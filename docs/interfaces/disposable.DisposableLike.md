@@ -10,6 +10,8 @@ Represents an unmanaged resource that can be disposed.
 
 - **`DisposableLike`**
 
+  ↳ [`AsyncEnumeratorLike`](asyncEnumerator.AsyncEnumeratorLike.md)
+
   ↳ [`DispatcherLike`](dispatcher.DispatcherLike.md)
 
   ↳ [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)

@@ -8,7 +8,7 @@ import {
 } from "./__internal__.liftable";
 import { getDelay } from "./__internal__.optionalArgs";
 import { AbstractAsyncEnumerable, lift, liftT } from "./asyncEnumerable/lift";
-import { AsyncEnumerator } from "./asyncEnumerator";
+import { AsyncEnumeratorLike } from "./asyncEnumerator";
 import {
   FromArray,
   Generate,
@@ -20,8 +20,12 @@ import {
   concatWith,
   fromValue,
 } from "./container";
-import { dispatch, getScheduler as getDispatcherScheduler } from "./dispatcher";
-import { add, addTo, bindTo } from "./disposable";
+import {
+  DispatcherLike,
+  dispatch,
+  getScheduler as getDispatcherScheduler,
+} from "./dispatcher";
+import { Disposable, add, addTo, bindTo } from "./disposable";
 import {
   EnumerableLike,
   FromEnumerable,
@@ -42,6 +46,7 @@ import {
   newInstanceWith,
   pipe,
   pipeLazy,
+  raise,
   returns,
 } from "./functions";
 import { InteractiveContainerLike } from "./interactiveContainer";
@@ -84,11 +89,11 @@ import { StreamLike } from "./stream";
 import { StreamableLike, stream } from "./streamable";
 
 export interface AsyncEnumerableLike<T>
-  extends StreamableLike<void, T, AsyncEnumerator<T>>,
+  extends StreamableLike<void, T, AsyncEnumeratorLike<T>>,
     InteractiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
-  readonly TLiftableContainerState: AsyncEnumerator<this["T"]>;
+  readonly TLiftableContainerState: AsyncEnumeratorLike<this["T"]>;
   readonly TCtx: SchedulerLike;
 }
 
@@ -96,6 +101,36 @@ export type AsyncEnumerableOperator<TA, TB> = Function1<
   AsyncEnumerableLike<TA>,
   AsyncEnumerableLike<TB>
 >;
+
+abstract class AsyncEnumerator<T>
+  extends Disposable
+  implements AsyncEnumeratorLike<T>
+{
+  get T(): T {
+    return raise();
+  }
+
+  get TContainerOf(): this {
+    return this;
+  }
+
+  get TLiftableContainerState(): Observer<this["T"]> {
+    return raise();
+  }
+
+  readonly observableType: DefaultObservable = 0;
+
+  abstract scheduler: SchedulerLike;
+  abstract observerCount: number;
+  abstract replay: number;
+
+  abstract dispatch(this: DispatcherLike<void>, req: void): void;
+  abstract sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
+
+  move(): void {
+    pipe(this, dispatch(none));
+  }
+}
 
 class CreateAsyncEnumerable<T> extends AbstractAsyncEnumerable<T> {
   constructor(
@@ -432,7 +467,7 @@ export const keep: <T>(
   class KeepAsyncEnumerator<T> extends AbstractDelegatingAsyncEnumerator<T, T> {
     readonly obs: MulticastObservableLike<T>;
 
-    constructor(delegate: AsyncEnumerator<T>, predicate: Predicate<T>) {
+    constructor(delegate: AsyncEnumeratorLike<T>, predicate: Predicate<T>) {
       super(delegate);
 
       this.obs = pipe(
@@ -478,7 +513,7 @@ export const map: <TA, TB>(
     readonly op: ObservableOperator<TA, TB>;
 
     constructor(
-      delegate: AsyncEnumerator<TA>,
+      delegate: AsyncEnumeratorLike<TA>,
       readonly mapper: Function1<TA, TB>,
     ) {
       super(delegate);
@@ -507,7 +542,7 @@ export const scan: <T, TAcc>(
     readonly op: ObservableOperator<T, TAcc>;
 
     constructor(
-      delegate: AsyncEnumerator<T>,
+      delegate: AsyncEnumeratorLike<T>,
       reducer: Reducer<T, TAcc>,
       acc: TAcc,
     ) {
@@ -532,7 +567,7 @@ class ScanAsyncAsyncEnumerator<
   readonly obs: MulticastObservableLike<TAcc>;
 
   constructor(
-    delegate: AsyncEnumerator<T>,
+    delegate: AsyncEnumeratorLike<T>,
     reducer: AsyncReducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ) {
@@ -563,12 +598,12 @@ export const scanAsync = <T, TAcc>(
   initialValue: Factory<TAcc>,
 ): AsyncEnumerableOperator<T, TAcc> =>
   pipe(
-    (delegate: AsyncEnumerator<T>) =>
+    (delegate: AsyncEnumeratorLike<T>) =>
       pipe(
         ScanAsyncAsyncEnumerator,
         newInstanceWith<
           ScanAsyncAsyncEnumerator<T, TAcc>,
-          AsyncEnumerator<T>,
+          AsyncEnumeratorLike<T>,
           AsyncReducer<T, TAcc>,
           Factory<TAcc>
         >(delegate, reducer, initialValue),
@@ -593,7 +628,7 @@ export const takeWhile: <T>(
     readonly obs: MulticastObservableLike<T>;
 
     constructor(
-      delegate: AsyncEnumerator<T>,
+      delegate: AsyncEnumeratorLike<T>,
       predicate: Predicate<T>,
       inclusive: boolean,
     ) {

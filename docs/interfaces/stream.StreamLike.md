@@ -21,10 +21,8 @@ Represents a duplex stream
 
   ↳ **`StreamLike`**
 
+  ↳↳ [`AsyncEnumeratorLike`](asyncEnumerator.AsyncEnumeratorLike.md)
+
   ↳↳ [`FlowableStreamLike`](flowable.FlowableStreamLike.md)
 
   ↳↳ [`WindowLocationStreamLike`](web.WindowLocationStreamLike.md)
-
-## Implemented by
-
-- [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)

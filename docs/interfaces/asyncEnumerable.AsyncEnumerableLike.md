@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\>
+- [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumeratorLike`](asyncEnumerator.AsyncEnumeratorLike.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\>
 
 - [`InteractiveContainerLike`](interactiveContainer.InteractiveContainerLike.md)
 
@@ -66,7 +66,7 @@ ___
 
 ### TLiftableContainerState
 
-• `Readonly` **TLiftableContainerState**: [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`AsyncEnumeratorLike`](asyncEnumerator.AsyncEnumeratorLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -97,20 +97,20 @@ ___
 
 ### stream
 
-▸ **stream**(`this`, `scheduler`, `options?`): [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>
+▸ **stream**(`this`, `scheduler`, `options?`): [`AsyncEnumeratorLike`](asyncEnumerator.AsyncEnumeratorLike.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\> |
+| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumeratorLike`](asyncEnumerator.AsyncEnumeratorLike.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\> |
 | `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
 
 #### Returns
 
-[`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>
+[`AsyncEnumeratorLike`](asyncEnumerator.AsyncEnumeratorLike.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>
 
 #### Inherited from
 
