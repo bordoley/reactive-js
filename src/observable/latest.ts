@@ -18,48 +18,45 @@ const enum LatestMode {
   Zip = 2,
 }
 
-class LatestCtx {
-  private completedCount = 0;
-  private readonly observers: LatestObserver[] = [];
-  readyCount = 0;
+type LatestCtx = {
+  delegate: ObserverLike<readonly unknown[]>;
+  mode: LatestMode;
+  completedCount: number;
+  observers: LatestObserver[];
+};
 
-  constructor(
-    readonly delegate: ObserverLike<readonly unknown[]>,
-    private readonly mode: LatestMode,
-  ) {}
+const add = (self: LatestCtx, observer: LatestObserver): void => {
+  self.observers.push(observer);
+};
 
-  add(observer: LatestObserver): void {
-    this.observers.push(observer);
-  }
+const onNotify = (self: LatestCtx) => {
+  const { mode, observers } = self;
 
-  notify() {
-    const { mode, observers, readyCount } = this;
+  const isReady = observers.every(x => x.ready);
 
-    if (readyCount === getLength(observers)) {
-      const result = pipe(
-        observers,
-        map(observer => observer.latest),
-      );
-      pipe(this, getDelegate, notify(result));
+  if (isReady) {
+    const result = pipe(
+      observers,
+      map(observer => observer.latest),
+    );
+    pipe(self, getDelegate, notify(result));
 
-      if (mode === LatestMode.Zip) {
-        for (const sub of observers) {
-          sub.ready = false;
-          sub.latest = none as any;
-        }
-        this.readyCount = 0;
+    if (mode === LatestMode.Zip) {
+      for (const sub of observers) {
+        sub.ready = false;
+        sub.latest = none as any;
       }
     }
   }
+};
 
-  onCompleted() {
-    this.completedCount++;
+const onCompleted = (self: LatestCtx) => {
+  self.completedCount++;
 
-    if (this.completedCount === getLength(this.observers)) {
-      pipe(this, getDelegate, dispose());
-    }
+  if (self.completedCount === getLength(self.observers)) {
+    pipe(self, getDelegate, dispose());
   }
-}
+};
 
 class LatestObserver extends Observer<unknown> {
   ready = false;
@@ -72,13 +69,9 @@ class LatestObserver extends Observer<unknown> {
   notify(next: unknown) {
     const { ctx } = this;
     this.latest = next;
+    this.ready = true;
 
-    if (!this.ready) {
-      ctx.readyCount++;
-      this.ready = true;
-    }
-
-    ctx.notify();
+    onNotify(ctx);
   }
 }
 
@@ -87,9 +80,15 @@ export const latest = (
   mode: LatestMode,
 ): ObservableLike<readonly unknown[]> => {
   const factory = () => (delegate: ObserverLike<readonly unknown[]>) => {
-    const latestCtxDelegate = new LatestCtx(delegate, mode);
+    const ctx: LatestCtx = {
+      completedCount: 0,
+      observers: [],
+      delegate,
+      mode,
+    };
+
     const onCompleteCb = () => {
-      latestCtxDelegate.onCompleted();
+      onCompleted(ctx);
     };
 
     const scheduler = getScheduler(delegate);
@@ -99,14 +98,14 @@ export const latest = (
         LatestObserver,
         newInstanceWith<LatestObserver, SchedulerLike, LatestCtx>(
           scheduler,
-          latestCtxDelegate,
+          ctx,
         ),
         addTo(delegate),
         onComplete(onCompleteCb),
         sourceFrom(observable),
       );
 
-      latestCtxDelegate.add(innerObserver);
+      add(ctx, innerObserver);
     }
   };
 
