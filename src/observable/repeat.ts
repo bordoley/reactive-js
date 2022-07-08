@@ -56,7 +56,7 @@ const repeatObs =
     const operator = (observer: ObserverLike<T>) =>
       createRepeatObserver(observer, observable, shouldRepeat);
 
-    return lift(operator, true)(observable);
+    return lift(operator, 2)(observable);
   };
 
 const defaultRepeatPredicate = (_: number, error?: Error): boolean =>

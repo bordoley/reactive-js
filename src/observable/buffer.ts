@@ -119,7 +119,7 @@ export function buffer<T>(
     );
   };
 
-  return lift(operator, delay === MAX_SAFE_INTEGER);
+  return lift(operator, delay === MAX_SAFE_INTEGER ? 2 : 0);
 }
 
 export const bufferT: Buffer<ObservableLike<unknown>> = {

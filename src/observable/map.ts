@@ -4,7 +4,7 @@ import { Map } from "../container";
 import { Function1 } from "../functions";
 import { ObservableLike } from "../observable";
 import { ObserverLike } from "../observer";
-import { liftSynchronousT } from "./lift";
+import { liftEnumerableT } from "./lift";
 import {
   AbstractDelegatingObserver,
   decorateNotifyWithAssertions,
@@ -22,7 +22,7 @@ export const map: Map<ObservableLike<unknown>>["map"] = /*@__PURE__*/ (() => {
   decorateWithMapNotify<ObservableLike<unknown>>(MapObserver);
   decorateNotifyWithAssertions(MapObserver);
   return createMapOperator<ObservableLike<unknown>, TReactive>(
-    liftSynchronousT,
+    liftEnumerableT,
     MapObserver,
   );
 })();

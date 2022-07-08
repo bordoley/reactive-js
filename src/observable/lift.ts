@@ -10,7 +10,7 @@ import {
 } from "../observable";
 import { ObserverLike } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
-import { AbstractObservable, isEnumerable } from "./observable";
+import { AbstractObservable } from "./observable";
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
@@ -47,7 +47,10 @@ class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
 export const lift =
   <TA, TB>(
     operator: ObserverOperator<TA, TB>,
-    isEnumerableOperator = false,
+    operatorType:
+      | EnumerableObservable
+      | RunnableObservable
+      | DefaultObservable = 0,
   ): ObservableOperator<TA, TB> =>
   source => {
     const sourceSource =
@@ -58,15 +61,16 @@ export const lift =
         ? [operator, ...source.operators]
         : [operator];
 
-    isEnumerableOperator = isEnumerable(source) && isEnumerableOperator;
+    const observableType = Math.min(source.observableType, operatorType);
 
     return newInstance(
       LiftedObservable,
       sourceSource,
       allFunctions,
-      isEnumerableOperator
-        ? (2 as EnumerableObservable)
-        : (0 as DefaultObservable),
+      observableType as
+        | EnumerableObservable
+        | RunnableObservable
+        | DefaultObservable,
     );
   };
 
@@ -75,7 +79,7 @@ export const liftT: Lift<ObservableLike<unknown>> = {
   variance: reactive,
 };
 
-export const liftSynchronousT: Lift<ObservableLike<unknown>> = {
-  lift: op => lift(op, true),
+export const liftEnumerableT: Lift<ObservableLike<unknown>> = {
+  lift: op => lift(op, 2),
   variance: reactive,
 };

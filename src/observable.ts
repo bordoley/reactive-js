@@ -87,7 +87,7 @@ import {
 import { createObservable, createT } from "./observable/createObservable";
 import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";
-import { lift, liftSynchronousT, liftT } from "./observable/lift";
+import { lift, liftEnumerableT, liftT } from "./observable/lift";
 import { mapT } from "./observable/map";
 import { tagObservableType } from "./observable/observable";
 import {
@@ -247,7 +247,7 @@ export const catchError: CatchError<ObservableLike<unknown>>["catchError"] =
     class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {},
     decorateWithCatchErrorNotify<ObservableLike<unknown>>(),
     decorateNotifyWithAssertions,
-    createCatchErrorOperator(liftSynchronousT),
+    createCatchErrorOperator(liftEnumerableT),
   );
 
 export const catchErrorT: CatchError<ObservableLike<unknown>> = {
@@ -273,7 +273,7 @@ export const decodeWithCharset: DecodeWithCharset<
   decorateWithDecodeWithCharsetNotify<ObservableLike<unknown>>(),
   decorateNotifyWithAssertions,
   createDecodeWithCharsetOperator({
-    ...liftSynchronousT,
+    ...liftEnumerableT,
     ...fromArrayT,
   }),
 );
@@ -309,7 +309,7 @@ export const distinctUntilChanged: DistinctUntilChanged<
   );
   decorateNotifyWithAssertions(DistinctUntilChangedObserver);
   return createDistinctUntilChangedOperator(
-    liftSynchronousT,
+    liftEnumerableT,
     DistinctUntilChangedObserver,
   );
 })();
@@ -333,7 +333,7 @@ export const everySatisfy: EverySatisfy<
   },
   decorateWithEverySatisfyNotify<ObservableLike<unknown>>(),
   decorateNotifyWithAssertions,
-  createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }),
+  createEverySatisfyOperator({ ...fromArrayT, ...liftEnumerableT }),
 );
 
 export const everySatisfyT: EverySatisfy<ObservableLike<unknown>> = {
@@ -406,7 +406,7 @@ export const keep: Keep<ObservableLike<unknown>>["keep"] =
     }
     decorateWithKeepNotify<ObservableLike<unknown>>(KeepObserver);
     decorateNotifyWithAssertions(KeepObserver);
-    return createKeepOperator(liftSynchronousT, KeepObserver);
+    return createKeepOperator(liftEnumerableT, KeepObserver);
   })();
 
 export const keepT: Keep<ObservableLike<unknown>> = {
@@ -435,7 +435,7 @@ export const pairwise: Pairwise<ObservableLike<unknown>>["pairwise"] =
     decorateWithPairwiseNotify<ObservableLike<unknown>>(PairwiseObserver);
     decorateNotifyWithAssertions(PairwiseObserver);
     return createPairwiseOperator<ObservableLike<unknown>, TReactive>(
-      liftSynchronousT,
+      liftEnumerableT,
       PairwiseObserver,
     );
   })();
@@ -482,7 +482,7 @@ export const reduce: Reduce<ObservableLike<unknown>>["reduce"] =
     },
     decorateWithReduceNotify<ObservableLike<unknown>>(),
     decorateNotifyWithAssertions,
-    createReduceOperator({ ...fromArrayT, ...liftSynchronousT }),
+    createReduceOperator({ ...fromArrayT, ...liftEnumerableT }),
   );
 
 export const reduceT: Reduce<ObservableLike<unknown>> = {
@@ -506,7 +506,7 @@ export const scan: Scan<ObservableLike<unknown>>["scan"] =
     decorateWithScanNotify<ObservableLike<unknown>>(ScanObserver);
     decorateNotifyWithAssertions(ScanObserver);
     return createScanOperator<ObservableLike<unknown>, TReactive>(
-      liftSynchronousT,
+      liftEnumerableT,
       ScanObserver,
     );
   })();
@@ -603,7 +603,7 @@ export const skipFirst: SkipFirst<ObservableLike<unknown>>["skipFirst"] =
     decorateWithSkipFirstNotify<ObservableLike<unknown>>(SkipFirstObserver);
     decorateNotifyWithAssertions(SkipFirstObserver);
     return createSkipFirstOperator<ObservableLike<unknown>, TReactive>(
-      liftSynchronousT,
+      liftEnumerableT,
       SkipFirstObserver,
     );
   })();
@@ -627,7 +627,7 @@ export const someSatisfy: SomeSatisfy<ObservableLike<unknown>>["someSatisfy"] =
     },
     decorateWithSomeSatisfyNotify<ObservableLike<unknown>>(),
     decorateNotifyWithAssertions,
-    createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }),
+    createSomeSatisfyOperator({ ...fromArrayT, ...liftEnumerableT }),
   );
 
 export const someSatisfyT: SomeSatisfy<ObservableLike<unknown>> = {
@@ -658,7 +658,7 @@ export const takeFirst: TakeFirst<ObservableLike<unknown>>["takeFirst"] =
     decorateWithTakeFirstNotify<ObservableLike<unknown>>(TakeFirstObserver);
     decorateNotifyWithAssertions(TakeFirstObserver);
     return createTakeFirstOperator<ObservableLike<unknown>, TReactive>(
-      { ...fromArrayT, ...liftSynchronousT },
+      { ...fromArrayT, ...liftEnumerableT },
       TakeFirstObserver,
     );
   })();
@@ -683,7 +683,7 @@ export const takeLast: TakeLast<ObservableLike<unknown>>["takeLast"] =
     },
     decorateWithTakeLastNotify<ObservableLike<unknown>>(),
     decorateNotifyWithAssertions,
-    createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }),
+    createTakeLastOperator({ ...fromArrayT, ...liftEnumerableT }),
   );
 
 export const takeLastT: TakeLast<ObservableLike<unknown>> = {
@@ -726,7 +726,7 @@ export const takeWhile: TakeWhile<ObservableLike<unknown>>["takeWhile"] =
 
     decorateWithTakeWhileNotify<ObservableLike<unknown>>(TakeWhileObserver);
     decorateNotifyWithAssertions(TakeWhileObserver);
-    return createTakeWhileOperator(liftSynchronousT, TakeWhileObserver);
+    return createTakeWhileOperator(liftEnumerableT, TakeWhileObserver);
   })();
 
 export const takeWhileT: TakeWhile<ObservableLike<unknown>> = {

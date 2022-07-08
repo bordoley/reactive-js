@@ -136,22 +136,20 @@ class LiftedObservable extends AbstractObservable {
  *
  * @param operator The operator function to apply.
  */
-const lift = (operator, isEnumerableOperator = false) => source => {
+const lift = (operator, operatorType = 0) => source => {
     const sourceSource = source instanceof LiftedObservable ? source.source : source;
     const allFunctions = source instanceof LiftedObservable
         ? [operator, ...source.operators]
         : [operator];
-    isEnumerableOperator = isEnumerable(source) && isEnumerableOperator;
-    return newInstance(LiftedObservable, sourceSource, allFunctions, isEnumerableOperator
-        ? 2
-        : 0);
+    const observableType = Math.min(source.observableType, operatorType);
+    return newInstance(LiftedObservable, sourceSource, allFunctions, observableType);
 };
 const liftT = {
     lift,
     variance: reactive,
 };
-const liftSynchronousT = {
-    lift: op => lift(op, true),
+const liftEnumerableT = {
+    lift: op => lift(op, 2),
     variance: reactive,
 };
 
@@ -283,7 +281,7 @@ const map = /*@__PURE__*/ (() => {
     }
     decorateWithMapNotify(MapObserver);
     decorateNotifyWithAssertions(MapObserver);
-    return createMapOperator(liftSynchronousT, MapObserver);
+    return createMapOperator(liftEnumerableT, MapObserver);
 })();
 const mapT = {
     map,
@@ -303,7 +301,7 @@ const onNotify$1 = /*@__PURE__*/ (() => {
     }
     decorateWithOnNotifyNotify(OnNotifyObserver);
     decorateNotifyWithAssertions(OnNotifyObserver);
-    return createOnNotifyOperator(liftSynchronousT, OnNotifyObserver);
+    return createOnNotifyOperator(liftEnumerableT, OnNotifyObserver);
 })();
 
 class Subject extends Disposable {
@@ -891,7 +889,7 @@ function buffer(options = {}) {
             }
         }));
     };
-    return lift(operator, delay === MAX_SAFE_INTEGER);
+    return lift(operator, delay === MAX_SAFE_INTEGER ? 2 : 0);
 }
 const bufferT = {
     buffer,
@@ -1006,7 +1004,7 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
 };
 const repeatObs = (shouldRepeat) => observable => {
     const operator = (observer) => createRepeatObserver(observer, observable, shouldRepeat);
-    return lift(operator, true)(observable);
+    return lift(operator, 2)(observable);
 };
 const defaultRepeatPredicate = (_, error) => isNone(error);
 function repeat(predicate) {
@@ -1329,7 +1327,7 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
 
 const catchError = 
 /*@__PURE__*/ decorateMap(class CatchErrorObserver extends AbstractDelegatingObserver {
-}, decorateWithCatchErrorNotify(), decorateNotifyWithAssertions, createCatchErrorOperator(liftSynchronousT));
+}, decorateWithCatchErrorNotify(), decorateNotifyWithAssertions, createCatchErrorOperator(liftEnumerableT));
 const catchErrorT = {
     catchError,
 };
@@ -1340,7 +1338,7 @@ const decodeWithCharset = /*@__PURE__*/ decorateMap(class DecodeWithCharsetObser
         this.textDecoder = textDecoder;
     }
 }, decorateWithDecodeWithCharsetNotify(), decorateNotifyWithAssertions, createDecodeWithCharsetOperator({
-    ...liftSynchronousT,
+    ...liftEnumerableT,
     ...fromArrayT,
 }));
 const decodeWithCharsetT = {
@@ -1364,7 +1362,7 @@ const distinctUntilChanged = /*@__PURE__*/ (() => {
     }
     decorateWithDistinctUntilChangedNotify(DistinctUntilChangedObserver);
     decorateNotifyWithAssertions(DistinctUntilChangedObserver);
-    return createDistinctUntilChangedOperator(liftSynchronousT, DistinctUntilChangedObserver);
+    return createDistinctUntilChangedOperator(liftEnumerableT, DistinctUntilChangedObserver);
 })();
 const distinctUntilChangedT = {
     distinctUntilChanged,
@@ -1374,7 +1372,7 @@ const everySatisfy = /*@__PURE__*/ decorateMap(class EverySatisfyObserver extend
         super(delegate);
         this.predicate = predicate;
     }
-}, decorateWithEverySatisfyNotify(), decorateNotifyWithAssertions, createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }));
+}, decorateWithEverySatisfyNotify(), decorateNotifyWithAssertions, createEverySatisfyOperator({ ...fromArrayT, ...liftEnumerableT }));
 const everySatisfyT = {
     everySatisfy,
 };
@@ -1426,7 +1424,7 @@ const keep =
     }
     decorateWithKeepNotify(KeepObserver);
     decorateNotifyWithAssertions(KeepObserver);
-    return createKeepOperator(liftSynchronousT, KeepObserver);
+    return createKeepOperator(liftEnumerableT, KeepObserver);
 })();
 const keepT = {
     keep,
@@ -1444,7 +1442,7 @@ const pairwise =
     }
     decorateWithPairwiseNotify(PairwiseObserver);
     decorateNotifyWithAssertions(PairwiseObserver);
-    return createPairwiseOperator(liftSynchronousT, PairwiseObserver);
+    return createPairwiseOperator(liftEnumerableT, PairwiseObserver);
 })();
 const pairwiseT = {
     pairwise,
@@ -1469,7 +1467,7 @@ const reduce =
         this.reducer = reducer;
         this.acc = acc;
     }
-}, decorateWithReduceNotify(), decorateNotifyWithAssertions, createReduceOperator({ ...fromArrayT, ...liftSynchronousT }));
+}, decorateWithReduceNotify(), decorateNotifyWithAssertions, createReduceOperator({ ...fromArrayT, ...liftEnumerableT }));
 const reduceT = {
     reduce,
 };
@@ -1485,7 +1483,7 @@ const scan =
     }
     decorateWithScanNotify(ScanObserver);
     decorateNotifyWithAssertions(ScanObserver);
-    return createScanOperator(liftSynchronousT, ScanObserver);
+    return createScanOperator(liftEnumerableT, ScanObserver);
 })();
 const scanT = {
     scan,
@@ -1540,7 +1538,7 @@ const skipFirst =
     }
     decorateWithSkipFirstNotify(SkipFirstObserver);
     decorateNotifyWithAssertions(SkipFirstObserver);
-    return createSkipFirstOperator(liftSynchronousT, SkipFirstObserver);
+    return createSkipFirstOperator(liftEnumerableT, SkipFirstObserver);
 })();
 const skipFirstT = {
     skipFirst,
@@ -1551,7 +1549,7 @@ const someSatisfy =
         super(delegate);
         this.predicate = predicate;
     }
-}, decorateWithSomeSatisfyNotify(), decorateNotifyWithAssertions, createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }));
+}, decorateWithSomeSatisfyNotify(), decorateNotifyWithAssertions, createSomeSatisfyOperator({ ...fromArrayT, ...liftEnumerableT }));
 const someSatisfyT = {
     someSatisfy,
 };
@@ -1567,7 +1565,7 @@ const takeFirst =
     }
     decorateWithTakeFirstNotify(TakeFirstObserver);
     decorateNotifyWithAssertions(TakeFirstObserver);
-    return createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, TakeFirstObserver);
+    return createTakeFirstOperator({ ...fromArrayT, ...liftEnumerableT }, TakeFirstObserver);
 })();
 const takeFirstT = {
     takeFirst,
@@ -1584,7 +1582,7 @@ const takeLast =
         this.maxCount = maxCount;
         this.last = [];
     }
-}, decorateWithTakeLastNotify(), decorateNotifyWithAssertions, createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }));
+}, decorateWithTakeLastNotify(), decorateNotifyWithAssertions, createTakeLastOperator({ ...fromArrayT, ...liftEnumerableT }));
 const takeLastT = {
     takeLast,
 };
@@ -1613,7 +1611,7 @@ const takeWhile =
     }
     decorateWithTakeWhileNotify(TakeWhileObserver);
     decorateNotifyWithAssertions(TakeWhileObserver);
-    return createTakeWhileOperator(liftSynchronousT, TakeWhileObserver);
+    return createTakeWhileOperator(liftEnumerableT, TakeWhileObserver);
 })();
 const takeWhileT = {
     takeWhile,
