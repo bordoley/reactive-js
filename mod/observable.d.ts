@@ -1,13 +1,13 @@
 import { DisposableLike, Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Zip, Concat, FromArray, Buffer, Map, ConcatAll, Repeat, ContainerLike, Container, ContainerOf, DistinctUntilChanged, EverySatisfy, Generate, Keep, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile } from "./container.mjs";
-import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Predicate, Equality, Updater, Reducer } from "./functions.mjs";
+import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Predicate, Updater } from "./functions.mjs";
 import { FromIterator, FromIterable, Using, Defer, CatchError, DecodeWithCharset, ThrowIfEmpty } from "./liftableContainer.mjs";
 import { ObserverLike } from "./observer.mjs";
-import { Option } from "./option.mjs";
 import { CreateReactiveContainer, Never, ReactiveContainerLike } from "./reactiveContainer.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { EnumerableLike, FromEnumerable, ToEnumerable } from "./enumerable.mjs";
+import { Option } from "./option.mjs";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: ObservableEffectMode | undefined;
 }) => ObservableLike<T>;
@@ -281,7 +281,7 @@ declare function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Observa
  */
 declare function concat<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
 declare const concatT: Concat<ObservableLike<unknown>>;
-declare const createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
+declare const createObservable: CreateReactiveContainer<ObservableLike<unknown>>["create"];
 declare const createT: CreateReactiveContainer<ObservableLike<unknown>>;
 declare class Subject<T> extends Disposable implements MulticastObservableLike<T> {
     readonly replay: number;
@@ -388,7 +388,7 @@ declare function buffer<T>(options?: {
     readonly maxBufferSize?: number;
 }): ObservableOperator<T, readonly T[]>;
 declare const bufferT: Buffer<ObservableLike<unknown>>;
-declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ObservableOperator<TA, TB>;
+declare const map: Map<ObservableLike<unknown>>["map"];
 declare const mapT: Map<ObservableLike<unknown>>;
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
@@ -464,7 +464,7 @@ declare function retry<T>(predicate: Function2<number, unknown, boolean>): Obser
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.
  */
-declare const switchAll: <T>() => ObservableOperator<ObservableLike<T>, T>;
+declare const switchAll: ConcatAll<ObservableLike<unknown>, Record<string, never>>["concatAll"];
 declare const switchAllT: ConcatAll<ObservableLike<unknown>, Record<string, never>>;
 /**
  * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
@@ -522,7 +522,7 @@ declare const zipT: Zip<ObservableLike<unknown>>;
  * @param selector
  */
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ObservableOperator<TA, T>;
-declare const toEnumerable: <T>() => Function1<ObservableLike<T>, EnumerableLike<T>>;
+declare const toEnumerable: ToEnumerable<ObservableLike<unknown>>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<ObservableLike<unknown>>;
 /**
  * Returns a Promise that completes with the last value produced by
@@ -585,10 +585,10 @@ declare type ObservableEffectMode = "batched" | "combine-latest";
  * interval -  Takes both the leading and trailing values.
  */
 declare type ThrottleMode = "first" | "last" | "interval";
-declare const catchError: <T>(onError: Function1<unknown, ObservableLike<T> | void>) => ObservableOperator<T, T>;
+declare const catchError: CatchError<ObservableLike<unknown>>["catchError"];
 declare const catchErrorT: CatchError<ObservableLike<unknown>>;
 declare const fromDisposable: <T>(disposable: DisposableLike) => ObservableLike<T>;
-declare const decodeWithCharset: (charset?: string) => ObservableOperator<ArrayBuffer, string>;
+declare const decodeWithCharset: DecodeWithCharset<ObservableLike<unknown>>["decodeWithCharset"];
 declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>>;
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
@@ -597,13 +597,11 @@ declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>>;
  * @param equals Optional equality function that is used to compare
  * if an item is distinct from the previous item.
  */
-declare const distinctUntilChanged: <T>(options?: {
-    readonly equality?: Equality<T>;
-}) => ObservableOperator<T, T>;
+declare const distinctUntilChanged: DistinctUntilChanged<ObservableLike<unknown>>["distinctUntilChanged"];
 declare const distinctUntilChangedT: DistinctUntilChanged<ObservableLike<unknown>>;
-declare const everySatisfy: <T>(predicate: Predicate<T>) => ObservableOperator<T, boolean>;
+declare const everySatisfy: EverySatisfy<ObservableLike<unknown>>["everySatisfy"];
 declare const everySatisfyT: EverySatisfy<ObservableLike<unknown>>;
-declare const fromObservable: <T>() => Function1<ObservableLike<T>, ObservableLike<T>>;
+declare const fromObservable: FromObservable<ObservableLike<unknown>>["fromObservable"];
 declare const fromObservableT: FromObservable<ObservableLike<unknown>>;
 declare const fromPromise: <T>(factory: Factory<Promise<T>>) => ObservableLike<T>;
 /**
@@ -620,15 +618,12 @@ declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, opt
     readonly delayStart?: boolean;
 }) => ObservableLike<T>;
 declare const generateT: Generate<ObservableLike<unknown>>;
-declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
+declare const keep: Keep<ObservableLike<unknown>>["keep"];
 declare const keepT: Keep<ObservableLike<unknown>>;
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ObservableOperator<TA, TB>;
 declare const onSubscribe: <T>(f: Factory<void | DisposableOrTeardown>) => ContainerOperator<ObservableLike<unknown>, T, T>;
 declare const getObserverCount: <T>(observable: MulticastObservableLike<T>) => number;
-declare const pairwise: <T>() => ObservableOperator<T, [
-    Option<T>,
-    T
-]>;
+declare const pairwise: Pairwise<ObservableLike<unknown>>["pairwise"];
 declare const pairwiseT: Pairwise<ObservableLike<unknown>>;
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -640,10 +635,10 @@ declare const pairwiseT: Pairwise<ObservableLike<unknown>>;
 declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
-declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
+declare const reduce: Reduce<ObservableLike<unknown>>["reduce"];
 declare const reduceT: Reduce<ObservableLike<unknown>>;
 declare const getReplay: <T>(observable: MulticastObservableLike<T>) => number;
-declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
+declare const scan: Scan<ObservableLike<unknown>>["scan"];
 declare const scanT: Scan<ObservableLike<unknown>>;
 interface ScanAsync<C extends ContainerLike> extends Container<C> {
     scanAsync: <T, TAcc>(scanner: AsyncReducer<T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
@@ -655,7 +650,7 @@ interface ScanAsync<C extends ContainerLike> extends Container<C> {
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-declare const scanAsync: <T, TAcc>(scanner: AsyncReducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
+declare const scanAsync: ScanAsync<ObservableLike<unknown>>["scanAsync"];
 declare const scanAsyncT: ScanAsync<ObservableLike<unknown>>;
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
@@ -674,25 +669,19 @@ declare const share: <T>(scheduler: SchedulerLike, options?: {
  *
  * @param count The number of items emitted by source that should be skipped.
  */
-declare const skipFirst: <T>(options?: {
-    readonly count?: number;
-}) => ObservableOperator<T, T>;
+declare const skipFirst: SkipFirst<ObservableLike<unknown>>["skipFirst"];
 declare const skipFirstT: SkipFirst<ObservableLike<unknown>>;
-declare const someSatisfy: <T>(predicate: Predicate<T>) => ObservableOperator<T, boolean>;
+declare const someSatisfy: SomeSatisfy<ObservableLike<unknown>>["someSatisfy"];
 declare const someSatisfyT: SomeSatisfy<ObservableLike<unknown>>;
 declare const subscribeOn: <T>(scheduler: SchedulerLike) => ObservableOperator<T, T>;
-declare const takeFirst: <T>(options?: {
-    readonly count?: number;
-}) => ObservableOperator<T, T>;
+declare const takeFirst: TakeFirst<ObservableLike<unknown>>["takeFirst"];
 declare const takeFirstT: TakeFirst<ObservableLike<unknown>>;
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *
  * @param count The maximum number of values to emit.
  */
-declare const takeLast: <T>(options?: {
-    readonly count?: number;
-}) => ObservableOperator<T, T>;
+declare const takeLast: TakeLast<ObservableLike<unknown>>["takeLast"];
 declare const takeLastT: TakeLast<ObservableLike<unknown>>;
 declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => ObservableOperator<T, T>;
 /**
@@ -702,13 +691,11 @@ declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => ObservableOpe
  *
  * @param predicate The predicate function.
  */
-declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
-    readonly inclusive?: boolean;
-}) => ObservableOperator<T, T>;
+declare const takeWhile: TakeWhile<ObservableLike<unknown>>["takeWhile"];
 declare const takeWhileT: TakeWhile<ObservableLike<unknown>>;
-declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ObservableOperator<T, T>;
+declare const throwIfEmpty: ThrowIfEmpty<ObservableLike<unknown>>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>>;
-declare const toObservable: <T>() => Function1<ObservableLike<T>, ObservableLike<T>>;
+declare const toObservable: ToObservable<ObservableLike<unknown>>["toObservable"];
 declare const toObservableT: ToObservable<ObservableLike<unknown>>;
 declare const toRunnable: <T>(options?: {
     readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;

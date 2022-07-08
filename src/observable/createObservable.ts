@@ -21,9 +21,10 @@ class CreateObservable<T> extends AbstractObservable<T> {
   }
 }
 
-export const createObservable = <T>(
-  f: SideEffect1<ObserverLike<T>>,
-): ObservableLike<T> => newInstance(CreateObservable, f);
+export const createObservable: CreateReactiveContainer<
+  ObservableLike<unknown>
+>["create"] = <T>(f: SideEffect1<ObserverLike<T>>) =>
+  newInstance(CreateObservable, f);
 
 export const createT: CreateReactiveContainer<ObservableLike<unknown>> = {
   create: createObservable,

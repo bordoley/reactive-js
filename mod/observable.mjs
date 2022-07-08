@@ -1334,7 +1334,8 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-const catchError = /*@__PURE__*/ decorateMap(class CatchErrorObserver extends AbstractDelegatingObserver {
+const catchError = 
+/*@__PURE__*/ decorateMap(class CatchErrorObserver extends AbstractDelegatingObserver {
 }, decorateWithCatchErrorNotify(), decorateNotifyWithAssertions, createCatchErrorOperator(liftSynchronousT));
 const catchErrorT = {
     catchError,
@@ -1468,23 +1469,20 @@ const multicast = (scheduler, options = {}) => observable => {
     pipe(observable, onNotify(publishTo(subject)), subscribe(scheduler), bindTo(subject));
     return subject;
 };
-const reduce = /*@__PURE__*/ (() => {
-    class ReducerObserver extends AbstractDelegatingObserver {
-        constructor(delegate, reducer, acc) {
-            super(delegate);
-            this.reducer = reducer;
-            this.acc = acc;
-        }
+const reduce = 
+/*@__PURE__*/ decorateMap(class ReducerObserver extends AbstractDelegatingObserver {
+    constructor(delegate, reducer, acc) {
+        super(delegate);
+        this.reducer = reducer;
+        this.acc = acc;
     }
-    decorateWithReduceNotify(ReducerObserver);
-    decorateNotifyWithAssertions(ReducerObserver);
-    return createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, ReducerObserver);
-})();
+}, decorateWithReduceNotify(), decorateNotifyWithAssertions, createReduceOperator({ ...fromArrayT, ...liftSynchronousT }));
 const reduceT = {
     reduce,
 };
 const getReplay = (observable) => observable.replay;
-const scan = /*@__PURE__*/ (() => {
+const scan = 
+/*@__PURE__*/ (() => {
     class ScanObserver extends AbstractDelegatingObserver {
         constructor(delegate, reducer, acc) {
             super(delegate);
@@ -1538,7 +1536,8 @@ const share = (scheduler, options) => source => {
  *
  * @param count The number of items emitted by source that should be skipped.
  */
-const skipFirst = /*@__PURE__*/ (() => {
+const skipFirst = 
+/*@__PURE__*/ (() => {
     class SkipFirstObserver extends AbstractDelegatingObserver {
         constructor(delegate, skipCount) {
             super(delegate);
@@ -1553,7 +1552,8 @@ const skipFirst = /*@__PURE__*/ (() => {
 const skipFirstT = {
     skipFirst,
 };
-const someSatisfy = /*@__PURE__*/ decorateMap(class SomeSatisfyObserver extends AbstractDelegatingObserver {
+const someSatisfy = 
+/*@__PURE__*/ decorateMap(class SomeSatisfyObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
@@ -1563,7 +1563,8 @@ const someSatisfyT = {
     someSatisfy,
 };
 const subscribeOn = (scheduler) => observable => createObservable(({ dispatcher }) => pipe(observable, onNotify(dispatchTo(dispatcher)), subscribe(scheduler), bindTo(dispatcher)));
-const takeFirst = /*@__PURE__*/ (() => {
+const takeFirst = 
+/*@__PURE__*/ (() => {
     class TakeFirstObserver extends AbstractDelegatingObserver {
         constructor(delegate, maxCount) {
             super(delegate);
@@ -1583,18 +1584,14 @@ const takeFirstT = {
  *
  * @param count The maximum number of values to emit.
  */
-const takeLast = /*@__PURE__*/ (() => {
-    class TakeLastObserver extends AbstractDelegatingObserver {
-        constructor(delegate, maxCount) {
-            super(delegate);
-            this.maxCount = maxCount;
-            this.last = [];
-        }
+const takeLast = 
+/*@__PURE__*/ decorateMap(class TakeLastObserver extends AbstractDelegatingObserver {
+    constructor(delegate, maxCount) {
+        super(delegate);
+        this.maxCount = maxCount;
+        this.last = [];
     }
-    decorateWithTakeLastNotify(TakeLastObserver);
-    decorateNotifyWithAssertions(TakeLastObserver);
-    return createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }, TakeLastObserver);
-})();
+}, decorateWithTakeLastNotify(), decorateNotifyWithAssertions, createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }));
 const takeLastT = {
     takeLast,
 };
@@ -1612,7 +1609,8 @@ const takeUntil = (notifier) => {
  *
  * @param predicate The predicate function.
  */
-const takeWhile = /*@__PURE__*/ (() => {
+const takeWhile = 
+/*@__PURE__*/ (() => {
     class TakeWhileObserver extends AbstractDelegatingObserver {
         constructor(delegate, predicate, inclusive) {
             super(delegate);

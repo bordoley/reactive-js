@@ -45,13 +45,13 @@ const createSatisfyOperator = (m, SatisfySink, defaultResult) => (predicate) => 
 })), lift(m));
 const createEverySatisfyOperator = (m) => (EverySatisfySink) => compose(predicate => compose(predicate, negate), createSatisfyOperator(m, EverySatisfySink, true));
 const createSomeSatisfyOperator = (m) => (SomeSatisfySink) => createSatisfyOperator(m, SomeSatisfySink, false);
-const createReduceOperator = (m, ReduceSink) => (reducer, initialValue) => pipe((delegate) => {
+const createReduceOperator = (m) => (ReduceSink) => (reducer, initialValue) => pipe((delegate) => {
     const sink = pipe(ReduceSink, newInstanceWith(delegate, reducer, initialValue()), addTo(delegate), onComplete(() => {
         pipe(sink.acc, fromValue(m), sinkInto(delegate));
     }));
     return sink;
 }, lift(m));
-const createTakeLastOperator = (m, TakeLastSink) => (options = {}) => {
+const createTakeLastOperator = (m) => (TakeLastSink) => (options = {}) => {
     const { count = 1 } = options;
     const operator = (delegate) => {
         const sink = pipe(TakeLastSink, newInstanceWith(delegate, count), addTo(delegate), onComplete(() => {
@@ -122,7 +122,7 @@ const decorateWithScanNotify = (ScanSink) => decorateWithNotify(ScanSink, functi
     this.acc = nextAcc;
     getDelegate(this).notify(nextAcc);
 });
-const decorateWithReduceNotify = (ReduceSink) => decorateWithNotify(ReduceSink, function notifyReduce(next) {
+const decorateWithReduceNotify = () => (ReduceSink) => decorateWithNotify(ReduceSink, function notifyReduce(next) {
     this.acc = this.reducer(this.acc, next);
 });
 const decorateWithSatisfyNotify = (SatisfySink, defaultResult) => decorateWithNotify(SatisfySink, function notifyEverySatisfy(next) {
@@ -146,7 +146,7 @@ const decorateWithTakeFirstNotify = (TakeFirstSink) => decorateWithNotify(TakeFi
         pipe(this, dispose());
     }
 });
-const decorateWithTakeLastNotify = (TakeLastSink) => decorateWithNotify(TakeLastSink, function notifyTakeLast(next) {
+const decorateWithTakeLastNotify = () => (TakeLastSink) => decorateWithNotify(TakeLastSink, function notifyTakeLast(next) {
     const { last } = this;
     last.push(next);
     if (getLength(last) > this.maxCount) {

@@ -203,10 +203,8 @@ type ReduceSink<C extends ReactiveContainerLike> = new <T, TAcc>(
 };
 
 export const createReduceOperator =
-  <C extends ReactiveContainerLike>(
-    m: FromArray<C> & Lift<C>,
-    ReduceSink: ReduceSink<C>,
-  ) =>
+  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  (ReduceSink: ReduceSink<C>) =>
   <T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
@@ -245,10 +243,8 @@ type TakeLastSink<C extends ReactiveContainerLike> = new <T>(
 };
 
 export const createTakeLastOperator =
-  <C extends ReactiveContainerLike>(
-    m: FromArray<C> & Lift<C>,
-    TakeLastSink: TakeLastSink<C>,
-  ) =>
+  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  (TakeLastSink: TakeLastSink<C>) =>
   <T>(
     options: { readonly count?: number } = {},
   ): ContainerOperator<C, T, T> => {
@@ -487,15 +483,15 @@ export const decorateWithScanNotify = <C extends ReactiveContainerLike>(
     },
   );
 
-export const decorateWithReduceNotify = <C extends ReactiveContainerLike>(
-  ReduceSink: ReduceSink<C>,
-) =>
-  decorateWithNotify(
-    ReduceSink,
-    function notifyReduce(this: InstanceType<typeof ReduceSink>, next) {
-      this.acc = this.reducer(this.acc, next);
-    },
-  );
+export const decorateWithReduceNotify =
+  <C extends ReactiveContainerLike>() =>
+  (ReduceSink: ReduceSink<C>) =>
+    decorateWithNotify(
+      ReduceSink,
+      function notifyReduce(this: InstanceType<typeof ReduceSink>, next) {
+        this.acc = this.reducer(this.acc, next);
+      },
+    );
 
 const decorateWithSatisfyNotify = <C extends ReactiveContainerLike>(
   SatisfySink: SatisfySink<C>,
@@ -560,21 +556,21 @@ export const decorateWithTakeFirstNotify = <C extends ReactiveContainerLike>(
     },
   );
 
-export const decorateWithTakeLastNotify = <C extends ReactiveContainerLike>(
-  TakeLastSink: TakeLastSink<C>,
-) =>
-  decorateWithNotify(
-    TakeLastSink,
-    function notifyTakeLast(this: InstanceType<typeof TakeLastSink>, next) {
-      const { last } = this;
+export const decorateWithTakeLastNotify =
+  <C extends ReactiveContainerLike>() =>
+  (TakeLastSink: TakeLastSink<C>) =>
+    decorateWithNotify(
+      TakeLastSink,
+      function notifyTakeLast(this: InstanceType<typeof TakeLastSink>, next) {
+        const { last } = this;
 
-      last.push(next);
+        last.push(next);
 
-      if (getLength(last) > this.maxCount) {
-        last.shift();
-      }
-    },
-  );
+        if (getLength(last) > this.maxCount) {
+          last.shift();
+        }
+      },
+    );
 
 export const decorateWithTakeWhileNotify = <C extends ReactiveContainerLike>(
   TakeWhileSink: new <T>(
