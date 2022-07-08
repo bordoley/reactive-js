@@ -3,7 +3,7 @@ import { decorateWithOnNotifyNotify } from "../__internal__.reactiveContainer";
 import { SideEffect1 } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike } from "../observer";
-import { liftSynchronousT } from "./lift";
+import { liftEnumerableT } from "./lift";
 import {
   AbstractDelegatingObserver,
   decorateNotifyWithAssertions,
@@ -24,5 +24,5 @@ export const onNotify: <T>(
   }
   decorateWithOnNotifyNotify<ObservableLike<unknown>>(OnNotifyObserver);
   decorateNotifyWithAssertions(OnNotifyObserver);
-  return createOnNotifyOperator(liftSynchronousT, OnNotifyObserver);
+  return createOnNotifyOperator(liftEnumerableT, OnNotifyObserver);
 })();
