@@ -33,21 +33,17 @@ import {
   catchError,
   combineLatestT,
   concat,
-  concatAllT,
-  concatT,
+  concatAllT as concatAllTObs,
   createObservable,
-  distinctUntilChanged,
   exhaustT,
   fromArray,
-  fromArrayT,
   fromIterable,
   fromIteratorT,
   fromPromise,
   generate,
   getObserverCount,
-  keepT,
   map,
-  mapT,
+  mapT as mapTObs,
   merge,
   mergeAllT,
   mergeT,
@@ -56,18 +52,14 @@ import {
   onNotify,
   onSubscribe,
   publishTo,
-  repeat,
   retry,
-  scan,
   scanAsync,
   share,
-  skipFirst,
   subscribe,
   switchAll,
   switchAllT,
   takeFirst,
   takeLast,
-  takeWhile,
   throttle,
   throwIfEmpty,
   timeout,
@@ -76,7 +68,7 @@ import {
   withLatestFrom,
   zip,
   zipLatestT,
-  zipT,
+  zipT as zipTObs,
   zipWithLatestFrom,
 } from "../observable";
 import { Option, isSome } from "../option";
@@ -86,6 +78,23 @@ import {
   last,
   toArray,
 } from "../runnable";
+import {
+  concatAllT,
+  concatT,
+  distinctUntilChangedT,
+  fromArrayT,
+  generateT,
+  keepT,
+  mapT,
+  repeatT,
+  scanT,
+  skipFirstT,
+  takeFirstT,
+  takeLastT,
+  takeWhileT,
+  toRunnableT,
+  zipT,
+} from "../runnableObservable";
 import { createHostScheduler, createVirtualTimeScheduler } from "../scheduler";
 import {
   describe,
@@ -292,7 +301,7 @@ export const tests = describe(
     pipeLazy(
       [fromArray()([1, 2, 3]), fromArray()([4, 5, 6]), fromArray()([7, 8, 9])],
       fromArray(),
-      concatMap({ ...exhaustT, ...mapT }, (x: ObservableLike<number>) => x),
+      concatMap({ ...exhaustT, ...mapTObs }, (x: ObservableLike<number>) => x),
       toRunnable(),
       toArray(),
       expectArrayEquals([1, 2, 3]),
@@ -327,7 +336,7 @@ export const tests = describe(
     pipeLazy(
       undefined,
       fromValue(fromArrayT),
-      genMap({ ...concatAllT, ...fromIteratorT, ...mapT }, function* (_) {
+      genMap({ ...concatAllTObs, ...fromIteratorT, ...mapTObs }, function* (_) {
         yield 1;
         yield 2;
         yield 3;
@@ -385,7 +394,7 @@ export const tests = describe(
             ObservableLike<unknown>,
             ObservableLike<ObservableLike<number>>,
             ObservableLike<number>
-          >({ ...mergeAllT, ...mapT }, identity),
+          >({ ...mergeAllT, ...mapTObs }, identity),
           toRunnable(),
           last(),
         ),
@@ -398,7 +407,7 @@ export const tests = describe(
         pipeLazy(
           [1, 2, 3, 4],
           fromArray(),
-          concatMap({ ...mergeAllT, ...mapT }, (x: number) => {
+          concatMap({ ...mergeAllT, ...mapTObs }, (x: number) => {
             if (x > 2) {
               raise();
             }
@@ -628,7 +637,9 @@ export const tests = describe(
     pipeLazy(
       [1, 2, 3],
       fromArray({ delay: 1 }),
-      concatMap({ ...switchAllT, ...mapT }, _ => pipe([1, 2, 3], fromArray())),
+      concatMap({ ...switchAllT, ...mapTObs }, _ =>
+        pipe([1, 2, 3], fromArray()),
+      ),
       toRunnable(),
       toArray(),
       expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
@@ -850,7 +861,7 @@ export const tests = describe(
       pipeLazy(
         [1, 2, 3],
         fromArray({ delay: 1 }),
-        zipWith(zipT, pipe([1, 2, 3], fromArray({ delay: 5 }))),
+        zipWith(zipTObs, pipe([1, 2, 3], fromArray({ delay: 5 }))),
         toRunnable(),
         toArray(),
         expectArrayEquals(
@@ -869,7 +880,7 @@ export const tests = describe(
         pipeLazy(
           raise,
           throws({ ...fromArrayT, ...mapT }),
-          zipWith(zipT, fromArray()([1, 2, 3])),
+          zipWith(zipTObs, fromArray()([1, 2, 3])),
           map(([, b]) => b),
           toRunnable(),
           toArray(),
@@ -986,16 +997,22 @@ export const tests = describe(
     ...concatAllT,
     ...fromArrayT,
     ...keepT,
-    distinctUntilChanged,
-    generate,
-    map,
-    repeat,
-    scan,
-    skipFirst,
-    takeFirst,
-    takeLast,
-    takeWhile,
-    toRunnable,
+    ...distinctUntilChangedT,
+    ...generateT,
+    ...mapT,
+    ...repeatT,
+    ...scanT,
+    ...skipFirstT,
+    ...takeFirstT,
+    ...takeLastT,
+    ...takeWhileT,
+    ...toRunnableT,
   }),
-  createZippableTests({ ...fromArrayT, generate, map, toRunnable, zip }),
+  createZippableTests({
+    ...fromArrayT,
+    ...generateT,
+    ...mapT,
+    ...toRunnableT,
+    ...zipT,
+  }),
 );

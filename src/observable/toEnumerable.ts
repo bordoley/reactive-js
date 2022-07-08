@@ -5,10 +5,10 @@ import {
   runContinuation,
 } from "../__internal__.schedulerImplementation";
 import { add, addTo, dispose, isDisposed } from "../disposable";
-import { ToEnumerable, createEnumerable } from "../enumerable";
+import { EnumerableLike, createEnumerable } from "../enumerable";
 import { EnumeratorLike, hasCurrent } from "../enumerator";
 import { newInstance, newInstanceWith, pipe } from "../functions";
-import { ObservableLike } from "../observable";
+import { EnumerableObservable, ObservableLike } from "../observable";
 import { isNone } from "../option";
 import { sourceFrom } from "../reactiveContainer";
 import {
@@ -95,10 +95,11 @@ export const enumerateObs = <T>(obs: ObservableLike<T>): EnumeratorLike<T> => {
   return scheduler;
 };
 
-export const toEnumerable: ToEnumerable<
-  ObservableLike<unknown>
->["toEnumerable"] = () => obs => createEnumerable(() => enumerateObs(obs));
-
-export const toEnumerableT: ToEnumerable<ObservableLike<unknown>> = {
-  toEnumerable,
-};
+export const toEnumerable =
+  <T>() =>
+  (
+    obs: ObservableLike<T> & {
+      readonly observableType: EnumerableObservable;
+    },
+  ): EnumerableLike<T> =>
+    createEnumerable(() => enumerateObs(obs));

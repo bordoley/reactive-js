@@ -105,7 +105,7 @@ import { ObserverLike, getScheduler } from "./observer";
 import { Option, isNone, isSome, none } from "./option";
 import { ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
 import { notifySink } from "./reactiveSink";
-import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
+import { RunnableLike, createRunnable } from "./runnable";
 import {
   SchedulerLike,
   VirtualTimeSchedulerLike,
@@ -133,18 +133,6 @@ export interface ObservableLike<T> extends ReactiveContainerLike {
     | DefaultObservable;
 
   sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
-}
-
-export interface EnumerableObservableLike<T> extends ObservableLike<T> {
-  readonly TContainerOf: EnumerableObservableLike<this["T"]>;
-
-  readonly observableType: EnumerableObservable;
-}
-
-export interface RunnableObservableLike<T> extends ObservableLike<T> {
-  readonly TContainerOf: RunnableObservableLike<this["T"]>;
-
-  readonly observableType: RunnableObservable;
 }
 
 export interface FromObservable<C extends ContainerLike> extends Container<C> {
@@ -238,7 +226,7 @@ export { timeout, timeoutError } from "./observable/timeout";
 export { withLatestFrom } from "./observable/withLatestFrom";
 export { zip, zipT } from "./observable/zip";
 export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
-export { toEnumerable, toEnumerableT } from "./observable/toEnumerable";
+export { toEnumerable } from "./observable/toEnumerable";
 export { toPromise } from "./observable/toPromise";
 export { isEnumerable, isRunnable } from "./observable/observable";
 
@@ -764,7 +752,12 @@ export const toRunnable =
     options: {
       readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
     } = {},
-  ): Function1<ObservableLike<T>, RunnableLike<T>> =>
+  ): Function1<
+    ObservableLike<T> & {
+      readonly observableType: RunnableObservable | EnumerableObservable;
+    },
+    RunnableLike<T>
+  > =>
   source =>
     createRunnable(sink => {
       const { schedulerFactory = createVirtualTimeScheduler } = options;
@@ -778,9 +771,5 @@ export const toRunnable =
 
       pipe(scheduler, addTo(sink), forEach(ignore), dispose());
     });
-
-export const toRunnableT: ToRunnable<ObservableLike<unknown>> = {
-  toRunnable,
-};
 
 export const TContainerOf: ObservableLike<unknown> = undefined as any;

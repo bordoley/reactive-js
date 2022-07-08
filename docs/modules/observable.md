@@ -10,11 +10,9 @@
 
 ### Interfaces
 
-- [EnumerableObservableLike](../interfaces/observable.EnumerableObservableLike.md)
 - [FromObservable](../interfaces/observable.FromObservable.md)
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
-- [RunnableObservableLike](../interfaces/observable.RunnableObservableLike.md)
 - [ScanAsync](../interfaces/observable.ScanAsync.md)
 - [ToObservable](../interfaces/observable.ToObservable.md)
 
@@ -66,9 +64,7 @@
 - [takeWhileT](observable.md#takewhilet)
 - [throwIfEmptyT](observable.md#throwifemptyt)
 - [timeoutError](observable.md#timeouterror)
-- [toEnumerableT](observable.md#toenumerablet)
 - [toObservableT](observable.md#toobservablet)
-- [toRunnableT](observable.md#torunnablet)
 - [usingT](observable.md#usingt)
 - [zipLatestT](observable.md#ziplatestt)
 - [zipT](observable.md#zipt)
@@ -430,21 +426,9 @@ Symbol thrown when the timeout operator times out
 
 ___
 
-### toEnumerableT
-
-• `Const` **toEnumerableT**: [`ToEnumerable`](../interfaces/enumerable.ToEnumerable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
-
-___
-
 ### toObservableT
 
 • `Const` **toObservableT**: [`ToObservable`](../interfaces/observable.ToObservable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
-
-___
-
-### toRunnableT
-
-• `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -2197,7 +2181,7 @@ ___
 
 ### isEnumerable
 
-▸ **isEnumerable**<`T`\>(`obs`): obs is EnumerableObservableLike<T\>
+▸ **isEnumerable**<`T`\>(`obs`): obs is ObservableLike<T\> & Object
 
 #### Type parameters
 
@@ -2213,13 +2197,13 @@ ___
 
 #### Returns
 
-obs is EnumerableObservableLike<T\>
+obs is ObservableLike<T\> & Object
 
 ___
 
 ### isRunnable
 
-▸ **isRunnable**<`T`\>(`obs`): obs is RunnableObservableLike<T\>
+▸ **isRunnable**<`T`\>(`obs`): obs is ObservableLike<T\> & Object
 
 #### Type parameters
 
@@ -2235,7 +2219,7 @@ ___
 
 #### Returns
 
-obs is RunnableObservableLike<T\>
+obs is ObservableLike<T\> & Object
 
 ___
 
@@ -3068,7 +3052,7 @@ ___
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(): (`obs`: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> & { `observableType`: ``2``  }) => [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -3078,7 +3062,19 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+`fn`
+
+▸ (`obs`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obs` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> & { `observableType`: ``2``  } |
+
+##### Returns
+
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 ___
 
@@ -3125,7 +3121,7 @@ ___
 
 ### toRunnable
 
-▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> & { `observableType`: ``2`` \| ``1``  }, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3142,7 +3138,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> & { `observableType`: ``2`` \| ``1``  }, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
 
 ___
 
