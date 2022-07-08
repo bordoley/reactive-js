@@ -165,7 +165,8 @@ const last = () => {
     return run(createSink);
 };
 
-const buffer = /*@__PURE__*/ (() => {
+const buffer = 
+/*@__PURE__*/ (() => {
     class BufferSink extends AbstractDelegatingRunnableSink {
         constructor(delegate, maxBufferSize) {
             super(delegate);
@@ -200,7 +201,8 @@ const buffer = /*@__PURE__*/ (() => {
 const bufferT = {
     buffer,
 };
-const catchError = /*@__PURE__*/ decorateMap(class CatchErrorSink extends AbstractDelegatingRunnableSink {
+const catchError = 
+/*@__PURE__*/ decorateMap(class CatchErrorSink extends AbstractDelegatingRunnableSink {
 }, decorateWithCatchErrorNotify(), decorateNotifyWithAssertions, createCatchErrorOperator(liftT));
 const catchErrorT = {
     catchError,
@@ -242,7 +244,8 @@ const distinctUntilChanged = /*@__PURE__*/ (() => {
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const everySatisfy = /*@__PURE__*/ decorateMap(class EverySatisfySink extends AbstractDelegatingRunnableSink {
+const everySatisfy = 
+/*@__PURE__*/ decorateMap(class EverySatisfySink extends AbstractDelegatingRunnableSink {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
@@ -264,8 +267,7 @@ const generate = (generator, initialValue) => {
 const generateT = {
     generate,
 };
-const keep = 
-/*@__PURE__*/ (() => {
+const keep = /*@__PURE__*/ (() => {
     class KeepSink extends AbstractDelegatingRunnableSink {
         constructor(delegate, predicate) {
             super(delegate);
@@ -293,7 +295,8 @@ const map = /*@__PURE__*/ (() => {
 const mapT = {
     map,
 };
-const never = /*@__PURE__*/ createNever(createT);
+const never = 
+/*@__PURE__*/ createNever(createT);
 const neverT = {
     never,
 };
@@ -330,18 +333,14 @@ const pairwise =
 const pairwiseT = {
     pairwise,
 };
-const reduce = /*@__PURE__*/ (() => {
-    class ReducerSink extends AbstractDelegatingRunnableSink {
-        constructor(delegate, reducer, acc) {
-            super(delegate);
-            this.reducer = reducer;
-            this.acc = acc;
-        }
+const reduce = 
+/*@__PURE__*/ decorateMap(class ReducerSink extends AbstractDelegatingRunnableSink {
+    constructor(delegate, reducer, acc) {
+        super(delegate);
+        this.reducer = reducer;
+        this.acc = acc;
     }
-    decorateWithReduceNotify(ReducerSink);
-    decorateNotifyWithAssertions(ReducerSink);
-    return createReduceOperator({ ...fromArrayT, ...liftT }, ReducerSink);
-})();
+}, decorateWithReduceNotify(), decorateNotifyWithAssertions, createReduceOperator({ ...fromArrayT, ...liftT }));
 const reduceT = {
     reduce,
 };
@@ -377,7 +376,8 @@ const scan = /*@__PURE__*/ (() => {
 const scanT = {
     scan,
 };
-const skipFirst = /*@__PURE__*/ (() => {
+const skipFirst = 
+/*@__PURE__*/ (() => {
     class SkipFirstSink extends AbstractDelegatingRunnableSink {
         constructor(delegate, skipCount) {
             super(delegate);
@@ -392,7 +392,8 @@ const skipFirst = /*@__PURE__*/ (() => {
 const skipFirstT = {
     skipFirst,
 };
-const someSatisfy = /*@__PURE__*/ decorateMap(class SomeSatisfySink extends AbstractDelegatingRunnableSink {
+const someSatisfy = 
+/*@__PURE__*/ decorateMap(class SomeSatisfySink extends AbstractDelegatingRunnableSink {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
@@ -401,7 +402,8 @@ const someSatisfy = /*@__PURE__*/ decorateMap(class SomeSatisfySink extends Abst
 const someSatisfyT = {
     someSatisfy,
 };
-const takeFirst = /*@__PURE__*/ (() => {
+const takeFirst = 
+/*@__PURE__*/ (() => {
     class TakeFirstSink extends AbstractDelegatingRunnableSink {
         constructor(delegate, maxCount) {
             super(delegate);
@@ -416,22 +418,19 @@ const takeFirst = /*@__PURE__*/ (() => {
 const takeFirstT = {
     takeFirst,
 };
-const takeLast = /*@__PURE__*/ (() => {
-    class TakeLastSink extends AbstractDelegatingRunnableSink {
-        constructor(delegate, maxCount) {
-            super(delegate);
-            this.maxCount = maxCount;
-            this.last = [];
-        }
+const takeLast = 
+/*@__PURE__*/ decorateMap(class TakeLastSink extends AbstractDelegatingRunnableSink {
+    constructor(delegate, maxCount) {
+        super(delegate);
+        this.maxCount = maxCount;
+        this.last = [];
     }
-    decorateWithTakeLastNotify(TakeLastSink);
-    decorateNotifyWithAssertions(TakeLastSink);
-    return createTakeLastOperator({ ...fromArrayT, ...liftT }, TakeLastSink);
-})();
+}, decorateWithTakeLastNotify(), decorateNotifyWithAssertions, createTakeLastOperator({ ...fromArrayT, ...liftT }));
 const takeLastT = {
     takeLast,
 };
-const takeWhile = /*@__PURE__*/ (() => {
+const takeWhile = 
+/*@__PURE__*/ (() => {
     class TakeWhileSink extends AbstractDelegatingRunnableSink {
         constructor(delegate, predicate, inclusive) {
             super(delegate);
@@ -446,7 +445,8 @@ const takeWhile = /*@__PURE__*/ (() => {
 const takeWhileT = {
     takeWhile,
 };
-const throwIfEmpty = /*@__PURE__*/ (() => {
+const throwIfEmpty = 
+/*@__PURE__*/ (() => {
     class ThrowIfEmptySink extends AbstractDelegatingRunnableSink {
         constructor() {
             super(...arguments);

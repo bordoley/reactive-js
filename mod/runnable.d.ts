@@ -1,17 +1,17 @@
-import { ConcatAll, FromArrayOptions, FromArray, ContainerLike, Container, ContainerOf, Buffer, Concat, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ToArray } from "./container.mjs";
+import { ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Buffer, Concat, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ToArray } from "./container.mjs";
 import { DisposableOrTeardown } from "./disposable.mjs";
-import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
+import { SideEffect1, Function1, Factory } from "./functions.mjs";
 import { CatchError, DecodeWithCharset, ThrowIfEmpty, Using } from "./liftableContainer.mjs";
-import { Option } from "./option.mjs";
 import { CreateReactiveContainer, ReactiveContainerLike, Never } from "./reactiveContainer.mjs";
 import { ReactiveSinkLike } from "./reactiveSink.mjs";
+import { Option } from "./option.mjs";
 declare const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"];
 declare const concatAllT: ConcatAll<RunnableLike<unknown>>;
 declare const createRunnable: <T>(run: SideEffect1<ReactiveSinkLike<T>>) => RunnableLike<T>;
 declare const createT: CreateReactiveContainer<RunnableLike<unknown>>;
 declare const first: <T>() => Function1<RunnableLike<T>, Option<T>>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<RunnableLike<T>, void>;
-declare const fromArray: <T>(options?: Partial<FromArrayOptions>) => Function1<readonly T[], RunnableLike<T>>;
+declare const fromArray: FromArray<RunnableLike<unknown>, FromArrayOptions>["fromArray"];
 declare const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions>;
 declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;
 interface RunnableLike<T> extends ReactiveContainerLike {
@@ -24,29 +24,25 @@ declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike
 interface ToRunnable<C extends ContainerLike> extends Container<C> {
     toRunnable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
-declare const buffer: <T>(options?: {
-    readonly maxBufferSize?: number;
-}) => RunnableOperator<T, readonly T[]>;
+declare const buffer: Buffer<RunnableLike<unknown>>["buffer"];
 declare const bufferT: Buffer<RunnableLike<unknown>>;
-declare const catchError: <T>(onError: Function1<unknown, RunnableLike<T> | void>) => RunnableOperator<T, T>;
+declare const catchError: CatchError<RunnableLike<unknown>>["catchError"];
 declare const catchErrorT: CatchError<RunnableLike<unknown>>;
 declare const concat: Concat<RunnableLike<unknown>>["concat"];
 declare const concatT: Concat<RunnableLike<unknown>>;
-declare const decodeWithCharset: (charset?: string) => RunnableOperator<ArrayBuffer, string>;
+declare const decodeWithCharset: DecodeWithCharset<RunnableLike<unknown>>["decodeWithCharset"];
 declare const decodeWithCharsetT: DecodeWithCharset<RunnableLike<unknown>>;
-declare const distinctUntilChanged: <T>(options?: {
-    readonly equality?: Equality<T>;
-}) => RunnableOperator<T, T>;
+declare const distinctUntilChanged: DistinctUntilChanged<RunnableLike<unknown>>["distinctUntilChanged"];
 declare const distinctUntilChangedT: DistinctUntilChanged<RunnableLike<unknown>>;
-declare const everySatisfy: <T>(predicate: Predicate<T>) => RunnableOperator<T, boolean>;
+declare const everySatisfy: EverySatisfy<RunnableLike<unknown>>["everySatisfy"];
 declare const everySatisfyT: EverySatisfy<RunnableLike<unknown>>;
-declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>) => RunnableLike<T>;
+declare const generate: Generate<RunnableLike<unknown>>["generate"];
 declare const generateT: Generate<RunnableLike<unknown>>;
-declare const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T>;
+declare const keep: Keep<RunnableLike<unknown>>["keep"];
 declare const keepT: Keep<RunnableLike<unknown>>;
-declare const map: <TA, TB>(mapper: Function1<TA, TB>) => RunnableOperator<TA, TB>;
+declare const map: Map<RunnableLike<unknown>>["map"];
 declare const mapT: Map<RunnableLike<unknown>>;
-declare const never: <T>() => RunnableLike<T>;
+declare const never: Never<RunnableLike<unknown>>["never"];
 declare const neverT: Never<RunnableLike<unknown>>;
 /**
  * Returns an `RunnableLike` that forwards notifications to the provided `onNotify` function.
@@ -55,43 +51,32 @@ declare const neverT: Never<RunnableLike<unknown>>;
  */
 declare const onNotify: <T>(onNotify: SideEffect1<T>) => RunnableOperator<T, T>;
 declare const onSink: <T>(f: Factory<void | DisposableOrTeardown>) => ContainerOperator<RunnableLike<unknown>, T, T>;
-declare const pairwise: <T>() => RunnableOperator<T, [
-    Option<T>,
-    T
-]>;
+declare const pairwise: Pairwise<RunnableLike<unknown>>["pairwise"];
 declare const pairwiseT: Pairwise<RunnableLike<unknown>>;
-declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => RunnableOperator<T, TAcc>;
+declare const reduce: Reduce<RunnableLike<unknown>>["reduce"];
 declare const reduceT: Reduce<RunnableLike<unknown>>;
 declare const repeat: Repeat<RunnableLike<unknown>>["repeat"];
 declare const repeatT: Repeat<RunnableLike<unknown>>;
-declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => RunnableOperator<T, TAcc>;
+declare const scan: Scan<RunnableLike<unknown>>["scan"];
 declare const scanT: Scan<RunnableLike<unknown>>;
-declare const skipFirst: <T>(options?: {
-    readonly count?: number;
-}) => RunnableOperator<T, T>;
+declare const skipFirst: SkipFirst<RunnableLike<unknown>>["skipFirst"];
 declare const skipFirstT: SkipFirst<RunnableLike<unknown>>;
-declare const someSatisfy: <T>(predicate: Predicate<T>) => RunnableOperator<T, boolean>;
+declare const someSatisfy: SomeSatisfy<RunnableLike<unknown>>["someSatisfy"];
 declare const someSatisfyT: SomeSatisfy<RunnableLike<unknown>>;
-declare const takeFirst: <T>(options?: {
-    readonly count?: number;
-}) => RunnableOperator<T, T>;
+declare const takeFirst: TakeFirst<RunnableLike<unknown>>["takeFirst"];
 declare const takeFirstT: TakeFirst<RunnableLike<unknown>>;
-declare const takeLast: <T>(options?: {
-    readonly count?: number;
-}) => RunnableOperator<T, T>;
+declare const takeLast: TakeLast<RunnableLike<unknown>>["takeLast"];
 declare const takeLastT: TakeLast<RunnableLike<unknown>>;
-declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
-    readonly inclusive?: boolean;
-}) => RunnableOperator<T, T>;
+declare const takeWhile: TakeWhile<RunnableLike<unknown>>["takeWhile"];
 declare const takeWhileT: TakeWhile<RunnableLike<unknown>>;
-declare const throwIfEmpty: <T>(factory: Factory<unknown>) => RunnableOperator<T, T>;
+declare const throwIfEmpty: ThrowIfEmpty<RunnableLike<unknown>>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>>;
 /**
  * Accumulates all values emitted by `runnable` into an array.
  */
-declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
+declare const toArray: ToArray<RunnableLike<unknown>>["toArray"];
 declare const toArrayT: ToArray<RunnableLike<unknown>>;
-declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
+declare const toRunnable: ToRunnable<RunnableLike<unknown>>["toRunnable"];
 declare const toRunnableT: ToRunnable<RunnableLike<unknown>>;
 declare const TContainerOf: RunnableLike<unknown>;
 declare const using: Using<RunnableLike<unknown>>["using"];

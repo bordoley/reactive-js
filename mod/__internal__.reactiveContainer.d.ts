@@ -23,12 +23,12 @@ declare type ReduceSink<C extends ReactiveContainerLike> = new <T, TAcc>(delegat
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 };
-declare const createReduceOperator: <C extends ReactiveContainerLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, ReduceSink: ReduceSink<C>) => <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
+declare const createReduceOperator: <C extends ReactiveContainerLike>(m: FromArray<C, FromArrayOptions> & Lift<C>) => (ReduceSink: ReduceSink<C>) => <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
 declare type TakeLastSink<C extends ReactiveContainerLike> = new <T>(delegate: LiftOperatorIn<C, T, T, TReactive>, maxCount: number) => LiftOperatorOut<C, T, T, TReactive> & {
     readonly last: T[];
     readonly maxCount: number;
 };
-declare const createTakeLastOperator: <C extends ReactiveContainerLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeLastSink: TakeLastSink<C>) => <T>(options?: {
+declare const createTakeLastOperator: <C extends ReactiveContainerLike>(m: FromArray<C, FromArrayOptions> & Lift<C>) => (TakeLastSink: TakeLastSink<C>) => <T>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T, T>;
 declare const createFromDisposable: <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) => <T>(disposable: DisposableLike) => ContainerOf<C, T>;
@@ -77,7 +77,7 @@ declare const decorateWithScanNotify: <C extends ReactiveContainerLike>(ScanSink
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }) => void;
-declare const decorateWithReduceNotify: <C extends ReactiveContainerLike>(ReduceSink: ReduceSink<C>) => void;
+declare const decorateWithReduceNotify: <C extends ReactiveContainerLike>() => (ReduceSink: ReduceSink<C>) => void;
 declare const decorateWithEverySatisfyNotify: <C extends ReactiveContainerLike>() => (SatisfySink: SatisfySink<C>) => void;
 declare const decorateWithSomeSatisfyNotify: <C extends ReactiveContainerLike>() => (SatisfySink: SatisfySink<C>) => void;
 declare const decorateWithSkipFirstNotify: <C extends ReactiveContainerLike>(SkipFirstSink: new <T>(delegate: LiftableContainerStateOf<C, T>, skipCount: number) => LiftableContainerStateOf<C, T> & {
@@ -92,7 +92,7 @@ declare const decorateWithTakeFirstNotify: <C extends ReactiveContainerLike>(Tak
     count: number;
     readonly maxCount: number;
 }) => void;
-declare const decorateWithTakeLastNotify: <C extends ReactiveContainerLike>(TakeLastSink: TakeLastSink<C>) => void;
+declare const decorateWithTakeLastNotify: <C extends ReactiveContainerLike>() => (TakeLastSink: TakeLastSink<C>) => void;
 declare const decorateWithTakeWhileNotify: <C extends ReactiveContainerLike>(TakeWhileSink: new <T>(delegate: LiftableContainerStateOf<C, T>, predicate: Predicate<T>, inclusive: boolean) => LiftableContainerStateOf<C, T> & {
     readonly delegate: LiftableContainerStateOf<C, T>;
 } & {

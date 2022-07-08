@@ -2,7 +2,7 @@ import { TReactive, createMapOperator } from "../__internal__.liftable";
 import { decorateWithMapNotify } from "../__internal__.reactiveContainer";
 import { Map } from "../container";
 import { Function1 } from "../functions";
-import { ObservableLike, ObservableOperator } from "../observable";
+import { ObservableLike } from "../observable";
 import { ObserverLike } from "../observer";
 import { liftSynchronousT } from "./lift";
 import {
@@ -10,9 +10,7 @@ import {
   decorateNotifyWithAssertions,
 } from "./observer";
 
-export const map: <TA, TB>(
-  mapper: Function1<TA, TB>,
-) => ObservableOperator<TA, TB> = /*@__PURE__*/ (() => {
+export const map: Map<ObservableLike<unknown>>["map"] = /*@__PURE__*/ (() => {
   class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
     constructor(
       delegate: ObserverLike<TB>,

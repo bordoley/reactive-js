@@ -242,14 +242,13 @@ export { toEnumerable, toEnumerableT } from "./observable/toEnumerable";
 export { toPromise } from "./observable/toPromise";
 export { isEnumerable, isRunnable } from "./observable/observable";
 
-export const catchError: <T>(
-  onError: Function1<unknown, ObservableLike<T> | void>,
-) => ObservableOperator<T, T> = /*@__PURE__*/ decorateMap(
-  class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {},
-  decorateWithCatchErrorNotify<ObservableLike<unknown>>(),
-  decorateNotifyWithAssertions,
-  createCatchErrorOperator(liftSynchronousT),
-);
+export const catchError: CatchError<ObservableLike<unknown>>["catchError"] =
+  /*@__PURE__*/ decorateMap(
+    class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {},
+    decorateWithCatchErrorNotify<ObservableLike<unknown>>(),
+    decorateNotifyWithAssertions,
+    createCatchErrorOperator(liftSynchronousT),
+  );
 
 export const catchErrorT: CatchError<ObservableLike<unknown>> = {
   catchError,
@@ -257,9 +256,9 @@ export const catchErrorT: CatchError<ObservableLike<unknown>> = {
 
 export const fromDisposable = /*@__PURE__*/ createFromDisposable(createT);
 
-export const decodeWithCharset: (
-  charset?: string,
-) => ObservableOperator<ArrayBuffer, string> = /*@__PURE__*/ decorateMap(
+export const decodeWithCharset: DecodeWithCharset<
+  ObservableLike<unknown>
+>["decodeWithCharset"] = /*@__PURE__*/ decorateMap(
   class DecodeWithCharsetObserver extends AbstractDelegatingObserver<
     ArrayBuffer,
     string
@@ -290,9 +289,9 @@ export const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>> = {
  * @param equals Optional equality function that is used to compare
  * if an item is distinct from the previous item.
  */
-export const distinctUntilChanged: <T>(options?: {
-  readonly equality?: Equality<T>;
-}) => ObservableOperator<T, T> = /*@__PURE__*/ (() => {
+export const distinctUntilChanged: DistinctUntilChanged<
+  ObservableLike<unknown>
+>["distinctUntilChanged"] = /*@__PURE__*/ (() => {
   class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<
     T,
     T
@@ -321,9 +320,9 @@ export const distinctUntilChangedT: DistinctUntilChanged<
   distinctUntilChanged,
 };
 
-export const everySatisfy: <T>(
-  predicate: Predicate<T>,
-) => ObservableOperator<T, boolean> = /*@__PURE__*/ decorateMap(
+export const everySatisfy: EverySatisfy<
+  ObservableLike<unknown>
+>["everySatisfy"] = /*@__PURE__*/ decorateMap(
   class EverySatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
     constructor(
       delegate: ObserverLike<boolean>,
@@ -341,10 +340,10 @@ export const everySatisfyT: EverySatisfy<ObservableLike<unknown>> = {
   everySatisfy,
 };
 
-export const fromObservable = <T>(): Function1<
-  ObservableLike<T>,
-  ObservableLike<T>
-> => identity;
+export const fromObservable: FromObservable<
+  ObservableLike<unknown>
+>["fromObservable"] = <T>(): Function1<ObservableLike<T>, ObservableLike<T>> =>
+  identity;
 export const fromObservableT: FromObservable<ObservableLike<unknown>> = {
   fromObservable,
 };
@@ -398,7 +397,7 @@ export const generateT: Generate<ObservableLike<unknown>> = {
   generate,
 };
 
-export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
+export const keep: Keep<ObservableLike<unknown>>["keep"] =
   /*@__PURE__*/ (() => {
     class KeepObserver<T> extends AbstractDelegatingObserver<T, T> {
       constructor(delegate: ObserverLike<T>, readonly predicate: Predicate<T>) {
@@ -424,7 +423,7 @@ export const onSubscribe = /*@__PURE__*/ createOnSink(createT);
 export const getObserverCount = <T>(observable: MulticastObservableLike<T>) =>
   observable.observerCount;
 
-export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
+export const pairwise: Pairwise<ObservableLike<unknown>>["pairwise"] =
   /*@__PURE__*/ (() => {
     class PairwiseObserver<T> extends AbstractDelegatingObserver<
       T,
@@ -470,27 +469,21 @@ export const multicast =
     return subject;
   };
 
-export const reduce: <T, TAcc>(
-  reducer: Reducer<T, TAcc>,
-  initialValue: Factory<TAcc>,
-) => ObservableOperator<T, TAcc> = /*@__PURE__*/ (() => {
-  class ReducerObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
-    constructor(
-      delegate: ObserverLike<TAcc>,
-      readonly reducer: Reducer<T, TAcc>,
-      public acc: TAcc,
-    ) {
-      super(delegate);
-    }
-  }
-
-  decorateWithReduceNotify<ObservableLike<unknown>>(ReducerObserver);
-  decorateNotifyWithAssertions(ReducerObserver);
-  return createReduceOperator(
-    { ...fromArrayT, ...liftSynchronousT },
-    ReducerObserver,
+export const reduce: Reduce<ObservableLike<unknown>>["reduce"] =
+  /*@__PURE__*/ decorateMap(
+    class ReducerObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
+      constructor(
+        delegate: ObserverLike<TAcc>,
+        readonly reducer: Reducer<T, TAcc>,
+        public acc: TAcc,
+      ) {
+        super(delegate);
+      }
+    },
+    decorateWithReduceNotify<ObservableLike<unknown>>(),
+    decorateNotifyWithAssertions,
+    createReduceOperator({ ...fromArrayT, ...liftSynchronousT }),
   );
-})();
 
 export const reduceT: Reduce<ObservableLike<unknown>> = {
   reduce,
@@ -499,26 +492,24 @@ export const reduceT: Reduce<ObservableLike<unknown>> = {
 export const getReplay = <T>(observable: MulticastObservableLike<T>) =>
   observable.replay;
 
-export const scan: <T, TAcc>(
-  reducer: Reducer<T, TAcc>,
-  initialValue: Factory<TAcc>,
-) => ObservableOperator<T, TAcc> = /*@__PURE__*/ (() => {
-  class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
-    constructor(
-      delegate: ObserverLike<TAcc>,
-      readonly reducer: Reducer<T, TAcc>,
-      public acc: TAcc,
-    ) {
-      super(delegate);
+export const scan: Scan<ObservableLike<unknown>>["scan"] =
+  /*@__PURE__*/ (() => {
+    class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
+      constructor(
+        delegate: ObserverLike<TAcc>,
+        readonly reducer: Reducer<T, TAcc>,
+        public acc: TAcc,
+      ) {
+        super(delegate);
+      }
     }
-  }
-  decorateWithScanNotify<ObservableLike<unknown>>(ScanObserver);
-  decorateNotifyWithAssertions(ScanObserver);
-  return createScanOperator<ObservableLike<unknown>, TReactive>(
-    liftSynchronousT,
-    ScanObserver,
-  );
-})();
+    decorateWithScanNotify<ObservableLike<unknown>>(ScanObserver);
+    decorateNotifyWithAssertions(ScanObserver);
+    return createScanOperator<ObservableLike<unknown>, TReactive>(
+      liftSynchronousT,
+      ScanObserver,
+    );
+  })();
 
 export const scanT: Scan<ObservableLike<unknown>> = {
   scan,
@@ -537,7 +528,7 @@ export interface ScanAsync<C extends ContainerLike> extends Container<C> {
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-export const scanAsync =
+export const scanAsync: ScanAsync<ObservableLike<unknown>>["scanAsync"] =
   <T, TAcc>(
     scanner: AsyncReducer<T, TAcc>,
     initialValue: Factory<TAcc>,
@@ -600,43 +591,44 @@ export const share =
  *
  * @param count The number of items emitted by source that should be skipped.
  */
-export const skipFirst: <T>(options?: {
-  readonly count?: number;
-}) => ObservableOperator<T, T> = /*@__PURE__*/ (() => {
-  class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
-    count = 0;
+export const skipFirst: SkipFirst<ObservableLike<unknown>>["skipFirst"] =
+  /*@__PURE__*/ (() => {
+    class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
+      count = 0;
 
-    constructor(delegate: ObserverLike<T>, readonly skipCount: number) {
-      super(delegate);
+      constructor(delegate: ObserverLike<T>, readonly skipCount: number) {
+        super(delegate);
+      }
     }
-  }
-  decorateWithSkipFirstNotify<ObservableLike<unknown>>(SkipFirstObserver);
-  decorateNotifyWithAssertions(SkipFirstObserver);
-  return createSkipFirstOperator<ObservableLike<unknown>, TReactive>(
-    liftSynchronousT,
-    SkipFirstObserver,
-  );
-})();
+    decorateWithSkipFirstNotify<ObservableLike<unknown>>(SkipFirstObserver);
+    decorateNotifyWithAssertions(SkipFirstObserver);
+    return createSkipFirstOperator<ObservableLike<unknown>, TReactive>(
+      liftSynchronousT,
+      SkipFirstObserver,
+    );
+  })();
 
 export const skipFirstT: SkipFirst<ObservableLike<unknown>> = {
   skipFirst,
 };
 
-export const someSatisfy: <T>(
-  predicate: Predicate<T>,
-) => ObservableOperator<T, boolean> = /*@__PURE__*/ decorateMap(
-  class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
-    constructor(
-      delegate: ObserverLike<boolean>,
-      readonly predicate: Predicate<T>,
-    ) {
-      super(delegate);
-    }
-  },
-  decorateWithSomeSatisfyNotify<ObservableLike<unknown>>(),
-  decorateNotifyWithAssertions,
-  createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }),
-);
+export const someSatisfy: SomeSatisfy<ObservableLike<unknown>>["someSatisfy"] =
+  /*@__PURE__*/ decorateMap(
+    class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<
+      T,
+      boolean
+    > {
+      constructor(
+        delegate: ObserverLike<boolean>,
+        readonly predicate: Predicate<T>,
+      ) {
+        super(delegate);
+      }
+    },
+    decorateWithSomeSatisfyNotify<ObservableLike<unknown>>(),
+    decorateNotifyWithAssertions,
+    createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }),
+  );
 
 export const someSatisfyT: SomeSatisfy<ObservableLike<unknown>> = {
   someSatisfy,
@@ -654,23 +646,22 @@ export const subscribeOn =
       ),
     );
 
-export const takeFirst: <T>(options?: {
-  readonly count?: number;
-}) => ObservableOperator<T, T> = /*@__PURE__*/ (() => {
-  class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
-    count = 0;
+export const takeFirst: TakeFirst<ObservableLike<unknown>>["takeFirst"] =
+  /*@__PURE__*/ (() => {
+    class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
+      count = 0;
 
-    constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
-      super(delegate);
+      constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
+        super(delegate);
+      }
     }
-  }
-  decorateWithTakeFirstNotify<ObservableLike<unknown>>(TakeFirstObserver);
-  decorateNotifyWithAssertions(TakeFirstObserver);
-  return createTakeFirstOperator<ObservableLike<unknown>, TReactive>(
-    { ...fromArrayT, ...liftSynchronousT },
-    TakeFirstObserver,
-  );
-})();
+    decorateWithTakeFirstNotify<ObservableLike<unknown>>(TakeFirstObserver);
+    decorateNotifyWithAssertions(TakeFirstObserver);
+    return createTakeFirstOperator<ObservableLike<unknown>, TReactive>(
+      { ...fromArrayT, ...liftSynchronousT },
+      TakeFirstObserver,
+    );
+  })();
 
 export const takeFirstT: TakeFirst<ObservableLike<unknown>> = {
   takeFirst,
@@ -681,23 +672,19 @@ export const takeFirstT: TakeFirst<ObservableLike<unknown>> = {
  *
  * @param count The maximum number of values to emit.
  */
-export const takeLast: <T>(options?: {
-  readonly count?: number;
-}) => ObservableOperator<T, T> = /*@__PURE__*/ (() => {
-  class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
-    readonly last: T[] = [];
+export const takeLast: TakeLast<ObservableLike<unknown>>["takeLast"] =
+  /*@__PURE__*/ decorateMap(
+    class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
+      readonly last: T[] = [];
 
-    constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
-      super(delegate);
-    }
-  }
-  decorateWithTakeLastNotify<ObservableLike<unknown>>(TakeLastObserver);
-  decorateNotifyWithAssertions(TakeLastObserver);
-  return createTakeLastOperator(
-    { ...fromArrayT, ...liftSynchronousT },
-    TakeLastObserver,
+      constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
+        super(delegate);
+      }
+    },
+    decorateWithTakeLastNotify<ObservableLike<unknown>>(),
+    decorateNotifyWithAssertions,
+    createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }),
   );
-})();
 
 export const takeLastT: TakeLast<ObservableLike<unknown>> = {
   takeLast,
@@ -725,32 +712,30 @@ export const takeUntil = <T>(
  *
  * @param predicate The predicate function.
  */
-export const takeWhile: <T>(
-  predicate: Predicate<T>,
-  options?: { readonly inclusive?: boolean },
-) => ObservableOperator<T, T> = /*@__PURE__*/ (() => {
-  class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
-    constructor(
-      delegate: ObserverLike<T>,
-      readonly predicate: Predicate<T>,
-      readonly inclusive: boolean,
-    ) {
-      super(delegate);
+export const takeWhile: TakeWhile<ObservableLike<unknown>>["takeWhile"] =
+  /*@__PURE__*/ (() => {
+    class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
+      constructor(
+        delegate: ObserverLike<T>,
+        readonly predicate: Predicate<T>,
+        readonly inclusive: boolean,
+      ) {
+        super(delegate);
+      }
     }
-  }
 
-  decorateWithTakeWhileNotify<ObservableLike<unknown>>(TakeWhileObserver);
-  decorateNotifyWithAssertions(TakeWhileObserver);
-  return createTakeWhileOperator(liftSynchronousT, TakeWhileObserver);
-})();
+    decorateWithTakeWhileNotify<ObservableLike<unknown>>(TakeWhileObserver);
+    decorateNotifyWithAssertions(TakeWhileObserver);
+    return createTakeWhileOperator(liftSynchronousT, TakeWhileObserver);
+  })();
 
 export const takeWhileT: TakeWhile<ObservableLike<unknown>> = {
   takeWhile,
 };
 
-export const throwIfEmpty: <T>(
-  factory: Factory<unknown>,
-) => ObservableOperator<T, T> = /*@__PURE__*/ (() => {
+export const throwIfEmpty: ThrowIfEmpty<
+  ObservableLike<unknown>
+>["throwIfEmpty"] = /*@__PURE__*/ (() => {
   class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
     isEmpty = true;
   }
@@ -766,10 +751,9 @@ export const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>> = {
   throwIfEmpty,
 };
 
-export const toObservable = <T>(): Function1<
-  ObservableLike<T>,
-  ObservableLike<T>
-> => identity;
+export const toObservable: ToObservable<
+  ObservableLike<unknown>
+>["toObservable"] = () => identity;
 
 export const toObservableT: ToObservable<ObservableLike<unknown>> = {
   toObservable,

@@ -6,7 +6,10 @@ import { ReactiveSinkLike } from "../reactiveSink";
 import { RunnableLike } from "../runnable";
 import { createRunnable } from "./createRunnable";
 
-export const fromArray = /*@__PURE__*/ createFromArray<RunnableLike<unknown>>(
+export const fromArray: FromArray<
+  RunnableLike<unknown>,
+  FromArrayOptions
+>["fromArray"] = /*@__PURE__*/ createFromArray<RunnableLike<unknown>>(
   <T>(values: readonly T[], startIndex: number, endIndex: number) => {
     const count = endIndex - startIndex;
 
