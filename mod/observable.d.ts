@@ -4,9 +4,9 @@ import { Factory, Function1, Function2, Function3, Function4, Function5, Functio
 import { FromIterator, FromIterable, Using, Defer, CatchError, DecodeWithCharset, ThrowIfEmpty } from "./liftableContainer.mjs";
 import { ObserverLike } from "./observer.mjs";
 import { CreateReactiveContainer, Never, ReactiveContainerLike } from "./reactiveContainer.mjs";
-import { RunnableLike, ToRunnable } from "./runnable.mjs";
+import { RunnableLike } from "./runnable.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
-import { EnumerableLike, FromEnumerable, ToEnumerable } from "./enumerable.mjs";
+import { EnumerableLike, FromEnumerable } from "./enumerable.mjs";
 import { Option } from "./option.mjs";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: ObservableEffectMode | undefined;
@@ -522,8 +522,9 @@ declare const zipT: Zip<ObservableLike<unknown>>;
  * @param selector
  */
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ObservableOperator<TA, T>;
-declare const toEnumerable: ToEnumerable<ObservableLike<unknown>>["toEnumerable"];
-declare const toEnumerableT: ToEnumerable<ObservableLike<unknown>>;
+declare const toEnumerable: <T>() => (obs: ObservableLike<T> & {
+    readonly observableType: EnumerableObservable;
+}) => EnumerableLike<T>;
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
@@ -531,8 +532,12 @@ declare const toEnumerableT: ToEnumerable<ObservableLike<unknown>>;
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
 declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, Promise<T>>;
-declare const isEnumerable: <T>(obs: ObservableLike<T>) => obs is EnumerableObservableLike<T>;
-declare const isRunnable: <T>(obs: ObservableLike<T>) => obs is RunnableObservableLike<T>;
+declare const isEnumerable: <T>(obs: ObservableLike<T>) => obs is ObservableLike<T> & {
+    readonly observableType: EnumerableObservable;
+};
+declare const isRunnable: <T>(obs: ObservableLike<T>) => obs is ObservableLike<T> & {
+    readonly observableType: EnumerableObservable | RunnableObservable;
+};
 declare type DefaultObservable = 0;
 declare type RunnableObservable = 1;
 declare type EnumerableObservable = 2;
@@ -547,14 +552,6 @@ interface ObservableLike<T> extends ReactiveContainerLike {
     readonly TLiftableContainerState: ObserverLike<this["T"]>;
     readonly observableType: EnumerableObservable | RunnableObservable | DefaultObservable;
     sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
-}
-interface EnumerableObservableLike<T> extends ObservableLike<T> {
-    readonly TContainerOf: EnumerableObservableLike<this["T"]>;
-    readonly observableType: EnumerableObservable;
-}
-interface RunnableObservableLike<T> extends ObservableLike<T> {
-    readonly TContainerOf: RunnableObservableLike<this["T"]>;
-    readonly observableType: RunnableObservable;
 }
 interface FromObservable<C extends ContainerLike> extends Container<C> {
     fromObservable<T>(): Function1<ObservableLike<T>, ContainerOf<C, T>>;
@@ -699,7 +696,8 @@ declare const toObservable: ToObservable<ObservableLike<unknown>>["toObservable"
 declare const toObservableT: ToObservable<ObservableLike<unknown>>;
 declare const toRunnable: <T>(options?: {
     readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
-}) => Function1<ObservableLike<T>, RunnableLike<T>>;
-declare const toRunnableT: ToRunnable<ObservableLike<unknown>>;
+}) => Function1<ObservableLike<T> & {
+    readonly observableType: RunnableObservable | EnumerableObservable;
+}, RunnableLike<T>>;
 declare const TContainerOf: ObservableLike<unknown>;
-export { AsyncReducer, DefaultObservable, EnumerableObservable, EnumerableObservableLike, FromObservable, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, RunnableObservable, RunnableObservableLike, ScanAsync, Subject, TContainerOf, ThrottleMode, ToObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, catchErrorT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, publishTo, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, using, usingT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { AsyncReducer, DefaultObservable, EnumerableObservable, FromObservable, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, RunnableObservable, ScanAsync, Subject, TContainerOf, ThrottleMode, ToObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, catchErrorT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, publishTo, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toObservable, toObservableT, toPromise, toRunnable, using, usingT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };

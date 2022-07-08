@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [observable](../modules/observable.md) / EnumerableObservableLike
+[Reactive-JS](../README.md) / [runnableObservable](../modules/runnableObservable.md) / RunnableObservableLike
 
-# Interface: EnumerableObservableLike<T\>
+# Interface: RunnableObservableLike<T\>
 
-[observable](../modules/observable.md).EnumerableObservableLike
+[runnableObservable](../modules/runnableObservable.md).RunnableObservableLike
 
 ## Type parameters
 
@@ -14,20 +14,20 @@
 
 - [`ObservableLike`](observable.ObservableLike.md)<`T`\>
 
-  ↳ **`EnumerableObservableLike`**
+  ↳ **`RunnableObservableLike`**
 
 ## Table of contents
 
 ### Properties
 
-- [T](observable.EnumerableObservableLike.md#t)
-- [TContainerOf](observable.EnumerableObservableLike.md#tcontainerof)
-- [TLiftableContainerState](observable.EnumerableObservableLike.md#tliftablecontainerstate)
-- [observableType](observable.EnumerableObservableLike.md#observabletype)
+- [T](runnableObservable.RunnableObservableLike.md#t)
+- [TContainerOf](runnableObservable.RunnableObservableLike.md#tcontainerof)
+- [TLiftableContainerState](runnableObservable.RunnableObservableLike.md#tliftablecontainerstate)
+- [observableType](runnableObservable.RunnableObservableLike.md#observabletype)
 
 ### Methods
 
-- [sinkInto](observable.EnumerableObservableLike.md#sinkinto)
+- [sinkInto](runnableObservable.RunnableObservableLike.md#sinkinto)
 
 ## Properties
 
@@ -43,7 +43,7 @@ ___
 
 ### TContainerOf
 
-• `Readonly` **TContainerOf**: [`EnumerableObservableLike`](observable.EnumerableObservableLike.md)<`unknown`\>
+• `Readonly` **TContainerOf**: [`RunnableObservableLike`](runnableObservable.RunnableObservableLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -63,7 +63,7 @@ ___
 
 ### observableType
 
-• `Readonly` **observableType**: ``2``
+• `Readonly` **observableType**: ``2`` \| ``1``
 
 #### Overrides
 
