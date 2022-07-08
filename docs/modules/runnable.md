@@ -256,7 +256,7 @@ ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -273,13 +273,13 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, readonly `T`[]\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
 
 ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -295,7 +295,7 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -369,7 +369,7 @@ ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`charset?`): [`RunnableOperator`](runnable.md#runnableoperator)<`ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -379,13 +379,13 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`ArrayBuffer`, `string`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -402,13 +402,13 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### everySatisfy
 
-▸ **everySatisfy**<`T`\>(`predicate`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `boolean`\>
+▸ **everySatisfy**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 #### Type parameters
 
@@ -424,7 +424,7 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `boolean`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 
@@ -513,7 +513,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -529,7 +529,7 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -551,7 +551,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`mapper`): [`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`mapper`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -568,7 +568,7 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
@@ -636,7 +636,7 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, [[`Option`](option.md#option)<`T`\>, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, readonly [[`Option`](option.md#option)<`T`\>, `T`]\>
 
 #### Type parameters
 
@@ -646,13 +646,13 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, [[`Option`](option.md#option)<`T`\>, `T`]\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, readonly [[`Option`](option.md#option)<`T`\>, `T`]\>
 
 ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -670,7 +670,7 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `TAcc`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
@@ -728,7 +728,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -741,18 +741,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `TAcc`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -769,13 +769,13 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### someSatisfy
 
-▸ **someSatisfy**<`T`\>(`predicate`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `boolean`\>
+▸ **someSatisfy**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 #### Type parameters
 
@@ -791,13 +791,13 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `boolean`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -814,13 +814,13 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -837,13 +837,13 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -861,13 +861,13 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### throwIfEmpty
 
-▸ **throwIfEmpty**<`T`\>(`factory`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+▸ **throwIfEmpty**<`T`\>(`factory`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -883,7 +883,7 @@ ___
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

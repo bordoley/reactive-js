@@ -1031,7 +1031,7 @@ ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1047,7 +1047,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -1326,7 +1326,7 @@ ___
 
 ### createObservable
 
-▸ **createObservable**<`T`\>(`f`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+▸ **createObservable**<`T`\>(`onSink`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -1338,7 +1338,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/observer.ObserverLike.md)<`T`\>\> |
+| `onSink` | (`sink`: [`ObserverLike`](../interfaces/observer.ObserverLike.md)<`T`\>) => `void` |
 
 #### Returns
 
@@ -1348,7 +1348,7 @@ ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`charset?`): [`ObservableOperator`](observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -1358,7 +1358,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
 
 ___
 
@@ -1406,7 +1406,7 @@ ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns an `ObservableLike` that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -1426,13 +1426,13 @@ are distinct by comparison from the previous item.
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### everySatisfy
 
-▸ **everySatisfy**<`T`\>(`predicate`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `boolean`\>
+▸ **everySatisfy**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 #### Type parameters
 
@@ -1448,7 +1448,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `boolean`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 
@@ -2241,7 +2241,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -2257,13 +2257,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`mapper`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`mapper`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2280,7 +2280,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
@@ -2474,7 +2474,7 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ObservableOperator`](observable.md#observableoperator)<`T`, [[`Option`](option.md#option)<`T`\>, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, readonly [[`Option`](option.md#option)<`T`\>, `T`]\>
 
 #### Type parameters
 
@@ -2484,7 +2484,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, [[`Option`](option.md#option)<`T`\>, `T`]\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, readonly [[`Option`](option.md#option)<`T`\>, `T`]\>
 
 ___
 
@@ -2534,7 +2534,7 @@ ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -2552,7 +2552,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `TAcc`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
@@ -2657,7 +2657,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -2670,18 +2670,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `TAcc`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
 ### scanAsync
 
-▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `TAcc`\>
+▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 Returns the `ObservableLike` that applies an asynchronous accumulator function
 over the source, and emits each intermediate result.
@@ -2702,7 +2702,7 @@ over the source, and emits each intermediate result.
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `TAcc`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
@@ -2736,7 +2736,7 @@ ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns an `ObservableLike` that skips the first count items emitted by the source.
 
@@ -2755,13 +2755,13 @@ Returns an `ObservableLike` that skips the first count items emitted by the sour
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### someSatisfy
 
-▸ **someSatisfy**<`T`\>(`predicate`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `boolean`\>
+▸ **someSatisfy**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 #### Type parameters
 
@@ -2777,7 +2777,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `boolean`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 
@@ -2831,7 +2831,7 @@ ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`ObservableOperator`](observable.md#observableoperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
 
 Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
 values only from the most recent source.
@@ -2842,15 +2842,21 @@ values only from the most recent source.
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<`Record`<`string`, `never`\>\> |
+
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -2867,13 +2873,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
 
@@ -2892,7 +2898,7 @@ Returns an `ObservableLike` that only emits the last `count` items emitted by th
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -2920,7 +2926,7 @@ ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns an `ObservableLike` which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -2942,7 +2948,7 @@ this predicate is not satisfied.
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -2997,7 +3003,7 @@ ___
 
 ### throwIfEmpty
 
-▸ **throwIfEmpty**<`T`\>(`factory`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+▸ **throwIfEmpty**<`T`\>(`factory`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -3013,7 +3019,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

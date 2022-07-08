@@ -56,7 +56,10 @@ const switchAllInstance = /*@__PURE__*/ lift(operator);
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.
  */
-export const switchAll = <T>(): ObservableOperator<ObservableLike<T>, T> =>
+export const switchAll: ConcatAll<
+  ObservableLike<unknown>,
+  Record<string, never>
+>["concatAll"] = <T>() =>
   switchAllInstance as ObservableOperator<ObservableLike<T>, T>;
 
 export const switchAllT: ConcatAll<
