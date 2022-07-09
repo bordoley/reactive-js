@@ -15,9 +15,7 @@ import {
   Zip,
 } from "./container";
 import {
-  EnumerableObservable,
-  ObservableLike,
-  RunnableObservable,
+  RunnableObservableLike,
   concatAll as concatAllObs,
   concat as concatObs,
   distinctUntilChanged as distinctUntilChangedObs,
@@ -36,10 +34,7 @@ import {
 } from "./observable";
 import { ToRunnable } from "./runnable";
 
-export interface RunnableObservableLike<T> extends ObservableLike<T> {
-  readonly TContainerOf: RunnableObservableLike<this["T"]>;
-  readonly observableType: RunnableObservable | EnumerableObservable;
-}
+export { RunnableObservableLike } from "./observable";
 
 export const concat: Concat<RunnableObservableLike<unknown>>["concat"] =
   concatObs as Concat<RunnableObservableLike<unknown>>["concat"];
