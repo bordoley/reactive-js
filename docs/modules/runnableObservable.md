@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-### Interfaces
+### References
 
-- [RunnableObservableLike](../interfaces/runnableObservable.RunnableObservableLike.md)
+- [RunnableObservableLike](runnableObservable.md#runnableobservablelike)
 
 ### Variables
 
@@ -44,101 +44,107 @@
 - [toRunnable](runnableObservable.md#torunnable)
 - [zip](runnableObservable.md#zip)
 
+## References
+
+### RunnableObservableLike
+
+Re-exports [RunnableObservableLike](../interfaces/observable.RunnableObservableLike.md)
+
 ## Variables
 
 ### concatAllT
 
-• `Const` **concatAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **concatAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### concatT
 
-• `Const` **concatT**: [`Concat`](../interfaces/container.Concat.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **concatT**: [`Concat`](../interfaces/container.Concat.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### distinctUntilChangedT
 
-• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](../interfaces/container.DistinctUntilChanged.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](../interfaces/container.DistinctUntilChanged.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### fromArrayT
 
-• `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, { `delay`: `number` ; `delayStart`: `boolean` ; `endIndex`: `number` ; `startIndex`: `number`  }\>
+• `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, { `delay`: `number` ; `delayStart`: `boolean` ; `endIndex`: `number` ; `startIndex`: `number`  }\>
 
 ___
 
 ### generateT
 
-• `Const` **generateT**: [`Generate`](../interfaces/container.Generate.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **generateT**: [`Generate`](../interfaces/container.Generate.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### keepT
 
-• `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### mapT
 
-• `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### repeatT
 
-• `Const` **repeatT**: [`Repeat`](../interfaces/container.Repeat.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **repeatT**: [`Repeat`](../interfaces/container.Repeat.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### scanT
 
-• `Const` **scanT**: [`Scan`](../interfaces/container.Scan.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **scanT**: [`Scan`](../interfaces/container.Scan.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### skipFirstT
 
-• `Const` **skipFirstT**: [`SkipFirst`](../interfaces/container.SkipFirst.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **skipFirstT**: [`SkipFirst`](../interfaces/container.SkipFirst.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### takeFirstT
 
-• `Const` **takeFirstT**: [`TakeFirst`](../interfaces/container.TakeFirst.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **takeFirstT**: [`TakeFirst`](../interfaces/container.TakeFirst.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### takeLastT
 
-• `Const` **takeLastT**: [`TakeLast`](../interfaces/container.TakeLast.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **takeLastT**: [`TakeLast`](../interfaces/container.TakeLast.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### takeWhileT
 
-• `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### toRunnableT
 
-• `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### zipT
 
-• `Const` **zipT**: [`Zip`](../interfaces/container.Zip.md)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>\>
+• `Const` **zipT**: [`Zip`](../interfaces/container.Zip.md)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>\>
 
 ## Functions
 
 ### concat
 
-▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>
+▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -150,19 +156,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\> |
-| `snd` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\> |
-| `...tail` | readonly [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>[] |
+| `fst` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\> |
+| `snd` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>[] |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>
 
 ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -178,13 +184,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -201,13 +207,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### fromArray
 
-▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>\>
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -223,13 +229,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>\>
 
 ___
 
 ### generate
 
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -246,13 +252,13 @@ ___
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -268,13 +274,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`mapper`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`mapper`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -291,13 +297,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -313,9 +319,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -331,9 +337,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -343,13 +349,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -367,13 +373,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -390,13 +396,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -413,13 +419,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -436,13 +442,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -460,13 +466,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### toRunnable
 
-▸ **toRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+▸ **toRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -476,13 +482,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
 
 ___
 
 ### zip
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -495,14 +501,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TA`\> |
-| `b` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TB`\> |
+| `a` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TB`\> |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`]\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -516,15 +522,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TA`\> |
-| `b` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TB`\> |
-| `c` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TC`\> |
+| `a` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TC`\> |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -539,16 +545,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TA`\> |
-| `b` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TB`\> |
-| `c` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TC`\> |
-| `d` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TD`\> |
+| `a` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TD`\> |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -564,17 +570,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TA`\> |
-| `b` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TB`\> |
-| `c` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TC`\> |
-| `d` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TD`\> |
-| `e` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TE`\> |
+| `a` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TE`\> |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -591,18 +597,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TA`\> |
-| `b` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TB`\> |
-| `c` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TC`\> |
-| `d` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TD`\> |
-| `e` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TE`\> |
-| `f` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TF`\> |
+| `a` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TE`\> |
+| `f` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TF`\> |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -620,19 +626,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TA`\> |
-| `b` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TB`\> |
-| `c` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TC`\> |
-| `d` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TD`\> |
-| `e` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TE`\> |
-| `f` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TF`\> |
-| `g` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TG`\> |
+| `a` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TE`\> |
+| `f` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TF`\> |
+| `g` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TG`\> |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -651,20 +657,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TA`\> |
-| `b` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TB`\> |
-| `c` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TC`\> |
-| `d` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TD`\> |
-| `e` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TE`\> |
-| `f` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TF`\> |
-| `g` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TG`\> |
-| `h` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TH`\> |
+| `a` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TE`\> |
+| `f` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TF`\> |
+| `g` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TG`\> |
+| `h` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TH`\> |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -684,21 +690,21 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TA`\> |
-| `b` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TB`\> |
-| `c` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TC`\> |
-| `d` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TD`\> |
-| `e` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TE`\> |
-| `f` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TF`\> |
-| `g` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TG`\> |
-| `h` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TH`\> |
-| `i` | [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`TI`\> |
+| `a` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TE`\> |
+| `f` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TF`\> |
+| `g` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TG`\> |
+| `h` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TH`\> |
+| `i` | [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`TI`\> |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
-▸ **zip**<`T`\>(...`enumerables`): [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly `T`[]\>
+▸ **zip**<`T`\>(...`enumerables`): [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly `T`[]\>
 
 #### Type parameters
 
@@ -710,8 +716,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `...enumerables` | readonly [`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<`T`\>[] |
+| `...enumerables` | readonly [`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<`T`\>[] |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/runnableObservable.RunnableObservableLike.md)<readonly `T`[]\>
+[`RunnableObservableLike`](../interfaces/observable.RunnableObservableLike.md)<readonly `T`[]\>

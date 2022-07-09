@@ -135,6 +135,16 @@ export interface ObservableLike<T> extends ReactiveContainerLike {
   sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
 }
 
+export interface RunnableObservableLike<T> extends ObservableLike<T> {
+  readonly TContainerOf: RunnableObservableLike<this["T"]>;
+  readonly observableType: RunnableObservable | EnumerableObservable;
+}
+
+export interface EnumerableObservableLike<T> extends RunnableObservableLike<T> {
+  readonly TContainerOf: EnumerableObservableLike<this["T"]>;
+  readonly observableType: EnumerableObservable;
+}
+
 export interface FromObservable<C extends ContainerLike> extends Container<C> {
   fromObservable<T>(): Function1<ObservableLike<T>, ContainerOf<C, T>>;
 }

@@ -553,6 +553,14 @@ interface ObservableLike<T> extends ReactiveContainerLike {
     readonly observableType: EnumerableObservable | RunnableObservable | DefaultObservable;
     sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
 }
+interface RunnableObservableLike<T> extends ObservableLike<T> {
+    readonly TContainerOf: RunnableObservableLike<this["T"]>;
+    readonly observableType: RunnableObservable | EnumerableObservable;
+}
+interface EnumerableObservableLike<T> extends RunnableObservableLike<T> {
+    readonly TContainerOf: EnumerableObservableLike<this["T"]>;
+    readonly observableType: EnumerableObservable;
+}
 interface FromObservable<C extends ContainerLike> extends Container<C> {
     fromObservable<T>(): Function1<ObservableLike<T>, ContainerOf<C, T>>;
 }
@@ -700,4 +708,4 @@ declare const toRunnable: <T>(options?: {
     readonly observableType: RunnableObservable | EnumerableObservable;
 }, RunnableLike<T>>;
 declare const TContainerOf: ObservableLike<unknown>;
-export { AsyncReducer, DefaultObservable, EnumerableObservable, FromObservable, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, RunnableObservable, ScanAsync, Subject, TContainerOf, ThrottleMode, ToObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, catchErrorT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, publishTo, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toObservable, toObservableT, toPromise, toRunnable, using, usingT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { AsyncReducer, DefaultObservable, EnumerableObservable, EnumerableObservableLike, FromObservable, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, RunnableObservable, RunnableObservableLike, ScanAsync, Subject, TContainerOf, ThrottleMode, ToObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, catchErrorT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, publishTo, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toObservable, toObservableT, toPromise, toRunnable, using, usingT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };

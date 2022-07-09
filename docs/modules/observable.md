@@ -10,9 +10,11 @@
 
 ### Interfaces
 
+- [EnumerableObservableLike](../interfaces/observable.EnumerableObservableLike.md)
 - [FromObservable](../interfaces/observable.FromObservable.md)
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
+- [RunnableObservableLike](../interfaces/observable.RunnableObservableLike.md)
 - [ScanAsync](../interfaces/observable.ScanAsync.md)
 - [ToObservable](../interfaces/observable.ToObservable.md)
 

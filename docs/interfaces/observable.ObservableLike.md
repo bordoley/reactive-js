@@ -18,11 +18,9 @@ The source of notifications which notifies a `ObserverLike` instance.
 
   ↳ **`ObservableLike`**
 
-  ↳↳ [`EnumerableObservableLike`](enumerableObservable.EnumerableObservableLike.md)
-
   ↳↳ [`MulticastObservableLike`](observable.MulticastObservableLike.md)
 
-  ↳↳ [`RunnableObservableLike`](runnableObservable.RunnableObservableLike.md)
+  ↳↳ [`RunnableObservableLike`](observable.RunnableObservableLike.md)
 
 ## Table of contents
 
@@ -83,8 +81,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`ObservableLike`](observable.ObservableLike.md)<[`T`](enumerableObservable.EnumerableObservableLike.md#t)\> |
-| `sink` | [`ObserverLike`](observer.ObserverLike.md)<[`T`](enumerableObservable.EnumerableObservableLike.md#t)\> |
+| `this` | [`ObservableLike`](observable.ObservableLike.md)<[`T`](flowable.FlowableStreamLike.md#t)\> |
+| `sink` | [`ObserverLike`](observer.ObserverLike.md)<[`T`](flowable.FlowableStreamLike.md#t)\> |
 
 #### Returns
 

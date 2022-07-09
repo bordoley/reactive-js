@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-### Interfaces
+### References
 
-- [EnumerableObservableLike](../interfaces/enumerableObservable.EnumerableObservableLike.md)
+- [EnumerableObservableLike](enumerableObservable.md#enumerableobservablelike)
 
 ### Variables
 
@@ -18,23 +18,29 @@
 - [toEnumerable](enumerableObservable.md#toenumerable)
 - [toRunnable](enumerableObservable.md#torunnable)
 
+## References
+
+### EnumerableObservableLike
+
+Re-exports [EnumerableObservableLike](../interfaces/observable.EnumerableObservableLike.md)
+
 ## Variables
 
 ### toEnumerableT
 
-• `Const` **toEnumerableT**: [`ToEnumerable`](../interfaces/enumerable.ToEnumerable.md)<[`EnumerableObservableLike`](../interfaces/enumerableObservable.EnumerableObservableLike.md)<`unknown`\>\>
+• `Const` **toEnumerableT**: [`ToEnumerable`](../interfaces/enumerable.ToEnumerable.md)<[`EnumerableObservableLike`](../interfaces/observable.EnumerableObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### toRunnableT
 
-• `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`EnumerableObservableLike`](../interfaces/enumerableObservable.EnumerableObservableLike.md)<`unknown`\>\>
+• `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`EnumerableObservableLike`](../interfaces/observable.EnumerableObservableLike.md)<`unknown`\>\>
 
 ## Functions
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/enumerableObservable.EnumerableObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/observable.EnumerableObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -44,13 +50,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/enumerableObservable.EnumerableObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/observable.EnumerableObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
 
 ___
 
 ### toRunnable
 
-▸ **toRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/enumerableObservable.EnumerableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+▸ **toRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/observable.EnumerableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -60,4 +66,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/enumerableObservable.EnumerableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/observable.EnumerableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>

@@ -1,16 +1,12 @@
 import { ToEnumerable } from "./enumerable";
 import {
-  EnumerableObservable,
-  ObservableLike,
+  EnumerableObservableLike,
   toEnumerable as toEnumerableObs,
   toRunnable as toRunnableObs,
 } from "./observable";
 import { ToRunnable } from "./runnable";
 
-export interface EnumerableObservableLike<T> extends ObservableLike<T> {
-  readonly TContainerOf: EnumerableObservableLike<this["T"]>;
-  readonly observableType: EnumerableObservable;
-}
+export { EnumerableObservableLike } from "./observable";
 
 export const toEnumerable: ToEnumerable<
   EnumerableObservableLike<unknown>
