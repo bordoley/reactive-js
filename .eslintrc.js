@@ -14,6 +14,7 @@ module.exports = {
     "node_modules",
     "rollup.config.js",
     "scripts",
+    "old_src",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
