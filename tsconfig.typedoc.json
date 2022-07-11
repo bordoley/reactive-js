@@ -3,7 +3,8 @@
   "compilerOptions": {
     "isolatedModules": true,
     "noEmit": true,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "rootDir": "src"
   },
-  "include": ["./packages/core/*"]
+  "include": ["./packages/core/**/*"]
 }

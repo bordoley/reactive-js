@@ -4,16 +4,6 @@
 
 [container](../modules/container.md).ContainerLike
 
-## Hierarchy
-
-- **`ContainerLike`**
-
-  ↳ [`FlowableLike`](flowable.FlowableLike.md)
-
-  ↳ [`LiftableContainerLike`](liftableContainer.LiftableContainerLike.md)
-
-  ↳ [`SequenceLike`](sequence.SequenceLike.md)
-
 ## Table of contents
 
 ### Properties

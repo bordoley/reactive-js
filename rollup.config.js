@@ -1,18 +1,22 @@
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import fs from "fs";
-import * as ts from "typescript";
+import ts from "typescript";
 import path from "path";
 
 const output = {
   mod: {
     dir: "./mod",
     hoistTransitiveImports: false,
+    preserveModules: true,
+    preserveModulesRoot: "src",
   },
   packages: {
     core: {
       dir: "./packages/core",
       hoistTransitiveImports: false,
+      preserveModules: true,
+      preserveModulesRoot: "src",
     },
   },
 };
@@ -20,8 +24,11 @@ const output = {
 const addDTSReferencesToMJSFilesForDeno = () => ({
   name: "addDTSReferencesToMJSFilesForDeno",
   renderChunk(code, info) {
-    const dts = "./" + info.fileName.replace(/mjs$/, "d.ts");
-    return info.isEntry ? `/// <reference types="${dts}" />\n` + code : code;
+    return info.isEntry
+      ? `/// <reference types="${
+          "./" + path.parse(info.fileName).name + ".d.ts"
+        }" />\n` + code
+      : code;
   },
 });
 
@@ -80,18 +87,34 @@ const transformDTSImportsForDeno = () => {
   };
 };
 
-const allModules = fs
-  .readdirSync("./src")
+const getFileList = dirName => {
+  let files = [];
+  const items = fs.readdirSync(dirName, { withFileTypes: true });
+
+  for (const item of items) {
+    if (item.isDirectory()) {
+      files = [...files, ...getFileList(`${dirName}/${item.name}`)];
+    } else {
+      files.push(`${dirName}/${item.name}`);
+    }
+  }
+
+  return files;
+};
+
+const allModules = getFileList("./src")
   .filter(file => file.endsWith(".ts"))
   .map(file => file.replace(".ts", ""));
 
 const external = ["stream", "react", "scheduler", "fs", "zlib"];
 
 const makeInput = modules => ({
-  src: modules.map(m => `./src/${m}.ts`),
+  src: modules.map(m => `${m}.ts`),
   // Resolve absolute path to work around oddness in rollup-plugin-dts
   // https://github.com/Swatinem/rollup-plugin-dts/blob/ced8c9d5aef7a5f65f9decfc7cc1d2ef46226bc8/src/index.ts#L66
-  "build-types": modules.map(m => path.resolve(`./build-types/${m}.d.ts`)),
+  "build-types": modules
+    .map(file => file.replace("./src", "./build-types") + ".d.ts")
+    .map(m => path.resolve(m)),
 });
 
 const makeCoreNPMPackage = () => {
@@ -133,6 +156,8 @@ const makeCoreNPMPackage = () => {
         {
           ...output.packages.core,
           format: "esm",
+          preserveModulesRoot: "build-types",
+          entryFileNames: "[name].d.ts",
         },
       ],
       plugins: [dts()],
@@ -169,7 +194,9 @@ const makeModules = () => {
       output: [
         {
           ...output.mod,
+          preserveModulesRoot: "build-types",
           format: "esm",
+          entryFileNames: "[name].d.ts",
           plugins: [transformDTSImportsForDeno()],
         },
       ],
