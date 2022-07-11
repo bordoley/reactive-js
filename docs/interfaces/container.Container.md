@@ -56,38 +56,6 @@
 
   ↳ [`Zip`](container.Zip.md)
 
-  ↳ [`FromEnumerable`](enumerable.FromEnumerable.md)
-
-  ↳ [`ToEnumerable`](enumerable.ToEnumerable.md)
-
-  ↳ [`CreateInteractiveContainer`](interactiveContainer.CreateInteractiveContainer.md)
-
-  ↳ [`CatchError`](liftableContainer.CatchError.md)
-
-  ↳ [`DecodeWithCharset`](liftableContainer.DecodeWithCharset.md)
-
-  ↳ [`Defer`](liftableContainer.Defer.md)
-
-  ↳ [`FromIterable`](liftableContainer.FromIterable.md)
-
-  ↳ [`FromIterator`](liftableContainer.FromIterator.md)
-
-  ↳ [`ThrowIfEmpty`](liftableContainer.ThrowIfEmpty.md)
-
-  ↳ [`Using`](liftableContainer.Using.md)
-
-  ↳ [`FromObservable`](observable.FromObservable.md)
-
-  ↳ [`ScanAsync`](observable.ScanAsync.md)
-
-  ↳ [`ToObservable`](observable.ToObservable.md)
-
-  ↳ [`CreateReactiveContainer`](reactiveContainer.CreateReactiveContainer.md)
-
-  ↳ [`Never`](reactiveContainer.Never.md)
-
-  ↳ [`ToRunnable`](runnable.ToRunnable.md)
-
 ## Table of contents
 
 ### Properties

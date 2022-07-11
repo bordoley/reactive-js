@@ -14,7 +14,6 @@
 
 ### Functions
 
-- [getOrDefault](option.md#getordefault)
 - [isNone](option.md#isnone)
 - [isSome](option.md#issome)
 
@@ -41,40 +40,6 @@ Represents an unboxed value of type T or undefined.
 An alias for undefined.
 
 ## Functions
-
-### getOrDefault
-
-▸ **getOrDefault**<`T`\>(`v`): (`option`: [`Option`](option.md#option)<`T`\>) => `T`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | `T` |
-
-#### Returns
-
-`fn`
-
-▸ (`option`): `T`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `option` | [`Option`](option.md#option)<`T`\> |
-
-##### Returns
-
-`T`
-
-___
 
 ### isNone
 
