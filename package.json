@@ -4,7 +4,7 @@
   "scripts": {
     "build": "yarn lint && yarn format && yarn clean && yarn build-types && rollup -c rollup.config.js && yarn pkg && yarn docs",
     "build-types": "tsc -p tsconfig.build-types.json",
-    "clean": "rm -rf ./build-types ./mod ./docs ./packages/core/README.md ./packages/core/**/*.js ./packages/core/**/*.ts ./packages/core/**/*.mjs",
+    "clean": "rm -rf ./build-types ./mod ./docs ./packages/core/README.md ./packages/core/*.js ./packages/core/**/*.js ./packages/core/*.ts ./packages/core/**/*.ts ./packages/core/*.mjs ./packages/core/**/*.mjs",
     "docs": "typedoc",
     "bootstrap": "lerna bootstrap",
     "deno-install": "curl -fsSL https://deno.land/x/install/install.sh | sh",
