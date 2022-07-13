@@ -3,20 +3,17 @@ import dts from "rollup-plugin-dts";
 import fs from "fs";
 import ts from "typescript";
 import path from "path";
+import { cwd } from "process";
 
 const output = {
   mod: {
     dir: "./mod",
     hoistTransitiveImports: false,
-    preserveModules: true,
-    preserveModulesRoot: "src",
   },
   packages: {
     core: {
       dir: "./packages/core",
       hoistTransitiveImports: false,
-      preserveModules: true,
-      preserveModulesRoot: "src",
     },
   },
 };
@@ -104,7 +101,10 @@ const getFileList = dirName => {
 
 const allModules = getFileList("./src")
   .filter(file => file.endsWith(".ts"))
+  .filter(file => !file.includes("__private__"))
   .map(file => file.replace(".ts", ""));
+
+console.log(allModules);
 
 const external = ["stream", "react", "scheduler", "fs", "zlib"];
 
@@ -132,13 +132,19 @@ const makeCoreNPMPackage = () => {
         {
           ...output.packages.core,
           chunkFileNames: "[name]-[hash].mjs",
-          entryFileNames: "[name].mjs",
+          entryFileNames: x =>
+            path
+              .relative(cwd() + "/src/", x.facadeModuleId)
+              .replace(".ts", ".mjs"),
           format: "esm",
         },
         {
           ...output.packages.core,
           chunkFileNames: "[name]-[hash].js",
-          entryFileNames: "[name].js",
+          entryFileNames: x =>
+            path
+              .relative(cwd() + "/src/", x.facadeModuleId)
+              .replace(".ts", ".js"),
           format: "cjs",
         },
       ],
@@ -157,7 +163,8 @@ const makeCoreNPMPackage = () => {
           ...output.packages.core,
           format: "esm",
           preserveModulesRoot: "build-types",
-          entryFileNames: "[name].d.ts",
+          entryFileNames: x =>
+            path.relative(cwd() + "/build-types/", x.facadeModuleId),
         },
       ],
       plugins: [dts()],
@@ -176,7 +183,10 @@ const makeModules = () => {
         {
           ...output.mod,
           chunkFileNames: "[name]-[hash].mjs",
-          entryFileNames: "[name].mjs",
+          entryFileNames: x =>
+            path
+              .relative(cwd() + "/src/", x.facadeModuleId)
+              .replace(".ts", ".mjs"),
           format: "esm",
           plugins: [addDTSReferencesToMJSFilesForDeno()],
         },
@@ -194,9 +204,9 @@ const makeModules = () => {
       output: [
         {
           ...output.mod,
-          preserveModulesRoot: "build-types",
           format: "esm",
-          entryFileNames: "[name].d.ts",
+          entryFileNames: x =>
+            path.relative(cwd() + "/build-types/", x.facadeModuleId),
           plugins: [transformDTSImportsForDeno()],
         },
       ],
