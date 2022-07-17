@@ -1,4 +1,13 @@
-import { mixinDisposable } from "../__internal__/util/DisposableLike";
+import {
+  DisposableLike_add,
+  DisposableLike_dispose,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  addDisposableOrTeardown,
+  dispose,
+  getError,
+  mixinDisposable,
+} from "../__internal__/util/DisposableLike";
 import { Option, isNone, isSome, none } from "./Option";
 import {
   Factory,
@@ -16,11 +25,6 @@ export type Error = {
 };
 
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
-
-export const DisposableLike_add = Symbol("DisposableLike_add");
-export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-export const DisposableLike_error = Symbol("DisposableLike_error");
-export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -55,32 +59,6 @@ export interface DisposableLike {
   [DisposableLike_dispose](error?: Error): void;
 }
 
-export const getError = (disposable: {
-  [DisposableLike_error]: Option<Error>;
-}): Option<Error> => disposable[DisposableLike_error];
-
-export const isDisposed = (disposable: {
-  [DisposableLike_isDisposed]: boolean;
-}): boolean => disposable[DisposableLike_isDisposed];
-
-/**
- * Dispose `disposable` with an optional error.
- */
-export const dispose =
-  <T extends DisposableLike>(e?: Error): Identity<T> =>
-  disposable => {
-    disposable[DisposableLike_dispose](e);
-    return disposable;
-  };
-
-const addDisposableOrTeardown = (
-  parent: DisposableLike,
-  child: DisposableOrTeardown,
-  ignoreChildErrors = false,
-) => {
-  parent[DisposableLike_add](child, ignoreChildErrors);
-};
-
 export const bindTo =
   <T extends DisposableLike>(child: DisposableLike): Identity<T> =>
   (parent: T): T => {
@@ -89,7 +67,7 @@ export const bindTo =
     return parent;
   };
 
-  export const add =
+export const add =
   <T extends DisposableLike>(child: DisposableLike) =>
   (parent: T): T => {
     addDisposableOrTeardown(parent, child);
@@ -194,3 +172,13 @@ export const create: Factory<DisposableLike> = /*@__PURE__*/ pipe(
   mixinDisposable(),
   instanceFactory(),
 );
+
+export {
+  dispose,
+  getError,
+  isDisposed,
+  DisposableLike_add,
+  DisposableLike_dispose,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+} from "../__internal__/util/DisposableLike";

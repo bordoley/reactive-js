@@ -1,6 +1,7 @@
 /// <reference types="./scheduling.d.ts" />
 import { getDelay } from './__internal__/optionalArgs.mjs';
-import { h as create, b as addTo, f as onDisposed, d as dispose, a as addIgnoringChildErrors, i as isDisposed, m as mixinDisposable } from './DisposableLike-ef44e42b.mjs';
+import { dispose, isDisposed, mixinDisposable } from './__internal__/util/DisposableLike.mjs';
+import { create, addTo, onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';
 import { pipe, instanceFactory } from './util/functions.mjs';
 import { runContinuation } from './scheduling/SchedulerImplementationLike.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, isInContinuation, SchedulerLike_requestYield, SchedulerLike_schedule } from './scheduling/SchedulerLike.mjs';
