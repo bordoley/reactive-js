@@ -6,12 +6,12 @@ import { __DENO__ } from './env.mjs';
 const DescribeType = 1;
 const TestType = 2;
 const TestAsyncType = 3;
-const describeTest = (name, ...tests) => ({
+const createDescribe = (name, ...tests) => ({
     type: DescribeType,
     name,
     tests,
 });
-const test = (name, f) => ({
+const createTest = (name, f) => ({
     type: TestType,
     name,
     f: (ctx) => () => {
@@ -143,8 +143,9 @@ const createTests = (testGroup, parents) => {
 };
 const runTests = (testGroups) => {
     for (const test of testGroups) {
+        console.log(test.name);
         createTests(test, []);
     }
 };
 
-export { DescribeType, TestAsyncType, TestType, describeTest as describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, test, testAsync };
+export { DescribeType, TestAsyncType, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, createTest as test, testAsync };

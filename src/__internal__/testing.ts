@@ -36,15 +36,15 @@ export type TestAsync = {
 
 export type TestGroup = Describe | Test | TestAsync;
 
-const describeTest = (name: string, ...tests: TestGroup[]): Describe => ({
+const createDescribe = (name: string, ...tests: TestGroup[]): Describe => ({
   type: DescribeType,
   name,
   tests,
 });
 
-export { describeTest as describe };
+export { createDescribe as describe };
 
-export const test = (name: string, f: SideEffect): Test => ({
+const createTest = (name: string, f: SideEffect): Test => ({
   type: TestType,
   name,
   f: (ctx: string) => () => {
@@ -52,6 +52,8 @@ export const test = (name: string, f: SideEffect): Test => ({
     f();
   },
 });
+
+export { createTest as test };
 
 export const testAsync = (
   name: string,
@@ -214,6 +216,7 @@ const createTests = (testGroup: TestGroup, parents: readonly string[]) => {
 
 export const runTests = (testGroups: TestGroup[]) => {
   for (const test of testGroups) {
+    console.log(test.name);
     createTests(test, []);
   }
 };

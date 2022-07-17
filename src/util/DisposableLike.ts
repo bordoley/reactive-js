@@ -89,7 +89,7 @@ export const bindTo =
     return parent;
   };
 
-export const add =
+  export const add =
   <T extends DisposableLike>(child: DisposableLike) =>
   (parent: T): T => {
     addDisposableOrTeardown(parent, child);
