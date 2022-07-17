@@ -2,14 +2,14 @@
 import { isNone, isSome } from '../../util/Option.mjs';
 import { pipe, newInstance } from '../../util/functions.mjs';
 import { MutableRefLike_current } from './MutableRefLike.mjs';
-import { decorateProperty, decorateMethod, decorateGetter } from './mixins.mjs';
+import { addProperty, addMethod, addGetter } from './mixins.mjs';
 
 const DisposableLike_add = Symbol("DisposableLike_add");
 const DisposableLike_dispose = Symbol("DisposableLike_dispose");
 const DisposableLike_error = Symbol("DisposableLike_error");
 const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 const DisposableRefLike_private_current = Symbol("DisposableRefLike_private_current");
-const mixinSerialDisposable = (defaultValue) => decorateProperty(MutableRefLike_current, {
+const mixinSerialDisposable = (defaultValue) => addProperty(MutableRefLike_current, {
     get: function () {
         let current = this[DisposableRefLike_private_current];
         if (isNone(current)) {
@@ -28,16 +28,16 @@ const mixinSerialDisposable = (defaultValue) => decorateProperty(MutableRefLike_
         }
     },
 });
-const mixinDelegatingDisposable = (getDelegate) => (Constructor) => pipe(Constructor, decorateMethod(DisposableLike_add, function (disposable, ignoreChildErrors) {
+const mixinDelegatingDisposable = (getDelegate) => (Constructor) => pipe(Constructor, addMethod(DisposableLike_add, function (disposable, ignoreChildErrors) {
     const delegate = getDelegate(this);
     delegate[DisposableLike_add](disposable, ignoreChildErrors);
-}), decorateMethod(DisposableLike_dispose, function (error) {
+}), addMethod(DisposableLike_dispose, function (error) {
     const delegate = getDelegate(this);
     delegate[DisposableLike_dispose](error);
-}), decorateGetter(DisposableLike_error, function () {
+}), addGetter(DisposableLike_error, function () {
     const delegate = getDelegate(this);
     return delegate[DisposableLike_error];
-}), decorateGetter(DisposableLike_isDisposed, function () {
+}), addGetter(DisposableLike_isDisposed, function () {
     const delegate = getDelegate(this);
     return delegate[DisposableLike_isDisposed];
 }));
@@ -103,7 +103,7 @@ function disposableDispose(error) {
         }
     }
 }
-const mixinDisposable = () => (Constructor) => pipe(Constructor, decorateGetter(DisposableLike_error, disposableGetError), decorateGetter(DisposableLike_isDisposed, disposableIsDisposed), decorateMethod(DisposableLike_add, disposableAdd), decorateMethod(DisposableLike_dispose, disposableDispose));
+const mixinDisposable = () => (Constructor) => pipe(Constructor, addGetter(DisposableLike_error, disposableGetError), addGetter(DisposableLike_isDisposed, disposableIsDisposed), addMethod(DisposableLike_add, disposableAdd), addMethod(DisposableLike_dispose, disposableDispose));
 const getError = (disposable) => disposable[DisposableLike_error];
 const isDisposed = (disposable) => disposable[DisposableLike_isDisposed];
 /**

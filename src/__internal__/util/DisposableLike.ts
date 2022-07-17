@@ -18,9 +18,9 @@ import {
   Mixin1,
   Mixin2,
   Mixin3,
-  decorateGetter,
-  decorateMethod,
-  decorateProperty,
+  addGetter,
+  addMethod,
+  addProperty,
 } from "./mixins";
 
 export const DisposableLike_add = Symbol("DisposableLike_add");
@@ -74,7 +74,7 @@ export const mixinSerialDisposable: MixinSerialDisposable = <
 >(
   defaultValue: Factory<TDisposable>,
 ) =>
-  decorateProperty(MutableRefLike_current, {
+  addProperty(MutableRefLike_current, {
     get: function (
       this: DisposableLike & {
         [DisposableRefLike_private_current]?: Option<TDisposable>;
@@ -132,7 +132,7 @@ export const mixinDelegatingDisposable: MixinDelegatingDisposable =
   (Constructor: AnyConstructor) =>
     pipe(
       Constructor,
-      decorateMethod(
+      addMethod(
         DisposableLike_add,
         function (
           this: T,
@@ -143,15 +143,15 @@ export const mixinDelegatingDisposable: MixinDelegatingDisposable =
           delegate[DisposableLike_add](disposable, ignoreChildErrors);
         },
       ),
-      decorateMethod(DisposableLike_dispose, function (this: T, error?: Error) {
+      addMethod(DisposableLike_dispose, function (this: T, error?: Error) {
         const delegate = getDelegate(this);
         delegate[DisposableLike_dispose](error);
       }),
-      decorateGetter(DisposableLike_error, function (this: T): Option<Error> {
+      addGetter(DisposableLike_error, function (this: T): Option<Error> {
         const delegate = getDelegate(this);
         return delegate[DisposableLike_error];
       }),
-      decorateGetter(DisposableLike_isDisposed, function (this: T): boolean {
+      addGetter(DisposableLike_isDisposed, function (this: T): boolean {
         const delegate = getDelegate(this);
         return delegate[DisposableLike_isDisposed];
       }),
@@ -256,10 +256,10 @@ export const mixinDisposable: MixinDisposable =
   () => (Constructor: AnyConstructor) =>
     pipe(
       Constructor,
-      decorateGetter(DisposableLike_error, disposableGetError),
-      decorateGetter(DisposableLike_isDisposed, disposableIsDisposed),
-      decorateMethod(DisposableLike_add, disposableAdd),
-      decorateMethod(DisposableLike_dispose, disposableDispose),
+      addGetter(DisposableLike_error, disposableGetError),
+      addGetter(DisposableLike_isDisposed, disposableIsDisposed),
+      addMethod(DisposableLike_add, disposableAdd),
+      addMethod(DisposableLike_dispose, disposableDispose),
     );
 
 export const getError = (disposable: {
