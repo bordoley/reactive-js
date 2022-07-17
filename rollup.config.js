@@ -104,8 +104,6 @@ const allModules = getFileList("./src")
   .filter(file => !file.includes("__private__"))
   .map(file => file.replace(".ts", ""));
 
-console.log(allModules);
-
 const external = ["stream", "react", "scheduler", "fs", "zlib"];
 
 const makeInput = modules => ({

@@ -1,6 +1,6 @@
 /// <reference types="./StatefulContainerLike.d.ts" />
 import { empty } from '../../containers/ContainerLike.mjs';
-import { a as addIgnoringChildErrors, b as addTo, o as onComplete, d as dispose } from '../../DisposableLike-199748e7.mjs';
+import { a as addIgnoringChildErrors, b as addTo, o as onComplete, d as dispose } from '../../DisposableLike-ef44e42b.mjs';
 import { none } from '../../util/Option.mjs';
 import { strictEquality, pipe, newInstanceWith, max } from '../../util/functions.mjs';
 
