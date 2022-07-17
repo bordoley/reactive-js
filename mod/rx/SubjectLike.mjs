@@ -1,6 +1,7 @@
 /// <reference types="./SubjectLike.d.ts" />
-import { i as isDisposed, f as onDisposed, a as addIgnoringChildErrors, m as mixinDisposable } from '../DisposableLike-ef44e42b.mjs';
+import { isDisposed, mixinDisposable } from '../__internal__/util/DisposableLike.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
+import { onDisposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { newInstance, getLength, pipe, max } from '../util/functions.mjs';
 import { MulticastObservableLike_replay, MulticastObservableLike_observerCount, getReplay } from './MulticastObservableLike.mjs';
 import { ObservableLike_observableType } from './ObservableLike.mjs';

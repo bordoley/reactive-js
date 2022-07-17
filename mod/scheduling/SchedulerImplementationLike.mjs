@@ -1,7 +1,8 @@
 /// <reference types="./SchedulerImplementationLike.d.ts" />
-import { i as isDisposed } from '../DisposableLike-ef44e42b.mjs';
+import '../util/DisposableLike.mjs';
 import { run } from './ContinuationLike.mjs';
 import { SchedulerLike_inContinuation } from './SchedulerLike.mjs';
+import { isDisposed } from '../__internal__/util/DisposableLike.mjs';
 
 const runContinuation = (continuation) => scheduler => {
     if (!isDisposed(continuation)) {

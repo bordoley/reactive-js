@@ -1,13 +1,23 @@
 import { Option } from "./Option.mjs";
-import { SideEffect1, Identity, SideEffect, Factory } from "./functions.mjs";
-declare type Error = {
-    readonly cause: unknown;
-};
-declare type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
+import { Identity, SideEffect1, SideEffect, Factory } from "./functions.mjs";
 declare const DisposableLike_add: unique symbol;
 declare const DisposableLike_dispose: unique symbol;
 declare const DisposableLike_error: unique symbol;
 declare const DisposableLike_isDisposed: unique symbol;
+declare const getError: (disposable: {
+    [DisposableLike_error]: Option<Error>;
+}) => Option<Error>;
+declare const isDisposed: (disposable: {
+    [DisposableLike_isDisposed]: boolean;
+}) => boolean;
+/**
+ * Dispose `disposable` with an optional error.
+ */
+declare const dispose: <T extends DisposableLike>(e?: Error) => Identity<T>;
+declare type Error = {
+    readonly cause: unknown;
+};
+declare type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
  */
@@ -34,16 +44,6 @@ interface DisposableLike {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
-declare const getError: (disposable: {
-    [DisposableLike_error]: Option<Error>;
-}) => Option<Error>;
-declare const isDisposed: (disposable: {
-    [DisposableLike_isDisposed]: boolean;
-}) => boolean;
-/**
- * Dispose `disposable` with an optional error.
- */
-declare const dispose: <T extends DisposableLike>(e?: Error) => Identity<T>;
 declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Identity<T>;
 declare const add: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
 declare const addIgnoringChildErrors: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
