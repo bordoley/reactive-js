@@ -28,7 +28,7 @@ export type Mixin3<TA, TB, TC, T, TMixed> = Function1<
 const { defineProperty: defineObjectProperty } = Object;
 const getPrototype = (constructor: AnyConstructor) => constructor.prototype;
 
-export const decorateGetter =
+export const addGetter =
   (property: PropertyKey, get: () => unknown) =>
   <TConstructor extends AnyConstructor>(
     Constructor: TConstructor,
@@ -39,7 +39,7 @@ export const decorateGetter =
     return Constructor;
   };
 
-export const decorateProperty =
+export const addProperty =
   (
     property: PropertyKey,
     description: {
@@ -54,7 +54,7 @@ export const decorateProperty =
     return Constructor;
   };
 
-export const decorateMethod =
+export const addMethod =
   (property: PropertyKey, f: (this: any, ...args: readonly any[]) => unknown) =>
   <TConstructor extends AnyConstructor>(
     Constructor: TConstructor,
