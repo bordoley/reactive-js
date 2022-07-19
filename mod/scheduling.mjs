@@ -204,8 +204,7 @@ const virtualTimeSchedulerFactory = /*@__PURE__*/ (() => {
             this.taskQueue = createPriorityQueue(comparator);
         }
         get [(_a = DisposableLike_error, _b = DisposableLike_isDisposed, _c = DisposableMixin_disposables, _d = EnumeratorMixin_current, _e = EnumeratorMixin_hasCurrent, _f = SchedulerLike_inContinuation, _g = SchedulerLike_now, SchedulerLike_shouldYield)]() {
-            const { yieldRequested } = this;
-            const inContinuation = isInContinuation(this);
+            const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation } = this;
             if (inContinuation) {
                 this.microTaskTicks++;
                 this.yieldRequested = false;
