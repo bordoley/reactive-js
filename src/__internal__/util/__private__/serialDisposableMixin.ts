@@ -43,25 +43,25 @@ interface MixinSerialDisposable {
     defaultValue: Factory<TDisposable>,
   ): Mixin<T, SerialDisposableLike<TDisposable>>;
   <
-    TA,
     T extends SerialDisposableMixin<TDisposable>,
+    TA,
     TDisposable extends DisposableLike = DisposableLike,
   >(
     defaultValue: Factory<TDisposable>,
   ): Mixin1<TA, T, SerialDisposableLike<TDisposable>>;
   <
+    T extends SerialDisposableMixin<TDisposable>,
     TA,
     TB,
-    T extends SerialDisposableMixin<TDisposable>,
     TDisposable extends DisposableLike = DisposableLike,
   >(
     defaultValue: Factory<TDisposable>,
   ): Mixin2<TA, TB, T, SerialDisposableLike<TDisposable>>;
   <
+    T extends SerialDisposableMixin<TDisposable>,
     TA,
     TB,
     TC,
-    T extends SerialDisposableMixin<TDisposable>,
     TDisposable extends DisposableLike = DisposableLike,
   >(
     defaultValue: Factory<TDisposable>,

@@ -19,10 +19,7 @@ import {
 import { none } from "../../util/Option";
 import { instanceFactory, pipe } from "../../util/functions";
 import { ContinuationLike } from "../ContinuationLike";
-import {
-  SchedulerImplementationLike,
-  runContinuation,
-} from "../SchedulerImplementationLike";
+import { runContinuation } from "../SchedulerImplementationLike";
 import {
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -49,7 +46,7 @@ const supportsIsInputPending = /*@__PURE__*/ (() =>
   (navigator as any).scheduling.isInputPending !== undefined)();
 
 const scheduleImmediateWithSetImmediate = (
-  scheduler: SchedulerImplementationLike & { startTime: number },
+  scheduler: HostSchedulerLike,
   continuation: ContinuationLike,
 ) => {
   const disposable = pipe(
@@ -66,7 +63,7 @@ const scheduleImmediateWithSetImmediate = (
 };
 
 const scheduleDelayed = (
-  scheduler: SchedulerImplementationLike & { startTime: number },
+  scheduler: HostSchedulerLike,
   continuation: ContinuationLike,
   delay: number,
 ) => {
@@ -97,7 +94,7 @@ const scheduleImmediate = (
 };
 
 const run = (
-  scheduler: SchedulerImplementationLike & { startTime: number },
+  scheduler: HostSchedulerLike,
   continuation: ContinuationLike,
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
@@ -107,8 +104,10 @@ const run = (
   pipe(scheduler, runContinuation(continuation));
 };
 
-interface HostSchedulerLike extends SchedulerImplementationLike {
+interface HostSchedulerLike extends DisposableLike {
   startTime: number;
+  [SchedulerLike_inContinuation]: boolean;
+  [SchedulerLike_now]: number;
 }
 
 const hostSchedulerFactory = /*@__PURE__*/ (() => {
@@ -181,8 +180,8 @@ const hostSchedulerFactory = /*@__PURE__*/ (() => {
 
   return pipe(
     HostScheduler,
-    mixinDisposable<number, HostScheduler>(),
-    instanceFactory<HostSchedulerLike, number>(),
+    mixinDisposable<HostScheduler, number>(),
+    instanceFactory<SchedulerLike, number>(),
   );
 })();
 

@@ -9,9 +9,9 @@ interface DelegatingDisposableMixin {
 }
 interface MixinDelegatingDisposable {
     <T extends DelegatingDisposableMixin>(): Mixin<T, DisposableLike>;
-    <TA, T extends DelegatingDisposableMixin>(): Mixin1<TA, T, DisposableLike>;
-    <TA, TB, T extends DelegatingDisposableMixin>(): Mixin2<TA, TB, T, DisposableLike>;
-    <TA, TB, TC, T extends DelegatingDisposableMixin>(): Mixin3<TA, TB, TC, T, DisposableLike>;
+    <T extends DelegatingDisposableMixin, TA>(): Mixin1<TA, T, DisposableLike>;
+    <T extends DelegatingDisposableMixin, TA, TB>(): Mixin2<TA, TB, T, DisposableLike>;
+    <T extends DelegatingDisposableMixin, TA, TB, TC>(): Mixin3<TA, TB, TC, T, DisposableLike>;
 }
 declare const mixinDelegatingDisposable: MixinDelegatingDisposable;
 declare const DisposableMixin_disposables: unique symbol;
@@ -22,9 +22,9 @@ interface DisposableMixin {
 }
 interface MixinDisposable {
     <T extends DisposableMixin>(): Mixin<T, DisposableLike>;
-    <TA, T extends DisposableMixin>(): Mixin1<TA, T, DisposableLike>;
-    <TA, TB, T extends DisposableMixin>(): Mixin2<TA, TB, T, DisposableLike>;
-    <TA, TB, TC, T extends DisposableMixin>(): Mixin3<TA, TB, TC, T, DisposableLike>;
+    <T extends DisposableMixin, TA>(): Mixin1<TA, T, DisposableLike>;
+    <T extends DisposableMixin, TA, TB>(): Mixin2<TA, TB, T, DisposableLike>;
+    <T extends DisposableMixin, TA, TB, TC>(): Mixin3<TA, TB, TC, T, DisposableLike>;
 }
 declare const mixinDisposable: MixinDisposable;
 interface SerialDisposableLike<TDisposable extends DisposableLike> extends DisposableLike, MutableRefLike<TDisposable> {
@@ -35,9 +35,9 @@ interface SerialDisposableMixin<T extends DisposableLike> extends DisposableLike
 }
 interface MixinSerialDisposable {
     <T extends SerialDisposableMixin<TDisposable>, TDisposable extends DisposableLike = DisposableLike>(defaultValue: Factory<TDisposable>): Mixin<T, SerialDisposableLike<TDisposable>>;
-    <TA, T extends SerialDisposableMixin<TDisposable>, TDisposable extends DisposableLike = DisposableLike>(defaultValue: Factory<TDisposable>): Mixin1<TA, T, SerialDisposableLike<TDisposable>>;
-    <TA, TB, T extends SerialDisposableMixin<TDisposable>, TDisposable extends DisposableLike = DisposableLike>(defaultValue: Factory<TDisposable>): Mixin2<TA, TB, T, SerialDisposableLike<TDisposable>>;
-    <TA, TB, TC, T extends SerialDisposableMixin<TDisposable>, TDisposable extends DisposableLike = DisposableLike>(defaultValue: Factory<TDisposable>): Mixin3<TA, TB, TC, T, SerialDisposableLike<TDisposable>>;
+    <T extends SerialDisposableMixin<TDisposable>, TA, TDisposable extends DisposableLike = DisposableLike>(defaultValue: Factory<TDisposable>): Mixin1<TA, T, SerialDisposableLike<TDisposable>>;
+    <T extends SerialDisposableMixin<TDisposable>, TA, TB, TDisposable extends DisposableLike = DisposableLike>(defaultValue: Factory<TDisposable>): Mixin2<TA, TB, T, SerialDisposableLike<TDisposable>>;
+    <T extends SerialDisposableMixin<TDisposable>, TA, TB, TC, TDisposable extends DisposableLike = DisposableLike>(defaultValue: Factory<TDisposable>): Mixin3<TA, TB, TC, T, SerialDisposableLike<TDisposable>>;
 }
 declare const mixinSerialDisposable: MixinSerialDisposable;
 export { DelegatingDisposableMixin, DelegatingDisposableMixin_delegate, DisposableMixin, DisposableMixin_disposables, SerialDisposableLike, SerialDisposableMixin, SerialDisposableMixin_current, mixinDelegatingDisposable, mixinDisposable, mixinSerialDisposable };

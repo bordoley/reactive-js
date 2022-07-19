@@ -45,14 +45,14 @@ function isDisposed(this: DelegatingDisposableMixin): boolean {
 
 interface MixinDelegatingDisposable {
   <T extends DelegatingDisposableMixin>(): Mixin<T, DisposableLike>;
-  <TA, T extends DelegatingDisposableMixin>(): Mixin1<TA, T, DisposableLike>;
-  <TA, TB, T extends DelegatingDisposableMixin>(): Mixin2<
+  <T extends DelegatingDisposableMixin, TA>(): Mixin1<TA, T, DisposableLike>;
+  <T extends DelegatingDisposableMixin, TA, TB>(): Mixin2<
     TA,
     TB,
     T,
     DisposableLike
   >;
-  <TA, TB, TC, T extends DelegatingDisposableMixin>(): Mixin3<
+  <T extends DelegatingDisposableMixin, TA, TB, TC>(): Mixin3<
     TA,
     TB,
     TC,

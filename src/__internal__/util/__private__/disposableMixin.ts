@@ -92,9 +92,9 @@ function disposableDispose(this: DisposableMixin, error?: Error) {
 
 interface MixinDisposable {
   <T extends DisposableMixin>(): Mixin<T, DisposableLike>;
-  <TA, T extends DisposableMixin>(): Mixin1<TA, T, DisposableLike>;
-  <TA, TB, T extends DisposableMixin>(): Mixin2<TA, TB, T, DisposableLike>;
-  <TA, TB, TC, T extends DisposableMixin>(): Mixin3<
+  <T extends DisposableMixin, TA>(): Mixin1<TA, T, DisposableLike>;
+  <T extends DisposableMixin, TA, TB>(): Mixin2<TA, TB, T, DisposableLike>;
+  <T extends DisposableMixin, TA, TB, TC>(): Mixin3<
     TA,
     TB,
     TC,
