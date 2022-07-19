@@ -45,6 +45,9 @@ const supportsIsInputPending = /*@__PURE__*/ (() =>
   (navigator as any).scheduling !== undefined &&
   (navigator as any).scheduling.isInputPending !== undefined)();
 
+const isInputPending = (): boolean =>
+  supportsIsInputPending && (navigator as any).scheduling.isInputPending();
+
 const scheduleImmediateWithSetImmediate = (
   scheduler: HostSchedulerLike,
   continuation: ContinuationLike,
@@ -146,13 +149,7 @@ const hostSchedulerFactory = /*@__PURE__*/ (() => {
         inContinuation &&
         (yieldRequested ||
           getCurrentTime(this) > this.startTime + this.yieldInterval ||
-          this.isInputPending)
-      );
-    }
-
-    get isInputPending(): boolean {
-      return (
-        supportsIsInputPending && (navigator as any).scheduling.isInputPending()
+          isInputPending())
       );
     }
 
