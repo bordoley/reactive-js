@@ -59,8 +59,7 @@ const Subject = /*@__PURE__*/ (() => {
     readonly observers: Set<ObserverLike<T>> =
       newInstance<Set<ObserverLike<T>>>(Set);
     readonly replayed: T[] = [];
-
-    public readonly [MulticastObservableLike_replay]: number;
+    readonly [MulticastObservableLike_replay]: number;
 
     constructor(replay: number) {
       this[MulticastObservableLike_replay] = replay;
@@ -118,7 +117,7 @@ const Subject = /*@__PURE__*/ (() => {
     }
   }
 
-  return pipe(Subject, mixinDisposable<number, Subject>());
+  return pipe(Subject, mixinDisposable<Subject, number>());
 })();
 
 export const create = <T>(options?: { replay?: number }): SubjectLike<T> => {

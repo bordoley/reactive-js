@@ -135,7 +135,7 @@ const Continuation = /*@__PURE__*/ (() => {
 
   return pipe(
     Continuation,
-    mixinDisposable<SchedulerLike, SideEffect, Continuation>(),
+    mixinDisposable<Continuation, SchedulerLike, SideEffect>(),
   );
 })();
 

@@ -9,11 +9,12 @@ export interface EnumeratorLike<T = unknown> extends InteractiveSourceLike {
   readonly [EnumeratorLike_hasCurrent]: boolean;
 }
 
-export const getCurrent = <T>(enumerator: EnumeratorLike<T>): T =>
+export const getCurrent = <T>(enumerator: { [EnumeratorLike_current]: T }): T =>
   enumerator[EnumeratorLike_current];
 
-export const hasCurrent = <T>(enumerator: EnumeratorLike<T>): boolean =>
-  enumerator[EnumeratorLike_hasCurrent];
+export const hasCurrent = (enumerator: {
+  [EnumeratorLike_hasCurrent]: boolean;
+}): boolean => enumerator[EnumeratorLike_hasCurrent];
 
 export const forEach =
   <T, TEnumerator extends EnumeratorLike<T> = EnumeratorLike<T>>(

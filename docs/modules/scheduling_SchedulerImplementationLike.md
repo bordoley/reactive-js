@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [SchedulerImplementationLike](../interfaces/scheduling_SchedulerImplementationLike.SchedulerImplementationLike.md)
-
 ### Functions
 
 - [runContinuation](scheduling_SchedulerImplementationLike.md#runcontinuation)
@@ -22,7 +18,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TScheduler` | extends [`SchedulerImplementationLike`](../interfaces/scheduling_SchedulerImplementationLike.SchedulerImplementationLike.md)<`TScheduler`\> |
+| `TScheduler` | extends `Object` |
 
 #### Parameters
 
