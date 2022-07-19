@@ -1,8 +1,21 @@
 /// <reference types="./util.d.ts" />
-import { mixinDisposable } from './__internal__/util/DisposableLike.mjs';
-import { pipe, instanceFactory } from './util/functions.mjs';
+import { DisposableMixin_disposables, mixinDisposable } from './__internal__/util/disposables.mjs';
+import { DisposableLike_error, DisposableLike_isDisposed } from './util/DisposableLike.mjs';
+import { none } from './util/Option.mjs';
+import { pipe } from './util/functions.mjs';
 
-const createDisposable = /*@__PURE__*/ pipe(class Disposable {
-}, mixinDisposable(), instanceFactory());
+var _a, _b, _c, _d;
+const Disposable = /*@__PURE__*/ pipe((_d = class Disposable {
+        constructor() {
+            this[_a] = none;
+            this[_b] = false;
+            this[_c] = new Set();
+        }
+    },
+    _a = DisposableLike_error,
+    _b = DisposableLike_isDisposed,
+    _c = DisposableMixin_disposables,
+    _d), mixinDisposable());
+const createDisposable = () => new Disposable();
 
 export { createDisposable };

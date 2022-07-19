@@ -1,4 +1,4 @@
-export type AnyConstructor = new (...args: readonly any[]) => unknown;
+export type ConstructorOf<T = unknown> = new (...args: readonly any[]) => T;
 
 export type Constructor<T> = new () => T;
 export type Constructor1<TA, T> = new (a: TA) => T;
