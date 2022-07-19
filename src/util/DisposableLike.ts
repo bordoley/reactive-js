@@ -1,21 +1,9 @@
-import {
-  DisposableLike_add,
-  DisposableLike_dispose,
-  DisposableLike_error,
-  DisposableLike_isDisposed,
-  addDisposableOrTeardown,
-  dispose,
-  getError,
-  mixinDisposable,
-} from "../__internal__/util/DisposableLike";
 import { Option, isNone, isSome, none } from "./Option";
 import {
-  Factory,
   Identity,
   SideEffect,
   SideEffect1,
   ignore,
-  instanceFactory,
   newInstance,
   pipe,
 } from "./functions";
@@ -25,6 +13,11 @@ export type Error = {
 };
 
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
+
+export const DisposableLike_add = Symbol("DisposableLike_add");
+export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
+export const DisposableLike_error = Symbol("DisposableLike_error");
+export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -58,6 +51,14 @@ export interface DisposableLike {
    */
   [DisposableLike_dispose](error?: Error): void;
 }
+
+const addDisposableOrTeardown = (
+  parent: DisposableLike,
+  child: DisposableOrTeardown,
+  ignoreChildErrors = false,
+) => {
+  parent[DisposableLike_add](child, ignoreChildErrors);
+};
 
 export const bindTo =
   <T extends DisposableLike>(child: DisposableLike): Identity<T> =>
@@ -167,18 +168,20 @@ export const disposed: DisposableLike = {
   [DisposableLike_dispose]: ignore,
 };
 
-export const create: Factory<DisposableLike> = /*@__PURE__*/ pipe(
-  class Disposable {},
-  mixinDisposable(),
-  instanceFactory(),
-);
+export const getError = (disposable: {
+  [DisposableLike_error]: Option<Error>;
+}): Option<Error> => disposable[DisposableLike_error];
 
-export {
-  dispose,
-  getError,
-  isDisposed,
-  DisposableLike_add,
-  DisposableLike_dispose,
-  DisposableLike_error,
-  DisposableLike_isDisposed,
-} from "../__internal__/util/DisposableLike";
+export const isDisposed = (disposable: {
+  [DisposableLike_isDisposed]: boolean;
+}): boolean => disposable[DisposableLike_isDisposed];
+
+/**
+ * Dispose `disposable` with an optional error.
+ */
+export const dispose =
+  <T extends DisposableLike>(e?: Error): Identity<T> =>
+  disposable => {
+    disposable[DisposableLike_dispose](e);
+    return disposable;
+  };
