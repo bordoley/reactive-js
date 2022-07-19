@@ -1,14 +1,15 @@
 import { getDelay } from "../../__internal__/optionalArgs";
 import { mixinDisposable } from "../../__internal__/util/DisposableLike";
+import { createDisposable } from "../../util";
 import {
   DisposableLike,
   addIgnoringChildErrors,
   addTo,
-  create as createDisposable,
   dispose,
   isDisposed,
   onDisposed,
 } from "../../util/DisposableLike";
+
 import { instanceFactory, pipe } from "../../util/functions";
 import { ContinuationLike } from "../ContinuationLike";
 import {
@@ -67,6 +68,7 @@ const scheduleDelayed = (
     addTo(continuation),
     onDisposed(_ => clearTimeout(timeout)),
   );
+
   const timeout: ReturnType<typeof setTimeout> = setTimeout(
     run,
     delay,
