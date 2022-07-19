@@ -70,7 +70,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`EnumeratorLike`](../interfaces/ix_EnumeratorLike.EnumeratorLike.md)<`T`\> |
+| `enumerator` | `Object` |
+| `enumerator.[EnumeratorLike_current]` | `T` |
 
 #### Returns
 
@@ -80,19 +81,14 @@ ___
 
 ### hasCurrent
 
-▸ **hasCurrent**<`T`\>(`enumerator`): `boolean`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
+▸ **hasCurrent**(`enumerator`): `boolean`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`EnumeratorLike`](../interfaces/ix_EnumeratorLike.EnumeratorLike.md)<`T`\> |
+| `enumerator` | `Object` |
+| `enumerator.[EnumeratorLike_hasCurrent]` | `boolean` |
 
 #### Returns
 
