@@ -10,15 +10,14 @@ import {
   DisposableOrTeardown,
 } from "./util/DisposableLike";
 import { none } from "./util/Option";
-import { Constructor, Factory, pipe } from "./util/functions";
+import { Factory, instanceFactory, pipe } from "./util/functions";
 
-const Disposable: Constructor<DisposableLike> = /*@__PURE__*/ pipe(
+export const createDisposable: Factory<DisposableLike> = /*@__PURE__*/ pipe(
   class Disposable implements DisposableMixin {
     [DisposableLike_error] = none;
     [DisposableLike_isDisposed] = false;
     readonly [DisposableMixin_disposables] = new Set<DisposableOrTeardown>();
   },
   mixinDisposable(),
+  instanceFactory(),
 );
-
-export const createDisposable: Factory<DisposableLike> = () => new Disposable();

@@ -65,6 +65,6 @@ export const addMethod =
   <TInstance>(
     Constructor: ConstructorOf<TInstance>,
   ): ConstructorOf<TInstance & Record<TKey, TMethod>> => {
-    Constructor.prototype[property] = f;
+    getPrototype(Constructor)[property] = f;
     return Constructor as any;
   };
