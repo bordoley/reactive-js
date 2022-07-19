@@ -34,6 +34,7 @@ Reactive-JS
 - [streaming/FlowableLike](modules/streaming_FlowableLike.md)
 - [streaming/StreamLike](modules/streaming_StreamLike.md)
 - [streaming/StreamableLike](modules/streaming_StreamableLike.md)
+- [util](modules/util.md)
 - [util/DisposableLike](modules/util_DisposableLike.md)
 - [util/Option](modules/util_Option.md)
 - [util/functions](modules/util_functions.md)

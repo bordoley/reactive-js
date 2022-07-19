@@ -1,7 +1,7 @@
 /// <reference types="./SchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { isDisposed, dispose, mixinDisposable } from '../__internal__/util/DisposableLike.mjs';
-import '../util/DisposableLike.mjs';
+import { mixinDisposable } from '../__internal__/util/DisposableLike.mjs';
+import { isDisposed, dispose } from '../util/DisposableLike.mjs';
 import { none, isSome, isNone } from '../util/Option.mjs';
 import { pipe, raise, newInstanceWith, newInstance } from '../util/functions.mjs';
 import { ContinuationLike_run } from './ContinuationLike.mjs';

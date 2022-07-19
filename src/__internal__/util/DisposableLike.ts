@@ -1,14 +1,20 @@
 import {
   DisposableLike,
+  DisposableLike_add,
+  DisposableLike_dispose,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
   DisposableOrTeardown,
   Error,
+  dispose,
+  getError,
+  isDisposed,
 } from "../../util/DisposableLike";
 import { Option, isNone, isSome } from "../../util/Option";
 import {
   AnyConstructor,
   Factory,
   Function1,
-  Identity,
   newInstance,
   pipe,
 } from "../../util/functions";
@@ -22,11 +28,6 @@ import {
   addMethod,
   addProperty,
 } from "./mixins";
-
-export const DisposableLike_add = Symbol("DisposableLike_add");
-export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-export const DisposableLike_error = Symbol("DisposableLike_error");
-export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 
 export interface SerialDisposableLike<TDisposable extends DisposableLike>
   extends DisposableLike,
@@ -84,7 +85,7 @@ export const mixinSerialDisposable: MixinSerialDisposable = <
       if (isNone(current)) {
         current = defaultValue();
         this[DisposableRefLike_private_current] = current;
-        addDisposableOrTeardown(this, current);
+        this[DisposableLike_add](current, false);
       }
       return current;
     },
@@ -97,7 +98,7 @@ export const mixinSerialDisposable: MixinSerialDisposable = <
       const oldCurrent = this[DisposableRefLike_private_current];
 
       this[DisposableRefLike_private_current] = newCurrent;
-      addDisposableOrTeardown(this, newCurrent);
+      this[DisposableLike_add](newCurrent, false);
 
       if (isSome(oldCurrent) && oldCurrent !== newCurrent) {
         pipe(oldCurrent, dispose());
@@ -261,29 +262,3 @@ export const mixinDisposable: MixinDisposable =
       addMethod(DisposableLike_add, disposableAdd),
       addMethod(DisposableLike_dispose, disposableDispose),
     );
-
-export const getError = (disposable: {
-  [DisposableLike_error]: Option<Error>;
-}): Option<Error> => disposable[DisposableLike_error];
-
-export const isDisposed = (disposable: {
-  [DisposableLike_isDisposed]: boolean;
-}): boolean => disposable[DisposableLike_isDisposed];
-
-/**
- * Dispose `disposable` with an optional error.
- */
-export const dispose =
-  <T extends DisposableLike>(e?: Error): Identity<T> =>
-  disposable => {
-    disposable[DisposableLike_dispose](e);
-    return disposable;
-  };
-
-export const addDisposableOrTeardown = (
-  parent: DisposableLike,
-  child: DisposableOrTeardown,
-  ignoreChildErrors = false,
-) => {
-  parent[DisposableLike_add](child, ignoreChildErrors);
-};

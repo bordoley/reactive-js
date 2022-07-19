@@ -1,23 +1,13 @@
 import { Option } from "./Option.mjs";
-import { Identity, SideEffect1, SideEffect, Factory } from "./functions.mjs";
-declare const DisposableLike_add: unique symbol;
-declare const DisposableLike_dispose: unique symbol;
-declare const DisposableLike_error: unique symbol;
-declare const DisposableLike_isDisposed: unique symbol;
-declare const getError: (disposable: {
-    [DisposableLike_error]: Option<Error>;
-}) => Option<Error>;
-declare const isDisposed: (disposable: {
-    [DisposableLike_isDisposed]: boolean;
-}) => boolean;
-/**
- * Dispose `disposable` with an optional error.
- */
-declare const dispose: <T extends DisposableLike>(e?: Error) => Identity<T>;
+import { SideEffect1, Identity, SideEffect } from "./functions.mjs";
 declare type Error = {
     readonly cause: unknown;
 };
 declare type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
+declare const DisposableLike_add: unique symbol;
+declare const DisposableLike_dispose: unique symbol;
+declare const DisposableLike_error: unique symbol;
+declare const DisposableLike_isDisposed: unique symbol;
 /**
  * Represents an unmanaged resource that can be disposed.
  */
@@ -58,5 +48,14 @@ declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Id
 declare const toErrorHandler: (disposable: DisposableLike) => SideEffect1<unknown>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
 declare const disposed: DisposableLike;
-declare const create: Factory<DisposableLike>;
-export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, create, dispose, disposed, getError, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+declare const getError: (disposable: {
+    [DisposableLike_error]: Option<Error>;
+}) => Option<Error>;
+declare const isDisposed: (disposable: {
+    [DisposableLike_isDisposed]: boolean;
+}) => boolean;
+/**
+ * Dispose `disposable` with an optional error.
+ */
+declare const dispose: <T extends DisposableLike>(e?: Error) => Identity<T>;
+export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, disposed, getError, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

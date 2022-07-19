@@ -1,7 +1,8 @@
 /// <reference types="./scheduling.d.ts" />
 import { getDelay } from './__internal__/optionalArgs.mjs';
-import { dispose, isDisposed, mixinDisposable } from './__internal__/util/DisposableLike.mjs';
-import { create, addTo, onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';
+import { mixinDisposable } from './__internal__/util/DisposableLike.mjs';
+import { createDisposable } from './util.mjs';
+import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './util/DisposableLike.mjs';
 import { pipe, instanceFactory } from './util/functions.mjs';
 import { runContinuation } from './scheduling/SchedulerImplementationLike.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, isInContinuation, SchedulerLike_requestYield, SchedulerLike_schedule } from './scheduling/SchedulerLike.mjs';
@@ -13,11 +14,11 @@ const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object
     navigator.scheduling !== undefined &&
     navigator.scheduling.isInputPending !== undefined)();
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
-    const disposable = pipe(create(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
+    const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(run, scheduler, continuation, disposable);
 };
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    const disposable = pipe(create(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
+    const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
     const timeout = setTimeout(run, delay, scheduler, continuation, disposable);
 };
 const scheduleImmediate = (scheduler, continuation) => {
