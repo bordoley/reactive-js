@@ -34,7 +34,6 @@ import {
   SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike,
   getCurrentTime,
-  isInContinuation,
 } from "../SchedulerLike";
 import { QueueLike, createPriorityQueue } from "./queue";
 
@@ -74,8 +73,8 @@ const virtualTimeSchedulerFactory = /*@__PURE__*/ (() => {
     ) {}
 
     get [SchedulerLike_shouldYield]() {
-      const { yieldRequested } = this;
-      const inContinuation = isInContinuation(this);
+      const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation } =
+        this;
 
       if (inContinuation) {
         this.microTaskTicks++;

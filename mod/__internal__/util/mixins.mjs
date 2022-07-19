@@ -12,7 +12,7 @@ const addProperty = (property, description) => (Constructor) => {
     return Constructor;
 };
 const addMethod = (property, f) => (Constructor) => {
-    Constructor.prototype[property] = f;
+    getPrototype(Constructor)[property] = f;
     return Constructor;
 };
 
