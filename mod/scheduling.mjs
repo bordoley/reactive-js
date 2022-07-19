@@ -18,6 +18,7 @@ const supportsProcessHRTime = /*@__PURE__*/ (() => typeof process === "object" &
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== undefined &&
     navigator.scheduling.isInputPending !== undefined)();
+const isInputPending = () => supportsIsInputPending && navigator.scheduling.isInputPending();
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
     const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(run, scheduler, continuation, disposable);
@@ -73,10 +74,7 @@ const hostSchedulerFactory = /*@__PURE__*/ (() => {
             return (inContinuation &&
                 (yieldRequested ||
                     getCurrentTime(this) > this.startTime + this.yieldInterval ||
-                    this.isInputPending));
-        }
-        get isInputPending() {
-            return (supportsIsInputPending && navigator.scheduling.isInputPending());
+                    isInputPending()));
         }
         [SchedulerLike_requestYield]() {
             this.yieldRequested = true;
