@@ -216,7 +216,6 @@ const createTests = (testGroup: TestGroup, parents: readonly string[]) => {
 
 export const runTests = (testGroups: TestGroup[]) => {
   for (const test of testGroups) {
-    console.log(test.name);
     createTests(test, []);
   }
 };

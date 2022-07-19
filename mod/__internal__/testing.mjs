@@ -143,7 +143,6 @@ const createTests = (testGroup, parents) => {
 };
 const runTests = (testGroups) => {
     for (const test of testGroups) {
-        console.log(test.name);
         createTests(test, []);
     }
 };

@@ -1,15 +1,22 @@
 import { getDelay } from "../../__internal__/optionalArgs";
-import { mixinDisposable } from "../../__internal__/util/DisposableLike";
+import {
+  DisposableMixin,
+  DisposableMixin_disposables,
+  mixinDisposable,
+} from "../../__internal__/util/disposables";
 import { createDisposable } from "../../util";
 import {
   DisposableLike,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  DisposableOrTeardown,
   addIgnoringChildErrors,
   addTo,
   dispose,
   isDisposed,
   onDisposed,
 } from "../../util/DisposableLike";
-
+import { none } from "../../util/Option";
 import { instanceFactory, pipe } from "../../util/functions";
 import { ContinuationLike } from "../ContinuationLike";
 import {
@@ -105,7 +112,11 @@ interface HostSchedulerLike extends SchedulerImplementationLike {
 }
 
 const hostSchedulerFactory = /*@__PURE__*/ (() => {
-  class HostScheduler {
+  class HostScheduler implements DisposableMixin {
+    [DisposableLike_error] = none;
+    [DisposableLike_isDisposed] = false;
+    readonly [DisposableMixin_disposables] = new Set<DisposableOrTeardown>();
+
     [SchedulerLike_inContinuation] = false;
     startTime = getCurrentTime(this);
 

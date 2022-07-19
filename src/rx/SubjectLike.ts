@@ -1,10 +1,18 @@
-import { mixinDisposable } from "../__internal__/util/DisposableLike";
+import {
+  DisposableMixin,
+  DisposableMixin_disposables,
+  mixinDisposable,
+} from "../__internal__/util/disposables";
 import { dispatch } from "../scheduling/DispatcherLike";
 import {
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  DisposableOrTeardown,
   addIgnoringChildErrors,
   isDisposed,
   onDisposed,
 } from "../util/DisposableLike";
+import { none } from "../util/Option";
 import {
   Function1,
   SideEffect1,
@@ -42,8 +50,12 @@ export const publishTo =
     return v;
   };
 
-const Subject = /*@__PURE__*/ (<T>() => {
-  class Subject<T> {
+const Subject = /*@__PURE__*/ (() => {
+  class Subject<T = unknown> implements DisposableMixin {
+    [DisposableLike_error] = none;
+    [DisposableLike_isDisposed] = false;
+    readonly [DisposableMixin_disposables] = new Set<DisposableOrTeardown>();
+
     readonly observers: Set<ObserverLike<T>> =
       newInstance<Set<ObserverLike<T>>>(Set);
     readonly replayed: T[] = [];
@@ -106,7 +118,7 @@ const Subject = /*@__PURE__*/ (<T>() => {
     }
   }
 
-  return pipe(Subject, mixinDisposable<number, Subject<T>>());
+  return pipe(Subject, mixinDisposable<number, Subject>());
 })();
 
 export const create = <T>(options?: { replay?: number }): SubjectLike<T> => {

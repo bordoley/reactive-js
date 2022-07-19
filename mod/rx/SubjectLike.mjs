@@ -1,7 +1,8 @@
 /// <reference types="./SubjectLike.d.ts" />
-import { mixinDisposable } from '../__internal__/util/DisposableLike.mjs';
+import { DisposableMixin_disposables, mixinDisposable } from '../__internal__/util/disposables.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
-import { isDisposed, onDisposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
+import { DisposableLike_error, DisposableLike_isDisposed, isDisposed, onDisposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
+import { none } from '../util/Option.mjs';
 import { newInstance, getLength, pipe, max } from '../util/functions.mjs';
 import { MulticastObservableLike_replay, MulticastObservableLike_observerCount, getReplay } from './MulticastObservableLike.mjs';
 import { ObservableLike_observableType } from './ObservableLike.mjs';
@@ -18,15 +19,18 @@ const publishTo = (subject) => v => {
     return v;
 };
 const Subject = /*@__PURE__*/ (() => {
-    var _a;
+    var _a, _b, _c, _d;
     class Subject {
         constructor(replay) {
+            this[_a] = none;
+            this[_b] = false;
+            this[_c] = new Set();
             this.observers = newInstance(Set);
             this.replayed = [];
-            this[_a] = 0;
+            this[_d] = 0;
             this[MulticastObservableLike_replay] = replay;
         }
-        get [(_a = ObservableLike_observableType, MulticastObservableLike_observerCount)]() {
+        get [(_a = DisposableLike_error, _b = DisposableLike_isDisposed, _c = DisposableMixin_disposables, _d = ObservableLike_observableType, MulticastObservableLike_observerCount)]() {
             return this.observers.size;
         }
         [SubjectLike_publish](next) {

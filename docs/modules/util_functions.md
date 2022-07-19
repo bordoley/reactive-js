@@ -6,13 +6,13 @@
 
 ### Type Aliases
 
-- [AnyConstructor](util_functions.md#anyconstructor)
 - [Comparator](util_functions.md#comparator)
 - [Constructor](util_functions.md#constructor)
 - [Constructor1](util_functions.md#constructor1)
 - [Constructor2](util_functions.md#constructor2)
 - [Constructor3](util_functions.md#constructor3)
 - [Constructor4](util_functions.md#constructor4)
+- [ConstructorOf](util_functions.md#constructorof)
 - [Equality](util_functions.md#equality)
 - [Factory](util_functions.md#factory)
 - [Function1](util_functions.md#function1)
@@ -74,22 +74,6 @@
 - [updateReducer](util_functions.md#updatereducer)
 
 ## Type Aliases
-
-### AnyConstructor
-
-Ƭ **AnyConstructor**: (...`args`: readonly `any`[]) => `unknown`
-
-#### Type declaration
-
-• (...`args`)
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...args` | readonly `any`[] |
-
-___
 
 ### Comparator
 
@@ -227,6 +211,28 @@ ___
 | `b` | `TB` |
 | `c` | `TC` |
 | `d` | `TD` |
+
+___
+
+### ConstructorOf
+
+Ƭ **ConstructorOf**<`T`\>: (...`args`: readonly `any`[]) => `T`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Type declaration
+
+• (...`args`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...args` | readonly `any`[] |
 
 ___
 

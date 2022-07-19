@@ -1,8 +1,9 @@
 /// <reference types="./scheduling.d.ts" />
 import { getDelay } from './__internal__/optionalArgs.mjs';
-import { mixinDisposable } from './__internal__/util/DisposableLike.mjs';
+import { DisposableMixin_disposables, mixinDisposable } from './__internal__/util/disposables.mjs';
 import { createDisposable } from './util.mjs';
-import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './util/DisposableLike.mjs';
+import { addTo, onDisposed, dispose, DisposableLike_error, DisposableLike_isDisposed, addIgnoringChildErrors, isDisposed } from './util/DisposableLike.mjs';
+import { none } from './util/Option.mjs';
 import { pipe, instanceFactory } from './util/functions.mjs';
 import { runContinuation } from './scheduling/SchedulerImplementationLike.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, isInContinuation, SchedulerLike_requestYield, SchedulerLike_schedule } from './scheduling/SchedulerLike.mjs';
@@ -36,15 +37,18 @@ const run = (scheduler, continuation, immmediateOrTimerDisposable) => {
     pipe(scheduler, runContinuation(continuation));
 };
 const hostSchedulerFactory = /*@__PURE__*/ (() => {
-    var _a;
+    var _a, _b, _c, _d;
     class HostScheduler {
         constructor(yieldInterval) {
             this.yieldInterval = yieldInterval;
-            this[_a] = false;
+            this[_a] = none;
+            this[_b] = false;
+            this[_c] = new Set();
+            this[_d] = false;
             this.startTime = getCurrentTime(this);
             this.yieldRequested = false;
         }
-        get [(_a = SchedulerLike_inContinuation, SchedulerLike_now)]() {
+        get [(_a = DisposableLike_error, _b = DisposableLike_isDisposed, _c = DisposableMixin_disposables, _d = SchedulerLike_inContinuation, SchedulerLike_now)]() {
             if (supportsPerformanceNow) {
                 return performance.now();
             }
