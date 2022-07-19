@@ -1,9 +1,9 @@
 import {
-  AnyConstructor,
   Constructor,
   Constructor1,
   Constructor2,
   Constructor3,
+  ConstructorOf,
   Function1,
 } from "../../util/functions";
 
@@ -26,39 +26,45 @@ export type Mixin3<TA, TB, TC, T, TMixed> = Function1<
 >;
 
 const { defineProperty: defineObjectProperty } = Object;
-const getPrototype = (constructor: AnyConstructor) => constructor.prototype;
+const getPrototype = (constructor: ConstructorOf) => constructor.prototype;
 
 export const addGetter =
-  (property: PropertyKey, get: () => unknown) =>
-  <TConstructor extends AnyConstructor>(
-    Constructor: TConstructor,
-  ): TConstructor => {
+  <Tkey extends PropertyKey, T>(property: Tkey, get: () => T) =>
+  <TInstance>(
+    Constructor: ConstructorOf<TInstance>,
+  ): ConstructorOf<TInstance & Readonly<Record<Tkey, T>>> => {
     defineObjectProperty(getPrototype(Constructor), property, {
       get,
     });
-    return Constructor;
+    return Constructor as any;
   };
 
 export const addProperty =
-  (
+  <Tkey extends PropertyKey, T>(
     property: PropertyKey,
     description: {
-      get: (this: any) => unknown;
-      set: (this: any, value: any) => void;
+      get: () => T;
+      set: (value: T) => void;
     },
   ) =>
-  <TConstructor extends AnyConstructor>(
-    Constructor: TConstructor,
-  ): TConstructor => {
+  <TInstance>(
+    Constructor: ConstructorOf<TInstance>,
+  ): ConstructorOf<TInstance & Record<Tkey, T>> => {
     defineObjectProperty(getPrototype(Constructor), property, description);
-    return Constructor;
+    return Constructor as any;
   };
 
 export const addMethod =
-  (property: PropertyKey, f: (this: any, ...args: readonly any[]) => unknown) =>
-  <TConstructor extends AnyConstructor>(
-    Constructor: TConstructor,
-  ): TConstructor => {
+  <
+    TKey extends PropertyKey,
+    TMethod extends (...args: readonly any[]) => unknown,
+  >(
+    property: PropertyKey,
+    f: TMethod,
+  ) =>
+  <TInstance>(
+    Constructor: ConstructorOf<TInstance>,
+  ): ConstructorOf<TInstance & Record<TKey, TMethod>> => {
     Constructor.prototype[property] = f;
-    return Constructor;
+    return Constructor as any;
   };

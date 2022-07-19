@@ -1,8 +1,15 @@
 import { getDelay } from "../__internal__/optionalArgs";
-import { mixinDisposable } from "../__internal__/util/DisposableLike";
+import {
+  DisposableMixin,
+  DisposableMixin_disposables,
+  mixinDisposable,
+} from "../__internal__/util/disposables";
 import { EnumeratorLike } from "../ix/EnumeratorLike";
 import {
   DisposableLike,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  DisposableOrTeardown,
   Error,
   dispose,
   isDisposed,
@@ -88,7 +95,11 @@ class YieldError {
 let currentScheduler: Option<SchedulerLike> = none;
 
 const Continuation = /*@__PURE__*/ (() => {
-  class Continuation {
+  class Continuation implements DisposableMixin {
+    [DisposableLike_error] = none;
+    [DisposableLike_isDisposed] = false;
+    readonly [DisposableMixin_disposables] = new Set<DisposableOrTeardown>();
+
     constructor(
       private readonly scheduler: SchedulerLike,
       private readonly f: SideEffect,

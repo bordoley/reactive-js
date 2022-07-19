@@ -1,7 +1,7 @@
 /// <reference types="./SchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { mixinDisposable } from '../__internal__/util/DisposableLike.mjs';
-import { isDisposed, dispose } from '../util/DisposableLike.mjs';
+import { DisposableMixin_disposables, mixinDisposable } from '../__internal__/util/disposables.mjs';
+import { DisposableLike_error, DisposableLike_isDisposed, isDisposed, dispose } from '../util/DisposableLike.mjs';
 import { none, isSome, isNone } from '../util/Option.mjs';
 import { pipe, raise, newInstanceWith, newInstance } from '../util/functions.mjs';
 import { ContinuationLike_run } from './ContinuationLike.mjs';
@@ -23,12 +23,16 @@ class YieldError {
 }
 let currentScheduler = none;
 const Continuation = /*@__PURE__*/ (() => {
+    var _a, _b, _c;
     class Continuation {
         constructor(scheduler, f) {
             this.scheduler = scheduler;
             this.f = f;
+            this[_a] = none;
+            this[_b] = false;
+            this[_c] = new Set();
         }
-        [ContinuationLike_run]() {
+        [(_a = DisposableLike_error, _b = DisposableLike_isDisposed, _c = DisposableMixin_disposables, ContinuationLike_run)]() {
             if (!isDisposed(this)) {
                 let error = none;
                 let yieldError = none;
