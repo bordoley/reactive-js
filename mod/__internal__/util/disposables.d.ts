@@ -27,10 +27,10 @@ interface MixinDisposable {
     <T extends DisposableMixin, TA, TB, TC>(): Mixin3<TA, TB, TC, T, DisposableLike>;
 }
 declare const mixinDisposable: MixinDisposable;
-interface SerialDisposableLike<TDisposable extends DisposableLike> extends DisposableLike, MutableRefLike<TDisposable> {
+interface SerialDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike, MutableRefLike<TDisposable> {
 }
 declare const SerialDisposableMixin_current: unique symbol;
-interface SerialDisposableMixin<T extends DisposableLike> extends DisposableLike {
+interface SerialDisposableMixin<T extends DisposableLike = DisposableLike> {
     [SerialDisposableMixin_current]: Option<T>;
 }
 interface MixinSerialDisposable {

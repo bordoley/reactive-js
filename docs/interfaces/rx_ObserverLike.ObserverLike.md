@@ -65,7 +65,7 @@ ___
 
 ### [ObserverLike\_scheduler]
 
-• `Readonly` **[ObserverLike\_scheduler]**: [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions)\>
+• `Readonly` **[ObserverLike\_scheduler]**: [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)
 
 ## Methods
 

@@ -1,4 +1,5 @@
 import { ContainerLike } from "../containers/ContainerLike";
+import { PauseableLike } from "../util/PauseableLike";
 import { StreamLike } from "./StreamLike";
 import { StreamableLike } from "./StreamableLike";
 
@@ -11,4 +12,6 @@ export interface FlowableLike<
     ContainerLike<T> {
   readonly TContainerOf?: FlowableStreamLike<this["T"]>;
 }
-export interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {}
+export interface FlowableStreamLike<T>
+  extends StreamLike<FlowMode, T>,
+    PauseableLike {}

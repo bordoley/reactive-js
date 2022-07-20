@@ -1,39 +1,35 @@
-[Reactive-JS](../README.md) / [scheduling/PausableSchedulerLike](../modules/scheduling_PausableSchedulerLike.md) / PausableSchedulerLike
+[Reactive-JS](../README.md) / [scheduling/SchedulerLike](../modules/scheduling_SchedulerLike.md) / PauseableSchedulerLike
 
-# Interface: PausableSchedulerLike<TOptions\>
+# Interface: PauseableSchedulerLike
 
-[scheduling/PausableSchedulerLike](../modules/scheduling_PausableSchedulerLike.md).PausableSchedulerLike
-
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TOptions` | extends [`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions) = [`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions) |
+[scheduling/SchedulerLike](../modules/scheduling_SchedulerLike.md).PauseableSchedulerLike
 
 ## Hierarchy
 
-- [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)<`TOptions`\>
+- [`PauseableLike`](util_PauseableLike.PauseableLike.md)
 
-  ↳ **`PausableSchedulerLike`**
+- [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)
+
+  ↳ **`PauseableSchedulerLike`**
 
 ## Table of contents
 
 ### Properties
 
-- [[DisposableLike\_error]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[disposablelike_error])
-- [[DisposableLike\_isDisposed]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[disposablelike_isdisposed])
-- [[SchedulerLike\_inContinuation]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[schedulerlike_incontinuation])
-- [[SchedulerLike\_now]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[schedulerlike_now])
-- [[SchedulerLike\_shouldYield]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[schedulerlike_shouldyield])
+- [[DisposableLike\_error]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[disposablelike_error])
+- [[DisposableLike\_isDisposed]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[disposablelike_isdisposed])
+- [[SchedulerLike\_inContinuation]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_incontinuation])
+- [[SchedulerLike\_now]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_now])
+- [[SchedulerLike\_shouldYield]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_shouldyield])
 
 ### Methods
 
-- [[DisposableLike\_add]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[disposablelike_dispose])
-- [[PausableSchedulerLike\_pause]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[pausableschedulerlike_pause])
-- [[PausableSchedulerLike\_resume]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[pausableschedulerlike_resume])
-- [[SchedulerLike\_requestYield]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[schedulerlike_requestyield])
-- [[SchedulerLike\_schedule]](scheduling_PausableSchedulerLike.PausableSchedulerLike.md#[schedulerlike_schedule])
+- [[DisposableLike\_add]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[disposablelike_add])
+- [[DisposableLike\_dispose]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[disposablelike_dispose])
+- [[PauseableLike\_pause]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[pauseablelike_pause])
+- [[PauseableLike\_resume]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[pauseablelike_resume])
+- [[SchedulerLike\_requestYield]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_requestyield])
+- [[SchedulerLike\_schedule]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_schedule])
 
 ## Properties
 
@@ -138,23 +134,31 @@ Dispose the resource.
 
 ___
 
-### [PausableSchedulerLike\_pause]
+### [PauseableLike\_pause]
 
-▸ **[PausableSchedulerLike_pause]**(): `void`
+▸ **[PauseableLike_pause]**(): `void`
 
 #### Returns
 
 `void`
+
+#### Inherited from
+
+[PauseableLike](util_PauseableLike.PauseableLike.md).[[PauseableLike_pause]](util_PauseableLike.PauseableLike.md#[pauseablelike_pause])
 
 ___
 
-### [PausableSchedulerLike\_resume]
+### [PauseableLike\_resume]
 
-▸ **[PausableSchedulerLike_resume]**(): `void`
+▸ **[PauseableLike_resume]**(): `void`
 
 #### Returns
 
 `void`
+
+#### Inherited from
+
+[PauseableLike](util_PauseableLike.PauseableLike.md).[[PauseableLike_resume]](util_PauseableLike.PauseableLike.md#[pauseablelike_resume])
 
 ___
 
@@ -183,7 +187,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `continuation` | [`ContinuationLike`](scheduling_ContinuationLike.ContinuationLike.md) |
-| `options?` | `TOptions` |
+| `options?` | [`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions) |
 
 #### Returns
 

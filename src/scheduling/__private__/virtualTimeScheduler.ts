@@ -7,7 +7,9 @@ import {
   mixinEnumerator,
 } from "../../__internal__/ix/enumerators";
 import { getDelay } from "../../__internal__/optionalArgs";
+import { runContinuation } from "../../__internal__/scheduling";
 import {
+  DisposableMixin,
   DisposableMixin_disposables,
   mixinDisposable,
 } from "../../__internal__/util/disposables";
@@ -25,7 +27,6 @@ import {
 import { isSome, none } from "../../util/Option";
 import { instanceFactory, pipe } from "../../util/functions";
 import { ContinuationLike } from "../ContinuationLike";
-import { runContinuation } from "../SchedulerImplementationLike";
 import {
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -51,7 +52,7 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 };
 
 const virtualTimeSchedulerFactory = /*@__PURE__*/ (() => {
-  class VirtualTimeScheduler implements EnumeratorMixin<void> {
+  class VirtualTimeScheduler implements EnumeratorMixin<void>, DisposableMixin {
     [DisposableLike_error] = none;
     [DisposableLike_isDisposed] = false;
     readonly [DisposableMixin_disposables] = new Set<DisposableOrTeardown>();

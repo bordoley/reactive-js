@@ -80,7 +80,7 @@ ___
 
 ### getScheduler
 
-▸ **getScheduler**(`dispatcher`): [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](scheduling_SchedulerLike.md#scheduleroptions)\>
+▸ **getScheduler**(`dispatcher`): [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)
 
 #### Parameters
 
@@ -90,4 +90,4 @@ ___
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](scheduling_SchedulerLike.md#scheduleroptions)\>
+[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)
