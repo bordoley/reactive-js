@@ -1,4 +1,6 @@
-import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduling/SchedulerLike.mjs";
+import { SchedulerLike, VirtualTimeSchedulerLike, PauseableSchedulerLike } from "./scheduling/SchedulerLike.mjs";
+import { Function1 } from "./util/functions.mjs";
+import { PrioritySchedulerLike } from "./scheduling/PrioritySchedulerLike.mjs";
 declare const createHostScheduler: (options?: {
     readonly yieldInterval?: number;
 }) => SchedulerLike;
@@ -12,4 +14,6 @@ declare const createHostScheduler: (options?: {
 declare const createVirtualTimeScheduler: (options?: {
     readonly maxMicroTaskTicks?: number;
 }) => VirtualTimeSchedulerLike;
-export { createHostScheduler, createVirtualTimeScheduler };
+declare const createPauseableScheduler: Function1<SchedulerLike, PauseableSchedulerLike>;
+declare const createPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
+export { createHostScheduler, createPauseableScheduler, createPriorityScheduler, createVirtualTimeScheduler };

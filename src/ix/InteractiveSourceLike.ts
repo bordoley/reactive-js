@@ -6,7 +6,9 @@ export interface InteractiveSourceLike extends DisposableLike {
 }
 
 export const move = <
-  TSource extends InteractiveSourceLike = InteractiveSourceLike,
+  TSource extends {
+    [InteractiveSourceLike_move](): void;
+  } = InteractiveSourceLike,
 >(
   source: TSource,
 ): TSource => {

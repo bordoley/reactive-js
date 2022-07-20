@@ -60,7 +60,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions)\> |
+| `scheduler` | [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
 

@@ -8,21 +8,23 @@ import { ConstructorOf, Factory, pipe } from "../../../util/functions";
 import { MutableRefLike, MutableRefLike_current } from "../MutableRefLike";
 import { Mixin, Mixin1, Mixin2, Mixin3, addProperty } from "../mixins";
 
-export interface SerialDisposableLike<TDisposable extends DisposableLike>
-  extends DisposableLike,
+export interface SerialDisposableLike<
+  TDisposable extends DisposableLike = DisposableLike,
+> extends DisposableLike,
     MutableRefLike<TDisposable> {}
 
 export const SerialDisposableMixin_current = Symbol(
   "SerialDisposableMixin_current",
 );
 
-export interface SerialDisposableMixin<T extends DisposableLike>
-  extends DisposableLike {
+export interface SerialDisposableMixin<
+  T extends DisposableLike = DisposableLike,
+> {
   [SerialDisposableMixin_current]: Option<T>;
 }
 
 function set<TDisposable extends DisposableLike>(
-  this: SerialDisposableMixin<TDisposable>,
+  this: SerialDisposableMixin<TDisposable> & DisposableLike,
   newCurrent: TDisposable,
 ) {
   const oldCurrent = this[SerialDisposableMixin_current];
@@ -69,12 +71,14 @@ interface MixinSerialDisposable {
 }
 
 export const mixinSerialDisposable: MixinSerialDisposable = <
-  T extends SerialDisposableMixin<TDisposable>,
+  T extends SerialDisposableMixin<TDisposable> & DisposableLike,
   TDisposable extends DisposableLike = DisposableLike,
 >(
   defaultValue: Factory<TDisposable>,
 ) => {
-  function get(this: SerialDisposableMixin<TDisposable>): TDisposable {
+  function get(
+    this: SerialDisposableMixin<TDisposable> & DisposableLike,
+  ): TDisposable {
     let current = this[SerialDisposableMixin_current];
     if (isNone(current)) {
       current = defaultValue();

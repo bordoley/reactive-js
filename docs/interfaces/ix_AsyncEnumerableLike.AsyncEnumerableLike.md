@@ -56,7 +56,7 @@ ___
 
 ### TCtx
 
-• `Optional` `Readonly` **TCtx**: [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions)\>
+• `Optional` `Readonly` **TCtx**: [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)
 
 #### Overrides
 
@@ -82,7 +82,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `_` | `undefined` \| [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions)\> |
+| `_` | `undefined` \| [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md) |
 
 #### Returns
 
@@ -102,7 +102,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions)\> |
+| `scheduler` | [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
 

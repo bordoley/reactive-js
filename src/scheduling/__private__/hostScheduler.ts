@@ -1,4 +1,5 @@
 import { getDelay } from "../../__internal__/optionalArgs";
+import { runContinuation } from "../../__internal__/scheduling";
 import {
   DisposableMixin,
   DisposableMixin_disposables,
@@ -19,7 +20,6 @@ import {
 import { none } from "../../util/Option";
 import { instanceFactory, pipe } from "../../util/functions";
 import { ContinuationLike } from "../ContinuationLike";
-import { runContinuation } from "../SchedulerImplementationLike";
 import {
   SchedulerLike,
   SchedulerLike_inContinuation,
