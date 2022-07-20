@@ -12,6 +12,10 @@
 
 - [PrioritySchedulerOptions](scheduling_PrioritySchedulerLike.md#priorityscheduleroptions)
 
+### Functions
+
+- [toScheduler](scheduling_PrioritySchedulerLike.md#toscheduler)
+
 ## Type Aliases
 
 ### PrioritySchedulerOptions
@@ -24,3 +28,21 @@
 | :------ | :------ |
 | `delay?` | `number` |
 | `priority` | `number` |
+
+## Functions
+
+### toScheduler
+
+▸ **toScheduler**(`priority`): [`Function1`](util_functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling_PrioritySchedulerLike.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)\>
+
+Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `priority` | `number` | The priority to schedule work at. |
+
+#### Returns
+
+[`Function1`](util_functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling_PrioritySchedulerLike.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)\>
