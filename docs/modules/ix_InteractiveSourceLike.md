@@ -32,7 +32,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TSource` | extends [`InteractiveSourceLike`](../interfaces/ix_InteractiveSourceLike.InteractiveSourceLike.md) = [`InteractiveSourceLike`](../interfaces/ix_InteractiveSourceLike.InteractiveSourceLike.md) |
+| `TSource` | extends `Object` = [`InteractiveSourceLike`](../interfaces/ix_InteractiveSourceLike.InteractiveSourceLike.md) |
 
 #### Parameters
 

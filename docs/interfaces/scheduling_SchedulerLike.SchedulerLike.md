@@ -1,14 +1,8 @@
 [Reactive-JS](../README.md) / [scheduling/SchedulerLike](../modules/scheduling_SchedulerLike.md) / SchedulerLike
 
-# Interface: SchedulerLike<TOptions\>
+# Interface: SchedulerLike
 
 [scheduling/SchedulerLike](../modules/scheduling_SchedulerLike.md).SchedulerLike
-
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TOptions` | extends [`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions) = [`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions) |
 
 ## Hierarchy
 
@@ -16,9 +10,7 @@
 
   ↳ **`SchedulerLike`**
 
-  ↳↳ [`PausableSchedulerLike`](scheduling_PausableSchedulerLike.PausableSchedulerLike.md)
-
-  ↳↳ [`PrioritySchedulerLike`](scheduling_SchedulerLike.PrioritySchedulerLike.md)
+  ↳↳ [`PauseableSchedulerLike`](scheduling_SchedulerLike.PauseableSchedulerLike.md)
 
   ↳↳ [`VirtualTimeSchedulerLike`](scheduling_SchedulerLike.VirtualTimeSchedulerLike.md)
 
@@ -151,7 +143,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `continuation` | [`ContinuationLike`](scheduling_ContinuationLike.ContinuationLike.md) |
-| `options?` | `TOptions` |
+| `options?` | [`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions) |
 
 #### Returns
 

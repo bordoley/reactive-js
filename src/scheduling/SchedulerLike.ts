@@ -15,6 +15,7 @@ import {
   isDisposed,
 } from "../util/DisposableLike";
 import { Option, isNone, isSome, none } from "../util/Option";
+import { PauseableLike } from "../util/PauseableLike";
 import {
   Function1,
   SideEffect,
@@ -35,9 +36,7 @@ export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 
 export type SchedulerOptions = { readonly delay?: number };
 
-export interface SchedulerLike<
-  TOptions extends SchedulerOptions = SchedulerOptions,
-> extends DisposableLike {
+export interface SchedulerLike extends DisposableLike {
   readonly [SchedulerLike_inContinuation]: boolean;
   readonly [SchedulerLike_now]: number;
   readonly [SchedulerLike_shouldYield]: boolean;
@@ -49,26 +48,15 @@ export interface SchedulerLike<
 
   [SchedulerLike_schedule](
     continuation: ContinuationLike,
-    options?: TOptions,
+    options?: SchedulerOptions,
   ): void;
 }
-
-export type PrioritySchedulerOptions = {
-  readonly priority: number;
-  readonly delay?: number;
-};
-
-/**
- * A scheduler which schedules work according to it's priority.
- *
- * @noInheritDoc
- */
-export interface PrioritySchedulerLike
-  extends SchedulerLike<PrioritySchedulerOptions> {}
 
 export interface VirtualTimeSchedulerLike
   extends EnumeratorLike<void>,
     SchedulerLike {}
+
+export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {}
 
 export const isInContinuation = (scheduler: {
   readonly [SchedulerLike_inContinuation]: boolean;

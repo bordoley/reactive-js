@@ -56,7 +56,7 @@ ___
 
 ### getScheduler
 
-▸ **getScheduler**<`T`\>(`observer`): [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](scheduling_SchedulerLike.md#scheduleroptions)\>
+▸ **getScheduler**<`T`\>(`observer`): [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)
 
 #### Type parameters
 
@@ -72,4 +72,4 @@ ___
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](scheduling_SchedulerLike.md#scheduleroptions)\>
+[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)

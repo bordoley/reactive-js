@@ -36,7 +36,7 @@
 
 ### [DispatcherLike\_scheduler]
 
-• `Readonly` **[DispatcherLike\_scheduler]**: [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](../modules/scheduling_SchedulerLike.md#scheduleroptions)\>
+• `Readonly` **[DispatcherLike\_scheduler]**: [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)
 
 ___
 

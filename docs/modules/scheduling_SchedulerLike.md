@@ -6,13 +6,12 @@
 
 ### Interfaces
 
-- [PrioritySchedulerLike](../interfaces/scheduling_SchedulerLike.PrioritySchedulerLike.md)
+- [PauseableSchedulerLike](../interfaces/scheduling_SchedulerLike.PauseableSchedulerLike.md)
 - [SchedulerLike](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/scheduling_SchedulerLike.VirtualTimeSchedulerLike.md)
 
 ### Type Aliases
 
-- [PrioritySchedulerOptions](scheduling_SchedulerLike.md#priorityscheduleroptions)
 - [SchedulerOptions](scheduling_SchedulerLike.md#scheduleroptions)
 
 ### Variables
@@ -33,19 +32,6 @@
 - [shouldYield](scheduling_SchedulerLike.md#shouldyield)
 
 ## Type Aliases
-
-### PrioritySchedulerOptions
-
-Ƭ **PrioritySchedulerOptions**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `delay?` | `number` |
-| `priority` | `number` |
-
-___
 
 ### SchedulerOptions
 
@@ -159,7 +145,7 @@ ___
 
 ### schedule
 
-▸ **schedule**(`f`, `options?`): [`Function1`](util_functions.md#function1)<[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](scheduling_SchedulerLike.md#scheduleroptions)\>, [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md)\>
+▸ **schedule**(`f`, `options?`): [`Function1`](util_functions.md#function1)<[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md), [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md)\>
 
 #### Parameters
 
@@ -171,7 +157,7 @@ ___
 
 #### Returns
 
-[`Function1`](util_functions.md#function1)<[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)<[`SchedulerOptions`](scheduling_SchedulerLike.md#scheduleroptions)\>, [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md)\>
+[`Function1`](util_functions.md#function1)<[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md), [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md)\>
 
 ___
 
