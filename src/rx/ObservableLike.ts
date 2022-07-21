@@ -13,7 +13,7 @@ export const ObservableLike_observableType = Symbol(
  *
  * @noInheritDoc
  */
-export interface ObservableLike<T = unknown> extends ReactiveContainerLike<T> {
+export interface ObservableLike<T = unknown> extends ReactiveContainerLike {
   readonly TStatefulContainerState?: ObserverLike<T>;
 
   readonly [ObservableLike_observableType]:

@@ -175,7 +175,7 @@ declare const pipe: Pipe;
 /**
  * Pipes `source` through a series of unary functions.
  */
-declare const pipeUnsafe: (source: unknown, ...operators: Function1<unknown, unknown>[]) => unknown;
+declare const pipeUnsafe: (source: unknown, ...operators: Function1<any, any>[]) => unknown;
 interface Compose {
     <T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     <T, A, B, C>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Function1<T, C>;

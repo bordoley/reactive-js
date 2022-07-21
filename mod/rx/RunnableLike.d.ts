@@ -2,8 +2,8 @@ import { ContainerLike, Container, ContainerOf } from '../containers/ContainerLi
 import { Function1 } from '../util/functions.js';
 import { ReactiveContainerLike, ReactiveContainerLike_sinkInto } from "./ReactiveContainerLike.mjs";
 import { ReactiveSinkLike } from "./ReactiveSinkLike.mjs";
-interface RunnableLike<T = unknown> extends ReactiveContainerLike<T> {
-    readonly TStatefulContainerState?: ReactiveSinkLike<T>;
+interface RunnableLike<T = unknown> extends ReactiveContainerLike {
+    readonly TStatefulContainerState?: ReactiveSinkLike<this["T"]>;
     [ReactiveContainerLike_sinkInto](sink: ReactiveSinkLike<T>): void;
 }
 declare type ToRunnable<C extends ContainerLike> = Container<C> & {

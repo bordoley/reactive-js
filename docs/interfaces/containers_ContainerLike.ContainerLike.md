@@ -1,14 +1,8 @@
 [Reactive-JS](../README.md) / [containers/ContainerLike](../modules/containers_ContainerLike.md) / ContainerLike
 
-# Interface: ContainerLike<T\>
+# Interface: ContainerLike
 
 [containers/ContainerLike](../modules/containers_ContainerLike.md).ContainerLike
-
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
 
 ## Hierarchy
 
@@ -33,7 +27,7 @@
 
 ### T
 
-• **T**: `undefined` \| `T`
+• `Optional` `Readonly` **T**: `unknown`
 
 ___
 

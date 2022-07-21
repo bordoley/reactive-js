@@ -4,7 +4,7 @@ declare type SequenceResult<T> = {
     readonly data: T;
     readonly next: SequenceLike<T>;
 };
-interface SequenceLike<T = unknown> extends ContainerLike<T> {
+interface SequenceLike<T = unknown> extends ContainerLike {
     readonly TContainerOf?: SequenceLike<this["T"]>;
     (): Option<SequenceResult<T>>;
 }

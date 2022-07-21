@@ -9,8 +9,8 @@ export interface FlowableLike<
   T,
   TStream extends FlowableStreamLike<T> = FlowableStreamLike<T>,
 > extends StreamableLike<FlowMode, T, TStream>,
-    ContainerLike<T> {
-  readonly TContainerOf?: FlowableStreamLike<this["T"]>;
+    ContainerLike {
+  readonly TContainerOf?: this;
 }
 export interface FlowableStreamLike<T>
   extends StreamLike<FlowMode, T>,

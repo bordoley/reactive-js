@@ -17,8 +17,8 @@ import {
 } from "../util/functions";
 import { empty as emptyArray } from "./ReadonlyArrayLike";
 
-export interface ContainerLike<T = unknown> {
-  readonly T?: T;
+export interface ContainerLike {
+  readonly T?: unknown;
   readonly TContainerOf?: unknown;
 }
 

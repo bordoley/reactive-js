@@ -10,8 +10,8 @@ import {
 } from "./ReactiveContainerLike";
 import { ReactiveSinkLike } from "./ReactiveSinkLike";
 
-export interface RunnableLike<T = unknown> extends ReactiveContainerLike<T> {
-  readonly TStatefulContainerState?: ReactiveSinkLike<T>;
+export interface RunnableLike<T = unknown> extends ReactiveContainerLike {
+  readonly TStatefulContainerState?: ReactiveSinkLike<this["T"]>;
 
   [ReactiveContainerLike_sinkInto](sink: ReactiveSinkLike<T>): void;
 }

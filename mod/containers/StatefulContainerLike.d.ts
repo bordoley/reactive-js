@@ -1,9 +1,8 @@
 import { DisposableLike } from '../util/DisposableLike.js';
 import { Function1, Factory, Function2, Function3, Function4, Function5 } from '../util/functions.js';
 import { ContainerLike, Container, ContainerOf, ContainerOperator } from "./ContainerLike.mjs";
-interface StatefulContainerLike<T = unknown> extends ContainerLike<T> {
+interface StatefulContainerLike extends ContainerLike {
     readonly TStatefulContainerState?: DisposableLike;
-    readonly TContainerOf?: this;
 }
 declare type StatefulContainerStateOf<C extends StatefulContainerLike, T> = C extends {
     readonly TStatefulContainerState?: DisposableLike;
@@ -57,12 +56,12 @@ declare type Using<C extends StatefulContainerLike> = Container<C> & {
     ]>, containerFactory: Function5<TResource1, TResource2, TResource3, TResource4, TResource5, ContainerOf<C, T>>): ContainerOf<C, T>;
     using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, runnableFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>): ContainerOf<C, T>;
 };
-declare const encodeUtf8: <C extends StatefulContainerLike<unknown>>(m: Container<C> & {
+declare const encodeUtf8: <C extends StatefulContainerLike>(m: Container<C> & {
     defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 } & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 }) => ContainerOperator<C, string, Uint8Array>;
-declare const genMap: <C extends StatefulContainerLike<unknown>, TA, TB, OConcatAll extends Record<string, never> = Record<string, never>, OFromIterator extends Record<string, never> = Record<string, never>, TReturn = any, TNext = unknown>(m: Container<C> & {
+declare const genMap: <C extends StatefulContainerLike, TA, TB, OConcatAll extends Record<string, never> = Record<string, never>, OFromIterator extends Record<string, never> = Record<string, never>, TReturn = any, TNext = unknown>(m: Container<C> & {
     map<TA_1, TB_1>(mapper: Function1<TA_1, TB_1>): ContainerOperator<C, TA_1, TB_1>;
 } & {
     concatAll: <T>(options?: Partial<OConcatAll> | undefined) => ContainerOperator<C, ContainerOf<C, T>, T>;
