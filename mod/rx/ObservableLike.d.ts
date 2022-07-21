@@ -9,7 +9,7 @@ declare const ObservableLike_observableType: unique symbol;
  *
  * @noInheritDoc
  */
-interface ObservableLike<T = unknown> extends ReactiveContainerLike<T> {
+interface ObservableLike<T = unknown> extends ReactiveContainerLike {
     readonly TStatefulContainerState?: ObserverLike<T>;
     readonly [ObservableLike_observableType]: typeof EnumerableObservable | typeof RunnableObservable | typeof DefaultObservable;
 }

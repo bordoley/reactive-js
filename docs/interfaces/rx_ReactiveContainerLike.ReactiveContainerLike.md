@@ -1,18 +1,12 @@
 [Reactive-JS](../README.md) / [rx/ReactiveContainerLike](../modules/rx_ReactiveContainerLike.md) / ReactiveContainerLike
 
-# Interface: ReactiveContainerLike<T\>
+# Interface: ReactiveContainerLike
 
 [rx/ReactiveContainerLike](../modules/rx_ReactiveContainerLike.md).ReactiveContainerLike
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
 
-- [`StatefulContainerLike`](containers_StatefulContainerLike.StatefulContainerLike.md)<`T`\>
+- [`StatefulContainerLike`](containers_StatefulContainerLike.StatefulContainerLike.md)
 
   ↳ **`ReactiveContainerLike`**
 
@@ -36,7 +30,7 @@
 
 ### T
 
-• **T**: `undefined` \| `T`
+• `Optional` `Readonly` **T**: `unknown`
 
 #### Inherited from
 
@@ -46,9 +40,9 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`ReactiveContainerLike`](rx_ReactiveContainerLike.ReactiveContainerLike.md)<`T`\>
+• `Optional` `Readonly` **TContainerOf**: [`ReactiveContainerLike`](rx_ReactiveContainerLike.ReactiveContainerLike.md)
 
-#### Inherited from
+#### Overrides
 
 [StatefulContainerLike](containers_StatefulContainerLike.StatefulContainerLike.md).[TContainerOf](containers_StatefulContainerLike.StatefulContainerLike.md#tcontainerof)
 

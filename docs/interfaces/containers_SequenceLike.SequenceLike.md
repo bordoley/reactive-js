@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ContainerLike`](containers_ContainerLike.ContainerLike.md)<`T`\>
+- [`ContainerLike`](containers_ContainerLike.ContainerLike.md)
 
   ↳ **`SequenceLike`**
 
@@ -37,7 +37,7 @@
 
 ### T
 
-• **T**: `undefined` \| `T`
+• `Optional` `Readonly` **T**: `unknown`
 
 #### Inherited from
 
@@ -47,7 +47,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`SequenceLike`](containers_SequenceLike.SequenceLike.md)<`undefined` \| `T`\>
+• `Optional` `Readonly` **TContainerOf**: [`SequenceLike`](containers_SequenceLike.SequenceLike.md)<`unknown`\>
 
 #### Overrides
 

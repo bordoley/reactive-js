@@ -9,9 +9,9 @@ import { ReactiveSinkLike } from "./ReactiveSinkLike";
 export const ReactiveContainerLike_sinkInto = Symbol(
   "ReactiveContainerLike_sinkInto",
 );
-export interface ReactiveContainerLike<T = unknown>
-  extends StatefulContainerLike<T> {
-  readonly TStatefulContainerState?: ReactiveSinkLike<unknown>;
+export interface ReactiveContainerLike extends StatefulContainerLike {
+  readonly TContainerOf?: this;
+  readonly TStatefulContainerState?: ReactiveSinkLike;
 
   [ReactiveContainerLike_sinkInto](
     sink: StatefulContainerStateOf<ReactiveContainerLike, this["T"]>,

@@ -1,7 +1,7 @@
 import { Option } from '../util/Option.js';
 import { Function1, Equality, Predicate, Updater, Factory, Reducer, TypePredicate } from '../util/functions.js';
-interface ContainerLike<T = unknown> {
-    readonly T?: T;
+interface ContainerLike {
+    readonly T?: unknown;
     readonly TContainerOf?: unknown;
 }
 declare type ContainerOf<C extends ContainerLike, T> = C extends {
@@ -160,35 +160,35 @@ declare type Zip<C extends ContainerLike> = Container<C> & {
     ]>;
     zip<T>(...enumerables: readonly ContainerOf<C, T>[]): ContainerOf<C, readonly T[]>;
 };
-declare const compute: <C extends ContainerLike<unknown>, T, O extends FromArrayOptions = FromArrayOptions>(m: Container<C> & {
+declare const compute: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(m: Container<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 } & {
     fromArray<T_1>(options?: Partial<O> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 }, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Factory<T>, ContainerOf<C, T>>;
-declare const concatMap: <C extends ContainerLike<unknown>, TA, TB, O = Record<string, never>>({ map, concatAll }: Container<C> & {
+declare const concatMap: <C extends ContainerLike, TA, TB, O = Record<string, never>>({ map, concatAll }: Container<C> & {
     map<TA_1, TB_1>(mapper: Function1<TA_1, TB_1>): ContainerOperator<C, TA_1, TB_1>;
 } & {
     concatAll: <T>(options?: Partial<O> | undefined) => ContainerOperator<C, ContainerOf<C, T>, T>;
 }, mapper: Function1<TA, ContainerOf<C, TB>>, options?: Partial<O> | undefined) => ContainerOperator<C, TA, TB>;
-declare const concatWith: <C extends ContainerLike<unknown>, T>({ concat }: Concat<C>, snd: ContainerOf<C, T>) => ContainerOperator<C, T, T>;
-declare const contains: <C extends ContainerLike<unknown>, T>({ someSatisfy }: SomeSatisfy<C>, value: T, options?: {
+declare const concatWith: <C extends ContainerLike, T>({ concat }: Concat<C>, snd: ContainerOf<C, T>) => ContainerOperator<C, T, T>;
+declare const contains: <C extends ContainerLike, T>({ someSatisfy }: SomeSatisfy<C>, value: T, options?: {
     readonly equality?: Equality<T> | undefined;
 }) => ContainerOperator<C, T, boolean>;
-declare const empty: <C extends ContainerLike<unknown>, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => ContainerOf<C, T>;
+declare const empty: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => ContainerOf<C, T>;
 declare function endWith<C extends ContainerLike, T>(m: Concat<C> & FromArray<C>, value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
-declare const fromOption: <C extends ContainerLike<unknown>, T, O extends FromArrayOptions = FromArrayOptions>(m: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Option<T>, ContainerOf<C, T>>;
-declare const fromValue: <C extends ContainerLike<unknown>, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<T, ContainerOf<C, T>>;
-declare const keepType: <C extends ContainerLike<unknown>, TA, TB extends TA>({ keep }: Keep<C>, predicate: TypePredicate<TA, TB>) => ContainerOperator<C, TA, TB>;
-declare const ignoreElements: <C extends ContainerLike<unknown>, T>({ keep, }: Keep<C>) => ContainerOperator<C, unknown, T>;
-declare const mapTo: <C extends ContainerLike<unknown>, TA, TB>({ map }: Map<C>, value: TB) => ContainerOperator<C, TA, TB>;
-declare const noneSatisfy: <C extends ContainerLike<unknown>, T>({ everySatisfy }: EverySatisfy<C>, predicate: Predicate<T>) => ContainerOperator<C, T, boolean>;
+declare const fromOption: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(m: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Option<T>, ContainerOf<C, T>>;
+declare const fromValue: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<T, ContainerOf<C, T>>;
+declare const keepType: <C extends ContainerLike, TA, TB extends TA>({ keep }: Keep<C>, predicate: TypePredicate<TA, TB>) => ContainerOperator<C, TA, TB>;
+declare const ignoreElements: <C extends ContainerLike, T>({ keep, }: Keep<C>) => ContainerOperator<C, unknown, T>;
+declare const mapTo: <C extends ContainerLike, TA, TB>({ map }: Map<C>, value: TB) => ContainerOperator<C, TA, TB>;
+declare const noneSatisfy: <C extends ContainerLike, T>({ everySatisfy }: EverySatisfy<C>, predicate: Predicate<T>) => ContainerOperator<C, T, boolean>;
 declare function startWith<C extends ContainerLike, T>(m: Concat<C> & FromArray<C>, value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
-declare const throws: <C extends ContainerLike<unknown>, T, O extends FromArrayOptions = FromArrayOptions>(m: Container<C> & {
+declare const throws: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(m: Container<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 } & {
     fromArray<T_1>(options?: Partial<O> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 }, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Factory<unknown>, ContainerOf<C, T>>;
-declare const zipWith: <C extends ContainerLike<unknown>, TA, TB>({ zip }: Zip<C>, snd: ContainerOf<C, TB>) => ContainerOperator<C, TA, readonly [
+declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: ContainerOf<C, TB>) => ContainerOperator<C, TA, readonly [
     TA,
     TB
 ]>;

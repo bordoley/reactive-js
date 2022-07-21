@@ -424,7 +424,7 @@ export const pipe: Pipe = (
  */
 export const pipeUnsafe = (
   source: unknown,
-  ...operators: Function1<unknown, unknown>[]
+  ...operators: Function1<any, any>[]
 ): unknown => operators.reduce(updateReducer, source);
 
 interface Compose {

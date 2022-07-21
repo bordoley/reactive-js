@@ -133,7 +133,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers_StatefulContainerLike.StatefulContainerLike.md)<`unknown`, `C`\> |
+| `C` | extends [`StatefulContainerLike`](../interfaces/containers_StatefulContainerLike.StatefulContainerLike.md) |
 
 #### Parameters
 
@@ -155,7 +155,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers_StatefulContainerLike.StatefulContainerLike.md)<`unknown`, `C`\> |
+| `C` | extends [`StatefulContainerLike`](../interfaces/containers_StatefulContainerLike.StatefulContainerLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
 | `OConcatAll` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |

@@ -2,7 +2,7 @@ import { Function1, Predicate, SideEffect1 } from "../util/functions";
 import { ContainerLike, Keep, Map } from "./ContainerLike";
 
 export interface ReadonlyArrayLike<T = unknown>
-  extends ContainerLike<T>,
+  extends ContainerLike,
     ReadonlyArray<T> {
   readonly TContainerOf?: ReadonlyArrayLike<this["T"]>;
 }

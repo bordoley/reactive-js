@@ -20,9 +20,8 @@ import {
   Map,
 } from "./ContainerLike";
 
-export interface StatefulContainerLike<T = unknown> extends ContainerLike<T> {
+export interface StatefulContainerLike extends ContainerLike {
   readonly TStatefulContainerState?: DisposableLike;
-  readonly TContainerOf?: this;
 }
 
 export type StatefulContainerStateOf<

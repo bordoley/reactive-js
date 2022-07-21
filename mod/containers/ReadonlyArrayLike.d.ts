@@ -1,6 +1,6 @@
 import { Predicate, Function1, SideEffect1 } from '../util/functions.js';
 import { ContainerLike, Keep, Map } from "./ContainerLike.mjs";
-interface ReadonlyArrayLike<T = unknown> extends ContainerLike<T>, ReadonlyArray<T> {
+interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
     readonly TContainerOf?: ReadonlyArrayLike<this["T"]>;
 }
 declare const empty: <T>() => ReadonlyArrayLike<T>;

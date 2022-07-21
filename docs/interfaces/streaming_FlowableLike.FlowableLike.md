@@ -15,7 +15,7 @@
 
 - [`StreamableLike`](streaming_StreamableLike.StreamableLike.md)<[`FlowMode`](../modules/streaming_FlowableLike.md#flowmode), `T`, `TStream`\>
 
-- [`ContainerLike`](containers_ContainerLike.ContainerLike.md)<`T`\>
+- [`ContainerLike`](containers_ContainerLike.ContainerLike.md)
 
   ↳ **`FlowableLike`**
 
@@ -34,7 +34,7 @@
 
 ### T
 
-• **T**: `undefined` \| `T`
+• `Optional` `Readonly` **T**: `unknown`
 
 #### Inherited from
 
@@ -44,7 +44,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`FlowableStreamLike`](streaming_FlowableLike.FlowableStreamLike.md)<`undefined` \| `T`\>
+• `Optional` `Readonly` **TContainerOf**: [`FlowableLike`](streaming_FlowableLike.FlowableLike.md)<`T`, `TStream`\>
 
 #### Overrides
 

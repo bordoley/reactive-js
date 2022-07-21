@@ -8,14 +8,13 @@ export const InteractiveContainerLike_interact = Symbol(
   "InteractiveContainerLike_interact",
 );
 
-export interface InteractiveContainerLike<T = unknown>
-  extends StatefulContainerLike<T> {
+export interface InteractiveContainerLike extends StatefulContainerLike {
   readonly TStatefulContainerState?: InteractiveSourceLike;
   readonly TCtx?: unknown;
 
   [InteractiveContainerLike_interact](
     _: this["TCtx"],
-  ): StatefulContainerStateOf<InteractiveContainerLike, T>;
+  ): StatefulContainerStateOf<InteractiveContainerLike, this["T"]>;
 }
 
 export type InteractiveContainerCtxOf<
