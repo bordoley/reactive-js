@@ -1,18 +1,12 @@
 [Reactive-JS](../README.md) / [ix/InteractiveContainerLike](../modules/ix_InteractiveContainerLike.md) / InteractiveContainerLike
 
-# Interface: InteractiveContainerLike<T\>
+# Interface: InteractiveContainerLike
 
 [ix/InteractiveContainerLike](../modules/ix_InteractiveContainerLike.md).InteractiveContainerLike
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
 
-- [`StatefulContainerLike`](containers_StatefulContainerLike.StatefulContainerLike.md)<`T`\>
+- [`StatefulContainerLike`](containers_StatefulContainerLike.StatefulContainerLike.md)
 
   ↳ **`InteractiveContainerLike`**
 
@@ -37,7 +31,7 @@
 
 ### T
 
-• **T**: `undefined` \| `T`
+• `Optional` `Readonly` **T**: `unknown`
 
 #### Inherited from
 
@@ -47,7 +41,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`InteractiveContainerLike`](ix_InteractiveContainerLike.InteractiveContainerLike.md)<`T`\>
+• `Optional` `Readonly` **TContainerOf**: `unknown`
 
 #### Inherited from
 

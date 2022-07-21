@@ -5,7 +5,7 @@ import { InteractiveContainerLike } from "./InteractiveContainerLike";
 
 export interface AsyncEnumerableLike<T = unknown>
   extends StreamableLike<void, T, AsyncEnumeratorLike<T>>,
-    InteractiveContainerLike<T> {
+    InteractiveContainerLike {
   readonly TStatefulContainerState?: AsyncEnumeratorLike<T>;
   readonly TCtx?: SchedulerLike;
 }

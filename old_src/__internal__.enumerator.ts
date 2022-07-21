@@ -14,44 +14,6 @@ import { EnumeratorLike, getCurrent, hasCurrent, move } from "./enumerator";
 import { newInstance, pipe, pipeLazy, raise } from "./functions";
 import { Option, none } from "./option";
 
-export abstract class AbstractEnumerator<T>
-  extends Disposable
-  implements EnumeratorLike<T>
-{
-  private _current: Option<T> = none;
-  private _hasCurrent = false;
-
-  constructor() {
-    super();
-    pipe(this, onDisposed(pipeLazy(this, reset)));
-  }
-
-  get current(): T {
-    return hasCurrent(this) ? (this._current as T) : raise();
-  }
-
-  set current(v: T) {
-    if (!isDisposed(this)) {
-      this._current = v;
-      this._hasCurrent = true;
-    }
-  }
-
-  get hasCurrent(): boolean {
-    return this._hasCurrent;
-  }
-
-  reset() {
-    this._current = none;
-    this._hasCurrent = false;
-  }
-
-  abstract move(): boolean;
-}
-
-export const reset = <T>(enumerator: AbstractEnumerator<T>) =>
-  enumerator.reset();
-
 const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
   for (const enumerator of enumerators) {
     move(enumerator);

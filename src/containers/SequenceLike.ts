@@ -38,7 +38,7 @@ export type SequenceResult<T> = {
   readonly next: SequenceLike<T>;
 };
 
-export interface SequenceLike<T = unknown> extends ContainerLike<T> {
+export interface SequenceLike<T = unknown> extends ContainerLike {
   readonly TContainerOf?: SequenceLike<this["T"]>;
 
   (): Option<SequenceResult<T>>;

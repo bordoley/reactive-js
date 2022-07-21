@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ContainerLike`](containers_ContainerLike.ContainerLike.md)<`T`\>
+- [`ContainerLike`](containers_ContainerLike.ContainerLike.md)
 
 - `ReadonlyArray`<`T`\>
 
@@ -29,7 +29,7 @@
 
 ### T
 
-• **T**: `undefined` \| `T`
+• `Optional` `Readonly` **T**: `unknown`
 
 #### Inherited from
 
@@ -39,7 +39,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`ReadonlyArrayLike`](containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`undefined` \| `T`\>
+• `Optional` `Readonly` **TContainerOf**: [`ReadonlyArrayLike`](containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`unknown`\>
 
 #### Overrides
 

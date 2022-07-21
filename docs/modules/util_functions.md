@@ -2883,7 +2883,7 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `source` | `unknown` |
-| `...operators` | [`Function1`](util_functions.md#function1)<`unknown`, `unknown`\>[] |
+| `...operators` | [`Function1`](util_functions.md#function1)<`any`, `any`\>[] |
 
 #### Returns
 

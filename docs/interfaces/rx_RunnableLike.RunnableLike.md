@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ReactiveContainerLike`](rx_ReactiveContainerLike.ReactiveContainerLike.md)<`T`\>
+- [`ReactiveContainerLike`](rx_ReactiveContainerLike.ReactiveContainerLike.md)
 
   ↳ **`RunnableLike`**
 
@@ -32,7 +32,7 @@
 
 ### T
 
-• **T**: `undefined` \| `T`
+• `Optional` `Readonly` **T**: `unknown`
 
 #### Inherited from
 
@@ -52,7 +52,7 @@ ___
 
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`ReactiveSinkLike`](rx_ReactiveSinkLike.ReactiveSinkLike.md)<`T`\>
+• `Optional` `Readonly` **TStatefulContainerState**: [`ReactiveSinkLike`](rx_ReactiveSinkLike.ReactiveSinkLike.md)<`unknown`\>
 
 #### Overrides
 

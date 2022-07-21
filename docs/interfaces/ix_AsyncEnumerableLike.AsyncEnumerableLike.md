@@ -14,7 +14,7 @@
 
 - [`StreamableLike`](streaming_StreamableLike.StreamableLike.md)<`void`, `T`, [`AsyncEnumeratorLike`](ix_AsyncEnumeratorLike.AsyncEnumeratorLike.md)<`T`\>\>
 
-- [`InteractiveContainerLike`](ix_InteractiveContainerLike.InteractiveContainerLike.md)<`T`\>
+- [`InteractiveContainerLike`](ix_InteractiveContainerLike.InteractiveContainerLike.md)
 
   ↳ **`AsyncEnumerableLike`**
 
@@ -36,7 +36,7 @@
 
 ### T
 
-• **T**: `undefined` \| `T`
+• `Optional` `Readonly` **T**: `unknown`
 
 #### Inherited from
 
@@ -46,7 +46,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`AsyncEnumerableLike`](ix_AsyncEnumerableLike.AsyncEnumerableLike.md)<`T`\>
+• `Optional` `Readonly` **TContainerOf**: `unknown`
 
 #### Inherited from
 

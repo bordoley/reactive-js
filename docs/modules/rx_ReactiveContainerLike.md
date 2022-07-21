@@ -62,7 +62,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveContainerLike`](../interfaces/rx_ReactiveContainerLike.ReactiveContainerLike.md)<`unknown`, `C`\> |
+| `C` | extends [`ReactiveContainerLike`](../interfaces/rx_ReactiveContainerLike.ReactiveContainerLike.md)<`C`\> |
 | `T` | `T` |
 | `TSink` | extends [`ReactiveSinkLike`](../interfaces/rx_ReactiveSinkLike.ReactiveSinkLike.md)<`unknown`, `TSink`\> |
 
@@ -86,7 +86,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveContainerLike`](../interfaces/rx_ReactiveContainerLike.ReactiveContainerLike.md)<`unknown`, `C`\> |
+| `C` | extends [`ReactiveContainerLike`](../interfaces/rx_ReactiveContainerLike.ReactiveContainerLike.md)<`C`\> |
 | `T` | `T` |
 | `TSink` | extends [`ReactiveSinkLike`](../interfaces/rx_ReactiveSinkLike.ReactiveSinkLike.md)<`unknown`, `TSink`\> |
 
