@@ -40,7 +40,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `obs` | [`MulticastObservableLike`](../interfaces/rx_MulticastObservableLike.MulticastObservableLike.md)<`unknown`\> |
+| `obs` | `Object` |
+| `obs.[MulticastObservableLike_observerCount]` | `number` |
 
 #### Returns
 
@@ -56,7 +57,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `obs` | [`MulticastObservableLike`](../interfaces/rx_MulticastObservableLike.MulticastObservableLike.md)<`unknown`\> |
+| `obs` | `Object` |
+| `obs.[MulticastObservableLike_replay]` | `number` |
 
 #### Returns
 

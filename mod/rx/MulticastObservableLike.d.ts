@@ -9,6 +9,10 @@ interface MulticastObservableLike<T = unknown> extends ObservableLike<T>, Dispos
     readonly [MulticastObservableLike_observerCount]: number;
     readonly [MulticastObservableLike_replay]: number;
 }
-declare const getObserverCount: (obs: MulticastObservableLike) => number;
-declare const getReplay: (obs: MulticastObservableLike) => number;
+declare const getObserverCount: (obs: {
+    [MulticastObservableLike_observerCount]: number;
+}) => number;
+declare const getReplay: (obs: {
+    [MulticastObservableLike_replay]: number;
+}) => number;
 export { MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, getObserverCount, getReplay };

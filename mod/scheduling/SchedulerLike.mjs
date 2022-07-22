@@ -1,9 +1,10 @@
 /// <reference types="./SchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { DisposableMixin_disposables, mixinDisposable } from '../__internal__/util/disposables.mjs';
-import { DisposableLike_error, DisposableLike_isDisposed, isDisposed, dispose } from '../util/DisposableLike.mjs';
+import { properties, prototype, init } from '../__internal__/util/Disposable.mjs';
+import { createObject } from '../__internal__/util/createObject.mjs';
+import { isDisposed, dispose } from '../util/DisposableLike.mjs';
 import { none, isSome, isNone } from '../util/Option.mjs';
-import { pipe, raise, newInstanceWith, newInstance } from '../util/functions.mjs';
+import { pipe, raise, newInstanceWith } from '../util/functions.mjs';
 import { ContinuationLike_run } from './ContinuationLike.mjs';
 
 const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
@@ -22,46 +23,48 @@ class YieldError {
     }
 }
 let currentScheduler = none;
-const Continuation = /*@__PURE__*/ (() => {
-    var _a, _b, _c;
-    class Continuation {
-        constructor(scheduler, f) {
-            this.scheduler = scheduler;
-            this.f = f;
-            this[_a] = none;
-            this[_b] = false;
-            this[_c] = new Set();
-        }
-        [(_a = DisposableLike_error, _b = DisposableLike_isDisposed, _c = DisposableMixin_disposables, ContinuationLike_run)]() {
-            if (!isDisposed(this)) {
-                let error = none;
-                let yieldError = none;
-                const { scheduler } = this;
-                const oldCurrentScheduler = currentScheduler;
-                currentScheduler = scheduler;
-                try {
-                    this.f();
-                }
-                catch (cause) {
-                    if (isYieldError(cause)) {
-                        yieldError = cause;
-                    }
-                    else {
-                        error = { cause };
-                    }
-                }
-                currentScheduler = oldCurrentScheduler;
-                if (isSome(yieldError)) {
-                    pipe(scheduler, schedule(this, yieldError));
+const continuationProperties = {
+    ...properties,
+    scheduler: none,
+    f: () => { },
+};
+const continuationPrototype = {
+    ...prototype,
+    [ContinuationLike_run]() {
+        if (!isDisposed(this)) {
+            let error = none;
+            let yieldError = none;
+            const { scheduler } = this;
+            const oldCurrentScheduler = currentScheduler;
+            currentScheduler = scheduler;
+            try {
+                this.f();
+            }
+            catch (cause) {
+                if (isYieldError(cause)) {
+                    yieldError = cause;
                 }
                 else {
-                    pipe(this, dispose(error));
+                    error = { cause };
                 }
             }
+            currentScheduler = oldCurrentScheduler;
+            if (isSome(yieldError)) {
+                pipe(scheduler, schedule(this, yieldError));
+            }
+            else {
+                pipe(this, dispose(error));
+            }
         }
-    }
-    return pipe(Continuation, mixinDisposable());
-})();
+    },
+};
+const createContinuation = (scheduler, f) => {
+    const instance = createObject(continuationPrototype, continuationProperties);
+    init(instance);
+    instance.scheduler = scheduler;
+    instance.f = f;
+    return instance;
+};
 const __yield = (options) => {
     const delay = getDelay(options);
     const scheduler = isNone(currentScheduler)
@@ -72,7 +75,7 @@ const __yield = (options) => {
     }
 };
 const schedule = (f, options) => scheduler => {
-    const continuation = typeof f === "function" ? newInstance(Continuation, scheduler, f) : f;
+    const continuation = typeof f === "function" ? createContinuation(scheduler, f) : f;
     scheduler[SchedulerLike_schedule](continuation, options);
     return continuation;
 };

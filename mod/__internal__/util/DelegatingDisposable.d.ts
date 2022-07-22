@@ -1,0 +1,16 @@
+import { DisposableLike, DisposableLike_error, Error, DisposableLike_isDisposed, DisposableOrTeardown } from '../../util/DisposableLike.js';
+import { Option } from '../../util/Option.js';
+declare const DelegatingDisposable_private_delegate: unique symbol;
+declare const properties: {
+    [DelegatingDisposable_private_delegate]: DisposableLike;
+};
+declare const prototype: {
+    readonly [DisposableLike_error]: Option<Error>;
+    readonly [DisposableLike_isDisposed]: boolean;
+    add(this: typeof properties, disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
+    dispose(this: {
+        [DelegatingDisposable_private_delegate]: DisposableLike;
+    }, error?: Error): void;
+};
+declare const init: (self: typeof properties, delegate: DisposableLike) => void;
+export { init, properties, prototype };
