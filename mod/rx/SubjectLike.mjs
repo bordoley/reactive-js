@@ -1,6 +1,6 @@
 /// <reference types="./SubjectLike.d.ts" />
 import { properties as properties$1, prototype as prototype$1, init } from '../__internal__/util/Disposable.mjs';
-import { createObject } from '../__internal__/util/createObject.mjs';
+import { createObjectFactory } from '../__internal__/util/Object.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
 import { isDisposed, onDisposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { newInstance, getLength, pipe, max } from '../util/functions.mjs';
@@ -63,10 +63,11 @@ const prototype = {
         pipe(this, addIgnoringChildErrors(getDispatcher(observer)));
     },
 };
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
 const create = (options) => {
     const { replay: replayOption = 0 } = options !== null && options !== void 0 ? options : {};
     const replay = max(replayOption, 0);
-    const instance = createObject(properties, prototype);
+    const instance = createInstance();
     init(instance);
     instance[MulticastObservableLike_replay] = replay;
     return instance;

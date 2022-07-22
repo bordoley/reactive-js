@@ -10,7 +10,7 @@ import {
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../../__internal__/util/Disposable";
-import { createObject } from "../../__internal__/util/createObject";
+import { createObjectFactory } from "../../__internal__/util/Object";
 import { EnumeratorLike_current } from "../../ix/EnumeratorLike";
 import { InteractiveSourceLike_move } from "../../ix/InteractiveSourceLike";
 import {
@@ -121,6 +121,8 @@ const prototype = {
   },
 };
 
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+
 /**
  * Creates a new virtual time scheduler instance.
  *
@@ -132,7 +134,7 @@ export const createVirtualTimeScheduler = (
   options: { readonly maxMicroTaskTicks?: number } = {},
 ): VirtualTimeSchedulerLike => {
   const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-  const instance = createObject(prototype, properties);
+  const instance = createInstance();
   disposableInit(instance);
   instance.maxMicroTaskTicks = maxMicroTaskTicks;
   instance.taskQueue = createPriorityQueue(comparator);

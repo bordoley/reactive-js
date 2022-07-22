@@ -14,12 +14,6 @@ class LiftedEnumerable {
         return pipeUnsafe(this.src, enumerate(), ...this.operators);
     }
 }
-/**
- * Returns an EnumerableOperator that applies `operator` to
- * the EnumeratorLike returned by the source when enumerated.
- *
- * @param operator
- */
 const lift = (operator) => (enumerable) => {
     const src = enumerable instanceof LiftedEnumerable ? enumerable.src : enumerable;
     const allFunctions = enumerable instanceof LiftedEnumerable
@@ -32,4 +26,4 @@ const liftT = {
     variance: interactive,
 };
 
-export { lift, liftT };
+export { liftT };

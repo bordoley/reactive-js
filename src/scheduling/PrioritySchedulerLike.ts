@@ -4,7 +4,7 @@ import {
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
-import { createObject } from "../__internal__/util/createObject";
+import { createObjectFactory } from "../__internal__/util/Object";
 import {
   DisposableLike,
   addIgnoringChildErrors,
@@ -98,6 +98,8 @@ const prototype = {
   },
 };
 
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *
@@ -107,7 +109,7 @@ const prototype = {
 export const toScheduler =
   (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
   priorityScheduler => {
-    const instance = createObject(prototype, properties);
+    const instance = createInstance();
     disposableInit(instance);
     instance.priority = priority;
     instance.priorityScheduler = priorityScheduler;

@@ -27,12 +27,5 @@ interface FromEnumerable<C extends ContainerLike> extends Container<C> {
 interface ToEnumerable<C extends ContainerLike> extends Container<C> {
     toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
-/**
- * Returns an EnumerableOperator that applies `operator` to
- * the EnumeratorLike returned by the source when enumerated.
- *
- * @param operator
- */
-declare const lift: <TA, TB>(operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>) => ContainerOperator<EnumerableLike<unknown>, TA, TB>;
 declare const liftT: Lift<EnumerableLike<unknown>, TInteractive>;
-export { EnumerableLike, FromEnumerable, ToEnumerable, lift, liftT };
+export { EnumerableLike, FromEnumerable, ToEnumerable, liftT };
