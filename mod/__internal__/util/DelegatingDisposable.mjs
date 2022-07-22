@@ -17,11 +17,11 @@ const prototype = {
         const delegate = self[DelegatingDisposable_private_delegate];
         return delegate[DisposableLike_isDisposed];
     },
-    add(disposable, ignoreChildErrors) {
+    [DisposableLike_add](disposable, ignoreChildErrors) {
         const delegate = this[DelegatingDisposable_private_delegate];
         delegate[DisposableLike_add](disposable, ignoreChildErrors);
     },
-    dispose(error) {
+    [DisposableLike_dispose](error) {
         const delegate = this[DelegatingDisposable_private_delegate];
         delegate[DisposableLike_dispose](error);
     },
