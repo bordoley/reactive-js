@@ -1,9 +1,11 @@
-import { EnumeratorLike } from '../ix/EnumeratorLike.js';
-import { DisposableLike } from '../util/DisposableLike.js';
-import { PauseableLike } from '../util/PauseableLike.js';
-import { SideEffect, Function1 } from '../util/functions.js';
+import { SchedulerLike_inContinuation } from '../__internal__/scheduling.js';
+export { SchedulerLike_inContinuation } from '../__internal__/scheduling.js';
 import { ContinuationLike } from "./ContinuationLike.mjs";
-declare const SchedulerLike_inContinuation: unique symbol;
+import { DisposableLike } from '../util/DisposableLike.js';
+import { SideEffect, Function1 } from '../util/functions.js';
+declare const create: (options?: {
+    readonly yieldInterval?: number;
+}) => SchedulerLike;
 declare const SchedulerLike_now: unique symbol;
 declare const SchedulerLike_requestYield: unique symbol;
 declare const SchedulerLike_shouldYield: unique symbol;
@@ -20,10 +22,6 @@ interface SchedulerLike extends DisposableLike {
      */
     [SchedulerLike_requestYield](): void;
     [SchedulerLike_schedule](continuation: ContinuationLike, options?: SchedulerOptions): void;
-}
-interface VirtualTimeSchedulerLike extends EnumeratorLike<void>, SchedulerLike {
-}
-interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
 }
 declare const isInContinuation: (scheduler: {
     readonly [SchedulerLike_inContinuation]: boolean;
@@ -43,4 +41,4 @@ declare const __yield: (options?: {
 declare const schedule: (f: SideEffect | ContinuationLike, options?: {
     readonly delay?: number;
 }) => Function1<SchedulerLike, DisposableLike>;
-export { PauseableSchedulerLike, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike, __yield, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield };
+export { SchedulerLike, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, __yield, create, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield };

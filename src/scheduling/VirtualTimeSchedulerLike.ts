@@ -1,37 +1,40 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/env";
+import { MAX_SAFE_INTEGER } from "../__internal__/env";
 import {
   properties as enumeratorProperties,
   prototype as enumeratorPrototype,
-} from "../../__internal__/ix/Enumerator";
-import { getDelay } from "../../__internal__/optionalArgs";
-import { runContinuation } from "../../__internal__/scheduling";
+} from "../__internal__/ix/Enumerator";
+import { getDelay } from "../__internal__/optionalArgs";
+import { runContinuation } from "../__internal__/scheduling";
+import {
+  QueueLike,
+  createPriorityQueue,
+} from "../__internal__/scheduling/queue";
 import {
   init as disposableInit,
   properties as disposableProperties,
   prototype as disposablePrototype,
-} from "../../__internal__/util/Disposable";
-import { createObjectFactory } from "../../__internal__/util/Object";
-import { EnumeratorLike_current } from "../../ix/EnumeratorLike";
-import { InteractiveSourceLike_move } from "../../ix/InteractiveSourceLike";
+} from "../__internal__/util/Disposable";
+import { createObjectFactory } from "../__internal__/util/Object";
+import { EnumeratorLike, EnumeratorLike_current } from "../ix/EnumeratorLike";
+import { InteractiveSourceLike_move } from "../ix/InteractiveSourceLike";
 import {
   DisposableLike,
   addIgnoringChildErrors,
   dispose,
   isDisposed,
-} from "../../util/DisposableLike";
-import { isSome, none } from "../../util/Option";
-import { pipe } from "../../util/functions";
-import { ContinuationLike } from "../ContinuationLike";
+} from "../util/DisposableLike";
+import { isSome, none } from "../util/Option";
+import { pipe } from "../util/functions";
+import { ContinuationLike } from "./ContinuationLike";
 import {
+  SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  VirtualTimeSchedulerLike,
   getCurrentTime,
-} from "../SchedulerLike";
-import { QueueLike, createPriorityQueue } from "./queue";
+} from "./SchedulerLike";
 
 type VirtualTask = {
   readonly continuation: ContinuationLike;
@@ -123,6 +126,10 @@ const prototype = {
 
 const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
 
+export interface VirtualTimeSchedulerLike
+  extends EnumeratorLike<void>,
+    SchedulerLike {}
+
 /**
  * Creates a new virtual time scheduler instance.
  *
@@ -130,7 +137,7 @@ const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
  * shouldYield should return false before returning true. Useful
  * for testing cooperative multitasking.
  */
-export const createVirtualTimeScheduler = (
+export const create = (
   options: { readonly maxMicroTaskTicks?: number } = {},
 ): VirtualTimeSchedulerLike => {
   const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;

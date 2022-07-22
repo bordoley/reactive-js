@@ -1,7 +1,8 @@
 import { DisposableLike } from '../util/DisposableLike.js';
 import { Function1 } from '../util/functions.js';
 import { ContinuationLike } from "./ContinuationLike.mjs";
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike } from "./SchedulerLike.mjs";
+import { SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike } from "./SchedulerLike.mjs";
+import { SchedulerLike_inContinuation } from '../__internal__/scheduling.js';
 declare type PrioritySchedulerOptions = {
     readonly priority: number;
     readonly delay?: number;
@@ -28,4 +29,5 @@ interface PrioritySchedulerLike extends DisposableLike {
  * @param priority The priority to schedule work at.
  */
 declare const toScheduler: (priority: number) => Function1<PrioritySchedulerLike, SchedulerLike>;
-export { PrioritySchedulerLike, PrioritySchedulerOptions, toScheduler };
+declare const create: Function1<SchedulerLike, PrioritySchedulerLike>;
+export { PrioritySchedulerLike, PrioritySchedulerOptions, create, toScheduler };

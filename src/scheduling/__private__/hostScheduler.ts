@@ -1,11 +1,15 @@
 import { getDelay } from "../../__internal__/optionalArgs";
-import { runContinuation } from "../../__internal__/scheduling";
+import {
+  SchedulerLike_inContinuation,
+  runContinuation,
+} from "../../__internal__/scheduling";
 import {
   init as disposableInit,
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../../__internal__/util/Disposable";
 import { createObjectFactory } from "../../__internal__/util/Object";
+import { ContinuationLike } from "../../scheduling/ContinuationLike";
 import {
   DisposableLike,
   addIgnoringChildErrors,
@@ -16,10 +20,8 @@ import {
   onDisposed,
 } from "../../util/DisposableLike";
 import { pipe } from "../../util/functions";
-import { ContinuationLike } from "../ContinuationLike";
 import {
   SchedulerLike,
-  SchedulerLike_inContinuation,
   SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
@@ -168,7 +170,7 @@ const prototype = {
 
 const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
 
-export const createHostScheduler = (
+export const create = (
   options: {
     readonly yieldInterval?: number;
   } = {},

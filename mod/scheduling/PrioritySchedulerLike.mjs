@@ -1,11 +1,13 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
+import { create as create$1 } from '../__internal__/scheduling/QueueScheduler.mjs';
 import { properties as properties$1, prototype as prototype$1, init } from '../__internal__/util/Disposable.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
 import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { none } from '../util/Option.mjs';
 import { pipe } from '../util/functions.mjs';
-import { SchedulerLike_inContinuation, isInContinuation, SchedulerLike_now, getCurrentTime, SchedulerLike_shouldYield, shouldYield, SchedulerLike_requestYield, requestYield, SchedulerLike_schedule } from './SchedulerLike.mjs';
+import { isInContinuation, SchedulerLike_now, getCurrentTime, SchedulerLike_shouldYield, shouldYield, SchedulerLike_requestYield, requestYield, SchedulerLike_schedule } from './SchedulerLike.mjs';
+import { SchedulerLike_inContinuation } from '../__internal__/scheduling.mjs';
 import { isDisposed } from '../__internal__/util/DisposableLike.mjs';
 
 const properties = {
@@ -56,5 +58,6 @@ const toScheduler = (priority) => priorityScheduler => {
     instance.priorityScheduler = priorityScheduler;
     return instance;
 };
+const create = create$1;
 
-export { toScheduler };
+export { create, toScheduler };
