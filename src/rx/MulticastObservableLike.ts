@@ -18,8 +18,9 @@ export interface MulticastObservableLike<T = unknown>
   readonly [MulticastObservableLike_replay]: number;
 }
 
-export const getObserverCount = (obs: MulticastObservableLike) =>
-  obs[MulticastObservableLike_observerCount];
+export const getObserverCount = (obs: {
+  [MulticastObservableLike_observerCount]: number;
+}) => obs[MulticastObservableLike_observerCount];
 
-export const getReplay = (obs: MulticastObservableLike) =>
+export const getReplay = (obs: { [MulticastObservableLike_replay]: number }) =>
   obs[MulticastObservableLike_replay];

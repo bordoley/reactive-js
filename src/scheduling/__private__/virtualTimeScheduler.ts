@@ -1,31 +1,26 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/env";
 import {
-  EnumeratorMixin,
-  EnumeratorMixin_current,
-  EnumeratorMixin_hasCurrent,
-  MutableEnumeratorLike,
-  mixinEnumerator,
-} from "../../__internal__/ix/enumerators";
+  properties as enumeratorProperties,
+  prototype as enumeratorPrototype,
+} from "../../__internal__/ix/Enumerator";
 import { getDelay } from "../../__internal__/optionalArgs";
 import { runContinuation } from "../../__internal__/scheduling";
 import {
-  DisposableMixin,
-  DisposableMixin_disposables,
-  mixinDisposable,
-} from "../../__internal__/util/disposables";
+  init as disposableInit,
+  properties as disposableProperties,
+  prototype as disposablePrototype,
+} from "../../__internal__/util/Disposable";
+import { createObject } from "../../__internal__/util/createObject";
 import { EnumeratorLike_current } from "../../ix/EnumeratorLike";
 import { InteractiveSourceLike_move } from "../../ix/InteractiveSourceLike";
 import {
   DisposableLike,
-  DisposableLike_error,
-  DisposableLike_isDisposed,
-  DisposableOrTeardown,
   addIgnoringChildErrors,
   dispose,
   isDisposed,
 } from "../../util/DisposableLike";
 import { isSome, none } from "../../util/Option";
-import { instanceFactory, pipe } from "../../util/functions";
+import { pipe } from "../../util/functions";
 import { ContinuationLike } from "../ContinuationLike";
 import {
   SchedulerLike_inContinuation,
@@ -51,94 +46,80 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-const virtualTimeSchedulerFactory = /*@__PURE__*/ (() => {
-  class VirtualTimeScheduler implements EnumeratorMixin<void>, DisposableMixin {
-    [DisposableLike_error] = none;
-    [DisposableLike_isDisposed] = false;
-    readonly [DisposableMixin_disposables] = new Set<DisposableOrTeardown>();
+const properties = {
+  ...disposableProperties,
+  ...enumeratorProperties,
+  [SchedulerLike_inContinuation]: false,
+  [SchedulerLike_now]: 0 as number,
+  maxMicroTaskTicks: MAX_SAFE_INTEGER,
+  microTaskTicks: 0,
+  taskIDCount: 0,
+  yieldRequested: false,
+  taskQueue: none as unknown as QueueLike<VirtualTask>,
+};
 
-    [EnumeratorMixin_current] = none;
-    [EnumeratorMixin_hasCurrent] = false;
+const prototype = {
+  ...disposablePrototype,
+  ...enumeratorPrototype,
+  get [SchedulerLike_shouldYield]() {
+    const self = this as unknown as typeof properties;
 
-    [SchedulerLike_inContinuation] = false;
-    [SchedulerLike_now] = 0;
+    const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation } =
+      self;
 
-    private microTaskTicks = 0;
-    private taskIDCount = 0;
-    private yieldRequested = false;
-    private readonly taskQueue: QueueLike<VirtualTask> =
-      createPriorityQueue(comparator);
-
-    constructor(
-      private readonly maxMicroTaskTicks: number = MAX_SAFE_INTEGER,
-    ) {}
-
-    get [SchedulerLike_shouldYield]() {
-      const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation } =
-        this;
-
-      if (inContinuation) {
-        this.microTaskTicks++;
-        this.yieldRequested = false;
-      }
-
-      return (
-        inContinuation &&
-        (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks)
-      );
+    if (inContinuation) {
+      self.microTaskTicks++;
+      self.yieldRequested = false;
     }
 
-    [InteractiveSourceLike_move](
-      this: this & MutableEnumeratorLike<void>,
-    ): void {
-      const taskQueue = this.taskQueue;
+    return (
+      inContinuation &&
+      (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks)
+    );
+  },
+  [SchedulerLike_requestYield](this: typeof properties): void {
+    this.yieldRequested = true;
+  },
+  [InteractiveSourceLike_move](
+    this: typeof properties &
+      DisposableLike & { [EnumeratorLike_current]: void },
+  ): void {
+    const taskQueue = this.taskQueue;
 
-      if (!isDisposed(this)) {
-        const task = taskQueue.pop();
+    if (!isDisposed(this)) {
+      const task = taskQueue.pop();
 
-        if (isSome(task)) {
-          const { dueTime, continuation } = task;
+      if (isSome(task)) {
+        const { dueTime, continuation } = task;
 
-          this.microTaskTicks = 0;
-          this[SchedulerLike_now] = dueTime;
-          this[EnumeratorLike_current] = none;
+        this.microTaskTicks = 0;
+        this[SchedulerLike_now] = dueTime;
+        this[EnumeratorLike_current] = none;
 
-          pipe(this, runContinuation(continuation));
-        } else {
-          pipe(this, dispose());
-        }
+        pipe(this, runContinuation(continuation));
+      } else {
+        pipe(this, dispose());
       }
     }
+  },
+  [SchedulerLike_schedule](
+    this: typeof properties & DisposableLike,
+    continuation: ContinuationLike,
+    options?: { readonly delay?: number },
+  ) {
+    const delay = getDelay(options);
 
-    [SchedulerLike_requestYield](): void {
-      this.yieldRequested = true;
+    pipe(this, addIgnoringChildErrors(continuation));
+
+    if (!isDisposed(continuation)) {
+      this.taskQueue.push({
+        id: this.taskIDCount++,
+        dueTime: getCurrentTime(this) + delay,
+        continuation,
+      });
     }
-
-    [SchedulerLike_schedule](
-      this: this & DisposableLike,
-      continuation: ContinuationLike,
-      options?: { readonly delay?: number },
-    ) {
-      const delay = getDelay(options);
-
-      pipe(this, addIgnoringChildErrors(continuation));
-
-      if (!isDisposed(continuation)) {
-        this.taskQueue.push({
-          id: this.taskIDCount++,
-          dueTime: getCurrentTime(this) + delay,
-          continuation,
-        });
-      }
-    }
-  }
-  return pipe(
-    VirtualTimeScheduler,
-    mixinDisposable<VirtualTimeScheduler, number>(),
-    mixinEnumerator<VirtualTimeScheduler & DisposableLike, number, void>(),
-    instanceFactory<VirtualTimeSchedulerLike, number>(),
-  );
-})();
+  },
+};
 
 /**
  * Creates a new virtual time scheduler instance.
@@ -151,5 +132,9 @@ export const createVirtualTimeScheduler = (
   options: { readonly maxMicroTaskTicks?: number } = {},
 ): VirtualTimeSchedulerLike => {
   const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-  return pipe(maxMicroTaskTicks, virtualTimeSchedulerFactory);
+  const instance = createObject(prototype, properties);
+  disposableInit(instance);
+  instance.maxMicroTaskTicks = maxMicroTaskTicks;
+  instance.taskQueue = createPriorityQueue(comparator);
+  return instance as VirtualTimeSchedulerLike;
 };

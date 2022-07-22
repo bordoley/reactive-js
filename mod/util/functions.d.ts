@@ -1,4 +1,3 @@
-declare type ConstructorOf<T = unknown> = new (...args: readonly any[]) => T;
 declare type Constructor<T> = new () => T;
 declare type Constructor1<TA, T> = new (a: TA) => T;
 declare type Constructor2<TA, TB, T> = new (a: TA, b: TB) => T;
@@ -245,4 +244,4 @@ interface InstanceFactory {
     <T, TA, TB, TC>(): Function1<Constructor3<TA, TB, TC, T>, Function3<TA, TB, TC, T>>;
 }
 declare const instanceFactory: InstanceFactory;
-export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, ConstructorOf, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Identity, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isOdd, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Identity, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isOdd, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };

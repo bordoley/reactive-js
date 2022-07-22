@@ -1,8 +1,8 @@
 /// <reference types="./SubjectLike.d.ts" />
-import { DisposableMixin_disposables, mixinDisposable } from '../__internal__/util/disposables.mjs';
+import { properties as properties$1, prototype as prototype$1, init } from '../__internal__/util/Disposable.mjs';
+import { createObject } from '../__internal__/util/createObject.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
-import { DisposableLike_error, DisposableLike_isDisposed, isDisposed, onDisposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
-import { none } from '../util/Option.mjs';
+import { isDisposed, onDisposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { newInstance, getLength, pipe, max } from '../util/functions.mjs';
 import { MulticastObservableLike_replay, MulticastObservableLike_observerCount, getReplay } from './MulticastObservableLike.mjs';
 import { ObservableLike_observableType } from './ObservableLike.mjs';
@@ -18,59 +18,58 @@ const publishTo = (subject) => v => {
     subject[SubjectLike_publish](v);
     return v;
 };
-const Subject = /*@__PURE__*/ (() => {
-    var _a, _b, _c, _d;
-    class Subject {
-        constructor(replay) {
-            this[_a] = none;
-            this[_b] = false;
-            this[_c] = new Set();
-            this.observers = newInstance(Set);
-            this.replayed = [];
-            this[_d] = 0;
-            this[MulticastObservableLike_replay] = replay;
-        }
-        get [(_a = DisposableLike_error, _b = DisposableLike_isDisposed, _c = DisposableMixin_disposables, _d = ObservableLike_observableType, MulticastObservableLike_observerCount)]() {
-            return this.observers.size;
-        }
-        [SubjectLike_publish](next) {
-            if (!isDisposed(this)) {
-                const { replayed } = this;
-                const replay = getReplay(this);
-                if (replay > 0) {
-                    replayed.push(next);
-                    if (getLength(replayed) > replay) {
-                        replayed.shift();
-                    }
-                }
-                for (const observer of this.observers) {
-                    pipe(observer, getDispatcher, dispatch(next));
+const properties = {
+    ...properties$1,
+    [MulticastObservableLike_replay]: 0,
+    observers: newInstance(Set),
+    replayed: [],
+};
+const prototype = {
+    ...prototype$1,
+    [ObservableLike_observableType]: 0,
+    get [MulticastObservableLike_observerCount]() {
+        const self = this;
+        return self.observers.size;
+    },
+    [SubjectLike_publish](next) {
+        if (!isDisposed(this)) {
+            const { replayed } = this;
+            const replay = getReplay(this);
+            if (replay > 0) {
+                replayed.push(next);
+                if (getLength(replayed) > replay) {
+                    replayed.shift();
                 }
             }
-        }
-        [ReactiveContainerLike_sinkInto](observer) {
-            if (!isDisposed(this)) {
-                const { observers } = this;
-                observers.add(observer);
-                pipe(observer, onDisposed(_ => {
-                    observers.delete(observer);
-                }));
-            }
-            // The idea here is that an onSubscribe function may
-            // call next from unscheduled sources such as event handlers.
-            // So we marshall those events back to the scheduler.
-            for (const next of this.replayed) {
+            for (const observer of this.observers) {
                 pipe(observer, getDispatcher, dispatch(next));
             }
-            pipe(this, addIgnoringChildErrors(getDispatcher(observer)));
         }
-    }
-    return pipe(Subject, mixinDisposable());
-})();
+    },
+    [ReactiveContainerLike_sinkInto](observer) {
+        if (!isDisposed(this)) {
+            const { observers } = this;
+            observers.add(observer);
+            pipe(observer, onDisposed(_ => {
+                observers.delete(observer);
+            }));
+        }
+        // The idea here is that an onSubscribe function may
+        // call next from unscheduled sources such as event handlers.
+        // So we marshall those events back to the scheduler.
+        for (const next of this.replayed) {
+            pipe(observer, getDispatcher, dispatch(next));
+        }
+        pipe(this, addIgnoringChildErrors(getDispatcher(observer)));
+    },
+};
 const create = (options) => {
     const { replay: replayOption = 0 } = options !== null && options !== void 0 ? options : {};
     const replay = max(replayOption, 0);
-    return newInstance(Subject, replay);
+    const instance = createObject(properties, prototype);
+    init(instance);
+    instance[MulticastObservableLike_replay] = replay;
+    return instance;
 };
 
 export { SubjectLike_publish, create, publish, publishTo };

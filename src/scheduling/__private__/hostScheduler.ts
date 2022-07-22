@@ -1,24 +1,21 @@
 import { getDelay } from "../../__internal__/optionalArgs";
 import { runContinuation } from "../../__internal__/scheduling";
 import {
-  DisposableMixin,
-  DisposableMixin_disposables,
-  mixinDisposable,
-} from "../../__internal__/util/disposables";
+  init as disposableInit,
+  properties as disposableProperties,
+  prototype as disposablePrototype,
+} from "../../__internal__/util/Disposable";
+import { createObject } from "../../__internal__/util/createObject";
 import { createDisposable } from "../../util";
 import {
   DisposableLike,
-  DisposableLike_error,
-  DisposableLike_isDisposed,
-  DisposableOrTeardown,
   addIgnoringChildErrors,
   addTo,
   dispose,
   isDisposed,
   onDisposed,
 } from "../../util/DisposableLike";
-import { none } from "../../util/Option";
-import { instanceFactory, pipe } from "../../util/functions";
+import { pipe } from "../../util/functions";
 import { ContinuationLike } from "../ContinuationLike";
 import {
   SchedulerLike,
@@ -49,7 +46,7 @@ const isInputPending = (): boolean =>
   supportsIsInputPending && (navigator as any).scheduling.isInputPending();
 
 const scheduleImmediateWithSetImmediate = (
-  scheduler: HostSchedulerLike,
+  scheduler: typeof properties & typeof prototype,
   continuation: ContinuationLike,
 ) => {
   const disposable = pipe(
@@ -66,7 +63,7 @@ const scheduleImmediateWithSetImmediate = (
 };
 
 const scheduleDelayed = (
-  scheduler: HostSchedulerLike,
+  scheduler: typeof properties & typeof prototype,
   continuation: ContinuationLike,
   delay: number,
 ) => {
@@ -86,7 +83,7 @@ const scheduleDelayed = (
 };
 
 const scheduleImmediate = (
-  scheduler: HostSchedulerLike,
+  scheduler: typeof properties & typeof prototype,
   continuation: ContinuationLike,
 ) => {
   if (supportsSetImmediate) {
@@ -97,7 +94,7 @@ const scheduleImmediate = (
 };
 
 const run = (
-  scheduler: HostSchedulerLike,
+  scheduler: typeof properties & typeof prototype,
   continuation: ContinuationLike,
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
@@ -107,80 +104,67 @@ const run = (
   pipe(scheduler, runContinuation(continuation));
 };
 
-interface HostSchedulerLike extends DisposableLike {
-  startTime: number;
-  [SchedulerLike_inContinuation]: boolean;
-  [SchedulerLike_now]: number;
-}
+const properties = {
+  ...disposableProperties,
+  [SchedulerLike_inContinuation]: false,
+  startTime: 0,
+  yieldInterval: 0,
+  yieldRequested: false,
+};
 
-const hostSchedulerFactory = /*@__PURE__*/ (() => {
-  class HostScheduler implements DisposableMixin {
-    [DisposableLike_error] = none;
-    [DisposableLike_isDisposed] = false;
-    readonly [DisposableMixin_disposables] = new Set<DisposableOrTeardown>();
+const prototype = {
+  ...disposablePrototype,
 
-    [SchedulerLike_inContinuation] = false;
-    startTime = getCurrentTime(this);
+  get [SchedulerLike_now](): number {
+    if (supportsPerformanceNow) {
+      return performance.now();
+    } else if (supportsProcessHRTime) {
+      const hr = process.hrtime();
+      return hr[0] * 1000 + hr[1] / 1e6;
+    } else {
+      return Date.now();
+    }
+  },
 
-    private yieldRequested = false;
+  get [SchedulerLike_shouldYield](): boolean {
+    const self = this as unknown as typeof properties & SchedulerLike;
 
-    constructor(private readonly yieldInterval: number) {}
+    const inContinuation = isInContinuation(self);
+    const { yieldRequested } = self;
 
-    get [SchedulerLike_now](): number {
-      if (supportsPerformanceNow) {
-        return performance.now();
-      } else if (supportsProcessHRTime) {
-        const hr = process.hrtime();
-        return hr[0] * 1000 + hr[1] / 1e6;
-      } else {
-        return Date.now();
-      }
+    if (inContinuation) {
+      self.yieldRequested = false;
     }
 
-    get [SchedulerLike_shouldYield](): boolean {
-      const inContinuation = isInContinuation(this);
-      const { yieldRequested } = this;
+    return (
+      inContinuation &&
+      (yieldRequested ||
+        getCurrentTime(self) > self.startTime + self.yieldInterval ||
+        isInputPending())
+    );
+  },
 
-      if (inContinuation) {
-        this.yieldRequested = false;
-      }
+  [SchedulerLike_requestYield](this: typeof properties): void {
+    this.yieldRequested = true;
+  },
 
-      return (
-        inContinuation &&
-        (yieldRequested ||
-          getCurrentTime(this) > this.startTime + this.yieldInterval ||
-          isInputPending())
-      );
+  [SchedulerLike_schedule](
+    this: typeof properties & SchedulerLike,
+    continuation: ContinuationLike,
+    options?: { readonly delay?: number },
+  ) {
+    const delay = getDelay(options);
+
+    pipe(this, addIgnoringChildErrors(continuation));
+
+    const continuationIsDisposed = isDisposed(continuation);
+    if (!continuationIsDisposed && delay > 0) {
+      scheduleDelayed(this, continuation, delay);
+    } else if (!continuationIsDisposed) {
+      scheduleImmediate(this, continuation);
     }
-
-    [SchedulerLike_requestYield](): void {
-      this.yieldRequested = true;
-    }
-
-    [SchedulerLike_schedule](
-      this: HostSchedulerLike,
-      continuation: ContinuationLike,
-      options?: { readonly delay?: number },
-    ) {
-      const delay = getDelay(options);
-
-      pipe(this, addIgnoringChildErrors(continuation));
-
-      const continuationIsDisposed = isDisposed(continuation);
-      if (!continuationIsDisposed && delay > 0) {
-        scheduleDelayed(this, continuation, delay);
-      } else if (!continuationIsDisposed) {
-        scheduleImmediate(this, continuation);
-      }
-    }
-  }
-
-  return pipe(
-    HostScheduler,
-    mixinDisposable<HostScheduler, number>(),
-    instanceFactory<SchedulerLike, number>(),
-  );
-})();
+  },
+};
 
 export const createHostScheduler = (
   options: {
@@ -188,6 +172,9 @@ export const createHostScheduler = (
   } = {},
 ): SchedulerLike => {
   const { yieldInterval = 5 } = options;
-  const hostScheduler = hostSchedulerFactory(yieldInterval);
-  return hostScheduler;
+  const instance = createObject(prototype, properties);
+  disposableInit(instance);
+  instance.yieldInterval = yieldInterval;
+  instance.startTime = getCurrentTime(instance);
+  return instance;
 };

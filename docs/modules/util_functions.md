@@ -12,7 +12,6 @@
 - [Constructor2](util_functions.md#constructor2)
 - [Constructor3](util_functions.md#constructor3)
 - [Constructor4](util_functions.md#constructor4)
-- [ConstructorOf](util_functions.md#constructorof)
 - [Equality](util_functions.md#equality)
 - [Factory](util_functions.md#factory)
 - [Function1](util_functions.md#function1)
@@ -211,28 +210,6 @@ ___
 | `b` | `TB` |
 | `c` | `TC` |
 | `d` | `TD` |
-
-___
-
-### ConstructorOf
-
-Ƭ **ConstructorOf**<`T`\>: (...`args`: readonly `any`[]) => `T`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
-#### Type declaration
-
-• (...`args`)
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...args` | readonly `any`[] |
 
 ___
 
