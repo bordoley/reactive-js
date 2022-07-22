@@ -1,17 +1,19 @@
 import {
   DisposableLike,
+  DisposableOrTeardown,
+  Error,
+} from "../../util/DisposableLike";
+import { Option, isNone, isSome, none } from "../../util/Option";
+import { pipe } from "../../util/functions";
+import {
   DisposableLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  DisposableOrTeardown,
-  Error,
   dispose,
   getError,
   isDisposed,
-} from "../../util/DisposableLike";
-import { Option, isNone, isSome, none } from "../../util/Option";
-import { pipe } from "../../util/functions";
+} from "./DisposableLike";
 
 const Disposable_private_disposables = Symbol("Disposable_private_disposables");
 

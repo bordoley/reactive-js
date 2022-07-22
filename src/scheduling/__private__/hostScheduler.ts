@@ -6,11 +6,11 @@ import {
   prototype as disposablePrototype,
 } from "../../__internal__/util/Disposable";
 import { createObjectFactory } from "../../__internal__/util/Object";
-import { createDisposable } from "../../util";
 import {
   DisposableLike,
   addIgnoringChildErrors,
   addTo,
+  create as createDisposable,
   dispose,
   isDisposed,
   onDisposed,

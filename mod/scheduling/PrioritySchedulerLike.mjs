@@ -2,10 +2,11 @@
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { properties as properties$1, prototype as prototype$1, init } from '../__internal__/util/Disposable.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import { addIgnoringChildErrors, isDisposed } from '../util/DisposableLike.mjs';
+import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { none } from '../util/Option.mjs';
 import { pipe } from '../util/functions.mjs';
 import { SchedulerLike_inContinuation, isInContinuation, SchedulerLike_now, getCurrentTime, SchedulerLike_shouldYield, shouldYield, SchedulerLike_requestYield, requestYield, SchedulerLike_schedule } from './SchedulerLike.mjs';
+import { isDisposed } from '../__internal__/util/DisposableLike.mjs';
 
 const properties = {
     ...properties$1,

@@ -1,5 +1,16 @@
+import { init, properties, prototype } from "../__internal__/util/Disposable";
+import {
+  DisposableLike_add,
+  DisposableLike_dispose,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  dispose,
+  getError,
+} from "../__internal__/util/DisposableLike";
+import { createObjectFactory } from "../__internal__/util/Object";
 import { Option, isNone, isSome, none } from "./Option";
 import {
+  Factory,
   Identity,
   SideEffect,
   SideEffect1,
@@ -13,11 +24,6 @@ export type Error = {
 };
 
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
-
-export const DisposableLike_add = Symbol("DisposableLike_add");
-export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-export const DisposableLike_error = Symbol("DisposableLike_error");
-export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -168,20 +174,20 @@ export const disposed: DisposableLike = {
   [DisposableLike_dispose]: ignore,
 };
 
-export const getError = (disposable: {
-  [DisposableLike_error]: Option<Error>;
-}): Option<Error> => disposable[DisposableLike_error];
+export {
+  DisposableLike_add,
+  DisposableLike_dispose,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  dispose,
+  getError,
+  isDisposed,
+} from "../__internal__/util/DisposableLike";
 
-export const isDisposed = (disposable: {
-  [DisposableLike_isDisposed]: boolean;
-}): boolean => disposable[DisposableLike_isDisposed];
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
 
-/**
- * Dispose `disposable` with an optional error.
- */
-export const dispose =
-  <T extends DisposableLike>(e?: Error): Identity<T> =>
-  disposable => {
-    disposable[DisposableLike_dispose](e);
-    return disposable;
-  };
+export const create: Factory<DisposableLike> = () => {
+  const instance = createInstance();
+  init(instance);
+  return instance;
+};
