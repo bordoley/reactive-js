@@ -78,8 +78,8 @@ export type EverySatisfy<C extends ContainerLike> = Container<C> & {
 };
 
 export type FromArrayOptions = {
-  readonly start: Option<number>;
-  readonly count: Option<number>;
+  readonly start: number;
+  readonly count: number;
 };
 
 export type FromArray<

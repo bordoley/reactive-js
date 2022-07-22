@@ -1,11 +1,20 @@
+import { createFromArray } from "../__internal__/containers/ContainerLike";
 import {
   Lift,
   TInteractive,
   createScanOperator,
   createSkipFirstOperator,
-  //createTakeFirstOperator,
+  createTakeFirstOperator,
+  createTakeWhileOperator,
+  createThrowIfEmptyOperator,
   interactive,
 } from "../__internal__/containers/StatefulContainerLike";
+import {
+  init as delegatingEnumeratorInit,
+  move as delegatingEnumeratorMove,
+  properties as delegatingEnumeratorProperties,
+  prototype as delegatingEnumeratorPrototype,
+} from "../__internal__/ix/DelegatingEnumerator";
 import {
   MutableEnumeratorLike,
   properties as enumeratorProperties,
@@ -16,6 +25,11 @@ import {
   properties as delegatingDisposableProperties,
   prototype as delegatingDisposablePrototype,
 } from "../__internal__/util/DelegatingDisposable";
+import {
+  init as disposableInit,
+  properties as disposableProperties,
+  prototype as disposablePrototype,
+} from "../__internal__/util/Disposable";
 import { createObjectFactory } from "../__internal__/util/Object";
 import {
   Container,
@@ -23,15 +37,18 @@ import {
   ContainerOf,
   ContainerOperator,
   DistinctUntilChanged,
+  FromArray,
   Keep,
   Map,
   Pairwise,
   Scan,
   SkipFirst,
-  //TakeFirst,
+  TakeFirst,
+  TakeWhile,
 } from "../containers/ContainerLike";
 import { empty as emptyArray } from "../containers/ReadonlyArrayLike";
-import { dispose } from "../util/DisposableLike";
+import { ThrowIfEmpty } from "../containers/StatefulContainerLike";
+import { dispose, isDisposed } from "../util/DisposableLike";
 import { Option, isSome, none } from "../util/Option";
 import {
   Equality,
@@ -50,7 +67,6 @@ import {
 import {
   EnumeratorLike,
   EnumeratorLike_current,
-  //EnumeratorLike_hasCurrent,
   getCurrent,
   hasCurrent,
   move,
@@ -85,43 +101,44 @@ const enumerate =
   (enumerable: EnumerableLike<T>): EnumeratorLike<T> =>
     enumerable[InteractiveContainerLike_interact](none);
 
-class LiftedEnumerable<T> implements EnumerableLike<T> {
-  constructor(
-    readonly src: EnumerableLike<any>,
-    readonly operators: readonly Function1<
-      EnumeratorLike<any>,
-      EnumeratorLike<any>
-    >[],
-  ) {}
+const lift = /*@__PURE__*/ (() => {
+  class LiftedEnumerable<T> implements EnumerableLike<T> {
+    constructor(
+      readonly src: EnumerableLike<any>,
+      readonly operators: readonly Function1<
+        EnumeratorLike<any>,
+        EnumeratorLike<any>
+      >[],
+    ) {}
 
-  [InteractiveContainerLike_interact](): EnumeratorLike<T> {
-    return pipeUnsafe(
-      this.src,
-      enumerate<unknown>(),
-      ...this.operators,
-    ) as EnumeratorLike<T>;
+    [InteractiveContainerLike_interact](): EnumeratorLike<T> {
+      return pipeUnsafe(
+        this.src,
+        enumerate<unknown>(),
+        ...this.operators,
+      ) as EnumeratorLike<T>;
+    }
   }
-}
 
-const lift =
-  <TA, TB>(
-    operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
-  ): ContainerOperator<EnumerableLike, TA, TB> =>
-  (enumerable: EnumerableLike<TA>): EnumerableLike<TB> => {
-    const src =
-      enumerable instanceof LiftedEnumerable ? enumerable.src : enumerable;
+  return <TA, TB>(
+      operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
+    ): ContainerOperator<EnumerableLike, TA, TB> =>
+    (enumerable: EnumerableLike<TA>): EnumerableLike<TB> => {
+      const src =
+        enumerable instanceof LiftedEnumerable ? enumerable.src : enumerable;
 
-    const allFunctions =
-      enumerable instanceof LiftedEnumerable
-        ? [...enumerable.operators, operator]
-        : [operator];
+      const allFunctions =
+        enumerable instanceof LiftedEnumerable
+          ? [...enumerable.operators, operator]
+          : [operator];
 
-    return newInstance<
-      LiftedEnumerable<TB>,
-      EnumerableLike<any>,
-      readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[]
-    >(LiftedEnumerable, src, allFunctions);
-  };
+      return newInstance<
+        LiftedEnumerable<TB>,
+        EnumerableLike<any>,
+        readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[]
+      >(LiftedEnumerable, src, allFunctions);
+    };
+})();
 
 const liftT: Lift<EnumerableLike, TInteractive> = {
   lift,
@@ -195,6 +212,67 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
 
     return compose(distinctUntilChangedEnumerator, lift);
   })();
+
+export const fromArray: FromArray<EnumerableLike>["fromArray"] =
+  /*@__PURE__*/ (() => {
+    const properties = {
+      ...disposableProperties,
+      ...enumeratorProperties,
+      array: [] as unknown[],
+      count: 0,
+      index: 0,
+    };
+
+    const prototype = {
+      ...disposablePrototype,
+      ...enumeratorPrototype,
+      [InteractiveSourceLike_move](
+        this: typeof properties & MutableEnumeratorLike,
+      ) {
+        const { array } = this;
+
+        if (!isDisposed(this)) {
+          this.index++;
+          const { index, count } = this;
+
+          if (count !== 0) {
+            this[EnumeratorLike_current] = array[index];
+
+            this.count = count > 0 ? this.count-- : this.count++;
+          } else {
+            pipe(this, dispose());
+          }
+        }
+      },
+    };
+
+    const createInstance = createObjectFactory(prototype, properties);
+
+    class FromArrayEnumerable<T> implements EnumerableLike<T> {
+      constructor(
+        private readonly array: readonly T[],
+        private readonly start: number,
+        private readonly count: number,
+      ) {}
+
+      [InteractiveContainerLike_interact](): EnumeratorLike<T> {
+        const instance = createInstance();
+        disposableInit(instance);
+        instance.array = this.array as unknown[];
+        instance.index = this.start - 1;
+        instance.count = this.count;
+
+        return instance as EnumeratorLike<T>;
+      }
+    }
+
+    return createFromArray<EnumerableLike>(
+      <T>(a: readonly T[], start: number, count: number) =>
+        new FromArrayEnumerable<T>(a, start, count),
+    );
+  })();
+
+export const fromArrayT: FromArray<EnumerableLike> = { fromArray };
 
 export const fromEnumerable = <T>(): Identity<EnumerableLike<T>> => identity;
 
@@ -445,32 +523,25 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
 export const skipFirstT: SkipFirst<EnumerableLike> = {
   skipFirst,
 };
-/*
+
 export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
-  /*@__PURE__*/ /*(() => {
+  /*@__PURE__*/ (() => {
     const properties = {
       ...delegatingDisposableProperties,
-      delegate: none as unknown as EnumeratorLike,
+      ...delegatingEnumeratorProperties,
       maxCount: 0 as number,
       count: 0 as number,
     };
 
     const prototype = {
-       ...delegatingDisposableEnumeratorPrototype,
-      get [EnumeratorLike_current](): unknown {
-        const self = this as unknown as typeof properties;
-        return self.delegate[EnumeratorLike_current]
-      },
-      get [EnumeratorLike_hasCurrent](): boolean {
-        const self = this as unknown as typeof properties;
-        return self.delegate[EnumeratorLike_hasCurrent]
-      },
+      ...delegatingDisposableEnumeratorPrototype,
+      ...delegatingEnumeratorPrototype,
       [InteractiveSourceLike_move](
         this: typeof properties & MutableEnumeratorLike,
       ) {
         if (this.count < this.maxCount) {
           this.count++;
-          pipe(this.delegate, move);
+          delegatingEnumeratorMove(this);
         } else {
           pipe(this, dispose());
         }
@@ -479,22 +550,128 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
 
     const createInstance = createObjectFactory(prototype, properties);
 
-    const takeFirstEnumerator = <T>(maxCount: number) => (delegate: EnumeratorLike<T>): EnumeratorLike<T> => {
-      const instance = createInstance();
-      delegatingDisposableInit(instance, delegate);
-      instance.delegate = delegate;
-      instance.maxCount = maxCount;
-      return instance as EnumeratorLike<T>;
-    }
+    const takeFirstEnumerator =
+      <T>(maxCount: number) =>
+      (delegate: EnumeratorLike<T>): EnumeratorLike<T> => {
+        const instance = createInstance();
+        delegatingDisposableInit(instance, delegate);
+        delegatingEnumeratorInit(instance, delegate);
+        instance.maxCount = maxCount;
+        return instance as EnumeratorLike<T>;
+      };
 
-    return pipe(takeFirstEnumerator, createTakeFirstOperator(liftT));
+    return pipe(
+      takeFirstEnumerator,
+      createTakeFirstOperator({ ...liftT, ...fromArrayT }),
+    );
   })();
 
-  export const takeFirstT: TakeFirst<EnumerableLike> = {
-    takeFirst,
-  };*/
+export const takeFirstT: TakeFirst<EnumerableLike> = {
+  takeFirst,
+};
+
+export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
+  /*@__PURE__*/ (() => {
+    const properties = {
+      ...delegatingDisposableProperties,
+      ...delegatingEnumeratorProperties,
+      predicate: none as unknown as Predicate<any>,
+      inclusive: false,
+      done: false,
+    };
+
+    const prototype = {
+      ...delegatingDisposableEnumeratorPrototype,
+      ...delegatingEnumeratorPrototype,
+      [InteractiveSourceLike_move](
+        this: typeof properties & MutableEnumeratorLike,
+      ) {
+        const { inclusive, predicate } = this;
+
+        if (this.done && !isDisposed(this)) {
+          pipe(this, dispose());
+        } else if (delegatingEnumeratorMove(this)) {
+          const current = getCurrent(this);
+
+          try {
+            const satisfiesPredicate = predicate(current);
+
+            if (!satisfiesPredicate && inclusive) {
+              this.done = true;
+            } else if (!satisfiesPredicate) {
+              pipe(this, dispose());
+            }
+          } catch (cause) {
+            pipe(this, dispose({ cause }));
+          }
+        }
+      },
+    };
+
+    const createInstance = createObjectFactory(prototype, properties);
+
+    const takeWhileEnumerator =
+      <T>(predicate: Predicate<T>, inclusive: boolean) =>
+      (delegate: EnumeratorLike<T>): EnumeratorLike<T> => {
+        const instance = createInstance();
+        delegatingDisposableInit(instance, delegate);
+        delegatingEnumeratorInit(instance, delegate);
+        instance.predicate = predicate;
+        instance.inclusive = inclusive;
+        return instance as EnumeratorLike<T>;
+      };
+
+    return pipe(takeWhileEnumerator, createTakeWhileOperator(liftT));
+  })();
+
+export const takeWhileT: TakeWhile<EnumerableLike<unknown>> = {
+  takeWhile,
+};
 
 export const TContainerOf: EnumerableLike = undefined as any;
+
+export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
+  /*@__PURE__*/ (() => {
+    const properties = {
+      ...disposableProperties,
+      ...delegatingEnumeratorProperties,
+      isEmpty: true,
+    };
+
+    const prototype = {
+      ...disposablePrototype,
+      ...delegatingEnumeratorPrototype,
+      [InteractiveSourceLike_move](
+        this: typeof properties & MutableEnumeratorLike,
+      ) {
+        if (delegatingEnumeratorMove(this)) {
+          this.isEmpty = false;
+        }
+      },
+    };
+
+    const createInstance = createObjectFactory(prototype, properties);
+
+    const throwIfEmptyEnumerator =
+      <T>() =>
+      (
+        delegate: EnumeratorLike<T>,
+      ): typeof properties & typeof prototype & EnumeratorLike<T> => {
+        const instance = createInstance();
+        disposableInit(instance);
+        delegatingEnumeratorInit(instance, delegate);
+
+        return instance as typeof properties &
+          typeof prototype &
+          EnumeratorLike<T>;
+      };
+
+    return pipe(throwIfEmptyEnumerator, createThrowIfEmptyOperator(liftT));
+  })();
+
+export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike> = {
+  throwIfEmpty,
+};
 
 export const toEnumerable = <T>(): Identity<EnumerableLike<T>> => identity;
 
