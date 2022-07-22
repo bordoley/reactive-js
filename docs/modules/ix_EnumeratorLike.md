@@ -18,6 +18,7 @@
 - [forEach](ix_EnumeratorLike.md#foreach)
 - [getCurrent](ix_EnumeratorLike.md#getcurrent)
 - [hasCurrent](ix_EnumeratorLike.md#hascurrent)
+- [move](ix_EnumeratorLike.md#move)
 
 ## Variables
 
@@ -89,6 +90,31 @@ ___
 | :------ | :------ |
 | `enumerator` | `Object` |
 | `enumerator.[EnumeratorLike_hasCurrent]` | `boolean` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### move
+
+▸ **move**<`T`\>(`enumerator`): `boolean`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `enumerator` | `Object` |
+| `enumerator.[EnumeratorLike_current]` | `T` |
+| `enumerator.[EnumeratorLike_hasCurrent]` | `boolean` |
+| `enumerator.[InteractiveSourceLike_move]` | () => `void` |
 
 #### Returns
 

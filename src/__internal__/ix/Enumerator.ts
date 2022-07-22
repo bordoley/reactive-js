@@ -11,6 +11,10 @@ import { raise } from "../../util/functions";
 const Enumerator_private_current = Symbol("Enumerator_private_current");
 const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
 
+export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
+  [EnumeratorLike_current]: T;
+}
+
 export const properties = {
   [Enumerator_private_current]: none as unknown,
   [Enumerator_private_hasCurrent]: false,
