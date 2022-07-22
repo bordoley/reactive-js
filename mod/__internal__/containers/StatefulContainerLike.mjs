@@ -2,7 +2,7 @@
 import { empty } from '../../containers/ContainerLike.mjs';
 import { addIgnoringChildErrors, addTo, onComplete } from '../../util/DisposableLike.mjs';
 import { none } from '../../util/Option.mjs';
-import { pipe, max, newInstanceWith } from '../../util/functions.mjs';
+import { pipe, max } from '../../util/functions.mjs';
 import { dispose } from '../util/DisposableLike.mjs';
 
 const interactive = 0;
@@ -22,12 +22,12 @@ const createTakeFirstOperator = (m) => (Constructor) => (options = {}) => {
     const lifted = pipe(operator, lift(m));
     return source => (count > 0 ? pipe(source, lifted) : empty(m));
 };
-const takeWhile = (m) => (Constructor) => (predicate, options = {}) => {
+const createTakeWhileOperator = (m) => (Constructor) => (predicate, options = {}) => {
     const { inclusive = false } = options;
-    return pipe((delegate) => pipe(Constructor, newInstanceWith(delegate, predicate, inclusive)), lift(m));
+    return pipe(Constructor(predicate, inclusive), lift(m));
 };
 const createThrowIfEmptyOperator = (m) => (Constructor) => (factory) => pipe((delegate) => {
-    const lifted = pipe(Constructor, newInstanceWith(delegate), m.variance === interactive
+    const lifted = pipe(delegate, Constructor(), m.variance === interactive
         ? addIgnoringChildErrors(delegate)
         : addTo(delegate));
     const { parent, child } = m.variance === interactive
@@ -50,4 +50,4 @@ const createThrowIfEmptyOperator = (m) => (Constructor) => (factory) => pipe((de
     return lifted;
 }, lift(m));
 
-export { createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createThrowIfEmptyOperator, interactive, lift, reactive, takeWhile };
+export { createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, lift, reactive };

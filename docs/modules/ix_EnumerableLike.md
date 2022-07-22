@@ -13,17 +13,22 @@
 ### Variables
 
 - [TContainerOf](ix_EnumerableLike.md#tcontainerof)
+- [fromArrayT](ix_EnumerableLike.md#fromarrayt)
 - [fromEnumerableT](ix_EnumerableLike.md#fromenumerablet)
 - [keepT](ix_EnumerableLike.md#keept)
 - [mapT](ix_EnumerableLike.md#mapt)
 - [pairwiseT](ix_EnumerableLike.md#pairwiset)
 - [scanT](ix_EnumerableLike.md#scant)
 - [skipFirstT](ix_EnumerableLike.md#skipfirstt)
+- [takeFirstT](ix_EnumerableLike.md#takefirstt)
+- [takeWhileT](ix_EnumerableLike.md#takewhilet)
+- [throwIfEmptyT](ix_EnumerableLike.md#throwifemptyt)
 - [toEnumerableT](ix_EnumerableLike.md#toenumerablet)
 
 ### Functions
 
 - [distinctUntilChanged](ix_EnumerableLike.md#distinctuntilchanged)
+- [fromArray](ix_EnumerableLike.md#fromarray)
 - [fromEnumerable](ix_EnumerableLike.md#fromenumerable)
 - [keep](ix_EnumerableLike.md#keep)
 - [map](ix_EnumerableLike.md#map)
@@ -31,6 +36,9 @@
 - [pairwise](ix_EnumerableLike.md#pairwise)
 - [scan](ix_EnumerableLike.md#scan)
 - [skipFirst](ix_EnumerableLike.md#skipfirst)
+- [takeFirst](ix_EnumerableLike.md#takefirst)
+- [takeWhile](ix_EnumerableLike.md#takewhile)
+- [throwIfEmpty](ix_EnumerableLike.md#throwifempty)
 - [toEnumerable](ix_EnumerableLike.md#toenumerable)
 
 ## Variables
@@ -38,6 +46,12 @@
 ### TContainerOf
 
 • `Const` **TContainerOf**: [`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)
+
+___
+
+### fromArrayT
+
+• `Const` **fromArrayT**: [`FromArray`](containers_ContainerLike.md#fromarray)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
 
 ___
 
@@ -77,6 +91,24 @@ ___
 
 ___
 
+### takeFirstT
+
+• `Const` **takeFirstT**: [`TakeFirst`](containers_ContainerLike.md#takefirst)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
+
+___
+
+### takeWhileT
+
+• `Const` **takeWhileT**: [`TakeWhile`](containers_ContainerLike.md#takewhile)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### throwIfEmptyT
+
+• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](containers_StatefulContainerLike.md#throwifempty)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
+
+___
+
 ### toEnumerableT
 
 • `Const` **toEnumerableT**: [`ToEnumerable`](../interfaces/ix_EnumerableLike.ToEnumerable.md)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
@@ -103,6 +135,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### fromArray
+
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](util_functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<[`FromArrayOptions`](containers_ContainerLike.md#fromarrayoptions)\> |
+
+#### Returns
+
+[`Function1`](util_functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>\>
 
 ___
 
@@ -245,6 +299,75 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### takeFirst
+
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### takeWhile
+
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](util_functions.md#predicate)<`T`\> |
+| `options?` | `Object` |
+| `options.inclusive?` | `boolean` |
+
+#### Returns
+
+[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### throwIfEmpty
+
+▸ **throwIfEmpty**<`T`\>(`factory`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](util_functions.md#factory)<`unknown`\> |
 
 #### Returns
 

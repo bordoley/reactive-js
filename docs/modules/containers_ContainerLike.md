@@ -183,8 +183,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `count` | [`Option`](util_Option.md#option)<`number`\> |
-| `start` | [`Option`](util_Option.md#option)<`number`\> |
+| `count` | `number` |
+| `start` | `number` |
 
 ___
 

@@ -36,8 +36,8 @@ declare type EverySatisfy<C extends ContainerLike> = Container<C> & {
     everySatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 };
 declare type FromArrayOptions = {
-    readonly start: Option<number>;
-    readonly count: Option<number>;
+    readonly start: number;
+    readonly count: number;
 };
 declare type FromArray<C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions> = Container<C> & {
     fromArray<T>(options?: Partial<O>): Function1<readonly T[], ContainerOf<C, T>>;

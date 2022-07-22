@@ -1,7 +1,10 @@
 /// <reference types="./EnumerableLike.d.ts" />
-import { interactive, createScanOperator, createSkipFirstOperator } from '../__internal__/containers/StatefulContainerLike.mjs';
+import { createFromArray } from '../__internal__/containers/ContainerLike.mjs';
+import { interactive, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.mjs';
+import { properties as properties$3, prototype as prototype$3, move as move$1, init as init$2 } from '../__internal__/ix/DelegatingEnumerator.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
 import { properties, prototype, init } from '../__internal__/util/DelegatingDisposable.mjs';
+import { properties as properties$2, prototype as prototype$2, init as init$1 } from '../__internal__/util/Disposable.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
 import { empty } from '../containers/ReadonlyArrayLike.mjs';
 import '../util/DisposableLike.mjs';
@@ -10,25 +13,27 @@ import { pipeUnsafe, newInstance, pipe, strictEquality, compose, identity } from
 import { hasCurrent, getCurrent, move, EnumeratorLike_current } from './EnumeratorLike.mjs';
 import { InteractiveContainerLike_interact } from './InteractiveContainerLike.mjs';
 import { InteractiveSourceLike_move } from './InteractiveSourceLike.mjs';
-import { dispose } from '../__internal__/util/DisposableLike.mjs';
+import { dispose, isDisposed } from '../__internal__/util/DisposableLike.mjs';
 
 const enumerate = () => (enumerable) => enumerable[InteractiveContainerLike_interact](none);
-class LiftedEnumerable {
-    constructor(src, operators) {
-        this.src = src;
-        this.operators = operators;
+const lift = /*@__PURE__*/ (() => {
+    class LiftedEnumerable {
+        constructor(src, operators) {
+            this.src = src;
+            this.operators = operators;
+        }
+        [InteractiveContainerLike_interact]() {
+            return pipeUnsafe(this.src, enumerate(), ...this.operators);
+        }
     }
-    [InteractiveContainerLike_interact]() {
-        return pipeUnsafe(this.src, enumerate(), ...this.operators);
-    }
-}
-const lift = (operator) => (enumerable) => {
-    const src = enumerable instanceof LiftedEnumerable ? enumerable.src : enumerable;
-    const allFunctions = enumerable instanceof LiftedEnumerable
-        ? [...enumerable.operators, operator]
-        : [operator];
-    return newInstance(LiftedEnumerable, src, allFunctions);
-};
+    return (operator) => (enumerable) => {
+        const src = enumerable instanceof LiftedEnumerable ? enumerable.src : enumerable;
+        const allFunctions = enumerable instanceof LiftedEnumerable
+            ? [...enumerable.operators, operator]
+            : [operator];
+        return newInstance(LiftedEnumerable, src, allFunctions);
+    };
+})();
 const liftT = {
     lift,
     variance: interactive,
@@ -81,6 +86,52 @@ const distinctUntilChanged =
     };
     return compose(distinctUntilChangedEnumerator, lift);
 })();
+const fromArray = 
+/*@__PURE__*/ (() => {
+    const properties = {
+        ...properties$2,
+        ...properties$1,
+        array: [],
+        count: 0,
+        index: 0,
+    };
+    const prototype = {
+        ...prototype$2,
+        ...prototype$1,
+        [InteractiveSourceLike_move]() {
+            const { array } = this;
+            if (!isDisposed(this)) {
+                this.index++;
+                const { index, count } = this;
+                if (count !== 0) {
+                    this[EnumeratorLike_current] = array[index];
+                    this.count = count > 0 ? this.count-- : this.count++;
+                }
+                else {
+                    pipe(this, dispose());
+                }
+            }
+        },
+    };
+    const createInstance = createObjectFactory(prototype, properties);
+    class FromArrayEnumerable {
+        constructor(array, start, count) {
+            this.array = array;
+            this.start = start;
+            this.count = count;
+        }
+        [InteractiveContainerLike_interact]() {
+            const instance = createInstance();
+            init$1(instance);
+            instance.array = this.array;
+            instance.index = this.start - 1;
+            instance.count = this.count;
+            return instance;
+        }
+    }
+    return createFromArray((a, start, count) => new FromArrayEnumerable(a, start, count));
+})();
+const fromArrayT = { fromArray };
 const fromEnumerable = () => identity;
 const fromEnumerableT = {
     fromEnumerable,
@@ -261,56 +312,120 @@ const skipFirst =
 const skipFirstT = {
     skipFirst,
 };
- /*(() => {
-  const properties = {
-    ...delegatingDisposableProperties,
-    delegate: none as unknown as EnumeratorLike,
-    maxCount: 0 as number,
-    count: 0 as number,
-  };
-
-  const prototype = {
-     ...delegatingDisposableEnumeratorPrototype,
-    get [EnumeratorLike_current](): unknown {
-      const self = this as unknown as typeof properties;
-      return self.delegate[EnumeratorLike_current]
-    },
-    get [EnumeratorLike_hasCurrent](): boolean {
-      const self = this as unknown as typeof properties;
-      return self.delegate[EnumeratorLike_hasCurrent]
-    },
-    [InteractiveSourceLike_move](
-      this: typeof properties & MutableEnumeratorLike,
-    ) {
-      if (this.count < this.maxCount) {
-        this.count++;
-        pipe(this.delegate, move);
-      } else {
-        pipe(this, dispose());
-      }
-    },
-  };
-
-  const createInstance = createObjectFactory(prototype, properties);
-
-  const takeFirstEnumerator = <T>(maxCount: number) => (delegate: EnumeratorLike<T>): EnumeratorLike<T> => {
-    const instance = createInstance();
-    delegatingDisposableInit(instance, delegate);
-    instance.delegate = delegate;
-    instance.maxCount = maxCount;
-    return instance as EnumeratorLike<T>;
-  }
-
-  return pipe(takeFirstEnumerator, createTakeFirstOperator(liftT));
+const takeFirst = 
+/*@__PURE__*/ (() => {
+    const properties$1 = {
+        ...properties,
+        ...properties$3,
+        maxCount: 0,
+        count: 0,
+    };
+    const prototype = {
+        ...delegatingDisposableEnumeratorPrototype,
+        ...prototype$3,
+        [InteractiveSourceLike_move]() {
+            if (this.count < this.maxCount) {
+                this.count++;
+                move$1(this);
+            }
+            else {
+                pipe(this, dispose());
+            }
+        },
+    };
+    const createInstance = createObjectFactory(prototype, properties$1);
+    const takeFirstEnumerator = (maxCount) => (delegate) => {
+        const instance = createInstance();
+        init(instance, delegate);
+        init$2(instance, delegate);
+        instance.maxCount = maxCount;
+        return instance;
+    };
+    return pipe(takeFirstEnumerator, createTakeFirstOperator({ ...liftT, ...fromArrayT }));
 })();
-
-export const takeFirstT: TakeFirst<EnumerableLike> = {
-  takeFirst,
-};*/
+const takeFirstT = {
+    takeFirst,
+};
+const takeWhile = 
+/*@__PURE__*/ (() => {
+    const properties$1 = {
+        ...properties,
+        ...properties$3,
+        predicate: none,
+        inclusive: false,
+        done: false,
+    };
+    const prototype = {
+        ...delegatingDisposableEnumeratorPrototype,
+        ...prototype$3,
+        [InteractiveSourceLike_move]() {
+            const { inclusive, predicate } = this;
+            if (this.done && !isDisposed(this)) {
+                pipe(this, dispose());
+            }
+            else if (move$1(this)) {
+                const current = getCurrent(this);
+                try {
+                    const satisfiesPredicate = predicate(current);
+                    if (!satisfiesPredicate && inclusive) {
+                        this.done = true;
+                    }
+                    else if (!satisfiesPredicate) {
+                        pipe(this, dispose());
+                    }
+                }
+                catch (cause) {
+                    pipe(this, dispose({ cause }));
+                }
+            }
+        },
+    };
+    const createInstance = createObjectFactory(prototype, properties$1);
+    const takeWhileEnumerator = (predicate, inclusive) => (delegate) => {
+        const instance = createInstance();
+        init(instance, delegate);
+        init$2(instance, delegate);
+        instance.predicate = predicate;
+        instance.inclusive = inclusive;
+        return instance;
+    };
+    return pipe(takeWhileEnumerator, createTakeWhileOperator(liftT));
+})();
+const takeWhileT = {
+    takeWhile,
+};
 const TContainerOf = undefined;
+const throwIfEmpty = 
+/*@__PURE__*/ (() => {
+    const properties = {
+        ...properties$2,
+        ...properties$3,
+        isEmpty: true,
+    };
+    const prototype = {
+        ...prototype$2,
+        ...prototype$3,
+        [InteractiveSourceLike_move]() {
+            if (move$1(this)) {
+                this.isEmpty = false;
+            }
+        },
+    };
+    const createInstance = createObjectFactory(prototype, properties);
+    const throwIfEmptyEnumerator = () => (delegate) => {
+        const instance = createInstance();
+        init$1(instance);
+        init$2(instance, delegate);
+        return instance;
+    };
+    return pipe(throwIfEmptyEnumerator, createThrowIfEmptyOperator(liftT));
+})();
+const throwIfEmptyT = {
+    throwIfEmpty,
+};
 const toEnumerable = () => identity;
 const toEnumerableT = {
     toEnumerable,
 };
 
-export { TContainerOf, distinctUntilChanged, fromEnumerable, fromEnumerableT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, toEnumerable, toEnumerableT };
+export { TContainerOf, distinctUntilChanged, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT };
