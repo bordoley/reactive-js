@@ -1,20 +1,17 @@
 import { getDelay } from "../__internal__/optionalArgs";
 import {
-  DisposableMixin,
-  DisposableMixin_disposables,
-  mixinDisposable,
-} from "../__internal__/util/disposables";
+  init as disposableInit,
+  properties as disposableProperties,
+  prototype as disposablePrototype,
+} from "../__internal__/util/Disposable";
+import { createObject } from "../__internal__/util/createObject";
 import {
   DisposableLike,
-  DisposableLike_error,
-  DisposableLike_isDisposed,
-  DisposableOrTeardown,
   addIgnoringChildErrors,
-  addToIgnoringChildErrors,
   isDisposed,
 } from "../util/DisposableLike";
 import { none } from "../util/Option";
-import { Function1, instanceFactory, pipe } from "../util/functions";
+import { Function1, pipe } from "../util/functions";
 import { ContinuationLike } from "./ContinuationLike";
 import {
   SchedulerLike,
@@ -55,57 +52,51 @@ export interface PrioritySchedulerLike extends DisposableLike {
   ): void;
 }
 
-const schedulerWithPriorityFactory = /*@__PURE__*/ (() => {
-  class SchedulerWithPriority implements DisposableMixin {
-    [DisposableLike_error] = none;
-    [DisposableLike_isDisposed] = false;
-    readonly [DisposableMixin_disposables] = new Set<DisposableOrTeardown>();
+const properties = {
+  ...disposableProperties,
+  priorityScheduler: none as unknown as PrioritySchedulerLike,
+  priority: 0,
+};
 
-    constructor(
-      private readonly priorityScheduler: PrioritySchedulerLike,
-      private readonly priority: number,
-    ) {}
+const prototype = {
+  ...disposablePrototype,
+  get [SchedulerLike_inContinuation]() {
+    const self = this as unknown as typeof properties;
+    return isInContinuation(self.priorityScheduler);
+  },
 
-    get [SchedulerLike_inContinuation]() {
-      return isInContinuation(this.priorityScheduler);
+  get [SchedulerLike_now]() {
+    const self = this as unknown as typeof properties;
+    return getCurrentTime(self.priorityScheduler);
+  },
+
+  get [SchedulerLike_shouldYield]() {
+    const self = this as unknown as typeof properties;
+    return shouldYield(self.priorityScheduler);
+  },
+
+  [SchedulerLike_requestYield](): void {
+    const self = this as unknown as typeof properties;
+    requestYield(self.priorityScheduler);
+  },
+
+  [SchedulerLike_schedule](
+    this: typeof properties & DisposableLike,
+    continuation: ContinuationLike,
+    options?: { readonly delay?: number },
+  ) {
+    const delay = getDelay(options);
+
+    pipe(this, addIgnoringChildErrors(continuation));
+
+    if (!isDisposed(continuation)) {
+      this.priorityScheduler[SchedulerLike_schedule](continuation, {
+        priority: this.priority,
+        delay,
+      });
     }
-
-    get [SchedulerLike_now]() {
-      return getCurrentTime(this.priorityScheduler);
-    }
-
-    get [SchedulerLike_shouldYield]() {
-      return shouldYield(this.priorityScheduler);
-    }
-
-    [SchedulerLike_requestYield](): void {
-      requestYield(this.priorityScheduler);
-    }
-
-    [SchedulerLike_schedule](
-      this: this & DisposableLike,
-      continuation: ContinuationLike,
-      options?: { readonly delay?: number },
-    ) {
-      const delay = getDelay(options);
-
-      pipe(this, addIgnoringChildErrors(continuation));
-
-      if (!isDisposed(continuation)) {
-        this.priorityScheduler[SchedulerLike_schedule](continuation, {
-          priority: this.priority,
-          delay,
-        });
-      }
-    }
-  }
-
-  return pipe(
-    SchedulerWithPriority,
-    mixinDisposable<SchedulerWithPriority, PrioritySchedulerLike, number>(),
-    instanceFactory<SchedulerLike, PrioritySchedulerLike, number>(),
-  );
-})();
+  },
+};
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
@@ -115,8 +106,10 @@ const schedulerWithPriorityFactory = /*@__PURE__*/ (() => {
  */
 export const toScheduler =
   (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
-  priorityScheduler =>
-    pipe(
-      schedulerWithPriorityFactory(priorityScheduler, priority),
-      addToIgnoringChildErrors<SchedulerLike>(priorityScheduler),
-    );
+  priorityScheduler => {
+    const instance = createObject(prototype, properties);
+    disposableInit(instance);
+    instance.priority = priority;
+    instance.priorityScheduler = priorityScheduler;
+    return instance;
+  };

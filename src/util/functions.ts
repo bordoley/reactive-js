@@ -1,5 +1,3 @@
-export type ConstructorOf<T = unknown> = new (...args: readonly any[]) => T;
-
 export type Constructor<T> = new () => T;
 export type Constructor1<TA, T> = new (a: TA) => T;
 export type Constructor2<TA, TB, T> = new (a: TA, b: TB) => T;
