@@ -2,10 +2,11 @@
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { properties, prototype, init } from '../__internal__/util/Disposable.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import { isDisposed, dispose } from '../util/DisposableLike.mjs';
+import '../util/DisposableLike.mjs';
 import { none, isSome, isNone } from '../util/Option.mjs';
 import { pipe, raise, newInstanceWith } from '../util/functions.mjs';
 import { ContinuationLike_run } from './ContinuationLike.mjs';
+import { isDisposed, dispose } from '../__internal__/util/DisposableLike.mjs';
 
 const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
 const SchedulerLike_now = Symbol("SchedulerLike_now");

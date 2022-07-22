@@ -28,6 +28,7 @@
 - [addTo](util_DisposableLike.md#addto)
 - [addToIgnoringChildErrors](util_DisposableLike.md#addtoignoringchilderrors)
 - [bindTo](util_DisposableLike.md#bindto)
+- [create](util_DisposableLike.md#create)
 - [dispose](util_DisposableLike.md#dispose)
 - [getError](util_DisposableLike.md#geterror)
 - [isDisposed](util_DisposableLike.md#isdisposed)
@@ -218,6 +219,16 @@ ___
 #### Returns
 
 [`Identity`](util_functions.md#identity)<`T`\>
+
+___
+
+### create
+
+▸ **create**(): [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md)
+
+#### Returns
+
+[`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md)
 
 ___
 

@@ -3,17 +3,17 @@ import { getDelay } from './__internal__/optionalArgs.mjs';
 import { runContinuation } from './__internal__/scheduling.mjs';
 import { properties as properties$3, prototype as prototype$3, init as init$1 } from './__internal__/util/Disposable.mjs';
 import { createObjectFactory } from './__internal__/util/Object.mjs';
-import { createDisposable } from './util.mjs';
-import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed, disposed } from './util/DisposableLike.mjs';
+import { create as create$1, addTo, onDisposed, addIgnoringChildErrors, disposed } from './util/DisposableLike.mjs';
 import { pipe, floor, getLength, newInstance, max } from './util/functions.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, isInContinuation, SchedulerLike_requestYield, SchedulerLike_schedule, schedule, shouldYield, __yield } from './scheduling/SchedulerLike.mjs';
+import { dispose, isDisposed } from './__internal__/util/DisposableLike.mjs';
 import { MAX_SAFE_INTEGER } from './__internal__/env.mjs';
 import { properties as properties$4, prototype as prototype$4 } from './__internal__/ix/Enumerator.mjs';
 import { EnumeratorLike_current, hasCurrent, getCurrent } from './ix/EnumeratorLike.mjs';
 import { InteractiveSourceLike_move, move } from './ix/InteractiveSourceLike.mjs';
 import { isSome, none, isNone } from './util/Option.mjs';
+import { properties as properties$5, prototype as prototype$5, init as init$2 } from './__internal__/util/DisposableRefLike.mjs';
 import { MutableRefLike_current } from './__internal__/util/MutableRefLike.mjs';
-import { properties as properties$5, prototype as prototype$5, init as init$2 } from './__internal__/util/SerialDisposable.mjs';
 import { PauseableLike_pause, PauseableLike_resume } from './util/PauseableLike.mjs';
 
 const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && typeof performance.now === "function")();
@@ -24,11 +24,11 @@ const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object
     navigator.scheduling.isInputPending !== undefined)();
 const isInputPending = () => supportsIsInputPending && navigator.scheduling.isInputPending();
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
-    const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
+    const disposable = pipe(create$1(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(run, scheduler, continuation, disposable);
 };
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
+    const disposable = pipe(create$1(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
     const timeout = setTimeout(run, delay, scheduler, continuation, disposable);
 };
 const scheduleImmediate = (scheduler, continuation) => {
