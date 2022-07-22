@@ -3,7 +3,7 @@ import {
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
-import { createObject } from "../__internal__/util/createObject";
+import { createObjectFactory } from "../__internal__/util/Object";
 import { dispatch } from "../scheduling/DispatcherLike";
 import {
   addIgnoringChildErrors,
@@ -117,11 +117,13 @@ const prototype = {
   },
 };
 
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+
 export const create = <T>(options?: { replay?: number }): SubjectLike<T> => {
   const { replay: replayOption = 0 } = options ?? {};
   const replay = max(replayOption, 0);
 
-  const instance = createObject(properties, prototype);
+  const instance = createInstance();
   disposableInit(instance);
   instance[MulticastObservableLike_replay] = replay;
   return instance;

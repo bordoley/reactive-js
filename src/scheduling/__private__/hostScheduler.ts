@@ -5,7 +5,7 @@ import {
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../../__internal__/util/Disposable";
-import { createObject } from "../../__internal__/util/createObject";
+import { createObjectFactory } from "../../__internal__/util/Object";
 import { createDisposable } from "../../util";
 import {
   DisposableLike,
@@ -166,13 +166,15 @@ const prototype = {
   },
 };
 
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+
 export const createHostScheduler = (
   options: {
     readonly yieldInterval?: number;
   } = {},
 ): SchedulerLike => {
   const { yieldInterval = 5 } = options;
-  const instance = createObject(prototype, properties);
+  const instance = createInstance();
   disposableInit(instance);
   instance.yieldInterval = yieldInterval;
   instance.startTime = getCurrentTime(instance);

@@ -2,7 +2,7 @@
 import { getDelay } from './__internal__/optionalArgs.mjs';
 import { runContinuation } from './__internal__/scheduling.mjs';
 import { properties as properties$3, prototype as prototype$3, init as init$1 } from './__internal__/util/Disposable.mjs';
-import { createObject } from './__internal__/util/createObject.mjs';
+import { createObjectFactory } from './__internal__/util/Object.mjs';
 import { createDisposable } from './util.mjs';
 import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed, disposed } from './util/DisposableLike.mjs';
 import { pipe, floor, getLength, newInstance, max } from './util/functions.mjs';
@@ -93,9 +93,10 @@ const prototype$2 = {
         }
     },
 };
+const createInstance$2 = /*@__PURE__*/ createObjectFactory(prototype$2, properties$2);
 const createHostScheduler = (options = {}) => {
     const { yieldInterval = 5 } = options;
-    const instance = createObject(prototype$2, properties$2);
+    const instance = createInstance$2();
     init$1(instance);
     instance.yieldInterval = yieldInterval;
     instance.startTime = getCurrentTime(instance);
@@ -242,6 +243,7 @@ const prototype$1 = {
         }
     },
 };
+const createInstance$1 = /*@__PURE__*/ createObjectFactory(prototype$1, properties$1);
 /**
  * Creates a new virtual time scheduler instance.
  *
@@ -251,7 +253,7 @@ const prototype$1 = {
  */
 const createVirtualTimeScheduler = (options = {}) => {
     const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-    const instance = createObject(prototype$1, properties$1);
+    const instance = createInstance$1();
     init$1(instance);
     instance.maxMicroTaskTicks = maxMicroTaskTicks;
     instance.taskQueue = createPriorityQueue(comparator);
@@ -423,12 +425,13 @@ const init = (instance, host) => {
         }
     };
 };
-const createInstance = (scheduler) => {
-    const instance = createObject(prototype, properties);
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+const create = (scheduler) => {
+    const instance = createInstance();
     init(instance, scheduler);
     return instance;
 };
-const createPauseableScheduler = createInstance;
-const createPriorityScheduler = createInstance;
+const createPauseableScheduler = create;
+const createPriorityScheduler = create;
 
 export { createHostScheduler, createPauseableScheduler, createPriorityScheduler, createVirtualTimeScheduler };

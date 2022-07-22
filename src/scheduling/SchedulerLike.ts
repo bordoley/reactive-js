@@ -4,7 +4,7 @@ import {
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
-import { createObject } from "../__internal__/util/createObject";
+import { createObjectFactory } from "../__internal__/util/Object";
 import { EnumeratorLike } from "../ix/EnumeratorLike";
 import {
   DisposableLike,
@@ -120,11 +120,16 @@ const continuationPrototype = {
   },
 };
 
+const createContinuationInstance = /*@__PURE__*/ createObjectFactory(
+  continuationPrototype,
+  continuationProperties,
+);
+
 const createContinuation = (
   scheduler: SchedulerLike,
   f: SideEffect,
 ): ContinuationLike => {
-  const instance = createObject(continuationPrototype, continuationProperties);
+  const instance = createContinuationInstance();
   disposableInit(instance);
   instance.scheduler = scheduler;
   instance.f = f;

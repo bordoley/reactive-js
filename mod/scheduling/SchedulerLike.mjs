@@ -1,7 +1,7 @@
 /// <reference types="./SchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { properties, prototype, init } from '../__internal__/util/Disposable.mjs';
-import { createObject } from '../__internal__/util/createObject.mjs';
+import { createObjectFactory } from '../__internal__/util/Object.mjs';
 import { isDisposed, dispose } from '../util/DisposableLike.mjs';
 import { none, isSome, isNone } from '../util/Option.mjs';
 import { pipe, raise, newInstanceWith } from '../util/functions.mjs';
@@ -58,8 +58,9 @@ const continuationPrototype = {
         }
     },
 };
+const createContinuationInstance = /*@__PURE__*/ createObjectFactory(continuationPrototype, continuationProperties);
 const createContinuation = (scheduler, f) => {
-    const instance = createObject(continuationPrototype, continuationProperties);
+    const instance = createContinuationInstance();
     init(instance);
     instance.scheduler = scheduler;
     instance.f = f;
