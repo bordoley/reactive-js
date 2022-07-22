@@ -59,13 +59,7 @@ class LiftedEnumerable<T> implements EnumerableLike<T> {
   }
 }
 
-/**
- * Returns an EnumerableOperator that applies `operator` to
- * the EnumeratorLike returned by the source when enumerated.
- *
- * @param operator
- */
-export const lift =
+const lift =
   <TA, TB>(
     operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
   ): ContainerOperator<EnumerableLike, TA, TB> =>

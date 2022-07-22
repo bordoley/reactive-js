@@ -11,13 +11,13 @@ import {
   prototype as disposablePrototype,
 } from "../../__internal__/util/Disposable";
 import { MutableRefLike_current } from "../../__internal__/util/MutableRefLike";
+import { createObjectFactory } from "../../__internal__/util/Object";
 import {
   SerialDisposableLike,
   init as serialDisposableInit,
   properties as serialDisposableProperties,
   prototype as serialDisposablePrototype,
 } from "../../__internal__/util/SerialDisposable";
-import { createObject } from "../../__internal__/util/createObject";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -319,8 +319,10 @@ const init = (
   };
 };
 
-const createInstance = (scheduler: SchedulerLike) => {
-  const instance = createObject(prototype, properties);
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+
+const create = (scheduler: SchedulerLike) => {
+  const instance = createInstance();
   init(instance, scheduler);
   return instance;
 };
@@ -328,9 +330,9 @@ const createInstance = (scheduler: SchedulerLike) => {
 export const createPauseableScheduler: Function1<
   SchedulerLike,
   PauseableSchedulerLike
-> = createInstance;
+> = create;
 
 export const createPriorityScheduler: Function1<
   SchedulerLike,
   PrioritySchedulerLike
-> = createInstance;
+> = create;

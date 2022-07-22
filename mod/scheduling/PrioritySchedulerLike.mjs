@@ -1,7 +1,7 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { properties as properties$1, prototype as prototype$1, init } from '../__internal__/util/Disposable.mjs';
-import { createObject } from '../__internal__/util/createObject.mjs';
+import { createObjectFactory } from '../__internal__/util/Object.mjs';
 import { addIgnoringChildErrors, isDisposed } from '../util/DisposableLike.mjs';
 import { none } from '../util/Option.mjs';
 import { pipe } from '../util/functions.mjs';
@@ -41,6 +41,7 @@ const prototype = {
         }
     },
 };
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *
@@ -48,7 +49,7 @@ const prototype = {
  * @param priority The priority to schedule work at.
  */
 const toScheduler = (priority) => priorityScheduler => {
-    const instance = createObject(prototype, properties);
+    const instance = createInstance();
     init(instance);
     instance.priority = priority;
     instance.priorityScheduler = priorityScheduler;
