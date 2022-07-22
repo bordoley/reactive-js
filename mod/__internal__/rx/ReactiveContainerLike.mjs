@@ -3,10 +3,11 @@ import { fromValue, empty } from '../../containers/ContainerLike.mjs';
 import { forEach } from '../../containers/ReadonlyArrayLike.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { notify } from '../../rx/ReactiveSinkLike.mjs';
-import { addToIgnoringChildErrors, onComplete, dispose, onError, addTo, isDisposed, onDisposed, add } from '../../util/DisposableLike.mjs';
+import { addToIgnoringChildErrors, onComplete, onError, addTo, onDisposed, add } from '../../util/DisposableLike.mjs';
 import { none, isSome } from '../../util/Option.mjs';
 import { pipe, newInstanceWith, newInstance, isEmpty, compose, negate, ignore, identity, getLength } from '../../util/functions.mjs';
 import { lift } from '../containers/StatefulContainerLike.mjs';
+import { dispose, isDisposed } from '../util/DisposableLike.mjs';
 
 const getDelegate = (container) => container.delegate;
 const create = (m) => (onSink) => m.create(onSink);

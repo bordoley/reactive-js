@@ -10,14 +10,14 @@ import {
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../../__internal__/util/Disposable";
+import {
+  DisposableRefLike,
+  init as disposableRefInit,
+  properties as disposableRefProperties,
+  prototype as disposableRefPrototype,
+} from "../../__internal__/util/DisposableRefLike";
 import { MutableRefLike_current } from "../../__internal__/util/MutableRefLike";
 import { createObjectFactory } from "../../__internal__/util/Object";
-import {
-  SerialDisposableLike,
-  init as serialDisposableInit,
-  properties as serialDisposableProperties,
-  prototype as serialDisposablePrototype,
-} from "../../__internal__/util/SerialDisposable";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -134,7 +134,7 @@ const priorityShouldYield = (
   );
 };
 
-const scheduleOnHost = (self: typeof properties & SerialDisposableLike) => {
+const scheduleOnHost = (self: typeof properties & DisposableRefLike) => {
   const task = peek(self);
 
   const continuationActive =
@@ -159,7 +159,7 @@ const scheduleOnHost = (self: typeof properties & SerialDisposableLike) => {
 const properties = {
   ...disposableProperties,
   ...enumeratorProperties,
-  ...serialDisposableProperties,
+  ...disposableRefProperties,
   [SchedulerLike_inContinuation]: false,
   delayed: none as unknown as QueueLike<QueueTask>,
   dueTime: 0,
@@ -174,7 +174,7 @@ const properties = {
 const prototype = {
   ...disposablePrototype,
   ...enumeratorPrototype,
-  ...serialDisposablePrototype,
+  ...disposableRefPrototype,
   get [SchedulerLike_now](): number {
     const self = this as unknown as typeof properties;
     return getCurrentTime(self.host);
@@ -218,16 +218,16 @@ const prototype = {
   [SchedulerLike_requestYield](this: typeof properties): void {
     this.yieldRequested = true;
   },
-  [PauseableLike_pause](this: typeof properties & SerialDisposableLike) {
+  [PauseableLike_pause](this: typeof properties & DisposableRefLike) {
     this.isPaused = true;
     this[MutableRefLike_current] = disposed;
   },
-  [PauseableLike_resume](this: typeof properties & SerialDisposableLike) {
+  [PauseableLike_resume](this: typeof properties & DisposableRefLike) {
     this.isPaused = false;
     scheduleOnHost(this);
   },
   [SchedulerLike_schedule](
-    this: typeof properties & SerialDisposableLike & EnumeratorLike<QueueTask>,
+    this: typeof properties & DisposableRefLike & EnumeratorLike<QueueTask>,
     continuation: ContinuationLike,
     options?: QueueSchedulerOptions,
   ) {
@@ -294,7 +294,7 @@ const init = (
   host: SchedulerLike,
 ) => {
   disposableInit(instance);
-  serialDisposableInit(instance, disposed);
+  disposableRefInit(instance, disposed);
 
   instance.delayed = createPriorityQueue(delayedComparator);
   instance.queue = createPriorityQueue(taskComparator);

@@ -1,11 +1,11 @@
 /// <reference types="./DisposableLike.d.ts" />
+import { prototype, properties, init } from '../__internal__/util/Disposable.mjs';
+import { DisposableLike_add, dispose, getError, DisposableLike_error, DisposableLike_isDisposed, DisposableLike_dispose } from '../__internal__/util/DisposableLike.mjs';
+export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, dispose, getError, isDisposed } from '../__internal__/util/DisposableLike.mjs';
+import { createObjectFactory } from '../__internal__/util/Object.mjs';
 import { isSome, isNone, none } from './Option.mjs';
 import { pipe, newInstance, ignore } from './functions.mjs';
 
-const DisposableLike_add = Symbol("DisposableLike_add");
-const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-const DisposableLike_error = Symbol("DisposableLike_error");
-const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 const addDisposableOrTeardown = (parent, child, ignoreChildErrors = false) => {
     parent[DisposableLike_add](child, ignoreChildErrors);
 };
@@ -83,14 +83,11 @@ const disposed = {
     },
     [DisposableLike_dispose]: ignore,
 };
-const getError = (disposable) => disposable[DisposableLike_error];
-const isDisposed = (disposable) => disposable[DisposableLike_isDisposed];
-/**
- * Dispose `disposable` with an optional error.
- */
-const dispose = (e) => disposable => {
-    disposable[DisposableLike_dispose](e);
-    return disposable;
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+const create = () => {
+    const instance = createInstance();
+    init(instance);
+    return instance;
 };
 
-export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, disposed, getError, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, create, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
