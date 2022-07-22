@@ -1,5 +1,6 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/env";
 import {
+  MutableEnumeratorLike,
   properties as enumeratorProperties,
   prototype as enumeratorPrototype,
 } from "../__internal__/ix/Enumerator";
@@ -84,8 +85,7 @@ const prototype = {
     this.yieldRequested = true;
   },
   [InteractiveSourceLike_move](
-    this: typeof properties &
-      DisposableLike & { [EnumeratorLike_current]: void },
+    this: typeof properties & MutableEnumeratorLike<void>,
   ): void {
     const taskQueue = this.taskQueue;
 

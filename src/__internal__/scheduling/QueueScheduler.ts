@@ -1,5 +1,6 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/env";
 import {
+  MutableEnumeratorLike,
   properties as enumeratorProperties,
   prototype as enumeratorPrototype,
 } from "../../__internal__/ix/Enumerator";
@@ -201,9 +202,7 @@ const prototype = {
     );
   },
   [InteractiveSourceLike_move](
-    this: typeof properties & {
-      [EnumeratorLike_current]: QueueTask;
-    },
+    this: typeof properties & MutableEnumeratorLike<QueueTask>,
   ): void {
     // First fast forward through any disposed tasks.
     peek(this);

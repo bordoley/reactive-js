@@ -50,6 +50,7 @@ import {
 import { InteractiveContainerLike } from "./interactiveContainer";
 import { ThrowIfEmpty, Using } from "./liftableContainer";
 import { Option, isSome, none } from "./option";
+import { InteractiveSourceLike_move } from "../src/ix/InteractiveSourceLike";
 
 /**
  * Interface for iterating a Container of items.
@@ -114,248 +115,6 @@ export function concat<T>(
 
 export const concatT: Concat<EnumerableLike<unknown>> = {
   concat,
-};
-
-export const distinctUntilChanged: <T>(options?: {
-  readonly equality?: Equality<T>;
-}) => EnumerableOperator<T, T> =
-  /*@__PURE__*/ createDistinctUntilChangedOperator(
-    liftT,
-    class DistinctUntilChangedEnumerator<
-      T,
-    > extends AbstractPassThroughEnumerator<T> {
-      constructor(
-        delegate: EnumeratorLike<T>,
-        private readonly equality: Equality<T>,
-      ) {
-        super(delegate);
-      }
-
-      move(): boolean {
-        const hadCurrent = hasCurrent(this);
-        const prevCurrent = hadCurrent ? getCurrent(this) : none;
-
-        try {
-          const { delegate } = this;
-          while (move(delegate)) {
-            if (
-              !hadCurrent ||
-              !this.equality(prevCurrent as any, getCurrent(delegate))
-            ) {
-              break;
-            }
-          }
-        } catch (cause) {
-          pipe(this, dispose({ cause }));
-        }
-
-        return hasCurrent(this);
-      }
-    },
-  );
-
-export const distinctUntilChangedT: DistinctUntilChanged<
-  EnumerableLike<unknown>
-> = {
-  distinctUntilChanged,
-};
-
-export const fromEnumerable = <T>(): Function1<
-  EnumerableLike<T>,
-  EnumerableLike<T>
-> => identity;
-
-export const fromEnumerableT: FromEnumerable<EnumerableLike<unknown>> = {
-  fromEnumerable,
-};
-
-export const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T> =
-  /*@__PURE__*/ createKeepOperator(
-    liftT,
-    class KeepEnumerator<T> extends AbstractPassThroughEnumerator<T> {
-      constructor(
-        delegate: EnumeratorLike<T>,
-        private readonly predicate: Predicate<T>,
-      ) {
-        super(delegate);
-      }
-
-      move(): boolean {
-        const { delegate, predicate } = this;
-
-        try {
-          while (move(delegate) && !predicate(getCurrent(delegate))) {}
-        } catch (cause) {
-          pipe(this, dispose({ cause }));
-        }
-
-        return hasCurrent(this);
-      }
-    },
-  );
-
-export const keepT: Keep<EnumerableLike<unknown>> = {
-  keep,
-};
-
-export const map: <TA, TB>(
-  mapper: Function1<TA, TB>,
-) => EnumerableOperator<TA, TB> = /*@__PURE__*/ createMapOperator(
-  liftT,
-  class MapEnumerator<TA, TB> extends AbstractDelegatingEnumerator<TA, TB> {
-    constructor(
-      delegate: EnumeratorLike<TA>,
-      readonly mapper: Function1<TA, TB>,
-    ) {
-      super(delegate);
-    }
-
-    move(): boolean {
-      reset(this);
-
-      const { delegate } = this;
-
-      if (move(delegate)) {
-        try {
-          this.current = this.mapper(getCurrent(delegate));
-        } catch (cause) {
-          pipe(this, dispose({ cause }));
-        }
-      }
-
-      return hasCurrent(this);
-    }
-  },
-);
-
-export const mapT: Map<EnumerableLike<unknown>> = {
-  map,
-};
-
-export const onNotify: <T>(
-  onNotify: SideEffect1<T>,
-) => EnumerableOperator<T, T> = /*@__PURE__*/ createOnNotifyOperator(
-  liftT,
-  class OnNotifyEnumerator<T> extends AbstractPassThroughEnumerator<T> {
-    constructor(
-      delegate: EnumeratorLike<T>,
-      private readonly onNotify: SideEffect1<T>,
-    ) {
-      super(delegate);
-    }
-
-    move(): boolean {
-      const { delegate } = this;
-
-      if (move(delegate)) {
-        try {
-          this.onNotify(getCurrent(this));
-        } catch (cause) {
-          pipe(this, dispose({ cause }));
-        }
-      }
-
-      return hasCurrent(this);
-    }
-  },
-);
-
-export const pairwise: <T>() => EnumerableOperator<T, [Option<T>, T]> =
-  /*@__PURE__*/ createPairwiseOperator(
-    liftT,
-    class PairwiseEnumerator<T> extends AbstractDelegatingEnumerator<
-      T,
-      [Option<T>, T]
-    > {
-      move(): boolean {
-        const prev = (hasCurrent(this) ? getCurrent(this) : emptyArray)[1];
-
-        reset(this);
-
-        const { delegate } = this;
-        if (move(delegate)) {
-          const { current } = delegate;
-          this.current = [prev, current];
-        }
-
-        return hasCurrent(this);
-      }
-    },
-  );
-
-export const pairwiseT: Pairwise<EnumerableLike<unknown>> = {
-  pairwise,
-};
-
-export const scan: <T, TAcc>(
-  reducer: Reducer<T, TAcc>,
-  initialValue: Factory<TAcc>,
-) => EnumerableOperator<T, TAcc> = /*@__PURE__*/ createScanOperator(
-  liftT,
-  class ScanEnumerator<T, TAcc> extends AbstractDelegatingEnumerator<T, TAcc> {
-    constructor(
-      delegate: EnumeratorLike<T>,
-      private readonly reducer: Reducer<T, TAcc>,
-      current: TAcc,
-    ) {
-      super(delegate);
-      this.current = current;
-    }
-
-    move(): boolean {
-      const acc = hasCurrent(this) ? getCurrent(this) : none;
-
-      reset(this);
-
-      const { delegate, reducer } = this;
-      if (isSome(acc) && move(delegate)) {
-        try {
-          this.current = reducer(acc, getCurrent(delegate));
-        } catch (cause) {
-          pipe(this, dispose({ cause }));
-        }
-      }
-
-      return hasCurrent(this);
-    }
-  },
-);
-
-export const scanT: Scan<EnumerableLike<unknown>> = {
-  scan,
-};
-
-export const skipFirst: <T>(options?: {
-  readonly count?: number;
-}) => EnumerableOperator<T, T> = /*@__PURE__*/ createSkipFirstOperator(
-  liftT,
-  class SkipFirstEnumerator<T> extends AbstractPassThroughEnumerator<T> {
-    private count = 0;
-
-    constructor(
-      delegate: EnumeratorLike<T>,
-      private readonly skipCount: number,
-    ) {
-      super(delegate);
-    }
-
-    move(): boolean {
-      const { delegate, skipCount } = this;
-
-      for (let { count } = this; count < skipCount; count++) {
-        if (!move(delegate)) {
-          break;
-        }
-      }
-
-      this.count = skipCount;
-      return move(delegate);
-    }
-  },
-);
-
-export const skipFirstT: SkipFirst<EnumerableLike<unknown>> = {
-  skipFirst,
 };
 
 export const takeFirst: <T>(options?: {
@@ -460,15 +219,6 @@ export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>> = {
   throwIfEmpty,
 };
 
-export const toEnumerable = <T>(): Function1<
-  EnumerableLike<T>,
-  EnumerableLike<T>
-> => identity;
-
-export const toEnumerableT: ToEnumerable<EnumerableLike<unknown>> = {
-  toEnumerable,
-};
-
 const _using = <TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource | readonly TResource[]>,
   enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
@@ -482,8 +232,6 @@ const _using = <TResource extends DisposableLike, T>(
 
     return enumerator;
   });
-
-export const TContainerOf: EnumerableLike<unknown> = undefined as any;
 
 export const using: Using<EnumerableLike<unknown>>["using"] = _using;
 

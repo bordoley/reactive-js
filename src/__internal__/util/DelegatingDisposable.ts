@@ -33,7 +33,7 @@ export const prototype = {
     const delegate = self[DelegatingDisposable_private_delegate];
     return delegate[DisposableLike_isDisposed];
   },
-  add(
+  [DisposableLike_add](
     this: typeof properties,
     disposable: DisposableOrTeardown,
     ignoreChildErrors: boolean,
@@ -41,7 +41,7 @@ export const prototype = {
     const delegate = this[DelegatingDisposable_private_delegate];
     delegate[DisposableLike_add](disposable, ignoreChildErrors);
   },
-  dispose(
+  [DisposableLike_dispose](
     this: {
       [DelegatingDisposable_private_delegate]: DisposableLike;
     },

@@ -2,31 +2,23 @@
 import { empty } from '../../containers/ContainerLike.mjs';
 import { addIgnoringChildErrors, addTo, onComplete } from '../../util/DisposableLike.mjs';
 import { none } from '../../util/Option.mjs';
-import { strictEquality, pipe, newInstanceWith, max } from '../../util/functions.mjs';
+import { pipe, max, newInstanceWith } from '../../util/functions.mjs';
 import { dispose } from '../util/DisposableLike.mjs';
 
 const interactive = 0;
 const reactive = 1;
 const lift = ({ lift, }) => lift;
-const distinctUntilChanged = (m) => (Constructor) => (options = {}) => {
-    const { equality = strictEquality } = options;
-    return pipe((delegate) => pipe(Constructor, newInstanceWith(delegate, equality)), lift(m));
-};
-const keep = (m) => (Constructor) => (predicate) => pipe((delegate) => pipe(Constructor, newInstanceWith(delegate, predicate)), lift(m));
-const map = (m) => (Constructor) => (mapper) => pipe((delegate) => pipe(Constructor, newInstanceWith(delegate, mapper)), lift(m));
-const onNotify = (m, Constructor) => (onNotify) => pipe((delegate) => pipe(Constructor, newInstanceWith(delegate, onNotify)), lift(m));
-const pairwise = (m) => (Constructor) => () => pipe((delegate) => pipe(Constructor, newInstanceWith(delegate)), lift(m));
-const scan = (m) => (Constructor) => (reducer, initialValue) => pipe((delegate) => pipe(Constructor, newInstanceWith(delegate, reducer, initialValue())), lift(m));
-const skipFirst = (m) => (Constructor) => (options = {}) => {
+const createScanOperator = (m) => (Constructor) => (reducer, initialValue) => pipe(Constructor(reducer, initialValue()), lift(m));
+const createSkipFirstOperator = (m) => (Constructor) => (options = {}) => {
     const { count = 1 } = options;
-    const operator = delegate => pipe(Constructor, newInstanceWith(delegate, count));
+    const operator = Constructor(count);
     const lifted = pipe(operator, lift(m));
     return runnable => (count > 0 ? pipe(runnable, lifted) : runnable);
 };
-const takeFirst = (m) => (Constructor) => (options = {}) => {
+const createTakeFirstOperator = (m) => (Constructor) => (options = {}) => {
     var _a;
     const { count = max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
-    const operator = delegate => pipe(Constructor, newInstanceWith(delegate, count));
+    const operator = Constructor(count);
     const lifted = pipe(operator, lift(m));
     return source => (count > 0 ? pipe(source, lifted) : empty(m));
 };
@@ -58,4 +50,4 @@ const createThrowIfEmptyOperator = (m) => (Constructor) => (factory) => pipe((de
     return lifted;
 }, lift(m));
 
-export { createThrowIfEmptyOperator, distinctUntilChanged, interactive, keep, lift, map, onNotify, pairwise, reactive, scan, skipFirst, takeFirst, takeWhile };
+export { createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createThrowIfEmptyOperator, interactive, lift, reactive, takeWhile };

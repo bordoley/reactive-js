@@ -1,17 +1,7 @@
-import { Container, ContainerOperator, ContainerLike, ContainerOf } from '../containers/ContainerLike.js';
-import { StatefulContainerLike, StatefulContainerStateOf } from '../containers/StatefulContainerLike.js';
-import { Function1 } from '../util/functions.js';
+import { ContainerLike, Container, ContainerOf, DistinctUntilChanged, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst } from '../containers/ContainerLike.js';
+import { Function1, Identity, SideEffect1 } from '../util/functions.js';
 import { EnumeratorLike } from "./EnumeratorLike.mjs";
 import { InteractiveContainerLike, InteractiveContainerLike_interact } from "./InteractiveContainerLike.mjs";
-declare type StatefulContainerOperator<C extends StatefulContainerLike, TA, TB, TVar extends TInteractive | TReactive> = Function1<StatefulContainerOperatorIn<C, TA, TB, TVar>, StatefulContainerOperatorOut<C, TA, TB, TVar>>;
-declare type StatefulContainerOperatorIn<C extends StatefulContainerLike, TA, TB, TVar extends TInteractive | TReactive> = TVar extends TReactive ? StatefulContainerStateOf<C, TB> : StatefulContainerStateOf<C, TA>;
-declare type StatefulContainerOperatorOut<C extends StatefulContainerLike, TA, TB, TVar extends TInteractive | TReactive> = TVar extends TReactive ? StatefulContainerStateOf<C, TA> : StatefulContainerStateOf<C, TB>;
-declare type TInteractive = 0;
-declare type TReactive = 1;
-declare type Lift<C extends StatefulContainerLike, TVar extends TInteractive | TReactive> = Container<C> & {
-    lift<TA, TB>(operator: StatefulContainerOperator<C, TA, TB, TVar>): ContainerOperator<C, TA, TB>;
-    readonly variance: TInteractive | TReactive;
-};
 /**
  * Interface for iterating a Container of items.
  */
@@ -27,5 +17,21 @@ interface FromEnumerable<C extends ContainerLike> extends Container<C> {
 interface ToEnumerable<C extends ContainerLike> extends Container<C> {
     toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
-declare const liftT: Lift<EnumerableLike<unknown>, TInteractive>;
-export { EnumerableLike, FromEnumerable, ToEnumerable, liftT };
+declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"];
+declare const fromEnumerable: <T>() => Identity<EnumerableLike<T>>;
+declare const fromEnumerableT: FromEnumerable<EnumerableLike>;
+declare const keep: Keep<EnumerableLike>["keep"];
+declare const keepT: Keep<EnumerableLike>;
+declare const map: Map<EnumerableLike>["map"];
+declare const mapT: Map<EnumerableLike>;
+declare const onNotify: <T>(a: SideEffect1<T>) => ContainerOperator<EnumerableLike<unknown>, T, T>;
+declare const pairwise: Pairwise<EnumerableLike>["pairwise"];
+declare const pairwiseT: Pairwise<EnumerableLike>;
+declare const scan: Scan<EnumerableLike>["scan"];
+declare const scanT: Scan<EnumerableLike>;
+declare const skipFirst: SkipFirst<EnumerableLike>["skipFirst"];
+declare const skipFirstT: SkipFirst<EnumerableLike>;
+declare const TContainerOf: EnumerableLike;
+declare const toEnumerable: <T>() => Identity<EnumerableLike<T>>;
+declare const toEnumerableT: ToEnumerable<EnumerableLike>;
+export { EnumerableLike, FromEnumerable, TContainerOf, ToEnumerable, distinctUntilChanged, fromEnumerable, fromEnumerableT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, toEnumerable, toEnumerableT };
