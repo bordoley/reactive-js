@@ -10,9 +10,9 @@
 
   ↳ **`SchedulerLike`**
 
-  ↳↳ [`PauseableSchedulerLike`](scheduling_SchedulerLike.PauseableSchedulerLike.md)
+  ↳↳ [`PauseableSchedulerLike`](scheduling_PausableSchedulerLike.PauseableSchedulerLike.md)
 
-  ↳↳ [`VirtualTimeSchedulerLike`](scheduling_SchedulerLike.VirtualTimeSchedulerLike.md)
+  ↳↳ [`VirtualTimeSchedulerLike`](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md)
 
 ## Table of contents
 

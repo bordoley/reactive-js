@@ -28,6 +28,20 @@ import {
   InteractiveSourceLike_move,
   move,
 } from "../../ix/InteractiveSourceLike";
+import { ContinuationLike } from "../../scheduling/ContinuationLike";
+import {
+  SchedulerLike,
+  SchedulerLike_inContinuation,
+  SchedulerLike_now,
+  SchedulerLike_requestYield,
+  SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
+  __yield,
+  getCurrentTime,
+  isInContinuation,
+  schedule,
+  shouldYield,
+} from "../../scheduling/SchedulerLike";
 import {
   DisposableLike,
   addIgnoringChildErrors,
@@ -41,22 +55,6 @@ import {
   PauseableLike_resume,
 } from "../../util/PauseableLike";
 import { Function1, max, pipe } from "../../util/functions";
-import { ContinuationLike } from "../ContinuationLike";
-import { PrioritySchedulerLike } from "../PrioritySchedulerLike";
-import {
-  PauseableSchedulerLike,
-  SchedulerLike,
-  SchedulerLike_inContinuation,
-  SchedulerLike_now,
-  SchedulerLike_requestYield,
-  SchedulerLike_schedule,
-  SchedulerLike_shouldYield,
-  __yield,
-  getCurrentTime,
-  isInContinuation,
-  schedule,
-  shouldYield,
-} from "../SchedulerLike";
 import { QueueLike, createPriorityQueue } from "./queue";
 
 export type QueueTask = {
@@ -321,18 +319,10 @@ const init = (
 
 const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
 
-const create = (scheduler: SchedulerLike) => {
+export const create: Function1<SchedulerLike, QueueSchedulerLike> = (
+  scheduler: SchedulerLike,
+) => {
   const instance = createInstance();
   init(instance, scheduler);
   return instance;
 };
-
-export const createPauseableScheduler: Function1<
-  SchedulerLike,
-  PauseableSchedulerLike
-> = create;
-
-export const createPriorityScheduler: Function1<
-  SchedulerLike,
-  PrioritySchedulerLike
-> = create;

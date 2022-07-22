@@ -14,6 +14,7 @@
 
 ### Functions
 
+- [create](scheduling_PrioritySchedulerLike.md#create)
 - [toScheduler](scheduling_PrioritySchedulerLike.md#toscheduler)
 
 ## Type Aliases
@@ -30,6 +31,22 @@
 | `priority` | `number` |
 
 ## Functions
+
+### create
+
+▸ **create**(`a`): [`PrioritySchedulerLike`](../interfaces/scheduling_PrioritySchedulerLike.PrioritySchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md) |
+
+#### Returns
+
+[`PrioritySchedulerLike`](../interfaces/scheduling_PrioritySchedulerLike.PrioritySchedulerLike.md)
+
+___
 
 ### toScheduler
 

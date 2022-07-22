@@ -6,9 +6,7 @@
 
 ### Interfaces
 
-- [PauseableSchedulerLike](../interfaces/scheduling_SchedulerLike.PauseableSchedulerLike.md)
 - [SchedulerLike](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)
-- [VirtualTimeSchedulerLike](../interfaces/scheduling_SchedulerLike.VirtualTimeSchedulerLike.md)
 
 ### Type Aliases
 
@@ -16,7 +14,6 @@
 
 ### Variables
 
-- [SchedulerLike\_inContinuation](scheduling_SchedulerLike.md#schedulerlike_incontinuation)
 - [SchedulerLike\_now](scheduling_SchedulerLike.md#schedulerlike_now)
 - [SchedulerLike\_requestYield](scheduling_SchedulerLike.md#schedulerlike_requestyield)
 - [SchedulerLike\_schedule](scheduling_SchedulerLike.md#schedulerlike_schedule)
@@ -25,6 +22,7 @@
 ### Functions
 
 - [\_\_yield](scheduling_SchedulerLike.md#__yield)
+- [create](scheduling_SchedulerLike.md#create)
 - [getCurrentTime](scheduling_SchedulerLike.md#getcurrenttime)
 - [isInContinuation](scheduling_SchedulerLike.md#isincontinuation)
 - [requestYield](scheduling_SchedulerLike.md#requestyield)
@@ -44,12 +42,6 @@
 | `delay?` | `number` |
 
 ## Variables
-
-### SchedulerLike\_inContinuation
-
-• `Const` **SchedulerLike\_inContinuation**: unique `symbol`
-
-___
 
 ### SchedulerLike\_now
 
@@ -89,6 +81,23 @@ ___
 #### Returns
 
 `void`
+
+___
+
+### create
+
+▸ **create**(`options?`): [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.yieldInterval?` | `number` |
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)
 
 ___
 

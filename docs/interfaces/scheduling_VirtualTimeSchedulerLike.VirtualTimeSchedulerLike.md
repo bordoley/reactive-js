@@ -1,35 +1,36 @@
-[Reactive-JS](../README.md) / [scheduling/SchedulerLike](../modules/scheduling_SchedulerLike.md) / PauseableSchedulerLike
+[Reactive-JS](../README.md) / [scheduling/VirtualTimeSchedulerLike](../modules/scheduling_VirtualTimeSchedulerLike.md) / VirtualTimeSchedulerLike
 
-# Interface: PauseableSchedulerLike
+# Interface: VirtualTimeSchedulerLike
 
-[scheduling/SchedulerLike](../modules/scheduling_SchedulerLike.md).PauseableSchedulerLike
+[scheduling/VirtualTimeSchedulerLike](../modules/scheduling_VirtualTimeSchedulerLike.md).VirtualTimeSchedulerLike
 
 ## Hierarchy
 
-- [`PauseableLike`](util_PauseableLike.PauseableLike.md)
+- [`EnumeratorLike`](ix_EnumeratorLike.EnumeratorLike.md)<`void`\>
 
 - [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)
 
-  ↳ **`PauseableSchedulerLike`**
+  ↳ **`VirtualTimeSchedulerLike`**
 
 ## Table of contents
 
 ### Properties
 
-- [[DisposableLike\_error]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[disposablelike_error])
-- [[DisposableLike\_isDisposed]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[disposablelike_isdisposed])
-- [[SchedulerLike\_inContinuation]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_incontinuation])
-- [[SchedulerLike\_now]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_now])
-- [[SchedulerLike\_shouldYield]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_shouldyield])
+- [[DisposableLike\_error]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[disposablelike_error])
+- [[DisposableLike\_isDisposed]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[disposablelike_isdisposed])
+- [[EnumeratorLike\_current]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[enumeratorlike_current])
+- [[EnumeratorLike\_hasCurrent]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[enumeratorlike_hascurrent])
+- [[SchedulerLike\_inContinuation]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[schedulerlike_incontinuation])
+- [[SchedulerLike\_now]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[schedulerlike_now])
+- [[SchedulerLike\_shouldYield]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[schedulerlike_shouldyield])
 
 ### Methods
 
-- [[DisposableLike\_add]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[disposablelike_dispose])
-- [[PauseableLike\_pause]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[pauseablelike_pause])
-- [[PauseableLike\_resume]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[pauseablelike_resume])
-- [[SchedulerLike\_requestYield]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_requestyield])
-- [[SchedulerLike\_schedule]](scheduling_SchedulerLike.PauseableSchedulerLike.md#[schedulerlike_schedule])
+- [[DisposableLike\_add]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[disposablelike_add])
+- [[DisposableLike\_dispose]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[disposablelike_dispose])
+- [[InteractiveSourceLike\_move]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[interactivesourcelike_move])
+- [[SchedulerLike\_requestYield]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[schedulerlike_requestyield])
+- [[SchedulerLike\_schedule]](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md#[schedulerlike_schedule])
 
 ## Properties
 
@@ -54,6 +55,26 @@ ___
 #### Inherited from
 
 [SchedulerLike](scheduling_SchedulerLike.SchedulerLike.md).[[DisposableLike_isDisposed]](scheduling_SchedulerLike.SchedulerLike.md#[disposablelike_isdisposed])
+
+___
+
+### [EnumeratorLike\_current]
+
+• `Readonly` **[EnumeratorLike\_current]**: `void`
+
+#### Inherited from
+
+[EnumeratorLike](ix_EnumeratorLike.EnumeratorLike.md).[[EnumeratorLike_current]](ix_EnumeratorLike.EnumeratorLike.md#[enumeratorlike_current])
+
+___
+
+### [EnumeratorLike\_hasCurrent]
+
+• `Readonly` **[EnumeratorLike\_hasCurrent]**: `boolean`
+
+#### Inherited from
+
+[EnumeratorLike](ix_EnumeratorLike.EnumeratorLike.md).[[EnumeratorLike_hasCurrent]](ix_EnumeratorLike.EnumeratorLike.md#[enumeratorlike_hascurrent])
 
 ___
 
@@ -134,23 +155,9 @@ Dispose the resource.
 
 ___
 
-### [PauseableLike\_pause]
+### [InteractiveSourceLike\_move]
 
-▸ **[PauseableLike_pause]**(): `void`
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[PauseableLike](util_PauseableLike.PauseableLike.md).[[PauseableLike_pause]](util_PauseableLike.PauseableLike.md#[pauseablelike_pause])
-
-___
-
-### [PauseableLike\_resume]
-
-▸ **[PauseableLike_resume]**(): `void`
+▸ **[InteractiveSourceLike_move]**(): `void`
 
 #### Returns
 
@@ -158,7 +165,7 @@ ___
 
 #### Inherited from
 
-[PauseableLike](util_PauseableLike.PauseableLike.md).[[PauseableLike_resume]](util_PauseableLike.PauseableLike.md#[pauseablelike_resume])
+[EnumeratorLike](ix_EnumeratorLike.EnumeratorLike.md).[[InteractiveSourceLike_move]](ix_EnumeratorLike.EnumeratorLike.md#[interactivesourcelike_move])
 
 ___
 

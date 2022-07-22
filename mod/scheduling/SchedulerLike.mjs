@@ -1,14 +1,102 @@
 /// <reference types="./SchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { properties, prototype, init } from '../__internal__/util/Disposable.mjs';
+import { runContinuation, SchedulerLike_inContinuation } from '../__internal__/scheduling.mjs';
+export { SchedulerLike_inContinuation } from '../__internal__/scheduling.mjs';
+import { properties as properties$1, prototype as prototype$1, init } from '../__internal__/util/Disposable.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import '../util/DisposableLike.mjs';
+import { ContinuationLike_run } from './ContinuationLike.mjs';
+import { create as create$1, addTo, onDisposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { none, isSome, isNone } from '../util/Option.mjs';
 import { pipe, raise, newInstanceWith } from '../util/functions.mjs';
-import { ContinuationLike_run } from './ContinuationLike.mjs';
-import { isDisposed, dispose } from '../__internal__/util/DisposableLike.mjs';
+import { dispose, isDisposed } from '../__internal__/util/DisposableLike.mjs';
 
-const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
+const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && typeof performance.now === "function")();
+const supportsSetImmediate = /*@__PURE__*/ (() => typeof setImmediate === "function")();
+const supportsProcessHRTime = /*@__PURE__*/ (() => typeof process === "object" && typeof process.hrtime === "function")();
+const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
+    navigator.scheduling !== undefined &&
+    navigator.scheduling.isInputPending !== undefined)();
+const isInputPending = () => supportsIsInputPending && navigator.scheduling.isInputPending();
+const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
+    const disposable = pipe(create$1(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
+    const immmediate = setImmediate(run, scheduler, continuation, disposable);
+};
+const scheduleDelayed = (scheduler, continuation, delay) => {
+    const disposable = pipe(create$1(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
+    const timeout = setTimeout(run, delay, scheduler, continuation, disposable);
+};
+const scheduleImmediate = (scheduler, continuation) => {
+    if (supportsSetImmediate) {
+        scheduleImmediateWithSetImmediate(scheduler, continuation);
+    }
+    else {
+        scheduleDelayed(scheduler, continuation, 0);
+    }
+};
+const run = (scheduler, continuation, immmediateOrTimerDisposable) => {
+    // clear the immediateOrTimer disposable
+    pipe(immmediateOrTimerDisposable, dispose());
+    scheduler.startTime = getCurrentTime(scheduler);
+    pipe(scheduler, runContinuation(continuation));
+};
+const properties = {
+    ...properties$1,
+    [SchedulerLike_inContinuation]: false,
+    startTime: 0,
+    yieldInterval: 0,
+    yieldRequested: false,
+};
+const prototype = {
+    ...prototype$1,
+    get [SchedulerLike_now]() {
+        if (supportsPerformanceNow) {
+            return performance.now();
+        }
+        else if (supportsProcessHRTime) {
+            const hr = process.hrtime();
+            return hr[0] * 1000 + hr[1] / 1e6;
+        }
+        else {
+            return Date.now();
+        }
+    },
+    get [SchedulerLike_shouldYield]() {
+        const self = this;
+        const inContinuation = isInContinuation(self);
+        const { yieldRequested } = self;
+        if (inContinuation) {
+            self.yieldRequested = false;
+        }
+        return (inContinuation &&
+            (yieldRequested ||
+                getCurrentTime(self) > self.startTime + self.yieldInterval ||
+                isInputPending()));
+    },
+    [SchedulerLike_requestYield]() {
+        this.yieldRequested = true;
+    },
+    [SchedulerLike_schedule](continuation, options) {
+        const delay = getDelay(options);
+        pipe(this, addIgnoringChildErrors(continuation));
+        const continuationIsDisposed = isDisposed(continuation);
+        if (!continuationIsDisposed && delay > 0) {
+            scheduleDelayed(this, continuation, delay);
+        }
+        else if (!continuationIsDisposed) {
+            scheduleImmediate(this, continuation);
+        }
+    },
+};
+const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+const create = (options = {}) => {
+    const { yieldInterval = 5 } = options;
+    const instance = createInstance();
+    init(instance);
+    instance.yieldInterval = yieldInterval;
+    instance.startTime = getCurrentTime(instance);
+    return instance;
+};
+
 const SchedulerLike_now = Symbol("SchedulerLike_now");
 const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
 const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
@@ -25,12 +113,12 @@ class YieldError {
 }
 let currentScheduler = none;
 const continuationProperties = {
-    ...properties,
+    ...properties$1,
     scheduler: none,
     f: () => { },
 };
 const continuationPrototype = {
-    ...prototype,
+    ...prototype$1,
     [ContinuationLike_run]() {
         if (!isDisposed(this)) {
             let error = none;
@@ -82,4 +170,4 @@ const schedule = (f, options) => scheduler => {
     return continuation;
 };
 
-export { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, __yield, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield };
+export { SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, __yield, create, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield };
