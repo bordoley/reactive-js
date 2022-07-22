@@ -1,4 +1,5 @@
 import { getDelay } from "../__internal__/optionalArgs";
+import { create as createQueueScheduler } from "../__internal__/scheduling/QueueScheduler";
 import {
   init as disposableInit,
   properties as disposableProperties,
@@ -115,3 +116,6 @@ export const toScheduler =
     instance.priorityScheduler = priorityScheduler;
     return instance;
   };
+
+export const create: Function1<SchedulerLike, PrioritySchedulerLike> =
+  createQueueScheduler;

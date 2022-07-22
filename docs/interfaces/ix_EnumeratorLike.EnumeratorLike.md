@@ -16,7 +16,7 @@
 
   ↳ **`EnumeratorLike`**
 
-  ↳↳ [`VirtualTimeSchedulerLike`](scheduling_SchedulerLike.VirtualTimeSchedulerLike.md)
+  ↳↳ [`VirtualTimeSchedulerLike`](scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md)
 
 ## Table of contents
 

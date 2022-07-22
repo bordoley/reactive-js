@@ -8,7 +8,7 @@
 
 - **`PauseableLike`**
 
-  ↳ [`PauseableSchedulerLike`](scheduling_SchedulerLike.PauseableSchedulerLike.md)
+  ↳ [`PauseableSchedulerLike`](scheduling_PausableSchedulerLike.PauseableSchedulerLike.md)
 
   ↳ [`FlowableStreamLike`](streaming_FlowableLike.FlowableStreamLike.md)
 

@@ -1,11 +1,15 @@
 import { getDelay } from "../__internal__/optionalArgs";
+import { SchedulerLike_inContinuation } from "../__internal__/scheduling";
 import {
   init as disposableInit,
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
 import { createObjectFactory } from "../__internal__/util/Object";
-import { EnumeratorLike } from "../ix/EnumeratorLike";
+import {
+  ContinuationLike,
+  ContinuationLike_run,
+} from "../scheduling/ContinuationLike";
 import {
   DisposableLike,
   Error,
@@ -13,7 +17,6 @@ import {
   isDisposed,
 } from "../util/DisposableLike";
 import { Option, isNone, isSome, none } from "../util/Option";
-import { PauseableLike } from "../util/PauseableLike";
 import {
   Function1,
   SideEffect,
@@ -21,11 +24,8 @@ import {
   pipe,
   raise,
 } from "../util/functions";
-import { ContinuationLike, ContinuationLike_run } from "./ContinuationLike";
 
-export const SchedulerLike_inContinuation = Symbol(
-  "SchedulerLike_inContinuation",
-);
+export { SchedulerLike_inContinuation } from "../__internal__/scheduling";
 export const SchedulerLike_now = Symbol("SchedulerLike_now");
 export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
 export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
@@ -48,12 +48,6 @@ export interface SchedulerLike extends DisposableLike {
     options?: SchedulerOptions,
   ): void;
 }
-
-export interface VirtualTimeSchedulerLike
-  extends EnumeratorLike<void>,
-    SchedulerLike {}
-
-export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {}
 
 export const isInContinuation = (scheduler: {
   readonly [SchedulerLike_inContinuation]: boolean;
@@ -161,3 +155,5 @@ export const schedule =
     scheduler[SchedulerLike_schedule](continuation, options);
     return continuation;
   };
+
+export { create } from "./__private__/hostScheduler";
