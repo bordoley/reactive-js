@@ -1,9 +1,9 @@
-/*import {
+import {
   ContainerLike,
   ContainerOf,
   FromArrayOptions,
 } from "../../containers/ContainerLike";
-import { isNone, isSome } from "../../util/Option";
+import { isSome } from "../../util/Option";
 import { Function1, getLength, max, min } from "../../util/functions";
 
 export const createFromArray =
@@ -18,16 +18,37 @@ export const createFromArray =
   <T>(options: Partial<O> = {}): Function1<readonly T[], ContainerOf<C, T>> =>
   values => {
     const valuesLength = getLength(values);
-    const {start: startOption, count: countOption} = options;
-    
-    const {start, count} = isNone(startOption) && isNone(countOption) ? {
-      start: 0, count: valuesLength
-    } : isSome(startOption) && isNone(countOption) ? {
-      start: min(max(startOption ?? 0, 0), valuesLength), 
-      count:
-    } : {};
+    const { start: startOption, count: countOption } = options;
 
+    const { start, count } = (() => {
+      if (isSome(countOption) && countOption >= 0) {
+        const startOrDefault = startOption ?? 0;
+        const maxStart = max(startOrDefault, 0);
+        const start = min(maxStart, valuesLength - 1);
 
- 
+        const maxCount = min(valuesLength, countOption);
+        const count = min(valuesLength - start, maxCount);
+
+        return { start, count };
+      } else if (isSome(countOption) && countOption < 0) {
+        const startOrDefault = startOption ?? valuesLength - 1;
+        const maxStart = max(startOrDefault, 0);
+        const start = min(maxStart, valuesLength - 1);
+
+        const maxCount = max(-valuesLength, countOption);
+        const count = max(-start - 1, maxCount);
+
+        return { start, count };
+      } else {
+        // count is none
+        const startOrDefault = startOption ?? 0;
+        const maxStart = max(startOrDefault, 0);
+        const start = min(maxStart, valuesLength - 1);
+        const count = valuesLength - start;
+
+        return { start, count };
+      }
+    })();
+
     return factory(values, start, count, options);
-  };*/
+  };
