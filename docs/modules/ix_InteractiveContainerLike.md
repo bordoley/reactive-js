@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [CreateInteractiveContainer](../interfaces/ix_InteractiveContainerLike.CreateInteractiveContainer.md)
 - [InteractiveContainerLike](../interfaces/ix_InteractiveContainerLike.InteractiveContainerLike.md)
 
 ### Type Aliases

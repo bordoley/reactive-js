@@ -1,3 +1,4 @@
+import { Container, ContainerOf } from '../containers/ContainerLike.js';
 import { StatefulContainerLike, StatefulContainerStateOf } from '../containers/StatefulContainerLike.js';
 import { InteractiveSourceLike } from "./InteractiveSourceLike.mjs";
 declare const InteractiveContainerLike_interact: unique symbol;
@@ -14,4 +15,7 @@ declare type InteractiveContainerCtxOf<C extends InteractiveContainerLike, T> = 
     readonly _C: C;
     readonly _T: () => T;
 };
-export { InteractiveContainerCtxOf, InteractiveContainerLike, InteractiveContainerLike_interact };
+interface CreateInteractiveContainer<C extends InteractiveContainerLike> extends Container<C> {
+    create<T>(source: (ctx: C["TCtx"]) => StatefulContainerStateOf<C, T>): ContainerOf<C, T>;
+}
+export { CreateInteractiveContainer, InteractiveContainerCtxOf, InteractiveContainerLike, InteractiveContainerLike_interact };

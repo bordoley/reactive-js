@@ -1,7 +1,8 @@
 import { EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../ix/EnumeratorLike.js';
+import { Option } from '../../util/Option.js';
 declare const Enumerator_private_delegate: unique symbol;
 declare const properties: {
-    [Enumerator_private_delegate]: EnumeratorLike<unknown>;
+    [Enumerator_private_delegate]: Option<EnumeratorLike>;
 };
 declare const prototype: {
     readonly [EnumeratorLike_current]: unknown;
