@@ -1,3 +1,4 @@
+import { Container, ContainerOf } from "../containers/ContainerLike";
 import {
   StatefulContainerLike,
   StatefulContainerStateOf,
@@ -32,3 +33,10 @@ export type InteractiveContainerCtxOf<
       readonly _C: C;
       readonly _T: () => T;
     };
+
+export interface CreateInteractiveContainer<C extends InteractiveContainerLike>
+  extends Container<C> {
+  create<T>(
+    source: (ctx: C["TCtx"]) => StatefulContainerStateOf<C, T>,
+  ): ContainerOf<C, T>;
+}
