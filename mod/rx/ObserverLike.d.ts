@@ -1,5 +1,5 @@
-import { DispatcherLike } from '../scheduling/DispatcherLike.js';
-import { SchedulerLike } from '../scheduling/SchedulerLike.js';
+import { DispatcherLike } from "../scheduling/DispatcherLike.mjs";
+import { SchedulerLike } from "../scheduling/SchedulerLike.mjs";
 import { ReactiveSinkLike } from "./ReactiveSinkLike.mjs";
 declare const ObserverLike_dispatcher: unique symbol;
 declare const ObserverLike_scheduler: unique symbol;

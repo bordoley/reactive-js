@@ -1,4 +1,4 @@
-import { DisposableLike } from '../util/DisposableLike.js';
+import { DisposableLike } from "../util/DisposableLike.mjs";
 import { ObservableLike } from "./ObservableLike.mjs";
 declare const MulticastObservableLike_observerCount: unique symbol;
 declare const MulticastObservableLike_replay: unique symbol;

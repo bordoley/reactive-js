@@ -1,9 +1,9 @@
-import { ContinuationLike } from '../../scheduling/ContinuationLike.js';
-import { SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike } from '../../scheduling/SchedulerLike.js';
-import { DisposableLike } from '../../util/DisposableLike.js';
-import { PauseableLike } from '../../util/PauseableLike.js';
-import { Function1 } from '../../util/functions.js';
-import { SchedulerLike_inContinuation } from '../scheduling.js';
+import { ContinuationLike } from "../../scheduling/ContinuationLike.mjs";
+import { SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike } from "../../scheduling/SchedulerLike.mjs";
+import { DisposableLike } from "../../util/DisposableLike.mjs";
+import { PauseableLike } from "../../util/PauseableLike.mjs";
+import { Function1 } from "../../util/functions.mjs";
+import { SchedulerLike_inContinuation } from "../scheduling.mjs";
 declare type QueueTask = {
     readonly continuation: ContinuationLike;
     dueTime: number;

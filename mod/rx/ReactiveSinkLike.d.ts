@@ -1,5 +1,5 @@
-import { DisposableLike } from '../util/DisposableLike.js';
-import { Function1, SideEffect1 } from '../util/functions.js';
+import { DisposableLike } from "../util/DisposableLike.mjs";
+import { Function1, SideEffect1 } from "../util/functions.mjs";
 declare const ReactiveSinkLike_notify: unique symbol;
 interface ReactiveSinkLike<T = unknown> extends DisposableLike {
     /**

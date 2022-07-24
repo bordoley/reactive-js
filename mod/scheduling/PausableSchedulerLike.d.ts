@@ -1,5 +1,5 @@
-import { PauseableLike } from '../util/PauseableLike.js';
-import { Function1 } from '../util/functions.js';
+import { PauseableLike } from "../util/PauseableLike.mjs";
+import { Function1 } from "../util/functions.mjs";
 import { SchedulerLike } from "./SchedulerLike.mjs";
 interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
 }

@@ -1,4 +1,4 @@
-import { SideEffect1, Function1 } from '../util/functions.js';
+import { SideEffect1, Function1 } from "../util/functions.mjs";
 import { InteractiveSourceLike, InteractiveSourceLike_move } from "./InteractiveSourceLike.mjs";
 declare const EnumeratorLike_current: unique symbol;
 declare const EnumeratorLike_hasCurrent: unique symbol;

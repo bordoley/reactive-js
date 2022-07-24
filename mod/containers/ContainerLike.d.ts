@@ -1,5 +1,5 @@
-import { Option } from '../util/Option.js';
-import { Function1, Equality, Predicate, Updater, Factory, Reducer, TypePredicate } from '../util/functions.js';
+import { Option } from "../util/Option.mjs";
+import { Function1, Equality, Predicate, Updater, Factory, Reducer, TypePredicate } from "../util/functions.mjs";
 interface ContainerLike {
     readonly T?: unknown;
     readonly TContainerOf?: unknown;

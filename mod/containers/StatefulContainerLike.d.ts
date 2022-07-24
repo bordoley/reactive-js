@@ -1,5 +1,5 @@
-import { DisposableLike } from '../util/DisposableLike.js';
-import { Function1, Factory, Function2, Function3, Function4, Function5 } from '../util/functions.js';
+import { DisposableLike } from "../util/DisposableLike.mjs";
+import { Function1, Factory, Function2, Function3, Function4, Function5 } from "../util/functions.mjs";
 import { ContainerLike, Container, ContainerOf, ContainerOperator } from "./ContainerLike.mjs";
 interface StatefulContainerLike extends ContainerLike {
     readonly TStatefulContainerState?: DisposableLike;

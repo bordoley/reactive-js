@@ -1,4 +1,4 @@
-import { Function1, Predicate, SideEffect1 } from '../util/functions.js';
+import { Function1, Predicate, SideEffect1 } from "../util/functions.mjs";
 import { ContainerLike, Container, ContainerOf, Empty, Keep, Map } from "./ContainerLike.mjs";
 interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
     readonly TContainerOf?: ReadonlyArrayLike<this["T"]>;

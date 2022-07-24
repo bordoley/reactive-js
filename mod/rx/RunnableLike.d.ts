@@ -1,5 +1,5 @@
-import { ContainerLike, Container, ContainerOf } from '../containers/ContainerLike.js';
-import { Function1 } from '../util/functions.js';
+import { ContainerLike, Container, ContainerOf } from "../containers/ContainerLike.mjs";
+import { Function1 } from "../util/functions.mjs";
 import { ReactiveContainerLike, ReactiveContainerLike_sinkInto } from "./ReactiveContainerLike.mjs";
 import { ReactiveSinkLike } from "./ReactiveSinkLike.mjs";
 interface RunnableLike<T = unknown> extends ReactiveContainerLike {
