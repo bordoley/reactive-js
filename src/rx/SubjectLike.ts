@@ -1,15 +1,19 @@
 import {
-  init as disposableInit,
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
-import { createObjectFactory } from "../__internal__/util/Object";
+import {
+  Object_init,
+  createObjectFactory,
+  init,
+} from "../__internal__/util/Object";
 import { dispatch } from "../scheduling/DispatcherLike";
 import {
   addIgnoringChildErrors,
   isDisposed,
   onDisposed,
 } from "../util/DisposableLike";
+import { none } from "../util/Option";
 import {
   Function1,
   SideEffect1,
@@ -50,81 +54,91 @@ export const publishTo =
     return v;
   };
 
-const properties: typeof disposableProperties & {
-  [MulticastObservableLike_replay]: number;
-  observers: Set<ObserverLike<unknown>>;
-  replayed: unknown[];
-} = {
-  ...disposableProperties,
-  [MulticastObservableLike_replay]: 0,
-  observers: newInstance<Set<ObserverLike<unknown>>>(Set),
-  replayed: [],
-};
+export const create = /*@__PURE__*/ (() => {
+  const properties: typeof disposableProperties & {
+    [MulticastObservableLike_replay]: number;
+    observers: Set<ObserverLike<unknown>>;
+    replayed: unknown[];
+  } = {
+    ...disposableProperties,
+    [MulticastObservableLike_replay]: 0,
+    observers: none as unknown as Set<ObserverLike<unknown>>,
+    replayed: none as unknown as Array<unknown>,
+  };
 
-const prototype = {
-  ...disposablePrototype,
+  const prototype = {
+    ...disposablePrototype,
 
-  [ObservableLike_observableType]: 0 as typeof DefaultObservable,
+    [Object_init](this: typeof properties, replay: number) {
+      init(disposablePrototype, this);
+      this[MulticastObservableLike_replay] = replay;
+      this.observers = newInstance<Set<ObserverLike<unknown>>>(Set);
+      this.replayed = [];
+    },
 
-  get [MulticastObservableLike_observerCount]() {
-    const self = this as unknown as typeof properties;
-    return self.observers.size;
-  },
+    [ObservableLike_observableType]: 0 as typeof DefaultObservable,
 
-  [SubjectLike_publish]<T>(this: typeof properties, next: T) {
-    if (!isDisposed(this)) {
-      const { replayed } = this;
+    get [MulticastObservableLike_observerCount]() {
+      const self = this as unknown as typeof properties;
+      return self.observers.size;
+    },
 
-      const replay = getReplay(this);
+    [SubjectLike_publish]<T>(this: typeof properties, next: T) {
+      if (!isDisposed(this)) {
+        const { replayed } = this;
 
-      if (replay > 0) {
-        replayed.push(next);
-        if (getLength(replayed) > replay) {
-          replayed.shift();
+        const replay = getReplay(this);
+
+        if (replay > 0) {
+          replayed.push(next);
+          if (getLength(replayed) > replay) {
+            replayed.shift();
+          }
+        }
+
+        for (const observer of this.observers) {
+          pipe(observer, getDispatcher, dispatch(next));
         }
       }
+    },
 
-      for (const observer of this.observers) {
+    [ReactiveContainerLike_sinkInto]<T>(
+      this: typeof properties & SubjectLike<T>,
+      observer: ObserverLike<T>,
+    ) {
+      if (!isDisposed(this)) {
+        const { observers } = this;
+        observers.add(observer);
+
+        pipe(
+          observer,
+          onDisposed(_ => {
+            observers.delete(observer);
+          }),
+        );
+      }
+
+      // The idea here is that an onSubscribe function may
+      // call next from unscheduled sources such as event handlers.
+      // So we marshall those events back to the scheduler.
+      for (const next of this.replayed) {
         pipe(observer, getDispatcher, dispatch(next));
       }
-    }
-  },
 
-  [ReactiveContainerLike_sinkInto]<T>(
-    this: typeof properties & SubjectLike<T>,
-    observer: ObserverLike<T>,
-  ) {
-    if (!isDisposed(this)) {
-      const { observers } = this;
-      observers.add(observer);
+      pipe(this, addIgnoringChildErrors(getDispatcher(observer)));
+    },
+  };
 
-      pipe(
-        observer,
-        onDisposed(_ => {
-          observers.delete(observer);
-        }),
-      );
-    }
+  const createInstance = /*@__PURE__*/ createObjectFactory<
+    typeof prototype,
+    typeof properties,
+    number
+  >(prototype, properties);
 
-    // The idea here is that an onSubscribe function may
-    // call next from unscheduled sources such as event handlers.
-    // So we marshall those events back to the scheduler.
-    for (const next of this.replayed) {
-      pipe(observer, getDispatcher, dispatch(next));
-    }
+  return <T>(options?: { replay?: number }): SubjectLike<T> => {
+    const { replay: replayOption = 0 } = options ?? {};
+    const replay = max(replayOption, 0);
 
-    pipe(this, addIgnoringChildErrors(getDispatcher(observer)));
-  },
-};
-
-const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
-
-export const create = <T>(options?: { replay?: number }): SubjectLike<T> => {
-  const { replay: replayOption = 0 } = options ?? {};
-  const replay = max(replayOption, 0);
-
-  const instance = createInstance();
-  disposableInit(instance);
-  instance[MulticastObservableLike_replay] = replay;
-  return instance;
-};
+    return createInstance(replay);
+  };
+})();

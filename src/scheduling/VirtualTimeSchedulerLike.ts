@@ -11,11 +11,14 @@ import {
   createPriorityQueue,
 } from "../__internal__/scheduling/queue";
 import {
-  init as disposableInit,
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
-import { createObjectFactory } from "../__internal__/util/Object";
+import {
+  Object_init,
+  createObjectFactory,
+  init,
+} from "../__internal__/util/Object";
 import { EnumeratorLike, EnumeratorLike_current } from "../ix/EnumeratorLike";
 import { InteractiveSourceLike_move } from "../ix/InteractiveSourceLike";
 import {
@@ -25,7 +28,7 @@ import {
   isDisposed,
 } from "../util/DisposableLike";
 import { isSome, none } from "../util/Option";
-import { pipe } from "../util/functions";
+import { Function1, pipe } from "../util/functions";
 import { ContinuationLike } from "./ContinuationLike";
 import {
   SchedulerLike,
@@ -65,6 +68,34 @@ const properties = {
 const prototype = {
   ...disposablePrototype,
   ...enumeratorPrototype,
+  [InteractiveSourceLike_move](
+    this: typeof properties & MutableEnumeratorLike<void>,
+  ): void {
+    const taskQueue = this.taskQueue;
+
+    if (isDisposed(this)) {
+      return;
+    }
+
+    const task = taskQueue.pop();
+
+    if (isSome(task)) {
+      const { dueTime, continuation } = task;
+
+      this.microTaskTicks = 0;
+      this[SchedulerLike_now] = dueTime;
+      this[EnumeratorLike_current] = none;
+
+      pipe(this, runContinuation(continuation));
+    } else {
+      pipe(this, dispose());
+    }
+  },
+  [Object_init](this: typeof properties, maxMicroTaskTicks: number) {
+    init(disposablePrototype, this);
+    this.maxMicroTaskTicks = maxMicroTaskTicks;
+    this.taskQueue = createPriorityQueue(comparator);
+  },
   get [SchedulerLike_shouldYield]() {
     const self = this as unknown as typeof properties;
 
@@ -83,27 +114,6 @@ const prototype = {
   },
   [SchedulerLike_requestYield](this: typeof properties): void {
     this.yieldRequested = true;
-  },
-  [InteractiveSourceLike_move](
-    this: typeof properties & MutableEnumeratorLike<void>,
-  ): void {
-    const taskQueue = this.taskQueue;
-
-    if (!isDisposed(this)) {
-      const task = taskQueue.pop();
-
-      if (isSome(task)) {
-        const { dueTime, continuation } = task;
-
-        this.microTaskTicks = 0;
-        this[SchedulerLike_now] = dueTime;
-        this[EnumeratorLike_current] = none;
-
-        pipe(this, runContinuation(continuation));
-      } else {
-        pipe(this, dispose());
-      }
-    }
   },
   [SchedulerLike_schedule](
     this: typeof properties & DisposableLike,
@@ -124,10 +134,15 @@ const prototype = {
   },
 };
 
-const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+const createInstance: Function1<number, VirtualTimeSchedulerLike> =
+  /*@__PURE__*/ createObjectFactory<
+    typeof prototype,
+    typeof properties,
+    number
+  >(prototype, properties);
 
 export interface VirtualTimeSchedulerLike
-  extends EnumeratorLike<void>,
+  extends EnumeratorLike<unknown>,
     SchedulerLike {}
 
 /**
@@ -141,9 +156,5 @@ export const create = (
   options: { readonly maxMicroTaskTicks?: number } = {},
 ): VirtualTimeSchedulerLike => {
   const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-  const instance = createInstance();
-  disposableInit(instance);
-  instance.maxMicroTaskTicks = maxMicroTaskTicks;
-  instance.taskQueue = createPriorityQueue(comparator);
-  return instance as VirtualTimeSchedulerLike;
+  return createInstance(maxMicroTaskTicks);
 };

@@ -1,5 +1,6 @@
 import { DisposableLike, DisposableLike_error, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose } from '../../util/DisposableLike.js';
 import { Option } from '../../util/Option.js';
+import { Object_init } from "./Object.mjs";
 declare const DelegatingDisposable_private_delegate: unique symbol;
 declare const properties: {
     [DelegatingDisposable_private_delegate]: DisposableLike;
@@ -11,6 +12,6 @@ declare const prototype: {
     [DisposableLike_dispose](this: {
         [DelegatingDisposable_private_delegate]: DisposableLike;
     }, error?: Error): void;
+    [Object_init](this: typeof properties, delegate: DisposableLike): void;
 };
-declare const init: (self: typeof properties, delegate: DisposableLike) => void;
-export { init, properties, prototype };
+export { properties, prototype };

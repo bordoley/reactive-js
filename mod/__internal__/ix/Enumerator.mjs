@@ -3,6 +3,7 @@ import { EnumeratorLike_current, hasCurrent, EnumeratorLike_hasCurrent } from '.
 import '../../util/DisposableLike.mjs';
 import { none } from '../../util/Option.mjs';
 import { raise } from '../../util/functions.mjs';
+import { Object_init } from '../util/Object.mjs';
 import { isDisposed } from '../util/DisposableLike.mjs';
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");
@@ -12,6 +13,10 @@ const properties = {
     [Enumerator_private_hasCurrent]: false,
 };
 const prototype = {
+    [Object_init]() {
+        this[Enumerator_private_current] = none;
+        this[Enumerator_private_hasCurrent] = false;
+    },
     get [EnumeratorLike_current]() {
         const self = this;
         return hasCurrent(self) ? self[Enumerator_private_current] : raise();

@@ -1,5 +1,5 @@
 /// <reference types="./DisposableLike.d.ts" />
-import { prototype, properties, init } from '../__internal__/util/Disposable.mjs';
+import { prototype, properties } from '../__internal__/util/Disposable.mjs';
 import { DisposableLike_add, dispose, getError, DisposableLike_error, DisposableLike_isDisposed, DisposableLike_dispose } from '../__internal__/util/DisposableLike.mjs';
 export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, dispose, getError, isDisposed } from '../__internal__/util/DisposableLike.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
@@ -83,11 +83,7 @@ const disposed = {
     },
     [DisposableLike_dispose]: ignore,
 };
-const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
-const create = () => {
-    const instance = createInstance();
-    init(instance);
-    return instance;
-};
+const create = 
+/*@__PURE__*/ createObjectFactory(prototype, properties);
 
 export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, create, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

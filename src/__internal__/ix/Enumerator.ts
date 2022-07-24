@@ -7,6 +7,7 @@ import {
 import { isDisposed } from "../../util/DisposableLike";
 import { none } from "../../util/Option";
 import { raise } from "../../util/functions";
+import { Object_init } from "../util/Object";
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");
 const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
@@ -21,6 +22,10 @@ export const properties = {
 };
 
 export const prototype = {
+  [Object_init](this: typeof properties) {
+    this[Enumerator_private_current] = none;
+    this[Enumerator_private_hasCurrent] = false;
+  },
   get [EnumeratorLike_current](): unknown {
     const self = this as unknown as typeof properties & EnumeratorLike;
     return hasCurrent(self) ? self[Enumerator_private_current] : raise();

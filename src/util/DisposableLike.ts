@@ -1,4 +1,4 @@
-import { init, properties, prototype } from "../__internal__/util/Disposable";
+import { properties, prototype } from "../__internal__/util/Disposable";
 import {
   DisposableLike_add,
   DisposableLike_dispose,
@@ -184,10 +184,5 @@ export {
   isDisposed,
 } from "../__internal__/util/DisposableLike";
 
-const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
-
-export const create: Factory<DisposableLike> = () => {
-  const instance = createInstance();
-  init(instance);
-  return instance;
-};
+export const create: Factory<DisposableLike> =
+  /*@__PURE__*/ createObjectFactory(prototype, properties);

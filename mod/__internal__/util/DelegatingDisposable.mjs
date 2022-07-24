@@ -1,5 +1,6 @@
 /// <reference types="./DelegatingDisposable.d.ts" />
 import { disposed } from '../../util/DisposableLike.mjs';
+import { Object_init } from './Object.mjs';
 import { DisposableLike_error, DisposableLike_isDisposed, DisposableLike_add, DisposableLike_dispose } from './DisposableLike.mjs';
 
 const DelegatingDisposable_private_delegate = Symbol("DelegatingDisposable_private_delegate");
@@ -25,9 +26,9 @@ const prototype = {
         const delegate = this[DelegatingDisposable_private_delegate];
         delegate[DisposableLike_dispose](error);
     },
-};
-const init = (self, delegate) => {
-    self[DelegatingDisposable_private_delegate] = delegate;
+    [Object_init](delegate) {
+        this[DelegatingDisposable_private_delegate] = delegate;
+    },
 };
 
-export { init, properties, prototype };
+export { properties, prototype };

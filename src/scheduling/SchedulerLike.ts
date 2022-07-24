@@ -1,11 +1,14 @@
 import { getDelay } from "../__internal__/optionalArgs";
 import { SchedulerLike_inContinuation } from "../__internal__/scheduling";
 import {
-  init as disposableInit,
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
-import { createObjectFactory } from "../__internal__/util/Object";
+import {
+  Object_init,
+  createObjectFactory,
+  init,
+} from "../__internal__/util/Object";
 import {
   ContinuationLike,
   ContinuationLike_run,
@@ -19,6 +22,7 @@ import {
 import { Option, isNone, isSome, none } from "../util/Option";
 import {
   Function1,
+  Function2,
   SideEffect,
   newInstanceWith,
   pipe,
@@ -73,62 +77,66 @@ class YieldError {
 
 let currentScheduler: Option<SchedulerLike> = none;
 
-const continuationProperties: typeof disposableProperties & {
-  scheduler: SchedulerLike;
-  f: SideEffect;
-} = {
-  ...disposableProperties,
-  scheduler: none as unknown as SchedulerLike,
-  f: () => {},
-};
+const createContinuation: Function2<
+  SchedulerLike,
+  SideEffect,
+  ContinuationLike
+> = /*@__PURE__*/ (() => {
+  const properties: typeof disposableProperties & {
+    scheduler: SchedulerLike;
+    f: SideEffect;
+  } = {
+    ...disposableProperties,
+    scheduler: none as unknown as SchedulerLike,
+    f: () => {},
+  };
 
-const continuationPrototype = {
-  ...disposablePrototype,
-  [ContinuationLike_run](
-    this: typeof continuationProperties & ContinuationLike,
-  ) {
-    if (!isDisposed(this)) {
-      let error: Option<Error> = none;
-      let yieldError: Option<YieldError> = none;
+  const prototype = {
+    ...disposablePrototype,
+    [ContinuationLike_run](this: typeof properties & ContinuationLike) {
+      if (!isDisposed(this)) {
+        let error: Option<Error> = none;
+        let yieldError: Option<YieldError> = none;
 
-      const { scheduler } = this;
-      const oldCurrentScheduler = currentScheduler;
-      currentScheduler = scheduler;
-      try {
-        this.f();
-      } catch (cause) {
-        if (isYieldError(cause)) {
-          yieldError = cause;
+        const { scheduler } = this;
+        const oldCurrentScheduler = currentScheduler;
+        currentScheduler = scheduler;
+        try {
+          this.f();
+        } catch (cause) {
+          if (isYieldError(cause)) {
+            yieldError = cause;
+          } else {
+            error = { cause };
+          }
+        }
+        currentScheduler = oldCurrentScheduler;
+
+        if (isSome(yieldError)) {
+          pipe(scheduler, schedule(this, yieldError));
         } else {
-          error = { cause };
+          pipe(this, dispose(error));
         }
       }
-      currentScheduler = oldCurrentScheduler;
+    },
+    [Object_init](
+      this: typeof properties,
+      scheduler: SchedulerLike,
+      f: SideEffect,
+    ) {
+      init(disposablePrototype, this);
+      this.scheduler = scheduler;
+      this.f = f;
+    },
+  };
 
-      if (isSome(yieldError)) {
-        pipe(scheduler, schedule(this, yieldError));
-      } else {
-        pipe(this, dispose(error));
-      }
-    }
-  },
-};
-
-const createContinuationInstance = /*@__PURE__*/ createObjectFactory(
-  continuationPrototype,
-  continuationProperties,
-);
-
-const createContinuation = (
-  scheduler: SchedulerLike,
-  f: SideEffect,
-): ContinuationLike => {
-  const instance = createContinuationInstance();
-  disposableInit(instance);
-  instance.scheduler = scheduler;
-  instance.f = f;
-  return instance;
-};
+  return createObjectFactory<
+    typeof prototype,
+    typeof properties,
+    SchedulerLike,
+    SideEffect
+  >(prototype, properties);
+})();
 
 export const __yield = (options?: { delay?: number }) => {
   const delay = getDelay(options);

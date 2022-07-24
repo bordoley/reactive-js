@@ -1,11 +1,11 @@
 /// <reference types="./EnumerableLike.d.ts" />
 import { createFromArray } from '../__internal__/containers/ContainerLike.mjs';
 import { interactive, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.mjs';
-import { properties as properties$3, prototype as prototype$3, move as move$1, init as init$2 } from '../__internal__/ix/DelegatingEnumerator.mjs';
+import { properties as properties$3, prototype as prototype$3, move as move$1 } from '../__internal__/ix/DelegatingEnumerator.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
-import { properties, prototype, init } from '../__internal__/util/DelegatingDisposable.mjs';
-import { properties as properties$2, prototype as prototype$2, init as init$1 } from '../__internal__/util/Disposable.mjs';
-import { createObjectFactory } from '../__internal__/util/Object.mjs';
+import { properties, prototype } from '../__internal__/util/DelegatingDisposable.mjs';
+import { properties as properties$2, prototype as prototype$2 } from '../__internal__/util/Disposable.mjs';
+import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { empty } from '../containers/ContainerLike.mjs';
 import { empty as empty$1, every, map as map$1, forEach } from '../containers/ReadonlyArrayLike.mjs';
 import { bindTo, add, addTo } from '../util/DisposableLike.mjs';
@@ -64,10 +64,11 @@ const delegatingDisposableEnumeratorProperties = {
 const delegatingDisposableEnumeratorPrototype = {
     ...prototype,
     ...prototype$1,
-};
-const delegatingDisposableEnumeratorInit = (instance, delegate) => {
-    init(instance, delegate);
-    instance.delegate = delegate;
+    [Object_init](delegate) {
+        init(prototype, this, delegate);
+        init(prototype$1, this);
+        this.delegate = delegate;
+    },
 };
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
@@ -93,14 +94,15 @@ const distinctUntilChanged =
                 pipe(this, dispose({ cause }));
             }
         },
+        [Object_init](delegate, equality) {
+            init(delegatingDisposableEnumeratorPrototype, this, delegate);
+            this.equality = equality;
+        },
     };
     const createInstance = createObjectFactory(prototype, properties);
     const distinctUntilChangedEnumerator = (options) => (delegate) => {
         const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
-        const instance = createInstance();
-        delegatingDisposableEnumeratorInit(instance, delegate);
-        instance.equality = equality;
-        return instance;
+        return createInstance(delegate, equality);
     };
     return compose(distinctUntilChangedEnumerator, lift);
 })();
@@ -119,6 +121,13 @@ const fromArray =
     const prototype = {
         ...prototype$2,
         ...prototype$1,
+        [Object_init](array, start, count) {
+            init(prototype$2, this);
+            init(prototype$1, this);
+            this.array = array;
+            this.index = start - 1;
+            this.count = count;
+        },
         [InteractiveSourceLike_move]() {
             const { array } = this;
             if (!isDisposed(this)) {
@@ -142,12 +151,7 @@ const fromArray =
             this.count = count;
         }
         [InteractiveContainerLike_interact]() {
-            const instance = createInstance();
-            init$1(instance);
-            instance.array = this.array;
-            instance.index = this.start - 1;
-            instance.count = this.count;
-            return instance;
+            return createInstance(this.array, this.start, this.count);
         }
     }
     return createFromArray((a, start, count) => newInstance(FromArrayEnumerable, a, start, count));
@@ -164,6 +168,10 @@ const keep = /*@__PURE__*/ (() => {
     };
     const prototype = {
         ...delegatingDisposableEnumeratorPrototype,
+        [Object_init](delegate, predicate) {
+            init(delegatingDisposableEnumeratorPrototype, this, delegate);
+            this.predicate = predicate;
+        },
         [InteractiveSourceLike_move]() {
             const { delegate, predicate } = this;
             try {
@@ -175,12 +183,7 @@ const keep = /*@__PURE__*/ (() => {
         },
     };
     const createInstance = createObjectFactory(prototype, properties);
-    const keepEnumerator = (predicate) => (delegate) => {
-        const instance = createInstance();
-        delegatingDisposableEnumeratorInit(instance, delegate);
-        instance.predicate = predicate;
-        return instance;
-    };
+    const keepEnumerator = (predicate) => (delegate) => createInstance(delegate, predicate);
     return compose(keepEnumerator, lift);
 })();
 const keepT = {
@@ -193,6 +196,10 @@ const map = /*@__PURE__*/ (() => {
     };
     const prototype = {
         ...delegatingDisposableEnumeratorPrototype,
+        [Object_init](delegate, mapper) {
+            init(delegatingDisposableEnumeratorPrototype, this, delegate);
+            this.mapper = mapper;
+        },
         [InteractiveSourceLike_move]() {
             const { delegate } = this;
             if (move(delegate)) {
@@ -206,12 +213,7 @@ const map = /*@__PURE__*/ (() => {
         },
     };
     const createInstance = createObjectFactory(prototype, properties);
-    const mapEnumerator = (mapper) => (delegate) => {
-        const instance = createInstance();
-        delegatingDisposableEnumeratorInit(instance, delegate);
-        instance.mapper = mapper;
-        return instance;
-    };
+    const mapEnumerator = (mapper) => (delegate) => createInstance(delegate, mapper);
     return compose(mapEnumerator, lift);
 })();
 const mapT = { map };
@@ -222,6 +224,10 @@ const onNotify = /*@__PURE__*/ (() => {
     };
     const prototype = {
         ...delegatingDisposableEnumeratorPrototype,
+        [Object_init](delegate, onNotify) {
+            init(delegatingDisposableEnumeratorPrototype, this, delegate);
+            this.onNotify = onNotify;
+        },
         [InteractiveSourceLike_move]() {
             const { delegate } = this;
             if (move(delegate)) {
@@ -235,12 +241,7 @@ const onNotify = /*@__PURE__*/ (() => {
         },
     };
     const createInstance = createObjectFactory(prototype, properties);
-    const onNotifyEnumerator = (onNotify) => (delegate) => {
-        const instance = createInstance();
-        delegatingDisposableEnumeratorInit(instance, delegate);
-        instance.onNotify = onNotify;
-        return instance;
-    };
+    const onNotifyEnumerator = (onNotify) => (delegate) => createInstance(delegate, onNotify);
     return compose(onNotifyEnumerator, lift);
 })();
 const pairwise = 
@@ -257,11 +258,7 @@ const pairwise =
         },
     };
     const createInstance = createObjectFactory(prototype, delegatingDisposableEnumeratorProperties);
-    const pairwiseEnumerator = () => (delegate) => {
-        const instance = createInstance();
-        delegatingDisposableEnumeratorInit(instance, delegate);
-        return instance;
-    };
+    const pairwiseEnumerator = () => (delegate) => createInstance(delegate);
     return () => pipe(pairwiseEnumerator(), lift);
 })();
 const pairwiseT = {
@@ -275,6 +272,11 @@ const scan = /*@__PURE__*/ (() => {
     };
     const prototype = {
         ...delegatingDisposableEnumeratorPrototype,
+        [Object_init](delegate, reducer, initialValue) {
+            init(delegatingDisposableEnumeratorPrototype, this, delegate);
+            this.reducer = reducer;
+            this.current = initialValue;
+        },
         [InteractiveSourceLike_move]() {
             const acc = hasCurrent(this) ? getCurrent(this) : none;
             const { delegate, reducer } = this;
@@ -289,13 +291,7 @@ const scan = /*@__PURE__*/ (() => {
         },
     };
     const createInstance = createObjectFactory(prototype, properties);
-    const scanEnumerator = (reducer, initialValue) => (delegate) => {
-        const instance = createInstance();
-        delegatingDisposableEnumeratorInit(instance, delegate);
-        instance.reducer = reducer;
-        instance.current = initialValue;
-        return instance;
-    };
+    const scanEnumerator = (reducer, initialValue) => (delegate) => createInstance(delegate, reducer, initialValue);
     return pipe(scanEnumerator, createScanOperator(liftT));
 })();
 const scanT = {
@@ -310,6 +306,11 @@ const skipFirst =
     };
     const prototype = {
         ...delegatingDisposableEnumeratorPrototype,
+        [Object_init](delegate, skipCount) {
+            init(delegatingDisposableEnumeratorPrototype, this, delegate);
+            this.skipCount = skipCount;
+            this.count = 0;
+        },
         [InteractiveSourceLike_move]() {
             const { delegate, skipCount } = this;
             for (let { count } = this; count < skipCount; count++) {
@@ -322,12 +323,7 @@ const skipFirst =
         },
     };
     const createInstance = createObjectFactory(prototype, properties);
-    const skipFirstEnumerator = (skipCount) => (delegate) => {
-        const instance = createInstance();
-        delegatingDisposableEnumeratorInit(instance, delegate);
-        instance.skipCount = skipCount;
-        return instance;
-    };
+    const skipFirstEnumerator = (skipCount) => (delegate) => createInstance(delegate, skipCount);
     return pipe(skipFirstEnumerator, createSkipFirstOperator(liftT));
 })();
 const skipFirstT = {
@@ -344,6 +340,11 @@ const takeFirst =
     const prototype$1 = {
         ...prototype,
         ...prototype$3,
+        [Object_init](delegate, maxCount) {
+            init(prototype, this, delegate);
+            init(prototype$3, this, delegate);
+            this.maxCount = maxCount;
+        },
         [InteractiveSourceLike_move]() {
             if (this.count < this.maxCount) {
                 this.count++;
@@ -355,13 +356,7 @@ const takeFirst =
         },
     };
     const createInstance = createObjectFactory(prototype$1, properties$1);
-    const takeFirstEnumerator = (maxCount) => (delegate) => {
-        const instance = createInstance();
-        init(instance, delegate);
-        init$2(instance, delegate);
-        instance.maxCount = maxCount;
-        return instance;
-    };
+    const takeFirstEnumerator = (maxCount) => (delegate) => createInstance(delegate, maxCount);
     return pipe(takeFirstEnumerator, createTakeFirstOperator({ ...liftT, ...fromArrayT }));
 })();
 const takeFirstT = {
@@ -378,6 +373,12 @@ const takeLast =
     const prototype = {
         ...prototype$2,
         ...prototype$3,
+        [Object_init](delegate, maxCount) {
+            init(prototype$2, this);
+            init(prototype$3, this, delegate);
+            this.maxCount = maxCount;
+            this.isStarted = false;
+        },
         [InteractiveSourceLike_move]() {
             if (!isDisposed(this) && !this.isStarted) {
                 this.isStarted = true;
@@ -389,7 +390,7 @@ const takeLast =
                     }
                 }
                 const enumerator = pipe(last, fromArray(), enumerate(), bindTo(this));
-                init$2(this, enumerator);
+                init(prototype$3, this, enumerator);
             }
             move$1(this);
         },
@@ -397,14 +398,7 @@ const takeLast =
     const createInstance = createObjectFactory(prototype, properties);
     return (options = {}) => {
         const { count = 1 } = options;
-        const operator = (delegate) => {
-            const instance = createInstance();
-            init$1(instance);
-            init$2(instance, delegate);
-            pipe(instance, add(delegate));
-            instance.maxCount = count;
-            return instance;
-        };
+        const operator = (delegate) => pipe(createInstance(delegate, count), add(delegate));
         return enumerable => count > 0
             ? pipe(enumerable, lift(operator))
             : // FIXME: why do we need the annotations?
@@ -421,9 +415,15 @@ const takeWhile =
         inclusive: false,
         done: false,
     };
-    const prototype = {
-        ...delegatingDisposableEnumeratorPrototype,
+    const prototype$1 = {
+        ...prototype,
         ...prototype$3,
+        [Object_init](delegate, predicate, inclusive) {
+            init(prototype, this, delegate);
+            init(prototype$3, this, delegate);
+            this.predicate = predicate;
+            this.inclusive = inclusive;
+        },
         [InteractiveSourceLike_move]() {
             const { inclusive, predicate } = this;
             if (this.done && !isDisposed(this)) {
@@ -446,15 +446,8 @@ const takeWhile =
             }
         },
     };
-    const createInstance = createObjectFactory(prototype, properties$1);
-    const takeWhileEnumerator = (predicate, inclusive) => (delegate) => {
-        const instance = createInstance();
-        init(instance, delegate);
-        init$2(instance, delegate);
-        instance.predicate = predicate;
-        instance.inclusive = inclusive;
-        return instance;
-    };
+    const createInstance = createObjectFactory(prototype$1, properties$1);
+    const takeWhileEnumerator = (predicate, inclusive) => (delegate) => createInstance(delegate, predicate, inclusive);
     return pipe(takeWhileEnumerator, createTakeWhileOperator(liftT));
 })();
 const takeWhileT = {
@@ -471,6 +464,11 @@ const throwIfEmpty =
     const prototype = {
         ...prototype$2,
         ...prototype$3,
+        [Object_init](delegate) {
+            init(prototype$2, this);
+            init(prototype$3, this, delegate);
+            this.isEmpty = true;
+        },
         [InteractiveSourceLike_move]() {
             if (move$1(this)) {
                 this.isEmpty = false;
@@ -478,12 +476,7 @@ const throwIfEmpty =
         },
     };
     const createInstance = createObjectFactory(prototype, properties);
-    const throwIfEmptyEnumerator = () => (delegate) => {
-        const instance = createInstance();
-        init$1(instance);
-        init$2(instance, delegate);
-        return instance;
-    };
+    const throwIfEmptyEnumerator = () => (delegate) => createInstance(delegate);
     return pipe(throwIfEmptyEnumerator, createThrowIfEmptyOperator(liftT));
 })();
 const throwIfEmptyT = {
@@ -530,6 +523,11 @@ const zip = /*@__PURE__*/ (() => {
     const prototype = {
         ...prototype$2,
         ...prototype$1,
+        [Object_init](enumerators) {
+            init(prototype$2, this);
+            init(prototype$1, this);
+            this.enumerators = enumerators;
+        },
         [InteractiveSourceLike_move]() {
             if (!isDisposed(this)) {
                 const { enumerators } = this;
@@ -545,9 +543,7 @@ const zip = /*@__PURE__*/ (() => {
     };
     const createInstance = createObjectFactory(prototype, properties);
     const zipEnumerators = (enumerators) => {
-        const instance = createInstance();
-        init$1(instance);
-        instance.enumerators = enumerators;
+        const instance = createInstance(enumerators);
         pipe(enumerators, forEach(addTo(instance)));
         return instance;
     };
