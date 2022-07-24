@@ -15,7 +15,6 @@ import {
   pipe,
   returns,
 } from "../util/functions";
-import { empty as emptyArray } from "./ReadonlyArrayLike";
 
 export interface ContainerLike {
   readonly T?: unknown;
@@ -77,6 +76,10 @@ export type EverySatisfy<C extends ContainerLike> = Container<C> & {
   everySatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 };
 
+export type Empty<C extends ContainerLike, TOptions = never> = Container<C> & {
+  empty<T>(options?: TOptions): ContainerOf<C, T>;
+};
+
 export type FromArrayOptions = {
   readonly start: number;
   readonly count: number;
@@ -89,6 +92,13 @@ export type FromArray<
   fromArray<T>(
     options?: Partial<O>,
   ): Function1<readonly T[], ContainerOf<C, T>>;
+};
+
+export type FromValue<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  fromValue<T>(options?: TOptions): Function1<T, ContainerOf<C, T>>;
 };
 
 export type Generate<C extends ContainerLike> = Container<C> & {
@@ -159,14 +169,6 @@ export type TakeWhile<C extends ContainerLike> = Container<C> & {
   ): ContainerOperator<C, T, T>;
 };
 
-export type ToArray<C extends ContainerLike> = Container<C> & {
-  toArray<T>(): Function1<ContainerOf<C, T>, readonly T[]>;
-};
-
-export type ToIterable<C extends ContainerLike> = Container<C> & {
-  toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
-};
-
 export type Zip<C extends ContainerLike> = Container<C> & {
   zip<TA, TB>(
     a: ContainerOf<C, TA>,
@@ -233,15 +235,11 @@ export type Zip<C extends ContainerLike> = Container<C> & {
   ): ContainerOf<C, readonly T[]>;
 };
 
-export const compute = <
-  C extends ContainerLike,
-  T,
-  O extends FromArrayOptions = FromArrayOptions,
->(
-  m: Map<C> & FromArray<C, O>,
-  options?: Omit<Partial<O>, keyof FromArrayOptions>,
+export const compute = <C extends ContainerLike, T, TOptions>(
+  m: Map<C> & FromValue<C, TOptions>,
+  options?: TOptions,
 ): Function1<Factory<T>, ContainerOf<C, T>> =>
-  compose(fromValue(m, options), m.map(callWith()));
+  compose(m.fromValue(options), m.map(callWith()));
 
 export const concatMap = <
   C extends ContainerLike,
@@ -268,49 +266,33 @@ export const contains = <C extends ContainerLike, T>(
   options: { readonly equality?: Equality<T> } = {},
 ): ContainerOperator<C, T, boolean> => someSatisfy(isEqualTo(value, options));
 
-export const empty = <
+export function endWith<
   C extends ContainerLike,
   T,
   O extends FromArrayOptions = FromArrayOptions,
 >(
-  { fromArray }: FromArray<C, O>,
-  options?: Omit<Partial<O>, keyof FromArrayOptions>,
-): ContainerOf<C, T> => fromArray<T>({ ...options })(emptyArray());
-
-export function endWith<C extends ContainerLike, T>(
-  m: Concat<C> & FromArray<C>,
+  m: Concat<C> & FromArray<C, O>,
   value: T,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T>;
-export function endWith<C extends ContainerLike, T>(
-  m: Concat<C> & FromArray<C, FromArrayOptions>,
+export function endWith<
+  C extends ContainerLike,
+  T,
+  O extends FromArrayOptions = FromArrayOptions,
+>(
+  m: Concat<C> & FromArray<C, O>,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T> {
   return concatWith(m, m.fromArray<T>()(values));
 }
 
 export const fromOption =
-  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
-    m: FromArray<C, O>,
-    options?: Omit<Partial<O>, keyof FromArrayOptions>,
+  <C extends ContainerLike, T, TOptions>(
+    { empty, fromValue }: FromValue<C, TOptions> & Empty<C, TOptions>,
+    options?: TOptions,
   ): Function1<Option<T>, ContainerOf<C, T>> =>
   option =>
-    isSome(option)
-      ? fromValue<C, T, O>(m, options)(option)
-      : empty<C, T, O>(m, options);
-
-export const fromValue =
-  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
-    { fromArray }: FromArray<C, O>,
-    options?: Omit<Partial<O>, keyof FromArrayOptions>,
-  ): Function1<T, ContainerOf<C, T>> =>
-  (value: T) =>
-    pipe(
-      [value],
-      fromArray({
-        ...options,
-      }),
-    );
+    isSome(option) ? pipe(option, fromValue(options)) : empty(options);
 
 export const keepType = <C extends ContainerLike, TA, TB extends TA>(
   { keep }: Keep<C>,
@@ -333,22 +315,30 @@ export const noneSatisfy = <C extends ContainerLike, T>(
   predicate: Predicate<T>,
 ): ContainerOperator<C, T, boolean> => everySatisfy(compose(predicate, negate));
 
-export function startWith<C extends ContainerLike, T>(
-  m: Concat<C> & FromArray<C>,
+export function startWith<
+  C extends ContainerLike,
+  T,
+  O extends FromArrayOptions = FromArrayOptions,
+>(
+  m: Concat<C> & FromArray<C, O>,
   value: T,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T>;
-export function startWith<C extends ContainerLike, T>(
-  m: Concat<C> & FromArray<C>,
+export function startWith<
+  C extends ContainerLike,
+  T,
+  O extends FromArrayOptions = FromArrayOptions,
+>(
+  m: Concat<C> & FromArray<C, O>,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T> {
   return container => pipe(values, m.fromArray(), concatWith(m, container));
 }
 
 export const throws =
-  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
-    m: Map<C> & FromArray<C, O>,
-    options?: Omit<Partial<O>, keyof FromArrayOptions>,
+  <C extends ContainerLike, T, TOptions>(
+    m: Map<C> & FromValue<C, TOptions>,
+    options?: TOptions,
   ): Function1<Factory<unknown>, ContainerOf<C, T>> =>
   (errorFactory): ContainerOf<C, T> =>
     pipe(() => {

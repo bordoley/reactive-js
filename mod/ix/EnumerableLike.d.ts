@@ -1,6 +1,8 @@
-import { ContainerLike, Container, ContainerOf, DistinctUntilChanged, FromArray, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToIterable, Zip } from '../containers/ContainerLike.js';
+import { ContainerLike, Container, ContainerOf, DistinctUntilChanged, Empty, FromArray, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, Zip } from '../containers/ContainerLike.js';
+import { ToIterable } from '../containers/IterableLike.js';
+import { ToReadonlyArray } from '../containers/ReadonlyArrayLike.js';
 import { ThrowIfEmpty } from '../containers/StatefulContainerLike.js';
-import { Function1, Factory, Identity, SideEffect1 } from '../util/functions.js';
+import { Function1, SideEffect1 } from '../util/functions.js';
 import { EnumeratorLike } from "./EnumeratorLike.mjs";
 import { InteractiveContainerLike, InteractiveContainerLike_interact, CreateInteractiveContainer } from "./InteractiveContainerLike.mjs";
 /**
@@ -12,21 +14,18 @@ interface EnumerableLike<T = unknown> extends InteractiveContainerLike {
     readonly TCtx?: void;
     [InteractiveContainerLike_interact](_: void): EnumeratorLike<T>;
 }
-interface FromEnumerable<C extends ContainerLike> extends Container<C> {
-    fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
-}
 interface ToEnumerable<C extends ContainerLike> extends Container<C> {
     toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
-declare const createEnumerable: <T>(enumerate: Factory<EnumeratorLike<T>>) => EnumerableLike<T>;
+declare const create: CreateInteractiveContainer<EnumerableLike>["create"];
 declare const createT: CreateInteractiveContainer<EnumerableLike>;
 declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"];
 declare const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike>;
+declare const empty: Empty<EnumerableLike>["empty"];
+declare const emptyT: Empty<EnumerableLike>;
 declare const fromArray: FromArray<EnumerableLike>["fromArray"];
 declare const fromArrayT: FromArray<EnumerableLike>;
-declare const fromEnumerable: <T>() => Identity<EnumerableLike<T>>;
-declare const fromEnumerableT: FromEnumerable<EnumerableLike>;
 declare const keep: Keep<EnumerableLike>["keep"];
 declare const keepT: Keep<EnumerableLike>;
 declare const map: Map<EnumerableLike>["map"];
@@ -47,12 +46,14 @@ declare const takeWhileT: TakeWhile<EnumerableLike>;
 declare const TContainerOf: EnumerableLike;
 declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike>;
-declare const toEnumerable: <T>() => Identity<EnumerableLike<T>>;
+declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
+declare const toArrayT: ToReadonlyArray<EnumerableLike>;
+declare const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<EnumerableLike>;
 /**
  * Converts an EnumerableLike into a javascript Iterable.
  */
 declare const toIterable: ToIterable<EnumerableLike>["toIterable"];
-declare const toIterableT: ToIterable<EnumerableLike<unknown>>;
-declare const zipT: Zip<EnumerableLike<unknown>>;
-export { EnumerableLike, FromEnumerable, TContainerOf, ToEnumerable, createEnumerable, createT, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, zipT };
+declare const toIterableT: ToIterable<EnumerableLike>;
+declare const zipT: Zip<EnumerableLike>;
+export { EnumerableLike, TContainerOf, ToEnumerable, create, createT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, fromArray, fromArrayT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };

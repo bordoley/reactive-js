@@ -1,5 +1,4 @@
 /// <reference types="./ReactiveContainerLike.d.ts" />
-import { fromValue, empty } from '../../containers/ContainerLike.mjs';
 import { forEach } from '../../containers/ReadonlyArrayLike.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { notify } from '../../rx/ReactiveSinkLike.mjs';
@@ -32,7 +31,7 @@ const createDecodeWithCharsetOperator = (m) => (DecodeWithCharsetSink) => (chars
     return pipe(DecodeWithCharsetSink, newInstanceWith(delegate, textDecoder), addTo(delegate), onComplete(() => {
         const data = textDecoder.decode();
         if (!isEmpty(data)) {
-            pipe(data, fromValue(m), sinkInto(delegate));
+            pipe(data, m.fromValue(), sinkInto(delegate));
         }
         else {
             pipe(delegate, dispose());
@@ -41,14 +40,14 @@ const createDecodeWithCharsetOperator = (m) => (DecodeWithCharsetSink) => (chars
 }, lift(m));
 const createSatisfyOperator = (m, SatisfySink, defaultResult) => (predicate) => pipe((delegate) => pipe(SatisfySink, newInstanceWith(delegate, predicate), addTo(delegate), onComplete(() => {
     if (!isDisposed(delegate)) {
-        pipe(defaultResult, fromValue(m), sinkInto(delegate));
+        pipe(defaultResult, m.fromValue(), sinkInto(delegate));
     }
 })), lift(m));
 const createEverySatisfyOperator = (m) => (EverySatisfySink) => compose(predicate => compose(predicate, negate), createSatisfyOperator(m, EverySatisfySink, true));
 const createSomeSatisfyOperator = (m) => (SomeSatisfySink) => createSatisfyOperator(m, SomeSatisfySink, false);
 const createReduceOperator = (m) => (ReduceSink) => (reducer, initialValue) => pipe((delegate) => {
     const sink = pipe(ReduceSink, newInstanceWith(delegate, reducer, initialValue()), addTo(delegate), onComplete(() => {
-        pipe(sink.acc, fromValue(m), sinkInto(delegate));
+        pipe(sink.acc, m.fromValue(), sinkInto(delegate));
     }));
     return sink;
 }, lift(m));
@@ -62,7 +61,7 @@ const createTakeLastOperator = (m) => (TakeLastSink) => (options = {}) => {
     };
     return source => count > 0
         ? pipe(source, lift(m)(operator))
-        : empty(m);
+        : m.empty();
 };
 const createFromDisposable = (m) => (disposable) => pipe(disposable, addTo, create(m));
 const createNever = (m) => {

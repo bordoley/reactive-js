@@ -8,10 +8,16 @@
 
 - [ReadonlyArrayLike](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)
 
+### Type Aliases
+
+- [ToReadonlyArray](containers_ReadonlyArrayLike.md#toreadonlyarray)
+
 ### Variables
 
+- [emptyT](containers_ReadonlyArrayLike.md#emptyt)
 - [keepT](containers_ReadonlyArrayLike.md#keept)
 - [mapT](containers_ReadonlyArrayLike.md#mapt)
+- [toReadonlyArrayT](containers_ReadonlyArrayLike.md#toreadonlyarrayt)
 
 ### Functions
 
@@ -20,8 +26,27 @@
 - [forEach](containers_ReadonlyArrayLike.md#foreach)
 - [keep](containers_ReadonlyArrayLike.md#keep)
 - [map](containers_ReadonlyArrayLike.md#map)
+- [toReadonlyArray](containers_ReadonlyArrayLike.md#toreadonlyarray-1)
+
+## Type Aliases
+
+### ToReadonlyArray
+
+Ƭ **ToReadonlyArray**<`C`\>: [`Container`](containers_ContainerLike.md#container)<`C`\> & { `toReadonlyArray`: <T\>() => [`Function1`](util_functions.md#function1)<[`ContainerOf`](containers_ContainerLike.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers_ContainerLike.ContainerLike.md) |
 
 ## Variables
+
+### emptyT
+
+• `Const` **emptyT**: [`Empty`](containers_ContainerLike.md#empty)<[`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)\>
+
+___
 
 ### keepT
 
@@ -33,11 +58,17 @@ ___
 
 • `Const` **mapT**: [`Map`](containers_ContainerLike.md#map)<[`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)\>
 
+___
+
+### toReadonlyArrayT
+
+• `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers_ReadonlyArrayLike.md#toreadonlyarray)<[`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)\>
+
 ## Functions
 
 ### empty
 
-▸ **empty**<`T`\>(): [`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>
+▸ **empty**<`T`\>(): readonly `T`[]
 
 #### Type parameters
 
@@ -47,7 +78,7 @@ ___
 
 #### Returns
 
-[`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>
+readonly `T`[]
 
 ___
 
@@ -75,7 +106,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`f`): [`Function1`](util_functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>\>
+▸ **forEach**<`T`\>(`f`): [`Function1`](util_functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 #### Type parameters
 
@@ -91,7 +122,7 @@ ___
 
 #### Returns
 
-[`Function1`](util_functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>\>
+[`Function1`](util_functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 ___
 
@@ -137,3 +168,19 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### toReadonlyArray
+
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](util_functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](util_functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>\>
