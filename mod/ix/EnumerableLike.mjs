@@ -6,11 +6,10 @@ import { properties as properties$1, prototype as prototype$1 } from '../__inter
 import { properties, prototype } from '../__internal__/util/DelegatingDisposable.mjs';
 import { properties as properties$2, prototype as prototype$2 } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { empty } from '../containers/ContainerLike.mjs';
 import { empty as empty$1, every, map as map$1, forEach } from '../containers/ReadonlyArrayLike.mjs';
 import { bindTo, add, addTo } from '../util/DisposableLike.mjs';
 import { none, isSome } from '../util/Option.mjs';
-import { pipeUnsafe, newInstance, pipe, strictEquality, compose, identity, getLength } from '../util/functions.mjs';
+import { pipeUnsafe, newInstance, pipe, strictEquality, compose, getLength, identity } from '../util/functions.mjs';
 import { hasCurrent, getCurrent, move, EnumeratorLike_current } from './EnumeratorLike.mjs';
 import { InteractiveContainerLike_interact } from './InteractiveContainerLike.mjs';
 import { InteractiveSourceLike_move } from './InteractiveSourceLike.mjs';
@@ -39,22 +38,25 @@ const liftT = {
     lift,
     variance: interactive,
 };
-class CreateEnumerable {
-    constructor(_enumerate) {
-        this._enumerate = _enumerate;
-    }
-    [InteractiveContainerLike_interact]() {
-        try {
-            return this._enumerate();
+const create = 
+/*@__PURE__*/ (() => {
+    class CreateEnumerable {
+        constructor(_enumerate) {
+            this._enumerate = _enumerate;
         }
-        catch (cause) {
-            return pipe(empty(fromArrayT), enumerate(), dispose({ cause }));
+        [InteractiveContainerLike_interact]() {
+            try {
+                return this._enumerate();
+            }
+            catch (cause) {
+                return pipe(empty(), enumerate(), dispose({ cause }));
+            }
         }
     }
-}
-const createEnumerable = (enumerate) => newInstance(CreateEnumerable, enumerate);
+    return (enumerate) => newInstance(CreateEnumerable, enumerate);
+})();
 const createT = {
-    create: (source) => createEnumerable(() => source(none)),
+    create,
 };
 const delegatingDisposableEnumeratorProperties = {
     ...properties,
@@ -109,6 +111,31 @@ const distinctUntilChanged =
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
+const empty = /*@__PURE__*/ (() => {
+    const properties = {
+        ...properties$2,
+        ...properties$1,
+    };
+    const prototype = {
+        ...prototype$2,
+        ...prototype$1,
+        [Object_init]() {
+            init(prototype$2, this);
+            init(prototype$1, this);
+        },
+        [InteractiveSourceLike_move]() {
+            pipe(this, dispose());
+        },
+    };
+    const createInstance = createObjectFactory(prototype, properties);
+    class EmptyEnumerable {
+        [InteractiveContainerLike_interact]() {
+            return createInstance();
+        }
+    }
+    return () => newInstance(EmptyEnumerable);
+})();
+const emptyT = { empty };
 const fromArray = 
 /*@__PURE__*/ (() => {
     const properties = {
@@ -157,10 +184,6 @@ const fromArray =
     return createFromArray((a, start, count) => newInstance(FromArrayEnumerable, a, start, count));
 })();
 const fromArrayT = { fromArray };
-const fromEnumerable = () => identity;
-const fromEnumerableT = {
-    fromEnumerable,
-};
 const keep = /*@__PURE__*/ (() => {
     const properties = {
         ...delegatingDisposableEnumeratorProperties,
@@ -357,7 +380,7 @@ const takeFirst =
     };
     const createInstance = createObjectFactory(prototype$1, properties$1);
     const takeFirstEnumerator = (maxCount) => (delegate) => createInstance(delegate, maxCount);
-    return pipe(takeFirstEnumerator, createTakeFirstOperator({ ...liftT, ...fromArrayT }));
+    return pipe(takeFirstEnumerator, createTakeFirstOperator({ ...liftT, ...emptyT }));
 })();
 const takeFirstT = {
     takeFirst,
@@ -402,7 +425,7 @@ const takeLast =
         return enumerable => count > 0
             ? pipe(enumerable, lift(operator))
             : // FIXME: why do we need the annotations?
-                empty(fromArrayT);
+                empty();
     };
 })();
 const takeLastT = { takeLast };
@@ -450,9 +473,7 @@ const takeWhile =
     const takeWhileEnumerator = (predicate, inclusive) => (delegate) => createInstance(delegate, predicate, inclusive);
     return pipe(takeWhileEnumerator, createTakeWhileOperator(liftT));
 })();
-const takeWhileT = {
-    takeWhile,
-};
+const takeWhileT = { takeWhile };
 const TContainerOf = undefined;
 const throwIfEmpty = 
 /*@__PURE__*/ (() => {
@@ -482,6 +503,15 @@ const throwIfEmpty =
 const throwIfEmptyT = {
     throwIfEmpty,
 };
+const toReadonlyArray = () => (enumerable) => {
+    const enumerator = pipe(enumerable, enumerate());
+    const result = [];
+    while (move(enumerator)) {
+        result.push(getCurrent(enumerator));
+    }
+    return result;
+};
+const toArrayT = { toReadonlyArray };
 const toEnumerable = () => identity;
 const toEnumerableT = {
     toEnumerable,
@@ -505,9 +535,7 @@ const toIterable =
     // FIXME: InstanceFactory?
     return () => enumerable => newInstance(EnumerableIterable, enumerable);
 })();
-const toIterableT = {
-    toIterable,
-};
+const toIterableT = { toIterable };
 const zip = /*@__PURE__*/ (() => {
     const moveAll = (enumerators) => {
         for (const enumerator of enumerators) {
@@ -547,11 +575,9 @@ const zip = /*@__PURE__*/ (() => {
         pipe(enumerators, forEach(addTo(instance)));
         return instance;
     };
-    const zip = (enumerables) => createEnumerable(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
+    const zip = (enumerables) => create(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
     return zip;
 })();
-const zipT = {
-    zip,
-};
+const zipT = { zip };
 
-export { TContainerOf, createEnumerable, createT, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, zipT };
+export { TContainerOf, create, createT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, fromArray, fromArrayT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };

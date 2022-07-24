@@ -8,6 +8,8 @@
 
 - **`ContainerLike`**
 
+  ↳ [`IterableLike`](containers_IterableLike.IterableLike.md)
+
   ↳ [`ReadonlyArrayLike`](containers_ReadonlyArrayLike.ReadonlyArrayLike.md)
 
   ↳ [`SequenceLike`](containers_SequenceLike.SequenceLike.md)
