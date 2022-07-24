@@ -1,4 +1,4 @@
-import { Function1 } from '../util/functions.js';
+import { Function1 } from "../util/functions.mjs";
 import { ContainerLike, Container, ContainerOf } from "./ContainerLike.mjs";
 interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
     readonly TContainerOf?: IterableLike<this["T"]>;

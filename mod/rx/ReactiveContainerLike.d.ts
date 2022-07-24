@@ -1,6 +1,6 @@
-import { Container, ContainerOf } from '../containers/ContainerLike.js';
-import { StatefulContainerLike, StatefulContainerStateOf } from '../containers/StatefulContainerLike.js';
-import { Function1 } from '../util/functions.js';
+import { Container, ContainerOf } from "../containers/ContainerLike.mjs";
+import { StatefulContainerLike, StatefulContainerStateOf } from "../containers/StatefulContainerLike.mjs";
+import { Function1 } from "../util/functions.mjs";
 import { ReactiveSinkLike } from "./ReactiveSinkLike.mjs";
 declare const ReactiveContainerLike_sinkInto: unique symbol;
 interface ReactiveContainerLike extends StatefulContainerLike {

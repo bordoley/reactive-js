@@ -1,8 +1,8 @@
-import { DisposableLike } from '../util/DisposableLike.js';
-import { Function1 } from '../util/functions.js';
+import { DisposableLike } from "../util/DisposableLike.mjs";
+import { Function1 } from "../util/functions.mjs";
 import { ContinuationLike } from "./ContinuationLike.mjs";
 import { SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike } from "./SchedulerLike.mjs";
-import { SchedulerLike_inContinuation } from '../__internal__/scheduling.js';
+import { SchedulerLike_inContinuation } from "../__internal__/scheduling.mjs";
 declare type PrioritySchedulerOptions = {
     readonly priority: number;
     readonly delay?: number;

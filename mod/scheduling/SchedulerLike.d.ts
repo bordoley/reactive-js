@@ -1,8 +1,8 @@
-import { SchedulerLike_inContinuation } from '../__internal__/scheduling.js';
+import { SchedulerLike_inContinuation } from "../__internal__/scheduling.mjs";
 export { SchedulerLike_inContinuation } from '../__internal__/scheduling.js';
 import { ContinuationLike } from "./ContinuationLike.mjs";
-import { DisposableLike } from '../util/DisposableLike.js';
-import { SideEffect, Function1 } from '../util/functions.js';
+import { DisposableLike } from "../util/DisposableLike.mjs";
+import { SideEffect, Function1 } from "../util/functions.mjs";
 declare const create: (options?: {
     readonly yieldInterval?: number;
 }) => SchedulerLike;

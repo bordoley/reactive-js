@@ -1,5 +1,5 @@
-import { MulticastObservableLike } from '../rx/MulticastObservableLike.js';
-import { DispatcherLike } from '../scheduling/DispatcherLike.js';
+import { MulticastObservableLike } from "../rx/MulticastObservableLike.mjs";
+import { DispatcherLike } from "../scheduling/DispatcherLike.mjs";
 /**
  * Represents a duplex stream
  *

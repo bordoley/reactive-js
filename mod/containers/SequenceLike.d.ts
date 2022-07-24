@@ -1,4 +1,4 @@
-import { Option } from '../util/Option.js';
+import { Option } from "../util/Option.mjs";
 import { ContainerLike, ConcatAll, DistinctUntilChanged, Keep, Map, Generate, Pairwise, ContainerOperator, TakeFirst, Repeat, Scan, SkipFirst, TakeLast, TakeWhile, Zip } from "./ContainerLike.mjs";
 declare type SequenceResult<T> = {
     readonly data: T;

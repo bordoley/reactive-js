@@ -1,5 +1,5 @@
-import { DisposableLike } from '../util/DisposableLike.js';
-import { Identity } from '../util/functions.js';
+import { DisposableLike } from "../util/DisposableLike.mjs";
+import { Identity } from "../util/functions.mjs";
 declare const ContinuationLike_run: unique symbol;
 /**
  * A unit of work to be executed by a scheduler.

@@ -1,4 +1,4 @@
-import { EnumeratorLike } from '../ix/EnumeratorLike.js';
+import { EnumeratorLike } from "../ix/EnumeratorLike.mjs";
 import { SchedulerLike } from "./SchedulerLike.mjs";
 interface VirtualTimeSchedulerLike extends EnumeratorLike<unknown>, SchedulerLike {
 }

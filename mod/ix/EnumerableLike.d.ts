@@ -1,8 +1,8 @@
-import { ContainerLike, Container, ContainerOf, DistinctUntilChanged, Empty, FromArray, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, Zip } from '../containers/ContainerLike.js';
-import { ToIterable } from '../containers/IterableLike.js';
-import { ToReadonlyArray } from '../containers/ReadonlyArrayLike.js';
-import { ThrowIfEmpty } from '../containers/StatefulContainerLike.js';
-import { Function1, SideEffect1 } from '../util/functions.js';
+import { ContainerLike, Container, ContainerOf, DistinctUntilChanged, Empty, FromArray, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, Zip } from "../containers/ContainerLike.mjs";
+import { ToIterable } from "../containers/IterableLike.mjs";
+import { ToReadonlyArray } from "../containers/ReadonlyArrayLike.mjs";
+import { ThrowIfEmpty } from "../containers/StatefulContainerLike.mjs";
+import { Function1, SideEffect1 } from "../util/functions.mjs";
 import { EnumeratorLike } from "./EnumeratorLike.mjs";
 import { InteractiveContainerLike, InteractiveContainerLike_interact, CreateInteractiveContainer } from "./InteractiveContainerLike.mjs";
 /**

@@ -1,4 +1,4 @@
-import { SchedulerLike } from '../scheduling/SchedulerLike.js';
+import { SchedulerLike } from "../scheduling/SchedulerLike.mjs";
 import { StreamLike } from "./StreamLike.mjs";
 declare const StreamableLike_stream: unique symbol;
 interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {

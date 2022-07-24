@@ -1,4 +1,4 @@
-import { DisposableLike_error, DisposableLike, DisposableLike_isDisposed, DisposableOrTeardown, DisposableLike_dispose, Error, DisposableLike_add } from '../../util/DisposableLike.js';
+import { DisposableLike_error, DisposableLike, DisposableLike_isDisposed, DisposableOrTeardown, DisposableLike_dispose, Error, DisposableLike_add } from "../../util/DisposableLike.mjs";
 import { Object_init } from "./Object.mjs";
 declare const Disposable_private_disposables: unique symbol;
 declare const properties: {
