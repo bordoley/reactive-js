@@ -55,76 +55,89 @@ export function concat<T>(...sequences: readonly SequenceLike<T>[]): SequenceLik
 export const concatT: Concat<SequenceLike> = {
   concat,
 };*/
-const _distinctUntilChanged = (equality, prevValue, next) => () => {
-    let retval = next();
-    while (true) {
-        if (isSome(retval)) {
-            if (!equality(prevValue, retval.data)) {
-                return createNext(retval.data, _distinctUntilChanged(equality, retval.data, retval.next));
+const distinctUntilChanged = 
+/*@__PURE__*/ (() => {
+    const _distinctUntilChanged = (equality, prevValue, next) => () => {
+        let retval = next();
+        while (true) {
+            if (isSome(retval)) {
+                if (!equality(prevValue, retval.data)) {
+                    return createNext(retval.data, _distinctUntilChanged(equality, retval.data, retval.next));
+                }
+                else {
+                    retval = retval.next();
+                }
             }
             else {
-                retval = retval.next();
+                return retval;
             }
         }
-        else {
-            return retval;
-        }
-    }
-};
-const distinctUntilChanged = (options = {}) => (seq) => () => {
-    const { equality = strictEquality } = options;
-    const result = seq();
-    return isSome(result)
-        ? createNext(result.data, _distinctUntilChanged(equality, result.data, result.next))
-        : none;
-};
+    };
+    return (options = {}) => (seq) => () => {
+        const { equality = strictEquality } = options;
+        const result = seq();
+        return isSome(result)
+            ? createNext(result.data, _distinctUntilChanged(equality, result.data, result.next))
+            : none;
+    };
+})();
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const _keep = (predicate, seq) => () => {
-    let result = seq();
-    while (true) {
-        if (isSome(result)) {
-            if (predicate(result.data)) {
-                return createNext(result.data, _keep(predicate, result.next));
+const keep = /*@__PURE__*/ (() => {
+    const _keep = (predicate, seq) => () => {
+        let result = seq();
+        while (true) {
+            if (isSome(result)) {
+                if (predicate(result.data)) {
+                    return createNext(result.data, _keep(predicate, result.next));
+                }
+                else {
+                    result = result.next();
+                }
             }
             else {
-                result = result.next();
+                return result;
             }
         }
-        else {
-            return result;
-        }
-    }
-};
-const keep = (predicate) => (seq) => _keep(predicate, seq);
+    };
+    return (predicate) => (seq) => _keep(predicate, seq);
+})();
 const keepT = { keep };
-const _map = (mapper, seq) => () => {
-    const result = seq();
-    return isSome(result)
-        ? createNext(mapper(result.data), _map(mapper, result.next))
-        : none;
-};
-const map = (mapper) => (seq) => _map(mapper, seq);
+const map = /*@__PURE__*/ (() => {
+    const _map = (mapper, seq) => () => {
+        const result = seq();
+        return isSome(result)
+            ? createNext(mapper(result.data), _map(mapper, result.next))
+            : none;
+    };
+    return (mapper) => (seq) => _map(mapper, seq);
+})();
 const mapT = { map };
-const _generate = (generator, acc) => () => createNext(acc, _generate(generator, generator(acc)));
-const generate = (generator, initialValue) => () => {
-    const acc = generator(initialValue());
-    return _generate(generator, acc)();
-};
+const generate = 
+/*@__PURE__*/ (() => {
+    const _generate = (generator, acc) => () => createNext(acc, _generate(generator, generator(acc)));
+    return (generator, initialValue) => () => {
+        const acc = generator(initialValue());
+        return _generate(generator, acc)();
+    };
+})();
 const generateT = { generate };
-const _pairwise = (prev, seq) => () => {
-    const result = seq();
-    if (isSome(result)) {
-        const { data, next } = result;
-        const v = [prev, data];
-        return createNext(v, _pairwise(data, next));
-    }
-    else {
-        return none;
-    }
-};
-const pairwise = () => (seq) => _pairwise(none, seq);
+const pairwise = 
+/*@__PURE__*/ (() => {
+    const _pairwise = (prev, seq) => () => {
+        const result = seq();
+        if (isSome(result)) {
+            const { data, next } = result;
+            const v = [prev, data];
+            return createNext(v, _pairwise(data, next));
+        }
+        else {
+            return none;
+        }
+    };
+    return () => (seq) => _pairwise(none, seq);
+})();
 const pairwiseT = { pairwise };
 const seek = (count) => (seq) => {
     if (count <= 0) {
@@ -141,96 +154,109 @@ const seek = (count) => (seq) => {
         return retval;
     }
 };
-const _takeFirst = (count, seq) => () => {
-    if (count > 0) {
-        const result = seq();
-        return isSome(result)
-            ? createNext(result.data, _takeFirst(count - 1, result.next))
-            : none;
-    }
-    else {
-        return none;
-    }
-};
-const takeFirst = (options = {}) => (seq) => {
-    const { count = 1 } = options;
-    return _takeFirst(count, seq);
-};
+const takeFirst = 
+/*@__PURE__*/ (() => {
+    const _takeFirst = (count, seq) => () => {
+        if (count > 0) {
+            const result = seq();
+            return isSome(result)
+                ? createNext(result.data, _takeFirst(count - 1, result.next))
+                : none;
+        }
+        else {
+            return none;
+        }
+    };
+    return (options = {}) => (seq) => {
+        const { count = 1 } = options;
+        return _takeFirst(count, seq);
+    };
+})();
 const takeFirstT = {
     takeFirst,
 };
-const _repeat = (predicate, count, src, seq) => () => {
-    const result = seq();
-    if (isSome(result)) {
-        return createNext(result.data, _repeat(predicate, count, src, result.next));
-    }
-    else if (predicate(count)) {
-        return _repeat(predicate, count + 1, src, src)();
-    }
-    else {
-        return none;
-    }
-};
-const repeat = (predicate) => {
-    const repeatPredicate = isNone(predicate)
-        ? alwaysTrue
-        : typeof predicate === "number"
-            ? (count) => count < predicate
-            : (count) => predicate(count);
-    return (seq) => _repeat(repeatPredicate, 1, seq, seq);
-};
+const repeat = /*@__PURE__*/ (() => {
+    const _repeat = (predicate, count, src, seq) => () => {
+        const result = seq();
+        if (isSome(result)) {
+            return createNext(result.data, _repeat(predicate, count, src, result.next));
+        }
+        else if (predicate(count)) {
+            return _repeat(predicate, count + 1, src, src)();
+        }
+        else {
+            return none;
+        }
+    };
+    return (predicate) => {
+        const repeatPredicate = isNone(predicate)
+            ? alwaysTrue
+            : typeof predicate === "number"
+                ? (count) => count < predicate
+                : (count) => predicate(count);
+        return (seq) => _repeat(repeatPredicate, 1, seq, seq);
+    };
+})();
 const repeatT = { repeat };
-const _scan = (reducer, acc, seq) => () => {
-    const result = seq();
-    if (isSome(result)) {
-        const nextAcc = reducer(acc, result.data);
-        return createNext(nextAcc, _scan(reducer, nextAcc, result.next));
-    }
-    else {
-        return none;
-    }
-};
-const scan = (reducer, initialValue) => (seq) => () => _scan(reducer, initialValue(), seq)();
+const scan = /*@__PURE__*/ (() => {
+    const _scan = (reducer, acc, seq) => () => {
+        const result = seq();
+        if (isSome(result)) {
+            const nextAcc = reducer(acc, result.data);
+            return createNext(nextAcc, _scan(reducer, nextAcc, result.next));
+        }
+        else {
+            return none;
+        }
+    };
+    return (reducer, initialValue) => (seq) => () => _scan(reducer, initialValue(), seq)();
+})();
 const scanT = { scan };
 const skipFirst = (options = {}) => (seq) => () => {
     const { count = 1 } = options;
     return seek(count)(seq)();
 };
 const skipFirstT = { skipFirst };
-const _takeLast = (maxCount, seq) => () => {
-    const last = [];
-    let result = seq();
-    while (true) {
-        if (isSome(result)) {
-            last.push(result.data);
-            if (getLength(last) > maxCount) {
-                last.shift();
+const takeLast = 
+/*@__PURE__*/ (() => {
+    const _takeLast = (maxCount, seq) => () => {
+        const last = [];
+        let result = seq();
+        while (true) {
+            if (isSome(result)) {
+                last.push(result.data);
+                if (getLength(last) > maxCount) {
+                    last.shift();
+                }
+                result = result.next();
             }
-            result = result.next();
+            else {
+                break;
+            }
         }
-        else {
-            break;
-        }
-    }
-    return _fromArray(last, 0, getLength(last));
-};
-const takeLast = (options = {}) => (seq) => {
-    const { count = 1 } = options;
-    return _takeLast(count, seq);
-};
+        return _fromArray(last, 0, getLength(last));
+    };
+    return (options = {}) => (seq) => {
+        const { count = 1 } = options;
+        return _takeLast(count, seq);
+    };
+})();
 const takeLastT = { takeLast };
-const _takeWhile = (predicate, inclusive, seq) => () => {
-    const result = seq();
-    return isSome(result) && predicate(result.data)
-        ? createNext(result.data, _takeWhile(predicate, inclusive, result.next))
-        : isSome(result) && inclusive
-            ? createNext(result.data, returns(none))
-            : none;
-};
-const takeWhile = (predicate, options = {}) => (seq) => {
-    const { inclusive = false } = options;
-    return _takeWhile(predicate, inclusive, seq);
-};
+const takeWhile = 
+/*@__PURE__*/ (() => {
+    const _takeWhile = (predicate, inclusive, seq) => () => {
+        const result = seq();
+        return isSome(result) && predicate(result.data)
+            ? createNext(result.data, _takeWhile(predicate, inclusive, result.next))
+            : isSome(result) && inclusive
+                ? createNext(result.data, returns(none))
+                : none;
+    };
+    return (predicate, options = {}) => (seq) => {
+        const { inclusive = false } = options;
+        return _takeWhile(predicate, inclusive, seq);
+    };
+})();
 const takeWhileT = { takeWhile };
 /*
 export const toRunnable =
@@ -247,13 +273,15 @@ export const toRunnable =
 export const toRunnableT: ToRunnable<SequenceLike> = {
   toRunnable,
 };*/
-const _zip = (...sequences) => () => {
-    const nextResults = pipe(sequences, map$1(callWith()), keepType(keepT$1, isSome));
-    return getLength(nextResults) === getLength(sequences)
-        ? createNext(pipe(nextResults, map$1(x => x.data)), _zip(...pipe(nextResults, map$1(x => x.next))))
-        : none;
-};
-const zip = _zip;
+const zip = /*@__PURE__*/ (() => {
+    const zip = (...sequences) => () => {
+        const nextResults = pipe(sequences, map$1(callWith()), keepType(keepT$1, isSome));
+        return getLength(nextResults) === getLength(sequences)
+            ? createNext(pipe(nextResults, map$1(x => x.data)), zip(...pipe(nextResults, map$1(x => x.next))))
+            : none;
+    };
+    return zip;
+})();
 const zipT = { zip };
 /*
 class SequenceEnumerator<T> extends AbstractEnumerator<T> {
