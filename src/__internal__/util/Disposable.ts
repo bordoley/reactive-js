@@ -14,6 +14,7 @@ import {
   getError,
   isDisposed,
 } from "./DisposableLike";
+import { Object_init } from "./Object";
 
 const Disposable_private_disposables = Symbol("Disposable_private_disposables");
 
@@ -90,8 +91,7 @@ export const prototype = {
       }
     }
   },
-};
-
-export const init = (self: typeof properties) => {
-  self[Disposable_private_disposables] = new Set();
+  [Object_init](this: typeof properties) {
+    this[Disposable_private_disposables] = new Set();
+  },
 };

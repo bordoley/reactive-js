@@ -4,8 +4,8 @@ import { properties as properties$2, prototype as prototype$2 } from '../__inter
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { SchedulerLike_inContinuation, runContinuation } from '../__internal__/scheduling.mjs';
 import { createPriorityQueue } from '../__internal__/scheduling/queue.mjs';
-import { properties as properties$1, prototype as prototype$1, init } from '../__internal__/util/Disposable.mjs';
-import { createObjectFactory } from '../__internal__/util/Object.mjs';
+import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Disposable.mjs';
+import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { EnumeratorLike_current } from '../ix/EnumeratorLike.mjs';
 import { InteractiveSourceLike_move } from '../ix/InteractiveSourceLike.mjs';
 import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
@@ -34,6 +34,28 @@ const properties = {
 const prototype = {
     ...prototype$1,
     ...prototype$2,
+    [InteractiveSourceLike_move]() {
+        const taskQueue = this.taskQueue;
+        if (isDisposed(this)) {
+            return;
+        }
+        const task = taskQueue.pop();
+        if (isSome(task)) {
+            const { dueTime, continuation } = task;
+            this.microTaskTicks = 0;
+            this[SchedulerLike_now] = dueTime;
+            this[EnumeratorLike_current] = none;
+            pipe(this, runContinuation(continuation));
+        }
+        else {
+            pipe(this, dispose());
+        }
+    },
+    [Object_init](maxMicroTaskTicks) {
+        init(prototype$1, this);
+        this.maxMicroTaskTicks = maxMicroTaskTicks;
+        this.taskQueue = createPriorityQueue(comparator);
+    },
     get [SchedulerLike_shouldYield]() {
         const self = this;
         const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation } = self;
@@ -47,22 +69,6 @@ const prototype = {
     [SchedulerLike_requestYield]() {
         this.yieldRequested = true;
     },
-    [InteractiveSourceLike_move]() {
-        const taskQueue = this.taskQueue;
-        if (!isDisposed(this)) {
-            const task = taskQueue.pop();
-            if (isSome(task)) {
-                const { dueTime, continuation } = task;
-                this.microTaskTicks = 0;
-                this[SchedulerLike_now] = dueTime;
-                this[EnumeratorLike_current] = none;
-                pipe(this, runContinuation(continuation));
-            }
-            else {
-                pipe(this, dispose());
-            }
-        }
-    },
     [SchedulerLike_schedule](continuation, options) {
         const delay = getDelay(options);
         pipe(this, addIgnoringChildErrors(continuation));
@@ -75,7 +81,8 @@ const prototype = {
         }
     },
 };
-const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+const createInstance = 
+/*@__PURE__*/ createObjectFactory(prototype, properties);
 /**
  * Creates a new virtual time scheduler instance.
  *
@@ -85,11 +92,7 @@ const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
  */
 const create = (options = {}) => {
     const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-    const instance = createInstance();
-    init(instance);
-    instance.maxMicroTaskTicks = maxMicroTaskTicks;
-    instance.taskQueue = createPriorityQueue(comparator);
-    return instance;
+    return createInstance(maxMicroTaskTicks);
 };
 
 export { create };

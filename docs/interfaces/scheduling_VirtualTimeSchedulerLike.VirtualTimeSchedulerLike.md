@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`EnumeratorLike`](ix_EnumeratorLike.EnumeratorLike.md)<`void`\>
+- [`EnumeratorLike`](ix_EnumeratorLike.EnumeratorLike.md)<`unknown`\>
 
 - [`SchedulerLike`](scheduling_SchedulerLike.SchedulerLike.md)
 
@@ -60,7 +60,7 @@ ___
 
 ### [EnumeratorLike\_current]
 
-• `Readonly` **[EnumeratorLike\_current]**: `void`
+• `Readonly` **[EnumeratorLike\_current]**: `unknown`
 
 #### Inherited from
 

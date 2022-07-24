@@ -1,5 +1,12 @@
-import { DisposableLike, disposed } from "../../util/DisposableLike";
+import {
+  DisposableLike,
+  add,
+  dispose,
+  disposed,
+} from "../../util/DisposableLike";
+import { pipe } from "../../util/functions";
 import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike";
+import { Object_init } from "./Object";
 
 export interface DisposableRefLike<
   TDisposable extends DisposableLike = DisposableLike,
@@ -24,14 +31,18 @@ export const prototype = {
     return self[DisposableRef_private_current];
   },
   set [MutableRefLike_current](v: DisposableLike) {
-    const self = this as unknown as typeof properties;
-    self[DisposableRef_private_current] = v;
-  },
-};
+    const self = this as unknown as typeof properties & DisposableLike;
+    const oldValue = self[DisposableRef_private_current];
+    pipe(oldValue, dispose());
 
-export const init = <TDisposable extends DisposableLike = DisposableLike>(
-  self: typeof properties,
-  defaultValue: TDisposable,
-) => {
-  self[DisposableRef_private_current] = defaultValue;
+    self[DisposableRef_private_current] = v;
+    pipe(self, add(v));
+  },
+  [Object_init]<TDisposable extends DisposableLike = DisposableLike>(
+    this: typeof properties & DisposableLike,
+    defaultValue: TDisposable,
+  ) {
+    this[DisposableRef_private_current] = defaultValue;
+    pipe(this, add(defaultValue));
+  },
 };

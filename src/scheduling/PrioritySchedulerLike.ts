@@ -1,11 +1,14 @@
 import { getDelay } from "../__internal__/optionalArgs";
 import { create as createQueueScheduler } from "../__internal__/scheduling/QueueScheduler";
 import {
-  init as disposableInit,
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
-import { createObjectFactory } from "../__internal__/util/Object";
+import {
+  Object_init,
+  createObjectFactory,
+  init,
+} from "../__internal__/util/Object";
 import {
   DisposableLike,
   addIgnoringChildErrors,
@@ -53,69 +56,79 @@ export interface PrioritySchedulerLike extends DisposableLike {
   ): void;
 }
 
-const properties = {
-  ...disposableProperties,
-  priorityScheduler: none as unknown as PrioritySchedulerLike,
-  priority: 0,
-};
-
-const prototype = {
-  ...disposablePrototype,
-  get [SchedulerLike_inContinuation]() {
-    const self = this as unknown as typeof properties;
-    return isInContinuation(self.priorityScheduler);
-  },
-
-  get [SchedulerLike_now]() {
-    const self = this as unknown as typeof properties;
-    return getCurrentTime(self.priorityScheduler);
-  },
-
-  get [SchedulerLike_shouldYield]() {
-    const self = this as unknown as typeof properties;
-    return shouldYield(self.priorityScheduler);
-  },
-
-  [SchedulerLike_requestYield](): void {
-    const self = this as unknown as typeof properties;
-    requestYield(self.priorityScheduler);
-  },
-
-  [SchedulerLike_schedule](
-    this: typeof properties & DisposableLike,
-    continuation: ContinuationLike,
-    options?: { readonly delay?: number },
-  ) {
-    const delay = getDelay(options);
-
-    pipe(this, addIgnoringChildErrors(continuation));
-
-    if (!isDisposed(continuation)) {
-      this.priorityScheduler[SchedulerLike_schedule](continuation, {
-        priority: this.priority,
-        delay,
-      });
-    }
-  },
-};
-
-const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
-
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *
  * @param priorityScheduler The underlying scheduler upon which to scheduler work.
  * @param priority The priority to schedule work at.
  */
-export const toScheduler =
-  (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
-  priorityScheduler => {
-    const instance = createInstance();
-    disposableInit(instance);
-    instance.priority = priority;
-    instance.priorityScheduler = priorityScheduler;
-    return instance;
+export const toScheduler = /*@__PURE__*/ (() => {
+  const properties = {
+    ...disposableProperties,
+    priorityScheduler: none as unknown as PrioritySchedulerLike,
+    priority: 0,
   };
+
+  const prototype = {
+    ...disposablePrototype,
+    [Object_init](
+      this: typeof properties,
+      scheduler: PrioritySchedulerLike,
+      priority: number,
+    ) {
+      init(disposablePrototype, this);
+      this.priorityScheduler = scheduler;
+      this.priority = priority;
+    },
+    get [SchedulerLike_inContinuation]() {
+      const self = this as unknown as typeof properties;
+      return isInContinuation(self.priorityScheduler);
+    },
+
+    get [SchedulerLike_now]() {
+      const self = this as unknown as typeof properties;
+      return getCurrentTime(self.priorityScheduler);
+    },
+
+    get [SchedulerLike_shouldYield]() {
+      const self = this as unknown as typeof properties;
+      return shouldYield(self.priorityScheduler);
+    },
+
+    [SchedulerLike_requestYield](): void {
+      const self = this as unknown as typeof properties;
+      requestYield(self.priorityScheduler);
+    },
+
+    [SchedulerLike_schedule](
+      this: typeof properties & DisposableLike,
+      continuation: ContinuationLike,
+      options?: { readonly delay?: number },
+    ) {
+      const delay = getDelay(options);
+
+      pipe(this, addIgnoringChildErrors(continuation));
+
+      if (!isDisposed(continuation)) {
+        this.priorityScheduler[SchedulerLike_schedule](continuation, {
+          priority: this.priority,
+          delay,
+        });
+      }
+    },
+  };
+
+  const createInstance = createObjectFactory<
+    typeof prototype,
+    typeof properties,
+    PrioritySchedulerLike,
+    number
+  >(prototype, properties);
+
+  return (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
+    priorityScheduler =>
+      createInstance(priorityScheduler, priority);
+})();
 
 export const create: Function1<SchedulerLike, PrioritySchedulerLike> =
   createQueueScheduler;

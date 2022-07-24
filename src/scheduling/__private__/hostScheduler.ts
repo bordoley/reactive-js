@@ -4,11 +4,14 @@ import {
   runContinuation,
 } from "../../__internal__/scheduling";
 import {
-  init as disposableInit,
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../../__internal__/util/Disposable";
-import { createObjectFactory } from "../../__internal__/util/Object";
+import {
+  Object_init,
+  createObjectFactory,
+  init,
+} from "../../__internal__/util/Object";
 import { ContinuationLike } from "../../scheduling/ContinuationLike";
 import {
   DisposableLike,
@@ -48,7 +51,7 @@ const isInputPending = (): boolean =>
   supportsIsInputPending && (navigator as any).scheduling.isInputPending();
 
 const scheduleImmediateWithSetImmediate = (
-  scheduler: typeof properties & typeof prototype,
+  scheduler: typeof properties & SchedulerLike,
   continuation: ContinuationLike,
 ) => {
   const disposable = pipe(
@@ -65,7 +68,7 @@ const scheduleImmediateWithSetImmediate = (
 };
 
 const scheduleDelayed = (
-  scheduler: typeof properties & typeof prototype,
+  scheduler: typeof properties & SchedulerLike,
   continuation: ContinuationLike,
   delay: number,
 ) => {
@@ -85,7 +88,7 @@ const scheduleDelayed = (
 };
 
 const scheduleImmediate = (
-  scheduler: typeof properties & typeof prototype,
+  scheduler: typeof properties & SchedulerLike,
   continuation: ContinuationLike,
 ) => {
   if (supportsSetImmediate) {
@@ -96,7 +99,7 @@ const scheduleImmediate = (
 };
 
 const run = (
-  scheduler: typeof properties & typeof prototype,
+  scheduler: typeof properties & SchedulerLike,
   continuation: ContinuationLike,
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
@@ -116,6 +119,10 @@ const properties = {
 
 const prototype = {
   ...disposablePrototype,
+  [Object_init](this: typeof properties, yieldInterval: number) {
+    init(disposablePrototype, this);
+    this.yieldInterval = yieldInterval;
+  },
 
   get [SchedulerLike_now](): number {
     if (supportsPerformanceNow) {
@@ -168,7 +175,11 @@ const prototype = {
   },
 };
 
-const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
+const createInstance = /*@__PURE__*/ createObjectFactory<
+  typeof prototype,
+  typeof properties,
+  number
+>(prototype, properties);
 
 export const create = (
   options: {
@@ -176,9 +187,5 @@ export const create = (
   } = {},
 ): SchedulerLike => {
   const { yieldInterval = 5 } = options;
-  const instance = createInstance();
-  disposableInit(instance);
-  instance.yieldInterval = yieldInterval;
-  instance.startTime = getCurrentTime(instance);
-  return instance;
+  return createInstance(yieldInterval);
 };
