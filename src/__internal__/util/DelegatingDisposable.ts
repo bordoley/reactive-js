@@ -9,6 +9,7 @@ import {
   disposed,
 } from "../../util/DisposableLike";
 import { Option } from "../../util/Option";
+import { Object_init } from "./Object";
 
 const DelegatingDisposable_private_delegate = Symbol(
   "DelegatingDisposable_private_delegate",
@@ -50,8 +51,7 @@ export const prototype = {
     const delegate = this[DelegatingDisposable_private_delegate];
     delegate[DisposableLike_dispose](error);
   },
-};
-
-export const init = (self: typeof properties, delegate: DisposableLike) => {
-  self[DelegatingDisposable_private_delegate] = delegate;
+  [Object_init](this: typeof properties, delegate: DisposableLike) {
+    this[DelegatingDisposable_private_delegate] = delegate;
+  },
 };

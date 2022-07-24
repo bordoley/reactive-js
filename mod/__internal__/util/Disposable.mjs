@@ -2,6 +2,7 @@
 import { none, isNone, isSome } from '../../util/Option.mjs';
 import { pipe } from '../../util/functions.mjs';
 import { DisposableLike_error, DisposableLike_isDisposed, getError, dispose, DisposableLike_dispose, isDisposed, DisposableLike_add } from './DisposableLike.mjs';
+import { Object_init } from './Object.mjs';
 
 const Disposable_private_disposables = Symbol("Disposable_private_disposables");
 const properties = {
@@ -60,9 +61,9 @@ const prototype = {
             }
         }
     },
-};
-const init = (self) => {
-    self[Disposable_private_disposables] = new Set();
+    [Object_init]() {
+        this[Disposable_private_disposables] = new Set();
+    },
 };
 
-export { init, properties, prototype };
+export { properties, prototype };

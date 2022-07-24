@@ -2,8 +2,8 @@
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { runContinuation, SchedulerLike_inContinuation } from '../__internal__/scheduling.mjs';
 export { SchedulerLike_inContinuation } from '../__internal__/scheduling.mjs';
-import { properties as properties$1, prototype as prototype$1, init } from '../__internal__/util/Disposable.mjs';
-import { createObjectFactory } from '../__internal__/util/Object.mjs';
+import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Disposable.mjs';
+import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { ContinuationLike_run } from './ContinuationLike.mjs';
 import { create as create$1, addTo, onDisposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { none, isSome, isNone } from '../util/Option.mjs';
@@ -48,6 +48,10 @@ const properties = {
 };
 const prototype = {
     ...prototype$1,
+    [Object_init](yieldInterval) {
+        init(prototype$1, this);
+        this.yieldInterval = yieldInterval;
+    },
     get [SchedulerLike_now]() {
         if (supportsPerformanceNow) {
             return performance.now();
@@ -90,11 +94,7 @@ const prototype = {
 const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
 const create = (options = {}) => {
     const { yieldInterval = 5 } = options;
-    const instance = createInstance();
-    init(instance);
-    instance.yieldInterval = yieldInterval;
-    instance.startTime = getCurrentTime(instance);
-    return instance;
+    return createInstance(yieldInterval);
 };
 
 const SchedulerLike_now = Symbol("SchedulerLike_now");
@@ -112,49 +112,49 @@ class YieldError {
     }
 }
 let currentScheduler = none;
-const continuationProperties = {
-    ...properties$1,
-    scheduler: none,
-    f: () => { },
-};
-const continuationPrototype = {
-    ...prototype$1,
-    [ContinuationLike_run]() {
-        if (!isDisposed(this)) {
-            let error = none;
-            let yieldError = none;
-            const { scheduler } = this;
-            const oldCurrentScheduler = currentScheduler;
-            currentScheduler = scheduler;
-            try {
-                this.f();
-            }
-            catch (cause) {
-                if (isYieldError(cause)) {
-                    yieldError = cause;
+const createContinuation = /*@__PURE__*/ (() => {
+    const properties = {
+        ...properties$1,
+        scheduler: none,
+        f: () => { },
+    };
+    const prototype = {
+        ...prototype$1,
+        [ContinuationLike_run]() {
+            if (!isDisposed(this)) {
+                let error = none;
+                let yieldError = none;
+                const { scheduler } = this;
+                const oldCurrentScheduler = currentScheduler;
+                currentScheduler = scheduler;
+                try {
+                    this.f();
+                }
+                catch (cause) {
+                    if (isYieldError(cause)) {
+                        yieldError = cause;
+                    }
+                    else {
+                        error = { cause };
+                    }
+                }
+                currentScheduler = oldCurrentScheduler;
+                if (isSome(yieldError)) {
+                    pipe(scheduler, schedule(this, yieldError));
                 }
                 else {
-                    error = { cause };
+                    pipe(this, dispose(error));
                 }
             }
-            currentScheduler = oldCurrentScheduler;
-            if (isSome(yieldError)) {
-                pipe(scheduler, schedule(this, yieldError));
-            }
-            else {
-                pipe(this, dispose(error));
-            }
-        }
-    },
-};
-const createContinuationInstance = /*@__PURE__*/ createObjectFactory(continuationPrototype, continuationProperties);
-const createContinuation = (scheduler, f) => {
-    const instance = createContinuationInstance();
-    init(instance);
-    instance.scheduler = scheduler;
-    instance.f = f;
-    return instance;
-};
+        },
+        [Object_init](scheduler, f) {
+            init(prototype$1, this);
+            this.scheduler = scheduler;
+            this.f = f;
+        },
+    };
+    return createObjectFactory(prototype, properties);
+})();
 const __yield = (options) => {
     const delay = getDelay(options);
     const scheduler = isNone(currentScheduler)

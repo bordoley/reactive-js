@@ -1,6 +1,6 @@
 import { EnumeratorLike } from '../ix/EnumeratorLike.js';
 import { SchedulerLike } from "./SchedulerLike.mjs";
-interface VirtualTimeSchedulerLike extends EnumeratorLike<void>, SchedulerLike {
+interface VirtualTimeSchedulerLike extends EnumeratorLike<unknown>, SchedulerLike {
 }
 /**
  * Creates a new virtual time scheduler instance.

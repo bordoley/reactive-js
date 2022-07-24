@@ -2,14 +2,14 @@
 import { MAX_SAFE_INTEGER } from '../env.mjs';
 import { properties as properties$2, prototype as prototype$2 } from '../ix/Enumerator.mjs';
 import { getDelay } from '../optionalArgs.mjs';
-import { SchedulerLike_inContinuation, runContinuation } from '../scheduling.mjs';
-import { properties as properties$1, prototype as prototype$1, init as init$1 } from '../util/Disposable.mjs';
-import { properties as properties$3, prototype as prototype$3, init as init$2 } from '../util/DisposableRefLike.mjs';
+import { runContinuation, SchedulerLike_inContinuation } from '../scheduling.mjs';
+import { properties as properties$1, prototype as prototype$1 } from '../util/Disposable.mjs';
+import { properties as properties$3, prototype as prototype$3 } from '../util/DisposableRefLike.mjs';
 import { MutableRefLike_current } from '../util/MutableRefLike.mjs';
-import { createObjectFactory } from '../util/Object.mjs';
+import { Object_init, init, createObjectFactory } from '../util/Object.mjs';
 import { EnumeratorLike_current, hasCurrent, getCurrent } from '../../ix/EnumeratorLike.mjs';
-import { InteractiveSourceLike_move, move } from '../../ix/InteractiveSourceLike.mjs';
-import { getCurrentTime, schedule, SchedulerLike_now, SchedulerLike_shouldYield, shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, isInContinuation, __yield } from '../../scheduling/SchedulerLike.mjs';
+import { move, InteractiveSourceLike_move } from '../../ix/InteractiveSourceLike.mjs';
+import { getCurrentTime, __yield, schedule, SchedulerLike_now, SchedulerLike_shouldYield, shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, isInContinuation } from '../../scheduling/SchedulerLike.mjs';
 import { disposed, addIgnoringChildErrors } from '../../util/DisposableLike.mjs';
 import { isNone, none, isSome } from '../../util/Option.mjs';
 import { PauseableLike_pause, PauseableLike_resume } from '../../util/PauseableLike.mjs';
@@ -66,6 +66,7 @@ const priorityShouldYield = (self, next) => {
         next.priority > current.priority);
 };
 const scheduleOnHost = (self) => {
+    var _a;
     const task = peek(self);
     const continuationActive = !isDisposed(self[MutableRefLike_current]) &&
         isSome(task) &&
@@ -76,7 +77,22 @@ const scheduleOnHost = (self) => {
     const dueTime = task.dueTime;
     const delay = max(dueTime - getCurrentTime(self.host), 0);
     self.dueTime = dueTime;
-    self[MutableRefLike_current] = pipe(self.host, schedule(self.hostContinuation, { delay }));
+    const continuation = (_a = self.hostContinuation) !== null && _a !== void 0 ? _a : (() => {
+        for (let task = peek(self); isSome(task) && !isDisposed(self); task = peek(self)) {
+            const { continuation, dueTime } = task;
+            const delay = max(dueTime - getCurrentTime(self.host), 0);
+            if (delay === 0) {
+                move(self);
+                pipe(self, runContinuation(continuation));
+            }
+            else {
+                self.dueTime = getCurrentTime(self.host) + delay;
+            }
+            __yield({ delay });
+        }
+    });
+    self.hostContinuation = continuation;
+    self[MutableRefLike_current] = pipe(self.host, schedule(continuation, { delay }));
 };
 const properties = {
     ...properties$1,
@@ -86,7 +102,7 @@ const properties = {
     delayed: none,
     dueTime: 0,
     host: none,
-    hostContinuation: () => { },
+    hostContinuation: none,
     isPaused: false,
     queue: none,
     taskIDCounter: 0,
@@ -122,6 +138,13 @@ const prototype = {
         if (isSome(task)) {
             this[EnumeratorLike_current] = task;
         }
+    },
+    [Object_init](host) {
+        init(prototype$1, this);
+        init(prototype$3, this, disposed);
+        this.delayed = createPriorityQueue(delayedComparator);
+        this.queue = createPriorityQueue(taskComparator);
+        this.host = host;
     },
     [SchedulerLike_requestYield]() {
         this.yieldRequested = true;
@@ -161,32 +184,7 @@ const prototype = {
         }
     },
 };
-const init = (instance, host) => {
-    init$1(instance);
-    init$2(instance, disposed);
-    instance.delayed = createPriorityQueue(delayedComparator);
-    instance.queue = createPriorityQueue(taskComparator);
-    instance.host = host;
-    instance.hostContinuation = () => {
-        for (let task = peek(instance); isSome(task) && !isDisposed(instance); task = peek(instance)) {
-            const { continuation, dueTime } = task;
-            const delay = max(dueTime - getCurrentTime(instance), 0);
-            if (delay === 0) {
-                move(instance);
-                pipe(instance, runContinuation(continuation));
-            }
-            else {
-                instance.dueTime = getCurrentTime(instance) + delay;
-            }
-            __yield({ delay });
-        }
-    };
-};
-const createInstance = /*@__PURE__*/ createObjectFactory(prototype, properties);
-const create = (scheduler) => {
-    const instance = createInstance();
-    init(instance, scheduler);
-    return instance;
-};
+const create = 
+/*@__PURE__*/ createObjectFactory(prototype, properties);
 
 export { create };
