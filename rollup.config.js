@@ -36,7 +36,7 @@ const transformDTSImportsForDeno = () => {
       const shouldTransform =
         ts.isImportDeclaration(node) &&
         ts.isStringLiteral(node.moduleSpecifier) &&
-        node.moduleSpecifier.text.startsWith("./");
+        node.moduleSpecifier.text.startsWith(".");
 
       return shouldTransform
         ? context.factory.updateImportDeclaration(

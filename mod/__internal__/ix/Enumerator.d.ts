@@ -1,5 +1,5 @@
-import { EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../ix/EnumeratorLike.js';
-import { Object_init } from '../util/Object.js';
+import { EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent } from "../../ix/EnumeratorLike.mjs";
+import { Object_init } from "../util/Object.mjs";
 declare const Enumerator_private_current: unique symbol;
 declare const Enumerator_private_hasCurrent: unique symbol;
 interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {

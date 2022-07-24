@@ -1,5 +1,5 @@
-import { DisposableLike } from '../util/DisposableLike.js';
-import { Identity, SideEffect1 } from '../util/functions.js';
+import { DisposableLike } from "../util/DisposableLike.mjs";
+import { Identity, SideEffect1 } from "../util/functions.mjs";
 import { SchedulerLike } from "./SchedulerLike.mjs";
 declare const DispatcherLike_dispatch: unique symbol;
 declare const DispatcherLike_scheduler: unique symbol;

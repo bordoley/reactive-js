@@ -1,4 +1,4 @@
-import { DisposableLike } from '../../util/DisposableLike.js';
+import { DisposableLike } from "../../util/DisposableLike.mjs";
 import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike.mjs";
 import { Object_init } from "./Object.mjs";
 interface DisposableRefLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike, MutableRefLike<TDisposable> {

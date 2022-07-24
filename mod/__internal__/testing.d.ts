@@ -1,5 +1,5 @@
-import { Option } from '../util/Option.js';
-import { Function1, SideEffect, Factory, Equality } from '../util/functions.js';
+import { Option } from "../util/Option.mjs";
+import { Function1, SideEffect, Factory, Equality } from "../util/functions.mjs";
 declare const DescribeType = 1;
 declare const TestType = 2;
 declare const TestAsyncType = 3;

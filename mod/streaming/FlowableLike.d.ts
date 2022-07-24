@@ -1,5 +1,5 @@
-import { ContainerLike } from '../containers/ContainerLike.js';
-import { PauseableLike } from '../util/PauseableLike.js';
+import { ContainerLike } from "../containers/ContainerLike.mjs";
+import { PauseableLike } from "../util/PauseableLike.mjs";
 import { StreamLike } from "./StreamLike.mjs";
 import { StreamableLike } from "./StreamableLike.mjs";
 declare type FlowMode = "resume" | "pause";

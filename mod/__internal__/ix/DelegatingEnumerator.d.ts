@@ -1,6 +1,6 @@
-import { EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../ix/EnumeratorLike.js';
-import { Option } from '../../util/Option.js';
-import { Object_init } from '../util/Object.js';
+import { EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent } from "../../ix/EnumeratorLike.mjs";
+import { Option } from "../../util/Option.mjs";
+import { Object_init } from "../util/Object.mjs";
 declare const DelegatingEnumerator_private_delegate: unique symbol;
 declare const properties: {
     [DelegatingEnumerator_private_delegate]: Option<EnumeratorLike>;

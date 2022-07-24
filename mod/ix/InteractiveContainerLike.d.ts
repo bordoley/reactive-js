@@ -1,5 +1,5 @@
-import { Container, ContainerOf } from '../containers/ContainerLike.js';
-import { StatefulContainerLike, StatefulContainerStateOf } from '../containers/StatefulContainerLike.js';
+import { Container, ContainerOf } from "../containers/ContainerLike.mjs";
+import { StatefulContainerLike, StatefulContainerStateOf } from "../containers/StatefulContainerLike.mjs";
 import { InteractiveSourceLike } from "./InteractiveSourceLike.mjs";
 declare const InteractiveContainerLike_interact: unique symbol;
 interface InteractiveContainerLike extends StatefulContainerLike {

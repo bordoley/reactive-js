@@ -1,4 +1,4 @@
-import { Function1, SideEffect1 } from '../util/functions.js';
+import { Function1, SideEffect1 } from "../util/functions.mjs";
 import { MulticastObservableLike } from "./MulticastObservableLike.mjs";
 declare const SubjectLike_publish: unique symbol;
 interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {

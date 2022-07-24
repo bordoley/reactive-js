@@ -1,4 +1,4 @@
-import { DisposableLike } from '../util/DisposableLike.js';
+import { DisposableLike } from "../util/DisposableLike.mjs";
 declare const InteractiveSourceLike_move: unique symbol;
 interface InteractiveSourceLike extends DisposableLike {
     [InteractiveSourceLike_move](): void;

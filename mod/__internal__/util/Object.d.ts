@@ -1,4 +1,4 @@
-import { Factory, Function1, Function2, Function3 } from '../../util/functions.js';
+import { Factory, Function1, Function2, Function3 } from "../../util/functions.mjs";
 declare const Object_init: unique symbol;
 interface Init {
     <TPrototype extends {
