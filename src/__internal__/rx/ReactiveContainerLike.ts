@@ -1,9 +1,9 @@
 import {
   ContainerOf,
   ContainerOperator,
+  Empty,
   FromArray,
-  empty,
-  fromValue,
+  FromValue,
 } from "../../containers/ContainerLike";
 import { forEach } from "../../containers/ReadonlyArrayLike";
 import {
@@ -147,7 +147,7 @@ type DecodeWithCharsetSink<C extends ReactiveContainerLike> = new (
 };
 
 export const createDecodeWithCharsetOperator =
-  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  <C extends ReactiveContainerLike>(m: FromValue<C> & Lift<C>) =>
   (DecodeWithCharsetSink: DecodeWithCharsetSink<C>) =>
   (charset = "utf-8"): ContainerOperator<C, ArrayBuffer, string> =>
     pipe(
@@ -163,7 +163,7 @@ export const createDecodeWithCharsetOperator =
             const data = textDecoder.decode();
 
             if (!isEmpty(data)) {
-              pipe(data, fromValue(m), sinkInto(delegate));
+              pipe(data, m.fromValue(), sinkInto(delegate));
             } else {
               pipe(delegate, dispose());
             }
@@ -182,7 +182,7 @@ type SatisfySink<C extends ReactiveContainerLike> = new <T>(
 
 const createSatisfyOperator =
   <C extends ReactiveContainerLike>(
-    m: FromArray<C> & Lift<C>,
+    m: FromValue<C> & Lift<C>,
     SatisfySink: SatisfySink<C>,
     defaultResult: boolean,
   ) =>
@@ -203,7 +203,7 @@ const createSatisfyOperator =
           addTo(delegate),
           onComplete(() => {
             if (!isDisposed(delegate)) {
-              pipe(defaultResult, fromValue(m), sinkInto(delegate));
+              pipe(defaultResult, m.fromValue(), sinkInto(delegate));
             }
           }),
         ),
@@ -211,7 +211,7 @@ const createSatisfyOperator =
     );
 
 export const createEverySatisfyOperator =
-  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  <C extends ReactiveContainerLike>(m: FromValue<C> & Lift<C>) =>
   (
     EverySatisfySink: SatisfySink<C>,
   ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
@@ -221,7 +221,7 @@ export const createEverySatisfyOperator =
     );
 
 export const createSomeSatisfyOperator =
-  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  <C extends ReactiveContainerLike>(m: FromValue<C> & Lift<C>) =>
   (
     SomeSatisfySink: SatisfySink<C>,
   ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
@@ -237,7 +237,7 @@ type ReduceSink<C extends ReactiveContainerLike> = new <T, TAcc>(
 };
 
 export const createReduceOperator =
-  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  <C extends ReactiveContainerLike>(m: FromValue<C> & Lift<C>) =>
   (ReduceSink: ReduceSink<C>) =>
   <T, TAcc>(
     reducer: Reducer<T, TAcc>,
@@ -260,7 +260,7 @@ export const createReduceOperator =
           >(delegate, reducer, initialValue()),
           addTo(delegate),
           onComplete(() => {
-            pipe(sink.acc, fromValue(m), sinkInto(delegate));
+            pipe(sink.acc, m.fromValue(), sinkInto(delegate));
           }),
         );
         return sink;
@@ -277,7 +277,7 @@ type TakeLastSink<C extends ReactiveContainerLike> = new <T>(
 };
 
 export const createTakeLastOperator =
-  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C> & Empty<C>) =>
   (TakeLastSink: TakeLastSink<C>) =>
   <T>(
     options: { readonly count?: number } = {},
@@ -308,7 +308,7 @@ export const createTakeLastOperator =
     return source =>
       count > 0
         ? pipe(source, lift<C, T, T, TReactive>(m)(operator))
-        : empty(m);
+        : m.empty();
   };
 
 export const createFromDisposable =

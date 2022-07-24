@@ -38,6 +38,7 @@ import {
   ContainerOf,
   ContainerOperator,
   DistinctUntilChanged,
+  Empty,
   FromArray,
   Keep,
   Map,
@@ -47,12 +48,12 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
-  ToIterable,
   Zip,
-  empty,
 } from "../containers/ContainerLike";
+import { ToIterable } from "../containers/IterableLike";
 import {
   ReadonlyArrayLike,
+  ToReadonlyArray,
   empty as emptyArray,
   every,
   forEach as forEachReadonlyArray,
@@ -72,7 +73,6 @@ import {
   Equality,
   Factory,
   Function1,
-  Identity,
   Predicate,
   Reducer,
   SideEffect1,
@@ -107,10 +107,6 @@ export interface EnumerableLike<T = unknown> extends InteractiveContainerLike {
   readonly TCtx?: void;
 
   [InteractiveContainerLike_interact](_: void): EnumeratorLike<T>;
-}
-
-export interface FromEnumerable<C extends ContainerLike> extends Container<C> {
-  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
 }
 
 export interface ToEnumerable<C extends ContainerLike> extends Container<C> {
@@ -166,29 +162,26 @@ const liftT: Lift<EnumerableLike, TInteractive> = {
   variance: interactive,
 };
 
-class CreateEnumerable<T> implements EnumerableLike<T> {
-  constructor(readonly _enumerate: Factory<EnumeratorLike<T>>) {}
+export const create: CreateInteractiveContainer<EnumerableLike>["create"] =
+  /*@__PURE__*/ (() => {
+    class CreateEnumerable<T> implements EnumerableLike<T> {
+      constructor(readonly _enumerate: Factory<EnumeratorLike<T>>) {}
 
-  [InteractiveContainerLike_interact](): EnumeratorLike<T> {
-    try {
-      return this._enumerate();
-    } catch (cause) {
-      return pipe(
-        empty<EnumerableLike, T>(fromArrayT),
-        enumerate(),
-        dispose({ cause }),
-      );
+      [InteractiveContainerLike_interact](): EnumeratorLike<T> {
+        try {
+          return this._enumerate();
+        } catch (cause) {
+          return pipe(empty<T>(), enumerate(), dispose({ cause }));
+        }
+      }
     }
-  }
-}
 
-export const createEnumerable = <T>(
-  enumerate: Factory<EnumeratorLike<T>>,
-): EnumerableLike<T> => newInstance(CreateEnumerable, enumerate);
+    return <T>(enumerate: Factory<EnumeratorLike<T>>): EnumerableLike<T> =>
+      newInstance(CreateEnumerable, enumerate);
+  })();
 
 export const createT: CreateInteractiveContainer<EnumerableLike> = {
-  create: <T>(source: (_: void) => EnumeratorLike<T>) =>
-    createEnumerable<T>(() => source(none)),
+  create,
 };
 
 const delegatingDisposableEnumeratorProperties = {
@@ -272,6 +265,42 @@ export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
   distinctUntilChanged,
 };
 
+export const empty: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (() => {
+  const properties = {
+    ...disposableProperties,
+    ...enumeratorProperties,
+  };
+
+  const prototype = {
+    ...disposablePrototype,
+    ...enumeratorPrototype,
+    [Object_init](this: typeof properties) {
+      init(disposablePrototype, this);
+      init(enumeratorPrototype, this);
+    },
+    [InteractiveSourceLike_move](
+      this: typeof properties & MutableEnumeratorLike,
+    ) {
+      pipe(this, dispose());
+    },
+  };
+
+  const createInstance = createObjectFactory<
+    typeof prototype,
+    typeof properties
+  >(prototype, properties);
+
+  class EmptyEnumerable<T> implements EnumerableLike<T> {
+    [InteractiveContainerLike_interact](): EnumeratorLike<T> {
+      return createInstance() as EnumeratorLike<T>;
+    }
+  }
+
+  return <T>() => newInstance(EmptyEnumerable) as EnumerableLike<T>;
+})();
+
+export const emptyT: Empty<EnumerableLike> = { empty };
+
 export const fromArray: FromArray<EnumerableLike>["fromArray"] =
   /*@__PURE__*/ (() => {
     const properties = {
@@ -349,12 +378,6 @@ export const fromArray: FromArray<EnumerableLike>["fromArray"] =
   })();
 
 export const fromArrayT: FromArray<EnumerableLike> = { fromArray };
-
-export const fromEnumerable = <T>(): Identity<EnumerableLike<T>> => identity;
-
-export const fromEnumerableT: FromEnumerable<EnumerableLike> = {
-  fromEnumerable,
-};
 
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (() => {
   const properties = {
@@ -686,7 +709,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
 
     return pipe(
       takeFirstEnumerator,
-      createTakeFirstOperator({ ...liftT, ...fromArrayT }),
+      createTakeFirstOperator({ ...liftT, ...emptyT }),
     );
   })();
 
@@ -762,7 +785,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
         count > 0
           ? pipe(enumerable, lift(operator))
           : // FIXME: why do we need the annotations?
-            empty<EnumerableLike<unknown>, T>(fromArrayT);
+            empty<T>();
     };
   })();
 
@@ -831,9 +854,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
     return pipe(takeWhileEnumerator, createTakeWhileOperator(liftT));
   })();
 
-export const takeWhileT: TakeWhile<EnumerableLike> = {
-  takeWhile,
-};
+export const takeWhileT: TakeWhile<EnumerableLike> = { takeWhile };
 
 export const TContainerOf: EnumerableLike = undefined as any;
 
@@ -878,7 +899,24 @@ export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike> = {
   throwIfEmpty,
 };
 
-export const toEnumerable = <T>(): Identity<EnumerableLike<T>> => identity;
+export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
+
+    <T>() =>
+    (enumerable: EnumerableLike<T>) => {
+      const enumerator = pipe(enumerable, enumerate());
+
+      const result: T[] = [];
+      while (move(enumerator)) {
+        result.push(getCurrent(enumerator));
+      }
+
+      return result;
+    };
+
+export const toArrayT: ToReadonlyArray<EnumerableLike> = { toReadonlyArray };
+
+export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] = () =>
+  identity;
 
 export const toEnumerableT: ToEnumerable<EnumerableLike> = {
   toEnumerable,
@@ -904,9 +942,7 @@ export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
     return () => enumerable => newInstance(EnumerableIterable, enumerable);
   })();
 
-export const toIterableT: ToIterable<EnumerableLike<unknown>> = {
-  toIterable,
-};
+export const toIterableT: ToIterable<EnumerableLike> = { toIterable };
 
 const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
@@ -971,13 +1007,11 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const zip = (
     enumerables: readonly EnumerableLike<any>[],
   ): EnumerableLike<any> =>
-    createEnumerable(() =>
+    create(() =>
       pipe(enumerables, mapReadonlyArray(enumerate()), zipEnumerators),
     );
 
   return zip as unknown as Zip<EnumerableLike>["zip"];
 })();
 
-export const zipT: Zip<EnumerableLike<unknown>> = {
-  zip,
-};
+export const zipT: Zip<EnumerableLike> = { zip };

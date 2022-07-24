@@ -1,6 +1,11 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
-const _empty = [];
-const empty = () => _empty;
+import { identity } from '../util/functions.mjs';
+
+const empty = /*@__PURE__*/ (() => {
+    const _empty = [];
+    return () => _empty;
+})();
+const emptyT = { empty };
 const every = (predicate) => arr => arr.every(predicate);
 const keep = (predicate) => (arr) => {
     const result = arr.filter(predicate);
@@ -13,5 +18,9 @@ const forEach = (f) => arr => {
     arr.forEach(f);
     return arr;
 };
+const toReadonlyArray = () => identity;
+const toReadonlyArrayT = {
+    toReadonlyArray,
+};
 
-export { empty, every, forEach, keep, keepT, map, mapT };
+export { empty, emptyT, every, forEach, keep, keepT, map, mapT, toReadonlyArray, toReadonlyArrayT };

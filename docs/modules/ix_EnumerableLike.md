@@ -7,7 +7,6 @@
 ### Interfaces
 
 - [EnumerableLike](../interfaces/ix_EnumerableLike.EnumerableLike.md)
-- [FromEnumerable](../interfaces/ix_EnumerableLike.FromEnumerable.md)
 - [ToEnumerable](../interfaces/ix_EnumerableLike.ToEnumerable.md)
 
 ### Variables
@@ -15,8 +14,8 @@
 - [TContainerOf](ix_EnumerableLike.md#tcontainerof)
 - [createT](ix_EnumerableLike.md#createt)
 - [distinctUntilChangedT](ix_EnumerableLike.md#distinctuntilchangedt)
+- [emptyT](ix_EnumerableLike.md#emptyt)
 - [fromArrayT](ix_EnumerableLike.md#fromarrayt)
-- [fromEnumerableT](ix_EnumerableLike.md#fromenumerablet)
 - [keepT](ix_EnumerableLike.md#keept)
 - [mapT](ix_EnumerableLike.md#mapt)
 - [pairwiseT](ix_EnumerableLike.md#pairwiset)
@@ -26,17 +25,18 @@
 - [takeLastT](ix_EnumerableLike.md#takelastt)
 - [takeWhileT](ix_EnumerableLike.md#takewhilet)
 - [throwIfEmptyT](ix_EnumerableLike.md#throwifemptyt)
+- [toArrayT](ix_EnumerableLike.md#toarrayt)
 - [toEnumerableT](ix_EnumerableLike.md#toenumerablet)
 - [toIterableT](ix_EnumerableLike.md#toiterablet)
 - [zipT](ix_EnumerableLike.md#zipt)
 
 ### Functions
 
-- [createEnumerable](ix_EnumerableLike.md#createenumerable)
+- [create](ix_EnumerableLike.md#create)
 - [distinctUntilChanged](ix_EnumerableLike.md#distinctuntilchanged)
+- [empty](ix_EnumerableLike.md#empty)
 - [enumerate](ix_EnumerableLike.md#enumerate)
 - [fromArray](ix_EnumerableLike.md#fromarray)
-- [fromEnumerable](ix_EnumerableLike.md#fromenumerable)
 - [keep](ix_EnumerableLike.md#keep)
 - [map](ix_EnumerableLike.md#map)
 - [onNotify](ix_EnumerableLike.md#onnotify)
@@ -49,6 +49,7 @@
 - [throwIfEmpty](ix_EnumerableLike.md#throwifempty)
 - [toEnumerable](ix_EnumerableLike.md#toenumerable)
 - [toIterable](ix_EnumerableLike.md#toiterable)
+- [toReadonlyArray](ix_EnumerableLike.md#toreadonlyarray)
 
 ## Variables
 
@@ -70,15 +71,15 @@ ___
 
 ___
 
-### fromArrayT
+### emptyT
 
-• `Const` **fromArrayT**: [`FromArray`](containers_ContainerLike.md#fromarray)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
+• `Const` **emptyT**: [`Empty`](containers_ContainerLike.md#empty)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
 
 ___
 
-### fromEnumerableT
+### fromArrayT
 
-• `Const` **fromEnumerableT**: [`FromEnumerable`](../interfaces/ix_EnumerableLike.FromEnumerable.md)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
+• `Const` **fromArrayT**: [`FromArray`](containers_ContainerLike.md#fromarray)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
 
 ___
 
@@ -136,6 +137,12 @@ ___
 
 ___
 
+### toArrayT
+
+• `Const` **toArrayT**: [`ToReadonlyArray`](containers_ReadonlyArrayLike.md#toreadonlyarray)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
+
+___
+
 ### toEnumerableT
 
 • `Const` **toEnumerableT**: [`ToEnumerable`](../interfaces/ix_EnumerableLike.ToEnumerable.md)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
@@ -144,19 +151,19 @@ ___
 
 ### toIterableT
 
-• `Const` **toIterableT**: [`ToIterable`](containers_ContainerLike.md#toiterable)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>\>
+• `Const` **toIterableT**: [`ToIterable`](containers_IterableLike.md#toiterable)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
 
 ___
 
 ### zipT
 
-• `Const` **zipT**: [`Zip`](containers_ContainerLike.md#zip)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>\>
+• `Const` **zipT**: [`Zip`](containers_ContainerLike.md#zip)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)\>
 
 ## Functions
 
-### createEnumerable
+### create
 
-▸ **createEnumerable**<`T`\>(`enumerate`): [`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>
+▸ **create**<`T`\>(`source`): [`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -168,7 +175,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerate` | [`Factory`](util_functions.md#factory)<[`EnumeratorLike`](../interfaces/ix_EnumeratorLike.EnumeratorLike.md)<`T`\>\> |
+| `source` | (`ctx`: `undefined` \| `void`) => [`EnumeratorLike`](../interfaces/ix_EnumeratorLike.EnumeratorLike.md)<`T`\> |
 
 #### Returns
 
@@ -196,6 +203,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(`options?`): [`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>
 
 ___
 
@@ -246,22 +275,6 @@ ___
 #### Returns
 
 [`Function1`](util_functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>\>
-
-___
-
-### fromEnumerable
-
-▸ **fromEnumerable**<`T`\>(): [`Identity`](util_functions.md#identity)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Identity`](util_functions.md#identity)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>\>
 
 ___
 
@@ -489,7 +502,7 @@ ___
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(): [`Identity`](util_functions.md#identity)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(): [`Function1`](util_functions.md#function1)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -499,7 +512,7 @@ ___
 
 #### Returns
 
-[`Identity`](util_functions.md#identity)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>\>
+[`Function1`](util_functions.md#function1)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>\>
 
 ___
 
@@ -518,3 +531,19 @@ Converts an EnumerableLike into a javascript Iterable.
 #### Returns
 
 [`Function1`](util_functions.md#function1)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>, `Iterable`<`T`\>\>
+
+___
+
+### toReadonlyArray
+
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](util_functions.md#function1)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](util_functions.md#function1)<[`EnumerableLike`](../interfaces/ix_EnumerableLike.EnumerableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers_ReadonlyArrayLike.ReadonlyArrayLike.md)<`T`\>\>

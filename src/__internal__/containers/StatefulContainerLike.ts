@@ -1,8 +1,7 @@
 import {
   Container,
   ContainerOperator,
-  FromArray,
-  empty,
+  Empty,
 } from "../../containers/ContainerLike";
 import {
   StatefulContainerLike,
@@ -140,7 +139,7 @@ export type TakeFirstStateContructor<
 
 export const createTakeFirstOperator =
   <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
-    m: FromArray<C> & Lift<C, TVar>,
+    m: Empty<C> & Lift<C, TVar>,
   ) =>
   (Constructor: TakeFirstStateContructor<C, TVar>) =>
   <T>(
@@ -150,7 +149,7 @@ export const createTakeFirstOperator =
     const operator: StatefulContainerOperator<C, T, T, TVar> =
       Constructor(count);
     const lifted = pipe(operator, lift(m));
-    return source => (count > 0 ? pipe(source, lifted) : empty(m));
+    return source => (count > 0 ? pipe(source, lifted) : m.empty());
   };
 
 export type TakeWhileLiftableStateConstructor<

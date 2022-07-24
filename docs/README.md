@@ -7,6 +7,7 @@ Reactive-JS
 ### Modules
 
 - [containers/ContainerLike](modules/containers_ContainerLike.md)
+- [containers/IterableLike](modules/containers_IterableLike.md)
 - [containers/ReadonlyArrayLike](modules/containers_ReadonlyArrayLike.md)
 - [containers/SequenceLike](modules/containers_SequenceLike.md)
 - [containers/StatefulContainerLike](modules/containers_StatefulContainerLike.md)

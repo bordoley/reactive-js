@@ -1,5 +1,4 @@
 /// <reference types="./StatefulContainerLike.d.ts" />
-import { empty } from '../../containers/ContainerLike.mjs';
 import { addIgnoringChildErrors, addTo, onComplete } from '../../util/DisposableLike.mjs';
 import { none } from '../../util/Option.mjs';
 import { pipe, max } from '../../util/functions.mjs';
@@ -20,7 +19,7 @@ const createTakeFirstOperator = (m) => (Constructor) => (options = {}) => {
     const { count = max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
     const operator = Constructor(count);
     const lifted = pipe(operator, lift(m));
-    return source => (count > 0 ? pipe(source, lifted) : empty(m));
+    return source => (count > 0 ? pipe(source, lifted) : m.empty());
 };
 const createTakeWhileOperator = (m) => (Constructor) => (predicate, options = {}) => {
     const { inclusive = false } = options;
