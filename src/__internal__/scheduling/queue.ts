@@ -1,6 +1,12 @@
-import { Comparator, floor, getLength, newInstance } from "../../functions";
-import { Option } from "../../util";
-import { isSome, none } from "../../util/Option";
+import {
+  Comparator,
+  Option,
+  floor,
+  getLength,
+  isSome,
+  newInstance,
+  none,
+} from "../../functions";
 
 const computeParentIndex = (index: number) => floor((index - 1) / 2);
 

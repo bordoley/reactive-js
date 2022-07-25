@@ -1,13 +1,17 @@
 import { properties, prototype } from "../__internal__/util/Disposable";
-import { dispose, getError } from "../__internal__/util/DisposableLike";
+import { dispose, getError } from "../__internal__/util/DisposableLikeInternal";
 import { createObjectFactory } from "../__internal__/util/Object";
 import {
   Factory,
   Identity,
+  Option,
   SideEffect,
   SideEffect1,
   ignore,
+  isNone,
+  isSome,
   newInstance,
+  none,
   pipe,
 } from "../functions";
 import {
@@ -18,9 +22,7 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
   Error,
-  Option,
 } from "../util";
-import { isNone, isSome, none } from "./Option";
 
 const addDisposableOrTeardown = (
   parent: DisposableLike,
@@ -142,7 +144,7 @@ export {
   dispose,
   getError,
   isDisposed,
-} from "../__internal__/util/DisposableLike";
+} from "../__internal__/util/DisposableLikeInternal";
 
 export const create: Factory<DisposableLike> =
   /*@__PURE__*/ createObjectFactory(prototype, properties);

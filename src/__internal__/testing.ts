@@ -2,15 +2,17 @@ import {
   Equality,
   Factory,
   Function1,
+  Option,
   SideEffect,
   arrayEquality,
   getLength,
   ignore,
+  isNone,
+  isSome,
+  none,
   raise,
   strictEquality,
 } from "../functions";
-import { Option } from "../util";
-import { isNone, isSome, none } from "../util/Option";
 import { __DENO__ } from "./env";
 
 export const DescribeType = 1;

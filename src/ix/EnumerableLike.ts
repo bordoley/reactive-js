@@ -7,7 +7,7 @@ import {
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
   interactive,
-} from "../__internal__/containers/StatefulContainerLike";
+} from "../__internal__/containers/StatefulContainerLikeInternal";
 import {
   move as delegatingEnumeratorMove,
   properties as delegatingEnumeratorProperties,
@@ -60,13 +60,16 @@ import {
   Equality,
   Factory,
   Function1,
+  Option,
   Predicate,
   Reducer,
   SideEffect1,
   compose,
   getLength,
   identity,
+  isSome,
   newInstance,
+  none,
   pipe,
   pipeUnsafe,
   strictEquality,
@@ -80,7 +83,7 @@ import {
   InteractiveSourceLike_move,
   ToEnumerable,
 } from "../ix";
-import { DisposableLike, Option } from "../util";
+import { DisposableLike } from "../util";
 import {
   add,
   addTo,
@@ -88,7 +91,6 @@ import {
   dispose,
   isDisposed,
 } from "../util/DisposableLike";
-import { isSome, none } from "../util/Option";
 import { getCurrent, hasCurrent, move } from "./EnumeratorLike";
 
 export const enumerate =

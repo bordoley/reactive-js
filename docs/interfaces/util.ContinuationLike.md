@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [scheduling](../modules/scheduling.md) / ContinuationLike
+[Reactive-JS](../README.md) / [util](../modules/util.md) / ContinuationLike
 
 # Interface: ContinuationLike
 
-[scheduling](../modules/scheduling.md).ContinuationLike
+[util](../modules/util.md).ContinuationLike
 
 A unit of work to be executed by a scheduler.
 
@@ -18,7 +18,7 @@ A unit of work to be executed by a scheduler.
 
 ### Methods
 
-- [[ContinuationLike\_run]](scheduling.ContinuationLike.md#[continuationlike_run])
+- [[ContinuationLike\_run]](util.ContinuationLike.md#[continuationlike_run])
 
 ## Methods
 

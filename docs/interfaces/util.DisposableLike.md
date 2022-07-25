@@ -18,13 +18,13 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`ReactiveSinkLike`](rx.ReactiveSinkLike.md)
 
-  ↳ [`ContinuationLike`](scheduling.ContinuationLike.md)
-
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
 
   ↳ [`PrioritySchedulerLike`](scheduling.PrioritySchedulerLike.md)
 
   ↳ [`SchedulerLike`](scheduling.SchedulerLike.md)
+
+  ↳ [`ContinuationLike`](util.ContinuationLike.md)
 
 ## Table of contents
 
@@ -42,7 +42,7 @@ Represents an unmanaged resource that can be disposed.
 
 ### [DisposableLike\_error]
 
-• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/util.md#option)<[`Error`](../modules/util.md#error)\>
+• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/functions.md#option)<[`Error`](../modules/util.md#error)\>
 
 The error the `Disposable` was disposed with if disposed.
 

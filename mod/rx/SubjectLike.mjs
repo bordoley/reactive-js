@@ -1,14 +1,13 @@
 /// <reference types="./SubjectLike.d.ts" />
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { newInstance, getLength, pipe, max } from '../functions.mjs';
+import { none, newInstance, getLength, pipe, max } from '../functions.mjs';
 import { SubjectLike_publish, MulticastObservableLike_replay, ObservableLike_observableType, MulticastObservableLike_observerCount, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
 import { onDisposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
-import { none } from '../util/Option.mjs';
 import { getReplay } from './MulticastObservableLike.mjs';
 import { getDispatcher } from './ObserverLike.mjs';
-import { isDisposed } from '../__internal__/util/DisposableLike.mjs';
+import { isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const publish = (v) => subject => {
     subject[SubjectLike_publish](v);

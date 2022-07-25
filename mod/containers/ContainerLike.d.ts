@@ -1,6 +1,5 @@
 import { ContainerLike, Container, ContainerOperator, ContainerOf, Concat, SomeSatisfy, FromArrayOptions, FromArray, Keep, Map, EverySatisfy, Zip } from "../containers.mjs";
-import { Function1, Factory, Equality, TypePredicate, Predicate } from "../functions.mjs";
-import { Option } from "../util.mjs";
+import { Function1, Factory, Equality, Option, TypePredicate, Predicate } from "../functions.mjs";
 declare const compute: <C extends ContainerLike, T, TOptions>(m: Container<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 } & {

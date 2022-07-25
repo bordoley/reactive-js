@@ -1,8 +1,4 @@
-import { SideEffect1 } from "./functions.mjs";
-/**
- * Represents an unboxed value of type T or undefined.
- */
-declare type Option<T> = T | undefined;
+import { SideEffect1, Option } from "./functions.mjs";
 declare const DisposableLike_add: unique symbol;
 declare const DisposableLike_dispose: unique symbol;
 declare const DisposableLike_error: unique symbol;
@@ -43,4 +39,13 @@ interface PauseableLike {
     [PauseableLike_pause](): void;
     [PauseableLike_resume](): void;
 }
-export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, Option, PauseableLike, PauseableLike_pause, PauseableLike_resume };
+declare const ContinuationLike_run: unique symbol;
+/**
+ * A unit of work to be executed by a scheduler.
+ *
+ * @noInheritDoc
+ */
+interface ContinuationLike extends DisposableLike {
+    [ContinuationLike_run](): void;
+}
+export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, PauseableLike, PauseableLike_pause, PauseableLike_resume };

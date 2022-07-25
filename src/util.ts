@@ -1,9 +1,4 @@
-import { SideEffect1 } from "./functions";
-
-/**
- * Represents an unboxed value of type T or undefined.
- */
-export type Option<T> = T | undefined;
+import { Option, SideEffect1 } from "./functions";
 
 export const DisposableLike_add = Symbol("DisposableLike_add");
 export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
@@ -55,4 +50,15 @@ export const PauseableLike_resume = Symbol("PausableLike_resume");
 export interface PauseableLike {
   [PauseableLike_pause](): void;
   [PauseableLike_resume](): void;
+}
+
+export const ContinuationLike_run = Symbol("ContinuationLike_run");
+
+/**
+ * A unit of work to be executed by a scheduler.
+ *
+ * @noInheritDoc
+ */
+export interface ContinuationLike extends DisposableLike {
+  [ContinuationLike_run](): void;
 }

@@ -1,4 +1,4 @@
-/// <reference types="./DisposableLike.d.ts" />
+/// <reference types="./DisposableLikeInternal.d.ts" />
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed } from '../../util.mjs';
 
 /**

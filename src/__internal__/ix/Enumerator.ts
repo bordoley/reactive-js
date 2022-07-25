@@ -1,4 +1,4 @@
-import { raise } from "../../functions";
+import { none, raise } from "../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -6,7 +6,6 @@ import {
 } from "../../ix";
 import { hasCurrent } from "../../ix/EnumeratorLike";
 import { isDisposed } from "../../util/DisposableLike";
-import { none } from "../../util/Option";
 import { Object_init } from "../util/Object";
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");

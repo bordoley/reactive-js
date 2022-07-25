@@ -18,18 +18,18 @@ import {
   Equality,
   Factory,
   Function1,
+  Option,
   Predicate,
   TypePredicate,
   alwaysFalse,
   callWith,
   compose,
   isEqualTo,
+  isSome,
   negate,
   pipe,
   returns,
 } from "../functions";
-import { Option } from "../util";
-import { isSome } from "../util/Option";
 
 export const compute = <C extends ContainerLike, T, TOptions>(
   m: Map<C> & FromValue<C, TOptions>,

@@ -8,9 +8,8 @@ import {
   createObjectFactory,
   init,
 } from "../__internal__/util/Object";
-import { Function1, pipe } from "../functions";
+import { Function1, none, pipe } from "../functions";
 import {
-  ContinuationLike,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -19,9 +18,8 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../scheduling";
-import { DisposableLike } from "../util";
+import { ContinuationLike, DisposableLike } from "../util";
 import { addIgnoringChildErrors, isDisposed } from "../util/DisposableLike";
-import { none } from "../util/Option";
 import {
   getCurrentTime,
   isInContinuation,

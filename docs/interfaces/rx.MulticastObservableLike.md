@@ -63,7 +63,7 @@ ___
 
 ### [DisposableLike\_error]
 
-• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/util.md#option)<[`Error`](../modules/util.md#error)\>
+• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/functions.md#option)<[`Error`](../modules/util.md#error)\>
 
 The error the `Disposable` was disposed with if disposed.
 

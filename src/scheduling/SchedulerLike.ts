@@ -5,11 +5,16 @@ import {
   prototype as enumeratorPrototype,
 } from "../__internal__/ix/Enumerator";
 import { getDelay } from "../__internal__/optionalArgs";
-import { runContinuation } from "../__internal__/scheduling";
 import {
   QueueLike,
   createPriorityQueue,
 } from "../__internal__/scheduling/queue";
+import {
+  SchedulerLike_inContinuation,
+  SchedulerLike_now,
+  getCurrentTime,
+  isInContinuation,
+} from "../__internal__/schedulingInternal";
 import {
   properties as disposableProperties,
   prototype as disposablePrototype,
@@ -28,9 +33,13 @@ import {
 import {
   Function1,
   Function2,
+  Option,
   SideEffect,
+  isNone,
+  isSome,
   max,
   newInstanceWith,
+  none,
   pipe,
   raise,
 } from "../functions";
@@ -42,40 +51,34 @@ import {
 import { getCurrent, hasCurrent } from "../ix/EnumeratorLike";
 import { move } from "../ix/InteractiveSourceLike";
 import {
-  ContinuationLike,
-  ContinuationLike_run,
   PauseableSchedulerLike,
   PrioritySchedulerLike,
   SchedulerLike,
-  SchedulerLike_inContinuation,
-  SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../scheduling";
 import {
+  ContinuationLike,
+  ContinuationLike_run,
   DisposableLike,
   Error,
-  Option,
   PauseableLike,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../util";
+import { run } from "../util/ContinuationLike";
 import {
   addIgnoringChildErrors,
   dispose,
   disposed,
   isDisposed,
 } from "../util/DisposableLike";
-import { isNone, isSome, none } from "../util/Option";
 
-export const isInContinuation = (scheduler: {
-  readonly [SchedulerLike_inContinuation]: boolean;
-}): boolean => scheduler[SchedulerLike_inContinuation];
-
-export const getCurrentTime = (scheduler: {
-  readonly [SchedulerLike_now]: number;
-}): number => scheduler[SchedulerLike_now];
+export {
+  isInContinuation,
+  getCurrentTime,
+} from "../__internal__/schedulingInternal";
 
 export const requestYield = (scheduler: {
   [SchedulerLike_requestYield](): void;
@@ -309,7 +312,9 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
 
             if (delay === 0) {
               move(self);
-              pipe(self, runContinuation(continuation));
+              self[SchedulerLike_inContinuation] = true;
+              run(continuation);
+              self[SchedulerLike_inContinuation] = false;
             } else {
               self.dueTime = getCurrentTime(self.host) + delay;
             }

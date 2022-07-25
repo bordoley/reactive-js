@@ -5,11 +5,16 @@ import {
   prototype as enumeratorPrototype,
 } from "./__internal__/ix/Enumerator";
 import { getDelay } from "./__internal__/optionalArgs";
-import { runContinuation } from "./__internal__/scheduling";
 import {
   QueueLike,
   createPriorityQueue,
 } from "./__internal__/scheduling/queue";
+import {
+  SchedulerLike_inContinuation,
+  SchedulerLike_now,
+  getCurrentTime,
+  isInContinuation,
+} from "./__internal__/schedulingInternal";
 import {
   properties as disposableProperties,
   prototype as disposablePrototype,
@@ -19,7 +24,7 @@ import {
   createObjectFactory,
   init,
 } from "./__internal__/util/Object";
-import { Function1, pipe } from "./functions";
+import { Function1, isSome, none, pipe } from "./functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -27,8 +32,13 @@ import {
 } from "./ix";
 import { getCurrent } from "./ix/EnumeratorLike";
 import { move } from "./ix/InteractiveSourceLike";
-import { getCurrentTime, isInContinuation } from "./scheduling/SchedulerLike";
-import { DisposableLike, PauseableLike } from "./util";
+import {
+  ContinuationLike,
+  ContinuationLike_run,
+  DisposableLike,
+  PauseableLike,
+} from "./util";
+import { run } from "./util/ContinuationLike";
 import {
   addIgnoringChildErrors,
   addTo,
@@ -37,23 +47,12 @@ import {
   isDisposed,
   onDisposed,
 } from "./util/DisposableLike";
-import { isSome, none } from "./util/Option";
 
-export const ContinuationLike_run = Symbol("ContinuationLike_run");
+export {
+  SchedulerLike_inContinuation,
+  SchedulerLike_now,
+} from "./__internal__/schedulingInternal";
 
-/**
- * A unit of work to be executed by a scheduler.
- *
- * @noInheritDoc
- */
-export interface ContinuationLike extends DisposableLike {
-  [ContinuationLike_run](): void;
-}
-
-export const SchedulerLike_inContinuation = Symbol(
-  "SchedulerLike_inContinuation",
-);
-export const SchedulerLike_now = Symbol("SchedulerLike_now");
 export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
 export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
@@ -149,7 +148,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
       onDisposed(() => clearImmediate(immmediate)),
     );
     const immmediate: ReturnType<typeof setImmediate> = setImmediate(
-      run,
+      runContinuation,
       scheduler,
       continuation,
       disposable,
@@ -168,7 +167,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     );
 
     const timeout: ReturnType<typeof setTimeout> = setTimeout(
-      run,
+      runContinuation,
       delay,
       scheduler,
       continuation,
@@ -187,7 +186,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     }
   };
 
-  const run = (
+  const runContinuation = (
     scheduler: typeof properties & SchedulerLike,
     continuation: ContinuationLike,
     immmediateOrTimerDisposable: DisposableLike,
@@ -195,7 +194,9 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     // clear the immediateOrTimer disposable
     pipe(immmediateOrTimerDisposable, dispose());
     scheduler.startTime = getCurrentTime(scheduler);
-    pipe(scheduler, runContinuation(continuation));
+    scheduler[SchedulerLike_inContinuation] = true;
+    run(continuation);
+    scheduler[SchedulerLike_inContinuation] = false;
   };
 
   const properties = {
@@ -318,7 +319,9 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
 
         this.microTaskTicks = 0;
         this[SchedulerLike_now] = dueTime;
-        pipe(this, runContinuation(continuation));
+        this[SchedulerLike_inContinuation] = true;
+        run(continuation);
+        this[SchedulerLike_inContinuation] = false;
       }
     },
     [InteractiveSourceLike_move](

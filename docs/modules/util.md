@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [ContinuationLike](../interfaces/util.ContinuationLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
 - [PauseableLike](../interfaces/util.PauseableLike.md)
 
@@ -13,10 +14,10 @@
 
 - [DisposableOrTeardown](util.md#disposableorteardown)
 - [Error](util.md#error)
-- [Option](util.md#option)
 
 ### Variables
 
+- [ContinuationLike\_run](util.md#continuationlike_run)
 - [DisposableLike\_add](util.md#disposablelike_add)
 - [DisposableLike\_dispose](util.md#disposablelike_dispose)
 - [DisposableLike\_error](util.md#disposablelike_error)
@@ -28,7 +29,7 @@
 
 ### DisposableOrTeardown
 
-Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/util.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Option`](util.md#option)<[`Error`](util.md#error)\>\>
+Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/util.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Option`](functions.md#option)<[`Error`](util.md#error)\>\>
 
 ___
 
@@ -42,21 +43,13 @@ ___
 | :------ | :------ |
 | `cause` | `unknown` |
 
-___
-
-### Option
-
-Ƭ **Option**<`T`\>: `T` \| `undefined`
-
-Represents an unboxed value of type T or undefined.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
 ## Variables
+
+### ContinuationLike\_run
+
+• `Const` **ContinuationLike\_run**: unique `symbol`
+
+___
 
 ### DisposableLike\_add
 

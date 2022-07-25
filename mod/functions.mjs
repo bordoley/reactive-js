@@ -138,5 +138,17 @@ const _newInstance = (Constructor, ...args) => new Constructor(...args);
 const newInstance = (Constructor, ...args) => _newInstance(Constructor, ...args);
 const newInstanceWith = (...args) => Constructor => _newInstance(Constructor, ...args);
 const instanceFactory = () => (Constructor) => (...args) => _newInstance(Constructor, ...args);
+/**
+ * An alias for undefined.
+ */
+const none = undefined;
+/**
+ * Returns true if `option` is not `none`.
+ */
+const isSome = (option) => option !== none;
+/**
+ * Returns true if `option` is `none`.
+ */
+const isNone = (option) => option === none;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isOdd, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, newInstanceWith, none, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };

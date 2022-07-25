@@ -1,12 +1,7 @@
 import { SideEffect, Function1 } from "../functions.mjs";
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, ContinuationLike, SchedulerLike, PauseableSchedulerLike, PrioritySchedulerLike } from "../scheduling.mjs";
-import { DisposableLike } from "../util.mjs";
-declare const isInContinuation: (scheduler: {
-    readonly [SchedulerLike_inContinuation]: boolean;
-}) => boolean;
-declare const getCurrentTime: (scheduler: {
-    readonly [SchedulerLike_now]: number;
-}) => number;
+import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike, PauseableSchedulerLike, PrioritySchedulerLike } from "../scheduling.mjs";
+import { ContinuationLike, DisposableLike } from "../util.mjs";
+export { getCurrentTime, isInContinuation } from '../__internal__/schedulingInternal.js';
 declare const requestYield: (scheduler: {
     [SchedulerLike_requestYield](): void;
 }) => void;
@@ -21,4 +16,4 @@ declare const schedule: (f: SideEffect | ContinuationLike, options?: {
 }) => Function1<SchedulerLike, DisposableLike>;
 declare const toPausableScheduler: Function1<SchedulerLike, PauseableSchedulerLike>;
 declare const toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
-export { __yield, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };
+export { __yield, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };

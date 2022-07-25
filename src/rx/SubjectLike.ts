@@ -13,6 +13,7 @@ import {
   getLength,
   max,
   newInstance,
+  none,
   pipe,
 } from "../functions";
 import {
@@ -31,7 +32,6 @@ import {
   isDisposed,
   onDisposed,
 } from "../util/DisposableLike";
-import { none } from "../util/Option";
 import { getReplay } from "./MulticastObservableLike";
 import { getDispatcher } from "./ObserverLike";
 
