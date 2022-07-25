@@ -1,5 +1,5 @@
-import { StatefulContainerLike, StatefulContainerStateOf, Container, ContainerOf, ContainerLike } from "./containers.mjs";
-import { Function1 } from "./functions.mjs";
+import { StatefulContainerLike, StatefulContainerStateOf, ContainerLike, Container, ContainerOf, Empty } from "./containers.mjs";
+import { Function1, Factory } from "./functions.mjs";
 import { ObserverLike } from "./rx.mjs";
 import { SchedulerLike } from "./scheduling.mjs";
 import { StreamLike, StreamableLike } from "./streaming.mjs";
@@ -48,10 +48,10 @@ declare type InteractiveContainerCtxOf<C extends InteractiveContainerLike, T> = 
     readonly _C: C;
     readonly _T: () => T;
 };
-interface CreateInteractiveContainer<C extends InteractiveContainerLike> extends Container<C> {
-    create<T>(source: (ctx: C["TCtx"]) => StatefulContainerStateOf<C, T>): ContainerOf<C, T>;
-}
 declare type ToEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };
-export { AsyncEnumerableLike, AsyncEnumeratorLike, CreateInteractiveContainer, EnumerableLike, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerCtxOf, InteractiveContainerLike, InteractiveContainerLike_interact, InteractiveSourceLike, InteractiveSourceLike_move, ToEnumerable };
+declare const createEnumerable: <T>(enumerate: Factory<EnumeratorLike<T>>) => EnumerableLike<T>;
+declare const emptyEnumerable: Empty<EnumerableLike>["empty"];
+declare const emptyEnumerableT: Empty<EnumerableLike>;
+export { AsyncEnumerableLike, AsyncEnumeratorLike, EnumerableLike, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerCtxOf, InteractiveContainerLike, InteractiveContainerLike_interact, InteractiveSourceLike, InteractiveSourceLike_move, ToEnumerable, createEnumerable, emptyEnumerable, emptyEnumerableT };

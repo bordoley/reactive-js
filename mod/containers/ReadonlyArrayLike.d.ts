@@ -1,8 +1,6 @@
-import { Empty, ReadonlyArrayLike, Keep, Map, ToReadonlyArray, ToSequence } from "../containers.mjs";
+import { Keep, ReadonlyArrayLike, Map, ToReadonlyArray, ToSequence } from "../containers.mjs";
 import { Predicate, Function1, SideEffect1 } from "../functions.mjs";
 import { ToEnumerable } from "../ix.mjs";
-declare const empty: <T>() => readonly T[];
-declare const emptyT: Empty<ReadonlyArrayLike>;
 declare const every: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
 declare const keep: Keep<ReadonlyArrayLike>["keep"];
 declare const keepT: Keep<ReadonlyArrayLike>;
@@ -25,4 +23,4 @@ declare const toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike>["toReadonlyArr
 declare const toReadonlyArrayT: ToReadonlyArray<ReadonlyArrayLike>;
 declare const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"];
 declare const toSequenceT: ToSequence<ReadonlyArrayLike>;
-export { FromArrayOptions, empty, emptyT, every, forEach, keep, keepT, map, mapT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toSequence, toSequenceT };
+export { FromArrayOptions, every, forEach, keep, keepT, map, mapT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toSequence, toSequenceT };

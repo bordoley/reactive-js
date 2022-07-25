@@ -10,7 +10,6 @@
 
 ### Variables
 
-- [emptyT](containers_ReadonlyArrayLike.md#emptyt)
 - [keepT](containers_ReadonlyArrayLike.md#keept)
 - [mapT](containers_ReadonlyArrayLike.md#mapt)
 - [toEnumerableT](containers_ReadonlyArrayLike.md#toenumerablet)
@@ -19,7 +18,6 @@
 
 ### Functions
 
-- [empty](containers_ReadonlyArrayLike.md#empty)
 - [every](containers_ReadonlyArrayLike.md#every)
 - [forEach](containers_ReadonlyArrayLike.md#foreach)
 - [keep](containers_ReadonlyArrayLike.md#keep)
@@ -42,12 +40,6 @@
 | `start` | `number` |
 
 ## Variables
-
-### emptyT
-
-• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
-
-___
 
 ### keepT
 
@@ -78,22 +70,6 @@ ___
 • `Const` **toSequenceT**: [`ToSequence`](containers.md#tosequence)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
 
 ## Functions
-
-### empty
-
-▸ **empty**<`T`\>(): readonly `T`[]
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-readonly `T`[]
-
-___
 
 ### every
 

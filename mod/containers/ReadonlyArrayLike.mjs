@@ -1,17 +1,11 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
-import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
+import { p as properties$1, b as prototype$1, I as InteractiveSourceLike_move, E as EnumeratorLike_current, c as InteractiveContainerLike_interact } from '../ix-e3dc0e14.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, pipe, newInstance, identity, none } from '../functions.mjs';
-import { InteractiveSourceLike_move, EnumeratorLike_current, InteractiveContainerLike_interact } from '../ix.mjs';
 import '../util/DisposableLike.mjs';
 import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
 
-const empty = /*@__PURE__*/ (() => {
-    const _empty = [];
-    return () => _empty;
-})();
-const emptyT = { empty };
 const every = (predicate) => arr => arr.every(predicate);
 const keep = (predicate) => (arr) => {
     const result = arr.filter(predicate);
@@ -120,4 +114,4 @@ const toSequenceT = {
     toSequence,
 };
 
-export { empty, emptyT, every, forEach, keep, keepT, map, mapT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toSequence, toSequenceT };
+export { every, forEach, keep, keepT, map, mapT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toSequence, toSequenceT };
