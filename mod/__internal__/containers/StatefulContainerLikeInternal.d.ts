@@ -12,7 +12,7 @@ declare type Lift<C extends StatefulContainerLike, TVar extends TInteractive | T
     readonly variance: TInteractive | TReactive;
 };
 declare const lift: <C extends StatefulContainerLike, TA, TB, TVar extends 0 | 1>({ lift, }: Lift<C, TVar>) => Function1<StatefulContainerOperator<C, TA, TB, TVar>, ContainerOperator<C, TA, TB>>;
-declare type ScanStateConstructor<C extends StatefulContainerLike, TVar extends TInteractive | TReactive> = <T, TAcc>(reducer: Reducer<T, TAcc>, acc: TAcc) => Function1<StatefulContainerOperatorIn<C, T, TAcc, TVar>, StatefulContainerOperatorOut<C, T, TAcc, TVar>>;
+declare type ScanStateConstructor<C extends StatefulContainerLike, TVar extends TInteractive | TReactive> = <T, TAcc>(reducer: Reducer<T, TAcc>, acc: Factory<TAcc>) => Function1<StatefulContainerOperatorIn<C, T, TAcc, TVar>, StatefulContainerOperatorOut<C, T, TAcc, TVar>>;
 declare const createScanOperator: <C extends StatefulContainerLike, TVar extends 0 | 1>(m: Lift<C, TVar>) => (Constructor: ScanStateConstructor<C, TVar>) => <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
 declare type SkipFirstStateConstructor<C extends StatefulContainerLike, TVar extends TInteractive | TReactive> = <T>(skipCount: number) => Function1<StatefulContainerOperatorIn<C, T, T, TVar>, StatefulContainerOperatorOut<C, T, T, TVar>>;
 declare const createSkipFirstOperator: <C extends StatefulContainerLike, TVar extends 0 | 1>(m: Lift<C, TVar>) => (Constructor: SkipFirstStateConstructor<C, TVar>) => <T>(options?: {

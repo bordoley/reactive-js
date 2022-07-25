@@ -3,21 +3,37 @@ import { toEnumerable } from "../containers/ReadonlyArrayLike";
 import {
   distinctUntilChangedT,
   keepT,
+  mapT,
+  scanT,
   toReadonlyArrayT,
 } from "../ix/EnumerableLike";
-import { distinctUntilChanged } from "./operators/distinctUntilChanged.test";
-import { keep } from "./operators/keep.test";
+import {
+  distinctUntilChangedTest,
+  keepTests,
+  mapTests,
+  scanTests,
+} from "./operators.test";
 
 export const tests = describe(
   "enumerable",
-  distinctUntilChanged({
+  distinctUntilChangedTest({
     fromArray: toEnumerable,
     ...distinctUntilChangedT,
     ...toReadonlyArrayT,
   }),
-  keep({
+  keepTests({
     fromArray: toEnumerable,
     ...keepT,
+    ...toReadonlyArrayT,
+  }),
+  mapTests({
+    fromArray: toEnumerable,
+    ...mapT,
+    ...toReadonlyArrayT,
+  }),
+  scanTests({
+    fromArray: toEnumerable,
+    ...scanT,
     ...toReadonlyArrayT,
   }),
 );

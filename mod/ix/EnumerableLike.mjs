@@ -196,13 +196,18 @@ const scan = /*@__PURE__*/ (() => {
     const properties = {
         ...delegatingDisposableEnumeratorProperties,
         reducer: none,
-        current: none,
     };
     const prototype = mix(delegatingDisposableEnumeratorPrototype, {
         [Object_init](delegate, reducer, initialValue) {
             init(delegatingDisposableEnumeratorPrototype, this, delegate);
             this.reducer = reducer;
-            this.current = initialValue;
+            try {
+                const acc = initialValue();
+                this[EnumeratorLike_current] = acc;
+            }
+            catch (cause) {
+                pipe(this, dispose({ cause }));
+            }
         },
         [SourceLike_move]() {
             const acc = hasCurrent(this) ? getCurrent(this) : none;
