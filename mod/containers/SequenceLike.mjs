@@ -2,8 +2,8 @@
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { isSome, none, pipe, strictEquality, isNone, alwaysTrue, getLength, callWith, returns, newInstance } from '../functions.mjs';
-import { InteractiveContainerLike_interact } from '../ix.mjs';
+import { isSome, none, pipe, strictEquality, isNone, alwaysTrue, getLength, callWith, returns } from '../functions.mjs';
+import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { keepType } from './ContainerLike.mjs';
@@ -263,15 +263,7 @@ const toEnumerable =
         },
     });
     const createInstance = createObjectFactory(prototype$2, properties$2);
-    class SequenceEnumerable {
-        constructor(seq) {
-            this.seq = seq;
-        }
-        [InteractiveContainerLike_interact]() {
-            return createInstance(this.seq);
-        }
-    }
-    return () => (seq) => newInstance(SequenceEnumerable, seq);
+    return () => (seq) => createEnumerable(() => createInstance(seq));
 })();
 const toEnumerableT = { toEnumerable };
 /*

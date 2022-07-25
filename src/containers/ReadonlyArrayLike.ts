@@ -33,15 +33,10 @@ import {
   isSome,
   max,
   min,
-  newInstance,
   none,
   pipe,
 } from "../functions";
-import {
-  EnumerableLike,
-  InteractiveContainerLike_interact,
-  ToEnumerable,
-} from "../ix";
+import { EnumerableLike, ToEnumerable, createEnumerable } from "../ix";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -183,26 +178,11 @@ export const toEnumerable: ToEnumerable<
     number
   >(prototype, properties);
 
-  class ReadonlyArrayEnumerable<T> implements EnumerableLike<T> {
-    constructor(
-      private readonly array: readonly T[],
-      private readonly start: number,
-      private readonly count: number,
-    ) {}
-
-    [InteractiveContainerLike_interact](): EnumeratorLike<T> {
-      return createInstance(
-        this.array,
-        this.start,
-        this.count,
-      ) as EnumeratorLike<T>;
-    }
-  }
-
   return createFromArray<EnumerableLike>(
-    <T>(a: readonly T[], start: number, count: number) => {
-      return newInstance(ReadonlyArrayEnumerable, a, start, count);
-    },
+    <T>(array: readonly T[], start: number, count: number) =>
+      createEnumerable(
+        () => createInstance(array, start, count) as EnumeratorLike<T>,
+      ),
   );
 })();
 
