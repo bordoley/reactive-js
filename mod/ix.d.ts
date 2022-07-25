@@ -47,7 +47,7 @@ declare type InteractiveContainerCtxOf<C extends InteractiveContainerLike, T> = 
 interface CreateInteractiveContainer<C extends InteractiveContainerLike> extends Container<C> {
     create<T>(source: (ctx: C["TCtx"]) => StatefulContainerStateOf<C, T>): ContainerOf<C, T>;
 }
-declare type ToEnumerable<C extends ContainerLike> = Container<C> & {
-    toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+declare type ToEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
+    toEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };
 export { AsyncEnumerableLike, AsyncEnumeratorLike, CreateInteractiveContainer, EnumerableLike, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerCtxOf, InteractiveContainerLike, InteractiveContainerLike_interact, InteractiveSourceLike, InteractiveSourceLike_move, ToEnumerable };

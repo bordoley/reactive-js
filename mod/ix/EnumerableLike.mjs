@@ -1,12 +1,11 @@
 /// <reference types="./EnumerableLike.d.ts" />
-import { createFromArray } from '../__internal__/containers/ContainerLike.mjs';
 import { interactive, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.mjs';
 import { properties as properties$3, prototype as prototype$3, move as move$1 } from '../__internal__/ix/DelegatingEnumerator.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
 import { properties, prototype } from '../__internal__/util/DelegatingDisposable.mjs';
 import { properties as properties$2, prototype as prototype$2 } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { empty as empty$1, every, map as map$1, forEach } from '../containers/ReadonlyArrayLike.mjs';
+import { empty as empty$1, toEnumerable as toEnumerable$1, every, map as map$1, forEach } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeUnsafe, newInstance, pipe, strictEquality, compose, getLength, identity } from '../functions.mjs';
 import { InteractiveContainerLike_interact, InteractiveSourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { bindTo, add, addTo } from '../util/DisposableLike.mjs';
@@ -135,54 +134,6 @@ const empty = /*@__PURE__*/ (() => {
     return () => newInstance(EmptyEnumerable);
 })();
 const emptyT = { empty };
-const fromArray = 
-/*@__PURE__*/ (() => {
-    const properties = {
-        ...properties$2,
-        ...properties$1,
-        array: [],
-        count: 0,
-        index: 0,
-    };
-    const prototype = {
-        ...prototype$2,
-        ...prototype$1,
-        [Object_init](array, start, count) {
-            init(prototype$2, this);
-            init(prototype$1, this);
-            this.array = array;
-            this.index = start - 1;
-            this.count = count;
-        },
-        [InteractiveSourceLike_move]() {
-            const { array } = this;
-            if (!isDisposed(this)) {
-                this.index++;
-                const { index, count } = this;
-                if (count !== 0) {
-                    this[EnumeratorLike_current] = array[index];
-                    this.count = count > 0 ? this.count-- : this.count++;
-                }
-                else {
-                    pipe(this, dispose());
-                }
-            }
-        },
-    };
-    const createInstance = createObjectFactory(prototype, properties);
-    class FromArrayEnumerable {
-        constructor(array, start, count) {
-            this.array = array;
-            this.start = start;
-            this.count = count;
-        }
-        [InteractiveContainerLike_interact]() {
-            return createInstance(this.array, this.start, this.count);
-        }
-    }
-    return createFromArray((a, start, count) => newInstance(FromArrayEnumerable, a, start, count));
-})();
-const fromArrayT = { fromArray };
 const keep = /*@__PURE__*/ (() => {
     const properties = {
         ...delegatingDisposableEnumeratorProperties,
@@ -411,7 +362,7 @@ const takeLast =
                         last.shift();
                     }
                 }
-                const enumerator = pipe(last, fromArray(), enumerate(), bindTo(this));
+                const enumerator = pipe(last, toEnumerable$1(), enumerate(), bindTo(this));
                 init(prototype$3, this, enumerator);
             }
             move$1(this);
@@ -579,4 +530,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { TContainerOf, create, createT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, fromArray, fromArrayT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };
+export { TContainerOf, create, createT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };

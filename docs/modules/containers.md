@@ -47,6 +47,7 @@
 - [ThrowIfEmpty](containers.md#throwifempty)
 - [ToIterable](containers.md#toiterable)
 - [ToReadonlyArray](containers.md#toreadonlyarray)
+- [ToSequence](containers.md#tosequence)
 - [Using](containers.md#using)
 - [Zip](containers.md#zip)
 
@@ -443,25 +444,40 @@ ___
 
 ### ToIterable
 
-Ƭ **ToIterable**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `toIterable`: <T\>() => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>  }
+Ƭ **ToIterable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toIterable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
 
 ___
 
 ### ToReadonlyArray
 
-Ƭ **ToReadonlyArray**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlyArray`: <T\>() => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>  }
+Ƭ **ToReadonlyArray**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlyArray`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
+
+___
+
+### ToSequence
+
+Ƭ **ToSequence**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toSequence`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
 
 ___
 

@@ -1,5 +1,5 @@
 import { SideEffect, Function1 } from "../functions.mjs";
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, ContinuationLike, SchedulerLike } from "../scheduling.mjs";
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, ContinuationLike, SchedulerLike, PauseableSchedulerLike, PrioritySchedulerLike } from "../scheduling.mjs";
 import { DisposableLike } from "../util.mjs";
 declare const isInContinuation: (scheduler: {
     readonly [SchedulerLike_inContinuation]: boolean;
@@ -22,4 +22,6 @@ declare const schedule: (f: SideEffect | ContinuationLike, options?: {
 declare const create: (options?: {
     readonly yieldInterval?: number;
 }) => SchedulerLike;
-export { __yield, create, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield };
+declare const toPausableScheduler: Function1<SchedulerLike, PauseableSchedulerLike>;
+declare const toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
+export { __yield, create, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };

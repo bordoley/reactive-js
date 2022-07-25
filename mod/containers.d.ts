@@ -139,11 +139,14 @@ declare type TakeWhile<C extends ContainerLike> = Container<C> & {
 declare type ThrowIfEmpty<C extends StatefulContainerLike> = Container<C> & {
     throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 };
-declare type ToIterable<C extends ContainerLike> = Container<C> & {
-    toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
+declare type ToIterable<C extends ContainerLike, TOptions = never> = Container<C> & {
+    toIterable<T>(options?: TOptions): Function1<ContainerOf<C, T>, Iterable<T>>;
 };
-declare type ToReadonlyArray<C extends ContainerLike> = Container<C> & {
-    toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
+declare type ToReadonlyArray<C extends ContainerLike, TOptions = never> = Container<C> & {
+    toReadonlyArray<T>(options?: TOptions): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
+};
+declare type ToSequence<C extends ContainerLike, TOptions = never> = Container<C> & {
+    toSequence<T>(options?: TOptions): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 };
 declare type Using<C extends StatefulContainerLike> = Container<C> & {
     using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource>, containerFactory: Function1<TResource, ContainerOf<C, T>>): ContainerOf<C, T>;
@@ -234,4 +237,4 @@ declare type Zip<C extends ContainerLike> = Container<C> & {
     ]>;
     zip<T>(...enumerables: readonly ContainerOf<C, T>[]): ContainerOf<C, readonly T[]>;
 };
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, FromValue, Generate, IterableLike, Keep, Map, Pairwise, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Using, Zip };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, FromValue, Generate, IterableLike, Keep, Map, Pairwise, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, ToSequence, Using, Zip };

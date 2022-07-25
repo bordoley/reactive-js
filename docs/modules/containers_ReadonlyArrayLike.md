@@ -4,12 +4,18 @@
 
 ## Table of contents
 
+### Type Aliases
+
+- [FromArrayOptions](containers_ReadonlyArrayLike.md#fromarrayoptions)
+
 ### Variables
 
 - [emptyT](containers_ReadonlyArrayLike.md#emptyt)
 - [keepT](containers_ReadonlyArrayLike.md#keept)
 - [mapT](containers_ReadonlyArrayLike.md#mapt)
+- [toEnumerableT](containers_ReadonlyArrayLike.md#toenumerablet)
 - [toReadonlyArrayT](containers_ReadonlyArrayLike.md#toreadonlyarrayt)
+- [toSequenceT](containers_ReadonlyArrayLike.md#tosequencet)
 
 ### Functions
 
@@ -18,7 +24,22 @@
 - [forEach](containers_ReadonlyArrayLike.md#foreach)
 - [keep](containers_ReadonlyArrayLike.md#keep)
 - [map](containers_ReadonlyArrayLike.md#map)
+- [toEnumerable](containers_ReadonlyArrayLike.md#toenumerable)
 - [toReadonlyArray](containers_ReadonlyArrayLike.md#toreadonlyarray)
+- [toSequence](containers_ReadonlyArrayLike.md#tosequence)
+
+## Type Aliases
+
+### FromArrayOptions
+
+Ƭ **FromArrayOptions**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+| `start` | `number` |
 
 ## Variables
 
@@ -40,9 +61,21 @@ ___
 
 ___
 
+### toEnumerableT
+
+• `Const` **toEnumerableT**: [`ToEnumerable`](ix.md#toenumerable)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md), { `count`: `number` ; `start`: `number`  }\>
+
+___
+
 ### toReadonlyArrayT
 
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
+
+___
+
+### toSequenceT
+
+• `Const` **toSequenceT**: [`ToSequence`](containers.md#tosequence)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
 
 ## Functions
 
@@ -151,9 +184,9 @@ ___
 
 ___
 
-### toReadonlyArray
+### toEnumerable
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -161,6 +194,58 @@ ___
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count` | `number` |
+| `options.start` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toReadonlyArray
+
+▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### toSequence
+
+▸ **toSequence**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>

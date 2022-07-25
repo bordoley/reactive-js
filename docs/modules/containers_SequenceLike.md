@@ -7,6 +7,7 @@
 ### Variables
 
 - [concatAllT](containers_SequenceLike.md#concatallt)
+- [concatT](containers_SequenceLike.md#concatt)
 - [distinctUntilChangedT](containers_SequenceLike.md#distinctuntilchangedt)
 - [generateT](containers_SequenceLike.md#generatet)
 - [keepT](containers_SequenceLike.md#keept)
@@ -18,10 +19,12 @@
 - [takeFirstT](containers_SequenceLike.md#takefirstt)
 - [takeLastT](containers_SequenceLike.md#takelastt)
 - [takeWhileT](containers_SequenceLike.md#takewhilet)
+- [toEnumerableT](containers_SequenceLike.md#toenumerablet)
 - [zipT](containers_SequenceLike.md#zipt)
 
 ### Functions
 
+- [concat](containers_SequenceLike.md#concat)
 - [concatAll](containers_SequenceLike.md#concatall)
 - [distinctUntilChanged](containers_SequenceLike.md#distinctuntilchanged)
 - [generate](containers_SequenceLike.md#generate)
@@ -35,6 +38,7 @@
 - [takeFirst](containers_SequenceLike.md#takefirst)
 - [takeLast](containers_SequenceLike.md#takelast)
 - [takeWhile](containers_SequenceLike.md#takewhile)
+- [toEnumerable](containers_SequenceLike.md#toenumerable)
 - [zip](containers_SequenceLike.md#zip)
 
 ## Variables
@@ -42,6 +46,12 @@
 ### concatAllT
 
 • `Const` **concatAllT**: [`ConcatAll`](containers.md#concatall)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
+
+___
+
+### concatT
+
+• `Const` **concatT**: [`Concat`](containers.md#concat)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
@@ -111,11 +121,41 @@ ___
 
 ___
 
+### toEnumerableT
+
+• `Const` **toEnumerableT**: [`ToEnumerable`](ix.md#toenumerable)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
+
+___
+
 ### zipT
 
 • `Const` **zipT**: [`Zip`](containers.md#zip)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ## Functions
+
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\> |
+| `snd` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\> |
+| `...tail` | readonly [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>[] |
+
+#### Returns
+
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
+
+___
 
 ### concatAll
 
@@ -434,6 +474,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
 
 ___
 
