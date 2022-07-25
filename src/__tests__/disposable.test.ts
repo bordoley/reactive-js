@@ -8,8 +8,8 @@ import {
   mockFn,
   test,
 } from "../__internal__/testing";
-import { pipe, pipeLazy, raise } from "../functions";
-import { Error, Option } from "../util";
+import { Option, none, pipe, pipeLazy, raise } from "../functions";
+import { Error } from "../util";
 import {
   addIgnoringChildErrors,
   create,
@@ -18,7 +18,6 @@ import {
   isDisposed,
   onDisposed,
 } from "../util/DisposableLike";
-import { none } from "../util/Option";
 
 export const tests = describe(
   "Disposable",

@@ -2,11 +2,12 @@
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { pipe } from '../functions.mjs';
-import { S as SchedulerLike_inContinuation, i as isInContinuation, b as SchedulerLike_now, g as getCurrentTime, c as SchedulerLike_shouldYield, s as shouldYield, d as SchedulerLike_requestYield, r as requestYield, e as SchedulerLike_schedule } from '../scheduling-bf2730af.mjs';
+import { none, pipe } from '../functions.mjs';
+import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
-import { none } from '../util/Option.mjs';
-import { isDisposed } from '../__internal__/util/DisposableLike.mjs';
+import { shouldYield, requestYield } from './SchedulerLike.mjs';
+import { SchedulerLike_inContinuation, isInContinuation, SchedulerLike_now, getCurrentTime } from '../__internal__/schedulingInternal.mjs';
+import { isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.

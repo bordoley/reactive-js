@@ -1,5 +1,4 @@
-import { Comparator } from "../../functions.mjs";
-import { Option } from "../../util.mjs";
+import { Option, Comparator } from "../../functions.mjs";
 interface QueueLike<T> {
     readonly count: number;
     clear(): void;

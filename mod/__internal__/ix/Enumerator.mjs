@@ -1,11 +1,10 @@
 /// <reference types="./Enumerator.d.ts" />
-import { raise } from '../../functions.mjs';
+import { none, raise } from '../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../ix.mjs';
 import { hasCurrent } from '../../ix/EnumeratorLike.mjs';
 import '../../util/DisposableLike.mjs';
-import { none } from '../../util/Option.mjs';
 import { Object_init } from '../util/Object.mjs';
-import { isDisposed } from '../util/DisposableLike.mjs';
+import { isDisposed } from '../util/DisposableLikeInternal.mjs';
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");
 const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");

@@ -1,12 +1,10 @@
-import { raise } from "../../functions";
+import { Option, none, raise } from "../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
 } from "../../ix";
 import { move as moveEnumerator } from "../../ix/EnumeratorLike";
-import { Option } from "../../util";
-import { none } from "../../util/Option";
 import { Object_init } from "../util/Object";
 
 const DelegatingEnumerator_private_delegate = Symbol(

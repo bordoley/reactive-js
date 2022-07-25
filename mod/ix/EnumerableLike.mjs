@@ -1,17 +1,16 @@
 /// <reference types="./EnumerableLike.d.ts" />
-import { interactive, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.mjs';
+import { interactive, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { properties as properties$3, prototype as prototype$3, move as move$1 } from '../__internal__/ix/DelegatingEnumerator.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
 import { properties, prototype } from '../__internal__/util/DelegatingDisposable.mjs';
 import { properties as properties$2, prototype as prototype$2 } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { empty as empty$1, toEnumerable as toEnumerable$1, every, map as map$1, forEach } from '../containers/ReadonlyArrayLike.mjs';
-import { pipeUnsafe, newInstance, pipe, strictEquality, compose, getLength, identity } from '../functions.mjs';
+import { none, pipeUnsafe, newInstance, pipe, strictEquality, compose, isSome, getLength, identity } from '../functions.mjs';
 import { InteractiveContainerLike_interact, InteractiveSourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { bindTo, add, addTo } from '../util/DisposableLike.mjs';
-import { none, isSome } from '../util/Option.mjs';
 import { hasCurrent, getCurrent, move } from './EnumeratorLike.mjs';
-import { dispose, isDisposed } from '../__internal__/util/DisposableLike.mjs';
+import { dispose, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const enumerate = () => (enumerable) => enumerable[InteractiveContainerLike_interact](none);
 const lift = /*@__PURE__*/ (() => {

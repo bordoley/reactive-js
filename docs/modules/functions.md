@@ -24,6 +24,7 @@
 - [Function8](functions.md#function8)
 - [Function9](functions.md#function9)
 - [Identity](functions.md#identity)
+- [Option](functions.md#option)
 - [Predicate](functions.md#predicate)
 - [Reducer](functions.md#reducer)
 - [SideEffect](functions.md#sideeffect)
@@ -36,6 +37,10 @@
 - [SideEffect7](functions.md#sideeffect7)
 - [TypePredicate](functions.md#typepredicate)
 - [Updater](functions.md#updater)
+
+### Variables
+
+- [none](functions.md#none)
 
 ### Functions
 
@@ -57,7 +62,9 @@
 - [isEmpty](functions.md#isempty)
 - [isEqualTo](functions.md#isequalto)
 - [isEven](functions.md#iseven)
+- [isNone](functions.md#isnone)
 - [isOdd](functions.md#isodd)
+- [isSome](functions.md#issome)
 - [max](functions.md#max)
 - [min](functions.md#min)
 - [negate](functions.md#negate)
@@ -576,6 +583,20 @@ ___
 
 ___
 
+### Option
+
+Ƭ **Option**<`T`\>: `T` \| `undefined`
+
+Represents an unboxed value of type T or undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+___
+
 ### Predicate
 
 Ƭ **Predicate**<`T`\>: [`Function1`](functions.md#function1)<`T`, `boolean`\>
@@ -887,6 +908,14 @@ Computes a new value of type `T` from the previous value of type `T`.
 | Name |
 | :------ |
 | `T` |
+
+## Variables
+
+### none
+
+• `Const` **none**: `undefined`
+
+An alias for undefined.
 
 ## Functions
 
@@ -1763,6 +1792,30 @@ Returns `true` if `x` is an even number, otherwise `false`.
 
 ___
 
+### isNone
+
+▸ **isNone**<`T`\>(`option`): option is undefined
+
+Returns true if `option` is `none`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `option` | [`Option`](functions.md#option)<`T`\> |
+
+#### Returns
+
+option is undefined
+
+___
+
 ### isOdd
 
 ▸ **isOdd**(`x`): `boolean`
@@ -1778,6 +1831,30 @@ Returns `true` if `x` is an odd number, otherwise `false`.
 #### Returns
 
 `boolean`
+
+___
+
+### isSome
+
+▸ **isSome**<`T`\>(`option`): option is T
+
+Returns true if `option` is not `none`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `option` | [`Option`](functions.md#option)<`T`\> |
+
+#### Returns
+
+option is T
 
 ___
 

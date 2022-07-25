@@ -16,9 +16,6 @@
 - [addToIgnoringChildErrors](util_DisposableLike.md#addtoignoringchilderrors)
 - [bindTo](util_DisposableLike.md#bindto)
 - [create](util_DisposableLike.md#create)
-- [dispose](util_DisposableLike.md#dispose)
-- [getError](util_DisposableLike.md#geterror)
-- [isDisposed](util_DisposableLike.md#isdisposed)
 - [onComplete](util_DisposableLike.md#oncomplete)
 - [onDisposed](util_DisposableLike.md#ondisposed)
 - [onError](util_DisposableLike.md#onerror)
@@ -177,64 +174,6 @@ ___
 
 ___
 
-### dispose
-
-▸ **dispose**<`T`\>(`e?`): [`Identity`](functions.md#identity)<`T`\>
-
-Dispose `disposable` with an optional error.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `e?` | [`Error`](util.md#error) |
-
-#### Returns
-
-[`Identity`](functions.md#identity)<`T`\>
-
-___
-
-### getError
-
-▸ **getError**(`disposable`): [`Option`](util.md#option)<[`Error`](util.md#error)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `disposable` | `Object` |
-| `disposable.[DisposableLike_error]` | [`Option`](util.md#option)<[`Error`](util.md#error)\> |
-
-#### Returns
-
-[`Option`](util.md#option)<[`Error`](util.md#error)\>
-
-___
-
-### isDisposed
-
-▸ **isDisposed**(`disposable`): `boolean`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `disposable` | `Object` |
-| `disposable.[DisposableLike_isDisposed]` | `boolean` |
-
-#### Returns
-
-`boolean`
-
-___
-
 ### onComplete
 
 ▸ **onComplete**<`T`\>(`teardown`): [`Identity`](functions.md#identity)<`T`\>
@@ -271,7 +210,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](util.md#option)<[`Error`](util.md#error)\>\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](functions.md#option)<[`Error`](util.md#error)\>\> |
 
 #### Returns
 

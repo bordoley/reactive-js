@@ -1,4 +1,4 @@
-import { pipe } from "../../functions";
+import { Option, isNone, isSome, none, pipe } from "../../functions";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -7,10 +7,8 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
   Error,
-  Option,
 } from "../../util";
-import { isNone, isSome, none } from "../../util/Option";
-import { dispose, getError, isDisposed } from "./DisposableLike";
+import { dispose, getError, isDisposed } from "./DisposableLikeInternal";
 import { Object_init } from "./Object";
 
 const Disposable_private_disposables = Symbol("Disposable_private_disposables");

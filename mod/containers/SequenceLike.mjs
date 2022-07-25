@@ -2,13 +2,12 @@
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { pipe, strictEquality, alwaysTrue, getLength, callWith, returns, newInstance } from '../functions.mjs';
+import { isSome, none, pipe, strictEquality, isNone, alwaysTrue, getLength, callWith, returns, newInstance } from '../functions.mjs';
 import { InteractiveSourceLike_move, EnumeratorLike_current, InteractiveContainerLike_interact } from '../ix.mjs';
 import '../util/DisposableLike.mjs';
-import { isSome, none, isNone } from '../util/Option.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
-import { isDisposed, dispose } from '../__internal__/util/DisposableLike.mjs';
+import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const createNext = (data, next) => ({
     data,

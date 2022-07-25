@@ -1,3 +1,4 @@
+import { Option } from "../../functions";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -6,7 +7,6 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
   Error,
-  Option,
 } from "../../util";
 import { disposed } from "../../util/DisposableLike";
 import { Object_init } from "./Object";

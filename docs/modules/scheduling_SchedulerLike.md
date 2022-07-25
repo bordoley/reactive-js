@@ -7,8 +7,6 @@
 ### Functions
 
 - [\_\_yield](scheduling_SchedulerLike.md#__yield)
-- [getCurrentTime](scheduling_SchedulerLike.md#getcurrenttime)
-- [isInContinuation](scheduling_SchedulerLike.md#isincontinuation)
 - [requestYield](scheduling_SchedulerLike.md#requestyield)
 - [schedule](scheduling_SchedulerLike.md#schedule)
 - [shouldYield](scheduling_SchedulerLike.md#shouldyield)
@@ -31,40 +29,6 @@
 #### Returns
 
 `void`
-
-___
-
-### getCurrentTime
-
-▸ **getCurrentTime**(`scheduler`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | `Object` |
-| `scheduler.[SchedulerLike_now]` | `number` |
-
-#### Returns
-
-`number`
-
-___
-
-### isInContinuation
-
-▸ **isInContinuation**(`scheduler`): `boolean`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | `Object` |
-| `scheduler.[SchedulerLike_inContinuation]` | `boolean` |
-
-#### Returns
-
-`boolean`
 
 ___
 
@@ -93,7 +57,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`ContinuationLike`](../interfaces/scheduling.ContinuationLike.md) \| [`SideEffect`](functions.md#sideeffect) |
+| `f` | [`ContinuationLike`](../interfaces/util.ContinuationLike.md) \| [`SideEffect`](functions.md#sideeffect) |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 

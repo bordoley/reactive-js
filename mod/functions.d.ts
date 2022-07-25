@@ -244,4 +244,20 @@ interface InstanceFactory {
     <T, TA, TB, TC>(): Function1<Constructor3<TA, TB, TC, T>, Function3<TA, TB, TC, T>>;
 }
 declare const instanceFactory: InstanceFactory;
-export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Identity, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isOdd, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+/**
+ * Represents an unboxed value of type T or undefined.
+ */
+declare type Option<T> = T | undefined;
+/**
+ * An alias for undefined.
+ */
+declare const none: undefined;
+/**
+ * Returns true if `option` is not `none`.
+ */
+declare const isSome: <T>(option: Option<T>) => option is T;
+/**
+ * Returns true if `option` is `none`.
+ */
+declare const isNone: <T>(option: Option<T>) => option is undefined;
+export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Identity, Option, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, newInstanceWith, none, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };

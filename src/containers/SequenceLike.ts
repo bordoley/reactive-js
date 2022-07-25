@@ -34,13 +34,17 @@ import {
   Equality,
   Factory,
   Function1,
+  Option,
   Predicate,
   Reducer,
   Updater,
   alwaysTrue,
   callWith,
   getLength,
+  isNone,
+  isSome,
   newInstance,
+  none,
   pipe,
   returns,
   strictEquality,
@@ -53,9 +57,7 @@ import {
   InteractiveSourceLike_move,
   ToEnumerable,
 } from "../ix";
-import { Option } from "../util";
 import { dispose, isDisposed } from "../util/DisposableLike";
-import { isNone, isSome, none } from "../util/Option";
 import { keepType } from "./ContainerLike";
 import {
   keepT as keepTArray,
