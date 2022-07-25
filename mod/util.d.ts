@@ -38,6 +38,8 @@ interface DisposableLike {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
+declare const createDisposable: Factory<DisposableLike>;
+declare const disposed: DisposableLike;
 /** @ignore */
 declare const PauseableLike_pause: unique symbol;
 /** @ignore */
@@ -56,6 +58,30 @@ declare const ContinuationLike_run: unique symbol;
 interface ContinuationLike extends DisposableLike {
     [ContinuationLike_run](): void;
 }
-declare const createDisposable: Factory<DisposableLike>;
-declare const disposed: DisposableLike;
-export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, PauseableLike, PauseableLike_pause, PauseableLike_resume, createDisposable, disposed };
+/** @ignore */
+declare const SinkLike_notify: unique symbol;
+interface SinkLike<T = unknown> extends DisposableLike {
+    /**
+     * Notifies the the sink of the next notification produced by the observable source.
+     *
+     * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
+     * scheduled using the sink's `schedule` method.
+     *
+     * @param next The next notification value.
+     */
+    [SinkLike_notify](next: T): void;
+}
+/** @ignore */
+declare const SourceLike_move: unique symbol;
+interface SourceLike extends DisposableLike {
+    [SourceLike_move](): void;
+}
+/** @ignore */
+declare const EnumeratorLike_current: unique symbol;
+/** @ignore */
+declare const EnumeratorLike_hasCurrent: unique symbol;
+interface EnumeratorLike<T = unknown> extends SourceLike {
+    readonly [EnumeratorLike_current]: T;
+    readonly [EnumeratorLike_hasCurrent]: boolean;
+}
+export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, Error, PauseableLike, PauseableLike_pause, PauseableLike_resume, SinkLike, SinkLike_notify, SourceLike, SourceLike_move, createDisposable, disposed };

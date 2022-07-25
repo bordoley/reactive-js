@@ -3,8 +3,8 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-} from "../../ix";
-import { move as moveEnumerator } from "../../ix/EnumeratorLike";
+} from "../../util";
+import { move as moveEnumerator } from "../../util/EnumeratorLike";
 import { Object_init } from "../util/Object";
 
 const DelegatingEnumerator_private_delegate = Symbol(

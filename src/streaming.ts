@@ -1,7 +1,7 @@
 import { ContainerLike } from "./containers";
 import { MulticastObservableLike } from "./rx";
-import { DispatcherLike, SchedulerLike } from "./scheduling";
-import { PauseableLike } from "./util";
+import { DispatcherLike, ObserverLike, SchedulerLike } from "./scheduling";
+import { PauseableLike, SourceLike } from "./util";
 
 /**
  * Represents a duplex stream
@@ -38,3 +38,9 @@ export interface FlowableLike<
 export interface FlowableStreamLike<T>
   extends StreamLike<FlowMode, T>,
     PauseableLike {}
+
+export interface AsyncEnumeratorLike<T = unknown>
+  extends SourceLike,
+    StreamLike<void, T> {
+  readonly TStatefulContainerState?: ObserverLike<T>;
+}

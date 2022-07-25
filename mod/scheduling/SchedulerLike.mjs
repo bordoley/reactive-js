@@ -1,19 +1,21 @@
 /// <reference types="./SchedulerLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/env.mjs';
-import { E as EnumeratorLike_current, d as move, p as properties$1, b as prototype$1, h as hasCurrent, I as InteractiveSourceLike_move, g as getCurrent } from '../ix-c87d6ab8.mjs';
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from '../__internal__/scheduling/queue.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from '../__internal__/schedulingInternal.mjs';
 export { getCurrentTime, isInContinuation } from '../__internal__/schedulingInternal.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { properties as properties$2, prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
+import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { none, isSome, pipe, isNone, raise, newInstanceWith, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
-import { ContinuationLike_run, disposed, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
+import { ContinuationLike_run, EnumeratorLike_current, SourceLike_move, disposed, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
+import { hasCurrent, getCurrent } from '../util/EnumeratorLike.mjs';
+import { move } from '../util/SourceLike.mjs';
 import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const requestYield = (scheduler) => scheduler[SchedulerLike_requestYield]();
@@ -200,7 +202,7 @@ const createQueueScheduler =
                     (isSome(next) ? priorityShouldYield(self, next) : false) ||
                     shouldYield(self.host)));
         },
-        [InteractiveSourceLike_move]() {
+        [SourceLike_move]() {
             // First fast forward through any disposed tasks.
             peek(this);
             const task = this.queue.pop();

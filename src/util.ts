@@ -65,6 +65,10 @@ export interface DisposableLike {
   [DisposableLike_dispose](error?: Error): void;
 }
 
+export const createDisposable: Factory<DisposableLike> = () =>
+  createDisposableInternal();
+export const disposed: DisposableLike = disposedInternal;
+
 /** @ignore */
 export const PauseableLike_pause = Symbol("PausableLike_pause");
 
@@ -88,6 +92,33 @@ export interface ContinuationLike extends DisposableLike {
   [ContinuationLike_run](): void;
 }
 
-export const createDisposable: Factory<DisposableLike> = () =>
-  createDisposableInternal();
-export const disposed: DisposableLike = disposedInternal;
+/** @ignore */
+export const SinkLike_notify = Symbol("SinkLike_notify");
+export interface SinkLike<T = unknown> extends DisposableLike {
+  /**
+   * Notifies the the sink of the next notification produced by the observable source.
+   *
+   * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
+   * scheduled using the sink's `schedule` method.
+   *
+   * @param next The next notification value.
+   */
+  [SinkLike_notify](next: T): void;
+}
+
+/** @ignore */
+export const SourceLike_move = Symbol("SourceLike_move");
+export interface SourceLike extends DisposableLike {
+  [SourceLike_move](): void;
+}
+
+/** @ignore */
+export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
+
+/** @ignore */
+export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+
+export interface EnumeratorLike<T = unknown> extends SourceLike {
+  readonly [EnumeratorLike_current]: T;
+  readonly [EnumeratorLike_hasCurrent]: boolean;
+}

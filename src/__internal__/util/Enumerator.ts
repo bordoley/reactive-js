@@ -3,10 +3,10 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-} from "../../ix";
-import { hasCurrent } from "../../ix/EnumeratorLike";
+} from "../../util";
 import { isDisposed } from "../../util/DisposableLike";
-import { Object_init } from "../util/Object";
+import { hasCurrent } from "../../util/EnumeratorLike";
+import { Object_init } from "./Object";
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");
 const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");

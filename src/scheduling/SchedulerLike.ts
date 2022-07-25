@@ -1,9 +1,4 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/env";
-import {
-  MutableEnumeratorLike,
-  properties as enumeratorProperties,
-  prototype as enumeratorPrototype,
-} from "../__internal__/ix/Enumerator";
 import { getDelay } from "../__internal__/optionalArgs";
 import {
   QueueLike,
@@ -22,6 +17,11 @@ import {
   properties as disposableRefProperties,
   prototype as disposableRefPrototype,
 } from "../__internal__/util/DisposableRefLike";
+import {
+  MutableEnumeratorLike,
+  properties as enumeratorProperties,
+  prototype as enumeratorPrototype,
+} from "../__internal__/util/Enumerator";
 import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
   Object_init,
@@ -42,13 +42,6 @@ import {
   raise,
 } from "../functions";
 import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  InteractiveSourceLike_move,
-} from "../ix";
-import { getCurrent, hasCurrent } from "../ix/EnumeratorLike";
-import { move } from "../ix/InteractiveSourceLike";
-import {
   PauseableSchedulerLike,
   PrioritySchedulerLike,
   SchedulerLike,
@@ -62,10 +55,13 @@ import {
   ContinuationLike,
   ContinuationLike_run,
   DisposableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
   Error,
   PauseableLike,
   PauseableLike_pause,
   PauseableLike_resume,
+  SourceLike_move,
   disposed,
 } from "../util";
 import { run } from "../util/ContinuationLike";
@@ -74,6 +70,8 @@ import {
   dispose,
   isDisposed,
 } from "../util/DisposableLike";
+import { getCurrent, hasCurrent } from "../util/EnumeratorLike";
+import { move } from "../util/SourceLike";
 
 export {
   isInContinuation,
@@ -377,7 +375,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
             shouldYield(self.host))
         );
       },
-      [InteractiveSourceLike_move](
+      [SourceLike_move](
         this: typeof properties & MutableEnumeratorLike<QueueTask>,
       ): void {
         // First fast forward through any disposed tasks.

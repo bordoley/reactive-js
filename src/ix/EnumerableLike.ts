@@ -9,23 +9,23 @@ import {
   interactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import {
-  move as delegatingEnumeratorMove,
-  properties as delegatingEnumeratorProperties,
-  prototype as delegatingEnumeratorPrototype,
-} from "../__internal__/ix/DelegatingEnumerator";
-import {
-  MutableEnumeratorLike,
-  properties as enumeratorProperties,
-  prototype as enumeratorPrototype,
-} from "../__internal__/ix/Enumerator";
-import {
   properties as delegatingDisposableProperties,
   prototype as delegatingDisposablePrototype,
 } from "../__internal__/util/DelegatingDisposable";
 import {
+  move as delegatingEnumeratorMove,
+  properties as delegatingEnumeratorProperties,
+  prototype as delegatingEnumeratorPrototype,
+} from "../__internal__/util/DelegatingEnumerator";
+import {
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
+import {
+  MutableEnumeratorLike,
+  properties as enumeratorProperties,
+  prototype as enumeratorPrototype,
+} from "../__internal__/util/Enumerator";
 import {
   Object_init,
   createObjectFactory,
@@ -74,16 +74,18 @@ import {
 } from "../functions";
 import {
   EnumerableLike,
-  EnumeratorLike,
-  EnumeratorLike_current,
   InteractiveContainerLike_interact,
-  InteractiveSourceLike_move,
   ToEnumerable,
   createEnumerable,
   emptyEnumerable,
   emptyEnumerableT,
 } from "../ix";
-import { DisposableLike } from "../util";
+import {
+  DisposableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  SourceLike_move,
+} from "../util";
 import {
   add,
   addTo,
@@ -91,7 +93,7 @@ import {
   dispose,
   isDisposed,
 } from "../util/DisposableLike";
-import { getCurrent, hasCurrent, move } from "./EnumeratorLike";
+import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
 
 export const enumerate =
   <T>() =>
@@ -170,7 +172,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
 
     const prototype = {
       ...delegatingDisposableEnumeratorPrototype,
-      [InteractiveSourceLike_move](this: typeof properties & EnumeratorLike) {
+      [SourceLike_move](this: typeof properties & EnumeratorLike) {
         const hadCurrent = hasCurrent(this);
         const prevCurrent = hadCurrent ? getCurrent(this) : none;
 
@@ -239,7 +241,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (() => {
       init(delegatingDisposableEnumeratorPrototype, this, delegate);
       this.predicate = predicate;
     },
-    [InteractiveSourceLike_move](this: typeof properties & EnumeratorLike) {
+    [SourceLike_move](this: typeof properties & EnumeratorLike) {
       const { delegate, predicate } = this;
 
       try {
@@ -288,9 +290,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (() => {
       init(delegatingDisposableEnumeratorPrototype, this, delegate);
       this.mapper = mapper;
     },
-    [InteractiveSourceLike_move](
-      this: typeof properties & MutableEnumeratorLike,
-    ) {
+    [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
       const { delegate } = this;
 
       if (move(delegate)) {
@@ -336,7 +336,7 @@ export const onNotify = /*@__PURE__*/ (() => {
       init(delegatingDisposableEnumeratorPrototype, this, delegate);
       this.onNotify = onNotify;
     },
-    [InteractiveSourceLike_move](this: typeof properties & EnumeratorLike) {
+    [SourceLike_move](this: typeof properties & EnumeratorLike) {
       const { delegate } = this;
 
       if (move(delegate)) {
@@ -368,7 +368,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
   /*@__PURE__*/ (() => {
     const prototype = {
       ...delegatingDisposableEnumeratorPrototype,
-      [InteractiveSourceLike_move](
+      [SourceLike_move](
         this: typeof delegatingDisposableEnumeratorProperties &
           MutableEnumeratorLike,
       ) {
@@ -423,9 +423,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (() => {
       this.reducer = reducer;
       this.current = initialValue;
     },
-    [InteractiveSourceLike_move](
-      this: typeof properties & MutableEnumeratorLike,
-    ) {
+    [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
       const acc = hasCurrent(this) ? getCurrent(this) : none;
 
       const { delegate, reducer } = this;
@@ -478,7 +476,7 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
         this.skipCount = skipCount;
         this.count = 0;
       },
-      [InteractiveSourceLike_move](this: typeof properties & EnumeratorLike) {
+      [SourceLike_move](this: typeof properties & EnumeratorLike) {
         const { delegate, skipCount } = this;
 
         for (let { count } = this; count < skipCount; count++) {
@@ -531,7 +529,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
         init(delegatingEnumeratorPrototype, this, delegate);
         this.maxCount = maxCount;
       },
-      [InteractiveSourceLike_move](this: typeof properties & DisposableLike) {
+      [SourceLike_move](this: typeof properties & DisposableLike) {
         if (this.count < this.maxCount) {
           this.count++;
           delegatingEnumeratorMove(this);
@@ -585,9 +583,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
         this.maxCount = maxCount;
         this.isStarted = false;
       },
-      [InteractiveSourceLike_move]<T>(
-        this: typeof properties & EnumeratorLike<T>,
-      ) {
+      [SourceLike_move]<T>(this: typeof properties & EnumeratorLike<T>) {
         if (!isDisposed(this) && !this.isStarted) {
           this.isStarted = true;
 
@@ -666,7 +662,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
         this.predicate = predicate;
         this.inclusive = inclusive;
       },
-      [InteractiveSourceLike_move](this: typeof properties & EnumeratorLike) {
+      [SourceLike_move](this: typeof properties & EnumeratorLike) {
         const { inclusive, predicate } = this;
 
         if (this.done && !isDisposed(this)) {
@@ -725,7 +721,7 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
         init(delegatingEnumeratorPrototype, this, delegate);
         this.isEmpty = true;
       },
-      [InteractiveSourceLike_move](this: typeof properties) {
+      [SourceLike_move](this: typeof properties) {
         if (delegatingEnumeratorMove(this)) {
           this.isEmpty = false;
         }
@@ -822,9 +818,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
       init(enumeratorPrototype, this);
       this.enumerators = enumerators;
     },
-    [InteractiveSourceLike_move](
-      this: typeof properties & MutableEnumeratorLike,
-    ) {
+    [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
       if (!isDisposed(this)) {
         const { enumerators } = this;
         moveAll(enumerators);
