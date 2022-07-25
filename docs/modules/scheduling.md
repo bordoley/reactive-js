@@ -24,11 +24,11 @@
 - [SchedulerLike\_requestYield](scheduling.md#schedulerlike_requestyield)
 - [SchedulerLike\_schedule](scheduling.md#schedulerlike_schedule)
 - [SchedulerLike\_shouldYield](scheduling.md#schedulerlike_shouldyield)
-- [createVirtualTimeScheduler](scheduling.md#createvirtualtimescheduler)
 
 ### Functions
 
 - [createHostScheduler](scheduling.md#createhostscheduler)
+- [createVirtualTimeScheduler](scheduling.md#createvirtualtimescheduler)
 
 ## Type Aliases
 
@@ -85,12 +85,6 @@ ___
 
 • `Const` **SchedulerLike\_shouldYield**: unique `symbol`
 
-___
-
-### createVirtualTimeScheduler
-
-• `Const` **createVirtualTimeScheduler**: `void`
-
 ## Functions
 
 ### createHostScheduler
@@ -107,3 +101,20 @@ ___
 #### Returns
 
 [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
+
+### createVirtualTimeScheduler
+
+▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxMicroTaskTicks?` | `number` |
+
+#### Returns
+
+[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
