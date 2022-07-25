@@ -6,34 +6,10 @@
 
 ### Functions
 
-- [create](rx_SubjectLike.md#create)
 - [publish](rx_SubjectLike.md#publish)
 - [publishTo](rx_SubjectLike.md#publishto)
 
 ## Functions
-
-### create
-
-▸ **create**<`T`\>(`options?`): [`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>
-
-___
 
 ### publish
 

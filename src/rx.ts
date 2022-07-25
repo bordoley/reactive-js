@@ -1,13 +1,35 @@
 import {
+  properties as disposableProperties,
+  prototype as disposablePrototype,
+} from "./__internal__/util/Disposable";
+import {
+  Object_init,
+  createObjectFactory,
+  init,
+} from "./__internal__/util/Object";
+import {
   Container,
   ContainerLike,
   ContainerOf,
   StatefulContainerLike,
   StatefulContainerStateOf,
 } from "./containers";
-import { Function1 } from "./functions";
+import {
+  Function1,
+  getLength,
+  max,
+  newInstance,
+  none,
+  pipe,
+} from "./functions";
 import { DispatcherLike, SchedulerLike } from "./scheduling";
+import { dispatch } from "./scheduling/DispatcherLike";
 import { DisposableLike } from "./util";
+import {
+  addIgnoringChildErrors,
+  isDisposed,
+  onDisposed,
+} from "./util/DisposableLike";
 
 /** @ignore */
 export const ReactiveSinkLike_notify = Symbol("ReactiveSinkLike_notify");
@@ -131,3 +153,94 @@ export type ToRunnable<
     options?: TOptions,
   ): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
+
+export const createSubject = /*@__PURE__*/ (() => {
+  const properties: typeof disposableProperties & {
+    [MulticastObservableLike_replay]: number;
+    observers: Set<ObserverLike<unknown>>;
+    replayed: unknown[];
+  } = {
+    ...disposableProperties,
+    [MulticastObservableLike_replay]: 0,
+    observers: none as unknown as Set<ObserverLike<unknown>>,
+    replayed: none as unknown as Array<unknown>,
+  };
+
+  const prototype = {
+    ...disposablePrototype,
+
+    [Object_init](this: typeof properties, replay: number) {
+      init(disposablePrototype, this);
+      this[MulticastObservableLike_replay] = replay;
+      this.observers = newInstance<Set<ObserverLike<unknown>>>(Set);
+      this.replayed = [];
+    },
+
+    [ObservableLike_observableType]: 0 as typeof DefaultObservable,
+
+    get [MulticastObservableLike_observerCount]() {
+      const self = this as unknown as typeof properties;
+      return self.observers.size;
+    },
+
+    [SubjectLike_publish]<T>(this: typeof properties, next: T) {
+      if (!isDisposed(this)) {
+        const { replayed } = this;
+
+        const replay = this[MulticastObservableLike_replay];
+
+        if (replay > 0) {
+          replayed.push(next);
+          if (getLength(replayed) > replay) {
+            replayed.shift();
+          }
+        }
+
+        for (const observer of this.observers) {
+          pipe(observer[ObserverLike_dispatcher], dispatch(next));
+        }
+      }
+    },
+
+    [ReactiveContainerLike_sinkInto]<T>(
+      this: typeof properties & SubjectLike<T>,
+      observer: ObserverLike<T>,
+    ) {
+      if (!isDisposed(this)) {
+        const { observers } = this;
+        observers.add(observer);
+
+        pipe(
+          observer,
+          onDisposed(_ => {
+            observers.delete(observer);
+          }),
+        );
+      }
+
+      const dispatcher = observer[ObserverLike_dispatcher];
+
+      // The idea here is that an onSubscribe function may
+      // call next from unscheduled sources such as event handlers.
+      // So we marshall those events back to the scheduler.
+      for (const next of this.replayed) {
+        pipe(dispatcher, dispatch(next));
+      }
+
+      pipe(this, addIgnoringChildErrors(dispatcher));
+    },
+  };
+
+  const createInstance = /*@__PURE__*/ createObjectFactory<
+    typeof prototype,
+    typeof properties,
+    number
+  >(prototype, properties);
+
+  return <T>(options?: { replay?: number }): SubjectLike<T> => {
+    const { replay: replayOption = 0 } = options ?? {};
+    const replay = max(replayOption, 0);
+
+    return createInstance(replay);
+  };
+})();

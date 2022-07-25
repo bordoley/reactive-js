@@ -28,6 +28,10 @@
 - [EnumerableObservable](rx.md#enumerableobservable)
 - [RunnableObservable](rx.md#runnableobservable)
 
+### Functions
+
+- [createSubject](rx.md#createsubject)
+
 ## Type Aliases
 
 ### CreateReactiveContainer
@@ -82,3 +86,26 @@ ___
 ### RunnableObservable
 
 • `Const` **RunnableObservable**: ``1``
+
+## Functions
+
+### createSubject
+
+▸ **createSubject**<`T`\>(`options?`): [`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>

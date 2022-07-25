@@ -1,2 +1,2 @@
 /// <reference types="./InteractiveSourceLike.d.ts" />
-export { i as move } from '../ix-e3dc0e14.mjs';
+export { d as move } from '../ix-c87d6ab8.mjs';
