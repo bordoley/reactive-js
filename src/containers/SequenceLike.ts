@@ -17,7 +17,6 @@ import {
   ConcatAll,
   ContainerOperator,
   DistinctUntilChanged,
-  Generate,
   Keep,
   Map,
   Pairwise,
@@ -37,7 +36,6 @@ import {
   Option,
   Predicate,
   Reducer,
-  Updater,
   alwaysTrue,
   callWith,
   getLength,
@@ -213,22 +211,6 @@ export const map: Map<SequenceLike>["map"] = /*@__PURE__*/ (() => {
 })();
 
 export const mapT: Map<SequenceLike> = { map };
-
-export const generate: Generate<SequenceLike>["generate"] =
-  /*@__PURE__*/ (() => {
-    const _generate =
-      <T>(generator: Updater<T>, acc: T): SequenceLike<T> =>
-      () =>
-        createNext(acc, _generate(generator, generator(acc)));
-
-    return <T>(generator: Updater<T>, initialValue: Factory<T>) =>
-      () => {
-        const acc = generator(initialValue());
-        return _generate(generator, acc)();
-      };
-  })();
-
-export const generateT: Generate<SequenceLike> = { generate };
 
 export const pairwise: Pairwise<SequenceLike>["pairwise"] =
   /*@__PURE__*/ (() => {

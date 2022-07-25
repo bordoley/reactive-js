@@ -1,15 +1,14 @@
 /// <reference types="./EnumerableLike.d.ts" />
 import { interactive, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
-import { properties as properties$3, prototype as prototype$3, move as move$1 } from '../__internal__/ix/DelegatingEnumerator.mjs';
-import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
+import { properties as properties$2, prototype as prototype$2, move as move$1 } from '../__internal__/ix/DelegatingEnumerator.mjs';
+import { c as InteractiveContainerLike_interact, p as properties$1, b as prototype$1, I as InteractiveSourceLike_move, h as hasCurrent, g as getCurrent, m as move, E as EnumeratorLike_current, e as emptyEnumerableT, d as emptyEnumerable, f as createEnumerable } from '../ix-e3dc0e14.mjs';
 import { properties, prototype } from '../__internal__/util/DelegatingDisposable.mjs';
-import { properties as properties$2, prototype as prototype$2 } from '../__internal__/util/Disposable.mjs';
+import { properties as properties$3, prototype as prototype$3 } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { empty as empty$1, toEnumerable as toEnumerable$1, every, map as map$1, forEach } from '../containers/ReadonlyArrayLike.mjs';
+import { emptyReadonlyArray } from '../containers.mjs';
+import { toEnumerable as toEnumerable$1, every, map as map$1, forEach } from '../containers/ReadonlyArrayLike.mjs';
 import { none, pipeUnsafe, newInstance, pipe, strictEquality, compose, isSome, getLength, identity } from '../functions.mjs';
-import { InteractiveContainerLike_interact, InteractiveSourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { bindTo, add, addTo } from '../util/DisposableLike.mjs';
-import { hasCurrent, getCurrent, move } from './EnumeratorLike.mjs';
 import { dispose, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const enumerate = () => (enumerable) => enumerable[InteractiveContainerLike_interact](none);
@@ -34,26 +33,6 @@ const lift = /*@__PURE__*/ (() => {
 const liftT = {
     lift,
     variance: interactive,
-};
-const create = 
-/*@__PURE__*/ (() => {
-    class CreateEnumerable {
-        constructor(_enumerate) {
-            this._enumerate = _enumerate;
-        }
-        [InteractiveContainerLike_interact]() {
-            try {
-                return this._enumerate();
-            }
-            catch (cause) {
-                return pipe(empty(), enumerate(), dispose({ cause }));
-            }
-        }
-    }
-    return (enumerate) => newInstance(CreateEnumerable, enumerate);
-})();
-const createT = {
-    create,
 };
 const delegatingDisposableEnumeratorProperties = {
     ...properties,
@@ -108,31 +87,6 @@ const distinctUntilChanged =
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const empty = /*@__PURE__*/ (() => {
-    const properties = {
-        ...properties$2,
-        ...properties$1,
-    };
-    const prototype = {
-        ...prototype$2,
-        ...prototype$1,
-        [Object_init]() {
-            init(prototype$2, this);
-            init(prototype$1, this);
-        },
-        [InteractiveSourceLike_move]() {
-            pipe(this, dispose());
-        },
-    };
-    const createInstance = createObjectFactory(prototype, properties);
-    class EmptyEnumerable {
-        [InteractiveContainerLike_interact]() {
-            return createInstance();
-        }
-    }
-    return () => newInstance(EmptyEnumerable);
-})();
-const emptyT = { empty };
 const keep = /*@__PURE__*/ (() => {
     const properties = {
         ...delegatingDisposableEnumeratorProperties,
@@ -221,7 +175,9 @@ const pairwise =
     const prototype = {
         ...delegatingDisposableEnumeratorPrototype,
         [InteractiveSourceLike_move]() {
-            const prev = (hasCurrent(this) ? getCurrent(this) : empty$1())[1];
+            const prev = (hasCurrent(this)
+                ? getCurrent(this)
+                : emptyReadonlyArray())[1];
             const { delegate } = this;
             if (move(delegate)) {
                 const current = getCurrent(delegate);
@@ -305,16 +261,16 @@ const takeFirst =
 /*@__PURE__*/ (() => {
     const properties$1 = {
         ...properties,
-        ...properties$3,
+        ...properties$2,
         maxCount: 0,
         count: 0,
     };
     const prototype$1 = {
         ...prototype,
-        ...prototype$3,
+        ...prototype$2,
         [Object_init](delegate, maxCount) {
             init(prototype, this, delegate);
-            init(prototype$3, this, delegate);
+            init(prototype$2, this, delegate);
             this.maxCount = maxCount;
         },
         [InteractiveSourceLike_move]() {
@@ -329,7 +285,7 @@ const takeFirst =
     };
     const createInstance = createObjectFactory(prototype$1, properties$1);
     const takeFirstEnumerator = (maxCount) => (delegate) => createInstance(delegate, maxCount);
-    return pipe(takeFirstEnumerator, createTakeFirstOperator({ ...liftT, ...emptyT }));
+    return pipe(takeFirstEnumerator, createTakeFirstOperator({ ...liftT, ...emptyEnumerableT }));
 })();
 const takeFirstT = {
     takeFirst,
@@ -337,17 +293,17 @@ const takeFirstT = {
 const takeLast = 
 /*@__PURE__*/ (() => {
     const properties = {
-        ...properties$2,
         ...properties$3,
+        ...properties$2,
         maxCount: 0,
         isStarted: false,
     };
     const prototype = {
-        ...prototype$2,
         ...prototype$3,
+        ...prototype$2,
         [Object_init](delegate, maxCount) {
-            init(prototype$2, this);
-            init(prototype$3, this, delegate);
+            init(prototype$3, this);
+            init(prototype$2, this, delegate);
             this.maxCount = maxCount;
             this.isStarted = false;
         },
@@ -362,7 +318,7 @@ const takeLast =
                     }
                 }
                 const enumerator = pipe(last, toEnumerable$1(), enumerate(), bindTo(this));
-                init(prototype$3, this, enumerator);
+                init(prototype$2, this, enumerator);
             }
             move$1(this);
         },
@@ -374,7 +330,7 @@ const takeLast =
         return enumerable => count > 0
             ? pipe(enumerable, lift(operator))
             : // FIXME: why do we need the annotations?
-                empty();
+                emptyEnumerable();
     };
 })();
 const takeLastT = { takeLast };
@@ -382,17 +338,17 @@ const takeWhile =
 /*@__PURE__*/ (() => {
     const properties$1 = {
         ...properties,
-        ...properties$3,
+        ...properties$2,
         predicate: none,
         inclusive: false,
         done: false,
     };
     const prototype$1 = {
         ...prototype,
-        ...prototype$3,
+        ...prototype$2,
         [Object_init](delegate, predicate, inclusive) {
             init(prototype, this, delegate);
-            init(prototype$3, this, delegate);
+            init(prototype$2, this, delegate);
             this.predicate = predicate;
             this.inclusive = inclusive;
         },
@@ -427,16 +383,16 @@ const TContainerOf = undefined;
 const throwIfEmpty = 
 /*@__PURE__*/ (() => {
     const properties = {
-        ...properties$2,
         ...properties$3,
+        ...properties$2,
         isEmpty: true,
     };
     const prototype = {
-        ...prototype$2,
         ...prototype$3,
+        ...prototype$2,
         [Object_init](delegate) {
-            init(prototype$2, this);
-            init(prototype$3, this, delegate);
+            init(prototype$3, this);
+            init(prototype$2, this, delegate);
             this.isEmpty = true;
         },
         [InteractiveSourceLike_move]() {
@@ -493,15 +449,15 @@ const zip = /*@__PURE__*/ (() => {
     };
     const allHaveCurrent = (enumerators) => pipe(enumerators, every(hasCurrent));
     const properties = {
-        ...properties$2,
+        ...properties$3,
         ...properties$1,
         enumerators: none,
     };
     const prototype = {
-        ...prototype$2,
+        ...prototype$3,
         ...prototype$1,
         [Object_init](enumerators) {
-            init(prototype$2, this);
+            init(prototype$3, this);
             init(prototype$1, this);
             this.enumerators = enumerators;
         },
@@ -524,9 +480,9 @@ const zip = /*@__PURE__*/ (() => {
         pipe(enumerators, forEach(addTo(instance)));
         return instance;
     };
-    const zip = (enumerables) => create(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
+    const zip = (enumerables) => createEnumerable(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
     return zip;
 })();
 const zipT = { zip };
 
-export { TContainerOf, create, createT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };
+export { TContainerOf, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };

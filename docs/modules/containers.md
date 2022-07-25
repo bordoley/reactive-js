@@ -51,6 +51,16 @@
 - [Using](containers.md#using)
 - [Zip](containers.md#zip)
 
+### Variables
+
+- [emptyReadonlyArrayT](containers.md#emptyreadonlyarrayt)
+- [generateSequenceT](containers.md#generatesequencet)
+
+### Functions
+
+- [emptyReadonlyArray](containers.md#emptyreadonlyarray)
+- [generateSequence](containers.md#generatesequence)
+
 ## Type Aliases
 
 ### Buffer
@@ -502,3 +512,54 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+
+## Variables
+
+### emptyReadonlyArrayT
+
+• `Const` **emptyReadonlyArrayT**: [`Empty`](containers.md#empty)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
+
+___
+
+### generateSequenceT
+
+• `Const` **generateSequenceT**: [`Generate`](containers.md#generate)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
+
+## Functions
+
+### emptyReadonlyArray
+
+▸ **emptyReadonlyArray**<`T`\>(): [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>
+
+___
+
+### generateSequence
+
+▸ **generateSequence**<`T`\>(`generator`, `initialValue`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>

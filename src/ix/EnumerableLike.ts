@@ -34,7 +34,6 @@ import {
 import {
   ContainerOperator,
   DistinctUntilChanged,
-  Empty,
   Keep,
   Map,
   Pairwise,
@@ -48,9 +47,9 @@ import {
   ToIterable,
   ToReadonlyArray,
   Zip,
+  emptyReadonlyArray,
 } from "../containers";
 import {
-  empty as emptyArray,
   every,
   forEach as forEachReadonlyArray,
   map as mapReadonlyArray,
@@ -58,7 +57,6 @@ import {
 } from "../containers/ReadonlyArrayLike";
 import {
   Equality,
-  Factory,
   Function1,
   Option,
   Predicate,
@@ -75,13 +73,15 @@ import {
   strictEquality,
 } from "../functions";
 import {
-  CreateInteractiveContainer,
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   InteractiveContainerLike_interact,
   InteractiveSourceLike_move,
   ToEnumerable,
+  createEnumerable,
+  emptyEnumerable,
+  emptyEnumerableT,
 } from "../ix";
 import { DisposableLike } from "../util";
 import {
@@ -140,28 +140,6 @@ const lift = /*@__PURE__*/ (() => {
 const liftT: Lift<EnumerableLike, TInteractive> = {
   lift,
   variance: interactive,
-};
-
-export const create: CreateInteractiveContainer<EnumerableLike>["create"] =
-  /*@__PURE__*/ (() => {
-    class CreateEnumerable<T> implements EnumerableLike<T> {
-      constructor(readonly _enumerate: Factory<EnumeratorLike<T>>) {}
-
-      [InteractiveContainerLike_interact](): EnumeratorLike<T> {
-        try {
-          return this._enumerate();
-        } catch (cause) {
-          return pipe(empty<T>(), enumerate(), dispose({ cause }));
-        }
-      }
-    }
-
-    return <T>(enumerate: Factory<EnumeratorLike<T>>): EnumerableLike<T> =>
-      newInstance(CreateEnumerable, enumerate);
-  })();
-
-export const createT: CreateInteractiveContainer<EnumerableLike> = {
-  create,
 };
 
 const delegatingDisposableEnumeratorProperties = {
@@ -244,42 +222,6 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
 export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
   distinctUntilChanged,
 };
-
-export const empty: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (() => {
-  const properties = {
-    ...disposableProperties,
-    ...enumeratorProperties,
-  };
-
-  const prototype = {
-    ...disposablePrototype,
-    ...enumeratorPrototype,
-    [Object_init](this: typeof properties) {
-      init(disposablePrototype, this);
-      init(enumeratorPrototype, this);
-    },
-    [InteractiveSourceLike_move](
-      this: typeof properties & MutableEnumeratorLike,
-    ) {
-      pipe(this, dispose());
-    },
-  };
-
-  const createInstance = createObjectFactory<
-    typeof prototype,
-    typeof properties
-  >(prototype, properties);
-
-  class EmptyEnumerable<T> implements EnumerableLike<T> {
-    [InteractiveContainerLike_interact](): EnumeratorLike<T> {
-      return createInstance() as EnumeratorLike<T>;
-    }
-  }
-
-  return <T>() => newInstance(EmptyEnumerable) as EnumerableLike<T>;
-})();
-
-export const emptyT: Empty<EnumerableLike> = { empty };
 
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (() => {
   const properties = {
@@ -431,7 +373,9 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
           MutableEnumeratorLike,
       ) {
         const prev = (
-          hasCurrent(this) ? (getCurrent(this) as readonly []) : emptyArray()
+          hasCurrent(this)
+            ? (getCurrent(this) as readonly [])
+            : emptyReadonlyArray()
         )[1];
 
         const { delegate } = this;
@@ -611,7 +555,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
 
     return pipe(
       takeFirstEnumerator,
-      createTakeFirstOperator({ ...liftT, ...emptyT }),
+      createTakeFirstOperator({ ...liftT, ...emptyEnumerableT }),
     );
   })();
 
@@ -692,7 +636,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
         count > 0
           ? pipe(enumerable, lift(operator))
           : // FIXME: why do we need the annotations?
-            empty<T>();
+            emptyEnumerable<T>();
     };
   })();
 
@@ -914,7 +858,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const zip = (
     enumerables: readonly EnumerableLike<any>[],
   ): EnumerableLike<any> =>
-    create(() =>
+    createEnumerable(() =>
       pipe(enumerables, mapReadonlyArray(enumerate()), zipEnumerators),
     );
 

@@ -1,9 +1,8 @@
 /// <reference types="./SequenceLike.d.ts" />
-import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
+import { p as properties$1, b as prototype$1, I as InteractiveSourceLike_move, E as EnumeratorLike_current, c as InteractiveContainerLike_interact } from '../ix-e3dc0e14.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { isSome, none, pipe, strictEquality, isNone, alwaysTrue, getLength, callWith, returns, newInstance } from '../functions.mjs';
-import { InteractiveSourceLike_move, EnumeratorLike_current, InteractiveContainerLike_interact } from '../ix.mjs';
 import '../util/DisposableLike.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
@@ -100,15 +99,6 @@ const map = /*@__PURE__*/ (() => {
     return (mapper) => (seq) => _map(mapper, seq);
 })();
 const mapT = { map };
-const generate = 
-/*@__PURE__*/ (() => {
-    const _generate = (generator, acc) => () => createNext(acc, _generate(generator, generator(acc)));
-    return (generator, initialValue) => () => {
-        const acc = generator(initialValue());
-        return _generate(generator, acc)();
-    };
-})();
-const generateT = { generate };
 const pairwise = 
 /*@__PURE__*/ (() => {
     const _pairwise = (prev, seq) => () => {
@@ -310,4 +300,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, zip, zipT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, zip, zipT };
