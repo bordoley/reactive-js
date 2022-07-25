@@ -1,5 +1,5 @@
 /// <reference types="./DispatcherLike.d.ts" />
-import { DispatcherLike_dispatch, DispatcherLike_scheduler } from '../scheduling.mjs';
+import { D as DispatcherLike_dispatch, a as DispatcherLike_scheduler } from '../scheduling-bf2730af.mjs';
 
 const dispatch = (v) => dispatcher => {
     dispatcher[DispatcherLike_dispatch](v);

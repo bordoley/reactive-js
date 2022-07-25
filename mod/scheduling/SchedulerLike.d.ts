@@ -19,9 +19,6 @@ declare const __yield: (options?: {
 declare const schedule: (f: SideEffect | ContinuationLike, options?: {
     readonly delay?: number;
 }) => Function1<SchedulerLike, DisposableLike>;
-declare const create: (options?: {
-    readonly yieldInterval?: number;
-}) => SchedulerLike;
 declare const toPausableScheduler: Function1<SchedulerLike, PauseableSchedulerLike>;
 declare const toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
-export { __yield, create, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };
+export { __yield, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };
