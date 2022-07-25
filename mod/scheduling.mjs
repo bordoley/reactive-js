@@ -16,10 +16,15 @@ import { run } from './util/ContinuationLike.mjs';
 import { addTo, onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';
 import { dispose, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 
+/** @ignore */
 const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
+/** @ignore */
 const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
+/** @ignore */
 const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
+/** @ignore */
 const DispatcherLike_dispatch = Symbol("DispatcherLike_dispatch");
+/** @ignore */
 const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
 const createHostScheduler = /*@__PURE__*/ (() => {
     const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && typeof performance.now === "function")();

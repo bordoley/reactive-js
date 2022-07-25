@@ -53,8 +53,13 @@ export {
   SchedulerLike_now,
 } from "./__internal__/schedulingInternal";
 
+/** @ignore */
 export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
+
+/** @ignore */
 export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
+
+/** @ignore */
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 
 export type SchedulerOptions = { readonly delay?: number };
@@ -75,7 +80,10 @@ export interface SchedulerLike extends DisposableLike {
   ): void;
 }
 
+/** @ignore */
 export const DispatcherLike_dispatch = Symbol("DispatcherLike_dispatch");
+
+/** @ignore */
 export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
 
 export interface DispatcherLike<T = unknown> extends DisposableLike {

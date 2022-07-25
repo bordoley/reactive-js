@@ -532,38 +532,3 @@ export const zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
 })();
 
 export const zipT: Zip<SequenceLike> = { zip };
-
-/*
-class SequenceEnumerator<T> extends AbstractEnumerator<T> {
-  constructor(private seq: SequenceLike<T>) {
-    super();
-  }
-
-  move(): boolean {
-    if (!isDisposed(this)) {
-      const next = this.seq();
-      if (isSome(next)) {
-        this.current = next.data;
-        this.seq = next.next;
-      } else {
-        pipe(this, dispose());
-      }
-    }
-    return hasCurrent(this);
-  }
-}
-
-export const toEnumerable =
-  <T>(): Function1<SequenceLike<T>, EnumerableLike<T>> =>
-  (seq: SequenceLike<T>) =>
-    createEnumerable(
-      pipeLazy(
-        SequenceEnumerator,
-        newInstanceWith<SequenceEnumerator<T>, SequenceLike<T>>(seq),
-      ),
-    );
-
-export const toEnumerableT: ToEnumerable<SequenceLike> = {
-  toEnumerable,
-};
-*/

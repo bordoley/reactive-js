@@ -17,14 +17,6 @@
 - [PrioritySchedulerOptions](scheduling.md#priorityscheduleroptions)
 - [SchedulerOptions](scheduling.md#scheduleroptions)
 
-### Variables
-
-- [DispatcherLike\_dispatch](scheduling.md#dispatcherlike_dispatch)
-- [DispatcherLike\_scheduler](scheduling.md#dispatcherlike_scheduler)
-- [SchedulerLike\_requestYield](scheduling.md#schedulerlike_requestyield)
-- [SchedulerLike\_schedule](scheduling.md#schedulerlike_schedule)
-- [SchedulerLike\_shouldYield](scheduling.md#schedulerlike_shouldyield)
-
 ### Functions
 
 - [createHostScheduler](scheduling.md#createhostscheduler)
@@ -54,36 +46,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `delay?` | `number` |
-
-## Variables
-
-### DispatcherLike\_dispatch
-
-• `Const` **DispatcherLike\_dispatch**: unique `symbol`
-
-___
-
-### DispatcherLike\_scheduler
-
-• `Const` **DispatcherLike\_scheduler**: unique `symbol`
-
-___
-
-### SchedulerLike\_requestYield
-
-• `Const` **SchedulerLike\_requestYield**: unique `symbol`
-
-___
-
-### SchedulerLike\_schedule
-
-• `Const` **SchedulerLike\_schedule**: unique `symbol`
-
-___
-
-### SchedulerLike\_shouldYield
-
-• `Const` **SchedulerLike\_shouldYield**: unique `symbol`
 
 ## Functions
 

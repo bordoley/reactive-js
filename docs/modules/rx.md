@@ -26,15 +26,7 @@
 
 - [DefaultObservable](rx.md#defaultobservable)
 - [EnumerableObservable](rx.md#enumerableobservable)
-- [MulticastObservableLike\_observerCount](rx.md#multicastobservablelike_observercount)
-- [MulticastObservableLike\_replay](rx.md#multicastobservablelike_replay)
-- [ObservableLike\_observableType](rx.md#observablelike_observabletype)
-- [ObserverLike\_dispatcher](rx.md#observerlike_dispatcher)
-- [ObserverLike\_scheduler](rx.md#observerlike_scheduler)
-- [ReactiveContainerLike\_sinkInto](rx.md#reactivecontainerlike_sinkinto)
-- [ReactiveSinkLike\_notify](rx.md#reactivesinklike_notify)
 - [RunnableObservable](rx.md#runnableobservable)
-- [SubjectLike\_publish](rx.md#subjectlike_publish)
 
 ## Type Aliases
 
@@ -87,54 +79,6 @@ ___
 
 ___
 
-### MulticastObservableLike\_observerCount
-
-• `Const` **MulticastObservableLike\_observerCount**: unique `symbol`
-
-___
-
-### MulticastObservableLike\_replay
-
-• `Const` **MulticastObservableLike\_replay**: unique `symbol`
-
-___
-
-### ObservableLike\_observableType
-
-• `Const` **ObservableLike\_observableType**: unique `symbol`
-
-___
-
-### ObserverLike\_dispatcher
-
-• `Const` **ObserverLike\_dispatcher**: unique `symbol`
-
-___
-
-### ObserverLike\_scheduler
-
-• `Const` **ObserverLike\_scheduler**: unique `symbol`
-
-___
-
-### ReactiveContainerLike\_sinkInto
-
-• `Const` **ReactiveContainerLike\_sinkInto**: unique `symbol`
-
-___
-
-### ReactiveSinkLike\_notify
-
-• `Const` **ReactiveSinkLike\_notify**: unique `symbol`
-
-___
-
 ### RunnableObservable
 
 • `Const` **RunnableObservable**: ``1``
-
-___
-
-### SubjectLike\_publish
-
-• `Const` **SubjectLike\_publish**: unique `symbol`

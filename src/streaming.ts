@@ -12,6 +12,7 @@ export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
     MulticastObservableLike<T> {}
 
+/** @ignore */
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
 export interface StreamableLike<

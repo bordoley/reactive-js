@@ -309,39 +309,5 @@ const zip = /*@__PURE__*/ (() => {
     return zip;
 })();
 const zipT = { zip };
-/*
-class SequenceEnumerator<T> extends AbstractEnumerator<T> {
-  constructor(private seq: SequenceLike<T>) {
-    super();
-  }
-
-  move(): boolean {
-    if (!isDisposed(this)) {
-      const next = this.seq();
-      if (isSome(next)) {
-        this.current = next.data;
-        this.seq = next.next;
-      } else {
-        pipe(this, dispose());
-      }
-    }
-    return hasCurrent(this);
-  }
-}
-
-export const toEnumerable =
-  <T>(): Function1<SequenceLike<T>, EnumerableLike<T>> =>
-  (seq: SequenceLike<T>) =>
-    createEnumerable(
-      pipeLazy(
-        SequenceEnumerator,
-        newInstanceWith<SequenceEnumerator<T>, SequenceLike<T>>(seq),
-      ),
-    );
-
-export const toEnumerableT: ToEnumerable<SequenceLike> = {
-  toEnumerable,
-};
-*/
 
 export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, zip, zipT };

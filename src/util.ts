@@ -10,12 +10,19 @@ import {
 } from "./__internal__/util/DisposableLikeInternal";
 import { Factory, Option, SideEffect1 } from "./functions";
 
+/** @ignore */
 export const DisposableLike_add: typeof DisposableLike_add_internal =
   DisposableLike_add_internal;
+
+/** @ignore */
 export const DisposableLike_dispose: typeof DisposableLike_dispose_internal =
   DisposableLike_dispose_internal;
+
+/** @ignore */
 export const DisposableLike_error: typeof DisposableLike_error_internal =
   DisposableLike_error_internal;
+
+/** @ignore */
 export const DisposableLike_isDisposed: typeof DisposableLike_isDisposed_internal =
   DisposableLike_isDisposed_internal;
 
@@ -58,7 +65,10 @@ export interface DisposableLike {
   [DisposableLike_dispose](error?: Error): void;
 }
 
+/** @ignore */
 export const PauseableLike_pause = Symbol("PausableLike_pause");
+
+/** @ignore */
 export const PauseableLike_resume = Symbol("PausableLike_resume");
 
 export interface PauseableLike {
@@ -66,6 +76,7 @@ export interface PauseableLike {
   [PauseableLike_resume](): void;
 }
 
+/** @ignore */
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
 
 /**

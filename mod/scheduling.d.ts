@@ -1,8 +1,11 @@
 import { SchedulerLike_inContinuation, SchedulerLike_now } from "./__internal__/schedulingInternal.mjs";
 export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.js';
 import { DisposableLike, ContinuationLike, PauseableLike } from "./util.mjs";
+/** @ignore */
 declare const SchedulerLike_requestYield: unique symbol;
+/** @ignore */
 declare const SchedulerLike_shouldYield: unique symbol;
+/** @ignore */
 declare const SchedulerLike_schedule: unique symbol;
 declare type SchedulerOptions = {
     readonly delay?: number;
@@ -17,7 +20,9 @@ interface SchedulerLike extends DisposableLike {
     [SchedulerLike_requestYield](): void;
     [SchedulerLike_schedule](continuation: ContinuationLike, options?: SchedulerOptions): void;
 }
+/** @ignore */
 declare const DispatcherLike_dispatch: unique symbol;
+/** @ignore */
 declare const DispatcherLike_scheduler: unique symbol;
 interface DispatcherLike<T = unknown> extends DisposableLike {
     /**

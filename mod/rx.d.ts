@@ -2,6 +2,7 @@ import { StatefulContainerLike, StatefulContainerStateOf, Container, ContainerOf
 import { Function1 } from "./functions.mjs";
 import { DispatcherLike, SchedulerLike } from "./scheduling.mjs";
 import { DisposableLike } from "./util.mjs";
+/** @ignore */
 declare const ReactiveSinkLike_notify: unique symbol;
 interface ReactiveSinkLike<T = unknown> extends DisposableLike {
     /**
@@ -14,12 +15,15 @@ interface ReactiveSinkLike<T = unknown> extends DisposableLike {
      */
     [ReactiveSinkLike_notify](next: T): void;
 }
+/** @ignore */
 declare const ObserverLike_dispatcher: unique symbol;
+/** @ignore */
 declare const ObserverLike_scheduler: unique symbol;
 interface ObserverLike<T = unknown> extends ReactiveSinkLike<T> {
     readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
     readonly [ObserverLike_scheduler]: SchedulerLike;
 }
+/** @ignore */
 declare const ReactiveContainerLike_sinkInto: unique symbol;
 interface ReactiveContainerLike extends StatefulContainerLike {
     readonly TContainerOf?: this;
@@ -33,6 +37,7 @@ interface RunnableLike<T = unknown> extends ReactiveContainerLike {
 declare const DefaultObservable = 0;
 declare const RunnableObservable = 1;
 declare const EnumerableObservable = 2;
+/** @ignore */
 declare const ObservableLike_observableType: unique symbol;
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
@@ -49,7 +54,9 @@ interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
 interface EnumerableObservableLike<T = unknown> extends RunnableObservableLike<T> {
     readonly [ObservableLike_observableType]: typeof EnumerableObservable;
 }
+/** @ignore */
 declare const MulticastObservableLike_observerCount: unique symbol;
+/** @ignore */
 declare const MulticastObservableLike_replay: unique symbol;
 interface MulticastObservableLike<T = unknown> extends ObservableLike<T>, DisposableLike {
     /**
@@ -58,6 +65,7 @@ interface MulticastObservableLike<T = unknown> extends ObservableLike<T>, Dispos
     readonly [MulticastObservableLike_observerCount]: number;
     readonly [MulticastObservableLike_replay]: number;
 }
+/** @ignore */
 declare const SubjectLike_publish: unique symbol;
 interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;

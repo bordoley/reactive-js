@@ -9,6 +9,7 @@ import { Function1 } from "./functions";
 import { DispatcherLike, SchedulerLike } from "./scheduling";
 import { DisposableLike } from "./util";
 
+/** @ignore */
 export const ReactiveSinkLike_notify = Symbol("ReactiveSinkLike_notify");
 export interface ReactiveSinkLike<T = unknown> extends DisposableLike {
   /**
@@ -22,7 +23,10 @@ export interface ReactiveSinkLike<T = unknown> extends DisposableLike {
   [ReactiveSinkLike_notify](next: T): void;
 }
 
+/** @ignore */
 export const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
+
+/** @ignore */
 export const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
 
 export interface ObserverLike<T = unknown> extends ReactiveSinkLike<T> {
@@ -30,6 +34,7 @@ export interface ObserverLike<T = unknown> extends ReactiveSinkLike<T> {
   readonly [ObserverLike_scheduler]: SchedulerLike;
 }
 
+/** @ignore */
 export const ReactiveContainerLike_sinkInto = Symbol(
   "ReactiveContainerLike_sinkInto",
 );
@@ -52,6 +57,7 @@ export const DefaultObservable = 0;
 export const RunnableObservable = 1;
 export const EnumerableObservable = 2;
 
+/** @ignore */
 export const ObservableLike_observableType = Symbol(
   "ObservableLike_observableType",
 );
@@ -80,9 +86,12 @@ export interface EnumerableObservableLike<T = unknown>
   readonly [ObservableLike_observableType]: typeof EnumerableObservable;
 }
 
+/** @ignore */
 export const MulticastObservableLike_observerCount = Symbol(
   "MulticastObservableLike_observerCount",
 );
+
+/** @ignore */
 export const MulticastObservableLike_replay = Symbol(
   "MulticastObservableLike_replay",
 );
@@ -97,6 +106,7 @@ export interface MulticastObservableLike<T = unknown>
   readonly [MulticastObservableLike_replay]: number;
 }
 
+/** @ignore */
 export const SubjectLike_publish = Symbol("SubjectLike_publish");
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
   [SubjectLike_publish](next: T): void;
