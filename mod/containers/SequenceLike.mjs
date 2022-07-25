@@ -266,6 +266,18 @@ const toEnumerable =
     return () => (seq) => createEnumerable(() => createInstance(seq));
 })();
 const toEnumerableT = { toEnumerable };
+const toReadonlyArray = () => (seq) => {
+    const result = [];
+    let next = seq();
+    while (isSome(next)) {
+        result.push(next.data);
+        next = next.next();
+    }
+    return result;
+};
+const toReadonlyArrayT = {
+    toReadonlyArray,
+};
 /*
 export const toRunnable =
   <T>(): Function1<SequenceLike<T>, RunnableLike<T>> =>
@@ -292,4 +304,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, zip, zipT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, zip, zipT };
