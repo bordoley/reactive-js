@@ -231,29 +231,31 @@ const scanT = {
 };
 const skipFirst = 
 /*@__PURE__*/ (() => {
-    const properties = {
-        ...delegatingDisposableEnumeratorProperties,
+    const properties$1 = {
+        ...properties,
+        ...properties$2,
         skipCount: 0,
         count: 0,
     };
-    const prototype = mix(delegatingDisposableEnumeratorPrototype, {
+    const prototype$1 = mix(prototype, prototype$2, {
         [Object_init](delegate, skipCount) {
-            init(delegatingDisposableEnumeratorPrototype, this, delegate);
+            init(prototype, this, delegate);
+            init(prototype$2, this, delegate);
             this.skipCount = skipCount;
             this.count = 0;
         },
         [SourceLike_move]() {
-            const { delegate, skipCount } = this;
+            const { skipCount } = this;
             for (let { count } = this; count < skipCount; count++) {
-                if (!move$1(delegate)) {
+                if (!move(this)) {
                     break;
                 }
             }
             this.count = skipCount;
-            move$1(delegate);
+            move(this);
         },
     });
-    const createInstance = createObjectFactory(prototype, properties);
+    const createInstance = createObjectFactory(prototype$1, properties$1);
     const skipFirstEnumerator = (skipCount) => (delegate) => createInstance(delegate, skipCount);
     return pipe(skipFirstEnumerator, createSkipFirstOperator(liftT));
 })();
