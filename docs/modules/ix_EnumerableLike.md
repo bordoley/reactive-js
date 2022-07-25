@@ -17,9 +17,9 @@
 - [takeLastT](ix_EnumerableLike.md#takelastt)
 - [takeWhileT](ix_EnumerableLike.md#takewhilet)
 - [throwIfEmptyT](ix_EnumerableLike.md#throwifemptyt)
-- [toArrayT](ix_EnumerableLike.md#toarrayt)
 - [toEnumerableT](ix_EnumerableLike.md#toenumerablet)
 - [toIterableT](ix_EnumerableLike.md#toiterablet)
+- [toReadonlyArrayT](ix_EnumerableLike.md#toreadonlyarrayt)
 - [zipT](ix_EnumerableLike.md#zipt)
 
 ### Functions
@@ -108,12 +108,6 @@ ___
 
 ___
 
-### toArrayT
-
-• `Const` **toArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
 ### toEnumerableT
 
 • `Const` **toEnumerableT**: [`ToEnumerable`](ix.md#toenumerable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
@@ -123,6 +117,12 @@ ___
 ### toIterableT
 
 • `Const` **toIterableT**: [`ToIterable`](containers.md#toiterable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
+
+___
+
+### toReadonlyArrayT
+
+• `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 

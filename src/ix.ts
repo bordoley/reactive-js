@@ -11,6 +11,7 @@ import {
   Object_init,
   createObjectFactory,
   init,
+  mix,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -110,9 +111,7 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
       ...enumeratorProperties,
     };
 
-    const prototype = {
-      ...disposablePrototype,
-      ...enumeratorPrototype,
+    const prototype = mix(disposablePrototype, enumeratorPrototype, {
       [Object_init](this: typeof properties) {
         init(disposablePrototype, this);
         init(enumeratorPrototype, this);
@@ -120,7 +119,7 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
       [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
         pipe(this, dispose());
       },
-    };
+    });
 
     const createInstance = createObjectFactory<
       typeof prototype,

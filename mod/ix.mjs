@@ -1,7 +1,7 @@
 /// <reference types="./ix.d.ts" />
 import { properties, prototype } from './__internal__/util/Disposable.mjs';
 import { properties as properties$1, prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
-import { Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
+import { mix, Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, newInstance } from './functions.mjs';
 import { SourceLike_move } from './util.mjs';
 import './util/DisposableLike.mjs';
@@ -32,9 +32,7 @@ const emptyEnumerable =
         ...properties,
         ...properties$1,
     };
-    const prototype$2 = {
-        ...prototype,
-        ...prototype$1,
+    const prototype$2 = mix(prototype, prototype$1, {
         [Object_init]() {
             init(prototype, this);
             init(prototype$1, this);
@@ -42,7 +40,7 @@ const emptyEnumerable =
         [SourceLike_move]() {
             pipe(this, dispose());
         },
-    };
+    });
     const createInstance = createObjectFactory(prototype$2, properties$2);
     class EmptyEnumerable {
         [InteractiveContainerLike_interact]() {

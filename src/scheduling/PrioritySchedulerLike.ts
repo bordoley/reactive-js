@@ -7,6 +7,7 @@ import {
   Object_init,
   createObjectFactory,
   init,
+  mix,
 } from "../__internal__/util/Object";
 import { Function1, none, pipe } from "../functions";
 import {
@@ -40,8 +41,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
     priority: 0,
   };
 
-  const prototype = {
-    ...disposablePrototype,
+  const prototype = mix(disposablePrototype, {
     [Object_init](
       this: typeof properties,
       scheduler: PrioritySchedulerLike,
@@ -87,7 +87,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
         });
       }
     },
-  };
+  });
 
   const createInstance = createObjectFactory<
     typeof prototype,

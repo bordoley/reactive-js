@@ -11,6 +11,7 @@ import {
   Object_init,
   createObjectFactory,
   init,
+  mix,
 } from "../__internal__/util/Object";
 import {
   ContainerLike,
@@ -118,7 +119,7 @@ const createFromArray =
         // count is none
         const startOrDefault = startOption ?? 0;
         const maxStart = max(startOrDefault, 0);
-        const start = min(maxStart, valuesLength - 1);
+        const start = min(maxStart, valuesLength);
         const count = valuesLength - start;
 
         return { start, count };
@@ -143,9 +144,7 @@ export const toEnumerable: ToEnumerable<
     index: 0,
   };
 
-  const prototype = {
-    ...disposablePrototype,
-    ...enumeratorPrototype,
+  const prototype = mix(disposablePrototype, enumeratorPrototype, {
     [Object_init](
       this: typeof properties,
       array: readonly unknown[],
@@ -161,7 +160,6 @@ export const toEnumerable: ToEnumerable<
     },
     [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
       const { array } = this;
-
       if (!isDisposed(this)) {
         this.index++;
         const { index, count } = this;
@@ -169,13 +167,13 @@ export const toEnumerable: ToEnumerable<
         if (count !== 0) {
           this[EnumeratorLike_current] = array[index];
 
-          this.count = count > 0 ? this.count-- : this.count++;
+          this.count = count > 0 ? this.count - 1 : this.count + 1;
         } else {
           pipe(this, dispose());
         }
       }
     },
-  };
+  });
 
   const createInstance = createObjectFactory<
     typeof prototype,
@@ -202,8 +200,9 @@ export const toEnumerable: ToEnumerable<
   }
 
   return createFromArray<EnumerableLike>(
-    <T>(a: readonly T[], start: number, count: number) =>
-      newInstance(ReadonlyArrayEnumerable, a, start, count),
+    <T>(a: readonly T[], start: number, count: number) => {
+      return newInstance(ReadonlyArrayEnumerable, a, start, count);
+    },
   );
 })();
 
@@ -215,10 +214,21 @@ export const toEnumerableT: ToEnumerable<
   }
 > = { toEnumerable };
 
-export const toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike>["toReadonlyArray"] =
-  () => identity;
+export const toReadonlyArray: ToReadonlyArray<
+  ReadonlyArrayLike,
+  {
+    readonly start: number;
+    readonly count: number;
+  }
+>["toReadonlyArray"] = () => identity;
 
-export const toReadonlyArrayT: ToReadonlyArray<ReadonlyArrayLike> = {
+export const toReadonlyArrayT: ToReadonlyArray<
+  ReadonlyArrayLike,
+  {
+    readonly start: number;
+    readonly count: number;
+  }
+> = {
   toReadonlyArray,
 };
 

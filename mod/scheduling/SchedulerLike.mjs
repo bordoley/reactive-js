@@ -8,7 +8,7 @@ import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { properties as properties$2, prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { none, isSome, pipe, isNone, raise, newInstanceWith, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, SourceLike_move, disposed, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
@@ -33,8 +33,7 @@ const createContinuation = /*@__PURE__*/ (() => {
         scheduler: none,
         f: () => { },
     };
-    const prototype$1 = {
-        ...prototype,
+    const prototype$1 = mix(prototype, {
         [ContinuationLike_run]() {
             if (!isDisposed(this)) {
                 let error = none;
@@ -67,7 +66,7 @@ const createContinuation = /*@__PURE__*/ (() => {
             this.scheduler = scheduler;
             this.f = f;
         },
-    };
+    });
     return createObjectFactory(prototype$1, properties$1);
 })();
 const __yield = (options) => {
@@ -179,10 +178,7 @@ const createQueueScheduler =
         taskIDCounter: 0,
         yieldRequested: false,
     };
-    const prototype$3 = {
-        ...prototype,
-        ...prototype$1,
-        ...prototype$2,
+    const prototype$3 = mix(prototype, prototype$1, prototype$2, {
         get [SchedulerLike_now]() {
             const self = this;
             return getCurrentTime(self.host);
@@ -254,7 +250,7 @@ const createQueueScheduler =
                 scheduleOnHost(this);
             }
         },
-    };
+    });
     return createObjectFactory(prototype$3, properties$3);
 })();
 const toPausableScheduler = createQueueScheduler;

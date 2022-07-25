@@ -6,6 +6,7 @@ import {
   Object_init,
   createObjectFactory,
   init,
+  mix,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -142,9 +143,7 @@ export const createSubject = /*@__PURE__*/ (() => {
     replayed: none as unknown as Array<unknown>,
   };
 
-  const prototype = {
-    ...disposablePrototype,
-
+  const prototype = mix(disposablePrototype, {
     [Object_init](this: typeof properties, replay: number) {
       init(disposablePrototype, this);
       this[MulticastObservableLike_replay] = replay;
@@ -205,7 +204,7 @@ export const createSubject = /*@__PURE__*/ (() => {
 
       pipe(this, addIgnoringChildErrors(dispatcher));
     },
-  };
+  });
 
   const createInstance = /*@__PURE__*/ createObjectFactory<
     typeof prototype,
