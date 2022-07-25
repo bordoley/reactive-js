@@ -8,7 +8,10 @@
 
 - [ContinuationLike](../interfaces/util.ContinuationLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
+- [EnumeratorLike](../interfaces/util.EnumeratorLike.md)
 - [PauseableLike](../interfaces/util.PauseableLike.md)
+- [SinkLike](../interfaces/util.SinkLike.md)
+- [SourceLike](../interfaces/util.SourceLike.md)
 
 ### Type Aliases
 

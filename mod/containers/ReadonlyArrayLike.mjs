@@ -1,8 +1,10 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
-import { p as properties$1, b as prototype$1, I as InteractiveSourceLike_move, E as EnumeratorLike_current, c as InteractiveContainerLike_interact } from '../ix-c87d6ab8.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
+import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, pipe, newInstance, identity, none } from '../functions.mjs';
+import { InteractiveContainerLike_interact } from '../ix.mjs';
+import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
 
@@ -67,7 +69,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
             this.index = start - 1;
             this.count = count;
         },
-        [InteractiveSourceLike_move]() {
+        [SourceLike_move]() {
             const { array } = this;
             if (!isDisposed(this)) {
                 this.index++;

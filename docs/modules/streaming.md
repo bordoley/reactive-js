@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [AsyncEnumeratorLike](../interfaces/streaming.AsyncEnumeratorLike.md)
 - [FlowableLike](../interfaces/streaming.FlowableLike.md)
 - [FlowableStreamLike](../interfaces/streaming.FlowableStreamLike.md)
 - [StreamLike](../interfaces/streaming.StreamLike.md)

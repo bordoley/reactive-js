@@ -57,7 +57,7 @@ ___
 
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`InteractiveSourceLike`](ix.InteractiveSourceLike.md)
+• `Optional` `Readonly` **TStatefulContainerState**: [`SourceLike`](util.SourceLike.md)
 
 #### Overrides
 
@@ -67,7 +67,7 @@ ___
 
 ### [InteractiveContainerLike\_interact]
 
-▸ **[InteractiveContainerLike_interact]**(`_`): [`InteractiveSourceLike`](ix.InteractiveSourceLike.md)
+▸ **[InteractiveContainerLike_interact]**(`_`): [`SourceLike`](util.SourceLike.md)
 
 #### Parameters
 
@@ -77,4 +77,4 @@ ___
 
 #### Returns
 
-[`InteractiveSourceLike`](ix.InteractiveSourceLike.md)
+[`SourceLike`](util.SourceLike.md)

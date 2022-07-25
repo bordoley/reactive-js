@@ -21,6 +21,6 @@ Represents a duplex stream
 
   ↳ **`StreamLike`**
 
-  ↳↳ [`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)
+  ↳↳ [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)
 
   ↳↳ [`FlowableStreamLike`](streaming.FlowableStreamLike.md)

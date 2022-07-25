@@ -1,7 +1,7 @@
 import { ContainerLike } from "./containers.mjs";
 import { MulticastObservableLike } from "./rx.mjs";
-import { DispatcherLike, SchedulerLike } from "./scheduling.mjs";
-import { PauseableLike } from "./util.mjs";
+import { DispatcherLike, SchedulerLike, ObserverLike } from "./scheduling.mjs";
+import { PauseableLike, SourceLike } from "./util.mjs";
 /**
  * Represents a duplex stream
  *
@@ -22,4 +22,7 @@ interface FlowableLike<T, TStream extends FlowableStreamLike<T> = FlowableStream
 }
 interface FlowableStreamLike<T> extends StreamLike<FlowMode, T>, PauseableLike {
 }
-export { FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream };
+interface AsyncEnumeratorLike<T = unknown> extends SourceLike, StreamLike<void, T> {
+    readonly TStatefulContainerState?: ObserverLike<T>;
+}
+export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream };

@@ -1,13 +1,13 @@
-[Reactive-JS](../README.md) / rx/ReactiveSinkLike
+[Reactive-JS](../README.md) / util/SinkLike
 
-# Module: rx/ReactiveSinkLike
+# Module: util/SinkLike
 
 ## Table of contents
 
 ### Functions
 
-- [notify](rx_ReactiveSinkLike.md#notify)
-- [notifySink](rx_ReactiveSinkLike.md#notifysink)
+- [notify](util_SinkLike.md#notify)
+- [notifySink](util_SinkLike.md#notifysink)
 
 ## Functions
 
@@ -20,7 +20,7 @@
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TSink` | extends [`ReactiveSinkLike`](../interfaces/rx.ReactiveSinkLike.md)<`T`, `TSink`\> = [`ReactiveSinkLike`](../interfaces/rx.ReactiveSinkLike.md)<`T`\> |
+| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> = [`SinkLike`](../interfaces/util.SinkLike.md)<`T`\> |
 
 #### Parameters
 
@@ -43,7 +43,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TSink` | extends [`ReactiveSinkLike`](../interfaces/rx.ReactiveSinkLike.md)<`T`, `TSink`\> = [`ReactiveSinkLike`](../interfaces/rx.ReactiveSinkLike.md)<`T`\> |
+| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> = [`SinkLike`](../interfaces/util.SinkLike.md)<`T`\> |
 
 #### Parameters
 

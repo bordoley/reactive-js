@@ -1,35 +1,31 @@
-[Reactive-JS](../README.md) / [rx](../modules/rx.md) / ReactiveSinkLike
+[Reactive-JS](../README.md) / [util](../modules/util.md) / SourceLike
 
-# Interface: ReactiveSinkLike<T\>
+# Interface: SourceLike
 
-[rx](../modules/rx.md).ReactiveSinkLike
-
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
+[util](../modules/util.md).SourceLike
 
 ## Hierarchy
 
 - [`DisposableLike`](util.DisposableLike.md)
 
-  ↳ **`ReactiveSinkLike`**
+  ↳ **`SourceLike`**
 
-  ↳↳ [`ObserverLike`](rx.ObserverLike.md)
+  ↳↳ [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)
+
+  ↳↳ [`EnumeratorLike`](util.EnumeratorLike.md)
 
 ## Table of contents
 
 ### Properties
 
-- [[DisposableLike\_error]](rx.ReactiveSinkLike.md#[disposablelike_error])
-- [[DisposableLike\_isDisposed]](rx.ReactiveSinkLike.md#[disposablelike_isdisposed])
+- [[DisposableLike\_error]](util.SourceLike.md#[disposablelike_error])
+- [[DisposableLike\_isDisposed]](util.SourceLike.md#[disposablelike_isdisposed])
 
 ### Methods
 
-- [[DisposableLike\_add]](rx.ReactiveSinkLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](rx.ReactiveSinkLike.md#[disposablelike_dispose])
-- [[ReactiveSinkLike\_notify]](rx.ReactiveSinkLike.md#[reactivesinklike_notify])
+- [[DisposableLike\_add]](util.SourceLike.md#[disposablelike_add])
+- [[DisposableLike\_dispose]](util.SourceLike.md#[disposablelike_dispose])
+- [[SourceLike\_move]](util.SourceLike.md#[sourcelike_move])
 
 ## Properties
 
@@ -104,20 +100,9 @@ Dispose the resource.
 
 ___
 
-### [ReactiveSinkLike\_notify]
+### [SourceLike\_move]
 
-▸ **[ReactiveSinkLike_notify]**(`next`): `void`
-
-Notifies the the sink of the next notification produced by the observable source.
-
-Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-scheduled using the sink's `schedule` method.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `next` | `T` | The next notification value. |
+▸ **[SourceLike_move]**(): `void`
 
 #### Returns
 

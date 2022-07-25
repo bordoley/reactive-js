@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [ix](../modules/ix.md) / EnumeratorLike
+[Reactive-JS](../README.md) / [util](../modules/util.md) / EnumeratorLike
 
 # Interface: EnumeratorLike<T\>
 
-[ix](../modules/ix.md).EnumeratorLike
+[util](../modules/util.md).EnumeratorLike
 
 ## Type parameters
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`InteractiveSourceLike`](ix.InteractiveSourceLike.md)
+- [`SourceLike`](util.SourceLike.md)
 
   ↳ **`EnumeratorLike`**
 
@@ -20,16 +20,16 @@
 
 ### Properties
 
-- [[DisposableLike\_error]](ix.EnumeratorLike.md#[disposablelike_error])
-- [[DisposableLike\_isDisposed]](ix.EnumeratorLike.md#[disposablelike_isdisposed])
-- [[EnumeratorLike\_current]](ix.EnumeratorLike.md#[enumeratorlike_current])
-- [[EnumeratorLike\_hasCurrent]](ix.EnumeratorLike.md#[enumeratorlike_hascurrent])
+- [[DisposableLike\_error]](util.EnumeratorLike.md#[disposablelike_error])
+- [[DisposableLike\_isDisposed]](util.EnumeratorLike.md#[disposablelike_isdisposed])
+- [[EnumeratorLike\_current]](util.EnumeratorLike.md#[enumeratorlike_current])
+- [[EnumeratorLike\_hasCurrent]](util.EnumeratorLike.md#[enumeratorlike_hascurrent])
 
 ### Methods
 
-- [[DisposableLike\_add]](ix.EnumeratorLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](ix.EnumeratorLike.md#[disposablelike_dispose])
-- [[InteractiveSourceLike\_move]](ix.EnumeratorLike.md#[interactivesourcelike_move])
+- [[DisposableLike\_add]](util.EnumeratorLike.md#[disposablelike_add])
+- [[DisposableLike\_dispose]](util.EnumeratorLike.md#[disposablelike_dispose])
+- [[SourceLike\_move]](util.EnumeratorLike.md#[sourcelike_move])
 
 ## Properties
 
@@ -41,7 +41,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[InteractiveSourceLike](ix.InteractiveSourceLike.md).[[DisposableLike_error]](ix.InteractiveSourceLike.md#[disposablelike_error])
+[SourceLike](util.SourceLike.md).[[DisposableLike_error]](util.SourceLike.md#[disposablelike_error])
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Inherited from
 
-[InteractiveSourceLike](ix.InteractiveSourceLike.md).[[DisposableLike_isDisposed]](ix.InteractiveSourceLike.md#[disposablelike_isdisposed])
+[SourceLike](util.SourceLike.md).[[DisposableLike_isDisposed]](util.SourceLike.md#[disposablelike_isdisposed])
 
 ___
 
@@ -90,7 +90,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[InteractiveSourceLike](ix.InteractiveSourceLike.md).[[DisposableLike_add]](ix.InteractiveSourceLike.md#[disposablelike_add])
+[SourceLike](util.SourceLike.md).[[DisposableLike_add]](util.SourceLike.md#[disposablelike_add])
 
 ___
 
@@ -112,13 +112,13 @@ Dispose the resource.
 
 #### Inherited from
 
-[InteractiveSourceLike](ix.InteractiveSourceLike.md).[[DisposableLike_dispose]](ix.InteractiveSourceLike.md#[disposablelike_dispose])
+[SourceLike](util.SourceLike.md).[[DisposableLike_dispose]](util.SourceLike.md#[disposablelike_dispose])
 
 ___
 
-### [InteractiveSourceLike\_move]
+### [SourceLike\_move]
 
-▸ **[InteractiveSourceLike_move]**(): `void`
+▸ **[SourceLike_move]**(): `void`
 
 #### Returns
 
@@ -126,4 +126,4 @@ ___
 
 #### Inherited from
 
-[InteractiveSourceLike](ix.InteractiveSourceLike.md).[[InteractiveSourceLike_move]](ix.InteractiveSourceLike.md#[interactivesourcelike_move])
+[SourceLike](util.SourceLike.md).[[SourceLike_move]](util.SourceLike.md#[sourcelike_move])

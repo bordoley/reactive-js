@@ -1,8 +1,10 @@
 /// <reference types="./SequenceLike.d.ts" />
-import { p as properties$1, b as prototype$1, I as InteractiveSourceLike_move, E as EnumeratorLike_current, c as InteractiveContainerLike_interact } from '../ix-c87d6ab8.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
+import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { isSome, none, pipe, strictEquality, isNone, alwaysTrue, getLength, callWith, returns, newInstance } from '../functions.mjs';
+import { InteractiveContainerLike_interact } from '../ix.mjs';
+import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
@@ -249,7 +251,7 @@ const toEnumerable =
             init(prototype$1, this);
             this.seq = seq;
         },
-        [InteractiveSourceLike_move]() {
+        [SourceLike_move]() {
             if (!isDisposed(this)) {
                 const next = this.seq();
                 if (isSome(next)) {

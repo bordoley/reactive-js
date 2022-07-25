@@ -1,12 +1,12 @@
-[Reactive-JS](../README.md) / ix/InteractiveSourceLike
+[Reactive-JS](../README.md) / util/SourceLike
 
-# Module: ix/InteractiveSourceLike
+# Module: util/SourceLike
 
 ## Table of contents
 
 ### Functions
 
-- [move](ix_InteractiveSourceLike.md#move)
+- [move](util_SourceLike.md#move)
 
 ## Functions
 
@@ -18,7 +18,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TSource` | extends `Object` = [`InteractiveSourceLike`](../interfaces/ix.InteractiveSourceLike.md) |
+| `TSource` | extends `Object` = [`SourceLike`](../interfaces/util.SourceLike.md) |
 
 #### Parameters
 

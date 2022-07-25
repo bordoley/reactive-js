@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streaming.StreamableLike.md)<`void`, `T`, [`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)<`T`\>\>
+- [`StreamableLike`](streaming.StreamableLike.md)<`void`, `T`, [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>\>
 
 - [`InteractiveContainerLike`](ix.InteractiveContainerLike.md)
 
@@ -66,7 +66,7 @@ ___
 
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)<`T`\>
+• `Optional` `Readonly` **TStatefulContainerState**: [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>
 
 #### Overrides
 
@@ -76,7 +76,7 @@ ___
 
 ### [InteractiveContainerLike\_interact]
 
-▸ **[InteractiveContainerLike_interact]**(`_`): [`InteractiveSourceLike`](ix.InteractiveSourceLike.md)
+▸ **[InteractiveContainerLike_interact]**(`_`): [`SourceLike`](util.SourceLike.md)
 
 #### Parameters
 
@@ -86,7 +86,7 @@ ___
 
 #### Returns
 
-[`InteractiveSourceLike`](ix.InteractiveSourceLike.md)
+[`SourceLike`](util.SourceLike.md)
 
 #### Inherited from
 
@@ -96,7 +96,7 @@ ___
 
 ### [StreamableLike\_stream]
 
-▸ **[StreamableLike_stream]**(`scheduler`, `options?`): [`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)<`T`\>
+▸ **[StreamableLike_stream]**(`scheduler`, `options?`): [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>
 
 #### Parameters
 
@@ -108,7 +108,7 @@ ___
 
 #### Returns
 
-[`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)<`T`\>
+[`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>
 
 #### Inherited from
 

@@ -1,12 +1,12 @@
 import {
-  MutableEnumeratorLike,
-  properties as enumeratorProperties,
-  prototype as enumeratorPrototype,
-} from "./__internal__/ix/Enumerator";
-import {
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "./__internal__/util/Disposable";
+import {
+  MutableEnumeratorLike,
+  properties as enumeratorProperties,
+  prototype as enumeratorPrototype,
+} from "./__internal__/util/Enumerator";
 import {
   Object_init,
   createObjectFactory,
@@ -21,35 +21,10 @@ import {
   StatefulContainerStateOf,
 } from "./containers";
 import { Factory, Function1, newInstance, none, pipe } from "./functions";
-import { ObserverLike } from "./rx";
 import { SchedulerLike } from "./scheduling";
-import { StreamLike, StreamableLike } from "./streaming";
-import { DisposableLike } from "./util";
+import { AsyncEnumeratorLike, StreamableLike } from "./streaming";
+import { EnumeratorLike, SourceLike, SourceLike_move } from "./util";
 import { dispose } from "./util/DisposableLike";
-
-/** @ignore */
-export const InteractiveSourceLike_move = Symbol("InteractiveSourceLike_move");
-export interface InteractiveSourceLike extends DisposableLike {
-  [InteractiveSourceLike_move](): void;
-}
-
-/** @ignore */
-export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-
-/** @ignore */
-export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
-
-export interface EnumeratorLike<T = unknown> extends InteractiveSourceLike {
-  readonly [EnumeratorLike_current]: T;
-  readonly [EnumeratorLike_hasCurrent]: boolean;
-}
-
-export interface AsyncEnumeratorLike<T = unknown>
-  extends DisposableLike,
-    InteractiveSourceLike,
-    StreamLike<void, T> {
-  readonly TStatefulContainerState?: ObserverLike<T>;
-}
 
 /** @ignore */
 export const InteractiveContainerLike_interact = Symbol(
@@ -57,7 +32,7 @@ export const InteractiveContainerLike_interact = Symbol(
 );
 
 export interface InteractiveContainerLike extends StatefulContainerLike {
-  readonly TStatefulContainerState?: InteractiveSourceLike;
+  readonly TStatefulContainerState?: SourceLike;
   readonly TCtx?: unknown;
 
   [InteractiveContainerLike_interact](
@@ -142,9 +117,7 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
         init(disposablePrototype, this);
         init(enumeratorPrototype, this);
       },
-      [InteractiveSourceLike_move](
-        this: typeof properties & MutableEnumeratorLike,
-      ) {
+      [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
         pipe(this, dispose());
       },
     };

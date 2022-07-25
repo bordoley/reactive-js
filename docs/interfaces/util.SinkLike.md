@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [rx](../modules/rx.md) / ObserverLike
+[Reactive-JS](../README.md) / [util](../modules/util.md) / SinkLike
 
-# Interface: ObserverLike<T\>
+# Interface: SinkLike<T\>
 
-[rx](../modules/rx.md).ObserverLike
+[util](../modules/util.md).SinkLike
 
 ## Type parameters
 
@@ -12,24 +12,24 @@
 
 ## Hierarchy
 
-- [`ReactiveSinkLike`](rx.ReactiveSinkLike.md)<`T`\>
+- [`DisposableLike`](util.DisposableLike.md)
 
-  ↳ **`ObserverLike`**
+  ↳ **`SinkLike`**
+
+  ↳↳ [`ObserverLike`](scheduling.ObserverLike.md)
 
 ## Table of contents
 
 ### Properties
 
-- [[DisposableLike\_error]](rx.ObserverLike.md#[disposablelike_error])
-- [[DisposableLike\_isDisposed]](rx.ObserverLike.md#[disposablelike_isdisposed])
-- [[ObserverLike\_dispatcher]](rx.ObserverLike.md#[observerlike_dispatcher])
-- [[ObserverLike\_scheduler]](rx.ObserverLike.md#[observerlike_scheduler])
+- [[DisposableLike\_error]](util.SinkLike.md#[disposablelike_error])
+- [[DisposableLike\_isDisposed]](util.SinkLike.md#[disposablelike_isdisposed])
 
 ### Methods
 
-- [[DisposableLike\_add]](rx.ObserverLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](rx.ObserverLike.md#[disposablelike_dispose])
-- [[ReactiveSinkLike\_notify]](rx.ObserverLike.md#[reactivesinklike_notify])
+- [[DisposableLike\_add]](util.SinkLike.md#[disposablelike_add])
+- [[DisposableLike\_dispose]](util.SinkLike.md#[disposablelike_dispose])
+- [[SinkLike\_notify]](util.SinkLike.md#[sinklike_notify])
 
 ## Properties
 
@@ -41,7 +41,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[ReactiveSinkLike](rx.ReactiveSinkLike.md).[[DisposableLike_error]](rx.ReactiveSinkLike.md#[disposablelike_error])
+[DisposableLike](util.DisposableLike.md).[[DisposableLike_error]](util.DisposableLike.md#[disposablelike_error])
 
 ___
 
@@ -53,19 +53,7 @@ ___
 
 #### Inherited from
 
-[ReactiveSinkLike](rx.ReactiveSinkLike.md).[[DisposableLike_isDisposed]](rx.ReactiveSinkLike.md#[disposablelike_isdisposed])
-
-___
-
-### [ObserverLike\_dispatcher]
-
-• `Readonly` **[ObserverLike\_dispatcher]**: [`DispatcherLike`](scheduling.DispatcherLike.md)<`T`\>
-
-___
-
-### [ObserverLike\_scheduler]
-
-• `Readonly` **[ObserverLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)
+[DisposableLike](util.DisposableLike.md).[[DisposableLike_isDisposed]](util.DisposableLike.md#[disposablelike_isdisposed])
 
 ## Methods
 
@@ -90,7 +78,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[ReactiveSinkLike](rx.ReactiveSinkLike.md).[[DisposableLike_add]](rx.ReactiveSinkLike.md#[disposablelike_add])
+[DisposableLike](util.DisposableLike.md).[[DisposableLike_add]](util.DisposableLike.md#[disposablelike_add])
 
 ___
 
@@ -112,13 +100,13 @@ Dispose the resource.
 
 #### Inherited from
 
-[ReactiveSinkLike](rx.ReactiveSinkLike.md).[[DisposableLike_dispose]](rx.ReactiveSinkLike.md#[disposablelike_dispose])
+[DisposableLike](util.DisposableLike.md).[[DisposableLike_dispose]](util.DisposableLike.md#[disposablelike_dispose])
 
 ___
 
-### [ReactiveSinkLike\_notify]
+### [SinkLike\_notify]
 
-▸ **[ReactiveSinkLike_notify]**(`next`): `void`
+▸ **[SinkLike_notify]**(`next`): `void`
 
 Notifies the the sink of the next notification produced by the observable source.
 
@@ -134,7 +122,3 @@ scheduled using the sink's `schedule` method.
 #### Returns
 
 `void`
-
-#### Inherited from
-
-[ReactiveSinkLike](rx.ReactiveSinkLike.md).[[ReactiveSinkLike_notify]](rx.ReactiveSinkLike.md#[reactivesinklike_notify])

@@ -1,12 +1,12 @@
 import {
-  MutableEnumeratorLike,
-  properties as enumeratorProperties,
-  prototype as enumeratorPrototype,
-} from "../__internal__/ix/Enumerator";
-import {
   properties as disposableProperties,
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
+import {
+  MutableEnumeratorLike,
+  properties as enumeratorProperties,
+  prototype as enumeratorPrototype,
+} from "../__internal__/util/Enumerator";
 import {
   Object_init,
   createObjectFactory,
@@ -49,12 +49,14 @@ import {
 } from "../functions";
 import {
   EnumerableLike,
-  EnumeratorLike,
-  EnumeratorLike_current,
   InteractiveContainerLike_interact,
-  InteractiveSourceLike_move,
   ToEnumerable,
 } from "../ix";
+import {
+  EnumeratorLike,
+  EnumeratorLike_current,
+  SourceLike_move,
+} from "../util";
 import { dispose, isDisposed } from "../util/DisposableLike";
 import { keepType } from "./ContainerLike";
 import {
@@ -430,9 +432,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
         init(enumeratorPrototype, this);
         this.seq = seq;
       },
-      [InteractiveSourceLike_move](
-        this: typeof properties & MutableEnumeratorLike,
-      ) {
+      [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
         if (!isDisposed(this)) {
           const next = this.seq();
           if (isSome(next)) {

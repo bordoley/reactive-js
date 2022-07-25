@@ -3,9 +3,9 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  InteractiveSourceLike_move,
-} from "../ix";
-import { move as ixMove } from "./InteractiveSourceLike";
+  SourceLike_move,
+} from "../util";
+import { move as ixMove } from "./SourceLike";
 
 export const getCurrent = <T>(enumerator: { [EnumeratorLike_current]: T }): T =>
   enumerator[EnumeratorLike_current];
@@ -17,7 +17,7 @@ export const hasCurrent = (enumerator: {
 export const move = <T>(enumerator: {
   [EnumeratorLike_current]: T;
   [EnumeratorLike_hasCurrent]: boolean;
-  [InteractiveSourceLike_move]: () => void;
+  [SourceLike_move]: () => void;
 }): boolean => {
   ixMove(enumerator);
   return hasCurrent(enumerator);

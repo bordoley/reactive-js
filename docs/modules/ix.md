@@ -7,11 +7,8 @@
 ### Interfaces
 
 - [AsyncEnumerableLike](../interfaces/ix.AsyncEnumerableLike.md)
-- [AsyncEnumeratorLike](../interfaces/ix.AsyncEnumeratorLike.md)
 - [EnumerableLike](../interfaces/ix.EnumerableLike.md)
-- [EnumeratorLike](../interfaces/ix.EnumeratorLike.md)
 - [InteractiveContainerLike](../interfaces/ix.InteractiveContainerLike.md)
-- [InteractiveSourceLike](../interfaces/ix.InteractiveSourceLike.md)
 
 ### Type Aliases
 
@@ -75,7 +72,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerate` | [`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`\>\> |
+| `enumerate` | [`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\>\> |
 
 #### Returns
 
