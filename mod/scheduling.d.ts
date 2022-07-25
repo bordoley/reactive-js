@@ -59,4 +59,8 @@ interface PrioritySchedulerLike extends DisposableLike {
 }
 interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
 }
-export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };
+declare const createHostScheduler: (options?: {
+    readonly yieldInterval?: number;
+}) => SchedulerLike;
+declare const createVirtualTimeScheduler: void;
+export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike, createHostScheduler, createVirtualTimeScheduler };
