@@ -1,8 +1,12 @@
 import { DisposableLike_add as DisposableLike_add$1, DisposableLike_dispose as DisposableLike_dispose$1, DisposableLike_error as DisposableLike_error$1, DisposableLike_isDisposed as DisposableLike_isDisposed$1 } from "./__internal__/util/DisposableLikeInternal.mjs";
 import { SideEffect1, Option, Factory } from "./functions.mjs";
+/** @ignore */
 declare const DisposableLike_add: typeof DisposableLike_add$1;
+/** @ignore */
 declare const DisposableLike_dispose: typeof DisposableLike_dispose$1;
+/** @ignore */
 declare const DisposableLike_error: typeof DisposableLike_error$1;
+/** @ignore */
 declare const DisposableLike_isDisposed: typeof DisposableLike_isDisposed$1;
 declare type Error = {
     readonly cause: unknown;
@@ -34,12 +38,15 @@ interface DisposableLike {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
+/** @ignore */
 declare const PauseableLike_pause: unique symbol;
+/** @ignore */
 declare const PauseableLike_resume: unique symbol;
 interface PauseableLike {
     [PauseableLike_pause](): void;
     [PauseableLike_resume](): void;
 }
+/** @ignore */
 declare const ContinuationLike_run: unique symbol;
 /**
  * A unit of work to be executed by a scheduler.

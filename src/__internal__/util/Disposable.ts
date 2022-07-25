@@ -107,7 +107,7 @@ export const createDisposable: Factory<DisposableLike> =
 export const disposed: DisposableLike = {
   [DisposableLike_error]: none,
   [DisposableLike_isDisposed]: true,
-  [DisposableLike_add]: function (
+  [DisposableLike_add](
     this: DisposableLike,
     disposable: DisposableOrTeardown,
   ): void {

@@ -19,13 +19,6 @@
 - [InteractiveContainerCtxOf](ix.md#interactivecontainerctxof)
 - [ToEnumerable](ix.md#toenumerable)
 
-### Variables
-
-- [EnumeratorLike\_current](ix.md#enumeratorlike_current)
-- [EnumeratorLike\_hasCurrent](ix.md#enumeratorlike_hascurrent)
-- [InteractiveContainerLike\_interact](ix.md#interactivecontainerlike_interact)
-- [InteractiveSourceLike\_move](ix.md#interactivesourcelike_move)
-
 ## Type Aliases
 
 ### InteractiveContainerCtxOf
@@ -51,27 +44,3 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `TOptions` | `never` |
-
-## Variables
-
-### EnumeratorLike\_current
-
-• `Const` **EnumeratorLike\_current**: unique `symbol`
-
-___
-
-### EnumeratorLike\_hasCurrent
-
-• `Const` **EnumeratorLike\_hasCurrent**: unique `symbol`
-
-___
-
-### InteractiveContainerLike\_interact
-
-• `Const` **InteractiveContainerLike\_interact**: unique `symbol`
-
-___
-
-### InteractiveSourceLike\_move
-
-• `Const` **InteractiveSourceLike\_move**: unique `symbol`
