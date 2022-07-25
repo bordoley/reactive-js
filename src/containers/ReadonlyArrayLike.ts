@@ -15,7 +15,6 @@ import {
 import {
   ContainerLike,
   ContainerOf,
-  Empty,
   Keep,
   Map,
   ReadonlyArrayLike,
@@ -46,13 +45,6 @@ import {
   ToEnumerable,
 } from "../ix";
 import { dispose, isDisposed } from "../util/DisposableLike";
-
-export const empty = /*@__PURE__*/ (() => {
-  const _empty: readonly any[] = [];
-  return <T>(): readonly T[] => _empty;
-})();
-
-export const emptyT: Empty<ReadonlyArrayLike> = { empty };
 
 export const every =
   <T>(predicate: Predicate<T>): Function1<readonly T[], boolean> =>

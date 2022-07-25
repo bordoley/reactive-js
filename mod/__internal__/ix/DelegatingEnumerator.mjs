@@ -1,7 +1,6 @@
 /// <reference types="./DelegatingEnumerator.d.ts" />
 import { none, raise } from '../../functions.mjs';
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../ix.mjs';
-import { move as move$1 } from '../../ix/EnumeratorLike.mjs';
+import { E as EnumeratorLike_current, a as EnumeratorLike_hasCurrent, m as move$1 } from '../../ix-e3dc0e14.mjs';
 import { Object_init } from '../util/Object.mjs';
 
 const DelegatingEnumerator_private_delegate = Symbol("DelegatingEnumerator_private_delegate");

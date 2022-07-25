@@ -1,18 +1,2 @@
 /// <reference types="./EnumeratorLike.d.ts" />
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../ix.mjs';
-import { move as move$1 } from './InteractiveSourceLike.mjs';
-
-const getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
-const hasCurrent = (enumerator) => enumerator[EnumeratorLike_hasCurrent];
-const move = (enumerator) => {
-    move$1(enumerator);
-    return hasCurrent(enumerator);
-};
-const forEach = (f) => enumerator => {
-    while (move(enumerator)) {
-        f(getCurrent(enumerator));
-    }
-    return enumerator;
-};
-
-export { forEach, getCurrent, hasCurrent, move };
+export { j as forEach, g as getCurrent, h as hasCurrent, m as move } from '../ix-e3dc0e14.mjs';

@@ -1,6 +1,6 @@
 /// <reference types="./scheduling.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__/env.mjs';
-import { properties as properties$1, prototype as prototype$1 } from './__internal__/ix/Enumerator.mjs';
+import { p as properties$1, b as prototype$1, i as move, g as getCurrent, I as InteractiveSourceLike_move, E as EnumeratorLike_current } from './ix-e3dc0e14.mjs';
 import { getDelay } from './__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from './__internal__/scheduling/queue.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from './__internal__/schedulingInternal.mjs';
@@ -8,9 +8,6 @@ export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/
 import { properties, prototype } from './__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, isSome } from './functions.mjs';
-import { InteractiveSourceLike_move, EnumeratorLike_current } from './ix.mjs';
-import { getCurrent } from './ix/EnumeratorLike.mjs';
-import { move } from './ix/InteractiveSourceLike.mjs';
 import { createDisposable, ContinuationLike_run } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
 import { addTo, onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';

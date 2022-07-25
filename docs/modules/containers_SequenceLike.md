@@ -9,7 +9,6 @@
 - [concatAllT](containers_SequenceLike.md#concatallt)
 - [concatT](containers_SequenceLike.md#concatt)
 - [distinctUntilChangedT](containers_SequenceLike.md#distinctuntilchangedt)
-- [generateT](containers_SequenceLike.md#generatet)
 - [keepT](containers_SequenceLike.md#keept)
 - [mapT](containers_SequenceLike.md#mapt)
 - [pairwiseT](containers_SequenceLike.md#pairwiset)
@@ -27,7 +26,6 @@
 - [concat](containers_SequenceLike.md#concat)
 - [concatAll](containers_SequenceLike.md#concatall)
 - [distinctUntilChanged](containers_SequenceLike.md#distinctuntilchanged)
-- [generate](containers_SequenceLike.md#generate)
 - [keep](containers_SequenceLike.md#keep)
 - [map](containers_SequenceLike.md#map)
 - [pairwise](containers_SequenceLike.md#pairwise)
@@ -58,12 +56,6 @@ ___
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
-
-___
-
-### generateT
-
-• `Const` **generateT**: [`Generate`](containers.md#generate)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
@@ -199,29 +191,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-
-#### Returns
-
-[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
 
 ___
 

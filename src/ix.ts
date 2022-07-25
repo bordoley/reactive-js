@@ -1,15 +1,31 @@
 import {
+  MutableEnumeratorLike,
+  properties as enumeratorProperties,
+  prototype as enumeratorPrototype,
+} from "./__internal__/ix/Enumerator";
+import {
+  properties as disposableProperties,
+  prototype as disposablePrototype,
+} from "./__internal__/util/Disposable";
+import {
+  Object_init,
+  createObjectFactory,
+  init,
+} from "./__internal__/util/Object";
+import {
   Container,
   ContainerLike,
   ContainerOf,
+  Empty,
   StatefulContainerLike,
   StatefulContainerStateOf,
 } from "./containers";
-import { Function1 } from "./functions";
+import { Factory, Function1, newInstance, none, pipe } from "./functions";
 import { ObserverLike } from "./rx";
 import { SchedulerLike } from "./scheduling";
 import { StreamLike, StreamableLike } from "./streaming";
 import { DisposableLike } from "./util";
+import { dispose } from "./util/DisposableLike";
 
 /** @ignore */
 export const InteractiveSourceLike_move = Symbol("InteractiveSourceLike_move");
@@ -82,13 +98,6 @@ export type InteractiveContainerCtxOf<
       readonly _T: () => T;
     };
 
-export interface CreateInteractiveContainer<C extends InteractiveContainerLike>
-  extends Container<C> {
-  create<T>(
-    source: (ctx: C["TCtx"]) => StatefulContainerStateOf<C, T>,
-  ): ContainerOf<C, T>;
-}
-
 export type ToEnumerable<
   C extends ContainerLike,
   TOptions = never,
@@ -96,4 +105,64 @@ export type ToEnumerable<
   toEnumerable<T>(
     options?: TOptions,
   ): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+};
+
+export const createEnumerable = /*@__PURE__*/ (() => {
+  class CreateEnumerable<T> implements EnumerableLike<T> {
+    constructor(readonly _enumerate: Factory<EnumeratorLike<T>>) {}
+
+    [InteractiveContainerLike_interact](): EnumeratorLike<T> {
+      try {
+        return this._enumerate();
+      } catch (cause) {
+        const empty = emptyEnumerable<T>();
+        return pipe(
+          empty[InteractiveContainerLike_interact](none),
+          dispose({ cause }),
+        );
+      }
+    }
+  }
+
+  return <T>(enumerate: Factory<EnumeratorLike<T>>): EnumerableLike<T> =>
+    newInstance(CreateEnumerable, enumerate);
+})();
+
+export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
+  /*@__PURE__*/ (() => {
+    const properties = {
+      ...disposableProperties,
+      ...enumeratorProperties,
+    };
+
+    const prototype = {
+      ...disposablePrototype,
+      ...enumeratorPrototype,
+      [Object_init](this: typeof properties) {
+        init(disposablePrototype, this);
+        init(enumeratorPrototype, this);
+      },
+      [InteractiveSourceLike_move](
+        this: typeof properties & MutableEnumeratorLike,
+      ) {
+        pipe(this, dispose());
+      },
+    };
+
+    const createInstance = createObjectFactory<
+      typeof prototype,
+      typeof properties
+    >(prototype, properties);
+
+    class EmptyEnumerable<T> implements EnumerableLike<T> {
+      [InteractiveContainerLike_interact](): EnumeratorLike<T> {
+        return createInstance() as EnumeratorLike<T>;
+      }
+    }
+
+    return <T>() => newInstance(EmptyEnumerable) as EnumerableLike<T>;
+  })();
+
+export const emptyEnumerableT: Empty<EnumerableLike> = {
+  empty: emptyEnumerable,
 };

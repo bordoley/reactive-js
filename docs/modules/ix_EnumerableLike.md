@@ -7,9 +7,7 @@
 ### Variables
 
 - [TContainerOf](ix_EnumerableLike.md#tcontainerof)
-- [createT](ix_EnumerableLike.md#createt)
 - [distinctUntilChangedT](ix_EnumerableLike.md#distinctuntilchangedt)
-- [emptyT](ix_EnumerableLike.md#emptyt)
 - [keepT](ix_EnumerableLike.md#keept)
 - [mapT](ix_EnumerableLike.md#mapt)
 - [pairwiseT](ix_EnumerableLike.md#pairwiset)
@@ -26,9 +24,7 @@
 
 ### Functions
 
-- [create](ix_EnumerableLike.md#create)
 - [distinctUntilChanged](ix_EnumerableLike.md#distinctuntilchanged)
-- [empty](ix_EnumerableLike.md#empty)
 - [enumerate](ix_EnumerableLike.md#enumerate)
 - [keep](ix_EnumerableLike.md#keep)
 - [map](ix_EnumerableLike.md#map)
@@ -52,21 +48,9 @@
 
 ___
 
-### createT
-
-• `Const` **createT**: [`CreateInteractiveContainer`](../interfaces/ix.CreateInteractiveContainer.md)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### emptyT
-
-• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 
@@ -148,28 +132,6 @@ ___
 
 ## Functions
 
-### create
-
-▸ **create**<`T`\>(`source`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `source` | (`ctx`: `undefined` \| `void`) => [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`\> |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
-
-___
-
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
@@ -190,28 +152,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### empty
-
-▸ **empty**<`T`\>(`options?`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
 
 ___
 
