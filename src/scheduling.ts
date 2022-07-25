@@ -391,7 +391,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
       number
     >(prototype, properties);
 
-  (
+  return (
     options: { readonly maxMicroTaskTicks?: number } = {},
   ): VirtualTimeSchedulerLike => {
     const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;

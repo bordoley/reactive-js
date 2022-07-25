@@ -188,7 +188,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     };
     const createInstance = 
     /*@__PURE__*/ createObjectFactory(prototype$2, properties$2);
-    (options = {}) => {
+    return (options = {}) => {
         const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
         return createInstance(maxMicroTaskTicks);
     };
