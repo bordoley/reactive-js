@@ -84,6 +84,11 @@ export interface CreateInteractiveContainer<C extends InteractiveContainerLike>
   ): ContainerOf<C, T>;
 }
 
-export type ToEnumerable<C extends ContainerLike> = Container<C> & {
-  toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+export type ToEnumerable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toEnumerable<T>(
+    options?: TOptions,
+  ): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };

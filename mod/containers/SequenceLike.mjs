@@ -1,8 +1,14 @@
 /// <reference types="./SequenceLike.d.ts" />
-import { strictEquality, alwaysTrue, getLength, returns, pipe, callWith } from '../functions.mjs';
+import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
+import { properties, prototype } from '../__internal__/util/Disposable.mjs';
+import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { pipe, strictEquality, alwaysTrue, getLength, callWith, returns, newInstance } from '../functions.mjs';
+import { InteractiveSourceLike_move, EnumeratorLike_current, InteractiveContainerLike_interact } from '../ix.mjs';
+import '../util/DisposableLike.mjs';
 import { isSome, none, isNone } from '../util/Option.mjs';
 import { keepType } from './ContainerLike.mjs';
-import { map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
+import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
+import { isDisposed, dispose } from '../__internal__/util/DisposableLike.mjs';
 
 const createNext = (data, next) => ({
     data,
@@ -30,31 +36,12 @@ const concatAll = () => (seq) => {
 const concatAllT = {
     concatAll,
 };
-const _fromArray = (arr, index, endIndex) => index < endIndex && index >= 0
-    ? createNext(arr[index], () => _fromArray(arr, index + 1, endIndex))
-    : none;
-
-/*<T>(values: readonly T[], startIndex: number, endIndex: number) =>
-    (() => _fromArray(values, startIndex, endIndex)),
-);
-
-export const fromArrayT: FromArray<SequenceLike> = {
-  fromArray,
-};
-
-export function concat<T>(
-  fst: SequenceLike<T>,
-  snd: SequenceLike<T>,
-  ...tail: readonly SequenceLike<T>[]
-): SequenceLike<T>;
-
-export function concat<T>(...sequences: readonly SequenceLike<T>[]): SequenceLike<T> {
-  return pipe(sequences, fromArray(), concatAll());
+function concat(...sequences) {
+    return pipe(sequences, toSequence(), concatAll());
 }
-
-export const concatT: Concat<SequenceLike> = {
-  concat,
-};*/
+const concatT = {
+    concat,
+};
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const _distinctUntilChanged = (equality, prevValue, next) => () => {
@@ -234,7 +221,7 @@ const takeLast =
                 break;
             }
         }
-        return _fromArray(last, 0, getLength(last));
+        return pipe(last, toSequence(), callWith());
     };
     return (options = {}) => (seq) => {
         const { count = 1 } = options;
@@ -258,6 +245,46 @@ const takeWhile =
     };
 })();
 const takeWhileT = { takeWhile };
+const toEnumerable = 
+/*@__PURE__*/ (() => {
+    const properties$2 = {
+        ...properties,
+        ...properties$1,
+        seq: (() => none),
+    };
+    const prototype$2 = {
+        ...prototype,
+        ...prototype$1,
+        [Object_init](seq) {
+            init(prototype, this);
+            init(prototype$1, this);
+            this.seq = seq;
+        },
+        [InteractiveSourceLike_move]() {
+            if (!isDisposed(this)) {
+                const next = this.seq();
+                if (isSome(next)) {
+                    this[EnumeratorLike_current] = next.data;
+                    this.seq = next.next;
+                }
+                else {
+                    pipe(this, dispose());
+                }
+            }
+        },
+    };
+    const createInstance = createObjectFactory(prototype$2, properties$2);
+    class SequenceEnumerable {
+        constructor(seq) {
+            this.seq = seq;
+        }
+        [InteractiveContainerLike_interact]() {
+            return createInstance(this.seq);
+        }
+    }
+    return () => (seq) => newInstance(SequenceEnumerable, seq);
+})();
+const toEnumerableT = { toEnumerable };
 /*
 export const toRunnable =
   <T>(): Function1<SequenceLike<T>, RunnableLike<T>> =>
@@ -318,4 +345,4 @@ export const toEnumerableT: ToEnumerable<SequenceLike> = {
 };
 */
 
-export { concatAll, concatAllT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, zip, zipT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, zip, zipT };

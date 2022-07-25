@@ -1,4 +1,3 @@
-import { createFromArray } from "../__internal__/containers/ContainerLike";
 import {
   Lift,
   TInteractive,
@@ -36,7 +35,6 @@ import {
   ContainerOperator,
   DistinctUntilChanged,
   Empty,
-  FromArray,
   Keep,
   Map,
   Pairwise,
@@ -56,6 +54,7 @@ import {
   every,
   forEach as forEachReadonlyArray,
   map as mapReadonlyArray,
+  toEnumerable as toEnumerableReadonlyArray,
 } from "../containers/ReadonlyArrayLike";
 import {
   Equality,
@@ -279,84 +278,6 @@ export const empty: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (() => {
 })();
 
 export const emptyT: Empty<EnumerableLike> = { empty };
-
-export const fromArray: FromArray<EnumerableLike>["fromArray"] =
-  /*@__PURE__*/ (() => {
-    const properties = {
-      ...disposableProperties,
-      ...enumeratorProperties,
-      array: [] as readonly unknown[],
-      count: 0,
-      index: 0,
-    };
-
-    const prototype = {
-      ...disposablePrototype,
-      ...enumeratorPrototype,
-      [Object_init](
-        this: typeof properties,
-        array: readonly unknown[],
-        start: number,
-        count: number,
-      ) {
-        init(disposablePrototype, this);
-        init(enumeratorPrototype, this);
-
-        this.array = array;
-        this.index = start - 1;
-        this.count = count;
-      },
-      [InteractiveSourceLike_move](
-        this: typeof properties & MutableEnumeratorLike,
-      ) {
-        const { array } = this;
-
-        if (!isDisposed(this)) {
-          this.index++;
-          const { index, count } = this;
-
-          if (count !== 0) {
-            this[EnumeratorLike_current] = array[index];
-
-            this.count = count > 0 ? this.count-- : this.count++;
-          } else {
-            pipe(this, dispose());
-          }
-        }
-      },
-    };
-
-    const createInstance = createObjectFactory<
-      typeof prototype,
-      typeof properties,
-      readonly unknown[],
-      number,
-      number
-    >(prototype, properties);
-
-    class FromArrayEnumerable<T> implements EnumerableLike<T> {
-      constructor(
-        private readonly array: readonly T[],
-        private readonly start: number,
-        private readonly count: number,
-      ) {}
-
-      [InteractiveContainerLike_interact](): EnumeratorLike<T> {
-        return createInstance(
-          this.array,
-          this.start,
-          this.count,
-        ) as EnumeratorLike<T>;
-      }
-    }
-
-    return createFromArray<EnumerableLike>(
-      <T>(a: readonly T[], start: number, count: number) =>
-        newInstance(FromArrayEnumerable, a, start, count),
-    );
-  })();
-
-export const fromArrayT: FromArray<EnumerableLike> = { fromArray };
 
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (() => {
   const properties = {
@@ -734,7 +655,12 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
             }
           }
 
-          const enumerator = pipe(last, fromArray(), enumerate(), bindTo(this));
+          const enumerator = pipe(
+            last,
+            toEnumerableReadonlyArray(),
+            enumerate(),
+            bindTo(this),
+          );
           init(delegatingEnumeratorPrototype, this, enumerator);
         }
 
