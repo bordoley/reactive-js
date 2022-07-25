@@ -405,9 +405,6 @@ export type Zip<C extends ContainerLike> = Container<C> & {
     h: ContainerOf<C, TH>,
     i: ContainerOf<C, TI>,
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-  zip<T>(
-    ...enumerables: readonly ContainerOf<C, T>[]
-  ): ContainerOf<C, readonly T[]>;
 };
 
 export const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"] =

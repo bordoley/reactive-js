@@ -126,17 +126,7 @@ export const createRunnableTests = <C extends ContainerLike>(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    test(
-      "mapTo",
-      pipeLazy(
-        [1, 2, 3],
-        m.fromArray(),
-        mapTo(m, 2),
-        m.toRunnable(),
-        toArray(),
-        expectArrayEquals([2, 2, 2]),
-      ),
-    ),
+
     describe(
       "repeat",
       test(

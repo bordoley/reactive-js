@@ -685,21 +685,3 @@ ___
 #### Returns
 
 [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
-
-▸ **zip**<`T`\>(...`enumerables`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...enumerables` | readonly [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>[] |
-
-#### Returns
-
-[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly `T`[]\>

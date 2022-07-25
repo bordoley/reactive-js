@@ -16,10 +16,12 @@ import {
   TakeLast,
   TakeWhile,
   ToReadonlyArray,
+  Zip,
   emptyReadonlyArray,
 } from "../containers";
 import {
   alwaysTrue,
+  arrayEquality,
   increment,
   pipe,
   pipeLazy,
@@ -340,4 +342,50 @@ export const takeWhileTests = <C extends ContainerLike>(
         expectToThrowError(err),
       );
     }),
+  );
+
+export const zipTests = <C extends ContainerLike>(
+  m: Zip<C> & FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "zip",
+    test(
+      "when all inputs are the same length",
+      pipeLazy(
+        m.zip(
+          pipe([1, 2, 3, 4, 5], m.fromArray()),
+          pipe([5, 4, 3, 2, 1], m.fromArray()),
+        ),
+        m.toReadonlyArray(),
+        expectArrayEquals<readonly [number, number]>(
+          [
+            [1, 5],
+            [2, 4],
+            [3, 3],
+            [4, 2],
+            [5, 1],
+          ],
+          arrayEquality(),
+        ),
+      ),
+    ),
+    test(
+      "when inputs are different length",
+      pipeLazy(
+        m.zip(
+          pipe([1, 2, 3], m.fromArray()),
+          pipe([5, 4, 3, 2, 1], m.fromArray()),
+          pipe([1, 2, 3, 4], m.fromArray()),
+        ),
+        m.toReadonlyArray(),
+        expectArrayEquals<readonly [number, number, number]>(
+          [
+            [1, 5, 1],
+            [2, 4, 2],
+            [3, 3, 3],
+          ],
+          arrayEquality(),
+        ),
+      ),
+    ),
   );

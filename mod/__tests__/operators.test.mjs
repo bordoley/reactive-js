@@ -1,7 +1,7 @@
 /// <reference types="./operators.test.d.ts" />
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectToThrowError } from '../__internal__/testing.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
-import { pipeLazy, pipe, increment, sum, returns, alwaysTrue } from '../functions.mjs';
+import { pipeLazy, pipe, increment, sum, returns, alwaysTrue, arrayEquality } from '../functions.mjs';
 
 const distinctUntilChangedTest = (m) => createDescribe("distinctUntilChanged", createTest("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), createTest("when source is empty", pipeLazy([], m.fromArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([]))), createTest("when equality operator throws", () => {
     const err = new Error();
@@ -51,5 +51,16 @@ const takeWhileTests = (m) => createDescribe("takeWhile", createTest("exclusive"
     };
     pipe(pipeLazy([1, 1], m.fromArray(), m.takeWhile(predicate), m.toReadonlyArray()), expectToThrowError(err));
 }));
+const zipTests = (m) => createDescribe("zip", createTest("when all inputs are the same length", pipeLazy(m.zip(pipe([1, 2, 3, 4, 5], m.fromArray()), pipe([5, 4, 3, 2, 1], m.fromArray())), m.toReadonlyArray(), expectArrayEquals([
+    [1, 5],
+    [2, 4],
+    [3, 3],
+    [4, 2],
+    [5, 1],
+], arrayEquality()))), createTest("when inputs are different length", pipeLazy(m.zip(pipe([1, 2, 3], m.fromArray()), pipe([5, 4, 3, 2, 1], m.fromArray()), pipe([1, 2, 3, 4], m.fromArray())), m.toReadonlyArray(), expectArrayEquals([
+    [1, 5, 1],
+    [2, 4, 2],
+    [3, 3, 3],
+], arrayEquality()))));
 
-export { distinctUntilChangedTest, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests };
+export { distinctUntilChangedTest, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests };
