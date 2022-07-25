@@ -1,11 +1,15 @@
 /// <reference types="./ContainerLike.test.d.ts" />
 import { describe as createDescribe, test as createTest, expectArrayEquals } from '../__internal__/testing.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
-import { ignoreElements } from '../containers/ContainerLike.mjs';
+import { ignoreElements, mapTo, zipWith } from '../containers/ContainerLike.mjs';
 import { toEnumerable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipeLazy } from '../functions.mjs';
-import { keepT, toReadonlyArray } from '../ix/EnumerableLike.mjs';
+import { pipeLazy, pipe, arrayEquality } from '../functions.mjs';
+import { keepT, toReadonlyArray, mapT, zipT } from '../ix/EnumerableLike.mjs';
 
-const ContainerLikeTests = createDescribe("ContainerLike", createDescribe("ignoreElements", createTest("ignoreElements", pipeLazy([1, 2, 3], toEnumerable(), ignoreElements(keepT), toReadonlyArray(), expectArrayEquals(emptyReadonlyArray())))));
+const ContainerLikeTests = createDescribe("ContainerLike", createDescribe("ignoreElements", createTest("ignores all elements", pipeLazy([1, 2, 3], toEnumerable(), ignoreElements(keepT), toReadonlyArray(), expectArrayEquals(emptyReadonlyArray())))), createDescribe("mapTo", createTest("maps every value in the source to v", pipeLazy([1, 2, 3], toEnumerable(), mapTo(mapT, 2), toReadonlyArray(), expectArrayEquals([2, 2, 2])))), createDescribe("zipWith", createTest("when inputs are different lengths", pipeLazy([1, 2, 3], toEnumerable(), zipWith(zipT, pipe([1, 2, 3, 4], toEnumerable())), toReadonlyArray(), expectArrayEquals([
+    [1, 1],
+    [2, 2],
+    [3, 3],
+], arrayEquality())))));
 
 export { ContainerLikeTests };

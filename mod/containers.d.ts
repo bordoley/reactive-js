@@ -235,7 +235,6 @@ declare type Zip<C extends ContainerLike> = Container<C> & {
         TH,
         TI
     ]>;
-    zip<T>(...enumerables: readonly ContainerOf<C, T>[]): ContainerOf<C, readonly T[]>;
 };
 declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;

@@ -10,6 +10,7 @@ import {
   takeLastT,
   takeWhileT,
   toReadonlyArrayT,
+  zipT,
 } from "../ix/EnumerableLike";
 import {
   distinctUntilChangedTest,
@@ -20,6 +21,7 @@ import {
   takeFirstTests,
   takeLastTests,
   takeWhileTests,
+  zipTests,
 } from "./operators.test";
 
 export const EnumerableLikeTests = describe(
@@ -62,6 +64,11 @@ export const EnumerableLikeTests = describe(
   takeWhileTests({
     fromArray: toEnumerable,
     ...takeWhileT,
+    ...toReadonlyArrayT,
+  }),
+  zipTests({
+    fromArray: toEnumerable,
+    ...zipT,
     ...toReadonlyArrayT,
   }),
 );
