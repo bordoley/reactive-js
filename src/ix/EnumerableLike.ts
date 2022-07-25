@@ -59,6 +59,7 @@ import {
   ThrowIfEmpty,
   ToIterable,
   ToReadonlyArray,
+  Using,
   Zip,
   emptyReadonlyArray,
 } from "../containers";
@@ -918,6 +919,27 @@ export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
   })();
 
 export const toIterableT: ToIterable<EnumerableLike> = { toIterable };
+
+export const using: Using<EnumerableLike<unknown>>["using"] = <
+  TResource extends DisposableLike,
+  T,
+>(
+  resourceFactory: Factory<TResource | readonly TResource[]>,
+  enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
+): EnumerableLike<T> =>
+  createEnumerable<T>(() => {
+    const resources = resourceFactory();
+    const resourcesArray = Array.isArray(resources) ? resources : [resources];
+    const enumerator = pipe(enumerableFactory(...resourcesArray), enumerate());
+
+    pipe(resourcesArray, forEachReadonlyArray(addTo(enumerator)));
+
+    return enumerator;
+  });
+
+export const usingT: Using<EnumerableLike<unknown>> = {
+  using,
+};
 
 const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
