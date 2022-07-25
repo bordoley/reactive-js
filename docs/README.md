@@ -29,7 +29,6 @@ Reactive-JS
 - [scheduling/DispatcherLike](modules/scheduling_DispatcherLike.md)
 - [scheduling/PrioritySchedulerLike](modules/scheduling_PrioritySchedulerLike.md)
 - [scheduling/SchedulerLike](modules/scheduling_SchedulerLike.md)
-- [scheduling/VirtualTimeSchedulerLike](modules/scheduling_VirtualTimeSchedulerLike.md)
 - [streaming](modules/streaming.md)
 - [util](modules/util.md)
 - [util/DisposableLike](modules/util_DisposableLike.md)

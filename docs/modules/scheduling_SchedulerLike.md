@@ -7,7 +7,6 @@
 ### Functions
 
 - [\_\_yield](scheduling_SchedulerLike.md#__yield)
-- [create](scheduling_SchedulerLike.md#create)
 - [getCurrentTime](scheduling_SchedulerLike.md#getcurrenttime)
 - [isInContinuation](scheduling_SchedulerLike.md#isincontinuation)
 - [requestYield](scheduling_SchedulerLike.md#requestyield)
@@ -32,23 +31,6 @@
 #### Returns
 
 `void`
-
-___
-
-### create
-
-▸ **create**(`options?`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.yieldInterval?` | `number` |
-
-#### Returns
-
-[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
 
 ___
 

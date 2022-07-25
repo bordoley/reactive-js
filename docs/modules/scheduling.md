@@ -28,6 +28,11 @@
 - [SchedulerLike\_requestYield](scheduling.md#schedulerlike_requestyield)
 - [SchedulerLike\_schedule](scheduling.md#schedulerlike_schedule)
 - [SchedulerLike\_shouldYield](scheduling.md#schedulerlike_shouldyield)
+- [createVirtualTimeScheduler](scheduling.md#createvirtualtimescheduler)
+
+### Functions
+
+- [createHostScheduler](scheduling.md#createhostscheduler)
 
 ## Type Aliases
 
@@ -101,3 +106,26 @@ ___
 ### SchedulerLike\_shouldYield
 
 • `Const` **SchedulerLike\_shouldYield**: unique `symbol`
+
+___
+
+### createVirtualTimeScheduler
+
+• `Const` **createVirtualTimeScheduler**: `void`
+
+## Functions
+
+### createHostScheduler
+
+▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.yieldInterval?` | `number` |
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
