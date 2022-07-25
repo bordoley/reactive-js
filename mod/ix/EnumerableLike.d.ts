@@ -29,10 +29,10 @@ declare const takeWhileT: TakeWhile<EnumerableLike>;
 declare const TContainerOf: EnumerableLike;
 declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike>;
-declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
-declare const toReadonlyArrayT: ToReadonlyArray<EnumerableLike>;
 declare const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<EnumerableLike>;
+declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
+declare const toReadonlyArrayT: ToReadonlyArray<EnumerableLike>;
 /**
  * Converts an EnumerableLike into a javascript Iterable.
  */

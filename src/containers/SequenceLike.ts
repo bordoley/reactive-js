@@ -28,6 +28,7 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
+  ToReadonlyArray,
   Zip,
 } from "../containers";
 import {
@@ -451,6 +452,25 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   })();
 
 export const toEnumerableT: ToEnumerable<SequenceLike> = { toEnumerable };
+
+export const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
+
+    <T>() =>
+    (seq: SequenceLike<T>) => {
+      const result: T[] = [];
+
+      let next = seq();
+      while (isSome(next)) {
+        result.push(next.data);
+        next = next.next();
+      }
+
+      return result;
+    };
+
+export const toReadonlyArrayT: ToReadonlyArray<SequenceLike> = {
+  toReadonlyArray,
+};
 
 /*
 export const toRunnable =

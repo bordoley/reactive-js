@@ -1,6 +1,6 @@
+import { createPriorityQueue } from "../__internal__/scheduling/queue";
+import { describe, expectArrayEquals, test } from "../__internal__/testing";
 import { floor, newInstance, pipe } from "../functions";
-import { createPriorityQueue } from "../scheduler/queue";
-import { describe, expectArrayEquals, test } from "../testing";
 
 const compare = (a: number, b: number): number => a - b;
 
@@ -26,7 +26,7 @@ const makeShuffledArray = (n: number) => {
   return result;
 };
 
-export const tests = describe(
+export const queueTests = describe(
   "priority queue",
   test("push", () => {
     const queue = createPriorityQueue(compare);
@@ -35,9 +35,9 @@ export const tests = describe(
       queue.push(shuffledArray[i]);
     }
 
-    const acc = [];
+    const acc: number[] = [];
     while (queue.count > 0) {
-      acc.push(queue.pop());
+      acc.push(queue.pop() as number);
     }
 
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
