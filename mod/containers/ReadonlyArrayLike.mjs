@@ -2,8 +2,8 @@
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { getLength, isSome, max, min, pipe, newInstance, identity, none } from '../functions.mjs';
-import { InteractiveContainerLike_interact } from '../ix.mjs';
+import { getLength, isSome, max, min, pipe, identity, none } from '../functions.mjs';
+import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
@@ -83,19 +83,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
         },
     });
     const createInstance = createObjectFactory(prototype$2, properties$2);
-    class ReadonlyArrayEnumerable {
-        constructor(array, start, count) {
-            this.array = array;
-            this.start = start;
-            this.count = count;
-        }
-        [InteractiveContainerLike_interact]() {
-            return createInstance(this.array, this.start, this.count);
-        }
-    }
-    return createFromArray((a, start, count) => {
-        return newInstance(ReadonlyArrayEnumerable, a, start, count);
-    });
+    return createFromArray((array, start, count) => createEnumerable(() => createInstance(array, start, count)));
 })();
 const toEnumerableT = { toEnumerable };
 const toReadonlyArray = () => identity;

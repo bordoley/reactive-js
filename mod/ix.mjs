@@ -42,12 +42,7 @@ const emptyEnumerable =
         },
     });
     const createInstance = createObjectFactory(prototype$2, properties$2);
-    class EmptyEnumerable {
-        [InteractiveContainerLike_interact]() {
-            return createInstance();
-        }
-    }
-    return () => newInstance(EmptyEnumerable);
+    return () => createEnumerable(() => createInstance());
 })();
 const emptyEnumerableT = {
     empty: emptyEnumerable,

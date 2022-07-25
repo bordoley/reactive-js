@@ -42,17 +42,12 @@ import {
   getLength,
   isNone,
   isSome,
-  newInstance,
   none,
   pipe,
   returns,
   strictEquality,
 } from "../functions";
-import {
-  EnumerableLike,
-  InteractiveContainerLike_interact,
-  ToEnumerable,
-} from "../ix";
+import { ToEnumerable, createEnumerable } from "../ix";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -450,17 +445,9 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       SequenceLike
     >(prototype, properties);
 
-    class SequenceEnumerable<T> implements EnumerableLike<T> {
-      constructor(private readonly seq: SequenceLike<T>) {}
-
-      [InteractiveContainerLike_interact](): EnumeratorLike<T> {
-        return createInstance(this.seq) as EnumeratorLike<T>;
-      }
-    }
-
     return <T>() =>
       (seq: SequenceLike<T>) =>
-        newInstance(SequenceEnumerable, seq);
+        createEnumerable(() => createInstance(seq) as EnumeratorLike<T>);
   })();
 
 export const toEnumerableT: ToEnumerable<SequenceLike> = { toEnumerable };
