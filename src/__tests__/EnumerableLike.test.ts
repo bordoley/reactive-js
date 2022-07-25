@@ -1,6 +1,7 @@
 import { describe } from "../__internal__/testing";
 import { toEnumerable } from "../containers/ReadonlyArrayLike";
 import {
+  concatAllT,
   distinctUntilChangedT,
   keepT,
   mapT,
@@ -13,7 +14,8 @@ import {
   zipT,
 } from "../ix/EnumerableLike";
 import {
-  distinctUntilChangedTest,
+  concatAllTests,
+  distinctUntilChangedTests,
   keepTests,
   mapTests,
   scanTests,
@@ -26,7 +28,12 @@ import {
 
 export const EnumerableLikeTests = describe(
   "EnumerableLike",
-  distinctUntilChangedTest({
+  concatAllTests({
+    fromArray: toEnumerable,
+    ...concatAllT,
+    ...toReadonlyArrayT,
+  }),
+  distinctUntilChangedTests({
     fromArray: toEnumerable,
     ...distinctUntilChangedT,
     ...toReadonlyArrayT,

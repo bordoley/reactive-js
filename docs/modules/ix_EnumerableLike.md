@@ -7,6 +7,8 @@
 ### Variables
 
 - [TContainerOf](ix_EnumerableLike.md#tcontainerof)
+- [concatAllT](ix_EnumerableLike.md#concatallt)
+- [concatT](ix_EnumerableLike.md#concatt)
 - [distinctUntilChangedT](ix_EnumerableLike.md#distinctuntilchangedt)
 - [keepT](ix_EnumerableLike.md#keept)
 - [mapT](ix_EnumerableLike.md#mapt)
@@ -24,6 +26,8 @@
 
 ### Functions
 
+- [concat](ix_EnumerableLike.md#concat)
+- [concatAll](ix_EnumerableLike.md#concatall)
 - [distinctUntilChanged](ix_EnumerableLike.md#distinctuntilchanged)
 - [enumerate](ix_EnumerableLike.md#enumerate)
 - [keep](ix_EnumerableLike.md#keep)
@@ -45,6 +49,18 @@
 ### TContainerOf
 
 • `Const` **TContainerOf**: [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)
+
+___
+
+### concatAllT
+
+• `Const` **concatAllT**: [`ConcatAll`](containers.md#concatall)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
+
+___
+
+### concatT
+
+• `Const` **concatT**: [`Concat`](containers.md#concat)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 
@@ -131,6 +147,52 @@ ___
 • `Const` **zipT**: [`Zip`](containers.md#zip)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ## Functions
+
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\> |
+| `snd` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+___
+
+### concatAll
+
+▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<`Record`<`string`, `never`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, `T`\>
+
+___
 
 ### distinctUntilChanged
 

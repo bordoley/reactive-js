@@ -3,7 +3,10 @@ import { describe as createDescribe, test as createTest, expectArrayEquals, expe
 import { emptyReadonlyArray } from '../containers.mjs';
 import { pipeLazy, pipe, increment, sum, returns, alwaysTrue, arrayEquality } from '../functions.mjs';
 
-const distinctUntilChangedTest = (m) => createDescribe("distinctUntilChanged", createTest("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), createTest("when source is empty", pipeLazy([], m.fromArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([]))), createTest("when equality operator throws", () => {
+const concatAllTests = (m) => createDescribe("concatAll", createTest("concats the input containers in order", pipeLazy([pipe([1, 2, 3], m.fromArray()), pipe([4, 5, 6], m.fromArray())], m.fromArray(), m.concatAll(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), createTest("when an inner enumerator throw", () => {
+    // FIXME: Implement me
+}));
+const distinctUntilChangedTests = (m) => createDescribe("distinctUntilChanged", createTest("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), createTest("when source is empty", pipeLazy([], m.fromArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([]))), createTest("when equality operator throws", () => {
     const err = new Error();
     const equality = (_a, _b) => {
         throw err;
@@ -63,4 +66,4 @@ const zipTests = (m) => createDescribe("zip", createTest("when all inputs are th
     [3, 3, 3],
 ], arrayEquality()))));
 
-export { distinctUntilChangedTest, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests };
+export { concatAllTests, distinctUntilChangedTests, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests };
