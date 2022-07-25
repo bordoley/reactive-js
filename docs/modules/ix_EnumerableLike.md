@@ -22,6 +22,7 @@
 - [toEnumerableT](ix_EnumerableLike.md#toenumerablet)
 - [toIterableT](ix_EnumerableLike.md#toiterablet)
 - [toReadonlyArrayT](ix_EnumerableLike.md#toreadonlyarrayt)
+- [usingT](ix_EnumerableLike.md#usingt)
 - [zipT](ix_EnumerableLike.md#zipt)
 
 ### Functions
@@ -43,6 +44,7 @@
 - [toEnumerable](ix_EnumerableLike.md#toenumerable)
 - [toIterable](ix_EnumerableLike.md#toiterable)
 - [toReadonlyArray](ix_EnumerableLike.md#toreadonlyarray)
+- [using](ix_EnumerableLike.md#using)
 
 ## Variables
 
@@ -139,6 +141,12 @@ ___
 ### toReadonlyArrayT
 
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
+
+___
+
+### usingT
+
+• `Const` **usingT**: [`Using`](containers.md#using)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
@@ -532,3 +540,137 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### using
+
+▸ **using**<`TResource`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
+| `containerFactory` | [`Function1`](functions.md#function1)<`TResource`, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+▸ **using**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\> |
+| `containerFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+▸ **using**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\> |
+| `containerFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource4` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
+| `containerFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource4` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource5` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
+| `containerFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+▸ **using**<`TResource`, `T`\>(`resourceFactory`, `runnableFactory`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\> |
+| `runnableFactory` | (...`resources`: readonly `TResource`[]) => [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
