@@ -5,6 +5,10 @@ import {
   keepT,
   mapT,
   scanT,
+  skipFirstT,
+  takeFirstT,
+  takeLastT,
+  takeWhileT,
   toReadonlyArrayT,
 } from "../ix/EnumerableLike";
 import {
@@ -12,10 +16,14 @@ import {
   keepTests,
   mapTests,
   scanTests,
+  skipFirstTests,
+  takeFirstTests,
+  takeLastTests,
+  takeWhileTests,
 } from "./operators.test";
 
-export const tests = describe(
-  "enumerable",
+export const EnumerableLikeTests = describe(
+  "EnumerableLike",
   distinctUntilChangedTest({
     fromArray: toEnumerable,
     ...distinctUntilChangedT,
@@ -34,6 +42,26 @@ export const tests = describe(
   scanTests({
     fromArray: toEnumerable,
     ...scanT,
+    ...toReadonlyArrayT,
+  }),
+  skipFirstTests({
+    fromArray: toEnumerable,
+    ...skipFirstT,
+    ...toReadonlyArrayT,
+  }),
+  takeFirstTests({
+    fromArray: toEnumerable,
+    ...takeFirstT,
+    ...toReadonlyArrayT,
+  }),
+  takeLastTests({
+    fromArray: toEnumerable,
+    ...takeLastT,
+    ...toReadonlyArrayT,
+  }),
+  takeWhileTests({
+    fromArray: toEnumerable,
+    ...takeWhileT,
     ...toReadonlyArrayT,
   }),
 );

@@ -1,11 +1,11 @@
-/// <reference types="./disposable.test.d.ts" />
+/// <reference types="./DisposableLike.test.d.ts" />
 import { describe as createDescribe, test as createTest, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals } from '../__internal__/testing.mjs';
 import { pipe, pipeLazy, none, raise } from '../functions.mjs';
 import { createDisposable } from '../util.mjs';
 import { addIgnoringChildErrors, onDisposed } from '../util/DisposableLike.mjs';
 import { dispose, isDisposed, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
-const tests = createDescribe("Disposable", createTest("disposes child disposable when disposed", () => {
+const DisposableLikeTests = createDescribe("DisposableLike", createTest("disposes child disposable when disposed", () => {
     const child = createDisposable();
     pipe(createDisposable(), addIgnoringChildErrors(child), dispose());
     pipe(child, isDisposed, expectTrue);
@@ -31,4 +31,4 @@ const tests = createDescribe("Disposable", createTest("disposes child disposable
     pipe(childTeardown.calls[0], expectArrayEquals([error]));
 }));
 
-export { tests };
+export { DisposableLikeTests };

@@ -3,7 +3,8 @@
  */
 
 import { runTests } from "../__internal__/testing";
-import { tests as disposableTests } from "./disposable.test";
-import { tests as enumerableTests } from "./enumerable.test";
+import { ContainerLikeTests } from "./ContainerLike.test";
+import { DisposableLikeTests } from "./DisposableLike.test";
+import { EnumerableLikeTests } from "./EnumerableLike.test";
 
-runTests([disposableTests, enumerableTests]);
+runTests([ContainerLikeTests, DisposableLikeTests, EnumerableLikeTests]);

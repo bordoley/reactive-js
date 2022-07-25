@@ -478,34 +478,41 @@ export const scanT: Scan<EnumerableLike> = {
 export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
   /*@__PURE__*/ (() => {
     const properties = {
-      ...delegatingDisposableEnumeratorProperties,
+      ...delegatingDisposableProperties,
+      ...delegatingEnumeratorProperties,
       skipCount: 0 as number,
       count: 0 as number,
     };
 
-    const prototype = mix(delegatingDisposableEnumeratorPrototype, {
-      [Object_init](
-        this: typeof properties,
-        delegate: EnumeratorLike,
-        skipCount: number,
-      ) {
-        init(delegatingDisposableEnumeratorPrototype, this, delegate);
-        this.skipCount = skipCount;
-        this.count = 0;
-      },
-      [SourceLike_move](this: typeof properties & EnumeratorLike) {
-        const { delegate, skipCount } = this;
+    const prototype = mix(
+      delegatingDisposablePrototype,
+      delegatingEnumeratorPrototype,
+      {
+        [Object_init](
+          this: typeof properties,
+          delegate: EnumeratorLike,
+          skipCount: number,
+        ) {
+          init(delegatingDisposablePrototype, this, delegate);
+          init(delegatingEnumeratorPrototype, this, delegate);
 
-        for (let { count } = this; count < skipCount; count++) {
-          if (!move(delegate)) {
-            break;
+          this.skipCount = skipCount;
+          this.count = 0;
+        },
+        [SourceLike_move](this: typeof properties & EnumeratorLike) {
+          const { skipCount } = this;
+
+          for (let { count } = this; count < skipCount; count++) {
+            if (!delegatingEnumeratorMove(this)) {
+              break;
+            }
           }
-        }
 
-        this.count = skipCount;
-        move(delegate);
+          this.count = skipCount;
+          delegatingEnumeratorMove(this);
+        },
       },
-    });
+    );
 
     const createInstance = createObjectFactory<
       typeof prototype,

@@ -31,4 +31,40 @@ declare const scanTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
-export { distinctUntilChangedTest, keepTests, mapTests, scanTests };
+declare const skipFirstTests: <C extends ContainerLike>(m: Container<C> & {
+    skipFirst<T>(options?: {
+        readonly count?: number | undefined;
+    } | undefined): ContainerOperator<C, T, T>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
+declare const takeFirstTests: <C extends ContainerLike>(m: Container<C> & {
+    takeFirst<T>(options?: {
+        readonly count?: number | undefined;
+    } | undefined): ContainerOperator<C, T, T>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
+declare const takeLastTests: <C extends ContainerLike>(m: Container<C> & {
+    takeLast<T>(options?: {
+        readonly count?: number | undefined;
+    } | undefined): ContainerOperator<C, T, T>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
+declare const takeWhileTests: <C extends ContainerLike>(m: Container<C> & {
+    takeWhile<T>(predicate: Predicate<T>, options?: {
+        readonly inclusive?: boolean | undefined;
+    } | undefined): ContainerOperator<C, T, T>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
+export { distinctUntilChangedTest, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests };
