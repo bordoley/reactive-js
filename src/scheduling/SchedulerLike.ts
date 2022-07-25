@@ -10,8 +10,6 @@ import {
   createPriorityQueue,
 } from "../__internal__/scheduling/queue";
 import {
-  SchedulerLike_inContinuation,
-  SchedulerLike_now,
   getCurrentTime,
   isInContinuation,
 } from "../__internal__/schedulingInternal";
@@ -54,6 +52,8 @@ import {
   PauseableSchedulerLike,
   PrioritySchedulerLike,
   SchedulerLike,
+  SchedulerLike_inContinuation,
+  SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
@@ -66,12 +66,12 @@ import {
   PauseableLike,
   PauseableLike_pause,
   PauseableLike_resume,
+  disposed,
 } from "../util";
 import { run } from "../util/ContinuationLike";
 import {
   addIgnoringChildErrors,
   dispose,
-  disposed,
   isDisposed,
 } from "../util/DisposableLike";
 

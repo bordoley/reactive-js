@@ -9,10 +9,9 @@ import {
   test,
 } from "../__internal__/testing";
 import { Option, none, pipe, pipeLazy, raise } from "../functions";
-import { Error } from "../util";
+import { Error, createDisposable } from "../util";
 import {
   addIgnoringChildErrors,
-  create,
   dispose,
   getError,
   isDisposed,
@@ -25,27 +24,36 @@ export const tests = describe(
   describe(
     "Disposable",
     test("disposes child disposable when disposed", () => {
-      const child = create();
-      pipe(create(), addIgnoringChildErrors(child), dispose());
+      const child = createDisposable();
+      pipe(createDisposable(), addIgnoringChildErrors(child), dispose());
       pipe(child, isDisposed, expectTrue);
     }),
 
     test("adding to disposed disposable disposes the child", () => {
-      const child = create();
-      pipe(create(), dispose(), addIgnoringChildErrors(child));
+      const child = createDisposable();
+      pipe(createDisposable(), dispose(), addIgnoringChildErrors(child));
       pipe(child, isDisposed, expectTrue);
     }),
 
     test("disposes teardown function exactly once when disposed", () => {
       const teardown = mockFn();
-      pipe(create(), onDisposed(teardown), onDisposed(teardown), dispose());
+      pipe(
+        createDisposable(),
+        onDisposed(teardown),
+        onDisposed(teardown),
+        dispose(),
+      );
       pipe(teardown, expectToHaveBeenCalledTimes(1));
     }),
 
     test("catches and swallows Errors thrown by teardown function", () => {
       const teardown = pipeLazy(none, raise);
 
-      const disposable = pipe(create(), onDisposed(teardown), dispose());
+      const disposable = pipe(
+        createDisposable(),
+        onDisposed(teardown),
+        dispose(),
+      );
       pipe(disposable, getError, expectNone);
     }),
 
@@ -53,7 +61,7 @@ export const tests = describe(
       const error: Option<Error> = { cause: null };
 
       const childTeardown = mockFn();
-      const disposable = pipe(create(), onDisposed(childTeardown));
+      const disposable = pipe(createDisposable(), onDisposed(childTeardown));
 
       pipe(disposable, dispose(error));
 

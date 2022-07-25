@@ -1,25 +1,17 @@
-import { properties, prototype } from "../__internal__/util/Disposable";
-import { dispose, getError } from "../__internal__/util/DisposableLikeInternal";
-import { createObjectFactory } from "../__internal__/util/Object";
+import { dispose } from "../__internal__/util/DisposableLikeInternal";
 import {
-  Factory,
   Identity,
   Option,
   SideEffect,
   SideEffect1,
-  ignore,
   isNone,
   isSome,
   newInstance,
-  none,
   pipe,
 } from "../functions";
 import {
   DisposableLike,
   DisposableLike_add,
-  DisposableLike_dispose,
-  DisposableLike_error,
-  DisposableLike_isDisposed,
   DisposableOrTeardown,
   Error,
 } from "../util";
@@ -113,38 +105,8 @@ export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   return abortController.signal;
 };
 
-const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
-  const error = getError(self);
-  if (disposable instanceof Function) {
-    try {
-      disposable.call(self, error);
-    } catch (_) {
-      /* Proactively catch Errors thrown in teardown logic. Teardown functions
-       * shouldn't throw, so this is to prevent unexpected Errors.
-       */
-    }
-  } else {
-    pipe(disposable, dispose(error));
-  }
-};
-
-export const disposed: DisposableLike = {
-  [DisposableLike_error]: none,
-  [DisposableLike_isDisposed]: true,
-  [DisposableLike_add]: function (
-    this: DisposableLike,
-    disposable: DisposableOrTeardown,
-  ): void {
-    doDispose(this, disposable);
-  },
-  [DisposableLike_dispose]: ignore,
-};
-
 export {
   dispose,
   getError,
   isDisposed,
 } from "../__internal__/util/DisposableLikeInternal";
-
-export const create: Factory<DisposableLike> =
-  /*@__PURE__*/ createObjectFactory(prototype, properties);

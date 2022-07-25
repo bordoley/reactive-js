@@ -1,6 +1,7 @@
 /// <reference types="./DisposableRefLike.d.ts" />
 import { pipe } from '../../functions.mjs';
-import { disposed, add } from '../../util/DisposableLike.mjs';
+import { disposed } from '../../util.mjs';
+import { add } from '../../util/DisposableLike.mjs';
 import { MutableRefLike_current } from './MutableRefLike.mjs';
 import { Object_init } from './Object.mjs';
 import { dispose } from './DisposableLikeInternal.mjs';

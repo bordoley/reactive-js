@@ -37,12 +37,12 @@ import {
   ContinuationLike_run,
   DisposableLike,
   PauseableLike,
+  createDisposable,
 } from "./util";
 import { run } from "./util/ContinuationLike";
 import {
   addIgnoringChildErrors,
   addTo,
-  create as createDisposable,
   dispose,
   isDisposed,
   onDisposed,

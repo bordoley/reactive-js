@@ -1,4 +1,4 @@
-import { Identity, SideEffect1, Option, SideEffect, Factory } from "../functions.mjs";
+import { Identity, SideEffect1, Option, SideEffect } from "../functions.mjs";
 import { DisposableLike, Error } from "../util.mjs";
 export { dispose, getError, isDisposed } from '../__internal__/util/DisposableLikeInternal.js';
 declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Identity<T>;
@@ -14,6 +14,4 @@ declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Id
  */
 declare const toErrorHandler: (disposable: DisposableLike) => SideEffect1<unknown>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-declare const disposed: DisposableLike;
-declare const create: Factory<DisposableLike>;
-export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, create, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

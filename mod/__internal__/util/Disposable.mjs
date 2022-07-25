@@ -1,8 +1,7 @@
 /// <reference types="./Disposable.d.ts" />
-import { none, pipe, isNone, isSome } from '../../functions.mjs';
-import { DisposableLike_error, DisposableLike_isDisposed, DisposableLike_dispose, DisposableLike_add } from '../../util.mjs';
-import { getError, dispose, isDisposed } from './DisposableLikeInternal.mjs';
-import { Object_init } from './Object.mjs';
+import { none, pipe, isNone, isSome, ignore } from '../../functions.mjs';
+import { DisposableLike_error, DisposableLike_isDisposed, getError, dispose, DisposableLike_dispose, isDisposed, DisposableLike_add } from './DisposableLikeInternal.mjs';
+import { Object_init, createObjectFactory } from './Object.mjs';
 
 const Disposable_private_disposables = Symbol("Disposable_private_disposables");
 const properties = {
@@ -65,5 +64,15 @@ const prototype = {
         this[Disposable_private_disposables] = new Set();
     },
 };
+const createDisposable = 
+/*@__PURE__*/ createObjectFactory(prototype, properties);
+const disposed = {
+    [DisposableLike_error]: none,
+    [DisposableLike_isDisposed]: true,
+    [DisposableLike_add]: function (disposable) {
+        doDispose(this, disposable);
+    },
+    [DisposableLike_dispose]: ignore,
+};
 
-export { properties, prototype };
+export { createDisposable, disposed, properties, prototype };

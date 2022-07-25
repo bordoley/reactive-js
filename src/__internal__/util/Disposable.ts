@@ -1,4 +1,12 @@
-import { Option, isNone, isSome, none, pipe } from "../../functions";
+import {
+  Factory,
+  Option,
+  ignore,
+  isNone,
+  isSome,
+  none,
+  pipe,
+} from "../../functions";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -7,9 +15,11 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
   Error,
-} from "../../util";
-import { dispose, getError, isDisposed } from "./DisposableLikeInternal";
-import { Object_init } from "./Object";
+  dispose,
+  getError,
+  isDisposed,
+} from "./DisposableLikeInternal";
+import { Object_init, createObjectFactory } from "./Object";
 
 const Disposable_private_disposables = Symbol("Disposable_private_disposables");
 
@@ -24,10 +34,7 @@ export const properties: {
     none as unknown as Set<DisposableOrTeardown>,
 };
 
-const doDispose = (
-  self: typeof properties,
-  disposable: DisposableOrTeardown,
-) => {
+const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
   const error = getError(self);
   if (disposable instanceof Function) {
     try {
@@ -43,7 +50,10 @@ const doDispose = (
 };
 
 export const prototype = {
-  [DisposableLike_dispose](this: typeof properties, error?: Error) {
+  [DisposableLike_dispose](
+    this: typeof properties & DisposableLike,
+    error?: Error,
+  ) {
     if (!isDisposed(this)) {
       this[DisposableLike_error] = error;
       this[DisposableLike_isDisposed] = true;
@@ -89,4 +99,19 @@ export const prototype = {
   [Object_init](this: typeof properties) {
     this[Disposable_private_disposables] = new Set();
   },
+};
+
+export const createDisposable: Factory<DisposableLike> =
+  /*@__PURE__*/ createObjectFactory(prototype, properties);
+
+export const disposed: DisposableLike = {
+  [DisposableLike_error]: none,
+  [DisposableLike_isDisposed]: true,
+  [DisposableLike_add]: function (
+    this: DisposableLike,
+    disposable: DisposableOrTeardown,
+  ): void {
+    doDispose(this, disposable);
+  },
+  [DisposableLike_dispose]: ignore,
 };
