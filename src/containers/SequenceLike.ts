@@ -1,4 +1,20 @@
-import { Option, isNone, isSome, none } from "../util/Option";
+import {
+  ConcatAll,
+  ContainerOperator,
+  DistinctUntilChanged,
+  Generate,
+  Keep,
+  Map,
+  Pairwise,
+  Repeat,
+  Scan,
+  SequenceLike,
+  SkipFirst,
+  TakeFirst,
+  TakeLast,
+  TakeWhile,
+  Zip,
+} from "../containers";
 import {
   Equality,
   Factory,
@@ -12,37 +28,16 @@ import {
   pipe,
   returns,
   strictEquality,
-} from "../util/functions";
-import {
-  ConcatAll,
-  ContainerLike,
-  ContainerOperator,
-  DistinctUntilChanged,
-  Generate,
-  Keep,
-  Map,
-  Pairwise,
-  Repeat,
-  Scan,
-  SkipFirst,
-  TakeFirst,
-  TakeLast,
-  TakeWhile,
-  Zip,
-  keepType,
-} from "./ContainerLike";
+} from "../functions";
+import { Option } from "../util";
+import { isNone, isSome, none } from "../util/Option";
+import { keepType } from "./ContainerLike";
 import { keepT as keepTArray, map as mapArray } from "./ReadonlyArrayLike";
 
-export type SequenceResult<T> = {
+type SequenceResult<T> = {
   readonly data: T;
   readonly next: SequenceLike<T>;
 };
-
-export interface SequenceLike<T = unknown> extends ContainerLike {
-  readonly TContainerOf?: SequenceLike<this["T"]>;
-
-  (): Option<SequenceResult<T>>;
-}
 
 const createNext = <T>(data: T, next: SequenceLike<T>): SequenceResult<T> => ({
   data,

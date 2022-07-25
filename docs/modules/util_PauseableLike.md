@@ -4,31 +4,10 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [PauseableLike](../interfaces/util_PauseableLike.PauseableLike.md)
-
-### Variables
-
-- [PauseableLike\_pause](util_PauseableLike.md#pauseablelike_pause)
-- [PauseableLike\_resume](util_PauseableLike.md#pauseablelike_resume)
-
 ### Functions
 
 - [pause](util_PauseableLike.md#pause)
 - [resume](util_PauseableLike.md#resume)
-
-## Variables
-
-### PauseableLike\_pause
-
-• `Const` **PauseableLike\_pause**: unique `symbol`
-
-___
-
-### PauseableLike\_resume
-
-• `Const` **PauseableLike\_resume**: unique `symbol`
 
 ## Functions
 

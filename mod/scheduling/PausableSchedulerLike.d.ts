@@ -1,7 +1,4 @@
-import { PauseableLike } from "../util/PauseableLike.mjs";
-import { Function1 } from "../util/functions.mjs";
-import { SchedulerLike } from "./SchedulerLike.mjs";
-interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
-}
+import { Function1 } from "../functions.mjs";
+import { SchedulerLike, PauseableSchedulerLike } from "../scheduling.mjs";
 declare const create: Function1<SchedulerLike, PauseableSchedulerLike>;
-export { PauseableSchedulerLike, create };
+export { create };

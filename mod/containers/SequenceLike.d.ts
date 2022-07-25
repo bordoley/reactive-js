@@ -1,13 +1,4 @@
-import { Option } from "../util/Option.mjs";
-import { ContainerLike, ConcatAll, DistinctUntilChanged, Keep, Map, Generate, Pairwise, ContainerOperator, TakeFirst, Repeat, Scan, SkipFirst, TakeLast, TakeWhile, Zip } from "./ContainerLike.mjs";
-declare type SequenceResult<T> = {
-    readonly data: T;
-    readonly next: SequenceLike<T>;
-};
-interface SequenceLike<T = unknown> extends ContainerLike {
-    readonly TContainerOf?: SequenceLike<this["T"]>;
-    (): Option<SequenceResult<T>>;
-}
+import { ConcatAll, SequenceLike, DistinctUntilChanged, Keep, Map, Generate, Pairwise, ContainerOperator, TakeFirst, Repeat, Scan, SkipFirst, TakeLast, TakeWhile, Zip } from "../containers.mjs";
 declare const concatAll: ConcatAll<SequenceLike>["concatAll"];
 declare const concatAllT: ConcatAll<SequenceLike>;
 declare const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"];
@@ -35,4 +26,4 @@ declare const takeWhile: TakeWhile<SequenceLike>["takeWhile"];
 declare const takeWhileT: TakeWhile<SequenceLike>;
 declare const zip: Zip<SequenceLike>["zip"];
 declare const zipT: Zip<SequenceLike>;
-export { SequenceLike, SequenceResult, concatAll, concatAllT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, zip, zipT };
+export { concatAll, concatAllT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, zip, zipT };

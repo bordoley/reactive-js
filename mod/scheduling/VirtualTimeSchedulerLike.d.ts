@@ -1,7 +1,4 @@
-import { EnumeratorLike } from "../ix/EnumeratorLike.mjs";
-import { SchedulerLike } from "./SchedulerLike.mjs";
-interface VirtualTimeSchedulerLike extends EnumeratorLike<unknown>, SchedulerLike {
-}
+import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
 /**
  * Creates a new virtual time scheduler instance.
  *
@@ -12,4 +9,4 @@ interface VirtualTimeSchedulerLike extends EnumeratorLike<unknown>, SchedulerLik
 declare const create: (options?: {
     readonly maxMicroTaskTicks?: number;
 }) => VirtualTimeSchedulerLike;
-export { VirtualTimeSchedulerLike, create };
+export { create };

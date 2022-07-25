@@ -4,14 +4,6 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [SequenceLike](../interfaces/containers_SequenceLike.SequenceLike.md)
-
-### Type Aliases
-
-- [SequenceResult](containers_SequenceLike.md#sequenceresult)
-
 ### Variables
 
 - [concatAllT](containers_SequenceLike.md#concatallt)
@@ -45,108 +37,89 @@
 - [takeWhile](containers_SequenceLike.md#takewhile)
 - [zip](containers_SequenceLike.md#zip)
 
-## Type Aliases
-
-### SequenceResult
-
-Ƭ **SequenceResult**<`T`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-| `next` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`T`\> |
-
 ## Variables
 
 ### concatAllT
 
-• `Const` **concatAllT**: [`ConcatAll`](containers_ContainerLike.md#concatall)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **concatAllT**: [`ConcatAll`](containers.md#concatall)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### distinctUntilChangedT
 
-• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers_ContainerLike.md#distinctuntilchanged)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### generateT
 
-• `Const` **generateT**: [`Generate`](containers_ContainerLike.md#generate)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **generateT**: [`Generate`](containers.md#generate)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### keepT
 
-• `Const` **keepT**: [`Keep`](containers_ContainerLike.md#keep)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **keepT**: [`Keep`](containers.md#keep)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### mapT
 
-• `Const` **mapT**: [`Map`](containers_ContainerLike.md#map)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **mapT**: [`Map`](containers.md#map)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### pairwiseT
 
-• `Const` **pairwiseT**: [`Pairwise`](containers_ContainerLike.md#pairwise)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **pairwiseT**: [`Pairwise`](containers.md#pairwise)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### repeatT
 
-• `Const` **repeatT**: [`Repeat`](containers_ContainerLike.md#repeat)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **repeatT**: [`Repeat`](containers.md#repeat)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### scanT
 
-• `Const` **scanT**: [`Scan`](containers_ContainerLike.md#scan)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **scanT**: [`Scan`](containers.md#scan)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### skipFirstT
 
-• `Const` **skipFirstT**: [`SkipFirst`](containers_ContainerLike.md#skipfirst)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **skipFirstT**: [`SkipFirst`](containers.md#skipfirst)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### takeFirstT
 
-• `Const` **takeFirstT**: [`TakeFirst`](containers_ContainerLike.md#takefirst)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **takeFirstT**: [`TakeFirst`](containers.md#takefirst)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### takeLastT
 
-• `Const` **takeLastT**: [`TakeLast`](containers_ContainerLike.md#takelast)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **takeLastT**: [`TakeLast`](containers.md#takelast)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### takeWhileT
 
-• `Const` **takeWhileT**: [`TakeWhile`](containers_ContainerLike.md#takewhile)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **takeWhileT**: [`TakeWhile`](containers.md#takewhile)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
 ### zipT
 
-• `Const` **zipT**: [`Zip`](containers_ContainerLike.md#zip)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)\>
+• `Const` **zipT**: [`Zip`](containers.md#zip)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ## Functions
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -162,13 +135,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, `T`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -181,17 +154,17 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.equality?` | [`Equality`](util_functions.md#equality)<`T`\> |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### generate
 
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`T`\>
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
 
 #### Type parameters
 
@@ -203,18 +176,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `generator` | [`Updater`](util_functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](util_functions.md#factory)<`T`\> |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`T`\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -226,17 +199,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Predicate`](util_functions.md#predicate)<`T`\> |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`mapper`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`mapper`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -249,17 +222,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `mapper` | [`Function1`](util_functions.md#function1)<`TA`, `TB`\> |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, readonly [[`Option`](util_Option.md#option)<`T`\>, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, readonly [[`Option`](util.md#option)<`T`\>, `T`]\>
 
 #### Type parameters
 
@@ -269,13 +242,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, readonly [[`Option`](util_Option.md#option)<`T`\>, `T`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, readonly [[`Option`](util.md#option)<`T`\>, `T`]\>
 
 ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -287,13 +260,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Predicate`](util_functions.md#predicate)<`number`\> |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -309,9 +282,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -321,13 +294,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -340,18 +313,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`Reducer`](util_functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](util_functions.md#factory)<`TAcc`\> |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `TAcc`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
 ### seek
 
-▸ **seek**<`T`\>(`count`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **seek**<`T`\>(`count`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -367,13 +340,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -390,13 +363,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -413,13 +386,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -436,13 +409,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -454,19 +427,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Predicate`](util_functions.md#predicate)<`T`\> |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 | `options?` | `Object` |
 | `options.inclusive?` | `boolean` |
 
 #### Returns
 
-[`ContainerOperator`](containers_ContainerLike.md#containeroperator)<[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### zip
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -479,14 +452,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TA`\> |
-| `b` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TB`\> |
+| `a` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TA`\> |
+| `b` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TB`\> |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`]\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -500,15 +473,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TA`\> |
-| `b` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TB`\> |
-| `c` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TC`\> |
+| `a` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TA`\> |
+| `b` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TB`\> |
+| `c` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TC`\> |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -523,16 +496,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TA`\> |
-| `b` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TB`\> |
-| `c` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TC`\> |
-| `d` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TD`\> |
+| `a` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TA`\> |
+| `b` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TB`\> |
+| `c` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TC`\> |
+| `d` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TD`\> |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -548,17 +521,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TA`\> |
-| `b` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TB`\> |
-| `c` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TC`\> |
-| `d` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TD`\> |
-| `e` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TE`\> |
+| `a` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TA`\> |
+| `b` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TB`\> |
+| `c` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TC`\> |
+| `d` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TD`\> |
+| `e` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TE`\> |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -575,18 +548,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TA`\> |
-| `b` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TB`\> |
-| `c` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TC`\> |
-| `d` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TD`\> |
-| `e` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TE`\> |
-| `f` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TF`\> |
+| `a` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TA`\> |
+| `b` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TB`\> |
+| `c` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TC`\> |
+| `d` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TD`\> |
+| `e` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TE`\> |
+| `f` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TF`\> |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -604,19 +577,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TA`\> |
-| `b` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TB`\> |
-| `c` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TC`\> |
-| `d` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TD`\> |
-| `e` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TE`\> |
-| `f` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TF`\> |
-| `g` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TG`\> |
+| `a` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TA`\> |
+| `b` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TB`\> |
+| `c` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TC`\> |
+| `d` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TD`\> |
+| `e` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TE`\> |
+| `f` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TF`\> |
+| `g` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TG`\> |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -635,20 +608,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TA`\> |
-| `b` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TB`\> |
-| `c` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TC`\> |
-| `d` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TD`\> |
-| `e` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TE`\> |
-| `f` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TF`\> |
-| `g` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TG`\> |
-| `h` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TH`\> |
+| `a` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TA`\> |
+| `b` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TB`\> |
+| `c` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TC`\> |
+| `d` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TD`\> |
+| `e` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TE`\> |
+| `f` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TF`\> |
+| `g` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TG`\> |
+| `h` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TH`\> |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -668,21 +641,21 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TA`\> |
-| `b` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TB`\> |
-| `c` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TC`\> |
-| `d` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TD`\> |
-| `e` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TE`\> |
-| `f` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TF`\> |
-| `g` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TG`\> |
-| `h` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TH`\> |
-| `i` | [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`TI`\> |
+| `a` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TA`\> |
+| `b` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TB`\> |
+| `c` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TC`\> |
+| `d` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TD`\> |
+| `e` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TE`\> |
+| `f` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TF`\> |
+| `g` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TG`\> |
+| `h` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TH`\> |
+| `i` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`TI`\> |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
-▸ **zip**<`T`\>(...`enumerables`): [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly `T`[]\>
+▸ **zip**<`T`\>(...`enumerables`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly `T`[]\>
 
 #### Type parameters
 
@@ -694,8 +667,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `...enumerables` | readonly [`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<`T`\>[] |
+| `...enumerables` | readonly [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>[] |
 
 #### Returns
 
-[`SequenceLike`](../interfaces/containers_SequenceLike.SequenceLike.md)<readonly `T`[]\>
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<readonly `T`[]\>

@@ -1,11 +1,5 @@
-import { Function1, Predicate, SideEffect1 } from "../util/functions.mjs";
-import { ContainerLike, Container, ContainerOf, Empty, Keep, Map } from "./ContainerLike.mjs";
-interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
-    readonly TContainerOf?: ReadonlyArrayLike<this["T"]>;
-}
-declare type ToReadonlyArray<C extends ContainerLike> = Container<C> & {
-    toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
-};
+import { Empty, ReadonlyArrayLike, Keep, Map, ToReadonlyArray } from "../containers.mjs";
+import { Predicate, Function1, SideEffect1 } from "../functions.mjs";
 declare const empty: <T>() => readonly T[];
 declare const emptyT: Empty<ReadonlyArrayLike>;
 declare const every: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
@@ -16,4 +10,4 @@ declare const mapT: Map<ReadonlyArrayLike>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<readonly T[], readonly T[]>;
 declare const toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<ReadonlyArrayLike>;
-export { ReadonlyArrayLike, ToReadonlyArray, empty, emptyT, every, forEach, keep, keepT, map, mapT, toReadonlyArray, toReadonlyArrayT };
+export { empty, emptyT, every, forEach, keep, keepT, map, mapT, toReadonlyArray, toReadonlyArrayT };

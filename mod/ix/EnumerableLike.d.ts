@@ -1,22 +1,6 @@
-import { ContainerLike, Container, ContainerOf, DistinctUntilChanged, Empty, FromArray, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, Zip } from "../containers/ContainerLike.mjs";
-import { ToIterable } from "../containers/IterableLike.mjs";
-import { ToReadonlyArray } from "../containers/ReadonlyArrayLike.mjs";
-import { ThrowIfEmpty } from "../containers/StatefulContainerLike.mjs";
-import { Function1, SideEffect1 } from "../util/functions.mjs";
-import { EnumeratorLike } from "./EnumeratorLike.mjs";
-import { InteractiveContainerLike, InteractiveContainerLike_interact, CreateInteractiveContainer } from "./InteractiveContainerLike.mjs";
-/**
- * Interface for iterating a Container of items.
- */
-interface EnumerableLike<T = unknown> extends InteractiveContainerLike {
-    readonly TContainerOf?: EnumerableLike<this["T"]>;
-    readonly TStatefulContainerState?: EnumeratorLike<this["T"]>;
-    readonly TCtx?: void;
-    [InteractiveContainerLike_interact](_: void): EnumeratorLike<T>;
-}
-interface ToEnumerable<C extends ContainerLike> extends Container<C> {
-    toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
-}
+import { DistinctUntilChanged, Empty, FromArray, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
+import { SideEffect1 } from "../functions.mjs";
+import { EnumerableLike, EnumeratorLike, CreateInteractiveContainer, ToEnumerable } from "../ix.mjs";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
 declare const create: CreateInteractiveContainer<EnumerableLike>["create"];
 declare const createT: CreateInteractiveContainer<EnumerableLike>;
@@ -56,4 +40,4 @@ declare const toEnumerableT: ToEnumerable<EnumerableLike>;
 declare const toIterable: ToIterable<EnumerableLike>["toIterable"];
 declare const toIterableT: ToIterable<EnumerableLike>;
 declare const zipT: Zip<EnumerableLike>;
-export { EnumerableLike, TContainerOf, ToEnumerable, create, createT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, fromArray, fromArrayT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };
+export { TContainerOf, create, createT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, fromArray, fromArrayT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };

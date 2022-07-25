@@ -9,52 +9,26 @@ import {
   createObjectFactory,
   init,
 } from "../__internal__/util/Object";
+import { Function1, pipe } from "../functions";
 import {
-  DisposableLike,
-  addIgnoringChildErrors,
-  isDisposed,
-} from "../util/DisposableLike";
-import { none } from "../util/Option";
-import { Function1, pipe } from "../util/functions";
-import { ContinuationLike } from "./ContinuationLike";
-import {
+  ContinuationLike,
+  PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+} from "../scheduling";
+import { DisposableLike } from "../util";
+import { addIgnoringChildErrors, isDisposed } from "../util/DisposableLike";
+import { none } from "../util/Option";
+import {
   getCurrentTime,
   isInContinuation,
   requestYield,
   shouldYield,
 } from "./SchedulerLike";
-
-export type PrioritySchedulerOptions = {
-  readonly priority: number;
-  readonly delay?: number;
-};
-
-/**
- * A scheduler which schedules work according to it's priority.
- *
- * @noInheritDoc
- */
-export interface PrioritySchedulerLike extends DisposableLike {
-  readonly [SchedulerLike_inContinuation]: boolean;
-  readonly [SchedulerLike_now]: number;
-  readonly [SchedulerLike_shouldYield]: boolean;
-
-  /**
-   * Request the scheduler to yield.
-   */
-  [SchedulerLike_requestYield](): void;
-
-  [SchedulerLike_schedule](
-    continuation: ContinuationLike,
-    options: PrioritySchedulerOptions,
-  ): void;
-}
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.

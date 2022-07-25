@@ -1,11 +1,4 @@
-import { Function1 } from "../util/functions.mjs";
-import { ContainerLike, Container, ContainerOf } from "./ContainerLike.mjs";
-interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
-    readonly TContainerOf?: IterableLike<this["T"]>;
-}
-declare type ToIterable<C extends ContainerLike> = Container<C> & {
-    toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
-};
+import { ToIterable, IterableLike } from "../containers.mjs";
 declare const toIterable: ToIterable<IterableLike>["toIterable"];
 declare const toIterableT: ToIterable<IterableLike>;
-export { IterableLike, ToIterable, toIterable, toIterableT };
+export { toIterable, toIterableT };

@@ -1,7 +1,7 @@
 /// <reference types="./ObserverLike.d.ts" />
-const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
-const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
+import { ObserverLike_scheduler, ObserverLike_dispatcher } from '../rx.mjs';
+
 const getScheduler = (observer) => observer[ObserverLike_scheduler];
 const getDispatcher = (observer) => observer[ObserverLike_dispatcher];
 
-export { ObserverLike_dispatcher, ObserverLike_scheduler, getDispatcher, getScheduler };
+export { getDispatcher, getScheduler };

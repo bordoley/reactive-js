@@ -1,10 +1,6 @@
-import {
-  ContainerLike,
-  ContainerOf,
-  FromArrayOptions,
-} from "../../containers/ContainerLike";
+import { ContainerLike, ContainerOf, FromArrayOptions } from "../../containers";
+import { Function1, getLength, max, min } from "../../functions";
 import { isSome } from "../../util/Option";
-import { Function1, getLength, max, min } from "../../util/functions";
 
 export const createFromArray =
   <C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions>(

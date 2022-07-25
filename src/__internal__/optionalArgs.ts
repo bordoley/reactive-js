@@ -1,4 +1,4 @@
-import { floor, max } from "../util/functions";
+import { floor, max } from "../functions";
 
 export const getDelay = (options: { delay?: number } = {}): number =>
   floor(max(options.delay ?? 0, 0));

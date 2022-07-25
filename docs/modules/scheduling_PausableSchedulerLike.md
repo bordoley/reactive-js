@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [PauseableSchedulerLike](../interfaces/scheduling_PausableSchedulerLike.PauseableSchedulerLike.md)
-
 ### Functions
 
 - [create](scheduling_PausableSchedulerLike.md#create)
@@ -16,14 +12,14 @@
 
 ### create
 
-▸ **create**(`a`): [`PauseableSchedulerLike`](../interfaces/scheduling_PausableSchedulerLike.PauseableSchedulerLike.md)
+▸ **create**(`a`): [`PauseableSchedulerLike`](../interfaces/scheduling.PauseableSchedulerLike.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md) |
+| `a` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 
-[`PauseableSchedulerLike`](../interfaces/scheduling_PausableSchedulerLike.PauseableSchedulerLike.md)
+[`PauseableSchedulerLike`](../interfaces/scheduling.PauseableSchedulerLike.md)

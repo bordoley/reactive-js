@@ -1,22 +1,11 @@
-import { Function1, Predicate, SideEffect1, identity } from "../util/functions";
 import {
-  Container,
-  ContainerLike,
-  ContainerOf,
   Empty,
   Keep,
   Map,
-} from "./ContainerLike";
-
-export interface ReadonlyArrayLike<T = unknown>
-  extends ContainerLike,
-    ReadonlyArray<T> {
-  readonly TContainerOf?: ReadonlyArrayLike<this["T"]>;
-}
-
-export type ToReadonlyArray<C extends ContainerLike> = Container<C> & {
-  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
-};
+  ReadonlyArrayLike,
+  ToReadonlyArray,
+} from "../containers";
+import { Function1, Predicate, SideEffect1, identity } from "../functions";
 
 export const empty = /*@__PURE__*/ (() => {
   const _empty: readonly any[] = [];
@@ -55,6 +44,7 @@ export const forEach =
 
 export const toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike>["toReadonlyArray"] =
   () => identity;
+  
 export const toReadonlyArrayT: ToReadonlyArray<ReadonlyArrayLike> = {
   toReadonlyArray,
 };

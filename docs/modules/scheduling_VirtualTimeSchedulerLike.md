@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [VirtualTimeSchedulerLike](../interfaces/scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md)
-
 ### Functions
 
 - [create](scheduling_VirtualTimeSchedulerLike.md#create)
@@ -16,7 +12,7 @@
 
 ### create
 
-▸ **create**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md)
+▸ **create**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
 
 Creates a new virtual time scheduler instance.
 
@@ -29,4 +25,4 @@ Creates a new virtual time scheduler instance.
 
 #### Returns
 
-[`VirtualTimeSchedulerLike`](../interfaces/scheduling_VirtualTimeSchedulerLike.VirtualTimeSchedulerLike.md)
+[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)

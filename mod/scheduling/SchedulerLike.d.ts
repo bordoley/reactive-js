@@ -1,28 +1,6 @@
-import { SchedulerLike_inContinuation } from "../__internal__/scheduling.mjs";
-export { SchedulerLike_inContinuation } from '../__internal__/scheduling.js';
-import { ContinuationLike } from "./ContinuationLike.mjs";
-import { DisposableLike } from "../util/DisposableLike.mjs";
-import { SideEffect, Function1 } from "../util/functions.mjs";
-declare const create: (options?: {
-    readonly yieldInterval?: number;
-}) => SchedulerLike;
-declare const SchedulerLike_now: unique symbol;
-declare const SchedulerLike_requestYield: unique symbol;
-declare const SchedulerLike_shouldYield: unique symbol;
-declare const SchedulerLike_schedule: unique symbol;
-declare type SchedulerOptions = {
-    readonly delay?: number;
-};
-interface SchedulerLike extends DisposableLike {
-    readonly [SchedulerLike_inContinuation]: boolean;
-    readonly [SchedulerLike_now]: number;
-    readonly [SchedulerLike_shouldYield]: boolean;
-    /**
-     * Request the scheduler to yield.
-     */
-    [SchedulerLike_requestYield](): void;
-    [SchedulerLike_schedule](continuation: ContinuationLike, options?: SchedulerOptions): void;
-}
+import { SideEffect, Function1 } from "../functions.mjs";
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, ContinuationLike, SchedulerLike } from "../scheduling.mjs";
+import { DisposableLike } from "../util.mjs";
 declare const isInContinuation: (scheduler: {
     readonly [SchedulerLike_inContinuation]: boolean;
 }) => boolean;
@@ -41,4 +19,7 @@ declare const __yield: (options?: {
 declare const schedule: (f: SideEffect | ContinuationLike, options?: {
     readonly delay?: number;
 }) => Function1<SchedulerLike, DisposableLike>;
-export { SchedulerLike, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, __yield, create, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield };
+declare const create: (options?: {
+    readonly yieldInterval?: number;
+}) => SchedulerLike;
+export { __yield, create, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield };
