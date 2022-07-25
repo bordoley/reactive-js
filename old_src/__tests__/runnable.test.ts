@@ -127,28 +127,6 @@ export const createRunnableTests = <C extends ContainerLike>(
       ),
     ),
     test(
-      "keep",
-      pipeLazy(
-        [4, 8, 10, 7],
-        m.fromArray(),
-        m.keep(x => x > 5),
-        m.toRunnable(),
-        toArray(),
-        expectArrayEquals([8, 10, 7]),
-      ),
-    ),
-    test(
-      "map",
-      pipeLazy(
-        [1, 2, 3],
-        m.fromArray(),
-        m.map(increment),
-        m.toRunnable(),
-        toArray(),
-        expectArrayEquals([2, 3, 4]),
-      ),
-    ),
-    test(
       "mapTo",
       pipeLazy(
         [1, 2, 3],

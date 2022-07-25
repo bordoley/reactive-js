@@ -58,6 +58,7 @@ import {
 } from "../containers/ReadonlyArrayLike";
 import {
   Equality,
+  Factory,
   Function1,
   Option,
   Predicate,
@@ -421,19 +422,24 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (() => {
   const properties = {
     ...delegatingDisposableEnumeratorProperties,
     reducer: none as unknown as Reducer<any, any>,
-    current: none as unknown,
   };
 
   const prototype = mix(delegatingDisposableEnumeratorPrototype, {
     [Object_init](
-      this: typeof properties,
+      this: typeof properties & MutableEnumeratorLike,
       delegate: EnumeratorLike,
       reducer: Reducer<any, any>,
-      initialValue: unknown,
+      initialValue: Factory<unknown>,
     ) {
       init(delegatingDisposableEnumeratorPrototype, this, delegate);
       this.reducer = reducer;
-      this.current = initialValue;
+
+      try {
+        const acc = initialValue();
+        this[EnumeratorLike_current] = acc;
+      } catch (cause) {
+        pipe(this, dispose({ cause }));
+      }
     },
     [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
       const acc = hasCurrent(this) ? getCurrent(this) : none;
@@ -458,7 +464,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (() => {
   >(prototype, properties);
 
   const scanEnumerator =
-    <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: TAcc) =>
+    <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
     (delegate: EnumeratorLike<T>): EnumeratorLike<TAcc> =>
       createInstance(delegate, reducer, initialValue) as EnumeratorLike<TAcc>;
 

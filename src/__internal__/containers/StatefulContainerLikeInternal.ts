@@ -84,7 +84,7 @@ export type ScanStateConstructor<
   TVar extends TInteractive | TReactive,
 > = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
-  acc: TAcc,
+  acc: Factory<TAcc>,
 ) => Function1<
   StatefulContainerOperatorIn<C, T, TAcc, TVar>,
   StatefulContainerOperatorOut<C, T, TAcc, TVar>
@@ -99,7 +99,7 @@ export const createScanOperator =
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc> =>
-    pipe(Constructor(reducer, initialValue()), lift(m));
+    pipe(Constructor(reducer, initialValue), lift(m));
 
 export type SkipFirstStateConstructor<
   C extends StatefulContainerLike,

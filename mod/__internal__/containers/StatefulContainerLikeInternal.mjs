@@ -6,7 +6,7 @@ import { dispose } from '../util/DisposableLikeInternal.mjs';
 const interactive = 0;
 const reactive = 1;
 const lift = ({ lift, }) => lift;
-const createScanOperator = (m) => (Constructor) => (reducer, initialValue) => pipe(Constructor(reducer, initialValue()), lift(m));
+const createScanOperator = (m) => (Constructor) => (reducer, initialValue) => pipe(Constructor(reducer, initialValue), lift(m));
 const createSkipFirstOperator = (m) => (Constructor) => (options = {}) => {
     const { count = 1 } = options;
     const operator = Constructor(count);
