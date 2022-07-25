@@ -455,6 +455,10 @@ const throwIfEmpty =
 const throwIfEmptyT = {
     throwIfEmpty,
 };
+const toEnumerable = () => identity;
+const toEnumerableT = {
+    toEnumerable,
+};
 const toReadonlyArray = () => (enumerable) => {
     const enumerator = pipe(enumerable, enumerate());
     const result = [];
@@ -469,10 +473,6 @@ const toReadonlyArray = () => (enumerable) => {
 };
 const toReadonlyArrayT = {
     toReadonlyArray,
-};
-const toEnumerable = () => identity;
-const toEnumerableT = {
-    toEnumerable,
 };
 /**
  * Converts an EnumerableLike into a javascript Iterable.

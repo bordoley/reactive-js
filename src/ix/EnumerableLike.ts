@@ -867,6 +867,13 @@ export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike> = {
   throwIfEmpty,
 };
 
+export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] = () =>
+  identity;
+
+export const toEnumerableT: ToEnumerable<EnumerableLike> = {
+  toEnumerable,
+};
+
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
 
     <T>() =>
@@ -889,13 +896,6 @@ export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"]
 
 export const toReadonlyArrayT: ToReadonlyArray<EnumerableLike> = {
   toReadonlyArray,
-};
-
-export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] = () =>
-  identity;
-
-export const toEnumerableT: ToEnumerable<EnumerableLike> = {
-  toEnumerable,
 };
 
 /**
