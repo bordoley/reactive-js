@@ -4,23 +4,9 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [InteractiveSourceLike](../interfaces/ix_InteractiveSourceLike.InteractiveSourceLike.md)
-
-### Variables
-
-- [InteractiveSourceLike\_move](ix_InteractiveSourceLike.md#interactivesourcelike_move)
-
 ### Functions
 
 - [move](ix_InteractiveSourceLike.md#move)
-
-## Variables
-
-### InteractiveSourceLike\_move
-
-• `Const` **InteractiveSourceLike\_move**: unique `symbol`
 
 ## Functions
 
@@ -32,7 +18,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TSource` | extends `Object` = [`InteractiveSourceLike`](../interfaces/ix_InteractiveSourceLike.InteractiveSourceLike.md) |
+| `TSource` | extends `Object` = [`InteractiveSourceLike`](../interfaces/ix.InteractiveSourceLike.md) |
 
 #### Parameters
 

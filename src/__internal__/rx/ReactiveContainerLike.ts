@@ -4,31 +4,10 @@ import {
   Empty,
   FromArray,
   FromValue,
-} from "../../containers/ContainerLike";
-import { forEach } from "../../containers/ReadonlyArrayLike";
-import {
   StatefulContainerLike,
   StatefulContainerStateOf,
-} from "../../containers/StatefulContainerLike";
-import {
-  CreateReactiveContainer,
-  ReactiveContainerLike,
-  sinkInto,
-} from "../../rx/ReactiveContainerLike";
-import { ReactiveSinkLike, notify } from "../../rx/ReactiveSinkLike";
-import {
-  DisposableLike,
-  DisposableOrTeardown,
-  add,
-  addTo,
-  addToIgnoringChildErrors,
-  dispose,
-  isDisposed,
-  onComplete,
-  onDisposed,
-  onError,
-} from "../../util/DisposableLike";
-import { Option, isSome, none } from "../../util/Option";
+} from "../../containers";
+import { forEach } from "../../containers/ReadonlyArrayLike";
 import {
   Equality,
   Factory,
@@ -45,7 +24,26 @@ import {
   newInstance,
   newInstanceWith,
   pipe,
-} from "../../util/functions";
+} from "../../functions";
+import {
+  CreateReactiveContainer,
+  ReactiveContainerLike,
+  ReactiveSinkLike,
+} from "../../rx";
+import { sinkInto } from "../../rx/ReactiveContainerLike";
+import { notify } from "../../rx/ReactiveSinkLike";
+import { DisposableLike, DisposableOrTeardown, Option } from "../../util";
+import {
+  add,
+  addTo,
+  addToIgnoringChildErrors,
+  dispose,
+  isDisposed,
+  onComplete,
+  onDisposed,
+  onError,
+} from "../../util/DisposableLike";
+import { isSome, none } from "../../util/Option";
 import {
   Lift as StatefulContainerLift,
   StatefulContainerOperator,

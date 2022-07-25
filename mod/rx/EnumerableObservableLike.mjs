@@ -1,2 +1,2 @@
 /// <reference types="./EnumerableObservableLike.d.ts" />
-import './ObservableLike.mjs';
+"use strict";

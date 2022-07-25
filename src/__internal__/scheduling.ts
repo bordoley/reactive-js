@@ -1,10 +1,7 @@
-import { ContinuationLike, run } from "../scheduling/ContinuationLike";
+import { Function1 } from "../functions";
+import { ContinuationLike, SchedulerLike_inContinuation } from "../scheduling";
+import { run } from "../scheduling/ContinuationLike";
 import { isDisposed } from "../util/DisposableLike";
-import { Function1 } from "../util/functions";
-
-export const SchedulerLike_inContinuation = Symbol(
-  "SchedulerLike_inContinuation",
-);
 
 export const runContinuation =
   <TScheduler extends { [SchedulerLike_inContinuation]: boolean }>(

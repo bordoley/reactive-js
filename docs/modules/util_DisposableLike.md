@@ -4,21 +4,8 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [DisposableLike](../interfaces/util_DisposableLike.DisposableLike.md)
-
-### Type Aliases
-
-- [DisposableOrTeardown](util_DisposableLike.md#disposableorteardown)
-- [Error](util_DisposableLike.md#error)
-
 ### Variables
 
-- [DisposableLike\_add](util_DisposableLike.md#disposablelike_add)
-- [DisposableLike\_dispose](util_DisposableLike.md#disposablelike_dispose)
-- [DisposableLike\_error](util_DisposableLike.md#disposablelike_error)
-- [DisposableLike\_isDisposed](util_DisposableLike.md#disposablelike_isdisposed)
 - [disposed](util_DisposableLike.md#disposed)
 
 ### Functions
@@ -38,53 +25,11 @@
 - [toAbortSignal](util_DisposableLike.md#toabortsignal)
 - [toErrorHandler](util_DisposableLike.md#toerrorhandler)
 
-## Type Aliases
-
-### DisposableOrTeardown
-
-Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) \| [`SideEffect1`](util_functions.md#sideeffect1)<[`Option`](util_Option.md#option)<[`Error`](util_DisposableLike.md#error)\>\>
-
-___
-
-### Error
-
-Ƭ **Error**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `cause` | `unknown` |
-
 ## Variables
-
-### DisposableLike\_add
-
-• `Const` **DisposableLike\_add**: unique `symbol`
-
-___
-
-### DisposableLike\_dispose
-
-• `Const` **DisposableLike\_dispose**: unique `symbol`
-
-___
-
-### DisposableLike\_error
-
-• `Const` **DisposableLike\_error**: unique `symbol`
-
-___
-
-### DisposableLike\_isDisposed
-
-• `Const` **DisposableLike\_isDisposed**: unique `symbol`
-
-___
 
 ### disposed
 
-• `Const` **disposed**: [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md)
+• `Const` **disposed**: [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ## Functions
 
@@ -96,13 +41,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `child` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -130,13 +75,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `child` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -158,83 +103,83 @@ ___
 
 ### addTo
 
-▸ **addTo**<`T`\>(`parent`): [`Identity`](util_functions.md#identity)<`T`\>
+▸ **addTo**<`T`\>(`parent`): [`Identity`](functions.md#identity)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `parent` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
-[`Identity`](util_functions.md#identity)<`T`\>
+[`Identity`](functions.md#identity)<`T`\>
 
 ___
 
 ### addToIgnoringChildErrors
 
-▸ **addToIgnoringChildErrors**<`T`\>(`parent`): [`Identity`](util_functions.md#identity)<`T`\>
+▸ **addToIgnoringChildErrors**<`T`\>(`parent`): [`Identity`](functions.md#identity)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `parent` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
-[`Identity`](util_functions.md#identity)<`T`\>
+[`Identity`](functions.md#identity)<`T`\>
 
 ___
 
 ### bindTo
 
-▸ **bindTo**<`T`\>(`child`): [`Identity`](util_functions.md#identity)<`T`\>
+▸ **bindTo**<`T`\>(`child`): [`Identity`](functions.md#identity)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `child` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
-[`Identity`](util_functions.md#identity)<`T`\>
+[`Identity`](functions.md#identity)<`T`\>
 
 ___
 
 ### create
 
-▸ **create**(): [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md)
+▸ **create**(): [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 #### Returns
 
-[`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md)
+[`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ___
 
 ### dispose
 
-▸ **dispose**<`T`\>(`e?`): [`Identity`](util_functions.md#identity)<`T`\>
+▸ **dispose**<`T`\>(`e?`): [`Identity`](functions.md#identity)<`T`\>
 
 Dispose `disposable` with an optional error.
 
@@ -242,34 +187,34 @@ Dispose `disposable` with an optional error.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `e?` | [`Error`](util_DisposableLike.md#error) |
+| `e?` | [`Error`](util.md#error) |
 
 #### Returns
 
-[`Identity`](util_functions.md#identity)<`T`\>
+[`Identity`](functions.md#identity)<`T`\>
 
 ___
 
 ### getError
 
-▸ **getError**(`disposable`): [`Option`](util_Option.md#option)<[`Error`](util_DisposableLike.md#error)\>
+▸ **getError**(`disposable`): [`Option`](util.md#option)<[`Error`](util.md#error)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `disposable` | `Object` |
-| `disposable.[DisposableLike_error]` | [`Option`](util_Option.md#option)<[`Error`](util_DisposableLike.md#error)\> |
+| `disposable.[DisposableLike_error]` | [`Option`](util.md#option)<[`Error`](util.md#error)\> |
 
 #### Returns
 
-[`Option`](util_Option.md#option)<[`Error`](util_DisposableLike.md#error)\>
+[`Option`](util.md#option)<[`Error`](util.md#error)\>
 
 ___
 
@@ -292,67 +237,67 @@ ___
 
 ### onComplete
 
-▸ **onComplete**<`T`\>(`teardown`): [`Identity`](util_functions.md#identity)<`T`\>
+▸ **onComplete**<`T`\>(`teardown`): [`Identity`](functions.md#identity)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect`](util_functions.md#sideeffect) |
+| `teardown` | [`SideEffect`](functions.md#sideeffect) |
 
 #### Returns
 
-[`Identity`](util_functions.md#identity)<`T`\>
+[`Identity`](functions.md#identity)<`T`\>
 
 ___
 
 ### onDisposed
 
-▸ **onDisposed**<`T`\>(`teardown`): [`Identity`](util_functions.md#identity)<`T`\>
+▸ **onDisposed**<`T`\>(`teardown`): [`Identity`](functions.md#identity)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect1`](util_functions.md#sideeffect1)<[`Option`](util_Option.md#option)<[`Error`](util_DisposableLike.md#error)\>\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](util.md#option)<[`Error`](util.md#error)\>\> |
 
 #### Returns
 
-[`Identity`](util_functions.md#identity)<`T`\>
+[`Identity`](functions.md#identity)<`T`\>
 
 ___
 
 ### onError
 
-▸ **onError**<`T`\>(`teardown`): [`Identity`](util_functions.md#identity)<`T`\>
+▸ **onError**<`T`\>(`teardown`): [`Identity`](functions.md#identity)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect1`](util_functions.md#sideeffect1)<[`Error`](util_DisposableLike.md#error)\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Error`](util.md#error)\> |
 
 #### Returns
 
-[`Identity`](util_functions.md#identity)<`T`\>
+[`Identity`](functions.md#identity)<`T`\>
 
 ___
 
@@ -364,7 +309,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `disposable` | [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `disposable` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -374,7 +319,7 @@ ___
 
 ### toErrorHandler
 
-▸ **toErrorHandler**(`disposable`): [`SideEffect1`](util_functions.md#sideeffect1)<`unknown`\>
+▸ **toErrorHandler**(`disposable`): [`SideEffect1`](functions.md#sideeffect1)<`unknown`\>
 
 Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
 
@@ -382,8 +327,8 @@ Returns a function that disposes `disposable` with an error wrapping the provide
 
 | Name | Type |
 | :------ | :------ |
-| `disposable` | [`DisposableLike`](../interfaces/util_DisposableLike.DisposableLike.md) |
+| `disposable` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
-[`SideEffect1`](util_functions.md#sideeffect1)<`unknown`\>
+[`SideEffect1`](functions.md#sideeffect1)<`unknown`\>

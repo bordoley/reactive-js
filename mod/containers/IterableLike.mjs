@@ -1,5 +1,5 @@
 /// <reference types="./IterableLike.d.ts" />
-import { identity } from '../util/functions.mjs';
+import { identity } from '../functions.mjs';
 
 const toIterable = () => identity;
 const toIterableT = {

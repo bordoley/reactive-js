@@ -1,9 +1,4 @@
-import { DisposableLike } from "../util/DisposableLike";
-
-export const InteractiveSourceLike_move = Symbol("InteractiveSourceLike_move");
-export interface InteractiveSourceLike extends DisposableLike {
-  [InteractiveSourceLike_move](): void;
-}
+import { InteractiveSourceLike, InteractiveSourceLike_move } from "../ix";
 
 export const move = <
   TSource extends {

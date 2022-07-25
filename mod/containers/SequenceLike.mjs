@@ -1,6 +1,6 @@
 /// <reference types="./SequenceLike.d.ts" />
+import { strictEquality, alwaysTrue, getLength, returns, pipe, callWith } from '../functions.mjs';
 import { isSome, none, isNone } from '../util/Option.mjs';
-import { strictEquality, alwaysTrue, getLength, returns, pipe, callWith } from '../util/functions.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
 

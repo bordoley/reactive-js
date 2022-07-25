@@ -1,8 +1,4 @@
-/**
- * Represents an unboxed value of type T or undefined.
- */
-export type Option<T> = T | undefined;
-
+import { Option } from "../util";
 /**
  * An alias for undefined.
  */

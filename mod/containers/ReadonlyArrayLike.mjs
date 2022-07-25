@@ -1,5 +1,5 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
-import { identity } from '../util/functions.mjs';
+import { identity } from '../functions.mjs';
 
 const empty = /*@__PURE__*/ (() => {
     const _empty = [];

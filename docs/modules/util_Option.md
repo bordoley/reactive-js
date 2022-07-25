@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Type Aliases
-
-- [Option](util_Option.md#option)
-
 ### Variables
 
 - [none](util_Option.md#none)
@@ -16,20 +12,6 @@
 
 - [isNone](util_Option.md#isnone)
 - [isSome](util_Option.md#issome)
-
-## Type Aliases
-
-### Option
-
-Ƭ **Option**<`T`\>: `T` \| `undefined`
-
-Represents an unboxed value of type T or undefined.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
 
 ## Variables
 
@@ -57,7 +39,7 @@ Returns true if `option` is `none`.
 
 | Name | Type |
 | :------ | :------ |
-| `option` | [`Option`](util_Option.md#option)<`T`\> |
+| `option` | [`Option`](util.md#option)<`T`\> |
 
 #### Returns
 
@@ -81,7 +63,7 @@ Returns true if `option` is not `none`.
 
 | Name | Type |
 | :------ | :------ |
-| `option` | [`Option`](util_Option.md#option)<`T`\> |
+| `option` | [`Option`](util.md#option)<`T`\> |
 
 #### Returns
 

@@ -1,17 +1,11 @@
-import { Function1, SideEffect1 } from "../util/functions";
+import { Function1, SideEffect1 } from "../functions";
 import {
-  InteractiveSourceLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   InteractiveSourceLike_move,
-  move as ixMove,
-} from "./InteractiveSourceLike";
-
-export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
-
-export interface EnumeratorLike<T = unknown> extends InteractiveSourceLike {
-  readonly [EnumeratorLike_current]: T;
-  readonly [EnumeratorLike_hasCurrent]: boolean;
-}
+} from "../ix";
+import { move as ixMove } from "./InteractiveSourceLike";
 
 export const getCurrent = <T>(enumerator: { [EnumeratorLike_current]: T }): T =>
   enumerator[EnumeratorLike_current];

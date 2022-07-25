@@ -1,7 +1,7 @@
 /// <reference types="./DelegatingDisposable.d.ts" />
+import { DisposableLike_error, DisposableLike_isDisposed, DisposableLike_add, DisposableLike_dispose } from '../../util.mjs';
 import { disposed } from '../../util/DisposableLike.mjs';
 import { Object_init } from './Object.mjs';
-import { DisposableLike_error, DisposableLike_isDisposed, DisposableLike_add, DisposableLike_dispose } from './DisposableLike.mjs';
 
 const DelegatingDisposable_private_delegate = Symbol("DelegatingDisposable_private_delegate");
 const properties = {

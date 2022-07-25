@@ -33,9 +33,6 @@ import {
   init,
 } from "../__internal__/util/Object";
 import {
-  Container,
-  ContainerLike,
-  ContainerOf,
   ContainerOperator,
   DistinctUntilChanged,
   Empty,
@@ -43,32 +40,23 @@ import {
   Keep,
   Map,
   Pairwise,
+  ReadonlyArrayLike,
   Scan,
   SkipFirst,
   TakeFirst,
   TakeLast,
   TakeWhile,
-  Zip,
-} from "../containers/ContainerLike";
-import { ToIterable } from "../containers/IterableLike";
-import {
-  ReadonlyArrayLike,
+  ThrowIfEmpty,
+  ToIterable,
   ToReadonlyArray,
+  Zip,
+} from "../containers";
+import {
   empty as emptyArray,
   every,
   forEach as forEachReadonlyArray,
   map as mapReadonlyArray,
 } from "../containers/ReadonlyArrayLike";
-import { ThrowIfEmpty } from "../containers/StatefulContainerLike";
-import {
-  DisposableLike,
-  add,
-  addTo,
-  bindTo,
-  dispose,
-  isDisposed,
-} from "../util/DisposableLike";
-import { Option, isSome, none } from "../util/Option";
 import {
   Equality,
   Factory,
@@ -83,35 +71,26 @@ import {
   pipe,
   pipeUnsafe,
   strictEquality,
-} from "../util/functions";
-import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  getCurrent,
-  hasCurrent,
-  move,
-} from "./EnumeratorLike";
+} from "../functions";
 import {
   CreateInteractiveContainer,
-  InteractiveContainerLike,
+  EnumerableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
   InteractiveContainerLike_interact,
-} from "./InteractiveContainerLike";
-import { InteractiveSourceLike_move } from "./InteractiveSourceLike";
-
-/**
- * Interface for iterating a Container of items.
- */
-export interface EnumerableLike<T = unknown> extends InteractiveContainerLike {
-  readonly TContainerOf?: EnumerableLike<this["T"]>;
-  readonly TStatefulContainerState?: EnumeratorLike<this["T"]>;
-  readonly TCtx?: void;
-
-  [InteractiveContainerLike_interact](_: void): EnumeratorLike<T>;
-}
-
-export interface ToEnumerable<C extends ContainerLike> extends Container<C> {
-  toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
-}
+  InteractiveSourceLike_move,
+  ToEnumerable,
+} from "../ix";
+import { DisposableLike, Option } from "../util";
+import {
+  add,
+  addTo,
+  bindTo,
+  dispose,
+  isDisposed,
+} from "../util/DisposableLike";
+import { isSome, none } from "../util/Option";
+import { getCurrent, hasCurrent, move } from "./EnumeratorLike";
 
 export const enumerate =
   <T>() =>

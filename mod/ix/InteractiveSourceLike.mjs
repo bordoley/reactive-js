@@ -1,8 +1,9 @@
 /// <reference types="./InteractiveSourceLike.d.ts" />
-const InteractiveSourceLike_move = Symbol("InteractiveSourceLike_move");
+import { InteractiveSourceLike_move } from '../ix.mjs';
+
 const move = (source) => {
     source[InteractiveSourceLike_move]();
     return source;
 };
 
-export { InteractiveSourceLike_move, move };
+export { move };

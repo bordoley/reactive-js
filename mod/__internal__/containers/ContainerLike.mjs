@@ -1,6 +1,6 @@
 /// <reference types="./ContainerLike.d.ts" />
+import { getLength, max, min } from '../../functions.mjs';
 import { isSome } from '../../util/Option.mjs';
-import { getLength, max, min } from '../../util/functions.mjs';
 
 const createFromArray = (factory) => (options = {}) => values => {
     const valuesLength = getLength(values);

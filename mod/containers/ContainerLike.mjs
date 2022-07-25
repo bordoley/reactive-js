@@ -1,6 +1,6 @@
 /// <reference types="./ContainerLike.d.ts" />
+import { compose, callWith, isEqualTo, pipe, alwaysFalse, returns, negate } from '../functions.mjs';
 import { isSome } from '../util/Option.mjs';
-import { compose, callWith, isEqualTo, pipe, alwaysFalse, returns, negate } from '../util/functions.mjs';
 
 const compute = (m, options) => compose(m.fromValue(options), m.map(callWith()));
 const concatMap = ({ map, concatAll }, mapper, options) => compose(map(mapper), concatAll(options));

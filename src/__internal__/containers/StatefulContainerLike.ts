@@ -2,19 +2,9 @@ import {
   Container,
   ContainerOperator,
   Empty,
-} from "../../containers/ContainerLike";
-import {
   StatefulContainerLike,
   StatefulContainerStateOf,
-} from "../../containers/StatefulContainerLike";
-import {
-  Error,
-  addIgnoringChildErrors,
-  addTo,
-  dispose,
-  onComplete,
-} from "../../util/DisposableLike";
-import { Option, none } from "../../util/Option";
+} from "../../containers";
 import {
   Factory,
   Function1,
@@ -22,7 +12,15 @@ import {
   Reducer,
   max,
   pipe,
-} from "../../util/functions";
+} from "../../functions";
+import { Error, Option } from "../../util";
+import {
+  addIgnoringChildErrors,
+  addTo,
+  dispose,
+  onComplete,
+} from "../../util/DisposableLike";
+import { none } from "../../util/Option";
 
 export type StatefulContainerOperator<
   C extends StatefulContainerLike,

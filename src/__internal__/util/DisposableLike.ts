@@ -1,11 +1,12 @@
-import { DisposableLike, Error } from "../../util/DisposableLike";
-import { Option } from "../../util/Option";
-import { Identity } from "../../util/functions";
-
-export const DisposableLike_add = Symbol("DisposableLike_add");
-export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-export const DisposableLike_error = Symbol("DisposableLike_error");
-export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
+import { Identity } from "../../functions";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  Error,
+  Option,
+} from "../../util";
 
 /**
  * Dispose `disposable` with an optional error.

@@ -4,45 +4,24 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [DispatcherLike](../interfaces/scheduling_DispatcherLike.DispatcherLike.md)
-
-### Variables
-
-- [DispatcherLike\_dispatch](scheduling_DispatcherLike.md#dispatcherlike_dispatch)
-- [DispatcherLike\_scheduler](scheduling_DispatcherLike.md#dispatcherlike_scheduler)
-
 ### Functions
 
 - [dispatch](scheduling_DispatcherLike.md#dispatch)
 - [dispatchTo](scheduling_DispatcherLike.md#dispatchto)
 - [getScheduler](scheduling_DispatcherLike.md#getscheduler)
 
-## Variables
-
-### DispatcherLike\_dispatch
-
-• `Const` **DispatcherLike\_dispatch**: unique `symbol`
-
-___
-
-### DispatcherLike\_scheduler
-
-• `Const` **DispatcherLike\_scheduler**: unique `symbol`
-
 ## Functions
 
 ### dispatch
 
-▸ **dispatch**<`T`, `TDispatcher`\>(`v`): [`Identity`](util_functions.md#identity)<`TDispatcher`\>
+▸ **dispatch**<`T`, `TDispatcher`\>(`v`): [`Identity`](functions.md#identity)<`TDispatcher`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TDispatcher` | extends [`DispatcherLike`](../interfaces/scheduling_DispatcherLike.DispatcherLike.md)<`T`, `TDispatcher`\> |
+| `TDispatcher` | extends `Object` |
 
 #### Parameters
 
@@ -52,13 +31,13 @@ ___
 
 #### Returns
 
-[`Identity`](util_functions.md#identity)<`TDispatcher`\>
+[`Identity`](functions.md#identity)<`TDispatcher`\>
 
 ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`SideEffect1`](util_functions.md#sideeffect1)<`T`\>
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
 
 #### Type parameters
 
@@ -70,24 +49,26 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/scheduling_DispatcherLike.DispatcherLike.md)<`T`\> |
+| `dispatcher` | `Object` |
+| `dispatcher.[DispatcherLike_dispatch]` | (`v`: `T`) => `void` |
 
 #### Returns
 
-[`SideEffect1`](util_functions.md#sideeffect1)<`T`\>
+[`SideEffect1`](functions.md#sideeffect1)<`T`\>
 
 ___
 
 ### getScheduler
 
-▸ **getScheduler**(`dispatcher`): [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)
+▸ **getScheduler**(`dispatcher`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/scheduling_DispatcherLike.DispatcherLike.md)<`unknown`\> |
+| `dispatcher` | `Object` |
+| `dispatcher.[DispatcherLike_scheduler]` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
