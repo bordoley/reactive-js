@@ -1,16 +1,18 @@
 /// <reference types="./scheduling.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__/env.mjs';
-import { p as properties$1, b as prototype$1, d as move, g as getCurrent, I as InteractiveSourceLike_move, E as EnumeratorLike_current } from './ix-c87d6ab8.mjs';
 import { getDelay } from './__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from './__internal__/scheduling/queue.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from './__internal__/schedulingInternal.mjs';
 export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
 import { properties, prototype } from './__internal__/util/Disposable.mjs';
+import { properties as properties$1, prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
 import { Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, isSome } from './functions.mjs';
-import { createDisposable, ContinuationLike_run } from './util.mjs';
+import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
 import { addTo, onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';
+import { getCurrent } from './util/EnumeratorLike.mjs';
+import { move } from './util/SourceLike.mjs';
 import { dispose, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
@@ -145,7 +147,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
                 this[SchedulerLike_inContinuation] = false;
             }
         },
-        [InteractiveSourceLike_move]() {
+        [SourceLike_move]() {
             const taskQueue = this.taskQueue;
             if (isDisposed(this)) {
                 return;
@@ -195,5 +197,9 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         return createInstance(maxMicroTaskTicks);
     };
 })();
+/** @ignore */
+const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
+/** @ignore */
+const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
 
-export { DispatcherLike_dispatch, DispatcherLike_scheduler, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, createHostScheduler, createVirtualTimeScheduler };
+export { DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike_dispatcher, ObserverLike_scheduler, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, createHostScheduler, createVirtualTimeScheduler };

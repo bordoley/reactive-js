@@ -1,15 +1,15 @@
-[Reactive-JS](../README.md) / ix/EnumeratorLike
+[Reactive-JS](../README.md) / util/EnumeratorLike
 
-# Module: ix/EnumeratorLike
+# Module: util/EnumeratorLike
 
 ## Table of contents
 
 ### Functions
 
-- [forEach](ix_EnumeratorLike.md#foreach)
-- [getCurrent](ix_EnumeratorLike.md#getcurrent)
-- [hasCurrent](ix_EnumeratorLike.md#hascurrent)
-- [move](ix_EnumeratorLike.md#move)
+- [forEach](util_EnumeratorLike.md#foreach)
+- [getCurrent](util_EnumeratorLike.md#getcurrent)
+- [hasCurrent](util_EnumeratorLike.md#hascurrent)
+- [move](util_EnumeratorLike.md#move)
 
 ## Functions
 
@@ -22,7 +22,7 @@
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TEnumerator` | extends [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`, `TEnumerator`\> = [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`\> |
+| `TEnumerator` | extends [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`, `TEnumerator`\> = [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\> |
 
 #### Parameters
 
@@ -93,7 +93,7 @@ ___
 | `enumerator` | `Object` |
 | `enumerator.[EnumeratorLike_current]` | `T` |
 | `enumerator.[EnumeratorLike_hasCurrent]` | `boolean` |
-| `enumerator.[InteractiveSourceLike_move]` | () => `void` |
+| `enumerator.[SourceLike_move]` | () => `void` |
 
 #### Returns
 

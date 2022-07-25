@@ -1,9 +1,4 @@
 import { MAX_SAFE_INTEGER } from "./__internal__/env";
-import {
-  MutableEnumeratorLike,
-  properties as enumeratorProperties,
-  prototype as enumeratorPrototype,
-} from "./__internal__/ix/Enumerator";
 import { getDelay } from "./__internal__/optionalArgs";
 import {
   QueueLike,
@@ -20,23 +15,25 @@ import {
   prototype as disposablePrototype,
 } from "./__internal__/util/Disposable";
 import {
+  MutableEnumeratorLike,
+  properties as enumeratorProperties,
+  prototype as enumeratorPrototype,
+} from "./__internal__/util/Enumerator";
+import {
   Object_init,
   createObjectFactory,
   init,
 } from "./__internal__/util/Object";
 import { Function1, isSome, none, pipe } from "./functions";
 import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  InteractiveSourceLike_move,
-} from "./ix";
-import { getCurrent } from "./ix/EnumeratorLike";
-import { move } from "./ix/InteractiveSourceLike";
-import {
   ContinuationLike,
   ContinuationLike_run,
   DisposableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
   PauseableLike,
+  SinkLike,
+  SourceLike_move,
   createDisposable,
 } from "./util";
 import { run } from "./util/ContinuationLike";
@@ -47,6 +44,8 @@ import {
   isDisposed,
   onDisposed,
 } from "./util/DisposableLike";
+import { getCurrent } from "./util/EnumeratorLike";
+import { move } from "./util/SourceLike";
 
 export {
   SchedulerLike_inContinuation,
@@ -332,7 +331,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         this[SchedulerLike_inContinuation] = false;
       }
     },
-    [InteractiveSourceLike_move](
+    [SourceLike_move](
       this: typeof properties & MutableEnumeratorLike<VirtualTask>,
     ): void {
       const taskQueue = this.taskQueue;
@@ -406,3 +405,14 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     return createInstance(maxMicroTaskTicks);
   };
 })();
+
+/** @ignore */
+export const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
+
+/** @ignore */
+export const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
+
+export interface ObserverLike<T = unknown> extends SinkLike<T> {
+  readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
+  readonly [ObserverLike_scheduler]: SchedulerLike;
+}

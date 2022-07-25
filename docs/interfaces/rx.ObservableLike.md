@@ -33,7 +33,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`ObserverLike`](rx.ObserverLike.md)<`T`\>
+• `Optional` `Readonly` **TStatefulContainerState**: [`ObserverLike`](scheduling.ObserverLike.md)<`T`\>
 
 #### Overrides
 

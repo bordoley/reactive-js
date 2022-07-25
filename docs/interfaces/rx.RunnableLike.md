@@ -52,7 +52,7 @@ ___
 
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`ReactiveSinkLike`](rx.ReactiveSinkLike.md)<`unknown`\>
+• `Optional` `Readonly` **TStatefulContainerState**: [`SinkLike`](util.SinkLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -68,7 +68,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`ReactiveSinkLike`](rx.ReactiveSinkLike.md)<`T`\> |
+| `sink` | [`SinkLike`](util.SinkLike.md)<`T`\> |
 
 #### Returns
 

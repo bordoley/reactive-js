@@ -1,6 +1,7 @@
 import { DistinctUntilChanged, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
 import { SideEffect1 } from "../functions.mjs";
-import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix.mjs";
+import { EnumerableLike, ToEnumerable } from "../ix.mjs";
+import { EnumeratorLike } from "../util.mjs";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
 declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"];
 declare const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike>;

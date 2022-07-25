@@ -65,7 +65,7 @@ ___
 
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`EnumeratorLike`](ix.EnumeratorLike.md)<`unknown`\>
+• `Optional` `Readonly` **TStatefulContainerState**: [`EnumeratorLike`](util.EnumeratorLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -75,7 +75,7 @@ ___
 
 ### [InteractiveContainerLike\_interact]
 
-▸ **[InteractiveContainerLike_interact]**(`_`): [`EnumeratorLike`](ix.EnumeratorLike.md)<`T`\>
+▸ **[InteractiveContainerLike_interact]**(`_`): [`EnumeratorLike`](util.EnumeratorLike.md)<`T`\>
 
 #### Parameters
 
@@ -85,7 +85,7 @@ ___
 
 #### Returns
 
-[`EnumeratorLike`](ix.EnumeratorLike.md)<`T`\>
+[`EnumeratorLike`](util.EnumeratorLike.md)<`T`\>
 
 #### Overrides
 

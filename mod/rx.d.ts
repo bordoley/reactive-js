@@ -1,38 +1,17 @@
 import { StatefulContainerLike, StatefulContainerStateOf, Container, ContainerOf, ContainerLike } from "./containers.mjs";
 import { Function1 } from "./functions.mjs";
-import { DispatcherLike, SchedulerLike } from "./scheduling.mjs";
-import { DisposableLike } from "./util.mjs";
-/** @ignore */
-declare const ReactiveSinkLike_notify: unique symbol;
-interface ReactiveSinkLike<T = unknown> extends DisposableLike {
-    /**
-     * Notifies the the sink of the next notification produced by the observable source.
-     *
-     * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-     * scheduled using the sink's `schedule` method.
-     *
-     * @param next The next notification value.
-     */
-    [ReactiveSinkLike_notify](next: T): void;
-}
-/** @ignore */
-declare const ObserverLike_dispatcher: unique symbol;
-/** @ignore */
-declare const ObserverLike_scheduler: unique symbol;
-interface ObserverLike<T = unknown> extends ReactiveSinkLike<T> {
-    readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
-    readonly [ObserverLike_scheduler]: SchedulerLike;
-}
+import { ObserverLike } from "./scheduling.mjs";
+import { SinkLike, DisposableLike } from "./util.mjs";
 /** @ignore */
 declare const ReactiveContainerLike_sinkInto: unique symbol;
 interface ReactiveContainerLike extends StatefulContainerLike {
     readonly TContainerOf?: this;
-    readonly TStatefulContainerState?: ReactiveSinkLike;
+    readonly TStatefulContainerState?: SinkLike;
     [ReactiveContainerLike_sinkInto](sink: StatefulContainerStateOf<ReactiveContainerLike, this["T"]>): void;
 }
 interface RunnableLike<T = unknown> extends ReactiveContainerLike {
-    readonly TStatefulContainerState?: ReactiveSinkLike<this["T"]>;
-    [ReactiveContainerLike_sinkInto](sink: ReactiveSinkLike<T>): void;
+    readonly TStatefulContainerState?: SinkLike<this["T"]>;
+    [ReactiveContainerLike_sinkInto](sink: SinkLike<T>): void;
 }
 declare const DefaultObservable = 0;
 declare const RunnableObservable = 1;
@@ -82,4 +61,4 @@ declare type ToRunnable<C extends ContainerLike, TOptions = never> = Container<C
 declare const createSubject: <T>(options?: {
     replay?: number;
 }) => SubjectLike<T>;
-export { CreateReactiveContainer, DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, Never, ObservableLike, ObservableLike_observableType, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, ReactiveSinkLike, ReactiveSinkLike_notify, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToRunnable, createSubject };
+export { CreateReactiveContainer, DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, Never, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToRunnable, createSubject };

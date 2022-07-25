@@ -1,13 +1,13 @@
-[Reactive-JS](../README.md) / rx/ObserverLike
+[Reactive-JS](../README.md) / scheduling/ObserverLike
 
-# Module: rx/ObserverLike
+# Module: scheduling/ObserverLike
 
 ## Table of contents
 
 ### Functions
 
-- [getDispatcher](rx_ObserverLike.md#getdispatcher)
-- [getScheduler](rx_ObserverLike.md#getscheduler)
+- [getDispatcher](scheduling_ObserverLike.md#getdispatcher)
+- [getScheduler](scheduling_ObserverLike.md#getscheduler)
 
 ## Functions
 
@@ -25,7 +25,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `observer` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
+| `observer` | [`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\> |
 
 #### Returns
 
@@ -47,7 +47,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observer` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
+| `observer` | [`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\> |
 
 #### Returns
 

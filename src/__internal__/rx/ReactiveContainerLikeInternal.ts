@@ -28,14 +28,9 @@ import {
   none,
   pipe,
 } from "../../functions";
-import {
-  CreateReactiveContainer,
-  ReactiveContainerLike,
-  ReactiveSinkLike,
-} from "../../rx";
+import { CreateReactiveContainer, ReactiveContainerLike } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
-import { notify } from "../../rx/ReactiveSinkLike";
-import { DisposableLike, DisposableOrTeardown } from "../../util";
+import { DisposableLike, DisposableOrTeardown, SinkLike } from "../../util";
 import {
   add,
   addTo,
@@ -46,6 +41,7 @@ import {
   onDisposed,
   onError,
 } from "../../util/DisposableLike";
+import { notify } from "../../util/SinkLike";
 import {
   Lift as StatefulContainerLift,
   StatefulContainerOperator,
@@ -359,7 +355,7 @@ export const createUsing =
     );
 
 const decorateWithNotify = <TThis, TNext>(
-  SinkClass: new <T>(...a: readonly any[]) => ReactiveSinkLike<T>,
+  SinkClass: new <T>(...a: readonly any[]) => SinkLike<T>,
   notify: (this: TThis, next: TNext) => void,
 ) => {
   SinkClass.prototype.notify = notify;

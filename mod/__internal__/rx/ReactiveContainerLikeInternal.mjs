@@ -2,8 +2,8 @@
 import { forEach } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe, newInstanceWith, none, isSome, newInstance, isEmpty, compose, negate, ignore, identity, getLength } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
-import { notify } from '../../rx/ReactiveSinkLike.mjs';
 import { addToIgnoringChildErrors, onComplete, onError, addTo, onDisposed, add } from '../../util/DisposableLike.mjs';
+import { notify } from '../../util/SinkLike.mjs';
 import { lift } from '../containers/StatefulContainerLikeInternal.mjs';
 import { dispose, isDisposed } from '../util/DisposableLikeInternal.mjs';
 

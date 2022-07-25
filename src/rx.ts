@@ -22,9 +22,10 @@ import {
   none,
   pipe,
 } from "./functions";
-import { DispatcherLike, SchedulerLike } from "./scheduling";
+import { ObserverLike } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
-import { DisposableLike } from "./util";
+import { getDispatcher } from "./scheduling/ObserverLike";
+import { DisposableLike, SinkLike } from "./util";
 import {
   addIgnoringChildErrors,
   isDisposed,
@@ -32,37 +33,12 @@ import {
 } from "./util/DisposableLike";
 
 /** @ignore */
-export const ReactiveSinkLike_notify = Symbol("ReactiveSinkLike_notify");
-export interface ReactiveSinkLike<T = unknown> extends DisposableLike {
-  /**
-   * Notifies the the sink of the next notification produced by the observable source.
-   *
-   * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-   * scheduled using the sink's `schedule` method.
-   *
-   * @param next The next notification value.
-   */
-  [ReactiveSinkLike_notify](next: T): void;
-}
-
-/** @ignore */
-export const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
-
-/** @ignore */
-export const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
-
-export interface ObserverLike<T = unknown> extends ReactiveSinkLike<T> {
-  readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
-  readonly [ObserverLike_scheduler]: SchedulerLike;
-}
-
-/** @ignore */
 export const ReactiveContainerLike_sinkInto = Symbol(
   "ReactiveContainerLike_sinkInto",
 );
 export interface ReactiveContainerLike extends StatefulContainerLike {
   readonly TContainerOf?: this;
-  readonly TStatefulContainerState?: ReactiveSinkLike;
+  readonly TStatefulContainerState?: SinkLike;
 
   [ReactiveContainerLike_sinkInto](
     sink: StatefulContainerStateOf<ReactiveContainerLike, this["T"]>,
@@ -70,9 +46,9 @@ export interface ReactiveContainerLike extends StatefulContainerLike {
 }
 
 export interface RunnableLike<T = unknown> extends ReactiveContainerLike {
-  readonly TStatefulContainerState?: ReactiveSinkLike<this["T"]>;
+  readonly TStatefulContainerState?: SinkLike<this["T"]>;
 
-  [ReactiveContainerLike_sinkInto](sink: ReactiveSinkLike<T>): void;
+  [ReactiveContainerLike_sinkInto](sink: SinkLike<T>): void;
 }
 
 export const DefaultObservable = 0;
@@ -197,7 +173,7 @@ export const createSubject = /*@__PURE__*/ (() => {
         }
 
         for (const observer of this.observers) {
-          pipe(observer[ObserverLike_dispatcher], dispatch(next));
+          pipe(observer, getDispatcher, dispatch(next));
         }
       }
     },
@@ -218,7 +194,7 @@ export const createSubject = /*@__PURE__*/ (() => {
         );
       }
 
-      const dispatcher = observer[ObserverLike_dispatcher];
+      const dispatcher = getDispatcher(observer);
 
       // The idea here is that an onSubscribe function may
       // call next from unscheduled sources such as event handlers.
