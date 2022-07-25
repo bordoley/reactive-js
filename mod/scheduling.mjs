@@ -1,6 +1,6 @@
 /// <reference types="./scheduling.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__/env.mjs';
-import { p as properties$1, b as prototype$1, i as move, g as getCurrent, I as InteractiveSourceLike_move, E as EnumeratorLike_current } from './ix-e3dc0e14.mjs';
+import { p as properties$1, b as prototype$1, d as move, g as getCurrent, I as InteractiveSourceLike_move, E as EnumeratorLike_current } from './ix-c87d6ab8.mjs';
 import { getDelay } from './__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from './__internal__/scheduling/queue.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from './__internal__/schedulingInternal.mjs';
