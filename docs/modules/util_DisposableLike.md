@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Variables
-
-- [disposed](util_DisposableLike.md#disposed)
-
 ### Functions
 
 - [add](util_DisposableLike.md#add)
@@ -15,18 +11,11 @@
 - [addTo](util_DisposableLike.md#addto)
 - [addToIgnoringChildErrors](util_DisposableLike.md#addtoignoringchilderrors)
 - [bindTo](util_DisposableLike.md#bindto)
-- [create](util_DisposableLike.md#create)
 - [onComplete](util_DisposableLike.md#oncomplete)
 - [onDisposed](util_DisposableLike.md#ondisposed)
 - [onError](util_DisposableLike.md#onerror)
 - [toAbortSignal](util_DisposableLike.md#toabortsignal)
 - [toErrorHandler](util_DisposableLike.md#toerrorhandler)
-
-## Variables
-
-### disposed
-
-• `Const` **disposed**: [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ## Functions
 
@@ -161,16 +150,6 @@ ___
 #### Returns
 
 [`Identity`](functions.md#identity)<`T`\>
-
-___
-
-### create
-
-▸ **create**(): [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-#### Returns
-
-[`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ___
 

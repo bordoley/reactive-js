@@ -1,8 +1,9 @@
-import { SideEffect1, Option } from "./functions.mjs";
-declare const DisposableLike_add: unique symbol;
-declare const DisposableLike_dispose: unique symbol;
-declare const DisposableLike_error: unique symbol;
-declare const DisposableLike_isDisposed: unique symbol;
+import { DisposableLike_add as DisposableLike_add$1, DisposableLike_dispose as DisposableLike_dispose$1, DisposableLike_error as DisposableLike_error$1, DisposableLike_isDisposed as DisposableLike_isDisposed$1 } from "./__internal__/util/DisposableLikeInternal.mjs";
+import { SideEffect1, Option, Factory } from "./functions.mjs";
+declare const DisposableLike_add: typeof DisposableLike_add$1;
+declare const DisposableLike_dispose: typeof DisposableLike_dispose$1;
+declare const DisposableLike_error: typeof DisposableLike_error$1;
+declare const DisposableLike_isDisposed: typeof DisposableLike_isDisposed$1;
 declare type Error = {
     readonly cause: unknown;
 };
@@ -48,4 +49,6 @@ declare const ContinuationLike_run: unique symbol;
 interface ContinuationLike extends DisposableLike {
     [ContinuationLike_run](): void;
 }
-export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, PauseableLike, PauseableLike_pause, PauseableLike_resume };
+declare const createDisposable: Factory<DisposableLike>;
+declare const disposed: DisposableLike;
+export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, PauseableLike, PauseableLike_pause, PauseableLike_resume, createDisposable, disposed };

@@ -1,5 +1,18 @@
-import { Identity, Option } from "../../functions.mjs";
-import { DisposableLike, Error, DisposableLike_error, DisposableLike_isDisposed } from "../../util.mjs";
+import { SideEffect1, Option, Identity } from "../../functions.mjs";
+declare const DisposableLike_add: unique symbol;
+declare const DisposableLike_dispose: unique symbol;
+declare const DisposableLike_error: unique symbol;
+declare const DisposableLike_isDisposed: unique symbol;
+declare type Error = {
+    readonly cause: unknown;
+};
+declare type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
+interface DisposableLike {
+    readonly [DisposableLike_error]: Option<Error>;
+    readonly [DisposableLike_isDisposed]: boolean;
+    [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
+    [DisposableLike_dispose](error?: Error): void;
+}
 /**
  * Dispose `disposable` with an optional error.
  */
@@ -10,4 +23,4 @@ declare const getError: (disposable: {
 declare const isDisposed: (disposable: {
     [DisposableLike_isDisposed]: boolean;
 }) => boolean;
-export { dispose, getError, isDisposed };
+export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, dispose, getError, isDisposed };

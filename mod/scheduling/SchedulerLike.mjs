@@ -14,9 +14,9 @@ import { EnumeratorLike_current, InteractiveSourceLike_move } from '../ix.mjs';
 import { hasCurrent, getCurrent } from '../ix/EnumeratorLike.mjs';
 import { move } from '../ix/InteractiveSourceLike.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
-import { ContinuationLike_run, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
+import { ContinuationLike_run, disposed, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
-import { disposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
+import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const requestYield = (scheduler) => scheduler[SchedulerLike_requestYield]();
