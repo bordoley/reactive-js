@@ -1,17 +1,12 @@
-import { DisposableLike } from "../util/DisposableLike.mjs";
-import { Identity, SideEffect1 } from "../util/functions.mjs";
-import { SchedulerLike } from "./SchedulerLike.mjs";
-declare const DispatcherLike_dispatch: unique symbol;
-declare const DispatcherLike_scheduler: unique symbol;
-interface DispatcherLike<T = unknown> extends DisposableLike {
-    /**
-     * Dispatches the next request
-     * @param req
-     */
-    [DispatcherLike_dispatch](req: T): void;
-    readonly [DispatcherLike_scheduler]: SchedulerLike;
-}
-declare const dispatch: <T, TDispatcher extends DispatcherLike<T>>(v: T) => Identity<TDispatcher>;
-declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
-declare const getScheduler: (dispatcher: DispatcherLike) => SchedulerLike;
-export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, dispatch, dispatchTo, getScheduler };
+import { Identity, SideEffect1 } from "../functions.mjs";
+import { DispatcherLike_dispatch, DispatcherLike_scheduler, SchedulerLike } from "../scheduling.mjs";
+declare const dispatch: <T, TDispatcher extends {
+    [DispatcherLike_dispatch](v: T): void;
+}>(v: T) => Identity<TDispatcher>;
+declare const dispatchTo: <T>(dispatcher: {
+    [DispatcherLike_dispatch](v: T): void;
+}) => SideEffect1<T>;
+declare const getScheduler: (dispatcher: {
+    [DispatcherLike_scheduler]: SchedulerLike;
+}) => SchedulerLike;
+export { dispatch, dispatchTo, getScheduler };

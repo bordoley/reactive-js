@@ -1,12 +1,12 @@
+import { raise } from "../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  hasCurrent,
-} from "../../ix/EnumeratorLike";
+} from "../../ix";
+import { hasCurrent } from "../../ix/EnumeratorLike";
 import { isDisposed } from "../../util/DisposableLike";
 import { none } from "../../util/Option";
-import { raise } from "../../util/functions";
 import { Object_init } from "../util/Object";
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");

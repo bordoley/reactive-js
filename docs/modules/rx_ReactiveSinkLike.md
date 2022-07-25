@@ -4,37 +4,23 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [ReactiveSinkLike](../interfaces/rx_ReactiveSinkLike.ReactiveSinkLike.md)
-
-### Variables
-
-- [ReactiveSinkLike\_notify](rx_ReactiveSinkLike.md#reactivesinklike_notify)
-
 ### Functions
 
 - [notify](rx_ReactiveSinkLike.md#notify)
 - [notifySink](rx_ReactiveSinkLike.md#notifysink)
 
-## Variables
-
-### ReactiveSinkLike\_notify
-
-• `Const` **ReactiveSinkLike\_notify**: unique `symbol`
-
 ## Functions
 
 ### notify
 
-▸ **notify**<`T`, `TSink`\>(`v`): [`Function1`](util_functions.md#function1)<`TSink`, `TSink`\>
+▸ **notify**<`T`, `TSink`\>(`v`): [`Function1`](functions.md#function1)<`TSink`, `TSink`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TSink` | extends [`ReactiveSinkLike`](../interfaces/rx_ReactiveSinkLike.ReactiveSinkLike.md)<`T`, `TSink`\> = [`ReactiveSinkLike`](../interfaces/rx_ReactiveSinkLike.ReactiveSinkLike.md)<`T`\> |
+| `TSink` | extends [`ReactiveSinkLike`](../interfaces/rx.ReactiveSinkLike.md)<`T`, `TSink`\> = [`ReactiveSinkLike`](../interfaces/rx.ReactiveSinkLike.md)<`T`\> |
 
 #### Parameters
 
@@ -44,20 +30,20 @@
 
 #### Returns
 
-[`Function1`](util_functions.md#function1)<`TSink`, `TSink`\>
+[`Function1`](functions.md#function1)<`TSink`, `TSink`\>
 
 ___
 
 ### notifySink
 
-▸ **notifySink**<`T`, `TSink`\>(`sink`): [`SideEffect1`](util_functions.md#sideeffect1)<`T`\>
+▸ **notifySink**<`T`, `TSink`\>(`sink`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TSink` | extends [`ReactiveSinkLike`](../interfaces/rx_ReactiveSinkLike.ReactiveSinkLike.md)<`T`, `TSink`\> = [`ReactiveSinkLike`](../interfaces/rx_ReactiveSinkLike.ReactiveSinkLike.md)<`T`\> |
+| `TSink` | extends [`ReactiveSinkLike`](../interfaces/rx.ReactiveSinkLike.md)<`T`, `TSink`\> = [`ReactiveSinkLike`](../interfaces/rx.ReactiveSinkLike.md)<`T`\> |
 
 #### Parameters
 
@@ -67,4 +53,4 @@ ___
 
 #### Returns
 
-[`SideEffect1`](util_functions.md#sideeffect1)<`T`\>
+[`SideEffect1`](functions.md#sideeffect1)<`T`\>

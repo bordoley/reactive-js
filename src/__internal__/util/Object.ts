@@ -1,4 +1,4 @@
-import { Factory, Function1, Function2, Function3 } from "../../util/functions";
+import { Factory, Function1, Function2, Function3 } from "../../functions";
 
 export const Object_init = Symbol("Object_init");
 

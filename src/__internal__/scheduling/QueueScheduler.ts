@@ -21,24 +21,24 @@ import {
   createObjectFactory,
   init,
 } from "../../__internal__/util/Object";
+import { Function1, SideEffect, max, pipe } from "../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
-  getCurrent,
-  hasCurrent,
-} from "../../ix/EnumeratorLike";
-import {
   InteractiveSourceLike_move,
-  move,
-} from "../../ix/InteractiveSourceLike";
-import { ContinuationLike } from "../../scheduling/ContinuationLike";
+} from "../../ix";
+import { getCurrent, hasCurrent } from "../../ix/EnumeratorLike";
+import { move } from "../../ix/InteractiveSourceLike";
 import {
+  ContinuationLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+} from "../../scheduling";
+import {
   __yield,
   getCurrentTime,
   isInContinuation,
@@ -47,17 +47,17 @@ import {
 } from "../../scheduling/SchedulerLike";
 import {
   DisposableLike,
+  Option,
+  PauseableLike,
+  PauseableLike_pause,
+  PauseableLike_resume,
+} from "../../util";
+import {
   addIgnoringChildErrors,
   disposed,
   isDisposed,
 } from "../../util/DisposableLike";
-import { Option, isNone, isSome, none } from "../../util/Option";
-import {
-  PauseableLike,
-  PauseableLike_pause,
-  PauseableLike_resume,
-} from "../../util/PauseableLike";
-import { Function1, SideEffect, max, pipe } from "../../util/functions";
+import { isNone, isSome, none } from "../../util/Option";
 import { QueueLike, createPriorityQueue } from "./queue";
 
 export type QueueTask = {

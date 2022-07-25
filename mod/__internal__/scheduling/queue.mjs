@@ -1,6 +1,6 @@
 /// <reference types="./queue.d.ts" />
+import { floor, getLength, newInstance } from '../../functions.mjs';
 import { isSome, none } from '../../util/Option.mjs';
-import { floor, getLength, newInstance } from '../../util/functions.mjs';
 
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const siftDown = (queue, item) => {

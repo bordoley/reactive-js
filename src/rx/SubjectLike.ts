@@ -7,13 +7,6 @@ import {
   createObjectFactory,
   init,
 } from "../__internal__/util/Object";
-import { dispatch } from "../scheduling/DispatcherLike";
-import {
-  addIgnoringChildErrors,
-  isDisposed,
-  onDisposed,
-} from "../util/DisposableLike";
-import { none } from "../util/Option";
 import {
   Function1,
   SideEffect1,
@@ -21,24 +14,26 @@ import {
   max,
   newInstance,
   pipe,
-} from "../util/functions";
-import {
-  MulticastObservableLike,
-  MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
-  getReplay,
-} from "./MulticastObservableLike";
+} from "../functions";
 import {
   DefaultObservable,
+  MulticastObservableLike_observerCount,
+  MulticastObservableLike_replay,
   ObservableLike_observableType,
-} from "./ObservableLike";
-import { ObserverLike, getDispatcher } from "./ObserverLike";
-import { ReactiveContainerLike_sinkInto } from "./ReactiveContainerLike";
-
-export const SubjectLike_publish = Symbol("SubjectLike_publish");
-export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
-  [SubjectLike_publish](next: T): void;
-}
+  ObserverLike,
+  ReactiveContainerLike_sinkInto,
+  SubjectLike,
+  SubjectLike_publish,
+} from "../rx";
+import { dispatch } from "../scheduling/DispatcherLike";
+import {
+  addIgnoringChildErrors,
+  isDisposed,
+  onDisposed,
+} from "../util/DisposableLike";
+import { none } from "../util/Option";
+import { getReplay } from "./MulticastObservableLike";
+import { getDispatcher } from "./ObserverLike";
 
 export const publish =
   <T>(v: T): Function1<SubjectLike<T>, SubjectLike<T>> =>

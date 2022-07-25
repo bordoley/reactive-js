@@ -1,0 +1,198 @@
+[Reactive-JS](../README.md) / [scheduling](../modules/scheduling.md) / PauseableSchedulerLike
+
+# Interface: PauseableSchedulerLike
+
+[scheduling](../modules/scheduling.md).PauseableSchedulerLike
+
+## Hierarchy
+
+- [`PauseableLike`](util.PauseableLike.md)
+
+- [`SchedulerLike`](scheduling.SchedulerLike.md)
+
+  ↳ **`PauseableSchedulerLike`**
+
+## Table of contents
+
+### Properties
+
+- [[DisposableLike\_error]](scheduling.PauseableSchedulerLike.md#[disposablelike_error])
+- [[DisposableLike\_isDisposed]](scheduling.PauseableSchedulerLike.md#[disposablelike_isdisposed])
+- [[SchedulerLike\_inContinuation]](scheduling.PauseableSchedulerLike.md#[schedulerlike_incontinuation])
+- [[SchedulerLike\_now]](scheduling.PauseableSchedulerLike.md#[schedulerlike_now])
+- [[SchedulerLike\_shouldYield]](scheduling.PauseableSchedulerLike.md#[schedulerlike_shouldyield])
+
+### Methods
+
+- [[DisposableLike\_add]](scheduling.PauseableSchedulerLike.md#[disposablelike_add])
+- [[DisposableLike\_dispose]](scheduling.PauseableSchedulerLike.md#[disposablelike_dispose])
+- [[PauseableLike\_pause]](scheduling.PauseableSchedulerLike.md#[pauseablelike_pause])
+- [[PauseableLike\_resume]](scheduling.PauseableSchedulerLike.md#[pauseablelike_resume])
+- [[SchedulerLike\_requestYield]](scheduling.PauseableSchedulerLike.md#[schedulerlike_requestyield])
+- [[SchedulerLike\_schedule]](scheduling.PauseableSchedulerLike.md#[schedulerlike_schedule])
+
+## Properties
+
+### [DisposableLike\_error]
+
+• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/util.md#option)<[`Error`](../modules/util.md#error)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Inherited from
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[DisposableLike_error]](scheduling.SchedulerLike.md#[disposablelike_error])
+
+___
+
+### [DisposableLike\_isDisposed]
+
+• `Readonly` **[DisposableLike\_isDisposed]**: `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Inherited from
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[DisposableLike_isDisposed]](scheduling.SchedulerLike.md#[disposablelike_isdisposed])
+
+___
+
+### [SchedulerLike\_inContinuation]
+
+• `Readonly` **[SchedulerLike\_inContinuation]**: `boolean`
+
+#### Inherited from
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[SchedulerLike_inContinuation]](scheduling.SchedulerLike.md#[schedulerlike_incontinuation])
+
+___
+
+### [SchedulerLike\_now]
+
+• `Readonly` **[SchedulerLike\_now]**: `number`
+
+#### Inherited from
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[SchedulerLike_now]](scheduling.SchedulerLike.md#[schedulerlike_now])
+
+___
+
+### [SchedulerLike\_shouldYield]
+
+• `Readonly` **[SchedulerLike\_shouldYield]**: `boolean`
+
+#### Inherited from
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[SchedulerLike_shouldYield]](scheduling.SchedulerLike.md#[schedulerlike_shouldyield])
+
+## Methods
+
+### [DisposableLike\_add]
+
+▸ **[DisposableLike_add]**(`disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `disposable` | [`DisposableOrTeardown`](../modules/util.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Inherited from
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[DisposableLike_add]](scheduling.SchedulerLike.md#[disposablelike_add])
+
+___
+
+### [DisposableLike\_dispose]
+
+▸ **[DisposableLike_dispose]**(`error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `error?` | [`Error`](../modules/util.md#error) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[DisposableLike_dispose]](scheduling.SchedulerLike.md#[disposablelike_dispose])
+
+___
+
+### [PauseableLike\_pause]
+
+▸ **[PauseableLike_pause]**(): `void`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[PauseableLike](util.PauseableLike.md).[[PauseableLike_pause]](util.PauseableLike.md#[pauseablelike_pause])
+
+___
+
+### [PauseableLike\_resume]
+
+▸ **[PauseableLike_resume]**(): `void`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[PauseableLike](util.PauseableLike.md).[[PauseableLike_resume]](util.PauseableLike.md#[pauseablelike_resume])
+
+___
+
+### [SchedulerLike\_requestYield]
+
+▸ **[SchedulerLike_requestYield]**(): `void`
+
+Request the scheduler to yield.
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[SchedulerLike_requestYield]](scheduling.SchedulerLike.md#[schedulerlike_requestyield])
+
+___
+
+### [SchedulerLike\_schedule]
+
+▸ **[SchedulerLike_schedule]**(`continuation`, `options?`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `continuation` | [`ContinuationLike`](scheduling.ContinuationLike.md) |
+| `options?` | [`SchedulerOptions`](../modules/scheduling.md#scheduleroptions) |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[SchedulerLike_schedule]](scheduling.SchedulerLike.md#[schedulerlike_schedule])

@@ -1,5 +1,4 @@
-import { DisposableLike, DisposableLike_error, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose } from "../../util/DisposableLike.mjs";
-import { Option } from "../../util/Option.mjs";
+import { DisposableLike, DisposableLike_error, Option, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose } from "../../util.mjs";
 import { Object_init } from "./Object.mjs";
 declare const DelegatingDisposable_private_delegate: unique symbol;
 declare const properties: {

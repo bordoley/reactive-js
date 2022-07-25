@@ -1,6 +1,6 @@
 /// <reference types="./testing.d.ts" />
+import { ignore, raise, strictEquality, arrayEquality, getLength } from '../functions.mjs';
 import { none, isSome, isNone } from '../util/Option.mjs';
-import { ignore, raise, strictEquality, arrayEquality, getLength } from '../util/functions.mjs';
 import { __DENO__ } from './env.mjs';
 
 const DescribeType = 1;

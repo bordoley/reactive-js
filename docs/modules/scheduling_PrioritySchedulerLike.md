@@ -4,53 +4,32 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [PrioritySchedulerLike](../interfaces/scheduling_PrioritySchedulerLike.PrioritySchedulerLike.md)
-
-### Type Aliases
-
-- [PrioritySchedulerOptions](scheduling_PrioritySchedulerLike.md#priorityscheduleroptions)
-
 ### Functions
 
 - [create](scheduling_PrioritySchedulerLike.md#create)
 - [toScheduler](scheduling_PrioritySchedulerLike.md#toscheduler)
 
-## Type Aliases
-
-### PrioritySchedulerOptions
-
-Ƭ **PrioritySchedulerOptions**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `delay?` | `number` |
-| `priority` | `number` |
-
 ## Functions
 
 ### create
 
-▸ **create**(`a`): [`PrioritySchedulerLike`](../interfaces/scheduling_PrioritySchedulerLike.PrioritySchedulerLike.md)
+▸ **create**(`a`): [`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md) |
+| `a` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 
-[`PrioritySchedulerLike`](../interfaces/scheduling_PrioritySchedulerLike.PrioritySchedulerLike.md)
+[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md)
 
 ___
 
 ### toScheduler
 
-▸ **toScheduler**(`priority`): [`Function1`](util_functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling_PrioritySchedulerLike.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)\>
+▸ **toScheduler**(`priority`): [`Function1`](functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\>
 
 Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
 
@@ -62,4 +41,4 @@ Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the
 
 #### Returns
 
-[`Function1`](util_functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling_PrioritySchedulerLike.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling_SchedulerLike.SchedulerLike.md)\>
+[`Function1`](functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\>

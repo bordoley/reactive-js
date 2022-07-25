@@ -1,10 +1,6 @@
-import {
-  DisposableLike,
-  add,
-  dispose,
-  disposed,
-} from "../../util/DisposableLike";
-import { pipe } from "../../util/functions";
+import { pipe } from "../../functions";
+import { DisposableLike } from "../../util";
+import { add, dispose, disposed } from "../../util/DisposableLike";
 import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike";
 import { Object_init } from "./Object";
 

@@ -1,5 +1,6 @@
 /// <reference types="./ReactiveContainerLike.d.ts" />
-const ReactiveContainerLike_sinkInto = Symbol("ReactiveContainerLike_sinkInto");
+import { ReactiveContainerLike_sinkInto } from '../rx.mjs';
+
 const sinkInto = (sink) => source => {
     source[ReactiveContainerLike_sinkInto](sink);
     return source;
@@ -9,4 +10,4 @@ const sourceFrom = (source) => sink => {
     return sink;
 };
 
-export { ReactiveContainerLike_sinkInto, sinkInto, sourceFrom };
+export { sinkInto, sourceFrom };

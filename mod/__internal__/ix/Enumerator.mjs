@@ -1,8 +1,9 @@
 /// <reference types="./Enumerator.d.ts" />
-import { EnumeratorLike_current, hasCurrent, EnumeratorLike_hasCurrent } from '../../ix/EnumeratorLike.mjs';
+import { raise } from '../../functions.mjs';
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../ix.mjs';
+import { hasCurrent } from '../../ix/EnumeratorLike.mjs';
 import '../../util/DisposableLike.mjs';
 import { none } from '../../util/Option.mjs';
-import { raise } from '../../util/functions.mjs';
 import { Object_init } from '../util/Object.mjs';
 import { isDisposed } from '../util/DisposableLike.mjs';
 

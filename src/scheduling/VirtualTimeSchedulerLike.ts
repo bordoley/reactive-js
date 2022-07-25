@@ -19,26 +19,32 @@ import {
   createObjectFactory,
   init,
 } from "../__internal__/util/Object";
-import { EnumeratorLike, EnumeratorLike_current } from "../ix/EnumeratorLike";
-import { InteractiveSourceLike_move } from "../ix/InteractiveSourceLike";
+import { Function1, pipe } from "../functions";
 import {
-  DisposableLike,
-  addIgnoringChildErrors,
-  dispose,
-  isDisposed,
-} from "../util/DisposableLike";
-import { isSome, none } from "../util/Option";
-import { Function1, pipe } from "../util/functions";
-import { ContinuationLike } from "./ContinuationLike";
+  EnumeratorLike,
+  EnumeratorLike_current,
+  InteractiveSourceLike_move,
+} from "../ix";
+import { getCurrent } from "../ix/EnumeratorLike";
+import { move } from "../ix/InteractiveSourceLike";
 import {
-  SchedulerLike,
+  ContinuationLike,
+  ContinuationLike_run,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  getCurrentTime,
-} from "./SchedulerLike";
+  VirtualTimeSchedulerLike,
+} from "../scheduling";
+import { DisposableLike } from "../util";
+import {
+  addIgnoringChildErrors,
+  dispose,
+  isDisposed,
+} from "../util/DisposableLike";
+import { isSome, none } from "../util/Option";
+import { getCurrentTime } from "./SchedulerLike";
 
 type VirtualTask = {
   readonly continuation: ContinuationLike;
@@ -68,8 +74,20 @@ const properties = {
 const prototype = {
   ...disposablePrototype,
   ...enumeratorPrototype,
+  [ContinuationLike_run](
+    this: typeof properties & EnumeratorLike<VirtualTask>,
+  ) {
+    while (move(this)) {
+      const task = getCurrent(this);
+      const { dueTime, continuation } = task;
+
+      this.microTaskTicks = 0;
+      this[SchedulerLike_now] = dueTime;
+      pipe(this, runContinuation(continuation));
+    }
+  },
   [InteractiveSourceLike_move](
-    this: typeof properties & MutableEnumeratorLike<void>,
+    this: typeof properties & MutableEnumeratorLike<VirtualTask>,
   ): void {
     const taskQueue = this.taskQueue;
 
@@ -80,13 +98,7 @@ const prototype = {
     const task = taskQueue.pop();
 
     if (isSome(task)) {
-      const { dueTime, continuation } = task;
-
-      this.microTaskTicks = 0;
-      this[SchedulerLike_now] = dueTime;
-      this[EnumeratorLike_current] = none;
-
-      pipe(this, runContinuation(continuation));
+      this[EnumeratorLike_current] = task;
     } else {
       pipe(this, dispose());
     }
@@ -140,10 +152,6 @@ const createInstance: Function1<number, VirtualTimeSchedulerLike> =
     typeof properties,
     number
   >(prototype, properties);
-
-export interface VirtualTimeSchedulerLike
-  extends EnumeratorLike<unknown>,
-    SchedulerLike {}
 
 /**
  * Creates a new virtual time scheduler instance.

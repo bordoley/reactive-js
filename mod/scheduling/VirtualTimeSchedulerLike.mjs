@@ -2,16 +2,18 @@
 import { MAX_SAFE_INTEGER } from '../__internal__/env.mjs';
 import { properties as properties$2, prototype as prototype$2 } from '../__internal__/ix/Enumerator.mjs';
 import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { SchedulerLike_inContinuation, runContinuation } from '../__internal__/scheduling.mjs';
+import { runContinuation } from '../__internal__/scheduling.mjs';
 import { createPriorityQueue } from '../__internal__/scheduling/queue.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { EnumeratorLike_current } from '../ix/EnumeratorLike.mjs';
-import { InteractiveSourceLike_move } from '../ix/InteractiveSourceLike.mjs';
+import { pipe } from '../functions.mjs';
+import { InteractiveSourceLike_move, EnumeratorLike_current } from '../ix.mjs';
+import { getCurrent } from '../ix/EnumeratorLike.mjs';
+import { move } from '../ix/InteractiveSourceLike.mjs';
+import { SchedulerLike_inContinuation, SchedulerLike_now, ContinuationLike_run, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { none, isSome } from '../util/Option.mjs';
-import { pipe } from '../util/functions.mjs';
-import { SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, getCurrentTime } from './SchedulerLike.mjs';
+import { getCurrentTime } from './SchedulerLike.mjs';
 import { isDisposed, dispose } from '../__internal__/util/DisposableLike.mjs';
 
 const comparator = (a, b) => {
@@ -34,6 +36,15 @@ const properties = {
 const prototype = {
     ...prototype$1,
     ...prototype$2,
+    [ContinuationLike_run]() {
+        while (move(this)) {
+            const task = getCurrent(this);
+            const { dueTime, continuation } = task;
+            this.microTaskTicks = 0;
+            this[SchedulerLike_now] = dueTime;
+            pipe(this, runContinuation(continuation));
+        }
+    },
     [InteractiveSourceLike_move]() {
         const taskQueue = this.taskQueue;
         if (isDisposed(this)) {
@@ -41,11 +52,7 @@ const prototype = {
         }
         const task = taskQueue.pop();
         if (isSome(task)) {
-            const { dueTime, continuation } = task;
-            this.microTaskTicks = 0;
-            this[SchedulerLike_now] = dueTime;
-            this[EnumeratorLike_current] = none;
-            pipe(this, runContinuation(continuation));
+            this[EnumeratorLike_current] = task;
         }
         else {
             pipe(this, dispose());

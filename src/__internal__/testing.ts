@@ -1,4 +1,3 @@
-import { Option, isNone, isSome, none } from "../util/Option";
 import {
   Equality,
   Factory,
@@ -9,7 +8,9 @@ import {
   ignore,
   raise,
   strictEquality,
-} from "../util/functions";
+} from "../functions";
+import { Option } from "../util";
+import { isNone, isSome, none } from "../util/Option";
 import { __DENO__ } from "./env";
 
 export const DescribeType = 1;

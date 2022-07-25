@@ -1,5 +1,5 @@
 /// <reference types="./StatefulContainerLike.d.ts" />
-import { newInstance, pipe, compose, pipeLazy } from '../util/functions.mjs';
+import { newInstance, pipe, compose, pipeLazy } from '../functions.mjs';
 
 const encodeUtf8 = (m) => obs => m.defer(() => {
     const textEncoder = newInstance(TextEncoder);
