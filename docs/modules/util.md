@@ -17,13 +17,6 @@
 
 ### Variables
 
-- [ContinuationLike\_run](util.md#continuationlike_run)
-- [DisposableLike\_add](util.md#disposablelike_add)
-- [DisposableLike\_dispose](util.md#disposablelike_dispose)
-- [DisposableLike\_error](util.md#disposablelike_error)
-- [DisposableLike\_isDisposed](util.md#disposablelike_isdisposed)
-- [PauseableLike\_pause](util.md#pauseablelike_pause)
-- [PauseableLike\_resume](util.md#pauseablelike_resume)
 - [disposed](util.md#disposed)
 
 ### Functions
@@ -49,48 +42,6 @@ ___
 | `cause` | `unknown` |
 
 ## Variables
-
-### ContinuationLike\_run
-
-• `Const` **ContinuationLike\_run**: unique `symbol`
-
-___
-
-### DisposableLike\_add
-
-• `Const` **DisposableLike\_add**: typeof `DisposableLike_add$1`
-
-___
-
-### DisposableLike\_dispose
-
-• `Const` **DisposableLike\_dispose**: typeof `DisposableLike_dispose$1`
-
-___
-
-### DisposableLike\_error
-
-• `Const` **DisposableLike\_error**: typeof `DisposableLike_error$1`
-
-___
-
-### DisposableLike\_isDisposed
-
-• `Const` **DisposableLike\_isDisposed**: typeof `DisposableLike_isDisposed$1`
-
-___
-
-### PauseableLike\_pause
-
-• `Const` **PauseableLike\_pause**: unique `symbol`
-
-___
-
-### PauseableLike\_resume
-
-• `Const` **PauseableLike\_resume**: unique `symbol`
-
-___
 
 ### disposed
 

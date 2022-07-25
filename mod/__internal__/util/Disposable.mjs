@@ -69,7 +69,7 @@ const createDisposable =
 const disposed = {
     [DisposableLike_error]: none,
     [DisposableLike_isDisposed]: true,
-    [DisposableLike_add]: function (disposable) {
+    [DisposableLike_add](disposable) {
         doDispose(this, disposable);
     },
     [DisposableLike_dispose]: ignore,

@@ -4,11 +4,14 @@ import { ObserverLike } from "./rx.mjs";
 import { SchedulerLike } from "./scheduling.mjs";
 import { StreamLike, StreamableLike } from "./streaming.mjs";
 import { DisposableLike } from "./util.mjs";
+/** @ignore */
 declare const InteractiveSourceLike_move: unique symbol;
 interface InteractiveSourceLike extends DisposableLike {
     [InteractiveSourceLike_move](): void;
 }
+/** @ignore */
 declare const EnumeratorLike_current: unique symbol;
+/** @ignore */
 declare const EnumeratorLike_hasCurrent: unique symbol;
 interface EnumeratorLike<T = unknown> extends InteractiveSourceLike {
     readonly [EnumeratorLike_current]: T;
@@ -17,6 +20,7 @@ interface EnumeratorLike<T = unknown> extends InteractiveSourceLike {
 interface AsyncEnumeratorLike<T = unknown> extends DisposableLike, InteractiveSourceLike, StreamLike<void, T> {
     readonly TStatefulContainerState?: ObserverLike<T>;
 }
+/** @ignore */
 declare const InteractiveContainerLike_interact: unique symbol;
 interface InteractiveContainerLike extends StatefulContainerLike {
     readonly TStatefulContainerState?: InteractiveSourceLike;

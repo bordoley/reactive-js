@@ -9,6 +9,7 @@ import { PauseableLike } from "./util.mjs";
  */
 interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
 }
+/** @ignore */
 declare const StreamableLike_stream: unique symbol;
 interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
     [StreamableLike_stream](scheduler: SchedulerLike, options?: {

@@ -15,18 +15,8 @@
 
 - [FlowMode](streaming.md#flowmode)
 
-### Variables
-
-- [StreamableLike\_stream](streaming.md#streamablelike_stream)
-
 ## Type Aliases
 
 ### FlowMode
 
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
-
-## Variables
-
-### StreamableLike\_stream
-
-• `Const` **StreamableLike\_stream**: unique `symbol`

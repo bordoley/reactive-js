@@ -11,12 +11,16 @@ import { SchedulerLike } from "./scheduling";
 import { StreamLike, StreamableLike } from "./streaming";
 import { DisposableLike } from "./util";
 
+/** @ignore */
 export const InteractiveSourceLike_move = Symbol("InteractiveSourceLike_move");
 export interface InteractiveSourceLike extends DisposableLike {
   [InteractiveSourceLike_move](): void;
 }
 
+/** @ignore */
 export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
+
+/** @ignore */
 export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
 
 export interface EnumeratorLike<T = unknown> extends InteractiveSourceLike {
@@ -31,6 +35,7 @@ export interface AsyncEnumeratorLike<T = unknown>
   readonly TStatefulContainerState?: ObserverLike<T>;
 }
 
+/** @ignore */
 export const InteractiveContainerLike_interact = Symbol(
   "InteractiveContainerLike_interact",
 );
