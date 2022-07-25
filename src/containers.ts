@@ -10,6 +10,7 @@ import {
   Predicate,
   Reducer,
   Updater,
+  identity,
 } from "./functions";
 import { DisposableLike } from "./util";
 
@@ -409,13 +410,20 @@ export type Zip<C extends ContainerLike> = Container<C> & {
   ): ContainerOf<C, readonly T[]>;
 };
 
-export const emptyReadonlyArray = /*@__PURE__*/ (() => {
-  const _empty: readonly any[] = [];
-  return <T>(): ReadonlyArrayLike<T> => _empty;
-})();
+export const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"] =
+  /*@__PURE__*/ (() => {
+    const _empty: readonly any[] = [];
+    return <T>(): ReadonlyArrayLike<T> => _empty;
+  })();
 
 export const emptyReadonlyArrayT: Empty<ReadonlyArrayLike> = {
   empty: emptyReadonlyArray,
+};
+
+export const fromArrayReadonlyArray: FromArray<ReadonlyArrayLike>["fromArray"] =
+  () => identity;
+export const fromArrayReadonlyArrayT: FromArray<ReadonlyArrayLike> = {
+  fromArray: fromArrayReadonlyArray,
 };
 
 export const generateSequence: Generate<SequenceLike>["generate"] =

@@ -26,7 +26,7 @@ declare const TContainerOf: EnumerableLike;
 declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike>;
 declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
-declare const toArrayT: ToReadonlyArray<EnumerableLike>;
+declare const toReadonlyArrayT: ToReadonlyArray<EnumerableLike>;
 declare const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<EnumerableLike>;
 /**
@@ -35,4 +35,4 @@ declare const toEnumerableT: ToEnumerable<EnumerableLike>;
 declare const toIterable: ToIterable<EnumerableLike>["toIterable"];
 declare const toIterableT: ToIterable<EnumerableLike>;
 declare const zipT: Zip<EnumerableLike>;
-export { TContainerOf, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };
+export { TContainerOf, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, toReadonlyArrayT, zipT };

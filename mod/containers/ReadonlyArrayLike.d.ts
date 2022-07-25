@@ -19,8 +19,14 @@ declare const toEnumerableT: ToEnumerable<ReadonlyArrayLike, {
     readonly start: number;
     readonly count: number;
 }>;
-declare const toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike>["toReadonlyArray"];
-declare const toReadonlyArrayT: ToReadonlyArray<ReadonlyArrayLike>;
+declare const toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike, {
+    readonly start: number;
+    readonly count: number;
+}>["toReadonlyArray"];
+declare const toReadonlyArrayT: ToReadonlyArray<ReadonlyArrayLike, {
+    readonly start: number;
+    readonly count: number;
+}>;
 declare const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"];
 declare const toSequenceT: ToSequence<ReadonlyArrayLike>;
 export { FromArrayOptions, every, forEach, keep, keepT, map, mapT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toSequence, toSequenceT };

@@ -54,11 +54,13 @@
 ### Variables
 
 - [emptyReadonlyArrayT](containers.md#emptyreadonlyarrayt)
+- [fromArrayReadonlyArrayT](containers.md#fromarrayreadonlyarrayt)
 - [generateSequenceT](containers.md#generatesequencet)
 
 ### Functions
 
 - [emptyReadonlyArray](containers.md#emptyreadonlyarray)
+- [fromArrayReadonlyArray](containers.md#fromarrayreadonlyarray)
 - [generateSequence](containers.md#generatesequence)
 
 ## Type Aliases
@@ -521,6 +523,12 @@ ___
 
 ___
 
+### fromArrayReadonlyArrayT
+
+• `Const` **fromArrayReadonlyArrayT**: [`FromArray`](containers.md#fromarray)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
+
+___
+
 ### generateSequenceT
 
 • `Const` **generateSequenceT**: [`Generate`](containers.md#generate)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
@@ -529,7 +537,7 @@ ___
 
 ### emptyReadonlyArray
 
-▸ **emptyReadonlyArray**<`T`\>(): [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>
+▸ **emptyReadonlyArray**<`T`\>(`options?`): [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>
 
 #### Type parameters
 
@@ -537,9 +545,37 @@ ___
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
 #### Returns
 
 [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>
+
+___
+
+### fromArrayReadonlyArray
+
+▸ **fromArrayReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<[`FromArrayOptions`](containers.md#fromarrayoptions)\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
 
 ___
 
