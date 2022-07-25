@@ -481,8 +481,7 @@ const zip = /*@__PURE__*/ (() => {
         pipe(enumerators, forEach(addTo(instance)));
         return instance;
     };
-    const zip = (enumerables) => createEnumerable(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
-    return zip;
+    return (...enumerables) => createEnumerable(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
 })();
 const zipT = { zip };
 

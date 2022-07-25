@@ -879,14 +879,12 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
     return instance as EnumeratorLike<readonly any[]>;
   };
 
-  const zip = (
-    enumerables: readonly EnumerableLike<any>[],
+  return (
+    ...enumerables: readonly EnumerableLike<any>[]
   ): EnumerableLike<any> =>
     createEnumerable(() =>
       pipe(enumerables, mapReadonlyArray(enumerate()), zipEnumerators),
     );
-
-  return zip as unknown as Zip<EnumerableLike>["zip"];
 })();
 
 export const zipT: Zip<EnumerableLike> = { zip };
