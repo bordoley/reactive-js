@@ -11,6 +11,7 @@ import {
   Object_init,
   createObjectFactory,
   init,
+  mix,
 } from "../__internal__/util/Object";
 import {
   Concat,
@@ -424,9 +425,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       seq: (() => none) as SequenceLike,
     };
 
-    const prototype = {
-      ...disposablePrototype,
-      ...enumeratorPrototype,
+    const prototype = mix(disposablePrototype, enumeratorPrototype, {
       [Object_init](this: typeof properties, seq: SequenceLike) {
         init(disposablePrototype, this);
         init(enumeratorPrototype, this);
@@ -443,7 +442,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
           }
         }
       },
-    };
+    });
 
     const createInstance = createObjectFactory<
       typeof prototype,

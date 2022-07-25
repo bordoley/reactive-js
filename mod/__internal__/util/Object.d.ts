@@ -27,4 +27,10 @@ interface ObjectFactory {
     }, TProperties, TA, TB, TC>(prototype: TPrototype, properties: TProperties): Function3<TA, TB, TC, TPrototype & TProperties>;
 }
 declare const createObjectFactory: ObjectFactory;
-export { Object_init, createObjectFactory, init };
+interface Mix {
+    <TProto0 extends object, TProto1 extends object>(p0: TProto0, p1: TProto1): TProto0 & TProto1;
+    <TProto0 extends object, TProto1 extends object, TProto2 extends object>(p0: TProto0, p1: TProto1, p2: TProto2): TProto0 & TProto1 & TProto2;
+    <TProto0 extends object, TProto1 extends object, TProto2 extends object, TProto3 extends object>(p0: TProto0, p1: TProto1, p2: TProto2, p3: TProto3): TProto0 & TProto1 & TProto2 & TProto3;
+}
+declare const mix: Mix;
+export { Object_init, createObjectFactory, init, mix };

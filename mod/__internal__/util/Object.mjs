@@ -11,5 +11,10 @@ const createObjectFactory = (prototype, properties) => {
         return instance;
     };
 };
+const mix = (...prototypes) => {
+    const propertyDescriptors = prototypes.map(prototype => Object.getOwnPropertyDescriptors(prototype));
+    const descriptor = propertyDescriptors.reduce((acc, next) => ({ ...acc, ...next }), {});
+    return Object.create(Object.prototype, descriptor);
+};
 
-export { Object_init, createObjectFactory, init };
+export { Object_init, createObjectFactory, init, mix };

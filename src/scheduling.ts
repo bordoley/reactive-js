@@ -23,6 +23,7 @@ import {
   Object_init,
   createObjectFactory,
   init,
+  mix,
 } from "./__internal__/util/Object";
 import { Function1, isSome, none, pipe } from "./functions";
 import {
@@ -214,8 +215,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     yieldRequested: false,
   };
 
-  const prototype = {
-    ...disposablePrototype,
+  const prototype = mix(disposablePrototype, {
     [Object_init](this: typeof properties, yieldInterval: number) {
       init(disposablePrototype, this);
       this.yieldInterval = yieldInterval;
@@ -270,7 +270,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
         scheduleImmediate(this, continuation);
       }
     },
-  };
+  });
 
   const createInstance = /*@__PURE__*/ createObjectFactory<
     typeof prototype,
@@ -314,9 +314,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     taskQueue: none as unknown as QueueLike<VirtualTask>,
   };
 
-  const prototype = {
-    ...disposablePrototype,
-    ...enumeratorPrototype,
+  const prototype = mix(disposablePrototype, enumeratorPrototype, {
     [ContinuationLike_run](
       this: typeof properties & EnumeratorLike<VirtualTask>,
     ) {
@@ -389,7 +387,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         });
       }
     },
-  };
+  });
 
   const createInstance: Function1<number, VirtualTimeSchedulerLike> =
     /*@__PURE__*/ createObjectFactory<

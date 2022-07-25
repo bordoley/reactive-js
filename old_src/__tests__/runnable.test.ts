@@ -104,32 +104,6 @@ export const createRunnableTests = <C extends ContainerLike>(
       ),
     ),
 
-    describe(
-      "distinctUntilChanged",
-      test(
-        "when source has duplicates in order",
-        pipeLazy(
-          [1, 2, 2, 2, 2, 3, 3, 3, 4],
-          m.fromArray(),
-          m.distinctUntilChanged(),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([1, 2, 3, 4]),
-        ),
-      ),
-      test(
-        "when source is empty",
-        pipeLazy(
-          [],
-          m.fromArray(),
-          m.distinctUntilChanged(),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([]),
-        ),
-      ),
-    ),
-
     test(
       "endWith",
       pipeLazy(

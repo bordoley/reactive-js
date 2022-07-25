@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
-import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, pipe, newInstance, identity, none } from '../functions.mjs';
 import { InteractiveContainerLike_interact } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
@@ -44,7 +44,7 @@ const createFromArray = (factory) => (options = {}) => values => {
             // count is none
             const startOrDefault = startOption !== null && startOption !== void 0 ? startOption : 0;
             const maxStart = max(startOrDefault, 0);
-            const start = min(maxStart, valuesLength - 1);
+            const start = min(maxStart, valuesLength);
             const count = valuesLength - start;
             return { start, count };
         }
@@ -59,9 +59,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
         count: 0,
         index: 0,
     };
-    const prototype$2 = {
-        ...prototype,
-        ...prototype$1,
+    const prototype$2 = mix(prototype, prototype$1, {
         [Object_init](array, start, count) {
             init(prototype, this);
             init(prototype$1, this);
@@ -76,14 +74,14 @@ const toEnumerable = /*@__PURE__*/ (() => {
                 const { index, count } = this;
                 if (count !== 0) {
                     this[EnumeratorLike_current] = array[index];
-                    this.count = count > 0 ? this.count-- : this.count++;
+                    this.count = count > 0 ? this.count - 1 : this.count + 1;
                 }
                 else {
                     pipe(this, dispose());
                 }
             }
         },
-    };
+    });
     const createInstance = createObjectFactory(prototype$2, properties$2);
     class ReadonlyArrayEnumerable {
         constructor(array, start, count) {
@@ -95,7 +93,9 @@ const toEnumerable = /*@__PURE__*/ (() => {
             return createInstance(this.array, this.start, this.count);
         }
     }
-    return createFromArray((a, start, count) => newInstance(ReadonlyArrayEnumerable, a, start, count));
+    return createFromArray((a, start, count) => {
+        return newInstance(ReadonlyArrayEnumerable, a, start, count);
+    });
 })();
 const toEnumerableT = { toEnumerable };
 const toReadonlyArray = () => identity;

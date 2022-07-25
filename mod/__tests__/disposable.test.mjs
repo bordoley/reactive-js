@@ -5,7 +5,7 @@ import { createDisposable } from '../util.mjs';
 import { addIgnoringChildErrors, onDisposed } from '../util/DisposableLike.mjs';
 import { dispose, isDisposed, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
-const tests = createDescribe("Disposable", createDescribe("Disposable", createTest("disposes child disposable when disposed", () => {
+const tests = createDescribe("Disposable", createTest("disposes child disposable when disposed", () => {
     const child = createDisposable();
     pipe(createDisposable(), addIgnoringChildErrors(child), dispose());
     pipe(child, isDisposed, expectTrue);
@@ -29,6 +29,6 @@ const tests = createDescribe("Disposable", createDescribe("Disposable", createTe
     pipe(disposable, getError, expectEquals(error));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([error]));
-})));
+}));
 
 export { tests };
