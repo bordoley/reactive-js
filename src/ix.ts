@@ -126,13 +126,8 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
       typeof properties
     >(prototype, properties);
 
-    class EmptyEnumerable<T> implements EnumerableLike<T> {
-      [InteractiveContainerLike_interact](): EnumeratorLike<T> {
-        return createInstance() as EnumeratorLike<T>;
-      }
-    }
-
-    return <T>() => newInstance(EmptyEnumerable) as EnumerableLike<T>;
+    return <T>() =>
+      createEnumerable(() => createInstance() as EnumeratorLike<T>);
   })();
 
 export const emptyEnumerableT: Empty<EnumerableLike> = {
