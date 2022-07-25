@@ -7,8 +7,8 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
   Error,
+  disposed,
 } from "../../util";
-import { disposed } from "../../util/DisposableLike";
 import { Object_init } from "./Object";
 
 const DelegatingDisposable_private_delegate = Symbol(

@@ -24,6 +24,11 @@
 - [DisposableLike\_isDisposed](util.md#disposablelike_isdisposed)
 - [PauseableLike\_pause](util.md#pauseablelike_pause)
 - [PauseableLike\_resume](util.md#pauseablelike_resume)
+- [disposed](util.md#disposed)
+
+### Functions
+
+- [createDisposable](util.md#createdisposable)
 
 ## Type Aliases
 
@@ -53,25 +58,25 @@ ___
 
 ### DisposableLike\_add
 
-• `Const` **DisposableLike\_add**: unique `symbol`
+• `Const` **DisposableLike\_add**: typeof `DisposableLike_add$1`
 
 ___
 
 ### DisposableLike\_dispose
 
-• `Const` **DisposableLike\_dispose**: unique `symbol`
+• `Const` **DisposableLike\_dispose**: typeof `DisposableLike_dispose$1`
 
 ___
 
 ### DisposableLike\_error
 
-• `Const` **DisposableLike\_error**: unique `symbol`
+• `Const` **DisposableLike\_error**: typeof `DisposableLike_error$1`
 
 ___
 
 ### DisposableLike\_isDisposed
 
-• `Const` **DisposableLike\_isDisposed**: unique `symbol`
+• `Const` **DisposableLike\_isDisposed**: typeof `DisposableLike_isDisposed$1`
 
 ___
 
@@ -84,3 +89,19 @@ ___
 ### PauseableLike\_resume
 
 • `Const` **PauseableLike\_resume**: unique `symbol`
+
+___
+
+### disposed
+
+• `Const` **disposed**: [`DisposableLike`](../interfaces/util.DisposableLike.md)
+
+## Functions
+
+### createDisposable
+
+▸ **createDisposable**(): [`DisposableLike`](../interfaces/util.DisposableLike.md)
+
+#### Returns
+
+[`DisposableLike`](../interfaces/util.DisposableLike.md)
