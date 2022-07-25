@@ -22,10 +22,20 @@ import {
   prototype as disposablePrototype,
 } from "../__internal__/util/Disposable";
 import {
+  properties as disposableRefProperties,
+  prototype as disposableRefPrototype,
+} from "../__internal__/util/DisposableRefLike";
+import {
   MutableEnumeratorLike,
   properties as enumeratorProperties,
   prototype as enumeratorPrototype,
+  neverEnumerator,
 } from "../__internal__/util/Enumerator";
+import {
+  MutableRefLike,
+  getCurrentRef,
+  setCurrentRef,
+} from "../__internal__/util/MutableRefLike";
 import {
   Object_init,
   createObjectFactory,
@@ -33,6 +43,8 @@ import {
   mix,
 } from "../__internal__/util/Object";
 import {
+  Concat,
+  ConcatAll,
   ContainerOperator,
   DistinctUntilChanged,
   Keep,
@@ -167,6 +179,86 @@ const delegatingDisposableEnumeratorPrototype = mix(
     },
   },
 );
+
+export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
+  /*@__PURE__*/ (() => {
+    const properties = {
+      ...disposableProperties,
+      ...disposableRefProperties,
+      ...enumeratorProperties,
+      delegate: none as unknown as EnumeratorLike<EnumerableLike>,
+    };
+
+    const prototype = mix(
+      disposablePrototype,
+      disposableRefPrototype,
+      enumeratorPrototype,
+      {
+        [Object_init](
+          this: typeof properties & DisposableLike,
+          delegate: EnumeratorLike<EnumerableLike>,
+        ) {
+          init(disposablePrototype, this);
+          init<typeof disposableRefPrototype, typeof this, EnumeratorLike>(
+            disposableRefPrototype,
+            this,
+            neverEnumerator(),
+          );
+          init(enumeratorPrototype, this);
+          this.delegate = delegate;
+        },
+        [SourceLike_move](
+          this: typeof properties &
+            MutableEnumeratorLike<unknown> &
+            MutableRefLike<EnumeratorLike>,
+        ) {
+          const { delegate } = this;
+          const innerEnumerator = getCurrentRef(this);
+
+          if (isDisposed(innerEnumerator) && move(delegate)) {
+            const next = pipe(delegate, getCurrent, enumerate());
+            pipe(this, setCurrentRef(next));
+          }
+
+          while (!pipe(this, getCurrentRef, isDisposed)) {
+            const innerEnumerator = getCurrentRef(this);
+            if (move(innerEnumerator)) {
+              this[EnumeratorLike_current] = getCurrent(innerEnumerator);
+              break;
+            } else if (move(delegate)) {
+              const next = pipe(delegate, getCurrent, enumerate());
+              pipe(this, setCurrentRef(next));
+            } else {
+              pipe(this, dispose());
+            }
+          }
+        },
+      },
+    );
+
+    const createInstance = createObjectFactory<
+      typeof prototype,
+      typeof properties,
+      EnumeratorLike<EnumerableLike>
+    >(prototype, properties);
+
+    const operator = <T>(
+      delegate: EnumeratorLike<EnumerableLike<T>>,
+    ): EnumeratorLike<T> =>
+      pipe(createInstance(delegate), add(delegate)) as EnumeratorLike<T>;
+
+    return () => lift(operator);
+  })();
+export const concatAllT: ConcatAll<EnumerableLike> = { concatAll };
+
+export const concat: Concat<EnumerableLike>["concat"] = <T>(
+  ...enumerables: readonly EnumerableLike<T>[]
+): EnumerableLike<T> =>
+  pipe(enumerables, toEnumerableReadonlyArray(), concatAll());
+
+export const concatT: Concat<EnumerableLike> = {
+  concat,
+};
 
 export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (() => {
@@ -338,31 +430,35 @@ export const mapT: Map<EnumerableLike> = { map };
 
 export const onNotify = /*@__PURE__*/ (() => {
   const properties = {
-    ...delegatingDisposableEnumeratorProperties,
+    ...delegatingDisposableProperties,
+    ...delegatingEnumeratorProperties,
     onNotify: none as unknown as SideEffect1<any>,
   };
 
-  const prototype = mix(delegatingDisposableEnumeratorPrototype, {
-    [Object_init](
-      this: typeof properties,
-      delegate: EnumeratorLike,
-      onNotify: SideEffect1<any>,
-    ) {
-      init(delegatingDisposableEnumeratorPrototype, this, delegate);
-      this.onNotify = onNotify;
-    },
-    [SourceLike_move](this: typeof properties & EnumeratorLike) {
-      const { delegate } = this;
-
-      if (move(delegate)) {
-        try {
-          this.onNotify(getCurrent(this));
-        } catch (cause) {
-          pipe(this, dispose({ cause }));
+  const prototype = mix(
+    delegatingDisposablePrototype,
+    delegatingEnumeratorPrototype,
+    {
+      [Object_init](
+        this: typeof properties,
+        delegate: EnumeratorLike,
+        onNotify: SideEffect1<any>,
+      ) {
+        init(delegatingDisposablePrototype, this, delegate);
+        init(delegatingEnumeratorPrototype, this, delegate);
+        this.onNotify = onNotify;
+      },
+      [SourceLike_move](this: typeof properties & EnumeratorLike) {
+        if (delegatingEnumeratorMove(this)) {
+          try {
+            this.onNotify(getCurrent(this));
+          } catch (cause) {
+            pipe(this, dispose({ cause }));
+          }
         }
-      }
+      },
     },
-  });
+  );
 
   const createInstance = createObjectFactory<
     typeof prototype,

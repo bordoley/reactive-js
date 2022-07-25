@@ -1,7 +1,14 @@
 import { Describe } from "../__internal__/testing.mjs";
-import { Equality, Function1, Predicate, Reducer, Factory } from "../functions.mjs";
-import { ContainerLike, Container, ContainerOperator, FromArrayOptions, ContainerOf, ReadonlyArrayLike } from "../containers.mjs";
-declare const distinctUntilChangedTest: <C extends ContainerLike>(m: Container<C> & {
+import { Function1, Equality, Predicate, Reducer, Factory } from "../functions.mjs";
+import { ContainerLike, Container, ContainerOperator, ContainerOf, FromArrayOptions, ReadonlyArrayLike } from "../containers.mjs";
+declare const concatAllTests: <C extends ContainerLike>(m: Container<C> & {
+    concatAll: <T>(options?: Partial<Record<string, never>> | undefined) => ContainerOperator<C, ContainerOf<C, T>, T>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
+declare const distinctUntilChangedTests: <C extends ContainerLike>(m: Container<C> & {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T> | undefined;
     } | undefined): ContainerOperator<C, T, T>;
@@ -133,4 +140,4 @@ declare const zipTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
-export { distinctUntilChangedTest, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests };
+export { concatAllTests, distinctUntilChangedTests, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests };

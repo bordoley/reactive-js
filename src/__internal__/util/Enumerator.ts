@@ -1,12 +1,17 @@
-import { none, raise } from "../../functions";
+import { Factory, none, raise } from "../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  SourceLike_move,
 } from "../../util";
 import { isDisposed } from "../../util/DisposableLike";
 import { hasCurrent } from "../../util/EnumeratorLike";
-import { Object_init } from "./Object";
+import {
+  properties as disposableProperties,
+  prototype as disposablePrototype,
+} from "../util/Disposable";
+import { Object_init, createObjectFactory, init, mix } from "./Object";
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");
 const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
@@ -41,3 +46,23 @@ export const prototype = {
     return !isDisposed(self) && self[Enumerator_private_hasCurrent];
   },
 };
+
+export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() => {
+  const properties = {
+    ...disposableProperties,
+  };
+  const prototype = mix(disposablePrototype, {
+    get [EnumeratorLike_current](): unknown {
+      return raise();
+    },
+    get [EnumeratorLike_hasCurrent](): boolean {
+      return false;
+    },
+    [Object_init](this: typeof properties) {
+      init(disposablePrototype, this);
+    },
+    [SourceLike_move](this: typeof properties) {},
+  });
+
+  return createObjectFactory(prototype, properties);
+})();

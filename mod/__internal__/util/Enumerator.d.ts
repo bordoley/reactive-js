@@ -1,3 +1,4 @@
+import { Factory } from "../../functions.mjs";
 import { EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent } from "../../util.mjs";
 import { Object_init } from "./Object.mjs";
 declare const Enumerator_private_current: unique symbol;
@@ -14,4 +15,5 @@ declare const prototype: {
     [EnumeratorLike_current]: unknown;
     readonly [EnumeratorLike_hasCurrent]: boolean;
 };
-export { MutableEnumeratorLike, properties, prototype };
+declare const neverEnumerator: Factory<EnumeratorLike>;
+export { MutableEnumeratorLike, neverEnumerator, properties, prototype };
