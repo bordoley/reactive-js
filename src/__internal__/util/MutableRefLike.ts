@@ -5,10 +5,10 @@ export interface MutableRefLike<T = unknown> {
   set [MutableRefLike_current](v: T);
 }
 
-export const getCurrent = <T>(ref: MutableRefLike<T>): T =>
+export const getCurrentRef = <T>(ref: MutableRefLike<T>): T =>
   ref[MutableRefLike_current];
 
-export const setCurrent =
+export const setCurrentRef =
   <T>(v: T) =>
   (ref: MutableRefLike<T>): MutableRefLike<T> => {
     ref[MutableRefLike_current] = v;
