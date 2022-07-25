@@ -53,5 +53,7 @@ interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
 declare const createHostScheduler: (options?: {
     readonly yieldInterval?: number;
 }) => SchedulerLike;
-declare const createVirtualTimeScheduler: void;
+declare const createVirtualTimeScheduler: (options?: {
+    readonly maxMicroTaskTicks?: number;
+}) => VirtualTimeSchedulerLike;
 export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike, createHostScheduler, createVirtualTimeScheduler };
