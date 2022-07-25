@@ -1,4 +1,4 @@
-import { DistinctUntilChanged, Empty, FromArray, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
+import { DistinctUntilChanged, Empty, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
 import { SideEffect1 } from "../functions.mjs";
 import { EnumerableLike, EnumeratorLike, CreateInteractiveContainer, ToEnumerable } from "../ix.mjs";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
@@ -8,8 +8,6 @@ declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distin
 declare const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike>;
 declare const empty: Empty<EnumerableLike>["empty"];
 declare const emptyT: Empty<EnumerableLike>;
-declare const fromArray: FromArray<EnumerableLike>["fromArray"];
-declare const fromArrayT: FromArray<EnumerableLike>;
 declare const keep: Keep<EnumerableLike>["keep"];
 declare const keepT: Keep<EnumerableLike>;
 declare const map: Map<EnumerableLike>["map"];
@@ -40,4 +38,4 @@ declare const toEnumerableT: ToEnumerable<EnumerableLike>;
 declare const toIterable: ToIterable<EnumerableLike>["toIterable"];
 declare const toIterableT: ToIterable<EnumerableLike>;
 declare const zipT: Zip<EnumerableLike>;
-export { TContainerOf, create, createT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, fromArray, fromArrayT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };
+export { TContainerOf, create, createT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArrayT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, zipT };

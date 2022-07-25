@@ -243,12 +243,29 @@ export type ThrowIfEmpty<C extends StatefulContainerLike> = Container<C> & {
   throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 };
 
-export type ToIterable<C extends ContainerLike> = Container<C> & {
-  toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
+export type ToIterable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toIterable<T>(options?: TOptions): Function1<ContainerOf<C, T>, Iterable<T>>;
 };
 
-export type ToReadonlyArray<C extends ContainerLike> = Container<C> & {
-  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
+export type ToReadonlyArray<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toReadonlyArray<T>(
+    options?: TOptions,
+  ): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
+};
+
+export type ToSequence<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toSequence<T>(
+    options?: TOptions,
+  ): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 };
 
 export type Using<C extends StatefulContainerLike> = Container<C> & {

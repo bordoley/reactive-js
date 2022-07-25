@@ -6,26 +6,9 @@
 
 ### Functions
 
-- [create](scheduling_PrioritySchedulerLike.md#create)
 - [toScheduler](scheduling_PrioritySchedulerLike.md#toscheduler)
 
 ## Functions
-
-### create
-
-▸ **create**(`a`): [`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md)
-
-___
 
 ### toScheduler
 

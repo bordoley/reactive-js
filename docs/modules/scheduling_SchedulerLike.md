@@ -13,6 +13,8 @@
 - [requestYield](scheduling_SchedulerLike.md#requestyield)
 - [schedule](scheduling_SchedulerLike.md#schedule)
 - [shouldYield](scheduling_SchedulerLike.md#shouldyield)
+- [toPausableScheduler](scheduling_SchedulerLike.md#topausablescheduler)
+- [toPriorityScheduler](scheduling_SchedulerLike.md#topriorityscheduler)
 
 ## Functions
 
@@ -133,3 +135,35 @@ ___
 #### Returns
 
 `boolean`
+
+___
+
+### toPausableScheduler
+
+▸ **toPausableScheduler**(`a`): [`PauseableSchedulerLike`](../interfaces/scheduling.PauseableSchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+[`PauseableSchedulerLike`](../interfaces/scheduling.PauseableSchedulerLike.md)
+
+___
+
+### toPriorityScheduler
+
+▸ **toPriorityScheduler**(`a`): [`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md)

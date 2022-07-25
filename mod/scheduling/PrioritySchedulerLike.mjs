@@ -1,6 +1,5 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { create as create$1 } from '../__internal__/scheduling/QueueScheduler.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { pipe } from '../functions.mjs';
@@ -59,6 +58,5 @@ const toScheduler = /*@__PURE__*/ (() => {
     const createInstance = createObjectFactory(prototype$1, properties$1);
     return (priority) => priorityScheduler => createInstance(priorityScheduler, priority);
 })();
-const create = create$1;
 
-export { create, toScheduler };
+export { toScheduler };

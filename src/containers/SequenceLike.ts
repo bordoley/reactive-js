@@ -1,4 +1,19 @@
 import {
+  MutableEnumeratorLike,
+  properties as enumeratorProperties,
+  prototype as enumeratorPrototype,
+} from "../__internal__/ix/Enumerator";
+import {
+  properties as disposableProperties,
+  prototype as disposablePrototype,
+} from "../__internal__/util/Disposable";
+import {
+  Object_init,
+  createObjectFactory,
+  init,
+} from "../__internal__/util/Object";
+import {
+  Concat,
   ConcatAll,
   ContainerOperator,
   DistinctUntilChanged,
@@ -25,14 +40,28 @@ import {
   alwaysTrue,
   callWith,
   getLength,
+  newInstance,
   pipe,
   returns,
   strictEquality,
 } from "../functions";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  InteractiveContainerLike_interact,
+  InteractiveSourceLike_move,
+  ToEnumerable,
+} from "../ix";
 import { Option } from "../util";
+import { dispose, isDisposed } from "../util/DisposableLike";
 import { isNone, isSome, none } from "../util/Option";
 import { keepType } from "./ContainerLike";
-import { keepT as keepTArray, map as mapArray } from "./ReadonlyArrayLike";
+import {
+  keepT as keepTArray,
+  map as mapArray,
+  toSequence as toSequenceReadonlyArray,
+} from "./ReadonlyArrayLike";
 
 type SequenceResult<T> = {
   readonly data: T;
@@ -77,37 +106,21 @@ export const concatAllT: ConcatAll<SequenceLike> = {
   concatAll,
 };
 
-const _fromArray = <T>(
-  arr: readonly T[],
-  index: number,
-  endIndex: number,
-): Option<SequenceResult<T>> =>
-  index < endIndex && index >= 0
-    ? createNext(arr[index], () => _fromArray(arr, index + 1, endIndex))
-    : none;
-
-//export const fromArray = /*@__PURE__*/ createFromArray<SequenceLike>(
-/*<T>(values: readonly T[], startIndex: number, endIndex: number) =>
-    (() => _fromArray(values, startIndex, endIndex)),
-);
-
-export const fromArrayT: FromArray<SequenceLike> = {
-  fromArray,
-};
-
 export function concat<T>(
   fst: SequenceLike<T>,
   snd: SequenceLike<T>,
   ...tail: readonly SequenceLike<T>[]
 ): SequenceLike<T>;
 
-export function concat<T>(...sequences: readonly SequenceLike<T>[]): SequenceLike<T> {
-  return pipe(sequences, fromArray(), concatAll());
+export function concat<T>(
+  ...sequences: readonly SequenceLike<T>[]
+): SequenceLike<T> {
+  return pipe(sequences, toSequenceReadonlyArray(), concatAll());
 }
 
 export const concatT: Concat<SequenceLike> = {
   concat,
-};*/
+};
 
 export const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (() => {
@@ -372,7 +385,7 @@ export const takeLast: TakeLast<SequenceLike>["takeLast"] =
             break;
           }
         }
-        return _fromArray(last, 0, getLength(last));
+        return pipe(last, toSequenceReadonlyArray(), callWith());
       };
 
     return <T>(options: { readonly count?: number } = {}) =>
@@ -416,6 +429,58 @@ export const takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
   })();
 
 export const takeWhileT: TakeWhile<SequenceLike> = { takeWhile };
+
+export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
+  /*@__PURE__*/ (() => {
+    const properties = {
+      ...disposableProperties,
+      ...enumeratorProperties,
+      seq: (() => none) as SequenceLike,
+    };
+
+    const prototype = {
+      ...disposablePrototype,
+      ...enumeratorPrototype,
+      [Object_init](this: typeof properties, seq: SequenceLike) {
+        init(disposablePrototype, this);
+        init(enumeratorPrototype, this);
+        this.seq = seq;
+      },
+      [InteractiveSourceLike_move](
+        this: typeof properties & MutableEnumeratorLike,
+      ) {
+        if (!isDisposed(this)) {
+          const next = this.seq();
+          if (isSome(next)) {
+            this[EnumeratorLike_current] = next.data;
+            this.seq = next.next;
+          } else {
+            pipe(this, dispose());
+          }
+        }
+      },
+    };
+
+    const createInstance = createObjectFactory<
+      typeof prototype,
+      typeof properties,
+      SequenceLike
+    >(prototype, properties);
+
+    class SequenceEnumerable<T> implements EnumerableLike<T> {
+      constructor(private readonly seq: SequenceLike<T>) {}
+
+      [InteractiveContainerLike_interact](): EnumeratorLike<T> {
+        return createInstance(this.seq) as EnumeratorLike<T>;
+      }
+    }
+
+    return <T>() =>
+      (seq: SequenceLike<T>) =>
+        newInstance(SequenceEnumerable, seq);
+  })();
+
+export const toEnumerableT: ToEnumerable<SequenceLike> = { toEnumerable };
 
 /*
 export const toRunnable =

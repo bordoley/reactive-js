@@ -113,6 +113,11 @@ export type Never<C extends ReactiveContainerLike> = Container<C> & {
   never<T>(): ContainerOf<C, T>;
 };
 
-export type ToRunnable<C extends ContainerLike> = Container<C> & {
-  toRunnable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+export type ToRunnable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toRunnable<T>(
+    options?: TOptions,
+  ): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };

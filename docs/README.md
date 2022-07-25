@@ -27,7 +27,6 @@ Reactive-JS
 - [scheduling](modules/scheduling.md)
 - [scheduling/ContinuationLike](modules/scheduling_ContinuationLike.md)
 - [scheduling/DispatcherLike](modules/scheduling_DispatcherLike.md)
-- [scheduling/PausableSchedulerLike](modules/scheduling_PausableSchedulerLike.md)
 - [scheduling/PrioritySchedulerLike](modules/scheduling_PrioritySchedulerLike.md)
 - [scheduling/SchedulerLike](modules/scheduling_SchedulerLike.md)
 - [scheduling/VirtualTimeSchedulerLike](modules/scheduling_VirtualTimeSchedulerLike.md)
