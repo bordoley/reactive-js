@@ -1,11 +1,10 @@
 /// <reference types="./DisposableLike.d.ts" />
 import { prototype, properties } from '../__internal__/util/Disposable.mjs';
-import { dispose, getError } from '../__internal__/util/DisposableLike.mjs';
-export { dispose, getError, isDisposed } from '../__internal__/util/DisposableLike.mjs';
+import { dispose, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
+export { dispose, getError, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import { pipe, newInstance, ignore } from '../functions.mjs';
+import { isSome, isNone, pipe, newInstance, none, ignore } from '../functions.mjs';
 import { DisposableLike_add, DisposableLike_error, DisposableLike_isDisposed, DisposableLike_dispose } from '../util.mjs';
-import { isSome, isNone, none } from './Option.mjs';
 
 const addDisposableOrTeardown = (parent, child, ignoreChildErrors = false) => {
     parent[DisposableLike_add](child, ignoreChildErrors);

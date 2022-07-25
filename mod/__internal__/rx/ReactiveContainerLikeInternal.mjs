@@ -1,12 +1,11 @@
-/// <reference types="./ReactiveContainerLike.d.ts" />
+/// <reference types="./ReactiveContainerLikeInternal.d.ts" />
 import { forEach } from '../../containers/ReadonlyArrayLike.mjs';
-import { pipe, newInstanceWith, newInstance, isEmpty, compose, negate, ignore, identity, getLength } from '../../functions.mjs';
+import { pipe, newInstanceWith, none, isSome, newInstance, isEmpty, compose, negate, ignore, identity, getLength } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { notify } from '../../rx/ReactiveSinkLike.mjs';
 import { addToIgnoringChildErrors, onComplete, onError, addTo, onDisposed, add } from '../../util/DisposableLike.mjs';
-import { none, isSome } from '../../util/Option.mjs';
-import { lift } from '../containers/StatefulContainerLike.mjs';
-import { dispose, isDisposed } from '../util/DisposableLike.mjs';
+import { lift } from '../containers/StatefulContainerLikeInternal.mjs';
+import { dispose, isDisposed } from '../util/DisposableLikeInternal.mjs';
 
 const getDelegate = (container) => container.delegate;
 const create = (m) => (onSink) => m.create(onSink);

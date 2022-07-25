@@ -25,13 +25,16 @@ import {
 } from "../containers";
 import {
   Function1,
+  Option,
   Predicate,
   SideEffect1,
   getLength,
   identity,
+  isSome,
   max,
   min,
   newInstance,
+  none,
   pipe,
 } from "../functions";
 import {
@@ -42,9 +45,7 @@ import {
   InteractiveSourceLike_move,
   ToEnumerable,
 } from "../ix";
-import { Option } from "../util";
 import { dispose, isDisposed } from "../util/DisposableLike";
-import { isSome, none } from "../util/Option";
 
 export const empty = /*@__PURE__*/ (() => {
   const _empty: readonly any[] = [];

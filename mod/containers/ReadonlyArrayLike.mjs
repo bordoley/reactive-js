@@ -2,11 +2,10 @@
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/ix/Enumerator.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { getLength, max, min, pipe, newInstance, identity } from '../functions.mjs';
+import { getLength, isSome, max, min, pipe, newInstance, identity, none } from '../functions.mjs';
 import { InteractiveSourceLike_move, EnumeratorLike_current, InteractiveContainerLike_interact } from '../ix.mjs';
 import '../util/DisposableLike.mjs';
-import { isSome, none } from '../util/Option.mjs';
-import { isDisposed, dispose } from '../__internal__/util/DisposableLike.mjs';
+import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const empty = /*@__PURE__*/ (() => {
     const _empty = [];

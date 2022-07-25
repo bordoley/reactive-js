@@ -1,5 +1,5 @@
-import { Function1, Factory, Equality, Predicate, Updater, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
-import { Option, DisposableLike } from "./util.mjs";
+import { Option, Function1, Factory, Equality, Predicate, Updater, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
+import { DisposableLike } from "./util.mjs";
 interface ContainerLike {
     readonly T?: unknown;
     readonly TContainerOf?: unknown;

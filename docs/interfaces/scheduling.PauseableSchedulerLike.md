@@ -35,7 +35,7 @@
 
 ### [DisposableLike\_error]
 
-• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/util.md#option)<[`Error`](../modules/util.md#error)\>
+• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/functions.md#option)<[`Error`](../modules/util.md#error)\>
 
 The error the `Disposable` was disposed with if disposed.
 
@@ -186,7 +186,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `continuation` | [`ContinuationLike`](scheduling.ContinuationLike.md) |
+| `continuation` | [`ContinuationLike`](util.ContinuationLike.md) |
 | `options?` | [`SchedulerOptions`](../modules/scheduling.md#scheduleroptions) |
 
 #### Returns

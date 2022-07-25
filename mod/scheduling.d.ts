@@ -1,15 +1,6 @@
-import { DisposableLike, PauseableLike } from "./util.mjs";
-declare const ContinuationLike_run: unique symbol;
-/**
- * A unit of work to be executed by a scheduler.
- *
- * @noInheritDoc
- */
-interface ContinuationLike extends DisposableLike {
-    [ContinuationLike_run](): void;
-}
-declare const SchedulerLike_inContinuation: unique symbol;
-declare const SchedulerLike_now: unique symbol;
+import { SchedulerLike_inContinuation, SchedulerLike_now } from "./__internal__/schedulingInternal.mjs";
+export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.js';
+import { DisposableLike, ContinuationLike, PauseableLike } from "./util.mjs";
 declare const SchedulerLike_requestYield: unique symbol;
 declare const SchedulerLike_shouldYield: unique symbol;
 declare const SchedulerLike_schedule: unique symbol;
@@ -63,4 +54,4 @@ declare const createHostScheduler: (options?: {
     readonly yieldInterval?: number;
 }) => SchedulerLike;
 declare const createVirtualTimeScheduler: void;
-export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike, createHostScheduler, createVirtualTimeScheduler };
+export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike, createHostScheduler, createVirtualTimeScheduler };

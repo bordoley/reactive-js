@@ -6,11 +6,12 @@ import {
   Function3,
   Function4,
   Function5,
+  Option,
   Predicate,
   Reducer,
   Updater,
 } from "./functions";
-import { DisposableLike, Option } from "./util";
+import { DisposableLike } from "./util";
 
 export interface ContainerLike {
   readonly T?: unknown;

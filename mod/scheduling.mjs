@@ -1,15 +1,197 @@
 /// <reference types="./scheduling.d.ts" />
-import './__internal__/env.mjs';
-import './__internal__/ix/Enumerator.mjs';
-import './__internal__/optionalArgs.mjs';
-export { C as ContinuationLike_run, D as DispatcherLike_dispatch, a as DispatcherLike_scheduler, S as SchedulerLike_inContinuation, b as SchedulerLike_now, d as SchedulerLike_requestYield, e as SchedulerLike_schedule, c as SchedulerLike_shouldYield, j as createHostScheduler, k as createVirtualTimeScheduler } from './scheduling-bf2730af.mjs';
-import './__internal__/scheduling/queue.mjs';
-import './__internal__/util/Disposable.mjs';
-import './__internal__/util/Object.mjs';
-import './functions.mjs';
-import './ix.mjs';
-import './ix/EnumeratorLike.mjs';
-import './ix/InteractiveSourceLike.mjs';
-import './util/DisposableLike.mjs';
-import './util/Option.mjs';
-import './__internal__/util/DisposableLike.mjs';
+import { MAX_SAFE_INTEGER } from './__internal__/env.mjs';
+import { properties as properties$1, prototype as prototype$1 } from './__internal__/ix/Enumerator.mjs';
+import { getDelay } from './__internal__/optionalArgs.mjs';
+import { createPriorityQueue } from './__internal__/scheduling/queue.mjs';
+import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from './__internal__/schedulingInternal.mjs';
+export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
+import { properties, prototype } from './__internal__/util/Disposable.mjs';
+import { Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
+import { pipe, none, isSome } from './functions.mjs';
+import { InteractiveSourceLike_move, EnumeratorLike_current } from './ix.mjs';
+import { getCurrent } from './ix/EnumeratorLike.mjs';
+import { move } from './ix/InteractiveSourceLike.mjs';
+import { ContinuationLike_run } from './util.mjs';
+import { run } from './util/ContinuationLike.mjs';
+import { create, addTo, onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';
+import { dispose, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
+
+const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
+const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
+const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
+const DispatcherLike_dispatch = Symbol("DispatcherLike_dispatch");
+const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
+const createHostScheduler = /*@__PURE__*/ (() => {
+    const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && typeof performance.now === "function")();
+    const supportsSetImmediate = /*@__PURE__*/ (() => typeof setImmediate === "function")();
+    const supportsProcessHRTime = /*@__PURE__*/ (() => typeof process === "object" && typeof process.hrtime === "function")();
+    const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
+        navigator.scheduling !== undefined &&
+        navigator.scheduling.isInputPending !== undefined)();
+    const isInputPending = () => supportsIsInputPending && navigator.scheduling.isInputPending();
+    const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
+        const disposable = pipe(create(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
+        const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
+    };
+    const scheduleDelayed = (scheduler, continuation, delay) => {
+        const disposable = pipe(create(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
+        const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
+    };
+    const scheduleImmediate = (scheduler, continuation) => {
+        if (supportsSetImmediate) {
+            scheduleImmediateWithSetImmediate(scheduler, continuation);
+        }
+        else {
+            scheduleDelayed(scheduler, continuation, 0);
+        }
+    };
+    const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
+        // clear the immediateOrTimer disposable
+        pipe(immmediateOrTimerDisposable, dispose());
+        scheduler.startTime = getCurrentTime(scheduler);
+        scheduler[SchedulerLike_inContinuation] = true;
+        run(continuation);
+        scheduler[SchedulerLike_inContinuation] = false;
+    };
+    const properties$1 = {
+        ...properties,
+        [SchedulerLike_inContinuation]: false,
+        startTime: 0,
+        yieldInterval: 0,
+        yieldRequested: false,
+    };
+    const prototype$1 = {
+        ...prototype,
+        [Object_init](yieldInterval) {
+            init(prototype, this);
+            this.yieldInterval = yieldInterval;
+        },
+        get [SchedulerLike_now]() {
+            if (supportsPerformanceNow) {
+                return performance.now();
+            }
+            else if (supportsProcessHRTime) {
+                const hr = process.hrtime();
+                return hr[0] * 1000 + hr[1] / 1e6;
+            }
+            else {
+                return Date.now();
+            }
+        },
+        get [SchedulerLike_shouldYield]() {
+            const self = this;
+            const inContinuation = isInContinuation(self);
+            const { yieldRequested } = self;
+            if (inContinuation) {
+                self.yieldRequested = false;
+            }
+            return (inContinuation &&
+                (yieldRequested ||
+                    getCurrentTime(self) > self.startTime + self.yieldInterval ||
+                    isInputPending()));
+        },
+        [SchedulerLike_requestYield]() {
+            this.yieldRequested = true;
+        },
+        [SchedulerLike_schedule](continuation, options) {
+            const delay = getDelay(options);
+            pipe(this, addIgnoringChildErrors(continuation));
+            const continuationIsDisposed = isDisposed(continuation);
+            if (!continuationIsDisposed && delay > 0) {
+                scheduleDelayed(this, continuation, delay);
+            }
+            else if (!continuationIsDisposed) {
+                scheduleImmediate(this, continuation);
+            }
+        },
+    };
+    const createInstance = /*@__PURE__*/ createObjectFactory(prototype$1, properties$1);
+    return (options = {}) => {
+        const { yieldInterval = 5 } = options;
+        return createInstance(yieldInterval);
+    };
+})();
+const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
+    const comparator = (a, b) => {
+        let diff = 0;
+        diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
+        diff = diff !== 0 ? diff : a.id - b.id;
+        return diff;
+    };
+    const properties$2 = {
+        ...properties,
+        ...properties$1,
+        [SchedulerLike_inContinuation]: false,
+        [SchedulerLike_now]: 0,
+        maxMicroTaskTicks: MAX_SAFE_INTEGER,
+        microTaskTicks: 0,
+        taskIDCount: 0,
+        yieldRequested: false,
+        taskQueue: none,
+    };
+    const prototype$2 = {
+        ...prototype,
+        ...prototype$1,
+        [ContinuationLike_run]() {
+            while (move(this)) {
+                const task = getCurrent(this);
+                const { dueTime, continuation } = task;
+                this.microTaskTicks = 0;
+                this[SchedulerLike_now] = dueTime;
+                this[SchedulerLike_inContinuation] = true;
+                run(continuation);
+                this[SchedulerLike_inContinuation] = false;
+            }
+        },
+        [InteractiveSourceLike_move]() {
+            const taskQueue = this.taskQueue;
+            if (isDisposed(this)) {
+                return;
+            }
+            const task = taskQueue.pop();
+            if (isSome(task)) {
+                this[EnumeratorLike_current] = task;
+            }
+            else {
+                pipe(this, dispose());
+            }
+        },
+        [Object_init](maxMicroTaskTicks) {
+            init(prototype, this);
+            this.maxMicroTaskTicks = maxMicroTaskTicks;
+            this.taskQueue = createPriorityQueue(comparator);
+        },
+        get [SchedulerLike_shouldYield]() {
+            const self = this;
+            const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation } = self;
+            if (inContinuation) {
+                self.microTaskTicks++;
+                self.yieldRequested = false;
+            }
+            return (inContinuation &&
+                (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks));
+        },
+        [SchedulerLike_requestYield]() {
+            this.yieldRequested = true;
+        },
+        [SchedulerLike_schedule](continuation, options) {
+            const delay = getDelay(options);
+            pipe(this, addIgnoringChildErrors(continuation));
+            if (!isDisposed(continuation)) {
+                this.taskQueue.push({
+                    id: this.taskIDCount++,
+                    dueTime: getCurrentTime(this) + delay,
+                    continuation,
+                });
+            }
+        },
+    };
+    const createInstance = 
+    /*@__PURE__*/ createObjectFactory(prototype$2, properties$2);
+    (options = {}) => {
+        const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
+        return createInstance(maxMicroTaskTicks);
+    };
+})();
+
+export { DispatcherLike_dispatch, DispatcherLike_scheduler, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, createHostScheduler, createVirtualTimeScheduler };

@@ -1,5 +1,4 @@
-import { Function1, SideEffect, Factory, Equality } from "../functions.mjs";
-import { Option } from "../util.mjs";
+import { Function1, SideEffect, Factory, Equality, Option } from "../functions.mjs";
 declare const DescribeType = 1;
 declare const TestType = 2;
 declare const TestAsyncType = 3;

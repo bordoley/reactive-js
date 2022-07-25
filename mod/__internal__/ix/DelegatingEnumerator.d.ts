@@ -1,5 +1,5 @@
+import { Option } from "../../functions.mjs";
 import { EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent } from "../../ix.mjs";
-import { Option } from "../../util.mjs";
 import { Object_init } from "../util/Object.mjs";
 declare const DelegatingEnumerator_private_delegate: unique symbol;
 declare const properties: {

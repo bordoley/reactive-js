@@ -12,6 +12,7 @@ import {
   Equality,
   Factory,
   Function1,
+  Option,
   Predicate,
   Reducer,
   SideEffect1,
@@ -20,9 +21,11 @@ import {
   identity,
   ignore,
   isEmpty,
+  isSome,
   negate,
   newInstance,
   newInstanceWith,
+  none,
   pipe,
 } from "../../functions";
 import {
@@ -32,7 +35,7 @@ import {
 } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
 import { notify } from "../../rx/ReactiveSinkLike";
-import { DisposableLike, DisposableOrTeardown, Option } from "../../util";
+import { DisposableLike, DisposableOrTeardown } from "../../util";
 import {
   add,
   addTo,
@@ -43,7 +46,6 @@ import {
   onDisposed,
   onError,
 } from "../../util/DisposableLike";
-import { isSome, none } from "../../util/Option";
 import {
   Lift as StatefulContainerLift,
   StatefulContainerOperator,
@@ -51,7 +53,7 @@ import {
   StatefulContainerOperatorOut,
   TReactive,
   lift,
-} from "../containers/StatefulContainerLike";
+} from "../containers/StatefulContainerLikeInternal";
 
 export type DelegatingStatefulContainerStateOf<
   C extends StatefulContainerLike,

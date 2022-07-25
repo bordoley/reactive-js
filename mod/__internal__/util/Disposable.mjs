@@ -1,8 +1,7 @@
 /// <reference types="./Disposable.d.ts" />
-import { pipe } from '../../functions.mjs';
+import { none, pipe, isNone, isSome } from '../../functions.mjs';
 import { DisposableLike_error, DisposableLike_isDisposed, DisposableLike_dispose, DisposableLike_add } from '../../util.mjs';
-import { none, isNone, isSome } from '../../util/Option.mjs';
-import { getError, dispose, isDisposed } from './DisposableLike.mjs';
+import { getError, dispose, isDisposed } from './DisposableLikeInternal.mjs';
 import { Object_init } from './Object.mjs';
 
 const Disposable_private_disposables = Symbol("Disposable_private_disposables");

@@ -3,7 +3,7 @@ import { pipe } from '../../functions.mjs';
 import { disposed, add } from '../../util/DisposableLike.mjs';
 import { MutableRefLike_current } from './MutableRefLike.mjs';
 import { Object_init } from './Object.mjs';
-import { dispose } from './DisposableLike.mjs';
+import { dispose } from './DisposableLikeInternal.mjs';
 
 const DisposableRef_private_current = Symbol("DisposableRef_private_current");
 const properties = {

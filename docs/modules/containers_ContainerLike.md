@@ -152,7 +152,7 @@ ___
 
 ### fromOption
 
-▸ **fromOption**<`C`, `T`, `TOptions`\>(`__namedParameters`, `options?`): [`Function1`](functions.md#function1)<[`Option`](util.md#option)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+▸ **fromOption**<`C`, `T`, `TOptions`\>(`__namedParameters`, `options?`): [`Function1`](functions.md#function1)<[`Option`](functions.md#option)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -171,7 +171,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Option`](util.md#option)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+[`Function1`](functions.md#function1)<[`Option`](functions.md#option)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
 
 ___
 

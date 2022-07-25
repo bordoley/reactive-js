@@ -1,11 +1,10 @@
-import { Identity } from "../../functions";
+import { Identity, Option } from "../../functions";
 import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
   Error,
-  Option,
 } from "../../util";
 
 /**
