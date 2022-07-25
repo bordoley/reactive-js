@@ -18,21 +18,18 @@ import {
   onDisposed,
 } from "../util/DisposableLike";
 
-export const tests = describe(
-  "Disposable",
-
+export const DisposableLikeTests = describe(
+  "DisposableLike",
   test("disposes child disposable when disposed", () => {
     const child = createDisposable();
     pipe(createDisposable(), addIgnoringChildErrors(child), dispose());
     pipe(child, isDisposed, expectTrue);
   }),
-
   test("adding to disposed disposable disposes the child", () => {
     const child = createDisposable();
     pipe(createDisposable(), dispose(), addIgnoringChildErrors(child));
     pipe(child, isDisposed, expectTrue);
   }),
-
   test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();
     pipe(
@@ -43,7 +40,6 @@ export const tests = describe(
     );
     pipe(teardown, expectToHaveBeenCalledTimes(1));
   }),
-
   test("catches and swallows Errors thrown by teardown function", () => {
     const teardown = pipeLazy(none, raise);
 
@@ -54,7 +50,6 @@ export const tests = describe(
     );
     pipe(disposable, getError, expectNone);
   }),
-
   test("propogates errors when disposed with an Error", () => {
     const error: Option<Error> = { cause: null };
 

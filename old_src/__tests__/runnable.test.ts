@@ -177,43 +177,6 @@ export const createRunnableTests = <C extends ContainerLike>(
     ),
 
     test(
-      "scan",
-      pipeLazy(
-        [1, 1, 1],
-        m.fromArray(),
-        m.scan(sum, returns(0)),
-        m.toRunnable(),
-        toArray(),
-        expectArrayEquals([1, 2, 3]),
-      ),
-    ),
-    describe(
-      "skipFirst",
-      test(
-        "when skipped source has additional elements",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromArray(),
-          m.skipFirst({ count: 2 }),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([3]),
-        ),
-      ),
-      test(
-        "when all elements are skipped",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromArray(),
-          m.skipFirst({ count: 4 }),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([]),
-        ),
-      ),
-    ),
-
-    test(
       "startWith",
       pipeLazy(
         [1, 2, 3],
@@ -225,79 +188,6 @@ export const createRunnableTests = <C extends ContainerLike>(
       ),
     ),
 
-    describe(
-      "takeFirst",
-      test(
-        "when taking fewer than the total number of elements in the source",
-        pipeLazy(
-          m.generate(increment, returns(0)),
-          m.takeFirst({ count: 3 }),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([1, 2, 3]),
-        ),
-      ),
-      test(
-        "when taking more than all the items produced by the source",
-        pipeLazy(
-          1,
-          fromValue(m),
-          m.takeFirst({ count: 3 }),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([1]),
-        ),
-      ),
-    ),
-    test(
-      "takeLast",
-      pipeLazy(
-        [1, 2, 3, 4, 5],
-        m.fromArray(),
-        m.takeLast({ count: 3 }),
-        m.toRunnable(),
-        toArray(),
-        expectArrayEquals([3, 4, 5]),
-      ),
-    ),
-    describe(
-      "takeWhile",
-      test("exclusive", () => {
-        pipe(
-          m.generate(increment, returns(0)),
-          m.takeWhile(x => x < 4),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([1, 2, 3]),
-        );
-        pipe(
-          [1, 2, 3],
-          m.fromArray(),
-          m.takeWhile(alwaysTrue),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([1, 2, 3]),
-        );
-        pipe(
-          empty(m),
-          m.takeWhile(alwaysTrue),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([]),
-        );
-      }),
-
-      test(
-        "inclusive",
-        pipeLazy(
-          m.generate(increment, returns(0)),
-          m.takeWhile(x => x < 4, { inclusive: true }),
-          m.toRunnable(),
-          toArray(),
-          expectArrayEquals([1, 2, 3, 4]),
-        ),
-      ),
-    ),
     test(
       "lift",
       pipeLazy(
@@ -310,18 +200,6 @@ export const createRunnableTests = <C extends ContainerLike>(
         m.toRunnable(),
         toArray(),
         expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]),
-      ),
-    ),
-    test(
-      "ignoreElements",
-      pipeLazy(
-        [1, 2, 3],
-        m.fromArray(),
-        ignoreElements(m),
-        endWith(m, 4),
-        m.toRunnable(),
-        toArray(),
-        expectArrayEquals([4]),
       ),
     ),
   );

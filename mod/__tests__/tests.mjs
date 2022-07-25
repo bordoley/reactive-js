@@ -1,9 +1,10 @@
 /// <reference types="./tests.d.ts" />
 import { runTests } from '../__internal__/testing.mjs';
-import { tests } from './disposable.test.mjs';
-import { tests as tests$1 } from './enumerable.test.mjs';
+import { ContainerLikeTests } from './ContainerLike.test.mjs';
+import { DisposableLikeTests } from './DisposableLike.test.mjs';
+import { EnumerableLikeTests } from './EnumerableLike.test.mjs';
 
 /**
  * @jest-environment node
  */
-runTests([tests, tests$1]);
+runTests([ContainerLikeTests, DisposableLikeTests, EnumerableLikeTests]);
