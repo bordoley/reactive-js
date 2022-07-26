@@ -1,7 +1,7 @@
 /// <reference types="./ix.d.ts" />
 import { prototype } from './__internal__/util/Disposable.mjs';
 import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
-import { Object_properties, createObjectFactory, mix, Object_init, init } from './__internal__/util/Object.mjs';
+import { Object_properties, mix, Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, newInstance, forEach } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { addTo } from './util/DisposableLike.mjs';
@@ -42,7 +42,7 @@ const emptyEnumerable =
         ...prototype[Object_properties],
         ...prototype$1[Object_properties],
     };
-    const createInstance = createObjectFactory(mix(prototype, prototype$1, {
+    const createInstance = pipe(mix(prototype, prototype$1, {
         [Object_properties]: properties,
         [Object_init]() {
             init(prototype, this);
@@ -51,8 +51,8 @@ const emptyEnumerable =
         [SourceLike_move]() {
             pipe(this, dispose());
         },
-    }));
-    return () => createEnumerable(() => createInstance());
+    }), createObjectFactory());
+    return () => createEnumerable(createInstance);
 })();
 const emptyEnumerableT = {
     empty: emptyEnumerable,
@@ -70,7 +70,7 @@ const generateEnumerable = (() => {
         ...prototype$1[Object_properties],
         f: none,
     };
-    const createInstance = createObjectFactory(mix(prototype, prototype$1, {
+    const createInstance = pipe(mix(prototype, prototype$1, {
         [Object_properties]: properties,
         [Object_init](f, acc) {
             init(prototype, this);
@@ -88,7 +88,7 @@ const generateEnumerable = (() => {
                 }
             }
         },
-    }));
+    }), createObjectFactory());
     return (generator, initialValue) => createEnumerable(() => createInstance(generator, initialValue()));
 })();
 const generateEnumerableT = {

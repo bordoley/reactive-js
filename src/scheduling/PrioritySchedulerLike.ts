@@ -39,12 +39,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
     priority: 0,
   };
 
-  const createInstance = createObjectFactory<
-    SchedulerLike,
-    typeof properties,
-    PrioritySchedulerLike,
-    number
-  >(
+  const createInstance = pipe(
     mix(disposablePrototype, {
       [Object_properties]: properties,
       [Object_init](
@@ -88,6 +83,12 @@ export const toScheduler = /*@__PURE__*/ (() => {
         }
       },
     }),
+    createObjectFactory<
+      SchedulerLike,
+      typeof properties,
+      PrioritySchedulerLike,
+      number
+    >(),
   );
 
   return (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>

@@ -22,7 +22,7 @@ import {
   init,
   mix,
 } from "./__internal__/util/Object";
-import { Function1, isSome, none, pipe } from "./functions";
+import { isSome, none, pipe } from "./functions";
 import {
   ContinuationLike,
   ContinuationLike_run,
@@ -211,11 +211,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     yieldRequested: false,
   };
 
-  const createInstance = createObjectFactory<
-    SchedulerLike,
-    typeof properties,
-    number
-  >(
+  const createInstance = pipe(
     mix(disposablePrototype, {
       [Object_properties]: properties,
       [Object_init](this: typeof properties, yieldInterval: number) {
@@ -273,6 +269,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
         }
       },
     }),
+    createObjectFactory<SchedulerLike, typeof properties, number>(),
   );
 
   return (
@@ -311,86 +308,86 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     taskQueue: none as unknown as QueueLike<VirtualTask>,
   };
 
-  const createInstance: Function1<number, VirtualTimeSchedulerLike> =
-    createObjectFactory<VirtualTimeSchedulerLike, typeof properties, number>(
-      mix(disposablePrototype, enumeratorPrototype, {
-        [Object_properties]: properties,
-        [Object_init](this: typeof properties, maxMicroTaskTicks: number) {
-          init(disposablePrototype, this);
-          this.maxMicroTaskTicks = maxMicroTaskTicks;
-          this.taskQueue = createPriorityQueue(comparator);
-        },
-        get [SchedulerLike_shouldYield]() {
-          const self = this as unknown as typeof properties;
+  const createInstance = pipe(
+    mix(disposablePrototype, enumeratorPrototype, {
+      [Object_properties]: properties,
+      [Object_init](this: typeof properties, maxMicroTaskTicks: number) {
+        init(disposablePrototype, this);
+        this.maxMicroTaskTicks = maxMicroTaskTicks;
+        this.taskQueue = createPriorityQueue(comparator);
+      },
+      get [SchedulerLike_shouldYield]() {
+        const self = this as unknown as typeof properties;
 
-          const {
-            yieldRequested,
-            [SchedulerLike_inContinuation]: inContinuation,
-          } = self;
+        const {
+          yieldRequested,
+          [SchedulerLike_inContinuation]: inContinuation,
+        } = self;
 
-          if (inContinuation) {
-            self.microTaskTicks++;
-            self.yieldRequested = false;
-          }
+        if (inContinuation) {
+          self.microTaskTicks++;
+          self.yieldRequested = false;
+        }
 
-          return (
-            inContinuation &&
-            (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks)
-          );
-        },
-        [ContinuationLike_run](
-          this: typeof properties & EnumeratorLike<VirtualTask>,
-        ) {
-          while (move(this)) {
-            const task = getCurrent(this);
-            const { dueTime, continuation } = task;
+        return (
+          inContinuation &&
+          (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks)
+        );
+      },
+      [ContinuationLike_run](
+        this: typeof properties & EnumeratorLike<VirtualTask>,
+      ) {
+        while (move(this)) {
+          const task = getCurrent(this);
+          const { dueTime, continuation } = task;
 
-            this.microTaskTicks = 0;
-            this[SchedulerLike_now] = dueTime;
-            this[SchedulerLike_inContinuation] = true;
-            run(continuation);
-            this[SchedulerLike_inContinuation] = false;
-          }
-        },
-        [SchedulerLike_requestYield](this: typeof properties): void {
-          this.yieldRequested = true;
-        },
-        [SchedulerLike_schedule](
-          this: typeof properties & DisposableLike,
-          continuation: ContinuationLike,
-          options?: { readonly delay?: number },
-        ) {
-          const delay = getDelay(options);
+          this.microTaskTicks = 0;
+          this[SchedulerLike_now] = dueTime;
+          this[SchedulerLike_inContinuation] = true;
+          run(continuation);
+          this[SchedulerLike_inContinuation] = false;
+        }
+      },
+      [SchedulerLike_requestYield](this: typeof properties): void {
+        this.yieldRequested = true;
+      },
+      [SchedulerLike_schedule](
+        this: typeof properties & DisposableLike,
+        continuation: ContinuationLike,
+        options?: { readonly delay?: number },
+      ) {
+        const delay = getDelay(options);
 
-          pipe(this, addIgnoringChildErrors(continuation));
+        pipe(this, addIgnoringChildErrors(continuation));
 
-          if (!isDisposed(continuation)) {
-            this.taskQueue.push({
-              id: this.taskIDCount++,
-              dueTime: getCurrentTime(this) + delay,
-              continuation,
-            });
-          }
-        },
-        [SourceLike_move](
-          this: typeof properties & MutableEnumeratorLike<VirtualTask>,
-        ): void {
-          const taskQueue = this.taskQueue;
+        if (!isDisposed(continuation)) {
+          this.taskQueue.push({
+            id: this.taskIDCount++,
+            dueTime: getCurrentTime(this) + delay,
+            continuation,
+          });
+        }
+      },
+      [SourceLike_move](
+        this: typeof properties & MutableEnumeratorLike<VirtualTask>,
+      ): void {
+        const taskQueue = this.taskQueue;
 
-          if (isDisposed(this)) {
-            return;
-          }
+        if (isDisposed(this)) {
+          return;
+        }
 
-          const task = taskQueue.pop();
+        const task = taskQueue.pop();
 
-          if (isSome(task)) {
-            this[EnumeratorLike_current] = task;
-          } else {
-            pipe(this, dispose());
-          }
-        },
-      }),
-    );
+        if (isSome(task)) {
+          this[EnumeratorLike_current] = task;
+        } else {
+          pipe(this, dispose());
+        }
+      },
+    }),
+    createObjectFactory<VirtualTimeSchedulerLike, typeof properties, number>(),
+  );
 
   return (
     options: { readonly maxMicroTaskTicks?: number } = {},

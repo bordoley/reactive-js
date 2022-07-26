@@ -418,11 +418,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       seq: (() => none) as SequenceLike,
     };
 
-    const createInstance = createObjectFactory<
-      EnumeratorLike<any>,
-      typeof properties,
-      SequenceLike
-    >(
+    const createInstance = pipe(
       mix(disposablePrototype, enumeratorPrototype, {
         [Object_properties]: properties,
         [Object_init](this: typeof properties, seq: SequenceLike) {
@@ -442,6 +438,11 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
           }
         },
       }),
+      createObjectFactory<
+        EnumeratorLike<any>,
+        typeof properties,
+        SequenceLike
+      >(),
     );
 
     return <T>() =>
