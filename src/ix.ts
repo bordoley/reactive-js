@@ -9,6 +9,7 @@ import {
   createObjectFactory,
   init,
   mixWith,
+  mixWithProps,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -143,10 +144,10 @@ export const createEnumerableUsingT: Using<EnumerableLike<unknown>> = {
 
 export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...disposablePrototype[Object_properties],
-      ...enumeratorPrototype[Object_properties],
-    };
+    const properties = pipe(
+      {},
+      mixWithProps(disposablePrototype, enumeratorPrototype),
+    );
 
     return pipe(
       {
@@ -178,11 +179,10 @@ export const emptyEnumerableT: Empty<EnumerableLike> = {
  */
 export const generateEnumerable: Generate<EnumerableLike>["generate"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...disposablePrototype[Object_properties],
-      ...enumeratorPrototype[Object_properties],
-      f: none as unknown as Updater<any>,
-    };
+    const properties = pipe(
+      { f: none as unknown as Updater<any> },
+      mixWithProps(disposablePrototype, enumeratorPrototype),
+    );
 
     const createInstance = pipe(
       {

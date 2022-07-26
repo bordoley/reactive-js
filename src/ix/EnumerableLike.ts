@@ -33,6 +33,7 @@ import {
   createObjectFactory,
   init,
   mixWith,
+  mixWithProps,
 } from "../__internal__/util/Object";
 import {
   Buffer,
@@ -174,11 +175,12 @@ const liftT: Lift<EnumerableLike, TInteractive> = {
   variance: interactive,
 };
 
-const delegatingDisposableEnumeratorProperties = {
-  ...delegatingDisposablePrototype[Object_properties],
-  ...enumeratorPrototype[Object_properties],
-  delegate: none as unknown as EnumeratorLike,
-};
+const delegatingDisposableEnumeratorProperties = pipe(
+  {
+    delegate: none as unknown as EnumeratorLike,
+  },
+  mixWithProps(delegatingDisposablePrototype, enumeratorPrototype),
+);
 
 const delegatingDisposableEnumeratorPrototype = pipe(
   {
@@ -196,12 +198,13 @@ const delegatingDisposableEnumeratorPrototype = pipe(
 );
 
 export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (() => {
-  const properties = {
-    ...disposablePrototype[Object_properties],
-    ...enumeratorPrototype[Object_properties],
-    delegate: none as unknown as EnumeratorLike,
-    maxBufferSize: 0,
-  };
+  const properties = pipe(
+    {
+      delegate: none as unknown as EnumeratorLike,
+      maxBufferSize: 0,
+    },
+    mixWithProps(disposablePrototype, enumeratorPrototype),
+  );
 
   const createInstance = pipe(
     {
@@ -262,12 +265,16 @@ export const bufferT: Buffer<EnumerableLike<unknown>> = {
 
 export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...disposablePrototype[Object_properties],
-      ...disposableRefPrototype[Object_properties],
-      ...enumeratorPrototype[Object_properties],
-      delegate: none as unknown as EnumeratorLike<EnumerableLike>,
-    };
+    const properties = pipe(
+      {
+        delegate: none as unknown as EnumeratorLike<EnumerableLike>,
+      },
+      mixWithProps(
+        disposablePrototype,
+        disposableRefPrototype,
+        enumeratorPrototype,
+      ),
+    );
 
     const createInstance = pipe(
       {
@@ -335,11 +342,15 @@ export const concatT: Concat<EnumerableLike> = {
 
 export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...delegatingDisposablePrototype[Object_properties],
-      ...delegatingEnumeratorPrototype[Object_properties],
-      equality: none as unknown as Equality<unknown>,
-    };
+    const properties = pipe(
+      {
+        equality: none as unknown as Equality<unknown>,
+      },
+      mixWithProps(
+        delegatingDisposablePrototype,
+        delegatingEnumeratorPrototype,
+      ),
+    );
 
     const createInstance = pipe(
       {
@@ -396,11 +407,12 @@ export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
 };
 
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (() => {
-  const properties = {
-    ...delegatingDisposablePrototype[Object_properties],
-    ...delegatingEnumeratorPrototype[Object_properties],
-    predicate: none as unknown as Predicate<unknown>,
-  };
+  const properties = pipe(
+    {
+      predicate: none as unknown as Predicate<unknown>,
+    },
+    mixWithProps(delegatingDisposablePrototype, delegatingEnumeratorPrototype),
+  );
 
   const createInstance = pipe(
     {
@@ -449,10 +461,12 @@ export const keepT: Keep<EnumerableLike> = {
 };
 
 export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (() => {
-  const properties = {
-    ...delegatingDisposableEnumeratorPrototype[Object_properties],
-    mapper: none as unknown as Function1<any, unknown>,
-  };
+  const properties = pipe(
+    {
+      mapper: none as unknown as Function1<any, unknown>,
+    },
+    mixWithProps(delegatingDisposableEnumeratorPrototype),
+  );
 
   const createInstance = pipe(
     {
@@ -497,11 +511,12 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (() => {
 export const mapT: Map<EnumerableLike> = { map };
 
 export const onNotify = /*@__PURE__*/ (() => {
-  const properties = {
-    ...delegatingDisposablePrototype[Object_properties],
-    ...delegatingEnumeratorPrototype[Object_properties],
-    onNotify: none as unknown as SideEffect1<any>,
-  };
+  const properties = pipe(
+    {
+      onNotify: none as unknown as SideEffect1<any>,
+    },
+    mixWithProps(delegatingDisposablePrototype, delegatingEnumeratorPrototype),
+  );
 
   const createInstance = pipe(
     {
@@ -582,13 +597,15 @@ export const pairwiseT: Pairwise<EnumerableLike> = {
 };
 
 export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (() => {
-  const properties = {
-    ...disposablePrototype[Object_properties],
-    count: 0,
-    enumerator: none as Option<EnumeratorLike>,
-    shouldRepeat: none as unknown as Predicate<number>,
-    src: none as unknown as EnumerableLike,
-  };
+  const properties = pipe(
+    {
+      count: 0,
+      enumerator: none as Option<EnumeratorLike>,
+      shouldRepeat: none as unknown as Predicate<number>,
+      src: none as unknown as EnumerableLike,
+    },
+    mixWithProps(disposablePrototype),
+  );
 
   const createInstance = pipe(
     {
@@ -722,12 +739,16 @@ export const scanT: Scan<EnumerableLike> = {
 
 export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...delegatingDisposablePrototype[Object_properties],
-      ...delegatingEnumeratorPrototype[Object_properties],
-      skipCount: 0,
-      count: 0,
-    };
+    const properties = pipe(
+      {
+        skipCount: 0,
+        count: 0,
+      },
+      mixWithProps(
+        delegatingDisposablePrototype,
+        delegatingEnumeratorPrototype,
+      ),
+    );
 
     const createInstance = pipe(
       {
@@ -779,12 +800,16 @@ export const skipFirstT: SkipFirst<EnumerableLike> = {
 
 export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...delegatingDisposablePrototype[Object_properties],
-      ...delegatingEnumeratorPrototype[Object_properties],
-      maxCount: 0,
-      count: 0,
-    };
+    const properties = pipe(
+      {
+        maxCount: 0,
+        count: 0,
+      },
+      mixWithProps(
+        delegatingDisposablePrototype,
+        delegatingEnumeratorPrototype,
+      ),
+    );
 
     const createInstance = pipe(
       {
@@ -833,12 +858,13 @@ export const takeFirstT: TakeFirst<EnumerableLike> = {
 
 export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...disposablePrototype[Object_properties],
-      ...delegatingEnumeratorPrototype[Object_properties],
-      maxCount: 0,
-      isStarted: false,
-    };
+    const properties = pipe(
+      {
+        maxCount: 0,
+        isStarted: false,
+      },
+      mixWithProps(disposablePrototype, delegatingEnumeratorPrototype),
+    );
 
     const createInstance = pipe(
       {
@@ -908,13 +934,17 @@ export const takeLastT: TakeLast<EnumerableLike> = { takeLast };
 
 export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...delegatingDisposablePrototype[Object_properties],
-      ...delegatingEnumeratorPrototype[Object_properties],
-      predicate: none as unknown as Predicate<any>,
-      inclusive: false,
-      done: false,
-    };
+    const properties = pipe(
+      {
+        predicate: none as unknown as Predicate<any>,
+        inclusive: false,
+        done: false,
+      },
+      mixWithProps(
+        delegatingDisposablePrototype,
+        delegatingEnumeratorPrototype,
+      ),
+    );
 
     const createInstance = pipe(
       {
@@ -976,11 +1006,12 @@ export const TContainerOf: EnumerableLike = undefined as any;
 
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...disposablePrototype[Object_properties],
-      ...delegatingEnumeratorPrototype[Object_properties],
-      isEmpty: true,
-    };
+    const properties = pipe(
+      {
+        isEmpty: true,
+      },
+      mixWithProps(disposablePrototype, delegatingEnumeratorPrototype),
+    );
 
     const createInstance = pipe(
       {
@@ -1125,11 +1156,12 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const allHaveCurrent = (enumerators: readonly EnumeratorLike<any>[]) =>
     pipe(enumerators, every(hasCurrent));
 
-  const properties = {
-    ...disposablePrototype[Object_properties],
-    ...enumeratorPrototype[Object_properties],
-    enumerators: none as unknown as readonly EnumeratorLike<unknown>[],
-  };
+  const properties = pipe(
+    {
+      enumerators: none as unknown as readonly EnumeratorLike<unknown>[],
+    },
+    mixWithProps(disposablePrototype, enumeratorPrototype),
+  );
 
   const createInstance = pipe(
     {

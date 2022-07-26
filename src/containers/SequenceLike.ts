@@ -9,6 +9,7 @@ import {
   createObjectFactory,
   init,
   mixWith,
+  mixWithProps,
 } from "../__internal__/util/Object";
 import {
   Concat,
@@ -412,11 +413,12 @@ export const takeWhileT: TakeWhile<SequenceLike> = { takeWhile };
 
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   /*@__PURE__*/ (() => {
-    const properties = {
-      ...disposablePrototype[Object_properties],
-      ...enumeratorPrototype[Object_properties],
-      seq: (() => none) as SequenceLike,
-    };
+    const properties = pipe(
+      {
+        seq: (() => none) as SequenceLike,
+      },
+      mixWithProps(disposablePrototype, enumeratorPrototype),
+    );
 
     const createInstance = pipe(
       {
