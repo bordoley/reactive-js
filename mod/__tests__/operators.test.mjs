@@ -7,6 +7,10 @@ const bufferTests = (m) => createDescribe("buffer", createTest("with multiple su
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9],
+], arrayEquality()))), createTest("last buffer is short", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], m.fromArray(), m.buffer({ maxBufferSize: 3 }), m.toReadonlyArray(), expectArrayEquals([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8],
 ], arrayEquality()))));
 const concatAllTests = (m) => createDescribe("concatAll", createTest("concats the input containers in order", pipeLazy([pipe([1, 2, 3], m.fromArray()), pipe([4, 5, 6], m.fromArray())], m.fromArray(), m.concatAll(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), createTest("when an inner enumerator throw", () => {
     // FIXME: Implement me
