@@ -31,29 +31,30 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
       iterator: none as unknown as Iterator<unknown>,
     };
 
-    const prototype = mix(disposablePrototype, enumeratorPrototype, {
-      [Object_init](this: typeof properties, iterator: Iterator<unknown>) {
-        init(disposablePrototype, this);
-        this.iterator = iterator;
-      },
-      [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
-        if (!isDisposed(this)) {
-          const next = this.iterator.next();
-
-          if (!next.done) {
-            this[EnumeratorLike_current] = next.value;
-          } else {
-            pipe(this, dispose());
-          }
-        }
-      },
-    });
-
     const createInstance = createObjectFactory<
       EnumeratorLike<any>,
       typeof properties,
       Iterator<unknown>
-    >(prototype, properties);
+    >(
+      properties,
+      mix(disposablePrototype, enumeratorPrototype, {
+        [Object_init](this: typeof properties, iterator: Iterator<unknown>) {
+          init(disposablePrototype, this);
+          this.iterator = iterator;
+        },
+        [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+          if (!isDisposed(this)) {
+            const next = this.iterator.next();
+
+            if (!next.done) {
+              this[EnumeratorLike_current] = next.value;
+            } else {
+              pipe(this, dispose());
+            }
+          }
+        },
+      }),
+    );
 
     return <T>() =>
       (iterable: Iterable<T>) =>

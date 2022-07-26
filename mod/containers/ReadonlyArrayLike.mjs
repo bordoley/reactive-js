@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
-import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { createObjectFactory, mix, Object_init, init } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, pipe, identity, none } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { createRunnable } from '../rx.mjs';
@@ -56,7 +56,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
         count: 0,
         index: 0,
     };
-    const prototype$2 = mix(prototype, prototype$1, {
+    const createInstance = createObjectFactory(properties$2, mix(prototype, prototype$1, {
         [Object_init](array, start, count) {
             init(prototype, this);
             init(prototype$1, this);
@@ -78,8 +78,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
                 }
             }
         },
-    });
-    const createInstance = createObjectFactory(prototype$2, properties$2);
+    }));
     return createFromArray((array, start, count) => createEnumerable(() => createInstance(array, start, count)));
 })();
 const toEnumerableT = { toEnumerable };

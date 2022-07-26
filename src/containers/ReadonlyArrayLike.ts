@@ -133,44 +133,45 @@ export const toEnumerable: ToEnumerable<
     index: 0,
   };
 
-  const prototype = mix(disposablePrototype, enumeratorPrototype, {
-    [Object_init](
-      this: typeof properties,
-      array: readonly unknown[],
-      start: number,
-      count: number,
-    ) {
-      init(disposablePrototype, this);
-      init(enumeratorPrototype, this);
-
-      this.array = array;
-      this.index = start - 1;
-      this.count = count;
-    },
-    [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
-      const { array } = this;
-      if (!isDisposed(this)) {
-        this.index++;
-        const { index, count } = this;
-
-        if (count !== 0) {
-          this[EnumeratorLike_current] = array[index];
-
-          this.count = count > 0 ? this.count - 1 : this.count + 1;
-        } else {
-          pipe(this, dispose());
-        }
-      }
-    },
-  });
-
   const createInstance = createObjectFactory<
     EnumeratorLike<any>,
     typeof properties,
     readonly unknown[],
     number,
     number
-  >(prototype, properties);
+  >(
+    properties,
+    mix(disposablePrototype, enumeratorPrototype, {
+      [Object_init](
+        this: typeof properties,
+        array: readonly unknown[],
+        start: number,
+        count: number,
+      ) {
+        init(disposablePrototype, this);
+        init(enumeratorPrototype, this);
+
+        this.array = array;
+        this.index = start - 1;
+        this.count = count;
+      },
+      [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+        const { array } = this;
+        if (!isDisposed(this)) {
+          this.index++;
+          const { index, count } = this;
+
+          if (count !== 0) {
+            this[EnumeratorLike_current] = array[index];
+
+            this.count = count > 0 ? this.count - 1 : this.count + 1;
+          } else {
+            pipe(this, dispose());
+          }
+        }
+      },
+    }),
+  );
 
   return createFromArray<EnumerableLike>(
     <T>(array: readonly T[], start: number, count: number) =>

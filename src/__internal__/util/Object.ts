@@ -58,39 +58,39 @@ export const init: Init = <
 
 interface ObjectFactory {
   <TReturn, TProperties>(
+    properties: TProperties,
     prototype: {
       [Object_init]: (this: TReturn & TProperties) => void;
     } & Omit<TReturn, keyof TProperties>,
-    properties: TProperties,
   ): Factory<TReturn>;
   <TReturn, TProperties, TA>(
+    properties: TProperties,
     prototype: {
       [Object_init]: (this: TReturn & TProperties, a: TA) => void;
     } & Omit<TReturn, keyof TProperties>,
-    properties: TProperties,
   ): Function1<TA, TReturn>;
   <TReturn, TProperties, TA, TB>(
+    properties: TProperties,
     prototype: {
       [Object_init]: (this: TReturn & TProperties, a: TA, b: TB) => void;
     } & Omit<TReturn, keyof TProperties>,
-    properties: TProperties,
   ): Function2<TA, TB, TReturn>;
   <TReturn, TProperties, TA, TB, TC>(
+    properties: TProperties,
     prototype: {
       [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TC) => void;
     } & Omit<TReturn, keyof TProperties>,
-    properties: TProperties,
   ): Function3<TA, TB, TC, TReturn>;
 }
 
 export const createObjectFactory: ObjectFactory = <TReturn, TProperties>(
+  properties: TProperties,
   prototype: {
     [Object_init]: (
       this: TReturn & TProperties,
       ...args: readonly any[]
     ) => void;
   },
-  properties: TProperties,
 ): Factory<TReturn> => {
   const propertyDesccription = Object.getOwnPropertyDescriptors(properties);
   return (...args: readonly any[]) => {

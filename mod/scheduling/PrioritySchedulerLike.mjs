@@ -1,7 +1,7 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
-import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { createObjectFactory, mix, Object_init, init } from '../__internal__/util/Object.mjs';
 import { none, pipe } from '../functions.mjs';
 import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
@@ -21,7 +21,7 @@ const toScheduler = /*@__PURE__*/ (() => {
         priorityScheduler: none,
         priority: 0,
     };
-    const prototype$1 = mix(prototype, {
+    const createInstance = createObjectFactory(properties$1, mix(prototype, {
         [Object_init](scheduler, priority) {
             init(prototype, this);
             this.priorityScheduler = scheduler;
@@ -40,8 +40,7 @@ const toScheduler = /*@__PURE__*/ (() => {
             return shouldYield(self.priorityScheduler);
         },
         [SchedulerLike_requestYield]() {
-            const self = this;
-            requestYield(self.priorityScheduler);
+            requestYield(this.priorityScheduler);
         },
         [SchedulerLike_schedule](continuation, options) {
             const delay = getDelay(options);
@@ -53,8 +52,7 @@ const toScheduler = /*@__PURE__*/ (() => {
                 });
             }
         },
-    });
-    const createInstance = createObjectFactory(prototype$1, properties$1);
+    }));
     return (priority) => priorityScheduler => createInstance(priorityScheduler, priority);
 })();
 

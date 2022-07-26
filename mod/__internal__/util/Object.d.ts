@@ -13,18 +13,18 @@ interface Init {
 }
 declare const init: Init;
 interface ObjectFactory {
-    <TReturn, TProperties>(prototype: {
+    <TReturn, TProperties>(properties: TProperties, prototype: {
         [Object_init]: (this: TReturn & TProperties) => void;
-    } & Omit<TReturn, keyof TProperties>, properties: TProperties): Factory<TReturn>;
-    <TReturn, TProperties, TA>(prototype: {
+    } & Omit<TReturn, keyof TProperties>): Factory<TReturn>;
+    <TReturn, TProperties, TA>(properties: TProperties, prototype: {
         [Object_init]: (this: TReturn & TProperties, a: TA) => void;
-    } & Omit<TReturn, keyof TProperties>, properties: TProperties): Function1<TA, TReturn>;
-    <TReturn, TProperties, TA, TB>(prototype: {
+    } & Omit<TReturn, keyof TProperties>): Function1<TA, TReturn>;
+    <TReturn, TProperties, TA, TB>(properties: TProperties, prototype: {
         [Object_init]: (this: TReturn & TProperties, a: TA, b: TB) => void;
-    } & Omit<TReturn, keyof TProperties>, properties: TProperties): Function2<TA, TB, TReturn>;
-    <TReturn, TProperties, TA, TB, TC>(prototype: {
+    } & Omit<TReturn, keyof TProperties>): Function2<TA, TB, TReturn>;
+    <TReturn, TProperties, TA, TB, TC>(properties: TProperties, prototype: {
         [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TC) => void;
-    } & Omit<TReturn, keyof TProperties>, properties: TProperties): Function3<TA, TB, TC, TReturn>;
+    } & Omit<TReturn, keyof TProperties>): Function3<TA, TB, TC, TReturn>;
 }
 declare const createObjectFactory: ObjectFactory;
 declare type Identity<T> = T extends object ? {

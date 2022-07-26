@@ -6,7 +6,7 @@ import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInCo
 export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
 import { properties, prototype } from './__internal__/util/Disposable.mjs';
 import { properties as properties$1, prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
-import { mix, Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
+import { createObjectFactory, mix, Object_init, init } from './__internal__/util/Object.mjs';
 import { pipe, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
@@ -64,7 +64,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
         yieldInterval: 0,
         yieldRequested: false,
     };
-    const prototype$1 = mix(prototype, {
+    const createInstance = /*@__PURE__*/ createObjectFactory(properties$1, mix(prototype, {
         [Object_init](yieldInterval) {
             init(prototype, this);
             this.yieldInterval = yieldInterval;
@@ -107,8 +107,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
                 scheduleImmediate(this, continuation);
             }
         },
-    });
-    const createInstance = /*@__PURE__*/ createObjectFactory(prototype$1, properties$1);
+    }));
     return (options = {}) => {
         const { yieldInterval = 5 } = options;
         return createInstance(yieldInterval);
@@ -132,7 +131,8 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         yieldRequested: false,
         taskQueue: none,
     };
-    const prototype$2 = mix(prototype, prototype$1, {
+    const createInstance = 
+    /*@__PURE__*/ createObjectFactory(properties$2, mix(prototype, prototype$1, {
         [ContinuationLike_run]() {
             while (move(this)) {
                 const task = getCurrent(this);
@@ -164,7 +164,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         },
         get [SchedulerLike_shouldYield]() {
             const self = this;
-            const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation } = self;
+            const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation, } = self;
             if (inContinuation) {
                 self.microTaskTicks++;
                 self.yieldRequested = false;
@@ -186,9 +186,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
                 });
             }
         },
-    });
-    const createInstance = 
-    /*@__PURE__*/ createObjectFactory(prototype$2, properties$2);
+    }));
     return (options = {}) => {
         const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
         return createInstance(maxMicroTaskTicks);

@@ -102,7 +102,7 @@ export const prototype = {
 };
 
 export const createDisposable: Factory<DisposableLike> =
-  /*@__PURE__*/ createObjectFactory(prototype, properties);
+  /*@__PURE__*/ createObjectFactory(properties, prototype);
 
 export const disposed: DisposableLike = {
   [DisposableLike_error]: none,

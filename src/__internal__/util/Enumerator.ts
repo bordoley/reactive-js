@@ -51,18 +51,20 @@ export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() => {
   const properties = {
     ...disposableProperties,
   };
-  const prototype = mix(disposablePrototype, {
-    get [EnumeratorLike_current](): unknown {
-      return raise();
-    },
-    get [EnumeratorLike_hasCurrent](): boolean {
-      return false;
-    },
-    [Object_init](this: typeof properties) {
-      init(disposablePrototype, this);
-    },
-    [SourceLike_move](this: typeof properties) {},
-  });
 
-  return createObjectFactory(prototype, properties);
+  return createObjectFactory(
+    properties,
+    mix(disposablePrototype, {
+      [Object_init](this: typeof properties) {
+        init(disposablePrototype, this);
+      },
+      get [EnumeratorLike_current](): unknown {
+        return raise();
+      },
+      get [EnumeratorLike_hasCurrent](): boolean {
+        return false;
+      },
+      [SourceLike_move](this: typeof properties) {},
+    }),
+  );
 })();
