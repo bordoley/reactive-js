@@ -18,6 +18,7 @@ import {
   ContainerLike,
   ContainerOf,
   Empty,
+  Generate,
   StatefulContainerLike,
   StatefulContainerStateOf,
   Using,
@@ -25,6 +26,7 @@ import {
 import {
   Factory,
   Function1,
+  Updater,
   forEach,
   newInstance,
   none,
@@ -35,10 +37,11 @@ import { AsyncEnumeratorLike, StreamableLike } from "./streaming";
 import {
   DisposableLike,
   EnumeratorLike,
+  EnumeratorLike_current,
   SourceLike,
   SourceLike_move,
 } from "./util";
-import { addTo, dispose } from "./util/DisposableLike";
+import { addTo, dispose, isDisposed } from "./util/DisposableLike";
 
 /** @ignore */
 export const InteractiveContainerLike_interact = Symbol(
@@ -168,4 +171,57 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
 
 export const emptyEnumerableT: Empty<EnumerableLike> = {
   empty: emptyEnumerable,
+};
+
+/**
+ * Generates an EnumerableLike from a generator function
+ * that is applied to an accumulator value.
+ *
+ * @param generator the generator function.
+ * @param initialValue Factory function used to generate the initial accumulator.
+ */
+export const generateEnumerable: Generate<EnumerableLike>["generate"] = (() => {
+  const properties = {
+    ...disposableProperties,
+    ...enumeratorProperties,
+    f: none as unknown as Updater<any>,
+  };
+
+  const prototype = mix(disposablePrototype, enumeratorPrototype, {
+    [Object_init]<T>(
+      this: typeof properties & MutableEnumeratorLike,
+      f: Updater<T>,
+      acc: T,
+    ) {
+      init(disposablePrototype, this);
+      init(enumeratorPrototype, this);
+      this.f = f;
+      this[EnumeratorLike_current] = acc;
+    },
+    [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+      if (!isDisposed(this)) {
+        try {
+          this[EnumeratorLike_current] = this.f(this);
+        } catch (cause) {
+          pipe(this, dispose({ cause }));
+        }
+      }
+    },
+  });
+
+  const createInstance = createObjectFactory<
+    typeof prototype,
+    typeof properties,
+    Updater<any>,
+    unknown
+  >(prototype, properties);
+
+  return <T>(generator: Updater<T>, initialValue: Factory<T>) =>
+    createEnumerable(
+      () => createInstance(generator, initialValue()) as EnumeratorLike<T>,
+    );
+})();
+
+export const generateEnumerableT: Generate<EnumerableLike> = {
+  generate: generateEnumerable,
 };
