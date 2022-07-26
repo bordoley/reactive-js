@@ -28,17 +28,22 @@
 - [EnumerableObservable](rx.md#enumerableobservable)
 - [RunnableObservable](rx.md#runnableobservable)
 - [createObservableUsingT](rx.md#createobservableusingt)
+- [createRunnableUsingT](rx.md#createrunnableusingt)
 - [deferObservableT](rx.md#deferobservablet)
 - [neverObservableT](rx.md#neverobservablet)
+- [neverRunnableT](rx.md#neverrunnablet)
 
 ### Functions
 
 - [createObservable](rx.md#createobservable)
 - [createObservableUsing](rx.md#createobservableusing)
+- [createRunnable](rx.md#createrunnable)
+- [createRunnableUsing](rx.md#createrunnableusing)
 - [createSubject](rx.md#createsubject)
 - [deferObservable](rx.md#deferobservable)
 - [fromDisposableObservable](rx.md#fromdisposableobservable)
 - [neverObservable](rx.md#neverobservable)
+- [neverRunnable](rx.md#neverrunnable)
 
 ## Type Aliases
 
@@ -126,19 +131,31 @@ ___
 
 ### createObservableUsingT
 
-• `Const` **createObservableUsingT**: [`Using`](containers.md#using)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\>
+• `Const` **createObservableUsingT**: [`Using`](containers.md#using)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### createRunnableUsingT
+
+• `Const` **createRunnableUsingT**: [`Using`](containers.md#using)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
 ### deferObservableT
 
-• `Const` **deferObservableT**: [`Defer`](containers.md#defer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\>
+• `Const` **deferObservableT**: [`Defer`](containers.md#defer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
 ### neverObservableT
 
-• `Const` **neverObservableT**: [`Never`](rx.md#never)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\>
+• `Const` **neverObservableT**: [`Never`](rx.md#never)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### neverRunnableT
+
+• `Const` **neverRunnableT**: [`Never`](rx.md#never)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ## Functions
 
@@ -298,6 +315,162 @@ ___
 
 ___
 
+### createRunnable
+
+▸ **createRunnable**<`T`\>(`run`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`SinkLike`](../interfaces/util.SinkLike.md)<`T`\>\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
+### createRunnableUsing
+
+▸ **createRunnableUsing**<`TResource`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
+| `containerFactory` | [`Function1`](functions.md#function1)<`TResource`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+▸ **createRunnableUsing**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\> |
+| `containerFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+▸ **createRunnableUsing**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\> |
+| `containerFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+▸ **createRunnableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource4` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
+| `containerFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+▸ **createRunnableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource4` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TResource5` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
+| `containerFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+▸ **createRunnableUsing**<`TResource`, `T`\>(`resourceFactory`, `runnableFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\> |
+| `runnableFactory` | (...`resources`: readonly `TResource`[]) => [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
 ### createSubject
 
 ▸ **createSubject**<`T`\>(`options?`): [`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>
@@ -398,3 +571,19 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
+### neverRunnable
+
+▸ **neverRunnable**<`T`\>(): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>

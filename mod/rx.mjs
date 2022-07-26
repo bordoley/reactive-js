@@ -136,5 +136,34 @@ const neverObservable = /*@__PURE__*/ createNever(createObservableT);
 const neverObservableT = {
     never: neverObservable,
 };
+const createRunnable = /*@__PURE__*/ (() => {
+    class Runnable {
+        constructor(_run) {
+            this._run = _run;
+        }
+        [ReactiveContainerLike_sinkInto](sink) {
+            try {
+                this._run(sink);
+                pipe(sink, dispose());
+            }
+            catch (cause) {
+                pipe(sink, dispose({ cause }));
+            }
+        }
+    }
+    return (run) => newInstance(Runnable, run);
+})();
+const createRunnableT = {
+    create: createRunnable,
+};
+const createRunnableUsing = 
+/*@__PURE__*/ createUsing(createRunnableT);
+const createRunnableUsingT = {
+    using: createRunnableUsing,
+};
+const neverRunnable = /*@__PURE__*/ createNever(createRunnableT);
+const neverRunnableT = {
+    never: neverRunnable,
+};
 
-export { DefaultObservable, EnumerableObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, RunnableObservable, SubjectLike_publish, createObservable, createObservableUsing, createObservableUsingT, createSubject, deferObservable, deferObservableT, fromDisposableObservable, neverObservable, neverObservableT };
+export { DefaultObservable, EnumerableObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, RunnableObservable, SubjectLike_publish, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, fromDisposableObservable, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
