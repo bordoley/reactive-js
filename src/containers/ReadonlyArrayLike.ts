@@ -8,7 +8,7 @@ import {
   Object_properties,
   createObjectFactory,
   init,
-  mix,
+  mixWith,
 } from "../__internal__/util/Object";
 import {
   ContainerLike,
@@ -131,7 +131,7 @@ export const toEnumerable: ToEnumerable<
   };
 
   const createInstance = pipe(
-    mix(disposablePrototype, enumeratorPrototype, {
+    {
       [Object_properties]: properties,
       [Object_init](
         this: typeof properties,
@@ -161,7 +161,8 @@ export const toEnumerable: ToEnumerable<
           }
         }
       },
-    }),
+    },
+    mixWith(disposablePrototype, enumeratorPrototype),
     createObjectFactory<
       EnumeratorLike<any>,
       typeof properties,

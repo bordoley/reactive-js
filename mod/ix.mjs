@@ -1,7 +1,7 @@
 /// <reference types="./ix.d.ts" />
 import { prototype } from './__internal__/util/Disposable.mjs';
 import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
-import { Object_properties, mix, Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, newInstance, forEach } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { addTo } from './util/DisposableLike.mjs';
@@ -42,7 +42,7 @@ const emptyEnumerable =
         ...prototype[Object_properties],
         ...prototype$1[Object_properties],
     };
-    const createInstance = pipe(mix(prototype, prototype$1, {
+    const createInstance = pipe({
         [Object_properties]: properties,
         [Object_init]() {
             init(prototype, this);
@@ -51,7 +51,7 @@ const emptyEnumerable =
         [SourceLike_move]() {
             pipe(this, dispose());
         },
-    }), createObjectFactory());
+    }, mixWith(prototype, prototype$1), createObjectFactory());
     return () => createEnumerable(createInstance);
 })();
 const emptyEnumerableT = {
@@ -64,13 +64,14 @@ const emptyEnumerableT = {
  * @param generator the generator function.
  * @param initialValue Factory function used to generate the initial accumulator.
  */
-const generateEnumerable = (() => {
+const generateEnumerable = 
+/*@__PURE__*/ (() => {
     const properties = {
         ...prototype[Object_properties],
         ...prototype$1[Object_properties],
         f: none,
     };
-    const createInstance = pipe(mix(prototype, prototype$1, {
+    const createInstance = pipe({
         [Object_properties]: properties,
         [Object_init](f, acc) {
             init(prototype, this);
@@ -88,7 +89,7 @@ const generateEnumerable = (() => {
                 }
             }
         },
-    }), createObjectFactory());
+    }, mixWith(prototype, prototype$1), createObjectFactory());
     return (generator, initialValue) => createEnumerable(() => createInstance(generator, initialValue()));
 })();
 const generateEnumerableT = {

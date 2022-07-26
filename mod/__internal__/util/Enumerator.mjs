@@ -4,7 +4,7 @@ import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move } fr
 import '../../util/DisposableLike.mjs';
 import { hasCurrent } from '../../util/EnumeratorLike.mjs';
 import { prototype as prototype$1 } from './Disposable.mjs';
-import { Object_properties, Object_init, mix, init, createObjectFactory } from './Object.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './Object.mjs';
 import { isDisposed } from './DisposableLikeInternal.mjs';
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");
@@ -35,7 +35,7 @@ const prototype = {
         return !isDisposed(self) && self[Enumerator_private_hasCurrent];
     },
 };
-const neverEnumerator = /*@__PURE__*/ (() => pipe(mix(prototype$1, {
+const neverEnumerator = /*@__PURE__*/ (() => pipe({
     [Object_properties]: prototype$1[Object_properties],
     [Object_init]() {
         init(prototype$1, this);
@@ -47,6 +47,6 @@ const neverEnumerator = /*@__PURE__*/ (() => pipe(mix(prototype$1, {
         return false;
     },
     [SourceLike_move]() { },
-}), createObjectFactory()))();
+}, mixWith(prototype$1), createObjectFactory()))();
 
 export { neverEnumerator, prototype };

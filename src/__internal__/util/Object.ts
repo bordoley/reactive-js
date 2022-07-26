@@ -55,41 +55,6 @@ type Identity<T> = T extends object
     }
   : T;
 
-interface Mix {
-  <TProto0 extends object, TProto1 extends object>(
-    p0: TProto0,
-    p1: TProto1,
-  ): Identity<TProto0 & TProto1>;
-
-  <TProto0 extends object, TProto1 extends object, TProto2 extends object>(
-    p0: TProto0,
-    p1: TProto1,
-    p2: TProto2,
-  ): Identity<TProto0 & TProto1 & TProto2>;
-
-  <
-    TProto0 extends object,
-    TProto1 extends object,
-    TProto2 extends object,
-    TProto3 extends object,
-  >(
-    p0: TProto0,
-    p1: TProto1,
-    p2: TProto2,
-    p3: TProto3,
-  ): Identity<TProto0 & TProto1 & TProto2 & TProto3>;
-}
-export const mix: Mix = (...prototypes: readonly object[]) => {
-  const propertyDescriptors = prototypes.map(prototype =>
-    Object.getOwnPropertyDescriptors(prototype),
-  );
-  const descriptor = propertyDescriptors.reduce(
-    (acc, next) => ({ ...acc, ...next }),
-    {},
-  );
-  return Object.create(Object.prototype, descriptor);
-};
-
 interface ObjectFactory {
   <TReturn, TProperties>(): Function1<
     {
@@ -141,4 +106,41 @@ export const createObjectFactory: ObjectFactory =
       instance[Object_init](...args);
       return instance;
     };
+  };
+
+interface MixWith {
+  <TProto0 extends object, TProto1 extends object>(p0: TProto0): Function1<
+    TProto1,
+    Identity<TProto0 & TProto1>
+  >;
+
+  <TProto0 extends object, TProto1 extends object, TProto2 extends object>(
+    p0: TProto0,
+    p1: TProto1,
+  ): Function1<TProto2, Identity<TProto0 & TProto1 & TProto2>>;
+
+  <
+    TProto0 extends object,
+    TProto1 extends object,
+    TProto2 extends object,
+    TProto3 extends object,
+  >(
+    p0: TProto0,
+    p1: TProto1,
+    p2: TProto2,
+  ): Function1<TProto3, Identity<TProto0 & TProto1 & TProto2 & TProto3>>;
+}
+export const mixWith: MixWith =
+  (...prototypes: readonly object[]) =>
+  (lastProto: object) => {
+    const propertyDescriptors = prototypes
+      .map(prototype => Object.getOwnPropertyDescriptors(prototype))
+      .reduce((acc, next) => ({ ...acc, ...next }), {});
+
+    const descriptor = {
+      ...propertyDescriptors,
+      ...Object.getOwnPropertyDescriptors(lastProto),
+    };
+
+    return Object.create(Object.prototype, descriptor);
   };

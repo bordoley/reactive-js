@@ -5,7 +5,7 @@ import {
   Object_properties,
   createObjectFactory,
   init,
-  mix,
+  mixWith,
 } from "../__internal__/util/Object";
 import { Function1, none, pipe } from "../functions";
 import {
@@ -40,7 +40,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
   };
 
   const createInstance = pipe(
-    mix(disposablePrototype, {
+    {
       [Object_properties]: properties,
       [Object_init](
         this: typeof properties,
@@ -82,7 +82,8 @@ export const toScheduler = /*@__PURE__*/ (() => {
           });
         }
       },
-    }),
+    },
+    mixWith(disposablePrototype),
     createObjectFactory<
       SchedulerLike,
       typeof properties,

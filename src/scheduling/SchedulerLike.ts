@@ -23,7 +23,7 @@ import {
   Object_properties,
   createObjectFactory,
   init,
-  mix,
+  mixWith,
 } from "../__internal__/util/Object";
 import {
   Function1,
@@ -103,7 +103,7 @@ const createContinuation: Function2<
   };
 
   return pipe(
-    mix(disposablePrototype, {
+    {
       [Object_properties]: properties,
       [Object_init](
         this: typeof properties,
@@ -140,7 +140,8 @@ const createContinuation: Function2<
           }
         }
       },
-    }),
+    },
+    mixWith(disposablePrototype),
     createObjectFactory<
       ContinuationLike,
       typeof properties,
@@ -338,7 +339,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     };
 
     return pipe(
-      mix(disposablePrototype, enumeratorPrototype, disposableRefPrototype, {
+      {
         [Object_properties]: properties,
         [Object_init](
           this: typeof properties & DisposableLike,
@@ -442,7 +443,8 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
             scheduleOnHost(this);
           }
         },
-      }),
+      },
+      mixWith(disposablePrototype, enumeratorPrototype, disposableRefPrototype),
       createObjectFactory<
         QueueSchedulerLike,
         typeof properties,
