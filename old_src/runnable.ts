@@ -606,10 +606,3 @@ export const toRunnableT: ToRunnable<RunnableLike<unknown>> = {
 };
 
 export const TContainerOf: RunnableLike<unknown> = undefined as any;
-
-export const using: Using<RunnableLike<unknown>>["using"] =
-  /*@__PURE__*/ createUsing(createT);
-
-export const usingT: Using<RunnableLike<unknown>> = {
-  using,
-};

@@ -4,7 +4,8 @@ import { properties as properties$1, prototype as prototype$1 } from '../__inter
 import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, pipe, identity, none } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
-import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
+import { createRunnable } from '../rx.mjs';
+import { SourceLike_move, EnumeratorLike_current, SinkLike_notify } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
 
@@ -164,6 +165,15 @@ const toReadonlyArray = () => identity;
 const toReadonlyArrayT = {
     toReadonlyArray,
 };
+const toRunnable = 
+/*@__PURE__*/ (() => {
+    return createFromArray((values, startIndex, count) => createRunnable(sink => {
+        for (let index = startIndex; !isDisposed(sink) && count !== 0; count > 0 ? index++ : index--, count > 0 ? count-- : count++) {
+            sink[SinkLike_notify](values[index]);
+        }
+    }));
+})();
+const toRunnableT = { toRunnable };
 const toSequence = 
 /*@__PURE__*/ (() => {
     const _arraySequence = (arr, index, count) => count !== 0 && index >= 0
@@ -178,4 +188,4 @@ const toSequenceT = {
     toSequence,
 };
 
-export { every, keep, keepT, map, mapT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toSequence, toSequenceT };
+export { every, keep, keepT, map, mapT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, toSequence, toSequenceT };

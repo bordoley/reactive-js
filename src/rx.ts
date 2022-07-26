@@ -56,6 +56,7 @@ export interface ReactiveContainerLike extends StatefulContainerLike {
 }
 
 export interface RunnableLike<T = unknown> extends ReactiveContainerLike {
+  readonly TContainerOf?: RunnableLike<this["T"]>;
   readonly TStatefulContainerState?: SinkLike<this["T"]>;
 
   [ReactiveContainerLike_sinkInto](sink: SinkLike<T>): void;
@@ -189,12 +190,12 @@ const createObservableT: CreateReactiveContainer<ObservableLike> = {
 export const createSubject = /*@__PURE__*/ (() => {
   const properties: typeof disposableProperties & {
     [MulticastObservableLike_replay]: number;
-    observers: Set<ObserverLike<unknown>>;
+    observers: Set<ObserverLike>;
     replayed: unknown[];
   } = {
     ...disposableProperties,
     [MulticastObservableLike_replay]: 0,
-    observers: none as unknown as Set<ObserverLike<unknown>>,
+    observers: none as unknown as Set<ObserverLike>,
     replayed: none as unknown as Array<unknown>,
   };
 
@@ -202,7 +203,7 @@ export const createSubject = /*@__PURE__*/ (() => {
     [Object_init](this: typeof properties, replay: number) {
       init(disposablePrototype, this);
       this[MulticastObservableLike_replay] = replay;
-      this.observers = newInstance<Set<ObserverLike<unknown>>>(Set);
+      this.observers = newInstance<Set<ObserverLike>>(Set);
       this.replayed = [];
     },
 
@@ -316,7 +317,7 @@ const createNever = <C extends ReactiveContainerLike>(
 export const createObservableUsing: Using<ObservableLike>["using"] =
   /*@__PURE__*/ createUsing(createObservableT);
 
-export const createObservableUsingT: Using<ObservableLike<unknown>> = {
+export const createObservableUsingT: Using<ObservableLike> = {
   using: createObservableUsing,
 };
 
@@ -351,11 +352,45 @@ export const deferObservable: DeferObservable = <T>(
     }
   });
 
-export const deferObservableT: Defer<ObservableLike<unknown>> = {
+export const deferObservableT: Defer<ObservableLike> = {
   defer: deferObservable,
 };
 
 export const neverObservable = /*@__PURE__*/ createNever(createObservableT);
-export const neverObservableT: Never<ObservableLike<unknown>> = {
+export const neverObservableT: Never<ObservableLike> = {
   never: neverObservable,
+};
+
+export const createRunnable = /*@__PURE__*/ (() => {
+  class Runnable<T> implements RunnableLike<T> {
+    constructor(private readonly _run: SideEffect1<SinkLike<T>>) {}
+
+    [ReactiveContainerLike_sinkInto](sink: SinkLike<T>) {
+      try {
+        this._run(sink);
+        pipe(sink, dispose());
+      } catch (cause) {
+        pipe(sink, dispose({ cause }));
+      }
+    }
+  }
+
+  return <T>(run: SideEffect1<SinkLike<T>>): RunnableLike<T> =>
+    newInstance(Runnable, run);
+})();
+
+const createRunnableT: CreateReactiveContainer<RunnableLike> = {
+  create: createRunnable,
+};
+
+export const createRunnableUsing: Using<RunnableLike>["using"] =
+  /*@__PURE__*/ createUsing(createRunnableT);
+
+export const createRunnableUsingT: Using<RunnableLike> = {
+  using: createRunnableUsing,
+};
+
+export const neverRunnable = /*@__PURE__*/ createNever(createRunnableT);
+export const neverRunnableT: Never<RunnableLike> = {
+  never: neverRunnable,
 };
