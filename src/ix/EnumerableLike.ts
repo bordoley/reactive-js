@@ -8,6 +8,7 @@ import {
   createThrowIfEmptyOperator,
   interactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
+import { getDelay } from "../__internal__/optionalArgs";
 import {
   properties as delegatingDisposableProperties,
   prototype as delegatingDisposablePrototype,
@@ -95,6 +96,18 @@ import {
   emptyEnumerableT,
 } from "../ix";
 import {
+  EnumerableObservable,
+  EnumerableObservableLike,
+  ObservableLike,
+  ObservableLike_observableType,
+  ReactiveContainerLike_sinkInto,
+  RunnableObservable,
+  RunnableObservableLike,
+} from "../rx";
+import { ObserverLike } from "../scheduling";
+import { getScheduler } from "../scheduling/ObserverLike";
+import { __yield, schedule } from "../scheduling/SchedulerLike";
+import {
   DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
@@ -109,6 +122,7 @@ import {
   isDisposed,
 } from "../util/DisposableLike";
 import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
+import { notifySink } from "../util/SinkLike";
 
 export const enumerate =
   <T>() =>
@@ -874,6 +888,52 @@ export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] = () =>
 export const toEnumerableT: ToEnumerable<EnumerableLike> = {
   toEnumerable,
 };
+
+interface ToObservable {
+  <T>(): Function1<EnumerableLike<T>, EnumerableObservableLike<T>>;
+  <T>(options?: { delay?: number }): Function1<
+    EnumerableLike<T>,
+    RunnableObservableLike<T>
+  >;
+}
+
+export const toObservable: ToObservable = /*@__PURE__*/ (() => {
+  class ToEnumerableObservable<T> implements ObservableLike<T> {
+    constructor(
+      private readonly enumerable: EnumerableLike<T>,
+      private readonly delay: number,
+    ) {}
+
+    get [ObservableLike_observableType]():
+      | typeof EnumerableObservable
+      | typeof RunnableObservable {
+      return this.delay > 0 ? RunnableObservable : EnumerableObservable;
+    }
+
+    [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
+      const enumerator = pipe(this.enumerable, enumerate(), bindTo(observer));
+
+      const options = { delay: this.delay };
+
+      pipe(
+        observer,
+        getScheduler,
+        schedule(() => {
+          while (!isDisposed(observer) && move(enumerator)) {
+            pipe(enumerator, getCurrent, notifySink<T>(observer));
+            __yield(options);
+          }
+        }, options),
+      );
+    }
+  }
+
+  return <T>(options?: { delay?: number }) =>
+    (enumerable: EnumerableLike<T>): EnumerableObservableLike<T> => {
+      const delay = getDelay(options);
+      return newInstance(ToEnumerableObservable, enumerable, delay) as any;
+    };
+})();
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
 

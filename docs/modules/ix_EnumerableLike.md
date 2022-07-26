@@ -42,6 +42,7 @@
 - [throwIfEmpty](ix_EnumerableLike.md#throwifempty)
 - [toEnumerable](ix_EnumerableLike.md#toenumerable)
 - [toIterable](ix_EnumerableLike.md#toiterable)
+- [toObservable](ix_EnumerableLike.md#toobservable)
 - [toReadonlyArray](ix_EnumerableLike.md#toreadonlyarray)
 
 ## Variables
@@ -510,6 +511,41 @@ Converts an EnumerableLike into a javascript Iterable.
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, `Iterable`<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
+
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\>
 
 ___
 
