@@ -59,13 +59,11 @@ import {
   ThrowIfEmpty,
   ToIterable,
   ToReadonlyArray,
-  Using,
   Zip,
   emptyReadonlyArray,
 } from "../containers";
 import {
   every,
-  forEach as forEachReadonlyArray,
   map as mapReadonlyArray,
   toEnumerable as toEnumerableReadonlyArray,
 } from "../containers/ReadonlyArrayLike";
@@ -78,6 +76,7 @@ import {
   Reducer,
   SideEffect1,
   compose,
+  forEach,
   getLength,
   identity,
   isSome,
@@ -113,8 +112,10 @@ import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
 
 export const enumerate =
   <T>() =>
-  (enumerable: EnumerableLike<T>): EnumeratorLike<T> =>
-    enumerable[InteractiveContainerLike_interact](none);
+  (enumerable: EnumerableLike<T>): EnumeratorLike<T> => {
+    debugger;
+    return enumerable[InteractiveContainerLike_interact](none);
+  };
 
 const lift = /*@__PURE__*/ (() => {
   class LiftedEnumerable<T> implements EnumerableLike<T> {
@@ -920,27 +921,6 @@ export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
 
 export const toIterableT: ToIterable<EnumerableLike> = { toIterable };
 
-export const using: Using<EnumerableLike<unknown>>["using"] = <
-  TResource extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<TResource | readonly TResource[]>,
-  enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
-): EnumerableLike<T> =>
-  createEnumerable<T>(() => {
-    const resources = resourceFactory();
-    const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    const enumerator = pipe(enumerableFactory(...resourcesArray), enumerate());
-
-    pipe(resourcesArray, forEachReadonlyArray(addTo(enumerator)));
-
-    return enumerator;
-  });
-
-export const usingT: Using<EnumerableLike<unknown>> = {
-  using,
-};
-
 const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
     for (const enumerator of enumerators) {
@@ -993,7 +973,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
     enumerators: ReadonlyArrayLike<EnumeratorLike<any>>,
   ): EnumeratorLike<readonly any[]> => {
     const instance = createInstance(enumerators);
-    pipe(enumerators, forEachReadonlyArray(addTo(instance)));
+    pipe(enumerators, forEach(addTo(instance)));
     return instance as EnumeratorLike<readonly any[]>;
   };
 

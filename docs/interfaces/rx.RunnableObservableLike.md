@@ -23,6 +23,7 @@
 ### Properties
 
 - [T](rx.RunnableObservableLike.md#t)
+- [TContainerOf](rx.RunnableObservableLike.md#tcontainerof)
 - [TStatefulContainerState](rx.RunnableObservableLike.md#tstatefulcontainerstate)
 - [[ObservableLike\_observableType]](rx.RunnableObservableLike.md#[observablelike_observabletype])
 
@@ -35,6 +36,16 @@
 #### Inherited from
 
 ObservableLike.T
+
+___
+
+### TContainerOf
+
+• `Optional` `Readonly` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
+
+#### Inherited from
+
+[ObservableLike](rx.ObservableLike.md).[TContainerOf](rx.ObservableLike.md#tcontainerof)
 
 ___
 

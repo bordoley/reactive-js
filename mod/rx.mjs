@@ -1,11 +1,12 @@
 /// <reference types="./rx.d.ts" />
 import { properties, prototype } from './__internal__/util/Disposable.mjs';
 import { mix, Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
-import { none, newInstance, getLength, pipe, max } from './functions.mjs';
+import { pipe, newInstance, none, getLength, max, forEach, ignore } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
-import { getDispatcher } from './scheduling/ObserverLike.mjs';
-import { onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';
-import { isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
+import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
+import { schedule } from './scheduling/SchedulerLike.mjs';
+import { onDisposed, addIgnoringChildErrors, addTo } from './util/DisposableLike.mjs';
+import { dispose, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
 const ReactiveContainerLike_sinkInto = Symbol("ReactiveContainerLike_sinkInto");
@@ -20,6 +21,26 @@ const MulticastObservableLike_observerCount = Symbol("MulticastObservableLike_ob
 const MulticastObservableLike_replay = Symbol("MulticastObservableLike_replay");
 /** @ignore */
 const SubjectLike_publish = Symbol("SubjectLike_publish");
+const createObservable = /*@__PURE__*/ (() => {
+    class CreateObservable {
+        constructor(f, type) {
+            this.f = f;
+            this[ObservableLike_observableType] = type;
+        }
+        [ReactiveContainerLike_sinkInto](observer) {
+            try {
+                this.f(observer);
+            }
+            catch (cause) {
+                pipe(observer, dispose({ cause }));
+            }
+        }
+    }
+    return (f, type = 0) => newInstance(CreateObservable, f, type);
+})();
+const createObservableT = {
+    create: createObservable,
+};
 const createSubject = /*@__PURE__*/ (() => {
     const properties$1 = {
         ...properties,
@@ -79,5 +100,39 @@ const createSubject = /*@__PURE__*/ (() => {
         return createInstance(replay);
     };
 })();
+const create = (m) => (onSink) => m.create(onSink);
+const createUsing = (m) => (resourceFactory, sourceFactory) => pipe((sink) => {
+    pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addTo(sink)), resources => sourceFactory(...resources))[ReactiveContainerLike_sinkInto](sink);
+}, create(m));
+const createFromDisposable = (m) => (disposable) => pipe(disposable, addTo, create(m));
+const createNever = (m) => {
+    const neverInstance = pipe(ignore, create(m));
+    return () => neverInstance;
+};
+const createObservableUsing = 
+/*@__PURE__*/ createUsing(createObservableT);
+const createObservableUsingT = {
+    using: createObservableUsing,
+};
+// FIXME: DisposableLike.toObservable would be better.
+const fromDisposableObservable = 
+/*@__PURE__*/ createFromDisposable(createObservableT);
+const deferObservable = (factory, options) => createObservable(observer => {
+    const sideEffect = factory();
+    if (typeof sideEffect === "function") {
+        const callback = () => sideEffect(observer);
+        pipe(observer, getScheduler, schedule(callback, options), addTo(observer));
+    }
+    else {
+        sideEffect[ReactiveContainerLike_sinkInto](observer);
+    }
+});
+const deferObservableT = {
+    defer: deferObservable,
+};
+const neverObservable = /*@__PURE__*/ createNever(createObservableT);
+const neverObservableT = {
+    never: neverObservable,
+};
 
-export { DefaultObservable, EnumerableObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, RunnableObservable, SubjectLike_publish, createSubject };
+export { DefaultObservable, EnumerableObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, RunnableObservable, SubjectLike_publish, createObservable, createObservableUsing, createObservableUsingT, createSubject, deferObservable, deferObservableT, fromDisposableObservable, neverObservable, neverObservableT };

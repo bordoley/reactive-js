@@ -19,7 +19,6 @@
 ### Functions
 
 - [every](containers_ReadonlyArrayLike.md#every)
-- [forEach](containers_ReadonlyArrayLike.md#foreach)
 - [keep](containers_ReadonlyArrayLike.md#keep)
 - [map](containers_ReadonlyArrayLike.md#map)
 - [toEnumerable](containers_ReadonlyArrayLike.md#toenumerable)
@@ -90,28 +89,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], `boolean`\>
-
-___
-
-### forEach
-
-▸ **forEach**<`T`\>(`f`): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 ___
 

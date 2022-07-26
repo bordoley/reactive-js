@@ -150,5 +150,9 @@ const isSome = (option) => option !== none;
  * Returns true if `option` is `none`.
  */
 const isNone = (option) => option === none;
+const forEach = (f) => arr => {
+    arr.forEach(f);
+    return arr;
+};
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, newInstanceWith, none, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, newInstanceWith, none, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };

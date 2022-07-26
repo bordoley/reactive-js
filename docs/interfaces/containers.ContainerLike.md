@@ -10,6 +10,8 @@
 
   ↳ [`IterableLike`](containers.IterableLike.md)
 
+  ↳ [`PromiseLike`](containers.PromiseLike.md)
+
   ↳ [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)
 
   ↳ [`SequenceLike`](containers.SequenceLike.md)

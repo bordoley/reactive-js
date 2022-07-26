@@ -38,6 +38,10 @@ export interface SequenceLike<T = unknown> extends ContainerLike {
   }>;
 }
 
+export interface PromiseLike<T = unknown> extends ContainerLike, Promise<T> {
+  readonly TContainerOf?: PromiseLike<this["T"]>;
+}
+
 export interface StatefulContainerLike extends ContainerLike {
   readonly TStatefulContainerState?: DisposableLike;
 }
@@ -250,6 +254,15 @@ export type ToIterable<
   TOptions = never,
 > = Container<C> & {
   toIterable<T>(options?: TOptions): Function1<ContainerOf<C, T>, Iterable<T>>;
+};
+
+export type ToPromise<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toPromise<T>(
+    options?: TOptions,
+  ): Function1<ContainerOf<C, T>, PromiseLike<T>>;
 };
 
 export type ToReadonlyArray<

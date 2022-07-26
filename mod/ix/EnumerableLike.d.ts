@@ -1,4 +1,4 @@
-import { ConcatAll, Concat, DistinctUntilChanged, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Using, Zip } from "../containers.mjs";
+import { ConcatAll, Concat, DistinctUntilChanged, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
 import { SideEffect1 } from "../functions.mjs";
 import { EnumerableLike, ToEnumerable } from "../ix.mjs";
 import { EnumeratorLike } from "../util.mjs";
@@ -38,7 +38,5 @@ declare const toReadonlyArrayT: ToReadonlyArray<EnumerableLike>;
  */
 declare const toIterable: ToIterable<EnumerableLike>["toIterable"];
 declare const toIterableT: ToIterable<EnumerableLike>;
-declare const using: Using<EnumerableLike<unknown>>["using"];
-declare const usingT: Using<EnumerableLike<unknown>>;
 declare const zipT: Zip<EnumerableLike>;
-export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, toReadonlyArrayT, using, usingT, zipT };
+export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, toReadonlyArrayT, zipT };

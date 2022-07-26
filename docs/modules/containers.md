@@ -8,6 +8,7 @@
 
 - [ContainerLike](../interfaces/containers.ContainerLike.md)
 - [IterableLike](../interfaces/containers.IterableLike.md)
+- [PromiseLike](../interfaces/containers.PromiseLike.md)
 - [ReadonlyArrayLike](../interfaces/containers.ReadonlyArrayLike.md)
 - [SequenceLike](../interfaces/containers.SequenceLike.md)
 - [StatefulContainerLike](../interfaces/containers.StatefulContainerLike.md)
@@ -46,6 +47,7 @@
 - [TakeWhile](containers.md#takewhile)
 - [ThrowIfEmpty](containers.md#throwifempty)
 - [ToIterable](containers.md#toiterable)
+- [ToPromise](containers.md#topromise)
 - [ToReadonlyArray](containers.md#toreadonlyarray)
 - [ToSequence](containers.md#tosequence)
 - [Using](containers.md#using)
@@ -457,6 +459,19 @@ ___
 ### ToIterable
 
 Ƭ **ToIterable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toIterable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
+
+___
+
+### ToPromise
+
+Ƭ **ToPromise**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`PromiseLike`](../interfaces/containers.PromiseLike.md)<`T`\>\>  }
 
 #### Type parameters
 
