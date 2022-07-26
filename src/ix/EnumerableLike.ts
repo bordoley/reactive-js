@@ -62,6 +62,7 @@ import {
   ToReadonlyArray,
   Zip,
   emptyReadonlyArray,
+  Repeat,
 } from "../containers";
 import {
   every,
@@ -86,6 +87,9 @@ import {
   pipe,
   pipeUnsafe,
   strictEquality,
+  raise,
+  isNone,
+  alwaysTrue,
 } from "../functions";
 import {
   EnumerableLike,
@@ -111,6 +115,7 @@ import {
   DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../util";
 import {
@@ -528,6 +533,82 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
 
 export const pairwiseT: Pairwise<EnumerableLike> = {
   pairwise,
+};
+
+export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (() => {
+  const properties = {
+    ...disposableProperties,
+    count: 0,
+    enumerator: none as Option<EnumeratorLike>,
+    shouldRepeat: none as unknown as Predicate<number>,
+    src: none as unknown as EnumerableLike,
+  };
+
+  const prototype = mix(disposablePrototype, {
+    [Object_init]<T>(
+      this: typeof properties,
+      src: EnumerableLike<T>,
+      shouldRepeat: Predicate<number>,
+    ) {
+      init(disposablePrototype, this);
+      this.src = src;
+      this.shouldRepeat = shouldRepeat;
+    },
+    [SourceLike_move](this: typeof properties & EnumeratorLike) {
+      if (isNone(this.enumerator)) {
+        this.enumerator = pipe(this.src, enumerate(), addTo(this));
+      }
+
+      let { enumerator } = this;
+      while (!move(enumerator)) {
+        this.count++;
+
+        try {
+          if (this.shouldRepeat(this.count)) {
+            enumerator = pipe(this.src, enumerate(), addTo(this));
+            this.enumerator = enumerator;
+          } else {
+            break;
+          }
+        } catch (cause) {
+          pipe(this, dispose({ cause }));
+          break;
+        }
+      }
+    },
+    get [EnumeratorLike_current](): unknown {
+      const self = this as unknown as typeof properties;
+      return hasCurrent(this)
+        ? self.enumerator?.[EnumeratorLike_current] ?? raise()
+        : raise();
+    },
+    get [EnumeratorLike_hasCurrent]() {
+      const self = this as unknown as typeof properties;
+      return self.enumerator?.[EnumeratorLike_hasCurrent] ?? false;
+    },
+  });
+
+  const createInstance = createObjectFactory<
+    typeof prototype,
+    typeof properties,
+    EnumerableLike,
+    Predicate<number>
+  >(prototype, properties);
+
+  return <T>(predicate?: Predicate<number> | number) => {
+    const repeatPredicate = isNone(predicate)
+      ? alwaysTrue
+      : typeof predicate === "number"
+      ? (count: number) => count < predicate
+      : (count: number) => predicate(count);
+
+    return (enumerable: EnumerableLike<T>) =>
+      createEnumerable(() => createInstance(enumerable, repeatPredicate));
+  };
+})();
+
+export const repeatT: Repeat<EnumerableLike<unknown>> = {
+  repeat,
 };
 
 export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (() => {
