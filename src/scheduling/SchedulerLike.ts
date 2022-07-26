@@ -102,12 +102,7 @@ const createContinuation: Function2<
     f: (() => {}) as SideEffect,
   };
 
-  return createObjectFactory<
-    ContinuationLike,
-    typeof properties,
-    SchedulerLike,
-    SideEffect
-  >(
+  return pipe(
     mix(disposablePrototype, {
       [Object_properties]: properties,
       [Object_init](
@@ -146,6 +141,12 @@ const createContinuation: Function2<
         }
       },
     }),
+    createObjectFactory<
+      ContinuationLike,
+      typeof properties,
+      SchedulerLike,
+      SideEffect
+    >(),
   );
 })();
 
@@ -336,11 +337,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
       yieldRequested: false,
     };
 
-    return createObjectFactory<
-      QueueSchedulerLike,
-      typeof properties,
-      SchedulerLike
-    >(
+    return pipe(
       mix(disposablePrototype, enumeratorPrototype, disposableRefPrototype, {
         [Object_properties]: properties,
         [Object_init](
@@ -446,6 +443,11 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           }
         },
       }),
+      createObjectFactory<
+        QueueSchedulerLike,
+        typeof properties,
+        SchedulerLike
+      >(),
     );
   })();
 

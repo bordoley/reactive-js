@@ -1,4 +1,4 @@
-import { Factory, none, raise } from "../../functions";
+import { Factory, none, pipe, raise } from "../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -51,15 +51,13 @@ export const prototype = {
   },
 };
 
-export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() => {
-  const properties = {
-    ...disposablePrototype[Object_properties],
-  };
-
-  return createObjectFactory(
+export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() =>
+  pipe(
     mix(disposablePrototype, {
-      [Object_properties]: properties,
-      [Object_init](this: typeof properties) {
+      [Object_properties]: disposablePrototype[Object_properties],
+      [Object_init](
+        this: typeof disposablePrototype[typeof Object_properties],
+      ) {
         init(disposablePrototype, this);
       },
       get [EnumeratorLike_current](): unknown {
@@ -70,5 +68,8 @@ export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() => {
       },
       [SourceLike_move](this: typeof properties) {},
     }),
-  );
-})();
+    createObjectFactory<
+      EnumeratorLike,
+      typeof disposablePrototype[typeof Object_properties]
+    >(),
+  ))();
