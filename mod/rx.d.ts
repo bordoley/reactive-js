@@ -10,6 +10,7 @@ interface ReactiveContainerLike extends StatefulContainerLike {
     [ReactiveContainerLike_sinkInto](sink: StatefulContainerStateOf<ReactiveContainerLike, this["T"]>): void;
 }
 interface RunnableLike<T = unknown> extends ReactiveContainerLike {
+    readonly TContainerOf?: RunnableLike<this["T"]>;
     readonly TStatefulContainerState?: SinkLike<this["T"]>;
     [ReactiveContainerLike_sinkInto](sink: SinkLike<T>): void;
 }
@@ -70,7 +71,7 @@ declare const createSubject: <T>(options?: {
     replay?: number;
 }) => SubjectLike<T>;
 declare const createObservableUsing: Using<ObservableLike>["using"];
-declare const createObservableUsingT: Using<ObservableLike<unknown>>;
+declare const createObservableUsingT: Using<ObservableLike>;
 declare const fromDisposableObservable: <T>(disposable: DisposableLike) => ObservableLike<T>;
 interface DeferObservable {
     <T>(factory: Factory<SideEffect1<ObserverLike<T>>>, options?: {
@@ -79,7 +80,12 @@ interface DeferObservable {
     <T>(factory: Factory<ObservableLike<T>>): ObservableLike<T>;
 }
 declare const deferObservable: DeferObservable;
-declare const deferObservableT: Defer<ObservableLike<unknown>>;
+declare const deferObservableT: Defer<ObservableLike>;
 declare const neverObservable: <T>() => ObservableLike<T>;
-declare const neverObservableT: Never<ObservableLike<unknown>>;
-export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, Never, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createObservable, createObservableUsing, createObservableUsingT, createSubject, deferObservable, deferObservableT, fromDisposableObservable, neverObservable, neverObservableT };
+declare const neverObservableT: Never<ObservableLike>;
+declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
+declare const createRunnableUsing: Using<RunnableLike>["using"];
+declare const createRunnableUsingT: Using<RunnableLike>;
+declare const neverRunnable: <T>() => RunnableLike<T>;
+declare const neverRunnableT: Never<RunnableLike>;
+export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, Never, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, fromDisposableObservable, neverObservable, neverObservableT, neverRunnable, neverRunnableT };

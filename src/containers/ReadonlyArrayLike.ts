@@ -36,9 +36,11 @@ import {
   pipe,
 } from "../functions";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../ix";
+import { RunnableLike, ToRunnable, createRunnable } from "../rx";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
+  SinkLike_notify,
   SourceLike_move,
 } from "../util";
 import { dispose, isDisposed } from "../util/DisposableLike";
@@ -282,6 +284,24 @@ export const toReadonlyArrayT: ToReadonlyArray<
 > = {
   toReadonlyArray,
 };
+
+export const toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
+  /*@__PURE__*/ (() => {
+    return createFromArray<RunnableLike>(
+      <T>(values: readonly T[], startIndex: number, count: number) =>
+        createRunnable<T>(sink => {
+          for (
+            let index = startIndex;
+            !isDisposed(sink) && count !== 0;
+            count > 0 ? index++ : index--, count > 0 ? count-- : count++
+          ) {
+            sink[SinkLike_notify](values[index]);
+          }
+        }),
+    );
+  })();
+
+export const toRunnableT: ToRunnable<ReadonlyArrayLike> = { toRunnable };
 
 export const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
   /*@__PURE__*/ (() => {
