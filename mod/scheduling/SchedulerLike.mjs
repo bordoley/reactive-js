@@ -8,7 +8,7 @@ import { prototype } from '../__internal__/util/Disposable.mjs';
 import { prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
 import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { Object_properties, mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { none, pipe, isSome, isNone, raise, newInstanceWith, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
@@ -33,7 +33,7 @@ const createContinuation = /*@__PURE__*/ (() => {
         scheduler: none,
         f: (() => { }),
     };
-    return pipe(mix(prototype, {
+    return pipe({
         [Object_properties]: properties,
         [Object_init](scheduler, f) {
             init(prototype, this);
@@ -67,7 +67,7 @@ const createContinuation = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }), createObjectFactory());
+    }, mixWith(prototype), createObjectFactory());
 })();
 const __yield = (options) => {
     const delay = getDelay(options);
@@ -178,7 +178,7 @@ const createQueueScheduler =
         taskIDCounter: 0,
         yieldRequested: false,
     };
-    return pipe(mix(prototype, prototype$1, prototype$2, {
+    return pipe({
         [Object_properties]: properties,
         [Object_init](host) {
             init(prototype, this);
@@ -252,7 +252,7 @@ const createQueueScheduler =
                 scheduleOnHost(this);
             }
         },
-    }), createObjectFactory());
+    }, mixWith(prototype, prototype$1, prototype$2), createObjectFactory());
 })();
 const toPausableScheduler = createQueueScheduler;
 const toPriorityScheduler = createQueueScheduler;

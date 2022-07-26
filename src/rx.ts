@@ -4,7 +4,7 @@ import {
   Object_properties,
   createObjectFactory,
   init,
-  mix,
+  mixWith,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -194,7 +194,7 @@ export const createSubject = /*@__PURE__*/ (() => {
   };
 
   const createInstance = pipe(
-    mix(disposablePrototype, {
+    {
       [Object_properties]: properties,
       [Object_init](this: typeof properties, replay: number) {
         init(disposablePrototype, this);
@@ -256,7 +256,8 @@ export const createSubject = /*@__PURE__*/ (() => {
 
         pipe(this, addIgnoringChildErrors(dispatcher));
       },
-    }),
+    },
+    mixWith(disposablePrototype),
     createObjectFactory<SubjectLike<any>, typeof properties, number>(),
   );
 

@@ -20,7 +20,7 @@ import {
   Object_properties,
   createObjectFactory,
   init,
-  mix,
+  mixWith,
 } from "./__internal__/util/Object";
 import { isSome, none, pipe } from "./functions";
 import {
@@ -212,7 +212,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   };
 
   const createInstance = pipe(
-    mix(disposablePrototype, {
+    {
       [Object_properties]: properties,
       [Object_init](this: typeof properties, yieldInterval: number) {
         init(disposablePrototype, this);
@@ -268,7 +268,8 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
           scheduleImmediate(this, continuation);
         }
       },
-    }),
+    },
+    mixWith(disposablePrototype),
     createObjectFactory<SchedulerLike, typeof properties, number>(),
   );
 
@@ -309,7 +310,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
   };
 
   const createInstance = pipe(
-    mix(disposablePrototype, enumeratorPrototype, {
+    {
       [Object_properties]: properties,
       [Object_init](this: typeof properties, maxMicroTaskTicks: number) {
         init(disposablePrototype, this);
@@ -385,7 +386,8 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
           pipe(this, dispose());
         }
       },
-    }),
+    },
+    mixWith(disposablePrototype, enumeratorPrototype),
     createObjectFactory<VirtualTimeSchedulerLike, typeof properties, number>(),
   );
 

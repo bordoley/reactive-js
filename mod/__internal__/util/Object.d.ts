@@ -19,12 +19,6 @@ declare const init: Init;
 declare type Identity<T> = T extends object ? {
     [P in keyof T]: T[P];
 } : T;
-interface Mix {
-    <TProto0 extends object, TProto1 extends object>(p0: TProto0, p1: TProto1): Identity<TProto0 & TProto1>;
-    <TProto0 extends object, TProto1 extends object, TProto2 extends object>(p0: TProto0, p1: TProto1, p2: TProto2): Identity<TProto0 & TProto1 & TProto2>;
-    <TProto0 extends object, TProto1 extends object, TProto2 extends object, TProto3 extends object>(p0: TProto0, p1: TProto1, p2: TProto2, p3: TProto3): Identity<TProto0 & TProto1 & TProto2 & TProto3>;
-}
-declare const mix: Mix;
 interface ObjectFactory {
     <TReturn, TProperties>(): Function1<{
         [Object_properties]: TProperties;
@@ -44,4 +38,10 @@ interface ObjectFactory {
     } & Omit<TReturn, keyof TProperties>, Function3<TA, TB, TC, TReturn>>;
 }
 declare const createObjectFactory: ObjectFactory;
-export { Object_init, Object_properties, createObjectFactory, init, mix };
+interface MixWith {
+    <TProto0 extends object, TProto1 extends object>(p0: TProto0): Function1<TProto1, Identity<TProto0 & TProto1>>;
+    <TProto0 extends object, TProto1 extends object, TProto2 extends object>(p0: TProto0, p1: TProto1): Function1<TProto2, Identity<TProto0 & TProto1 & TProto2>>;
+    <TProto0 extends object, TProto1 extends object, TProto2 extends object, TProto3 extends object>(p0: TProto0, p1: TProto1, p2: TProto2): Function1<TProto3, Identity<TProto0 & TProto1 & TProto2 & TProto3>>;
+}
+declare const mixWith: MixWith;
+export { Object_init, Object_properties, createObjectFactory, init, mixWith };
