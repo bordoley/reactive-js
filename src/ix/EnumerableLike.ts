@@ -8,6 +8,7 @@ import {
   createThrowIfEmptyOperator,
   interactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
+import { MAX_SAFE_INTEGER } from "../__internal__/env";
 import { getDelay } from "../__internal__/optionalArgs";
 import {
   properties as delegatingDisposableProperties,
@@ -44,6 +45,7 @@ import {
   mix,
 } from "../__internal__/util/Object";
 import {
+  Buffer,
   Concat,
   ConcatAll,
   ContainerOperator,
@@ -52,6 +54,7 @@ import {
   Map,
   Pairwise,
   ReadonlyArrayLike,
+  Repeat,
   Scan,
   SkipFirst,
   TakeFirst,
@@ -62,7 +65,6 @@ import {
   ToReadonlyArray,
   Zip,
   emptyReadonlyArray,
-  Repeat,
 } from "../containers";
 import {
   every,
@@ -77,19 +79,20 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  alwaysTrue,
   compose,
   forEach,
   getLength,
   identity,
+  isNone,
   isSome,
+  max,
   newInstance,
   none,
   pipe,
   pipeUnsafe,
-  strictEquality,
   raise,
-  isNone,
-  alwaysTrue,
+  strictEquality,
 } from "../functions";
 import {
   EnumerableLike,
@@ -200,6 +203,73 @@ const delegatingDisposableEnumeratorPrototype = mix(
     },
   },
 );
+
+export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (() => {
+  const properties = {
+    ...disposableProperties,
+    ...enumeratorProperties,
+    delegate: none as unknown as EnumeratorLike,
+    maxBufferSize: 0,
+  };
+
+  const prototype = mix(disposablePrototype, enumeratorPrototype, {
+    [Object_init](
+      this: typeof properties & DisposableLike,
+      delegate: EnumeratorLike,
+      maxBufferSize: number,
+    ) {
+      init(disposablePrototype, this);
+      init(enumeratorPrototype, this);
+      this.delegate = delegate;
+      this.maxBufferSize = maxBufferSize;
+    },
+    [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+      const buffer: unknown[] = [];
+
+      const { delegate, maxBufferSize } = this;
+
+      while (getLength(buffer) < maxBufferSize && move(delegate)) {
+        buffer.push(getCurrent(delegate));
+      }
+
+      const bufferLength = getLength(buffer);
+      if (bufferLength > 0) {
+        this[EnumeratorLike_current] = buffer;
+      }
+
+      if (bufferLength < maxBufferSize) {
+        pipe(this, dispose());
+      }
+    },
+  });
+
+  const createInstance = createObjectFactory<
+    typeof prototype,
+    typeof properties,
+    EnumeratorLike,
+    number
+  >(prototype, properties);
+
+  return <T>(
+    options: {
+      readonly maxBufferSize?: number;
+    } = {},
+  ) => {
+    const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
+
+    const operator = (delegate: EnumeratorLike<T>) =>
+      pipe(
+        createInstance(delegate, maxBufferSize),
+        add(delegate),
+      ) as EnumeratorLike<readonly T[]>;
+
+    return lift(operator);
+  };
+})();
+
+export const bufferT: Buffer<EnumerableLike<unknown>> = {
+  buffer,
+};
 
 export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
   /*@__PURE__*/ (() => {

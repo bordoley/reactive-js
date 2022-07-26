@@ -1,6 +1,15 @@
 import { Describe } from "../__internal__/testing.mjs";
 import { Function1, Equality, Predicate, Reducer, Factory } from "../functions.mjs";
-import { ContainerLike, Container, ContainerOperator, ContainerOf, FromArrayOptions, ReadonlyArrayLike } from "../containers.mjs";
+import { ContainerLike, Container, ContainerOperator, FromArrayOptions, ContainerOf, ReadonlyArrayLike } from "../containers.mjs";
+declare const bufferTests: <C extends ContainerLike>(m: Container<C> & {
+    buffer: <T>(options?: {
+        readonly maxBufferSize?: number | undefined;
+    } | undefined) => ContainerOperator<C, T, readonly T[]>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
 declare const concatAllTests: <C extends ContainerLike>(m: Container<C> & {
     concatAll: <T>(options?: Partial<Record<string, never>> | undefined) => ContainerOperator<C, ContainerOf<C, T>, T>;
 } & {
@@ -30,6 +39,19 @@ declare const mapTests: <C extends ContainerLike>(m: Container<C> & {
     fromArray<T>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T[], ContainerOf<C, T>>;
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
+}) => Describe;
+declare const repeatTests: <C extends ContainerLike>(m: Container<C> & {
+    repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
+    repeat<T_1>(count: number): ContainerOperator<C, T_1, T_1>;
+    repeat<T_2>(): ContainerOperator<C, T_2, T_2>;
+} & {
+    fromArray<T_3>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_3[], ContainerOf<C, T_3>>;
+} & {
+    takeFirst<T_4>(options?: {
+        readonly count?: number | undefined;
+    } | undefined): ContainerOperator<C, T_4, T_4>;
+} & {
+    toReadonlyArray<T_5>(options?: undefined): Function1<ContainerOf<C, T_5>, ReadonlyArrayLike<T_5>>;
 }) => Describe;
 declare const scanTests: <C extends ContainerLike>(m: Container<C> & {
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<C, T, TAcc>;
@@ -66,11 +88,18 @@ declare const takeLastTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const takeWhileTests: <C extends ContainerLike>(m: Container<C> & {
-    takeWhile<T>(predicate: Predicate<T>, options?: {
-        readonly inclusive?: boolean | undefined;
-    } | undefined): ContainerOperator<C, T, T>;
+    fromArray<T>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T[], ContainerOf<C, T>>;
 } & {
-    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+    takeWhile<T_1>(predicate: Predicate<T_1>, options?: {
+        readonly inclusive?: boolean | undefined;
+    } | undefined): ContainerOperator<C, T_1, T_1>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
+declare const throwIfEmptyTests: <C extends ContainerLike>(m: Container<C> & {
+    fromArray<T>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T[], ContainerOf<C, T>>;
+} & {
+    throwIfEmpty<T_1>(factory: Factory<unknown>): ContainerOperator<C, T_1, T_1>;
 } & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
@@ -140,4 +169,4 @@ declare const zipTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
-export { concatAllTests, distinctUntilChangedTests, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests };
+export { bufferTests, concatAllTests, distinctUntilChangedTests, keepTests, mapTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };

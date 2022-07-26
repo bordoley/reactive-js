@@ -1,8 +1,8 @@
 /// <reference types="./SequenceLike.test.d.ts" />
 import { describe as createDescribe } from '../__internal__/testing.mjs';
 import { toSequence } from '../containers/ReadonlyArrayLike.mjs';
-import { concatAllT, toReadonlyArrayT, distinctUntilChangedT, keepT, mapT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, zipT } from '../containers/SequenceLike.mjs';
-import { concatAllTests, distinctUntilChangedTests, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests } from './operators.test.mjs';
+import { concatAllT, toReadonlyArrayT, distinctUntilChangedT, keepT, mapT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, zipT } from '../containers/SequenceLike.mjs';
+import { concatAllTests, distinctUntilChangedTests, keepTests, mapTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests } from './operators.test.mjs';
 
 const SequenceLikeTests = createDescribe("SequenceLike", concatAllTests({
     fromArray: toSequence,
@@ -19,6 +19,11 @@ const SequenceLikeTests = createDescribe("SequenceLike", concatAllTests({
 }), mapTests({
     fromArray: toSequence,
     ...mapT,
+    ...toReadonlyArrayT,
+}), repeatTests({
+    fromArray: toSequence,
+    ...repeatT,
+    ...takeFirstT,
     ...toReadonlyArrayT,
 }), scanTests({
     fromArray: toSequence,
