@@ -13,7 +13,7 @@ import {
   Object_properties,
   createObjectFactory,
   init,
-  mix,
+  mixWith,
 } from "./Object";
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");
@@ -53,7 +53,7 @@ export const prototype = {
 
 export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() =>
   pipe(
-    mix(disposablePrototype, {
+    {
       [Object_properties]: disposablePrototype[Object_properties],
       [Object_init](
         this: typeof disposablePrototype[typeof Object_properties],
@@ -67,7 +67,8 @@ export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() =>
         return false;
       },
       [SourceLike_move](this: typeof properties) {},
-    }),
+    },
+    mixWith(disposablePrototype),
     createObjectFactory<
       EnumeratorLike,
       typeof disposablePrototype[typeof Object_properties]

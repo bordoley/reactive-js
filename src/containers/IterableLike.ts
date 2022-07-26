@@ -8,7 +8,7 @@ import {
   Object_properties,
   createObjectFactory,
   init,
-  mix,
+  mixWith,
 } from "../__internal__/util/Object";
 import { IterableLike, ToIterable } from "../containers";
 import { identity, none, pipe } from "../functions";
@@ -29,7 +29,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
     };
 
     const createInstance = pipe(
-      mix(disposablePrototype, enumeratorPrototype, {
+      {
         [Object_properties]: properties,
         [Object_init](this: typeof properties, iterator: Iterator<unknown>) {
           init(disposablePrototype, this);
@@ -46,7 +46,8 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
             }
           }
         },
-      }),
+      },
+      mixWith(disposablePrototype, enumeratorPrototype),
       createObjectFactory<
         EnumeratorLike<any>,
         typeof properties,
