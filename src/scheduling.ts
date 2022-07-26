@@ -18,12 +18,13 @@ import {
 import {
   Object_init,
   Object_properties,
+  PropertyTypeOf,
+  anyProperty,
   createObjectFactory,
   init,
   mixWith,
-  mixWithProps,
 } from "./__internal__/util/Object";
-import { isSome, none, pipe } from "./functions";
+import { isSome, pipe } from "./functions";
 import {
   ContinuationLike,
   ContinuationLike_run,
@@ -144,7 +145,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     supportsIsInputPending && (navigator as any).scheduling.isInputPending();
 
   const scheduleImmediateWithSetImmediate = (
-    scheduler: typeof properties & SchedulerLike,
+    scheduler: TProperties & SchedulerLike,
     continuation: ContinuationLike,
   ) => {
     const disposable = pipe(
@@ -161,7 +162,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   };
 
   const scheduleDelayed = (
-    scheduler: typeof properties & SchedulerLike,
+    scheduler: TProperties & SchedulerLike,
     continuation: ContinuationLike,
     delay: number,
   ) => {
@@ -181,7 +182,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   };
 
   const scheduleImmediate = (
-    scheduler: typeof properties & SchedulerLike,
+    scheduler: TProperties & SchedulerLike,
     continuation: ContinuationLike,
   ) => {
     if (supportsSetImmediate) {
@@ -192,7 +193,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   };
 
   const runContinuation = (
-    scheduler: typeof properties & { [SchedulerLike_now]: number },
+    scheduler: TProperties & { [SchedulerLike_now]: number },
     continuation: ContinuationLike,
     immmediateOrTimerDisposable: DisposableLike,
   ) => {
@@ -204,20 +205,22 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     scheduler[SchedulerLike_inContinuation] = false;
   };
 
-  const properties = pipe(
-    {
-      [SchedulerLike_inContinuation]: false as boolean,
-      startTime: 0,
-      yieldInterval: 0,
-      yieldRequested: false,
-    },
-    mixWithProps(disposablePrototype),
-  );
+  type TProperties = PropertyTypeOf<[typeof disposablePrototype]> & {
+    [SchedulerLike_inContinuation]: boolean;
+    startTime: number;
+    yieldInterval: number;
+    yieldRequested: boolean;
+  };
 
   const createInstance = pipe(
     {
-      [Object_properties]: properties,
-      [Object_init](this: typeof properties, yieldInterval: number) {
+      [Object_properties]: {
+        [SchedulerLike_inContinuation]: false,
+        startTime: 0,
+        yieldInterval: 0,
+        yieldRequested: false,
+      },
+      [Object_init](this: TProperties, yieldInterval: number) {
         init(disposablePrototype, this);
         this.yieldInterval = yieldInterval;
       },
@@ -234,7 +237,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
       },
 
       get [SchedulerLike_shouldYield](): boolean {
-        const self = this as unknown as typeof properties & SchedulerLike;
+        const self = this as unknown as TProperties & SchedulerLike;
 
         const inContinuation = isInContinuation(self);
         const { yieldRequested } = self;
@@ -251,12 +254,12 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
         );
       },
 
-      [SchedulerLike_requestYield](this: typeof properties): void {
+      [SchedulerLike_requestYield](this: TProperties): void {
         this.yieldRequested = true;
       },
 
       [SchedulerLike_schedule](
-        this: typeof properties & SchedulerLike,
+        this: TProperties & SchedulerLike,
         continuation: ContinuationLike,
         options?: { readonly delay?: number },
       ) {
@@ -273,7 +276,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
       },
     },
     mixWith(disposablePrototype),
-    createObjectFactory<SchedulerLike, typeof properties, number>(),
+    createObjectFactory<SchedulerLike, TProperties, number>(),
   );
 
   return (
@@ -300,29 +303,36 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     return diff;
   };
 
-  const properties = pipe(
-    {
-      [SchedulerLike_inContinuation]: false,
-      [SchedulerLike_now]: 0 as number,
-      maxMicroTaskTicks: MAX_SAFE_INTEGER,
-      microTaskTicks: 0,
-      taskIDCount: 0,
-      yieldRequested: false,
-      taskQueue: none as unknown as QueueLike<VirtualTask>,
-    },
-    mixWithProps(disposablePrototype, enumeratorPrototype),
-  );
+  type TProperties = PropertyTypeOf<
+    [typeof disposablePrototype & typeof enumeratorPrototype]
+  > & {
+    [SchedulerLike_inContinuation]: boolean;
+    [SchedulerLike_now]: number;
+    maxMicroTaskTicks: number;
+    microTaskTicks: number;
+    taskIDCount: number;
+    yieldRequested: boolean;
+    taskQueue: QueueLike<VirtualTask>;
+  };
 
   const createInstance = pipe(
     {
-      [Object_properties]: properties,
-      [Object_init](this: typeof properties, maxMicroTaskTicks: number) {
+      [Object_properties]: {
+        [SchedulerLike_inContinuation]: false,
+        [SchedulerLike_now]: 0,
+        maxMicroTaskTicks: MAX_SAFE_INTEGER,
+        microTaskTicks: 0,
+        taskIDCount: 0,
+        yieldRequested: false,
+        taskQueue: anyProperty,
+      },
+      [Object_init](this: TProperties, maxMicroTaskTicks: number) {
         init(disposablePrototype, this);
         this.maxMicroTaskTicks = maxMicroTaskTicks;
         this.taskQueue = createPriorityQueue(comparator);
       },
       get [SchedulerLike_shouldYield]() {
-        const self = this as unknown as typeof properties;
+        const self = this as unknown as TProperties;
 
         const {
           yieldRequested,
@@ -339,9 +349,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
           (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks)
         );
       },
-      [ContinuationLike_run](
-        this: typeof properties & EnumeratorLike<VirtualTask>,
-      ) {
+      [ContinuationLike_run](this: TProperties & EnumeratorLike<VirtualTask>) {
         while (move(this)) {
           const task = getCurrent(this);
           const { dueTime, continuation } = task;
@@ -353,11 +361,11 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
           this[SchedulerLike_inContinuation] = false;
         }
       },
-      [SchedulerLike_requestYield](this: typeof properties): void {
+      [SchedulerLike_requestYield](this: TProperties): void {
         this.yieldRequested = true;
       },
       [SchedulerLike_schedule](
-        this: typeof properties & DisposableLike,
+        this: TProperties & DisposableLike,
         continuation: ContinuationLike,
         options?: { readonly delay?: number },
       ) {
@@ -374,7 +382,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         }
       },
       [SourceLike_move](
-        this: typeof properties & MutableEnumeratorLike<VirtualTask>,
+        this: TProperties & MutableEnumeratorLike<VirtualTask>,
       ): void {
         const taskQueue = this.taskQueue;
 
@@ -392,7 +400,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
       },
     },
     mixWith(disposablePrototype, enumeratorPrototype),
-    createObjectFactory<VirtualTimeSchedulerLike, typeof properties, number>(),
+    createObjectFactory<VirtualTimeSchedulerLike, TProperties, number>(),
   );
 
   return (

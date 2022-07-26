@@ -8,7 +8,7 @@ import { prototype } from '../__internal__/util/Disposable.mjs';
 import { prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
 import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { mixWithProps, Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { none, pipe, isSome, isNone, raise, newInstanceWith, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
@@ -28,12 +28,11 @@ class YieldError {
 }
 let currentScheduler = none;
 const createContinuation = /*@__PURE__*/ (() => {
-    const properties = pipe({
-        scheduler: none,
-        f: (() => { }),
-    }, mixWithProps(prototype));
     return pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            scheduler: anyProperty,
+            f: anyProperty,
+        },
         [Object_init](scheduler, f) {
             init(prototype, this);
             this.scheduler = scheduler;
@@ -163,19 +162,18 @@ const createQueueScheduler =
         self.hostContinuation = continuation;
         self[MutableRefLike_current] = pipe(self.host, schedule(continuation, { delay }));
     };
-    const properties = pipe({
-        [SchedulerLike_inContinuation]: false,
-        delayed: none,
-        dueTime: 0,
-        host: none,
-        hostContinuation: none,
-        isPaused: false,
-        queue: none,
-        taskIDCounter: 0,
-        yieldRequested: false,
-    }, mixWithProps(prototype, prototype$1, prototype$2));
     return pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            [SchedulerLike_inContinuation]: false,
+            delayed: anyProperty,
+            dueTime: 0,
+            host: anyProperty,
+            hostContinuation: anyProperty,
+            isPaused: false,
+            queue: anyProperty,
+            taskIDCounter: 0,
+            yieldRequested: false,
+        },
         [Object_init](host) {
             init(prototype, this);
             init(prototype$1, this);

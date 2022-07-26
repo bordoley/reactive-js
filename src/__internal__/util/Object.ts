@@ -1,7 +1,22 @@
-import { Factory, Function1, Function2, Function3 } from "../../functions";
+import {
+  Factory,
+  Function1,
+  Function2,
+  Function3,
+  none,
+} from "../../functions";
 
 export const Object_init = Symbol("Object_init");
 export const Object_properties = Symbol("Object_properties");
+
+export type PropertyTypeOf<T extends any[]> = T extends [infer F, ...infer R]
+  ? (F extends {
+      [Object_properties]: unknown;
+    }
+      ? F[typeof Object_properties]
+      : never) &
+      PropertyTypeOf<R>
+  : unknown;
 
 interface Init {
   <TProperties>(
@@ -111,13 +126,27 @@ export const createObjectFactory: ObjectFactory =
 interface MixWith {
   <TProto0 extends object, TProto1 extends object>(p0: TProto0): Function1<
     TProto1,
-    Identity<TProto0 & TProto1>
+    Identity<
+      TProto0 &
+        TProto1 & {
+          [Object_properties]: PropertyTypeOf<[TProto0, TProto1]>;
+        }
+    >
   >;
 
   <TProto0 extends object, TProto1 extends object, TProto2 extends object>(
     p0: TProto0,
     p1: TProto1,
-  ): Function1<TProto2, Identity<TProto0 & TProto1 & TProto2>>;
+  ): Function1<
+    TProto2,
+    Identity<
+      TProto0 &
+        TProto1 &
+        TProto2 & {
+          [Object_properties]: PropertyTypeOf<[TProto0, TProto1, TProto2]>;
+        }
+    >
+  >;
 
   <
     TProto0 extends object,
@@ -128,47 +157,47 @@ interface MixWith {
     p0: TProto0,
     p1: TProto1,
     p2: TProto2,
-  ): Function1<TProto3, Identity<TProto0 & TProto1 & TProto2 & TProto3>>;
+  ): Function1<
+    TProto3,
+    Identity<
+      TProto0 &
+        TProto1 &
+        TProto2 &
+        TProto3 & {
+          [Object_properties]: PropertyTypeOf<
+            [TProto0, TProto1, TProto2, TProto3]
+          >;
+        }
+    >
+  >;
 }
 export const mixWith: MixWith =
-  (...prototypes: readonly object[]) =>
-  (lastProto: object) => {
+  (
+    ...prototypes: readonly {
+      [Object_properties]: object;
+    }[]
+  ) =>
+  (lastProto: { [Object_properties]: object }) => {
     const propertyDescriptors = prototypes
       .map(prototype => Object.getOwnPropertyDescriptors(prototype))
+      .reduce((acc, next) => ({ ...acc, ...next }), {});
+
+    const properties = [...prototypes, lastProto]
+      .map(prototype => prototype[Object_properties])
       .reduce((acc, next) => ({ ...acc, ...next }), {});
 
     const descriptor = {
       ...propertyDescriptors,
       ...Object.getOwnPropertyDescriptors(lastProto),
+      [Object_properties]: {
+        configurable: true,
+        enumerable: true,
+        value: properties,
+        writable: true,
+      },
     };
 
     return Object.create(Object.prototype, descriptor);
   };
 
-interface MixWithProps {
-  <TProps0, TProps1>(p0: { [Object_properties]: TProps0 }): Function1<
-    TProps1,
-    Identity<TProps0 & TProps1>
-  >;
-
-  <TProps0, TProps1, TProps2>(
-    p0: { [Object_properties]: TProps0 },
-    p1: { [Object_properties]: TProps1 },
-  ): Function1<TProps2, Identity<TProps0 & TProps1 & TProps2>>;
-
-  <TProps0, TProps1, TProps2, TProps3>(
-    p0: { [Object_properties]: TProps0 },
-    p1: { [Object_properties]: TProps1 },
-    p2: { [Object_properties]: TProps2 },
-  ): Function1<TProps3, Identity<TProps0 & TProps1 & TProps2 & TProps3>>;
-}
-
-export const mixWithProps: MixWithProps =
-  (...prototypes: readonly { [Object_properties]: any }[]) =>
-  (lastProps: any) => {
-    const prototypeProps = prototypes
-      .map(prototype => prototype[Object_properties])
-      .reduce((acc, next) => ({ ...acc, ...next }), {});
-
-    return { ...prototypeProps, ...lastProps };
-  };
+export const anyProperty: any = none;

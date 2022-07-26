@@ -11,6 +11,8 @@ import { prototype as disposablePrototype } from "../util/Disposable";
 import {
   Object_init,
   Object_properties,
+  PropertyTypeOf,
+  anyProperty,
   createObjectFactory,
   init,
   mixWith,
@@ -23,30 +25,33 @@ export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
 }
 
-const properties = {
-  [Enumerator_private_current]: none as unknown,
-  [Enumerator_private_hasCurrent]: false,
+type TProperties = {
+  [Enumerator_private_current]: unknown;
+  [Enumerator_private_hasCurrent]: boolean;
 };
 
 export const prototype = {
-  [Object_properties]: properties,
-  [Object_init](this: typeof properties) {
+  [Object_properties]: {
+    [Enumerator_private_current]: anyProperty,
+    [Enumerator_private_hasCurrent]: false,
+  },
+  [Object_init](this: TProperties) {
     this[Enumerator_private_current] = none;
     this[Enumerator_private_hasCurrent] = false;
   },
   get [EnumeratorLike_current](): unknown {
-    const self = this as unknown as typeof properties & EnumeratorLike;
+    const self = this as unknown as TProperties & EnumeratorLike;
     return hasCurrent(self) ? self[Enumerator_private_current] : raise();
   },
   set [EnumeratorLike_current](v: unknown) {
-    const self = this as unknown as typeof properties & EnumeratorLike;
+    const self = this as unknown as TProperties & EnumeratorLike;
     if (!isDisposed(self)) {
       self[Enumerator_private_current] = v;
       self[Enumerator_private_hasCurrent] = true;
     }
   },
   get [EnumeratorLike_hasCurrent](): boolean {
-    const self = this as unknown as typeof properties & EnumeratorLike;
+    const self = this as unknown as TProperties & EnumeratorLike;
     return !isDisposed(self) && self[Enumerator_private_hasCurrent];
   },
 };
@@ -54,10 +59,8 @@ export const prototype = {
 export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() =>
   pipe(
     {
-      [Object_properties]: disposablePrototype[Object_properties],
-      [Object_init](
-        this: typeof disposablePrototype[typeof Object_properties],
-      ) {
+      [Object_properties]: {},
+      [Object_init](this: PropertyTypeOf<[typeof disposablePrototype]>) {
         init(disposablePrototype, this);
       },
       get [EnumeratorLike_current](): unknown {
@@ -66,11 +69,11 @@ export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() =>
       get [EnumeratorLike_hasCurrent](): boolean {
         return false;
       },
-      [SourceLike_move](this: typeof properties) {},
+      [SourceLike_move]() {},
     },
     mixWith(disposablePrototype),
     createObjectFactory<
       EnumeratorLike,
-      typeof disposablePrototype[typeof Object_properties]
+      PropertyTypeOf<[typeof disposablePrototype]>
     >(),
   ))();

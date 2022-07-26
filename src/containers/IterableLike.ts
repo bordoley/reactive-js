@@ -6,13 +6,14 @@ import {
 import {
   Object_init,
   Object_properties,
+  PropertyTypeOf,
+  anyProperty,
   createObjectFactory,
   init,
   mixWith,
-  mixWithProps,
 } from "../__internal__/util/Object";
 import { IterableLike, ToIterable } from "../containers";
-import { identity, none, pipe } from "../functions";
+import { identity, pipe } from "../functions";
 import { ToEnumerable, createEnumerable } from "../ix";
 import {
   EnumeratorLike,
@@ -23,19 +24,20 @@ import { dispose, isDisposed } from "../util/DisposableLike";
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (() => {
-    const properties = pipe(
-      { iterator: none as unknown as Iterator<unknown> },
-      mixWithProps(disposablePrototype, enumeratorPrototype),
-    );
+    type TProperties = PropertyTypeOf<
+      [typeof disposablePrototype, typeof enumeratorPrototype]
+    > & {
+      iterator: Iterator<unknown>;
+    };
 
     const createInstance = pipe(
       {
-        [Object_properties]: properties,
-        [Object_init](this: typeof properties, iterator: Iterator<unknown>) {
+        [Object_properties]: { iterator: anyProperty },
+        [Object_init](this: TProperties, iterator: Iterator<unknown>) {
           init(disposablePrototype, this);
           this.iterator = iterator;
         },
-        [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
           if (!isDisposed(this)) {
             const next = this.iterator.next();
 
@@ -50,7 +52,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
       mixWith(disposablePrototype, enumeratorPrototype),
       createObjectFactory<
         EnumeratorLike<any>,
-        typeof properties,
+        TProperties,
         Iterator<unknown>
       >(),
     );
