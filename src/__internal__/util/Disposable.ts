@@ -19,16 +19,12 @@ import {
   getError,
   isDisposed,
 } from "./DisposableLikeInternal";
-import { Object_init, createObjectFactory } from "./Object";
+import { Object_init, Object_properties, createObjectFactory } from "./Object";
 
 const Disposable_private_disposables = Symbol("Disposable_private_disposables");
 
-export const properties: {
-  [DisposableLike_error]: DisposableLike[typeof DisposableLike_error];
-  [DisposableLike_isDisposed]: DisposableLike[typeof DisposableLike_isDisposed];
-  [Disposable_private_disposables]: Set<DisposableOrTeardown>;
-} = {
-  [DisposableLike_error]: none,
+const properties = {
+  [DisposableLike_error]: none as Option<Error>,
   [DisposableLike_isDisposed]: false,
   [Disposable_private_disposables]:
     none as unknown as Set<DisposableOrTeardown>,
@@ -50,6 +46,10 @@ const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
 };
 
 export const prototype = {
+  [Object_properties]: properties,
+  [Object_init](this: typeof properties) {
+    this[Disposable_private_disposables] = new Set();
+  },
   [DisposableLike_dispose](
     this: typeof properties & DisposableLike,
     error?: Error,
@@ -96,13 +96,10 @@ export const prototype = {
       }
     }
   },
-  [Object_init](this: typeof properties) {
-    this[Disposable_private_disposables] = new Set();
-  },
 };
 
 export const createDisposable: Factory<DisposableLike> =
-  /*@__PURE__*/ createObjectFactory(properties, prototype);
+  /*@__PURE__*/ createObjectFactory(prototype);
 
 export const disposed: DisposableLike = {
   [DisposableLike_error]: none,

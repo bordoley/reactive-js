@@ -1,9 +1,7 @@
-import {
-  properties as disposableProperties,
-  prototype as disposablePrototype,
-} from "./__internal__/util/Disposable";
+import { prototype as disposablePrototype } from "./__internal__/util/Disposable";
 import {
   Object_init,
+  Object_properties,
   createObjectFactory,
   init,
   mix,
@@ -188,24 +186,20 @@ const createObservableT: CreateReactiveContainer<ObservableLike> = {
 };
 
 export const createSubject = /*@__PURE__*/ (() => {
-  const properties: typeof disposableProperties & {
-    [MulticastObservableLike_replay]: number;
-    observers: Set<ObserverLike>;
-    replayed: unknown[];
-  } = {
-    ...disposableProperties,
+  const properties = {
+    ...disposablePrototype[Object_properties],
     [MulticastObservableLike_replay]: 0,
     observers: none as unknown as Set<ObserverLike>,
     replayed: none as unknown as Array<unknown>,
   };
 
-  const createInstance = /*@__PURE__*/ createObjectFactory<
+  const createInstance = createObjectFactory<
     SubjectLike<any>,
     typeof properties,
     number
   >(
-    properties,
     mix(disposablePrototype, {
+      [Object_properties]: properties,
       [Object_init](this: typeof properties, replay: number) {
         init(disposablePrototype, this);
         this[MulticastObservableLike_replay] = replay;

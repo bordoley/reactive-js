@@ -1,14 +1,11 @@
-import {
-  properties as disposableProperties,
-  prototype as disposablePrototype,
-} from "../__internal__/util/Disposable";
+import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
 import {
   MutableEnumeratorLike,
-  properties as enumeratorProperties,
   prototype as enumeratorPrototype,
 } from "../__internal__/util/Enumerator";
 import {
   Object_init,
+  Object_properties,
   createObjectFactory,
   init,
   mix,
@@ -416,8 +413,8 @@ export const takeWhileT: TakeWhile<SequenceLike> = { takeWhile };
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   /*@__PURE__*/ (() => {
     const properties = {
-      ...disposableProperties,
-      ...enumeratorProperties,
+      ...disposablePrototype[Object_properties],
+      ...enumeratorPrototype[Object_properties],
       seq: (() => none) as SequenceLike,
     };
 
@@ -426,8 +423,8 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       typeof properties,
       SequenceLike
     >(
-      properties,
       mix(disposablePrototype, enumeratorPrototype, {
+        [Object_properties]: properties,
         [Object_init](this: typeof properties, seq: SequenceLike) {
           init(disposablePrototype, this);
           init(enumeratorPrototype, this);

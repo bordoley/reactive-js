@@ -2,13 +2,14 @@
 import { none, raise } from '../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../util.mjs';
 import { move as move$1 } from '../../util/EnumeratorLike.mjs';
-import { Object_init } from './Object.mjs';
+import { Object_properties, Object_init } from './Object.mjs';
 
 const DelegatingEnumerator_private_delegate = Symbol("DelegatingEnumerator_private_delegate");
 const properties = {
     [DelegatingEnumerator_private_delegate]: none,
 };
 const prototype = {
+    [Object_properties]: properties,
     [Object_init](delegate) {
         this[DelegatingEnumerator_private_delegate] = delegate;
     },
@@ -28,4 +29,4 @@ const move = (enumerator) => {
     return (delegate && move$1(delegate)) || false;
 };
 
-export { move, properties, prototype };
+export { move, prototype };

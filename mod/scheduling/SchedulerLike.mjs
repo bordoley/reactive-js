@@ -4,11 +4,11 @@ import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from '../__internal__/scheduling/queue.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from '../__internal__/schedulingInternal.mjs';
 export { getCurrentTime, isInContinuation } from '../__internal__/schedulingInternal.mjs';
-import { properties, prototype } from '../__internal__/util/Disposable.mjs';
-import { properties as properties$2, prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
-import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
+import { prototype } from '../__internal__/util/Disposable.mjs';
+import { prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
+import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { createObjectFactory, mix, Object_init, init } from '../__internal__/util/Object.mjs';
+import { Object_properties, createObjectFactory, mix, Object_init, init } from '../__internal__/util/Object.mjs';
 import { none, isSome, pipe, isNone, raise, newInstanceWith, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
@@ -28,12 +28,18 @@ class YieldError {
 }
 let currentScheduler = none;
 const createContinuation = /*@__PURE__*/ (() => {
-    const properties$1 = {
-        ...properties,
+    const properties = {
+        ...prototype[Object_properties],
         scheduler: none,
-        f: () => { },
+        f: (() => { }),
     };
-    return createObjectFactory(properties$1, mix(prototype, {
+    return createObjectFactory(mix(prototype, {
+        [Object_properties]: properties,
+        [Object_init](scheduler, f) {
+            init(prototype, this);
+            this.scheduler = scheduler;
+            this.f = f;
+        },
         [ContinuationLike_run]() {
             if (!isDisposed(this)) {
                 let error = none;
@@ -60,11 +66,6 @@ const createContinuation = /*@__PURE__*/ (() => {
                     pipe(this, dispose(error));
                 }
             }
-        },
-        [Object_init](scheduler, f) {
-            init(prototype, this);
-            this.scheduler = scheduler;
-            this.f = f;
         },
     }));
 })();
@@ -163,10 +164,10 @@ const createQueueScheduler =
         self.hostContinuation = continuation;
         self[MutableRefLike_current] = pipe(self.host, schedule(continuation, { delay }));
     };
-    const properties$3 = {
-        ...properties,
-        ...properties$1,
-        ...properties$2,
+    const properties = {
+        ...prototype[Object_properties],
+        ...prototype$1[Object_properties],
+        ...prototype$2[Object_properties],
         [SchedulerLike_inContinuation]: false,
         delayed: none,
         dueTime: 0,
@@ -177,7 +178,8 @@ const createQueueScheduler =
         taskIDCounter: 0,
         yieldRequested: false,
     };
-    return createObjectFactory(properties$3, mix(prototype, prototype$1, prototype$2, {
+    return createObjectFactory(mix(prototype, prototype$1, prototype$2, {
+        [Object_properties]: properties,
         [Object_init](host) {
             init(prototype, this);
             init(prototype$1, this);

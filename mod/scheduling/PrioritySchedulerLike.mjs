@@ -1,7 +1,7 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { properties, prototype } from '../__internal__/util/Disposable.mjs';
-import { createObjectFactory, mix, Object_init, init } from '../__internal__/util/Object.mjs';
+import { prototype } from '../__internal__/util/Disposable.mjs';
+import { Object_properties, createObjectFactory, mix, Object_init, init } from '../__internal__/util/Object.mjs';
 import { none, pipe } from '../functions.mjs';
 import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
@@ -16,12 +16,13 @@ import { isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
  * @param priority The priority to schedule work at.
  */
 const toScheduler = /*@__PURE__*/ (() => {
-    const properties$1 = {
-        ...properties,
+    const properties = {
+        ...prototype[Object_properties],
         priorityScheduler: none,
         priority: 0,
     };
-    const createInstance = createObjectFactory(properties$1, mix(prototype, {
+    const createInstance = createObjectFactory(mix(prototype, {
+        [Object_properties]: properties,
         [Object_init](scheduler, priority) {
             init(prototype, this);
             this.priorityScheduler = scheduler;
