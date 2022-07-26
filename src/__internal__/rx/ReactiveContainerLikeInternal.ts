@@ -1,4 +1,5 @@
-import {
+/*import {
+  Container,
   ContainerOf,
   ContainerOperator,
   Empty,
@@ -7,7 +8,6 @@ import {
   StatefulContainerLike,
   StatefulContainerStateOf,
 } from "../../containers";
-import { forEach } from "../../containers/ReadonlyArrayLike";
 import {
   Equality,
   Factory,
@@ -17,6 +17,7 @@ import {
   Reducer,
   SideEffect1,
   compose,
+  forEach,
   getLength,
   identity,
   ignore,
@@ -28,7 +29,7 @@ import {
   none,
   pipe,
 } from "../../functions";
-import { CreateReactiveContainer, ReactiveContainerLike } from "../../rx";
+import { ReactiveContainerLike } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
 import { DisposableLike, DisposableOrTeardown, SinkLike } from "../../util";
 import {
@@ -50,6 +51,13 @@ import {
   TReactive,
   lift,
 } from "../containers/StatefulContainerLikeInternal";
+
+export type CreateReactiveContainer<C extends ReactiveContainerLike> =
+  Container<C> & {
+    create<T>(
+      onSink: (sink: StatefulContainerStateOf<C, T>) => void,
+    ): ContainerOf<C, T>;
+  };
 
 export type DelegatingStatefulContainerStateOf<
   C extends StatefulContainerLike,
@@ -88,11 +96,6 @@ export type Lift<C extends ReactiveContainerLike> = StatefulContainerLift<
     operator: StatefulContainerOperator<C, TA, TB, TReactive>,
   ): ContainerOperator<C, TA, TB>;
 };
-
-const create =
-  <C extends ReactiveContainerLike, T>(m: CreateReactiveContainer<C>) =>
-  (onSink: (sink: StatefulContainerStateOf<C, T>) => void): ContainerOf<C, T> =>
-    m.create(onSink);
 
 type CatchErrorSink<C extends ReactiveContainerLike> = new <T>(
   delegate: StatefulContainerStateOf<C, T>,
@@ -307,18 +310,6 @@ export const createTakeLastOperator =
         : m.empty();
   };
 
-export const createFromDisposable =
-  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
-  <T>(disposable: DisposableLike): ContainerOf<C, T> =>
-    pipe(disposable, addTo, create(m));
-
-export const createNever = <C extends ReactiveContainerLike>(
-  m: CreateReactiveContainer<C>,
-) => {
-  const neverInstance: ContainerOf<C, any> = pipe(ignore, create(m));
-  return <T>(): ContainerOf<C, T> => neverInstance;
-};
-
 export const createOnSink =
   <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
   <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<C, T, T> =>
@@ -335,24 +326,6 @@ export const createOnSink =
           : identity,
       );
     }, create(m));
-
-export const createUsing =
-  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
-  <TResource extends DisposableLike, T>(
-    resourceFactory: Factory<TResource | readonly TResource[]>,
-    sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
-  ): ContainerOf<C, T> =>
-    pipe(
-      (sink: StatefulContainerStateOf<C, T>) =>
-        pipe(
-          resourceFactory(),
-          resources => (Array.isArray(resources) ? resources : [resources]),
-          forEach<TResource>(addTo(sink)),
-          resources => sourceFactory(...resources),
-          sinkInto(sink),
-        ),
-      create(m),
-    );
 
 const decorateWithNotify = <TThis, TNext>(
   SinkClass: new <T>(...a: readonly any[]) => SinkLike<T>,
@@ -644,3 +617,4 @@ export const decorateWithThrowIfEmptyNotify = <C extends ReactiveContainerLike>(
     },
   );
 };
+*/

@@ -17,6 +17,9 @@ interface SequenceLike<T = unknown> extends ContainerLike {
         readonly next: SequenceLike<T>;
     }>;
 }
+interface PromiseLike<T = unknown> extends ContainerLike, Promise<T> {
+    readonly TContainerOf?: PromiseLike<this["T"]>;
+}
 interface StatefulContainerLike extends ContainerLike {
     readonly TStatefulContainerState?: DisposableLike;
 }
@@ -142,6 +145,9 @@ declare type ThrowIfEmpty<C extends StatefulContainerLike> = Container<C> & {
 declare type ToIterable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toIterable<T>(options?: TOptions): Function1<ContainerOf<C, T>, Iterable<T>>;
 };
+declare type ToPromise<C extends ContainerLike, TOptions = never> = Container<C> & {
+    toPromise<T>(options?: TOptions): Function1<ContainerOf<C, T>, PromiseLike<T>>;
+};
 declare type ToReadonlyArray<C extends ContainerLike, TOptions = never> = Container<C> & {
     toReadonlyArray<T>(options?: TOptions): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
 };
@@ -242,4 +248,4 @@ declare const fromArrayReadonlyArray: FromArray<ReadonlyArrayLike>["fromArray"];
 declare const fromArrayReadonlyArrayT: FromArray<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, FromValue, Generate, IterableLike, Keep, Map, Pairwise, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, fromArrayReadonlyArray, fromArrayReadonlyArrayT, generateSequence, generateSequenceT };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, FromValue, Generate, IterableLike, Keep, Map, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, fromArrayReadonlyArray, fromArrayReadonlyArrayT, generateSequence, generateSequenceT };

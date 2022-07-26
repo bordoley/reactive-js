@@ -4,9 +4,19 @@
 
 ## Table of contents
 
+### Variables
+
+- [TContainerOf](rx_ObservableLike.md#tcontainerof)
+
 ### Functions
 
 - [getObservableType](rx_ObservableLike.md#getobservabletype)
+
+## Variables
+
+### TContainerOf
+
+• `Const` **TContainerOf**: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>
 
 ## Functions
 

@@ -2,9 +2,9 @@
 import { properties, prototype } from './__internal__/util/Disposable.mjs';
 import { properties as properties$1, prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
 import { mix, Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
-import { pipe, none, newInstance } from './functions.mjs';
+import { pipe, none, newInstance, forEach } from './functions.mjs';
 import { SourceLike_move } from './util.mjs';
-import './util/DisposableLike.mjs';
+import { addTo } from './util/DisposableLike.mjs';
 import { dispose } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
@@ -26,6 +26,16 @@ const createEnumerable = /*@__PURE__*/ (() => {
     }
     return (enumerate) => newInstance(CreateEnumerable, enumerate);
 })();
+const createEnumerableUsing = (resourceFactory, enumerableFactory) => createEnumerable(() => {
+    const resources = resourceFactory();
+    const resourcesArray = Array.isArray(resources) ? resources : [resources];
+    const enumerator = enumerableFactory(...resourcesArray)[InteractiveContainerLike_interact]();
+    pipe(resourcesArray, forEach(addTo(enumerator)));
+    return enumerator;
+});
+const createEnumerableUsingT = {
+    using: createEnumerableUsing,
+};
 const emptyEnumerable = 
 /*@__PURE__*/ (() => {
     const properties$2 = {
@@ -48,4 +58,4 @@ const emptyEnumerableT = {
     empty: emptyEnumerable,
 };
 
-export { InteractiveContainerLike_interact, createEnumerable, emptyEnumerable, emptyEnumerableT };
+export { InteractiveContainerLike_interact, createEnumerable, createEnumerableUsing, createEnumerableUsingT, emptyEnumerable, emptyEnumerableT };

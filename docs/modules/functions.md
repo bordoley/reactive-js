@@ -53,6 +53,7 @@
 - [decrementBy](functions.md#decrementby)
 - [flip](functions.md#flip)
 - [floor](functions.md#floor)
+- [forEach](functions.md#foreach)
 - [getLength](functions.md#getlength)
 - [identity](functions.md#identity-1)
 - [ignore](functions.md#ignore)
@@ -1574,6 +1575,28 @@ ___
 #### Returns
 
 `number`
+
+___
+
+### forEach
+
+▸ **forEach**<`T`\>(`f`): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 ___
 

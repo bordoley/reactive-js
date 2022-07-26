@@ -27,6 +27,7 @@
 ### Properties
 
 - [T](rx.MulticastObservableLike.md#t)
+- [TContainerOf](rx.MulticastObservableLike.md#tcontainerof)
 - [TStatefulContainerState](rx.MulticastObservableLike.md#tstatefulcontainerstate)
 - [[DisposableLike\_error]](rx.MulticastObservableLike.md#[disposablelike_error])
 - [[DisposableLike\_isDisposed]](rx.MulticastObservableLike.md#[disposablelike_isdisposed])
@@ -48,6 +49,16 @@
 #### Inherited from
 
 ObservableLike.T
+
+___
+
+### TContainerOf
+
+• `Optional` `Readonly` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
+
+#### Inherited from
+
+[ObservableLike](rx.ObservableLike.md).[TContainerOf](rx.ObservableLike.md#tcontainerof)
 
 ___
 

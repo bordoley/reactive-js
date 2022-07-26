@@ -27,7 +27,6 @@ import {
   Function1,
   Option,
   Predicate,
-  SideEffect1,
   getLength,
   identity,
   isSome,
@@ -64,13 +63,6 @@ export const map: Map<ReadonlyArrayLike>["map"] =
   (arr: readonly TA[]): readonly TB[] =>
     arr.map(mapper);
 export const mapT: Map<ReadonlyArrayLike> = { map };
-
-export const forEach =
-  <T>(f: SideEffect1<T>): Function1<readonly T[], readonly T[]> =>
-  arr => {
-    arr.forEach(f);
-    return arr;
-  };
 
 export type FromArrayOptions = {
   readonly start: number;
@@ -193,6 +185,85 @@ export const toEnumerableT: ToEnumerable<
     readonly count: number;
   }
 > = { toEnumerable };
+
+/*
+export const toEnumerableObservable: ToEnumerableObservable<ReadonlyArrayLike> = 
+ createFromArray(
+      (values, start, count) => {
+        createObservable(observer => {
+
+        const callback = () => sideEffect(observer);
+        pipe(
+          observer,
+          getScheduler,
+          schedule(callback, options),
+          addTo(observer),
+        );
+      }, 2
+    );
+
+    const fromArray =createFromArray<
+      ObservableLike<unknown>,
+      {
+        readonly delay: number;
+        readonly startIndex: number;
+        readonly endIndex: number;
+        readonly delayStart: boolean;
+      }
+    >(
+      <T>(
+        values: readonly T[],
+        startIndex: number,
+        endIndex: number,
+        options?: {
+          readonly delay?: number;
+          readonly delayStart?: boolean;
+        },
+      ) => {
+        const count = endIndex - startIndex;
+        const isEnumerableTag = !hasDelay(options);
+        const { delayStart = true } = options ?? {};
+        return count === 0 && isEnumerableTag
+          ? empty
+          : pipe(
+              defer(
+                () => {
+                  let index = startIndex;
+                  return (observer: ObserverLike<T>) => {
+                    while (index < endIndex && !isDisposed(observer)) {
+                      const value = values[index];
+                      index++;
+
+                      observer.notify(value);
+
+                      if (index < endIndex) {
+                        __yield(options);
+                      }
+                    }
+                    pipe(observer, dispose());
+                  };
+                },
+                delayStart ? options : none,
+              ),
+              tagObservableType(hasDelay(options) ? 1 : 2),
+            );
+      },
+    );
+
+    
+  })();
+
+  export const fromArrayT: FromArray<
+      ObservableLike<unknown>,
+      {
+        readonly delay: number;
+        readonly delayStart: boolean;
+        readonly startIndex: number;
+        readonly endIndex: number;
+      }
+    > = {
+      fromArray,
+    };*/
 
 export const toReadonlyArray: ToReadonlyArray<
   ReadonlyArrayLike,
