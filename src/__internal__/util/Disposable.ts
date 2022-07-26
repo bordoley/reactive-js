@@ -1,12 +1,4 @@
-import {
-  Factory,
-  Option,
-  ignore,
-  isNone,
-  isSome,
-  none,
-  pipe,
-} from "../../functions";
+import { Option, ignore, isNone, isSome, none, pipe } from "../../functions";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -98,8 +90,10 @@ export const prototype = {
   },
 };
 
-export const createDisposable: Factory<DisposableLike> =
-  /*@__PURE__*/ createObjectFactory(prototype);
+export const createDisposable = /*@__PURE__*/ pipe(
+  prototype,
+  createObjectFactory<DisposableLike, typeof properties>(),
+);
 
 export const disposed: DisposableLike = {
   [DisposableLike_error]: none,

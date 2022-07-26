@@ -6,7 +6,7 @@ import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInCo
 export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
 import { prototype } from './__internal__/util/Disposable.mjs';
 import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
-import { Object_properties, createObjectFactory, mix, Object_init, init } from './__internal__/util/Object.mjs';
+import { Object_properties, mix, Object_init, init, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
@@ -64,7 +64,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
         yieldInterval: 0,
         yieldRequested: false,
     };
-    const createInstance = createObjectFactory(mix(prototype, {
+    const createInstance = pipe(mix(prototype, {
         [Object_properties]: properties,
         [Object_init](yieldInterval) {
             init(prototype, this);
@@ -108,7 +108,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
                 scheduleImmediate(this, continuation);
             }
         },
-    }));
+    }), createObjectFactory());
     return (options = {}) => {
         const { yieldInterval = 5 } = options;
         return createInstance(yieldInterval);
@@ -132,7 +132,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         yieldRequested: false,
         taskQueue: none,
     };
-    const createInstance = createObjectFactory(mix(prototype, prototype$1, {
+    const createInstance = pipe(mix(prototype, prototype$1, {
         [Object_properties]: properties,
         [Object_init](maxMicroTaskTicks) {
             init(prototype, this);
@@ -187,7 +187,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
                 pipe(this, dispose());
             }
         },
-    }));
+    }), createObjectFactory());
     return (options = {}) => {
         const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
         return createInstance(maxMicroTaskTicks);

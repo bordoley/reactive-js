@@ -147,10 +147,7 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
       ...enumeratorPrototype[Object_properties],
     };
 
-    const createInstance = createObjectFactory<
-      EnumeratorLike<any>,
-      typeof properties
-    >(
+    const createInstance = pipe(
       mix(disposablePrototype, enumeratorPrototype, {
         [Object_properties]: properties,
         [Object_init](this: typeof properties) {
@@ -161,9 +158,10 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
           pipe(this, dispose());
         },
       }),
+      createObjectFactory<EnumeratorLike<any>, typeof properties>(),
     );
 
-    return () => createEnumerable(() => createInstance());
+    return () => createEnumerable(createInstance);
   })();
 
 export const emptyEnumerableT: Empty<EnumerableLike> = {
@@ -184,12 +182,7 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] = (() => {
     f: none as unknown as Updater<any>,
   };
 
-  const createInstance = createObjectFactory<
-    EnumeratorLike<any>,
-    typeof properties,
-    Updater<any>,
-    unknown
-  >(
+  const createInstance = pipe(
     mix(disposablePrototype, enumeratorPrototype, {
       [Object_properties]: properties,
       [Object_init](
@@ -212,6 +205,12 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] = (() => {
         }
       },
     }),
+    createObjectFactory<
+      EnumeratorLike<any>,
+      typeof properties,
+      Updater<any>,
+      unknown
+    >(),
   );
 
   return <T>(generator: Updater<T>, initialValue: Factory<T>) =>

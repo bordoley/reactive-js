@@ -28,11 +28,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
       iterator: none as unknown as Iterator<unknown>,
     };
 
-    const createInstance = createObjectFactory<
-      EnumeratorLike<any>,
-      typeof properties,
-      Iterator<unknown>
-    >(
+    const createInstance = pipe(
       mix(disposablePrototype, enumeratorPrototype, {
         [Object_properties]: properties,
         [Object_init](this: typeof properties, iterator: Iterator<unknown>) {
@@ -51,6 +47,11 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
           }
         },
       }),
+      createObjectFactory<
+        EnumeratorLike<any>,
+        typeof properties,
+        Iterator<unknown>
+      >(),
     );
 
     return <T>() =>

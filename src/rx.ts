@@ -193,11 +193,7 @@ export const createSubject = /*@__PURE__*/ (() => {
     replayed: none as unknown as Array<unknown>,
   };
 
-  const createInstance = createObjectFactory<
-    SubjectLike<any>,
-    typeof properties,
-    number
-  >(
+  const createInstance = pipe(
     mix(disposablePrototype, {
       [Object_properties]: properties,
       [Object_init](this: typeof properties, replay: number) {
@@ -261,6 +257,7 @@ export const createSubject = /*@__PURE__*/ (() => {
         pipe(this, addIgnoringChildErrors(dispatcher));
       },
     }),
+    createObjectFactory<SubjectLike<any>, typeof properties, number>(),
   );
 
   return <T>(options?: { replay?: number }): SubjectLike<T> => {

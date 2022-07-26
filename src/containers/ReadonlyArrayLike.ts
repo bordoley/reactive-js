@@ -130,13 +130,7 @@ export const toEnumerable: ToEnumerable<
     index: 0,
   };
 
-  const createInstance = createObjectFactory<
-    EnumeratorLike<any>,
-    typeof properties,
-    readonly unknown[],
-    number,
-    number
-  >(
+  const createInstance = pipe(
     mix(disposablePrototype, enumeratorPrototype, {
       [Object_properties]: properties,
       [Object_init](
@@ -168,6 +162,13 @@ export const toEnumerable: ToEnumerable<
         }
       },
     }),
+    createObjectFactory<
+      EnumeratorLike<any>,
+      typeof properties,
+      readonly unknown[],
+      number,
+      number
+    >(),
   );
 
   return createFromArray<EnumerableLike>(
