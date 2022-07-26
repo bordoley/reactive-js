@@ -274,9 +274,7 @@ const pairwise =
 /*@__PURE__*/ (() => {
     const prototype = mix(delegatingDisposableEnumeratorPrototype, {
         [SourceLike_move]() {
-            const prev = (hasCurrent(this)
-                ? getCurrent(this)
-                : emptyReadonlyArray())[1];
+            const prev = (hasCurrent(this) ? getCurrent(this) : emptyReadonlyArray())[1];
             const { delegate } = this;
             if (move(delegate)) {
                 const current = getCurrent(delegate);

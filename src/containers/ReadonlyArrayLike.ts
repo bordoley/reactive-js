@@ -165,7 +165,7 @@ export const toEnumerable: ToEnumerable<
   });
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    EnumeratorLike<any>,
     typeof properties,
     readonly unknown[],
     number,
@@ -174,9 +174,7 @@ export const toEnumerable: ToEnumerable<
 
   return createFromArray<EnumerableLike>(
     <T>(array: readonly T[], start: number, count: number) =>
-      createEnumerable(
-        () => createInstance(array, start, count) as EnumeratorLike<T>,
-      ),
+      createEnumerable(() => createInstance(array, start, count)),
   );
 })();
 

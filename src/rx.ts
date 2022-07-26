@@ -263,7 +263,7 @@ export const createSubject = /*@__PURE__*/ (() => {
   });
 
   const createInstance = /*@__PURE__*/ createObjectFactory<
-    typeof prototype,
+    SubjectLike<any>,
     typeof properties,
     number
   >(prototype, properties);

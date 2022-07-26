@@ -242,7 +242,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (() => {
   });
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    EnumeratorLike<any>,
     typeof properties,
     EnumeratorLike,
     number
@@ -256,10 +256,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (() => {
     const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
     const operator = (delegate: EnumeratorLike<T>) =>
-      pipe(
-        createInstance(delegate, maxBufferSize),
-        add(delegate),
-      ) as EnumeratorLike<readonly T[]>;
+      pipe(createInstance(delegate, maxBufferSize), add(delegate));
 
     return lift(operator);
   };
@@ -326,15 +323,14 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     );
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof properties,
       EnumeratorLike<EnumerableLike>
     >(prototype, properties);
 
     const operator = <T>(
       delegate: EnumeratorLike<EnumerableLike<T>>,
-    ): EnumeratorLike<T> =>
-      pipe(createInstance(delegate), add(delegate)) as EnumeratorLike<T>;
+    ): EnumeratorLike<T> => pipe(createInstance(delegate), add(delegate));
 
     return () => lift(operator);
   })();
@@ -361,7 +357,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
       delegatingDisposablePrototype,
       delegatingEnumeratorPrototype,
       {
-        [SourceLike_move](this: typeof properties & EnumeratorLike) {
+        [SourceLike_move](this: typeof properties & EnumeratorLike<any>) {
           const hadCurrent = hasCurrent(this);
           const prevCurrent = hadCurrent ? getCurrent(this) : none;
 
@@ -369,7 +365,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
             while (delegatingEnumeratorMove(this)) {
               if (
                 !hadCurrent ||
-                !this.equality(prevCurrent as any, getCurrent(this))
+                !this.equality(prevCurrent, getCurrent(this))
               ) {
                 break;
               }
@@ -391,7 +387,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
     );
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof properties,
       EnumeratorLike,
       Equality<unknown>
@@ -402,10 +398,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
       (delegate: EnumeratorLike<T>): EnumeratorLike<T> => {
         const { equality = strictEquality } = options ?? {};
 
-        return createInstance(
-          delegate,
-          equality as Equality<unknown>,
-        ) as EnumeratorLike<T>;
+        return createInstance(delegate, equality as Equality<unknown>);
       };
 
     return compose(distinctUntilChangedEnumerator, lift);
@@ -451,7 +444,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (() => {
   );
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    EnumeratorLike<any>,
     typeof properties,
     EnumeratorLike,
     Predicate<unknown>
@@ -460,10 +453,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (() => {
   const keepEnumerator =
     <T>(predicate: Predicate<T>) =>
     (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
-      createInstance(
-        delegate,
-        predicate as Predicate<unknown>,
-      ) as EnumeratorLike<T>;
+      createInstance(delegate, predicate as Predicate<unknown>);
 
   return compose(keepEnumerator, lift);
 })();
@@ -501,7 +491,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (() => {
   });
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    EnumeratorLike<any>,
     typeof properties,
     EnumeratorLike,
     Function1<any, unknown>
@@ -510,7 +500,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (() => {
   const mapEnumerator =
     <TA, TB>(mapper: Function1<TA, TB>) =>
     (delegate: EnumeratorLike<TA>): EnumeratorLike<TB> =>
-      createInstance(delegate, mapper) as EnumeratorLike<TB>;
+      createInstance(delegate, mapper);
 
   return compose(mapEnumerator, lift);
 })();
@@ -550,7 +540,7 @@ export const onNotify = /*@__PURE__*/ (() => {
   );
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    EnumeratorLike<any>,
     typeof properties,
     EnumeratorLike,
     SideEffect1<any>
@@ -559,7 +549,7 @@ export const onNotify = /*@__PURE__*/ (() => {
   const onNotifyEnumerator =
     <T>(onNotify: SideEffect1<T>) =>
     (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
-      createInstance(delegate, onNotify) as EnumeratorLike<T>;
+      createInstance(delegate, onNotify);
 
   return compose(onNotifyEnumerator, lift);
 })();
@@ -569,12 +559,10 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
     const prototype = mix(delegatingDisposableEnumeratorPrototype, {
       [SourceLike_move](
         this: typeof delegatingDisposableEnumeratorProperties &
-          MutableEnumeratorLike,
+          MutableEnumeratorLike<readonly any[]>,
       ) {
         const prev = (
-          hasCurrent(this)
-            ? (getCurrent(this) as readonly [])
-            : emptyReadonlyArray()
+          hasCurrent(this) ? getCurrent(this) : emptyReadonlyArray()
         )[1];
 
         const { delegate } = this;
@@ -586,7 +574,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
     });
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof delegatingDisposableEnumeratorProperties,
       EnumeratorLike
     >(prototype, delegatingDisposableEnumeratorProperties);
@@ -594,7 +582,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
     const pairwiseEnumerator =
       <T>() =>
       (delegate: EnumeratorLike<T>): EnumeratorLike<readonly [Option<T>, T]> =>
-        createInstance(delegate) as EnumeratorLike<readonly [Option<T>, T]>;
+        createInstance(delegate);
 
     return <T>() => pipe(pairwiseEnumerator<T>(), lift);
   })();
@@ -657,14 +645,14 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (() => {
   });
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    EnumeratorLike,
     typeof properties,
-    EnumerableLike,
+    EnumerableLike<any>,
     Predicate<number>
   >(prototype, properties);
 
   return <T>(predicate?: Predicate<number> | number) => {
-    const repeatPredicate = isNone(predicate)
+    const repeatPredicate: Predicate<number> = isNone(predicate)
       ? alwaysTrue
       : typeof predicate === "number"
       ? (count: number) => count < predicate
@@ -717,7 +705,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (() => {
   });
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    EnumeratorLike<any>,
     typeof properties,
     EnumeratorLike,
     Reducer<any, any>,
@@ -727,7 +715,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (() => {
   const scanEnumerator =
     <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
     (delegate: EnumeratorLike<T>): EnumeratorLike<TAcc> =>
-      createInstance(delegate, reducer, initialValue) as EnumeratorLike<TAcc>;
+      createInstance(delegate, reducer, initialValue);
 
   return pipe(scanEnumerator, createScanOperator(liftT));
 })();
@@ -741,8 +729,8 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
     const properties = {
       ...delegatingDisposableProperties,
       ...delegatingEnumeratorProperties,
-      skipCount: 0 as number,
-      count: 0 as number,
+      skipCount: 0,
+      count: 0,
     };
 
     const prototype = mix(
@@ -776,7 +764,7 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
     );
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof properties,
       EnumeratorLike,
       number
@@ -784,7 +772,7 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
     const skipFirstEnumerator =
       <T>(skipCount: number) =>
       (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
-        createInstance(delegate, skipCount) as EnumeratorLike<T>;
+        createInstance(delegate, skipCount);
 
     return pipe(skipFirstEnumerator, createSkipFirstOperator(liftT));
   })();
@@ -798,8 +786,8 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
     const properties = {
       ...delegatingDisposableProperties,
       ...delegatingEnumeratorProperties,
-      maxCount: 0 as number,
-      count: 0 as number,
+      maxCount: 0,
+      count: 0,
     };
 
     const prototype = mix(
@@ -827,7 +815,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
     );
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof properties,
       EnumeratorLike,
       number
@@ -836,7 +824,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
     const takeFirstEnumerator =
       <T>(maxCount: number) =>
       (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
-        createInstance(delegate, maxCount) as EnumeratorLike<T>;
+        createInstance(delegate, maxCount);
 
     return pipe(
       takeFirstEnumerator,
@@ -896,7 +884,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
     });
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof properties,
       EnumeratorLike,
       number
@@ -908,10 +896,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
       const { count = 1 } = options;
 
       const operator = (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
-        pipe(
-          createInstance(delegate, count),
-          add(delegate),
-        ) as EnumeratorLike<T>;
+        pipe(createInstance(delegate, count), add(delegate));
 
       return enumerable =>
         count > 0
@@ -973,7 +958,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
     );
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof properties,
       EnumeratorLike,
       Predicate<any>,
@@ -983,7 +968,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
     const takeWhileEnumerator =
       <T>(predicate: Predicate<T>, inclusive: boolean) =>
       (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
-        createInstance(delegate, predicate, inclusive) as EnumeratorLike<T>;
+        createInstance(delegate, predicate, inclusive);
 
     return pipe(takeWhileEnumerator, createTakeWhileOperator(liftT));
   })();
@@ -1014,7 +999,7 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
     });
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any> & { isEmpty: boolean },
       typeof properties,
       EnumeratorLike
     >(prototype, properties);
@@ -1022,7 +1007,7 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
     const throwIfEmptyEnumerator =
       <T>() =>
       (delegate: EnumeratorLike<T>): EnumeratorLike<T> & { isEmpty: boolean } =>
-        createInstance(delegate) as EnumeratorLike<T> & { isEmpty: boolean };
+        createInstance(delegate);
 
     return pipe(throwIfEmptyEnumerator, createThrowIfEmptyOperator(liftT));
   })();
@@ -1173,7 +1158,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   });
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    EnumeratorLike<any>,
     typeof properties,
     ReadonlyArrayLike<EnumeratorLike<any>>
   >(prototype, properties);
@@ -1183,7 +1168,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   ): EnumeratorLike<readonly any[]> => {
     const instance = createInstance(enumerators);
     pipe(enumerators, forEach(addTo(instance)));
-    return instance as EnumeratorLike<readonly any[]>;
+    return instance;
   };
 
   return (
