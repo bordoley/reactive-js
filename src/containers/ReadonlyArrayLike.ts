@@ -9,6 +9,7 @@ import {
   createObjectFactory,
   init,
   mixWith,
+  mixWithProps,
 } from "../__internal__/util/Object";
 import {
   ContainerLike,
@@ -122,13 +123,14 @@ export const toEnumerable: ToEnumerable<
     readonly count: number;
   }
 >["toEnumerable"] = /*@__PURE__*/ (() => {
-  const properties = {
-    ...disposablePrototype[Object_properties],
-    ...enumeratorPrototype[Object_properties],
-    array: [] as readonly unknown[],
-    count: 0,
-    index: 0,
-  };
+  const properties = pipe(
+    {
+      array: [] as readonly unknown[],
+      count: 0,
+      index: 0,
+    },
+    mixWithProps(disposablePrototype, enumeratorPrototype),
+  );
 
   const createInstance = pipe(
     {

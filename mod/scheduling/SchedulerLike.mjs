@@ -8,7 +8,7 @@ import { prototype } from '../__internal__/util/Disposable.mjs';
 import { prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
 import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { mixWithProps, Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { none, pipe, isSome, isNone, raise, newInstanceWith, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
@@ -28,11 +28,10 @@ class YieldError {
 }
 let currentScheduler = none;
 const createContinuation = /*@__PURE__*/ (() => {
-    const properties = {
-        ...prototype[Object_properties],
+    const properties = pipe({
         scheduler: none,
         f: (() => { }),
-    };
+    }, mixWithProps(prototype));
     return pipe({
         [Object_properties]: properties,
         [Object_init](scheduler, f) {
@@ -164,10 +163,7 @@ const createQueueScheduler =
         self.hostContinuation = continuation;
         self[MutableRefLike_current] = pipe(self.host, schedule(continuation, { delay }));
     };
-    const properties = {
-        ...prototype[Object_properties],
-        ...prototype$1[Object_properties],
-        ...prototype$2[Object_properties],
+    const properties = pipe({
         [SchedulerLike_inContinuation]: false,
         delayed: none,
         dueTime: 0,
@@ -177,7 +173,7 @@ const createQueueScheduler =
         queue: none,
         taskIDCounter: 0,
         yieldRequested: false,
-    };
+    }, mixWithProps(prototype, prototype$1, prototype$2));
     return pipe({
         [Object_properties]: properties,
         [Object_init](host) {

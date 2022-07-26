@@ -6,6 +6,7 @@ import {
   createObjectFactory,
   init,
   mixWith,
+  mixWithProps,
 } from "../__internal__/util/Object";
 import { Function1, none, pipe } from "../functions";
 import {
@@ -33,11 +34,13 @@ import {
  * @param priority The priority to schedule work at.
  */
 export const toScheduler = /*@__PURE__*/ (() => {
-  const properties = {
-    ...disposablePrototype[Object_properties],
-    priorityScheduler: none as unknown as PrioritySchedulerLike,
-    priority: 0,
-  };
+  const properties = pipe(
+    {
+      priorityScheduler: none as unknown as PrioritySchedulerLike,
+      priority: 0,
+    },
+    mixWithProps(disposablePrototype),
+  );
 
   const createInstance = pipe(
     {

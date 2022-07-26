@@ -22,5 +22,11 @@ const mixWith = (...prototypes) => (lastProto) => {
     };
     return Object.create(Object.prototype, descriptor);
 };
+const mixWithProps = (...prototypes) => (lastProps) => {
+    const prototypeProps = prototypes
+        .map(prototype => prototype[Object_properties])
+        .reduce((acc, next) => ({ ...acc, ...next }), {});
+    return { ...prototypeProps, ...lastProps };
+};
 
-export { Object_init, Object_properties, createObjectFactory, init, mixWith };
+export { Object_init, Object_properties, createObjectFactory, init, mixWith, mixWithProps };

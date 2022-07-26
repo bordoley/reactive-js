@@ -44,4 +44,22 @@ interface MixWith {
     <TProto0 extends object, TProto1 extends object, TProto2 extends object, TProto3 extends object>(p0: TProto0, p1: TProto1, p2: TProto2): Function1<TProto3, Identity<TProto0 & TProto1 & TProto2 & TProto3>>;
 }
 declare const mixWith: MixWith;
-export { Object_init, Object_properties, createObjectFactory, init, mixWith };
+interface MixWithProps {
+    <TProps0, TProps1>(p0: {
+        [Object_properties]: TProps0;
+    }): Function1<TProps1, Identity<TProps0 & TProps1>>;
+    <TProps0, TProps1, TProps2>(p0: {
+        [Object_properties]: TProps0;
+    }, p1: {
+        [Object_properties]: TProps1;
+    }): Function1<TProps2, Identity<TProps0 & TProps1 & TProps2>>;
+    <TProps0, TProps1, TProps2, TProps3>(p0: {
+        [Object_properties]: TProps0;
+    }, p1: {
+        [Object_properties]: TProps1;
+    }, p2: {
+        [Object_properties]: TProps2;
+    }): Function1<TProps3, Identity<TProps0 & TProps1 & TProps2 & TProps3>>;
+}
+declare const mixWithProps: MixWithProps;
+export { Object_init, Object_properties, createObjectFactory, init, mixWith, mixWithProps };

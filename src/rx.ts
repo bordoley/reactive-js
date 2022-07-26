@@ -5,6 +5,7 @@ import {
   createObjectFactory,
   init,
   mixWith,
+  mixWithProps,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -186,12 +187,14 @@ const createObservableT: CreateReactiveContainer<ObservableLike> = {
 };
 
 export const createSubject = /*@__PURE__*/ (() => {
-  const properties = {
-    ...disposablePrototype[Object_properties],
-    [MulticastObservableLike_replay]: 0,
-    observers: none as unknown as Set<ObserverLike>,
-    replayed: none as unknown as Array<unknown>,
-  };
+  const properties = pipe(
+    {
+      [MulticastObservableLike_replay]: 0,
+      observers: none as unknown as Set<ObserverLike>,
+      replayed: none as unknown as Array<unknown>,
+    },
+    mixWithProps(disposablePrototype),
+  );
 
   const createInstance = pipe(
     {

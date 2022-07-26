@@ -21,6 +21,7 @@ import {
   createObjectFactory,
   init,
   mixWith,
+  mixWithProps,
 } from "./__internal__/util/Object";
 import { isSome, none, pipe } from "./functions";
 import {
@@ -191,7 +192,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   };
 
   const runContinuation = (
-    scheduler: typeof properties & SchedulerLike,
+    scheduler: typeof properties & { [SchedulerLike_now]: number },
     continuation: ContinuationLike,
     immmediateOrTimerDisposable: DisposableLike,
   ) => {
@@ -203,13 +204,15 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     scheduler[SchedulerLike_inContinuation] = false;
   };
 
-  const properties = {
-    ...disposablePrototype[Object_properties],
-    [SchedulerLike_inContinuation]: false,
-    startTime: 0,
-    yieldInterval: 0,
-    yieldRequested: false,
-  };
+  const properties = pipe(
+    {
+      [SchedulerLike_inContinuation]: false as boolean,
+      startTime: 0,
+      yieldInterval: 0,
+      yieldRequested: false,
+    },
+    mixWithProps(disposablePrototype),
+  );
 
   const createInstance = pipe(
     {
@@ -297,17 +300,18 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     return diff;
   };
 
-  const properties = {
-    ...disposablePrototype[Object_properties],
-    ...enumeratorPrototype[Object_properties],
-    [SchedulerLike_inContinuation]: false,
-    [SchedulerLike_now]: 0 as number,
-    maxMicroTaskTicks: MAX_SAFE_INTEGER,
-    microTaskTicks: 0,
-    taskIDCount: 0,
-    yieldRequested: false,
-    taskQueue: none as unknown as QueueLike<VirtualTask>,
-  };
+  const properties = pipe(
+    {
+      [SchedulerLike_inContinuation]: false,
+      [SchedulerLike_now]: 0 as number,
+      maxMicroTaskTicks: MAX_SAFE_INTEGER,
+      microTaskTicks: 0,
+      taskIDCount: 0,
+      yieldRequested: false,
+      taskQueue: none as unknown as QueueLike<VirtualTask>,
+    },
+    mixWithProps(disposablePrototype, enumeratorPrototype),
+  );
 
   const createInstance = pipe(
     {
