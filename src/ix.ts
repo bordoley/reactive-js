@@ -161,12 +161,11 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
     });
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof properties
     >(prototype, properties);
 
-    return <T>() =>
-      createEnumerable(() => createInstance() as EnumeratorLike<T>);
+    return () => createEnumerable(() => createInstance());
   })();
 
 export const emptyEnumerableT: Empty<EnumerableLike> = {
@@ -210,16 +209,14 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] = (() => {
   });
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    EnumeratorLike<any>,
     typeof properties,
     Updater<any>,
     unknown
   >(prototype, properties);
 
   return <T>(generator: Updater<T>, initialValue: Factory<T>) =>
-    createEnumerable(
-      () => createInstance(generator, initialValue()) as EnumeratorLike<T>,
-    );
+    createEnumerable(() => createInstance(generator, initialValue()));
 })();
 
 export const generateEnumerableT: Generate<EnumerableLike> = {
