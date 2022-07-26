@@ -1,7 +1,7 @@
 /// <reference types="./IterableLike.d.ts" />
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
-import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { createObjectFactory, mix, Object_init, init } from '../__internal__/util/Object.mjs';
 import { none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
@@ -15,7 +15,7 @@ const toEnumerable =
         ...properties$1,
         iterator: none,
     };
-    const prototype$2 = mix(prototype, prototype$1, {
+    const createInstance = createObjectFactory(properties$2, mix(prototype, prototype$1, {
         [Object_init](iterator) {
             init(prototype, this);
             this.iterator = iterator;
@@ -31,8 +31,7 @@ const toEnumerable =
                 }
             }
         },
-    });
-    const createInstance = createObjectFactory(prototype$2, properties$2);
+    }));
     return () => (iterable) => createEnumerable(() => createInstance(iterable[Symbol.iterator]()));
 })();
 const toEnumerableT = { toEnumerable };

@@ -421,30 +421,31 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       seq: (() => none) as SequenceLike,
     };
 
-    const prototype = mix(disposablePrototype, enumeratorPrototype, {
-      [Object_init](this: typeof properties, seq: SequenceLike) {
-        init(disposablePrototype, this);
-        init(enumeratorPrototype, this);
-        this.seq = seq;
-      },
-      [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
-        if (!isDisposed(this)) {
-          const next = this.seq();
-          if (isSome(next)) {
-            this[EnumeratorLike_current] = next.data;
-            this.seq = next.next;
-          } else {
-            pipe(this, dispose());
-          }
-        }
-      },
-    });
-
     const createInstance = createObjectFactory<
       EnumeratorLike<any>,
       typeof properties,
       SequenceLike
-    >(prototype, properties);
+    >(
+      properties,
+      mix(disposablePrototype, enumeratorPrototype, {
+        [Object_init](this: typeof properties, seq: SequenceLike) {
+          init(disposablePrototype, this);
+          init(enumeratorPrototype, this);
+          this.seq = seq;
+        },
+        [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+          if (!isDisposed(this)) {
+            const next = this.seq();
+            if (isSome(next)) {
+              this[EnumeratorLike_current] = next.data;
+              this.seq = next.next;
+            } else {
+              pipe(this, dispose());
+            }
+          }
+        },
+      }),
+    );
 
     return <T>() =>
       (seq: SequenceLike<T>) =>
