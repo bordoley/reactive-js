@@ -144,3 +144,31 @@ export const mixWith: MixWith =
 
     return Object.create(Object.prototype, descriptor);
   };
+
+interface MixWithProps {
+  <TProps0, TProps1>(p0: { [Object_properties]: TProps0 }): Function1<
+    TProps1,
+    Identity<TProps0 & TProps1>
+  >;
+
+  <TProps0, TProps1, TProps2>(
+    p0: { [Object_properties]: TProps0 },
+    p1: { [Object_properties]: TProps1 },
+  ): Function1<TProps2, Identity<TProps0 & TProps1 & TProps2>>;
+
+  <TProps0, TProps1, TProps2, TProps3>(
+    p0: { [Object_properties]: TProps0 },
+    p1: { [Object_properties]: TProps1 },
+    p2: { [Object_properties]: TProps2 },
+  ): Function1<TProps3, Identity<TProps0 & TProps1 & TProps2 & TProps3>>;
+}
+
+export const mixWithProps: MixWithProps =
+  (...prototypes: readonly { [Object_properties]: any }[]) =>
+  (lastProps: any) => {
+    const prototypeProps = prototypes
+      .map(prototype => prototype[Object_properties])
+      .reduce((acc, next) => ({ ...acc, ...next }), {});
+
+    return { ...prototypeProps, ...lastProps };
+  };

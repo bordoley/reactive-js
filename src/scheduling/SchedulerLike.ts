@@ -24,6 +24,7 @@ import {
   createObjectFactory,
   init,
   mixWith,
+  mixWithProps,
 } from "../__internal__/util/Object";
 import {
   Function1,
@@ -96,11 +97,13 @@ const createContinuation: Function2<
   SideEffect,
   ContinuationLike
 > = /*@__PURE__*/ (() => {
-  const properties = {
-    ...disposablePrototype[Object_properties],
-    scheduler: none as unknown as SchedulerLike,
-    f: (() => {}) as SideEffect,
-  };
+  const properties = pipe(
+    {
+      scheduler: none as unknown as SchedulerLike,
+      f: (() => {}) as SideEffect,
+    },
+    mixWithProps(disposablePrototype),
+  );
 
   return pipe(
     {
@@ -323,20 +326,24 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
       );
     };
 
-    const properties = {
-      ...disposablePrototype[Object_properties],
-      ...enumeratorPrototype[Object_properties],
-      ...disposableRefPrototype[Object_properties],
-      [SchedulerLike_inContinuation]: false,
-      delayed: none as unknown as QueueLike<QueueTask>,
-      dueTime: 0,
-      host: none as unknown as SchedulerLike,
-      hostContinuation: none as Option<SideEffect>,
-      isPaused: false,
-      queue: none as unknown as QueueLike<QueueTask>,
-      taskIDCounter: 0,
-      yieldRequested: false,
-    };
+    const properties = pipe(
+      {
+        [SchedulerLike_inContinuation]: false,
+        delayed: none as unknown as QueueLike<QueueTask>,
+        dueTime: 0,
+        host: none as unknown as SchedulerLike,
+        hostContinuation: none as Option<SideEffect>,
+        isPaused: false,
+        queue: none as unknown as QueueLike<QueueTask>,
+        taskIDCounter: 0,
+        yieldRequested: false,
+      },
+      mixWithProps(
+        disposablePrototype,
+        enumeratorPrototype,
+        disposableRefPrototype,
+      ),
+    );
 
     return pipe(
       {
