@@ -5,6 +5,7 @@ import {
   distinctUntilChangedT,
   keepT,
   mapT,
+  repeatT,
   scanT,
   skipFirstT,
   takeFirstT,
@@ -18,6 +19,7 @@ import {
   distinctUntilChangedTests,
   keepTests,
   mapTests,
+  repeatTests,
   scanTests,
   skipFirstTests,
   takeFirstTests,
@@ -46,6 +48,12 @@ export const EnumerableLikeTests = describe(
   mapTests({
     fromArray: toEnumerable,
     ...mapT,
+    ...toReadonlyArrayT,
+  }),
+  repeatTests({
+    fromArray: toEnumerable,
+    ...repeatT,
+    ...takeFirstT,
     ...toReadonlyArrayT,
   }),
   scanTests({

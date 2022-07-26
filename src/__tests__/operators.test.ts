@@ -19,6 +19,7 @@ import {
   ToReadonlyArray,
   Zip,
   emptyReadonlyArray,
+  Repeat,
 } from "../containers";
 import {
   alwaysTrue,
@@ -147,6 +148,45 @@ export const mapTests = <C extends ContainerLike>(
         expectToThrowError(err),
       );
     }),
+  );
+
+export const repeatTests = <C extends ContainerLike>(
+  m: Repeat<C> & FromArray<C> & TakeFirst<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "repeat",
+    test(
+      "when always repeating",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray(),
+        m.repeat(),
+        m.takeFirst({ count: 6 }),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+
+    test(
+      "when repeating a finite amount of times.",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray(),
+        m.repeat(3),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+    test(
+      "when repeating with a predicate",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray(),
+        m.repeat(x => x < 1),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
   );
 
 export const scanTests = <C extends ContainerLike>(
