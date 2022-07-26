@@ -5,21 +5,23 @@ import {
   test,
 } from "../__internal__/testing";
 import {
+  Buffer,
   ConcatAll,
   ContainerLike,
   DistinctUntilChanged,
   FromArray,
   Keep,
   Map,
+  Repeat,
   Scan,
   SkipFirst,
   TakeFirst,
   TakeLast,
   TakeWhile,
+  ThrowIfEmpty,
   ToReadonlyArray,
   Zip,
   emptyReadonlyArray,
-  Repeat,
 } from "../containers";
 import {
   alwaysTrue,
@@ -30,6 +32,30 @@ import {
   returns,
   sum,
 } from "../functions";
+
+export const bufferTests = <C extends ContainerLike>(
+  m: Buffer<C> & FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "buffer",
+    test(
+      "with multiple sub buffers",
+      pipeLazy(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        m.fromArray(),
+        m.buffer({ maxBufferSize: 3 }),
+        m.toReadonlyArray(),
+        expectArrayEquals<readonly number[]>(
+          [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+          ],
+          arrayEquality(),
+        ),
+      ),
+    ),
+  );
 
 export const concatAllTests = <C extends ContainerLike>(
   m: ConcatAll<C> & FromArray<C> & ToReadonlyArray<C>,
@@ -350,7 +376,7 @@ export const takeLastTests = <C extends ContainerLike>(
   );
 
 export const takeWhileTests = <C extends ContainerLike>(
-  m: TakeWhile<C> & FromArray<C> & ToReadonlyArray<C>,
+  m: FromArray<C> & TakeWhile<C> & ToReadonlyArray<C>,
 ) =>
   describe(
     "takeWhile",
@@ -403,6 +429,36 @@ export const takeWhileTests = <C extends ContainerLike>(
         expectToThrowError(err),
       );
     }),
+  );
+
+export const throwIfEmptyTests = <C extends ContainerLike>(
+  m: FromArray<C> & ThrowIfEmpty<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "throwIfEmpty",
+    test("when source is empty", () => {
+      const error = new Error();
+      pipeLazy(
+        pipeLazy(
+          [],
+          m.fromArray(),
+          m.throwIfEmpty(() => error),
+          m.toReadonlyArray(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+
+    test(
+      "when source is not empty",
+      pipeLazy(
+        [1],
+        m.fromArray(),
+        m.throwIfEmpty(() => undefined),
+        m.toReadonlyArray(),
+        expectArrayEquals([1]),
+      ),
+    ),
   );
 
 export const zipTests = <C extends ContainerLike>(

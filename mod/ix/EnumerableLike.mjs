@@ -1,5 +1,6 @@
 /// <reference types="./EnumerableLike.d.ts" />
 import { interactive, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
+import { MAX_SAFE_INTEGER } from '../__internal__/env.mjs';
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { properties, prototype } from '../__internal__/util/DelegatingDisposable.mjs';
 import { properties as properties$4, prototype as prototype$4, move as move$1 } from '../__internal__/util/DelegatingEnumerator.mjs';
@@ -10,16 +11,16 @@ import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLik
 import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { none, pipeUnsafe, newInstance, pipe, strictEquality, compose, isSome, getLength, identity, forEach } from '../functions.mjs';
-import { InteractiveContainerLike_interact, emptyEnumerableT, emptyEnumerable, createEnumerable } from '../ix.mjs';
+import { none, pipeUnsafe, newInstance, getLength, pipe, max, strictEquality, compose, isNone, raise, alwaysTrue, isSome, identity, forEach } from '../functions.mjs';
+import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT, emptyEnumerable } from '../ix.mjs';
 import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
-import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
-import { add, bindTo, addTo } from '../util/DisposableLike.mjs';
+import { SourceLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../util.mjs';
+import { add, addTo, bindTo } from '../util/DisposableLike.mjs';
 import { move, getCurrent, hasCurrent } from '../util/EnumeratorLike.mjs';
 import { notifySink } from '../util/SinkLike.mjs';
-import { isDisposed, dispose, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { dispose, isDisposed, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const enumerate = () => (enumerable) => {
     debugger;
@@ -59,6 +60,46 @@ const delegatingDisposableEnumeratorPrototype = mix(prototype, prototype$1, {
         this.delegate = delegate;
     },
 });
+const buffer = /*@__PURE__*/ (() => {
+    const properties = {
+        ...properties$2,
+        ...properties$1,
+        delegate: none,
+        maxBufferSize: 0,
+    };
+    const prototype = mix(prototype$2, prototype$1, {
+        [Object_init](delegate, maxBufferSize) {
+            init(prototype$2, this);
+            init(prototype$1, this);
+            this.delegate = delegate;
+            this.maxBufferSize = maxBufferSize;
+        },
+        [SourceLike_move]() {
+            const buffer = [];
+            const { delegate, maxBufferSize } = this;
+            while (getLength(buffer) < maxBufferSize && move(delegate)) {
+                buffer.push(getCurrent(delegate));
+            }
+            const bufferLength = getLength(buffer);
+            if (bufferLength > 0) {
+                this[EnumeratorLike_current] = buffer;
+            }
+            if (bufferLength < maxBufferSize) {
+                pipe(this, dispose());
+            }
+        },
+    });
+    const createInstance = createObjectFactory(prototype, properties);
+    return (options = {}) => {
+        var _a;
+        const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER, 1);
+        const operator = (delegate) => pipe(createInstance(delegate, maxBufferSize), add(delegate));
+        return lift(operator);
+    };
+})();
+const bufferT = {
+    buffer,
+};
 const concatAll = 
 /*@__PURE__*/ (() => {
     const properties = {
@@ -249,6 +290,68 @@ const pairwise =
 })();
 const pairwiseT = {
     pairwise,
+};
+const repeat = /*@__PURE__*/ (() => {
+    const properties = {
+        ...properties$2,
+        count: 0,
+        enumerator: none,
+        shouldRepeat: none,
+        src: none,
+    };
+    const prototype = mix(prototype$2, {
+        [Object_init](src, shouldRepeat) {
+            init(prototype$2, this);
+            this.src = src;
+            this.shouldRepeat = shouldRepeat;
+        },
+        [SourceLike_move]() {
+            if (isNone(this.enumerator)) {
+                this.enumerator = pipe(this.src, enumerate(), addTo(this));
+            }
+            let { enumerator } = this;
+            while (!move(enumerator)) {
+                this.count++;
+                try {
+                    if (this.shouldRepeat(this.count)) {
+                        enumerator = pipe(this.src, enumerate(), addTo(this));
+                        this.enumerator = enumerator;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                catch (cause) {
+                    pipe(this, dispose({ cause }));
+                    break;
+                }
+            }
+        },
+        get [EnumeratorLike_current]() {
+            var _a, _b;
+            const self = this;
+            return hasCurrent(this)
+                ? (_b = (_a = self.enumerator) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_current]) !== null && _b !== void 0 ? _b : raise()
+                : raise();
+        },
+        get [EnumeratorLike_hasCurrent]() {
+            var _a, _b;
+            const self = this;
+            return (_b = (_a = self.enumerator) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_hasCurrent]) !== null && _b !== void 0 ? _b : false;
+        },
+    });
+    const createInstance = createObjectFactory(prototype, properties);
+    return (predicate) => {
+        const repeatPredicate = isNone(predicate)
+            ? alwaysTrue
+            : typeof predicate === "number"
+                ? (count) => count < predicate
+                : (count) => predicate(count);
+        return (enumerable) => createEnumerable(() => createInstance(enumerable, repeatPredicate));
+    };
+})();
+const repeatT = {
+    repeat,
 };
 const scan = /*@__PURE__*/ (() => {
     const properties = {
@@ -568,4 +671,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toReadonlyArray, toReadonlyArrayT, zipT };
+export { TContainerOf, buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toReadonlyArray, toReadonlyArrayT, zipT };

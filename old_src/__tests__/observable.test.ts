@@ -117,42 +117,6 @@ export const tests = describe(
   "observable",
 
   describe(
-    "buffer",
-    test(
-      "with duration and maxBufferSize",
-      pipeLazy(
-        concat(
-          pipe([1, 2, 3, 4], fromArray()),
-          pipe([1, 2, 3], fromArray({ delay: 1 })),
-          pipe(4, fromValue(fromArrayT, { delay: 8 })),
-        ),
-        buffer({ duration: 4, maxBufferSize: 3 }),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()),
-      ),
-    ),
-    test(
-      "when duration observable throws",
-      pipeLazy(
-        pipeLazy(
-          [1, 2, 3, 4],
-          fromArray(),
-          buffer({ duration: _ => throws({ ...fromArrayT, ...mapT })(raise) }),
-          toRunnable({
-            schedulerFactory: pipeLazy(
-              { maxMicroTaskTicks: 1 },
-              createVirtualTimeScheduler,
-            ),
-          }),
-          toArray(),
-        ),
-        expectToThrow,
-      ),
-    ),
-  ),
-
-  describe(
     "catchError",
     test(
       "source completes successfully",
@@ -711,34 +675,6 @@ export const tests = describe(
           last(),
         ),
         expectToThrow,
-      ),
-    ),
-  ),
-  describe(
-    "throwIfEmpty",
-    test(
-      "when source is empty",
-      pipeLazy(
-        pipeLazy(
-          empty(fromArrayT),
-          throwIfEmpty(() => undefined),
-          toRunnable(),
-          last(),
-        ),
-        expectToThrow,
-      ),
-    ),
-
-    test(
-      "when source is not empty",
-      pipeLazy(
-        1,
-        returns,
-        compute({ ...fromArrayT, ...mapT }),
-        throwIfEmpty(() => undefined),
-        toRunnable(),
-        last(),
-        expectEquals(1),
       ),
     ),
   ),

@@ -1,6 +1,7 @@
 import { describe } from "../__internal__/testing";
 import { toEnumerable } from "../containers/ReadonlyArrayLike";
 import {
+  bufferT,
   concatAllT,
   distinctUntilChangedT,
   keepT,
@@ -11,10 +12,12 @@ import {
   takeFirstT,
   takeLastT,
   takeWhileT,
+  throwIfEmptyT,
   toReadonlyArrayT,
   zipT,
 } from "../ix/EnumerableLike";
 import {
+  bufferTests,
   concatAllTests,
   distinctUntilChangedTests,
   keepTests,
@@ -25,11 +28,17 @@ import {
   takeFirstTests,
   takeLastTests,
   takeWhileTests,
+  throwIfEmptyTests,
   zipTests,
 } from "./operators.test";
 
 export const EnumerableLikeTests = describe(
   "EnumerableLike",
+  bufferTests({
+    fromArray: toEnumerable,
+    ...bufferT,
+    ...toReadonlyArrayT,
+  }),
   concatAllTests({
     fromArray: toEnumerable,
     ...concatAllT,
@@ -79,6 +88,11 @@ export const EnumerableLikeTests = describe(
   takeWhileTests({
     fromArray: toEnumerable,
     ...takeWhileT,
+    ...toReadonlyArrayT,
+  }),
+  throwIfEmptyTests({
+    fromArray: toEnumerable,
+    ...throwIfEmptyT,
     ...toReadonlyArrayT,
   }),
   zipTests({
