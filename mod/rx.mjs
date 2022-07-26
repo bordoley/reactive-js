@@ -1,6 +1,6 @@
 /// <reference types="./rx.d.ts" />
-import { properties, prototype } from './__internal__/util/Disposable.mjs';
-import { createObjectFactory, mix, Object_init, init } from './__internal__/util/Object.mjs';
+import { prototype } from './__internal__/util/Disposable.mjs';
+import { Object_properties, createObjectFactory, mix, Object_init, init } from './__internal__/util/Object.mjs';
 import { pipe, newInstance, none, getLength, max, forEach, ignore } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
@@ -44,13 +44,14 @@ const createObservableT = {
     create: createObservable,
 };
 const createSubject = /*@__PURE__*/ (() => {
-    const properties$1 = {
-        ...properties,
+    const properties = {
+        ...prototype[Object_properties],
         [MulticastObservableLike_replay]: 0,
         observers: none,
         replayed: none,
     };
-    const createInstance = /*@__PURE__*/ createObjectFactory(properties$1, mix(prototype, {
+    const createInstance = createObjectFactory(mix(prototype, {
+        [Object_properties]: properties,
         [Object_init](replay) {
             init(prototype, this);
             this[MulticastObservableLike_replay] = replay;

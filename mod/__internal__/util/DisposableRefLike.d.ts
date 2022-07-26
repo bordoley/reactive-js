@@ -1,15 +1,17 @@
 import { DisposableLike } from "../../util.mjs";
 import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike.mjs";
-import { Object_init } from "./Object.mjs";
+import { Object_properties, Object_init } from "./Object.mjs";
 interface DisposableRefLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike, MutableRefLike<TDisposable> {
 }
 declare const DisposableRef_private_current: unique symbol;
-interface DisposableRefProperties<TDisposable extends DisposableLike = DisposableLike> {
-    [DisposableRef_private_current]: TDisposable;
-}
-declare const properties: DisposableRefProperties;
-declare const prototype: {
-    [MutableRefLike_current]: DisposableLike;
-    [Object_init]<TDisposable extends DisposableLike = DisposableLike>(this: typeof properties & DisposableLike, defaultValue: TDisposable): void;
+declare const properties: {
+    [DisposableRef_private_current]: DisposableLike;
 };
-export { DisposableRefLike, properties, prototype };
+declare const prototype: {
+    [Object_properties]: {
+        [DisposableRef_private_current]: DisposableLike;
+    };
+    [Object_init]<TDisposable extends DisposableLike = DisposableLike>(this: typeof properties & DisposableLike, defaultValue: TDisposable): void;
+    [MutableRefLike_current]: DisposableLike;
+};
+export { DisposableRefLike, prototype };

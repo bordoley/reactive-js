@@ -1,14 +1,11 @@
-import {
-  properties as disposableProperties,
-  prototype as disposablePrototype,
-} from "../__internal__/util/Disposable";
+import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
 import {
   MutableEnumeratorLike,
-  properties as enumeratorProperties,
   prototype as enumeratorPrototype,
 } from "../__internal__/util/Enumerator";
 import {
   Object_init,
+  Object_properties,
   createObjectFactory,
   init,
   mix,
@@ -126,8 +123,8 @@ export const toEnumerable: ToEnumerable<
   }
 >["toEnumerable"] = /*@__PURE__*/ (() => {
   const properties = {
-    ...disposableProperties,
-    ...enumeratorProperties,
+    ...disposablePrototype[Object_properties],
+    ...enumeratorPrototype[Object_properties],
     array: [] as readonly unknown[],
     count: 0,
     index: 0,
@@ -140,8 +137,8 @@ export const toEnumerable: ToEnumerable<
     number,
     number
   >(
-    properties,
     mix(disposablePrototype, enumeratorPrototype, {
+      [Object_properties]: properties,
       [Object_init](
         this: typeof properties,
         array: readonly unknown[],

@@ -10,17 +10,14 @@ import {
   getCurrentTime,
   isInContinuation,
 } from "./__internal__/schedulingInternal";
-import {
-  properties as disposableProperties,
-  prototype as disposablePrototype,
-} from "./__internal__/util/Disposable";
+import { prototype as disposablePrototype } from "./__internal__/util/Disposable";
 import {
   MutableEnumeratorLike,
-  properties as enumeratorProperties,
   prototype as enumeratorPrototype,
 } from "./__internal__/util/Enumerator";
 import {
   Object_init,
+  Object_properties,
   createObjectFactory,
   init,
   mix,
@@ -129,19 +126,18 @@ export interface VirtualTimeSchedulerLike
     ContinuationLike {}
 
 export const createHostScheduler = /*@__PURE__*/ (() => {
-  const supportsPerformanceNow = /*@__PURE__*/ (() =>
-    typeof performance === "object" && typeof performance.now === "function")();
+  const supportsPerformanceNow =
+    typeof performance === "object" && typeof performance.now === "function";
 
-  const supportsSetImmediate = /*@__PURE__*/ (() =>
-    typeof setImmediate === "function")();
+  const supportsSetImmediate = typeof setImmediate === "function";
 
-  const supportsProcessHRTime = /*@__PURE__*/ (() =>
-    typeof process === "object" && typeof process.hrtime === "function")();
+  const supportsProcessHRTime =
+    typeof process === "object" && typeof process.hrtime === "function";
 
-  const supportsIsInputPending = /*@__PURE__*/ (() =>
+  const supportsIsInputPending =
     typeof navigator === "object" &&
     (navigator as any).scheduling !== undefined &&
-    (navigator as any).scheduling.isInputPending !== undefined)();
+    (navigator as any).scheduling.isInputPending !== undefined;
 
   const isInputPending = (): boolean =>
     supportsIsInputPending && (navigator as any).scheduling.isInputPending();
@@ -208,20 +204,20 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   };
 
   const properties = {
-    ...disposableProperties,
+    ...disposablePrototype[Object_properties],
     [SchedulerLike_inContinuation]: false,
     startTime: 0,
     yieldInterval: 0,
     yieldRequested: false,
   };
 
-  const createInstance = /*@__PURE__*/ createObjectFactory<
+  const createInstance = createObjectFactory<
     SchedulerLike,
     typeof properties,
     number
   >(
-    properties,
     mix(disposablePrototype, {
+      [Object_properties]: properties,
       [Object_init](this: typeof properties, yieldInterval: number) {
         init(disposablePrototype, this);
         this.yieldInterval = yieldInterval;
@@ -304,8 +300,8 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
   };
 
   const properties = {
-    ...disposableProperties,
-    ...enumeratorProperties,
+    ...disposablePrototype[Object_properties],
+    ...enumeratorPrototype[Object_properties],
     [SchedulerLike_inContinuation]: false,
     [SchedulerLike_now]: 0 as number,
     maxMicroTaskTicks: MAX_SAFE_INTEGER,
@@ -316,44 +312,9 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
   };
 
   const createInstance: Function1<number, VirtualTimeSchedulerLike> =
-    /*@__PURE__*/ createObjectFactory<
-      VirtualTimeSchedulerLike,
-      typeof properties,
-      number
-    >(
-      properties,
+    createObjectFactory<VirtualTimeSchedulerLike, typeof properties, number>(
       mix(disposablePrototype, enumeratorPrototype, {
-        [ContinuationLike_run](
-          this: typeof properties & EnumeratorLike<VirtualTask>,
-        ) {
-          while (move(this)) {
-            const task = getCurrent(this);
-            const { dueTime, continuation } = task;
-
-            this.microTaskTicks = 0;
-            this[SchedulerLike_now] = dueTime;
-            this[SchedulerLike_inContinuation] = true;
-            run(continuation);
-            this[SchedulerLike_inContinuation] = false;
-          }
-        },
-        [SourceLike_move](
-          this: typeof properties & MutableEnumeratorLike<VirtualTask>,
-        ): void {
-          const taskQueue = this.taskQueue;
-
-          if (isDisposed(this)) {
-            return;
-          }
-
-          const task = taskQueue.pop();
-
-          if (isSome(task)) {
-            this[EnumeratorLike_current] = task;
-          } else {
-            pipe(this, dispose());
-          }
-        },
+        [Object_properties]: properties,
         [Object_init](this: typeof properties, maxMicroTaskTicks: number) {
           init(disposablePrototype, this);
           this.maxMicroTaskTicks = maxMicroTaskTicks;
@@ -377,6 +338,20 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
             (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks)
           );
         },
+        [ContinuationLike_run](
+          this: typeof properties & EnumeratorLike<VirtualTask>,
+        ) {
+          while (move(this)) {
+            const task = getCurrent(this);
+            const { dueTime, continuation } = task;
+
+            this.microTaskTicks = 0;
+            this[SchedulerLike_now] = dueTime;
+            this[SchedulerLike_inContinuation] = true;
+            run(continuation);
+            this[SchedulerLike_inContinuation] = false;
+          }
+        },
         [SchedulerLike_requestYield](this: typeof properties): void {
           this.yieldRequested = true;
         },
@@ -395,6 +370,23 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
               dueTime: getCurrentTime(this) + delay,
               continuation,
             });
+          }
+        },
+        [SourceLike_move](
+          this: typeof properties & MutableEnumeratorLike<VirtualTask>,
+        ): void {
+          const taskQueue = this.taskQueue;
+
+          if (isDisposed(this)) {
+            return;
+          }
+
+          const task = taskQueue.pop();
+
+          if (isSome(task)) {
+            this[EnumeratorLike_current] = task;
+          } else {
+            pipe(this, dispose());
           }
         },
       }),

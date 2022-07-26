@@ -1,14 +1,11 @@
-import {
-  properties as disposableProperties,
-  prototype as disposablePrototype,
-} from "./__internal__/util/Disposable";
+import { prototype as disposablePrototype } from "./__internal__/util/Disposable";
 import {
   MutableEnumeratorLike,
-  properties as enumeratorProperties,
   prototype as enumeratorPrototype,
 } from "./__internal__/util/Enumerator";
 import {
   Object_init,
+  Object_properties,
   createObjectFactory,
   init,
   mix,
@@ -146,16 +143,16 @@ export const createEnumerableUsingT: Using<EnumerableLike<unknown>> = {
 export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
   /*@__PURE__*/ (() => {
     const properties = {
-      ...disposableProperties,
-      ...enumeratorProperties,
+      ...disposablePrototype[Object_properties],
+      ...enumeratorPrototype[Object_properties],
     };
 
     const createInstance = createObjectFactory<
       EnumeratorLike<any>,
       typeof properties
     >(
-      properties,
       mix(disposablePrototype, enumeratorPrototype, {
+        [Object_properties]: properties,
         [Object_init](this: typeof properties) {
           init(disposablePrototype, this);
           init(enumeratorPrototype, this);
@@ -182,8 +179,8 @@ export const emptyEnumerableT: Empty<EnumerableLike> = {
  */
 export const generateEnumerable: Generate<EnumerableLike>["generate"] = (() => {
   const properties = {
-    ...disposableProperties,
-    ...enumeratorProperties,
+    ...disposablePrototype[Object_properties],
+    ...enumeratorPrototype[Object_properties],
     f: none as unknown as Updater<any>,
   };
 
@@ -193,8 +190,8 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] = (() => {
     Updater<any>,
     unknown
   >(
-    properties,
     mix(disposablePrototype, enumeratorPrototype, {
+      [Object_properties]: properties,
       [Object_init](
         this: typeof properties & MutableEnumeratorLike,
         f: Updater<any>,

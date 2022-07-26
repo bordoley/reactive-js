@@ -1,10 +1,8 @@
 import { getDelay } from "../__internal__/optionalArgs";
-import {
-  properties as disposableProperties,
-  prototype as disposablePrototype,
-} from "../__internal__/util/Disposable";
+import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
 import {
   Object_init,
+  Object_properties,
   createObjectFactory,
   init,
   mix,
@@ -36,7 +34,7 @@ import {
  */
 export const toScheduler = /*@__PURE__*/ (() => {
   const properties = {
-    ...disposableProperties,
+    ...disposablePrototype[Object_properties],
     priorityScheduler: none as unknown as PrioritySchedulerLike,
     priority: 0,
   };
@@ -47,8 +45,8 @@ export const toScheduler = /*@__PURE__*/ (() => {
     PrioritySchedulerLike,
     number
   >(
-    properties,
     mix(disposablePrototype, {
+      [Object_properties]: properties,
       [Object_init](
         this: typeof properties,
         scheduler: PrioritySchedulerLike,

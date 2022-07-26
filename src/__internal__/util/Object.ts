@@ -1,39 +1,31 @@
 import { Factory, Function1, Function2, Function3 } from "../../functions";
 
 export const Object_init = Symbol("Object_init");
+export const Object_properties = Symbol("Object_properties");
 
 interface Init {
-  <
-    TPrototype extends {
-      [Object_init](this: TProperties & TPrototype): void;
+  <TProperties>(
+    prototype: {
+      [Object_properties]: TProperties;
+      [Object_init](this: TProperties): void;
     },
-    TProperties,
-  >(
-    prototype: TPrototype,
     self: TProperties,
   ): void;
 
-  <
-    TPrototype extends {
-      [Object_init](this: TProperties & TPrototype, a: TA): void;
+  <TProperties, TA>(
+    prototype: {
+      [Object_properties]: TProperties;
+      [Object_init](this: TProperties, a: TA): void;
     },
-    TProperties,
-    TA,
-  >(
-    prototype: TPrototype,
     self: TProperties,
     a: TA,
   ): void;
 
-  <
-    TPrototype extends {
-      [Object_init](this: TProperties & TPrototype, a: TA, b: TB): void;
+  <TProperties, TA, TB>(
+    prototype: {
+      [Object_properties]: TProperties;
+      [Object_init](this: TProperties, a: TA, b: TB): void;
     },
-    TProperties,
-    TA,
-    TB,
-  >(
-    prototype: TPrototype,
     self: TProperties,
     a: TA,
     b: TB,
@@ -42,6 +34,7 @@ interface Init {
 
 export const init: Init = <
   TPrototype extends {
+    [Object_properties]: TProperties;
     [Object_init]: (
       this: TPrototype & TProperties,
       ...args: readonly any[]
@@ -58,41 +51,41 @@ export const init: Init = <
 
 interface ObjectFactory {
   <TReturn, TProperties>(
-    properties: TProperties,
     prototype: {
+      [Object_properties]: TProperties;
       [Object_init]: (this: TReturn & TProperties) => void;
     } & Omit<TReturn, keyof TProperties>,
   ): Factory<TReturn>;
   <TReturn, TProperties, TA>(
-    properties: TProperties,
     prototype: {
+      [Object_properties]: TProperties;
       [Object_init]: (this: TReturn & TProperties, a: TA) => void;
     } & Omit<TReturn, keyof TProperties>,
   ): Function1<TA, TReturn>;
   <TReturn, TProperties, TA, TB>(
-    properties: TProperties,
     prototype: {
+      [Object_properties]: TProperties;
       [Object_init]: (this: TReturn & TProperties, a: TA, b: TB) => void;
     } & Omit<TReturn, keyof TProperties>,
   ): Function2<TA, TB, TReturn>;
   <TReturn, TProperties, TA, TB, TC>(
-    properties: TProperties,
     prototype: {
+      [Object_properties]: TProperties;
       [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TC) => void;
     } & Omit<TReturn, keyof TProperties>,
   ): Function3<TA, TB, TC, TReturn>;
 }
 
-export const createObjectFactory: ObjectFactory = <TReturn, TProperties>(
-  properties: TProperties,
-  prototype: {
-    [Object_init]: (
-      this: TReturn & TProperties,
-      ...args: readonly any[]
-    ) => void;
-  },
-): Factory<TReturn> => {
-  const propertyDesccription = Object.getOwnPropertyDescriptors(properties);
+export const createObjectFactory: ObjectFactory = <
+  TReturn,
+  TProperties,
+>(prototype: {
+  [Object_properties]: TProperties;
+  [Object_init]: (this: TReturn & TProperties, ...args: readonly any[]) => void;
+}): Factory<TReturn> => {
+  const propertyDesccription = Object.getOwnPropertyDescriptors(
+    prototype[Object_properties],
+  );
   return (...args: readonly any[]) => {
     const instance = Object.create(prototype, propertyDesccription);
     instance[Object_init](...args);
