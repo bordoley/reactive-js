@@ -82,6 +82,7 @@ import {
   pipe,
   pipeUnsafe,
   raise,
+  returns,
   strictEquality,
 } from "../functions";
 import {
@@ -319,7 +320,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
       delegate: EnumeratorLike<EnumerableLike<T>>,
     ): EnumeratorLike<T> => pipe(createInstance(delegate), add(delegate));
 
-    return () => lift(operator);
+    return returns(lift(operator));
   })();
 export const concatAllT: ConcatAll<EnumerableLike> = { concatAll };
 
