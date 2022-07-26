@@ -1,6 +1,7 @@
 import { ConcatAll, Concat, DistinctUntilChanged, Keep, Map, ContainerOperator, Pairwise, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
-import { SideEffect1 } from "../functions.mjs";
+import { SideEffect1, Function1 } from "../functions.mjs";
 import { EnumerableLike, ToEnumerable } from "../ix.mjs";
+import { EnumerableObservableLike, RunnableObservableLike } from "../rx.mjs";
 import { EnumeratorLike } from "../util.mjs";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
 declare const concatAll: ConcatAll<EnumerableLike>["concatAll"];
@@ -31,6 +32,13 @@ declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike>;
 declare const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<EnumerableLike>;
+interface ToObservable {
+    <T>(): Function1<EnumerableLike<T>, EnumerableObservableLike<T>>;
+    <T>(options?: {
+        delay?: number;
+    }): Function1<EnumerableLike<T>, RunnableObservableLike<T>>;
+}
+declare const toObservable: ToObservable;
 declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<EnumerableLike>;
 /**
@@ -39,4 +47,4 @@ declare const toReadonlyArrayT: ToReadonlyArray<EnumerableLike>;
 declare const toIterable: ToIterable<EnumerableLike>["toIterable"];
 declare const toIterableT: ToIterable<EnumerableLike>;
 declare const zipT: Zip<EnumerableLike>;
-export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, toReadonlyArrayT, zipT };
+export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toReadonlyArray, toReadonlyArrayT, zipT };
