@@ -2,10 +2,11 @@ import { prototype as disposablePrototype } from "./__internal__/util/Disposable
 import {
   Object_init,
   Object_properties,
+  PropertyTypeOf,
+  anyProperty,
   createObjectFactory,
   init,
   mixWith,
-  mixWithProps,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -25,7 +26,6 @@ import {
   ignore,
   max,
   newInstance,
-  none,
   pipe,
 } from "./functions";
 import { ObserverLike } from "./scheduling";
@@ -187,19 +187,20 @@ const createObservableT: CreateReactiveContainer<ObservableLike> = {
 };
 
 export const createSubject = /*@__PURE__*/ (() => {
-  const properties = pipe(
-    {
-      [MulticastObservableLike_replay]: 0,
-      observers: none as unknown as Set<ObserverLike>,
-      replayed: none as unknown as Array<unknown>,
-    },
-    mixWithProps(disposablePrototype),
-  );
+  type TProperties = {
+    [MulticastObservableLike_replay]: number;
+    observers: Set<ObserverLike>;
+    replayed: Array<unknown>;
+  } & PropertyTypeOf<[typeof disposablePrototype]>;
 
   const createInstance = pipe(
     {
-      [Object_properties]: properties,
-      [Object_init](this: typeof properties, replay: number) {
+      [Object_properties]: {
+        [MulticastObservableLike_replay]: 0,
+        observers: anyProperty,
+        replayed: anyProperty,
+      },
+      [Object_init](this: TProperties, replay: number) {
         init(disposablePrototype, this);
         this[MulticastObservableLike_replay] = replay;
         this.observers = newInstance<Set<ObserverLike>>(Set);
@@ -209,11 +210,11 @@ export const createSubject = /*@__PURE__*/ (() => {
       [ObservableLike_observableType]: 0 as typeof DefaultObservable,
 
       get [MulticastObservableLike_observerCount]() {
-        const self = this as unknown as typeof properties;
+        const self = this as unknown as TProperties;
         return self.observers.size;
       },
 
-      [SubjectLike_publish](this: typeof properties, next: unknown) {
+      [SubjectLike_publish](this: TProperties, next: unknown) {
         if (!isDisposed(this)) {
           const { replayed } = this;
 
@@ -233,7 +234,7 @@ export const createSubject = /*@__PURE__*/ (() => {
       },
 
       [ReactiveContainerLike_sinkInto](
-        this: typeof properties & SubjectLike,
+        this: TProperties & SubjectLike,
         observer: ObserverLike<any>,
       ) {
         if (!isDisposed(this)) {
@@ -261,7 +262,7 @@ export const createSubject = /*@__PURE__*/ (() => {
       },
     },
     mixWith(disposablePrototype),
-    createObjectFactory<SubjectLike<any>, typeof properties, number>(),
+    createObjectFactory<SubjectLike<any>, TProperties, number>(),
   );
 
   return <T>(options?: { replay?: number }): SubjectLike<T> => {

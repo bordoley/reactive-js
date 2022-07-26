@@ -6,10 +6,11 @@ import {
 import {
   Object_init,
   Object_properties,
+  PropertyTypeOf,
+  anyProperty,
   createObjectFactory,
   init,
   mixWith,
-  mixWithProps,
 } from "../__internal__/util/Object";
 import {
   ContainerLike,
@@ -123,20 +124,23 @@ export const toEnumerable: ToEnumerable<
     readonly count: number;
   }
 >["toEnumerable"] = /*@__PURE__*/ (() => {
-  const properties = pipe(
-    {
-      array: [] as readonly unknown[],
-      count: 0,
-      index: 0,
-    },
-    mixWithProps(disposablePrototype, enumeratorPrototype),
-  );
+  type TProperties = PropertyTypeOf<
+    [typeof disposablePrototype & typeof enumeratorPrototype]
+  > & {
+    array: readonly unknown[];
+    count: number;
+    index: number;
+  };
 
   const createInstance = pipe(
     {
-      [Object_properties]: properties,
+      [Object_properties]: {
+        array: anyProperty,
+        count: 0,
+        index: 0,
+      },
       [Object_init](
-        this: typeof properties,
+        this: TProperties,
         array: readonly unknown[],
         start: number,
         count: number,
@@ -148,7 +152,7 @@ export const toEnumerable: ToEnumerable<
         this.index = start - 1;
         this.count = count;
       },
-      [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+      [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
         const { array } = this;
         if (!isDisposed(this)) {
           this.index++;
@@ -167,7 +171,7 @@ export const toEnumerable: ToEnumerable<
     mixWith(disposablePrototype, enumeratorPrototype),
     createObjectFactory<
       EnumeratorLike<any>,
-      typeof properties,
+      TProperties,
       readonly unknown[],
       number,
       number

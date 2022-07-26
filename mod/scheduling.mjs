@@ -6,8 +6,8 @@ import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInCo
 export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
 import { prototype } from './__internal__/util/Disposable.mjs';
 import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
-import { mixWithProps, Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
-import { pipe, none, isSome } from './functions.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory, anyProperty } from './__internal__/util/Object.mjs';
+import { pipe, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
 import { addTo, onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';
@@ -57,14 +57,13 @@ const createHostScheduler = /*@__PURE__*/ (() => {
         run(continuation);
         scheduler[SchedulerLike_inContinuation] = false;
     };
-    const properties = pipe({
-        [SchedulerLike_inContinuation]: false,
-        startTime: 0,
-        yieldInterval: 0,
-        yieldRequested: false,
-    }, mixWithProps(prototype));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            [SchedulerLike_inContinuation]: false,
+            startTime: 0,
+            yieldInterval: 0,
+            yieldRequested: false,
+        },
         [Object_init](yieldInterval) {
             init(prototype, this);
             this.yieldInterval = yieldInterval;
@@ -120,17 +119,16 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         diff = diff !== 0 ? diff : a.id - b.id;
         return diff;
     };
-    const properties = pipe({
-        [SchedulerLike_inContinuation]: false,
-        [SchedulerLike_now]: 0,
-        maxMicroTaskTicks: MAX_SAFE_INTEGER,
-        microTaskTicks: 0,
-        taskIDCount: 0,
-        yieldRequested: false,
-        taskQueue: none,
-    }, mixWithProps(prototype, prototype$1));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            [SchedulerLike_inContinuation]: false,
+            [SchedulerLike_now]: 0,
+            maxMicroTaskTicks: MAX_SAFE_INTEGER,
+            microTaskTicks: 0,
+            taskIDCount: 0,
+            yieldRequested: false,
+            taskQueue: anyProperty,
+        },
         [Object_init](maxMicroTaskTicks) {
             init(prototype, this);
             this.maxMicroTaskTicks = maxMicroTaskTicks;

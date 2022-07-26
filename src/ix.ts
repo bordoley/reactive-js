@@ -6,10 +6,11 @@ import {
 import {
   Object_init,
   Object_properties,
+  PropertyTypeOf,
+  anyProperty,
   createObjectFactory,
   init,
   mixWith,
-  mixWithProps,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -143,28 +144,28 @@ export const createEnumerableUsingT: Using<EnumerableLike<unknown>> = {
 };
 
 export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
-  /*@__PURE__*/ (() => {
-    const properties = pipe(
-      {},
-      mixWithProps(disposablePrototype, enumeratorPrototype),
-    );
-
-    return pipe(
-      {
-        [Object_properties]: properties,
-        [Object_init](this: typeof properties) {
-          init(disposablePrototype, this);
-          init(enumeratorPrototype, this);
-        },
-        [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
-          pipe(this, dispose());
-        },
+  /*@__PURE__*/ pipe(
+    {
+      [Object_properties]: {},
+      [Object_init](
+        this: PropertyTypeOf<
+          [typeof disposablePrototype, typeof enumeratorPrototype]
+        >,
+      ) {
+        init(disposablePrototype, this);
+        init(enumeratorPrototype, this);
       },
-      mixWith(disposablePrototype, enumeratorPrototype),
-      createObjectFactory<EnumeratorLike<any>, typeof properties>(),
-      f => pipeLazy(f, createEnumerable),
-    );
-  })();
+      [SourceLike_move](this: MutableEnumeratorLike) {
+        pipe(this, dispose());
+      },
+    },
+    mixWith(disposablePrototype, enumeratorPrototype),
+    createObjectFactory<
+      EnumeratorLike<any>,
+      PropertyTypeOf<[typeof disposablePrototype, typeof enumeratorPrototype]>
+    >(),
+    f => pipeLazy(f, createEnumerable),
+  );
 
 export const emptyEnumerableT: Empty<EnumerableLike> = {
   empty: emptyEnumerable,
@@ -179,16 +180,15 @@ export const emptyEnumerableT: Empty<EnumerableLike> = {
  */
 export const generateEnumerable: Generate<EnumerableLike>["generate"] =
   /*@__PURE__*/ (() => {
-    const properties = pipe(
-      { f: none as unknown as Updater<any> },
-      mixWithProps(disposablePrototype, enumeratorPrototype),
-    );
+    type TProperties = PropertyTypeOf<
+      [typeof disposablePrototype, typeof enumeratorPrototype]
+    > & { f: Updater<any> };
 
     const createInstance = pipe(
       {
-        [Object_properties]: properties,
+        [Object_properties]: { f: anyProperty },
         [Object_init](
-          this: typeof properties & MutableEnumeratorLike,
+          this: TProperties & MutableEnumeratorLike,
           f: Updater<any>,
           acc: unknown,
         ) {
@@ -197,7 +197,7 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
           this.f = f;
           this[EnumeratorLike_current] = acc;
         },
-        [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
           if (!isDisposed(this)) {
             try {
               this[EnumeratorLike_current] = this.f(this);
@@ -210,7 +210,7 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
       mixWith(disposablePrototype, enumeratorPrototype),
       createObjectFactory<
         EnumeratorLike<any>,
-        typeof properties,
+        TProperties,
         Updater<any>,
         unknown
       >(),

@@ -1,7 +1,7 @@
 /// <reference types="./SequenceLike.d.ts" />
 import { prototype } from '../__internal__/util/Disposable.mjs';
 import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
-import { mixWithProps, Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { isSome, none, pipe, strictEquality, isNone, alwaysTrue, getLength, callWith, returns } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
@@ -238,11 +238,10 @@ const takeWhile =
 const takeWhileT = { takeWhile };
 const toEnumerable = 
 /*@__PURE__*/ (() => {
-    const properties = pipe({
-        seq: (() => none),
-    }, mixWithProps(prototype, prototype$1));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            seq: anyProperty,
+        },
         [Object_init](seq) {
             init(prototype, this);
             init(prototype$1, this);
