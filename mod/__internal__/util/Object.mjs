@@ -1,10 +1,11 @@
 /// <reference types="./Object.d.ts" />
 const Object_init = Symbol("Object_init");
+const Object_properties = Symbol("Object_properties");
 const init = (prototype, self, ...args) => {
     prototype[Object_init].call(self, ...args);
 };
-const createObjectFactory = (properties, prototype) => {
-    const propertyDesccription = Object.getOwnPropertyDescriptors(properties);
+const createObjectFactory = (prototype) => {
+    const propertyDesccription = Object.getOwnPropertyDescriptors(prototype[Object_properties]);
     return (...args) => {
         const instance = Object.create(prototype, propertyDesccription);
         instance[Object_init](...args);
@@ -17,4 +18,4 @@ const mix = (...prototypes) => {
     return Object.create(Object.prototype, descriptor);
 };
 
-export { Object_init, createObjectFactory, init, mix };
+export { Object_init, Object_properties, createObjectFactory, init, mix };

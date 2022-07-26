@@ -8,23 +8,19 @@ import {
   getCurrentTime,
   isInContinuation,
 } from "../__internal__/schedulingInternal";
-import {
-  properties as disposableProperties,
-  prototype as disposablePrototype,
-} from "../__internal__/util/Disposable";
+import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
 import {
   DisposableRefLike,
-  properties as disposableRefProperties,
   prototype as disposableRefPrototype,
 } from "../__internal__/util/DisposableRefLike";
 import {
   MutableEnumeratorLike,
-  properties as enumeratorProperties,
   prototype as enumeratorPrototype,
 } from "../__internal__/util/Enumerator";
 import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
   Object_init,
+  Object_properties,
   createObjectFactory,
   init,
   mix,
@@ -100,13 +96,10 @@ const createContinuation: Function2<
   SideEffect,
   ContinuationLike
 > = /*@__PURE__*/ (() => {
-  const properties: typeof disposableProperties & {
-    scheduler: SchedulerLike;
-    f: SideEffect;
-  } = {
-    ...disposableProperties,
+  const properties = {
+    ...disposablePrototype[Object_properties],
     scheduler: none as unknown as SchedulerLike,
-    f: () => {},
+    f: (() => {}) as SideEffect,
   };
 
   return createObjectFactory<
@@ -115,8 +108,17 @@ const createContinuation: Function2<
     SchedulerLike,
     SideEffect
   >(
-    properties,
     mix(disposablePrototype, {
+      [Object_properties]: properties,
+      [Object_init](
+        this: typeof properties,
+        scheduler: SchedulerLike,
+        f: SideEffect,
+      ) {
+        init(disposablePrototype, this);
+        this.scheduler = scheduler;
+        this.f = f;
+      },
       [ContinuationLike_run](this: typeof properties & ContinuationLike) {
         if (!isDisposed(this)) {
           let error: Option<Error> = none;
@@ -142,15 +144,6 @@ const createContinuation: Function2<
             pipe(this, dispose(error));
           }
         }
-      },
-      [Object_init](
-        this: typeof properties,
-        scheduler: SchedulerLike,
-        f: SideEffect,
-      ) {
-        init(disposablePrototype, this);
-        this.scheduler = scheduler;
-        this.f = f;
       },
     }),
   );
@@ -329,9 +322,9 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     };
 
     const properties = {
-      ...disposableProperties,
-      ...enumeratorProperties,
-      ...disposableRefProperties,
+      ...disposablePrototype[Object_properties],
+      ...enumeratorPrototype[Object_properties],
+      ...disposableRefPrototype[Object_properties],
       [SchedulerLike_inContinuation]: false,
       delayed: none as unknown as QueueLike<QueueTask>,
       dueTime: 0,
@@ -348,8 +341,8 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
       typeof properties,
       SchedulerLike
     >(
-      properties,
       mix(disposablePrototype, enumeratorPrototype, disposableRefPrototype, {
+        [Object_properties]: properties,
         [Object_init](
           this: typeof properties & DisposableLike,
           host: SchedulerLike,

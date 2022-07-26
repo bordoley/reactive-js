@@ -7,11 +7,14 @@ import {
 } from "../../util";
 import { isDisposed } from "../../util/DisposableLike";
 import { hasCurrent } from "../../util/EnumeratorLike";
+import { prototype as disposablePrototype } from "../util/Disposable";
 import {
-  properties as disposableProperties,
-  prototype as disposablePrototype,
-} from "../util/Disposable";
-import { Object_init, createObjectFactory, init, mix } from "./Object";
+  Object_init,
+  Object_properties,
+  createObjectFactory,
+  init,
+  mix,
+} from "./Object";
 
 const Enumerator_private_current = Symbol("Enumerator_private_current");
 const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
@@ -20,12 +23,13 @@ export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
 }
 
-export const properties = {
+const properties = {
   [Enumerator_private_current]: none as unknown,
   [Enumerator_private_hasCurrent]: false,
 };
 
 export const prototype = {
+  [Object_properties]: properties,
   [Object_init](this: typeof properties) {
     this[Enumerator_private_current] = none;
     this[Enumerator_private_hasCurrent] = false;
@@ -49,12 +53,12 @@ export const prototype = {
 
 export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() => {
   const properties = {
-    ...disposableProperties,
+    ...disposablePrototype[Object_properties],
   };
 
   return createObjectFactory(
-    properties,
     mix(disposablePrototype, {
+      [Object_properties]: properties,
       [Object_init](this: typeof properties) {
         init(disposablePrototype, this);
       },

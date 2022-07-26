@@ -9,19 +9,21 @@ import {
   Error,
   disposed,
 } from "../../util";
-import { Object_init } from "./Object";
+import { Object_init, Object_properties } from "./Object";
 
 const DelegatingDisposable_private_delegate = Symbol(
   "DelegatingDisposable_private_delegate",
 );
 
-export const properties: {
-  [DelegatingDisposable_private_delegate]: DisposableLike;
-} = {
+const properties = {
   [DelegatingDisposable_private_delegate]: disposed,
 };
 
 export const prototype = {
+  [Object_properties]: properties,
+  [Object_init](this: typeof properties, delegate: DisposableLike) {
+    this[DelegatingDisposable_private_delegate] = delegate;
+  },
   get [DisposableLike_error](): Option<Error> {
     const self = this as unknown as typeof properties;
 
@@ -50,8 +52,5 @@ export const prototype = {
   ) {
     const delegate = this[DelegatingDisposable_private_delegate];
     delegate[DisposableLike_dispose](error);
-  },
-  [Object_init](this: typeof properties, delegate: DisposableLike) {
-    this[DelegatingDisposable_private_delegate] = delegate;
   },
 };
