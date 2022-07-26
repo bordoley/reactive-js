@@ -28,6 +28,7 @@ import {
   newInstance,
   none,
   pipe,
+  pipeLazy,
 } from "./functions";
 import { SchedulerLike } from "./scheduling";
 import { AsyncEnumeratorLike, StreamableLike } from "./streaming";
@@ -147,7 +148,7 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
       ...enumeratorPrototype[Object_properties],
     };
 
-    const createInstance = pipe(
+    return pipe(
       {
         [Object_properties]: properties,
         [Object_init](this: typeof properties) {
@@ -160,9 +161,8 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
       },
       mixWith(disposablePrototype, enumeratorPrototype),
       createObjectFactory<EnumeratorLike<any>, typeof properties>(),
+      f => pipeLazy(f, createEnumerable),
     );
-
-    return () => createEnumerable(createInstance);
   })();
 
 export const emptyEnumerableT: Empty<EnumerableLike> = {

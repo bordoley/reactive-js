@@ -2,7 +2,7 @@
 import { prototype } from './__internal__/util/Disposable.mjs';
 import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
-import { pipe, none, newInstance, forEach } from './functions.mjs';
+import { pipe, none, newInstance, forEach, pipeLazy } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { addTo } from './util/DisposableLike.mjs';
 import { dispose, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
@@ -42,7 +42,7 @@ const emptyEnumerable =
         ...prototype[Object_properties],
         ...prototype$1[Object_properties],
     };
-    const createInstance = pipe({
+    return pipe({
         [Object_properties]: properties,
         [Object_init]() {
             init(prototype, this);
@@ -51,8 +51,7 @@ const emptyEnumerable =
         [SourceLike_move]() {
             pipe(this, dispose());
         },
-    }, mixWith(prototype, prototype$1), createObjectFactory());
-    return () => createEnumerable(createInstance);
+    }, mixWith(prototype, prototype$1), createObjectFactory(), f => pipeLazy(f, createEnumerable));
 })();
 const emptyEnumerableT = {
     empty: emptyEnumerable,
