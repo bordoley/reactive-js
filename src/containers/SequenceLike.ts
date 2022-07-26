@@ -441,14 +441,14 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
     });
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof properties,
       SequenceLike
     >(prototype, properties);
 
     return <T>() =>
       (seq: SequenceLike<T>) =>
-        createEnumerable(() => createInstance(seq) as EnumeratorLike<T>);
+        createEnumerable(() => createInstance(seq));
   })();
 
 export const toEnumerableT: ToEnumerable<SequenceLike> = { toEnumerable };

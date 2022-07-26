@@ -273,7 +273,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   });
 
   const createInstance = /*@__PURE__*/ createObjectFactory<
-    typeof prototype,
+    SchedulerLike,
     typeof properties,
     number
   >(prototype, properties);
@@ -391,7 +391,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
 
   const createInstance: Function1<number, VirtualTimeSchedulerLike> =
     /*@__PURE__*/ createObjectFactory<
-      typeof prototype,
+      VirtualTimeSchedulerLike,
       typeof properties,
       number
     >(prototype, properties);

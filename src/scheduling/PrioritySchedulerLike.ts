@@ -90,7 +90,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
   });
 
   const createInstance = createObjectFactory<
-    typeof prototype,
+    SchedulerLike,
     typeof properties,
     PrioritySchedulerLike,
     number

@@ -148,7 +148,7 @@ const createContinuation: Function2<
   });
 
   return createObjectFactory<
-    typeof prototype,
+    ContinuationLike,
     typeof properties,
     SchedulerLike,
     SideEffect
@@ -452,7 +452,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     );
 
     return createObjectFactory<
-      typeof prototype,
+      QueueSchedulerLike,
       typeof properties,
       SchedulerLike
     >(prototype, properties);

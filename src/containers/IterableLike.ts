@@ -50,17 +50,14 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
     });
 
     const createInstance = createObjectFactory<
-      typeof prototype,
+      EnumeratorLike<any>,
       typeof properties,
       Iterator<unknown>
     >(prototype, properties);
 
     return <T>() =>
       (iterable: Iterable<T>) =>
-        createEnumerable(
-          () =>
-            createInstance(iterable[Symbol.iterator]()) as EnumeratorLike<T>,
-        );
+        createEnumerable(() => createInstance(iterable[Symbol.iterator]()));
   })();
 
 export const toEnumerableT: ToEnumerable<IterableLike> = { toEnumerable };
