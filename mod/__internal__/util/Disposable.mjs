@@ -65,7 +65,7 @@ const prototype = {
     },
 };
 const createDisposable = 
-/*@__PURE__*/ createObjectFactory(prototype, properties);
+/*@__PURE__*/ createObjectFactory(properties, prototype);
 const disposed = {
     [DisposableLike_error]: none,
     [DisposableLike_isDisposed]: true,

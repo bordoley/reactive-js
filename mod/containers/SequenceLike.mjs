@@ -1,7 +1,7 @@
 /// <reference types="./SequenceLike.d.ts" />
 import { properties, prototype } from '../__internal__/util/Disposable.mjs';
 import { properties as properties$1, prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
-import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { createObjectFactory, mix, Object_init, init } from '../__internal__/util/Object.mjs';
 import { isSome, none, pipe, strictEquality, isNone, alwaysTrue, getLength, callWith, returns } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
@@ -243,7 +243,7 @@ const toEnumerable =
         ...properties$1,
         seq: (() => none),
     };
-    const prototype$2 = mix(prototype, prototype$1, {
+    const createInstance = createObjectFactory(properties$2, mix(prototype, prototype$1, {
         [Object_init](seq) {
             init(prototype, this);
             init(prototype$1, this);
@@ -261,8 +261,7 @@ const toEnumerable =
                 }
             }
         },
-    });
-    const createInstance = createObjectFactory(prototype$2, properties$2);
+    }));
     return () => (seq) => createEnumerable(() => createInstance(seq));
 })();
 const toEnumerableT = { toEnumerable };

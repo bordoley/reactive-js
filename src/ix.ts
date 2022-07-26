@@ -150,20 +150,21 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
       ...enumeratorProperties,
     };
 
-    const prototype = mix(disposablePrototype, enumeratorPrototype, {
-      [Object_init](this: typeof properties) {
-        init(disposablePrototype, this);
-        init(enumeratorPrototype, this);
-      },
-      [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
-        pipe(this, dispose());
-      },
-    });
-
     const createInstance = createObjectFactory<
       EnumeratorLike<any>,
       typeof properties
-    >(prototype, properties);
+    >(
+      properties,
+      mix(disposablePrototype, enumeratorPrototype, {
+        [Object_init](this: typeof properties) {
+          init(disposablePrototype, this);
+          init(enumeratorPrototype, this);
+        },
+        [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+          pipe(this, dispose());
+        },
+      }),
+    );
 
     return () => createEnumerable(() => createInstance());
   })();
@@ -186,34 +187,35 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] = (() => {
     f: none as unknown as Updater<any>,
   };
 
-  const prototype = mix(disposablePrototype, enumeratorPrototype, {
-    [Object_init]<T>(
-      this: typeof properties & MutableEnumeratorLike,
-      f: Updater<T>,
-      acc: T,
-    ) {
-      init(disposablePrototype, this);
-      init(enumeratorPrototype, this);
-      this.f = f;
-      this[EnumeratorLike_current] = acc;
-    },
-    [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
-      if (!isDisposed(this)) {
-        try {
-          this[EnumeratorLike_current] = this.f(this);
-        } catch (cause) {
-          pipe(this, dispose({ cause }));
-        }
-      }
-    },
-  });
-
   const createInstance = createObjectFactory<
     EnumeratorLike<any>,
     typeof properties,
     Updater<any>,
     unknown
-  >(prototype, properties);
+  >(
+    properties,
+    mix(disposablePrototype, enumeratorPrototype, {
+      [Object_init](
+        this: typeof properties & MutableEnumeratorLike,
+        f: Updater<any>,
+        acc: unknown,
+      ) {
+        init(disposablePrototype, this);
+        init(enumeratorPrototype, this);
+        this.f = f;
+        this[EnumeratorLike_current] = acc;
+      },
+      [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+        if (!isDisposed(this)) {
+          try {
+            this[EnumeratorLike_current] = this.f(this);
+          } catch (cause) {
+            pipe(this, dispose({ cause }));
+          }
+        }
+      },
+    }),
+  );
 
   return <T>(generator: Updater<T>, initialValue: Factory<T>) =>
     createEnumerable(() => createInstance(generator, initialValue()));

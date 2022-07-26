@@ -109,50 +109,51 @@ const createContinuation: Function2<
     f: () => {},
   };
 
-  const prototype = mix(disposablePrototype, {
-    [ContinuationLike_run](this: typeof properties & ContinuationLike) {
-      if (!isDisposed(this)) {
-        let error: Option<Error> = none;
-        let yieldError: Option<YieldError> = none;
-
-        const { scheduler } = this;
-        const oldCurrentScheduler = currentScheduler;
-        currentScheduler = scheduler;
-        try {
-          this.f();
-        } catch (cause) {
-          if (isYieldError(cause)) {
-            yieldError = cause;
-          } else {
-            error = { cause };
-          }
-        }
-        currentScheduler = oldCurrentScheduler;
-
-        if (isSome(yieldError)) {
-          pipe(scheduler, schedule(this, yieldError));
-        } else {
-          pipe(this, dispose(error));
-        }
-      }
-    },
-    [Object_init](
-      this: typeof properties,
-      scheduler: SchedulerLike,
-      f: SideEffect,
-    ) {
-      init(disposablePrototype, this);
-      this.scheduler = scheduler;
-      this.f = f;
-    },
-  });
-
   return createObjectFactory<
     ContinuationLike,
     typeof properties,
     SchedulerLike,
     SideEffect
-  >(prototype, properties);
+  >(
+    properties,
+    mix(disposablePrototype, {
+      [ContinuationLike_run](this: typeof properties & ContinuationLike) {
+        if (!isDisposed(this)) {
+          let error: Option<Error> = none;
+          let yieldError: Option<YieldError> = none;
+
+          const { scheduler } = this;
+          const oldCurrentScheduler = currentScheduler;
+          currentScheduler = scheduler;
+          try {
+            this.f();
+          } catch (cause) {
+            if (isYieldError(cause)) {
+              yieldError = cause;
+            } else {
+              error = { cause };
+            }
+          }
+          currentScheduler = oldCurrentScheduler;
+
+          if (isSome(yieldError)) {
+            pipe(scheduler, schedule(this, yieldError));
+          } else {
+            pipe(this, dispose(error));
+          }
+        }
+      },
+      [Object_init](
+        this: typeof properties,
+        scheduler: SchedulerLike,
+        f: SideEffect,
+      ) {
+        init(disposablePrototype, this);
+        this.scheduler = scheduler;
+        this.f = f;
+      },
+    }),
+  );
 })();
 
 export const __yield = (options?: { delay?: number }) => {
@@ -342,11 +343,25 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
       yieldRequested: false,
     };
 
-    const prototype = mix(
-      disposablePrototype,
-      enumeratorPrototype,
-      disposableRefPrototype,
-      {
+    return createObjectFactory<
+      QueueSchedulerLike,
+      typeof properties,
+      SchedulerLike
+    >(
+      properties,
+      mix(disposablePrototype, enumeratorPrototype, disposableRefPrototype, {
+        [Object_init](
+          this: typeof properties & DisposableLike,
+          host: SchedulerLike,
+        ) {
+          init(disposablePrototype, this);
+          init(enumeratorPrototype, this);
+          init(disposableRefPrototype, this, disposed);
+
+          this.delayed = createPriorityQueue(delayedComparator);
+          this.queue = createPriorityQueue(taskComparator);
+          this.host = host;
+        },
         get [SchedulerLike_now](): number {
           const self = this as unknown as typeof properties;
           return getCurrentTime(self.host);
@@ -386,17 +401,6 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           if (isSome(task)) {
             this[EnumeratorLike_current] = task;
           }
-        },
-        [Object_init](
-          this: typeof properties & DisposableLike,
-          host: SchedulerLike,
-        ) {
-          init(disposablePrototype, this);
-          init(disposableRefPrototype, this, disposed);
-
-          this.delayed = createPriorityQueue(delayedComparator);
-          this.queue = createPriorityQueue(taskComparator);
-          this.host = host;
         },
         [SchedulerLike_requestYield](this: typeof properties): void {
           this.yieldRequested = true;
@@ -448,14 +452,8 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
             scheduleOnHost(this);
           }
         },
-      },
+      }),
     );
-
-    return createObjectFactory<
-      QueueSchedulerLike,
-      typeof properties,
-      SchedulerLike
-    >(prototype, properties);
   })();
 
 export const toPausableScheduler: Function1<

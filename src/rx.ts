@@ -199,74 +199,75 @@ export const createSubject = /*@__PURE__*/ (() => {
     replayed: none as unknown as Array<unknown>,
   };
 
-  const prototype = mix(disposablePrototype, {
-    [Object_init](this: typeof properties, replay: number) {
-      init(disposablePrototype, this);
-      this[MulticastObservableLike_replay] = replay;
-      this.observers = newInstance<Set<ObserverLike>>(Set);
-      this.replayed = [];
-    },
-
-    [ObservableLike_observableType]: 0 as typeof DefaultObservable,
-
-    get [MulticastObservableLike_observerCount]() {
-      const self = this as unknown as typeof properties;
-      return self.observers.size;
-    },
-
-    [SubjectLike_publish]<T>(this: typeof properties, next: T) {
-      if (!isDisposed(this)) {
-        const { replayed } = this;
-
-        const replay = this[MulticastObservableLike_replay];
-
-        if (replay > 0) {
-          replayed.push(next);
-          if (getLength(replayed) > replay) {
-            replayed.shift();
-          }
-        }
-
-        for (const observer of this.observers) {
-          pipe(observer, getDispatcher, dispatch(next));
-        }
-      }
-    },
-
-    [ReactiveContainerLike_sinkInto]<T>(
-      this: typeof properties & SubjectLike<T>,
-      observer: ObserverLike<T>,
-    ) {
-      if (!isDisposed(this)) {
-        const { observers } = this;
-        observers.add(observer);
-
-        pipe(
-          observer,
-          onDisposed(_ => {
-            observers.delete(observer);
-          }),
-        );
-      }
-
-      const dispatcher = getDispatcher(observer);
-
-      // The idea here is that an onSubscribe function may
-      // call next from unscheduled sources such as event handlers.
-      // So we marshall those events back to the scheduler.
-      for (const next of this.replayed) {
-        pipe(dispatcher, dispatch(next));
-      }
-
-      pipe(this, addIgnoringChildErrors(dispatcher));
-    },
-  });
-
   const createInstance = /*@__PURE__*/ createObjectFactory<
     SubjectLike<any>,
     typeof properties,
     number
-  >(prototype, properties);
+  >(
+    properties,
+    mix(disposablePrototype, {
+      [Object_init](this: typeof properties, replay: number) {
+        init(disposablePrototype, this);
+        this[MulticastObservableLike_replay] = replay;
+        this.observers = newInstance<Set<ObserverLike>>(Set);
+        this.replayed = [];
+      },
+
+      [ObservableLike_observableType]: 0 as typeof DefaultObservable,
+
+      get [MulticastObservableLike_observerCount]() {
+        const self = this as unknown as typeof properties;
+        return self.observers.size;
+      },
+
+      [SubjectLike_publish](this: typeof properties, next: unknown) {
+        if (!isDisposed(this)) {
+          const { replayed } = this;
+
+          const replay = this[MulticastObservableLike_replay];
+
+          if (replay > 0) {
+            replayed.push(next);
+            if (getLength(replayed) > replay) {
+              replayed.shift();
+            }
+          }
+
+          for (const observer of this.observers) {
+            pipe(observer, getDispatcher, dispatch(next));
+          }
+        }
+      },
+
+      [ReactiveContainerLike_sinkInto](
+        this: typeof properties & SubjectLike,
+        observer: ObserverLike<any>,
+      ) {
+        if (!isDisposed(this)) {
+          const { observers } = this;
+          observers.add(observer);
+
+          pipe(
+            observer,
+            onDisposed(_ => {
+              observers.delete(observer);
+            }),
+          );
+        }
+
+        const dispatcher = getDispatcher(observer);
+
+        // The idea here is that an onSubscribe function may
+        // call next from unscheduled sources such as event handlers.
+        // So we marshall those events back to the scheduler.
+        for (const next of this.replayed) {
+          pipe(dispatcher, dispatch(next));
+        }
+
+        pipe(this, addIgnoringChildErrors(dispatcher));
+      },
+    }),
+  );
 
   return <T>(options?: { replay?: number }): SubjectLike<T> => {
     const { replay: replayOption = 0 } = options ?? {};

@@ -41,60 +41,56 @@ export const toScheduler = /*@__PURE__*/ (() => {
     priority: 0,
   };
 
-  const prototype = mix(disposablePrototype, {
-    [Object_init](
-      this: typeof properties,
-      scheduler: PrioritySchedulerLike,
-      priority: number,
-    ) {
-      init(disposablePrototype, this);
-      this.priorityScheduler = scheduler;
-      this.priority = priority;
-    },
-    get [SchedulerLike_inContinuation]() {
-      const self = this as unknown as typeof properties;
-      return isInContinuation(self.priorityScheduler);
-    },
-
-    get [SchedulerLike_now]() {
-      const self = this as unknown as typeof properties;
-      return getCurrentTime(self.priorityScheduler);
-    },
-
-    get [SchedulerLike_shouldYield]() {
-      const self = this as unknown as typeof properties;
-      return shouldYield(self.priorityScheduler);
-    },
-
-    [SchedulerLike_requestYield](): void {
-      const self = this as unknown as typeof properties;
-      requestYield(self.priorityScheduler);
-    },
-
-    [SchedulerLike_schedule](
-      this: typeof properties & DisposableLike,
-      continuation: ContinuationLike,
-      options?: { readonly delay?: number },
-    ) {
-      const delay = getDelay(options);
-
-      pipe(this, addIgnoringChildErrors(continuation));
-
-      if (!isDisposed(continuation)) {
-        this.priorityScheduler[SchedulerLike_schedule](continuation, {
-          priority: this.priority,
-          delay,
-        });
-      }
-    },
-  });
-
   const createInstance = createObjectFactory<
     SchedulerLike,
     typeof properties,
     PrioritySchedulerLike,
     number
-  >(prototype, properties);
+  >(
+    properties,
+    mix(disposablePrototype, {
+      [Object_init](
+        this: typeof properties,
+        scheduler: PrioritySchedulerLike,
+        priority: number,
+      ) {
+        init(disposablePrototype, this);
+        this.priorityScheduler = scheduler;
+        this.priority = priority;
+      },
+      get [SchedulerLike_inContinuation]() {
+        const self = this as unknown as typeof properties;
+        return isInContinuation(self.priorityScheduler);
+      },
+      get [SchedulerLike_now]() {
+        const self = this as unknown as typeof properties;
+        return getCurrentTime(self.priorityScheduler);
+      },
+      get [SchedulerLike_shouldYield]() {
+        const self = this as unknown as typeof properties;
+        return shouldYield(self.priorityScheduler);
+      },
+      [SchedulerLike_requestYield](this: typeof properties): void {
+        requestYield(this.priorityScheduler);
+      },
+      [SchedulerLike_schedule](
+        this: typeof properties & DisposableLike,
+        continuation: ContinuationLike,
+        options?: { readonly delay?: number },
+      ) {
+        const delay = getDelay(options);
+
+        pipe(this, addIgnoringChildErrors(continuation));
+
+        if (!isDisposed(continuation)) {
+          this.priorityScheduler[SchedulerLike_schedule](continuation, {
+            priority: this.priority,
+            delay,
+          });
+        }
+      },
+    }),
+  );
 
   return (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
     priorityScheduler =>
