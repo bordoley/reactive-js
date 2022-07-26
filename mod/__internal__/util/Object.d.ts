@@ -1,6 +1,12 @@
 import { Function1, Factory, Function2, Function3 } from "../../functions.mjs";
 declare const Object_init: unique symbol;
 declare const Object_properties: unique symbol;
+declare type PropertyTypeOf<T extends any[]> = T extends [
+    infer F,
+    ...infer R
+] ? (F extends {
+    [Object_properties]: unknown;
+} ? F[typeof Object_properties] : never) & PropertyTypeOf<R> : unknown;
 interface Init {
     <TProperties>(prototype: {
         [Object_properties]: TProperties;
@@ -39,27 +45,28 @@ interface ObjectFactory {
 }
 declare const createObjectFactory: ObjectFactory;
 interface MixWith {
-    <TProto0 extends object, TProto1 extends object>(p0: TProto0): Function1<TProto1, Identity<TProto0 & TProto1>>;
-    <TProto0 extends object, TProto1 extends object, TProto2 extends object>(p0: TProto0, p1: TProto1): Function1<TProto2, Identity<TProto0 & TProto1 & TProto2>>;
-    <TProto0 extends object, TProto1 extends object, TProto2 extends object, TProto3 extends object>(p0: TProto0, p1: TProto1, p2: TProto2): Function1<TProto3, Identity<TProto0 & TProto1 & TProto2 & TProto3>>;
+    <TProto0 extends object, TProto1 extends object>(p0: TProto0): Function1<TProto1, Identity<TProto0 & TProto1 & {
+        [Object_properties]: PropertyTypeOf<[
+            TProto0,
+            TProto1
+        ]>;
+    }>>;
+    <TProto0 extends object, TProto1 extends object, TProto2 extends object>(p0: TProto0, p1: TProto1): Function1<TProto2, Identity<TProto0 & TProto1 & TProto2 & {
+        [Object_properties]: PropertyTypeOf<[
+            TProto0,
+            TProto1,
+            TProto2
+        ]>;
+    }>>;
+    <TProto0 extends object, TProto1 extends object, TProto2 extends object, TProto3 extends object>(p0: TProto0, p1: TProto1, p2: TProto2): Function1<TProto3, Identity<TProto0 & TProto1 & TProto2 & TProto3 & {
+        [Object_properties]: PropertyTypeOf<[
+            TProto0,
+            TProto1,
+            TProto2,
+            TProto3
+        ]>;
+    }>>;
 }
 declare const mixWith: MixWith;
-interface MixWithProps {
-    <TProps0, TProps1>(p0: {
-        [Object_properties]: TProps0;
-    }): Function1<TProps1, Identity<TProps0 & TProps1>>;
-    <TProps0, TProps1, TProps2>(p0: {
-        [Object_properties]: TProps0;
-    }, p1: {
-        [Object_properties]: TProps1;
-    }): Function1<TProps2, Identity<TProps0 & TProps1 & TProps2>>;
-    <TProps0, TProps1, TProps2, TProps3>(p0: {
-        [Object_properties]: TProps0;
-    }, p1: {
-        [Object_properties]: TProps1;
-    }, p2: {
-        [Object_properties]: TProps2;
-    }): Function1<TProps3, Identity<TProps0 & TProps1 & TProps2 & TProps3>>;
-}
-declare const mixWithProps: MixWithProps;
-export { Object_init, Object_properties, createObjectFactory, init, mixWith, mixWithProps };
+declare const anyProperty: any;
+export { Object_init, Object_properties, PropertyTypeOf, anyProperty, createObjectFactory, init, mixWith };

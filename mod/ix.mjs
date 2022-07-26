@@ -1,7 +1,7 @@
 /// <reference types="./ix.d.ts" />
 import { prototype } from './__internal__/util/Disposable.mjs';
 import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
-import { mixWithProps, Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory, anyProperty } from './__internal__/util/Object.mjs';
 import { pipe, none, newInstance, forEach, pipeLazy } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { addTo } from './util/DisposableLike.mjs';
@@ -37,19 +37,16 @@ const createEnumerableUsingT = {
     using: createEnumerableUsing,
 };
 const emptyEnumerable = 
-/*@__PURE__*/ (() => {
-    const properties = pipe({}, mixWithProps(prototype, prototype$1));
-    return pipe({
-        [Object_properties]: properties,
-        [Object_init]() {
-            init(prototype, this);
-            init(prototype$1, this);
-        },
-        [SourceLike_move]() {
-            pipe(this, dispose());
-        },
-    }, mixWith(prototype, prototype$1), createObjectFactory(), f => pipeLazy(f, createEnumerable));
-})();
+/*@__PURE__*/ pipe({
+    [Object_properties]: {},
+    [Object_init]() {
+        init(prototype, this);
+        init(prototype$1, this);
+    },
+    [SourceLike_move]() {
+        pipe(this, dispose());
+    },
+}, mixWith(prototype, prototype$1), createObjectFactory(), f => pipeLazy(f, createEnumerable));
 const emptyEnumerableT = {
     empty: emptyEnumerable,
 };
@@ -62,9 +59,8 @@ const emptyEnumerableT = {
  */
 const generateEnumerable = 
 /*@__PURE__*/ (() => {
-    const properties = pipe({ f: none }, mixWithProps(prototype, prototype$1));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: { f: anyProperty },
         [Object_init](f, acc) {
             init(prototype, this);
             init(prototype$1, this);

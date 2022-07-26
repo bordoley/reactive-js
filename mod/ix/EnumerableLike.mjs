@@ -8,7 +8,7 @@ import { prototype as prototype$2 } from '../__internal__/util/Disposable.mjs';
 import { prototype as prototype$3 } from '../__internal__/util/DisposableRefLike.mjs';
 import { prototype as prototype$1, neverEnumerator } from '../__internal__/util/Enumerator.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
-import { mixWithProps, Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { none, pipeUnsafe, newInstance, pipe, getLength, max, returns, strictEquality, compose, isNone, raise, alwaysTrue, isSome, identity, forEach } from '../functions.mjs';
@@ -48,11 +48,10 @@ const liftT = {
     lift,
     variance: interactive,
 };
-const delegatingDisposableEnumeratorProperties = pipe({
-    delegate: none,
-}, mixWithProps(prototype, prototype$1));
 const delegatingDisposableEnumeratorPrototype = pipe({
-    [Object_properties]: delegatingDisposableEnumeratorProperties,
+    [Object_properties]: {
+        delegate: anyProperty,
+    },
     [Object_init](delegate) {
         init(prototype, this, delegate);
         init(prototype$1, this);
@@ -60,12 +59,11 @@ const delegatingDisposableEnumeratorPrototype = pipe({
     },
 }, mixWith(prototype, prototype$1));
 const buffer = /*@__PURE__*/ (() => {
-    const properties = pipe({
-        delegate: none,
-        maxBufferSize: 0,
-    }, mixWithProps(prototype$2, prototype$1));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            delegate: anyProperty,
+            maxBufferSize: 0,
+        },
         [Object_init](delegate, maxBufferSize) {
             init(prototype$2, this);
             init(prototype$1, this);
@@ -99,11 +97,10 @@ const bufferT = {
 };
 const concatAll = 
 /*@__PURE__*/ (() => {
-    const properties = pipe({
-        delegate: none,
-    }, mixWithProps(prototype$2, prototype$3, prototype$1));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            delegate: anyProperty,
+        },
         [Object_init](delegate) {
             init(prototype$2, this);
             init(prototype$3, this, neverEnumerator());
@@ -143,11 +140,8 @@ const concatT = {
 };
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
-    const properties = pipe({
-        equality: none,
-    }, mixWithProps(prototype, prototype$4));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: { equality: anyProperty },
         [Object_init](delegate, equality) {
             init(prototype, this, delegate);
             init(prototype$4, this, delegate);
@@ -179,11 +173,8 @@ const distinctUntilChangedT = {
     distinctUntilChanged,
 };
 const keep = /*@__PURE__*/ (() => {
-    const properties = pipe({
-        predicate: none,
-    }, mixWithProps(prototype, prototype$4));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: { predicate: anyProperty },
         [Object_init](delegate, predicate) {
             init(prototype, this, delegate);
             init(prototype$4, this, delegate);
@@ -207,11 +198,10 @@ const keepT = {
     keep,
 };
 const map = /*@__PURE__*/ (() => {
-    const properties = pipe({
-        mapper: none,
-    }, mixWithProps(delegatingDisposableEnumeratorPrototype));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            mapper: anyProperty,
+        },
         [Object_init](delegate, mapper) {
             init(delegatingDisposableEnumeratorPrototype, this, delegate);
             this.mapper = mapper;
@@ -233,11 +223,8 @@ const map = /*@__PURE__*/ (() => {
 })();
 const mapT = { map };
 const onNotify = /*@__PURE__*/ (() => {
-    const properties = pipe({
-        onNotify: none,
-    }, mixWithProps(prototype, prototype$4));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: { onNotify: anyProperty },
         [Object_init](delegate, onNotify) {
             init(prototype, this, delegate);
             init(prototype$4, this, delegate);
@@ -276,14 +263,13 @@ const pairwiseT = {
     pairwise,
 };
 const repeat = /*@__PURE__*/ (() => {
-    const properties = pipe({
-        count: 0,
-        enumerator: none,
-        shouldRepeat: none,
-        src: none,
-    }, mixWithProps(prototype$2));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            count: 0,
+            enumerator: none,
+            shouldRepeat: none,
+            src: none,
+        },
         [Object_init](src, shouldRepeat) {
             init(prototype$2, this);
             this.src = src;
@@ -337,12 +323,8 @@ const repeatT = {
     repeat,
 };
 const scan = /*@__PURE__*/ (() => {
-    const properties = {
-        ...delegatingDisposableEnumeratorProperties,
-        reducer: none,
-    };
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: { reducer: anyProperty },
         [Object_init](delegate, reducer, initialValue) {
             init(delegatingDisposableEnumeratorPrototype, this, delegate);
             this.reducer = reducer;
@@ -375,12 +357,11 @@ const scanT = {
 };
 const skipFirst = 
 /*@__PURE__*/ (() => {
-    const properties = pipe({
-        skipCount: 0,
-        count: 0,
-    }, mixWithProps(prototype, prototype$4));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            skipCount: 0,
+            count: 0,
+        },
         [Object_init](delegate, skipCount) {
             init(prototype, this, delegate);
             init(prototype$4, this, delegate);
@@ -406,12 +387,11 @@ const skipFirstT = {
 };
 const takeFirst = 
 /*@__PURE__*/ (() => {
-    const properties = pipe({
-        maxCount: 0,
-        count: 0,
-    }, mixWithProps(prototype, prototype$4));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            maxCount: 0,
+            count: 0,
+        },
         [Object_init](delegate, maxCount) {
             init(prototype, this, delegate);
             init(prototype$4, this, delegate);
@@ -435,12 +415,11 @@ const takeFirstT = {
 };
 const takeLast = 
 /*@__PURE__*/ (() => {
-    const properties = pipe({
-        maxCount: 0,
-        isStarted: false,
-    }, mixWithProps(prototype$2, prototype$4));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            maxCount: 0,
+            isStarted: false,
+        },
         [Object_init](delegate, maxCount) {
             init(prototype$2, this);
             init(prototype$4, this, delegate);
@@ -475,13 +454,12 @@ const takeLast =
 const takeLastT = { takeLast };
 const takeWhile = 
 /*@__PURE__*/ (() => {
-    const properties = pipe({
-        predicate: none,
-        inclusive: false,
-        done: false,
-    }, mixWithProps(prototype, prototype$4));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            predicate: anyProperty,
+            inclusive: false,
+            done: false,
+        },
         [Object_init](delegate, predicate, inclusive) {
             init(prototype, this, delegate);
             init(prototype$4, this, delegate);
@@ -517,11 +495,10 @@ const takeWhileT = { takeWhile };
 const TContainerOf = undefined;
 const throwIfEmpty = 
 /*@__PURE__*/ (() => {
-    const properties = pipe({
-        isEmpty: true,
-    }, mixWithProps(prototype$2, prototype$4));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            isEmpty: true,
+        },
         [Object_init](delegate) {
             init(prototype$2, this);
             init(prototype$4, this, delegate);
@@ -610,11 +587,10 @@ const zip = /*@__PURE__*/ (() => {
         }
     };
     const allHaveCurrent = (enumerators) => pipe(enumerators, every(hasCurrent));
-    const properties = pipe({
-        enumerators: none,
-    }, mixWithProps(prototype$2, prototype$1));
     const createInstance = pipe({
-        [Object_properties]: properties,
+        [Object_properties]: {
+            enumerators: anyProperty,
+        },
         [Object_init](enumerators) {
             init(prototype$2, this);
             init(prototype$1, this);

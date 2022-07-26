@@ -21,10 +21,11 @@ import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
   Object_init,
   Object_properties,
+  PropertyTypeOf,
+  anyProperty,
   createObjectFactory,
   init,
   mixWith,
-  mixWithProps,
 } from "../__internal__/util/Object";
 import {
   Function1,
@@ -97,19 +98,19 @@ const createContinuation: Function2<
   SideEffect,
   ContinuationLike
 > = /*@__PURE__*/ (() => {
-  const properties = pipe(
-    {
-      scheduler: none as unknown as SchedulerLike,
-      f: (() => {}) as SideEffect,
-    },
-    mixWithProps(disposablePrototype),
-  );
+  type TProperties = PropertyTypeOf<[typeof disposablePrototype]> & {
+    scheduler: SchedulerLike;
+    f: SideEffect;
+  };
 
   return pipe(
     {
-      [Object_properties]: properties,
+      [Object_properties]: {
+        scheduler: anyProperty,
+        f: anyProperty,
+      },
       [Object_init](
-        this: typeof properties,
+        this: TProperties,
         scheduler: SchedulerLike,
         f: SideEffect,
       ) {
@@ -117,7 +118,7 @@ const createContinuation: Function2<
         this.scheduler = scheduler;
         this.f = f;
       },
-      [ContinuationLike_run](this: typeof properties & ContinuationLike) {
+      [ContinuationLike_run](this: TProperties & ContinuationLike) {
         if (!isDisposed(this)) {
           let error: Option<Error> = none;
           let yieldError: Option<YieldError> = none;
@@ -147,7 +148,7 @@ const createContinuation: Function2<
     mixWith(disposablePrototype),
     createObjectFactory<
       ContinuationLike,
-      typeof properties,
+      TProperties,
       SchedulerLike,
       SideEffect
     >(),
@@ -224,7 +225,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
       return diff;
     };
 
-    const peek = (self: typeof properties): Option<QueueTask> => {
+    const peek = (self: TProperties): Option<QueueTask> => {
       const { delayed, queue } = self;
       const now = getCurrentTime(self.host);
 
@@ -266,7 +267,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     };
 
     const priorityShouldYield = (
-      self: typeof properties & EnumeratorLike<QueueTask>,
+      self: TProperties & EnumeratorLike<QueueTask>,
       next: QueueTask,
     ): boolean => {
       const { [EnumeratorLike_current]: current } = self;
@@ -279,7 +280,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     };
 
     const scheduleOnHost = (
-      self: typeof properties & DisposableRefLike & EnumeratorLike,
+      self: TProperties & DisposableRefLike & EnumeratorLike,
     ) => {
       const task = peek(self);
 
@@ -326,32 +327,38 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
       );
     };
 
-    const properties = pipe(
-      {
-        [SchedulerLike_inContinuation]: false,
-        delayed: none as unknown as QueueLike<QueueTask>,
-        dueTime: 0,
-        host: none as unknown as SchedulerLike,
-        hostContinuation: none as Option<SideEffect>,
-        isPaused: false,
-        queue: none as unknown as QueueLike<QueueTask>,
-        taskIDCounter: 0,
-        yieldRequested: false,
-      },
-      mixWithProps(
-        disposablePrototype,
-        enumeratorPrototype,
-        disposableRefPrototype,
-      ),
-    );
+    type TProperties = PropertyTypeOf<
+      [
+        typeof disposablePrototype,
+        typeof enumeratorPrototype,
+        typeof disposableRefPrototype,
+      ]
+    > & {
+      [SchedulerLike_inContinuation]: boolean;
+      delayed: QueueLike<QueueTask>;
+      dueTime: number;
+      host: SchedulerLike;
+      hostContinuation: Option<SideEffect>;
+      isPaused: boolean;
+      queue: QueueLike<QueueTask>;
+      taskIDCounter: number;
+      yieldRequested: boolean;
+    };
 
     return pipe(
       {
-        [Object_properties]: properties,
-        [Object_init](
-          this: typeof properties & DisposableLike,
-          host: SchedulerLike,
-        ) {
+        [Object_properties]: {
+          [SchedulerLike_inContinuation]: false,
+          delayed: anyProperty,
+          dueTime: 0,
+          host: anyProperty,
+          hostContinuation: anyProperty,
+          isPaused: false,
+          queue: anyProperty,
+          taskIDCounter: 0,
+          yieldRequested: false,
+        },
+        [Object_init](this: TProperties & DisposableLike, host: SchedulerLike) {
           init(disposablePrototype, this);
           init(enumeratorPrototype, this);
           init(disposableRefPrototype, this, disposed);
@@ -361,11 +368,11 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           this.host = host;
         },
         get [SchedulerLike_now](): number {
-          const self = this as unknown as typeof properties;
+          const self = this as unknown as TProperties;
           return getCurrentTime(self.host);
         },
         get [SchedulerLike_shouldYield](): boolean {
-          const self = this as unknown as typeof properties &
+          const self = this as unknown as TProperties &
             EnumeratorLike<QueueTask>;
 
           const {
@@ -390,7 +397,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           );
         },
         [SourceLike_move](
-          this: typeof properties & MutableEnumeratorLike<QueueTask>,
+          this: TProperties & MutableEnumeratorLike<QueueTask>,
         ): void {
           // First fast forward through any disposed tasks.
           peek(this);
@@ -400,23 +407,21 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
             this[EnumeratorLike_current] = task;
           }
         },
-        [SchedulerLike_requestYield](this: typeof properties): void {
+        [SchedulerLike_requestYield](this: TProperties): void {
           this.yieldRequested = true;
         },
-        [PauseableLike_pause](this: typeof properties & DisposableRefLike) {
+        [PauseableLike_pause](this: TProperties & DisposableRefLike) {
           this.isPaused = true;
           this[MutableRefLike_current] = disposed;
         },
         [PauseableLike_resume](
-          this: typeof properties & DisposableRefLike & EnumeratorLike,
+          this: TProperties & DisposableRefLike & EnumeratorLike,
         ) {
           this.isPaused = false;
           scheduleOnHost(this);
         },
         [SchedulerLike_schedule](
-          this: typeof properties &
-            DisposableRefLike &
-            EnumeratorLike<QueueTask>,
+          this: TProperties & DisposableRefLike & EnumeratorLike<QueueTask>,
           continuation: ContinuationLike,
           options?: QueueSchedulerOptions,
         ) {
@@ -452,11 +457,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
         },
       },
       mixWith(disposablePrototype, enumeratorPrototype, disposableRefPrototype),
-      createObjectFactory<
-        QueueSchedulerLike,
-        typeof properties,
-        SchedulerLike
-      >(),
+      createObjectFactory<QueueSchedulerLike, TProperties, SchedulerLike>(),
     );
   })();
 

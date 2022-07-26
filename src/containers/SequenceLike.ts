@@ -6,10 +6,11 @@ import {
 import {
   Object_init,
   Object_properties,
+  PropertyTypeOf,
+  anyProperty,
   createObjectFactory,
   init,
   mixWith,
-  mixWithProps,
 } from "../__internal__/util/Object";
 import {
   Concat,
@@ -413,22 +414,23 @@ export const takeWhileT: TakeWhile<SequenceLike> = { takeWhile };
 
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   /*@__PURE__*/ (() => {
-    const properties = pipe(
-      {
-        seq: (() => none) as SequenceLike,
-      },
-      mixWithProps(disposablePrototype, enumeratorPrototype),
-    );
+    type TProperties = PropertyTypeOf<
+      [typeof disposablePrototype, typeof enumeratorPrototype]
+    > & {
+      seq: SequenceLike;
+    };
 
     const createInstance = pipe(
       {
-        [Object_properties]: properties,
-        [Object_init](this: typeof properties, seq: SequenceLike) {
+        [Object_properties]: {
+          seq: anyProperty,
+        },
+        [Object_init](this: TProperties, seq: SequenceLike) {
           init(disposablePrototype, this);
           init(enumeratorPrototype, this);
           this.seq = seq;
         },
-        [SourceLike_move](this: typeof properties & MutableEnumeratorLike) {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
           if (!isDisposed(this)) {
             const next = this.seq();
             if (isSome(next)) {
@@ -441,11 +443,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
         },
       },
       mixWith(disposablePrototype, enumeratorPrototype),
-      createObjectFactory<
-        EnumeratorLike<any>,
-        typeof properties,
-        SequenceLike
-      >(),
+      createObjectFactory<EnumeratorLike<any>, TProperties, SequenceLike>(),
     );
 
     return <T>() =>

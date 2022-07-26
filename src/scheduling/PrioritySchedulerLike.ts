@@ -3,12 +3,13 @@ import { prototype as disposablePrototype } from "../__internal__/util/Disposabl
 import {
   Object_init,
   Object_properties,
+  PropertyTypeOf,
+  anyProperty,
   createObjectFactory,
   init,
   mixWith,
-  mixWithProps,
 } from "../__internal__/util/Object";
-import { Function1, none, pipe } from "../functions";
+import { Function1, pipe } from "../functions";
 import {
   PrioritySchedulerLike,
   SchedulerLike,
@@ -34,19 +35,19 @@ import {
  * @param priority The priority to schedule work at.
  */
 export const toScheduler = /*@__PURE__*/ (() => {
-  const properties = pipe(
-    {
-      priorityScheduler: none as unknown as PrioritySchedulerLike,
-      priority: 0,
-    },
-    mixWithProps(disposablePrototype),
-  );
+  type TProperties = PropertyTypeOf<[typeof disposablePrototype]> & {
+    priorityScheduler: PrioritySchedulerLike;
+    priority: number;
+  };
 
   const createInstance = pipe(
     {
-      [Object_properties]: properties,
+      [Object_properties]: {
+        priorityScheduler: anyProperty,
+        priority: 0,
+      },
       [Object_init](
-        this: typeof properties,
+        this: TProperties,
         scheduler: PrioritySchedulerLike,
         priority: number,
       ) {
@@ -55,22 +56,22 @@ export const toScheduler = /*@__PURE__*/ (() => {
         this.priority = priority;
       },
       get [SchedulerLike_inContinuation]() {
-        const self = this as unknown as typeof properties;
+        const self = this as unknown as TProperties;
         return isInContinuation(self.priorityScheduler);
       },
       get [SchedulerLike_now]() {
-        const self = this as unknown as typeof properties;
+        const self = this as unknown as TProperties;
         return getCurrentTime(self.priorityScheduler);
       },
       get [SchedulerLike_shouldYield]() {
-        const self = this as unknown as typeof properties;
+        const self = this as unknown as TProperties;
         return shouldYield(self.priorityScheduler);
       },
-      [SchedulerLike_requestYield](this: typeof properties): void {
+      [SchedulerLike_requestYield](this: TProperties): void {
         requestYield(this.priorityScheduler);
       },
       [SchedulerLike_schedule](
-        this: typeof properties & DisposableLike,
+        this: TProperties & DisposableLike,
         continuation: ContinuationLike,
         options?: { readonly delay?: number },
       ) {
@@ -89,7 +90,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
     mixWith(disposablePrototype),
     createObjectFactory<
       SchedulerLike,
-      typeof properties,
+      TProperties,
       PrioritySchedulerLike,
       number
     >(),
