@@ -84,7 +84,7 @@ const buffer = /*@__PURE__*/ (() => {
             if (bufferLength > 0) {
                 this[EnumeratorLike_current] = buffer;
             }
-            if (bufferLength < maxBufferSize) {
+            else if (bufferLength === 0) {
                 pipe(this, dispose());
             }
         },

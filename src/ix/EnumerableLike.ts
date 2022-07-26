@@ -235,9 +235,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (() => {
       const bufferLength = getLength(buffer);
       if (bufferLength > 0) {
         this[EnumeratorLike_current] = buffer;
-      }
-
-      if (bufferLength < maxBufferSize) {
+      } else if (bufferLength === 0) {
         pipe(this, dispose());
       }
     },
