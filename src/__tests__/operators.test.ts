@@ -55,6 +55,24 @@ export const bufferTests = <C extends ContainerLike>(
         ),
       ),
     ),
+
+    test(
+      "last buffer is short",
+      pipeLazy(
+        [1, 2, 3, 4, 5, 6, 7, 8],
+        m.fromArray(),
+        m.buffer({ maxBufferSize: 3 }),
+        m.toReadonlyArray(),
+        expectArrayEquals<readonly number[]>(
+          [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8],
+          ],
+          arrayEquality(),
+        ),
+      ),
+    ),
   );
 
 export const concatAllTests = <C extends ContainerLike>(
