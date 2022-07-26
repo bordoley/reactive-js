@@ -161,33 +161,12 @@ export type ToRunnable<
   ): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
 
-interface CreateObservable {
-  <T>(
-    f: SideEffect1<ObserverLike<T>>,
-    type: typeof EnumerableObservable,
-  ): EnumerableObservableLike<T>;
-  <T>(
-    f: SideEffect1<ObserverLike<T>>,
-    type: typeof RunnableObservable,
-  ): RunnableObservableLike<T>;
-  <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T>;
-}
-
-export const createObservable: CreateObservable = /*@__PURE__*/ (() => {
+export const createObservable = /*@__PURE__*/ (() => {
   class CreateObservable<T> implements ObservableLike<T> {
-    readonly [ObservableLike_observableType]:
-      | typeof DefaultObservable
-      | typeof EnumerableObservable
-      | typeof RunnableObservable;
+    constructor(private readonly f: SideEffect1<ObserverLike<T>>) {}
 
-    constructor(
-      private readonly f: SideEffect1<ObserverLike<T>>,
-      type:
-        | typeof DefaultObservable
-        | typeof EnumerableObservable
-        | typeof RunnableObservable,
-    ) {
-      this[ObservableLike_observableType] = type;
+    get [ObservableLike_observableType](): typeof DefaultObservable {
+      return 0;
     }
 
     [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
@@ -199,13 +178,8 @@ export const createObservable: CreateObservable = /*@__PURE__*/ (() => {
     }
   }
 
-  return <T>(
-    f: SideEffect1<ObserverLike<T>>,
-    type:
-      | typeof DefaultObservable
-      | typeof EnumerableObservable
-      | typeof RunnableObservable = 0,
-  ) => newInstance(CreateObservable, f, type) as any;
+  return <T>(f: SideEffect1<ObserverLike<T>>) =>
+    newInstance(CreateObservable, f) as any;
 })();
 
 const createObservableT: CreateReactiveContainer<ObservableLike> = {
