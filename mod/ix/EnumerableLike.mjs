@@ -1,5 +1,6 @@
 /// <reference types="./EnumerableLike.d.ts" />
 import { interactive, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
+import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { properties, prototype } from '../__internal__/util/DelegatingDisposable.mjs';
 import { properties as properties$4, prototype as prototype$4, move as move$1 } from '../__internal__/util/DelegatingEnumerator.mjs';
 import { properties as properties$2, prototype as prototype$2 } from '../__internal__/util/Disposable.mjs';
@@ -11,9 +12,13 @@ import { emptyReadonlyArray } from '../containers.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { none, pipeUnsafe, newInstance, pipe, strictEquality, compose, isSome, getLength, identity, forEach } from '../functions.mjs';
 import { InteractiveContainerLike_interact, emptyEnumerableT, emptyEnumerable, createEnumerable } from '../ix.mjs';
+import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import { getScheduler } from '../scheduling/ObserverLike.mjs';
+import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
 import { add, bindTo, addTo } from '../util/DisposableLike.mjs';
 import { move, getCurrent, hasCurrent } from '../util/EnumeratorLike.mjs';
+import { notifySink } from '../util/SinkLike.mjs';
 import { isDisposed, dispose, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const enumerate = () => (enumerable) => {
@@ -462,6 +467,31 @@ const toEnumerable = () => identity;
 const toEnumerableT = {
     toEnumerable,
 };
+const toObservable = /*@__PURE__*/ (() => {
+    class ToEnumerableObservable {
+        constructor(enumerable, delay) {
+            this.enumerable = enumerable;
+            this.delay = delay;
+        }
+        get [ObservableLike_observableType]() {
+            return this.delay > 0 ? RunnableObservable : EnumerableObservable;
+        }
+        [ReactiveContainerLike_sinkInto](observer) {
+            const enumerator = pipe(this.enumerable, enumerate(), bindTo(observer));
+            const options = { delay: this.delay };
+            pipe(observer, getScheduler, schedule(() => {
+                while (!isDisposed(observer) && move(enumerator)) {
+                    pipe(enumerator, getCurrent, notifySink(observer));
+                    __yield(options);
+                }
+            }, options));
+        }
+    }
+    return (options) => (enumerable) => {
+        const delay = getDelay(options);
+        return newInstance(ToEnumerableObservable, enumerable, delay);
+    };
+})();
 const toReadonlyArray = () => (enumerable) => {
     const enumerator = pipe(enumerable, enumerate());
     const result = [];
@@ -538,4 +568,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, toReadonlyArrayT, zipT };
+export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toReadonlyArray, toReadonlyArrayT, zipT };
