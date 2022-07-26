@@ -11,7 +11,7 @@ import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLik
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { none, pipeUnsafe, newInstance, pipe, getLength, max, strictEquality, compose, isNone, raise, alwaysTrue, isSome, identity, forEach } from '../functions.mjs';
+import { none, pipeUnsafe, newInstance, pipe, getLength, max, returns, strictEquality, compose, isNone, raise, alwaysTrue, isSome, identity, forEach } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT, emptyEnumerable } from '../ix.mjs';
 import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -141,7 +141,7 @@ const concatAll =
         },
     }, mixWith(prototype$2, prototype$3, prototype$1), createObjectFactory());
     const operator = (delegate) => pipe(createInstance(delegate), add(delegate));
-    return () => lift(operator);
+    return returns(lift(operator));
 })();
 const concatAllT = { concatAll };
 const concat = (...enumerables) => pipe(enumerables, toEnumerable$1(), concatAll());
