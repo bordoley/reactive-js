@@ -65,12 +65,7 @@ declare type ToEnumerableObservable<C extends ContainerLike, TOptions = never> =
 declare type ToRunnable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toRunnable<T>(options?: TOptions): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
-interface CreateObservable {
-    <T>(f: SideEffect1<ObserverLike<T>>, type: typeof EnumerableObservable): EnumerableObservableLike<T>;
-    <T>(f: SideEffect1<ObserverLike<T>>, type: typeof RunnableObservable): RunnableObservableLike<T>;
-    <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T>;
-}
-declare const createObservable: CreateObservable;
+declare const createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => any;
 declare const createSubject: <T>(options?: {
     replay?: number;
 }) => SubjectLike<T>;

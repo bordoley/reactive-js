@@ -23,9 +23,11 @@ const MulticastObservableLike_replay = Symbol("MulticastObservableLike_replay");
 const SubjectLike_publish = Symbol("SubjectLike_publish");
 const createObservable = /*@__PURE__*/ (() => {
     class CreateObservable {
-        constructor(f, type) {
+        constructor(f) {
             this.f = f;
-            this[ObservableLike_observableType] = type;
+        }
+        get [ObservableLike_observableType]() {
+            return 0;
         }
         [ReactiveContainerLike_sinkInto](observer) {
             try {
@@ -36,7 +38,7 @@ const createObservable = /*@__PURE__*/ (() => {
             }
         }
     }
-    return (f, type = 0) => newInstance(CreateObservable, f, type);
+    return (f) => newInstance(CreateObservable, f);
 })();
 const createObservableT = {
     create: createObservable,
