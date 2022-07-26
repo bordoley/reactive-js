@@ -144,45 +144,7 @@ ___
 
 ### createObservable
 
-▸ **createObservable**<`T`\>(`f`, `type`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
-| `type` | ``2`` |
-
-#### Returns
-
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-▸ **createObservable**<`T`\>(`f`, `type`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
-| `type` | ``1`` |
-
-#### Returns
-
-[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-▸ **createObservable**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **createObservable**<`T`\>(`f`): `any`
 
 #### Type parameters
 
@@ -198,7 +160,7 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+`any`
 
 ___
 
