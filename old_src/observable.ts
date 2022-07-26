@@ -139,10 +139,6 @@ export interface FromObservable<C extends ContainerLike> extends Container<C> {
   fromObservable<T>(): Function1<ObservableLike<T>, ContainerOf<C, T>>;
 }
 
-export interface ToObservable<C extends ContainerLike> extends Container<C> {
-  toObservable: <T>() => Function1<ContainerOf<C, T>, ObservableLike<T>>;
-}
-
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
 export type ObservableOperator<A, B> = Function1<
   ObservableLike<A>,
@@ -232,8 +228,6 @@ export const catchError: CatchError<ObservableLike<unknown>>["catchError"] =
 export const catchErrorT: CatchError<ObservableLike<unknown>> = {
   catchError,
 };
-
-export const fromDisposable = /*@__PURE__*/ createFromDisposable(createT);
 
 export const decodeWithCharset: DecodeWithCharset<
   ObservableLike<unknown>
@@ -326,17 +320,6 @@ export const fromObservable: FromObservable<
 export const fromObservableT: FromObservable<ObservableLike<unknown>> = {
   fromObservable,
 };
-
-export const fromPromise = <T>(
-  factory: Factory<Promise<T>>,
-): ObservableLike<T> =>
-  /*@__PURE__*/ createObservable(({ dispatcher }) => {
-    factory().then(next => {
-      if (!isDisposed(dispatcher)) {
-        pipe(dispatcher, dispatch(next), dispose());
-      }
-    }, toErrorHandler(dispatcher));
-  });
 
 /**
  * Generates an `ObservableLike` sequence from a generator function

@@ -12,12 +12,18 @@ import {
   Container,
   ContainerLike,
   ContainerOf,
+  Defer,
   StatefulContainerLike,
   StatefulContainerStateOf,
+  Using,
 } from "./containers";
 import {
+  Factory,
   Function1,
+  SideEffect1,
+  forEach,
   getLength,
+  ignore,
   max,
   newInstance,
   none,
@@ -25,10 +31,13 @@ import {
 } from "./functions";
 import { ObserverLike } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
-import { getDispatcher } from "./scheduling/ObserverLike";
+import { getDispatcher, getScheduler } from "./scheduling/ObserverLike";
+import { schedule } from "./scheduling/SchedulerLike";
 import { DisposableLike, SinkLike } from "./util";
 import {
   addIgnoringChildErrors,
+  addTo,
+  dispose,
   isDisposed,
   onDisposed,
 } from "./util/DisposableLike";
@@ -38,7 +47,7 @@ export const ReactiveContainerLike_sinkInto = Symbol(
   "ReactiveContainerLike_sinkInto",
 );
 export interface ReactiveContainerLike extends StatefulContainerLike {
-  readonly TContainerOf?: this;
+  readonly TContainerOf?: ReactiveContainerLike;
   readonly TStatefulContainerState?: SinkLike;
 
   [ReactiveContainerLike_sinkInto](
@@ -66,6 +75,7 @@ export const ObservableLike_observableType = Symbol(
  * @noInheritDoc
  */
 export interface ObservableLike<T = unknown> extends ReactiveContainerLike {
+  readonly TContainerOf?: ObservableLike<this["T"]>;
   readonly TStatefulContainerState?: ObserverLike<T>;
 
   readonly [ObservableLike_observableType]:
@@ -111,15 +121,35 @@ export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
   [SubjectLike_publish](next: T): void;
 }
 
-export type CreateReactiveContainer<C extends ReactiveContainerLike> =
-  Container<C> & {
-    create<T>(
-      onSink: (sink: StatefulContainerStateOf<C, T>) => void,
-    ): ContainerOf<C, T>;
-  };
-
 export type Never<C extends ReactiveContainerLike> = Container<C> & {
   never<T>(): ContainerOf<C, T>;
+};
+
+export type ToObservable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toObservable: <T>(
+    options?: TOptions,
+  ) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
+};
+
+export type ToRunnableObservable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toRunnableObservable: <T>(
+    options?: TOptions,
+  ) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
+};
+
+export type ToEnumerableObservable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toEnumerableObservable: <T>(
+    options?: TOptions,
+  ) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
 };
 
 export type ToRunnable<
@@ -129,6 +159,57 @@ export type ToRunnable<
   toRunnable<T>(
     options?: TOptions,
   ): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+};
+
+interface CreateObservable {
+  <T>(
+    f: SideEffect1<ObserverLike<T>>,
+    type: typeof EnumerableObservable,
+  ): EnumerableObservableLike<T>;
+  <T>(
+    f: SideEffect1<ObserverLike<T>>,
+    type: typeof RunnableObservable,
+  ): RunnableObservableLike<T>;
+  <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T>;
+}
+
+export const createObservable: CreateObservable = /*@__PURE__*/ (() => {
+  class CreateObservable<T> implements ObservableLike<T> {
+    readonly [ObservableLike_observableType]:
+      | typeof DefaultObservable
+      | typeof EnumerableObservable
+      | typeof RunnableObservable;
+
+    constructor(
+      private readonly f: SideEffect1<ObserverLike<T>>,
+      type:
+        | typeof DefaultObservable
+        | typeof EnumerableObservable
+        | typeof RunnableObservable,
+    ) {
+      this[ObservableLike_observableType] = type;
+    }
+
+    [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
+      try {
+        this.f(observer);
+      } catch (cause) {
+        pipe(observer, dispose({ cause }));
+      }
+    }
+  }
+
+  return <T>(
+    f: SideEffect1<ObserverLike<T>>,
+    type:
+      | typeof DefaultObservable
+      | typeof EnumerableObservable
+      | typeof RunnableObservable = 0,
+  ) => newInstance(CreateObservable, f, type) as any;
+})();
+
+const createObservableT: CreateReactiveContainer<ObservableLike> = {
+  create: createObservable,
 };
 
 export const createSubject = /*@__PURE__*/ (() => {
@@ -219,3 +300,88 @@ export const createSubject = /*@__PURE__*/ (() => {
     return createInstance(replay);
   };
 })();
+
+type CreateReactiveContainer<C extends ReactiveContainerLike> = Container<C> & {
+  create<T>(
+    onSink: SideEffect1<StatefulContainerStateOf<C, T>>,
+  ): ContainerOf<C, T>;
+};
+
+const create =
+  <C extends ReactiveContainerLike, T>(m: CreateReactiveContainer<C>) =>
+  (onSink: (sink: StatefulContainerStateOf<C, T>) => void): ContainerOf<C, T> =>
+    m.create(onSink);
+
+const createUsing =
+  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
+  <TResource extends DisposableLike, T>(
+    resourceFactory: Factory<TResource | readonly TResource[]>,
+    sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
+  ): ContainerOf<C, T> =>
+    pipe((sink: StatefulContainerStateOf<C, T>) => {
+      pipe(
+        resourceFactory(),
+        resources => (Array.isArray(resources) ? resources : [resources]),
+        forEach<TResource>(addTo(sink)),
+        resources => sourceFactory(...resources),
+      )[ReactiveContainerLike_sinkInto](sink);
+    }, create(m));
+
+const createFromDisposable =
+  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
+  <T>(disposable: DisposableLike): ContainerOf<C, T> =>
+    pipe(disposable, addTo, create(m));
+
+const createNever = <C extends ReactiveContainerLike>(
+  m: CreateReactiveContainer<C>,
+) => {
+  const neverInstance: ContainerOf<C, any> = pipe(ignore, create(m));
+  return <T>(): ContainerOf<C, T> => neverInstance;
+};
+
+export const createObservableUsing: Using<ObservableLike>["using"] =
+  /*@__PURE__*/ createUsing(createObservableT);
+
+export const createObservableUsingT: Using<ObservableLike<unknown>> = {
+  using: createObservableUsing,
+};
+
+// FIXME: DisposableLike.toObservable would be better.
+export const fromDisposableObservable =
+  /*@__PURE__*/ createFromDisposable(createObservableT);
+
+interface DeferObservable {
+  <T>(
+    factory: Factory<SideEffect1<ObserverLike<T>>>,
+    options?: { readonly delay?: number },
+  ): ObservableLike<T>;
+  <T>(factory: Factory<ObservableLike<T>>): ObservableLike<T>;
+}
+
+export const deferObservable: DeferObservable = <T>(
+  factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
+  options?: { readonly delay?: number },
+): ObservableLike<T> =>
+  createObservable(observer => {
+    const sideEffect = factory();
+    if (typeof sideEffect === "function") {
+      const callback = () => sideEffect(observer);
+      pipe(
+        observer,
+        getScheduler,
+        schedule(callback, options),
+        addTo(observer),
+      );
+    } else {
+      sideEffect[ReactiveContainerLike_sinkInto](observer);
+    }
+  });
+
+export const deferObservableT: Defer<ObservableLike<unknown>> = {
+  defer: deferObservable,
+};
+
+export const neverObservable = /*@__PURE__*/ createNever(createObservableT);
+export const neverObservableT: Never<ObservableLike<unknown>> = {
+  never: neverObservable,
+};

@@ -26,10 +26,21 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ### Properties
 
+- [TContainerOf](rx.ObservableLike.md#tcontainerof)
 - [TStatefulContainerState](rx.ObservableLike.md#tstatefulcontainerstate)
 - [[ObservableLike\_observableType]](rx.ObservableLike.md#[observablelike_observabletype])
 
 ## Properties
+
+### TContainerOf
+
+• `Optional` `Readonly` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
+
+#### Overrides
+
+[ReactiveContainerLike](rx.ReactiveContainerLike.md).[TContainerOf](rx.ReactiveContainerLike.md#tcontainerof)
+
+___
 
 ### TStatefulContainerState
 

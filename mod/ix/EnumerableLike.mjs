@@ -8,15 +8,18 @@ import { properties as properties$1, prototype as prototype$1, neverEnumerator }
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
 import { mix, Object_init, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
-import { toEnumerable as toEnumerable$1, forEach, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { none, pipeUnsafe, newInstance, pipe, strictEquality, compose, isSome, getLength, identity } from '../functions.mjs';
+import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
+import { none, pipeUnsafe, newInstance, pipe, strictEquality, compose, isSome, getLength, identity, forEach } from '../functions.mjs';
 import { InteractiveContainerLike_interact, emptyEnumerableT, emptyEnumerable, createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
 import { add, bindTo, addTo } from '../util/DisposableLike.mjs';
 import { move, getCurrent, hasCurrent } from '../util/EnumeratorLike.mjs';
 import { isDisposed, dispose, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
-const enumerate = () => (enumerable) => enumerable[InteractiveContainerLike_interact](none);
+const enumerate = () => (enumerable) => {
+    debugger;
+    return enumerable[InteractiveContainerLike_interact](none);
+};
 const lift = /*@__PURE__*/ (() => {
     class LiftedEnumerable {
         constructor(src, operators) {
@@ -494,16 +497,6 @@ const toIterable =
     return () => enumerable => newInstance(EnumerableIterable, enumerable);
 })();
 const toIterableT = { toIterable };
-const using = (resourceFactory, enumerableFactory) => createEnumerable(() => {
-    const resources = resourceFactory();
-    const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    const enumerator = pipe(enumerableFactory(...resourcesArray), enumerate());
-    pipe(resourcesArray, forEach(addTo(enumerator)));
-    return enumerator;
-});
-const usingT = {
-    using,
-};
 const zip = /*@__PURE__*/ (() => {
     const moveAll = (enumerators) => {
         for (const enumerator of enumerators) {
@@ -545,4 +538,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, toReadonlyArrayT, using, usingT, zipT };
+export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toReadonlyArray, toReadonlyArrayT, zipT };

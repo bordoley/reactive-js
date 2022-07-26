@@ -42,7 +42,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`RunnableLike`](rx.RunnableLike.md)<`T`\>
+• `Optional` `Readonly` **TContainerOf**: [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)
 
 #### Inherited from
 
