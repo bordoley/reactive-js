@@ -1,10 +1,48 @@
 /// <reference types="./ObservableLike.d.ts" />
-import { ObservableLike_observableType } from '../rx.mjs';
+import { observerPrototype } from '../__internal__/scheduling/Observer.mjs';
+import { prototype } from '../__internal__/util/DelegatingDisposable.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { mapPrototype } from '../__internal__/util/Sink.mjs';
+import { pipeUnsafe, newInstance, pipe } from '../functions.mjs';
+import { ObservableLike_observableType, ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import { ObserverLike_scheduler } from '../scheduling.mjs';
+import { sourceFrom } from './ReactiveContainerLike.mjs';
 
-//import { ToPromise } from "../containers";
-//import { SchedulerLike } from "../scheduling";
 const getObservableType = (obs) => obs[ObservableLike_observableType];
 const TContainerOf = undefined;
+const lift = /*@__PURE__*/ (() => {
+    class LiftedObservable {
+        constructor(source, operators, observableType) {
+            this.source = source;
+            this.operators = operators;
+            this[ObservableLike_observableType] = observableType;
+        }
+        [ReactiveContainerLike_sinkInto](observer) {
+            pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
+        }
+    }
+    return (operator) => source => {
+        const sourceSource = source instanceof LiftedObservable ? source.source : source;
+        const allFunctions = source instanceof LiftedObservable
+            ? [operator, ...source.operators]
+            : [operator];
+        return newInstance(LiftedObservable, sourceSource, allFunctions, 0);
+    };
+})();
+const map = /*@__PURE__*/ (() => {
+    const createInstance = pipe({
+        [Object_properties]: {},
+        [Object_init](delegate, mapper) {
+            init(prototype, this, delegate);
+            init(observerPrototype, this, delegate[ObserverLike_scheduler]);
+            init(mapPrototype, this, delegate, mapper);
+        },
+    }, mixWith(prototype, observerPrototype, mapPrototype), createObjectFactory());
+    return (mapper) => {
+        const operator = (delegate) => createInstance(delegate, mapper);
+        return lift(operator);
+    };
+})();
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
@@ -50,4 +88,4 @@ export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
       );
     });*/
 
-export { TContainerOf, getObservableType };
+export { TContainerOf, getObservableType, map };

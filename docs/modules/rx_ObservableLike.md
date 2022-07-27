@@ -11,6 +11,7 @@
 ### Functions
 
 - [getObservableType](rx_ObservableLike.md#getobservabletype)
+- [map](rx_ObservableLike.md#map)
 
 ## Variables
 
@@ -33,3 +34,26 @@
 #### Returns
 
 ``0`` \| ``2`` \| ``1``
+
+___
+
+### map
+
+▸ **map**<`TA`, `TB`\>(`mapper`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
