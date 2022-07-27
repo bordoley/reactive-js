@@ -11,14 +11,14 @@ import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLik
 import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { none, pipeUnsafe, newInstance, pipe, getLength, max, returns, strictEquality, compose, isNone, raise, alwaysTrue, isSome, identity, forEach } from '../functions.mjs';
+import { none, pipeUnsafe, newInstance, pipe, getLength, max, returns, strictEquality, compose, isNone, raise, alwaysTrue, isSome, identity, forEach as forEach$1 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT, emptyEnumerable } from '../ix.mjs';
-import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
 import { SourceLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../util.mjs';
 import { add, addTo, bindTo } from '../util/DisposableLike.mjs';
-import { move, getCurrent, hasCurrent } from '../util/EnumeratorLike.mjs';
+import { move, getCurrent, hasCurrent, forEach } from '../util/EnumeratorLike.mjs';
 import { notifySink } from '../util/SinkLike.mjs';
 import { dispose, isDisposed, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
@@ -577,6 +577,19 @@ const toIterable =
     return () => enumerable => newInstance(EnumerableIterable, enumerable);
 })();
 const toIterableT = { toIterable };
+const toRunnable = 
+/*@__PURE__*/ (() => {
+    const enumeratorToRunnable = (f) => {
+        const run = (sink) => {
+            pipe(f(), add(sink), forEach(notifySink(sink)), dispose());
+        };
+        return createRunnable(run);
+    };
+    return () => (enumerable) => enumeratorToRunnable(() => enumerable[InteractiveContainerLike_interact]());
+})();
+const toRunnableT = {
+    toRunnable,
+};
 const zip = /*@__PURE__*/ (() => {
     const moveAll = (enumerators) => {
         for (const enumerator of enumerators) {
@@ -608,11 +621,11 @@ const zip = /*@__PURE__*/ (() => {
     }, mixWith(prototype$2, prototype$1), createObjectFactory());
     const zipEnumerators = (enumerators) => {
         const instance = createInstance(enumerators);
-        pipe(enumerators, forEach(addTo(instance)));
+        pipe(enumerators, forEach$1(addTo(instance)));
         return instance;
     };
     return (...enumerables) => createEnumerable(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
 })();
 const zipT = { zip };
 
-export { TContainerOf, buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toReadonlyArray, toReadonlyArrayT, zipT };
+export { TContainerOf, buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zipT };

@@ -101,8 +101,11 @@ import {
   ObservableLike,
   ObservableLike_observableType,
   ReactiveContainerLike_sinkInto,
+  RunnableLike,
   RunnableObservable,
   RunnableObservableLike,
+  ToRunnable,
+  createRunnable,
 } from "../rx";
 import { ObserverLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
@@ -112,6 +115,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  SinkLike,
   SourceLike_move,
 } from "../util";
 import {
@@ -122,7 +126,12 @@ import {
   getError,
   isDisposed,
 } from "../util/DisposableLike";
-import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
+import {
+  forEach as forEachEnumerator,
+  getCurrent,
+  hasCurrent,
+  move,
+} from "../util/EnumeratorLike";
 import { notifySink } from "../util/SinkLike";
 
 export const enumerate =
@@ -1159,6 +1168,28 @@ export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
   })();
 
 export const toIterableT: ToIterable<EnumerableLike> = { toIterable };
+
+export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
+  /*@__PURE__*/ (() => {
+    const enumeratorToRunnable = <T>(
+      f: Factory<EnumeratorLike<T>>,
+    ): RunnableLike<T> => {
+      const run = (sink: SinkLike<T>) => {
+        pipe(f(), add(sink), forEachEnumerator(notifySink(sink)), dispose());
+      };
+      return createRunnable(run);
+    };
+
+    return <T>() =>
+      (enumerable: EnumerableLike<T>): RunnableLike<T> =>
+        enumeratorToRunnable(() =>
+          enumerable[InteractiveContainerLike_interact](),
+        );
+  })();
+
+export const toRunnableT: ToRunnable<EnumerableLike<unknown>> = {
+  toRunnable,
+};
 
 const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {

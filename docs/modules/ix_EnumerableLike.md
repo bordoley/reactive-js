@@ -24,6 +24,7 @@
 - [toEnumerableT](ix_EnumerableLike.md#toenumerablet)
 - [toIterableT](ix_EnumerableLike.md#toiterablet)
 - [toReadonlyArrayT](ix_EnumerableLike.md#toreadonlyarrayt)
+- [toRunnableT](ix_EnumerableLike.md#torunnablet)
 - [zipT](ix_EnumerableLike.md#zipt)
 
 ### Functions
@@ -48,6 +49,7 @@
 - [toIterable](ix_EnumerableLike.md#toiterable)
 - [toObservable](ix_EnumerableLike.md#toobservable)
 - [toReadonlyArray](ix_EnumerableLike.md#toreadonlyarray)
+- [toRunnable](ix_EnumerableLike.md#torunnable)
 
 ## Variables
 
@@ -156,6 +158,12 @@ ___
 ### toReadonlyArrayT
 
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
+
+___
+
+### toRunnableT
+
+• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
@@ -659,3 +667,25 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
