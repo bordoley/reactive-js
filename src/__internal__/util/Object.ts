@@ -9,6 +9,12 @@ import {
 export const Object_init = Symbol("Object_init");
 export const Object_properties = Symbol("Object_properties");
 
+const {
+  create: createObject,
+  getOwnPropertyDescriptors,
+  prototype: objectPrototype,
+} = Object;
+
 export type PropertyTypeOf<T extends any[]> = T extends [infer F, ...infer R]
   ? (F extends {
       [Object_properties]: unknown;
@@ -47,22 +53,15 @@ interface Init {
   ): void;
 }
 
-export const init: Init = <
-  TPrototype extends {
-    [Object_properties]: TProperties;
-    [Object_init]: (
-      this: TPrototype & TProperties,
-      ...args: readonly any[]
-    ) => void;
-  },
-  TProperties,
->(
-  prototype: TPrototype,
-  self: TPrototype & TProperties,
+const initUnsafe = (
+  prototype: any,
+  self: any,
   ...args: readonly any[]
 ): void => {
   prototype[Object_init].call(self, ...args);
 };
+
+export const init: Init = initUnsafe;
 
 type Identity<T> = T extends object
   ? {
@@ -113,12 +112,24 @@ export const createObjectFactory: ObjectFactory =
       ...args: readonly any[]
     ) => void;
   }): Factory<TReturn> => {
-    const propertyDesccription = Object.getOwnPropertyDescriptors(
+    const propertyDescription = getOwnPropertyDescriptors(
       prototype[Object_properties],
     );
+
+    const prototypeDescription = getOwnPropertyDescriptors(prototype);
+    const {
+      [Object_properties]: _properties,
+      [Object_init]: _init,
+      ...objectPrototypeDescription
+    } = prototypeDescription;
+    const factoryPrototype = createObject(
+      objectPrototype,
+      objectPrototypeDescription as any,
+    );
+
     return (...args: readonly any[]) => {
-      const instance = Object.create(prototype, propertyDesccription);
-      instance[Object_init](...args);
+      const instance = createObject(factoryPrototype, propertyDescription);
+      initUnsafe(prototype, instance, ...args);
       return instance;
     };
   };
@@ -179,7 +190,7 @@ export const mixWith: MixWith =
   ) =>
   (lastProto: { [Object_properties]: object }) => {
     const propertyDescriptors = prototypes
-      .map(prototype => Object.getOwnPropertyDescriptors(prototype))
+      .map(prototype => getOwnPropertyDescriptors(prototype))
       .reduce((acc, next) => ({ ...acc, ...next }), {});
 
     const properties = [...prototypes, lastProto]
@@ -188,7 +199,7 @@ export const mixWith: MixWith =
 
     const descriptor = {
       ...propertyDescriptors,
-      ...Object.getOwnPropertyDescriptors(lastProto),
+      ...getOwnPropertyDescriptors(lastProto),
       [Object_properties]: {
         configurable: true,
         enumerable: true,
@@ -197,7 +208,7 @@ export const mixWith: MixWith =
       },
     };
 
-    return Object.create(Object.prototype, descriptor);
+    return createObject(objectPrototype, descriptor);
   };
 
 export const anyProperty: any = none;
