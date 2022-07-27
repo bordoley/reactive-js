@@ -1,5 +1,7 @@
 /// <reference types="./RunnableLike.d.ts" />
-import { reactive } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
+import { prototype } from '../__internal__/util/DelegatingDisposable.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { mapPrototype } from '../__internal__/util/Sink.mjs';
 import { pipe, pipeUnsafe, newInstance } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import '../util/DisposableLike.mjs';
@@ -24,9 +26,23 @@ const lift = /*@__PURE__*/ (() => {
         return newInstance(LiftedRunnable, src, allFunctions);
     };
 })();
-const liftT = {
-    lift,
-    variance: reactive,
-};
+/*
+const liftT: Lift<RunnableLike, TReactive> = {
+  lift,
+  variance: reactive,
+};*/
+const map = /*@__PURE__*/ (() => {
+    const createInstance = pipe({
+        [Object_properties]: {},
+        [Object_init](delegate, mapper) {
+            init(prototype, this, delegate);
+            init(mapPrototype, this, delegate, mapper);
+        },
+    }, mixWith(prototype, mapPrototype), createObjectFactory());
+    return (mapper) => {
+        const operator = (delegate) => createInstance(delegate, mapper);
+        return lift(operator);
+    };
+})();
 
-export { liftT };
+export { map };

@@ -408,22 +408,6 @@ export const decorateWithKeepNotify = <C extends ReactiveContainerLike>(
     },
   );
 
-export const decorateWithMapNotify = <C extends ReactiveContainerLike>(
-  MapSink: new <TA, TB>(
-    delegate: StatefulContainerOperatorIn<C, TA, TB, TReactive>,
-    mapper: Function1<TA, TB>,
-  ) => StatefulContainerOperatorOut<C, TA, TB, TReactive> &
-    DelegatingStatefulContainerStateOf<C, TA, TB> & {
-      readonly mapper: Function1<TA, TB>;
-    },
-) =>
-  decorateWithNotify(
-    MapSink,
-    function notifyMap(this: InstanceType<typeof MapSink>, next) {
-      const mapped = this.mapper(next);
-      pipe(this, getDelegate, notify(mapped));
-    },
-  );
 
 export const decorateWithOnNotifyNotify = <C extends ReactiveContainerLike>(
   OnNotifySink: new <T>(

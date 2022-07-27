@@ -72,7 +72,6 @@ import {
   Reducer,
   SideEffect1,
   alwaysTrue,
-  compose,
   forEach,
   getLength,
   identity,
@@ -82,6 +81,7 @@ import {
   newInstance,
   none,
   pipe,
+  pipeLazy,
   pipeUnsafe,
   raise,
   returns,
@@ -299,6 +299,8 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
           init(disposableRefPrototype, this, neverEnumerator());
           init(enumeratorPrototype, this);
           this.delegate = delegate;
+
+          pipe(this, add(delegate));
         },
         [SourceLike_move](
           this: TProperties &
@@ -335,11 +337,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
       >(),
     );
 
-    const operator = <T>(
-      delegate: EnumeratorLike<EnumerableLike<T>>,
-    ): EnumeratorLike<T> => pipe(createInstance(delegate), add(delegate));
-
-    return returns(lift(operator));
+    return returns(lift(createInstance));
   })();
 export const concatAllT: ConcatAll<EnumerableLike> = { concatAll };
 
@@ -360,7 +358,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
         typeof delegatingEnumeratorPrototype,
       ]
     > & {
-      equality: Equality<unknown>;
+      equality: Equality<any>;
     };
 
     const createInstance = pipe(
@@ -369,7 +367,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
         [Object_init](
           this: TProperties,
           delegate: EnumeratorLike,
-          equality: Equality<unknown>,
+          equality: Equality<any>,
         ) {
           init(delegatingDisposablePrototype, this, delegate);
           init(delegatingEnumeratorPrototype, this, delegate);
@@ -402,15 +400,12 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
       >(),
     );
 
-    const distinctUntilChangedEnumerator =
-      <T>(options?: { readonly equality?: Equality<T> }) =>
-      (delegate: EnumeratorLike<T>): EnumeratorLike<T> => {
-        const { equality = strictEquality } = options ?? {};
-
-        return createInstance(delegate, equality as Equality<unknown>);
-      };
-
-    return compose(distinctUntilChangedEnumerator, lift);
+    return (options?: { readonly equality?: Equality<any> }) => {
+      const { equality = strictEquality } = options ?? {};
+      const operator = (delegate: EnumeratorLike): EnumeratorLike<any> =>
+        createInstance(delegate, equality as Equality<unknown>);
+      return lift(operator);
+    };
   })();
 
 export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
@@ -458,12 +453,11 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (() => {
     >(),
   );
 
-  const keepEnumerator =
-    <T>(predicate: Predicate<T>) =>
-    (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
+  return <T>(predicate: Predicate<T>) => {
+    const operator = (delegate: EnumeratorLike) =>
       createInstance(delegate, predicate as Predicate<unknown>);
-
-  return compose(keepEnumerator, lift);
+    return lift(operator);
+  };
 })();
 
 export const keepT: Keep<EnumerableLike> = {
@@ -511,12 +505,11 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (() => {
     >(),
   );
 
-  const mapEnumerator =
-    <TA, TB>(mapper: Function1<TA, TB>) =>
-    (delegate: EnumeratorLike<TA>): EnumeratorLike<TB> =>
+  return <TA, TB>(mapper: Function1<TA, TB>) => {
+    const operator = (delegate: EnumeratorLike<TA>): EnumeratorLike<TB> =>
       createInstance(delegate, mapper);
-
-  return compose(mapEnumerator, lift);
+    return lift(operator);
+  };
 })();
 
 export const mapT: Map<EnumerableLike> = { map };
@@ -559,12 +552,11 @@ export const onNotify = /*@__PURE__*/ (() => {
     >(),
   );
 
-  const onNotifyEnumerator =
-    <T>(onNotify: SideEffect1<T>) =>
-    (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
+  return <T>(onNotify: SideEffect1<T>) => {
+    const operator = (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
       createInstance(delegate, onNotify);
-
-  return compose(onNotifyEnumerator, lift);
+    return lift(operator);
+  };
 })();
 
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
@@ -594,12 +586,11 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
       >(),
     );
 
-    const pairwiseEnumerator =
-      <T>() =>
-      (delegate: EnumeratorLike<T>): EnumeratorLike<readonly [Option<T>, T]> =>
-        createInstance(delegate);
+    const operator = (
+      delegate: EnumeratorLike,
+    ): EnumeratorLike<readonly [Option<any>, any]> => createInstance(delegate);
 
-    return <T>() => pipe(pairwiseEnumerator<T>(), lift);
+    return pipeLazy(operator, lift);
   })();
 
 export const pairwiseT: Pairwise<EnumerableLike> = {
