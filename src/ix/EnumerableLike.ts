@@ -127,10 +127,8 @@ import { notifySink } from "../util/SinkLike";
 
 export const enumerate =
   <T>() =>
-  (enumerable: EnumerableLike<T>): EnumeratorLike<T> => {
-    debugger;
-    return enumerable[InteractiveContainerLike_interact](none);
-  };
+  (enumerable: EnumerableLike<T>): EnumeratorLike<T> =>
+    enumerable[InteractiveContainerLike_interact](none);
 
 const lift = /*@__PURE__*/ (() => {
   class LiftedEnumerable<T> implements EnumerableLike<T> {
