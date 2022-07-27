@@ -22,10 +22,7 @@ import { move, getCurrent, hasCurrent } from '../util/EnumeratorLike.mjs';
 import { notifySink } from '../util/SinkLike.mjs';
 import { dispose, isDisposed, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
-const enumerate = () => (enumerable) => {
-    debugger;
-    return enumerable[InteractiveContainerLike_interact](none);
-};
+const enumerate = () => (enumerable) => enumerable[InteractiveContainerLike_interact](none);
 const lift = /*@__PURE__*/ (() => {
     class LiftedEnumerable {
         constructor(src, operators) {

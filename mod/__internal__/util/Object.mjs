@@ -3,27 +3,32 @@ import { none } from '../../functions.mjs';
 
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
-const init = (prototype, self, ...args) => {
+const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
+const initUnsafe = (prototype, self, ...args) => {
     prototype[Object_init].call(self, ...args);
 };
+const init = initUnsafe;
 const createObjectFactory = () => (prototype) => {
-    const propertyDesccription = Object.getOwnPropertyDescriptors(prototype[Object_properties]);
+    const propertyDescription = getOwnPropertyDescriptors(prototype[Object_properties]);
+    const prototypeDescription = getOwnPropertyDescriptors(prototype);
+    const { [Object_properties]: _properties, [Object_init]: _init, ...objectPrototypeDescription } = prototypeDescription;
+    const factoryPrototype = createObject(objectPrototype, objectPrototypeDescription);
     return (...args) => {
-        const instance = Object.create(prototype, propertyDesccription);
-        instance[Object_init](...args);
+        const instance = createObject(factoryPrototype, propertyDescription);
+        initUnsafe(prototype, instance, ...args);
         return instance;
     };
 };
 const mixWith = (...prototypes) => (lastProto) => {
     const propertyDescriptors = prototypes
-        .map(prototype => Object.getOwnPropertyDescriptors(prototype))
+        .map(prototype => getOwnPropertyDescriptors(prototype))
         .reduce((acc, next) => ({ ...acc, ...next }), {});
     const properties = [...prototypes, lastProto]
         .map(prototype => prototype[Object_properties])
         .reduce((acc, next) => ({ ...acc, ...next }), {});
     const descriptor = {
         ...propertyDescriptors,
-        ...Object.getOwnPropertyDescriptors(lastProto),
+        ...getOwnPropertyDescriptors(lastProto),
         [Object_properties]: {
             configurable: true,
             enumerable: true,
@@ -31,7 +36,7 @@ const mixWith = (...prototypes) => (lastProto) => {
             writable: true,
         },
     };
-    return Object.create(Object.prototype, descriptor);
+    return createObject(objectPrototype, descriptor);
 };
 const anyProperty = none;
 
