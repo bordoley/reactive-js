@@ -11,7 +11,7 @@ import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLik
 import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { none, pipeUnsafe, newInstance, pipe, getLength, max, returns, strictEquality, compose, isNone, raise, alwaysTrue, isSome, identity, forEach as forEach$1 } from '../functions.mjs';
+import { none, pipeUnsafe, newInstance, pipe, getLength, max, returns, strictEquality, pipeLazy, isNone, raise, alwaysTrue, isSome, identity, forEach as forEach$1 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT, emptyEnumerable } from '../ix.mjs';
 import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -103,6 +103,7 @@ const concatAll =
             init(prototype$3, this, neverEnumerator());
             init(prototype$1, this);
             this.delegate = delegate;
+            pipe(this, add(delegate));
         },
         [SourceLike_move]() {
             const { delegate } = this;
@@ -127,8 +128,7 @@ const concatAll =
             }
         },
     }, mixWith(prototype$2, prototype$3, prototype$1), createObjectFactory());
-    const operator = (delegate) => pipe(createInstance(delegate), add(delegate));
-    return returns(lift(operator));
+    return returns(lift(createInstance));
 })();
 const concatAllT = { concatAll };
 const concat = (...enumerables) => pipe(enumerables, toEnumerable$1(), concatAll());
@@ -160,11 +160,11 @@ const distinctUntilChanged =
             }
         },
     }, mixWith(prototype, prototype$4), createObjectFactory());
-    const distinctUntilChangedEnumerator = (options) => (delegate) => {
+    return (options) => {
         const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
-        return createInstance(delegate, equality);
+        const operator = (delegate) => createInstance(delegate, equality);
+        return lift(operator);
     };
-    return compose(distinctUntilChangedEnumerator, lift);
 })();
 const distinctUntilChangedT = {
     distinctUntilChanged,
@@ -188,8 +188,10 @@ const keep = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(prototype, prototype$4), createObjectFactory());
-    const keepEnumerator = (predicate) => (delegate) => createInstance(delegate, predicate);
-    return compose(keepEnumerator, lift);
+    return (predicate) => {
+        const operator = (delegate) => createInstance(delegate, predicate);
+        return lift(operator);
+    };
 })();
 const keepT = {
     keep,
@@ -215,8 +217,10 @@ const map = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(delegatingDisposableEnumeratorPrototype), createObjectFactory());
-    const mapEnumerator = (mapper) => (delegate) => createInstance(delegate, mapper);
-    return compose(mapEnumerator, lift);
+    return (mapper) => {
+        const operator = (delegate) => createInstance(delegate, mapper);
+        return lift(operator);
+    };
 })();
 const mapT = { map };
 const onNotify = /*@__PURE__*/ (() => {
@@ -238,8 +242,10 @@ const onNotify = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(prototype, prototype$4), createObjectFactory());
-    const onNotifyEnumerator = (onNotify) => (delegate) => createInstance(delegate, onNotify);
-    return compose(onNotifyEnumerator, lift);
+    return (onNotify) => {
+        const operator = (delegate) => createInstance(delegate, onNotify);
+        return lift(operator);
+    };
 })();
 const pairwise = 
 /*@__PURE__*/ (() => {
@@ -253,8 +259,8 @@ const pairwise =
             }
         },
     }, mixWith(delegatingDisposableEnumeratorPrototype), createObjectFactory());
-    const pairwiseEnumerator = () => (delegate) => createInstance(delegate);
-    return () => pipe(pairwiseEnumerator(), lift);
+    const operator = (delegate) => createInstance(delegate);
+    return pipeLazy(operator, lift);
 })();
 const pairwiseT = {
     pairwise,

@@ -1,4 +1,4 @@
-import { Lift, TReactive } from "../__internal__/containers/StatefulContainerLikeInternal.mjs";
+import { Map } from "../containers.mjs";
 import { RunnableLike } from "../rx.mjs";
-declare const liftT: Lift<RunnableLike<unknown>, TReactive>;
-export { liftT };
+declare const map: Map<RunnableLike>["map"];
+export { map };
