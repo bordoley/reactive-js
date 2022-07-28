@@ -1,10 +1,14 @@
 /// <reference types="./RunnableLike.test.d.ts" />
 import { describe as createDescribe } from '../__internal__/testing.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { keepT, toReadonlyArrayT, mapT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT } from '../rx/RunnableLike.mjs';
-import { keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests } from './operators.test.mjs';
+import { distinctUntilChangedT, toReadonlyArrayT, keepT, mapT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT } from '../rx/RunnableLike.mjs';
+import { distinctUntilChangedTests, keepTests, mapTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests } from './operators.test.mjs';
 
-const RunnableLikeTests = createDescribe("RunnableLike", keepTests({
+const RunnableLikeTests = createDescribe("RunnableLike", distinctUntilChangedTests({
+    fromArray: toRunnable,
+    ...distinctUntilChangedT,
+    ...toReadonlyArrayT,
+}), keepTests({
     fromArray: toRunnable,
     ...keepT,
     ...toReadonlyArrayT,

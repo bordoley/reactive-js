@@ -14,6 +14,33 @@ const createSink = /*@__PURE__*/ (() => pipe({
     },
     [SinkLike_notify](_) { },
 }, mixWith(disposableMixin), createObjectFactory()))();
+const distinctUntilChangedSinkMixin = /*@__PURE__*/ (() => {
+    const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
+    const DistinctUntilChangedSink_private_prev = Symbol("DistinctUntilChangedSink_private_prev");
+    const DistinctUntilChangedSink_private_hasValue = Symbol("DistinctUntilChangedSink_private_hasValue");
+    return pipe({
+        [Object_properties]: {
+            [Sink_private_delegate]: none,
+            [DistinctUntilChangedSink_private_equality]: none,
+            [DistinctUntilChangedSink_private_prev]: none,
+            [DistinctUntilChangedSink_private_hasValue]: false,
+        },
+        [Object_init](delegate, equality) {
+            init(delegatingDisposableMixin, this, delegate);
+            this[Sink_private_delegate] = delegate;
+            this[DistinctUntilChangedSink_private_equality] = equality;
+        },
+        [SinkLike_notify](next) {
+            const shouldEmit = !this[DistinctUntilChangedSink_private_hasValue] ||
+                !this[DistinctUntilChangedSink_private_equality](this[DistinctUntilChangedSink_private_prev], next);
+            if (shouldEmit) {
+                this[DistinctUntilChangedSink_private_prev] = next;
+                this[DistinctUntilChangedSink_private_hasValue] = true;
+                pipe(this[Sink_private_delegate], notify(next));
+            }
+        },
+    }, mixWith(delegatingDisposableMixin), returns);
+})();
 const keepSinkMixin = /*@__PURE__*/ (() => {
     const KeepSink_private_predicate = Symbol("KeepSink_private_predicate");
     return pipe({
@@ -195,4 +222,4 @@ const takeWhileSinkMixin = /*@__PURE__*/ (() => {
     }, mixWith(delegatingDisposableMixin), returns);
 })();
 
-export { TakeLastSink_last, createSink, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
+export { TakeLastSink_last, createSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };

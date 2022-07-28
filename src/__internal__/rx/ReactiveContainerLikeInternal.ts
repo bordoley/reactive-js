@@ -320,35 +320,6 @@ export const decorateWithDecodeWithCharsetNotify =
       },
     );
 
-export const decorateWithDistinctUntilChangedNotify = <
-  C extends ReactiveContainerLike,
->(
-  DistinctUntilChangedSink: new <T>(
-    delegate: StatefulContainerStateOf<C, T>,
-    equality: Equality<T>,
-  ) => DelegatingStatefulContainerStateOf<C, T, T> & {
-    readonly equality: Equality<T>;
-    prev: Option<T>;
-    hasValue: boolean;
-  },
-) =>
-  decorateWithNotify(
-    DistinctUntilChangedSink,
-    function notifyDistinctUntilChanged(
-      this: InstanceType<typeof DistinctUntilChangedSink>,
-      next,
-    ) {
-      const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
-
-      if (shouldEmit) {
-        this.prev = next;
-        this.hasValue = true;
-        pipe(this, getDelegate, notify(next));
-      }
-    },
-  );
-
-
 export const decorateWithPairwiseNotify = <C extends ReactiveContainerLike>(
   PairwiseSink: new <T>(
     delegate: StatefulContainerOperatorIn<C, T, [Option<T>, T], TReactive>,

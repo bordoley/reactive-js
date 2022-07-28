@@ -6,6 +6,7 @@
 
 ### Variables
 
+- [distinctUntilChangedT](rx_RunnableLike.md#distinctuntilchangedt)
 - [keepT](rx_RunnableLike.md#keept)
 - [mapT](rx_RunnableLike.md#mapt)
 - [scanT](rx_RunnableLike.md#scant)
@@ -17,6 +18,7 @@
 
 ### Functions
 
+- [distinctUntilChanged](rx_RunnableLike.md#distinctuntilchanged)
 - [keep](rx_RunnableLike.md#keep)
 - [map](rx_RunnableLike.md#map)
 - [onNotify](rx_RunnableLike.md#onnotify)
@@ -29,6 +31,12 @@
 - [toReadonlyArray](rx_RunnableLike.md#toreadonlyarray)
 
 ## Variables
+
+### distinctUntilChangedT
+
+• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
 
 ### keepT
 
@@ -77,6 +85,29 @@ ___
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ## Functions
+
+### distinctUntilChanged
+
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
 
 ### keep
 
