@@ -6,8 +6,8 @@ import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInCo
 export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
 import { prototype } from './__internal__/util/Disposable.mjs';
 import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory, anyProperty } from './__internal__/util/Object.mjs';
-import { pipe, isSome } from './functions.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
+import { pipe, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
 import { addTo, onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';
@@ -127,7 +127,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
             microTaskTicks: 0,
             taskIDCount: 0,
             yieldRequested: false,
-            taskQueue: anyProperty,
+            taskQueue: none,
         },
         [Object_init](maxMicroTaskTicks) {
             init(prototype, this);

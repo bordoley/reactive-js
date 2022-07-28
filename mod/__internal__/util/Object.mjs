@@ -1,6 +1,4 @@
 /// <reference types="./Object.d.ts" />
-import { none } from '../../functions.mjs';
-
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
@@ -38,6 +36,5 @@ const mixWith = (...prototypes) => (lastProto) => {
     };
     return createObject(objectPrototype, descriptor);
 };
-const anyProperty = none;
 
-export { Object_init, Object_properties, anyProperty, createObjectFactory, init, mixWith };
+export { Object_init, Object_properties, createObjectFactory, init, mixWith };

@@ -8,7 +8,7 @@ import { prototype as prototype$1 } from '../__internal__/util/Disposable.mjs';
 import { prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
 import { prototype, neverEnumerator } from '../__internal__/util/Enumerator.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
-import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { none, pipeUnsafe, newInstance, pipe, getLength, max, returns, strictEquality, pipeLazy, isNone, raise, alwaysTrue, isSome, identity, forEach as forEach$1 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT, emptyEnumerable } from '../ix.mjs';
@@ -48,7 +48,7 @@ const buffer = /*@__PURE__*/ (() => {
     const typedEnumerator = prototype();
     const createInstance = pipe({
         [Object_properties]: {
-            delegate: anyProperty,
+            delegate: none,
             maxBufferSize: 0,
         },
         [Object_init](delegate, maxBufferSize) {
@@ -87,7 +87,7 @@ const concatAll =
     const typedEnumerator = prototype();
     const createInstance = pipe({
         [Object_properties]: {
-            delegate: anyProperty,
+            delegate: none,
         },
         [Object_init](delegate) {
             init(prototype$1, this);
@@ -130,7 +130,7 @@ const distinctUntilChanged =
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorPrototype = prototype$3();
     const createInstance = pipe({
-        [Object_properties]: { equality: anyProperty },
+        [Object_properties]: { equality: none },
         [Object_init](delegate, equality) {
             init(prototype$4, this, delegate);
             init(typedDelegatingEnumeratorPrototype, this, delegate);
@@ -164,7 +164,7 @@ const distinctUntilChangedT = {
 const keep = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorPrototype = prototype$3();
     const createInstance = pipe({
-        [Object_properties]: { predicate: anyProperty },
+        [Object_properties]: { predicate: none },
         [Object_init](delegate, predicate) {
             init(prototype$4, this, delegate);
             init(typedDelegatingEnumeratorPrototype, this, delegate);
@@ -193,8 +193,8 @@ const map = /*@__PURE__*/ (() => {
     const typedEnumerator = prototype();
     const createInstance = pipe({
         [Object_properties]: {
-            mapper: anyProperty,
-            delegate: anyProperty,
+            mapper: none,
+            delegate: none,
         },
         [Object_init](delegate, mapper) {
             init(prototype$4, this, delegate);
@@ -223,7 +223,7 @@ const mapT = { map };
 const onNotify = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorPrototype = prototype$3();
     const createInstance = pipe({
-        [Object_properties]: { onNotify: anyProperty },
+        [Object_properties]: { onNotify: none },
         [Object_init](delegate, onNotify) {
             init(prototype$4, this, delegate);
             init(typedDelegatingEnumeratorPrototype, this, delegate);
@@ -267,9 +267,9 @@ const repeat = /*@__PURE__*/ (() => {
     const createInstance = pipe({
         [Object_properties]: {
             count: 0,
-            enumerator: anyProperty,
-            shouldRepeat: anyProperty,
-            src: anyProperty,
+            enumerator: none,
+            shouldRepeat: none,
+            src: none,
         },
         [Object_init](src, shouldRepeat) {
             init(prototype$1, this);
@@ -326,7 +326,7 @@ const repeatT = {
 const scan = /*@__PURE__*/ (() => {
     const typedEnumerator = prototype();
     const createInstance = pipe({
-        [Object_properties]: { reducer: anyProperty, delegate: anyProperty },
+        [Object_properties]: { reducer: none, delegate: none },
         [Object_init](delegate, reducer, initialValue) {
             init(prototype$4, this, delegate);
             init(prototype(), this);
@@ -464,7 +464,7 @@ const takeWhile =
     const typedDelegatingEnumeratorPrototype = prototype$3();
     return pipe({
         [Object_properties]: {
-            predicate: anyProperty,
+            predicate: none,
             inclusive: false,
             done: false,
         },
@@ -608,7 +608,7 @@ const zip = /*@__PURE__*/ (() => {
     const typedEnumerator = prototype();
     const createInstance = pipe({
         [Object_properties]: {
-            enumerators: anyProperty,
+            enumerators: none,
         },
         [Object_init](enumerators) {
             init(prototype$1, this);

@@ -7,7 +7,6 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
@@ -135,7 +134,7 @@ export const toEnumerable: ToEnumerable<
   const createInstance = pipe(
     {
       [Object_properties]: {
-        array: anyProperty,
+        array: none,
         count: 0,
         index: 0,
       },

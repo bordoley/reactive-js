@@ -1,8 +1,8 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { prototype } from '../__internal__/util/Disposable.mjs';
-import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { pipe } from '../functions.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { pipe, none } from '../functions.mjs';
 import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { shouldYield, requestYield } from './SchedulerLike.mjs';
@@ -18,7 +18,7 @@ import { isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 const toScheduler = /*@__PURE__*/ (() => {
     const createInstance = pipe({
         [Object_properties]: {
-            priorityScheduler: anyProperty,
+            priorityScheduler: none,
             priority: 0,
         },
         [Object_init](scheduler, priority) {

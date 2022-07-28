@@ -7,7 +7,6 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
@@ -190,7 +189,7 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
 
     const createInstance = pipe(
       {
-        [Object_properties]: { f: anyProperty },
+        [Object_properties]: { f: none },
         [Object_init](
           this: TProperties & MutableEnumeratorLike,
           f: Updater<T>,

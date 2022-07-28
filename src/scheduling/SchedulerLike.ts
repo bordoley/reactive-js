@@ -22,7 +22,6 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
@@ -106,8 +105,8 @@ const createContinuation: Function2<
   return pipe(
     {
       [Object_properties]: {
-        scheduler: anyProperty,
-        f: anyProperty,
+        scheduler: none,
+        f: none,
       },
       [Object_init](
         this: TProperties,
@@ -349,12 +348,12 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
       {
         [Object_properties]: {
           [SchedulerLike_inContinuation]: false,
-          delayed: anyProperty,
+          delayed: none,
           dueTime: 0,
-          host: anyProperty,
-          hostContinuation: anyProperty,
+          host: none,
+          hostContinuation: none,
           isPaused: false,
-          queue: anyProperty,
+          queue: none,
           taskIDCounter: 0,
           yieldRequested: false,
         },
