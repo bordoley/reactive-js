@@ -2,11 +2,23 @@ import {
   PropertyTypeOf,
   createObjectFactory,
 } from "../__internal__/util/Object";
-import { mapSinkMixin } from "../__internal__/util/SinkLikeMixin";
-import { Map } from "../containers";
-import { Function1, newInstance, pipe, pipeUnsafe } from "../functions";
+import {
+  createSink,
+  mapSinkMixin,
+  onNotifySinkMixin,
+} from "../__internal__/util/SinkLikeMixin";
+import { ContainerOperator, Map, ToReadonlyArray } from "../containers";
+import {
+  Function1,
+  SideEffect1,
+  isSome,
+  newInstance,
+  pipe,
+  pipeUnsafe,
+  raise,
+} from "../functions";
 import { ReactiveContainerLike_sinkInto, RunnableLike } from "../rx";
-import { SinkLike } from "../util";
+import { DisposableLike_error, SinkLike } from "../util";
 import { dispose } from "../util/DisposableLike";
 import { sourceFrom } from "./ReactiveContainerLike";
 
@@ -63,3 +75,58 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     return lift(operator);
   };
 })();
+
+export const mapT: Map<RunnableLike> = { map };
+
+export const onNotify: <T>(
+  onNotify: SideEffect1<T>,
+) => ContainerOperator<RunnableLike, T, T> = /*@__PURE__*/ (<T>() => {
+  const typedOnNotifySinkMixin = onNotifySinkMixin<T>();
+
+  const createInstance = pipe(
+    typedOnNotifySinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedOnNotifySinkMixin]>,
+      SinkLike<T>,
+      SideEffect1<T>
+    >(),
+  );
+
+  return (onNotify: SideEffect1<T>) => {
+    const operator = (delegate: SinkLike<T>): SinkLike<T> =>
+      createInstance(delegate, onNotify);
+    return lift(operator);
+  };
+})();
+
+export const run =
+  <T>() =>
+  (runnable: RunnableLike<T>): void =>
+    pipe(
+      createSink(),
+      sourceFrom(runnable),
+      dispose(),
+      ({ [DisposableLike_error]: error }) => {
+        if (isSome(error)) {
+          raise(error.cause);
+        }
+      },
+    );
+
+export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
+
+    <T>() =>
+    (runnable: RunnableLike<T>) => {
+      const result: T[] = [];
+      pipe(
+        runnable,
+        onNotify(x => result.push(x)),
+        run(),
+      );
+      return result;
+    };
+
+export const toReadonlyArrayT: ToReadonlyArray<RunnableLike> = {
+  toReadonlyArray,
+};
