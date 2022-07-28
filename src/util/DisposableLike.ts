@@ -32,3 +32,12 @@ export {
   onComplete,
   onError,
 } from "../__internal__/util/DisposableLikeInternal";
+
+/*
+const createToDisposable =
+  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
+  <T>(disposable: DisposableLike): ContainerOf<C, T> =>
+    pipe(disposable, addTo, create(m));
+
+export const toObservable = createToDisposable(createObservableT);
+*/

@@ -4,8 +4,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
 } from "../../util";
-import { isDisposed } from "../../util/DisposableLike";
-import { hasCurrent } from "../../util/EnumeratorLike";
+import { isDisposed } from "./DisposableLikeInternal";
 import { Object_init, Object_properties } from "./Object";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
@@ -37,7 +36,9 @@ export const enumeratorMixin: <T>() => {
       },
       get [EnumeratorLike_current](): T {
         const self = this as unknown as TProperties & EnumeratorLike<T>;
-        return hasCurrent(self) ? self[Enumerator_private_current] : raise();
+        return self[EnumeratorLike_hasCurrent]
+          ? self[Enumerator_private_current]
+          : raise();
       },
       set [EnumeratorLike_current](v: T) {
         const self = this as unknown as TProperties & EnumeratorLike;

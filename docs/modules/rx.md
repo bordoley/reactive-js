@@ -41,7 +41,6 @@
 - [createRunnableUsing](rx.md#createrunnableusing)
 - [createSubject](rx.md#createsubject)
 - [deferObservable](rx.md#deferobservable)
-- [fromDisposableObservable](rx.md#fromdisposableobservable)
 - [neverObservable](rx.md#neverobservable)
 - [neverRunnable](rx.md#neverrunnable)
 
@@ -529,28 +528,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-___
-
-### fromDisposableObservable
-
-▸ **fromDisposableObservable**<`T`\>(`disposable`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `disposable` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
