@@ -13,6 +13,7 @@ import {
 import {
   TakeLastSink_last,
   createSink,
+  distinctUntilChangedSinkMixin,
   keepSinkMixin,
   mapSinkMixin,
   onNotifySinkMixin,
@@ -24,6 +25,7 @@ import {
 } from "../__internal__/util/SinkLikeMixin";
 import {
   ContainerOperator,
+  DistinctUntilChanged,
   Keep,
   Map,
   Scan,
@@ -35,6 +37,7 @@ import {
 } from "../containers";
 import { toRunnable } from "../containers/ReadonlyArrayLike";
 import {
+  Equality,
   Factory,
   Function1,
   Predicate,
@@ -45,6 +48,7 @@ import {
   pipe,
   pipeUnsafe,
   raise,
+  strictEquality,
 } from "../functions";
 import {
   ReactiveContainerLike_sinkInto,
@@ -88,6 +92,33 @@ const lift = /*@__PURE__*/ (() => {
 const liftT: Lift<RunnableLike, TReactive> = {
   lift,
   variance: reactive,
+};
+
+export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
+  /*@__PURE__*/ (<T>() => {
+    const typedDistinctUntilChangedSinkMixin =
+      distinctUntilChangedSinkMixin<T>();
+
+    const createInstance = pipe(
+      typedDistinctUntilChangedSinkMixin,
+      createObjectFactory<
+        SinkLike<T>,
+        PropertyTypeOf<[typeof typedDistinctUntilChangedSinkMixin]>,
+        SinkLike<T>,
+        Equality<T>
+      >(),
+    );
+
+    return (options?: { readonly equality?: Equality<T> }) => {
+      const { equality = strictEquality } = options ?? {};
+      const operator = (delegate: SinkLike<T>): SinkLike<T> =>
+        createInstance(delegate, equality);
+      return lift(operator);
+    };
+  })();
+
+export const distinctUntilChangedT: DistinctUntilChanged<RunnableLike> = {
+  distinctUntilChanged,
 };
 
 export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {

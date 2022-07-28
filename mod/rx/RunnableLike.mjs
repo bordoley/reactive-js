@@ -1,9 +1,9 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { reactive, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import { keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, TakeLastSink_last, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, TakeLastSink_last, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, pipeUnsafe, newInstance, isSome, raise } from '../functions.mjs';
+import { pipe, pipeUnsafe, newInstance, strictEquality, isSome, raise } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto, emptyRunnableT, emptyRunnable } from '../rx.mjs';
 import { DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
@@ -31,6 +31,19 @@ const lift = /*@__PURE__*/ (() => {
 const liftT = {
     lift,
     variance: reactive,
+};
+const distinctUntilChanged = 
+/*@__PURE__*/ (() => {
+    const typedDistinctUntilChangedSinkMixin = distinctUntilChangedSinkMixin();
+    const createInstance = pipe(typedDistinctUntilChangedSinkMixin, createObjectFactory());
+    return (options) => {
+        const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
+        const operator = (delegate) => createInstance(delegate, equality);
+        return lift(operator);
+    };
+})();
+const distinctUntilChangedT = {
+    distinctUntilChanged,
 };
 const keep = /*@__PURE__*/ (() => {
     const typedKeepSinkMixin = keepSinkMixin();
@@ -114,4 +127,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { keep, keepT, map, mapT, onNotify, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };
+export { distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, onNotify, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };
