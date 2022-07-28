@@ -4,12 +4,23 @@ import {
 } from "../__internal__/util/Object";
 import {
   createSink,
+  keepSinkMixin,
   mapSinkMixin,
   onNotifySinkMixin,
+  scanSinkMixin,
 } from "../__internal__/util/SinkLikeMixin";
-import { ContainerOperator, Map, ToReadonlyArray } from "../containers";
 import {
+  ContainerOperator,
+  Keep,
+  Map,
+  Scan,
+  ToReadonlyArray,
+} from "../containers";
+import {
+  Factory,
   Function1,
+  Predicate,
+  Reducer,
   SideEffect1,
   isSome,
   newInstance,
@@ -55,6 +66,28 @@ const liftT: Lift<RunnableLike, TReactive> = {
   lift,
   variance: reactive,
 };*/
+
+export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
+  const typedKeepSinkMixin = keepSinkMixin<T>();
+
+  const createInstance = pipe(
+    typedKeepSinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedKeepSinkMixin]>,
+      SinkLike<T>,
+      Predicate<T>
+    >(),
+  );
+
+  return (mapper: Predicate<T>) => {
+    const operator = (delegate: SinkLike<T>): SinkLike<T> =>
+      createInstance(delegate, mapper);
+    return lift(operator);
+  };
+})();
+
+export const keepT: Keep<RunnableLike> = { keep };
 
 export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const typedMapSinkMixin = mapSinkMixin<TA, TB>();
@@ -113,6 +146,29 @@ export const run =
         }
       },
     );
+
+export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
+  const typedScanSinkMixin = scanSinkMixin<T, TAcc>();
+
+  const createInstance = pipe(
+    typedScanSinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedScanSinkMixin]>,
+      SinkLike<TAcc>,
+      Reducer<T, TAcc>,
+      Factory<TAcc>
+    >(),
+  );
+
+  return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => {
+    const operator = (delegate: SinkLike<TAcc>): SinkLike<T> =>
+      createInstance(delegate, reducer, initialValue);
+    return lift(operator);
+  };
+})();
+
+export const scanT: Scan<RunnableLike> = { scan };
 
 export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
 
