@@ -1,8 +1,24 @@
-import { Equality, Predicate, Function1, SideEffect1, Reducer, Factory, Option } from "../../functions.mjs";
+import { Option, Equality, Predicate, Function1, SideEffect1, Reducer, Factory } from "../../functions.mjs";
 import { SinkLike, SinkLike_notify } from "../../util.mjs";
-import { DisposableLike, DisposableLike_error, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose } from "./DisposableLikeInternal.mjs";
+import { DisposableLike_error, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose, DisposableLike } from "./DisposableLikeInternal.mjs";
 import { Object_properties, Object_init } from "./Object.mjs";
 declare const createSink: <T>() => SinkLike<T>;
+declare const DelegatingSink_delegate: unique symbol;
+declare const delegatingSinkMixin: <T>() => {
+    [Object_properties]: {
+        [DelegatingSink_delegate]: SinkLike<T>;
+        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_isDisposed]: boolean;
+    };
+    [Object_init](this: {
+        [DelegatingSink_delegate]: SinkLike<T>;
+        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_isDisposed]: boolean;
+    }, delegate: SinkLike<T>): void;
+    [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+};
 declare const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T>;
 declare const distinctUntilChangedSinkMixin: <T>() => DisposableLike & {
     [Object_properties]: unknown;
@@ -60,4 +76,4 @@ declare const takeWhileSinkMixin: <T>() => DisposableLike & {
     [Object_init](this: unknown, delegate: SinkLike<T>, predicate: Predicate<T>, inclusive: boolean): void;
     [SinkLike_notify](next: T): void;
 };
-export { TakeLastSink_last, createDelegatingSink, createSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
