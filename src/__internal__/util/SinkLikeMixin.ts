@@ -1,4 +1,5 @@
 import {
+  Equality,
   Factory,
   Function1,
   Option,
@@ -52,6 +53,69 @@ export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
       PropertyTypeOf<[typeof disposableMixin]>
     >(),
   ))();
+
+export const distinctUntilChangedSinkMixin: <T>() => DisposableLike & {
+  [Object_properties]: unknown;
+  [Object_init](
+    this: unknown,
+    delegate: SinkLike<T>,
+    equality: Equality<T>,
+  ): void;
+  [SinkLike_notify](next: T): void;
+} = /*@__PURE__*/ (<T>() => {
+  const DistinctUntilChangedSink_private_equality = Symbol(
+    "DistinctUntilChangedSink_private_equality",
+  );
+  const DistinctUntilChangedSink_private_prev = Symbol(
+    "DistinctUntilChangedSink_private_prev",
+  );
+  const DistinctUntilChangedSink_private_hasValue = Symbol(
+    "DistinctUntilChangedSink_private_hasValue",
+  );
+
+  type TProperties = {
+    [Sink_private_delegate]: SinkLike<T>;
+    [DistinctUntilChangedSink_private_equality]: Equality<T>;
+    [DistinctUntilChangedSink_private_prev]: Option<T>;
+    [DistinctUntilChangedSink_private_hasValue]: boolean;
+  } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
+
+  return pipe(
+    {
+      [Object_properties]: {
+        [Sink_private_delegate]: none,
+        [DistinctUntilChangedSink_private_equality]: none,
+        [DistinctUntilChangedSink_private_prev]: none,
+        [DistinctUntilChangedSink_private_hasValue]: false,
+      },
+      [Object_init](
+        this: TProperties,
+        delegate: SinkLike<T>,
+        equality: Equality<T>,
+      ) {
+        init(delegatingDisposableMixin, this, delegate);
+        this[Sink_private_delegate] = delegate;
+        this[DistinctUntilChangedSink_private_equality] = equality;
+      },
+      [SinkLike_notify](this: TProperties, next: T) {
+        const shouldEmit =
+          !this[DistinctUntilChangedSink_private_hasValue] ||
+          !this[DistinctUntilChangedSink_private_equality](
+            this[DistinctUntilChangedSink_private_prev] as T,
+            next,
+          );
+
+        if (shouldEmit) {
+          this[DistinctUntilChangedSink_private_prev] = next;
+          this[DistinctUntilChangedSink_private_hasValue] = true;
+          pipe(this[Sink_private_delegate], notify(next));
+        }
+      },
+    },
+    mixWith(delegatingDisposableMixin),
+    returns,
+  );
+})();
 
 export const keepSinkMixin: <T>() => DisposableLike & {
   [Object_properties]: unknown;
