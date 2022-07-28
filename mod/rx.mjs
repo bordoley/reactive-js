@@ -100,6 +100,9 @@ const createSubject = /*@__PURE__*/ (() => {
     };
 })();
 const create = (m) => (onSink) => m.create(onSink);
+const createEmpty = (m) => () => pipe((sink) => {
+    pipe(sink, dispose());
+}, create(m));
 const createUsing = (m) => (resourceFactory, sourceFactory) => pipe((sink) => {
     pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addTo(sink)), resources => sourceFactory(...resources))[ReactiveContainerLike_sinkInto](sink);
 }, create(m));
@@ -154,9 +157,13 @@ const createRunnableUsing =
 const createRunnableUsingT = {
     using: createRunnableUsing,
 };
-const neverRunnable = /*@__PURE__*/ createNever(createRunnableT);
+const emptyRunnable = 
+/*@__PURE__*/ createEmpty(createRunnableT);
+const emptyRunnableT = { empty: emptyRunnable };
+const neverRunnable = 
+/*@__PURE__*/ createNever(createRunnableT);
 const neverRunnableT = {
     never: neverRunnable,
 };
 
-export { DefaultObservable, EnumerableObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, RunnableObservable, SubjectLike_publish, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { DefaultObservable, EnumerableObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, RunnableObservable, SubjectLike_publish, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, emptyRunnable, emptyRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };

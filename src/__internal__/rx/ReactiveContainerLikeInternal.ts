@@ -267,49 +267,6 @@ export const createReduceOperator =
       lift(m),
     );
 
-type TakeLastSink<C extends ReactiveContainerLike> = new <T>(
-  delegate: StatefulContainerOperatorIn<C, T, T, TReactive>,
-  maxCount: number,
-) => StatefulContainerOperatorOut<C, T, T, TReactive> & {
-  readonly last: T[];
-  readonly maxCount: number;
-};
-
-export const createTakeLastOperator =
-  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C> & Empty<C>) =>
-  (TakeLastSink: TakeLastSink<C>) =>
-  <T>(
-    options: { readonly count?: number } = {},
-  ): ContainerOperator<C, T, T> => {
-    const { count = 1 } = options;
-
-    const operator = (
-      delegate: StatefulContainerStateOf<C, T>,
-    ): StatefulContainerStateOf<C, T> => {
-      const sink = pipe(
-        TakeLastSink,
-        newInstanceWith<
-          StatefulContainerStateOf<C, T> & {
-            readonly last: T[];
-            readonly maxCount: number;
-          },
-          StatefulContainerStateOf<C, T>,
-          number
-        >(delegate, count),
-        addTo(delegate),
-        onComplete(() => {
-          pipe(sink.last, m.fromArray(), sinkInto(delegate));
-        }),
-      );
-      return sink;
-    };
-
-    return source =>
-      count > 0
-        ? pipe(source, lift<C, T, T, TReactive>(m)(operator))
-        : m.empty();
-  };
-
 export const createOnSink =
   <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
   <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<C, T, T> =>
@@ -416,27 +373,6 @@ export const decorateWithPairwiseNotify = <C extends ReactiveContainerLike>(
     },
   );
 
-export const decorateWithScanNotify = <C extends ReactiveContainerLike>(
-  ScanSink: new <T, TAcc>(
-    delegate: StatefulContainerOperatorIn<C, T, TAcc, TReactive>,
-    reducer: Reducer<T, TAcc>,
-    acc: TAcc,
-  ) => StatefulContainerOperatorOut<C, T, TAcc, TReactive> &
-    DelegatingStatefulContainerStateOf<C, T, TAcc> & {
-      readonly reducer: Reducer<T, TAcc>;
-      acc: TAcc;
-    },
-) =>
-  decorateWithNotify(
-    ScanSink,
-    function notifyScan(this: InstanceType<typeof ScanSink>, next) {
-      const nextAcc = this.reducer(this.acc, next);
-      this.acc = nextAcc;
-
-      pipe(this, getDelegate, notify(nextAcc));
-    },
-  );
-
 export const decorateWithReduceNotify =
   <C extends ReactiveContainerLike>() =>
   (ReduceSink: ReduceSink<C>) =>
@@ -470,102 +406,4 @@ export const decorateWithSomeSatisfyNotify =
   (SatisfySink: SatisfySink<C>) =>
     decorateWithSatisfyNotify(SatisfySink, false);
 
-export const decorateWithSkipFirstNotify = <C extends ReactiveContainerLike>(
-  SkipFirstSink: new <T>(
-    delegate: StatefulContainerOperatorIn<C, T, T, TReactive>,
-    skipCount: number,
-  ) => DelegatingStatefulContainerStateOf<C, T, T> & {
-    count: number;
-    readonly skipCount: number;
-  },
-) =>
-  decorateWithNotify(
-    SkipFirstSink,
-    function notifySkipFirst(this: InstanceType<typeof SkipFirstSink>, next) {
-      this.count++;
-      if (this.count > this.skipCount) {
-        pipe(this, getDelegate, notify(next));
-      }
-    },
-  );
-
-export const decorateWithTakeFirstNotify = <C extends ReactiveContainerLike>(
-  TakeFirstSink: new <T>(
-    delegate: StatefulContainerOperatorIn<C, T, T, TReactive>,
-    maxCount: number,
-  ) => DelegatingStatefulContainerStateOf<C, T, T> & {
-    count: number;
-    readonly maxCount: number;
-  },
-) =>
-  decorateWithNotify(
-    TakeFirstSink,
-    function notifyTakeFirst(this: InstanceType<typeof TakeFirstSink>, next) {
-      this.count++;
-      pipe(this, getDelegate, notify(next));
-      if (this.count >= this.maxCount) {
-        pipe(this, dispose());
-      }
-    },
-  );
-
-export const decorateWithTakeLastNotify =
-  <C extends ReactiveContainerLike>() =>
-  (TakeLastSink: TakeLastSink<C>) =>
-    decorateWithNotify(
-      TakeLastSink,
-      function notifyTakeLast(this: InstanceType<typeof TakeLastSink>, next) {
-        const { last } = this;
-
-        last.push(next);
-
-        if (getLength(last) > this.maxCount) {
-          last.shift();
-        }
-      },
-    );
-
-export const decorateWithTakeWhileNotify = <C extends ReactiveContainerLike>(
-  TakeWhileSink: new <T>(
-    delegate: StatefulContainerStateOf<C, T>,
-    predicate: Predicate<T>,
-    inclusive: boolean,
-  ) => DelegatingStatefulContainerStateOf<C, T, T> & {
-    readonly predicate: Predicate<T>;
-    readonly inclusive: boolean;
-  },
-) =>
-  decorateWithNotify(
-    TakeWhileSink,
-    function notifyTakeWhile(this: InstanceType<typeof TakeWhileSink>, next) {
-      const satisfiesPredicate = this.predicate(next);
-
-      if (satisfiesPredicate || this.inclusive) {
-        pipe(this, getDelegate, notify(next));
-      }
-
-      if (!satisfiesPredicate) {
-        pipe(this, dispose());
-      }
-    },
-  );
-
-export const decorateWithThrowIfEmptyNotify = <C extends ReactiveContainerLike>(
-  ThrowIfEmptySink: new <T>(
-    delegate: StatefulContainerOperatorIn<C, T, T, TReactive>,
-  ) => DelegatingStatefulContainerStateOf<C, T, T> & {
-    isEmpty: boolean;
-  },
-) => {
-  decorateWithNotify(
-    ThrowIfEmptySink,
-    function notifyThrowIfEmpty(
-      this: InstanceType<typeof ThrowIfEmptySink>,
-      next,
-    ) {
-      this.isEmpty = false;
-      pipe(this, getDelegate, notify(next));
-    },
-  );
-};
 */
