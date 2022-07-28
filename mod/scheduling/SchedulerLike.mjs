@@ -8,7 +8,7 @@ import { prototype } from '../__internal__/util/Disposable.mjs';
 import { prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
 import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { none, pipe, isSome, isNone, raise, newInstanceWith, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
@@ -30,8 +30,8 @@ let currentScheduler = none;
 const createContinuation = /*@__PURE__*/ (() => {
     return pipe({
         [Object_properties]: {
-            scheduler: anyProperty,
-            f: anyProperty,
+            scheduler: none,
+            f: none,
         },
         [Object_init](scheduler, f) {
             init(prototype, this);
@@ -165,12 +165,12 @@ const createQueueScheduler =
     return pipe({
         [Object_properties]: {
             [SchedulerLike_inContinuation]: false,
-            delayed: anyProperty,
+            delayed: none,
             dueTime: 0,
-            host: anyProperty,
-            hostContinuation: anyProperty,
+            host: none,
+            hostContinuation: none,
             isPaused: false,
-            queue: anyProperty,
+            queue: none,
             taskIDCounter: 0,
             yieldRequested: false,
         },

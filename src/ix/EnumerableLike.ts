@@ -31,7 +31,6 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
@@ -196,7 +195,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   const createInstance = pipe(
     {
       [Object_properties]: {
-        delegate: anyProperty,
+        delegate: none,
         maxBufferSize: 0,
       },
       [Object_init](
@@ -272,7 +271,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     const createInstance = pipe(
       {
         [Object_properties]: {
-          delegate: anyProperty,
+          delegate: none,
         },
         [Object_init](
           this: TProperties & DisposableLike,
@@ -349,7 +348,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
 
     const createInstance = pipe(
       {
-        [Object_properties]: { equality: anyProperty },
+        [Object_properties]: { equality: none },
         [Object_init](
           this: TProperties,
           delegate: EnumeratorLike<T>,
@@ -415,7 +414,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
   const createInstance = pipe(
     {
-      [Object_properties]: { predicate: anyProperty },
+      [Object_properties]: { predicate: none },
       [Object_init](
         this: TProperties,
         delegate: EnumeratorLike<T>,
@@ -471,8 +470,8 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const createInstance = pipe(
     {
       [Object_properties]: {
-        mapper: anyProperty,
-        delegate: anyProperty,
+        mapper: none,
+        delegate: none,
       },
       [Object_init](
         this: TProperties,
@@ -528,7 +527,7 @@ export const onNotify = /*@__PURE__*/ (<T>() => {
 
   const createInstance = pipe(
     {
-      [Object_properties]: { onNotify: anyProperty },
+      [Object_properties]: { onNotify: none },
       [Object_init](
         this: TProperties,
         delegate: EnumeratorLike<T>,
@@ -622,9 +621,9 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
     {
       [Object_properties]: {
         count: 0,
-        enumerator: anyProperty,
-        shouldRepeat: anyProperty,
-        src: anyProperty,
+        enumerator: none,
+        shouldRepeat: none,
+        src: none,
       },
       [Object_init](
         this: TProperties,
@@ -708,7 +707,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
 
   const createInstance = pipe(
     {
-      [Object_properties]: { reducer: anyProperty, delegate: anyProperty },
+      [Object_properties]: { reducer: none, delegate: none },
       [Object_init](
         this: TProperties & MutableEnumeratorLike,
         delegate: EnumeratorLike<T>,
@@ -985,7 +984,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
     return pipe(
       {
         [Object_properties]: {
-          predicate: anyProperty,
+          predicate: none,
           inclusive: false,
           done: false,
         },
@@ -1224,7 +1223,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const createInstance = pipe(
     {
       [Object_properties]: {
-        enumerators: anyProperty,
+        enumerators: none,
       },
       [Object_init](this: TProperties, enumerators: readonly EnumeratorLike[]) {
         init(disposablePrototype, this);

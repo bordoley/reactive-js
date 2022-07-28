@@ -7,7 +7,6 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
@@ -423,7 +422,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
     const createInstance = pipe(
       {
         [Object_properties]: {
-          seq: anyProperty,
+          seq: none,
         },
         [Object_init](this: TProperties, seq: SequenceLike) {
           init(disposablePrototype, this);

@@ -1,6 +1,5 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { observerPrototype } from '../__internal__/scheduling/Observer.mjs';
-import { prototype } from '../__internal__/util/DelegatingDisposable.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { mapPrototype } from '../__internal__/util/Sink.mjs';
 import { pipeUnsafe, newInstance, pipe } from '../functions.mjs';
@@ -30,14 +29,15 @@ const lift = /*@__PURE__*/ (() => {
     };
 })();
 const map = /*@__PURE__*/ (() => {
+    const typedMapPrototype = mapPrototype();
+    const typedObserverPrototype = observerPrototype();
     const createInstance = pipe({
         [Object_properties]: {},
         [Object_init](delegate, mapper) {
-            init(prototype, this, delegate);
-            init(observerPrototype, this, delegate[ObserverLike_scheduler]);
-            init(mapPrototype, this, delegate, mapper);
+            init(typedObserverPrototype, this, delegate[ObserverLike_scheduler]);
+            init(typedMapPrototype, this, delegate, mapper);
         },
-    }, mixWith(prototype, observerPrototype, mapPrototype), createObjectFactory());
+    }, mixWith(typedObserverPrototype, typedMapPrototype), createObjectFactory());
     return (mapper) => {
         const operator = (delegate) => createInstance(delegate, mapper);
         return lift(operator);

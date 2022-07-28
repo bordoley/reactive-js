@@ -7,13 +7,12 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
 } from "../__internal__/util/Object";
 import { IterableLike, ToIterable } from "../containers";
-import { identity, pipe } from "../functions";
+import { identity, none, pipe } from "../functions";
 import { ToEnumerable, createEnumerable } from "../ix";
 import {
   EnumeratorLike,
@@ -32,7 +31,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
 
     const createInstance = pipe(
       {
-        [Object_properties]: { iterator: anyProperty },
+        [Object_properties]: { iterator: none },
         [Object_init](this: TProperties, iterator: Iterator<unknown>) {
           init(disposablePrototype, this);
           this.iterator = iterator;

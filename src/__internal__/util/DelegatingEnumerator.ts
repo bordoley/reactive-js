@@ -1,11 +1,11 @@
-import { raise } from "../../functions";
+import { none, raise } from "../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
 } from "../../util";
 import { move as moveEnumerator } from "../../util/EnumeratorLike";
-import { Object_init, Object_properties, anyProperty } from "../util/Object";
+import { Object_init, Object_properties } from "../util/Object";
 
 const DelegatingEnumerator_move_delegate = Symbol(
   "DelegatingEnumerator_move_delegate",
@@ -34,7 +34,7 @@ export const prototype: <T>() => TPrototype<T> = /*@__PURE__*/ (<T>() => {
 
   const prototype = {
     [Object_properties]: {
-      [DelegatingEnumerator_private_delegate]: anyProperty,
+      [DelegatingEnumerator_private_delegate]: none,
     },
     [Object_init](this: TProperties, delegate: EnumeratorLike<T>) {
       this[DelegatingEnumerator_private_delegate] = delegate;

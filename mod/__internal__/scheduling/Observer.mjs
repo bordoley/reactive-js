@@ -1,12 +1,12 @@
 /// <reference types="./Observer.d.ts" />
-import { getLength, pipe, none, isNone, isEmpty } from '../../functions.mjs';
+import { getLength, pipe, none, isNone, isEmpty, returns } from '../../functions.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../scheduling.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../../util.mjs';
 import { addTo, onComplete, addToIgnoringChildErrors, onDisposed } from '../../util/DisposableLike.mjs';
 import { prototype } from '../util/Disposable.mjs';
-import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../util/Object.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../util/Object.mjs';
 import { isDisposed, dispose } from '../util/DisposableLikeInternal.mjs';
 
 const createObserverDispatcher = (() => {
@@ -18,10 +18,10 @@ const createObserverDispatcher = (() => {
     };
     return pipe({
         [Object_properties]: {
-            continuation: anyProperty,
-            nextQueue: anyProperty,
-            observer: anyProperty,
-            onContinuationDispose: anyProperty,
+            continuation: none,
+            nextQueue: none,
+            observer: none,
+            onContinuationDispose: none,
         },
         [Object_init](observer) {
             init(prototype, this);
@@ -52,26 +52,29 @@ const createObserverDispatcher = (() => {
         },
     }, mixWith(prototype), createObjectFactory());
 })();
-const observerPrototype = {
-    [Object_properties]: {
-        [ObserverLike_scheduler]: anyProperty,
-        dispatcher: none,
-    },
-    [Object_init](scheduler) {
-        this[ObserverLike_scheduler] = scheduler;
-    },
-    get [ObserverLike_dispatcher]() {
-        const self = this;
-        if (isNone(self.dispatcher)) {
-            const dispatcher = pipe(createObserverDispatcher(self), addToIgnoringChildErrors(self), onDisposed(e => {
-                if (isEmpty(dispatcher.nextQueue)) {
-                    pipe(self, dispose(e));
-                }
-            }));
-            self.dispatcher = dispatcher;
-        }
-        return self.dispatcher;
-    },
-};
+const observerPrototype = 
+/*@__PURE__*/ (() => {
+    return pipe({
+        [Object_properties]: {
+            [ObserverLike_scheduler]: none,
+            dispatcher: none,
+        },
+        [Object_init](scheduler) {
+            this[ObserverLike_scheduler] = scheduler;
+        },
+        get [ObserverLike_dispatcher]() {
+            const self = this;
+            if (isNone(self.dispatcher)) {
+                const dispatcher = pipe(createObserverDispatcher(self), addToIgnoringChildErrors(self), onDisposed(e => {
+                    if (isEmpty(dispatcher.nextQueue)) {
+                        pipe(self, dispose(e));
+                    }
+                }));
+                self.dispatcher = dispatcher;
+            }
+            return self.dispatcher;
+        },
+    }, returns);
+})();
 
 export { observerPrototype };

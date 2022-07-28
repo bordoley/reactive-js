@@ -1,15 +1,15 @@
 /// <reference types="./DelegatingEnumerator.d.ts" />
-import { raise } from '../../functions.mjs';
+import { none, raise } from '../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../util.mjs';
 import { move as move$1 } from '../../util/EnumeratorLike.mjs';
-import { Object_properties, anyProperty, Object_init } from './Object.mjs';
+import { Object_properties, Object_init } from './Object.mjs';
 
 const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
 const prototype = /*@__PURE__*/ (() => {
     const DelegatingEnumerator_private_delegate = Symbol("DelegatingEnumerator_private_delegate");
     const prototype = {
         [Object_properties]: {
-            [DelegatingEnumerator_private_delegate]: anyProperty,
+            [DelegatingEnumerator_private_delegate]: none,
         },
         [Object_init](delegate) {
             this[DelegatingEnumerator_private_delegate] = delegate;

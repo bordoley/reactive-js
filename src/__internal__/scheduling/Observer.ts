@@ -6,6 +6,7 @@ import {
   isNone,
   none,
   pipe,
+  returns,
 } from "../../functions";
 import {
   DispatcherLike,
@@ -36,7 +37,6 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
@@ -65,10 +65,10 @@ const createObserverDispatcher = (<T>() => {
   return pipe(
     {
       [Object_properties]: {
-        continuation: anyProperty,
-        nextQueue: anyProperty,
-        observer: anyProperty,
-        onContinuationDispose: anyProperty,
+        continuation: none,
+        nextQueue: none,
+        observer: none,
+        onContinuationDispose: none,
       },
       [Object_init](
         this: TProperties & DisposableLike,
@@ -118,29 +118,44 @@ type TProperties = {
   dispatcher: Option<DispatcherLike>;
 };
 
-export const observerPrototype = {
+type TObserverPrototype<T> = {
   [Object_properties]: {
-    [ObserverLike_scheduler]: anyProperty,
-    dispatcher: none,
-  },
-  [Object_init](this: TProperties, scheduler: SchedulerLike) {
-    this[ObserverLike_scheduler] = scheduler;
-  },
-  get [ObserverLike_dispatcher]() {
-    const self = this as unknown as ObserverLike & TProperties;
-    if (isNone(self.dispatcher)) {
-      const dispatcher = pipe(
-        createObserverDispatcher(self),
-        addToIgnoringChildErrors(self),
-        onDisposed(e => {
-          if (isEmpty(dispatcher.nextQueue)) {
-            pipe(self, dispose(e));
-          }
-        }),
-      );
-
-      self.dispatcher = dispatcher;
-    }
-    return self.dispatcher;
-  },
+    [ObserverLike_scheduler]: SchedulerLike;
+    dispatcher: Option<DispatcherLike>;
+  };
+  [Object_init](this: TProperties, scheduler: SchedulerLike): void;
+  readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
 };
+
+export const observerPrototype: <T>() => TObserverPrototype<T> =
+  /*@__PURE__*/ (<T>() => {
+    return pipe(
+      {
+        [Object_properties]: {
+          [ObserverLike_scheduler]: none as any,
+          dispatcher: none,
+        },
+        [Object_init](this: TProperties, scheduler: SchedulerLike) {
+          this[ObserverLike_scheduler] = scheduler;
+        },
+        get [ObserverLike_dispatcher](): DispatcherLike<T> {
+          const self = this as unknown as ObserverLike<T> & TProperties;
+          if (isNone(self.dispatcher)) {
+            const dispatcher = pipe(
+              createObserverDispatcher(self),
+              addToIgnoringChildErrors(self),
+              onDisposed(e => {
+                if (isEmpty(dispatcher.nextQueue)) {
+                  pipe(self, dispose(e));
+                }
+              }),
+            );
+
+            self.dispatcher = dispatcher;
+          }
+          return self.dispatcher;
+        },
+      },
+      returns,
+    );
+  })();
