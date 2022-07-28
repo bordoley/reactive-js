@@ -1,4 +1,4 @@
-import { Factory, none, pipe, raise } from "../../functions";
+import { Factory, pipe, raise } from "../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -18,43 +18,52 @@ import {
   mixWith,
 } from "./Object";
 
-const Enumerator_private_current = Symbol("Enumerator_private_current");
-const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
-
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
 }
 
-type TProperties = {
-  [Enumerator_private_current]: unknown;
-  [Enumerator_private_hasCurrent]: boolean;
+type TPrototype<T> = {
+  [Object_properties]: unknown;
+  [Object_init](this: unknown): void;
+  [EnumeratorLike_current]: T;
+  readonly [EnumeratorLike_hasCurrent]: boolean;
 };
 
-export const prototype = {
-  [Object_properties]: {
-    [Enumerator_private_current]: anyProperty,
-    [Enumerator_private_hasCurrent]: false,
-  },
-  [Object_init](this: TProperties) {
-    this[Enumerator_private_current] = none;
-    this[Enumerator_private_hasCurrent] = false;
-  },
-  get [EnumeratorLike_current](): unknown {
-    const self = this as unknown as TProperties & EnumeratorLike;
-    return hasCurrent(self) ? self[Enumerator_private_current] : raise();
-  },
-  set [EnumeratorLike_current](v: unknown) {
-    const self = this as unknown as TProperties & EnumeratorLike;
-    if (!isDisposed(self)) {
-      self[Enumerator_private_current] = v;
-      self[Enumerator_private_hasCurrent] = true;
-    }
-  },
-  get [EnumeratorLike_hasCurrent](): boolean {
-    const self = this as unknown as TProperties & EnumeratorLike;
-    return !isDisposed(self) && self[Enumerator_private_hasCurrent];
-  },
-};
+export const prototype: <T>() => TPrototype<T> = /*@__PURE__*/ (<T>() => {
+  const Enumerator_private_current = Symbol("Enumerator_private_current");
+  const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
+
+  type TProperties = {
+    [Enumerator_private_current]: T;
+    [Enumerator_private_hasCurrent]: boolean;
+  };
+
+  const description = {
+    [Object_properties]: {
+      [Enumerator_private_current]: anyProperty,
+      [Enumerator_private_hasCurrent]: false,
+    },
+    [Object_init](this: TProperties) {
+      this[Enumerator_private_hasCurrent] = false;
+    },
+    get [EnumeratorLike_current](): T {
+      const self = this as unknown as TProperties & EnumeratorLike<T>;
+      return hasCurrent(self) ? self[Enumerator_private_current] : raise();
+    },
+    set [EnumeratorLike_current](v: T) {
+      const self = this as unknown as TProperties & EnumeratorLike;
+      if (!isDisposed(self)) {
+        self[Enumerator_private_current] = v;
+        self[Enumerator_private_hasCurrent] = true;
+      }
+    },
+    get [EnumeratorLike_hasCurrent](): boolean {
+      const self = this as unknown as TProperties & EnumeratorLike;
+      return !isDisposed(self) && self[Enumerator_private_hasCurrent];
+    },
+  };
+  return () => description;
+})();
 
 export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() =>
   pipe(

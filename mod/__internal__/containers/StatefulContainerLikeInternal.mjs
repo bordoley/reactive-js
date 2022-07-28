@@ -6,26 +6,23 @@ import { dispose } from '../util/DisposableLikeInternal.mjs';
 const interactive = 0;
 const reactive = 1;
 const lift = ({ lift, }) => lift;
-const createScanOperator = (m) => (Constructor) => (reducer, initialValue) => pipe(Constructor(reducer, initialValue), lift(m));
-const createSkipFirstOperator = (m) => (Constructor) => (options = {}) => {
+const createSkipFirstOperator = (m) => (operator) => (options = {}) => {
     const { count = 1 } = options;
-    const operator = Constructor(count);
-    const lifted = pipe(operator, lift(m));
-    return runnable => (count > 0 ? pipe(runnable, lifted) : runnable);
+    const lifted = pipe((delegate) => operator(delegate, count), lift(m));
+    return container => (count > 0 ? pipe(container, lifted) : container);
 };
-const createTakeFirstOperator = (m) => (Constructor) => (options = {}) => {
+const createTakeFirstOperator = (m) => (operator) => (options = {}) => {
     var _a;
     const { count = max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
-    const operator = Constructor(count);
-    const lifted = pipe(operator, lift(m));
-    return source => (count > 0 ? pipe(source, lifted) : m.empty());
+    const lifted = pipe((delegate) => operator(delegate, count), lift(m));
+    return container => (count > 0 ? pipe(container, lifted) : m.empty());
 };
-const createTakeWhileOperator = (m) => (Constructor) => (predicate, options = {}) => {
+const createTakeWhileOperator = (m) => (operator) => (predicate, options = {}) => {
     const { inclusive = false } = options;
-    return pipe(Constructor(predicate, inclusive), lift(m));
+    return pipe((delegate) => operator(delegate, predicate, inclusive), lift(m));
 };
-const createThrowIfEmptyOperator = (m) => (Constructor) => (factory) => pipe((delegate) => {
-    const lifted = pipe(delegate, Constructor(), m.variance === interactive
+const createThrowIfEmptyOperator = (m) => (operator) => (factory) => pipe((delegate) => {
+    const lifted = pipe(delegate, operator, m.variance === interactive
         ? addIgnoringChildErrors(delegate)
         : addTo(delegate));
     const { parent, child } = m.variance === interactive
@@ -48,4 +45,4 @@ const createThrowIfEmptyOperator = (m) => (Constructor) => (factory) => pipe((de
     return lifted;
 }, lift(m));
 
-export { createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, lift, reactive };
+export { createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, lift, reactive };

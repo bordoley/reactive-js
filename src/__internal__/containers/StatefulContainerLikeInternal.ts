@@ -8,9 +8,10 @@ import {
 import {
   Factory,
   Function1,
+  Function2,
+  Function3,
   Option,
   Predicate,
-  Reducer,
   max,
   none,
   pipe,
@@ -79,122 +80,89 @@ export const lift = <
   ContainerOperator<C, TA, TB>
 > => lift;
 
-export type ScanStateConstructor<
-  C extends StatefulContainerLike,
-  TVar extends TInteractive | TReactive,
-> = <T, TAcc>(
-  reducer: Reducer<T, TAcc>,
-  acc: Factory<TAcc>,
-) => Function1<
-  StatefulContainerOperatorIn<C, T, TAcc, TVar>,
-  StatefulContainerOperatorOut<C, T, TAcc, TVar>
->;
-
-export const createScanOperator =
-  <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
-    m: Lift<C, TVar>,
-  ) =>
-  (Constructor: ScanStateConstructor<C, TVar>) =>
-  <T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): ContainerOperator<C, T, TAcc> =>
-    pipe(Constructor(reducer, initialValue), lift(m));
-
-export type SkipFirstStateConstructor<
-  C extends StatefulContainerLike,
-  TVar extends TInteractive | TReactive,
-> = <T>(
-  skipCount: number,
-) => Function1<
-  StatefulContainerOperatorIn<C, T, T, TVar>,
-  StatefulContainerOperatorOut<C, T, T, TVar>
->;
-
 export const createSkipFirstOperator =
-  <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
+  <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
-  (Constructor: SkipFirstStateConstructor<C, TVar>) =>
-  <T>(
-    options: { readonly count?: number } = {},
-  ): ContainerOperator<C, T, T> => {
+  (
+    operator: Function2<
+      StatefulContainerOperatorIn<C, T, T, TVar>,
+      number,
+      StatefulContainerOperatorOut<C, T, T, TVar>
+    >,
+  ) =>
+  (options: { readonly count?: number } = {}): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
-    const operator: StatefulContainerOperator<C, T, T, TVar> =
-      Constructor(count);
-    const lifted = pipe(operator, lift(m));
-    return runnable => (count > 0 ? pipe(runnable, lifted) : runnable);
+    const lifted = pipe(
+      (delegate: StatefulContainerOperatorIn<C, T, T, TVar>) =>
+        operator(delegate, count),
+      lift(m),
+    );
+    return container => (count > 0 ? pipe(container, lifted) : container);
   };
-
-export type TakeFirstStateContructor<
-  C extends StatefulContainerLike,
-  TVar extends TInteractive | TReactive,
-> = <T>(
-  maxCount: number,
-) => Function1<
-  StatefulContainerOperatorIn<C, T, T, TVar>,
-  StatefulContainerOperatorOut<C, T, T, TVar>
->;
 
 export const createTakeFirstOperator =
-  <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
+  <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Empty<C> & Lift<C, TVar>,
   ) =>
-  (Constructor: TakeFirstStateContructor<C, TVar>) =>
-  <T>(
-    options: { readonly count?: number } = {},
-  ): ContainerOperator<C, T, T> => {
+  (
+    operator: Function2<
+      StatefulContainerOperatorIn<C, T, T, TVar>,
+      number,
+      StatefulContainerOperatorOut<C, T, T, TVar>
+    >,
+  ) =>
+  (options: { readonly count?: number } = {}): ContainerOperator<C, T, T> => {
     const { count = max(options.count ?? 1, 0) } = options;
-    const operator: StatefulContainerOperator<C, T, T, TVar> =
-      Constructor(count);
-    const lifted = pipe(operator, lift(m));
-    return source => (count > 0 ? pipe(source, lifted) : m.empty());
+    const lifted = pipe(
+      (delegate: StatefulContainerOperatorIn<C, T, T, TVar>) =>
+        operator(delegate, count),
+      lift(m),
+    );
+    return container => (count > 0 ? pipe(container, lifted) : m.empty());
   };
 
-export type TakeWhileLiftableStateConstructor<
-  C extends StatefulContainerLike,
-  TVar extends TInteractive | TReactive,
-> = <T>(
-  predicate: Predicate<T>,
-  inclusive: boolean,
-) => Function1<
-  StatefulContainerOperatorIn<C, T, T, TVar>,
-  StatefulContainerOperatorOut<C, T, T, TVar>
->;
-
 export const createTakeWhileOperator =
-  <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
+  <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
-  (Constructor: TakeWhileLiftableStateConstructor<C, TVar>) =>
-  <T>(
+  (
+    operator: Function3<
+      StatefulContainerOperatorIn<C, T, T, TVar>,
+      Predicate<T>,
+      boolean,
+      StatefulContainerOperatorOut<C, T, T, TVar>
+    >,
+  ) =>
+  (
     predicate: Predicate<T>,
     options: { readonly inclusive?: boolean } = {},
   ): ContainerOperator<C, T, T> => {
     const { inclusive = false } = options;
-    return pipe(Constructor(predicate, inclusive), lift(m));
+    return pipe(
+      (delegate: StatefulContainerOperatorIn<C, T, T, TVar>) =>
+        operator(delegate, predicate, inclusive),
+      lift(m),
+    );
   };
 
-export type ThrowIfEmptyStateConstructor<
-  C extends StatefulContainerLike,
-  TVar extends TInteractive | TReactive,
-> = <T>() => Function1<
-  StatefulContainerOperatorIn<C, T, T, TVar>,
-  StatefulContainerOperatorOut<C, T, T, TVar> & {
-    readonly isEmpty: boolean;
-  }
->;
-
 export const createThrowIfEmptyOperator =
-  <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
+  <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
-  (Constructor: ThrowIfEmptyStateConstructor<C, TVar>) =>
-  <T>(factory: Factory<unknown>): ContainerOperator<C, T, T> =>
+  (
+    operator: Function1<
+      StatefulContainerOperatorIn<C, T, T, TVar>,
+      StatefulContainerOperatorOut<C, T, T, TVar> & {
+        readonly isEmpty: boolean;
+      }
+    >,
+  ) =>
+  (factory: Factory<unknown>): ContainerOperator<C, T, T> =>
     pipe((delegate: StatefulContainerOperatorIn<C, T, T, TVar>) => {
       const lifted = pipe(
         delegate,
-        Constructor(),
+        operator,
         m.variance === interactive
           ? addIgnoringChildErrors(delegate)
           : addTo(delegate),

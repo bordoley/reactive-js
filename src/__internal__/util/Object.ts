@@ -3,6 +3,7 @@ import {
   Function1,
   Function2,
   Function3,
+  Function4,
   none,
 } from "../../functions";
 
@@ -97,9 +98,23 @@ interface ObjectFactory {
   <TReturn, TProperties, TA, TB, TC>(): Function1<
     {
       [Object_properties]: TProperties;
-      [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TB) => void;
+      [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TC) => void;
     } & Omit<TReturn, keyof TProperties>,
     Function3<TA, TB, TC, TReturn>
+  >;
+
+  <TReturn, TProperties, TA, TB, TC, TD>(): Function1<
+    {
+      [Object_properties]: TProperties;
+      [Object_init]: (
+        this: TReturn & TProperties,
+        a: TA,
+        b: TB,
+        c: TC,
+        d: TD,
+      ) => void;
+    } & Omit<TReturn, keyof TProperties>,
+    Function4<TA, TB, TC, TD, TReturn>
   >;
 }
 

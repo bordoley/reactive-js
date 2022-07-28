@@ -41,12 +41,12 @@ const emptyEnumerable =
     [Object_properties]: {},
     [Object_init]() {
         init(prototype, this);
-        init(prototype$1, this);
+        init(prototype$1(), this);
     },
     [SourceLike_move]() {
         pipe(this, dispose());
     },
-}, mixWith(prototype, prototype$1), createObjectFactory(), f => pipeLazy(f, createEnumerable));
+}, mixWith(prototype, prototype$1()), createObjectFactory(), f => pipeLazy(f, createEnumerable));
 const emptyEnumerableT = {
     empty: emptyEnumerable,
 };
@@ -59,25 +59,26 @@ const emptyEnumerableT = {
  */
 const generateEnumerable = 
 /*@__PURE__*/ (() => {
+    const typedEnumerator = prototype$1();
     const createInstance = pipe({
         [Object_properties]: { f: anyProperty },
         [Object_init](f, acc) {
             init(prototype, this);
-            init(prototype$1, this);
+            init(prototype$1(), this);
             this.f = f;
             this[EnumeratorLike_current] = acc;
         },
         [SourceLike_move]() {
             if (!isDisposed(this)) {
                 try {
-                    this[EnumeratorLike_current] = this.f(this);
+                    this[EnumeratorLike_current] = this.f(this[EnumeratorLike_current]);
                 }
                 catch (cause) {
                     pipe(this, dispose({ cause }));
                 }
             }
         },
-    }, mixWith(prototype, prototype$1), createObjectFactory());
+    }, mixWith(prototype, typedEnumerator), createObjectFactory());
     return (generator, initialValue) => createEnumerable(() => createInstance(generator, initialValue()));
 })();
 const generateEnumerableT = {

@@ -1,4 +1,4 @@
-import { Function1, Factory, Function2, Function3 } from "../../functions.mjs";
+import { Function1, Factory, Function2, Function3, Function4 } from "../../functions.mjs";
 declare const Object_init: unique symbol;
 declare const Object_properties: unique symbol;
 declare type PropertyTypeOf<T extends any[]> = T extends [
@@ -40,8 +40,12 @@ interface ObjectFactory {
     } & Omit<TReturn, keyof TProperties>, Function2<TA, TB, TReturn>>;
     <TReturn, TProperties, TA, TB, TC>(): Function1<{
         [Object_properties]: TProperties;
-        [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TB) => void;
+        [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TC) => void;
     } & Omit<TReturn, keyof TProperties>, Function3<TA, TB, TC, TReturn>>;
+    <TReturn, TProperties, TA, TB, TC, TD>(): Function1<{
+        [Object_properties]: TProperties;
+        [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TC, d: TD) => void;
+    } & Omit<TReturn, keyof TProperties>, Function4<TA, TB, TC, TD, TReturn>>;
 }
 declare const createObjectFactory: ObjectFactory;
 interface MixWith {

@@ -244,7 +244,7 @@ const toEnumerable =
         },
         [Object_init](seq) {
             init(prototype, this);
-            init(prototype$1, this);
+            init(prototype$1(), this);
             this.seq = seq;
         },
         [SourceLike_move]() {
@@ -259,7 +259,7 @@ const toEnumerable =
                 }
             }
         },
-    }, mixWith(prototype, prototype$1), createObjectFactory());
+    }, mixWith(prototype, prototype$1()), createObjectFactory());
     return () => (seq) => createEnumerable(() => createInstance(seq));
 })();
 const toEnumerableT = { toEnumerable };
