@@ -391,39 +391,6 @@ export const decorateWithDistinctUntilChangedNotify = <
     },
   );
 
-export const decorateWithKeepNotify = <C extends ReactiveContainerLike>(
-  KeepSink: new <T>(
-    delegate: StatefulContainerStateOf<C, T>,
-    predicate: Predicate<T>,
-  ) => DelegatingStatefulContainerStateOf<C, T, T> & {
-    readonly predicate: Predicate<T>;
-  },
-) =>
-  decorateWithNotify(
-    KeepSink,
-    function notifyKeep(this: InstanceType<typeof KeepSink>, next) {
-      if (this.predicate(next)) {
-        pipe(this, getDelegate, notify(next));
-      }
-    },
-  );
-
-
-export const decorateWithOnNotifyNotify = <C extends ReactiveContainerLike>(
-  OnNotifySink: new <T>(
-    delegate: StatefulContainerStateOf<C, T>,
-    onNotify: SideEffect1<T>,
-  ) => DelegatingStatefulContainerStateOf<C, T, T> & {
-    readonly onNotify: SideEffect1<T>;
-  },
-) =>
-  decorateWithNotify(
-    OnNotifySink,
-    function notifyOnNotify(this: InstanceType<typeof OnNotifySink>, next) {
-      this.onNotify(next);
-      pipe(this, getDelegate, notify(next));
-    },
-  );
 
 export const decorateWithPairwiseNotify = <C extends ReactiveContainerLike>(
   PairwiseSink: new <T>(

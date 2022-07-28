@@ -1,6 +1,6 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import { mapSinkMixin, onNotifySinkMixin, createSink } from '../__internal__/util/SinkLikeMixin.mjs';
+import { keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { pipe, pipeUnsafe, newInstance, isSome, raise } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { DisposableLike_error } from '../util.mjs';
@@ -31,6 +31,15 @@ const liftT: Lift<RunnableLike, TReactive> = {
   lift,
   variance: reactive,
 };*/
+const keep = /*@__PURE__*/ (() => {
+    const typedKeepSinkMixin = keepSinkMixin();
+    const createInstance = pipe(typedKeepSinkMixin, createObjectFactory());
+    return (mapper) => {
+        const operator = (delegate) => createInstance(delegate, mapper);
+        return lift(operator);
+    };
+})();
+const keepT = { keep };
 const map = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
     const createInstance = pipe(typedMapSinkMixin, createObjectFactory());
@@ -53,6 +62,15 @@ const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose
         raise(error.cause);
     }
 });
+const scan = /*@__PURE__*/ (() => {
+    const typedScanSinkMixin = scanSinkMixin();
+    const createInstance = pipe(typedScanSinkMixin, createObjectFactory());
+    return (reducer, initialValue) => {
+        const operator = (delegate) => createInstance(delegate, reducer, initialValue);
+        return lift(operator);
+    };
+})();
+const scanT = { scan };
 const toReadonlyArray = () => (runnable) => {
     const result = [];
     pipe(runnable, onNotify(x => result.push(x)), run());
@@ -62,4 +80,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { map, mapT, onNotify, run, toReadonlyArray, toReadonlyArrayT };
+export { keep, keepT, map, mapT, onNotify, run, scan, scanT, toReadonlyArray, toReadonlyArrayT };
