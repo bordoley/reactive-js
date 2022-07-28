@@ -10,11 +10,11 @@ import {
   getCurrentTime,
   isInContinuation,
 } from "./__internal__/schedulingInternal";
-import { prototype as disposablePrototype } from "./__internal__/util/Disposable";
+import { disposableMixin } from "./__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
-  prototype as enumeratorPrototype,
-} from "./__internal__/util/Enumerator";
+  enumeratorMixin,
+} from "./__internal__/util/EnumeratorLikeMixin";
 import {
   Object_init,
   Object_properties,
@@ -204,7 +204,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     scheduler[SchedulerLike_inContinuation] = false;
   };
 
-  type TProperties = PropertyTypeOf<[typeof disposablePrototype]> & {
+  type TProperties = PropertyTypeOf<[typeof disposableMixin]> & {
     [SchedulerLike_inContinuation]: boolean;
     startTime: number;
     yieldInterval: number;
@@ -220,7 +220,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
         yieldRequested: false,
       },
       [Object_init](this: TProperties, yieldInterval: number) {
-        init(disposablePrototype, this);
+        init(disposableMixin, this);
         this.yieldInterval = yieldInterval;
       },
 
@@ -274,7 +274,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
         }
       },
     },
-    mixWith(disposablePrototype),
+    mixWith(disposableMixin),
     createObjectFactory<SchedulerLike, TProperties, number>(),
   );
 
@@ -302,8 +302,10 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     return diff;
   };
 
+  const typedEnumeratorMixin = enumeratorMixin<VirtualTask>();
+
   type TProperties = PropertyTypeOf<
-    [typeof disposablePrototype & typeof enumeratorPrototype]
+    [typeof disposableMixin & typeof typedEnumeratorMixin]
   > & {
     [SchedulerLike_inContinuation]: boolean;
     [SchedulerLike_now]: number;
@@ -326,7 +328,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         taskQueue: none,
       },
       [Object_init](this: TProperties, maxMicroTaskTicks: number) {
-        init(disposablePrototype, this);
+        init(disposableMixin, this);
         this.maxMicroTaskTicks = maxMicroTaskTicks;
         this.taskQueue = createPriorityQueue(comparator);
       },
@@ -398,7 +400,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         }
       },
     },
-    mixWith(disposablePrototype, enumeratorPrototype),
+    mixWith(disposableMixin, typedEnumeratorMixin),
     createObjectFactory<VirtualTimeSchedulerLike, TProperties, number>(),
   );
 

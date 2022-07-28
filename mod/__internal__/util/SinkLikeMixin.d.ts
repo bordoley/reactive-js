@@ -3,7 +3,7 @@ import { SinkLike, SinkLike_notify } from "../../util.mjs";
 import { DisposableLike } from "./DisposableLikeInternal.mjs";
 import { Object_properties, Object_init } from "./Object.mjs";
 declare const Sink_delegate: unique symbol;
-declare type TMapPrototype<TA, TB> = DisposableLike & {
+declare const mapSinkMixin: <TA, TB>() => DisposableLike & {
     [Object_properties]: {
         [Sink_delegate]: SinkLike<TB>;
         mapper: Function1<TA, TB>;
@@ -14,5 +14,4 @@ declare type TMapPrototype<TA, TB> = DisposableLike & {
     }, delegate: SinkLike<TB>, mapper: Function1<TA, TB>): void;
     [SinkLike_notify](next: TA): void;
 };
-declare const mapPrototype: <TA, TB>() => TMapPrototype<TA, TB>;
-export { Sink_delegate, mapPrototype };
+export { Sink_delegate, mapSinkMixin };

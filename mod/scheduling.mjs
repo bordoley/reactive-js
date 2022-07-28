@@ -4,16 +4,16 @@ import { getDelay } from './__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from './__internal__/scheduling/queue.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from './__internal__/schedulingInternal.mjs';
 export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
-import { prototype } from './__internal__/util/Disposable.mjs';
-import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
+import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
+import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
-import { addTo, onDisposed, addIgnoringChildErrors } from './util/DisposableLike.mjs';
+import './util/DisposableLike.mjs';
 import { getCurrent } from './util/EnumeratorLike.mjs';
 import { move } from './util/SourceLike.mjs';
-import { dispose, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
+import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
 const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
@@ -65,7 +65,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
             yieldRequested: false,
         },
         [Object_init](yieldInterval) {
-            init(prototype, this);
+            init(disposableMixin, this);
             this.yieldInterval = yieldInterval;
         },
         get [SchedulerLike_now]() {
@@ -106,7 +106,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
                 scheduleImmediate(this, continuation);
             }
         },
-    }, mixWith(prototype), createObjectFactory());
+    }, mixWith(disposableMixin), createObjectFactory());
     return (options = {}) => {
         const { yieldInterval = 5 } = options;
         return createInstance(yieldInterval);
@@ -119,6 +119,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         diff = diff !== 0 ? diff : a.id - b.id;
         return diff;
     };
+    const typedEnumeratorMixin = enumeratorMixin();
     const createInstance = pipe({
         [Object_properties]: {
             [SchedulerLike_inContinuation]: false,
@@ -130,7 +131,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
             taskQueue: none,
         },
         [Object_init](maxMicroTaskTicks) {
-            init(prototype, this);
+            init(disposableMixin, this);
             this.maxMicroTaskTicks = maxMicroTaskTicks;
             this.taskQueue = createPriorityQueue(comparator);
         },
@@ -182,7 +183,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
                 pipe(this, dispose());
             }
         },
-    }, mixWith(prototype, prototype$1), createObjectFactory());
+    }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
     return (options = {}) => {
         const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
         return createInstance(maxMicroTaskTicks);

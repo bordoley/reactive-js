@@ -1,13 +1,13 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { prototype } from '../__internal__/util/Disposable.mjs';
+import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { pipe, none } from '../functions.mjs';
 import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
-import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
+import '../util/DisposableLike.mjs';
 import { shouldYield, requestYield } from './SchedulerLike.mjs';
 import { SchedulerLike_inContinuation, isInContinuation, SchedulerLike_now, getCurrentTime } from '../__internal__/schedulingInternal.mjs';
-import { isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { addIgnoringChildErrors, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
@@ -22,7 +22,7 @@ const toScheduler = /*@__PURE__*/ (() => {
             priority: 0,
         },
         [Object_init](scheduler, priority) {
-            init(prototype, this);
+            init(disposableMixin, this);
             this.priorityScheduler = scheduler;
             this.priority = priority;
         },
@@ -51,7 +51,7 @@ const toScheduler = /*@__PURE__*/ (() => {
                 });
             }
         },
-    }, mixWith(prototype), createObjectFactory());
+    }, mixWith(disposableMixin), createObjectFactory());
     return (priority) => priorityScheduler => createInstance(priorityScheduler, priority);
 })();
 

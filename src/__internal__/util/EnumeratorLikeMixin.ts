@@ -1,34 +1,23 @@
-import { Factory, none, pipe, raise, returns } from "../../functions";
+import { none, pipe, raise, returns } from "../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  SourceLike_move,
 } from "../../util";
 import { isDisposed } from "../../util/DisposableLike";
 import { hasCurrent } from "../../util/EnumeratorLike";
-import { prototype as disposablePrototype } from "../util/Disposable";
-import {
-  Object_init,
-  Object_properties,
-  PropertyTypeOf,
-  createObjectFactory,
-  init,
-  mixWith,
-} from "./Object";
+import { Object_init, Object_properties } from "./Object";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
 }
 
-type TPrototype<T> = {
+export const enumeratorMixin: <T>() => {
   [Object_properties]: unknown;
   [Object_init](this: unknown): void;
   [EnumeratorLike_current]: T;
   readonly [EnumeratorLike_hasCurrent]: boolean;
-};
-
-export const prototype: <T>() => TPrototype<T> = /*@__PURE__*/ (<T>() => {
+} = /*@__PURE__*/ (<T>() => {
   const Enumerator_private_current = Symbol("Enumerator_private_current");
   const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
 
@@ -65,25 +54,3 @@ export const prototype: <T>() => TPrototype<T> = /*@__PURE__*/ (<T>() => {
     returns,
   );
 })();
-
-export const neverEnumerator: Factory<EnumeratorLike> = /*@__PURE__*/ (() =>
-  pipe(
-    {
-      [Object_properties]: {},
-      [Object_init](this: PropertyTypeOf<[typeof disposablePrototype]>) {
-        init(disposablePrototype, this);
-      },
-      get [EnumeratorLike_current](): unknown {
-        return raise();
-      },
-      get [EnumeratorLike_hasCurrent](): boolean {
-        return false;
-      },
-      [SourceLike_move]() {},
-    },
-    mixWith(disposablePrototype),
-    createObjectFactory<
-      EnumeratorLike,
-      PropertyTypeOf<[typeof disposablePrototype]>
-    >(),
-  ))();

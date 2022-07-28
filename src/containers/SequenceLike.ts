@@ -1,8 +1,8 @@
-import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
+import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
-  prototype as enumeratorPrototype,
-} from "../__internal__/util/Enumerator";
+  enumeratorMixin,
+} from "../__internal__/util/EnumeratorLikeMixin";
 import {
   Object_init,
   Object_properties,
@@ -412,11 +412,12 @@ export const takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
 export const takeWhileT: TakeWhile<SequenceLike> = { takeWhile };
 
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
-  /*@__PURE__*/ (() => {
+  /*@__PURE__*/ (<T>() => {
+    const typedEnumeratorMixin = enumeratorMixin<T>();
     type TProperties = PropertyTypeOf<
-      [typeof disposablePrototype, ReturnType<typeof enumeratorPrototype>]
+      [typeof disposableMixin, typeof typedEnumeratorMixin]
     > & {
-      seq: SequenceLike;
+      seq: SequenceLike<T>;
     };
 
     const createInstance = pipe(
@@ -424,12 +425,12 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
         [Object_properties]: {
           seq: none,
         },
-        [Object_init](this: TProperties, seq: SequenceLike) {
-          init(disposablePrototype, this);
-          init(enumeratorPrototype(), this);
+        [Object_init](this: TProperties, seq: SequenceLike<T>) {
+          init(disposableMixin, this);
+          init(typedEnumeratorMixin, this);
           this.seq = seq;
         },
-        [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
           if (!isDisposed(this)) {
             const next = this.seq();
             if (isSome(next)) {
@@ -441,13 +442,12 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
           }
         },
       },
-      mixWith(disposablePrototype, enumeratorPrototype()),
-      createObjectFactory<EnumeratorLike<any>, TProperties, SequenceLike>(),
+      mixWith(disposableMixin, typedEnumeratorMixin),
+      createObjectFactory<EnumeratorLike<T>, TProperties, SequenceLike<T>>(),
     );
 
-    return <T>() =>
-      (seq: SequenceLike<T>) =>
-        createEnumerable(() => createInstance(seq));
+    return () => (seq: SequenceLike<T>) =>
+      createEnumerable(() => createInstance(seq));
   })();
 
 export const toEnumerableT: ToEnumerable<SequenceLike> = { toEnumerable };

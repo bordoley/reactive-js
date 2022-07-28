@@ -9,19 +9,15 @@ import {
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { MAX_SAFE_INTEGER } from "../__internal__/env";
 import { getDelay } from "../__internal__/optionalArgs";
-import { prototype as delegatingDisposablePrototype } from "../__internal__/util/DelegatingDisposable";
 import {
-  DelegatingEnumeratorLike,
-  move as delegatingEnumeratorMove,
-  prototype as delegatingEnumeratorPrototype,
-} from "../__internal__/util/DelegatingEnumerator";
-import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
-import { prototype as disposableRefPrototype } from "../__internal__/util/DisposableRefLike";
+  delegatingDisposableMixin,
+  disposableMixin,
+  disposableRefMixin,
+} from "../__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
-  prototype as enumeratorPrototype,
-  neverEnumerator,
-} from "../__internal__/util/Enumerator";
+  enumeratorMixin,
+} from "../__internal__/util/EnumeratorLikeMixin";
 import {
   MutableRefLike,
   getCurrentRef,
@@ -131,6 +127,64 @@ import {
 } from "../util/EnumeratorLike";
 import { notifySink } from "../util/SinkLike";
 
+const DelegatingEnumerator_move_delegate = Symbol(
+  "DelegatingEnumerator_move_delegate",
+);
+
+interface DelegatingEnumeratorLike<T> extends EnumeratorLike<T> {
+  [DelegatingEnumerator_move_delegate](): boolean;
+}
+
+export const delegatingEnumeratorMixin: <T>() => {
+  [Object_properties]: unknown;
+  [Object_init](this: unknown, delegate: EnumeratorLike<T>): void;
+  [DelegatingEnumerator_move_delegate](): boolean;
+  readonly [EnumeratorLike_current]: T;
+  readonly [EnumeratorLike_hasCurrent]: boolean;
+} = /*@__PURE__*/ (<T>() => {
+  const DelegatingEnumerator_private_delegate = Symbol(
+    "DelegatingEnumerator_private_delegate",
+  );
+
+  type TProperties = {
+    [DelegatingEnumerator_private_delegate]: EnumeratorLike<T>;
+  };
+
+  return pipe(
+    {
+      [Object_properties]: {
+        [DelegatingEnumerator_private_delegate]: none,
+      },
+      [Object_init](this: TProperties, delegate: EnumeratorLike<T>) {
+        this[DelegatingEnumerator_private_delegate] = delegate;
+      },
+      get [EnumeratorLike_current](): T {
+        const self = this as unknown as TProperties;
+        return (
+          self[DelegatingEnumerator_private_delegate]?.[
+            EnumeratorLike_current
+          ] ?? raise()
+        );
+      },
+      get [EnumeratorLike_hasCurrent](): boolean {
+        const self = this as unknown as TProperties;
+        return self[DelegatingEnumerator_private_delegate][
+          EnumeratorLike_hasCurrent
+        ];
+      },
+      [DelegatingEnumerator_move_delegate](this: TProperties): boolean {
+        const delegate = this[DelegatingEnumerator_private_delegate];
+        return move(delegate);
+      },
+    },
+    returns,
+  );
+})();
+
+const delegatingEnumeratorMove = (enumerator: {
+  [DelegatingEnumerator_move_delegate](): boolean;
+}): boolean => enumerator[DelegatingEnumerator_move_delegate]();
+
 export const enumerate =
   <T>() =>
   (enumerable: EnumerableLike<T>): EnumeratorLike<T> =>
@@ -183,10 +237,10 @@ const liftT: Lift<EnumerableLike, TInteractive> = {
 export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedEnumerator = enumeratorPrototype<T>();
+  const typedEnumerator = enumeratorMixin<T>();
 
   type TProperties = PropertyTypeOf<
-    [typeof disposablePrototype, typeof typedEnumerator]
+    [typeof disposableMixin, typeof typedEnumerator]
   > & {
     delegate: EnumeratorLike<T>;
     maxBufferSize: number;
@@ -203,8 +257,8 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
         delegate: EnumeratorLike<T>,
         maxBufferSize: number,
       ) {
-        init(disposablePrototype, this);
-        init(enumeratorPrototype(), this);
+        init(disposableMixin, this);
+        init(typedEnumerator, this);
         this.delegate = delegate;
         this.maxBufferSize = maxBufferSize;
       },
@@ -227,7 +281,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
         }
       },
     },
-    mixWith(disposablePrototype, typedEnumerator),
+    mixWith(disposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<any>,
       TProperties,
@@ -256,12 +310,34 @@ export const bufferT: Buffer<EnumerableLike<unknown>> = {
 
 export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
   /*@__PURE__*/ (<T>() => {
-    const typedEnumerator = enumeratorPrototype<T>();
+    const typedEnumerator = enumeratorMixin<T>();
+    const typedDisposableRefMixin = disposableRefMixin<EnumeratorLike<T>>();
+
+    const neverEnumerator: Factory<EnumeratorLike> = pipe(
+      {
+        [Object_properties]: {},
+        [Object_init](this: PropertyTypeOf<[typeof disposableMixin]>) {
+          init(disposableMixin, this);
+        },
+        get [EnumeratorLike_current](): unknown {
+          return raise();
+        },
+        get [EnumeratorLike_hasCurrent](): boolean {
+          return false;
+        },
+        [SourceLike_move]() {},
+      },
+      mixWith(disposableMixin),
+      createObjectFactory<
+        EnumeratorLike,
+        PropertyTypeOf<[typeof disposableMixin]>
+      >(),
+    );
 
     type TProperties = PropertyTypeOf<
       [
-        typeof disposablePrototype,
-        typeof disposableRefPrototype,
+        typeof disposableMixin,
+        typeof typedDisposableRefMixin,
         typeof typedEnumerator,
       ]
     > & {
@@ -277,9 +353,9 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
           this: TProperties & DisposableLike,
           delegate: EnumeratorLike<EnumerableLike<T>>,
         ) {
-          init(disposablePrototype, this);
-          init(disposableRefPrototype, this, neverEnumerator());
-          init(enumeratorPrototype(), this);
+          init(disposableMixin, this);
+          init(typedDisposableRefMixin, this, neverEnumerator());
+          init(typedEnumerator, this);
           this.delegate = delegate;
 
           pipe(this, add(delegate));
@@ -311,7 +387,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
           }
         },
       },
-      mixWith(disposablePrototype, disposableRefPrototype, typedEnumerator),
+      mixWith(disposableMixin, typedDisposableRefMixin, typedEnumerator),
       createObjectFactory<
         EnumeratorLike<T>,
         TProperties,
@@ -334,14 +410,10 @@ export const concatT: Concat<EnumerableLike> = {
 
 export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorPrototype =
-      delegatingEnumeratorPrototype<T>();
+    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
     type TProperties = PropertyTypeOf<
-      [
-        typeof delegatingDisposablePrototype,
-        typeof typedDelegatingEnumeratorPrototype,
-      ]
+      [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
     > & {
       equality: Equality<T>;
     };
@@ -354,8 +426,8 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
           delegate: EnumeratorLike<T>,
           equality: Equality<T>,
         ) {
-          init(delegatingDisposablePrototype, this, delegate);
-          init(typedDelegatingEnumeratorPrototype, this, delegate);
+          init(delegatingDisposableMixin, this, delegate);
+          init(typedDelegatingEnumeratorMixin, this, delegate);
           this.equality = equality;
         },
         [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
@@ -376,10 +448,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
           }
         },
       },
-      mixWith(
-        delegatingDisposablePrototype,
-        typedDelegatingEnumeratorPrototype,
-      ),
+      mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
       createObjectFactory<
         EnumeratorLike<T>,
         TProperties,
@@ -401,13 +470,10 @@ export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
 };
 
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
-  const typedDelegatingEnumeratorPrototype = delegatingEnumeratorPrototype<T>();
+  const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
   type TProperties = PropertyTypeOf<
-    [
-      typeof delegatingDisposablePrototype,
-      typeof typedDelegatingEnumeratorPrototype,
-    ]
+    [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
   > & {
     predicate: Predicate<T>;
   };
@@ -420,8 +486,8 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         delegate: EnumeratorLike<T>,
         predicate: Predicate<T>,
       ) {
-        init(delegatingDisposablePrototype, this, delegate);
-        init(typedDelegatingEnumeratorPrototype, this, delegate);
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
         this.predicate = predicate;
       },
       [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
@@ -437,7 +503,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         }
       },
     },
-    mixWith(delegatingDisposablePrototype, typedDelegatingEnumeratorPrototype),
+    mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
     createObjectFactory<
       EnumeratorLike<T>,
       TProperties,
@@ -458,10 +524,10 @@ export const keepT: Keep<EnumerableLike> = {
 };
 
 export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
-  const typedEnumerator = enumeratorPrototype<TB>();
+  const typedEnumerator = enumeratorMixin<TB>();
 
   type TProperties = PropertyTypeOf<
-    [typeof delegatingDisposablePrototype, typeof typedEnumerator]
+    [typeof delegatingDisposableMixin, typeof typedEnumerator]
   > & {
     mapper: Function1<TA, TB>;
     delegate: EnumeratorLike<TA>;
@@ -478,7 +544,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
         delegate: EnumeratorLike<TA>,
         mapper: Function1<TA, TB>,
       ) {
-        init(delegatingDisposablePrototype, this, delegate);
+        init(delegatingDisposableMixin, this, delegate);
         init(typedEnumerator, this);
         this.delegate = delegate;
         this.mapper = mapper;
@@ -495,7 +561,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
         }
       },
     },
-    mixWith(delegatingDisposablePrototype, typedEnumerator),
+    mixWith(delegatingDisposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<TB>,
       TProperties,
@@ -514,13 +580,10 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
 export const mapT: Map<EnumerableLike> = { map };
 
 export const onNotify = /*@__PURE__*/ (<T>() => {
-  const typedDelegatingEnumeratorPrototype = delegatingEnumeratorPrototype<T>();
+  const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
   type TProperties = PropertyTypeOf<
-    [
-      typeof delegatingDisposablePrototype,
-      typeof typedDelegatingEnumeratorPrototype,
-    ]
+    [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
   > & {
     onNotify: SideEffect1<T>;
   };
@@ -533,8 +596,8 @@ export const onNotify = /*@__PURE__*/ (<T>() => {
         delegate: EnumeratorLike<T>,
         onNotify: SideEffect1<T>,
       ) {
-        init(delegatingDisposablePrototype, this, delegate);
-        init(typedDelegatingEnumeratorPrototype, this, delegate);
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
         this.onNotify = onNotify;
       },
       [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
@@ -547,7 +610,7 @@ export const onNotify = /*@__PURE__*/ (<T>() => {
         }
       },
     },
-    mixWith(delegatingDisposablePrototype, typedDelegatingEnumeratorPrototype),
+    mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
     createObjectFactory<
       EnumeratorLike<T>,
       TProperties,
@@ -566,10 +629,10 @@ export const onNotify = /*@__PURE__*/ (<T>() => {
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedEnumerator = enumeratorPrototype<[Option<T>, T]>();
+  const typedEnumerator = enumeratorMixin<[Option<T>, T]>();
 
   type TProperties = PropertyTypeOf<
-    [typeof delegatingDisposablePrototype, typeof typedEnumerator]
+    [typeof delegatingDisposableMixin, typeof typedEnumerator]
   > & {
     delegate: EnumeratorLike<T>;
   };
@@ -588,7 +651,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
         }
       },
     },
-    mixWith(delegatingDisposablePrototype, typedEnumerator),
+    mixWith(delegatingDisposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<[Option<T>, T]>,
       TProperties,
@@ -610,7 +673,7 @@ export const pairwiseT: Pairwise<EnumerableLike> = {
 export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   T,
 >() => {
-  type TProperties = PropertyTypeOf<[typeof disposablePrototype]> & {
+  type TProperties = PropertyTypeOf<[typeof disposableMixin]> & {
     count: number;
     enumerator: Option<EnumeratorLike<T>>;
     shouldRepeat: Predicate<number>;
@@ -630,7 +693,7 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
         src: EnumerableLike<T>,
         shouldRepeat: Predicate<number>,
       ) {
-        init(disposablePrototype, this);
+        init(disposableMixin, this);
         this.src = src;
         this.shouldRepeat = shouldRepeat;
       },
@@ -667,7 +730,7 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
         return self.enumerator?.[EnumeratorLike_hasCurrent] ?? false;
       },
     },
-    mixWith(disposablePrototype),
+    mixWith(disposableMixin),
     createObjectFactory<
       EnumeratorLike<T>,
       TProperties,
@@ -696,10 +759,10 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const typedEnumerator = enumeratorPrototype<TAcc>();
+  const typedEnumerator = enumeratorMixin<TAcc>();
 
   type TProperties = PropertyTypeOf<
-    [typeof delegatingDisposablePrototype, typeof typedEnumerator]
+    [typeof delegatingDisposableMixin, typeof typedEnumerator]
   > & {
     reducer: Reducer<T, TAcc>;
     delegate: EnumeratorLike<T>;
@@ -714,8 +777,8 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
       ) {
-        init(delegatingDisposablePrototype, this, delegate);
-        init(enumeratorPrototype(), this);
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedEnumerator, this);
         this.delegate = delegate;
         this.reducer = reducer;
 
@@ -739,7 +802,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
         }
       },
     },
-    mixWith(delegatingDisposablePrototype, typedEnumerator),
+    mixWith(delegatingDisposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<TAcc>,
       TProperties,
@@ -763,14 +826,10 @@ export const scanT: Scan<EnumerableLike> = {
 
 export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorPrototype =
-      delegatingEnumeratorPrototype<T>();
+    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
     type TProperties = PropertyTypeOf<
-      [
-        typeof delegatingDisposablePrototype,
-        typeof typedDelegatingEnumeratorPrototype,
-      ]
+      [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
     > & {
       skipCount: number;
       count: number;
@@ -787,8 +846,8 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
           delegate: EnumeratorLike<T>,
           skipCount: number,
         ) {
-          init(delegatingDisposablePrototype, this, delegate);
-          init(typedDelegatingEnumeratorPrototype, this, delegate);
+          init(delegatingDisposableMixin, this, delegate);
+          init(typedDelegatingEnumeratorMixin, this, delegate);
 
           this.skipCount = skipCount;
           this.count = 0;
@@ -806,10 +865,7 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
           delegatingEnumeratorMove(this);
         },
       },
-      mixWith(
-        delegatingDisposablePrototype,
-        typedDelegatingEnumeratorPrototype,
-      ),
+      mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
       createObjectFactory<
         EnumeratorLike<T>,
         TProperties,
@@ -826,14 +882,10 @@ export const skipFirstT: SkipFirst<EnumerableLike> = {
 
 export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorPrototype =
-      delegatingEnumeratorPrototype<T>();
+    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
     type TProperties = PropertyTypeOf<
-      [
-        typeof delegatingDisposablePrototype,
-        typeof typedDelegatingEnumeratorPrototype,
-      ]
+      [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
     > & {
       maxCount: number;
       count: number;
@@ -850,8 +902,8 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
           delegate: EnumeratorLike<T>,
           maxCount: number,
         ) {
-          init(delegatingDisposablePrototype, this, delegate);
-          init(typedDelegatingEnumeratorPrototype, this, delegate);
+          init(delegatingDisposableMixin, this, delegate);
+          init(typedDelegatingEnumeratorMixin, this, delegate);
           this.maxCount = maxCount;
         },
         [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
@@ -863,10 +915,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
           }
         },
       },
-      mixWith(
-        delegatingDisposablePrototype,
-        typedDelegatingEnumeratorPrototype,
-      ),
+      mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
       createObjectFactory<
         EnumeratorLike<T>,
         TProperties,
@@ -887,10 +936,10 @@ export const takeFirstT: TakeFirst<EnumerableLike> = {
 export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedDelegatingEnumeratorPrototype = delegatingEnumeratorPrototype<T>();
+  const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
   type TProperties = PropertyTypeOf<
-    [typeof disposablePrototype, typeof typedDelegatingEnumeratorPrototype]
+    [typeof disposableMixin, typeof typedDelegatingEnumeratorMixin]
   > & {
     maxCount: number;
     isStarted: boolean;
@@ -907,8 +956,8 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
         delegate: EnumeratorLike<T>,
         maxCount: number,
       ) {
-        init(disposablePrototype, this);
-        init(typedDelegatingEnumeratorPrototype, this, delegate);
+        init(disposableMixin, this);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
         this.maxCount = maxCount;
         this.isStarted = false;
       },
@@ -932,13 +981,13 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
             enumerate(),
             bindTo(this),
           );
-          init(typedDelegatingEnumeratorPrototype, this, enumerator);
+          init(typedDelegatingEnumeratorMixin, this, enumerator);
         }
 
         delegatingEnumeratorMove(this);
       },
     },
-    mixWith(disposablePrototype, typedDelegatingEnumeratorPrototype),
+    mixWith(disposableMixin, typedDelegatingEnumeratorMixin),
     createObjectFactory<
       EnumeratorLike<T>,
       TProperties,
@@ -967,14 +1016,10 @@ export const takeLastT: TakeLast<EnumerableLike> = { takeLast };
 
 export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorPrototype =
-      delegatingEnumeratorPrototype<T>();
+    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
     type TProperties = PropertyTypeOf<
-      [
-        typeof delegatingDisposablePrototype,
-        typeof typedDelegatingEnumeratorPrototype,
-      ]
+      [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
     > & {
       predicate: Predicate<T>;
       inclusive: boolean;
@@ -994,8 +1039,8 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
           predicate: Predicate<T>,
           inclusive: boolean,
         ) {
-          init(delegatingDisposablePrototype, this, delegate);
-          init(typedDelegatingEnumeratorPrototype, this, delegate);
+          init(delegatingDisposableMixin, this, delegate);
+          init(typedDelegatingEnumeratorMixin, this, delegate);
           this.predicate = predicate;
           this.inclusive = inclusive;
         },
@@ -1021,10 +1066,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
           }
         },
       },
-      mixWith(
-        delegatingDisposablePrototype,
-        typedDelegatingEnumeratorPrototype,
-      ),
+      mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
       createObjectFactory<
         EnumeratorLike<T>,
         TProperties,
@@ -1042,11 +1084,10 @@ export const TContainerOf: EnumerableLike = undefined as any;
 
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorPrototype =
-      delegatingEnumeratorPrototype<T>();
+    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
     type TProperties = PropertyTypeOf<
-      [typeof disposablePrototype, typeof typedDelegatingEnumeratorPrototype]
+      [typeof disposableMixin, typeof typedDelegatingEnumeratorMixin]
     > & {
       isEmpty: boolean;
     };
@@ -1057,8 +1098,8 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
           isEmpty: true,
         },
         [Object_init](this: TProperties, delegate: EnumeratorLike) {
-          init(disposablePrototype, this);
-          init(typedDelegatingEnumeratorPrototype, this, delegate);
+          init(disposableMixin, this);
+          init(typedDelegatingEnumeratorMixin, this, delegate);
           this.isEmpty = true;
         },
         [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
@@ -1067,7 +1108,7 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
           }
         },
       },
-      mixWith(disposablePrototype, typedDelegatingEnumeratorPrototype),
+      mixWith(disposableMixin, typedDelegatingEnumeratorMixin),
       createObjectFactory<
         EnumeratorLike<T> & { isEmpty: boolean },
         TProperties,
@@ -1212,10 +1253,10 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const allHaveCurrent = (enumerators: readonly EnumeratorLike[]) =>
     pipe(enumerators, every(hasCurrent));
 
-  const typedEnumerator = enumeratorPrototype<readonly unknown[]>();
+  const typedEnumerator = enumeratorMixin<readonly unknown[]>();
 
   type TProperties = PropertyTypeOf<
-    [typeof disposablePrototype, typeof typedEnumerator]
+    [typeof disposableMixin, typeof typedEnumerator]
   > & {
     enumerators: readonly EnumeratorLike[];
   };
@@ -1226,7 +1267,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
         enumerators: none,
       },
       [Object_init](this: TProperties, enumerators: readonly EnumeratorLike[]) {
-        init(disposablePrototype, this);
+        init(disposableMixin, this);
         init(typedEnumerator, this);
         this.enumerators = enumerators;
       },
@@ -1248,7 +1289,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
         }
       },
     },
-    mixWith(disposablePrototype, typedEnumerator),
+    mixWith(disposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<readonly unknown[]>,
       TProperties,

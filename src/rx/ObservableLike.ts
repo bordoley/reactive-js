@@ -1,4 +1,4 @@
-import { observerPrototype } from "../__internal__/scheduling/Observer";
+import { observerMixin } from "../__internal__/scheduling/ObserverLikeMixin";
 import {
   Object_init,
   Object_properties,
@@ -7,7 +7,7 @@ import {
   init,
   mixWith,
 } from "../__internal__/util/Object";
-import { mapPrototype } from "../__internal__/util/Sink";
+import { mapSinkMixin } from "../__internal__/util/SinkLikeMixin";
 import { ContainerOperator, Map } from "../containers";
 import { Function1, newInstance, pipe, pipeUnsafe } from "../functions";
 import {
@@ -78,11 +78,11 @@ const lift = /*@__PURE__*/ (() => {
 })();
 
 export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
-  const typedMapPrototype = mapPrototype<TA, TB>();
-  const typedObserverPrototype = observerPrototype<TA>();
+  const typedMapSinkMixin = mapSinkMixin<TA, TB>();
+  const typedObserverMixin = observerMixin<TA>();
 
   type TProperties = PropertyTypeOf<
-    [typeof typedObserverPrototype, typeof typedMapPrototype]
+    [typeof typedObserverMixin, typeof typedMapSinkMixin]
   >;
 
   const createInstance = pipe(
@@ -93,11 +93,11 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
         delegate: ObserverLike<TB>,
         mapper: Function1<TA, TB>,
       ) {
-        init(typedObserverPrototype, this, delegate[ObserverLike_scheduler]);
-        init(typedMapPrototype, this, delegate, mapper);
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedMapSinkMixin, this, delegate, mapper);
       },
     },
-    mixWith(typedObserverPrototype, typedMapPrototype),
+    mixWith(typedObserverMixin, typedMapSinkMixin),
     createObjectFactory<
       ObserverLike,
       TProperties,

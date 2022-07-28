@@ -8,15 +8,15 @@ import {
   getCurrentTime,
   isInContinuation,
 } from "../__internal__/schedulingInternal";
-import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
 import {
   DisposableRefLike,
-  prototype as disposableRefPrototype,
-} from "../__internal__/util/DisposableRefLike";
+  disposableMixin,
+  disposableRefMixin,
+} from "../__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
-  prototype as enumeratorPrototype,
-} from "../__internal__/util/Enumerator";
+  enumeratorMixin,
+} from "../__internal__/util/EnumeratorLikeMixin";
 import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
   Object_init,
@@ -97,7 +97,7 @@ const createContinuation: Function2<
   SideEffect,
   ContinuationLike
 > = /*@__PURE__*/ (() => {
-  type TProperties = PropertyTypeOf<[typeof disposablePrototype]> & {
+  type TProperties = PropertyTypeOf<[typeof disposableMixin]> & {
     scheduler: SchedulerLike;
     f: SideEffect;
   };
@@ -113,7 +113,7 @@ const createContinuation: Function2<
         scheduler: SchedulerLike,
         f: SideEffect,
       ) {
-        init(disposablePrototype, this);
+        init(disposableMixin, this);
         this.scheduler = scheduler;
         this.f = f;
       },
@@ -144,7 +144,7 @@ const createContinuation: Function2<
         }
       },
     },
-    mixWith(disposablePrototype),
+    mixWith(disposableMixin),
     createObjectFactory<
       ContinuationLike,
       TProperties,
@@ -326,11 +326,14 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
       );
     };
 
+    const typedDisposableRefMixin = disposableRefMixin();
+    const typedEnumeratorMixin = enumeratorMixin<QueueTask>();
+
     type TProperties = PropertyTypeOf<
       [
-        typeof disposablePrototype,
-        ReturnType<typeof enumeratorPrototype>,
-        typeof disposableRefPrototype,
+        typeof disposableMixin,
+        typeof typedEnumeratorMixin,
+        typeof typedDisposableRefMixin,
       ]
     > & {
       [SchedulerLike_inContinuation]: boolean;
@@ -358,9 +361,9 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           yieldRequested: false,
         },
         [Object_init](this: TProperties & DisposableLike, host: SchedulerLike) {
-          init(disposablePrototype, this);
-          init(enumeratorPrototype(), this);
-          init(disposableRefPrototype, this, disposed);
+          init(disposableMixin, this);
+          init(typedEnumeratorMixin, this);
+          init(typedDisposableRefMixin, this, disposed);
 
           this.delayed = createPriorityQueue(delayedComparator);
           this.queue = createPriorityQueue(taskComparator);
@@ -455,11 +458,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           }
         },
       },
-      mixWith(
-        disposablePrototype,
-        enumeratorPrototype(),
-        disposableRefPrototype,
-      ),
+      mixWith(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin),
       createObjectFactory<QueueSchedulerLike, TProperties, SchedulerLike>(),
     );
   })();

@@ -1,8 +1,8 @@
-import { prototype as disposablePrototype } from "./__internal__/util/Disposable";
+import { disposableMixin } from "./__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
-  prototype as enumeratorPrototype,
-} from "./__internal__/util/Enumerator";
+  enumeratorMixin,
+} from "./__internal__/util/EnumeratorLikeMixin";
 import {
   Object_init,
   Object_properties,
@@ -148,21 +148,21 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
       [Object_properties]: {},
       [Object_init](
         this: PropertyTypeOf<
-          [typeof disposablePrototype, ReturnType<typeof enumeratorPrototype>]
+          [typeof disposableMixin, ReturnType<typeof enumeratorMixin>]
         >,
       ) {
-        init(disposablePrototype, this);
-        init(enumeratorPrototype(), this);
+        init(disposableMixin, this);
+        init(enumeratorMixin(), this);
       },
       [SourceLike_move](this: MutableEnumeratorLike) {
         pipe(this, dispose());
       },
     },
-    mixWith(disposablePrototype, enumeratorPrototype()),
+    mixWith(disposableMixin, enumeratorMixin()),
     createObjectFactory<
       EnumeratorLike<any>,
       PropertyTypeOf<
-        [typeof disposablePrototype, ReturnType<typeof enumeratorPrototype>]
+        [typeof disposableMixin, ReturnType<typeof enumeratorMixin>]
       >
     >(),
     f => pipeLazy(f, createEnumerable),
@@ -181,10 +181,10 @@ export const emptyEnumerableT: Empty<EnumerableLike> = {
  */
 export const generateEnumerable: Generate<EnumerableLike>["generate"] =
   /*@__PURE__*/ (<T>() => {
-    const typedEnumerator = enumeratorPrototype<T>();
+    const typedEnumerator = enumeratorMixin<T>();
 
     type TProperties = PropertyTypeOf<
-      [typeof disposablePrototype, typeof typedEnumerator]
+      [typeof disposableMixin, typeof typedEnumerator]
     > & { f: Updater<T> };
 
     const createInstance = pipe(
@@ -195,8 +195,8 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
           f: Updater<T>,
           acc: T,
         ) {
-          init(disposablePrototype, this);
-          init(enumeratorPrototype(), this);
+          init(disposableMixin, this);
+          init(typedEnumerator, this);
           this.f = f;
           this[EnumeratorLike_current] = acc;
         },
@@ -212,7 +212,7 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
           }
         },
       },
-      mixWith(disposablePrototype, typedEnumerator),
+      mixWith(disposableMixin, typedEnumerator),
       createObjectFactory<
         EnumeratorLike<T>,
         TProperties,
