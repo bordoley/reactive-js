@@ -16,7 +16,7 @@ declare const keep: Keep<EnumerableLike>["keep"];
 declare const keepT: Keep<EnumerableLike>;
 declare const map: Map<EnumerableLike>["map"];
 declare const mapT: Map<EnumerableLike>;
-declare const onNotify: <T>(onNotify: SideEffect1<T>) => ContainerOperator<EnumerableLike<unknown>, T, T>;
+declare const onNotify: (onNotify: SideEffect1<unknown>) => ContainerOperator<EnumerableLike<unknown>, unknown, unknown>;
 declare const pairwise: Pairwise<EnumerableLike>["pairwise"];
 declare const pairwiseT: Pairwise<EnumerableLike>;
 declare const repeat: Repeat<EnumerableLike>["repeat"];

@@ -57,7 +57,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
         },
         [Object_init](array, start, count) {
             init(prototype, this);
-            init(prototype$1, this);
+            init(prototype$1(), this);
             this.array = array;
             this.index = start - 1;
             this.count = count;
@@ -76,7 +76,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(prototype, prototype$1), createObjectFactory());
+    }, mixWith(prototype, prototype$1()), createObjectFactory());
     return createFromArray((array, start, count) => createEnumerable(() => createInstance(array, start, count)));
 })();
 const toEnumerableT = { toEnumerable };

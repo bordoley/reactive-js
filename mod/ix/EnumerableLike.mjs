@@ -1,15 +1,14 @@
 /// <reference types="./EnumerableLike.d.ts" />
-import { interactive, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
+import { interactive, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { MAX_SAFE_INTEGER } from '../__internal__/env.mjs';
 import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { prototype } from '../__internal__/util/DelegatingDisposable.mjs';
-import { prototype as prototype$4, move as move$1 } from '../__internal__/util/DelegatingEnumerator.mjs';
-import { prototype as prototype$2 } from '../__internal__/util/Disposable.mjs';
-import { prototype as prototype$3 } from '../__internal__/util/DisposableRefLike.mjs';
-import { prototype as prototype$1, neverEnumerator } from '../__internal__/util/Enumerator.mjs';
+import { prototype as prototype$4 } from '../__internal__/util/DelegatingDisposable.mjs';
+import { prototype as prototype$3, move as move$1 } from '../__internal__/util/DelegatingEnumerator.mjs';
+import { prototype as prototype$1 } from '../__internal__/util/Disposable.mjs';
+import { prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
+import { prototype, neverEnumerator } from '../__internal__/util/Enumerator.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
 import { Object_properties, anyProperty, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { emptyReadonlyArray } from '../containers.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { none, pipeUnsafe, newInstance, pipe, getLength, max, returns, strictEquality, pipeLazy, isNone, raise, alwaysTrue, isSome, identity, forEach as forEach$1 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT, emptyEnumerable } from '../ix.mjs';
@@ -45,25 +44,16 @@ const liftT = {
     lift,
     variance: interactive,
 };
-const delegatingDisposableEnumeratorPrototype = pipe({
-    [Object_properties]: {
-        delegate: anyProperty,
-    },
-    [Object_init](delegate) {
-        init(prototype, this, delegate);
-        init(prototype$1, this);
-        this.delegate = delegate;
-    },
-}, mixWith(prototype, prototype$1));
 const buffer = /*@__PURE__*/ (() => {
+    const typedEnumerator = prototype();
     const createInstance = pipe({
         [Object_properties]: {
             delegate: anyProperty,
             maxBufferSize: 0,
         },
         [Object_init](delegate, maxBufferSize) {
-            init(prototype$2, this);
             init(prototype$1, this);
+            init(prototype(), this);
             this.delegate = delegate;
             this.maxBufferSize = maxBufferSize;
         },
@@ -81,7 +71,7 @@ const buffer = /*@__PURE__*/ (() => {
                 pipe(this, dispose());
             }
         },
-    }, mixWith(prototype$2, prototype$1), createObjectFactory());
+    }, mixWith(prototype$1, typedEnumerator), createObjectFactory());
     return (options = {}) => {
         var _a;
         const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER, 1);
@@ -94,14 +84,15 @@ const bufferT = {
 };
 const concatAll = 
 /*@__PURE__*/ (() => {
+    const typedEnumerator = prototype();
     const createInstance = pipe({
         [Object_properties]: {
             delegate: anyProperty,
         },
         [Object_init](delegate) {
-            init(prototype$2, this);
-            init(prototype$3, this, neverEnumerator());
             init(prototype$1, this);
+            init(prototype$2, this, neverEnumerator());
+            init(prototype(), this);
             this.delegate = delegate;
             pipe(this, add(delegate));
         },
@@ -127,8 +118,8 @@ const concatAll =
                 }
             }
         },
-    }, mixWith(prototype$2, prototype$3, prototype$1), createObjectFactory());
-    return returns(lift(createInstance));
+    }, mixWith(prototype$1, prototype$2, typedEnumerator), createObjectFactory());
+    return pipe(createInstance, lift, returns);
 })();
 const concatAllT = { concatAll };
 const concat = (...enumerables) => pipe(enumerables, toEnumerable$1(), concatAll());
@@ -137,11 +128,12 @@ const concatT = {
 };
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
+    const typedDelegatingEnumeratorPrototype = prototype$3();
     const createInstance = pipe({
         [Object_properties]: { equality: anyProperty },
         [Object_init](delegate, equality) {
-            init(prototype, this, delegate);
             init(prototype$4, this, delegate);
+            init(typedDelegatingEnumeratorPrototype, this, delegate);
             this.equality = equality;
         },
         [SourceLike_move]() {
@@ -159,7 +151,7 @@ const distinctUntilChanged =
                 pipe(this, dispose({ cause }));
             }
         },
-    }, mixWith(prototype, prototype$4), createObjectFactory());
+    }, mixWith(prototype$4, typedDelegatingEnumeratorPrototype), createObjectFactory());
     return (options) => {
         const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
         const operator = (delegate) => createInstance(delegate, equality);
@@ -170,11 +162,12 @@ const distinctUntilChangedT = {
     distinctUntilChanged,
 };
 const keep = /*@__PURE__*/ (() => {
+    const typedDelegatingEnumeratorPrototype = prototype$3();
     const createInstance = pipe({
         [Object_properties]: { predicate: anyProperty },
         [Object_init](delegate, predicate) {
-            init(prototype, this, delegate);
             init(prototype$4, this, delegate);
+            init(typedDelegatingEnumeratorPrototype, this, delegate);
             this.predicate = predicate;
         },
         [SourceLike_move]() {
@@ -187,7 +180,7 @@ const keep = /*@__PURE__*/ (() => {
                 pipe(this, dispose({ cause }));
             }
         },
-    }, mixWith(prototype, prototype$4), createObjectFactory());
+    }, mixWith(prototype$4, typedDelegatingEnumeratorPrototype), createObjectFactory());
     return (predicate) => {
         const operator = (delegate) => createInstance(delegate, predicate);
         return lift(operator);
@@ -197,12 +190,16 @@ const keepT = {
     keep,
 };
 const map = /*@__PURE__*/ (() => {
+    const typedEnumerator = prototype();
     const createInstance = pipe({
         [Object_properties]: {
             mapper: anyProperty,
+            delegate: anyProperty,
         },
         [Object_init](delegate, mapper) {
-            init(delegatingDisposableEnumeratorPrototype, this, delegate);
+            init(prototype$4, this, delegate);
+            init(typedEnumerator, this);
+            this.delegate = delegate;
             this.mapper = mapper;
         },
         [SourceLike_move]() {
@@ -216,7 +213,7 @@ const map = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(delegatingDisposableEnumeratorPrototype), createObjectFactory());
+    }, mixWith(prototype$4, typedEnumerator), createObjectFactory());
     return (mapper) => {
         const operator = (delegate) => createInstance(delegate, mapper);
         return lift(operator);
@@ -224,11 +221,12 @@ const map = /*@__PURE__*/ (() => {
 })();
 const mapT = { map };
 const onNotify = /*@__PURE__*/ (() => {
+    const typedDelegatingEnumeratorPrototype = prototype$3();
     const createInstance = pipe({
         [Object_properties]: { onNotify: anyProperty },
         [Object_init](delegate, onNotify) {
-            init(prototype, this, delegate);
             init(prototype$4, this, delegate);
+            init(typedDelegatingEnumeratorPrototype, this, delegate);
             this.onNotify = onNotify;
         },
         [SourceLike_move]() {
@@ -241,24 +239,24 @@ const onNotify = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(prototype, prototype$4), createObjectFactory());
+    }, mixWith(prototype$4, typedDelegatingEnumeratorPrototype), createObjectFactory());
     return (onNotify) => {
         const operator = (delegate) => createInstance(delegate, onNotify);
         return lift(operator);
     };
 })();
-const pairwise = 
-/*@__PURE__*/ (() => {
+const pairwise = /*@__PURE__*/ (() => {
+    const typedEnumerator = prototype();
     const createInstance = pipe({
         [SourceLike_move]() {
-            const prev = (hasCurrent(this) ? getCurrent(this) : emptyReadonlyArray())[1];
+            const prev = (hasCurrent(this) ? getCurrent(this) : [])[1];
             const { delegate } = this;
             if (move(delegate)) {
                 const current = getCurrent(delegate);
                 this[EnumeratorLike_current] = [prev, current];
             }
         },
-    }, mixWith(delegatingDisposableEnumeratorPrototype), createObjectFactory());
+    }, mixWith(prototype$4, typedEnumerator), createObjectFactory());
     const operator = (delegate) => createInstance(delegate);
     return pipeLazy(operator, lift);
 })();
@@ -269,12 +267,12 @@ const repeat = /*@__PURE__*/ (() => {
     const createInstance = pipe({
         [Object_properties]: {
             count: 0,
-            enumerator: none,
-            shouldRepeat: none,
-            src: none,
+            enumerator: anyProperty,
+            shouldRepeat: anyProperty,
+            src: anyProperty,
         },
         [Object_init](src, shouldRepeat) {
-            init(prototype$2, this);
+            init(prototype$1, this);
             this.src = src;
             this.shouldRepeat = shouldRepeat;
         },
@@ -312,7 +310,7 @@ const repeat = /*@__PURE__*/ (() => {
             const self = this;
             return (_b = (_a = self.enumerator) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_hasCurrent]) !== null && _b !== void 0 ? _b : false;
         },
-    }, mixWith(prototype$2), createObjectFactory());
+    }, mixWith(prototype$1), createObjectFactory());
     return (predicate) => {
         const repeatPredicate = isNone(predicate)
             ? alwaysTrue
@@ -326,10 +324,13 @@ const repeatT = {
     repeat,
 };
 const scan = /*@__PURE__*/ (() => {
+    const typedEnumerator = prototype();
     const createInstance = pipe({
-        [Object_properties]: { reducer: anyProperty },
+        [Object_properties]: { reducer: anyProperty, delegate: anyProperty },
         [Object_init](delegate, reducer, initialValue) {
-            init(delegatingDisposableEnumeratorPrototype, this, delegate);
+            init(prototype$4, this, delegate);
+            init(prototype(), this);
+            this.delegate = delegate;
             this.reducer = reducer;
             try {
                 const acc = initialValue();
@@ -351,23 +352,26 @@ const scan = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(delegatingDisposableEnumeratorPrototype), createObjectFactory());
-    const scanEnumerator = (reducer, initialValue) => (delegate) => createInstance(delegate, reducer, initialValue);
-    return pipe(scanEnumerator, createScanOperator(liftT));
+    }, mixWith(prototype$4, typedEnumerator), createObjectFactory());
+    return (scanner, initialValue) => {
+        const operator = (delegate) => createInstance(delegate, scanner, initialValue);
+        return lift(operator);
+    };
 })();
 const scanT = {
     scan,
 };
 const skipFirst = 
 /*@__PURE__*/ (() => {
-    const createInstance = pipe({
+    const typedDelegatingEnumeratorPrototype = prototype$3();
+    return pipe({
         [Object_properties]: {
             skipCount: 0,
             count: 0,
         },
         [Object_init](delegate, skipCount) {
-            init(prototype, this, delegate);
             init(prototype$4, this, delegate);
+            init(typedDelegatingEnumeratorPrototype, this, delegate);
             this.skipCount = skipCount;
             this.count = 0;
         },
@@ -381,23 +385,22 @@ const skipFirst =
             this.count = skipCount;
             move$1(this);
         },
-    }, mixWith(prototype, prototype$4), createObjectFactory());
-    const skipFirstEnumerator = (skipCount) => (delegate) => createInstance(delegate, skipCount);
-    return pipe(skipFirstEnumerator, createSkipFirstOperator(liftT));
+    }, mixWith(prototype$4, typedDelegatingEnumeratorPrototype), createObjectFactory(), createSkipFirstOperator(liftT));
 })();
 const skipFirstT = {
     skipFirst,
 };
 const takeFirst = 
 /*@__PURE__*/ (() => {
-    const createInstance = pipe({
+    const typedDelegatingEnumeratorPrototype = prototype$3();
+    return pipe({
         [Object_properties]: {
             maxCount: 0,
             count: 0,
         },
         [Object_init](delegate, maxCount) {
-            init(prototype, this, delegate);
             init(prototype$4, this, delegate);
+            init(typedDelegatingEnumeratorPrototype, this, delegate);
             this.maxCount = maxCount;
         },
         [SourceLike_move]() {
@@ -409,23 +412,24 @@ const takeFirst =
                 pipe(this, dispose());
             }
         },
-    }, mixWith(prototype, prototype$4), createObjectFactory());
-    const takeFirstEnumerator = (maxCount) => (delegate) => createInstance(delegate, maxCount);
-    return pipe(takeFirstEnumerator, createTakeFirstOperator({ ...liftT, ...emptyEnumerableT }));
+    }, mixWith(prototype$4, typedDelegatingEnumeratorPrototype), createObjectFactory(), createTakeFirstOperator({
+        ...liftT,
+        ...emptyEnumerableT,
+    }));
 })();
 const takeFirstT = {
     takeFirst,
 };
-const takeLast = 
-/*@__PURE__*/ (() => {
+const takeLast = /*@__PURE__*/ (() => {
+    const typedDelegatingEnumeratorPrototype = prototype$3();
     const createInstance = pipe({
         [Object_properties]: {
             maxCount: 0,
             isStarted: false,
         },
         [Object_init](delegate, maxCount) {
-            init(prototype$2, this);
-            init(prototype$4, this, delegate);
+            init(prototype$1, this);
+            init(typedDelegatingEnumeratorPrototype, this, delegate);
             this.maxCount = maxCount;
             this.isStarted = false;
         },
@@ -440,11 +444,11 @@ const takeLast =
                     }
                 }
                 const enumerator = pipe(last, toEnumerable$1(), enumerate(), bindTo(this));
-                init(prototype$4, this, enumerator);
+                init(typedDelegatingEnumeratorPrototype, this, enumerator);
             }
             move$1(this);
         },
-    }, mixWith(prototype$2, prototype$4), createObjectFactory());
+    }, mixWith(prototype$1, typedDelegatingEnumeratorPrototype), createObjectFactory());
     return (options = {}) => {
         const { count = 1 } = options;
         const operator = (delegate) => pipe(createInstance(delegate, count), add(delegate));
@@ -457,15 +461,16 @@ const takeLast =
 const takeLastT = { takeLast };
 const takeWhile = 
 /*@__PURE__*/ (() => {
-    const createInstance = pipe({
+    const typedDelegatingEnumeratorPrototype = prototype$3();
+    return pipe({
         [Object_properties]: {
             predicate: anyProperty,
             inclusive: false,
             done: false,
         },
         [Object_init](delegate, predicate, inclusive) {
-            init(prototype, this, delegate);
             init(prototype$4, this, delegate);
+            init(typedDelegatingEnumeratorPrototype, this, delegate);
             this.predicate = predicate;
             this.inclusive = inclusive;
         },
@@ -490,21 +495,20 @@ const takeWhile =
                 }
             }
         },
-    }, mixWith(prototype, prototype$4), createObjectFactory());
-    const takeWhileEnumerator = (predicate, inclusive) => (delegate) => createInstance(delegate, predicate, inclusive);
-    return pipe(takeWhileEnumerator, createTakeWhileOperator(liftT));
+    }, mixWith(prototype$4, typedDelegatingEnumeratorPrototype), createObjectFactory(), createTakeWhileOperator(liftT));
 })();
 const takeWhileT = { takeWhile };
 const TContainerOf = undefined;
 const throwIfEmpty = 
 /*@__PURE__*/ (() => {
-    const createInstance = pipe({
+    const typedDelegatingEnumeratorPrototype = prototype$3();
+    return pipe({
         [Object_properties]: {
             isEmpty: true,
         },
         [Object_init](delegate) {
-            init(prototype$2, this);
-            init(prototype$4, this, delegate);
+            init(prototype$1, this);
+            init(typedDelegatingEnumeratorPrototype, this, delegate);
             this.isEmpty = true;
         },
         [SourceLike_move]() {
@@ -512,9 +516,7 @@ const throwIfEmpty =
                 this.isEmpty = false;
             }
         },
-    }, mixWith(prototype$2, prototype$4), createObjectFactory());
-    const throwIfEmptyEnumerator = () => (delegate) => createInstance(delegate);
-    return pipe(throwIfEmptyEnumerator, createThrowIfEmptyOperator(liftT));
+    }, mixWith(prototype$1, typedDelegatingEnumeratorPrototype), createObjectFactory(), createThrowIfEmptyOperator(liftT));
 })();
 const throwIfEmptyT = {
     throwIfEmpty,
@@ -603,13 +605,14 @@ const zip = /*@__PURE__*/ (() => {
         }
     };
     const allHaveCurrent = (enumerators) => pipe(enumerators, every(hasCurrent));
+    const typedEnumerator = prototype();
     const createInstance = pipe({
         [Object_properties]: {
             enumerators: anyProperty,
         },
         [Object_init](enumerators) {
-            init(prototype$2, this);
             init(prototype$1, this);
+            init(typedEnumerator, this);
             this.enumerators = enumerators;
         },
         [SourceLike_move]() {
@@ -624,7 +627,7 @@ const zip = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(prototype$2, prototype$1), createObjectFactory());
+    }, mixWith(prototype$1, typedEnumerator), createObjectFactory());
     const zipEnumerators = (enumerators) => {
         const instance = createInstance(enumerators);
         pipe(enumerators, forEach$1(addTo(instance)));

@@ -330,7 +330,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     type TProperties = PropertyTypeOf<
       [
         typeof disposablePrototype,
-        typeof enumeratorPrototype,
+        ReturnType<typeof enumeratorPrototype>,
         typeof disposableRefPrototype,
       ]
     > & {
@@ -360,7 +360,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
         },
         [Object_init](this: TProperties & DisposableLike, host: SchedulerLike) {
           init(disposablePrototype, this);
-          init(enumeratorPrototype, this);
+          init(enumeratorPrototype(), this);
           init(disposableRefPrototype, this, disposed);
 
           this.delayed = createPriorityQueue(delayedComparator);
@@ -456,7 +456,11 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           }
         },
       },
-      mixWith(disposablePrototype, enumeratorPrototype, disposableRefPrototype),
+      mixWith(
+        disposablePrototype,
+        enumeratorPrototype(),
+        disposableRefPrototype,
+      ),
       createObjectFactory<QueueSchedulerLike, TProperties, SchedulerLike>(),
     );
   })();

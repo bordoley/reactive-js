@@ -415,7 +415,7 @@ export const takeWhileT: TakeWhile<SequenceLike> = { takeWhile };
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   /*@__PURE__*/ (() => {
     type TProperties = PropertyTypeOf<
-      [typeof disposablePrototype, typeof enumeratorPrototype]
+      [typeof disposablePrototype, ReturnType<typeof enumeratorPrototype>]
     > & {
       seq: SequenceLike;
     };
@@ -427,7 +427,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
         },
         [Object_init](this: TProperties, seq: SequenceLike) {
           init(disposablePrototype, this);
-          init(enumeratorPrototype, this);
+          init(enumeratorPrototype(), this);
           this.seq = seq;
         },
         [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
@@ -442,7 +442,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
           }
         },
       },
-      mixWith(disposablePrototype, enumeratorPrototype),
+      mixWith(disposablePrototype, enumeratorPrototype()),
       createObjectFactory<EnumeratorLike<any>, TProperties, SequenceLike>(),
     );
 

@@ -25,7 +25,7 @@ import { dispose, isDisposed } from "../util/DisposableLike";
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (() => {
     type TProperties = PropertyTypeOf<
-      [typeof disposablePrototype, typeof enumeratorPrototype]
+      [typeof disposablePrototype, ReturnType<typeof enumeratorPrototype>]
     > & {
       iterator: Iterator<unknown>;
     };
@@ -49,7 +49,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
           }
         },
       },
-      mixWith(disposablePrototype, enumeratorPrototype),
+      mixWith(disposablePrototype, enumeratorPrototype()),
       createObjectFactory<
         EnumeratorLike<any>,
         TProperties,

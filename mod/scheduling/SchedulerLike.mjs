@@ -176,7 +176,7 @@ const createQueueScheduler =
         },
         [Object_init](host) {
             init(prototype, this);
-            init(prototype$1, this);
+            init(prototype$1(), this);
             init(prototype$2, this, disposed);
             this.delayed = createPriorityQueue(delayedComparator);
             this.queue = createPriorityQueue(taskComparator);
@@ -246,7 +246,7 @@ const createQueueScheduler =
                 scheduleOnHost(this);
             }
         },
-    }, mixWith(prototype, prototype$1, prototype$2), createObjectFactory());
+    }, mixWith(prototype, prototype$1(), prototype$2), createObjectFactory());
 })();
 const toPausableScheduler = createQueueScheduler;
 const toPriorityScheduler = createQueueScheduler;

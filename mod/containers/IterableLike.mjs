@@ -27,7 +27,7 @@ const toEnumerable =
                 }
             }
         },
-    }, mixWith(prototype, prototype$1), createObjectFactory());
+    }, mixWith(prototype, prototype$1()), createObjectFactory());
     return () => (iterable) => createEnumerable(() => createInstance(iterable[Symbol.iterator]()));
 })();
 const toEnumerableT = { toEnumerable };
