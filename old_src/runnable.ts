@@ -202,25 +202,6 @@ export const catchErrorT: CatchError<RunnableLike<unknown>> = {
   catchError,
 };
 
-export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
-  ...runnables: readonly RunnableLike<T>[]
-) =>
-  createRunnable((sink: ReactiveSinkLike<T>) => {
-    const runnablesLength = getLength(runnables);
-    for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
-      pipe(
-        createDelegatingRunnableSink(sink),
-        addTo(sink),
-        sourceFrom(runnables[i]),
-        dispose(),
-      );
-    }
-  });
-
-export const concatT: Concat<RunnableLike<unknown>> = {
-  concat,
-};
-
 export const decodeWithCharset: DecodeWithCharset<
   RunnableLike<unknown>
 >["decodeWithCharset"] = /*@__PURE__*/ decorateMap(
@@ -245,34 +226,6 @@ export const decodeWithCharset: DecodeWithCharset<
 
 export const decodeWithCharsetT: DecodeWithCharset<RunnableLike<unknown>> = {
   decodeWithCharset,
-};
-
-export const distinctUntilChanged: DistinctUntilChanged<
-  RunnableLike<unknown>
->["distinctUntilChanged"] = /*@__PURE__*/ (() => {
-  class DistinctUntilChangedSink<T> extends AbstractDelegatingRunnableSink<
-    T,
-    T
-  > {
-    prev: Option<T> = none;
-    hasValue = false;
-
-    constructor(delegate: ReactiveSinkLike<T>, readonly equality: Equality<T>) {
-      super(delegate);
-    }
-  }
-
-  decorateWithDistinctUntilChangedNotify<RunnableLike<unknown>>(
-    DistinctUntilChangedSink,
-  );
-  decorateNotifyWithAssertions(DistinctUntilChangedSink);
-  return createDistinctUntilChangedOperator(liftT, DistinctUntilChangedSink);
-})();
-
-export const distinctUntilChangedT: DistinctUntilChanged<
-  RunnableLike<unknown>
-> = {
-  distinctUntilChanged,
 };
 
 export const everySatisfy: EverySatisfy<RunnableLike<unknown>>["everySatisfy"] =
@@ -314,69 +267,6 @@ export const generate: Generate<RunnableLike<unknown>>["generate"] = <T>(
 export const generateT: Generate<RunnableLike<unknown>> = {
   generate,
 };
-
-export const keep: Keep<RunnableLike<unknown>>["keep"] = /*@__PURE__*/ (() => {
-  class KeepSink<T> extends AbstractDelegatingRunnableSink<T, T> {
-    constructor(
-      delegate: ReactiveSinkLike<T>,
-      readonly predicate: Predicate<T>,
-    ) {
-      super(delegate);
-    }
-  }
-  decorateWithKeepNotify<RunnableLike<unknown>>(KeepSink);
-  decorateNotifyWithAssertions(KeepSink);
-  return createKeepOperator(liftT, KeepSink);
-})();
-
-export const keepT: Keep<RunnableLike<unknown>> = {
-  keep,
-};
-
-export const map: Map<RunnableLike<unknown>>["map"] = /*@__PURE__*/ (() => {
-  class MapSink<TA, TB> extends AbstractDelegatingRunnableSink<TA, TB> {
-    constructor(
-      delegate: ReactiveSinkLike<TB>,
-      readonly mapper: Function1<TA, TB>,
-    ) {
-      super(delegate);
-    }
-  }
-  decorateWithMapNotify<RunnableLike<unknown>>(MapSink);
-  decorateNotifyWithAssertions(MapSink);
-  return createMapOperator<RunnableLike<unknown>, TReactive>(liftT, MapSink);
-})();
-
-export const mapT: Map<RunnableLike<unknown>> = {
-  map,
-};
-
-export const never: Never<RunnableLike<unknown>>["never"] =
-  /*@__PURE__*/ createNever(createT);
-
-export const neverT: Never<RunnableLike<unknown>> = {
-  never,
-};
-
-/**
- * Returns an `RunnableLike` that forwards notifications to the provided `onNotify` function.
- *
- * @param onNotify The function that is invoked when the observable source produces values.
- */
-export const onNotify: <T>(onNotify: SideEffect1<T>) => RunnableOperator<T, T> =
-  /*@__PURE__*/ (() => {
-    class OnNotifySink<T> extends AbstractDelegatingRunnableSink<T, T> {
-      constructor(
-        delegate: ReactiveSinkLike<T>,
-        readonly onNotify: SideEffect1<T>,
-      ) {
-        super(delegate);
-      }
-    }
-    decorateWithOnNotifyNotify<RunnableLike<unknown>>(OnNotifySink);
-    decorateNotifyWithAssertions(OnNotifySink);
-    return createOnNotifyOperator(liftT, OnNotifySink);
-  })();
 
 export const onSink = /*@__PURE__*/ createOnSink(createT);
 
@@ -449,46 +339,6 @@ export const repeatT: Repeat<RunnableLike<unknown>> = {
   repeat,
 };
 
-export const scan: Scan<RunnableLike<unknown>>["scan"] = /*@__PURE__*/ (() => {
-  class ScanSink<T, TAcc> extends AbstractDelegatingRunnableSink<T, TAcc> {
-    constructor(
-      delegate: ReactiveSinkLike<TAcc>,
-      readonly reducer: Reducer<T, TAcc>,
-      public acc: TAcc,
-    ) {
-      super(delegate);
-    }
-  }
-  decorateWithScanNotify<RunnableLike<unknown>>(ScanSink);
-  decorateNotifyWithAssertions(ScanSink);
-  return createScanOperator<RunnableLike<unknown>, TReactive>(liftT, ScanSink);
-})();
-
-export const scanT: Scan<RunnableLike<unknown>> = {
-  scan,
-};
-
-export const skipFirst: SkipFirst<RunnableLike<unknown>>["skipFirst"] =
-  /*@__PURE__*/ (() => {
-    class SkipFirstSink<T> extends AbstractDelegatingRunnableSink<T, T> {
-      count = 0;
-
-      constructor(delegate: ReactiveSinkLike<T>, readonly skipCount: number) {
-        super(delegate);
-      }
-    }
-    decorateWithSkipFirstNotify<RunnableLike<unknown>>(SkipFirstSink);
-    decorateNotifyWithAssertions(SkipFirstSink);
-    return createSkipFirstOperator<RunnableLike<unknown>, TReactive>(
-      liftT,
-      SkipFirstSink,
-    );
-  })();
-
-export const skipFirstT: SkipFirst<RunnableLike<unknown>> = {
-  skipFirst,
-};
-
 export const someSatisfy: SomeSatisfy<RunnableLike<unknown>>["someSatisfy"] =
   /*@__PURE__*/ decorateMap(
     class SomeSatisfySink<T> extends AbstractDelegatingRunnableSink<
@@ -511,66 +361,6 @@ export const someSatisfyT: SomeSatisfy<RunnableLike<unknown>> = {
   someSatisfy,
 };
 
-export const takeFirst: TakeFirst<RunnableLike<unknown>>["takeFirst"] =
-  /*@__PURE__*/ (() => {
-    class TakeFirstSink<T> extends AbstractDelegatingRunnableSink<T, T> {
-      count = 0;
-
-      constructor(delegate: ReactiveSinkLike<T>, readonly maxCount: number) {
-        super(delegate);
-      }
-    }
-    decorateWithTakeFirstNotify<RunnableLike<unknown>>(TakeFirstSink);
-    decorateNotifyWithAssertions(TakeFirstSink);
-    return createTakeFirstOperator<RunnableLike<unknown>, TReactive>(
-      { ...fromArrayT, ...liftT },
-      TakeFirstSink,
-    );
-  })();
-
-export const takeFirstT: TakeFirst<RunnableLike<unknown>> = {
-  takeFirst,
-};
-
-export const takeLast: TakeLast<RunnableLike<unknown>>["takeLast"] =
-  /*@__PURE__*/ decorateMap(
-    class TakeLastSink<T> extends AbstractDelegatingRunnableSink<T, T> {
-      readonly last: T[] = [];
-
-      constructor(delegate: ReactiveSinkLike<T>, readonly maxCount: number) {
-        super(delegate);
-      }
-    },
-    decorateWithTakeLastNotify<RunnableLike<unknown>>(),
-    decorateNotifyWithAssertions,
-    createTakeLastOperator({ ...fromArrayT, ...liftT }),
-  );
-
-export const takeLastT: TakeLast<RunnableLike<unknown>> = {
-  takeLast,
-};
-
-export const takeWhile: TakeWhile<RunnableLike<unknown>>["takeWhile"] =
-  /*@__PURE__*/ (() => {
-    class TakeWhileSink<T> extends AbstractDelegatingRunnableSink<T, T> {
-      constructor(
-        delegate: ReactiveSinkLike<T>,
-        readonly predicate: Predicate<T>,
-        readonly inclusive: boolean,
-      ) {
-        super(delegate);
-      }
-    }
-
-    decorateWithTakeWhileNotify<RunnableLike<unknown>>(TakeWhileSink);
-    decorateNotifyWithAssertions(TakeWhileSink);
-    return createTakeWhileOperator(liftT, TakeWhileSink);
-  })();
-
-export const takeWhileT: TakeWhile<RunnableLike<unknown>> = {
-  takeWhile,
-};
-
 export const throwIfEmpty: ThrowIfEmpty<RunnableLike<unknown>>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {
     class ThrowIfEmptySink<T> extends AbstractDelegatingRunnableSink<T, T> {
@@ -586,16 +376,6 @@ export const throwIfEmpty: ThrowIfEmpty<RunnableLike<unknown>>["throwIfEmpty"] =
 
 export const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>> = {
   throwIfEmpty,
-};
-
-/**
- * Accumulates all values emitted by `runnable` into an array.
- */
-export const toArray: ToArray<RunnableLike<unknown>>["toArray"] = () =>
-  compose(buffer(), first(), getOrDefault(emptyArray));
-
-export const toArrayT: ToArray<RunnableLike<unknown>> = {
-  toArray,
 };
 
 export const toRunnable: ToRunnable<RunnableLike<unknown>>["toRunnable"] = () =>

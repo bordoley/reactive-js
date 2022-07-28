@@ -54,6 +54,30 @@ export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
     >(),
   ))();
 
+export const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T> =
+  /*@__PURE__*/ (<T>() => {
+    type TProperties = {
+      [Sink_private_delegate]: SinkLike<T>;
+    } & PropertyTypeOf<[typeof disposableMixin]>;
+
+    return pipe(
+      {
+        [Object_properties]: {
+          [Sink_private_delegate]: none as any,
+        },
+        [Object_init](this: TProperties, delegate: SinkLike<T>) {
+          init(disposableMixin, this);
+          this[Sink_private_delegate] = delegate;
+        },
+        [SinkLike_notify](this: TProperties, v: T) {
+          this[Sink_private_delegate][SinkLike_notify](v);
+        },
+      },
+      mixWith(disposableMixin),
+      createObjectFactory<SinkLike<T>, TProperties, SinkLike<T>>(),
+    );
+  })();
+
 export const distinctUntilChangedSinkMixin: <T>() => DisposableLike & {
   [Object_properties]: unknown;
   [Object_init](

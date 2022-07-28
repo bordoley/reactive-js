@@ -3,6 +3,7 @@ import { SinkLike, SinkLike_notify } from "../../util.mjs";
 import { DisposableLike, DisposableLike_error, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose } from "./DisposableLikeInternal.mjs";
 import { Object_properties, Object_init } from "./Object.mjs";
 declare const createSink: <T>() => SinkLike<T>;
+declare const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T>;
 declare const distinctUntilChangedSinkMixin: <T>() => DisposableLike & {
     [Object_properties]: unknown;
     [Object_init](this: unknown, delegate: SinkLike<T>, equality: Equality<T>): void;
@@ -59,4 +60,4 @@ declare const takeWhileSinkMixin: <T>() => DisposableLike & {
     [Object_init](this: unknown, delegate: SinkLike<T>, predicate: Predicate<T>, inclusive: boolean): void;
     [SinkLike_notify](next: T): void;
 };
-export { TakeLastSink_last, createSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
+export { TakeLastSink_last, createDelegatingSink, createSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };

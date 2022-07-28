@@ -12,6 +12,7 @@ import {
 } from "../__internal__/util/Object";
 import {
   TakeLastSink_last,
+  createDelegatingSink,
   createSink,
   distinctUntilChangedSinkMixin,
   keepSinkMixin,
@@ -24,6 +25,7 @@ import {
   takeWhileSinkMixin,
 } from "../__internal__/util/SinkLikeMixin";
 import {
+  Concat,
   ContainerOperator,
   DistinctUntilChanged,
   Keep,
@@ -43,6 +45,7 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  getLength,
   isSome,
   newInstance,
   pipe,
@@ -53,11 +56,12 @@ import {
 import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
+  createRunnable,
   emptyRunnable,
   emptyRunnableT,
 } from "../rx";
 import { DisposableLike_error, SinkLike } from "../util";
-import { addTo, dispose, onComplete } from "../util/DisposableLike";
+import { addTo, dispose, isDisposed, onComplete } from "../util/DisposableLike";
 import { sinkInto, sourceFrom } from "./ReactiveContainerLike";
 
 const lift = /*@__PURE__*/ (() => {
@@ -92,6 +96,25 @@ const lift = /*@__PURE__*/ (() => {
 const liftT: Lift<RunnableLike, TReactive> = {
   lift,
   variance: reactive,
+};
+
+export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
+  ...runnables: readonly RunnableLike<T>[]
+) =>
+  createRunnable((sink: SinkLike<T>) => {
+    const runnablesLength = getLength(runnables);
+    for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
+      pipe(
+        createDelegatingSink(sink),
+        addTo(sink),
+        sourceFrom(runnables[i]),
+        dispose(),
+      );
+    }
+  });
+
+export const concatT: Concat<RunnableLike<unknown>> = {
+  concat,
 };
 
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =

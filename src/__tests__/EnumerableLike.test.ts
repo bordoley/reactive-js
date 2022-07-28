@@ -3,6 +3,7 @@ import { toEnumerable } from "../containers/ReadonlyArrayLike";
 import {
   bufferT,
   concatAllT,
+  concatT,
   distinctUntilChangedT,
   keepT,
   mapT,
@@ -19,6 +20,7 @@ import {
 import {
   bufferTests,
   concatAllTests,
+  concatTests,
   distinctUntilChangedTests,
   keepTests,
   mapTests,
@@ -37,6 +39,11 @@ export const EnumerableLikeTests = describe(
   bufferTests({
     fromArray: toEnumerable,
     ...bufferT,
+    ...toReadonlyArrayT,
+  }),
+  concatTests({
+    fromArray: toEnumerable,
+    ...concatT,
     ...toReadonlyArrayT,
   }),
   concatAllTests({
