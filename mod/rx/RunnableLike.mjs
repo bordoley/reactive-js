@@ -1,8 +1,9 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import { mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
-import { pipe, pipeUnsafe, newInstance } from '../functions.mjs';
+import { mapSinkMixin, onNotifySinkMixin, createSink } from '../__internal__/util/SinkLikeMixin.mjs';
+import { pipe, pipeUnsafe, newInstance, isSome, raise } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import { DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
@@ -38,5 +39,27 @@ const map = /*@__PURE__*/ (() => {
         return lift(operator);
     };
 })();
+const mapT = { map };
+const onNotify = /*@__PURE__*/ (() => {
+    const typedOnNotifySinkMixin = onNotifySinkMixin();
+    const createInstance = pipe(typedOnNotifySinkMixin, createObjectFactory());
+    return (onNotify) => {
+        const operator = (delegate) => createInstance(delegate, onNotify);
+        return lift(operator);
+    };
+})();
+const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose(), ({ [DisposableLike_error]: error }) => {
+    if (isSome(error)) {
+        raise(error.cause);
+    }
+});
+const toReadonlyArray = () => (runnable) => {
+    const result = [];
+    pipe(runnable, onNotify(x => result.push(x)), run());
+    return result;
+};
+const toReadonlyArrayT = {
+    toReadonlyArray,
+};
 
-export { map };
+export { map, mapT, onNotify, run, toReadonlyArray, toReadonlyArrayT };
