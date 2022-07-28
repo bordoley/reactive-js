@@ -340,23 +340,17 @@ ___
 
 ### onNotify
 
-▸ **onNotify**<`T`\>(`onNotify`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
+▸ **onNotify**(`onNotify`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `unknown`, `unknown`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `onNotify` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+| `onNotify` | [`SideEffect1`](functions.md#sideeffect1)<`unknown`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `unknown`, `unknown`\>
 
 ___
 

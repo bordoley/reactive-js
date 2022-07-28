@@ -125,7 +125,7 @@ export const toEnumerable: ToEnumerable<
   }
 >["toEnumerable"] = /*@__PURE__*/ (() => {
   type TProperties = PropertyTypeOf<
-    [typeof disposablePrototype & typeof enumeratorPrototype]
+    [typeof disposablePrototype & ReturnType<typeof enumeratorPrototype>]
   > & {
     array: readonly unknown[];
     count: number;
@@ -146,7 +146,7 @@ export const toEnumerable: ToEnumerable<
         count: number,
       ) {
         init(disposablePrototype, this);
-        init(enumeratorPrototype, this);
+        init(enumeratorPrototype(), this);
 
         this.array = array;
         this.index = start - 1;
@@ -168,7 +168,7 @@ export const toEnumerable: ToEnumerable<
         }
       },
     },
-    mixWith(disposablePrototype, enumeratorPrototype),
+    mixWith(disposablePrototype, enumeratorPrototype()),
     createObjectFactory<
       EnumeratorLike<any>,
       TProperties,
