@@ -1,4 +1,4 @@
-import { StatefulContainerLike, StatefulContainerStateOf, Container, ContainerOf, ContainerLike, Using, Defer } from "./containers.mjs";
+import { StatefulContainerLike, StatefulContainerStateOf, Container, ContainerOf, ContainerLike, Using, Defer, Empty } from "./containers.mjs";
 import { Function1, SideEffect1, Factory } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
 import { SinkLike, DisposableLike } from "./util.mjs";
@@ -85,6 +85,8 @@ declare const neverObservableT: Never<ObservableLike>;
 declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
 declare const createRunnableUsing: Using<RunnableLike>["using"];
 declare const createRunnableUsingT: Using<RunnableLike>;
-declare const neverRunnable: <T>() => RunnableLike<T>;
+declare const emptyRunnable: Empty<RunnableLike>["empty"];
+declare const emptyRunnableT: Empty<RunnableLike>;
+declare const neverRunnable: Never<RunnableLike>["never"];
 declare const neverRunnableT: Never<RunnableLike>;
-export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, Never, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, Never, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, emptyRunnable, emptyRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };

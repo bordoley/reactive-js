@@ -1,21 +1,39 @@
 import {
+  Lift,
+  TReactive,
+  createSkipFirstOperator,
+  createTakeFirstOperator,
+  createTakeWhileOperator,
+  reactive,
+} from "../__internal__/containers/StatefulContainerLikeInternal";
+import {
   PropertyTypeOf,
   createObjectFactory,
 } from "../__internal__/util/Object";
 import {
+  TakeLastSink_last,
   createSink,
   keepSinkMixin,
   mapSinkMixin,
   onNotifySinkMixin,
   scanSinkMixin,
+  skipFirstSinkMixin,
+  takeFirstSinkMixin,
+  takeLastSinkMixin,
+  takeWhileSinkMixin,
 } from "../__internal__/util/SinkLikeMixin";
 import {
   ContainerOperator,
   Keep,
   Map,
   Scan,
+  SkipFirst,
+  TakeFirst,
+  TakeLast,
+  TakeWhile,
   ToReadonlyArray,
 } from "../containers";
+import { toRunnable } from "../containers/ReadonlyArrayLike";
 import {
   Factory,
   Function1,
@@ -28,10 +46,15 @@ import {
   pipeUnsafe,
   raise,
 } from "../functions";
-import { ReactiveContainerLike_sinkInto, RunnableLike } from "../rx";
+import {
+  ReactiveContainerLike_sinkInto,
+  RunnableLike,
+  emptyRunnable,
+  emptyRunnableT,
+} from "../rx";
 import { DisposableLike_error, SinkLike } from "../util";
-import { dispose } from "../util/DisposableLike";
-import { sourceFrom } from "./ReactiveContainerLike";
+import { addTo, dispose, onComplete } from "../util/DisposableLike";
+import { sinkInto, sourceFrom } from "./ReactiveContainerLike";
 
 const lift = /*@__PURE__*/ (() => {
   class LiftedRunnable<T> implements RunnableLike<T> {
@@ -61,11 +84,11 @@ const lift = /*@__PURE__*/ (() => {
       return newInstance(LiftedRunnable, src, allFunctions);
     };
 })();
-/*
+
 const liftT: Lift<RunnableLike, TReactive> = {
   lift,
   variance: reactive,
-};*/
+};
 
 export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedKeepSinkMixin = keepSinkMixin<T>();
@@ -169,6 +192,107 @@ export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
 })();
 
 export const scanT: Scan<RunnableLike> = { scan };
+
+export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedSkipFirstSinkMixin = skipFirstSinkMixin<T>();
+
+  return pipe(
+    typedSkipFirstSinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedSkipFirstSinkMixin]>,
+      SinkLike<T>,
+      number
+    >(),
+    createSkipFirstOperator<RunnableLike, T, TReactive>(liftT),
+  );
+})();
+
+export const skipFirstT: SkipFirst<RunnableLike> = { skipFirst };
+
+export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedTakeFirstSinkMixin = takeFirstSinkMixin<T>();
+
+  return pipe(
+    typedTakeFirstSinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedTakeFirstSinkMixin]>,
+      SinkLike<T>,
+      number
+    >(),
+    createTakeFirstOperator<RunnableLike, T, TReactive>({
+      ...liftT,
+      ...emptyRunnableT,
+    }),
+  );
+})();
+
+export const takeFirstT: TakeFirst<RunnableLike> = { takeFirst };
+
+export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedTakeLastSinkMixin = takeLastSinkMixin<T>();
+
+  const createSink = pipe(
+    typedTakeLastSinkMixin,
+    createObjectFactory<
+      SinkLike<T> & {
+        readonly [TakeLastSink_last]: readonly T[];
+      },
+      PropertyTypeOf<[typeof typedTakeLastSinkMixin]>,
+      SinkLike<T>,
+      number
+    >(),
+  );
+
+  return (
+    options: { readonly count?: number } = {},
+  ): ContainerOperator<RunnableLike, T, T> => {
+    const { count = 1 } = options;
+
+    const operator = lift((delegate: SinkLike<T>) => {
+      const sink = pipe(
+        createSink(delegate, count),
+        addTo(delegate),
+        onComplete(() => {
+          pipe(sink[TakeLastSink_last], toRunnable(), sinkInto(delegate));
+        }),
+      );
+      return sink;
+    });
+
+    return (source: RunnableLike<T>) =>
+      count > 0 ? pipe(source, operator) : emptyRunnable();
+  };
+})();
+
+export const takeLastT: TakeLast<RunnableLike> = { takeLast };
+
+export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedTakeWhileSinkMixin = takeWhileSinkMixin<T>();
+
+  return pipe(
+    typedTakeWhileSinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedTakeWhileSinkMixin]>,
+      SinkLike<T>,
+      Predicate<T>,
+      boolean
+    >(),
+    createTakeWhileOperator<RunnableLike, T, TReactive>(liftT),
+  );
+})();
+
+export const takeWhileT: TakeWhile<RunnableLike> = { takeWhile };
 
 export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
 

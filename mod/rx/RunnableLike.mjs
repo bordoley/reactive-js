@@ -1,12 +1,14 @@
 /// <reference types="./RunnableLike.d.ts" />
+import { reactive, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import { keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, TakeLastSink_last, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, pipeUnsafe, newInstance, isSome, raise } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import { ReactiveContainerLike_sinkInto, emptyRunnableT, emptyRunnable } from '../rx.mjs';
 import { DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
-import { sourceFrom } from './ReactiveContainerLike.mjs';
-import { dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { sourceFrom, sinkInto } from './ReactiveContainerLike.mjs';
+import { dispose, addTo, onComplete } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const lift = /*@__PURE__*/ (() => {
     class LiftedRunnable {
@@ -26,11 +28,10 @@ const lift = /*@__PURE__*/ (() => {
         return newInstance(LiftedRunnable, src, allFunctions);
     };
 })();
-/*
-const liftT: Lift<RunnableLike, TReactive> = {
-  lift,
-  variance: reactive,
-};*/
+const liftT = {
+    lift,
+    variance: reactive,
+};
 const keep = /*@__PURE__*/ (() => {
     const typedKeepSinkMixin = keepSinkMixin();
     const createInstance = pipe(typedKeepSinkMixin, createObjectFactory());
@@ -71,6 +72,39 @@ const scan = /*@__PURE__*/ (() => {
     };
 })();
 const scanT = { scan };
+const skipFirst = /*@__PURE__*/ (() => {
+    const typedSkipFirstSinkMixin = skipFirstSinkMixin();
+    return pipe(typedSkipFirstSinkMixin, createObjectFactory(), createSkipFirstOperator(liftT));
+})();
+const skipFirstT = { skipFirst };
+const takeFirst = /*@__PURE__*/ (() => {
+    const typedTakeFirstSinkMixin = takeFirstSinkMixin();
+    return pipe(typedTakeFirstSinkMixin, createObjectFactory(), createTakeFirstOperator({
+        ...liftT,
+        ...emptyRunnableT,
+    }));
+})();
+const takeFirstT = { takeFirst };
+const takeLast = /*@__PURE__*/ (() => {
+    const typedTakeLastSinkMixin = takeLastSinkMixin();
+    const createSink = pipe(typedTakeLastSinkMixin, createObjectFactory());
+    return (options = {}) => {
+        const { count = 1 } = options;
+        const operator = lift((delegate) => {
+            const sink = pipe(createSink(delegate, count), addTo(delegate), onComplete(() => {
+                pipe(sink[TakeLastSink_last], toRunnable(), sinkInto(delegate));
+            }));
+            return sink;
+        });
+        return (source) => count > 0 ? pipe(source, operator) : emptyRunnable();
+    };
+})();
+const takeLastT = { takeLast };
+const takeWhile = /*@__PURE__*/ (() => {
+    const typedTakeWhileSinkMixin = takeWhileSinkMixin();
+    return pipe(typedTakeWhileSinkMixin, createObjectFactory(), createTakeWhileOperator(liftT));
+})();
+const takeWhileT = { takeWhile };
 const toReadonlyArray = () => (runnable) => {
     const result = [];
     pipe(runnable, onNotify(x => result.push(x)), run());
@@ -80,4 +114,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { keep, keepT, map, mapT, onNotify, run, scan, scanT, toReadonlyArray, toReadonlyArrayT };
+export { keep, keepT, map, mapT, onNotify, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };
