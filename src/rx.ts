@@ -299,11 +299,6 @@ const createUsing =
       )[ReactiveContainerLike_sinkInto](sink);
     }, create(m));
 
-const createFromDisposable =
-  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
-  <T>(disposable: DisposableLike): ContainerOf<C, T> =>
-    pipe(disposable, addTo, create(m));
-
 const createNever = <C extends ReactiveContainerLike>(
   m: CreateReactiveContainer<C>,
 ) => {
@@ -317,10 +312,6 @@ export const createObservableUsing: Using<ObservableLike>["using"] =
 export const createObservableUsingT: Using<ObservableLike> = {
   using: createObservableUsing,
 };
-
-// FIXME: DisposableLike.toObservable would be better.
-export const fromDisposableObservable =
-  /*@__PURE__*/ createFromDisposable(createObservableT);
 
 interface DeferObservable {
   <T>(
