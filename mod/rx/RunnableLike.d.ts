@@ -1,6 +1,8 @@
-import { DistinctUntilChanged, Keep, Map, ContainerOperator, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray } from "../containers.mjs";
+import { Concat, DistinctUntilChanged, Keep, Map, ContainerOperator, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray } from "../containers.mjs";
 import { SideEffect1 } from "../functions.mjs";
 import { RunnableLike } from "../rx.mjs";
+declare const concat: Concat<RunnableLike<unknown>>["concat"];
+declare const concatT: Concat<RunnableLike<unknown>>;
 declare const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"];
 declare const distinctUntilChangedT: DistinctUntilChanged<RunnableLike>;
 declare const keep: Keep<RunnableLike>["keep"];
@@ -21,4 +23,4 @@ declare const takeWhile: TakeWhile<RunnableLike>["takeWhile"];
 declare const takeWhileT: TakeWhile<RunnableLike>;
 declare const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableLike>;
-export { distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, onNotify, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };
+export { concat, concatT, distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, onNotify, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };

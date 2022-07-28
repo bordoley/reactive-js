@@ -6,6 +6,7 @@ import {
 } from "../__internal__/testing";
 import {
   Buffer,
+  Concat,
   ConcatAll,
   ContainerLike,
   DistinctUntilChanged,
@@ -71,6 +72,24 @@ export const bufferTests = <C extends ContainerLike>(
           ],
           arrayEquality(),
         ),
+      ),
+    ),
+  );
+
+export const concatTests = <C extends ContainerLike>(
+  m: Concat<C> & FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "concat",
+    test(
+      "concats the input containers in order",
+      pipeLazy(
+        m.concat(
+          pipe([1, 2, 3], m.fromArray()),
+          pipe([4, 5, 6], m.fromArray()),
+        ),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
       ),
     ),
   );

@@ -1,14 +1,14 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { reactive, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import { distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, TakeLastSink_last, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { createDelegatingSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, TakeLastSink_last, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, pipeUnsafe, newInstance, strictEquality, isSome, raise } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto, emptyRunnableT, emptyRunnable } from '../rx.mjs';
+import { pipe, pipeUnsafe, newInstance, getLength, strictEquality, isSome, raise } from '../functions.mjs';
+import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT, emptyRunnable } from '../rx.mjs';
 import { DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { sourceFrom, sinkInto } from './ReactiveContainerLike.mjs';
-import { dispose, addTo, onComplete } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { dispose, isDisposed, addTo, onComplete } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const lift = /*@__PURE__*/ (() => {
     class LiftedRunnable {
@@ -31,6 +31,15 @@ const lift = /*@__PURE__*/ (() => {
 const liftT = {
     lift,
     variance: reactive,
+};
+const concat = (...runnables) => createRunnable((sink) => {
+    const runnablesLength = getLength(runnables);
+    for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
+        pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(runnables[i]), dispose());
+    }
+});
+const concatT = {
+    concat,
 };
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
@@ -127,4 +136,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, onNotify, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };
+export { concat, concatT, distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, onNotify, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };

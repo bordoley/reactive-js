@@ -1,6 +1,7 @@
 import { describe } from "../__internal__/testing";
 import { toRunnable } from "../containers/ReadonlyArrayLike";
 import {
+  concatT,
   distinctUntilChangedT,
   keepT,
   mapT,
@@ -12,6 +13,7 @@ import {
   toReadonlyArrayT,
 } from "../rx/RunnableLike";
 import {
+  concatTests,
   distinctUntilChangedTests,
   keepTests,
   mapTests,
@@ -24,6 +26,11 @@ import {
 
 export const RunnableLikeTests = describe(
   "RunnableLike",
+  concatTests({
+    fromArray: toRunnable,
+    ...concatT,
+    ...toReadonlyArrayT,
+  }),
   distinctUntilChangedTests({
     fromArray: toRunnable,
     ...distinctUntilChangedT,
