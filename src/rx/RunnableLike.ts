@@ -7,13 +7,20 @@ import {
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import {
+  DisposableLike,
+  bindTo,
+} from "../__internal__/util/DisposableLikeInternal";
+import {
   PropertyTypeOf,
   createObjectFactory,
+  mixWith,
 } from "../__internal__/util/Object";
 import {
+  DelegatingSink_delegate,
   TakeLastSink_last,
   createDelegatingSink,
   createSink,
+  delegatingSinkMixin,
   distinctUntilChangedSinkMixin,
   keepSinkMixin,
   mapSinkMixin,
@@ -26,6 +33,7 @@ import {
 } from "../__internal__/util/SinkLikeMixin";
 import {
   Concat,
+  ConcatAll,
   ContainerOperator,
   DistinctUntilChanged,
   Keep,
@@ -49,6 +57,7 @@ import {
   isSome,
   newInstance,
   pipe,
+  pipeLazy,
   pipeUnsafe,
   raise,
   strictEquality,
@@ -60,7 +69,7 @@ import {
   emptyRunnable,
   emptyRunnableT,
 } from "../rx";
-import { DisposableLike_error, SinkLike } from "../util";
+import { DisposableLike_error, SinkLike, SinkLike_notify } from "../util";
 import { addTo, dispose, isDisposed, onComplete } from "../util/DisposableLike";
 import { sinkInto, sourceFrom } from "./ReactiveContainerLike";
 
@@ -98,7 +107,7 @@ const liftT: Lift<RunnableLike, TReactive> = {
   variance: reactive,
 };
 
-export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
+export const concat: Concat<RunnableLike>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]
 ) =>
   createRunnable((sink: SinkLike<T>) => {
@@ -113,8 +122,43 @@ export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
     }
   });
 
-export const concatT: Concat<RunnableLike<unknown>> = {
+export const concatT: Concat<RunnableLike> = {
   concat,
+};
+
+export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedDelegatingSinkMixin = delegatingSinkMixin<T>();
+
+  return pipeLazy(
+    {
+      [SinkLike_notify](
+        this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
+          DisposableLike,
+        next: RunnableLike<T>,
+      ) {
+        const { [DelegatingSink_delegate]: delegate } = this;
+        pipe(
+          createDelegatingSink(delegate),
+          addTo<SinkLike<T>>(this),
+          sourceFrom(next),
+          dispose(),
+        );
+      },
+    },
+    mixWith(typedDelegatingSinkMixin),
+    createObjectFactory<
+      SinkLike<RunnableLike<T>>,
+      PropertyTypeOf<[typeof typedDelegatingSinkMixin]> & DisposableLike,
+      SinkLike<T>
+    >(),
+    mixin => lift(delegate => pipe(mixin(delegate), bindTo(delegate))),
+  );
+})();
+
+export const concatAllT: ConcatAll<RunnableLike> = {
+  concatAll,
 };
 
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
