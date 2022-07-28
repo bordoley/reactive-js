@@ -579,7 +579,9 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
 
 export const mapT: Map<EnumerableLike> = { map };
 
-export const onNotify = /*@__PURE__*/ (<T>() => {
+export const onNotify: <T>(
+  onNotify: SideEffect1<T>,
+) => ContainerOperator<EnumerableLike, T, T> = /*@__PURE__*/ (<T>() => {
   const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
   type TProperties = PropertyTypeOf<
