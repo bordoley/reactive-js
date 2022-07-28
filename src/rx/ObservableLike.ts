@@ -1,5 +1,4 @@
 import { observerPrototype } from "../__internal__/scheduling/Observer";
-import { prototype as delegatingDisposablePrototype } from "../__internal__/util/DelegatingDisposable";
 import {
   Object_init,
   Object_properties,
@@ -78,13 +77,12 @@ const lift = /*@__PURE__*/ (() => {
     };
 })();
 
-export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (() => {
+export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
+  const typedMapPrototype = mapPrototype<TA, TB>();
+  const typedObserverPrototype = observerPrototype<TA>();
+
   type TProperties = PropertyTypeOf<
-    [
-      typeof delegatingDisposablePrototype,
-      typeof observerPrototype,
-      typeof mapPrototype,
-    ]
+    [typeof typedObserverPrototype, typeof typedMapPrototype]
   >;
 
   const createInstance = pipe(
@@ -92,15 +90,14 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (() => {
       [Object_properties]: {},
       [Object_init](
         this: TProperties,
-        delegate: ObserverLike,
-        mapper: Function1<any, any>,
+        delegate: ObserverLike<TB>,
+        mapper: Function1<TA, TB>,
       ) {
-        init(delegatingDisposablePrototype, this, delegate);
-        init(observerPrototype, this, delegate[ObserverLike_scheduler]);
-        init(mapPrototype, this, delegate, mapper);
+        init(typedObserverPrototype, this, delegate[ObserverLike_scheduler]);
+        init(typedMapPrototype, this, delegate, mapper);
       },
     },
-    mixWith(delegatingDisposablePrototype, observerPrototype, mapPrototype),
+    mixWith(typedObserverPrototype, typedMapPrototype),
     createObjectFactory<
       ObserverLike,
       TProperties,

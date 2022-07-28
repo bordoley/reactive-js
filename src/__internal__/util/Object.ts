@@ -4,7 +4,7 @@ import {
   Function2,
   Function3,
   Function4,
-  none,
+  Option,
 } from "../../functions";
 
 export const Object_init = Symbol("Object_init");
@@ -24,6 +24,12 @@ export type PropertyTypeOf<T extends any[]> = T extends [infer F, ...infer R]
       : never) &
       PropertyTypeOf<R>
   : unknown;
+
+type OptionalProps<T> = T extends object
+  ? {
+      [P in keyof T]: T[P] extends object ? Option<T[P]> : T[P];
+    }
+  : T;
 
 interface Init {
   <TProperties>(
@@ -73,7 +79,7 @@ type Identity<T> = T extends object
 interface ObjectFactory {
   <TReturn, TProperties>(): Function1<
     {
-      [Object_properties]: TProperties;
+      [Object_properties]: OptionalProps<TProperties>;
       [Object_init]: (this: TReturn & TProperties) => void;
     } & Omit<TReturn, keyof TProperties>,
     Factory<TReturn>
@@ -81,7 +87,7 @@ interface ObjectFactory {
 
   <TReturn, TProperties, TA>(): Function1<
     {
-      [Object_properties]: TProperties;
+      [Object_properties]: OptionalProps<TProperties>;
       [Object_init]: (this: TReturn & TProperties, a: TA) => void;
     } & Omit<TReturn, keyof TProperties>,
     Function1<TA, TReturn>
@@ -89,7 +95,7 @@ interface ObjectFactory {
 
   <TReturn, TProperties, TA, TB>(): Function1<
     {
-      [Object_properties]: TProperties;
+      [Object_properties]: OptionalProps<TProperties>;
       [Object_init]: (this: TReturn & TProperties, a: TA, b: TB) => void;
     } & Omit<TReturn, keyof TProperties>,
     Function2<TA, TB, TReturn>
@@ -97,7 +103,7 @@ interface ObjectFactory {
 
   <TReturn, TProperties, TA, TB, TC>(): Function1<
     {
-      [Object_properties]: TProperties;
+      [Object_properties]: OptionalProps<TProperties>;
       [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TC) => void;
     } & Omit<TReturn, keyof TProperties>,
     Function3<TA, TB, TC, TReturn>
@@ -105,7 +111,7 @@ interface ObjectFactory {
 
   <TReturn, TProperties, TA, TB, TC, TD>(): Function1<
     {
-      [Object_properties]: TProperties;
+      [Object_properties]: OptionalProps<TProperties>;
       [Object_init]: (
         this: TReturn & TProperties,
         a: TA,
@@ -121,7 +127,7 @@ interface ObjectFactory {
 export const createObjectFactory: ObjectFactory =
   <TReturn, TProperties>() =>
   (prototype: {
-    [Object_properties]: TProperties;
+    [Object_properties]: OptionalProps<TProperties>;
     [Object_init]: (
       this: TReturn & TProperties,
       ...args: readonly any[]
@@ -155,7 +161,9 @@ interface MixWith {
     Identity<
       TProto0 &
         TProto1 & {
-          [Object_properties]: PropertyTypeOf<[TProto0, TProto1]>;
+          [Object_properties]: OptionalProps<
+            PropertyTypeOf<[TProto0, TProto1]>
+          >;
         }
     >
   >;
@@ -169,7 +177,9 @@ interface MixWith {
       TProto0 &
         TProto1 &
         TProto2 & {
-          [Object_properties]: PropertyTypeOf<[TProto0, TProto1, TProto2]>;
+          [Object_properties]: OptionalProps<
+            PropertyTypeOf<[TProto0, TProto1, TProto2]>
+          >;
         }
     >
   >;
@@ -190,8 +200,8 @@ interface MixWith {
         TProto1 &
         TProto2 &
         TProto3 & {
-          [Object_properties]: PropertyTypeOf<
-            [TProto0, TProto1, TProto2, TProto3]
+          [Object_properties]: OptionalProps<
+            PropertyTypeOf<[TProto0, TProto1, TProto2, TProto3]>
           >;
         }
     >
@@ -225,5 +235,3 @@ export const mixWith: MixWith =
 
     return createObject(objectPrototype, descriptor);
   };
-
-export const anyProperty: any = none;

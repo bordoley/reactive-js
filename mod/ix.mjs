@@ -1,7 +1,7 @@
 /// <reference types="./ix.d.ts" />
 import { prototype } from './__internal__/util/Disposable.mjs';
 import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory, anyProperty } from './__internal__/util/Object.mjs';
+import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, newInstance, forEach, pipeLazy } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { addTo } from './util/DisposableLike.mjs';
@@ -61,7 +61,7 @@ const generateEnumerable =
 /*@__PURE__*/ (() => {
     const typedEnumerator = prototype$1();
     const createInstance = pipe({
-        [Object_properties]: { f: anyProperty },
+        [Object_properties]: { f: none },
         [Object_init](f, acc) {
             init(prototype, this);
             init(prototype$1(), this);

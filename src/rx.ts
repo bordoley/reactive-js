@@ -3,7 +3,6 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
@@ -26,6 +25,7 @@ import {
   ignore,
   max,
   newInstance,
+  none,
   pipe,
 } from "./functions";
 import { ObserverLike } from "./scheduling";
@@ -197,8 +197,8 @@ export const createSubject = /*@__PURE__*/ (() => {
     {
       [Object_properties]: {
         [MulticastObservableLike_replay]: 0,
-        observers: anyProperty,
-        replayed: anyProperty,
+        observers: none,
+        replayed: none,
       },
       [Object_init](this: TProperties, replay: number) {
         init(disposablePrototype, this);

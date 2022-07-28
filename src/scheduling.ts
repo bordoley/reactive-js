@@ -19,12 +19,11 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
 } from "./__internal__/util/Object";
-import { isSome, pipe } from "./functions";
+import { isSome, none, pipe } from "./functions";
 import {
   ContinuationLike,
   ContinuationLike_run,
@@ -324,7 +323,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         microTaskTicks: 0,
         taskIDCount: 0,
         yieldRequested: false,
-        taskQueue: anyProperty,
+        taskQueue: none,
       },
       [Object_init](this: TProperties, maxMicroTaskTicks: number) {
         init(disposablePrototype, this);

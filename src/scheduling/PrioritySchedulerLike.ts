@@ -4,12 +4,11 @@ import {
   Object_init,
   Object_properties,
   PropertyTypeOf,
-  anyProperty,
   createObjectFactory,
   init,
   mixWith,
 } from "../__internal__/util/Object";
-import { Function1, pipe } from "../functions";
+import { Function1, none, pipe } from "../functions";
 import {
   PrioritySchedulerLike,
   SchedulerLike,
@@ -43,7 +42,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
   const createInstance = pipe(
     {
       [Object_properties]: {
-        priorityScheduler: anyProperty,
+        priorityScheduler: none,
         priority: 0,
       },
       [Object_init](
