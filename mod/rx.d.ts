@@ -72,7 +72,6 @@ declare const createSubject: <T>(options?: {
 }) => SubjectLike<T>;
 declare const createObservableUsing: Using<ObservableLike>["using"];
 declare const createObservableUsingT: Using<ObservableLike>;
-declare const fromDisposableObservable: <T>(disposable: DisposableLike) => ObservableLike<T>;
 interface DeferObservable {
     <T>(factory: Factory<SideEffect1<ObserverLike<T>>>, options?: {
         readonly delay?: number;
@@ -88,4 +87,4 @@ declare const createRunnableUsing: Using<RunnableLike>["using"];
 declare const createRunnableUsingT: Using<RunnableLike>;
 declare const neverRunnable: <T>() => RunnableLike<T>;
 declare const neverRunnableT: Never<RunnableLike>;
-export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, Never, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, fromDisposableObservable, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, Never, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };

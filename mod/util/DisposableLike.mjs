@@ -12,5 +12,13 @@ const toAbortSignal = (disposable) => {
     addDisposableOrTeardown(disposable, () => abortController.abort());
     return abortController.signal;
 };
+/*
+const createToDisposable =
+  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
+  <T>(disposable: DisposableLike): ContainerOf<C, T> =>
+    pipe(disposable, addTo, create(m));
+
+export const toObservable = createToDisposable(createObservableT);
+*/
 
 export { toAbortSignal, toErrorHandler };
