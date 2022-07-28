@@ -25,7 +25,7 @@ import {
   mixWith,
 } from "./Object";
 
-export const Sink_delegate = Symbol("Sink_delegate");
+const Sink_private_delegate = Symbol("Sink_private_delegate");
 
 export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
   pipe(
@@ -44,30 +44,26 @@ export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
   ))();
 
 export const keepSinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: {
-    [Sink_delegate]: SinkLike<T>;
-    predicate: Predicate<T>;
-  };
+  [Object_properties]: unknown;
   [Object_init](
-    this: {
-      [Sink_delegate]: SinkLike<T>;
-      predicate: Predicate<T>;
-    },
+    this: unknown,
     delegate: SinkLike<T>,
     predicate: Predicate<T>,
   ): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T>() => {
+  const KeepSink_private_predicate = Symbol("KeepSink_private_predicate");
+
   type TProperties = {
-    [Sink_delegate]: SinkLike<T>;
-    predicate: Predicate<T>;
+    [Sink_private_delegate]: SinkLike<T>;
+    [KeepSink_private_predicate]: Predicate<T>;
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
     {
       [Object_properties]: {
-        [Sink_delegate]: none as any,
-        predicate: none as any,
+        [Sink_private_delegate]: none,
+        [KeepSink_private_predicate]: none,
       },
       [Object_init](
         this: TProperties,
@@ -75,12 +71,12 @@ export const keepSinkMixin: <T>() => DisposableLike & {
         predicate: Predicate<T>,
       ) {
         init(delegatingDisposableMixin, this, delegate);
-        this[Sink_delegate] = delegate;
-        this.predicate = predicate;
+        this[Sink_private_delegate] = delegate;
+        this[KeepSink_private_predicate] = predicate;
       },
       [SinkLike_notify](this: TProperties, next: T) {
-        if (this.predicate(next)) {
-          pipe(this[Sink_delegate], notify(next));
+        if (this[KeepSink_private_predicate](next)) {
+          pipe(this[Sink_private_delegate], notify(next));
         }
       },
     },
@@ -90,29 +86,25 @@ export const keepSinkMixin: <T>() => DisposableLike & {
 })();
 
 export const mapSinkMixin: <TA, TB>() => DisposableLike & {
-  [Object_properties]: {
-    [Sink_delegate]: SinkLike<TB>;
-    mapper: Function1<TA, TB>;
-  };
+  [Object_properties]: unknown;
   [Object_init](
-    this: {
-      [Sink_delegate]: SinkLike<TB>;
-      mapper: Function1<TA, TB>;
-    },
+    this: unknown,
     delegate: SinkLike<TB>,
     mapper: Function1<TA, TB>,
   ): void;
   [SinkLike_notify](next: TA): void;
 } = /*@__PURE__*/ (<TA, TB>() => {
+  const MapSink_private_mapper = Symbol("MapSink_private_mapper");
+
   type TProperties = {
-    [Sink_delegate]: SinkLike<TB>;
-    mapper: Function1<TA, TB>;
+    [Sink_private_delegate]: SinkLike<TB>;
+    [MapSink_private_mapper]: Function1<TA, TB>;
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
     {
       [Object_properties]: {
-        [Sink_delegate]: none as any,
+        [Sink_private_delegate]: none as any,
         mapper: none as any,
       },
       [Object_init](
@@ -121,12 +113,12 @@ export const mapSinkMixin: <TA, TB>() => DisposableLike & {
         mapper: Function1<TA, TB>,
       ) {
         init(delegatingDisposableMixin, this, delegate);
-        this[Sink_delegate] = delegate;
-        this.mapper = mapper;
+        this[Sink_private_delegate] = delegate;
+        this[MapSink_private_mapper] = mapper;
       },
       [SinkLike_notify](this: TProperties, next: TA) {
-        const mapped = this.mapper(next);
-        pipe(this[Sink_delegate], notify(mapped));
+        const mapped = this[MapSink_private_mapper](next);
+        pipe(this[Sink_private_delegate], notify(mapped));
       },
     },
     mixWith(delegatingDisposableMixin),
@@ -135,30 +127,26 @@ export const mapSinkMixin: <TA, TB>() => DisposableLike & {
 })();
 
 export const onNotifySinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: {
-    [Sink_delegate]: SinkLike<T>;
-    onNotify: SideEffect1<T>;
-  };
+  [Object_properties]: unknown;
   [Object_init](
-    this: {
-      [Sink_delegate]: SinkLike<T>;
-      onNotify: SideEffect1<T>;
-    },
+    this: unknown,
     delegate: SinkLike<T>,
     monNotify: SideEffect1<T>,
   ): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T>() => {
+  const OnNotifySink_private_onNotify = Symbol("OnNotifySink_private_onNotify");
+
   type TProperties = {
-    [Sink_delegate]: SinkLike<T>;
-    onNotify: SideEffect1<T>;
+    [Sink_private_delegate]: SinkLike<T>;
+    [OnNotifySink_private_onNotify]: SideEffect1<T>;
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
     {
       [Object_properties]: {
-        [Sink_delegate]: none as any,
-        onNotify: none as any,
+        [Sink_private_delegate]: none,
+        [OnNotifySink_private_onNotify]: none,
       },
       [Object_init](
         this: TProperties,
@@ -166,12 +154,12 @@ export const onNotifySinkMixin: <T>() => DisposableLike & {
         onNotify: SideEffect1<T>,
       ) {
         init(delegatingDisposableMixin, this, delegate);
-        this[Sink_delegate] = delegate;
-        this.onNotify = onNotify;
+        this[Sink_private_delegate] = delegate;
+        this[OnNotifySink_private_onNotify] = onNotify;
       },
       [SinkLike_notify](this: TProperties, next: T) {
-        this.onNotify(next);
-        pipe(this[Sink_delegate], notify(next));
+        this[OnNotifySink_private_onNotify](next);
+        pipe(this[Sink_private_delegate], notify(next));
       },
     },
     mixWith(delegatingDisposableMixin),
@@ -180,35 +168,30 @@ export const onNotifySinkMixin: <T>() => DisposableLike & {
 })();
 
 export const scanSinkMixin: <T, TAcc>() => DisposableLike & {
-  [Object_properties]: {
-    [Sink_delegate]: SinkLike<TAcc>;
-    reducer: Reducer<T, TAcc>;
-    acc: TAcc;
-  };
+  [Object_properties]: unknown;
   [Object_init](
-    this: {
-      [Sink_delegate]: SinkLike<TAcc>;
-      reducer: Reducer<T, TAcc>;
-      acc: TAcc;
-    },
+    this: unknown,
     delegate: SinkLike<TAcc>,
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T, TAcc>() => {
+  const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
+  const ScanSink_private_acc = Symbol("ScanSink_private_acc");
+
   type TProperties = {
-    [Sink_delegate]: SinkLike<TAcc>;
-    reducer: Reducer<T, TAcc>;
-    acc: TAcc;
+    [Sink_private_delegate]: SinkLike<TAcc>;
+    [ScanSink_private_reducer]: Reducer<T, TAcc>;
+    [ScanSink_private_acc]: TAcc;
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
     {
       [Object_properties]: {
-        [Sink_delegate]: none as any,
-        reducer: none as any,
-        acc: none as any,
+        [Sink_private_delegate]: none,
+        [ScanSink_private_reducer]: none,
+        [ScanSink_private_acc]: none,
       },
       [Object_init](
         this: TProperties & DisposableLike,
@@ -217,20 +200,23 @@ export const scanSinkMixin: <T, TAcc>() => DisposableLike & {
         initialValue: Factory<TAcc>,
       ) {
         init(delegatingDisposableMixin, this, delegate);
-        this[Sink_delegate] = delegate;
-        this.reducer = reducer;
+        this[Sink_private_delegate] = delegate;
+        this[ScanSink_private_reducer] = reducer;
 
         try {
           const acc = initialValue();
-          this.acc = acc;
+          this[ScanSink_private_acc] = acc;
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
       },
       [SinkLike_notify](this: TProperties, next: T) {
-        const nextAcc = this.reducer(this.acc, next);
-        this.acc = nextAcc;
-        pipe(this[Sink_delegate], notify(nextAcc));
+        const nextAcc = this[ScanSink_private_reducer](
+          this[ScanSink_private_acc],
+          next,
+        );
+        this[ScanSink_private_acc] = nextAcc;
+        pipe(this[Sink_private_delegate], notify(nextAcc));
       },
     },
     mixWith(delegatingDisposableMixin),
