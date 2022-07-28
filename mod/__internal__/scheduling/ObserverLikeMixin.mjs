@@ -1,13 +1,13 @@
-/// <reference types="./Observer.d.ts" />
+/// <reference types="./ObserverLikeMixin.d.ts" />
 import { getLength, pipe, none, isNone, isEmpty, returns } from '../../functions.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../scheduling.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../../util.mjs';
-import { addTo, onComplete, addToIgnoringChildErrors, onDisposed } from '../../util/DisposableLike.mjs';
-import { prototype } from '../util/Disposable.mjs';
+import '../../util/DisposableLike.mjs';
+import { disposableMixin } from '../util/DisposableLikeMixins.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../util/Object.mjs';
-import { isDisposed, dispose } from '../util/DisposableLikeInternal.mjs';
+import { addTo, onComplete, isDisposed, dispose, addToIgnoringChildErrors, onDisposed } from '../util/DisposableLikeInternal.mjs';
 
 const createObserverDispatcher = (() => {
     const scheduleDrainQueue = (dispatcher) => {
@@ -24,7 +24,7 @@ const createObserverDispatcher = (() => {
             onContinuationDispose: none,
         },
         [Object_init](observer) {
-            init(prototype, this);
+            init(disposableMixin, this);
             this.observer = observer;
             this.continuation = () => {
                 const { nextQueue } = this;
@@ -50,10 +50,9 @@ const createObserverDispatcher = (() => {
                 scheduleDrainQueue(this);
             }
         },
-    }, mixWith(prototype), createObjectFactory());
+    }, mixWith(disposableMixin), createObjectFactory());
 })();
-const observerPrototype = 
-/*@__PURE__*/ (() => {
+const observerMixin = /*@__PURE__*/ (() => {
     return pipe({
         [Object_properties]: {
             [ObserverLike_scheduler]: none,
@@ -77,4 +76,4 @@ const observerPrototype =
     }, returns);
 })();
 
-export { observerPrototype };
+export { observerMixin };

@@ -1,5 +1,5 @@
 import { getDelay } from "../__internal__/optionalArgs";
-import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
+import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   Object_init,
   Object_properties,
@@ -34,7 +34,7 @@ import {
  * @param priority The priority to schedule work at.
  */
 export const toScheduler = /*@__PURE__*/ (() => {
-  type TProperties = PropertyTypeOf<[typeof disposablePrototype]> & {
+  type TProperties = PropertyTypeOf<[typeof disposableMixin]> & {
     priorityScheduler: PrioritySchedulerLike;
     priority: number;
   };
@@ -50,7 +50,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
         scheduler: PrioritySchedulerLike,
         priority: number,
       ) {
-        init(disposablePrototype, this);
+        init(disposableMixin, this);
         this.priorityScheduler = scheduler;
         this.priority = priority;
       },
@@ -86,7 +86,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
         }
       },
     },
-    mixWith(disposablePrototype),
+    mixWith(disposableMixin),
     createObjectFactory<
       SchedulerLike,
       TProperties,

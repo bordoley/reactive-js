@@ -1,7 +1,7 @@
 /// <reference types="./ObservableLike.d.ts" />
-import { observerPrototype } from '../__internal__/scheduling/Observer.mjs';
+import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { mapPrototype } from '../__internal__/util/Sink.mjs';
+import { mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { pipeUnsafe, newInstance, pipe } from '../functions.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { ObserverLike_scheduler } from '../scheduling.mjs';
@@ -29,15 +29,15 @@ const lift = /*@__PURE__*/ (() => {
     };
 })();
 const map = /*@__PURE__*/ (() => {
-    const typedMapPrototype = mapPrototype();
-    const typedObserverPrototype = observerPrototype();
+    const typedMapSinkMixin = mapSinkMixin();
+    const typedObserverMixin = observerMixin();
     const createInstance = pipe({
         [Object_properties]: {},
         [Object_init](delegate, mapper) {
-            init(typedObserverPrototype, this, delegate[ObserverLike_scheduler]);
-            init(typedMapPrototype, this, delegate, mapper);
+            init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+            init(typedMapSinkMixin, this, delegate, mapper);
         },
-    }, mixWith(typedObserverPrototype, typedMapPrototype), createObjectFactory());
+    }, mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory());
     return (mapper) => {
         const operator = (delegate) => createInstance(delegate, mapper);
         return lift(operator);

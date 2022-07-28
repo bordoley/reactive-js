@@ -1,4 +1,11 @@
-import { prototype as disposablePrototype } from "./__internal__/util/Disposable";
+import {
+  addIgnoringChildErrors,
+  addTo,
+  dispose,
+  isDisposed,
+  onDisposed,
+} from "./__internal__/util/DisposableLikeInternal";
+import { disposableMixin } from "./__internal__/util/DisposableLikeMixins";
 import {
   Object_init,
   Object_properties,
@@ -33,13 +40,6 @@ import { dispatch } from "./scheduling/DispatcherLike";
 import { getDispatcher, getScheduler } from "./scheduling/ObserverLike";
 import { schedule } from "./scheduling/SchedulerLike";
 import { DisposableLike, SinkLike } from "./util";
-import {
-  addIgnoringChildErrors,
-  addTo,
-  dispose,
-  isDisposed,
-  onDisposed,
-} from "./util/DisposableLike";
 
 /** @ignore */
 export const ReactiveContainerLike_sinkInto = Symbol(
@@ -191,7 +191,7 @@ export const createSubject = /*@__PURE__*/ (() => {
     [MulticastObservableLike_replay]: number;
     observers: Set<ObserverLike>;
     replayed: Array<unknown>;
-  } & PropertyTypeOf<[typeof disposablePrototype]>;
+  } & PropertyTypeOf<[typeof disposableMixin]>;
 
   const createInstance = pipe(
     {
@@ -201,7 +201,7 @@ export const createSubject = /*@__PURE__*/ (() => {
         replayed: none,
       },
       [Object_init](this: TProperties, replay: number) {
-        init(disposablePrototype, this);
+        init(disposableMixin, this);
         this[MulticastObservableLike_replay] = replay;
         this.observers = newInstance<Set<ObserverLike>>(Set);
         this.replayed = [];
@@ -261,7 +261,7 @@ export const createSubject = /*@__PURE__*/ (() => {
         pipe(this, addIgnoringChildErrors(dispatcher));
       },
     },
-    mixWith(disposablePrototype),
+    mixWith(disposableMixin),
     createObjectFactory<SubjectLike<any>, TProperties, number>(),
   );
 

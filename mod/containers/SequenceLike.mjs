@@ -1,6 +1,6 @@
 /// <reference types="./SequenceLike.d.ts" />
-import { prototype } from '../__internal__/util/Disposable.mjs';
-import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
+import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
+import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { isSome, none, pipe, strictEquality, isNone, alwaysTrue, getLength, callWith, returns } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
@@ -238,13 +238,14 @@ const takeWhile =
 const takeWhileT = { takeWhile };
 const toEnumerable = 
 /*@__PURE__*/ (() => {
+    const typedEnumeratorMixin = enumeratorMixin();
     const createInstance = pipe({
         [Object_properties]: {
             seq: none,
         },
         [Object_init](seq) {
-            init(prototype, this);
-            init(prototype$1(), this);
+            init(disposableMixin, this);
+            init(typedEnumeratorMixin, this);
             this.seq = seq;
         },
         [SourceLike_move]() {
@@ -259,7 +260,7 @@ const toEnumerable =
                 }
             }
         },
-    }, mixWith(prototype, prototype$1()), createObjectFactory());
+    }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
     return () => (seq) => createEnumerable(() => createInstance(seq));
 })();
 const toEnumerableT = { toEnumerable };

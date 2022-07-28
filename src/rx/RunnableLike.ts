@@ -2,7 +2,7 @@ import {
   PropertyTypeOf,
   createObjectFactory,
 } from "../__internal__/util/Object";
-import { mapPrototype } from "../__internal__/util/Sink";
+import { mapSinkMixin } from "../__internal__/util/SinkLikeMixin";
 import { Map } from "../containers";
 import { Function1, newInstance, pipe, pipeUnsafe } from "../functions";
 import { ReactiveContainerLike_sinkInto, RunnableLike } from "../rx";
@@ -45,13 +45,13 @@ const liftT: Lift<RunnableLike, TReactive> = {
 };*/
 
 export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
-  const typedMapPrototype = mapPrototype<TA, TB>();
+  const typedMapSinkMixin = mapSinkMixin<TA, TB>();
 
   const createInstance = pipe(
-    typedMapPrototype,
+    typedMapSinkMixin,
     createObjectFactory<
       SinkLike<TA>,
-      PropertyTypeOf<[typeof typedMapPrototype]>,
+      PropertyTypeOf<[typeof typedMapSinkMixin]>,
       SinkLike<TB>,
       Function1<TA, TB>
     >(),

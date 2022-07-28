@@ -32,6 +32,7 @@
 - [buffer](ix_EnumerableLike.md#buffer)
 - [concat](ix_EnumerableLike.md#concat)
 - [concatAll](ix_EnumerableLike.md#concatall)
+- [delegatingEnumeratorMixin](ix_EnumerableLike.md#delegatingenumeratormixin)
 - [distinctUntilChanged](ix_EnumerableLike.md#distinctuntilchanged)
 - [enumerate](ix_EnumerableLike.md#enumerate)
 - [keep](ix_EnumerableLike.md#keep)
@@ -239,6 +240,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, `T`\>
+
+___
+
+### delegatingEnumeratorMixin
+
+▸ **delegatingEnumeratorMixin**<`T`\>(): `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `[EnumeratorLike_current]` | `T` |
+| `[EnumeratorLike_hasCurrent]` | `boolean` |
+| `[Object_properties]` | `unknown` |
+| `[DelegatingEnumerator_move_delegate]` | () => `boolean` |
+| `[Object_init]` | (`this`: `unknown`, `delegate`: [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\>) => `void` |
 
 ___
 

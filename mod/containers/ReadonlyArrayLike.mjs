@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
-import { prototype } from '../__internal__/util/Disposable.mjs';
-import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
+import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
+import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, pipe, none, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
@@ -49,6 +49,7 @@ const createFromArray = (factory) => (options = {}) => values => {
     return factory(values, start, count, options);
 };
 const toEnumerable = /*@__PURE__*/ (() => {
+    const typedEnumerator = enumeratorMixin();
     const createInstance = pipe({
         [Object_properties]: {
             array: none,
@@ -56,8 +57,8 @@ const toEnumerable = /*@__PURE__*/ (() => {
             index: 0,
         },
         [Object_init](array, start, count) {
-            init(prototype, this);
-            init(prototype$1(), this);
+            init(disposableMixin, this);
+            init(typedEnumerator, this);
             this.array = array;
             this.index = start - 1;
             this.count = count;
@@ -76,7 +77,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(prototype, prototype$1()), createObjectFactory());
+    }, mixWith(disposableMixin, typedEnumerator), createObjectFactory());
     return createFromArray((array, start, count) => createEnumerable(() => createInstance(array, start, count)));
 })();
 const toEnumerableT = { toEnumerable };

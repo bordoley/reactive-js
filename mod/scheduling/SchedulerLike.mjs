@@ -4,19 +4,18 @@ import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from '../__internal__/scheduling/queue.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from '../__internal__/schedulingInternal.mjs';
 export { getCurrentTime, isInContinuation } from '../__internal__/schedulingInternal.mjs';
-import { prototype } from '../__internal__/util/Disposable.mjs';
-import { prototype as prototype$2 } from '../__internal__/util/DisposableRefLike.mjs';
-import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
+import { disposableMixin, disposableRefMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
+import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { none, pipe, isSome, isNone, raise, newInstanceWith, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
-import { addIgnoringChildErrors } from '../util/DisposableLike.mjs';
+import '../util/DisposableLike.mjs';
 import { hasCurrent, getCurrent } from '../util/EnumeratorLike.mjs';
 import { move } from '../util/SourceLike.mjs';
-import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { isDisposed, dispose, addIgnoringChildErrors } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const requestYield = (scheduler) => scheduler[SchedulerLike_requestYield]();
 const shouldYield = (scheduler) => scheduler[SchedulerLike_shouldYield];
@@ -34,7 +33,7 @@ const createContinuation = /*@__PURE__*/ (() => {
             f: none,
         },
         [Object_init](scheduler, f) {
-            init(prototype, this);
+            init(disposableMixin, this);
             this.scheduler = scheduler;
             this.f = f;
         },
@@ -65,7 +64,7 @@ const createContinuation = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(prototype), createObjectFactory());
+    }, mixWith(disposableMixin), createObjectFactory());
 })();
 const __yield = (options) => {
     const delay = getDelay(options);
@@ -162,6 +161,8 @@ const createQueueScheduler =
         self.hostContinuation = continuation;
         self[MutableRefLike_current] = pipe(self.host, schedule(continuation, { delay }));
     };
+    const typedDisposableRefMixin = disposableRefMixin();
+    const typedEnumeratorMixin = enumeratorMixin();
     return pipe({
         [Object_properties]: {
             [SchedulerLike_inContinuation]: false,
@@ -175,9 +176,9 @@ const createQueueScheduler =
             yieldRequested: false,
         },
         [Object_init](host) {
-            init(prototype, this);
-            init(prototype$1(), this);
-            init(prototype$2, this, disposed);
+            init(disposableMixin, this);
+            init(typedEnumeratorMixin, this);
+            init(typedDisposableRefMixin, this, disposed);
             this.delayed = createPriorityQueue(delayedComparator);
             this.queue = createPriorityQueue(taskComparator);
             this.host = host;
@@ -246,7 +247,7 @@ const createQueueScheduler =
                 scheduleOnHost(this);
             }
         },
-    }, mixWith(prototype, prototype$1(), prototype$2), createObjectFactory());
+    }, mixWith(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), createObjectFactory());
 })();
 const toPausableScheduler = createQueueScheduler;
 const toPriorityScheduler = createQueueScheduler;

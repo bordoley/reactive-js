@@ -1,6 +1,6 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { createObjectFactory } from '../__internal__/util/Object.mjs';
-import { mapPrototype } from '../__internal__/util/Sink.mjs';
+import { mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { pipe, pipeUnsafe, newInstance } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import '../util/DisposableLike.mjs';
@@ -31,8 +31,8 @@ const liftT: Lift<RunnableLike, TReactive> = {
   variance: reactive,
 };*/
 const map = /*@__PURE__*/ (() => {
-    const typedMapPrototype = mapPrototype();
-    const createInstance = pipe(typedMapPrototype, createObjectFactory());
+    const typedMapSinkMixin = mapSinkMixin();
+    const createInstance = pipe(typedMapSinkMixin, createObjectFactory());
     return (mapper) => {
         const operator = (delegate) => createInstance(delegate, mapper);
         return lift(operator);

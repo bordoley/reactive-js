@@ -1,13 +1,12 @@
-/// <reference types="./Enumerator.d.ts" />
+/// <reference types="./EnumeratorLikeMixin.d.ts" />
 import { pipe, none, raise, returns } from '../../functions.mjs';
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move } from '../../util.mjs';
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../util.mjs';
 import '../../util/DisposableLike.mjs';
 import { hasCurrent } from '../../util/EnumeratorLike.mjs';
-import { prototype as prototype$1 } from './Disposable.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './Object.mjs';
+import { Object_properties, Object_init } from './Object.mjs';
 import { isDisposed } from './DisposableLikeInternal.mjs';
 
-const prototype = /*@__PURE__*/ (() => {
+const enumeratorMixin = /*@__PURE__*/ (() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");
     const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
     return pipe({
@@ -35,18 +34,5 @@ const prototype = /*@__PURE__*/ (() => {
         },
     }, returns);
 })();
-const neverEnumerator = /*@__PURE__*/ (() => pipe({
-    [Object_properties]: {},
-    [Object_init]() {
-        init(prototype$1, this);
-    },
-    get [EnumeratorLike_current]() {
-        return raise();
-    },
-    get [EnumeratorLike_hasCurrent]() {
-        return false;
-    },
-    [SourceLike_move]() { },
-}, mixWith(prototype$1), createObjectFactory()))();
 
-export { neverEnumerator, prototype };
+export { enumeratorMixin };

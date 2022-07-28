@@ -1,8 +1,8 @@
-import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
+import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
-  prototype as enumeratorPrototype,
-} from "../__internal__/util/Enumerator";
+  enumeratorMixin,
+} from "../__internal__/util/EnumeratorLikeMixin";
 import {
   Object_init,
   Object_properties,
@@ -70,15 +70,15 @@ export type FromArrayOptions = {
 };
 
 const createFromArray =
-  <C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions>(
-    factory: <T>(
+  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
+    factory: (
       values: readonly T[],
       start: number,
       count: number,
       options?: Partial<O>,
     ) => ContainerOf<C, T>,
   ) =>
-  <T>(options: Partial<O> = {}): Function1<readonly T[], ContainerOf<C, T>> =>
+  (options: Partial<O> = {}): Function1<readonly T[], ContainerOf<C, T>> =>
   values => {
     const valuesLength = getLength(values);
     const { start: startOption, count: countOption } = options;
@@ -122,9 +122,11 @@ export const toEnumerable: ToEnumerable<
     readonly start: number;
     readonly count: number;
   }
->["toEnumerable"] = /*@__PURE__*/ (() => {
+>["toEnumerable"] = /*@__PURE__*/ (<T>() => {
+  const typedEnumerator = enumeratorMixin<T>();
+
   type TProperties = PropertyTypeOf<
-    [typeof disposablePrototype & ReturnType<typeof enumeratorPrototype>]
+    [typeof disposableMixin & typeof typedEnumerator]
   > & {
     array: readonly unknown[];
     count: number;
@@ -144,8 +146,8 @@ export const toEnumerable: ToEnumerable<
         start: number,
         count: number,
       ) {
-        init(disposablePrototype, this);
-        init(enumeratorPrototype(), this);
+        init(disposableMixin, this);
+        init(typedEnumerator, this);
 
         this.array = array;
         this.index = start - 1;
@@ -167,18 +169,18 @@ export const toEnumerable: ToEnumerable<
         }
       },
     },
-    mixWith(disposablePrototype, enumeratorPrototype()),
+    mixWith(disposableMixin, typedEnumerator),
     createObjectFactory<
-      EnumeratorLike<any>,
+      EnumeratorLike<T>,
       TProperties,
-      readonly unknown[],
+      readonly T[],
       number,
       number
     >(),
   );
 
-  return createFromArray<EnumerableLike>(
-    <T>(array: readonly T[], start: number, count: number) =>
+  return createFromArray<EnumerableLike<T>, T>(
+    (array: readonly T[], start: number, count: number) =>
       createEnumerable(() => createInstance(array, start, count)),
   );
 })();
@@ -289,8 +291,8 @@ export const toReadonlyArrayT: ToReadonlyArray<
 };
 
 export const toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
-  /*@__PURE__*/ (() => {
-    return createFromArray<RunnableLike>(
+  /*@__PURE__*/ (<T>() => {
+    return createFromArray<RunnableLike, T>(
       <T>(values: readonly T[], startIndex: number, count: number) =>
         createRunnable<T>(sink => {
           for (
@@ -307,8 +309,8 @@ export const toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
 export const toRunnableT: ToRunnable<ReadonlyArrayLike> = { toRunnable };
 
 export const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
-  /*@__PURE__*/ (() => {
-    const _arraySequence = <T>(
+  /*@__PURE__*/ (<T>() => {
+    const _arraySequence = (
       arr: readonly T[],
       index: number,
       count: number,
@@ -328,10 +330,9 @@ export const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
           }
         : none;
 
-    return createFromArray<SequenceLike>(
-      <T>(values: readonly T[], startIndex: number, count: number) =>
-        () =>
-          _arraySequence(values, startIndex, count),
+    return createFromArray<SequenceLike, T>(
+      (values: readonly T[], startIndex: number, count: number) => () =>
+        _arraySequence(values, startIndex, count),
     );
   })();
 

@@ -1,7 +1,7 @@
 /// <reference types="./StatefulContainerLikeInternal.d.ts" />
 import { pipe, max, none } from '../../functions.mjs';
-import { addIgnoringChildErrors, addTo, onComplete } from '../../util/DisposableLike.mjs';
-import { dispose } from '../util/DisposableLikeInternal.mjs';
+import '../../util/DisposableLike.mjs';
+import { addIgnoringChildErrors, addTo, onComplete, dispose } from '../util/DisposableLikeInternal.mjs';
 
 const interactive = 0;
 const reactive = 1;

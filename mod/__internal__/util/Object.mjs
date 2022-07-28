@@ -2,27 +2,27 @@
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
-const initUnsafe = (prototype, self, ...args) => {
-    prototype[Object_init].call(self, ...args);
+const initUnsafe = (mixin, self, ...args) => {
+    mixin[Object_init].call(self, ...args);
 };
 const init = initUnsafe;
-const createObjectFactory = () => (prototype) => {
-    const propertyDescription = getOwnPropertyDescriptors(prototype[Object_properties]);
-    const prototypeDescription = getOwnPropertyDescriptors(prototype);
-    const { [Object_properties]: _properties, [Object_init]: _init, ...objectPrototypeDescription } = prototypeDescription;
-    const factoryPrototype = createObject(objectPrototype, objectPrototypeDescription);
+const createObjectFactory = () => (mixin) => {
+    const propertyDescription = getOwnPropertyDescriptors(mixin[Object_properties]);
+    const mixinDescription = getOwnPropertyDescriptors(mixin);
+    const { [Object_properties]: _properties, [Object_init]: _init, ...prototypeDescription } = mixinDescription;
+    const prototype = createObject(objectPrototype, prototypeDescription);
     return (...args) => {
-        const instance = createObject(factoryPrototype, propertyDescription);
-        initUnsafe(prototype, instance, ...args);
+        const instance = createObject(prototype, propertyDescription);
+        initUnsafe(mixin, instance, ...args);
         return instance;
     };
 };
-const mixWith = (...prototypes) => (lastProto) => {
-    const propertyDescriptors = prototypes
-        .map(prototype => getOwnPropertyDescriptors(prototype))
+const mixWith = (...mixins) => (lastProto) => {
+    const propertyDescriptors = mixins
+        .map(mixin => getOwnPropertyDescriptors(mixin))
         .reduce((acc, next) => ({ ...acc, ...next }), {});
-    const properties = [...prototypes, lastProto]
-        .map(prototype => prototype[Object_properties])
+    const properties = [...mixins, lastProto]
+        .map(mixin => mixin[Object_properties])
         .reduce((acc, next) => ({ ...acc, ...next }), {});
     const descriptor = {
         ...propertyDescriptors,
