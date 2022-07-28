@@ -1,8 +1,8 @@
-import { prototype as disposablePrototype } from "../__internal__/util/Disposable";
+import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
-  prototype as enumeratorPrototype,
-} from "../__internal__/util/Enumerator";
+  enumeratorMixin,
+} from "../__internal__/util/EnumeratorLikeMixin";
 import {
   Object_init,
   Object_properties,
@@ -22,18 +22,20 @@ import {
 import { dispose, isDisposed } from "../util/DisposableLike";
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
-  /*@__PURE__*/ (() => {
+  /*@__PURE__*/ (<T>() => {
+    const typedEnumeratorMixin = enumeratorMixin<T>();
+
     type TProperties = PropertyTypeOf<
-      [typeof disposablePrototype, ReturnType<typeof enumeratorPrototype>]
+      [typeof disposableMixin, typeof typedEnumeratorMixin]
     > & {
-      iterator: Iterator<unknown>;
+      iterator: Iterator<T>;
     };
 
     const createInstance = pipe(
       {
         [Object_properties]: { iterator: none },
-        [Object_init](this: TProperties, iterator: Iterator<unknown>) {
-          init(disposablePrototype, this);
+        [Object_init](this: TProperties, iterator: Iterator<T>) {
+          init(disposableMixin, this);
           this.iterator = iterator;
         },
         [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
@@ -48,17 +50,12 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
           }
         },
       },
-      mixWith(disposablePrototype, enumeratorPrototype()),
-      createObjectFactory<
-        EnumeratorLike<any>,
-        TProperties,
-        Iterator<unknown>
-      >(),
+      mixWith(disposableMixin, typedEnumeratorMixin),
+      createObjectFactory<EnumeratorLike<T>, TProperties, Iterator<T>>(),
     );
 
-    return <T>() =>
-      (iterable: Iterable<T>) =>
-        createEnumerable(() => createInstance(iterable[Symbol.iterator]()));
+    return () => (iterable: Iterable<T>) =>
+      createEnumerable(() => createInstance(iterable[Symbol.iterator]()));
   })();
 
 export const toEnumerableT: ToEnumerable<IterableLike> = { toEnumerable };

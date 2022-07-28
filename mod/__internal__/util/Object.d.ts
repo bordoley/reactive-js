@@ -11,15 +11,15 @@ declare type OptionalProps<T> = T extends object ? {
     [P in keyof T]: T[P] extends object ? Option<T[P]> : T[P];
 } : T;
 interface Init {
-    <TProperties>(prototype: {
+    <TProperties>(mixin: {
         [Object_properties]: TProperties;
         [Object_init](this: TProperties): void;
     }, self: TProperties): void;
-    <TProperties, TA>(prototype: {
+    <TProperties, TA>(mixin: {
         [Object_properties]: TProperties;
         [Object_init](this: TProperties, a: TA): void;
     }, self: TProperties, a: TA): void;
-    <TProperties, TA, TB>(prototype: {
+    <TProperties, TA, TB>(mixin: {
         [Object_properties]: TProperties;
         [Object_init](this: TProperties, a: TA, b: TB): void;
     }, self: TProperties, a: TA, b: TB): void;
@@ -52,25 +52,25 @@ interface ObjectFactory {
 }
 declare const createObjectFactory: ObjectFactory;
 interface MixWith {
-    <TProto0 extends object, TProto1 extends object>(p0: TProto0): Function1<TProto1, Identity<TProto0 & TProto1 & {
+    <TMixin0 extends object, TMixin1 extends object>(m0: TMixin0): Function1<TMixin1, Identity<TMixin0 & TMixin1 & {
         [Object_properties]: OptionalProps<PropertyTypeOf<[
-            TProto0,
-            TProto1
+            TMixin0,
+            TMixin1
         ]>>;
     }>>;
-    <TProto0 extends object, TProto1 extends object, TProto2 extends object>(p0: TProto0, p1: TProto1): Function1<TProto2, Identity<TProto0 & TProto1 & TProto2 & {
+    <TMixin0 extends object, TMixin1 extends object, TMixin2 extends object>(m0: TMixin0, m1: TMixin1): Function1<TMixin2, Identity<TMixin0 & TMixin1 & TMixin2 & {
         [Object_properties]: OptionalProps<PropertyTypeOf<[
-            TProto0,
-            TProto1,
-            TProto2
+            TMixin0,
+            TMixin1,
+            TMixin2
         ]>>;
     }>>;
-    <TProto0 extends object, TProto1 extends object, TProto2 extends object, TProto3 extends object>(p0: TProto0, p1: TProto1, p2: TProto2): Function1<TProto3, Identity<TProto0 & TProto1 & TProto2 & TProto3 & {
+    <TMixin0 extends object, TMixin1 extends object, TMixin2 extends object, TMixin3 extends object>(m0: TMixin0, m1: TMixin1, m2: TMixin2): Function1<TMixin3, Identity<TMixin0 & TMixin1 & TMixin2 & TMixin3 & {
         [Object_properties]: OptionalProps<PropertyTypeOf<[
-            TProto0,
-            TProto1,
-            TProto2,
-            TProto3
+            TMixin0,
+            TMixin1,
+            TMixin2,
+            TMixin3
         ]>>;
     }>>;
 }

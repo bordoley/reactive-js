@@ -33,7 +33,7 @@ type OptionalProps<T> = T extends object
 
 interface Init {
   <TProperties>(
-    prototype: {
+    mixin: {
       [Object_properties]: TProperties;
       [Object_init](this: TProperties): void;
     },
@@ -41,7 +41,7 @@ interface Init {
   ): void;
 
   <TProperties, TA>(
-    prototype: {
+    mixin: {
       [Object_properties]: TProperties;
       [Object_init](this: TProperties, a: TA): void;
     },
@@ -50,7 +50,7 @@ interface Init {
   ): void;
 
   <TProperties, TA, TB>(
-    prototype: {
+    mixin: {
       [Object_properties]: TProperties;
       [Object_init](this: TProperties, a: TA, b: TB): void;
     },
@@ -60,12 +60,8 @@ interface Init {
   ): void;
 }
 
-const initUnsafe = (
-  prototype: any,
-  self: any,
-  ...args: readonly any[]
-): void => {
-  prototype[Object_init].call(self, ...args);
+const initUnsafe = (mixin: any, self: any, ...args: readonly any[]): void => {
+  mixin[Object_init].call(self, ...args);
 };
 
 export const init: Init = initUnsafe;
@@ -126,7 +122,7 @@ interface ObjectFactory {
 
 export const createObjectFactory: ObjectFactory =
   <TReturn, TProperties>() =>
-  (prototype: {
+  (mixin: {
     [Object_properties]: OptionalProps<TProperties>;
     [Object_init]: (
       this: TReturn & TProperties,
@@ -134,74 +130,74 @@ export const createObjectFactory: ObjectFactory =
     ) => void;
   }): Factory<TReturn> => {
     const propertyDescription = getOwnPropertyDescriptors(
-      prototype[Object_properties],
+      mixin[Object_properties],
     );
 
-    const prototypeDescription = getOwnPropertyDescriptors(prototype);
+    const mixinDescription = getOwnPropertyDescriptors(mixin);
     const {
       [Object_properties]: _properties,
       [Object_init]: _init,
-      ...objectPrototypeDescription
-    } = prototypeDescription;
-    const factoryPrototype = createObject(
+      ...prototypeDescription
+    } = mixinDescription;
+    const prototype = createObject(
       objectPrototype,
-      objectPrototypeDescription as any,
+      prototypeDescription as any,
     );
 
     return (...args: readonly any[]) => {
-      const instance = createObject(factoryPrototype, propertyDescription);
-      initUnsafe(prototype, instance, ...args);
+      const instance = createObject(prototype, propertyDescription);
+      initUnsafe(mixin, instance, ...args);
       return instance;
     };
   };
 
 interface MixWith {
-  <TProto0 extends object, TProto1 extends object>(p0: TProto0): Function1<
-    TProto1,
+  <TMixin0 extends object, TMixin1 extends object>(m0: TMixin0): Function1<
+    TMixin1,
     Identity<
-      TProto0 &
-        TProto1 & {
+      TMixin0 &
+        TMixin1 & {
           [Object_properties]: OptionalProps<
-            PropertyTypeOf<[TProto0, TProto1]>
+            PropertyTypeOf<[TMixin0, TMixin1]>
           >;
         }
     >
   >;
 
-  <TProto0 extends object, TProto1 extends object, TProto2 extends object>(
-    p0: TProto0,
-    p1: TProto1,
+  <TMixin0 extends object, TMixin1 extends object, TMixin2 extends object>(
+    m0: TMixin0,
+    m1: TMixin1,
   ): Function1<
-    TProto2,
+    TMixin2,
     Identity<
-      TProto0 &
-        TProto1 &
-        TProto2 & {
+      TMixin0 &
+        TMixin1 &
+        TMixin2 & {
           [Object_properties]: OptionalProps<
-            PropertyTypeOf<[TProto0, TProto1, TProto2]>
+            PropertyTypeOf<[TMixin0, TMixin1, TMixin2]>
           >;
         }
     >
   >;
 
   <
-    TProto0 extends object,
-    TProto1 extends object,
-    TProto2 extends object,
-    TProto3 extends object,
+    TMixin0 extends object,
+    TMixin1 extends object,
+    TMixin2 extends object,
+    TMixin3 extends object,
   >(
-    p0: TProto0,
-    p1: TProto1,
-    p2: TProto2,
+    m0: TMixin0,
+    m1: TMixin1,
+    m2: TMixin2,
   ): Function1<
-    TProto3,
+    TMixin3,
     Identity<
-      TProto0 &
-        TProto1 &
-        TProto2 &
-        TProto3 & {
+      TMixin0 &
+        TMixin1 &
+        TMixin2 &
+        TMixin3 & {
           [Object_properties]: OptionalProps<
-            PropertyTypeOf<[TProto0, TProto1, TProto2, TProto3]>
+            PropertyTypeOf<[TMixin0, TMixin1, TMixin2, TMixin3]>
           >;
         }
     >
@@ -209,17 +205,17 @@ interface MixWith {
 }
 export const mixWith: MixWith =
   (
-    ...prototypes: readonly {
+    ...mixins: readonly {
       [Object_properties]: object;
     }[]
   ) =>
   (lastProto: { [Object_properties]: object }) => {
-    const propertyDescriptors = prototypes
-      .map(prototype => getOwnPropertyDescriptors(prototype))
+    const propertyDescriptors = mixins
+      .map(mixin => getOwnPropertyDescriptors(mixin))
       .reduce((acc, next) => ({ ...acc, ...next }), {});
 
-    const properties = [...prototypes, lastProto]
-      .map(prototype => prototype[Object_properties])
+    const properties = [...mixins, lastProto]
+      .map(mixin => mixin[Object_properties])
       .reduce((acc, next) => ({ ...acc, ...next }), {});
 
     const descriptor = {

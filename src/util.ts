@@ -1,13 +1,13 @@
 import {
-  createDisposable as createDisposableInternal,
-  disposed as disposedInternal,
-} from "./__internal__/util/Disposable";
-import {
   DisposableLike_add as DisposableLike_add_internal,
   DisposableLike_dispose as DisposableLike_dispose_internal,
   DisposableLike_error as DisposableLike_error_internal,
   DisposableLike_isDisposed as DisposableLike_isDisposed_internal,
 } from "./__internal__/util/DisposableLikeInternal";
+import {
+  createDisposable as createDisposableInternal,
+  disposed as disposedInternal,
+} from "./__internal__/util/DisposableLikeMixins";
 import { Factory, Option, SideEffect1 } from "./functions";
 
 /** @ignore */

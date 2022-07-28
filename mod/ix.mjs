@@ -1,11 +1,11 @@
 /// <reference types="./ix.d.ts" />
-import { prototype } from './__internal__/util/Disposable.mjs';
-import { prototype as prototype$1 } from './__internal__/util/Enumerator.mjs';
+import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
+import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, newInstance, forEach, pipeLazy } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
-import { addTo } from './util/DisposableLike.mjs';
-import { dispose, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
+import './util/DisposableLike.mjs';
+import { dispose, addTo, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
 const InteractiveContainerLike_interact = Symbol("InteractiveContainerLike_interact");
@@ -40,13 +40,13 @@ const emptyEnumerable =
 /*@__PURE__*/ pipe({
     [Object_properties]: {},
     [Object_init]() {
-        init(prototype, this);
-        init(prototype$1(), this);
+        init(disposableMixin, this);
+        init(enumeratorMixin(), this);
     },
     [SourceLike_move]() {
         pipe(this, dispose());
     },
-}, mixWith(prototype, prototype$1()), createObjectFactory(), f => pipeLazy(f, createEnumerable));
+}, mixWith(disposableMixin, enumeratorMixin()), createObjectFactory(), f => pipeLazy(f, createEnumerable));
 const emptyEnumerableT = {
     empty: emptyEnumerable,
 };
@@ -59,12 +59,12 @@ const emptyEnumerableT = {
  */
 const generateEnumerable = 
 /*@__PURE__*/ (() => {
-    const typedEnumerator = prototype$1();
+    const typedEnumerator = enumeratorMixin();
     const createInstance = pipe({
         [Object_properties]: { f: none },
         [Object_init](f, acc) {
-            init(prototype, this);
-            init(prototype$1(), this);
+            init(disposableMixin, this);
+            init(typedEnumerator, this);
             this.f = f;
             this[EnumeratorLike_current] = acc;
         },
@@ -78,7 +78,7 @@ const generateEnumerable =
                 }
             }
         },
-    }, mixWith(prototype, typedEnumerator), createObjectFactory());
+    }, mixWith(disposableMixin, typedEnumerator), createObjectFactory());
     return (generator, initialValue) => createEnumerable(() => createInstance(generator, initialValue()));
 })();
 const generateEnumerableT = {

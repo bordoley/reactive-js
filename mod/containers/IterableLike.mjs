@@ -1,6 +1,6 @@
 /// <reference types="./IterableLike.d.ts" />
-import { prototype } from '../__internal__/util/Disposable.mjs';
-import { prototype as prototype$1 } from '../__internal__/util/Enumerator.mjs';
+import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
+import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { pipe, none, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
@@ -10,10 +10,11 @@ import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal
 
 const toEnumerable = 
 /*@__PURE__*/ (() => {
+    const typedEnumeratorMixin = enumeratorMixin();
     const createInstance = pipe({
         [Object_properties]: { iterator: none },
         [Object_init](iterator) {
-            init(prototype, this);
+            init(disposableMixin, this);
             this.iterator = iterator;
         },
         [SourceLike_move]() {
@@ -27,7 +28,7 @@ const toEnumerable =
                 }
             }
         },
-    }, mixWith(prototype, prototype$1()), createObjectFactory());
+    }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
     return () => (iterable) => createEnumerable(() => createInstance(iterable[Symbol.iterator]()));
 })();
 const toEnumerableT = { toEnumerable };

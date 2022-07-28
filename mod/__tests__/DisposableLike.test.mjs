@@ -2,8 +2,8 @@
 import { describe as createDescribe, test as createTest, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals } from '../__internal__/testing.mjs';
 import { pipe, pipeLazy, none, raise } from '../functions.mjs';
 import { createDisposable } from '../util.mjs';
-import { addIgnoringChildErrors, onDisposed } from '../util/DisposableLike.mjs';
-import { dispose, isDisposed, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
+import '../util/DisposableLike.mjs';
+import { addIgnoringChildErrors, dispose, isDisposed, onDisposed, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const DisposableLikeTests = createDescribe("DisposableLike", createTest("disposes child disposable when disposed", () => {
     const child = createDisposable();

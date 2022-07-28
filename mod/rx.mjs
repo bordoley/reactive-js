@@ -1,12 +1,11 @@
 /// <reference types="./rx.d.ts" />
-import { prototype } from './__internal__/util/Disposable.mjs';
+import { dispose, isDisposed, onDisposed, addIgnoringChildErrors, addTo } from './__internal__/util/DisposableLikeInternal.mjs';
+import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, newInstance, none, getLength, max, forEach, ignore } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
 import { schedule } from './scheduling/SchedulerLike.mjs';
-import { onDisposed, addIgnoringChildErrors, addTo } from './util/DisposableLike.mjs';
-import { dispose, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
 const ReactiveContainerLike_sinkInto = Symbol("ReactiveContainerLike_sinkInto");
@@ -51,7 +50,7 @@ const createSubject = /*@__PURE__*/ (() => {
             replayed: none,
         },
         [Object_init](replay) {
-            init(prototype, this);
+            init(disposableMixin, this);
             this[MulticastObservableLike_replay] = replay;
             this.observers = newInstance(Set);
             this.replayed = [];
@@ -93,7 +92,7 @@ const createSubject = /*@__PURE__*/ (() => {
             }
             pipe(this, addIgnoringChildErrors(dispatcher));
         },
-    }, mixWith(prototype), createObjectFactory());
+    }, mixWith(disposableMixin), createObjectFactory());
     return (options) => {
         const { replay: replayOption = 0 } = options !== null && options !== void 0 ? options : {};
         const replay = max(replayOption, 0);

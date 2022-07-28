@@ -57,7 +57,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`ContinuationLike`](../interfaces/util.ContinuationLike.md) \| [`SideEffect`](functions.md#sideeffect) |
+| `f` | [`SideEffect`](functions.md#sideeffect) \| [`ContinuationLike`](../interfaces/util.ContinuationLike.md) |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 

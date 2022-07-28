@@ -1,4 +1,4 @@
-import { SideEffect1, Option, Identity } from "../../functions.mjs";
+import { SideEffect1, Option, Identity, SideEffect } from "../../functions.mjs";
 declare const DisposableLike_add: unique symbol;
 declare const DisposableLike_dispose: unique symbol;
 declare const DisposableLike_error: unique symbol;
@@ -23,4 +23,13 @@ declare const getError: (disposable: {
 declare const isDisposed: (disposable: {
     [DisposableLike_isDisposed]: boolean;
 }) => boolean;
-export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, dispose, getError, isDisposed };
+declare const addDisposableOrTeardown: (parent: DisposableLike, child: DisposableOrTeardown, ignoreChildErrors?: boolean) => void;
+declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Identity<T>;
+declare const add: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
+declare const addIgnoringChildErrors: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
+declare const addTo: <T extends DisposableLike>(parent: DisposableLike) => Identity<T>;
+declare const addToIgnoringChildErrors: <T extends DisposableLike>(parent: DisposableLike) => Identity<T>;
+declare const onDisposed: <T extends DisposableLike>(teardown: SideEffect1<Option<Error>>) => Identity<T>;
+declare const onError: <T extends DisposableLike>(teardown: SideEffect1<Error>) => Identity<T>;
+declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Identity<T>;
+export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, Error, add, addDisposableOrTeardown, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getError, isDisposed, onComplete, onDisposed, onError };
