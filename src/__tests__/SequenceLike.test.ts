@@ -2,6 +2,7 @@ import { describe } from "../__internal__/testing";
 import { toSequence } from "../containers/ReadonlyArrayLike";
 import {
   concatAllT,
+  concatT,
   distinctUntilChangedT,
   keepT,
   mapT,
@@ -16,6 +17,7 @@ import {
 } from "../containers/SequenceLike";
 import {
   concatAllTests,
+  concatTests,
   distinctUntilChangedTests,
   keepTests,
   mapTests,
@@ -30,6 +32,11 @@ import {
 
 export const SequenceLikeTests = describe(
   "SequenceLike",
+  concatTests({
+    fromArray: toSequence,
+    ...concatT,
+    ...toReadonlyArrayT,
+  }),
   concatAllTests({
     fromArray: toSequence,
     ...concatAllT,

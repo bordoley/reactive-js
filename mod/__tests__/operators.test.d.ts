@@ -10,6 +10,13 @@ declare const bufferTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
+declare const concatTests: <C extends ContainerLike>(m: Container<C> & {
+    concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
 declare const concatAllTests: <C extends ContainerLike>(m: Container<C> & {
     concatAll: <T>(options?: Partial<Record<string, never>> | undefined) => ContainerOperator<C, ContainerOf<C, T>, T>;
 } & {
@@ -169,4 +176,4 @@ declare const zipTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
-export { bufferTests, concatAllTests, distinctUntilChangedTests, keepTests, mapTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };
+export { bufferTests, concatAllTests, concatTests, distinctUntilChangedTests, keepTests, mapTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };

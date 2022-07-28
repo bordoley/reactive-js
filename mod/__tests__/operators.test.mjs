@@ -12,6 +12,7 @@ const bufferTests = (m) => createDescribe("buffer", createTest("with multiple su
     [4, 5, 6],
     [7, 8],
 ], arrayEquality()))));
+const concatTests = (m) => createDescribe("concat", createTest("concats the input containers in order", pipeLazy(m.concat(pipe([1, 2, 3], m.fromArray()), pipe([4, 5, 6], m.fromArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))));
 const concatAllTests = (m) => createDescribe("concatAll", createTest("concats the input containers in order", pipeLazy([pipe([1, 2, 3], m.fromArray()), pipe([4, 5, 6], m.fromArray())], m.fromArray(), m.concatAll(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), createTest("when an inner enumerator throw", () => {
     // FIXME: Implement me
 }));
@@ -80,4 +81,4 @@ const zipTests = (m) => createDescribe("zip", createTest("when all inputs are th
     [3, 3, 3],
 ], arrayEquality()))));
 
-export { bufferTests, concatAllTests, distinctUntilChangedTests, keepTests, mapTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };
+export { bufferTests, concatAllTests, concatTests, distinctUntilChangedTests, keepTests, mapTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };

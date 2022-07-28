@@ -14,6 +14,21 @@ const createSink = /*@__PURE__*/ (() => pipe({
     },
     [SinkLike_notify](_) { },
 }, mixWith(disposableMixin), createObjectFactory()))();
+const createDelegatingSink = 
+/*@__PURE__*/ (() => {
+    return pipe({
+        [Object_properties]: {
+            [Sink_private_delegate]: none,
+        },
+        [Object_init](delegate) {
+            init(disposableMixin, this);
+            this[Sink_private_delegate] = delegate;
+        },
+        [SinkLike_notify](v) {
+            this[Sink_private_delegate][SinkLike_notify](v);
+        },
+    }, mixWith(disposableMixin), createObjectFactory());
+})();
 const distinctUntilChangedSinkMixin = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
     const DistinctUntilChangedSink_private_prev = Symbol("DistinctUntilChangedSink_private_prev");
@@ -222,4 +237,4 @@ const takeWhileSinkMixin = /*@__PURE__*/ (() => {
     }, mixWith(delegatingDisposableMixin), returns);
 })();
 
-export { TakeLastSink_last, createSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
+export { TakeLastSink_last, createDelegatingSink, createSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };

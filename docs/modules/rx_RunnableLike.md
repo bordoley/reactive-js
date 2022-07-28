@@ -6,6 +6,7 @@
 
 ### Variables
 
+- [concatT](rx_RunnableLike.md#concatt)
 - [distinctUntilChangedT](rx_RunnableLike.md#distinctuntilchangedt)
 - [keepT](rx_RunnableLike.md#keept)
 - [mapT](rx_RunnableLike.md#mapt)
@@ -18,6 +19,7 @@
 
 ### Functions
 
+- [concat](rx_RunnableLike.md#concat)
 - [distinctUntilChanged](rx_RunnableLike.md#distinctuntilchanged)
 - [keep](rx_RunnableLike.md#keep)
 - [map](rx_RunnableLike.md#map)
@@ -31,6 +33,12 @@
 - [toReadonlyArray](rx_RunnableLike.md#toreadonlyarray)
 
 ## Variables
+
+### concatT
+
+• `Const` **concatT**: [`Concat`](containers.md#concat)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>\>
+
+___
 
 ### distinctUntilChangedT
 
@@ -85,6 +93,30 @@ ___
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ## Functions
+
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
+| `snd` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
 
 ### distinctUntilChanged
 
