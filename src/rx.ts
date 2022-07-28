@@ -19,6 +19,7 @@ import {
   ContainerLike,
   ContainerOf,
   Defer,
+  Empty,
   StatefulContainerLike,
   StatefulContainerStateOf,
   Using,
@@ -284,6 +285,13 @@ const create =
   (onSink: (sink: StatefulContainerStateOf<C, T>) => void): ContainerOf<C, T> =>
     m.create(onSink);
 
+const createEmpty =
+  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
+  <T>(): ContainerOf<C, T> =>
+    pipe((sink: SinkLike<T>) => {
+      pipe(sink, dispose());
+    }, create(m));
+
 const createUsing =
   <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
   <TResource extends DisposableLike, T>(
@@ -378,7 +386,12 @@ export const createRunnableUsingT: Using<RunnableLike> = {
   using: createRunnableUsing,
 };
 
-export const neverRunnable = /*@__PURE__*/ createNever(createRunnableT);
+export const emptyRunnable: Empty<RunnableLike>["empty"] =
+  /*@__PURE__*/ createEmpty(createRunnableT);
+export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
+
+export const neverRunnable: Never<RunnableLike>["never"] =
+  /*@__PURE__*/ createNever(createRunnableT);
 export const neverRunnableT: Never<RunnableLike> = {
   never: neverRunnable,
 };

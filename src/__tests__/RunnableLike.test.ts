@@ -1,7 +1,24 @@
 import { describe } from "../__internal__/testing";
 import { toRunnable } from "../containers/ReadonlyArrayLike";
-import { keepT, mapT, scanT, toReadonlyArrayT } from "../rx/RunnableLike";
-import { keepTests, mapTests, scanTests } from "./operators.test";
+import {
+  keepT,
+  mapT,
+  scanT,
+  skipFirstT,
+  takeFirstT,
+  takeLastT,
+  takeWhileT,
+  toReadonlyArrayT,
+} from "../rx/RunnableLike";
+import {
+  keepTests,
+  mapTests,
+  scanTests,
+  skipFirstTests,
+  takeFirstTests,
+  takeLastTests,
+  takeWhileTests,
+} from "./operators.test";
 
 export const RunnableLikeTests = describe(
   "RunnableLike",
@@ -18,6 +35,26 @@ export const RunnableLikeTests = describe(
   scanTests({
     fromArray: toRunnable,
     ...scanT,
+    ...toReadonlyArrayT,
+  }),
+  skipFirstTests({
+    fromArray: toRunnable,
+    ...skipFirstT,
+    ...toReadonlyArrayT,
+  }),
+  takeFirstTests({
+    fromArray: toRunnable,
+    ...takeFirstT,
+    ...toReadonlyArrayT,
+  }),
+  takeLastTests({
+    fromArray: toRunnable,
+    ...takeLastT,
+    ...toReadonlyArrayT,
+  }),
+  takeWhileTests({
+    fromArray: toRunnable,
+    ...takeWhileT,
     ...toReadonlyArrayT,
   }),
 );
