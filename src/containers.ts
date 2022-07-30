@@ -9,6 +9,7 @@ import {
   Option,
   Predicate,
   Reducer,
+  SideEffect1,
   Updater,
 } from "./functions";
 import { DisposableLike } from "./util";
@@ -137,6 +138,10 @@ export type EverySatisfy<C extends ContainerLike> = Container<C> & {
 
 export type Empty<C extends ContainerLike, TOptions = never> = Container<C> & {
   empty<T>(options?: TOptions): ContainerOf<C, T>;
+};
+
+export type ForEach<C extends ContainerLike> = Container<C> & {
+  forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
 };
 
 export type FromArrayOptions = {

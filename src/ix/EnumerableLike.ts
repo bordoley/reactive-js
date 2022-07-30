@@ -1,13 +1,19 @@
 import {
   Lift,
   TInteractive,
+  createBufferOperator,
+  createDistinctUntilChangedOperator,
+  createForEachOperator,
+  createKeepOperator,
+  createMapOperator,
+  createScanOperator,
   createSkipFirstOperator,
   createTakeFirstOperator,
+  createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
   interactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
-import { MAX_SAFE_INTEGER } from "../__internal__/env";
 import { getDelay } from "../__internal__/optionalArgs";
 import {
   delegatingDisposableMixin,
@@ -35,8 +41,8 @@ import {
   Buffer,
   Concat,
   ConcatAll,
-  ContainerOperator,
   DistinctUntilChanged,
+  ForEach,
   Keep,
   Map,
   Pairwise,
@@ -65,28 +71,23 @@ import {
   Reducer,
   SideEffect1,
   alwaysTrue,
-  forEach,
+  forEach as forEachArray,
   getLength,
   identity,
   isNone,
   isSome,
-  max,
   newInstance,
   none,
-  partial,
   pipe,
-  pipeLazy,
   pipeUnsafe,
   raise,
   returns,
-  strictEquality,
 } from "../functions";
 import {
   EnumerableLike,
   InteractiveContainerLike_interact,
   ToEnumerable,
   createEnumerable,
-  emptyEnumerable,
   emptyEnumerableT,
 } from "../ix";
 import {
@@ -249,7 +250,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
     maxBufferSize: number;
   };
 
-  const createInstance = pipe(
+  return pipe(
     {
       [Object_properties]: {
         delegate: none,
@@ -293,17 +294,8 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
       EnumeratorLike,
       number
     >(),
+    createBufferOperator<EnumerableLike, T, TInteractive>(liftT),
   );
-
-  return (
-    options: {
-      readonly maxBufferSize?: number;
-    } = {},
-  ) => {
-    const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
-
-    return pipe(createInstance, partial(maxBufferSize), lift);
-  };
 })();
 
 export const bufferT: Buffer<EnumerableLike<unknown>> = {
@@ -346,7 +338,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
       delegate: EnumeratorLike<EnumerableLike<T>>;
     };
 
-    const createInstance = pipe(
+    return pipe(
       {
         [Object_properties]: {
           delegate: none,
@@ -395,9 +387,9 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
         TProperties,
         EnumeratorLike<EnumerableLike<T>>
       >(),
+      lift,
+      returns,
     );
-
-    return pipe(createInstance, lift, returns);
   })();
 export const concatAllT: ConcatAll<EnumerableLike> = { concatAll };
 
@@ -420,7 +412,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
       equality: Equality<T>;
     };
 
-    const createInstance = pipe(
+    return pipe(
       {
         [Object_properties]: { equality: none },
         [Object_init](
@@ -457,17 +449,61 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
         EnumeratorLike<T>,
         Equality<T>
       >(),
+      createDistinctUntilChangedOperator<EnumerableLike, T, TInteractive>(
+        liftT,
+      ),
     );
-
-    return (options?: { readonly equality?: Equality<T> }) => {
-      const { equality = strictEquality } = options ?? {};
-      return pipe(createInstance, partial(equality), lift);
-    };
   })();
 
 export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
   distinctUntilChanged,
 };
+
+export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
+  > & {
+    effect: SideEffect1<T>;
+  };
+
+  return pipe(
+    {
+      [Object_properties]: { effect: none },
+      [Object_init](
+        this: TProperties,
+        delegate: EnumeratorLike<T>,
+        effect: SideEffect1<T>,
+      ) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
+        this.effect = effect;
+      },
+      [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+        if (delegatingEnumeratorMove(this)) {
+          try {
+            this.effect(getCurrent(this));
+          } catch (cause) {
+            pipe(this, dispose({ cause }));
+          }
+        }
+      },
+    },
+    mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
+    createObjectFactory<
+      EnumeratorLike<T>,
+      TProperties,
+      EnumeratorLike<T>,
+      SideEffect1<T>
+    >(),
+    createForEachOperator<EnumerableLike, T, TInteractive>(liftT),
+  );
+})();
+
+export const forEachT: ForEach<EnumerableLike> = { forEach };
 
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
@@ -478,7 +514,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     predicate: Predicate<T>;
   };
 
-  const createInstance = pipe(
+  return pipe(
     {
       [Object_properties]: { predicate: none },
       [Object_init](
@@ -510,10 +546,8 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
       EnumeratorLike<T>,
       Predicate<T>
     >(),
+    createKeepOperator<EnumerableLike, T, TInteractive>(liftT),
   );
-
-  return (predicate: Predicate<T>) =>
-    pipe(createInstance, partial(predicate), lift);
 })();
 
 export const keepT: Keep<EnumerableLike> = {
@@ -530,7 +564,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     delegate: EnumeratorLike<TA>;
   };
 
-  const createInstance = pipe(
+  return pipe(
     {
       [Object_properties]: {
         mapper: none,
@@ -565,59 +599,11 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
       EnumeratorLike<TA>,
       Function1<TA, TB>
     >(),
+    createMapOperator<EnumerableLike, TA, TB, TInteractive>(liftT),
   );
-
-  return (mapper: Function1<TA, TB>) =>
-    pipe(createInstance, partial(mapper), lift);
 })();
 
 export const mapT: Map<EnumerableLike> = { map };
-
-export const onNotify: <T>(
-  onNotify: SideEffect1<T>,
-) => ContainerOperator<EnumerableLike, T, T> = /*@__PURE__*/ (<T>() => {
-  const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
-
-  type TProperties = PropertyTypeOf<
-    [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
-  > & {
-    onNotify: SideEffect1<T>;
-  };
-
-  const createInstance = pipe(
-    {
-      [Object_properties]: { onNotify: none },
-      [Object_init](
-        this: TProperties,
-        delegate: EnumeratorLike<T>,
-        onNotify: SideEffect1<T>,
-      ) {
-        init(delegatingDisposableMixin, this, delegate);
-        init(typedDelegatingEnumeratorMixin, this, delegate);
-        this.onNotify = onNotify;
-      },
-      [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-        if (delegatingEnumeratorMove(this)) {
-          try {
-            this.onNotify(getCurrent(this));
-          } catch (cause) {
-            pipe(this, dispose({ cause }));
-          }
-        }
-      },
-    },
-    mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
-    createObjectFactory<
-      EnumeratorLike<T>,
-      TProperties,
-      EnumeratorLike<T>,
-      SideEffect1<T>
-    >(),
-  );
-
-  return (onNotify: SideEffect1<T>) =>
-    pipe(createInstance, partial(onNotify), lift);
-})();
 
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
   T,
@@ -630,7 +616,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
     delegate: EnumeratorLike<T>;
   };
 
-  const createInstance = pipe(
+  return pipe(
     {
       [SourceLike_move](
         this: TProperties & MutableEnumeratorLike<[Option<T>, T]>,
@@ -650,9 +636,9 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
       TProperties,
       EnumeratorLike<T>
     >(),
+    lift,
+    returns,
   );
-
-  return pipeLazy(createInstance, lift);
 })();
 
 export const pairwiseT: Pairwise<EnumerableLike> = {
@@ -757,7 +743,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
     delegate: EnumeratorLike<T>;
   };
 
-  const createInstance = pipe(
+  return pipe(
     {
       [Object_properties]: { reducer: none, delegate: none },
       [Object_init](
@@ -799,10 +785,8 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
       Reducer<T, TAcc>,
       Factory<TAcc>
     >(),
+    createScanOperator<EnumerableLike, T, TAcc, TInteractive>(liftT),
   );
-
-  return (scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-    pipe(createInstance, partial(scanner, initialValue), lift);
 })();
 
 export const scanT: Scan<EnumerableLike> = {
@@ -930,7 +914,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
     isStarted: boolean;
   };
 
-  const createInstance = pipe(
+  return pipe(
     {
       [Object_properties]: {
         maxCount: 0,
@@ -981,18 +965,11 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
       EnumeratorLike<T>,
       number
     >(),
+    createTakeLastOperator<EnumerableLike, T, TInteractive>({
+      ...liftT,
+      ...emptyEnumerableT,
+    }),
   );
-
-  return (
-    options: { readonly count?: number } = {},
-  ): ContainerOperator<EnumerableLike, T, T> => {
-    const { count = 1 } = options;
-
-    const operator = pipe(createInstance, partial(count), lift);
-
-    return enumerable =>
-      count > 0 ? pipe(enumerable, operator) : emptyEnumerable();
-  };
 })();
 
 export const takeLastT: TakeLast<EnumerableLike> = { takeLast };
@@ -1283,7 +1260,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
     enumerators: readonly EnumeratorLike[],
   ): EnumeratorLike<readonly unknown[]> => {
     const instance = createInstance(enumerators);
-    pipe(enumerators, forEach(addTo(instance)));
+    pipe(enumerators, forEachArray(addTo(instance)));
     return instance;
   };
 

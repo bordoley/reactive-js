@@ -180,6 +180,47 @@ export const distinctUntilChangedSinkMixin: <T>() => DisposableLike & {
   );
 })();
 
+export const forEachSinkMixin: <T>() => DisposableLike & {
+  [Object_properties]: unknown;
+  [Object_init](
+    this: unknown,
+    delegate: SinkLike<T>,
+    effect: SideEffect1<T>,
+  ): void;
+  [SinkLike_notify](next: T): void;
+} = /*@__PURE__*/ (<T>() => {
+  const ForEachSink_private_effect = Symbol("ForEachSink_private_effect");
+
+  type TProperties = {
+    [Sink_private_delegate]: SinkLike<T>;
+    [ForEachSink_private_effect]: SideEffect1<T>;
+  } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
+
+  return pipe(
+    {
+      [Object_properties]: {
+        [Sink_private_delegate]: none,
+        [ForEachSink_private_effect]: none,
+      },
+      [Object_init](
+        this: TProperties,
+        delegate: SinkLike<T>,
+        effect: SideEffect1<T>,
+      ) {
+        init(delegatingDisposableMixin, this, delegate);
+        this[Sink_private_delegate] = delegate;
+        this[ForEachSink_private_effect] = effect;
+      },
+      [SinkLike_notify](this: TProperties, next: T) {
+        this[ForEachSink_private_effect](next);
+        pipe(this[Sink_private_delegate], notify(next));
+      },
+    },
+    mixWith(delegatingDisposableMixin),
+    returns,
+  );
+})();
+
 export const keepSinkMixin: <T>() => DisposableLike & {
   [Object_properties]: unknown;
   [Object_init](
@@ -256,47 +297,6 @@ export const mapSinkMixin: <TA, TB>() => DisposableLike & {
       [SinkLike_notify](this: TProperties, next: TA) {
         const mapped = this[MapSink_private_mapper](next);
         pipe(this[Sink_private_delegate], notify(mapped));
-      },
-    },
-    mixWith(delegatingDisposableMixin),
-    returns,
-  );
-})();
-
-export const onNotifySinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: unknown;
-  [Object_init](
-    this: unknown,
-    delegate: SinkLike<T>,
-    monNotify: SideEffect1<T>,
-  ): void;
-  [SinkLike_notify](next: T): void;
-} = /*@__PURE__*/ (<T>() => {
-  const OnNotifySink_private_onNotify = Symbol("OnNotifySink_private_onNotify");
-
-  type TProperties = {
-    [Sink_private_delegate]: SinkLike<T>;
-    [OnNotifySink_private_onNotify]: SideEffect1<T>;
-  } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
-
-  return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [OnNotifySink_private_onNotify]: none,
-      },
-      [Object_init](
-        this: TProperties,
-        delegate: SinkLike<T>,
-        onNotify: SideEffect1<T>,
-      ) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        this[OnNotifySink_private_onNotify] = onNotify;
-      },
-      [SinkLike_notify](this: TProperties, next: T) {
-        this[OnNotifySink_private_onNotify](next);
-        pipe(this[Sink_private_delegate], notify(next));
       },
     },
     mixWith(delegatingDisposableMixin),

@@ -1,4 +1,4 @@
-import { Option, Function1, Factory, Equality, Predicate, Updater, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
+import { Option, Function1, Factory, Equality, Predicate, SideEffect1, Updater, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
 import { DisposableLike } from "./util.mjs";
 interface ContainerLike {
     readonly T?: unknown;
@@ -73,6 +73,9 @@ declare type EverySatisfy<C extends ContainerLike> = Container<C> & {
 };
 declare type Empty<C extends ContainerLike, TOptions = never> = Container<C> & {
     empty<T>(options?: TOptions): ContainerOf<C, T>;
+};
+declare type ForEach<C extends ContainerLike> = Container<C> & {
+    forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
 };
 declare type FromArrayOptions = {
     readonly start: number;
@@ -246,4 +249,4 @@ declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, FromValue, Generate, IterableLike, Keep, Map, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromArray, FromArrayOptions, FromIterable, FromIterator, FromValue, Generate, IterableLike, Keep, Map, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };

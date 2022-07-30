@@ -1,11 +1,11 @@
 /// <reference types="./RunnableLike.d.ts" />
-import { reactive, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
+import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { dispose, bindTo, addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
 import { Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, pipeUnsafe, newInstance, pipeLazy, strictEquality, partial, isSome, raise } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto, emptyRunnableT, emptyRunnable } from '../rx.mjs';
+import { pipe, pipeUnsafe, newInstance, pipeLazy, isSome, raise } from '../functions.mjs';
+import { ReactiveContainerLike_sinkInto, emptyRunnableT } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
@@ -55,32 +55,26 @@ const concatAllT = {
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const typedDistinctUntilChangedSinkMixin = distinctUntilChangedSinkMixin();
-    const createInstance = pipe(typedDistinctUntilChangedSinkMixin, createObjectFactory());
-    return (options) => {
-        const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
-        return pipe(createInstance, partial(equality), lift);
-    };
+    return pipe(typedDistinctUntilChangedSinkMixin, createObjectFactory(), createDistinctUntilChangedOperator(liftT));
 })();
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
+const forEach = /*@__PURE__*/ (() => {
+    const typedForEachSinkMixin = forEachSinkMixin();
+    return pipe(typedForEachSinkMixin, createObjectFactory(), createForEachOperator(liftT));
+})();
+const forEachT = { forEach };
 const keep = /*@__PURE__*/ (() => {
     const typedKeepSinkMixin = keepSinkMixin();
-    const createInstance = pipe(typedKeepSinkMixin, createObjectFactory());
-    return (predicate) => pipe(createInstance, partial(predicate), lift);
+    return pipe(typedKeepSinkMixin, createObjectFactory(), createKeepOperator(liftT));
 })();
 const keepT = { keep };
 const map = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
-    const createInstance = pipe(typedMapSinkMixin, createObjectFactory());
-    return (mapper) => pipe(createInstance, partial(mapper), lift);
+    return pipe(typedMapSinkMixin, createObjectFactory(), createMapOperator(liftT));
 })();
 const mapT = { map };
-const onNotify = /*@__PURE__*/ (() => {
-    const typedOnNotifySinkMixin = onNotifySinkMixin();
-    const createInstance = pipe(typedOnNotifySinkMixin, createObjectFactory());
-    return (onNotify) => pipe(createInstance, partial(onNotify), lift);
-})();
 const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose(), ({ [DisposableLike_error]: error }) => {
     if (isSome(error)) {
         raise(error.cause);
@@ -88,8 +82,7 @@ const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose
 });
 const scan = /*@__PURE__*/ (() => {
     const typedScanSinkMixin = scanSinkMixin();
-    const createInstance = pipe(typedScanSinkMixin, createObjectFactory());
-    return (reducer, initialValue) => pipe(createInstance, partial(reducer, initialValue), lift);
+    return pipe(typedScanSinkMixin, createObjectFactory(), createScanOperator(liftT));
 })();
 const scanT = { scan };
 const skipFirst = /*@__PURE__*/ (() => {
@@ -107,12 +100,10 @@ const takeFirst = /*@__PURE__*/ (() => {
 const takeFirstT = { takeFirst };
 const takeLast = /*@__PURE__*/ (() => {
     const typedTakeLastSinkMixin = takeLastSinkMixin(toRunnable());
-    const createSink = pipe(typedTakeLastSinkMixin, createObjectFactory());
-    return (options = {}) => {
-        const { count = 1 } = options;
-        const operator = pipe(createSink, partial(count), lift);
-        return (source) => count > 0 ? pipe(source, operator) : emptyRunnable();
-    };
+    return pipe(typedTakeLastSinkMixin, createObjectFactory(), createTakeLastOperator({
+        ...liftT,
+        ...emptyRunnableT,
+    }));
 })();
 const takeLastT = { takeLast };
 const takeWhile = /*@__PURE__*/ (() => {
@@ -122,11 +113,11 @@ const takeWhile = /*@__PURE__*/ (() => {
 const takeWhileT = { takeWhile };
 const toReadonlyArray = () => (runnable) => {
     const result = [];
-    pipe(runnable, onNotify(x => result.push(x)), run());
+    pipe(runnable, forEach(x => result.push(x)), run());
     return result;
 };
 const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, onNotify, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };

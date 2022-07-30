@@ -27,6 +27,7 @@
 - [DistinctUntilChanged](containers.md#distinctuntilchanged)
 - [Empty](containers.md#empty)
 - [EverySatisfy](containers.md#everysatisfy)
+- [ForEach](containers.md#foreach)
 - [FromArray](containers.md#fromarray)
 - [FromArrayOptions](containers.md#fromarrayoptions)
 - [FromIterable](containers.md#fromiterable)
@@ -212,6 +213,18 @@ ___
 ### EverySatisfy
 
 Ƭ **EverySatisfy**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `everySatisfy`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `boolean`\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+
+___
+
+### ForEach
+
+Ƭ **ForEach**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `forEach`: <T\>(`effect`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
