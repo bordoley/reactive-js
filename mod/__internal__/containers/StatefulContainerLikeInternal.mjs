@@ -1,5 +1,5 @@
 /// <reference types="./StatefulContainerLikeInternal.d.ts" />
-import { pipe, max, none } from '../../functions.mjs';
+import { pipe, partial, max, none } from '../../functions.mjs';
 import '../../util/DisposableLike.mjs';
 import { addIgnoringChildErrors, addTo, onComplete, dispose } from '../util/DisposableLikeInternal.mjs';
 
@@ -8,18 +8,18 @@ const reactive = 1;
 const lift = ({ lift, }) => lift;
 const createSkipFirstOperator = (m) => (operator) => (options = {}) => {
     const { count = 1 } = options;
-    const lifted = pipe((delegate) => operator(delegate, count), lift(m));
+    const lifted = pipe(operator, partial(count), lift(m));
     return container => (count > 0 ? pipe(container, lifted) : container);
 };
 const createTakeFirstOperator = (m) => (operator) => (options = {}) => {
     var _a;
     const { count = max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
-    const lifted = pipe((delegate) => operator(delegate, count), lift(m));
+    const lifted = pipe(operator, partial(count), lift(m));
     return container => (count > 0 ? pipe(container, lifted) : m.empty());
 };
 const createTakeWhileOperator = (m) => (operator) => (predicate, options = {}) => {
     const { inclusive = false } = options;
-    return pipe((delegate) => operator(delegate, predicate, inclusive), lift(m));
+    return pipe(operator, partial(predicate, inclusive), lift(m));
 };
 const createThrowIfEmptyOperator = (m) => (operator) => (factory) => pipe((delegate) => {
     const lifted = pipe(delegate, operator, m.variance === interactive

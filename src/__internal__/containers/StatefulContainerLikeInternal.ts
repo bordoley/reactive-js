@@ -14,6 +14,7 @@ import {
   Predicate,
   max,
   none,
+  partial,
   pipe,
 } from "../../functions";
 import { Error } from "../../util";
@@ -93,11 +94,7 @@ export const createSkipFirstOperator =
   ) =>
   (options: { readonly count?: number } = {}): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
-    const lifted = pipe(
-      (delegate: StatefulContainerOperatorIn<C, T, T, TVar>) =>
-        operator(delegate, count),
-      lift(m),
-    );
+    const lifted = pipe(operator, partial(count), lift(m));
     return container => (count > 0 ? pipe(container, lifted) : container);
   };
 
@@ -114,11 +111,7 @@ export const createTakeFirstOperator =
   ) =>
   (options: { readonly count?: number } = {}): ContainerOperator<C, T, T> => {
     const { count = max(options.count ?? 1, 0) } = options;
-    const lifted = pipe(
-      (delegate: StatefulContainerOperatorIn<C, T, T, TVar>) =>
-        operator(delegate, count),
-      lift(m),
-    );
+    const lifted = pipe(operator, partial(count), lift(m));
     return container => (count > 0 ? pipe(container, lifted) : m.empty());
   };
 
@@ -139,11 +132,7 @@ export const createTakeWhileOperator =
     options: { readonly inclusive?: boolean } = {},
   ): ContainerOperator<C, T, T> => {
     const { inclusive = false } = options;
-    return pipe(
-      (delegate: StatefulContainerOperatorIn<C, T, T, TVar>) =>
-        operator(delegate, predicate, inclusive),
-      lift(m),
-    );
+    return pipe(operator, partial(predicate, inclusive), lift(m));
   };
 
 export const createThrowIfEmptyOperator =

@@ -725,3 +725,24 @@ export const forEach =
     arr.forEach(f);
     return arr;
   };
+
+interface Partial {
+  <TA, TB, TOut>(b: TB): Function1<
+    Function2<TA, TB, TOut>,
+    Function1<TA, TOut>
+  >;
+  <TA, TB, TC, TOut>(b: TB, c: TC): Function1<
+    Function3<TA, TB, TC, TOut>,
+    Function1<TA, TOut>
+  >;
+  <TA, TB, TC, TD, TOut>(b: TB, c: TC, d: TD): Function1<
+    Function4<TA, TB, TC, TD, TOut>,
+    Function1<TA, TOut>
+  >;
+}
+
+export const partial: Partial =
+  (...args: readonly any[]) =>
+  (f: (...args: readonly any[]) => any) =>
+  (arg0: any) =>
+    f(arg0, ...args);
