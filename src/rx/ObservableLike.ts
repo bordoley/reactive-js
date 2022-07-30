@@ -1,3 +1,9 @@
+import {
+  Lift,
+  TReactive,
+  createMapOperator,
+  reactive,
+} from "../__internal__/containers/StatefulContainerLikeInternal";
 import { observerMixin } from "../__internal__/scheduling/ObserverLikeMixin";
 import {
   Object_init,
@@ -26,7 +32,7 @@ export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
 
 export const TContainerOf: ObservableLike<unknown> = undefined as any;
 
-const lift = /*@__PURE__*/ (() => {
+const lift: Lift<ObservableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
     [ObservableLike_observableType]:
       | typeof DefaultObservable
@@ -77,6 +83,11 @@ const lift = /*@__PURE__*/ (() => {
     };
 })();
 
+export const liftT: Lift<ObservableLike, TReactive> = {
+  lift,
+  variance: reactive,
+};
+
 export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const typedMapSinkMixin = mapSinkMixin<TA, TB>();
   const typedObserverMixin = observerMixin<TA>();
@@ -85,7 +96,7 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     [typeof typedObserverMixin, typeof typedMapSinkMixin]
   >;
 
-  const createInstance = pipe(
+  return pipe(
     {
       [Object_properties]: {},
       [Object_init](
@@ -104,13 +115,8 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
       ObserverLike,
       Function1<any, any>
     >(),
+    createMapOperator(liftT),
   );
-
-  return <TA, TB>(mapper: Function1<TA, TB>) => {
-    const operator = (delegate: ObserverLike<TB>): ObserverLike<TA> =>
-      createInstance(delegate, mapper);
-    return lift(operator);
-  };
 })();
 
 /**

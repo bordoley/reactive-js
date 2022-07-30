@@ -50,7 +50,7 @@ const createFromArray = (factory) => (options = {}) => values => {
 };
 const toEnumerable = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    const createInstance = pipe({
+    const createReadonlyArrayEnumerator = pipe({
         [Object_properties]: {
             array: none,
             count: 0,
@@ -78,7 +78,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(disposableMixin, typedEnumerator), createObjectFactory());
-    return createFromArray((array, start, count) => createEnumerable(() => createInstance(array, start, count)));
+    return createFromArray((array, start, count) => createEnumerable(() => createReadonlyArrayEnumerator(array, start, count)));
 })();
 const toEnumerableT = { toEnumerable };
 /*

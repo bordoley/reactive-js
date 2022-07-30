@@ -63,7 +63,7 @@ const emptyEnumerableT = {
 const generateEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    const createInstance = pipe({
+    const createGenerateEnumerator = pipe({
         [Object_properties]: { f: none },
         [Object_init](f, acc) {
             init(disposableMixin, this);
@@ -82,7 +82,7 @@ const generateEnumerable =
             }
         },
     }, mixWith(disposableMixin, typedEnumerator), createObjectFactory());
-    return (generator, initialValue) => createEnumerable(() => createInstance(generator, initialValue()));
+    return (generator, initialValue) => createEnumerable(() => createGenerateEnumerator(generator, initialValue()));
 })();
 const generateEnumerableT = {
     generate: generateEnumerable,

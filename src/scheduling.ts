@@ -211,7 +211,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     yieldRequested: boolean;
   };
 
-  const createInstance = pipe(
+  const createHostSchedulerInstance = pipe(
     {
       [Object_properties]: {
         [SchedulerLike_inContinuation]: false,
@@ -284,7 +284,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     } = {},
   ): SchedulerLike => {
     const { yieldInterval = 5 } = options;
-    return createInstance(yieldInterval);
+    return createHostSchedulerInstance(yieldInterval);
   };
 })();
 
@@ -316,7 +316,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     taskQueue: QueueLike<VirtualTask>;
   };
 
-  const createInstance = pipe(
+  const createVirtualTimeSchedulerInstance = pipe(
     {
       [Object_properties]: {
         [SchedulerLike_inContinuation]: false,
@@ -408,7 +408,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     options: { readonly maxMicroTaskTicks?: number } = {},
   ): VirtualTimeSchedulerLike => {
     const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-    return createInstance(maxMicroTaskTicks);
+    return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
   };
 })();
 
