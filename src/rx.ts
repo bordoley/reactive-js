@@ -46,13 +46,13 @@ import { DisposableLike, SinkLike } from "./util";
 export const ReactiveContainerLike_sinkInto = Symbol(
   "ReactiveContainerLike_sinkInto",
 );
-export interface ReactiveContainerLike<TSink extends SinkLike<T>, T>
+export interface ReactiveContainerLike<TSink extends DisposableLike>
   extends StatefulContainerLike {
   [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
 
 export interface RunnableLike<T = unknown>
-  extends ReactiveContainerLike<SinkLike<T>, T> {
+  extends ReactiveContainerLike<SinkLike<T>> {
   readonly TContainerOf?: RunnableLike<this["T"]>;
   readonly TStatefulContainerState?: SinkLike<this["T"]>;
 }
@@ -71,7 +71,7 @@ export const ObservableLike_observableType = Symbol(
  * @noInheritDoc
  */
 export interface ObservableLike<T = unknown>
-  extends ReactiveContainerLike<ObserverLike<T>, T> {
+  extends ReactiveContainerLike<ObserverLike<T>> {
   readonly TContainerOf?: ObservableLike<this["T"]>;
   readonly TStatefulContainerState?: ObserverLike<this["T"]>;
 
@@ -179,13 +179,10 @@ export const createObservable = /*@__PURE__*/ (() => {
     newInstance(CreateObservable, f) as any;
 })();
 
-const createObservableT: CreateReactiveContainer<
-  ObservableLike,
-  ObserverLike,
-  unknown
-> = {
-  create: createObservable,
-};
+const createObservableT: CreateReactiveContainer<ObservableLike, ObserverLike> =
+  {
+    create: createObservable,
+  };
 
 export const createSubject = /*@__PURE__*/ (() => {
   type TProperties = {
@@ -275,23 +272,22 @@ export const createSubject = /*@__PURE__*/ (() => {
 })();
 
 type CreateReactiveContainer<
-  C extends ReactiveContainerLike<TSink, T>,
-  TSink extends SinkLike<T>,
-  T,
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends DisposableLike,
 > = {
   create<T>(onSink: SideEffect1<TSink>): ContainerOf<C, T>;
 };
 
 const create =
-  <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
-    m: CreateReactiveContainer<C, TSink, T>,
+  <C extends ReactiveContainerLike<TSink>, TSink extends DisposableLike, T>(
+    m: CreateReactiveContainer<C, TSink>,
   ) =>
   (onSink: (sink: TSink) => void): ContainerOf<C, T> =>
     m.create(onSink);
 
 const createEmpty =
-  <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
-    m: CreateReactiveContainer<C, TSink, T>,
+  <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
+    m: CreateReactiveContainer<C, TSink>,
   ) =>
   (): ContainerOf<C, T> =>
     pipe((sink: TSink) => {
@@ -299,8 +295,8 @@ const createEmpty =
     }, create<C, TSink, T>(m));
 
 const createUsing =
-  <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
-    m: CreateReactiveContainer<C, TSink, T>,
+  <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
+    m: CreateReactiveContainer<C, TSink>,
   ) =>
   <TResource extends DisposableLike>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
@@ -317,11 +313,11 @@ const createUsing =
     }, create<C, TSink, T>(m));
 
 const createNever = <
-  C extends ReactiveContainerLike<TSink, T>,
+  C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
   T,
 >(
-  m: CreateReactiveContainer<C, TSink, T>,
+  m: CreateReactiveContainer<C, TSink>,
 ) => {
   const neverInstance: ContainerOf<C, any> = pipe(ignore, create(m));
   return <T>(): ContainerOf<C, T> => neverInstance;
@@ -388,11 +384,7 @@ export const createRunnable = /*@__PURE__*/ (() => {
     newInstance(Runnable, run);
 })();
 
-const createRunnableT: CreateReactiveContainer<
-  RunnableLike,
-  SinkLike,
-  unknown
-> = {
+const createRunnableT: CreateReactiveContainer<RunnableLike, SinkLike> = {
   create: createRunnable,
 };
 
