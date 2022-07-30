@@ -203,7 +203,7 @@ export type Map<C extends ContainerLike> = Container<C> & {
 };
 
 export type Pairwise<C extends ContainerLike> = Container<C> & {
-  pairwise<T>(): ContainerOperator<C, T, readonly [Option<T>, T]>;
+  pairwise<T>(): ContainerOperator<C, T, readonly [T, T]>;
 };
 
 export type Reduce<C extends ContainerLike> = Container<C> & {

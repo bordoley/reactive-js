@@ -32,6 +32,7 @@ import {
   forEachSinkMixin,
   keepSinkMixin,
   mapSinkMixin,
+  pairwiseSinkMixin,
   scanSinkMixin,
   skipFirstSinkMixin,
   takeFirstSinkMixin,
@@ -45,6 +46,7 @@ import {
   ForEach,
   Keep,
   Map,
+  Pairwise,
   Scan,
   SkipFirst,
   TakeFirst,
@@ -66,6 +68,7 @@ import {
   pipeLazy,
   pipeUnsafe,
   raise,
+  returns,
 } from "../functions";
 import {
   ReactiveContainerLike_sinkInto,
@@ -235,6 +238,25 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
 })();
 
 export const mapT: Map<RunnableLike> = { map };
+
+export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedPairwiseSinkMixin = pairwiseSinkMixin<T>();
+
+  return pipe(
+    typedPairwiseSinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedPairwiseSinkMixin]>,
+      SinkLike<readonly [T, T]>
+    >(),
+    lift,
+    returns,
+  );
+})();
+
+export const pairwiseT: Pairwise<RunnableLike> = { pairwise };
 
 export const run =
   <T>() =>

@@ -283,7 +283,7 @@ export const mapSinkMixin: <TA, TB>() => DisposableLike & {
     {
       [Object_properties]: {
         [Sink_private_delegate]: none as any,
-        mapper: none as any,
+        [MapSink_private_mapper]: none as any,
       },
       [Object_init](
         this: TProperties,
@@ -297,6 +297,50 @@ export const mapSinkMixin: <TA, TB>() => DisposableLike & {
       [SinkLike_notify](this: TProperties, next: TA) {
         const mapped = this[MapSink_private_mapper](next);
         pipe(this[Sink_private_delegate], notify(mapped));
+      },
+    },
+    mixWith(delegatingDisposableMixin),
+    returns,
+  );
+})();
+
+export const pairwiseSinkMixin: <T>() => DisposableLike & {
+  [Object_properties]: unknown;
+  [Object_init](this: unknown, delegate: SinkLike<readonly [T, T]>): void;
+  [SinkLike_notify](next: T): void;
+} = /*@__PURE__*/ (<T>() => {
+  const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
+  const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
+
+  type TProperties = {
+    [Sink_private_delegate]: SinkLike<readonly [T, T]>;
+    [PairwiseSink_private_prev]: T;
+    [PairwiseSink_private_hasPrev]: boolean;
+  } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
+
+  return pipe(
+    {
+      [Object_properties]: {
+        [Sink_private_delegate]: none as any,
+        [PairwiseSink_private_prev]: none,
+        [PairwiseSink_private_hasPrev]: false,
+      },
+      [Object_init](this: TProperties, delegate: SinkLike<readonly [T, T]>) {
+        init(delegatingDisposableMixin, this, delegate);
+        this[Sink_private_delegate] = delegate;
+      },
+      [SinkLike_notify](this: TProperties, next: T) {
+        const prev = this[PairwiseSink_private_prev];
+
+        if (this[PairwiseSink_private_hasPrev]) {
+          pipe(
+            this[Sink_private_delegate],
+            notify<SinkLike<readonly [T, T]>, readonly [T, T]>([prev, next]),
+          );
+        }
+
+        this[PairwiseSink_private_hasPrev] = true;
+        this[PairwiseSink_private_prev] = next;
       },
     },
     mixWith(delegatingDisposableMixin),

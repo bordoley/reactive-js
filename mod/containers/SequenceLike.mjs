@@ -115,7 +115,15 @@ const pairwise =
             return none;
         }
     };
-    return () => (seq) => _pairwise(none, seq);
+    return () => (seq) => {
+        const first = seq();
+        if (isSome(first)) {
+            return _pairwise(first.data, first.next);
+        }
+        else {
+            return () => none;
+        }
+    };
 })();
 const pairwiseT = { pairwise };
 const seek = (count) => (seq) => {

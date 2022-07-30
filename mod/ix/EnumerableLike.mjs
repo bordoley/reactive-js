@@ -7,7 +7,7 @@ import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isNone, isSome, identity, forEach as forEach$2 } from '../functions.mjs';
+import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT } from '../ix.mjs';
 import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -265,12 +265,24 @@ const mapT = { map };
 const pairwise = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
     return pipe({
+        [Object_init](delegate) {
+            init(delegatingDisposableMixin, this, delegate);
+            init(typedEnumerator, this);
+            this.delegate = delegate;
+        },
         [SourceLike_move]() {
-            const prev = (hasCurrent(this) ? getCurrent(this) : [])[1];
             const { delegate } = this;
-            if (move(delegate)) {
+            const prev = hasCurrent(this)
+                ? getCurrent(this)[1]
+                : move(delegate)
+                    ? getCurrent(delegate)
+                    : none;
+            if (isSome(prev) && move(delegate)) {
                 const current = getCurrent(delegate);
                 this[EnumeratorLike_current] = [prev, current];
+            }
+            else {
+                pipe(this, dispose());
             }
         },
     }, mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory(), lift, returns);

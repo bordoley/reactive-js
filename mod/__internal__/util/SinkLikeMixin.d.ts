@@ -41,6 +41,14 @@ declare const mapSinkMixin: <TA, TB>() => DisposableLike & {
     [Object_init](this: unknown, delegate: SinkLike<TB>, mapper: Function1<TA, TB>): void;
     [SinkLike_notify](next: TA): void;
 };
+declare const pairwiseSinkMixin: <T>() => DisposableLike & {
+    [Object_properties]: unknown;
+    [Object_init](this: unknown, delegate: SinkLike<readonly [
+        T,
+        T
+    ]>): void;
+    [SinkLike_notify](next: T): void;
+};
 declare const scanSinkMixin: <T, TAcc>() => DisposableLike & {
     [Object_properties]: unknown;
     [Object_init](this: unknown, delegate: SinkLike<TAcc>, reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): void;
@@ -75,4 +83,4 @@ declare const takeWhileSinkMixin: <T>() => DisposableLike & {
     [Object_init](this: unknown, delegate: SinkLike<T>, predicate: Predicate<T>, inclusive: boolean): void;
     [SinkLike_notify](next: T): void;
 };
-export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };

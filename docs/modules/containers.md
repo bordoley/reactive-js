@@ -338,7 +338,7 @@ ___
 
 ### Pairwise
 
-Ƭ **Pairwise**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `pairwise`: <T\>() => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [[`Option`](functions.md#option)<`T`\>, `T`]\>  }
+Ƭ **Pairwise**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `pairwise`: <T\>() => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`T`, `T`]\>  }
 
 #### Type parameters
 
