@@ -2,7 +2,7 @@
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
-import { pipe, none, newInstance, forEach, pipeLazy } from './functions.mjs';
+import { pipe, newInstance, forEach, none } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import './util/DisposableLike.mjs';
 import { dispose, addTo, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
@@ -20,7 +20,7 @@ const createEnumerable = /*@__PURE__*/ (() => {
             }
             catch (cause) {
                 const empty = emptyEnumerable();
-                return pipe(empty[InteractiveContainerLike_interact](none), dispose({ cause }));
+                return pipe(empty[InteractiveContainerLike_interact](), dispose({ cause }));
             }
         }
     }
@@ -36,17 +36,20 @@ const createEnumerableUsing = (resourceFactory, enumerableFactory) => createEnum
 const createEnumerableUsingT = {
     using: createEnumerableUsing,
 };
-const emptyEnumerable = 
-/*@__PURE__*/ pipe({
-    [Object_properties]: {},
-    [Object_init]() {
-        init(disposableMixin, this);
-        init(enumeratorMixin(), this);
-    },
-    [SourceLike_move]() {
-        pipe(this, dispose());
-    },
-}, mixWith(disposableMixin, enumeratorMixin()), createObjectFactory(), f => pipeLazy(f, createEnumerable));
+const emptyEnumerable = /*@__PURE__*/ (() => {
+    const typedEnumeratorMixin = enumeratorMixin();
+    const f = pipe({
+        [Object_properties]: {},
+        [Object_init]() {
+            init(disposableMixin, this);
+            init(typedEnumeratorMixin, this);
+        },
+        [SourceLike_move]() {
+            pipe(this, dispose());
+        },
+    }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
+    return () => createEnumerable(f);
+})();
 const emptyEnumerableT = {
     empty: emptyEnumerable,
 };

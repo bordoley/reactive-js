@@ -13,14 +13,14 @@
 
 ### notify
 
-▸ **notify**<`T`, `TSink`\>(`v`): [`Function1`](functions.md#function1)<`TSink`, `TSink`\>
+▸ **notify**<`TSink`, `T`\>(`v`): [`Function1`](functions.md#function1)<`TSink`, `TSink`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
+| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> |
 | `T` | `T` |
-| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> = [`SinkLike`](../interfaces/util.SinkLike.md)<`T`\> |
 
 #### Parameters
 
@@ -36,14 +36,14 @@ ___
 
 ### notifySink
 
-▸ **notifySink**<`T`, `TSink`\>(`sink`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
+▸ **notifySink**<`TSink`, `T`\>(`sink`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
+| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> |
 | `T` | `T` |
-| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> = [`SinkLike`](../interfaces/util.SinkLike.md)<`T`\> |
 
 #### Parameters
 
