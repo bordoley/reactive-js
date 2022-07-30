@@ -9,6 +9,7 @@
 - [concatAllT](rx_RunnableLike.md#concatallt)
 - [concatT](rx_RunnableLike.md#concatt)
 - [distinctUntilChangedT](rx_RunnableLike.md#distinctuntilchangedt)
+- [forEachT](rx_RunnableLike.md#foreacht)
 - [keepT](rx_RunnableLike.md#keept)
 - [mapT](rx_RunnableLike.md#mapt)
 - [scanT](rx_RunnableLike.md#scant)
@@ -23,9 +24,9 @@
 - [concat](rx_RunnableLike.md#concat)
 - [concatAll](rx_RunnableLike.md#concatall)
 - [distinctUntilChanged](rx_RunnableLike.md#distinctuntilchanged)
+- [forEach](rx_RunnableLike.md#foreach)
 - [keep](rx_RunnableLike.md#keep)
 - [map](rx_RunnableLike.md#map)
-- [onNotify](rx_RunnableLike.md#onnotify)
 - [run](rx_RunnableLike.md#run)
 - [scan](rx_RunnableLike.md#scan)
 - [skipFirst](rx_RunnableLike.md#skipfirst)
@@ -51,6 +52,12 @@ ___
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### forEachT
+
+• `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -171,6 +178,28 @@ ___
 
 ___
 
+### forEach
+
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
@@ -213,28 +242,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-___
-
-### onNotify
-
-▸ **onNotify**<`T`\>(`onNotify`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onNotify` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

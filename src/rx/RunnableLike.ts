@@ -1,8 +1,14 @@
 import {
   Lift,
   TReactive,
+  createDistinctUntilChangedOperator,
+  createForEachOperator,
+  createKeepOperator,
+  createMapOperator,
+  createScanOperator,
   createSkipFirstOperator,
   createTakeFirstOperator,
+  createTakeLastOperator,
   createTakeWhileOperator,
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
@@ -23,9 +29,9 @@ import {
   createSink,
   delegatingSinkMixin,
   distinctUntilChangedSinkMixin,
+  forEachSinkMixin,
   keepSinkMixin,
   mapSinkMixin,
-  onNotifySinkMixin,
   scanSinkMixin,
   skipFirstSinkMixin,
   takeFirstSinkMixin,
@@ -35,8 +41,8 @@ import {
 import {
   Concat,
   ConcatAll,
-  ContainerOperator,
   DistinctUntilChanged,
+  ForEach,
   Keep,
   Map,
   Scan,
@@ -56,17 +62,14 @@ import {
   SideEffect1,
   isSome,
   newInstance,
-  partial,
   pipe,
   pipeLazy,
   pipeUnsafe,
   raise,
-  strictEquality,
 } from "../functions";
 import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
-  emptyRunnable,
   emptyRunnableT,
 } from "../rx";
 import { DisposableLike_error, SinkLike, SinkLike_notify } from "../util";
@@ -164,7 +167,7 @@ export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctU
     const typedDistinctUntilChangedSinkMixin =
       distinctUntilChangedSinkMixin<T>();
 
-    const createInstance = pipe(
+    return pipe(
       typedDistinctUntilChangedSinkMixin,
       createObjectFactory<
         SinkLike<T>,
@@ -172,22 +175,37 @@ export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctU
         SinkLike<T>,
         Equality<T>
       >(),
+      createDistinctUntilChangedOperator<RunnableLike, T, TReactive>(liftT),
     );
-
-    return (options?: { readonly equality?: Equality<T> }) => {
-      const { equality = strictEquality } = options ?? {};
-      return pipe(createInstance, partial(equality), lift);
-    };
   })();
 
 export const distinctUntilChangedT: DistinctUntilChanged<RunnableLike> = {
   distinctUntilChanged,
 };
 
+export const forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedForEachSinkMixin = forEachSinkMixin<T>();
+
+  return pipe(
+    typedForEachSinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedForEachSinkMixin]>,
+      SinkLike<T>,
+      SideEffect1<T>
+    >(),
+    createForEachOperator<RunnableLike, T, TReactive>(liftT),
+  );
+})();
+
+export const forEachT: ForEach<RunnableLike> = { forEach };
+
 export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedKeepSinkMixin = keepSinkMixin<T>();
 
-  const createInstance = pipe(
+  return pipe(
     typedKeepSinkMixin,
     createObjectFactory<
       SinkLike<T>,
@@ -195,10 +213,8 @@ export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
       SinkLike<T>,
       Predicate<T>
     >(),
+    createKeepOperator<RunnableLike, T, TReactive>(liftT),
   );
-
-  return (predicate: Predicate<T>) =>
-    pipe(createInstance, partial(predicate), lift);
 })();
 
 export const keepT: Keep<RunnableLike> = { keep };
@@ -206,7 +222,7 @@ export const keepT: Keep<RunnableLike> = { keep };
 export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const typedMapSinkMixin = mapSinkMixin<TA, TB>();
 
-  const createInstance = pipe(
+  return pipe(
     typedMapSinkMixin,
     createObjectFactory<
       SinkLike<TA>,
@@ -214,32 +230,11 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
       SinkLike<TB>,
       Function1<TA, TB>
     >(),
+    createMapOperator<RunnableLike, TA, TB, TReactive>(liftT),
   );
-
-  return (mapper: Function1<TA, TB>) =>
-    pipe(createInstance, partial(mapper), lift);
 })();
 
 export const mapT: Map<RunnableLike> = { map };
-
-export const onNotify: <T>(
-  onNotify: SideEffect1<T>,
-) => ContainerOperator<RunnableLike, T, T> = /*@__PURE__*/ (<T>() => {
-  const typedOnNotifySinkMixin = onNotifySinkMixin<T>();
-
-  const createInstance = pipe(
-    typedOnNotifySinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof typedOnNotifySinkMixin]>,
-      SinkLike<T>,
-      SideEffect1<T>
-    >(),
-  );
-
-  return (onNotify: SideEffect1<T>) =>
-    pipe(createInstance, partial(onNotify), lift);
-})();
 
 export const run =
   <T>() =>
@@ -258,7 +253,7 @@ export const run =
 export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
   const typedScanSinkMixin = scanSinkMixin<T, TAcc>();
 
-  const createInstance = pipe(
+  return pipe(
     typedScanSinkMixin,
     createObjectFactory<
       SinkLike<T>,
@@ -267,10 +262,8 @@ export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
       Reducer<T, TAcc>,
       Factory<TAcc>
     >(),
+    createScanOperator<RunnableLike, T, TAcc, TReactive>(liftT),
   );
-
-  return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-    pipe(createInstance, partial(reducer, initialValue), lift);
 })();
 
 export const scanT: Scan<RunnableLike> = { scan };
@@ -325,7 +318,7 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
     T
   >(toRunnable());
 
-  const createSink = pipe(
+  return pipe(
     typedTakeLastSinkMixin,
     createObjectFactory<
       SinkLike<T>,
@@ -333,18 +326,11 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
       SinkLike<T>,
       number
     >(),
+    createTakeLastOperator<RunnableLike, T, TReactive>({
+      ...liftT,
+      ...emptyRunnableT,
+    }),
   );
-
-  return (
-    options: { readonly count?: number } = {},
-  ): ContainerOperator<RunnableLike, T, T> => {
-    const { count = 1 } = options;
-
-    const operator = pipe(createSink, partial(count), lift);
-
-    return (source: RunnableLike<T>) =>
-      count > 0 ? pipe(source, operator) : emptyRunnable();
-  };
 })();
 
 export const takeLastT: TakeLast<RunnableLike> = { takeLast };
@@ -376,7 +362,7 @@ export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
       const result: T[] = [];
       pipe(
         runnable,
-        onNotify<T>(x => result.push(x)),
+        forEach<T>(x => result.push(x)),
         run(),
       );
       return result;

@@ -11,6 +11,7 @@
 - [concatAllT](ix_EnumerableLike.md#concatallt)
 - [concatT](ix_EnumerableLike.md#concatt)
 - [distinctUntilChangedT](ix_EnumerableLike.md#distinctuntilchangedt)
+- [forEachT](ix_EnumerableLike.md#foreacht)
 - [keepT](ix_EnumerableLike.md#keept)
 - [mapT](ix_EnumerableLike.md#mapt)
 - [pairwiseT](ix_EnumerableLike.md#pairwiset)
@@ -35,9 +36,9 @@
 - [delegatingEnumeratorMixin](ix_EnumerableLike.md#delegatingenumeratormixin)
 - [distinctUntilChanged](ix_EnumerableLike.md#distinctuntilchanged)
 - [enumerate](ix_EnumerableLike.md#enumerate)
+- [forEach](ix_EnumerableLike.md#foreach)
 - [keep](ix_EnumerableLike.md#keep)
 - [map](ix_EnumerableLike.md#map)
-- [onNotify](ix_EnumerableLike.md#onnotify)
 - [pairwise](ix_EnumerableLike.md#pairwise)
 - [repeat](ix_EnumerableLike.md#repeat)
 - [scan](ix_EnumerableLike.md#scan)
@@ -81,6 +82,12 @@ ___
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
+
+___
+
+### forEachT
+
+• `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 
@@ -318,6 +325,28 @@ ___
 
 ___
 
+### forEach
+
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
@@ -360,28 +389,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-___
-
-### onNotify
-
-▸ **onNotify**<`T`\>(`onNotify`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onNotify` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
