@@ -35,7 +35,7 @@ import {
   none,
   pipe,
 } from "./functions";
-import { sinkInto } from "./rx/ReactiveContainerLike";
+
 import { ObserverLike } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
 import { getDispatcher, getScheduler } from "./scheduling/ObserverLike";
@@ -312,8 +312,8 @@ const createUsing =
         resources => (Array.isArray(resources) ? resources : [resources]),
         forEach<TResource>(addTo(sink)),
         resources => sourceFactory(...resources),
-        sinkInto<C, TSink, T>(sink),
-      );
+        //sinkInto<C, TSink, T>(sink),
+      )[ReactiveContainerLike_sinkInto](sink);
     }, create<C, TSink, T>(m));
 
 const createNever = <

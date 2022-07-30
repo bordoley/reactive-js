@@ -1,8 +1,15 @@
 [Reactive-JS](../README.md) / [ix](../modules/ix.md) / InteractiveContainerLike
 
-# Interface: InteractiveContainerLike
+# Interface: InteractiveContainerLike<TSource, TCtx\>
 
 [ix](../modules/ix.md).InteractiveContainerLike
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TSource` | extends [`SourceLike`](util.SourceLike.md) |
+| `TCtx` | `void` |
 
 ## Hierarchy
 
@@ -20,7 +27,6 @@
 
 - [T](ix.InteractiveContainerLike.md#t)
 - [TContainerOf](ix.InteractiveContainerLike.md#tcontainerof)
-- [TCtx](ix.InteractiveContainerLike.md#tctx)
 - [TStatefulContainerState](ix.InteractiveContainerLike.md#tstatefulcontainerstate)
 
 ### Methods
@@ -49,17 +55,11 @@ ___
 
 ___
 
-### TCtx
-
-• `Optional` `Readonly` **TCtx**: `unknown`
-
-___
-
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`SourceLike`](util.SourceLike.md)
+• `Optional` `Readonly` **TStatefulContainerState**: [`DisposableLike`](util.DisposableLike.md)
 
-#### Overrides
+#### Inherited from
 
 [StatefulContainerLike](containers.StatefulContainerLike.md).[TStatefulContainerState](containers.StatefulContainerLike.md#tstatefulcontainerstate)
 
@@ -67,14 +67,14 @@ ___
 
 ### [InteractiveContainerLike\_interact]
 
-▸ **[InteractiveContainerLike_interact]**(`_`): [`SourceLike`](util.SourceLike.md)
+▸ **[InteractiveContainerLike_interact]**(`_`): `TSource`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `_` | `unknown` |
+| `_` | `TCtx` |
 
 #### Returns
 
-[`SourceLike`](util.SourceLike.md)
+`TSource`

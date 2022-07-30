@@ -89,7 +89,7 @@ const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   }
 
   return <TA, TB>(operator: Function1<SinkLike<TB>, SinkLike<TA>>) =>
-    (runnable: RunnableLike<TA>) => {
+    (runnable: RunnableLike<TA>): RunnableLike<TB> => {
       const src = runnable instanceof LiftedRunnable ? runnable.src : runnable;
 
       const allFunctions =

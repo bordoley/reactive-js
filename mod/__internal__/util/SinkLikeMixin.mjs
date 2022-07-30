@@ -1,6 +1,6 @@
 /// <reference types="./SinkLikeMixin.d.ts" />
 import { pipe, pipeLazy, none, returns, getLength } from '../../functions.mjs';
-import { s as sinkInto } from '../../ReactiveContainerLike-e32dbf9b.mjs';
+import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './DisposableLikeMixins.mjs';

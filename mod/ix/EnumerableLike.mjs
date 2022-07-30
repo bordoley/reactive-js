@@ -9,7 +9,7 @@ import { Object_properties, Object_init, init, mixWith, createObjectFactory } fr
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, max, strictEquality, pipeLazy, isNone, alwaysTrue, isSome, identity, forEach as forEach$1 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT, emptyEnumerable } from '../ix.mjs';
-import { O as ObservableLike_observableType, R as RunnableObservable, E as EnumerableObservable, a as ReactiveContainerLike_sinkInto, c as createRunnable } from '../ReactiveContainerLike-e32dbf9b.mjs';
+import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move } from '../util.mjs';
@@ -56,7 +56,9 @@ const lift = /*@__PURE__*/ (() => {
         }
     }
     return (operator) => (enumerable) => {
-        const src = enumerable instanceof LiftedEnumerable ? enumerable.src : enumerable;
+        const src = enumerable instanceof LiftedEnumerable
+            ? enumerable.src
+            : enumerable;
         const allFunctions = enumerable instanceof LiftedEnumerable
             ? [...enumerable.operators, operator]
             : [operator];

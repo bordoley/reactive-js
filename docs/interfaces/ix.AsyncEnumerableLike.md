@@ -14,7 +14,7 @@
 
 - [`StreamableLike`](streaming.StreamableLike.md)<`void`, `T`, [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>\>
 
-- [`InteractiveContainerLike`](ix.InteractiveContainerLike.md)
+- [`InteractiveContainerLike`](ix.InteractiveContainerLike.md)<[`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>, [`SchedulerLike`](scheduling.SchedulerLike.md)\>
 
   ↳ **`AsyncEnumerableLike`**
 
@@ -24,7 +24,6 @@
 
 - [T](ix.AsyncEnumerableLike.md#t)
 - [TContainerOf](ix.AsyncEnumerableLike.md#tcontainerof)
-- [TCtx](ix.AsyncEnumerableLike.md#tctx)
 - [TStatefulContainerState](ix.AsyncEnumerableLike.md#tstatefulcontainerstate)
 
 ### Methods
@@ -46,27 +45,17 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: `unknown`
+• `Optional` `Readonly` **TContainerOf**: [`AsyncEnumerableLike`](ix.AsyncEnumerableLike.md)<`unknown`\>
 
-#### Inherited from
+#### Overrides
 
 [InteractiveContainerLike](ix.InteractiveContainerLike.md).[TContainerOf](ix.InteractiveContainerLike.md#tcontainerof)
 
 ___
 
-### TCtx
-
-• `Optional` `Readonly` **TCtx**: [`SchedulerLike`](scheduling.SchedulerLike.md)
-
-#### Overrides
-
-[InteractiveContainerLike](ix.InteractiveContainerLike.md).[TCtx](ix.InteractiveContainerLike.md#tctx)
-
-___
-
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>
+• `Optional` `Readonly` **TStatefulContainerState**: [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -76,17 +65,17 @@ ___
 
 ### [InteractiveContainerLike\_interact]
 
-▸ **[InteractiveContainerLike_interact]**(`_`): [`SourceLike`](util.SourceLike.md)
+▸ **[InteractiveContainerLike_interact]**(`_`): [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `_` | `undefined` \| [`SchedulerLike`](scheduling.SchedulerLike.md) |
+| `_` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
 
 #### Returns
 
-[`SourceLike`](util.SourceLike.md)
+[`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>
 
 #### Inherited from
 

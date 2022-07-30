@@ -12,7 +12,6 @@
 
 ### Type Aliases
 
-- [InteractiveContainerCtxOf](ix.md#interactivecontainerctxof)
 - [ToEnumerable](ix.md#toenumerable)
 
 ### Variables
@@ -29,19 +28,6 @@
 - [generateEnumerable](ix.md#generateenumerable)
 
 ## Type Aliases
-
-### InteractiveContainerCtxOf
-
-Ƭ **InteractiveContainerCtxOf**<`C`, `T`\>: `C` extends { `TCtx?`: `unknown`  } ? `NonNullable`<`C` & { `T`: `T`  }[``"TCtx"``]\> : { `_C`: `C` ; `_T`: () => `T`  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`InteractiveContainerLike`](../interfaces/ix.InteractiveContainerLike.md) |
-| `T` | `T` |
-
-___
 
 ### ToEnumerable
 
