@@ -13,6 +13,7 @@ import {
   FromArray,
   Keep,
   Map,
+  Pairwise,
   Repeat,
   Scan,
   SkipFirst,
@@ -211,6 +212,36 @@ export const mapTests = <C extends ContainerLike>(
         expectToThrowError(err),
       );
     }),
+  );
+
+export const pairwiseTests = <C extends ContainerLike>(
+  m: Pairwise<C> & FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "pairwise",
+    test(
+      "when ",
+      pipeLazy(
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        m.fromArray(),
+        m.pairwise<number>(),
+        m.toReadonlyArray<readonly [number, number]>(),
+        expectArrayEquals<readonly [number, number]>(
+          [
+            [0, 1],
+            [1, 2],
+            [2, 3],
+            [3, 4],
+            [4, 5],
+            [5, 6],
+            [6, 7],
+            [7, 8],
+            [8, 9],
+          ],
+          arrayEquality(),
+        ),
+      ),
+    ),
   );
 
 export const repeatTests = <C extends ContainerLike>(

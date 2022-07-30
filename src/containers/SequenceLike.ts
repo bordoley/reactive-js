@@ -211,15 +211,12 @@ export const mapT: Map<SequenceLike> = { map };
 export const pairwise: Pairwise<SequenceLike>["pairwise"] =
   /*@__PURE__*/ (() => {
     const _pairwise =
-      <T>(
-        prev: Option<T>,
-        seq: SequenceLike<T>,
-      ): SequenceLike<readonly [Option<T>, T]> =>
+      <T>(prev: T, seq: SequenceLike<T>): SequenceLike<readonly [T, T]> =>
       () => {
         const result = seq();
         if (isSome(result)) {
           const { data, next } = result;
-          const v: [Option<T>, T] = [prev, data];
+          const v: [T, T] = [prev, data];
           return createNext(v, _pairwise(data, next));
         } else {
           return none;
@@ -227,8 +224,14 @@ export const pairwise: Pairwise<SequenceLike>["pairwise"] =
       };
 
     return <T>() =>
-      (seq: SequenceLike<T>) =>
-        _pairwise(none, seq);
+      (seq: SequenceLike<T>) => {
+        const first = seq();
+        if (isSome(first)) {
+          return _pairwise(first.data, first.next);
+        } else {
+          return () => none;
+        }
+      };
   })();
 
 export const pairwiseT: Pairwise<SequenceLike> = { pairwise };

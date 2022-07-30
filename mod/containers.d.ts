@@ -104,7 +104,7 @@ declare type Map<C extends ContainerLike> = Container<C> & {
 };
 declare type Pairwise<C extends ContainerLike> = Container<C> & {
     pairwise<T>(): ContainerOperator<C, T, readonly [
-        Option<T>,
+        T,
         T
     ]>;
 };

@@ -83,7 +83,7 @@ const lift: Lift<ObservableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
     };
 })();
 
-export const liftT: Lift<ObservableLike, TReactive> = {
+const liftT: Lift<ObservableLike, TReactive> = {
   lift,
   variance: reactive,
 };

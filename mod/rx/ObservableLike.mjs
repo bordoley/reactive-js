@@ -89,4 +89,4 @@ export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
       );
     });*/
 
-export { TContainerOf, getObservableType, liftT, map };
+export { TContainerOf, getObservableType, map };

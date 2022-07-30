@@ -608,7 +608,7 @@ export const mapT: Map<EnumerableLike> = { map };
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedEnumerator = enumeratorMixin<[Option<T>, T]>();
+  const typedEnumerator = enumeratorMixin<[T, T]>();
 
   type TProperties = PropertyTypeOf<
     [typeof delegatingDisposableMixin, typeof typedEnumerator]
@@ -618,21 +618,31 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
 
   return pipe(
     {
-      [SourceLike_move](
-        this: TProperties & MutableEnumeratorLike<[Option<T>, T]>,
-      ) {
-        const prev = (hasCurrent(this) ? getCurrent(this) : [])[1];
-
+      [Object_init](this: TProperties, delegate: EnumeratorLike<T>) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedEnumerator, this);
+        this.delegate = delegate;
+      },
+      [SourceLike_move](this: TProperties & MutableEnumeratorLike<[T, T]>) {
         const { delegate } = this;
-        if (move(delegate)) {
+
+        const prev = hasCurrent(this)
+          ? getCurrent(this)[1]
+          : move(delegate)
+          ? getCurrent(delegate)
+          : none;
+
+        if (isSome(prev) && move(delegate)) {
           const current = getCurrent(delegate);
           this[EnumeratorLike_current] = [prev, current];
+        } else {
+          pipe(this, dispose());
         }
       },
     },
     mixWith(delegatingDisposableMixin, typedEnumerator),
     createObjectFactory<
-      EnumeratorLike<[Option<T>, T]>,
+      EnumeratorLike<[T, T]>,
       TProperties,
       EnumeratorLike<T>
     >(),
