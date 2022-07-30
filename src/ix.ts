@@ -35,7 +35,6 @@ import {
   DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
-  SourceLike,
   SourceLike_move,
 } from "./util";
 import { addTo, dispose, isDisposed } from "./util/DisposableLike";
@@ -46,7 +45,7 @@ export const InteractiveContainerLike_interact = Symbol(
 );
 
 export interface InteractiveContainerLike<
-  TSource extends SourceLike,
+  TSource extends DisposableLike,
   TCtx = void,
 > extends StatefulContainerLike {
   [InteractiveContainerLike_interact](_: TCtx): TSource;

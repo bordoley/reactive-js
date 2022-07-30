@@ -2,10 +2,10 @@ import { StatefulContainerLike, ContainerLike, Container, ContainerOf, Using, Em
 import { Function1, Factory } from "./functions.mjs";
 import { SchedulerLike } from "./scheduling.mjs";
 import { StreamableLike, AsyncEnumeratorLike } from "./streaming.mjs";
-import { SourceLike, EnumeratorLike } from "./util.mjs";
+import { DisposableLike, EnumeratorLike } from "./util.mjs";
 /** @ignore */
 declare const InteractiveContainerLike_interact: unique symbol;
-interface InteractiveContainerLike<TSource extends SourceLike, TCtx = void> extends StatefulContainerLike {
+interface InteractiveContainerLike<TSource extends DisposableLike, TCtx = void> extends StatefulContainerLike {
     [InteractiveContainerLike_interact](_: TCtx): TSource;
 }
 /**

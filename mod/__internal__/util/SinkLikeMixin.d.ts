@@ -57,7 +57,7 @@ declare const takeFirstSinkMixin: <T>() => DisposableLike & {
     [SinkLike_notify](next: T): void;
 };
 declare const TakeLastSink_last: unique symbol;
-declare const takeLastSinkMixin: <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(fromArray: (v: readonly T[]) => C) => {
+declare const takeLastSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(fromArray: (v: readonly T[]) => C) => {
     [Object_properties]: {
         [DisposableLike_error]: Option<Error>;
         [DisposableLike_isDisposed]: boolean;

@@ -14,7 +14,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ## Hierarchy
 
-- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`ObserverLike`](scheduling.ObserverLike.md)<`T`\>, `T`\>
+- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`ObserverLike`](scheduling.ObserverLike.md)<`T`\>\>
 
   ↳ **`ObservableLike`**
 
