@@ -15,6 +15,7 @@ import {
 import {
   DisposableLike,
   bindTo,
+  isDisposed,
 } from "../__internal__/util/DisposableLikeInternal";
 import {
   Object_init,
@@ -47,6 +48,7 @@ import {
   Keep,
   Map,
   Pairwise,
+  Repeat,
   Scan,
   SkipFirst,
   TakeFirst,
@@ -74,10 +76,12 @@ import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
   emptyRunnableT,
+  createRunnable,
 } from "../rx";
 import { DisposableLike_error, SinkLike, SinkLike_notify } from "../util";
 import { addTo, dispose } from "../util/DisposableLike";
 import { sourceFrom } from "./ReactiveContainerLike";
+import { createRepeatOperator } from "../__internal__/containers/ContainerLikeInternal";
 
 const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedRunnable<T> implements RunnableLike<T> {
@@ -257,6 +261,25 @@ export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
 })();
 
 export const pairwiseT: Pairwise<RunnableLike> = { pairwise };
+
+export const repeat = /*@__PURE__*/ (<T>() => {
+  return createRepeatOperator<RunnableLike, T>((delegate, predicate) =>
+    createRunnable(sink => {
+      let count = 0;
+      do {
+        pipe(
+          createDelegatingSink(sink),
+          addTo(sink),
+          sourceFrom(delegate),
+          dispose(),
+        );
+        count++;
+      } while (!isDisposed(sink) && predicate(count));
+    }),
+  );
+})();
+
+export const repeatT: Repeat<RunnableLike> = { repeat };
 
 export const run =
   <T>() =>

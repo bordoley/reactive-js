@@ -220,7 +220,7 @@ export const pairwiseTests = <C extends ContainerLike>(
   describe(
     "pairwise",
     test(
-      "when ",
+      "when there are more than one input value",
       pipeLazy(
         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromArray(),
@@ -238,6 +238,19 @@ export const pairwiseTests = <C extends ContainerLike>(
             [7, 8],
             [8, 9],
           ],
+          arrayEquality(),
+        ),
+      ),
+    ),
+    test(
+      "when the input only provides 1 value",
+      pipeLazy(
+        [0],
+        m.fromArray(),
+        m.pairwise<number>(),
+        m.toReadonlyArray<readonly [number, number]>(),
+        expectArrayEquals<readonly [number, number]>(
+          [],
           arrayEquality(),
         ),
       ),
