@@ -8,7 +8,7 @@ import { disposableMixin, disposableRefMixin } from '../__internal__/util/Dispos
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { none, pipe, isSome, isNone, raise, newInstanceWith, max } from '../functions.mjs';
+import { none, pipe, isSome, isNone, raise, newInstance, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
@@ -72,7 +72,7 @@ const __yield = (options) => {
         ? raise("__yield effect may only be invoked from within a SchedulerContinuation")
         : currentScheduler;
     if (delay > 0 || shouldYield(scheduler)) {
-        pipe(YieldError, newInstanceWith(delay), raise);
+        pipe(newInstance(YieldError, delay), raise);
     }
 };
 const schedule = (f, options) => scheduler => {

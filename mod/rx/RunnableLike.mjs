@@ -1,11 +1,11 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { reactive, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
-import { dispose, isDisposed, addTo, bindTo } from '../__internal__/util/DisposableLikeInternal.mjs';
-import { mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { createDelegatingSink, delegatingSinkMixin, DelegatingSink_delegate, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { dispose, bindTo, addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, pipeUnsafe, newInstance, getLength, pipeLazy, strictEquality, isSome, raise } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT, emptyRunnable } from '../rx.mjs';
+import { pipe, pipeUnsafe, newInstance, pipeLazy, strictEquality, isSome, raise } from '../functions.mjs';
+import { ReactiveContainerLike_sinkInto, emptyRunnableT, emptyRunnable } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
@@ -32,23 +32,22 @@ const liftT = {
     lift,
     variance: reactive,
 };
-const concat = (...runnables) => createRunnable((sink) => {
-    const runnablesLength = getLength(runnables);
-    for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
-        pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(runnables[i]), dispose());
-    }
-});
+const concat = (...runnables) => pipe(runnables, toRunnable(), concatAll());
 const concatT = {
     concat,
 };
 const concatAll = /*@__PURE__*/ (() => {
     const typedDelegatingSinkMixin = delegatingSinkMixin();
     return pipeLazy({
+        [Object_init](delegate) {
+            init(typedDelegatingSinkMixin, this, delegate);
+            pipe(this, bindTo(delegate));
+        },
         [SinkLike_notify](next) {
             const { [DelegatingSink_delegate]: delegate } = this;
-            pipe(createDelegatingSink(delegate), addTo(this), sourceFrom(next), dispose());
+            pipe(delegate, createDelegatingSink, addTo(this), sourceFrom(next), dispose());
         },
-    }, mixWith(typedDelegatingSinkMixin), createObjectFactory(), mixin => lift(delegate => pipe(mixin(delegate), bindTo(delegate))));
+    }, mixWith(typedDelegatingSinkMixin), createObjectFactory(), lift);
 })();
 const concatAllT = {
     concatAll,

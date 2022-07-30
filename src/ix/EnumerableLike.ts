@@ -1009,10 +1009,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
       pipe(createInstance(delegate, count), add(delegate));
 
     return enumerable =>
-      count > 0
-        ? pipe(enumerable, lift(operator))
-        : // FIXME: why do we need the annotations?
-          emptyEnumerable<T>();
+      count > 0 ? pipe(enumerable, lift(operator)) : emptyEnumerable();
   };
 })();
 
@@ -1219,7 +1216,6 @@ export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
       }
     }
 
-    // FIXME: InstanceFactory?
     return () => enumerable => newInstance(EnumerableIterable, enumerable);
   })();
 
