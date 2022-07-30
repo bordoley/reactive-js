@@ -56,6 +56,7 @@ import {
   SideEffect1,
   isSome,
   newInstance,
+  partial,
   pipe,
   pipeLazy,
   pipeUnsafe,
@@ -175,9 +176,7 @@ export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctU
 
     return (options?: { readonly equality?: Equality<T> }) => {
       const { equality = strictEquality } = options ?? {};
-      const operator = (delegate: SinkLike<T>): SinkLike<T> =>
-        createInstance(delegate, equality);
-      return lift(operator);
+      return pipe(createInstance, partial(equality), lift);
     };
   })();
 
@@ -198,11 +197,8 @@ export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     >(),
   );
 
-  return (mapper: Predicate<T>) => {
-    const operator = (delegate: SinkLike<T>): SinkLike<T> =>
-      createInstance(delegate, mapper);
-    return lift(operator);
-  };
+  return (predicate: Predicate<T>) =>
+    pipe(createInstance, partial(predicate), lift);
 })();
 
 export const keepT: Keep<RunnableLike> = { keep };
@@ -220,11 +216,8 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     >(),
   );
 
-  return (mapper: Function1<TA, TB>) => {
-    const operator = (delegate: SinkLike<TB>): SinkLike<TA> =>
-      createInstance(delegate, mapper);
-    return lift(operator);
-  };
+  return (mapper: Function1<TA, TB>) =>
+    pipe(createInstance, partial(mapper), lift);
 })();
 
 export const mapT: Map<RunnableLike> = { map };
@@ -244,11 +237,8 @@ export const onNotify: <T>(
     >(),
   );
 
-  return (onNotify: SideEffect1<T>) => {
-    const operator = (delegate: SinkLike<T>): SinkLike<T> =>
-      createInstance(delegate, onNotify);
-    return lift(operator);
-  };
+  return (onNotify: SideEffect1<T>) =>
+    pipe(createInstance, partial(onNotify), lift);
 })();
 
 export const run =
@@ -279,11 +269,8 @@ export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
     >(),
   );
 
-  return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => {
-    const operator = (delegate: SinkLike<TAcc>): SinkLike<T> =>
-      createInstance(delegate, reducer, initialValue);
-    return lift(operator);
-  };
+  return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+    pipe(createInstance, partial(reducer, initialValue), lift);
 })();
 
 export const scanT: Scan<RunnableLike> = { scan };
@@ -353,9 +340,7 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
   ): ContainerOperator<RunnableLike, T, T> => {
     const { count = 1 } = options;
 
-    const operator = lift((delegate: SinkLike<T>) =>
-      createSink(delegate, count),
-    );
+    const operator = pipe(createSink, partial(count), lift);
 
     return (source: RunnableLike<T>) =>
       count > 0 ? pipe(source, operator) : emptyRunnable();
