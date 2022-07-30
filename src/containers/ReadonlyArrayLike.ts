@@ -298,9 +298,9 @@ export const toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
       <T>(values: readonly T[], startIndex: number, count: number) =>
         createRunnable<T>(sink => {
           for (
-            let index = startIndex;
-            !isDisposed(sink) && count !== 0;
-            count > 0 ? index++ : index--, count > 0 ? count-- : count++
+            let index = startIndex, cnt = count;
+            !isDisposed(sink) && cnt !== 0;
+            cnt > 0 ? index++ : index--, cnt > 0 ? cnt-- : cnt++
           ) {
             sink[SinkLike_notify](values[index]);
           }
