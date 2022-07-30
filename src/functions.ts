@@ -698,43 +698,6 @@ export const newInstance: NewInstance = (
   ...args: readonly any[]
 ): any => _newInstance(Constructor, ...args);
 
-interface NewInstanceWith {
-  <T>(): Function1<Constructor<T>, T>;
-  <T, TA>(a: TA): Function1<Constructor1<TA, T>, T>;
-  <T, TA, TB>(a: TA, b: TB): Function1<Constructor2<TA, TB, T>, T>;
-  <T, TA, TB, TC>(a: TA, b: TB, c: TC): Function1<
-    Constructor3<TA, TB, TC, T>,
-    T
-  >;
-  <T, TA, TB, TC, TD>(a: TA, b: TB, c: TC, d: TD): Function1<
-    Constructor4<TA, TB, TC, TD, T>,
-    T
-  >;
-}
-
-export const newInstanceWith: NewInstanceWith =
-  (
-    ...args: readonly any[]
-  ): Function1<new (...args: readonly any[]) => any, any> =>
-  Constructor =>
-    _newInstance(Constructor, ...args);
-
-interface InstanceFactory {
-  <T>(): Function1<Constructor<T>, Factory<T>>;
-  <T, TA>(): Function1<Constructor1<TA, T>, Function1<TA, T>>;
-  <T, TA, TB>(): Function1<Constructor2<TA, TB, T>, Function2<TA, TB, T>>;
-  <T, TA, TB, TC>(): Function1<
-    Constructor3<TA, TB, TC, T>,
-    Function3<TA, TB, TC, T>
-  >;
-}
-
-export const instanceFactory: InstanceFactory =
-  () =>
-  (Constructor: new (...args: readonly any[]) => any) =>
-  (...args: readonly any[]) =>
-    _newInstance(Constructor, ...args);
-
 /**
  * Represents an unboxed value of type T or undefined.
  */

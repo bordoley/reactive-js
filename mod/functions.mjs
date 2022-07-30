@@ -136,8 +136,6 @@ const flip = (f) => (...args) => {
 const { max, min, floor } = Math;
 const _newInstance = (Constructor, ...args) => new Constructor(...args);
 const newInstance = (Constructor, ...args) => _newInstance(Constructor, ...args);
-const newInstanceWith = (...args) => Constructor => _newInstance(Constructor, ...args);
-const instanceFactory = () => (Constructor) => (...args) => _newInstance(Constructor, ...args);
 /**
  * An alias for undefined.
  */
@@ -155,4 +153,4 @@ const forEach = (f) => arr => {
     return arr;
 };
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, newInstanceWith, none, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };

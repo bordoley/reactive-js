@@ -491,10 +491,7 @@ const takeLast = /*@__PURE__*/ (() => {
     return (options = {}) => {
         const { count = 1 } = options;
         const operator = (delegate) => pipe(createInstance(delegate, count), add(delegate));
-        return enumerable => count > 0
-            ? pipe(enumerable, lift(operator))
-            : // FIXME: why do we need the annotations?
-                emptyEnumerable();
+        return enumerable => count > 0 ? pipe(enumerable, lift(operator)) : emptyEnumerable();
     };
 })();
 const takeLastT = { takeLast };
@@ -620,7 +617,6 @@ const toIterable =
             }
         }
     }
-    // FIXME: InstanceFactory?
     return () => enumerable => newInstance(EnumerableIterable, enumerable);
 })();
 const toIterableT = { toIterable };

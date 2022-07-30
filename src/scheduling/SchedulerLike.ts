@@ -34,7 +34,7 @@ import {
   isNone,
   isSome,
   max,
-  newInstanceWith,
+  newInstance,
   none,
   pipe,
   raise,
@@ -164,7 +164,7 @@ export const __yield = (options?: { delay?: number }) => {
     : currentScheduler;
 
   if (delay > 0 || shouldYield(scheduler)) {
-    pipe(YieldError, newInstanceWith(delay), raise);
+    pipe(newInstance(YieldError, delay), raise);
   }
 };
 
