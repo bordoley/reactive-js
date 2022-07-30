@@ -10,7 +10,6 @@ import {
   Predicate,
   Reducer,
   Updater,
-  identity,
 } from "./functions";
 import { DisposableLike } from "./util";
 
@@ -119,8 +118,11 @@ export type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
   ): ContainerOperator<C, ArrayBuffer, string>;
 };
 
-export type Defer<C extends ContainerLike> = Container<C> & {
-  defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
+export type Defer<C extends ContainerLike, TOptions = never> = Container<C> & {
+  defer<T>(
+    factory: Factory<ContainerOf<C, T>>,
+    options?: TOptions,
+  ): ContainerOf<C, T>;
 };
 
 export type DistinctUntilChanged<C extends ContainerLike> = Container<C> & {
@@ -176,10 +178,14 @@ export type FromValue<
   fromValue<T>(options?: TOptions): Function1<T, ContainerOf<C, T>>;
 };
 
-export type Generate<C extends ContainerLike> = Container<C> & {
+export type Generate<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
+    options?: TOptions,
   ): ContainerOf<C, T>;
 };
 
@@ -427,12 +433,6 @@ export const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"] =
 
 export const emptyReadonlyArrayT: Empty<ReadonlyArrayLike> = {
   empty: emptyReadonlyArray,
-};
-
-export const fromArrayReadonlyArray: FromArray<ReadonlyArrayLike>["fromArray"] =
-  () => identity;
-export const fromArrayReadonlyArrayT: FromArray<ReadonlyArrayLike> = {
-  fromArray: fromArrayReadonlyArray,
 };
 
 export const generateSequence: Generate<SequenceLike>["generate"] =

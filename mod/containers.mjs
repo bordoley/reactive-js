@@ -1,6 +1,4 @@
 /// <reference types="./containers.d.ts" />
-import { identity } from './functions.mjs';
-
 const emptyReadonlyArray = 
 /*@__PURE__*/ (() => {
     const _empty = [];
@@ -8,10 +6,6 @@ const emptyReadonlyArray =
 })();
 const emptyReadonlyArrayT = {
     empty: emptyReadonlyArray,
-};
-const fromArrayReadonlyArray = () => identity;
-const fromArrayReadonlyArrayT = {
-    fromArray: fromArrayReadonlyArray,
 };
 const generateSequence = 
 /*@__PURE__*/ (() => {
@@ -25,4 +19,4 @@ const generateSequenceT = {
     generate: generateSequence,
 };
 
-export { emptyReadonlyArray, emptyReadonlyArrayT, fromArrayReadonlyArray, fromArrayReadonlyArrayT, generateSequence, generateSequenceT };
+export { emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
