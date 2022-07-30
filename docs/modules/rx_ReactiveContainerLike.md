@@ -13,15 +13,15 @@
 
 ### sinkInto
 
-▸ **sinkInto**<`C`, `T`, `TSink`\>(`sink`): [`Function1`](functions.md#function1)<`C`, `C`\>
+▸ **sinkInto**<`C`, `TSink`, `T`\>(`sink`): [`Function1`](functions.md#function1)<`C`, `C`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveContainerLike`](../interfaces/rx.ReactiveContainerLike.md)<`C`\> |
+| `C` | extends [`ReactiveContainerLike`](../interfaces/rx.ReactiveContainerLike.md)<`TSink`, `T`, `C`\> |
+| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> |
 | `T` | `T` |
-| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`unknown`, `TSink`\> |
 
 #### Parameters
 
@@ -37,15 +37,15 @@ ___
 
 ### sourceFrom
 
-▸ **sourceFrom**<`C`, `T`, `TSink`\>(`source`): [`Function1`](functions.md#function1)<`TSink`, `TSink`\>
+▸ **sourceFrom**<`C`, `TSink`, `T`\>(`source`): [`Function1`](functions.md#function1)<`TSink`, `TSink`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveContainerLike`](../interfaces/rx.ReactiveContainerLike.md)<`C`\> |
+| `C` | extends [`ReactiveContainerLike`](../interfaces/rx.ReactiveContainerLike.md)<`TSink`, `T`, `C`\> |
+| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> |
 | `T` | `T` |
-| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`unknown`, `TSink`\> |
 
 #### Parameters
 

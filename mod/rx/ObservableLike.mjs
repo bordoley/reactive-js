@@ -3,9 +3,8 @@ import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs'
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { pipeUnsafe, newInstance, pipe } from '../functions.mjs';
-import { ObservableLike_observableType, ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import { O as ObservableLike_observableType, a as ReactiveContainerLike_sinkInto, b as sourceFrom } from '../ReactiveContainerLike-e32dbf9b.mjs';
 import { ObserverLike_scheduler } from '../scheduling.mjs';
-import { sourceFrom } from './ReactiveContainerLike.mjs';
 
 const getObservableType = (obs) => obs[ObservableLike_observableType];
 const TContainerOf = undefined;

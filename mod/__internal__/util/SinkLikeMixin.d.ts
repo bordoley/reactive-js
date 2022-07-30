@@ -1,4 +1,5 @@
 import { Option, Equality, Predicate, Function1, SideEffect1, Reducer, Factory } from "../../functions.mjs";
+import { ReactiveContainerLike } from "../../rx.mjs";
 import { SinkLike, SinkLike_notify } from "../../util.mjs";
 import { DisposableLike_error, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose, DisposableLike } from "./DisposableLikeInternal.mjs";
 import { Object_properties, Object_init } from "./Object.mjs";
@@ -56,17 +57,15 @@ declare const takeFirstSinkMixin: <T>() => DisposableLike & {
     [SinkLike_notify](next: T): void;
 };
 declare const TakeLastSink_last: unique symbol;
-declare const takeLastSinkMixin: <T>() => {
+declare const takeLastSinkMixin: <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(fromArray: (v: readonly T[]) => C) => {
     [Object_properties]: {
-        readonly [TakeLastSink_last]: readonly T[];
         [DisposableLike_error]: Option<Error>;
         [DisposableLike_isDisposed]: boolean;
     };
     [Object_init](this: {
-        readonly [TakeLastSink_last]: readonly T[];
         [DisposableLike_error]: Option<Error>;
         [DisposableLike_isDisposed]: boolean;
-    }, delegate: SinkLike<T>, takeLastCount: number): void;
+    }, delegate: TSink, takeLastCount: number): void;
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Error): void;
     [SinkLike_notify](next: T): void;

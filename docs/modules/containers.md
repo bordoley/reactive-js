@@ -87,7 +87,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 
 ___
 
@@ -169,7 +169,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 
 ___
 
@@ -181,7 +181,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 
 ___
 
@@ -256,7 +256,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `O` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
 
 ___
@@ -269,7 +269,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `O` | extends `Record`<`string`, `unknown`\> = `Record`<`string`, `never`\> |
 
 ___
@@ -452,7 +452,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 
 ___
 
@@ -516,7 +516,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 
 ___
 

@@ -1,8 +1,15 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / ReactiveContainerLike
 
-# Interface: ReactiveContainerLike
+# Interface: ReactiveContainerLike<TSink, T\>
 
 [rx](../modules/rx.md).ReactiveContainerLike
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TSink` | extends [`SinkLike`](util.SinkLike.md)<`T`\> |
+| `T` | `T` |
 
 ## Hierarchy
 
@@ -40,9 +47,9 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)
+• `Optional` `Readonly` **TContainerOf**: `unknown`
 
-#### Overrides
+#### Inherited from
 
 [StatefulContainerLike](containers.StatefulContainerLike.md).[TContainerOf](containers.StatefulContainerLike.md#tcontainerof)
 
@@ -50,9 +57,9 @@ ___
 
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`SinkLike`](util.SinkLike.md)<`unknown`\>
+• `Optional` `Readonly` **TStatefulContainerState**: [`DisposableLike`](util.DisposableLike.md)
 
-#### Overrides
+#### Inherited from
 
 [StatefulContainerLike](containers.StatefulContainerLike.md).[TStatefulContainerState](containers.StatefulContainerLike.md#tstatefulcontainerstate)
 
@@ -66,7 +73,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`SinkLike`](util.SinkLike.md)<`unknown`\> |
+| `sink` | `TSink` |
 
 #### Returns
 
