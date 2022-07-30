@@ -320,29 +320,6 @@ export const decorateWithDecodeWithCharsetNotify =
       },
     );
 
-export const decorateWithPairwiseNotify = <C extends ReactiveContainerLike>(
-  PairwiseSink: new <T>(
-    delegate: StatefulContainerOperatorIn<C, T, [Option<T>, T], TReactive>,
-  ) => StatefulContainerOperatorOut<C, T, [Option<T>, T], TReactive> &
-    DelegatingStatefulContainerStateOf<C, T, [Option<T>, T]> & {
-      prev: Option<T>;
-      hasPrev: boolean;
-    },
-) =>
-  decorateWithNotify(
-    PairwiseSink,
-    function notifyPairwise(
-      this: InstanceType<typeof PairwiseSink>,
-      value,
-    ): void {
-      const prev = this.hasPrev ? this.prev : none;
-
-      this.hasPrev = true;
-      this.prev = value;
-
-      pipe(this, getDelegate, notify([prev, value]));
-    },
-  );
 
 export const decorateWithReduceNotify =
   <C extends ReactiveContainerLike>() =>
