@@ -14,6 +14,8 @@ import {
   PropertyTypeOf,
   createObjectFactory,
   mixWith,
+  Object_init,
+  init
 } from "../__internal__/util/Object";
 import {
   DelegatingSink_delegate,
@@ -52,7 +54,6 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
-  getLength,
   isSome,
   newInstance,
   pipe,
@@ -64,12 +65,11 @@ import {
 import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
-  createRunnable,
   emptyRunnable,
   emptyRunnableT,
 } from "../rx";
 import { DisposableLike_error, SinkLike, SinkLike_notify } from "../util";
-import { addTo, dispose, isDisposed } from "../util/DisposableLike";
+import { addTo, dispose } from "../util/DisposableLike";
 import { sourceFrom } from "./ReactiveContainerLike";
 
 const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
@@ -108,18 +108,7 @@ const liftT: Lift<RunnableLike, TReactive> = {
 
 export const concat: Concat<RunnableLike>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]
-) =>
-  createRunnable((sink: SinkLike<T>) => {
-    const runnablesLength = getLength(runnables);
-    for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
-      pipe(
-        createDelegatingSink(sink),
-        addTo(sink),
-        sourceFrom(runnables[i]),
-        dispose(),
-      );
-    }
-  });
+) => pipe(runnables, toRunnable(), concatAll());
 
 export const concatT: Concat<RunnableLike> = {
   concat,
@@ -131,7 +120,14 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
   const typedDelegatingSinkMixin = delegatingSinkMixin<T>();
 
   return pipeLazy(
-    {
+    { 
+      [Object_init](
+        this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> & DisposableLike,
+        delegate: SinkLike<T>,
+      ) {
+        init(typedDelegatingSinkMixin, this, delegate);
+        pipe(this, bindTo(delegate));
+      },
       [SinkLike_notify](
         this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
           DisposableLike,
@@ -139,7 +135,8 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
       ) {
         const { [DelegatingSink_delegate]: delegate } = this;
         pipe(
-          createDelegatingSink(delegate),
+          delegate,
+          createDelegatingSink,
           addTo<SinkLike<T>>(this),
           sourceFrom(next),
           dispose(),
@@ -152,10 +149,7 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
       PropertyTypeOf<[typeof typedDelegatingSinkMixin]> & DisposableLike,
       SinkLike<T>
     >(),
-    mixin =>
-      lift<RunnableLike, T>(delegate =>
-        pipe(mixin(delegate), bindTo(delegate)),
-      ),
+   lift<RunnableLike, T>,
   );
 })();
 
