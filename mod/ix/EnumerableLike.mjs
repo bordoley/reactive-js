@@ -12,7 +12,7 @@ import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT }
 import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move } from '../util.mjs';
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, disposed } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { move, getCurrent, hasCurrent, forEach as forEach$1 } from '../util/EnumeratorLike.mjs';
 import { notifySink } from '../util/SinkLike.mjs';
@@ -106,26 +106,13 @@ const concatAll =
 /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
     const typedDisposableRefMixin = disposableRefMixin();
-    const neverEnumerator = pipe({
-        [Object_properties]: {},
-        [Object_init]() {
-            init(disposableMixin, this);
-        },
-        get [EnumeratorLike_current]() {
-            return raise();
-        },
-        get [EnumeratorLike_hasCurrent]() {
-            return false;
-        },
-        [SourceLike_move]() { },
-    }, mixWith(disposableMixin), createObjectFactory());
     return pipe({
         [Object_properties]: {
             delegate: none,
         },
         [Object_init](delegate) {
             init(disposableMixin, this);
-            init(typedDisposableRefMixin, this, neverEnumerator());
+            init(typedDisposableRefMixin, this, disposed);
             init(typedEnumerator, this);
             this.delegate = delegate;
             pipe(this, add(delegate));

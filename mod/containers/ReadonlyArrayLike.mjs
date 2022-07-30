@@ -166,7 +166,7 @@ const toReadonlyArrayT = {
 const toRunnable = 
 /*@__PURE__*/ (() => {
     return createFromArray((values, startIndex, count) => createRunnable(sink => {
-        for (let index = startIndex; !isDisposed(sink) && count !== 0; count > 0 ? index++ : index--, count > 0 ? count-- : count++) {
+        for (let index = startIndex, cnt = count; !isDisposed(sink) && cnt !== 0; cnt > 0 ? index++ : index--, cnt > 0 ? cnt-- : cnt++) {
             sink[SinkLike_notify](values[index]);
         }
     }));

@@ -249,10 +249,7 @@ export const pairwiseTests = <C extends ContainerLike>(
         m.fromArray(),
         m.pairwise<number>(),
         m.toReadonlyArray<readonly [number, number]>(),
-        expectArrayEquals<readonly [number, number]>(
-          [],
-          arrayEquality(),
-        ),
+        expectArrayEquals<readonly [number, number]>([], arrayEquality()),
       ),
     ),
   );
