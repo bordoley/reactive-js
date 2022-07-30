@@ -56,13 +56,11 @@
 ### Variables
 
 - [emptyReadonlyArrayT](containers.md#emptyreadonlyarrayt)
-- [fromArrayReadonlyArrayT](containers.md#fromarrayreadonlyarrayt)
 - [generateSequenceT](containers.md#generatesequencet)
 
 ### Functions
 
 - [emptyReadonlyArray](containers.md#emptyreadonlyarray)
-- [fromArrayReadonlyArray](containers.md#fromarrayreadonlyarray)
 - [generateSequence](containers.md#generatesequence)
 
 ## Type Aliases
@@ -175,13 +173,14 @@ ___
 
 ### Defer
 
-Ƭ **Defer**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `defer`: <T\>(`factory`: [`Factory`](functions.md#factory)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+Ƭ **Defer**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `defer`: <T\>(`factory`: [`Factory`](functions.md#factory)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>, `options?`: `TOptions`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
 
 ___
 
@@ -289,13 +288,14 @@ ___
 
 ### Generate
 
-Ƭ **Generate**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `generate`: <T\>(`generator`: [`Updater`](functions.md#updater)<`T`\>, `initialValue`: [`Factory`](functions.md#factory)<`T`\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+Ƭ **Generate**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `generate`: <T\>(`generator`: [`Updater`](functions.md#updater)<`T`\>, `initialValue`: [`Factory`](functions.md#factory)<`T`\>, `options?`: `TOptions`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
 
 ___
 
@@ -538,12 +538,6 @@ ___
 
 ___
 
-### fromArrayReadonlyArrayT
-
-• `Const` **fromArrayReadonlyArrayT**: [`FromArray`](containers.md#fromarray)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
-
-___
-
 ### generateSequenceT
 
 • `Const` **generateSequenceT**: [`Generate`](containers.md#generate)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
@@ -572,31 +566,9 @@ ___
 
 ___
 
-### fromArrayReadonlyArray
-
-▸ **fromArrayReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Partial`<[`FromArrayOptions`](containers.md#fromarrayoptions)\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
-
-___
-
 ### generateSequence
 
-▸ **generateSequence**<`T`\>(`generator`, `initialValue`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
+▸ **generateSequence**<`T`\>(`generator`, `initialValue`, `options?`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
 
 #### Type parameters
 
@@ -610,6 +582,7 @@ ___
 | :------ | :------ |
 | `generator` | [`Updater`](functions.md#updater)<`T`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `undefined` |
 
 #### Returns
 

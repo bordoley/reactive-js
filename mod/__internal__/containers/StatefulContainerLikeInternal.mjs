@@ -45,4 +45,4 @@ const createThrowIfEmptyOperator = (m) => (operator) => (factory) => pipe((deleg
     return lifted;
 }, lift(m));
 
-export { createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, lift, reactive };
+export { createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, reactive };
