@@ -21,7 +21,6 @@ import {
   Defer,
   Empty,
   StatefulContainerLike,
-  StatefulContainerStateOf,
   Using,
 } from "./containers";
 import {
@@ -36,6 +35,7 @@ import {
   none,
   pipe,
 } from "./functions";
+import { sinkInto } from "./rx/ReactiveContainerLike";
 import { ObserverLike } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
 import { getDispatcher, getScheduler } from "./scheduling/ObserverLike";
@@ -46,20 +46,15 @@ import { DisposableLike, SinkLike } from "./util";
 export const ReactiveContainerLike_sinkInto = Symbol(
   "ReactiveContainerLike_sinkInto",
 );
-export interface ReactiveContainerLike extends StatefulContainerLike {
-  readonly TContainerOf?: ReactiveContainerLike;
-  readonly TStatefulContainerState?: SinkLike;
-
-  [ReactiveContainerLike_sinkInto](
-    sink: StatefulContainerStateOf<ReactiveContainerLike, this["T"]>,
-  ): void;
+export interface ReactiveContainerLike<TSink extends SinkLike<T>, T>
+  extends StatefulContainerLike {
+  [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
 
-export interface RunnableLike<T = unknown> extends ReactiveContainerLike {
+export interface RunnableLike<T = unknown>
+  extends ReactiveContainerLike<SinkLike<T>, T> {
   readonly TContainerOf?: RunnableLike<this["T"]>;
   readonly TStatefulContainerState?: SinkLike<this["T"]>;
-
-  [ReactiveContainerLike_sinkInto](sink: SinkLike<T>): void;
 }
 
 export const DefaultObservable = 0;
@@ -75,9 +70,10 @@ export const ObservableLike_observableType = Symbol(
  *
  * @noInheritDoc
  */
-export interface ObservableLike<T = unknown> extends ReactiveContainerLike {
+export interface ObservableLike<T = unknown>
+  extends ReactiveContainerLike<ObserverLike<T>, T> {
   readonly TContainerOf?: ObservableLike<this["T"]>;
-  readonly TStatefulContainerState?: ObserverLike<T>;
+  readonly TStatefulContainerState?: ObserverLike<this["T"]>;
 
   readonly [ObservableLike_observableType]:
     | typeof EnumerableObservable
@@ -122,7 +118,7 @@ export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
   [SubjectLike_publish](next: T): void;
 }
 
-export type Never<C extends ReactiveContainerLike> = Container<C> & {
+export type Never<C extends StatefulContainerLike> = Container<C> & {
   never<T>(): ContainerOf<C, T>;
 };
 
@@ -183,7 +179,11 @@ export const createObservable = /*@__PURE__*/ (() => {
     newInstance(CreateObservable, f) as any;
 })();
 
-const createObservableT: CreateReactiveContainer<ObservableLike> = {
+const createObservableT: CreateReactiveContainer<
+  ObservableLike,
+  ObserverLike,
+  unknown
+> = {
   create: createObservable,
 };
 
@@ -274,41 +274,54 @@ export const createSubject = /*@__PURE__*/ (() => {
   };
 })();
 
-type CreateReactiveContainer<C extends ReactiveContainerLike> = Container<C> & {
-  create<T>(
-    onSink: SideEffect1<StatefulContainerStateOf<C, T>>,
-  ): ContainerOf<C, T>;
+type CreateReactiveContainer<
+  C extends ReactiveContainerLike<TSink, T>,
+  TSink extends SinkLike<T>,
+  T,
+> = {
+  create<T>(onSink: SideEffect1<TSink>): ContainerOf<C, T>;
 };
 
 const create =
-  <C extends ReactiveContainerLike, T>(m: CreateReactiveContainer<C>) =>
-  (onSink: (sink: StatefulContainerStateOf<C, T>) => void): ContainerOf<C, T> =>
+  <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
+    m: CreateReactiveContainer<C, TSink, T>,
+  ) =>
+  (onSink: (sink: TSink) => void): ContainerOf<C, T> =>
     m.create(onSink);
 
 const createEmpty =
-  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
-  <T>(): ContainerOf<C, T> =>
-    pipe((sink: SinkLike<T>) => {
+  <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
+    m: CreateReactiveContainer<C, TSink, T>,
+  ) =>
+  (): ContainerOf<C, T> =>
+    pipe((sink: TSink) => {
       pipe(sink, dispose());
-    }, create(m));
+    }, create<C, TSink, T>(m));
 
 const createUsing =
-  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
-  <TResource extends DisposableLike, T>(
+  <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
+    m: CreateReactiveContainer<C, TSink, T>,
+  ) =>
+  <TResource extends DisposableLike>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
-    sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
+    sourceFactory: (...resources: readonly TResource[]) => C,
   ): ContainerOf<C, T> =>
-    pipe((sink: StatefulContainerStateOf<C, T>) => {
+    pipe((sink: TSink) => {
       pipe(
         resourceFactory(),
         resources => (Array.isArray(resources) ? resources : [resources]),
         forEach<TResource>(addTo(sink)),
         resources => sourceFactory(...resources),
-      )[ReactiveContainerLike_sinkInto](sink);
-    }, create(m));
+        sinkInto<C, TSink, T>(sink),
+      );
+    }, create<C, TSink, T>(m));
 
-const createNever = <C extends ReactiveContainerLike>(
-  m: CreateReactiveContainer<C>,
+const createNever = <
+  C extends ReactiveContainerLike<TSink, T>,
+  TSink extends SinkLike<T>,
+  T,
+>(
+  m: CreateReactiveContainer<C, TSink, T>,
 ) => {
   const neverInstance: ContainerOf<C, any> = pipe(ignore, create(m));
   return <T>(): ContainerOf<C, T> => neverInstance;
@@ -375,7 +388,11 @@ export const createRunnable = /*@__PURE__*/ (() => {
     newInstance(Runnable, run);
 })();
 
-const createRunnableT: CreateReactiveContainer<RunnableLike> = {
+const createRunnableT: CreateReactiveContainer<
+  RunnableLike,
+  SinkLike,
+  unknown
+> = {
   create: createRunnable,
 };
 

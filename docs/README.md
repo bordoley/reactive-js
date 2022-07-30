@@ -12,7 +12,6 @@ Reactive-JS
 - [containers/PromiseLike](modules/containers_PromiseLike.md)
 - [containers/ReadonlyArrayLike](modules/containers_ReadonlyArrayLike.md)
 - [containers/SequenceLike](modules/containers_SequenceLike.md)
-- [containers/StatefulContainerLike](modules/containers_StatefulContainerLike.md)
 - [functions](modules/functions.md)
 - [ix](modules/ix.md)
 - [ix/EnumerableLike](modules/ix_EnumerableLike.md)

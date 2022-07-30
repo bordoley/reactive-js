@@ -90,7 +90,7 @@ export type Buffer<C extends ContainerLike> = Container<C> & {
   }) => ContainerOperator<C, T, readonly T[]>;
 };
 
-export type CatchError<C extends StatefulContainerLike> = Container<C> & {
+export type CatchError<C extends ContainerLike> = Container<C> & {
   catchError<T>(
     onError: Function1<unknown, ContainerOf<C, T> | void>,
   ): ContainerOperator<C, T, T>;
@@ -113,14 +113,13 @@ export type ConcatAll<
   ) => ContainerOperator<C, ContainerOf<C, T>, T>;
 };
 
-export type DecodeWithCharset<C extends StatefulContainerLike> =
-  Container<C> & {
-    decodeWithCharset(
-      charset?: string,
-    ): ContainerOperator<C, ArrayBuffer, string>;
-  };
+export type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
+  decodeWithCharset(
+    charset?: string,
+  ): ContainerOperator<C, ArrayBuffer, string>;
+};
 
-export type Defer<C extends StatefulContainerLike> = Container<C> & {
+export type Defer<C extends ContainerLike> = Container<C> & {
   defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 };
 
@@ -153,7 +152,7 @@ export type FromArray<
 };
 
 export type FromIterable<
-  C extends StatefulContainerLike,
+  C extends ContainerLike,
   O extends Record<string, never> = Record<string, never>,
 > = Container<C> & {
   fromIterable<T>(
@@ -162,7 +161,7 @@ export type FromIterable<
 };
 
 export type FromIterator<
-  C extends StatefulContainerLike,
+  C extends ContainerLike,
   O extends Record<string, unknown> = Record<string, never>,
 > = Container<C> & {
   fromIterator<T, TReturn = any, TNext = unknown>(
@@ -245,7 +244,7 @@ export type TakeWhile<C extends ContainerLike> = Container<C> & {
   ): ContainerOperator<C, T, T>;
 };
 
-export type ThrowIfEmpty<C extends StatefulContainerLike> = Container<C> & {
+export type ThrowIfEmpty<C extends ContainerLike> = Container<C> & {
   throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 };
 
@@ -283,7 +282,7 @@ export type ToSequence<
   ): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 };
 
-export type Using<C extends StatefulContainerLike> = Container<C> & {
+export type Using<C extends ContainerLike> = Container<C> & {
   using<TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource>,
     containerFactory: Function1<TResource, ContainerOf<C, T>>,

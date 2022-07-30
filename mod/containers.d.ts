@@ -48,7 +48,7 @@ declare type Buffer<C extends ContainerLike> = Container<C> & {
         readonly maxBufferSize?: number;
     }) => ContainerOperator<C, T, readonly T[]>;
 };
-declare type CatchError<C extends StatefulContainerLike> = Container<C> & {
+declare type CatchError<C extends ContainerLike> = Container<C> & {
     catchError<T>(onError: Function1<unknown, ContainerOf<C, T> | void>): ContainerOperator<C, T, T>;
 };
 declare type Concat<C extends ContainerLike> = Container<C> & {
@@ -57,10 +57,10 @@ declare type Concat<C extends ContainerLike> = Container<C> & {
 declare type ConcatAll<C extends ContainerLike, O = Record<string, never>> = Container<C> & {
     concatAll: <T>(options?: Partial<O>) => ContainerOperator<C, ContainerOf<C, T>, T>;
 };
-declare type DecodeWithCharset<C extends StatefulContainerLike> = Container<C> & {
+declare type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
     decodeWithCharset(charset?: string): ContainerOperator<C, ArrayBuffer, string>;
 };
-declare type Defer<C extends StatefulContainerLike> = Container<C> & {
+declare type Defer<C extends ContainerLike> = Container<C> & {
     defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 };
 declare type DistinctUntilChanged<C extends ContainerLike> = Container<C> & {
@@ -81,10 +81,10 @@ declare type FromArrayOptions = {
 declare type FromArray<C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions> = Container<C> & {
     fromArray<T>(options?: Partial<O>): Function1<readonly T[], ContainerOf<C, T>>;
 };
-declare type FromIterable<C extends StatefulContainerLike, O extends Record<string, never> = Record<string, never>> = Container<C> & {
+declare type FromIterable<C extends ContainerLike, O extends Record<string, never> = Record<string, never>> = Container<C> & {
     fromIterable<T>(options?: Partial<O>): Function1<Iterable<T>, ContainerOf<C, T>>;
 };
-declare type FromIterator<C extends StatefulContainerLike, O extends Record<string, unknown> = Record<string, never>> = Container<C> & {
+declare type FromIterator<C extends ContainerLike, O extends Record<string, unknown> = Record<string, never>> = Container<C> & {
     fromIterator<T, TReturn = any, TNext = unknown>(options?: Partial<O>): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
 };
 declare type FromValue<C extends ContainerLike, TOptions = never> = Container<C> & {
@@ -139,7 +139,7 @@ declare type TakeWhile<C extends ContainerLike> = Container<C> & {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
 };
-declare type ThrowIfEmpty<C extends StatefulContainerLike> = Container<C> & {
+declare type ThrowIfEmpty<C extends ContainerLike> = Container<C> & {
     throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 };
 declare type ToIterable<C extends ContainerLike, TOptions = never> = Container<C> & {
@@ -154,7 +154,7 @@ declare type ToReadonlyArray<C extends ContainerLike, TOptions = never> = Contai
 declare type ToSequence<C extends ContainerLike, TOptions = never> = Container<C> & {
     toSequence<T>(options?: TOptions): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 };
-declare type Using<C extends StatefulContainerLike> = Container<C> & {
+declare type Using<C extends ContainerLike> = Container<C> & {
     using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource>, containerFactory: Function1<TResource, ContainerOf<C, T>>): ContainerOf<C, T>;
     using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, T>(resourceFactory: Factory<[
         TResource1,

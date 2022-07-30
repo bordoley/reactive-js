@@ -64,7 +64,7 @@ ___
 
 ### TStatefulContainerState
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`ObserverLike`](scheduling.ObserverLike.md)<`T`\>
+• `Optional` `Readonly` **TStatefulContainerState**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
 
 #### Inherited from
 

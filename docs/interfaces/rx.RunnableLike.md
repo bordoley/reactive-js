@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)
+- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`SinkLike`](util.SinkLike.md)<`T`\>, `T`\>
 
   ↳ **`RunnableLike`**
 
@@ -74,6 +74,6 @@ ___
 
 `void`
 
-#### Overrides
+#### Inherited from
 
 [ReactiveContainerLike](rx.ReactiveContainerLike.md).[[ReactiveContainerLike_sinkInto]](rx.ReactiveContainerLike.md#[reactivecontainerlike_sinkinto])

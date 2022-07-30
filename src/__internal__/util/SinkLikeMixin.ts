@@ -12,6 +12,8 @@ import {
   pipeLazy,
   returns,
 } from "../../functions";
+import { ReactiveContainerLike } from "../../rx";
+import { sinkInto } from "../../rx/ReactiveContainerLike";
 import { SinkLike, SinkLike_notify } from "../../util";
 import { notify } from "../../util/SinkLike";
 import {
@@ -26,7 +28,9 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
   Error,
+  addTo,
   dispose,
+  onComplete,
 } from "./DisposableLikeInternal";
 import {
   Object_init,
@@ -456,19 +460,23 @@ export const takeFirstSinkMixin: <T>() => DisposableLike & {
 
 export const TakeLastSink_last = Symbol("TakeLastSink_last");
 
-export const takeLastSinkMixin: <T>() => {
+export const takeLastSinkMixin: <
+  C extends ReactiveContainerLike<TSink, T>,
+  TSink extends SinkLike<T>,
+  T,
+>(
+  fromArray: (v: readonly T[]) => C,
+) => {
   [Object_properties]: {
-    readonly [TakeLastSink_last]: readonly T[];
     [DisposableLike_error]: Option<Error>;
     [DisposableLike_isDisposed]: boolean;
   };
   [Object_init](
     this: {
-      readonly [TakeLastSink_last]: readonly T[];
       [DisposableLike_error]: Option<Error>;
       [DisposableLike_isDisposed]: boolean;
     },
-    delegate: SinkLike<T>,
+    delegate: TSink,
     takeLastCount: number,
   ): void;
   [DisposableLike_add](
@@ -477,7 +485,9 @@ export const takeLastSinkMixin: <T>() => {
   ): void;
   [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
-} = /*@__PURE__*/ (<T>() => {
+} = <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
+  fromArray: (v: readonly T[]) => C,
+) => {
   const TakeLastSink_private_takeLastCount = Symbol(
     "TakeLastSink_private_takeLastCount",
   );
@@ -496,14 +506,22 @@ export const takeLastSinkMixin: <T>() => {
         [TakeLastSink_last]: none as any,
       },
       [Object_init](
-        this: TProperties,
-        delegate: SinkLike<T>,
+        this: TProperties & DisposableLike,
+        delegate: TSink,
         takeLastCount: number,
       ) {
         init(disposableMixin, this);
         this[Sink_private_delegate] = delegate;
         this[TakeLastSink_private_takeLastCount] = takeLastCount;
         this[TakeLastSink_last] = [];
+
+        pipe(
+          this,
+          addTo(delegate),
+          onComplete(() => {
+            pipe(this[TakeLastSink_last], fromArray, sinkInto(delegate));
+          }),
+        );
       },
       [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
         const { [TakeLastSink_last]: last } = this;
@@ -516,9 +534,8 @@ export const takeLastSinkMixin: <T>() => {
       },
     },
     mixWith(disposableMixin),
-    returns,
   );
-})();
+};
 
 export const takeWhileSinkMixin: <T>() => DisposableLike & {
   [Object_properties]: unknown;

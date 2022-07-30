@@ -4,10 +4,12 @@ import {
   ContainerLike,
   ContainerOf,
   ContainerOperator,
+  Defer,
   Empty,
   EverySatisfy,
   FromArray,
   FromArrayOptions,
+  FromIterator,
   FromValue,
   Keep,
   Map,
@@ -27,7 +29,9 @@ import {
   isEqualTo,
   isSome,
   negate,
+  newInstance,
   pipe,
+  pipeLazy,
   returns,
 } from "../functions";
 
@@ -62,6 +66,19 @@ export const contains = <C extends ContainerLike, T>(
   options: { readonly equality?: Equality<T> } = {},
 ): ContainerOperator<C, T, boolean> => someSatisfy(isEqualTo(value, options));
 
+export const encodeUtf8 =
+  <C extends ContainerLike>(
+    m: Defer<C> & Map<C>,
+  ): ContainerOperator<C, string, Uint8Array> =>
+  obs =>
+    m.defer(() => {
+      const textEncoder = newInstance(TextEncoder);
+      return pipe(
+        obs,
+        m.map(s => textEncoder.encode(s)),
+      );
+    });
+
 export function endWith<
   C extends ContainerLike,
   T,
@@ -89,6 +106,24 @@ export const fromOption =
   ): Function1<Option<T>, ContainerOf<C, T>> =>
   option =>
     isSome(option) ? pipe(option, fromValue(options)) : empty(options);
+
+export const genMap = <
+  C extends ContainerLike,
+  TA,
+  TB,
+  OConcatAll extends Record<string, never> = Record<string, never>,
+  OFromIterator extends Record<string, never> = Record<string, never>,
+  TReturn = any,
+  TNext = unknown,
+>(
+  m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>,
+  mapper: Function1<TA, Generator<TB, TReturn, TNext>>,
+  options?: Partial<OConcatAll & OFromIterator>,
+): ContainerOperator<C, TA, TB> =>
+  compose(
+    m.map(x => pipe(pipeLazy(x, mapper), m.fromIterator<TB>(options))),
+    m.concatAll(options),
+  );
 
 export const keepType = <C extends ContainerLike, TA, TB extends TA>(
   { keep }: Keep<C>,

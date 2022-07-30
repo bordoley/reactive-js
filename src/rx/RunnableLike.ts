@@ -17,7 +17,6 @@ import {
 } from "../__internal__/util/Object";
 import {
   DelegatingSink_delegate,
-  TakeLastSink_last,
   createDelegatingSink,
   createSink,
   delegatingSinkMixin,
@@ -70,10 +69,10 @@ import {
   emptyRunnableT,
 } from "../rx";
 import { DisposableLike_error, SinkLike, SinkLike_notify } from "../util";
-import { addTo, dispose, isDisposed, onComplete } from "../util/DisposableLike";
-import { sinkInto, sourceFrom } from "./ReactiveContainerLike";
+import { addTo, dispose, isDisposed } from "../util/DisposableLike";
+import { sourceFrom } from "./ReactiveContainerLike";
 
-const lift = /*@__PURE__*/ (() => {
+const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedRunnable<T> implements RunnableLike<T> {
     constructor(
       readonly src: RunnableLike<any>,
@@ -153,7 +152,10 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
       PropertyTypeOf<[typeof typedDelegatingSinkMixin]> & DisposableLike,
       SinkLike<T>
     >(),
-    mixin => lift(delegate => pipe(mixin(delegate), bindTo(delegate))),
+    mixin =>
+      lift<RunnableLike, T>(delegate =>
+        pipe(mixin(delegate), bindTo(delegate)),
+      ),
   );
 })();
 
@@ -335,14 +337,16 @@ export const takeFirstT: TakeFirst<RunnableLike> = { takeFirst };
 export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedTakeLastSinkMixin = takeLastSinkMixin<T>();
+  const typedTakeLastSinkMixin = takeLastSinkMixin<
+    RunnableLike<T>,
+    SinkLike<T>,
+    T
+  >(toRunnable());
 
   const createSink = pipe(
     typedTakeLastSinkMixin,
     createObjectFactory<
-      SinkLike<T> & {
-        readonly [TakeLastSink_last]: readonly T[];
-      },
+      SinkLike<T>,
       PropertyTypeOf<[typeof typedTakeLastSinkMixin]>,
       SinkLike<T>,
       number
@@ -354,16 +358,9 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
   ): ContainerOperator<RunnableLike, T, T> => {
     const { count = 1 } = options;
 
-    const operator = lift((delegate: SinkLike<T>) => {
-      const sink = pipe(
-        createSink(delegate, count),
-        addTo(delegate),
-        onComplete(() => {
-          pipe(sink[TakeLastSink_last], toRunnable(), sinkInto(delegate));
-        }),
-      );
-      return sink;
-    });
+    const operator = lift((delegate: SinkLike<T>) =>
+      createSink(delegate, count),
+    );
 
     return (source: RunnableLike<T>) =>
       count > 0 ? pipe(source, operator) : emptyRunnable();
@@ -399,7 +396,7 @@ export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
       const result: T[] = [];
       pipe(
         runnable,
-        onNotify(x => result.push(x)),
+        onNotify<T>(x => result.push(x)),
         run(),
       );
       return result;

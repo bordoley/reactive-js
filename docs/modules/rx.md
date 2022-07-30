@@ -56,7 +56,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveContainerLike`](../interfaces/rx.ReactiveContainerLike.md) |
+| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
 
 ___
 
