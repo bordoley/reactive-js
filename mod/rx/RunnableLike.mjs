@@ -1,14 +1,15 @@
 /// <reference types="./RunnableLike.d.ts" />
+import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
 import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
-import { dispose, bindTo, addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
 import { Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, pipeUnsafe, newInstance, pipeLazy, returns, isSome, raise } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto, emptyRunnableT } from '../rx.mjs';
+import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
+import { dispose, bindTo, addTo, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const lift = /*@__PURE__*/ (() => {
     class LiftedRunnable {
@@ -80,6 +81,16 @@ const pairwise = /*@__PURE__*/ (() => {
     return pipe(typedPairwiseSinkMixin, createObjectFactory(), lift, returns);
 })();
 const pairwiseT = { pairwise };
+const repeat = /*@__PURE__*/ (() => {
+    return createRepeatOperator((delegate, predicate) => createRunnable(sink => {
+        let count = 0;
+        do {
+            pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(delegate), dispose());
+            count++;
+        } while (!isDisposed(sink) && predicate(count));
+    }));
+})();
+const repeatT = { repeat };
 const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose(), ({ [DisposableLike_error]: error }) => {
     if (isSome(error)) {
         raise(error.cause);
@@ -125,4 +136,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };

@@ -14,12 +14,6 @@ import {
 } from "../../functions";
 import { ReactiveContainerLike } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
-import { SinkLike, SinkLike_notify } from "../../util";
-import { notify } from "../../util/SinkLike";
-import {
-  delegatingDisposableMixin,
-  disposableMixin,
-} from "../util/DisposableLikeMixins";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -28,10 +22,15 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
   Error,
-  addTo,
-  dispose,
-  onComplete,
-} from "./DisposableLikeInternal";
+  SinkLike,
+  SinkLike_notify,
+} from "../../util";
+import { addTo, dispose, onComplete } from "../../util/DisposableLike";
+import { notify } from "../../util/SinkLike";
+import {
+  delegatingDisposableMixin,
+  disposableMixin,
+} from "../util/DisposableLikeMixins";
 import {
   Object_init,
   Object_properties,

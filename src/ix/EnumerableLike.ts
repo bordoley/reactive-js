@@ -112,6 +112,7 @@ import {
   EnumeratorLike_hasCurrent,
   SinkLike,
   SourceLike_move,
+  disposed,
 } from "../util";
 import {
   add,
@@ -307,27 +308,6 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     const typedEnumerator = enumeratorMixin<T>();
     const typedDisposableRefMixin = disposableRefMixin<EnumeratorLike<T>>();
 
-    const neverEnumerator: Factory<EnumeratorLike> = pipe(
-      {
-        [Object_properties]: {},
-        [Object_init](this: PropertyTypeOf<[typeof disposableMixin]>) {
-          init(disposableMixin, this);
-        },
-        get [EnumeratorLike_current](): unknown {
-          return raise();
-        },
-        get [EnumeratorLike_hasCurrent](): boolean {
-          return false;
-        },
-        [SourceLike_move]() {},
-      },
-      mixWith(disposableMixin),
-      createObjectFactory<
-        EnumeratorLike,
-        PropertyTypeOf<[typeof disposableMixin]>
-      >(),
-    );
-
     type TProperties = PropertyTypeOf<
       [
         typeof disposableMixin,
@@ -348,7 +328,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
           delegate: EnumeratorLike<EnumerableLike<T>>,
         ) {
           init(disposableMixin, this);
-          init(typedDisposableRefMixin, this, neverEnumerator());
+          init(typedDisposableRefMixin, this, disposed);
           init(typedEnumerator, this);
           this.delegate = delegate;
 

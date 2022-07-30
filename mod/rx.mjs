@@ -1,11 +1,12 @@
 /// <reference types="./rx.d.ts" />
-import { dispose, isDisposed, onDisposed, addIgnoringChildErrors, addTo } from './__internal__/util/DisposableLikeInternal.mjs';
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, newInstance, none, getLength, max, forEach, ignore } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
 import { schedule } from './scheduling/SchedulerLike.mjs';
+import './util/DisposableLike.mjs';
+import { dispose, isDisposed, onDisposed, addIgnoringChildErrors, addTo } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
 const ReactiveContainerLike_sinkInto = Symbol("ReactiveContainerLike_sinkInto");

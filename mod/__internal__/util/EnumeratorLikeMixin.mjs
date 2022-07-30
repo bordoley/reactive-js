@@ -1,8 +1,9 @@
 /// <reference types="./EnumeratorLikeMixin.d.ts" />
 import { pipe, none, raise, returns } from '../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../util.mjs';
-import { isDisposed } from './DisposableLikeInternal.mjs';
+import '../../util/DisposableLike.mjs';
 import { Object_properties, Object_init } from './Object.mjs';
+import { isDisposed } from './DisposableLikeInternal.mjs';
 
 const enumeratorMixin = /*@__PURE__*/ (() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");

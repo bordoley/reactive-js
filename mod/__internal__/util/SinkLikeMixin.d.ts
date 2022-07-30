@@ -1,7 +1,6 @@
 import { Option, Equality, SideEffect1, Predicate, Function1, Reducer, Factory } from "../../functions.mjs";
 import { ReactiveContainerLike } from "../../rx.mjs";
-import { SinkLike, SinkLike_notify } from "../../util.mjs";
-import { DisposableLike_error, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose, DisposableLike } from "./DisposableLikeInternal.mjs";
+import { SinkLike, DisposableLike_error, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose, SinkLike_notify, DisposableLike } from "../../util.mjs";
 import { Object_properties, Object_init } from "./Object.mjs";
 declare const createSink: <T>() => SinkLike<T>;
 declare const DelegatingSink_delegate: unique symbol;

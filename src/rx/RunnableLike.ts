@@ -1,3 +1,4 @@
+import { createRepeatOperator } from "../__internal__/containers/ContainerLikeInternal";
 import {
   Lift,
   TReactive,
@@ -12,11 +13,6 @@ import {
   createTakeWhileOperator,
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
-import {
-  DisposableLike,
-  bindTo,
-  isDisposed,
-} from "../__internal__/util/DisposableLikeInternal";
 import {
   Object_init,
   PropertyTypeOf,
@@ -75,13 +71,17 @@ import {
 import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
-  emptyRunnableT,
   createRunnable,
+  emptyRunnableT,
 } from "../rx";
-import { DisposableLike_error, SinkLike, SinkLike_notify } from "../util";
-import { addTo, dispose } from "../util/DisposableLike";
+import {
+  DisposableLike,
+  DisposableLike_error,
+  SinkLike,
+  SinkLike_notify,
+} from "../util";
+import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
 import { sourceFrom } from "./ReactiveContainerLike";
-import { createRepeatOperator } from "../__internal__/containers/ContainerLikeInternal";
 
 const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedRunnable<T> implements RunnableLike<T> {
