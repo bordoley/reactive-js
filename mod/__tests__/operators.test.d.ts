@@ -47,6 +47,16 @@ declare const mapTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
+declare const pairwiseTests: <C extends ContainerLike>(m: Container<C> & {
+    pairwise<T>(): ContainerOperator<C, T, readonly [
+        T,
+        T
+    ]>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
 declare const repeatTests: <C extends ContainerLike>(m: Container<C> & {
     repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
     repeat<T_1>(count: number): ContainerOperator<C, T_1, T_1>;
@@ -176,4 +186,4 @@ declare const zipTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
-export { bufferTests, concatAllTests, concatTests, distinctUntilChangedTests, keepTests, mapTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };
+export { bufferTests, concatAllTests, concatTests, distinctUntilChangedTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };

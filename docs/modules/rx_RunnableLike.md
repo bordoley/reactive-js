@@ -12,6 +12,7 @@
 - [forEachT](rx_RunnableLike.md#foreacht)
 - [keepT](rx_RunnableLike.md#keept)
 - [mapT](rx_RunnableLike.md#mapt)
+- [pairwiseT](rx_RunnableLike.md#pairwiset)
 - [scanT](rx_RunnableLike.md#scant)
 - [skipFirstT](rx_RunnableLike.md#skipfirstt)
 - [takeFirstT](rx_RunnableLike.md#takefirstt)
@@ -27,6 +28,7 @@
 - [forEach](rx_RunnableLike.md#foreach)
 - [keep](rx_RunnableLike.md#keep)
 - [map](rx_RunnableLike.md#map)
+- [pairwise](rx_RunnableLike.md#pairwise)
 - [run](rx_RunnableLike.md#run)
 - [scan](rx_RunnableLike.md#scan)
 - [skipFirst](rx_RunnableLike.md#skipfirst)
@@ -70,6 +72,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](containers.md#map)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### pairwiseT
+
+• `Const` **pairwiseT**: [`Pairwise`](containers.md#pairwise)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -242,6 +250,22 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### pairwise
+
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
 
 ___
 

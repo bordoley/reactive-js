@@ -6,6 +6,7 @@ import {
   distinctUntilChangedT,
   keepT,
   mapT,
+  pairwiseT,
   repeatT,
   scanT,
   skipFirstT,
@@ -21,6 +22,7 @@ import {
   distinctUntilChangedTests,
   keepTests,
   mapTests,
+  pairwiseTests,
   repeatTests,
   scanTests,
   skipFirstTests,
@@ -55,6 +57,11 @@ export const SequenceLikeTests = describe(
   mapTests({
     fromArray: toSequence,
     ...mapT,
+    ...toReadonlyArrayT,
+  }),
+  pairwiseTests({
+    fromArray: toSequence,
+    ...pairwiseT,
     ...toReadonlyArrayT,
   }),
   repeatTests({

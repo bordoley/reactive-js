@@ -104,7 +104,7 @@ const mapSinkMixin = /*@__PURE__*/ (() => {
     return pipe({
         [Object_properties]: {
             [Sink_private_delegate]: none,
-            mapper: none,
+            [MapSink_private_mapper]: none,
         },
         [Object_init](delegate, mapper) {
             init(delegatingDisposableMixin, this, delegate);
@@ -114,6 +114,29 @@ const mapSinkMixin = /*@__PURE__*/ (() => {
         [SinkLike_notify](next) {
             const mapped = this[MapSink_private_mapper](next);
             pipe(this[Sink_private_delegate], notify(mapped));
+        },
+    }, mixWith(delegatingDisposableMixin), returns);
+})();
+const pairwiseSinkMixin = /*@__PURE__*/ (() => {
+    const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
+    const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
+    return pipe({
+        [Object_properties]: {
+            [Sink_private_delegate]: none,
+            [PairwiseSink_private_prev]: none,
+            [PairwiseSink_private_hasPrev]: false,
+        },
+        [Object_init](delegate) {
+            init(delegatingDisposableMixin, this, delegate);
+            this[Sink_private_delegate] = delegate;
+        },
+        [SinkLike_notify](next) {
+            const prev = this[PairwiseSink_private_prev];
+            if (this[PairwiseSink_private_hasPrev]) {
+                pipe(this[Sink_private_delegate], notify([prev, next]));
+            }
+            this[PairwiseSink_private_hasPrev] = true;
+            this[PairwiseSink_private_prev] = next;
         },
     }, mixWith(delegatingDisposableMixin), returns);
 })();
@@ -246,4 +269,4 @@ const takeWhileSinkMixin = /*@__PURE__*/ (() => {
     }, mixWith(delegatingDisposableMixin), returns);
 })();
 
-export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
