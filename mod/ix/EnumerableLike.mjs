@@ -7,7 +7,7 @@ import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, max, strictEquality, pipeLazy, isNone, alwaysTrue, isSome, identity, forEach as forEach$1 } from '../functions.mjs';
+import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, max, partial, strictEquality, pipeLazy, isNone, alwaysTrue, isSome, identity, forEach as forEach$1 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT, emptyEnumerable } from '../ix.mjs';
 import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -16,7 +16,7 @@ import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move } fr
 import '../util/DisposableLike.mjs';
 import { move, getCurrent, hasCurrent, forEach } from '../util/EnumeratorLike.mjs';
 import { notifySink } from '../util/SinkLike.mjs';
-import { dispose, add, isDisposed, addTo, bindTo, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { add, dispose, isDisposed, addTo, bindTo, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
 const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
@@ -81,6 +81,7 @@ const buffer = /*@__PURE__*/ (() => {
             init(typedEnumerator, this);
             this.delegate = delegate;
             this.maxBufferSize = maxBufferSize;
+            pipe(this, add(delegate));
         },
         [SourceLike_move]() {
             const buffer = [];
@@ -100,8 +101,7 @@ const buffer = /*@__PURE__*/ (() => {
     return (options = {}) => {
         var _a;
         const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER, 1);
-        const operator = (delegate) => pipe(createInstance(delegate, maxBufferSize), add(delegate));
-        return lift(operator);
+        return pipe(createInstance, partial(maxBufferSize), lift);
     };
 })();
 const bufferT = {
@@ -193,8 +193,7 @@ const distinctUntilChanged =
     }, mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory());
     return (options) => {
         const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
-        const operator = (delegate) => createInstance(delegate, equality);
-        return lift(operator);
+        return pipe(createInstance, partial(equality), lift);
     };
 })();
 const distinctUntilChangedT = {
@@ -220,10 +219,7 @@ const keep = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory());
-    return (predicate) => {
-        const operator = (delegate) => createInstance(delegate, predicate);
-        return lift(operator);
-    };
+    return (predicate) => pipe(createInstance, partial(predicate), lift);
 })();
 const keepT = {
     keep,
@@ -253,10 +249,7 @@ const map = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory());
-    return (mapper) => {
-        const operator = (delegate) => createInstance(delegate, mapper);
-        return lift(operator);
-    };
+    return (mapper) => pipe(createInstance, partial(mapper), lift);
 })();
 const mapT = { map };
 const onNotify = /*@__PURE__*/ (() => {
@@ -279,10 +272,7 @@ const onNotify = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory());
-    return (onNotify) => {
-        const operator = (delegate) => createInstance(delegate, onNotify);
-        return lift(operator);
-    };
+    return (onNotify) => pipe(createInstance, partial(onNotify), lift);
 })();
 const pairwise = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
@@ -296,8 +286,7 @@ const pairwise = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory());
-    const operator = (delegate) => createInstance(delegate);
-    return pipeLazy(operator, lift);
+    return pipeLazy(createInstance, lift);
 })();
 const pairwiseT = {
     pairwise,
@@ -392,10 +381,7 @@ const scan = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory());
-    return (scanner, initialValue) => {
-        const operator = (delegate) => createInstance(delegate, scanner, initialValue);
-        return lift(operator);
-    };
+    return (scanner, initialValue) => pipe(createInstance, partial(scanner, initialValue), lift);
 })();
 const scanT = {
     scan,
@@ -471,6 +457,7 @@ const takeLast = /*@__PURE__*/ (() => {
             init(typedDelegatingEnumeratorMixin, this, delegate);
             this.maxCount = maxCount;
             this.isStarted = false;
+            pipe(this, add(delegate));
         },
         [SourceLike_move]() {
             if (!isDisposed(this) && !this.isStarted) {
@@ -490,8 +477,8 @@ const takeLast = /*@__PURE__*/ (() => {
     }, mixWith(disposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory());
     return (options = {}) => {
         const { count = 1 } = options;
-        const operator = (delegate) => pipe(createInstance(delegate, count), add(delegate));
-        return enumerable => count > 0 ? pipe(enumerable, lift(operator)) : emptyEnumerable();
+        const operator = pipe(createInstance, partial(count), lift);
+        return enumerable => count > 0 ? pipe(enumerable, operator) : emptyEnumerable();
     };
 })();
 const takeLastT = { takeLast };

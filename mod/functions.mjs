@@ -152,5 +152,6 @@ const forEach = (f) => arr => {
     arr.forEach(f);
     return arr;
 };
+const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };

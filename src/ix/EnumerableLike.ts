@@ -73,6 +73,7 @@ import {
   max,
   newInstance,
   none,
+  partial,
   pipe,
   pipeLazy,
   pipeUnsafe,
@@ -263,6 +264,8 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
         init(typedEnumerator, this);
         this.delegate = delegate;
         this.maxBufferSize = maxBufferSize;
+
+        pipe(this, add(delegate));
       },
       [SourceLike_move](
         this: TProperties & MutableEnumeratorLike<readonly T[]>,
@@ -299,10 +302,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   ) => {
     const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
-    const operator = (delegate: EnumeratorLike<T>) =>
-      pipe(createInstance(delegate, maxBufferSize), add(delegate));
-
-    return lift(operator);
+    return pipe(createInstance, partial(maxBufferSize), lift);
   };
 })();
 
@@ -461,9 +461,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
 
     return (options?: { readonly equality?: Equality<T> }) => {
       const { equality = strictEquality } = options ?? {};
-      const operator = (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
-        createInstance(delegate, equality);
-      return lift(operator);
+      return pipe(createInstance, partial(equality), lift);
     };
   })();
 
@@ -514,11 +512,8 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     >(),
   );
 
-  return (predicate: Predicate<T>) => {
-    const operator = (delegate: EnumeratorLike<T>) =>
-      createInstance(delegate, predicate as Predicate<unknown>);
-    return lift(operator);
-  };
+  return (predicate: Predicate<T>) =>
+    pipe(createInstance, partial(predicate), lift);
 })();
 
 export const keepT: Keep<EnumerableLike> = {
@@ -572,11 +567,8 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     >(),
   );
 
-  return (mapper: Function1<TA, TB>) => {
-    const operator = (delegate: EnumeratorLike<TA>): EnumeratorLike<TB> =>
-      createInstance(delegate, mapper);
-    return lift(operator);
-  };
+  return (mapper: Function1<TA, TB>) =>
+    pipe(createInstance, partial(mapper), lift);
 })();
 
 export const mapT: Map<EnumerableLike> = { map };
@@ -623,11 +615,8 @@ export const onNotify: <T>(
     >(),
   );
 
-  return (onNotify: SideEffect1<T>) => {
-    const operator = (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
-      createInstance(delegate, onNotify);
-    return lift(operator);
-  };
+  return (onNotify: SideEffect1<T>) =>
+    pipe(createInstance, partial(onNotify), lift);
 })();
 
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
@@ -663,11 +652,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
     >(),
   );
 
-  const operator = (
-    delegate: EnumeratorLike<T>,
-  ): EnumeratorLike<readonly [Option<any>, any]> => createInstance(delegate);
-
-  return pipeLazy(operator, lift);
+  return pipeLazy(createInstance, lift);
 })();
 
 export const pairwiseT: Pairwise<EnumerableLike> = {
@@ -816,12 +801,8 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
     >(),
   );
 
-  return (scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => {
-    const operator = (delegate: EnumeratorLike<T>): EnumeratorLike<TAcc> =>
-      createInstance(delegate, scanner, initialValue);
-
-    return lift(operator);
-  };
+  return (scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+    pipe(createInstance, partial(scanner, initialValue), lift);
 })();
 
 export const scanT: Scan<EnumerableLike> = {
@@ -956,7 +937,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
         isStarted: false,
       },
       [Object_init](
-        this: TProperties,
+        this: TProperties & DisposableLike,
         delegate: EnumeratorLike<T>,
         maxCount: number,
       ) {
@@ -964,6 +945,8 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.maxCount = maxCount;
         this.isStarted = false;
+
+        pipe(this, add(delegate));
       },
       [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
         if (!isDisposed(this) && !this.isStarted) {
@@ -1005,11 +988,10 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
   ): ContainerOperator<EnumerableLike, T, T> => {
     const { count = 1 } = options;
 
-    const operator = (delegate: EnumeratorLike<T>): EnumeratorLike<T> =>
-      pipe(createInstance(delegate, count), add(delegate));
+    const operator = pipe(createInstance, partial(count), lift);
 
     return enumerable =>
-      count > 0 ? pipe(enumerable, lift(operator)) : emptyEnumerable();
+      count > 0 ? pipe(enumerable, operator) : emptyEnumerable();
   };
 })();
 

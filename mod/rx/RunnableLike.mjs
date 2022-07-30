@@ -4,7 +4,7 @@ import { dispose, bindTo, addTo } from '../__internal__/util/DisposableLikeInter
 import { Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, pipeUnsafe, newInstance, pipeLazy, strictEquality, isSome, raise } from '../functions.mjs';
+import { pipe, pipeUnsafe, newInstance, pipeLazy, strictEquality, partial, isSome, raise } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto, emptyRunnableT, emptyRunnable } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
@@ -58,8 +58,7 @@ const distinctUntilChanged =
     const createInstance = pipe(typedDistinctUntilChangedSinkMixin, createObjectFactory());
     return (options) => {
         const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
-        const operator = (delegate) => createInstance(delegate, equality);
-        return lift(operator);
+        return pipe(createInstance, partial(equality), lift);
     };
 })();
 const distinctUntilChangedT = {
@@ -68,28 +67,19 @@ const distinctUntilChangedT = {
 const keep = /*@__PURE__*/ (() => {
     const typedKeepSinkMixin = keepSinkMixin();
     const createInstance = pipe(typedKeepSinkMixin, createObjectFactory());
-    return (mapper) => {
-        const operator = (delegate) => createInstance(delegate, mapper);
-        return lift(operator);
-    };
+    return (predicate) => pipe(createInstance, partial(predicate), lift);
 })();
 const keepT = { keep };
 const map = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
     const createInstance = pipe(typedMapSinkMixin, createObjectFactory());
-    return (mapper) => {
-        const operator = (delegate) => createInstance(delegate, mapper);
-        return lift(operator);
-    };
+    return (mapper) => pipe(createInstance, partial(mapper), lift);
 })();
 const mapT = { map };
 const onNotify = /*@__PURE__*/ (() => {
     const typedOnNotifySinkMixin = onNotifySinkMixin();
     const createInstance = pipe(typedOnNotifySinkMixin, createObjectFactory());
-    return (onNotify) => {
-        const operator = (delegate) => createInstance(delegate, onNotify);
-        return lift(operator);
-    };
+    return (onNotify) => pipe(createInstance, partial(onNotify), lift);
 })();
 const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose(), ({ [DisposableLike_error]: error }) => {
     if (isSome(error)) {
@@ -99,10 +89,7 @@ const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose
 const scan = /*@__PURE__*/ (() => {
     const typedScanSinkMixin = scanSinkMixin();
     const createInstance = pipe(typedScanSinkMixin, createObjectFactory());
-    return (reducer, initialValue) => {
-        const operator = (delegate) => createInstance(delegate, reducer, initialValue);
-        return lift(operator);
-    };
+    return (reducer, initialValue) => pipe(createInstance, partial(reducer, initialValue), lift);
 })();
 const scanT = { scan };
 const skipFirst = /*@__PURE__*/ (() => {
@@ -123,7 +110,7 @@ const takeLast = /*@__PURE__*/ (() => {
     const createSink = pipe(typedTakeLastSinkMixin, createObjectFactory());
     return (options = {}) => {
         const { count = 1 } = options;
-        const operator = lift((delegate) => createSink(delegate, count));
+        const operator = pipe(createSink, partial(count), lift);
         return (source) => count > 0 ? pipe(source, operator) : emptyRunnable();
     };
 })();
