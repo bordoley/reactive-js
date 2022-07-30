@@ -1,3 +1,4 @@
+import { createRepeatOperator } from "../__internal__/containers/ContainerLikeInternal";
 import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
@@ -36,10 +37,8 @@ import {
   Option,
   Predicate,
   Reducer,
-  alwaysTrue,
   callWith,
   getLength,
-  isNone,
   isSome,
   none,
   pipe,
@@ -279,12 +278,12 @@ export const takeFirstT: TakeFirst<SequenceLike> = {
   takeFirst,
 };
 
-export const repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (() => {
+export const repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (<T>() => {
   const _repeat =
-    <T>(
+    (
+      src: SequenceLike<T>,
       predicate: Predicate<number>,
       count: number,
-      src: SequenceLike<T>,
       seq: SequenceLike<T>,
     ): SequenceLike<T> =>
     () => {
@@ -292,23 +291,17 @@ export const repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (() => {
       if (isSome(result)) {
         return createNext(
           result.data,
-          _repeat(predicate, count, src, result.next),
+          _repeat(src, predicate, count, result.next),
         );
       } else if (predicate(count)) {
-        return _repeat(predicate, count + 1, src, src)();
+        return _repeat(src, predicate, count + 1, src)();
       } else {
         return none;
       }
     };
-  return <T>(predicate?: Predicate<number> | number) => {
-    const repeatPredicate = isNone(predicate)
-      ? alwaysTrue
-      : typeof predicate === "number"
-      ? (count: number) => count < predicate
-      : (count: number) => predicate(count);
-
-    return (seq: SequenceLike<T>) => _repeat(repeatPredicate, 1, seq, seq);
-  };
+  return createRepeatOperator<SequenceLike, T>((seq, predicate) =>
+    _repeat(seq, predicate, 1, seq),
+  );
 })();
 
 export const repeatT: Repeat<SequenceLike> = { repeat };
@@ -420,7 +413,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       seq: SequenceLike<T>;
     };
 
-    const createInstance = pipe(
+    const createSequenceEnumerator = pipe(
       {
         [Object_properties]: {
           seq: none,
@@ -447,7 +440,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
     );
 
     return () => (seq: SequenceLike<T>) =>
-      createEnumerable(() => createInstance(seq));
+      createEnumerable(() => createSequenceEnumerator(seq));
   })();
 
 export const toEnumerableT: ToEnumerable<SequenceLike> = { toEnumerable };

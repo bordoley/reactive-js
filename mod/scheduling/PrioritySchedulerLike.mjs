@@ -2,7 +2,7 @@
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { pipe, none } from '../functions.mjs';
+import { pipe, none, partial } from '../functions.mjs';
 import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import '../util/DisposableLike.mjs';
 import { shouldYield, requestYield } from './SchedulerLike.mjs';
@@ -16,7 +16,7 @@ import { addIgnoringChildErrors, isDisposed } from '../__internal__/util/Disposa
  * @param priority The priority to schedule work at.
  */
 const toScheduler = /*@__PURE__*/ (() => {
-    const createInstance = pipe({
+    const createSchedulerInstance = pipe({
         [Object_properties]: {
             priorityScheduler: none,
             priority: 0,
@@ -52,7 +52,7 @@ const toScheduler = /*@__PURE__*/ (() => {
             }
         },
     }, mixWith(disposableMixin), createObjectFactory());
-    return (priority) => priorityScheduler => createInstance(priorityScheduler, priority);
+    return (priority) => pipe(createSchedulerInstance, partial(priority));
 })();
 
 export { toScheduler };

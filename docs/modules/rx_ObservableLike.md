@@ -7,6 +7,7 @@
 ### Variables
 
 - [TContainerOf](rx_ObservableLike.md#tcontainerof)
+- [liftT](rx_ObservableLike.md#liftt)
 
 ### Functions
 
@@ -18,6 +19,12 @@
 ### TContainerOf
 
 • `Const` **TContainerOf**: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>
+
+___
+
+### liftT
+
+• `Const` **liftT**: `Lift`<[`ObservableLike`](../interfaces/rx.ObservableLike.md), `TReactive`\>
 
 ## Functions
 

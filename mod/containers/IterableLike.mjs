@@ -11,7 +11,7 @@ import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal
 const toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
-    const createInstance = pipe({
+    const createIterableEnumerator = pipe({
         [Object_properties]: { iterator: none },
         [Object_init](iterator) {
             init(disposableMixin, this);
@@ -29,7 +29,7 @@ const toEnumerable =
             }
         },
     }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
-    return () => (iterable) => createEnumerable(() => createInstance(iterable[Symbol.iterator]()));
+    return () => (iterable) => createEnumerable(() => createIterableEnumerator(iterable[Symbol.iterator]()));
 })();
 const toEnumerableT = { toEnumerable };
 const toIterable = () => identity;

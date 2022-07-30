@@ -1,4 +1,5 @@
 /// <reference types="./ObservableLike.d.ts" />
+import { reactive, createMapOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
@@ -28,20 +29,20 @@ const lift = /*@__PURE__*/ (() => {
         return newInstance(LiftedObservable, sourceSource, allFunctions, 0);
     };
 })();
+const liftT = {
+    lift,
+    variance: reactive,
+};
 const map = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
     const typedObserverMixin = observerMixin();
-    const createInstance = pipe({
+    return pipe({
         [Object_properties]: {},
         [Object_init](delegate, mapper) {
             init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
             init(typedMapSinkMixin, this, delegate, mapper);
         },
-    }, mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory());
-    return (mapper) => {
-        const operator = (delegate) => createInstance(delegate, mapper);
-        return lift(operator);
-    };
+    }, mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory(), createMapOperator(liftT));
 })();
 /**
  * Returns a Promise that completes with the last value produced by
@@ -88,4 +89,4 @@ export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
       );
     });*/
 
-export { TContainerOf, getObservableType, map };
+export { TContainerOf, getObservableType, liftT, map };

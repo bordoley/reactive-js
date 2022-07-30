@@ -1,4 +1,5 @@
 /// <reference types="./EnumerableLike.d.ts" />
+import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
 import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
@@ -6,7 +7,7 @@ import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isNone, alwaysTrue, isSome, identity, forEach as forEach$2 } from '../functions.mjs';
+import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isNone, isSome, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT } from '../ix.mjs';
 import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -278,7 +279,7 @@ const pairwiseT = {
     pairwise,
 };
 const repeat = /*@__PURE__*/ (() => {
-    const createInstance = pipe({
+    const createRepeatEnumerator = pipe({
         [Object_properties]: {
             count: 0,
             enumerator: none,
@@ -325,14 +326,7 @@ const repeat = /*@__PURE__*/ (() => {
             return (_b = (_a = self.enumerator) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_hasCurrent]) !== null && _b !== void 0 ? _b : false;
         },
     }, mixWith(disposableMixin), createObjectFactory());
-    return (predicate) => {
-        const repeatPredicate = isNone(predicate)
-            ? alwaysTrue
-            : typeof predicate === "number"
-                ? (count) => count < predicate
-                : (count) => predicate(count);
-        return (enumerable) => createEnumerable(() => createInstance(enumerable, repeatPredicate));
-    };
+    return createRepeatOperator((delegate, predicate) => createEnumerable(() => createRepeatEnumerator(delegate, predicate)));
 })();
 const repeatT = {
     repeat,
@@ -611,7 +605,7 @@ const zip = /*@__PURE__*/ (() => {
     };
     const allHaveCurrent = (enumerators) => pipe(enumerators, every(hasCurrent));
     const typedEnumerator = enumeratorMixin();
-    const createInstance = pipe({
+    const createZipEnumerator = pipe({
         [Object_properties]: {
             enumerators: none,
         },
@@ -634,7 +628,7 @@ const zip = /*@__PURE__*/ (() => {
         },
     }, mixWith(disposableMixin, typedEnumerator), createObjectFactory());
     const zipEnumerators = (enumerators) => {
-        const instance = createInstance(enumerators);
+        const instance = createZipEnumerator(enumerators);
         pipe(enumerators, forEach$2(addTo(instance)));
         return instance;
     };

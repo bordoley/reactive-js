@@ -57,7 +57,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
         run(continuation);
         scheduler[SchedulerLike_inContinuation] = false;
     };
-    const createInstance = pipe({
+    const createHostSchedulerInstance = pipe({
         [Object_properties]: {
             [SchedulerLike_inContinuation]: false,
             startTime: 0,
@@ -109,7 +109,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
     }, mixWith(disposableMixin), createObjectFactory());
     return (options = {}) => {
         const { yieldInterval = 5 } = options;
-        return createInstance(yieldInterval);
+        return createHostSchedulerInstance(yieldInterval);
     };
 })();
 const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
@@ -120,7 +120,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         return diff;
     };
     const typedEnumeratorMixin = enumeratorMixin();
-    const createInstance = pipe({
+    const createVirtualTimeSchedulerInstance = pipe({
         [Object_properties]: {
             [SchedulerLike_inContinuation]: false,
             [SchedulerLike_now]: 0,
@@ -186,7 +186,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
     return (options = {}) => {
         const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-        return createInstance(maxMicroTaskTicks);
+        return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
     };
 })();
 /** @ignore */
