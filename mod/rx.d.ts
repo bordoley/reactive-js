@@ -1,18 +1,15 @@
-import { StatefulContainerLike, StatefulContainerStateOf, Container, ContainerOf, ContainerLike, Using, Defer, Empty } from "./containers.mjs";
+import { StatefulContainerLike, Container, ContainerOf, ContainerLike, Using, Defer, Empty } from "./containers.mjs";
 import { Function1, SideEffect1, Factory } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
 import { SinkLike, DisposableLike } from "./util.mjs";
 /** @ignore */
 declare const ReactiveContainerLike_sinkInto: unique symbol;
-interface ReactiveContainerLike extends StatefulContainerLike {
-    readonly TContainerOf?: ReactiveContainerLike;
-    readonly TStatefulContainerState?: SinkLike;
-    [ReactiveContainerLike_sinkInto](sink: StatefulContainerStateOf<ReactiveContainerLike, this["T"]>): void;
+interface ReactiveContainerLike<TSink extends SinkLike<T>, T> extends StatefulContainerLike {
+    [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
-interface RunnableLike<T = unknown> extends ReactiveContainerLike {
+interface RunnableLike<T = unknown> extends ReactiveContainerLike<SinkLike<T>, T> {
     readonly TContainerOf?: RunnableLike<this["T"]>;
     readonly TStatefulContainerState?: SinkLike<this["T"]>;
-    [ReactiveContainerLike_sinkInto](sink: SinkLike<T>): void;
 }
 declare const DefaultObservable = 0;
 declare const RunnableObservable = 1;
@@ -24,9 +21,9 @@ declare const ObservableLike_observableType: unique symbol;
  *
  * @noInheritDoc
  */
-interface ObservableLike<T = unknown> extends ReactiveContainerLike {
+interface ObservableLike<T = unknown> extends ReactiveContainerLike<ObserverLike<T>, T> {
     readonly TContainerOf?: ObservableLike<this["T"]>;
-    readonly TStatefulContainerState?: ObserverLike<T>;
+    readonly TStatefulContainerState?: ObserverLike<this["T"]>;
     readonly [ObservableLike_observableType]: typeof EnumerableObservable | typeof RunnableObservable | typeof DefaultObservable;
 }
 interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
@@ -51,7 +48,7 @@ declare const SubjectLike_publish: unique symbol;
 interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;
 }
-declare type Never<C extends ReactiveContainerLike> = Container<C> & {
+declare type Never<C extends StatefulContainerLike> = Container<C> & {
     never<T>(): ContainerOf<C, T>;
 };
 declare type ToObservable<C extends ContainerLike, TOptions = never> = Container<C> & {

@@ -1,14 +1,13 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { reactive, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
-import { dispose, isDisposed, addTo, bindTo, onComplete } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { dispose, isDisposed, addTo, bindTo } from '../__internal__/util/DisposableLikeInternal.mjs';
 import { mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { createDelegatingSink, delegatingSinkMixin, DelegatingSink_delegate, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, TakeLastSink_last, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { createDelegatingSink, delegatingSinkMixin, DelegatingSink_delegate, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, pipeUnsafe, newInstance, getLength, pipeLazy, strictEquality, isSome, raise } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT, emptyRunnable } from '../rx.mjs';
+import { a as ReactiveContainerLike_sinkInto, b as sourceFrom, c as createRunnable, e as emptyRunnableT, d as emptyRunnable } from '../ReactiveContainerLike-e32dbf9b.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
-import { sourceFrom, sinkInto } from './ReactiveContainerLike.mjs';
 
 const lift = /*@__PURE__*/ (() => {
     class LiftedRunnable {
@@ -120,16 +119,11 @@ const takeFirst = /*@__PURE__*/ (() => {
 })();
 const takeFirstT = { takeFirst };
 const takeLast = /*@__PURE__*/ (() => {
-    const typedTakeLastSinkMixin = takeLastSinkMixin();
+    const typedTakeLastSinkMixin = takeLastSinkMixin(toRunnable());
     const createSink = pipe(typedTakeLastSinkMixin, createObjectFactory());
     return (options = {}) => {
         const { count = 1 } = options;
-        const operator = lift((delegate) => {
-            const sink = pipe(createSink(delegate, count), addTo(delegate), onComplete(() => {
-                pipe(sink[TakeLastSink_last], toRunnable(), sinkInto(delegate));
-            }));
-            return sink;
-        });
+        const operator = lift((delegate) => createSink(delegate, count));
         return (source) => count > 0 ? pipe(source, operator) : emptyRunnable();
     };
 })();

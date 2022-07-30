@@ -1,13 +1,9 @@
-import { StatefulContainerStateOf } from "../containers";
 import { Function1 } from "../functions";
 import { ReactiveContainerLike, ReactiveContainerLike_sinkInto } from "../rx";
+import { SinkLike } from "../util";
 
 export const sinkInto =
-  <
-    C extends ReactiveContainerLike,
-    T,
-    TSink extends StatefulContainerStateOf<C, T>,
-  >(
+  <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
     sink: TSink,
   ): Function1<C, C> =>
   source => {
@@ -16,11 +12,7 @@ export const sinkInto =
   };
 
 export const sourceFrom =
-  <
-    C extends ReactiveContainerLike,
-    T,
-    TSink extends StatefulContainerStateOf<C, T>,
-  >(
+  <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
     source: C,
   ): Function1<TSink, TSink> =>
   sink => {

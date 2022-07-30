@@ -1,9 +1,10 @@
 /// <reference types="./SinkLikeMixin.d.ts" />
 import { pipe, pipeLazy, none, returns, getLength } from '../../functions.mjs';
+import { s as sinkInto } from '../../ReactiveContainerLike-e32dbf9b.mjs';
 import { SinkLike_notify } from '../../util.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './DisposableLikeMixins.mjs';
-import { dispose } from './DisposableLikeInternal.mjs';
+import { dispose, addTo, onComplete } from './DisposableLikeInternal.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './Object.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
@@ -192,7 +193,7 @@ const takeFirstSinkMixin = /*@__PURE__*/ (() => {
     }, mixWith(delegatingDisposableMixin), returns);
 })();
 const TakeLastSink_last = Symbol("TakeLastSink_last");
-const takeLastSinkMixin = /*@__PURE__*/ (() => {
+const takeLastSinkMixin = (fromArray) => {
     const TakeLastSink_private_takeLastCount = Symbol("TakeLastSink_private_takeLastCount");
     return pipe({
         [Object_properties]: {
@@ -205,6 +206,9 @@ const takeLastSinkMixin = /*@__PURE__*/ (() => {
             this[Sink_private_delegate] = delegate;
             this[TakeLastSink_private_takeLastCount] = takeLastCount;
             this[TakeLastSink_last] = [];
+            pipe(this, addTo(delegate), onComplete(() => {
+                pipe(this[TakeLastSink_last], fromArray, sinkInto(delegate));
+            }));
         },
         [SinkLike_notify](next) {
             const { [TakeLastSink_last]: last } = this;
@@ -213,8 +217,8 @@ const takeLastSinkMixin = /*@__PURE__*/ (() => {
                 last.shift();
             }
         },
-    }, mixWith(disposableMixin), returns);
-})();
+    }, mixWith(disposableMixin));
+};
 const takeWhileSinkMixin = /*@__PURE__*/ (() => {
     const TakeWhileSink_private_predicate = Symbol("TakeWhileSink_private_predicate");
     const TakeWhileSink_private_inclusive = Symbol("TakeWhileSink_private_inclusive");
