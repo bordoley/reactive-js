@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TSource` | extends [`SourceLike`](util.SourceLike.md) |
+| `TSource` | extends [`DisposableLike`](util.DisposableLike.md) |
 | `TCtx` | `void` |
 
 ## Hierarchy

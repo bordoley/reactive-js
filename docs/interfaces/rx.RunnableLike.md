@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`SinkLike`](util.SinkLike.md)<`T`\>, `T`\>
+- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`SinkLike`](util.SinkLike.md)<`T`\>\>
 
   ↳ **`RunnableLike`**
 

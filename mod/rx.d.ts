@@ -1,13 +1,13 @@
 import { StatefulContainerLike, Container, ContainerOf, ContainerLike, Using, Defer, Empty } from "./containers.mjs";
 import { Function1, SideEffect1, Factory } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
-import { SinkLike, DisposableLike } from "./util.mjs";
+import { DisposableLike, SinkLike } from "./util.mjs";
 /** @ignore */
 declare const ReactiveContainerLike_sinkInto: unique symbol;
-interface ReactiveContainerLike<TSink extends SinkLike<T>, T> extends StatefulContainerLike {
+interface ReactiveContainerLike<TSink extends DisposableLike> extends StatefulContainerLike {
     [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
-interface RunnableLike<T = unknown> extends ReactiveContainerLike<SinkLike<T>, T> {
+interface RunnableLike<T = unknown> extends ReactiveContainerLike<SinkLike<T>> {
     readonly TContainerOf?: RunnableLike<this["T"]>;
     readonly TStatefulContainerState?: SinkLike<this["T"]>;
 }
@@ -21,7 +21,7 @@ declare const ObservableLike_observableType: unique symbol;
  *
  * @noInheritDoc
  */
-interface ObservableLike<T = unknown> extends ReactiveContainerLike<ObserverLike<T>, T> {
+interface ObservableLike<T = unknown> extends ReactiveContainerLike<ObserverLike<T>> {
     readonly TContainerOf?: ObservableLike<this["T"]>;
     readonly TStatefulContainerState?: ObserverLike<this["T"]>;
     readonly [ObservableLike_observableType]: typeof EnumerableObservable | typeof RunnableObservable | typeof DefaultObservable;

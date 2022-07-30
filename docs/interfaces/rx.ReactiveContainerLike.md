@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / ReactiveContainerLike
 
-# Interface: ReactiveContainerLike<TSink, T\>
+# Interface: ReactiveContainerLike<TSink\>
 
 [rx](../modules/rx.md).ReactiveContainerLike
 
@@ -8,8 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TSink` | extends [`SinkLike`](util.SinkLike.md)<`T`\> |
-| `T` | `T` |
+| `TSink` | extends [`DisposableLike`](util.DisposableLike.md) |
 
 ## Hierarchy
 

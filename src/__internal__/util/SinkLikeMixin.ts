@@ -461,7 +461,7 @@ export const takeFirstSinkMixin: <T>() => DisposableLike & {
 export const TakeLastSink_last = Symbol("TakeLastSink_last");
 
 export const takeLastSinkMixin: <
-  C extends ReactiveContainerLike<TSink, T>,
+  C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
   T,
 >(
@@ -485,7 +485,7 @@ export const takeLastSinkMixin: <
   ): void;
   [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
-} = <C extends ReactiveContainerLike<TSink, T>, TSink extends SinkLike<T>, T>(
+} = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
   fromArray: (v: readonly T[]) => C,
 ) => {
   const TakeLastSink_private_takeLastCount = Symbol(
