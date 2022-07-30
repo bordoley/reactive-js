@@ -13,6 +13,7 @@
 - [keepT](rx_RunnableLike.md#keept)
 - [mapT](rx_RunnableLike.md#mapt)
 - [pairwiseT](rx_RunnableLike.md#pairwiset)
+- [repeatT](rx_RunnableLike.md#repeatt)
 - [scanT](rx_RunnableLike.md#scant)
 - [skipFirstT](rx_RunnableLike.md#skipfirstt)
 - [takeFirstT](rx_RunnableLike.md#takefirstt)
@@ -29,6 +30,7 @@
 - [keep](rx_RunnableLike.md#keep)
 - [map](rx_RunnableLike.md#map)
 - [pairwise](rx_RunnableLike.md#pairwise)
+- [repeat](rx_RunnableLike.md#repeat)
 - [run](rx_RunnableLike.md#run)
 - [scan](rx_RunnableLike.md#scan)
 - [skipFirst](rx_RunnableLike.md#skipfirst)
@@ -78,6 +80,12 @@ ___
 ### pairwiseT
 
 • `Const` **pairwiseT**: [`Pairwise`](containers.md#pairwise)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### repeatT
+
+• `Const` **repeatT**: [`Repeat`](containers.md#repeat)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -266,6 +274,34 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+
+___
+
+### repeat
+
+▸ **repeat**(`predicate?`): (`c`: [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>) => [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate?` | `number` \| [`Predicate`](functions.md#predicate)<`number`\> |
+
+#### Returns
+
+`fn`
+
+▸ (`c`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\> |
+
+##### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>
 
 ___
 

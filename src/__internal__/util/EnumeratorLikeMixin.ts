@@ -4,7 +4,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
 } from "../../util";
-import { isDisposed } from "./DisposableLikeInternal";
+import { isDisposed } from "../../util/DisposableLike";
 import { Object_init, Object_properties } from "./Object";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {

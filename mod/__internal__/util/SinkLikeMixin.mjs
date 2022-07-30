@@ -2,10 +2,11 @@
 import { pipe, pipeLazy, none, returns, getLength } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
+import '../../util/DisposableLike.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './DisposableLikeMixins.mjs';
-import { dispose, addTo, onComplete } from './DisposableLikeInternal.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './Object.mjs';
+import { dispose, addTo, onComplete } from './DisposableLikeInternal.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 const createSink = /*@__PURE__*/ (() => pipe({
