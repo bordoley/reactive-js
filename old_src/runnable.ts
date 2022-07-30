@@ -124,11 +124,9 @@ export interface ToRunnable<C extends ContainerLike> extends Container<C> {
   toRunnable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
-export { concatAll, concatAllT } from "./runnable/concat";
 export { createRunnable, createT } from "./runnable/createRunnable";
 export { first } from "./runnable/first";
-export { forEach } from "./runnable/forEach";
-export { fromArray, fromArrayT } from "./runnable/fromArray";
+
 export { last } from "./runnable/last";
 
 export const buffer: Buffer<RunnableLike<unknown>>["buffer"] =

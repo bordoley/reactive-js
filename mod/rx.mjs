@@ -43,7 +43,7 @@ const createObservableT = {
     create: createObservable,
 };
 const createSubject = /*@__PURE__*/ (() => {
-    const createInstance = pipe({
+    const createSubjectInstance = pipe({
         [Object_properties]: {
             [MulticastObservableLike_replay]: 0,
             observers: none,
@@ -96,7 +96,7 @@ const createSubject = /*@__PURE__*/ (() => {
     return (options) => {
         const { replay: replayOption = 0 } = options !== null && options !== void 0 ? options : {};
         const replay = max(replayOption, 0);
-        return createInstance(replay);
+        return createSubjectInstance(replay);
     };
 })();
 const create = (m) => (onSink) => m.create(onSink);

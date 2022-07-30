@@ -8,7 +8,7 @@ import {
   init,
   mixWith,
 } from "../__internal__/util/Object";
-import { Function1, none, pipe } from "../functions";
+import { Function1, none, partial, pipe } from "../functions";
 import {
   PrioritySchedulerLike,
   SchedulerLike,
@@ -39,7 +39,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
     priority: number;
   };
 
-  const createInstance = pipe(
+  const createSchedulerInstance = pipe(
     {
       [Object_properties]: {
         priorityScheduler: none,
@@ -96,6 +96,5 @@ export const toScheduler = /*@__PURE__*/ (() => {
   );
 
   return (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
-    priorityScheduler =>
-      createInstance(priorityScheduler, priority);
+    pipe(createSchedulerInstance, partial(priority));
 })();

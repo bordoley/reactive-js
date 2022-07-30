@@ -167,7 +167,7 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
       [typeof disposableMixin, typeof typedEnumerator]
     > & { f: Updater<T> };
 
-    const createInstance = pipe(
+    const createGenerateEnumerator = pipe(
       {
         [Object_properties]: { f: none },
         [Object_init](
@@ -202,7 +202,9 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
     );
 
     return (generator: Updater<T>, initialValue: Factory<T>) =>
-      createEnumerable(() => createInstance(generator, initialValue()));
+      createEnumerable(() =>
+        createGenerateEnumerator(generator, initialValue()),
+      );
   })();
 
 export const generateEnumerableT: Generate<EnumerableLike> = {

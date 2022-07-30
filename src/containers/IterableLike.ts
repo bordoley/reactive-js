@@ -31,7 +31,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
       iterator: Iterator<T>;
     };
 
-    const createInstance = pipe(
+    const createIterableEnumerator = pipe(
       {
         [Object_properties]: { iterator: none },
         [Object_init](this: TProperties, iterator: Iterator<T>) {
@@ -55,7 +55,9 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
     );
 
     return () => (iterable: Iterable<T>) =>
-      createEnumerable(() => createInstance(iterable[Symbol.iterator]()));
+      createEnumerable(() =>
+        createIterableEnumerator(iterable[Symbol.iterator]()),
+      );
   })();
 
 export const toEnumerableT: ToEnumerable<IterableLike> = { toEnumerable };

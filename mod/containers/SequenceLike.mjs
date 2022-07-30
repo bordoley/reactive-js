@@ -1,8 +1,9 @@
 /// <reference types="./SequenceLike.d.ts" />
+import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { isSome, none, pipe, strictEquality, isNone, alwaysTrue, getLength, callWith, returns } from '../functions.mjs';
+import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
 import '../util/DisposableLike.mjs';
@@ -154,26 +155,19 @@ const takeFirstT = {
     takeFirst,
 };
 const repeat = /*@__PURE__*/ (() => {
-    const _repeat = (predicate, count, src, seq) => () => {
+    const _repeat = (src, predicate, count, seq) => () => {
         const result = seq();
         if (isSome(result)) {
-            return createNext(result.data, _repeat(predicate, count, src, result.next));
+            return createNext(result.data, _repeat(src, predicate, count, result.next));
         }
         else if (predicate(count)) {
-            return _repeat(predicate, count + 1, src, src)();
+            return _repeat(src, predicate, count + 1, src)();
         }
         else {
             return none;
         }
     };
-    return (predicate) => {
-        const repeatPredicate = isNone(predicate)
-            ? alwaysTrue
-            : typeof predicate === "number"
-                ? (count) => count < predicate
-                : (count) => predicate(count);
-        return (seq) => _repeat(repeatPredicate, 1, seq, seq);
-    };
+    return createRepeatOperator((seq, predicate) => _repeat(seq, predicate, 1, seq));
 })();
 const repeatT = { repeat };
 const scan = /*@__PURE__*/ (() => {
@@ -239,7 +233,7 @@ const takeWhileT = { takeWhile };
 const toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
-    const createInstance = pipe({
+    const createSequenceEnumerator = pipe({
         [Object_properties]: {
             seq: none,
         },
@@ -261,7 +255,7 @@ const toEnumerable =
             }
         },
     }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
-    return () => (seq) => createEnumerable(() => createInstance(seq));
+    return () => (seq) => createEnumerable(() => createSequenceEnumerator(seq));
 })();
 const toEnumerableT = { toEnumerable };
 const toReadonlyArray = () => (seq) => {

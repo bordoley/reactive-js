@@ -191,7 +191,7 @@ export const createSubject = /*@__PURE__*/ (() => {
     replayed: Array<unknown>;
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
-  const createInstance = pipe(
+  const createSubjectInstance = pipe(
     {
       [Object_properties]: {
         [MulticastObservableLike_replay]: 0,
@@ -267,7 +267,7 @@ export const createSubject = /*@__PURE__*/ (() => {
     const { replay: replayOption = 0 } = options ?? {};
     const replay = max(replayOption, 0);
 
-    return createInstance(replay);
+    return createSubjectInstance(replay);
   };
 })();
 

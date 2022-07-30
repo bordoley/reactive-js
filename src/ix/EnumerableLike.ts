@@ -1,3 +1,4 @@
+import { createRepeatOperator } from "../__internal__/containers/ContainerLikeInternal";
 import {
   Lift,
   TInteractive,
@@ -70,7 +71,6 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
-  alwaysTrue,
   forEach as forEachArray,
   getLength,
   identity,
@@ -655,7 +655,7 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
     src: EnumerableLike<T>;
   };
 
-  const createInstance = pipe(
+  const createRepeatEnumerator = pipe(
     {
       [Object_properties]: {
         count: 0,
@@ -714,16 +714,9 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
     >(),
   );
 
-  return (predicate?: Predicate<number> | number) => {
-    const repeatPredicate: Predicate<number> = isNone(predicate)
-      ? alwaysTrue
-      : typeof predicate === "number"
-      ? (count: number) => count < predicate
-      : (count: number) => predicate(count);
-
-    return (enumerable: EnumerableLike<T>) =>
-      createEnumerable(() => createInstance(enumerable, repeatPredicate));
-  };
+  return createRepeatOperator<EnumerableLike, T>((delegate, predicate) =>
+    createEnumerable(() => createRepeatEnumerator(delegate, predicate)),
+  );
 })();
 
 export const repeatT: Repeat<EnumerableLike<unknown>> = {
@@ -1220,7 +1213,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
     enumerators: readonly EnumeratorLike[];
   };
 
-  const createInstance = pipe(
+  const createZipEnumerator = pipe(
     {
       [Object_properties]: {
         enumerators: none,
@@ -1259,7 +1252,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const zipEnumerators = (
     enumerators: readonly EnumeratorLike[],
   ): EnumeratorLike<readonly unknown[]> => {
-    const instance = createInstance(enumerators);
+    const instance = createZipEnumerator(enumerators);
     pipe(enumerators, forEachArray(addTo(instance)));
     return instance;
   };

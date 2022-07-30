@@ -133,7 +133,7 @@ export const toEnumerable: ToEnumerable<
     index: number;
   };
 
-  const createInstance = pipe(
+  const createReadonlyArrayEnumerator = pipe(
     {
       [Object_properties]: {
         array: none,
@@ -181,7 +181,9 @@ export const toEnumerable: ToEnumerable<
 
   return createFromArray<EnumerableLike<T>, T>(
     (array: readonly T[], start: number, count: number) =>
-      createEnumerable(() => createInstance(array, start, count)),
+      createEnumerable(() =>
+        createReadonlyArrayEnumerator(array, start, count),
+      ),
   );
 })();
 
