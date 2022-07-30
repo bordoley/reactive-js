@@ -190,7 +190,7 @@ export const enumerate =
   (enumerable: EnumerableLike<T>): EnumeratorLike<T> =>
     enumerable[InteractiveContainerLike_interact](none);
 
-const lift = /*@__PURE__*/ (() => {
+const lift: Lift<EnumerableLike, TInteractive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedEnumerable<T> implements EnumerableLike<T> {
     constructor(
       readonly src: EnumerableLike<any>,
@@ -211,21 +211,23 @@ const lift = /*@__PURE__*/ (() => {
 
   return <TA, TB>(
       operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
-    ): ContainerOperator<EnumerableLike, TA, TB> =>
+    ) =>
     (enumerable: EnumerableLike<TA>): EnumerableLike<TB> => {
       const src =
-        enumerable instanceof LiftedEnumerable ? enumerable.src : enumerable;
+        enumerable instanceof LiftedEnumerable
+          ? (enumerable.src as EnumerableLike<TA>)
+          : enumerable;
 
       const allFunctions =
         enumerable instanceof LiftedEnumerable
           ? [...enumerable.operators, operator]
           : [operator];
 
-      return newInstance<
-        LiftedEnumerable<TB>,
-        EnumerableLike<any>,
-        readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[]
-      >(LiftedEnumerable, src, allFunctions);
+      return newInstance<EnumerableLike<TB>, EnumerableLike<TA>, any>(
+        LiftedEnumerable,
+        src,
+        allFunctions,
+      );
     };
 })();
 
@@ -237,7 +239,7 @@ const liftT: Lift<EnumerableLike, TInteractive> = {
 export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedEnumerator = enumeratorMixin<T>();
+  const typedEnumerator = enumeratorMixin<readonly T[]>();
 
   type TProperties = PropertyTypeOf<
     [typeof disposableMixin, typeof typedEnumerator]
@@ -283,14 +285,14 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
     },
     mixWith(disposableMixin, typedEnumerator),
     createObjectFactory<
-      EnumeratorLike<any>,
+      EnumeratorLike<readonly T[]>,
       TProperties,
       EnumeratorLike,
       number
     >(),
   );
 
-  return <T>(
+  return (
     options: {
       readonly maxBufferSize?: number;
     } = {},
@@ -1162,7 +1164,7 @@ export const toObservable: ToObservable = /*@__PURE__*/ (() => {
         getScheduler,
         schedule(() => {
           while (!isDisposed(observer) && move(enumerator)) {
-            pipe(enumerator, getCurrent, notifySink<T>(observer));
+            pipe(enumerator, getCurrent, notifySink(observer));
             __yield(options);
           }
         }, options),

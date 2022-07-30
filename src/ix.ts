@@ -18,7 +18,6 @@ import {
   Empty,
   Generate,
   StatefulContainerLike,
-  StatefulContainerStateOf,
   Using,
 } from "./containers";
 import {
@@ -29,7 +28,6 @@ import {
   newInstance,
   none,
   pipe,
-  pipeLazy,
 } from "./functions";
 import { SchedulerLike } from "./scheduling";
 import { AsyncEnumeratorLike, StreamableLike } from "./streaming";
@@ -47,47 +45,27 @@ export const InteractiveContainerLike_interact = Symbol(
   "InteractiveContainerLike_interact",
 );
 
-export interface InteractiveContainerLike extends StatefulContainerLike {
-  readonly TStatefulContainerState?: SourceLike;
-  readonly TCtx?: unknown;
-
-  [InteractiveContainerLike_interact](
-    _: this["TCtx"],
-  ): StatefulContainerStateOf<InteractiveContainerLike, this["T"]>;
+export interface InteractiveContainerLike<
+  TSource extends SourceLike,
+  TCtx = void,
+> extends StatefulContainerLike {
+  [InteractiveContainerLike_interact](_: TCtx): TSource;
 }
 
 /**
  * Interface for iterating a Container of items.
  */
-export interface EnumerableLike<T = unknown> extends InteractiveContainerLike {
+export interface EnumerableLike<T = unknown>
+  extends InteractiveContainerLike<EnumeratorLike<T>> {
   readonly TContainerOf?: EnumerableLike<this["T"]>;
   readonly TStatefulContainerState?: EnumeratorLike<this["T"]>;
-  readonly TCtx?: void;
-
-  [InteractiveContainerLike_interact](_: void): EnumeratorLike<T>;
 }
 export interface AsyncEnumerableLike<T = unknown>
   extends StreamableLike<void, T, AsyncEnumeratorLike<T>>,
-    InteractiveContainerLike {
-  readonly TStatefulContainerState?: AsyncEnumeratorLike<T>;
-  readonly TCtx?: SchedulerLike;
+    InteractiveContainerLike<AsyncEnumeratorLike<T>, SchedulerLike> {
+  readonly TContainerOf?: AsyncEnumerableLike<this["T"]>;
+  readonly TStatefulContainerState?: AsyncEnumeratorLike<this["T"]>;
 }
-
-export type InteractiveContainerCtxOf<
-  C extends InteractiveContainerLike,
-  T,
-> = C extends {
-  readonly TCtx?: unknown;
-}
-  ? NonNullable<
-      (C & {
-        readonly T: T;
-      })["TCtx"]
-    >
-  : {
-      readonly _C: C;
-      readonly _T: () => T;
-    };
 
 export type ToEnumerable<
   C extends ContainerLike,
@@ -108,7 +86,7 @@ export const createEnumerable = /*@__PURE__*/ (() => {
       } catch (cause) {
         const empty = emptyEnumerable<T>();
         return pipe(
-          empty[InteractiveContainerLike_interact](none),
+          empty[InteractiveContainerLike_interact](),
           dispose({ cause }),
         );
       }
@@ -142,31 +120,34 @@ export const createEnumerableUsingT: Using<EnumerableLike<unknown>> = {
   using: createEnumerableUsing,
 };
 
-export const emptyEnumerable: Empty<EnumerableLike>["empty"] =
-  /*@__PURE__*/ pipe(
+export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedEnumeratorMixin = enumeratorMixin<T>();
+  const f = pipe(
     {
       [Object_properties]: {},
       [Object_init](
         this: PropertyTypeOf<
-          [typeof disposableMixin, ReturnType<typeof enumeratorMixin>]
+          [typeof disposableMixin, typeof typedEnumeratorMixin]
         >,
       ) {
         init(disposableMixin, this);
-        init(enumeratorMixin(), this);
+        init(typedEnumeratorMixin, this);
       },
       [SourceLike_move](this: MutableEnumeratorLike) {
         pipe(this, dispose());
       },
     },
-    mixWith(disposableMixin, enumeratorMixin()),
+    mixWith(disposableMixin, typedEnumeratorMixin),
     createObjectFactory<
-      EnumeratorLike<any>,
-      PropertyTypeOf<
-        [typeof disposableMixin, ReturnType<typeof enumeratorMixin>]
-      >
+      EnumeratorLike<T>,
+      PropertyTypeOf<[typeof disposableMixin, typeof typedEnumeratorMixin]>
     >(),
-    f => pipeLazy(f, createEnumerable),
   );
+
+  return () => createEnumerable(f);
+})();
 
 export const emptyEnumerableT: Empty<EnumerableLike> = {
   empty: emptyEnumerable,

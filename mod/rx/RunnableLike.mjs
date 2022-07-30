@@ -5,9 +5,10 @@ import { mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { createDelegatingSink, delegatingSinkMixin, DelegatingSink_delegate, distinctUntilChangedSinkMixin, keepSinkMixin, mapSinkMixin, onNotifySinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, pipeUnsafe, newInstance, getLength, pipeLazy, strictEquality, isSome, raise } from '../functions.mjs';
-import { a as ReactiveContainerLike_sinkInto, b as sourceFrom, c as createRunnable, e as emptyRunnableT, d as emptyRunnable } from '../ReactiveContainerLike-e32dbf9b.mjs';
+import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT, emptyRunnable } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
+import { sourceFrom } from './ReactiveContainerLike.mjs';
 
 const lift = /*@__PURE__*/ (() => {
     class LiftedRunnable {
