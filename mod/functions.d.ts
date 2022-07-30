@@ -229,21 +229,6 @@ interface NewInstance {
     <T, TA, TB, TC, TD>(Constructor: Constructor4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
 }
 declare const newInstance: NewInstance;
-interface NewInstanceWith {
-    <T>(): Function1<Constructor<T>, T>;
-    <T, TA>(a: TA): Function1<Constructor1<TA, T>, T>;
-    <T, TA, TB>(a: TA, b: TB): Function1<Constructor2<TA, TB, T>, T>;
-    <T, TA, TB, TC>(a: TA, b: TB, c: TC): Function1<Constructor3<TA, TB, TC, T>, T>;
-    <T, TA, TB, TC, TD>(a: TA, b: TB, c: TC, d: TD): Function1<Constructor4<TA, TB, TC, TD, T>, T>;
-}
-declare const newInstanceWith: NewInstanceWith;
-interface InstanceFactory {
-    <T>(): Function1<Constructor<T>, Factory<T>>;
-    <T, TA>(): Function1<Constructor1<TA, T>, Function1<TA, T>>;
-    <T, TA, TB>(): Function1<Constructor2<TA, TB, T>, Function2<TA, TB, T>>;
-    <T, TA, TB, TC>(): Function1<Constructor3<TA, TB, TC, T>, Function3<TA, TB, TC, T>>;
-}
-declare const instanceFactory: InstanceFactory;
 /**
  * Represents an unboxed value of type T or undefined.
  */
@@ -261,4 +246,4 @@ declare const isSome: <T>(option: Option<T>) => option is T;
  */
 declare const isNone: <T>(option: Option<T>) => option is undefined;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<readonly T[], readonly T[]>;
-export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Identity, Option, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, newInstanceWith, none, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Identity, Option, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };

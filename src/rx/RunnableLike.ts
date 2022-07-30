@@ -11,11 +11,11 @@ import {
   bindTo,
 } from "../__internal__/util/DisposableLikeInternal";
 import {
+  Object_init,
   PropertyTypeOf,
   createObjectFactory,
+  init,
   mixWith,
-  Object_init,
-  init
 } from "../__internal__/util/Object";
 import {
   DelegatingSink_delegate,
@@ -120,9 +120,10 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
   const typedDelegatingSinkMixin = delegatingSinkMixin<T>();
 
   return pipeLazy(
-    { 
+    {
       [Object_init](
-        this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> & DisposableLike,
+        this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
+          DisposableLike,
         delegate: SinkLike<T>,
       ) {
         init(typedDelegatingSinkMixin, this, delegate);
@@ -149,7 +150,7 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
       PropertyTypeOf<[typeof typedDelegatingSinkMixin]> & DisposableLike,
       SinkLike<T>
     >(),
-   lift<RunnableLike, T>,
+    lift,
   );
 })();
 
