@@ -25,16 +25,6 @@ import {
   onComplete,
 } from "../../util/DisposableLike";
 
-export type StatefulContainerOperator<
-  C extends StatefulContainerLike,
-  TA,
-  TB,
-  TVar extends TInteractive | TReactive,
-> = Function1<
-  StatefulContainerOperatorIn<C, TA, TB, TVar>,
-  StatefulContainerOperatorOut<C, TA, TB, TVar>
->;
-
 export type StatefulContainerOperatorIn<
   C extends StatefulContainerLike,
   TA,
@@ -63,23 +53,21 @@ export type Lift<
   TVar extends TInteractive | TReactive,
 > = Container<C> & {
   lift<TA, TB>(
-    operator: StatefulContainerOperator<C, TA, TB, TVar>,
+    operator: Function1<
+      StatefulContainerOperatorIn<C, TA, TB, TVar>,
+      StatefulContainerOperatorOut<C, TA, TB, TVar>
+    >,
   ): ContainerOperator<C, TA, TB>;
 
-  readonly variance: TInteractive | TReactive;
+  readonly variance: TVar;
 };
 
-export const lift = <
+const lift = <
   C extends StatefulContainerLike,
-  TA,
-  TB,
   TVar extends TInteractive | TReactive,
 >({
   lift,
-}: Lift<C, TVar>): Function1<
-  StatefulContainerOperator<C, TA, TB, TVar>,
-  ContainerOperator<C, TA, TB>
-> => lift;
+}: Lift<C, TVar>): Lift<C, TVar>["lift"] => lift;
 
 export const createSkipFirstOperator =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(

@@ -240,7 +240,7 @@ ___
 
 ### generateEnumerable
 
-▸ **generateEnumerable**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+▸ **generateEnumerable**<`T`\>(`generator`, `initialValue`, `options?`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
 
 Generates an EnumerableLike from a generator function
 that is applied to an accumulator value.
@@ -257,6 +257,7 @@ that is applied to an accumulator value.
 | :------ | :------ | :------ |
 | `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+| `options?` | `undefined` | - |
 
 #### Returns
 

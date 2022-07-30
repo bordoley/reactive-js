@@ -60,8 +60,8 @@ declare type ConcatAll<C extends ContainerLike, O = Record<string, never>> = Con
 declare type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
     decodeWithCharset(charset?: string): ContainerOperator<C, ArrayBuffer, string>;
 };
-declare type Defer<C extends ContainerLike> = Container<C> & {
-    defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
+declare type Defer<C extends ContainerLike, TOptions = never> = Container<C> & {
+    defer<T>(factory: Factory<ContainerOf<C, T>>, options?: TOptions): ContainerOf<C, T>;
 };
 declare type DistinctUntilChanged<C extends ContainerLike> = Container<C> & {
     distinctUntilChanged<T>(options?: {
@@ -90,8 +90,8 @@ declare type FromIterator<C extends ContainerLike, O extends Record<string, unkn
 declare type FromValue<C extends ContainerLike, TOptions = never> = Container<C> & {
     fromValue<T>(options?: TOptions): Function1<T, ContainerOf<C, T>>;
 };
-declare type Generate<C extends ContainerLike> = Container<C> & {
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
+declare type Generate<C extends ContainerLike, TOptions = never> = Container<C> & {
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: TOptions): ContainerOf<C, T>;
 };
 declare type Keep<C extends ContainerLike> = Container<C> & {
     keep<T>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
@@ -244,8 +244,6 @@ declare type Zip<C extends ContainerLike> = Container<C> & {
 };
 declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;
-declare const fromArrayReadonlyArray: FromArray<ReadonlyArrayLike>["fromArray"];
-declare const fromArrayReadonlyArrayT: FromArray<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, FromValue, Generate, IterableLike, Keep, Map, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, fromArrayReadonlyArray, fromArrayReadonlyArrayT, generateSequence, generateSequenceT };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, FromValue, Generate, IterableLike, Keep, Map, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
