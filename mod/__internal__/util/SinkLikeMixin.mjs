@@ -1,12 +1,12 @@
 /// <reference types="./SinkLikeMixin.d.ts" />
-import { pipe, pipeLazy, none, returns, getLength } from '../../functions.mjs';
+import { pipe, pipeLazy, none, isEmpty, getLength, returns } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
 import '../../util/DisposableLike.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './DisposableLikeMixins.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './Object.mjs';
-import { dispose, addTo, onComplete } from './DisposableLikeInternal.mjs';
+import { addTo, onComplete, dispose } from './DisposableLikeInternal.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 const createSink = /*@__PURE__*/ (() => pipe({
@@ -36,6 +36,42 @@ const createDelegatingSink =
     const typeDelegatingSinkMixin = delegatingSinkMixin();
     return pipe(typeDelegatingSinkMixin, createObjectFactory());
 })();
+const bufferSinkMixin = (fromArray) => {
+    const BufferSink_private_maxBufferSize = Symbol("BufferSink_private_maxBufferSize");
+    const BufferSink_private_buffer = Symbol("BufferSink_private_buffer");
+    return pipe({
+        [Object_properties]: {
+            [Sink_private_delegate]: none,
+            [BufferSink_private_maxBufferSize]: 0,
+            [BufferSink_private_buffer]: none,
+        },
+        [Object_init](delegate, maxBufferSize) {
+            init(disposableMixin, this);
+            this[Sink_private_delegate] = delegate;
+            this[BufferSink_private_maxBufferSize] = maxBufferSize;
+            this[BufferSink_private_buffer] = [];
+            pipe(this, addTo(delegate), onComplete(() => {
+                const { [BufferSink_private_buffer]: buffer } = this;
+                this[BufferSink_private_buffer] = [];
+                if (isEmpty(buffer)) {
+                    pipe(this[Sink_private_delegate], dispose());
+                }
+                else {
+                    pipe([buffer], fromArray, sinkInto(this[Sink_private_delegate]));
+                }
+            }));
+        },
+        [SinkLike_notify](next) {
+            const { [BufferSink_private_buffer]: buffer, [BufferSink_private_maxBufferSize]: maxBufferSize, } = this;
+            buffer.push(next);
+            if (getLength(buffer) === maxBufferSize) {
+                const buffer = this[BufferSink_private_buffer];
+                this[BufferSink_private_buffer] = [];
+                pipe(this[Sink_private_delegate], notify(buffer));
+            }
+        },
+    }, mixWith(disposableMixin));
+};
 const distinctUntilChangedSinkMixin = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
     const DistinctUntilChangedSink_private_prev = Symbol("DistinctUntilChangedSink_private_prev");
@@ -301,4 +337,4 @@ const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
     }, mixWith(disposableMixin), returns);
 })();
 
-export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

@@ -1,10 +1,14 @@
 /// <reference types="./RunnableLike.test.d.ts" />
 import { describe as createDescribe } from '../__internal__/testing.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { concatT, toReadonlyArrayT, concatAllT, distinctUntilChangedT, forEachT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../rx/RunnableLike.mjs';
-import { concatTests, concatAllTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from './operators.test.mjs';
+import { bufferT, toReadonlyArrayT, concatT, concatAllT, distinctUntilChangedT, forEachT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../rx/RunnableLike.mjs';
+import { bufferTests, concatTests, concatAllTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from './operators.test.mjs';
 
-const RunnableLikeTests = createDescribe("RunnableLike", concatTests({
+const RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
+    fromArray: toRunnable,
+    ...bufferT,
+    ...toReadonlyArrayT,
+}), concatTests({
     fromArray: toRunnable,
     ...concatT,
     ...toReadonlyArrayT,

@@ -32,7 +32,6 @@
 - [FromArrayOptions](containers.md#fromarrayoptions)
 - [FromIterable](containers.md#fromiterable)
 - [FromIterator](containers.md#fromiterator)
-- [FromValue](containers.md#fromvalue)
 - [Generate](containers.md#generate)
 - [Keep](containers.md#keep)
 - [Map](containers.md#map)
@@ -174,14 +173,14 @@ ___
 
 ### Defer
 
-Ƭ **Defer**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `defer`: <T\>(`factory`: [`Factory`](functions.md#factory)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>, `options?`: `TOptions`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+Ƭ **Defer**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `defer`: <T\>(`factory`: [`Factory`](functions.md#factory)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>, `options?`: `Partial`<`O`\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 
@@ -199,14 +198,14 @@ ___
 
 ### Empty
 
-Ƭ **Empty**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `empty`: <T\>(`options?`: `TOptions`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+Ƭ **Empty**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `empty`: <T\>(`options?`: `Partial`<`O`\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 
@@ -255,8 +254,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `count` | `number` |
-| `start` | `number` |
+| `count` | [`Option`](functions.md#option)<`number`\> |
+| `start` | [`Option`](functions.md#option)<`number`\> |
 
 ___
 
@@ -286,29 +285,16 @@ ___
 
 ___
 
-### FromValue
-
-Ƭ **FromValue**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `fromValue`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<`T`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
-
-___
-
 ### Generate
 
-Ƭ **Generate**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `generate`: <T\>(`generator`: [`Updater`](functions.md#updater)<`T`\>, `initialValue`: [`Factory`](functions.md#factory)<`T`\>, `options?`: `TOptions`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+Ƭ **Generate**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `generate`: <T\>(`generator`: [`Updater`](functions.md#updater)<`T`\>, `initialValue`: [`Factory`](functions.md#factory)<`T`\>, `options?`: `Partial`<`O`\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 
@@ -471,53 +457,53 @@ ___
 
 ### ToIterable
 
-Ƭ **ToIterable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toIterable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>  }
+Ƭ **ToIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 
 ### ToPromise
 
-Ƭ **ToPromise**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`PromiseLike`](../interfaces/containers.PromiseLike.md)<`T`\>\>  }
+Ƭ **ToPromise**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`PromiseLike`](../interfaces/containers.PromiseLike.md)<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 
 ### ToReadonlyArray
 
-Ƭ **ToReadonlyArray**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlyArray`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>  }
+Ƭ **ToReadonlyArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlyArray`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 
 ### ToSequence
 
-Ƭ **ToSequence**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toSequence`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>  }
+Ƭ **ToSequence**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toSequence`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 

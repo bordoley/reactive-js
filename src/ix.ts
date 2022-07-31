@@ -114,7 +114,6 @@ export const createEnumerableUsing: Using<EnumerableLike<unknown>>["using"] = <
 
     return enumerator;
   });
-
 export const createEnumerableUsingT: Using<EnumerableLike<unknown>> = {
   using: createEnumerableUsing,
 };
@@ -147,7 +146,6 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
 
   return () => createEnumerable(f);
 })();
-
 export const emptyEnumerableT: Empty<EnumerableLike> = {
   empty: emptyEnumerable,
 };
@@ -206,7 +204,6 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
         createGenerateEnumerator(generator, initialValue()),
       );
   })();
-
 export const generateEnumerableT: Generate<EnumerableLike> = {
   generate: generateEnumerable,
 };

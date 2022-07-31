@@ -129,65 +129,6 @@ export { first } from "./runnable/first";
 
 export { last } from "./runnable/last";
 
-export const buffer: Buffer<RunnableLike<unknown>>["buffer"] =
-  /*@__PURE__*/ (() => {
-    class BufferSink<T> extends AbstractDelegatingRunnableSink<
-      T,
-      readonly T[]
-    > {
-      buffer: T[] = [];
-      constructor(
-        delegate: ReactiveSinkLike<readonly T[]>,
-        readonly maxBufferSize: number,
-      ) {
-        super(delegate);
-      }
-
-      notify(next: T) {
-        const { buffer, maxBufferSize } = this;
-
-        buffer.push(next);
-
-        if (getLength(buffer) === maxBufferSize) {
-          const buffer = this.buffer;
-          this.buffer = [];
-
-          getDelegate(this).notify(buffer);
-        }
-      }
-    }
-
-    return <T>(
-      options: {
-        readonly maxBufferSize?: number;
-      } = {},
-    ): RunnableOperator<T, readonly T[]> => {
-      const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
-
-      return lift((delegate: ReactiveSinkLike<readonly T[]>) =>
-        pipe(
-          BufferSink,
-          newInstanceWith(delegate, maxBufferSize),
-          addTo(delegate),
-          onComplete(function onDispose(this: BufferSink<T>) {
-            const { buffer } = this;
-            this.buffer = [];
-
-            if (isEmpty(buffer)) {
-              pipe(this, getDelegate, dispose());
-            } else {
-              pipe(buffer, fromValue(fromArrayT), sinkInto(getDelegate(this)));
-            }
-          }),
-        ),
-      );
-    };
-  })();
-
-export const bufferT: Buffer<RunnableLike<unknown>> = {
-  buffer,
-};
-
 export const catchError: CatchError<RunnableLike<unknown>>["catchError"] =
   /*@__PURE__*/ decorateMap(
     class CatchErrorSink<T> extends AbstractDelegatingRunnableSink<T, T> {},
@@ -268,27 +209,6 @@ export const generateT: Generate<RunnableLike<unknown>> = {
 
 export const onSink = /*@__PURE__*/ createOnSink(createT);
 
-export const pairwise: Pairwise<RunnableLike<unknown>>["pairwise"] =
-  /*@__PURE__*/ (() => {
-    class PairwiseSink<T> extends AbstractDelegatingRunnableSink<
-      T,
-      [Option<T>, T]
-    > {
-      prev: Option<T>;
-      hasPrev = false;
-    }
-    decorateWithPairwiseNotify<RunnableLike<unknown>>(PairwiseSink);
-    decorateNotifyWithAssertions(PairwiseSink);
-    return createPairwiseOperator<RunnableLike<unknown>, TReactive>(
-      liftT,
-      PairwiseSink,
-    );
-  })();
-
-export const pairwiseT: Pairwise<RunnableLike<unknown>> = {
-  pairwise,
-};
-
 export const reduce: Reduce<RunnableLike<unknown>>["reduce"] =
   /*@__PURE__*/ decorateMap(
     class ReducerSink<T, TAcc> extends AbstractDelegatingRunnableSink<T, TAcc> {
@@ -307,34 +227,6 @@ export const reduce: Reduce<RunnableLike<unknown>>["reduce"] =
 
 export const reduceT: Reduce<RunnableLike<unknown>> = {
   reduce,
-};
-
-export const repeat: Repeat<RunnableLike<unknown>>["repeat"] = <T>(
-  predicate?: Predicate<number> | number,
-): RunnableOperator<T, T> => {
-  const shouldRepeat = isNone(predicate)
-    ? alwaysTrue
-    : typeof predicate === "number"
-    ? (count: number) => count < predicate
-    : (count: number) => predicate(count);
-
-  return runnable =>
-    createRunnable(sink => {
-      let count = 0;
-      do {
-        pipe(
-          createDelegatingRunnableSink(sink),
-          addTo(sink),
-          sourceFrom(runnable),
-          dispose(),
-        );
-        count++;
-      } while (!isDisposed(sink) && shouldRepeat(count));
-    });
-};
-
-export const repeatT: Repeat<RunnableLike<unknown>> = {
-  repeat,
 };
 
 export const someSatisfy: SomeSatisfy<RunnableLike<unknown>>["someSatisfy"] =
@@ -357,23 +249,6 @@ export const someSatisfy: SomeSatisfy<RunnableLike<unknown>>["someSatisfy"] =
 
 export const someSatisfyT: SomeSatisfy<RunnableLike<unknown>> = {
   someSatisfy,
-};
-
-export const throwIfEmpty: ThrowIfEmpty<RunnableLike<unknown>>["throwIfEmpty"] =
-  /*@__PURE__*/ (() => {
-    class ThrowIfEmptySink<T> extends AbstractDelegatingRunnableSink<T, T> {
-      isEmpty = true;
-    }
-    decorateWithThrowIfEmptyNotify<RunnableLike<unknown>>(ThrowIfEmptySink);
-    decorateNotifyWithAssertions(ThrowIfEmptySink);
-    return createThrowIfEmptyOperator<RunnableLike<unknown>, TReactive>(
-      liftT,
-      ThrowIfEmptySink,
-    );
-  })();
-
-export const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>> = {
-  throwIfEmpty,
 };
 
 export const toRunnable: ToRunnable<RunnableLike<unknown>>["toRunnable"] = () =>

@@ -7,6 +7,7 @@ import {
   Reducer,
   SideEffect1,
   getLength,
+  isEmpty,
   none,
   pipe,
   pipeLazy,
@@ -115,6 +116,105 @@ export const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T> =
       >(),
     );
   })();
+
+export const bufferSinkMixin: <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<readonly T[]>,
+  T,
+>(
+  fromArray: (v: readonly T[][]) => C,
+) => {
+  [Object_properties]: {
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_init](
+    this: {
+      [DisposableLike_error]: Option<Error>;
+      [DisposableLike_isDisposed]: boolean;
+    },
+    delegate: TSink,
+    maxBufferSize: number,
+  ): void;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
+  [SinkLike_notify](next: T): void;
+} = <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<readonly T[]>,
+  T,
+>(
+  fromArray: (v: readonly T[][]) => C,
+) => {
+  const BufferSink_private_maxBufferSize = Symbol(
+    "BufferSink_private_maxBufferSize",
+  );
+  const BufferSink_private_buffer = Symbol("BufferSink_private_buffer");
+
+  type TProperties = {
+    [Sink_private_delegate]: TSink;
+    [BufferSink_private_maxBufferSize]: number;
+    [BufferSink_private_buffer]: T[];
+  } & PropertyTypeOf<[typeof disposableMixin]>;
+
+  return pipe(
+    {
+      [Object_properties]: {
+        [Sink_private_delegate]: none,
+        [BufferSink_private_maxBufferSize]: 0,
+        [BufferSink_private_buffer]: none,
+      },
+      [Object_init](
+        this: TProperties & DisposableLike,
+        delegate: TSink,
+        maxBufferSize: number,
+      ) {
+        init(disposableMixin, this);
+        this[Sink_private_delegate] = delegate;
+        this[BufferSink_private_maxBufferSize] = maxBufferSize;
+        this[BufferSink_private_buffer] = [];
+
+        pipe(
+          this,
+          addTo(delegate),
+          onComplete(() => {
+            const { [BufferSink_private_buffer]: buffer } = this;
+            this[BufferSink_private_buffer] = [];
+
+            if (isEmpty(buffer)) {
+              pipe(this[Sink_private_delegate], dispose());
+            } else {
+              pipe(
+                [buffer],
+                fromArray,
+                sinkInto<C, TSink, readonly T[]>(this[Sink_private_delegate]),
+              );
+            }
+          }),
+        );
+      },
+      [SinkLike_notify](this: TProperties, next: T) {
+        const {
+          [BufferSink_private_buffer]: buffer,
+          [BufferSink_private_maxBufferSize]: maxBufferSize,
+        } = this;
+
+        buffer.push(next);
+
+        if (getLength(buffer) === maxBufferSize) {
+          const buffer = this[BufferSink_private_buffer];
+          this[BufferSink_private_buffer] = [];
+
+          pipe(this[Sink_private_delegate], notify(buffer));
+        }
+      },
+    },
+    mixWith(disposableMixin),
+  );
+};
 
 export const distinctUntilChangedSinkMixin: <T>() => DisposableLike & {
   [Object_properties]: unknown;

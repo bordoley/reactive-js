@@ -158,6 +158,49 @@ export type ToRunnable<
   ): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
 
+type CreateReactiveContainer<
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<T>,
+  T,
+> = (onSink: SideEffect1<TSink>) => ContainerOf<C, T>;
+
+const createEmpty = <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<T>,
+  T,
+>(
+  create: CreateReactiveContainer<C, TSink, T>,
+) =>
+  create((sink: TSink) => {
+    pipe(sink, dispose());
+  });
+
+const createNever = <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<T>,
+  T,
+>(
+  create: CreateReactiveContainer<C, TSink, T>,
+) => create(ignore);
+
+const createUsing =
+  <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
+    create: CreateReactiveContainer<C, TSink, T>,
+  ) =>
+  <TResource extends DisposableLike>(
+    resourceFactory: Factory<TResource | readonly TResource[]>,
+    sourceFactory: (...resources: readonly TResource[]) => C,
+  ): ContainerOf<C, T> =>
+    create((sink: TSink) => {
+      pipe(
+        resourceFactory(),
+        resources => (Array.isArray(resources) ? resources : [resources]),
+        forEach<TResource>(addTo(sink)),
+        resources => sourceFactory(...resources),
+        //sinkInto<C, TSink, T>(sink),
+      )[ReactiveContainerLike_sinkInto](sink);
+    });
+
 export const createObservable = /*@__PURE__*/ (() => {
   class CreateObservable<T> implements ObservableLike<T> {
     constructor(private readonly f: SideEffect1<ObserverLike<T>>) {}
@@ -175,14 +218,39 @@ export const createObservable = /*@__PURE__*/ (() => {
     }
   }
 
-  return <T>(f: SideEffect1<ObserverLike<T>>) =>
-    newInstance(CreateObservable, f) as any;
+  return <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T> =>
+    newInstance(CreateObservable, f);
 })();
 
-const createObservableT: CreateReactiveContainer<ObservableLike, ObserverLike> =
-  {
-    create: createObservable,
-  };
+export const createObservableUsing: Using<ObservableLike>["using"] =
+  /*@__PURE__*/ createUsing(createObservable);
+export const createObservableUsingT: Using<ObservableLike> = {
+  using: createObservableUsing,
+};
+
+export const createRunnable = /*@__PURE__*/ (() => {
+  class Runnable<T> implements RunnableLike<T> {
+    constructor(private readonly _run: SideEffect1<SinkLike<T>>) {}
+
+    [ReactiveContainerLike_sinkInto](sink: SinkLike<T>) {
+      try {
+        this._run(sink);
+        pipe(sink, dispose());
+      } catch (cause) {
+        pipe(sink, dispose({ cause }));
+      }
+    }
+  }
+
+  return <T>(run: SideEffect1<SinkLike<T>>): RunnableLike<T> =>
+    newInstance(Runnable, run);
+})();
+
+export const createRunnableUsing: Using<RunnableLike>["using"] =
+  /*@__PURE__*/ createUsing(createRunnable);
+export const createRunnableUsingT: Using<RunnableLike> = {
+  using: createRunnableUsing,
+};
 
 export const createSubject = /*@__PURE__*/ (() => {
   type TProperties = {
@@ -271,65 +339,6 @@ export const createSubject = /*@__PURE__*/ (() => {
   };
 })();
 
-type CreateReactiveContainer<
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends DisposableLike,
-> = {
-  create<T>(onSink: SideEffect1<TSink>): ContainerOf<C, T>;
-};
-
-const create =
-  <C extends ReactiveContainerLike<TSink>, TSink extends DisposableLike, T>(
-    m: CreateReactiveContainer<C, TSink>,
-  ) =>
-  (onSink: (sink: TSink) => void): ContainerOf<C, T> =>
-    m.create(onSink);
-
-const createEmpty =
-  <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
-    m: CreateReactiveContainer<C, TSink>,
-  ) =>
-  (): ContainerOf<C, T> =>
-    pipe((sink: TSink) => {
-      pipe(sink, dispose());
-    }, create<C, TSink, T>(m));
-
-const createUsing =
-  <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
-    m: CreateReactiveContainer<C, TSink>,
-  ) =>
-  <TResource extends DisposableLike>(
-    resourceFactory: Factory<TResource | readonly TResource[]>,
-    sourceFactory: (...resources: readonly TResource[]) => C,
-  ): ContainerOf<C, T> =>
-    pipe((sink: TSink) => {
-      pipe(
-        resourceFactory(),
-        resources => (Array.isArray(resources) ? resources : [resources]),
-        forEach<TResource>(addTo(sink)),
-        resources => sourceFactory(...resources),
-        //sinkInto<C, TSink, T>(sink),
-      )[ReactiveContainerLike_sinkInto](sink);
-    }, create<C, TSink, T>(m));
-
-const createNever = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->(
-  m: CreateReactiveContainer<C, TSink>,
-) => {
-  const neverInstance: ContainerOf<C, any> = pipe(ignore, create(m));
-  return <T>(): ContainerOf<C, T> => neverInstance;
-};
-
-export const createObservableUsing: Using<ObservableLike>["using"] =
-  /*@__PURE__*/ createUsing(createObservableT);
-
-export const createObservableUsingT: Using<ObservableLike> = {
-  using: createObservableUsing,
-};
-
 interface DeferObservable {
   <T>(
     factory: Factory<SideEffect1<ObserverLike<T>>>,
@@ -337,7 +346,6 @@ interface DeferObservable {
   ): ObservableLike<T>;
   <T>(factory: Factory<ObservableLike<T>>): ObservableLike<T>;
 }
-
 export const deferObservable: DeferObservable = <T>(
   factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
   options?: { readonly delay?: number },
@@ -356,51 +364,21 @@ export const deferObservable: DeferObservable = <T>(
       sideEffect[ReactiveContainerLike_sinkInto](observer);
     }
   });
-
 export const deferObservableT: Defer<ObservableLike> = {
   defer: deferObservable,
 };
 
-export const neverObservable = /*@__PURE__*/ createNever(createObservableT);
+export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
+  createEmpty<RunnableLike, SinkLike<T>, T>(createRunnable);
+export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
+
+export const neverObservable: Never<ObservableLike>["never"] = <T>() =>
+  createNever<ObservableLike, ObserverLike<T>, T>(createObservable);
 export const neverObservableT: Never<ObservableLike> = {
   never: neverObservable,
 };
-
-export const createRunnable = /*@__PURE__*/ (() => {
-  class Runnable<T> implements RunnableLike<T> {
-    constructor(private readonly _run: SideEffect1<SinkLike<T>>) {}
-
-    [ReactiveContainerLike_sinkInto](sink: SinkLike<T>) {
-      try {
-        this._run(sink);
-        pipe(sink, dispose());
-      } catch (cause) {
-        pipe(sink, dispose({ cause }));
-      }
-    }
-  }
-
-  return <T>(run: SideEffect1<SinkLike<T>>): RunnableLike<T> =>
-    newInstance(Runnable, run);
-})();
-
-const createRunnableT: CreateReactiveContainer<RunnableLike, SinkLike> = {
-  create: createRunnable,
-};
-
-export const createRunnableUsing: Using<RunnableLike>["using"] =
-  /*@__PURE__*/ createUsing(createRunnableT);
-
-export const createRunnableUsingT: Using<RunnableLike> = {
-  using: createRunnableUsing,
-};
-
-export const emptyRunnable: Empty<RunnableLike>["empty"] =
-  /*@__PURE__*/ createEmpty(createRunnableT);
-export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
-
-export const neverRunnable: Never<RunnableLike>["never"] =
-  /*@__PURE__*/ createNever(createRunnableT);
+export const neverRunnable: Never<RunnableLike>["never"] = <T>() =>
+  createNever<RunnableLike, SinkLike<T>, T>(createRunnable);
 export const neverRunnableT: Never<RunnableLike> = {
   never: neverRunnable,
 };

@@ -26,7 +26,7 @@
 
 ### compute
 
-▸ **compute**<`C`, `T`, `TOptions`\>(`m`, `options?`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+▸ **compute**<`C`, `T`, `O`\>(`m`, `options?`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -34,14 +34,14 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `TOptions` | `TOptions` |
+| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromValue`: <T_1\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<`T_1`, [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
-| `options?` | `TOptions` |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromArray`: <T_1\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
+| `options?` | `Omit`<`Partial`<`O`\>, keyof [`FromArrayOptions`](containers.md#fromarrayoptions)\> |
 
 #### Returns
 
@@ -164,7 +164,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `concat`: <T\>(`fst`: [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `snd`: [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, ...`tail`: readonly [`ContainerOf`](containers.md#containerof)<`C`, `T`\>[]) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  } & { `fromArray`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  } |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `concat`: <T\>(`fst`: [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `snd`: [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, ...`tail`: readonly [`ContainerOf`](containers.md#containerof)<`C`, `T`\>[]) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  } & { `fromArray`: <T\>(`options?`: `undefined`) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  } |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
 
@@ -176,7 +176,7 @@ ___
 
 ### fromOption
 
-▸ **fromOption**<`C`, `T`, `TOptions`\>(`__namedParameters`, `options?`): [`Function1`](functions.md#function1)<[`Option`](functions.md#option)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+▸ **fromOption**<`C`, `T`, `O`\>(`__namedParameters`, `options?`): [`Function1`](functions.md#function1)<[`Option`](functions.md#option)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -184,14 +184,14 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `TOptions` | `TOptions` |
+| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Container`](containers.md#container)<`C`\> & { `fromValue`: <T_1\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<`T_1`, [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } & { `empty`: <T_2\>(`options?`: `TOptions`) => [`ContainerOf`](containers.md#containerof)<`C`, `T_2`\>  } |
-| `options?` | `TOptions` |
+| `__namedParameters` | [`FromArray`](containers.md#fromarray)<`C`, `O`\> |
+| `options?` | `Omit`<`Partial`<`O`\>, keyof [`FromArrayOptions`](containers.md#fromarrayoptions)\> |
 
 #### Returns
 
@@ -354,7 +354,7 @@ ___
 
 ### throws
 
-▸ **throws**<`C`, `T`, `TOptions`\>(`m`, `options?`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`unknown`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+▸ **throws**<`C`, `T`, `O`\>(`m`, `options?`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`unknown`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -362,14 +362,14 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `TOptions` | `TOptions` |
+| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromValue`: <T_1\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<`T_1`, [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
-| `options?` | `TOptions` |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromArray`: <T_1\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
+| `options?` | `Omit`<`Partial`<`O`\>, keyof [`FromArrayOptions`](containers.md#fromarrayoptions)\> |
 
 #### Returns
 

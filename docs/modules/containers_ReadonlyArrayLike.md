@@ -183,9 +183,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.count` | `number` |
-| `options.start` | `number` |
+| `options?` | `Partial`<{ `count`: `number` ; `start`: `number`  }\> |
 
 #### Returns
 
