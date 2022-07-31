@@ -3,7 +3,7 @@ import { describe as createDescribe, test as createTest, expectTrue, mockFn, exp
 import { pipe, pipeLazy, none, raise } from '../functions.mjs';
 import { createDisposable } from '../util.mjs';
 import '../util/DisposableLike.mjs';
-import { addIgnoringChildErrors, dispose, isDisposed, onDisposed, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { addIgnoringChildErrors, dispose, isDisposed, onDisposed, getException, addTo, add } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const DisposableLikeTests = createDescribe("DisposableLike", createTest("disposes child disposable when disposed", () => {
     const child = createDisposable();
@@ -20,15 +20,25 @@ const DisposableLikeTests = createDescribe("DisposableLike", createTest("dispose
 }), createTest("catches and swallows Errors thrown by teardown function", () => {
     const teardown = pipeLazy(none, raise);
     const disposable = pipe(createDisposable(), onDisposed(teardown), dispose());
-    pipe(disposable, getError, expectNone);
-}), createTest("propogates errors when disposed with an Error", () => {
+    pipe(disposable, getException, expectNone);
+}), createTest("propogates errors when disposed with an Exception", () => {
     const error = { cause: null };
     const childTeardown = mockFn();
     const disposable = pipe(createDisposable(), onDisposed(childTeardown));
     pipe(disposable, dispose(error));
-    pipe(disposable, getError, expectEquals(error));
+    pipe(disposable, getException, expectEquals(error));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([error]));
+}), createTest("ignores when it is added to itself", () => {
+    const disposable = createDisposable();
+    pipe(disposable, addTo(disposable), dispose());
+}), createTest("disposes parent when child is disposed with error", () => {
+    const parent = createDisposable();
+    const child = createDisposable();
+    pipe(parent, add(child));
+    const cause = new Error();
+    pipe(child, dispose({ cause }));
+    pipe(parent, getException, ({ cause } = { cause: undefined }) => cause, expectEquals(cause));
 }));
 
 export { DisposableLikeTests };

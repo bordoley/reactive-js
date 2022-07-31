@@ -16,7 +16,7 @@ import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, dis
 import '../util/DisposableLike.mjs';
 import { move, getCurrent, hasCurrent, forEach as forEach$1 } from '../util/EnumeratorLike.mjs';
 import { notifySink } from '../util/SinkLike.mjs';
-import { add, dispose, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { add, dispose, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
 const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
@@ -544,7 +544,7 @@ const toReadonlyArray = () => (enumerable) => {
     while (move(enumerator)) {
         result.push(getCurrent(enumerator));
     }
-    const error = getError(enumerator);
+    const error = getException(enumerator);
     if (isSome(error)) {
         throw error.cause;
     }

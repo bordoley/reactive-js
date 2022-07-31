@@ -1,23 +1,15 @@
-import {
-  Option,
-  ignore,
-  isNone,
-  isSome,
-  none,
-  pipe,
-  returns,
-} from "../../functions";
+import { Option, ignore, isSome, none, pipe, returns } from "../../functions";
 import {
   DisposableLike,
   DisposableLike_add,
   DisposableLike_dispose,
-  DisposableLike_error,
+  DisposableLike_exception,
   DisposableLike_isDisposed,
   DisposableOrTeardown,
-  Error,
+  Exception,
   add,
   dispose,
-  getError,
+  getException,
   isDisposed,
   onDisposed,
 } from "./DisposableLikeInternal";
@@ -37,12 +29,12 @@ export const delegatingDisposableMixin: {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
   };
 } = /*@__PURE__*/ (() => {
   const DelegatingDisposable_private_delegate = Symbol(
@@ -73,11 +65,11 @@ export const delegatingDisposableMixin: {
       [DisposableLike_isDisposed]: false,
     },
     {
-      get [DisposableLike_error](): Option<Error> {
+      get [DisposableLike_exception](): Option<Exception> {
         const self = this as unknown as TProperties;
 
         const delegate = self[DelegatingDisposable_private_delegate];
-        return delegate[DisposableLike_error];
+        return delegate[DisposableLike_exception];
       },
       [DisposableLike_add](
         this: TProperties,
@@ -87,7 +79,7 @@ export const delegatingDisposableMixin: {
         const delegate = this[DelegatingDisposable_private_delegate];
         delegate[DisposableLike_add](disposable, ignoreChildErrors);
       },
-      [DisposableLike_dispose](this: TProperties, error?: Error) {
+      [DisposableLike_dispose](this: TProperties, error?: Exception) {
         pipe(this[DelegatingDisposable_private_delegate], dispose(error));
       },
     },
@@ -95,7 +87,7 @@ export const delegatingDisposableMixin: {
 })();
 
 const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
-  const error = getError(self);
+  const error = getException(self);
   if (disposable instanceof Function) {
     try {
       disposable.call(self, error);
@@ -111,15 +103,15 @@ const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
 
 export const disposableMixin: {
   [Object_init](this: {
-    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
   }): void;
   [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
@@ -131,7 +123,7 @@ export const disposableMixin: {
   );
 
   type TProperties = {
-    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
     [Disposable_private_disposables]: Set<DisposableOrTeardown>;
   };
@@ -141,25 +133,20 @@ export const disposableMixin: {
       this[Disposable_private_disposables] = new Set();
     },
     {
-      [DisposableLike_error]: none,
+      [DisposableLike_exception]: none,
       [DisposableLike_isDisposed]: false,
       [Disposable_private_disposables]: none,
     },
     {
       [DisposableLike_dispose](
         this: TProperties & DisposableLike,
-        error?: Error,
+        error?: Exception,
       ) {
         if (!isDisposed(this)) {
-          this[DisposableLike_error] = error;
+          this[DisposableLike_exception] = error;
           this[DisposableLike_isDisposed] = true;
 
-          const disposables: Option<Set<DisposableOrTeardown>> =
-            this[Disposable_private_disposables];
-
-          if (isNone(disposables)) {
-            return;
-          }
+          const disposables = this[Disposable_private_disposables];
 
           for (const disposable of disposables) {
             disposables.delete(disposable);
@@ -202,7 +189,7 @@ export const createDisposable = /*@__PURE__*/ pipe(
 );
 
 export const disposed: DisposableLike = {
-  [DisposableLike_error]: none,
+  [DisposableLike_exception]: none,
   [DisposableLike_isDisposed]: true,
   [DisposableLike_add](
     this: DisposableLike,

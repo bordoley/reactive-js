@@ -16,7 +16,7 @@
 ### Type Aliases
 
 - [DisposableOrTeardown](util.md#disposableorteardown)
-- [Error](util.md#error)
+- [Exception](util.md#exception)
 
 ### Variables
 
@@ -30,13 +30,13 @@
 
 ### DisposableOrTeardown
 
-Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/util.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Option`](functions.md#option)<[`Error`](util.md#error)\>\>
+Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/util.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Option`](functions.md#option)<[`Exception`](util.md#exception)\>\>
 
 ___
 
-### Error
+### Exception
 
-Ƭ **Error**: `Object`
+Ƭ **Exception**: `Object`
 
 #### Type declaration
 

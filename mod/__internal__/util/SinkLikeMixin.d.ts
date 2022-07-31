@@ -1,54 +1,54 @@
 import { Option, Equality, SideEffect1, Predicate, Function1, Reducer, Factory } from "../../functions.mjs";
 import { ReactiveContainerLike } from "../../rx.mjs";
-import { SinkLike, DisposableLike_error, Error, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose, SinkLike_notify } from "../../util.mjs";
+import { SinkLike, DisposableLike_exception, Exception, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose, SinkLike_notify } from "../../util.mjs";
 import { Object_init, Object_properties, Object_prototype } from "./Object.mjs";
 declare const createSink: <T>() => SinkLike<T>;
 declare const DelegatingSink_delegate: unique symbol;
 declare const delegatingSinkMixin: <T>() => {
     [Object_init](this: {
         [DelegatingSink_delegate]: SinkLike<T>;
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     }, delegate: SinkLike<T>): void;
     [Object_properties]: {
         [DelegatingSink_delegate]: SinkLike<T>;
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
 declare const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T>;
 declare const bufferSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<readonly T[]>, T>(fromArray: (v: readonly T[][]) => C) => {
     [Object_init](this: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     }, delegate: TSink, maxBufferSize: number): void;
     [Object_properties]: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
 declare const decodeWithCharsetSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<string>>(fromArray: (v: readonly string[]) => C) => {
     [Object_init](this: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     }, delegate: SinkLike<string>, charset: string): void;
     [Object_properties]: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: ArrayBuffer): void;
     };
 };
@@ -60,9 +60,9 @@ declare const distinctUntilChangedSinkMixin: <T>() => {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
@@ -72,9 +72,9 @@ declare const forEachSinkMixin: <T>() => {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
@@ -84,9 +84,9 @@ declare const keepSinkMixin: <T>() => {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
@@ -96,9 +96,9 @@ declare const mapSinkMixin: <TA, TB>() => {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: TA): void;
     };
 };
@@ -113,21 +113,21 @@ declare const pairwiseSinkMixin: <T>() => {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
 declare const reduceSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<TAcc>, T, TAcc>(fromArray: (v: readonly TAcc[]) => C) => {
     [Object_init](this: unknown, delegate: TSink, reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): void;
     [Object_properties]: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
@@ -137,9 +137,9 @@ declare const scanSinkMixin: <T, TAcc>() => {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
@@ -151,9 +151,9 @@ declare const skipFirstSinkMixin: <T>() => {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
@@ -165,25 +165,25 @@ declare const takeFirstSinkMixin: <T>() => {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
 declare const TakeLastSink_last: unique symbol;
 declare const takeLastSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(fromArray: (v: readonly T[]) => C) => {
     [Object_init](this: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     }, delegate: TSink, takeLastCount: number): void;
     [Object_properties]: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
@@ -195,21 +195,21 @@ declare const takeWhileSinkMixin: <T>() => {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };
 declare const throwIfEmptySinkMixin: <T>() => {
     [Object_init](this: unknown, delegate: SinkLike<T>, factory: Factory<unknown>): void;
     [Object_properties]: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [SinkLike_notify](next: T): void;
     };
 };

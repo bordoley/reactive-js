@@ -92,7 +92,7 @@ import {
 } from "../rx";
 import {
   DisposableLike,
-  DisposableLike_error,
+  DisposableLike_exception,
   SinkLike,
   SinkLike_notify,
 } from "../util";
@@ -368,7 +368,7 @@ export const run =
       createSink(),
       sourceFrom(runnable),
       dispose(),
-      ({ [DisposableLike_error]: error }) => {
+      ({ [DisposableLike_exception]: error }) => {
         if (isSome(error)) {
           raise(error.cause);
         }

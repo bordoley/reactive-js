@@ -28,7 +28,7 @@ Represents an unmanaged resource that can be disposed.
 
 ### Properties
 
-- [[DisposableLike\_error]](util.DisposableLike.md#[disposablelike_error])
+- [[DisposableLike\_exception]](util.DisposableLike.md#[disposablelike_exception])
 - [[DisposableLike\_isDisposed]](util.DisposableLike.md#[disposablelike_isdisposed])
 
 ### Methods
@@ -38,9 +38,9 @@ Represents an unmanaged resource that can be disposed.
 
 ## Properties
 
-### [DisposableLike\_error]
+### [DisposableLike\_exception]
 
-• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/functions.md#option)<[`Error`](../modules/util.md#error)\>
+• `Readonly` **[DisposableLike\_exception]**: [`Option`](../modules/functions.md#option)<[`Exception`](../modules/util.md#exception)\>
 
 The error the `Disposable` was disposed with if disposed.
 
@@ -85,7 +85,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `error?` | [`Error`](../modules/util.md#error) | An optional error that signals the resource is being disposed due to an error. |
+| `error?` | [`Exception`](../modules/util.md#exception) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
 
