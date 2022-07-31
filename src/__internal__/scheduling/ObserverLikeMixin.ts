@@ -72,6 +72,7 @@ const createObserverDispatcher = (<T>() => {
       ) {
         init(disposableMixin, this);
         this.observer = observer;
+        this.nextQueue = [];
 
         this.continuation = () => {
           const { nextQueue } = this;
@@ -134,8 +135,8 @@ export const observerMixin: <T>() => {
   [Object_prototype]: {
     get [ObserverLike_dispatcher](): DispatcherLike<T>;
   };
-} = /*@__PURE__*/ (<T>() => {
-  return pipe(
+} = /*@__PURE__*/ (<T>() =>
+  pipe(
     clazz(
       function ObserverMixin(this: TProperties, scheduler: SchedulerLike) {
         this[ObserverLike_scheduler] = scheduler;
@@ -160,5 +161,4 @@ export const observerMixin: <T>() => {
       },
     ),
     returns,
-  );
-})();
+  ))();

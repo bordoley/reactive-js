@@ -11,8 +11,7 @@ import { pipe, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
 import './util/DisposableLike.mjs';
-import { getCurrent } from './util/EnumeratorLike.mjs';
-import { move } from './util/SourceLike.mjs';
+import { move, getCurrent } from './util/EnumeratorLike.mjs';
 import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
