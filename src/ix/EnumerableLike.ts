@@ -110,17 +110,20 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  Error,
   SinkLike,
   SourceLike_move,
   disposed,
 } from "../util";
 import {
   add,
+  addIgnoringChildErrors,
   addTo,
   bindTo,
   dispose,
   getError,
   isDisposed,
+  onComplete,
 } from "../util/DisposableLike";
 import {
   forEach as forEachEnumerator,
@@ -299,7 +302,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   );
 })();
 
-export const bufferT: Buffer<EnumerableLike<unknown>> = {
+export const bufferT: Buffer<EnumerableLike> = {
   buffer,
 };
 
@@ -709,7 +712,7 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   );
 })();
 
-export const repeatT: Repeat<EnumerableLike<unknown>> = {
+export const repeatT: Repeat<EnumerableLike> = {
   repeat,
 };
 
@@ -1040,10 +1043,35 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
         [Object_properties]: {
           isEmpty: true,
         },
-        [Object_init](this: TProperties, delegate: EnumeratorLike) {
+        [Object_init](
+          this: TProperties & DisposableLike,
+          delegate: EnumeratorLike,
+          factory: Factory<unknown>,
+        ) {
           init(disposableMixin, this);
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.isEmpty = true;
+
+          pipe(this, addIgnoringChildErrors(delegate));
+          pipe(
+            delegate,
+            onComplete(() => {
+              let error: Option<Error> = none;
+
+              if (this.isEmpty) {
+                let cause: unknown = none;
+                try {
+                  cause = factory();
+                } catch (e) {
+                  cause = e;
+                }
+
+                error = { cause };
+              }
+
+              pipe(this, dispose(error));
+            }),
+          );
         },
         [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
           if (delegatingEnumeratorMove(this)) {
@@ -1053,9 +1081,10 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
       },
       mixWith(disposableMixin, typedDelegatingEnumeratorMixin),
       createObjectFactory<
-        EnumeratorLike<T> & { isEmpty: boolean },
+        EnumeratorLike<T>,
         TProperties,
-        EnumeratorLike<T>
+        EnumeratorLike<T>,
+        Factory<unknown>
       >(),
       createThrowIfEmptyOperator<EnumerableLike, T, TInteractive>(liftT),
     );
@@ -1181,7 +1210,7 @@ export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
         );
   })();
 
-export const toRunnableT: ToRunnable<EnumerableLike<unknown>> = {
+export const toRunnableT: ToRunnable<EnumerableLike> = {
   toRunnable,
 };
 

@@ -10,6 +10,7 @@ import {
   ConcatAll,
   ContainerLike,
   DistinctUntilChanged,
+  ForEach,
   FromArray,
   Keep,
   Map,
@@ -158,6 +159,42 @@ export const distinctUntilChangedTests = <C extends ContainerLike>(
     }),
   );
 
+export const forEachTests = <C extends ContainerLike>(
+  m: ForEach<C> & FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "forEach",
+    test("invokes the effect for each notified value", () => {
+      const result: number[] = [];
+      pipe(
+        [1, 2, 3],
+        m.fromArray(),
+        m.forEach(x => {
+          result.push(x + 10);
+        }),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      );
+
+      pipe(result, expectArrayEquals([11, 12, 13]));
+    }),
+
+    test("when the effect function throws", () => {
+      const err = new Error();
+      pipe(
+        pipeLazy(
+          [1, 1],
+          m.fromArray(),
+          m.forEach(_ => {
+            throw err;
+          }),
+          m.toReadonlyArray(),
+        ),
+        expectToThrowError(err),
+      );
+    }),
+  );
+
 export const keepTests = <C extends ContainerLike>(
   m: Keep<C> & FromArray<C> & ToReadonlyArray<C>,
 ) =>
@@ -291,6 +328,20 @@ export const repeatTests = <C extends ContainerLike>(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
+    test("when the repeat function throws", () => {
+      const err = new Error();
+      pipe(
+        pipeLazy(
+          [1, 1],
+          m.fromArray(),
+          m.repeat(_ => {
+            throw err;
+          }),
+          m.toReadonlyArray(),
+        ),
+        expectToThrowError(err),
+      );
+    }),
   );
 
 export const scanTests = <C extends ContainerLike>(
@@ -516,11 +567,26 @@ export const throwIfEmptyTests = <C extends ContainerLike>(
     "throwIfEmpty",
     test("when source is empty", () => {
       const error = new Error();
-      pipeLazy(
+      pipe(
         pipeLazy(
           [],
           m.fromArray(),
           m.throwIfEmpty(() => error),
+          m.toReadonlyArray(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+
+    test("when factory throw", () => {
+      const error = new Error();
+      pipe(
+        pipeLazy(
+          [],
+          m.fromArray(),
+          m.throwIfEmpty(() => {
+            throw error;
+          }),
           m.toReadonlyArray(),
         ),
         expectToThrowError(error),

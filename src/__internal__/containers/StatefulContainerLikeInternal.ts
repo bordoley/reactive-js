@@ -11,23 +11,14 @@ import {
   Function1,
   Function2,
   Function3,
-  Option,
   Predicate,
   Reducer,
   SideEffect1,
   max,
-  none,
   partial,
   pipe,
   strictEquality,
 } from "../../functions";
-import { Error } from "../../util";
-import {
-  addIgnoringChildErrors,
-  addTo,
-  dispose,
-  onComplete,
-} from "../../util/DisposableLike";
 import { MAX_SAFE_INTEGER } from "../env";
 
 export type StatefulContainerOperatorIn<
@@ -256,46 +247,11 @@ export const createThrowIfEmptyOperator =
     m: Lift<C, TVar>,
   ) =>
   (
-    operator: Function1<
+    operator: Function2<
       StatefulContainerOperatorIn<C, T, T, TVar>,
-      StatefulContainerOperatorOut<C, T, T, TVar> & {
-        readonly isEmpty: boolean;
-      }
+      Factory<unknown>,
+      StatefulContainerOperatorOut<C, T, T, TVar>
     >,
   ) =>
-  (factory: Factory<unknown>): ContainerOperator<C, T, T> =>
-    pipe((delegate: StatefulContainerOperatorIn<C, T, T, TVar>) => {
-      const lifted = pipe(
-        delegate,
-        operator,
-        m.variance === interactive
-          ? addIgnoringChildErrors(delegate)
-          : addTo(delegate),
-      );
-      const { parent, child } =
-        m.variance === interactive
-          ? { parent: lifted, child: delegate }
-          : { parent: delegate, child: lifted };
-
-      pipe(
-        child,
-        onComplete(() => {
-          let error: Option<Error> = none;
-
-          if (lifted.isEmpty) {
-            let cause: unknown = none;
-            try {
-              cause = factory();
-            } catch (e) {
-              cause = e;
-            }
-
-            error = { cause };
-          }
-
-          pipe(parent, dispose(error));
-        }),
-      );
-
-      return lifted;
-    }, lift(m));
+  (factory: Factory<unknown>) =>
+    pipe(operator, partial(factory), lift(m));

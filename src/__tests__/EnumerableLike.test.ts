@@ -5,6 +5,7 @@ import {
   concatAllT,
   concatT,
   distinctUntilChangedT,
+  forEachT,
   keepT,
   mapT,
   pairwiseT,
@@ -23,6 +24,7 @@ import {
   concatAllTests,
   concatTests,
   distinctUntilChangedTests,
+  forEachTests,
   keepTests,
   mapTests,
   pairwiseTests,
@@ -56,6 +58,11 @@ export const EnumerableLikeTests = describe(
   distinctUntilChangedTests({
     fromArray: toEnumerable,
     ...distinctUntilChangedT,
+    ...toReadonlyArrayT,
+  }),
+  forEachTests({
+    fromArray: toEnumerable,
+    ...forEachT,
     ...toReadonlyArrayT,
   }),
   keepTests({

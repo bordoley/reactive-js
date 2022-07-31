@@ -637,3 +637,74 @@ export const takeWhileSinkMixin: <T>() => DisposableLike & {
     returns,
   );
 })();
+
+export const throwIfEmptySinkMixin: <T>() => {
+  [Object_properties]: {
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_init](
+    this: unknown,
+    delegate: SinkLike<T>,
+    factory: Factory<unknown>,
+  ): void;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
+  [SinkLike_notify](next: T): void;
+} = /*@__PURE__*/ (<T>() => {
+  const ThrowIfEmptySink_private_isEmpty = Symbol(
+    "ThrowIfEmptySink_private_isEmpty",
+  );
+
+  type TProperties = {
+    [Sink_private_delegate]: SinkLike<T>;
+    [ThrowIfEmptySink_private_isEmpty]: boolean;
+  } & PropertyTypeOf<[typeof disposableMixin]>;
+
+  return pipe(
+    {
+      [Object_properties]: {
+        [Sink_private_delegate]: none,
+        [ThrowIfEmptySink_private_isEmpty]: true,
+      },
+      [Object_init](
+        this: TProperties & DisposableLike,
+        delegate: SinkLike<T>,
+        factory: Factory<unknown>,
+      ) {
+        init(disposableMixin, this);
+        this[Sink_private_delegate] = delegate;
+
+        pipe(
+          this,
+          addTo(delegate),
+          onComplete(() => {
+            let error: Option<Error> = none;
+
+            if (this[ThrowIfEmptySink_private_isEmpty]) {
+              let cause: unknown = none;
+              try {
+                cause = factory();
+              } catch (e) {
+                cause = e;
+              }
+
+              error = { cause };
+            }
+
+            pipe(delegate, dispose(error));
+          }),
+        );
+      },
+      [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
+        this[ThrowIfEmptySink_private_isEmpty] = false;
+        pipe(this[Sink_private_delegate], notify(next));
+      },
+    },
+    mixWith(disposableMixin),
+    returns,
+  );
+})();

@@ -23,6 +23,18 @@ const distinctUntilChangedTests = (m) => createDescribe("distinctUntilChanged", 
     };
     pipe(pipeLazy([1, 1], m.fromArray(), m.distinctUntilChanged({ equality }), m.toReadonlyArray()), expectToThrowError(err));
 }));
+const forEachTests = (m) => createDescribe("forEach", createTest("invokes the effect for each notified value", () => {
+    const result = [];
+    pipe([1, 2, 3], m.fromArray(), m.forEach(x => {
+        result.push(x + 10);
+    }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
+    pipe(result, expectArrayEquals([11, 12, 13]));
+}), createTest("when the effect function throws", () => {
+    const err = new Error();
+    pipe(pipeLazy([1, 1], m.fromArray(), m.forEach(_ => {
+        throw err;
+    }), m.toReadonlyArray()), expectToThrowError(err));
+}));
 const keepTests = (m) => createDescribe("keep", createTest("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], m.fromArray(), m.keep(x => x > 5), m.toReadonlyArray(), expectArrayEquals([8, 10, 7]))), createTest("when predicate throws", () => {
     const err = new Error();
     const predicate = (_a) => {
@@ -48,7 +60,12 @@ const pairwiseTests = (m) => createDescribe("pairwise", createTest("when there a
     [7, 8],
     [8, 9],
 ], arrayEquality()))), createTest("when the input only provides 1 value", pipeLazy([0], m.fromArray(), m.pairwise(), m.toReadonlyArray(), expectArrayEquals([], arrayEquality()))));
-const repeatTests = (m) => createDescribe("repeat", createTest("when always repeating", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), createTest("when repeating a finite amount of times.", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(3), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), createTest("when repeating with a predicate", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(x => x < 1), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))));
+const repeatTests = (m) => createDescribe("repeat", createTest("when always repeating", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), createTest("when repeating a finite amount of times.", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(3), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), createTest("when repeating with a predicate", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(x => x < 1), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), createTest("when the repeat function throws", () => {
+    const err = new Error();
+    pipe(pipeLazy([1, 1], m.fromArray(), m.repeat(_ => {
+        throw err;
+    }), m.toReadonlyArray()), expectToThrowError(err));
+}));
 const scanTests = (m) => createDescribe("scan", createTest("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromArray(), m.scan(sum, returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), createTest("throws when the scan function throws", () => {
     const err = new Error();
     const scanner = (_acc, _next) => {
@@ -78,7 +95,12 @@ const takeWhileTests = (m) => createDescribe("takeWhile", createTest("exclusive"
 }));
 const throwIfEmptyTests = (m) => createDescribe("throwIfEmpty", createTest("when source is empty", () => {
     const error = new Error();
-    pipeLazy(pipeLazy([], m.fromArray(), m.throwIfEmpty(() => error), m.toReadonlyArray()), expectToThrowError(error));
+    pipe(pipeLazy([], m.fromArray(), m.throwIfEmpty(() => error), m.toReadonlyArray()), expectToThrowError(error));
+}), createTest("when factory throw", () => {
+    const error = new Error();
+    pipe(pipeLazy([], m.fromArray(), m.throwIfEmpty(() => {
+        throw error;
+    }), m.toReadonlyArray()), expectToThrowError(error));
 }), createTest("when source is not empty", pipeLazy([1], m.fromArray(), m.throwIfEmpty(() => undefined), m.toReadonlyArray(), expectArrayEquals([1]))));
 const zipTests = (m) => createDescribe("zip", createTest("when all inputs are the same length", pipeLazy(m.zip(pipe([1, 2, 3, 4, 5], m.fromArray()), pipe([5, 4, 3, 2, 1], m.fromArray())), m.toReadonlyArray(), expectArrayEquals([
     [1, 5],
@@ -92,4 +114,4 @@ const zipTests = (m) => createDescribe("zip", createTest("when all inputs are th
     [3, 3, 3],
 ], arrayEquality()))));
 
-export { bufferTests, concatAllTests, concatTests, distinctUntilChangedTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };
+export { bufferTests, concatAllTests, concatTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };

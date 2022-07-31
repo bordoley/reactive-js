@@ -42,7 +42,5 @@ declare const createTakeLastOperator: <C extends StatefulContainerLike, T, TVar 
 declare const createTakeWhileOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function3<StatefulContainerOperatorIn<C, T, T, TVar>, Predicate<T>, boolean, StatefulContainerOperatorOut<C, T, T, TVar>>) => (predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T, T>;
-declare const createThrowIfEmptyOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function1<StatefulContainerOperatorIn<C, T, T, TVar>, StatefulContainerOperatorOut<C, T, T, TVar> & {
-    readonly isEmpty: boolean;
-}>) => (factory: Factory<unknown>) => ContainerOperator<C, T, T>;
+declare const createThrowIfEmptyOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function2<StatefulContainerOperatorIn<C, T, T, TVar>, Factory<unknown>, StatefulContainerOperatorOut<C, T, T, TVar>>) => (factory: Factory<unknown>) => ContainerOperator<C, T, T>;
 export { Lift, StatefulContainerOperatorIn, StatefulContainerOperatorOut, TInteractive, TReactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, reactive };
