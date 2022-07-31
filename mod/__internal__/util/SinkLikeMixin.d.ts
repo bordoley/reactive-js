@@ -74,6 +74,16 @@ declare const pairwiseSinkMixin: <T>() => DisposableLike & {
     ]>): void;
     [SinkLike_notify](next: T): void;
 };
+declare const reduceSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<TAcc>, T, TAcc>(fromArray: (v: readonly TAcc[]) => C) => {
+    [Object_properties]: {
+        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_isDisposed]: boolean;
+    };
+    [Object_init](this: unknown, delegate: TSink, reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): void;
+    [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+};
 declare const scanSinkMixin: <T, TAcc>() => DisposableLike & {
     [Object_properties]: unknown;
     [Object_init](this: unknown, delegate: SinkLike<TAcc>, reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): void;
@@ -118,4 +128,4 @@ declare const throwIfEmptySinkMixin: <T>() => {
     [DisposableLike_dispose](error?: Error): void;
     [SinkLike_notify](next: T): void;
 };
-export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

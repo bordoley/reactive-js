@@ -1,8 +1,8 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
-import { reactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
+import { reactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { createObjectFactory, Object_init, init, mixWith } from '../__internal__/util/Object.mjs';
-import { bufferSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { bufferSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, pipeUnsafe, newInstance, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT } from '../rx.mjs';
@@ -108,6 +108,11 @@ const pairwise = /*@__PURE__*/ (() => {
     return pipe(typedPairwiseSinkMixin, createObjectFactory(), lift, returns);
 })();
 const pairwiseT = { pairwise };
+const reduce = /*@__PURE__*/ (() => {
+    const typedReduceSinkMixin = reduceSinkMixin(toRunnable$1());
+    return pipe(typedReduceSinkMixin, createObjectFactory(), createReduceOperator(liftT));
+})();
+const reduceT = { reduce };
 const repeat = /*@__PURE__*/ (() => {
     return createRepeatOperator((delegate, predicate) => createRunnable(sink => {
         let count = 0;
@@ -175,4 +180,4 @@ const toRunnableT = {
     toRunnable,
 };
 
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, first, forEach, forEachT, keep, keepT, last, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, first, forEach, forEachT, keep, keepT, last, map, mapT, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT };

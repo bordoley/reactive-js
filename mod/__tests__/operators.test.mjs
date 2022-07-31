@@ -2,7 +2,7 @@
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from '../__internal__/testing.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
 import { encodeUtf8 } from '../containers/ContainerLike.mjs';
-import { pipeLazy, arrayEquality, pipe, increment, sum, returns, alwaysTrue } from '../functions.mjs';
+import { pipeLazy, arrayEquality, pipe, increment, returns, sum, alwaysTrue } from '../functions.mjs';
 
 const bufferTests = (m) => createDescribe("buffer", createTest("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray(), m.buffer({ maxBufferSize: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
@@ -68,6 +68,7 @@ const pairwiseTests = (m) => createDescribe("pairwise", createTest("when there a
     [7, 8],
     [8, 9],
 ], arrayEquality()))), createTest("when the input only provides 1 value", pipeLazy([0], m.fromArray(), m.pairwise(), m.toReadonlyArray(), expectArrayEquals([], arrayEquality()))));
+const reduceTests = (m) => createDescribe("reduce", createTest("summing all values", pipeLazy([1, 2, 3], m.fromArray(), m.reduce((acc, next) => acc + next, returns(0)), m.toReadonlyArray(), expectArrayEquals([6]))));
 const repeatTests = (m) => createDescribe("repeat", createTest("when always repeating", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), createTest("when repeating a finite amount of times.", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(3), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), createTest("when repeating with a predicate", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(x => x < 1), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), createTest("when the repeat function throws", () => {
     const err = new Error();
     pipe(pipeLazy([1, 1], m.fromArray(), m.repeat(_ => {
@@ -122,4 +123,4 @@ const zipTests = (m) => createDescribe("zip", createTest("when all inputs are th
     [3, 3, 3],
 ], arrayEquality()))));
 
-export { bufferTests, concatAllTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };
+export { bufferTests, concatAllTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };

@@ -18,6 +18,7 @@ const createDistinctUntilChangedOperator = (m) => (operator) => (options) => {
 const createForEachOperator = (m) => (operator) => (effect) => pipe(operator, partial(effect), lift(m));
 const createKeepOperator = (m) => (operator) => (predicate) => pipe(operator, partial(predicate), lift(m));
 const createMapOperator = (m) => (operator) => (mapper) => pipe(operator, partial(mapper), lift(m));
+const createReduceOperator = (m) => (operator) => (reducer, initialValue) => pipe(operator, partial(reducer, initialValue), lift(m));
 const createScanOperator = (m) => (operator) => (reducer, initialValue) => pipe(operator, partial(reducer, initialValue), lift(m));
 const createSkipFirstOperator = (m) => (operator) => (options = {}) => {
     const { count = 1 } = options;
@@ -41,4 +42,4 @@ const createTakeWhileOperator = (m) => (operator) => (predicate, options = {}) =
 };
 const createThrowIfEmptyOperator = (m) => (operator) => (factory) => pipe(operator, partial(factory), lift(m));
 
-export { createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, reactive };
+export { createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, reactive };
