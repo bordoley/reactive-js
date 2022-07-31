@@ -6,6 +6,7 @@
 
 ### Variables
 
+- [bufferT](rx_RunnableLike.md#buffert)
 - [concatAllT](rx_RunnableLike.md#concatallt)
 - [concatT](rx_RunnableLike.md#concatt)
 - [distinctUntilChangedT](rx_RunnableLike.md#distinctuntilchangedt)
@@ -24,6 +25,7 @@
 
 ### Functions
 
+- [buffer](rx_RunnableLike.md#buffer)
 - [concat](rx_RunnableLike.md#concat)
 - [concatAll](rx_RunnableLike.md#concatall)
 - [distinctUntilChanged](rx_RunnableLike.md#distinctuntilchanged)
@@ -42,6 +44,12 @@
 - [toReadonlyArray](rx_RunnableLike.md#toreadonlyarray)
 
 ## Variables
+
+### bufferT
+
+• `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
 
 ### concatAllT
 
@@ -132,6 +140,29 @@ ___
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ## Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+___
 
 ### concat
 

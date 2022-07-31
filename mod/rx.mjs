@@ -1,12 +1,12 @@
 /// <reference types="./rx.d.ts" />
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
-import { pipe, newInstance, none, getLength, max, forEach, ignore } from './functions.mjs';
+import { pipe, ignore, forEach, newInstance, none, getLength, max } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
 import { schedule } from './scheduling/SchedulerLike.mjs';
 import './util/DisposableLike.mjs';
-import { dispose, isDisposed, onDisposed, addIgnoringChildErrors, addTo } from './__internal__/util/DisposableLikeInternal.mjs';
+import { dispose, addTo, isDisposed, onDisposed, addIgnoringChildErrors } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
 const ReactiveContainerLike_sinkInto = Symbol("ReactiveContainerLike_sinkInto");
@@ -21,6 +21,13 @@ const MulticastObservableLike_observerCount = Symbol("MulticastObservableLike_ob
 const MulticastObservableLike_replay = Symbol("MulticastObservableLike_replay");
 /** @ignore */
 const SubjectLike_publish = Symbol("SubjectLike_publish");
+const createEmpty = (create) => create((sink) => {
+    pipe(sink, dispose());
+});
+const createNever = (create) => create(ignore);
+const createUsing = (create) => (resourceFactory, sourceFactory) => create((sink) => {
+    pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addTo(sink)), resources => sourceFactory(...resources))[ReactiveContainerLike_sinkInto](sink);
+});
 const createObservable = /*@__PURE__*/ (() => {
     class CreateObservable {
         constructor(f) {
@@ -40,8 +47,32 @@ const createObservable = /*@__PURE__*/ (() => {
     }
     return (f) => newInstance(CreateObservable, f);
 })();
-const createObservableT = {
-    create: createObservable,
+const createObservableUsing = 
+/*@__PURE__*/ createUsing(createObservable);
+const createObservableUsingT = {
+    using: createObservableUsing,
+};
+const createRunnable = /*@__PURE__*/ (() => {
+    class Runnable {
+        constructor(_run) {
+            this._run = _run;
+        }
+        [ReactiveContainerLike_sinkInto](sink) {
+            try {
+                this._run(sink);
+                pipe(sink, dispose());
+            }
+            catch (cause) {
+                pipe(sink, dispose({ cause }));
+            }
+        }
+    }
+    return (run) => newInstance(Runnable, run);
+})();
+const createRunnableUsing = 
+/*@__PURE__*/ createUsing(createRunnable);
+const createRunnableUsingT = {
+    using: createRunnableUsing,
 };
 const createSubject = /*@__PURE__*/ (() => {
     const createSubjectInstance = pipe({
@@ -100,22 +131,6 @@ const createSubject = /*@__PURE__*/ (() => {
         return createSubjectInstance(replay);
     };
 })();
-const create = (m) => (onSink) => m.create(onSink);
-const createEmpty = (m) => () => pipe((sink) => {
-    pipe(sink, dispose());
-}, create(m));
-const createUsing = (m) => (resourceFactory, sourceFactory) => pipe((sink) => {
-    pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addTo(sink)), resources => sourceFactory(...resources))[ReactiveContainerLike_sinkInto](sink);
-}, create(m));
-const createNever = (m) => {
-    const neverInstance = pipe(ignore, create(m));
-    return () => neverInstance;
-};
-const createObservableUsing = 
-/*@__PURE__*/ createUsing(createObservableT);
-const createObservableUsingT = {
-    using: createObservableUsing,
-};
 const deferObservable = (factory, options) => createObservable(observer => {
     const sideEffect = factory();
     if (typeof sideEffect === "function") {
@@ -129,40 +144,13 @@ const deferObservable = (factory, options) => createObservable(observer => {
 const deferObservableT = {
     defer: deferObservable,
 };
-const neverObservable = /*@__PURE__*/ createNever(createObservableT);
+const emptyRunnable = () => createEmpty(createRunnable);
+const emptyRunnableT = { empty: emptyRunnable };
+const neverObservable = () => createNever(createObservable);
 const neverObservableT = {
     never: neverObservable,
 };
-const createRunnable = /*@__PURE__*/ (() => {
-    class Runnable {
-        constructor(_run) {
-            this._run = _run;
-        }
-        [ReactiveContainerLike_sinkInto](sink) {
-            try {
-                this._run(sink);
-                pipe(sink, dispose());
-            }
-            catch (cause) {
-                pipe(sink, dispose({ cause }));
-            }
-        }
-    }
-    return (run) => newInstance(Runnable, run);
-})();
-const createRunnableT = {
-    create: createRunnable,
-};
-const createRunnableUsing = 
-/*@__PURE__*/ createUsing(createRunnableT);
-const createRunnableUsingT = {
-    using: createRunnableUsing,
-};
-const emptyRunnable = 
-/*@__PURE__*/ createEmpty(createRunnableT);
-const emptyRunnableT = { empty: emptyRunnable };
-const neverRunnable = 
-/*@__PURE__*/ createNever(createRunnableT);
+const neverRunnable = () => createNever(createRunnable);
 const neverRunnableT = {
     never: neverRunnable,
 };

@@ -119,10 +119,10 @@ export type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
   ): ContainerOperator<C, ArrayBuffer, string>;
 };
 
-export type Defer<C extends ContainerLike, TOptions = never> = Container<C> & {
+export type Defer<C extends ContainerLike, O = never> = Container<C> & {
   defer<T>(
     factory: Factory<ContainerOf<C, T>>,
-    options?: TOptions,
+    options?: Partial<O>,
   ): ContainerOf<C, T>;
 };
 
@@ -136,8 +136,8 @@ export type EverySatisfy<C extends ContainerLike> = Container<C> & {
   everySatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 };
 
-export type Empty<C extends ContainerLike, TOptions = never> = Container<C> & {
-  empty<T>(options?: TOptions): ContainerOf<C, T>;
+export type Empty<C extends ContainerLike, O = never> = Container<C> & {
+  empty<T>(options?: Partial<O>): ContainerOf<C, T>;
 };
 
 export type ForEach<C extends ContainerLike> = Container<C> & {
@@ -145,8 +145,8 @@ export type ForEach<C extends ContainerLike> = Container<C> & {
 };
 
 export type FromArrayOptions = {
-  readonly start: number;
-  readonly count: number;
+  readonly start: Option<number>;
+  readonly count: Option<number>;
 };
 
 export type FromArray<
@@ -176,21 +176,11 @@ export type FromIterator<
   ): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
 };
 
-export type FromValue<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
-  fromValue<T>(options?: TOptions): Function1<T, ContainerOf<C, T>>;
-};
-
-export type Generate<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
+export type Generate<C extends ContainerLike, O = never> = Container<C> & {
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
-    options?: TOptions,
+    options?: Partial<O>,
   ): ContainerOf<C, T>;
 };
 
@@ -259,37 +249,30 @@ export type ThrowIfEmpty<C extends ContainerLike> = Container<C> & {
   throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 };
 
-export type ToIterable<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
-  toIterable<T>(options?: TOptions): Function1<ContainerOf<C, T>, Iterable<T>>;
+export type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
+  toIterable<T>(
+    options?: Partial<O>,
+  ): Function1<ContainerOf<C, T>, Iterable<T>>;
 };
 
-export type ToPromise<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
+export type ToPromise<C extends ContainerLike, O = never> = Container<C> & {
   toPromise<T>(
-    options?: TOptions,
+    options?: Partial<O>,
   ): Function1<ContainerOf<C, T>, PromiseLike<T>>;
 };
 
 export type ToReadonlyArray<
   C extends ContainerLike,
-  TOptions = never,
+  O = never,
 > = Container<C> & {
   toReadonlyArray<T>(
-    options?: TOptions,
+    options?: Partial<O>,
   ): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
 };
 
-export type ToSequence<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
+export type ToSequence<C extends ContainerLike, O = never> = Container<C> & {
   toSequence<T>(
-    options?: TOptions,
+    options?: Partial<O>,
   ): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 };
 
