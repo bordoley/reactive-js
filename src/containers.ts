@@ -259,10 +259,8 @@ export type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
   ): Function1<ContainerOf<C, T>, Iterable<T>>;
 };
 
-export type ToPromise<C extends ContainerLike, O = never> = Container<C> & {
-  toPromise<T>(
-    options?: Partial<O>,
-  ): Function1<ContainerOf<C, T>, PromiseLike<T>>;
+export type ToPromise<C extends ContainerLike, Ctx = void> = Container<C> & {
+  toPromise<T>(ctx: Ctx): Function1<ContainerOf<C, T>, PromiseLike<T>>;
 };
 
 export type ToReadonlyArray<

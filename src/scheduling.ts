@@ -42,8 +42,7 @@ import {
   isDisposed,
   onDisposed,
 } from "./util/DisposableLike";
-import { getCurrent } from "./util/EnumeratorLike";
-import { move } from "./util/SourceLike";
+import { getCurrent, move } from "./util/EnumeratorLike";
 
 export {
   SchedulerLike_inContinuation,

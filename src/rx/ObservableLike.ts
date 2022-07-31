@@ -1,10 +1,12 @@
 import {
   Lift,
   TReactive,
+  createForEachOperator,
   createMapOperator,
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { observerMixin } from "../__internal__/scheduling/ObserverLikeMixin";
+import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   PropertyTypeOf,
   clazz,
@@ -12,9 +14,21 @@ import {
   init,
   mixWith,
 } from "../__internal__/util/Object";
-import { mapSinkMixin } from "../__internal__/util/SinkLikeMixin";
-import { ContainerOperator, Map } from "../containers";
-import { Function1, newInstance, pipe, pipeUnsafe } from "../functions";
+import {
+  forEachSinkMixin,
+  mapSinkMixin,
+} from "../__internal__/util/SinkLikeMixin";
+import { ContainerOperator, ForEach, Map, ToPromise } from "../containers";
+import {
+  Function1,
+  Option,
+  SideEffect1,
+  isSome,
+  newInstance,
+  none,
+  pipe,
+  pipeUnsafe,
+} from "../functions";
 import {
   DefaultObservable,
   EnumerableObservable,
@@ -23,7 +37,13 @@ import {
   ReactiveContainerLike_sinkInto,
   RunnableObservable,
 } from "../rx";
-import { ObserverLike, ObserverLike_scheduler } from "../scheduling";
+import {
+  ObserverLike,
+  ObserverLike_scheduler,
+  SchedulerLike,
+} from "../scheduling";
+import { DisposableLike, SinkLike_notify } from "../util";
+import { addTo, onDisposed } from "../util/DisposableLike";
 import { sourceFrom } from "./ReactiveContainerLike";
 
 export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
@@ -85,6 +105,35 @@ const liftT: Lift<ObservableLike, TReactive> = {
   variance: reactive,
 };
 
+export const forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedForEachSinkMixin = forEachSinkMixin<T>();
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedForEachSinkMixin]
+  >;
+
+  return pipe(
+    clazz(
+      function ForEachObserver(
+        this: TProperties & DisposableLike,
+        delegate: ObserverLike<T>,
+        effect: SideEffect1<T>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedForEachSinkMixin, this, delegate, effect);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedForEachSinkMixin),
+    createObjectFactory<ObserverLike<T>, ObserverLike<T>, SideEffect1<T>>(),
+    createForEachOperator<ObservableLike, T, TReactive>(liftT),
+  );
+})();
+
 export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const typedMapSinkMixin = mapSinkMixin<TA, TB>();
   const typedObserverMixin = observerMixin<TA>();
@@ -107,9 +156,36 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
       {},
     ),
     mixWith(typedObserverMixin, typedMapSinkMixin),
-    createObjectFactory<ObserverLike, ObserverLike, Function1<any, any>>(),
-    createMapOperator(liftT),
+    createObjectFactory<
+      ObserverLike<TA>,
+      ObserverLike<TB>,
+      Function1<TA, TB>
+    >(),
+    createMapOperator<ObservableLike, TA, TB, TReactive>(liftT),
   );
+})();
+
+export const subscribe: <T>(
+  scheduler: SchedulerLike,
+) => Function1<ObservableLike<T>, DisposableLike> = /*@__PURE__*/ (<T>() => {
+  const typedObserverMixin = observerMixin<T>();
+
+  const createObserver = pipe(
+    clazz(
+      function SubscribeObserver(this, scheduler: SchedulerLike) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, scheduler);
+      },
+      {},
+      {
+        [SinkLike_notify](_: T) {},
+      },
+    ),
+    mixWith(disposableMixin, typedObserverMixin),
+    createObjectFactory<ObserverLike, SchedulerLike>(),
+  );
+  return (scheduler: SchedulerLike) => observable =>
+    pipe(scheduler, createObserver, addTo(scheduler), sourceFrom(observable));
 })();
 
 /**
@@ -118,9 +194,8 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
  *
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
-/*
-export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
-  <T>(options?: Option<{ scheduler: SchedulerLike}>): Function1<ObservableLike<T>, Promise<T>> =>
+export const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"] =
+  <T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, Promise<T>> =>
   observable =>
     newInstance<
       Promise<T>,
@@ -134,7 +209,7 @@ export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
 
       pipe(
         observable,
-        onNotify(next => {
+        forEach(next => {
           hasResult = true;
           result = next;
         }),
@@ -146,7 +221,7 @@ export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
           } else if (!hasResult) {
             reject(
               newInstance(
-                Exception,
+                Error,
                 "Observable completed without producing a value",
               ),
             );
@@ -155,4 +230,4 @@ export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
           }
         }),
       );
-    });*/
+    });

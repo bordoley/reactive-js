@@ -148,8 +148,8 @@ declare type ThrowIfEmpty<C extends ContainerLike> = Container<C> & {
 declare type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
     toIterable<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, Iterable<T>>;
 };
-declare type ToPromise<C extends ContainerLike, O = never> = Container<C> & {
-    toPromise<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, PromiseLike<T>>;
+declare type ToPromise<C extends ContainerLike, Ctx = void> = Container<C> & {
+    toPromise<T>(ctx: Ctx): Function1<ContainerOf<C, T>, PromiseLike<T>>;
 };
 declare type ToReadonlyArray<C extends ContainerLike, O = never> = Container<C> & {
     toReadonlyArray<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
