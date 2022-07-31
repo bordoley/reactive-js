@@ -10,6 +10,7 @@ const createBufferOperator = (m) => (operator) => (options = {}) => {
     const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER, 1);
     return pipe(operator, partial(maxBufferSize), lift(m));
 };
+const createDecodeWithCharsetOperator = (m) => (operator) => (charset = "utf-8") => pipe(operator, partial(charset), lift(m));
 const createDistinctUntilChangedOperator = (m) => (operator) => (options) => {
     const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
     return pipe(operator, partial(equality), lift(m));
@@ -40,4 +41,4 @@ const createTakeWhileOperator = (m) => (operator) => (predicate, options = {}) =
 };
 const createThrowIfEmptyOperator = (m) => (operator) => (factory) => pipe(operator, partial(factory), lift(m));
 
-export { createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, reactive };
+export { createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, reactive };

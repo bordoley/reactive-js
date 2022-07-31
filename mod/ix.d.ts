@@ -6,7 +6,7 @@ import { DisposableLike, EnumeratorLike } from "./util.mjs";
 /** @ignore */
 declare const InteractiveContainerLike_interact: unique symbol;
 interface InteractiveContainerLike<TSource extends DisposableLike, TCtx = void> extends StatefulContainerLike {
-    [InteractiveContainerLike_interact](_: TCtx): TSource;
+    [InteractiveContainerLike_interact](ctx: TCtx): TSource;
 }
 /**
  * Interface for iterating a Container of items.

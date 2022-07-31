@@ -77,10 +77,12 @@ interface DeferObservable {
 }
 declare const deferObservable: DeferObservable;
 declare const deferObservableT: Defer<ObservableLike>;
+declare const deferRunnable: Defer<RunnableLike>["defer"];
+declare const deferRunnableT: Defer<RunnableLike>;
 declare const emptyRunnable: Empty<RunnableLike>["empty"];
 declare const emptyRunnableT: Empty<RunnableLike>;
 declare const neverObservable: Never<ObservableLike>["never"];
 declare const neverObservableT: Never<ObservableLike>;
 declare const neverRunnable: Never<RunnableLike>["never"];
 declare const neverRunnableT: Never<RunnableLike>;
-export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, emptyRunnable, emptyRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyRunnable, emptyRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };

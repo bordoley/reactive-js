@@ -4,7 +4,7 @@ import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, pipe, none, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
-import { createRunnable } from '../rx.mjs';
+import { c as createRunnable } from '../ReactiveContainerLike-29f1e1fa.mjs';
 import { SourceLike_move, EnumeratorLike_current, SinkLike_notify } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';

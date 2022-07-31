@@ -67,13 +67,13 @@ ___
 
 ### [InteractiveContainerLike\_interact]
 
-▸ **[InteractiveContainerLike_interact]**(`_`): `TSource`
+▸ **[InteractiveContainerLike_interact]**(`ctx`): `TSource`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `_` | `TCtx` |
+| `ctx` | `TCtx` |
 
 #### Returns
 

@@ -1,5 +1,5 @@
 /// <reference types="./SubjectLike.d.ts" />
-import { SubjectLike_publish } from '../rx.mjs';
+import { S as SubjectLike_publish } from '../ReactiveContainerLike-29f1e1fa.mjs';
 
 const publish = (v) => subject => {
     subject[SubjectLike_publish](v);

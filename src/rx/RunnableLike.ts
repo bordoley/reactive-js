@@ -3,6 +3,7 @@ import {
   Lift,
   TReactive,
   createBufferOperator,
+  createDecodeWithCharsetOperator,
   createDistinctUntilChangedOperator,
   createForEachOperator,
   createKeepOperator,
@@ -27,6 +28,7 @@ import {
   bufferSinkMixin,
   createDelegatingSink,
   createSink,
+  decodeWithCharsetSinkMixin,
   delegatingSinkMixin,
   distinctUntilChangedSinkMixin,
   forEachSinkMixin,
@@ -44,6 +46,7 @@ import {
   Buffer,
   Concat,
   ConcatAll,
+  DecodeWithCharset,
   DistinctUntilChanged,
   ForEach,
   Keep,
@@ -196,6 +199,28 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
 
 export const concatAllT: ConcatAll<RunnableLike> = {
   concatAll,
+};
+
+export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
+  /*@__PURE__*/ (() => {
+    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(
+      toRunnable(),
+    );
+
+    return pipe(
+      typedDecodeWithCharsetMixin,
+      createObjectFactory<
+        SinkLike<ArrayBuffer>,
+        PropertyTypeOf<[typeof typedDecodeWithCharsetMixin]>,
+        SinkLike<string>,
+        string
+      >(),
+      createDecodeWithCharsetOperator(liftT),
+    );
+  })();
+
+export const decodeWithCharsetT: DecodeWithCharset<RunnableLike> = {
+  decodeWithCharset,
 };
 
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =

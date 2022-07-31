@@ -30,6 +30,7 @@ import {
   pipe,
 } from "./functions";
 
+import { sinkInto } from "./rx/ReactiveContainerLike";
 import { ObserverLike } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
 import { getDispatcher, getScheduler } from "./scheduling/ObserverLike";
@@ -364,6 +365,12 @@ export const deferObservable: DeferObservable = <T>(
 export const deferObservableT: Defer<ObservableLike> = {
   defer: deferObservable,
 };
+
+export const deferRunnable: Defer<RunnableLike>["defer"] = f =>
+  createRunnable(sink => {
+    pipe(f(), sinkInto(sink));
+  });
+export const deferRunnableT: Defer<RunnableLike> = { defer: deferRunnable };
 
 export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
   createEmpty<RunnableLike, SinkLike<T>, T>(createRunnable);

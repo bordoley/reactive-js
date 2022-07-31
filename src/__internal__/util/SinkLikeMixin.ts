@@ -8,6 +8,7 @@ import {
   SideEffect1,
   getLength,
   isEmpty,
+  newInstance,
   none,
   pipe,
   pipeLazy,
@@ -209,6 +210,87 @@ export const bufferSinkMixin: <
           this[BufferSink_private_buffer] = [];
 
           pipe(this[Sink_private_delegate], notify(buffer));
+        }
+      },
+    },
+    mixWith(disposableMixin),
+  );
+};
+
+export const decodeWithCharsetSinkMixin: <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<string>,
+>(
+  fromArray: (v: readonly string[]) => C,
+) => {
+  [Object_properties]: {
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_init](
+    this: {
+      [DisposableLike_error]: Option<Error>;
+      [DisposableLike_isDisposed]: boolean;
+    },
+    delegate: SinkLike<string>,
+    charset: string,
+  ): void;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
+  [SinkLike_notify](next: ArrayBuffer): void;
+} = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<string>>(
+  fromArray: (v: readonly string[]) => C,
+) => {
+  const DecodeWithCharsetSink_private_textDecoder = Symbol(
+    "DecodeWithCharsetSink_private_textDecoder",
+  );
+
+  type TProperties = {
+    [Sink_private_delegate]: SinkLike<string>;
+    [DecodeWithCharsetSink_private_textDecoder]: TextDecoder;
+  } & PropertyTypeOf<[typeof disposableMixin]>;
+
+  return pipe(
+    {
+      [Object_properties]: {
+        [Sink_private_delegate]: none,
+        [DecodeWithCharsetSink_private_textDecoder]: none,
+      },
+      [Object_init](
+        this: TProperties & DisposableLike,
+        delegate: SinkLike<string>,
+        charset: string,
+      ) {
+        init(disposableMixin, this);
+        this[Sink_private_delegate] = delegate;
+
+        const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
+        this[DecodeWithCharsetSink_private_textDecoder] = textDecoder;
+
+        pipe(
+          this,
+          addTo(delegate),
+          onComplete(() => {
+            const data = textDecoder.decode();
+
+            if (!isEmpty(data)) {
+              pipe([data], fromArray, sinkInto(delegate));
+            } else {
+              pipe(delegate, dispose());
+            }
+          }),
+        );
+      },
+      [SinkLike_notify](this: TProperties, next: ArrayBuffer) {
+        const data = this[DecodeWithCharsetSink_private_textDecoder].decode(
+          next,
+          { stream: true },
+        );
+        if (!isEmpty(data)) {
+          pipe(this[Sink_private_delegate], notify(data));
         }
       },
     },
