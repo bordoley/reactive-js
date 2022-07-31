@@ -35,6 +35,7 @@
 - [Generate](containers.md#generate)
 - [Keep](containers.md#keep)
 - [Map](containers.md#map)
+- [Never](containers.md#never)
 - [Pairwise](containers.md#pairwise)
 - [Reduce](containers.md#reduce)
 - [Repeat](containers.md#repeat)
@@ -319,6 +320,18 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+
+___
+
+### Never
+
+Ƭ **Never**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `never`: <T\>() => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
 
 ___
 

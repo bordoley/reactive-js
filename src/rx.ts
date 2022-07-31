@@ -13,6 +13,7 @@ import {
   ContainerOf,
   Defer,
   Empty,
+  Never,
   StatefulContainerLike,
   Using,
 } from "./containers";
@@ -117,10 +118,6 @@ export const SubjectLike_publish = Symbol("SubjectLike_publish");
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
   [SubjectLike_publish](next: T): void;
 }
-
-export type Never<C extends StatefulContainerLike> = Container<C> & {
-  never<T>(): ContainerOf<C, T>;
-};
 
 export type ToObservable<
   C extends ContainerLike,

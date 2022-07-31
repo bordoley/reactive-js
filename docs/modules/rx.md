@@ -16,7 +16,6 @@
 
 ### Type Aliases
 
-- [Never](rx.md#never)
 - [ToEnumerableObservable](rx.md#toenumerableobservable)
 - [ToObservable](rx.md#toobservable)
 - [ToRunnable](rx.md#torunnable)
@@ -47,18 +46,6 @@
 - [neverRunnable](rx.md#neverrunnable)
 
 ## Type Aliases
-
-### Never
-
-Ƭ **Never**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `never`: <T\>() => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
-
-___
 
 ### ToEnumerableObservable
 
@@ -156,13 +143,13 @@ ___
 
 ### neverObservableT
 
-• `Const` **neverObservableT**: [`Never`](rx.md#never)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+• `Const` **neverObservableT**: [`Never`](containers.md#never)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
 ### neverRunnableT
 
-• `Const` **neverRunnableT**: [`Never`](rx.md#never)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+• `Const` **neverRunnableT**: [`Never`](containers.md#never)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ## Functions
 
