@@ -1,6 +1,6 @@
 /// <reference types="./DisposableLikeMixins.d.ts" />
 import { none, pipe, isNone, isSome, ignore, returns } from '../../functions.mjs';
-import { DisposableLike_error, DisposableLike_isDisposed, DisposableLike_add, DisposableLike_dispose, dispose, getError, isDisposed, add } from './DisposableLikeInternal.mjs';
+import { DisposableLike_isDisposed, onDisposed, DisposableLike_error, DisposableLike_add, DisposableLike_dispose, dispose, getError, isDisposed, add } from './DisposableLikeInternal.mjs';
 import { MutableRefLike_current } from './MutableRefLike.mjs';
 import { Object_properties, Object_init, createObjectFactory } from './Object.mjs';
 
@@ -9,19 +9,18 @@ const delegatingDisposableMixin = /*@__PURE__*/ (() => {
     return {
         [Object_properties]: {
             [DelegatingDisposable_private_delegate]: none,
+            [DisposableLike_isDisposed]: false,
         },
         [Object_init](delegate) {
             this[DelegatingDisposable_private_delegate] = delegate;
+            pipe(delegate, onDisposed(_ => {
+                this[DisposableLike_isDisposed] = true;
+            }));
         },
         get [DisposableLike_error]() {
             const self = this;
             const delegate = self[DelegatingDisposable_private_delegate];
             return delegate[DisposableLike_error];
-        },
-        get [DisposableLike_isDisposed]() {
-            const self = this;
-            const delegate = self[DelegatingDisposable_private_delegate];
-            return delegate[DisposableLike_isDisposed];
         },
         [DisposableLike_add](disposable, ignoreChildErrors) {
             const delegate = this[DelegatingDisposable_private_delegate];
