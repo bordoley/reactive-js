@@ -94,16 +94,13 @@ import {
   emptyEnumerableT,
 } from "../ix";
 import {
-  EnumerableObservable,
   EnumerableObservableLike,
-  ObservableLike,
-  ObservableLike_observableType,
-  ReactiveContainerLike_sinkInto,
   RunnableLike,
-  RunnableObservable,
   RunnableObservableLike,
   ToRunnable,
+  createEnumerableObservable,
   createRunnable,
+  createRunnableObservable,
 } from "../rx";
 import { ObserverLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
@@ -1106,40 +1103,28 @@ interface ToObservable {
 }
 
 export const toObservable: ToObservable = /*@__PURE__*/ (() => {
-  class ToEnumerableObservable<T> implements ObservableLike<T> {
-    constructor(
-      private readonly enumerable: EnumerableLike<T>,
-      private readonly delay: number,
-    ) {}
-
-    get [ObservableLike_observableType]():
-      | typeof EnumerableObservable
-      | typeof RunnableObservable {
-      return this.delay > 0 ? RunnableObservable : EnumerableObservable;
-    }
-
-    [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
-      const enumerator = pipe(this.enumerable, enumerate(), bindTo(observer));
-
-      const options = { delay: this.delay };
-
-      pipe(
-        observer,
-        getScheduler,
-        schedule(() => {
-          while (!isDisposed(observer) && move(enumerator)) {
-            pipe(enumerator, getCurrent, notifySink(observer));
-            __yield(options);
-          }
-        }, options),
-      );
-    }
-  }
-
   return <T>(options?: { delay?: number }) =>
     (enumerable: EnumerableLike<T>): EnumerableObservableLike<T> => {
       const delay = getDelay(options);
-      return newInstance(ToEnumerableObservable, enumerable, delay) as any;
+      const onSink = (observer: ObserverLike<T>) => {
+        const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
+
+        const options = { delay: delay };
+
+        pipe(
+          observer,
+          getScheduler,
+          schedule(() => {
+            while (!isDisposed(observer) && move(enumerator)) {
+              pipe(enumerator, getCurrent, notifySink(observer));
+              __yield(options);
+            }
+          }, options),
+        );
+      };
+      return delay > 0
+        ? createRunnableObservable(onSink)
+        : createEnumerableObservable(onSink);
     };
 })();
 

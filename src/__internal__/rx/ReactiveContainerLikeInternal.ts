@@ -48,33 +48,6 @@ type DecodeWithCharsetSink<C extends ReactiveContainerLike> = new (
   readonly textDecoder: TextDecoder;
 };
 
-export const createDecodeWithCharsetOperator =
-  <C extends ReactiveContainerLike>(m: FromValue<C> & Lift<C>) =>
-  (DecodeWithCharsetSink: DecodeWithCharsetSink<C>) =>
-  (charset = "utf-8"): ContainerOperator<C, ArrayBuffer, string> =>
-    pipe(
-      (
-        delegate: StatefulContainerStateOf<C, string>,
-      ): StatefulContainerStateOf<C, ArrayBuffer> => {
-        const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
-        return pipe(
-          DecodeWithCharsetSink,
-          newInstanceWith(delegate, textDecoder),
-          addTo(delegate),
-          onComplete(() => {
-            const data = textDecoder.decode();
-
-            if (!isEmpty(data)) {
-              pipe(data, m.fromValue(), sinkInto(delegate));
-            } else {
-              pipe(delegate, dispose());
-            }
-          }),
-        );
-      },
-      lift(m),
-    );
-
 type SatisfySink<C extends ReactiveContainerLike> = new <T>(
   delegate: StatefulContainerStateOf<C, boolean>,
   predicate: Predicate<T>,

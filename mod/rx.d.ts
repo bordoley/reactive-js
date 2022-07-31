@@ -11,9 +11,12 @@ interface RunnableLike<T = unknown> extends ReactiveContainerLike<SinkLike<T>> {
     readonly TContainerOf?: RunnableLike<this["T"]>;
     readonly TStatefulContainerState?: SinkLike<this["T"]>;
 }
-declare const DefaultObservable = 0;
-declare const RunnableObservable = 1;
-declare const EnumerableObservable = 2;
+declare type ObservableType = 0 | 1 | 2;
+declare type RunnableObservableType = typeof RunnableObservable | typeof EnumerableObservable;
+declare type EnumerableObservableType = typeof EnumerableObservable;
+declare const DefaultObservable: ObservableType;
+declare const RunnableObservable: ObservableType;
+declare const EnumerableObservable: ObservableType;
 /** @ignore */
 declare const ObservableLike_observableType: unique symbol;
 /**
@@ -24,13 +27,13 @@ declare const ObservableLike_observableType: unique symbol;
 interface ObservableLike<T = unknown> extends ReactiveContainerLike<ObserverLike<T>> {
     readonly TContainerOf?: ObservableLike<this["T"]>;
     readonly TStatefulContainerState?: ObserverLike<this["T"]>;
-    readonly [ObservableLike_observableType]: typeof EnumerableObservable | typeof RunnableObservable | typeof DefaultObservable;
+    readonly [ObservableLike_observableType]: ObservableType;
 }
 interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
-    readonly [ObservableLike_observableType]: typeof RunnableObservable | typeof EnumerableObservable;
+    readonly [ObservableLike_observableType]: RunnableObservableType;
 }
 interface EnumerableObservableLike<T = unknown> extends RunnableObservableLike<T> {
-    readonly [ObservableLike_observableType]: typeof EnumerableObservable;
+    readonly [ObservableLike_observableType]: EnumerableObservableType;
 }
 /** @ignore */
 declare const MulticastObservableLike_observerCount: unique symbol;
@@ -60,7 +63,9 @@ declare type ToEnumerableObservable<C extends ContainerLike, TOptions = never> =
 declare type ToRunnable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toRunnable<T>(options?: TOptions): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
+declare const createEnumerableObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 declare const createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
+declare const createRunnableObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 declare const createObservableUsing: Using<ObservableLike>["using"];
 declare const createObservableUsingT: Using<ObservableLike>;
 declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
@@ -87,4 +92,4 @@ declare const neverObservable: Never<ObservableLike>["never"];
 declare const neverObservableT: Never<ObservableLike>;
 declare const neverRunnable: Never<RunnableLike>["never"];
 declare const neverRunnableT: Never<RunnableLike>;
-export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_observableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyRunnable, emptyRunnableT, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, EnumerableObservableType, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_observableType, ObservableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, RunnableObservableType, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createEnumerableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableObservable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyRunnable, emptyRunnableT, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };

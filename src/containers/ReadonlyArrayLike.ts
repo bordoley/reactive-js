@@ -1,3 +1,4 @@
+import { getDelay, hasDelay } from "../__internal__/optionalArgs";
 import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
@@ -33,14 +34,26 @@ import {
   pipe,
 } from "../functions";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../ix";
-import { RunnableLike, ToRunnable, createRunnable } from "../rx";
+import {
+  EnumerableObservableLike,
+  ObservableLike,
+  RunnableLike,
+  RunnableObservableLike,
+  ToRunnable,
+  createEnumerableObservable,
+  createRunnable,
+  createRunnableObservable,
+} from "../rx";
+import { ObserverLike } from "../scheduling";
+import { getScheduler } from "../scheduling/ObserverLike";
+import { __yield, schedule } from "../scheduling/SchedulerLike";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   SinkLike_notify,
   SourceLike_move,
 } from "../util";
-import { dispose, isDisposed } from "../util/DisposableLike";
+import { addTo, dispose, isDisposed } from "../util/DisposableLike";
 
 export const every =
   <T>(predicate: Predicate<T>): Function1<readonly T[], boolean> =>
@@ -189,7 +202,7 @@ export const toEnumerableT: ToEnumerable<
     readonly count: number;
   }
 > = { toEnumerable };
-/*
+
 interface ToObservable {
   <T>(options?: {
     readonly start?: number;
@@ -199,13 +212,62 @@ interface ToObservable {
   <T>(options: {
     readonly start?: number;
     readonly count?: number;
-    readonly delay: number
+    readonly delay: number;
   }): Function1<ReadonlyArrayLike<T>, RunnableObservableLike<T>>;
 }
-export const toObservable: ToObservable = createFromArray(
-      (values, start, count) => {
-        
-  })();*/
+export const toObservable: ToObservable = /*@__PURE__*/ (<T>() => {
+  return createFromArray<
+    ObservableLike,
+    T,
+    {
+      readonly start: number;
+      readonly count: number;
+      readonly delay: number;
+      readonly delayStart: boolean;
+    }
+  >((values, startIndex, count, options) => {
+    const delay = getDelay(options);
+    const { delayStart = false } = options ?? {};
+
+    const onSink = (observer: ObserverLike<T>) => {
+      let index = startIndex,
+        cnt = count;
+
+      const continuation = () => {
+        while (!isDisposed(observer) && cnt !== 0) {
+          const value = values[index];
+          if (cnt > 0) {
+            index++;
+            cnt--;
+          } else {
+            index--;
+            cnt++;
+          }
+
+          observer[SinkLike_notify](value);
+
+          if (cnt !== 0) {
+            __yield(options);
+          }
+        }
+        pipe(observer, dispose());
+      };
+
+      pipe(
+        observer,
+        getScheduler,
+        schedule(
+          continuation,
+          delayStart && hasDelay(options) ? options : none,
+        ),
+        addTo(observer),
+      );
+    };
+    return delay > 0
+      ? createRunnableObservable(onSink)
+      : createEnumerableObservable(onSink);
+  });
+})();
 
 export const toReadonlyArray: ToReadonlyArray<
   ReadonlyArrayLike,

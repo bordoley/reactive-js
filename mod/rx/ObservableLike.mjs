@@ -4,7 +4,7 @@ import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs'
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { forEachSinkMixin, mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
-import { pipeUnsafe, newInstance, pipe, none, isSome } from '../functions.mjs';
+import { pipeUnsafe, min, newInstance, pipe, none, isSome } from '../functions.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { ObserverLike_scheduler } from '../scheduling.mjs';
 import { SinkLike_notify } from '../util.mjs';
@@ -13,7 +13,7 @@ import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { addTo, onDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const getObservableType = (obs) => obs[ObservableLike_observableType];
-const lift = /*@__PURE__*/ (() => {
+const createLift = /*@__PURE__*/ (() => {
     class LiftedObservable {
         constructor(source, operators, observableType) {
             this.source = source;
@@ -24,16 +24,31 @@ const lift = /*@__PURE__*/ (() => {
             pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
         }
     }
-    return (operator) => source => {
+    return (observableType) => (operator) => source => {
         const sourceSource = source instanceof LiftedObservable ? source.source : source;
         const allFunctions = source instanceof LiftedObservable
             ? [operator, ...source.operators]
             : [operator];
-        return newInstance(LiftedObservable, sourceSource, allFunctions, 0);
+        const type = min(observableType, source[ObservableLike_observableType], sourceSource[ObservableLike_observableType]);
+        return newInstance(LiftedObservable, sourceSource, allFunctions, type);
     };
 })();
-const liftT = {
-    lift,
+/*
+const lift: Lift<ObservableLike, TReactive>["lift"] = createLift(0);
+const liftT: Lift<ObservableLike, TReactive> = {
+  lift,
+  variance: reactive,
+};*/
+/*
+const liftRunnableObservable: Lift<RunnableObservableLike, TReactive>["lift"] =
+  createLift(1);
+const liftRunnableObservableT: Lift<ObservableLike, TReactive> = {
+  lift: liftRunnableObservable,
+  variance: reactive,
+};*/
+const liftEnumerableObservable = createLift(2);
+const liftEnumerableObservableT = {
+    lift: liftEnumerableObservable,
     variance: reactive,
 };
 const forEach = /*@__PURE__*/ (() => {
@@ -42,16 +57,18 @@ const forEach = /*@__PURE__*/ (() => {
     return pipe(clazz(function ForEachObserver(delegate, effect) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedForEachSinkMixin, this, delegate, effect);
-    }, {}, {}), mixWith(typedObserverMixin, typedForEachSinkMixin), createObjectFactory(), createForEachOperator(liftT));
+    }, {}, {}), mixWith(typedObserverMixin, typedForEachSinkMixin), createObjectFactory(), createForEachOperator(liftEnumerableObservableT));
 })();
+const forEachT = { forEach };
 const map = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
     const typedObserverMixin = observerMixin();
     return pipe(clazz(function MapObserver(delegate, mapper) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedMapSinkMixin, this, delegate, mapper);
-    }, {}, {}), mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory(), createMapOperator(liftT));
+    }, {}, {}), mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory(), createMapOperator(liftEnumerableObservableT));
 })();
+const mapT = { map };
 const subscribe = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
     const createObserver = pipe(clazz(function SubscribeObserver(scheduler) {
@@ -88,4 +105,4 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-export { forEach, getObservableType, map, subscribe, toPromise };
+export { forEach, forEachT, getObservableType, map, mapT, subscribe, toPromise };
