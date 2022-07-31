@@ -7,7 +7,7 @@ export { getCurrentTime, isInContinuation } from '../__internal__/schedulingInte
 import { disposableMixin, disposableRefMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { none, pipe, isSome, isNone, raise, newInstance, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
@@ -27,16 +27,14 @@ class YieldError {
 }
 let currentScheduler = none;
 const createContinuation = /*@__PURE__*/ (() => {
-    return pipe({
-        [Object_properties]: {
-            scheduler: none,
-            f: none,
-        },
-        [Object_init](scheduler, f) {
-            init(disposableMixin, this);
-            this.scheduler = scheduler;
-            this.f = f;
-        },
+    return pipe(clazz(function Continuation(scheduler, f) {
+        init(disposableMixin, this);
+        this.scheduler = scheduler;
+        this.f = f;
+    }, {
+        scheduler: none,
+        f: none,
+    }, {
         [ContinuationLike_run]() {
             if (!isDisposed(this)) {
                 let error = none;
@@ -64,7 +62,7 @@ const createContinuation = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(disposableMixin), createObjectFactory());
+    }), mixWith(disposableMixin), createObjectFactory());
 })();
 const __yield = (options) => {
     const delay = getDelay(options);
@@ -163,26 +161,24 @@ const createQueueScheduler =
     };
     const typedDisposableRefMixin = disposableRefMixin();
     const typedEnumeratorMixin = enumeratorMixin();
-    return pipe({
-        [Object_properties]: {
-            [SchedulerLike_inContinuation]: false,
-            delayed: none,
-            dueTime: 0,
-            host: none,
-            hostContinuation: none,
-            isPaused: false,
-            queue: none,
-            taskIDCounter: 0,
-            yieldRequested: false,
-        },
-        [Object_init](host) {
-            init(disposableMixin, this);
-            init(typedEnumeratorMixin, this);
-            init(typedDisposableRefMixin, this, disposed);
-            this.delayed = createPriorityQueue(delayedComparator);
-            this.queue = createPriorityQueue(taskComparator);
-            this.host = host;
-        },
+    return pipe(clazz(function QueueScheduler(host) {
+        init(disposableMixin, this);
+        init(typedEnumeratorMixin, this);
+        init(typedDisposableRefMixin, this, disposed);
+        this.delayed = createPriorityQueue(delayedComparator);
+        this.queue = createPriorityQueue(taskComparator);
+        this.host = host;
+    }, {
+        [SchedulerLike_inContinuation]: false,
+        delayed: none,
+        dueTime: 0,
+        host: none,
+        hostContinuation: none,
+        isPaused: false,
+        queue: none,
+        taskIDCounter: 0,
+        yieldRequested: false,
+    }, {
         get [SchedulerLike_now]() {
             const self = this;
             return getCurrentTime(self.host);
@@ -247,7 +243,7 @@ const createQueueScheduler =
                 scheduleOnHost(this);
             }
         },
-    }, mixWith(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), createObjectFactory());
+    }), mixWith(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), createObjectFactory());
 })();
 const toPausableScheduler = createQueueScheduler;
 const toPriorityScheduler = createQueueScheduler;

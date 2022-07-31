@@ -36,7 +36,9 @@ import { disposableMixin } from "../util/DisposableLikeMixins";
 import {
   Object_init,
   Object_properties,
+  Object_prototype,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -63,14 +65,8 @@ const createObserverDispatcher = (<T>() => {
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        continuation: none,
-        nextQueue: none,
-        observer: none,
-        onContinuationDispose: none,
-      },
-      [Object_init](
+    clazz(
+      function ObserverDispatcher(
         this: TProperties & DisposableLike,
         observer: ObserverLike<T>,
       ) {
@@ -93,23 +89,37 @@ const createObserverDispatcher = (<T>() => {
             pipe(this.observer, dispose(this[DisposableLike_error]));
           }
         };
+
+        pipe(
+          this,
+          onDisposed(e => {
+            if (isEmpty(this.nextQueue)) {
+              pipe(this, dispose(e));
+            }
+          }),
+        );
       },
-      get [DispatcherLike_scheduler]() {
-        return getScheduler(this.observer);
+      {
+        continuation: none,
+        nextQueue: none,
+        observer: none,
+        onContinuationDispose: none,
       },
-      [DispatcherLike_dispatch](this: TProperties, next: T) {
-        if (!isDisposed(this)) {
-          this.nextQueue.push(next);
-          scheduleDrainQueue(this);
-        }
+      {
+        get [DispatcherLike_scheduler]() {
+          const self = this as unknown as TProperties;
+          return getScheduler(self.observer);
+        },
+        [DispatcherLike_dispatch](this: TProperties, next: T) {
+          if (!isDisposed(this)) {
+            this.nextQueue.push(next);
+            scheduleDrainQueue(this);
+          }
+        },
       },
-    },
+    ),
     mixWith(disposableMixin),
-    createObjectFactory<
-      DispatcherLike & TProperties,
-      TProperties,
-      ObserverLike<T>
-    >(),
+    createObjectFactory<DispatcherLike<T>, ObserverLike<T>>(),
   );
 })();
 
@@ -119,37 +129,36 @@ type TProperties = {
 };
 
 export const observerMixin: <T>() => {
-  [Object_properties]: TProperties;
   [Object_init](this: TProperties, scheduler: SchedulerLike): void;
-  readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
+  [Object_properties]: TProperties;
+  [Object_prototype]: {
+    get [ObserverLike_dispatcher](): DispatcherLike<T>;
+  };
 } = /*@__PURE__*/ (<T>() => {
   return pipe(
-    {
-      [Object_properties]: {
+    clazz(
+      function ObserverMixin(this: TProperties, scheduler: SchedulerLike) {
+        this[ObserverLike_scheduler] = scheduler;
+      },
+      {
         [ObserverLike_scheduler]: none as any,
         dispatcher: none,
       },
-      [Object_init](this: TProperties, scheduler: SchedulerLike) {
-        this[ObserverLike_scheduler] = scheduler;
-      },
-      get [ObserverLike_dispatcher](): DispatcherLike<T> {
-        const self = this as unknown as ObserverLike<T> & TProperties;
-        if (isNone(self.dispatcher)) {
-          const dispatcher = pipe(
-            createObserverDispatcher(self),
-            addToIgnoringChildErrors(self),
-            onDisposed(e => {
-              if (isEmpty(dispatcher.nextQueue)) {
-                pipe(self, dispose(e));
-              }
-            }),
-          );
+      {
+        get [ObserverLike_dispatcher](): DispatcherLike<T> {
+          const self = this as unknown as ObserverLike<T> & TProperties;
+          if (isNone(self.dispatcher)) {
+            const dispatcher = pipe(
+              createObserverDispatcher(self),
+              addToIgnoringChildErrors(self),
+            );
 
-          self.dispatcher = dispatcher;
-        }
-        return self.dispatcher;
+            self.dispatcher = dispatcher;
+          }
+          return self.dispatcher;
+        },
       },
-    },
+    ),
     returns,
   );
 })();

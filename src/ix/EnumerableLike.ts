@@ -33,7 +33,10 @@ import {
 import {
   Object_init,
   Object_properties,
+  Object_prototype,
   PropertyTypeOf,
+  UnknownObject,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -141,12 +144,14 @@ interface DelegatingEnumeratorLike<T> extends EnumeratorLike<T> {
   [DelegatingEnumerator_move_delegate](): boolean;
 }
 
-export const delegatingEnumeratorMixin: <T>() => {
-  [Object_properties]: unknown;
+const delegatingEnumeratorMixin: <T>() => {
   [Object_init](this: unknown, delegate: EnumeratorLike<T>): void;
-  [DelegatingEnumerator_move_delegate](): boolean;
-  readonly [EnumeratorLike_current]: T;
-  readonly [EnumeratorLike_hasCurrent]: boolean;
+  [Object_properties]: UnknownObject;
+  [Object_prototype]: {
+    [DelegatingEnumerator_move_delegate](): boolean;
+    readonly [EnumeratorLike_current]: T;
+    readonly [EnumeratorLike_hasCurrent]: boolean;
+  };
 } = /*@__PURE__*/ (<T>() => {
   const DelegatingEnumerator_private_delegate = Symbol(
     "DelegatingEnumerator_private_delegate",
@@ -157,32 +162,37 @@ export const delegatingEnumeratorMixin: <T>() => {
   };
 
   return pipe(
-    {
-      [Object_properties]: {
-        [DelegatingEnumerator_private_delegate]: none,
-      },
-      [Object_init](this: TProperties, delegate: EnumeratorLike<T>) {
+    clazz(
+      function DelegatingEnumerator(
+        this: TProperties,
+        delegate: EnumeratorLike<T>,
+      ) {
         this[DelegatingEnumerator_private_delegate] = delegate;
       },
-      get [EnumeratorLike_current](): T {
-        const self = this as unknown as TProperties;
-        return (
-          self[DelegatingEnumerator_private_delegate]?.[
-            EnumeratorLike_current
-          ] ?? raise()
-        );
+      {
+        [DelegatingEnumerator_private_delegate]: none,
       },
-      get [EnumeratorLike_hasCurrent](): boolean {
-        const self = this as unknown as TProperties;
-        return self[DelegatingEnumerator_private_delegate][
-          EnumeratorLike_hasCurrent
-        ];
+      {
+        get [EnumeratorLike_current](): T {
+          const self = this as unknown as TProperties;
+          return (
+            self[DelegatingEnumerator_private_delegate]?.[
+              EnumeratorLike_current
+            ] ?? raise()
+          );
+        },
+        get [EnumeratorLike_hasCurrent](): boolean {
+          const self = this as unknown as TProperties;
+          return self[DelegatingEnumerator_private_delegate][
+            EnumeratorLike_hasCurrent
+          ];
+        },
+        [DelegatingEnumerator_move_delegate](this: TProperties): boolean {
+          const delegate = this[DelegatingEnumerator_private_delegate];
+          return move(delegate);
+        },
       },
-      [DelegatingEnumerator_move_delegate](this: TProperties): boolean {
-        const delegate = this[DelegatingEnumerator_private_delegate];
-        return move(delegate);
-      },
-    },
+    ),
     returns,
   );
 })();
@@ -255,12 +265,8 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   };
 
   return pipe(
-    {
-      [Object_properties]: {
-        delegate: none,
-        maxBufferSize: 0,
-      },
-      [Object_init](
+    clazz(
+      function BufferEnumerator(
         this: TProperties & DisposableLike,
         delegate: EnumeratorLike<T>,
         maxBufferSize: number,
@@ -272,30 +278,35 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
 
         pipe(this, add(delegate));
       },
-      [SourceLike_move](
-        this: TProperties & MutableEnumeratorLike<readonly T[]>,
-      ) {
-        const buffer: T[] = [];
-
-        const { delegate, maxBufferSize } = this;
-
-        while (getLength(buffer) < maxBufferSize && move(delegate)) {
-          buffer.push(getCurrent(delegate));
-        }
-
-        const bufferLength = getLength(buffer);
-        if (bufferLength > 0) {
-          this[EnumeratorLike_current] = buffer;
-        } else if (bufferLength === 0) {
-          pipe(this, dispose());
-        }
+      {
+        delegate: none,
+        maxBufferSize: 0,
       },
-    },
+      {
+        [SourceLike_move](
+          this: TProperties & MutableEnumeratorLike<readonly T[]>,
+        ) {
+          const buffer: T[] = [];
+
+          const { delegate, maxBufferSize } = this;
+
+          while (getLength(buffer) < maxBufferSize && move(delegate)) {
+            buffer.push(getCurrent(delegate));
+          }
+
+          const bufferLength = getLength(buffer);
+          if (bufferLength > 0) {
+            this[EnumeratorLike_current] = buffer;
+          } else if (bufferLength === 0) {
+            pipe(this, dispose());
+          }
+        },
+      },
+    ),
     mixWith(disposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<readonly T[]>,
-      TProperties,
-      EnumeratorLike,
+      EnumeratorLike<T>,
       number
     >(),
     createBufferOperator<EnumerableLike, T, TInteractive>(liftT),
@@ -322,11 +333,8 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     };
 
     return pipe(
-      {
-        [Object_properties]: {
-          delegate: none,
-        },
-        [Object_init](
+      clazz(
+        function ConcatAllEnumerator(
           this: TProperties & DisposableLike,
           delegate: EnumeratorLike<EnumerableLike<T>>,
         ) {
@@ -337,37 +345,41 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
 
           pipe(this, add(delegate));
         },
-        [SourceLike_move](
-          this: TProperties &
-            MutableEnumeratorLike<T> &
-            MutableRefLike<EnumeratorLike<T>>,
-        ) {
-          const { delegate } = this;
-          const innerEnumerator = getCurrentRef(this);
-
-          if (isDisposed(innerEnumerator) && move(delegate)) {
-            const next = pipe(delegate, getCurrent, enumerate());
-            pipe(this, setCurrentRef(next));
-          }
-
-          while (!pipe(this, getCurrentRef, isDisposed)) {
+        {
+          delegate: none,
+        },
+        {
+          [SourceLike_move](
+            this: TProperties &
+              MutableEnumeratorLike<T> &
+              MutableRefLike<EnumeratorLike<T>>,
+          ) {
+            const { delegate } = this;
             const innerEnumerator = getCurrentRef(this);
-            if (move(innerEnumerator)) {
-              this[EnumeratorLike_current] = getCurrent(innerEnumerator);
-              break;
-            } else if (move(delegate)) {
+
+            if (isDisposed(innerEnumerator) && move(delegate)) {
               const next = pipe(delegate, getCurrent, enumerate());
               pipe(this, setCurrentRef(next));
-            } else {
-              pipe(this, dispose());
             }
-          }
+
+            while (!pipe(this, getCurrentRef, isDisposed)) {
+              const innerEnumerator = getCurrentRef(this);
+              if (move(innerEnumerator)) {
+                this[EnumeratorLike_current] = getCurrent(innerEnumerator);
+                break;
+              } else if (move(delegate)) {
+                const next = pipe(delegate, getCurrent, enumerate());
+                pipe(this, setCurrentRef(next));
+              } else {
+                pipe(this, dispose());
+              }
+            }
+          },
         },
-      },
+      ),
       mixWith(disposableMixin, typedDisposableRefMixin, typedEnumerator),
       createObjectFactory<
         EnumeratorLike<T>,
-        TProperties,
         EnumeratorLike<EnumerableLike<T>>
       >(),
       lift,
@@ -396,9 +408,8 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
     };
 
     return pipe(
-      {
-        [Object_properties]: { equality: none },
-        [Object_init](
+      clazz(
+        function DistinctUntilChanged(
           this: TProperties,
           delegate: EnumeratorLike<T>,
           equality: Equality<T>,
@@ -407,31 +418,29 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.equality = equality;
         },
-        [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-          const hadCurrent = hasCurrent(this);
-          const prevCurrent = hadCurrent ? getCurrent(this) : none;
+        { equality: none },
+        {
+          [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            const hadCurrent = hasCurrent(this);
+            const prevCurrent = hadCurrent ? getCurrent(this) : none;
 
-          try {
-            while (delegatingEnumeratorMove(this)) {
-              if (
-                !hadCurrent ||
-                !this.equality(prevCurrent as T, getCurrent(this))
-              ) {
-                break;
+            try {
+              while (delegatingEnumeratorMove(this)) {
+                if (
+                  !hadCurrent ||
+                  !this.equality(prevCurrent as T, getCurrent(this))
+                ) {
+                  break;
+                }
               }
+            } catch (cause) {
+              pipe(this, dispose({ cause }));
             }
-          } catch (cause) {
-            pipe(this, dispose({ cause }));
-          }
+          },
         },
-      },
+      ),
       mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
-      createObjectFactory<
-        EnumeratorLike<T>,
-        TProperties,
-        EnumeratorLike<T>,
-        Equality<T>
-      >(),
+      createObjectFactory<EnumeratorLike<T>, EnumeratorLike<T>, Equality<T>>(),
       createDistinctUntilChangedOperator<EnumerableLike, T, TInteractive>(
         liftT,
       ),
@@ -454,9 +463,8 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   };
 
   return pipe(
-    {
-      [Object_properties]: { effect: none },
-      [Object_init](
+    clazz(
+      function forEachEnumerator(
         this: TProperties,
         delegate: EnumeratorLike<T>,
         effect: SideEffect1<T>,
@@ -465,23 +473,21 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.effect = effect;
       },
-      [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-        if (delegatingEnumeratorMove(this)) {
-          try {
-            this.effect(getCurrent(this));
-          } catch (cause) {
-            pipe(this, dispose({ cause }));
+      { effect: none },
+      {
+        [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+          if (delegatingEnumeratorMove(this)) {
+            try {
+              this.effect(getCurrent(this));
+            } catch (cause) {
+              pipe(this, dispose({ cause }));
+            }
           }
-        }
+        },
       },
-    },
+    ),
     mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
-    createObjectFactory<
-      EnumeratorLike<T>,
-      TProperties,
-      EnumeratorLike<T>,
-      SideEffect1<T>
-    >(),
+    createObjectFactory<EnumeratorLike<T>, EnumeratorLike<T>, SideEffect1<T>>(),
     createForEachOperator<EnumerableLike, T, TInteractive>(liftT),
   );
 })();
@@ -498,9 +504,8 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   };
 
   return pipe(
-    {
-      [Object_properties]: { predicate: none },
-      [Object_init](
+    clazz(
+      function KeepEnumerator(
         this: TProperties,
         delegate: EnumeratorLike<T>,
         predicate: Predicate<T>,
@@ -509,26 +514,24 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.predicate = predicate;
       },
-      [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-        const { predicate } = this;
+      { predicate: none },
+      {
+        [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+          const { predicate } = this;
 
-        try {
-          while (
-            delegatingEnumeratorMove(this) &&
-            !predicate(getCurrent(this))
-          ) {}
-        } catch (cause) {
-          pipe(this, dispose({ cause }));
-        }
+          try {
+            while (
+              delegatingEnumeratorMove(this) &&
+              !predicate(getCurrent(this))
+            ) {}
+          } catch (cause) {
+            pipe(this, dispose({ cause }));
+          }
+        },
       },
-    },
+    ),
     mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
-    createObjectFactory<
-      EnumeratorLike<T>,
-      TProperties,
-      EnumeratorLike<T>,
-      Predicate<T>
-    >(),
+    createObjectFactory<EnumeratorLike<T>, EnumeratorLike<T>, Predicate<T>>(),
     createKeepOperator<EnumerableLike, T, TInteractive>(liftT),
   );
 })();
@@ -548,12 +551,8 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   };
 
   return pipe(
-    {
-      [Object_properties]: {
-        mapper: none,
-        delegate: none,
-      },
-      [Object_init](
+    clazz(
+      function MapEnumerator(
         this: TProperties,
         delegate: EnumeratorLike<TA>,
         mapper: Function1<TA, TB>,
@@ -563,22 +562,27 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
         this.delegate = delegate;
         this.mapper = mapper;
       },
-      [SourceLike_move](this: TProperties & MutableEnumeratorLike<TB>) {
-        const { delegate } = this;
-
-        if (move(delegate)) {
-          try {
-            this[EnumeratorLike_current] = this.mapper(getCurrent(delegate));
-          } catch (cause) {
-            pipe(this, dispose({ cause }));
-          }
-        }
+      {
+        mapper: none,
+        delegate: none,
       },
-    },
+      {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike<TB>) {
+          const { delegate } = this;
+
+          if (move(delegate)) {
+            try {
+              this[EnumeratorLike_current] = this.mapper(getCurrent(delegate));
+            } catch (cause) {
+              pipe(this, dispose({ cause }));
+            }
+          }
+        },
+      },
+    ),
     mixWith(delegatingDisposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<TB>,
-      TProperties,
       EnumeratorLike<TA>,
       Function1<TA, TB>
     >(),
@@ -606,29 +610,28 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
         init(typedEnumerator, this);
         this.delegate = delegate;
       },
-      [SourceLike_move](this: TProperties & MutableEnumeratorLike<[T, T]>) {
-        const { delegate } = this;
+      [Object_properties]: {},
+      [Object_prototype]: {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike<[T, T]>) {
+          const { delegate } = this;
 
-        const prev = hasCurrent(this)
-          ? getCurrent(this)[1]
-          : move(delegate)
-          ? getCurrent(delegate)
-          : none;
+          const prev = hasCurrent(this)
+            ? getCurrent(this)[1]
+            : move(delegate)
+            ? getCurrent(delegate)
+            : none;
 
-        if (isSome(prev) && move(delegate)) {
-          const current = getCurrent(delegate);
-          this[EnumeratorLike_current] = [prev, current];
-        } else {
-          pipe(this, dispose());
-        }
+          if (isSome(prev) && move(delegate)) {
+            const current = getCurrent(delegate);
+            this[EnumeratorLike_current] = [prev, current];
+          } else {
+            pipe(this, dispose());
+          }
+        },
       },
     },
     mixWith(delegatingDisposableMixin, typedEnumerator),
-    createObjectFactory<
-      EnumeratorLike<[T, T]>,
-      TProperties,
-      EnumeratorLike<T>
-    >(),
+    createObjectFactory<EnumeratorLike<[T, T]>, EnumeratorLike<T>>(),
     lift,
     returns,
   );
@@ -649,14 +652,8 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   };
 
   const createRepeatEnumerator = pipe(
-    {
-      [Object_properties]: {
-        count: 0,
-        enumerator: none,
-        shouldRepeat: none,
-        src: none,
-      },
-      [Object_init](
+    clazz(
+      function RepeatEnumerator(
         this: TProperties,
         src: EnumerableLike<T>,
         shouldRepeat: Predicate<number>,
@@ -665,43 +662,50 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
         this.src = src;
         this.shouldRepeat = shouldRepeat;
       },
-      [SourceLike_move](this: TProperties & EnumeratorLike<T>) {
-        if (isNone(this.enumerator)) {
-          this.enumerator = pipe(this.src, enumerate(), addTo(this));
-        }
+      {
+        count: 0,
+        enumerator: none,
+        shouldRepeat: none,
+        src: none,
+      },
+      {
+        [SourceLike_move](this: TProperties & EnumeratorLike<T>) {
+          if (isNone(this.enumerator)) {
+            this.enumerator = pipe(this.src, enumerate(), addTo(this));
+          }
 
-        let { enumerator } = this;
-        while (!move(enumerator)) {
-          this.count++;
+          let { enumerator } = this;
+          while (!move(enumerator)) {
+            this.count++;
 
-          try {
-            if (this.shouldRepeat(this.count)) {
-              enumerator = pipe(this.src, enumerate(), addTo(this));
-              this.enumerator = enumerator;
-            } else {
+            try {
+              if (this.shouldRepeat(this.count)) {
+                enumerator = pipe(this.src, enumerate(), addTo(this));
+                this.enumerator = enumerator;
+              } else {
+                break;
+              }
+            } catch (cause) {
+              pipe(this, dispose({ cause }));
               break;
             }
-          } catch (cause) {
-            pipe(this, dispose({ cause }));
-            break;
           }
-        }
+        },
+        get [EnumeratorLike_current](): T {
+          const self = this as unknown as TProperties;
+          return hasCurrent(this)
+            ? self.enumerator?.[EnumeratorLike_current] ?? raise()
+            : raise();
+        },
+        get [EnumeratorLike_hasCurrent]() {
+          const self = this as unknown as TProperties;
+          return self.enumerator?.[EnumeratorLike_hasCurrent] ?? false;
+        },
       },
-      get [EnumeratorLike_current](): T {
-        const self = this as unknown as TProperties;
-        return hasCurrent(this)
-          ? self.enumerator?.[EnumeratorLike_current] ?? raise()
-          : raise();
-      },
-      get [EnumeratorLike_hasCurrent]() {
-        const self = this as unknown as TProperties;
-        return self.enumerator?.[EnumeratorLike_hasCurrent] ?? false;
-      },
-    },
+    ),
     mixWith(disposableMixin),
     createObjectFactory<
       EnumeratorLike<T>,
-      TProperties,
       EnumerableLike<T>,
       Predicate<number>
     >(),
@@ -730,9 +734,8 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   };
 
   return pipe(
-    {
-      [Object_properties]: { reducer: none, delegate: none },
-      [Object_init](
+    clazz(
+      function ScanEnumerator(
         this: TProperties & MutableEnumeratorLike,
         delegate: EnumeratorLike<T>,
         reducer: Reducer<T, TAcc>,
@@ -750,23 +753,25 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
           pipe(this, dispose({ cause }));
         }
       },
-      [SourceLike_move](this: TProperties & MutableEnumeratorLike<TAcc>) {
-        const acc = hasCurrent(this) ? getCurrent(this) : none;
+      { reducer: none, delegate: none },
+      {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike<TAcc>) {
+          const acc = hasCurrent(this) ? getCurrent(this) : none;
 
-        const { delegate, reducer } = this;
-        if (isSome(acc) && move(delegate)) {
-          try {
-            this[EnumeratorLike_current] = reducer(acc, getCurrent(delegate));
-          } catch (cause) {
-            pipe(this, dispose({ cause }));
+          const { delegate, reducer } = this;
+          if (isSome(acc) && move(delegate)) {
+            try {
+              this[EnumeratorLike_current] = reducer(acc, getCurrent(delegate));
+            } catch (cause) {
+              pipe(this, dispose({ cause }));
+            }
           }
-        }
+        },
       },
-    },
+    ),
     mixWith(delegatingDisposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<TAcc>,
-      TProperties,
       EnumeratorLike<T>,
       Reducer<T, TAcc>,
       Factory<TAcc>
@@ -791,12 +796,8 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
     };
 
     return pipe(
-      {
-        [Object_properties]: {
-          skipCount: 0,
-          count: 0,
-        },
-        [Object_init](
+      clazz(
+        function SkipFirstEnumerator(
           this: TProperties,
           delegate: EnumeratorLike<T>,
           skipCount: number,
@@ -807,26 +808,27 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
           this.skipCount = skipCount;
           this.count = 0;
         },
-        [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-          const { skipCount } = this;
-
-          for (let { count } = this; count < skipCount; count++) {
-            if (!delegatingEnumeratorMove(this)) {
-              break;
-            }
-          }
-
-          this.count = skipCount;
-          delegatingEnumeratorMove(this);
+        {
+          skipCount: 0,
+          count: 0,
         },
-      },
+        {
+          [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            const { skipCount } = this;
+
+            for (let { count } = this; count < skipCount; count++) {
+              if (!delegatingEnumeratorMove(this)) {
+                break;
+              }
+            }
+
+            this.count = skipCount;
+            delegatingEnumeratorMove(this);
+          },
+        },
+      ),
       mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
-      createObjectFactory<
-        EnumeratorLike<T>,
-        TProperties,
-        EnumeratorLike<T>,
-        number
-      >(),
+      createObjectFactory<EnumeratorLike<T>, EnumeratorLike<T>, number>(),
       createSkipFirstOperator<EnumerableLike, T, TInteractive>(liftT),
     );
   })();
@@ -847,12 +849,8 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
     };
 
     return pipe(
-      {
-        [Object_properties]: {
-          maxCount: 0,
-          count: 0,
-        },
-        [Object_init](
+      clazz(
+        function TakeFirstEnumerator(
           this: TProperties,
           delegate: EnumeratorLike<T>,
           maxCount: number,
@@ -861,22 +859,23 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.maxCount = maxCount;
         },
-        [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-          if (this.count < this.maxCount) {
-            this.count++;
-            delegatingEnumeratorMove(this);
-          } else {
-            pipe(this, dispose());
-          }
+        {
+          maxCount: 0,
+          count: 0,
         },
-      },
+        {
+          [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            if (this.count < this.maxCount) {
+              this.count++;
+              delegatingEnumeratorMove(this);
+            } else {
+              pipe(this, dispose());
+            }
+          },
+        },
+      ),
       mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
-      createObjectFactory<
-        EnumeratorLike<T>,
-        TProperties,
-        EnumeratorLike<T>,
-        number
-      >(),
+      createObjectFactory<EnumeratorLike<T>, EnumeratorLike<T>, number>(),
       createTakeFirstOperator<EnumerableLike, T, TInteractive>({
         ...liftT,
         ...emptyEnumerableT,
@@ -901,12 +900,8 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
   };
 
   return pipe(
-    {
-      [Object_properties]: {
-        maxCount: 0,
-        isStarted: false,
-      },
-      [Object_init](
+    clazz(
+      function TakeLastEnumerator(
         this: TProperties & DisposableLike,
         delegate: EnumeratorLike<T>,
         maxCount: number,
@@ -918,39 +913,40 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
 
         pipe(this, add(delegate));
       },
-      [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-        if (!isDisposed(this) && !this.isStarted) {
-          this.isStarted = true;
+      {
+        maxCount: 0,
+        isStarted: false,
+      },
+      {
+        [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+          if (!isDisposed(this) && !this.isStarted) {
+            this.isStarted = true;
 
-          const last: unknown[] = [];
+            const last: unknown[] = [];
 
-          while (delegatingEnumeratorMove(this)) {
-            last.push(getCurrent(this));
+            while (delegatingEnumeratorMove(this)) {
+              last.push(getCurrent(this));
 
-            if (getLength(last) > this.maxCount) {
-              last.shift();
+              if (getLength(last) > this.maxCount) {
+                last.shift();
+              }
             }
+
+            const enumerator = pipe(
+              last,
+              toEnumerableReadonlyArray(),
+              enumerate(),
+              bindTo(this),
+            );
+            init(typedDelegatingEnumeratorMixin, this, enumerator);
           }
 
-          const enumerator = pipe(
-            last,
-            toEnumerableReadonlyArray(),
-            enumerate(),
-            bindTo(this),
-          );
-          init(typedDelegatingEnumeratorMixin, this, enumerator);
-        }
-
-        delegatingEnumeratorMove(this);
+          delegatingEnumeratorMove(this);
+        },
       },
-    },
+    ),
     mixWith(disposableMixin, typedDelegatingEnumeratorMixin),
-    createObjectFactory<
-      EnumeratorLike<T>,
-      TProperties,
-      EnumeratorLike<T>,
-      number
-    >(),
+    createObjectFactory<EnumeratorLike<T>, EnumeratorLike<T>, number>(),
     createTakeLastOperator<EnumerableLike, T, TInteractive>({
       ...liftT,
       ...emptyEnumerableT,
@@ -973,13 +969,8 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
     };
 
     return pipe(
-      {
-        [Object_properties]: {
-          predicate: none,
-          inclusive: false,
-          done: false,
-        },
-        [Object_init](
+      clazz(
+        function TakeWhileEnumerator(
           this: TProperties,
           delegate: EnumeratorLike<T>,
           predicate: Predicate<T>,
@@ -990,32 +981,38 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
           this.predicate = predicate;
           this.inclusive = inclusive;
         },
-        [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-          const { inclusive, predicate } = this;
-
-          if (this.done && !isDisposed(this)) {
-            pipe(this, dispose());
-          } else if (delegatingEnumeratorMove(this)) {
-            const current = getCurrent(this);
-
-            try {
-              const satisfiesPredicate = predicate(current);
-
-              if (!satisfiesPredicate && inclusive) {
-                this.done = true;
-              } else if (!satisfiesPredicate) {
-                pipe(this, dispose());
-              }
-            } catch (cause) {
-              pipe(this, dispose({ cause }));
-            }
-          }
+        {
+          predicate: none,
+          inclusive: false,
+          done: false,
         },
-      },
+        {
+          [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            const { inclusive, predicate } = this;
+
+            if (this.done && !isDisposed(this)) {
+              pipe(this, dispose());
+            } else if (delegatingEnumeratorMove(this)) {
+              const current = getCurrent(this);
+
+              try {
+                const satisfiesPredicate = predicate(current);
+
+                if (!satisfiesPredicate && inclusive) {
+                  this.done = true;
+                } else if (!satisfiesPredicate) {
+                  pipe(this, dispose());
+                }
+              } catch (cause) {
+                pipe(this, dispose({ cause }));
+              }
+            }
+          },
+        },
+      ),
       mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
       createObjectFactory<
         EnumeratorLike<T>,
-        TProperties,
         EnumeratorLike<T>,
         Predicate<T>,
         boolean
@@ -1037,11 +1034,8 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
     };
 
     return pipe(
-      {
-        [Object_properties]: {
-          isEmpty: true,
-        },
-        [Object_init](
+      clazz(
+        function TakeWhileEnumerator(
           this: TProperties & DisposableLike,
           delegate: EnumeratorLike,
           factory: Factory<unknown>,
@@ -1071,16 +1065,20 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
             }),
           );
         },
-        [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-          if (delegatingEnumeratorMove(this)) {
-            this.isEmpty = false;
-          }
+        {
+          isEmpty: true,
         },
-      },
+        {
+          [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            if (delegatingEnumeratorMove(this)) {
+              this.isEmpty = false;
+            }
+          },
+        },
+      ),
       mixWith(disposableMixin, typedDelegatingEnumeratorMixin),
       createObjectFactory<
         EnumeratorLike<T>,
-        TProperties,
         EnumeratorLike<T>,
         Factory<unknown>
       >(),
@@ -1232,36 +1230,37 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
 
   const createZipEnumerator = pipe(
     {
-      [Object_properties]: {
-        enumerators: none,
-      },
       [Object_init](this: TProperties, enumerators: readonly EnumeratorLike[]) {
         init(disposableMixin, this);
         init(typedEnumerator, this);
         this.enumerators = enumerators;
       },
-      [SourceLike_move](
-        this: TProperties & MutableEnumeratorLike<readonly unknown[]>,
-      ) {
-        if (!isDisposed(this)) {
-          const { enumerators } = this;
-          moveAll(enumerators);
+      [Object_properties]: {
+        enumerators: none,
+      },
+      [Object_prototype]: {
+        [SourceLike_move](
+          this: TProperties & MutableEnumeratorLike<readonly unknown[]>,
+        ) {
+          if (!isDisposed(this)) {
+            const { enumerators } = this;
+            moveAll(enumerators);
 
-          if (allHaveCurrent(enumerators)) {
-            this[EnumeratorLike_current] = pipe(
-              enumerators,
-              mapReadonlyArray(getCurrent),
-            );
-          } else {
-            pipe(this, dispose());
+            if (allHaveCurrent(enumerators)) {
+              this[EnumeratorLike_current] = pipe(
+                enumerators,
+                mapReadonlyArray(getCurrent),
+              );
+            } else {
+              pipe(this, dispose());
+            }
           }
-        }
+        },
       },
     },
     mixWith(disposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<readonly unknown[]>,
-      TProperties,
       readonly EnumeratorLike[]
     >(),
   );

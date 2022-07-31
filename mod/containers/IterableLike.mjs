@@ -1,7 +1,7 @@
 /// <reference types="./IterableLike.d.ts" />
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { pipe, none, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
@@ -11,12 +11,10 @@ import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal
 const toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
-    const createIterableEnumerator = pipe({
-        [Object_properties]: { iterator: none },
-        [Object_init](iterator) {
-            init(disposableMixin, this);
-            this.iterator = iterator;
-        },
+    const createIterableEnumerator = pipe(clazz(function IteratorEnumerator(iterator) {
+        init(disposableMixin, this);
+        this.iterator = iterator;
+    }, { iterator: none }, {
         [SourceLike_move]() {
             if (!isDisposed(this)) {
                 const next = this.iterator.next();
@@ -28,7 +26,7 @@ const toEnumerable =
                 }
             }
         },
-    }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
+    }), mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
     return () => (iterable) => createEnumerable(() => createIterableEnumerator(iterable[Symbol.iterator]()));
 })();
 const toEnumerableT = { toEnumerable };

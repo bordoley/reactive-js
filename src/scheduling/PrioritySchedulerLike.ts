@@ -1,9 +1,8 @@
 import { getDelay } from "../__internal__/optionalArgs";
 import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
-  Object_init,
-  Object_properties,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -40,12 +39,8 @@ export const toScheduler = /*@__PURE__*/ (() => {
   };
 
   const createSchedulerInstance = pipe(
-    {
-      [Object_properties]: {
-        priorityScheduler: none,
-        priority: 0,
-      },
-      [Object_init](
+    clazz(
+      function PrioritySchedulerDelegatingScheduler(
         this: TProperties,
         scheduler: PrioritySchedulerLike,
         priority: number,
@@ -54,45 +49,46 @@ export const toScheduler = /*@__PURE__*/ (() => {
         this.priorityScheduler = scheduler;
         this.priority = priority;
       },
-      get [SchedulerLike_inContinuation]() {
-        const self = this as unknown as TProperties;
-        return isInContinuation(self.priorityScheduler);
+      {
+        priorityScheduler: none,
+        priority: 0,
       },
-      get [SchedulerLike_now]() {
-        const self = this as unknown as TProperties;
-        return getCurrentTime(self.priorityScheduler);
-      },
-      get [SchedulerLike_shouldYield]() {
-        const self = this as unknown as TProperties;
-        return shouldYield(self.priorityScheduler);
-      },
-      [SchedulerLike_requestYield](this: TProperties): void {
-        requestYield(this.priorityScheduler);
-      },
-      [SchedulerLike_schedule](
-        this: TProperties & DisposableLike,
-        continuation: ContinuationLike,
-        options?: { readonly delay?: number },
-      ) {
-        const delay = getDelay(options);
+      {
+        get [SchedulerLike_inContinuation]() {
+          const self = this as unknown as TProperties;
+          return isInContinuation(self.priorityScheduler);
+        },
+        get [SchedulerLike_now]() {
+          const self = this as unknown as TProperties;
+          return getCurrentTime(self.priorityScheduler);
+        },
+        get [SchedulerLike_shouldYield]() {
+          const self = this as unknown as TProperties;
+          return shouldYield(self.priorityScheduler);
+        },
+        [SchedulerLike_requestYield](this: TProperties): void {
+          requestYield(this.priorityScheduler);
+        },
+        [SchedulerLike_schedule](
+          this: TProperties & DisposableLike,
+          continuation: ContinuationLike,
+          options?: { readonly delay?: number },
+        ) {
+          const delay = getDelay(options);
 
-        pipe(this, addIgnoringChildErrors(continuation));
+          pipe(this, addIgnoringChildErrors(continuation));
 
-        if (!isDisposed(continuation)) {
-          this.priorityScheduler[SchedulerLike_schedule](continuation, {
-            priority: this.priority,
-            delay,
-          });
-        }
+          if (!isDisposed(continuation)) {
+            this.priorityScheduler[SchedulerLike_schedule](continuation, {
+              priority: this.priority,
+              delay,
+            });
+          }
+        },
       },
-    },
+    ),
     mixWith(disposableMixin),
-    createObjectFactory<
-      SchedulerLike,
-      TProperties,
-      PrioritySchedulerLike,
-      number
-    >(),
+    createObjectFactory<SchedulerLike, PrioritySchedulerLike, number>(),
   );
 
   return (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>

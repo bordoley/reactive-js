@@ -4,9 +4,8 @@ import {
   enumeratorMixin,
 } from "../__internal__/util/EnumeratorLikeMixin";
 import {
-  Object_init,
-  Object_properties,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -134,13 +133,8 @@ export const toEnumerable: ToEnumerable<
   };
 
   const createReadonlyArrayEnumerator = pipe(
-    {
-      [Object_properties]: {
-        array: none,
-        count: 0,
-        index: 0,
-      },
-      [Object_init](
+    clazz(
+      function ReadonlyArrayEnumerator(
         this: TProperties,
         array: readonly unknown[],
         start: number,
@@ -153,30 +147,31 @@ export const toEnumerable: ToEnumerable<
         this.index = start - 1;
         this.count = count;
       },
-      [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
-        const { array } = this;
-        if (!isDisposed(this)) {
-          this.index++;
-          const { index, count } = this;
-
-          if (count !== 0) {
-            this[EnumeratorLike_current] = array[index];
-
-            this.count = count > 0 ? this.count - 1 : this.count + 1;
-          } else {
-            pipe(this, dispose());
-          }
-        }
+      {
+        array: none,
+        count: 0,
+        index: 0,
       },
-    },
+      {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
+          const { array } = this;
+          if (!isDisposed(this)) {
+            this.index++;
+            const { index, count } = this;
+
+            if (count !== 0) {
+              this[EnumeratorLike_current] = array[index];
+
+              this.count = count > 0 ? this.count - 1 : this.count + 1;
+            } else {
+              pipe(this, dispose());
+            }
+          }
+        },
+      },
+    ),
     mixWith(disposableMixin, typedEnumerator),
-    createObjectFactory<
-      EnumeratorLike<T>,
-      TProperties,
-      readonly T[],
-      number,
-      number
-    >(),
+    createObjectFactory<EnumeratorLike<T>, readonly T[], number, number>(),
   );
 
   return createFromArray<EnumerableLike<T>, T>(

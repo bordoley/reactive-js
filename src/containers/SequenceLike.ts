@@ -5,9 +5,8 @@ import {
   enumeratorMixin,
 } from "../__internal__/util/EnumeratorLikeMixin";
 import {
-  Object_init,
-  Object_properties,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -417,29 +416,31 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
     };
 
     const createSequenceEnumerator = pipe(
-      {
-        [Object_properties]: {
-          seq: none,
-        },
-        [Object_init](this: TProperties, seq: SequenceLike<T>) {
+      clazz(
+        function SequenceEnumerator(this: TProperties, seq: SequenceLike<T>) {
           init(disposableMixin, this);
           init(typedEnumeratorMixin, this);
           this.seq = seq;
         },
-        [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
-          if (!isDisposed(this)) {
-            const next = this.seq();
-            if (isSome(next)) {
-              this[EnumeratorLike_current] = next.data;
-              this.seq = next.next;
-            } else {
-              pipe(this, dispose());
-            }
-          }
+        {
+          seq: none,
         },
-      },
+        {
+          [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
+            if (!isDisposed(this)) {
+              const next = this.seq();
+              if (isSome(next)) {
+                this[EnumeratorLike_current] = next.data;
+                this.seq = next.next;
+              } else {
+                pipe(this, dispose());
+              }
+            }
+          },
+        },
+      ),
       mixWith(disposableMixin, typedEnumeratorMixin),
-      createObjectFactory<EnumeratorLike<T>, TProperties, SequenceLike<T>>(),
+      createObjectFactory<EnumeratorLike<T>, SequenceLike<T>>(),
     );
 
     return () => (seq: SequenceLike<T>) =>

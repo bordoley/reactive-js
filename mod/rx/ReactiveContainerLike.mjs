@@ -6,6 +6,7 @@ const sinkInto = (sink) => source => {
     return source;
 };
 const sourceFrom = (source) => sink => {
+    debugger;
     source[ReactiveContainerLike_sinkInto](sink);
     return sink;
 };
