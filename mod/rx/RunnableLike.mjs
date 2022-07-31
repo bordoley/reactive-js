@@ -4,7 +4,7 @@ import { reactive, createBufferOperator, createDistinctUntilChangedOperator, cre
 import { createObjectFactory, Object_init, init, mixWith } from '../__internal__/util/Object.mjs';
 import { bufferSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, pipeUnsafe, newInstance, pipeLazy, returns, isSome, raise } from '../functions.mjs';
+import { pipe, pipeUnsafe, newInstance, pipeLazy, none, returns, isSome, raise } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
@@ -66,6 +66,13 @@ const distinctUntilChanged =
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
+const first = () => src => {
+    let result = none;
+    pipe(src, takeFirst(), forEach(next => {
+        result = next;
+    }), run());
+    return result;
+};
 const forEach = /*@__PURE__*/ (() => {
     const typedForEachSinkMixin = forEachSinkMixin();
     return pipe(typedForEachSinkMixin, createObjectFactory(), createForEachOperator(liftT));
@@ -76,6 +83,13 @@ const keep = /*@__PURE__*/ (() => {
     return pipe(typedKeepSinkMixin, createObjectFactory(), createKeepOperator(liftT));
 })();
 const keepT = { keep };
+const last = () => src => {
+    let result = none;
+    pipe(src, forEach(next => {
+        result = next;
+    }), run());
+    return result;
+};
 const map = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
     return pipe(typedMapSinkMixin, createObjectFactory(), createMapOperator(liftT));
@@ -149,4 +163,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, first, forEach, forEachT, keep, keepT, last, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };

@@ -1,7 +1,8 @@
 /// <reference types="./RunnableLike.test.d.ts" />
-import { describe as createDescribe } from '../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectEquals } from '../__internal__/testing.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { bufferT, toReadonlyArrayT, concatT, concatAllT, distinctUntilChangedT, forEachT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../rx/RunnableLike.mjs';
+import { pipeLazy, none } from '../functions.mjs';
+import { bufferT, toReadonlyArrayT, concatT, concatAllT, distinctUntilChangedT, forEachT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT, first, last } from '../rx/RunnableLike.mjs';
 import { bufferTests, concatTests, concatAllTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from './operators.test.mjs';
 
 const RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
@@ -65,6 +66,6 @@ const RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
     fromArray: toRunnable,
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
-}));
+}), createDescribe("first", createTest("when the source has values", pipeLazy([0, 1, 2], toRunnable(), first(), expectEquals(0))), createTest("when the source is empty", pipeLazy([], toRunnable(), first(), expectEquals(none)))), createDescribe("last", createTest("when the source has values", pipeLazy([0, 1, 2], toRunnable(), last(), expectEquals(2))), createTest("when the source is empty", pipeLazy([], toRunnable(), last(), expectEquals(none)))));
 
 export { RunnableLikeTests };
