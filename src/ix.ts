@@ -48,7 +48,7 @@ export interface InteractiveContainerLike<
   TSource extends DisposableLike,
   TCtx = void,
 > extends StatefulContainerLike {
-  [InteractiveContainerLike_interact](_: TCtx): TSource;
+  [InteractiveContainerLike_interact](ctx: TCtx): TSource;
 }
 
 /**
