@@ -1,6 +1,7 @@
 import {
   Lift,
   TReactive,
+  createDecodeWithCharsetOperator,
   createForEachOperator,
   createMapOperator,
   reactive,
@@ -15,10 +16,18 @@ import {
   mixWith,
 } from "../__internal__/util/Object";
 import {
+  decodeWithCharsetSinkMixin,
   forEachSinkMixin,
   mapSinkMixin,
 } from "../__internal__/util/SinkLikeMixin";
-import { ContainerOperator, ForEach, Map, ToPromise } from "../containers";
+import {
+  ContainerOperator,
+  DecodeWithCharset,
+  ForEach,
+  Map,
+  ToPromise,
+} from "../containers";
+import { toObservable as arrayToObservable } from "../containers/ReadonlyArrayLike";
 import {
   Function1,
   Option,
@@ -122,6 +131,60 @@ const liftEnumerableObservableT: Lift<EnumerableObservableLike, TReactive> = {
   variance: reactive,
 };
 
+interface DecodeWithCharsetObservable {
+  (charset?: string | undefined): ContainerOperator<
+    ObservableLike,
+    ArrayBuffer,
+    string
+  >;
+  (charset?: string | undefined): ContainerOperator<
+    RunnableObservableLike,
+    ArrayBuffer,
+    string
+  >;
+  (charset?: string | undefined): ContainerOperator<
+    EnumerableObservableLike,
+    ArrayBuffer,
+    string
+  >;
+}
+export const decodeWithCharset: DecodeWithCharsetObservable =
+  /*@__PURE__*/ (() => {
+    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(
+      arrayToObservable(),
+    );
+    const typedObserverMixin = observerMixin<ArrayBuffer>();
+
+    type TProperties = PropertyTypeOf<
+      [typeof typedObserverMixin, typeof typedDecodeWithCharsetMixin]
+    >;
+
+    return pipe(
+      clazz(
+        function DecodeWithCharsetObserver(
+          this: TProperties & DisposableLike,
+          delegate: ObserverLike<string>,
+          charset: string,
+        ) {
+          init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+          init(typedDecodeWithCharsetMixin, this, delegate, charset);
+        },
+        {},
+        {},
+      ),
+      mixWith(typedObserverMixin, typedDecodeWithCharsetMixin),
+      createObjectFactory<
+        ObserverLike<ArrayBuffer>,
+        ObserverLike<string>,
+        string
+      >(),
+      createDecodeWithCharsetOperator(liftEnumerableObservableT),
+    );
+  })();
+export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
+  decodeWithCharset,
+};
+
 interface ForEachObservable {
   <T>(effect: SideEffect1<T>): ContainerOperator<ObservableLike<unknown>, T, T>;
   <T>(effect: SideEffect1<T>): ContainerOperator<
@@ -214,7 +277,6 @@ export const map: MapObservable = /*@__PURE__*/ (<TA, TB>() => {
     ),
   );
 })();
-
 export const mapT: Map<ObservableLike> = { map };
 
 export const subscribe: <T>(

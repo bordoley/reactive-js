@@ -1,9 +1,10 @@
 /// <reference types="./ObservableLike.d.ts" />
-import { reactive, createForEachOperator, createMapOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
+import { reactive, createDecodeWithCharsetOperator, createForEachOperator, createMapOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { forEachSinkMixin, mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { decodeWithCharsetSinkMixin, forEachSinkMixin, mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { toObservable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeUnsafe, min, newInstance, pipe, none, isSome } from '../functions.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { ObserverLike_scheduler } from '../scheduling.mjs';
@@ -50,6 +51,18 @@ const liftEnumerableObservable = createLift(2);
 const liftEnumerableObservableT = {
     lift: liftEnumerableObservable,
     variance: reactive,
+};
+const decodeWithCharset = 
+/*@__PURE__*/ (() => {
+    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(toObservable());
+    const typedObserverMixin = observerMixin();
+    return pipe(clazz(function DecodeWithCharsetObserver(delegate, charset) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedDecodeWithCharsetMixin, this, delegate, charset);
+    }, {}, {}), mixWith(typedObserverMixin, typedDecodeWithCharsetMixin), createObjectFactory(), createDecodeWithCharsetOperator(liftEnumerableObservableT));
+})();
+const decodeWithCharsetT = {
+    decodeWithCharset,
 };
 const forEach = /*@__PURE__*/ (() => {
     const typedForEachSinkMixin = forEachSinkMixin();
@@ -105,4 +118,4 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-export { forEach, forEachT, getObservableType, map, mapT, subscribe, toPromise };
+export { decodeWithCharset, decodeWithCharsetT, forEach, forEachT, getObservableType, map, mapT, subscribe, toPromise };

@@ -3,9 +3,13 @@ import { pipe, isSome } from '../functions.mjs';
 import { createVirtualTimeScheduler } from '../scheduling.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import '../util/DisposableLike.mjs';
-import { forEach as forEach$1, map as map$1, subscribe } from './ObservableLike.mjs';
+import { decodeWithCharset as decodeWithCharset$1, forEach as forEach$1, map as map$1, subscribe } from './ObservableLike.mjs';
 import { addTo, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
 
+const decodeWithCharset = decodeWithCharset$1;
+const decodeWithCharsetT = {
+    decodeWithCharset,
+};
 const forEach = forEach$1;
 const forEachT = { forEach };
 const map = map$1;
@@ -26,4 +30,4 @@ const toReadonlyArray = (options = {}) => observable => {
 };
 const toReadonlyArrayT = { toReadonlyArray };
 
-export { forEach, forEachT, map, mapT, toReadonlyArray, toReadonlyArrayT };
+export { decodeWithCharset, decodeWithCharsetT, forEach, forEachT, map, mapT, toReadonlyArray, toReadonlyArrayT };
