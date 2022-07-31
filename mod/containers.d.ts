@@ -60,8 +60,8 @@ declare type ConcatAll<C extends ContainerLike, O = Record<string, never>> = Con
 declare type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
     decodeWithCharset(charset?: string): ContainerOperator<C, ArrayBuffer, string>;
 };
-declare type Defer<C extends ContainerLike, TOptions = never> = Container<C> & {
-    defer<T>(factory: Factory<ContainerOf<C, T>>, options?: TOptions): ContainerOf<C, T>;
+declare type Defer<C extends ContainerLike, O = never> = Container<C> & {
+    defer<T>(factory: Factory<ContainerOf<C, T>>, options?: Partial<O>): ContainerOf<C, T>;
 };
 declare type DistinctUntilChanged<C extends ContainerLike> = Container<C> & {
     distinctUntilChanged<T>(options?: {
@@ -71,15 +71,15 @@ declare type DistinctUntilChanged<C extends ContainerLike> = Container<C> & {
 declare type EverySatisfy<C extends ContainerLike> = Container<C> & {
     everySatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 };
-declare type Empty<C extends ContainerLike, TOptions = never> = Container<C> & {
-    empty<T>(options?: TOptions): ContainerOf<C, T>;
+declare type Empty<C extends ContainerLike, O = never> = Container<C> & {
+    empty<T>(options?: Partial<O>): ContainerOf<C, T>;
 };
 declare type ForEach<C extends ContainerLike> = Container<C> & {
     forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
 };
 declare type FromArrayOptions = {
-    readonly start: number;
-    readonly count: number;
+    readonly start: Option<number>;
+    readonly count: Option<number>;
 };
 declare type FromArray<C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions> = Container<C> & {
     fromArray<T>(options?: Partial<O>): Function1<readonly T[], ContainerOf<C, T>>;
@@ -90,11 +90,8 @@ declare type FromIterable<C extends ContainerLike, O extends Record<string, neve
 declare type FromIterator<C extends ContainerLike, O extends Record<string, unknown> = Record<string, never>> = Container<C> & {
     fromIterator<T, TReturn = any, TNext = unknown>(options?: Partial<O>): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
 };
-declare type FromValue<C extends ContainerLike, TOptions = never> = Container<C> & {
-    fromValue<T>(options?: TOptions): Function1<T, ContainerOf<C, T>>;
-};
-declare type Generate<C extends ContainerLike, TOptions = never> = Container<C> & {
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: TOptions): ContainerOf<C, T>;
+declare type Generate<C extends ContainerLike, O = never> = Container<C> & {
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: Partial<O>): ContainerOf<C, T>;
 };
 declare type Keep<C extends ContainerLike> = Container<C> & {
     keep<T>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
@@ -145,17 +142,17 @@ declare type TakeWhile<C extends ContainerLike> = Container<C> & {
 declare type ThrowIfEmpty<C extends ContainerLike> = Container<C> & {
     throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 };
-declare type ToIterable<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toIterable<T>(options?: TOptions): Function1<ContainerOf<C, T>, Iterable<T>>;
+declare type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
+    toIterable<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, Iterable<T>>;
 };
-declare type ToPromise<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toPromise<T>(options?: TOptions): Function1<ContainerOf<C, T>, PromiseLike<T>>;
+declare type ToPromise<C extends ContainerLike, O = never> = Container<C> & {
+    toPromise<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, PromiseLike<T>>;
 };
-declare type ToReadonlyArray<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toReadonlyArray<T>(options?: TOptions): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
+declare type ToReadonlyArray<C extends ContainerLike, O = never> = Container<C> & {
+    toReadonlyArray<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
 };
-declare type ToSequence<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toSequence<T>(options?: TOptions): Function1<ContainerOf<C, T>, SequenceLike<T>>;
+declare type ToSequence<C extends ContainerLike, O = never> = Container<C> & {
+    toSequence<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 };
 declare type Using<C extends ContainerLike> = Container<C> & {
     using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource>, containerFactory: Function1<TResource, ContainerOf<C, T>>): ContainerOf<C, T>;
@@ -249,4 +246,4 @@ declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromArray, FromArrayOptions, FromIterable, FromIterator, FromValue, Generate, IterableLike, Keep, Map, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, IterableLike, Keep, Map, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };

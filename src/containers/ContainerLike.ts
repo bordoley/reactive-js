@@ -5,12 +5,10 @@ import {
   ContainerOf,
   ContainerOperator,
   Defer,
-  Empty,
   EverySatisfy,
   FromArray,
   FromArrayOptions,
   FromIterator,
-  FromValue,
   Keep,
   Map,
   SomeSatisfy,
@@ -35,11 +33,21 @@ import {
   returns,
 } from "../functions";
 
-export const compute = <C extends ContainerLike, T, TOptions>(
-  m: Map<C> & FromValue<C, TOptions>,
-  options?: TOptions,
+export const compute = <
+  C extends ContainerLike,
+  T,
+  O extends FromArrayOptions = FromArrayOptions,
+>(
+  m: Map<C> & FromArray<C, O>,
+  options?: Omit<Partial<O>, keyof FromArrayOptions>,
 ): Function1<Factory<T>, ContainerOf<C, T>> =>
-  compose(m.fromValue(options), m.map(callWith()));
+  compose(
+    x => [x],
+    m.fromArray<Factory<T>>({
+      ...options,
+    }),
+    m.map(callWith()),
+  );
 
 export const concatMap = <
   C extends ContainerLike,
@@ -84,7 +92,7 @@ export function endWith<
   T,
   O extends FromArrayOptions = FromArrayOptions,
 >(
-  m: Concat<C> & FromArray<C, O>,
+  m: Concat<C> & FromArray<C, never>,
   value: T,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T>;
@@ -100,12 +108,12 @@ export function endWith<
 }
 
 export const fromOption =
-  <C extends ContainerLike, T, TOptions>(
-    { empty, fromValue }: FromValue<C, TOptions> & Empty<C, TOptions>,
-    options?: TOptions,
+  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
+    { fromArray }: FromArray<C, O>,
+    options?: Omit<Partial<O>, keyof FromArrayOptions>,
   ): Function1<Option<T>, ContainerOf<C, T>> =>
   option =>
-    isSome(option) ? pipe(option, fromValue(options)) : empty(options);
+    pipe(isSome(option) ? [option] : [], fromArray<T>({ ...options }));
 
 export const genMap = <
   C extends ContainerLike,
@@ -167,9 +175,9 @@ export function startWith<
 }
 
 export const throws =
-  <C extends ContainerLike, T, TOptions>(
-    m: Map<C> & FromValue<C, TOptions>,
-    options?: TOptions,
+  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
+    m: Map<C> & FromArray<C, O>,
+    options?: Omit<Partial<O>, keyof FromArrayOptions>,
   ): Function1<Factory<unknown>, ContainerOf<C, T>> =>
   (errorFactory): ContainerOf<C, T> =>
     pipe(() => {

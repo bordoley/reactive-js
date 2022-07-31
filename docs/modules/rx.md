@@ -168,7 +168,7 @@ ___
 
 ### createObservable
 
-▸ **createObservable**<`T`\>(`f`): `any`
+▸ **createObservable**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -184,7 +184,7 @@ ___
 
 #### Returns
 
-`any`
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 

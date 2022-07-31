@@ -2,6 +2,7 @@ import { createRepeatOperator } from "../__internal__/containers/ContainerLikeIn
 import {
   Lift,
   TReactive,
+  createBufferOperator,
   createDistinctUntilChangedOperator,
   createForEachOperator,
   createKeepOperator,
@@ -23,6 +24,7 @@ import {
 } from "../__internal__/util/Object";
 import {
   DelegatingSink_delegate,
+  bufferSinkMixin,
   createDelegatingSink,
   createSink,
   delegatingSinkMixin,
@@ -39,6 +41,7 @@ import {
   throwIfEmptySinkMixin,
 } from "../__internal__/util/SinkLikeMixin";
 import {
+  Buffer,
   Concat,
   ConcatAll,
   DistinctUntilChanged,
@@ -119,6 +122,27 @@ const liftT: Lift<RunnableLike, TReactive> = {
   lift,
   variance: reactive,
 };
+
+export const buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<T>() => {
+  const typedBufferSinkMixin = bufferSinkMixin<
+    RunnableLike,
+    SinkLike<readonly T[]>,
+    T
+  >(toRunnable());
+
+  return pipe(
+    typedBufferSinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedBufferSinkMixin]>,
+      SinkLike<readonly T[]>,
+      number
+    >(),
+    createBufferOperator<RunnableLike, T, TReactive>(liftT),
+  );
+})();
+
+export const bufferT: Buffer<RunnableLike> = { buffer };
 
 export const concat: Concat<RunnableLike>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]
