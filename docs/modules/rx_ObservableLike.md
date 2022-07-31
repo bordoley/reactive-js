@@ -6,11 +6,13 @@
 
 ### Variables
 
+- [decodeWithCharsetT](rx_ObservableLike.md#decodewithcharsett)
 - [forEachT](rx_ObservableLike.md#foreacht)
 - [mapT](rx_ObservableLike.md#mapt)
 
 ### Functions
 
+- [decodeWithCharset](rx_ObservableLike.md#decodewithcharset)
 - [forEach](rx_ObservableLike.md#foreach)
 - [getObservableType](rx_ObservableLike.md#getobservabletype)
 - [map](rx_ObservableLike.md#map)
@@ -18,6 +20,12 @@
 - [toPromise](rx_ObservableLike.md#topromise)
 
 ## Variables
+
+### decodeWithCharsetT
+
+• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](containers.md#decodewithcharset)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
 
 ### forEachT
 
@@ -30,6 +38,46 @@ ___
 • `Const` **mapT**: [`Map`](containers.md#map)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ## Functions
+
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+___
 
 ### forEach
 

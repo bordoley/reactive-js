@@ -1,7 +1,9 @@
-import { ForEach, Map, ToReadonlyArray } from "../containers.mjs";
+import { DecodeWithCharset, ForEach, Map, ToReadonlyArray } from "../containers.mjs";
 import { Factory } from "../functions.mjs";
 import { RunnableObservableLike } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
+declare const decodeWithCharset: DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"];
+declare const decodeWithCharsetT: DecodeWithCharset<RunnableObservableLike>;
 declare const forEach: ForEach<RunnableObservableLike>["forEach"];
 declare const forEachT: ForEach<RunnableObservableLike>;
 declare const map: Map<RunnableObservableLike>["map"];
@@ -12,4 +14,4 @@ declare const toReadonlyArray: ToReadonlyArray<RunnableObservableLike, {
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
-export { forEach, forEachT, map, mapT, toReadonlyArray, toReadonlyArrayT };
+export { decodeWithCharset, decodeWithCharsetT, forEach, forEachT, map, mapT, toReadonlyArray, toReadonlyArrayT };
