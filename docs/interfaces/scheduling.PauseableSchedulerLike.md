@@ -16,7 +16,7 @@
 
 ### Properties
 
-- [[DisposableLike\_error]](scheduling.PauseableSchedulerLike.md#[disposablelike_error])
+- [[DisposableLike\_exception]](scheduling.PauseableSchedulerLike.md#[disposablelike_exception])
 - [[DisposableLike\_isDisposed]](scheduling.PauseableSchedulerLike.md#[disposablelike_isdisposed])
 - [[SchedulerLike\_inContinuation]](scheduling.PauseableSchedulerLike.md#[schedulerlike_incontinuation])
 - [[SchedulerLike\_now]](scheduling.PauseableSchedulerLike.md#[schedulerlike_now])
@@ -33,15 +33,15 @@
 
 ## Properties
 
-### [DisposableLike\_error]
+### [DisposableLike\_exception]
 
-• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/functions.md#option)<[`Error`](../modules/util.md#error)\>
+• `Readonly` **[DisposableLike\_exception]**: [`Option`](../modules/functions.md#option)<[`Exception`](../modules/util.md#exception)\>
 
 The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[SchedulerLike](scheduling.SchedulerLike.md).[[DisposableLike_error]](scheduling.SchedulerLike.md#[disposablelike_error])
+[SchedulerLike](scheduling.SchedulerLike.md).[[DisposableLike_exception]](scheduling.SchedulerLike.md#[disposablelike_exception])
 
 ___
 
@@ -122,7 +122,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `error?` | [`Error`](../modules/util.md#error) | An optional error that signals the resource is being disposed due to an error. |
+| `error?` | [`Exception`](../modules/util.md#exception) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
 

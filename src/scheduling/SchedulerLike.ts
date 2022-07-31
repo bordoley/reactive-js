@@ -54,7 +54,7 @@ import {
   DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
-  Error,
+  Exception,
   PauseableLike,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -119,7 +119,7 @@ const createContinuation: Function2<
       {
         [ContinuationLike_run](this: TProperties & ContinuationLike) {
           if (!isDisposed(this)) {
-            let error: Option<Error> = none;
+            let error: Option<Exception> = none;
             let yieldError: Option<YieldError> = none;
 
             const { scheduler } = this;

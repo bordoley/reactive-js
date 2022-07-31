@@ -23,7 +23,7 @@
 - [T](rx.SubjectLike.md#t)
 - [TContainerOf](rx.SubjectLike.md#tcontainerof)
 - [TStatefulContainerState](rx.SubjectLike.md#tstatefulcontainerstate)
-- [[DisposableLike\_error]](rx.SubjectLike.md#[disposablelike_error])
+- [[DisposableLike\_exception]](rx.SubjectLike.md#[disposablelike_exception])
 - [[DisposableLike\_isDisposed]](rx.SubjectLike.md#[disposablelike_isdisposed])
 - [[MulticastObservableLike\_observerCount]](rx.SubjectLike.md#[multicastobservablelike_observercount])
 - [[MulticastObservableLike\_replay]](rx.SubjectLike.md#[multicastobservablelike_replay])
@@ -67,15 +67,15 @@ ___
 
 ___
 
-### [DisposableLike\_error]
+### [DisposableLike\_exception]
 
-• `Readonly` **[DisposableLike\_error]**: [`Option`](../modules/functions.md#option)<[`Error`](../modules/util.md#error)\>
+• `Readonly` **[DisposableLike\_exception]**: [`Option`](../modules/functions.md#option)<[`Exception`](../modules/util.md#exception)\>
 
 The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[MulticastObservableLike](rx.MulticastObservableLike.md).[[DisposableLike_error]](rx.MulticastObservableLike.md#[disposablelike_error])
+[MulticastObservableLike](rx.MulticastObservableLike.md).[[DisposableLike_exception]](rx.MulticastObservableLike.md#[disposablelike_exception])
 
 ___
 
@@ -158,7 +158,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `error?` | [`Error`](../modules/util.md#error) | An optional error that signals the resource is being disposed due to an error. |
+| `error?` | [`Exception`](../modules/util.md#exception) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
 

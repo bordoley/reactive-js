@@ -21,7 +21,7 @@ import { getScheduler } from "../../scheduling/ObserverLike";
 import { __yield, schedule } from "../../scheduling/SchedulerLike";
 import {
   DisposableLike,
-  DisposableLike_error,
+  DisposableLike_exception,
   SinkLike_notify,
 } from "../../util";
 import {
@@ -86,7 +86,7 @@ const createObserverDispatcher = (<T>() => {
 
         this.onContinuationDispose = () => {
           if (isDisposed(this)) {
-            pipe(this.observer, dispose(this[DisposableLike_error]));
+            pipe(this.observer, dispose(this[DisposableLike_exception]));
           }
         };
 

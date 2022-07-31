@@ -26,7 +26,7 @@ export {
   addToIgnoringChildErrors,
   bindTo,
   dispose,
-  getError,
+  getException,
   isDisposed,
   onDisposed,
   onComplete,

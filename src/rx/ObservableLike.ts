@@ -146,7 +146,7 @@ export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
           } else if (!hasResult) {
             reject(
               newInstance(
-                Error,
+                Exception,
                 "Observable completed without producing a value",
               ),
             );

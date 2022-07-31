@@ -3,7 +3,7 @@ import { isSome, isNone } from '../../functions.mjs';
 
 const DisposableLike_add = Symbol("DisposableLike_add");
 const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-const DisposableLike_error = Symbol("DisposableLike_error");
+const DisposableLike_exception = Symbol("DisposableLike_exception");
 const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 /**
  * Dispose `disposable` with an optional error.
@@ -12,7 +12,7 @@ const dispose = (e) => disposable => {
     disposable[DisposableLike_dispose](e);
     return disposable;
 };
-const getError = (disposable) => disposable[DisposableLike_error];
+const getException = (disposable) => disposable[DisposableLike_exception];
 const isDisposed = (disposable) => disposable[DisposableLike_isDisposed];
 const addDisposableOrTeardown = (parent, child, ignoreChildErrors = false) => {
     parent[DisposableLike_add](child, ignoreChildErrors);
@@ -59,4 +59,4 @@ const onComplete = (teardown) => disposable => {
     return disposable;
 };
 
-export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, add, addDisposableOrTeardown, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getError, isDisposed, onComplete, onDisposed, onError };
+export { DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, add, addDisposableOrTeardown, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError };

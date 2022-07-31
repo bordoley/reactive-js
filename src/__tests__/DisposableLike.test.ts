@@ -9,11 +9,13 @@ import {
   test,
 } from "../__internal__/testing";
 import { Option, none, pipe, pipeLazy, raise } from "../functions";
-import { Error, createDisposable } from "../util";
+import { Exception, createDisposable } from "../util";
 import {
+  add,
   addIgnoringChildErrors,
+  addTo,
   dispose,
-  getError,
+  getException,
   isDisposed,
   onDisposed,
 } from "../util/DisposableLike";
@@ -48,18 +50,38 @@ export const DisposableLikeTests = describe(
       onDisposed(teardown),
       dispose(),
     );
-    pipe(disposable, getError, expectNone);
+    pipe(disposable, getException, expectNone);
   }),
-  test("propogates errors when disposed with an Error", () => {
-    const error: Option<Error> = { cause: null };
+  test("propogates errors when disposed with an Exception", () => {
+    const error: Option<Exception> = { cause: null };
 
     const childTeardown = mockFn();
     const disposable = pipe(createDisposable(), onDisposed(childTeardown));
 
     pipe(disposable, dispose(error));
 
-    pipe(disposable, getError, expectEquals<Option<Error>>(error));
+    pipe(disposable, getException, expectEquals<Option<Exception>>(error));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([error]));
+  }),
+  test("ignores when it is added to itself", () => {
+    const disposable = createDisposable();
+    pipe(disposable, addTo(disposable), dispose());
+  }),
+  test("disposes parent when child is disposed with error", () => {
+    const parent = createDisposable();
+    const child = createDisposable();
+
+    pipe(parent, add(child));
+
+    const cause = new Error();
+    pipe(child, dispose({ cause }));
+
+    pipe(
+      parent,
+      getException,
+      ({ cause }: Exception = { cause: undefined }) => cause as any,
+      expectEquals(cause),
+    );
   }),
 );
