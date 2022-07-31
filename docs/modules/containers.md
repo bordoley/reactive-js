@@ -483,14 +483,14 @@ ___
 
 ### ToPromise
 
-Ƭ **ToPromise**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`PromiseLike`](../interfaces/containers.PromiseLike.md)<`T`\>\>  }
+Ƭ **ToPromise**<`C`, `Ctx`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`ctx`: `Ctx`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`PromiseLike`](../interfaces/containers.PromiseLike.md)<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | `never` |
+| `Ctx` | `void` |
 
 ___
 

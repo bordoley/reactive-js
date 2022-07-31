@@ -16,7 +16,6 @@ export const sourceFrom =
     source: C,
   ): Function1<TSink, TSink> =>
   sink => {
-    debugger;
     source[ReactiveContainerLike_sinkInto](sink);
     return sink;
   };

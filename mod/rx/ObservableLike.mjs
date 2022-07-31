@@ -1,12 +1,16 @@
 /// <reference types="./ObservableLike.d.ts" />
-import { reactive, createMapOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
+import { reactive, createForEachOperator, createMapOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
+import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
-import { pipeUnsafe, newInstance, pipe } from '../functions.mjs';
+import { forEachSinkMixin, mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
+import { pipeUnsafe, newInstance, pipe, none, isSome } from '../functions.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { ObserverLike_scheduler } from '../scheduling.mjs';
+import { SinkLike_notify } from '../util.mjs';
+import '../util/DisposableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
+import { addTo, onDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const getObservableType = (obs) => obs[ObservableLike_observableType];
 const lift = /*@__PURE__*/ (() => {
@@ -32,6 +36,14 @@ const liftT = {
     lift,
     variance: reactive,
 };
+const forEach = /*@__PURE__*/ (() => {
+    const typedForEachSinkMixin = forEachSinkMixin();
+    const typedObserverMixin = observerMixin();
+    return pipe(clazz(function ForEachObserver(delegate, effect) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedForEachSinkMixin, this, delegate, effect);
+    }, {}, {}), mixWith(typedObserverMixin, typedForEachSinkMixin), createObjectFactory(), createForEachOperator(liftT));
+})();
 const map = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
     const typedObserverMixin = observerMixin();
@@ -40,49 +52,40 @@ const map = /*@__PURE__*/ (() => {
         init(typedMapSinkMixin, this, delegate, mapper);
     }, {}, {}), mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory(), createMapOperator(liftT));
 })();
+const subscribe = /*@__PURE__*/ (() => {
+    const typedObserverMixin = observerMixin();
+    const createObserver = pipe(clazz(function SubscribeObserver(scheduler) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, scheduler);
+    }, {}, {
+        [SinkLike_notify](_) { },
+    }), mixWith(disposableMixin, typedObserverMixin), createObjectFactory());
+    return (scheduler) => observable => pipe(scheduler, createObserver, addTo(scheduler), sourceFrom(observable));
+})();
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
  *
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
-/*
-export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
-  <T>(options?: Option<{ scheduler: SchedulerLike}>): Function1<ObservableLike<T>, Promise<T>> =>
-  observable =>
-    newInstance<
-      Promise<T>,
-      (
-        resolve: (value: T | PromiseLike<T>) => void,
-        reject: (ex: unknown) => void,
-      ) => void
-    >(Promise, (resolve, reject) => {
-      let result: Option<T> = none;
-      let hasResult = false;
-
-      pipe(
-        observable,
-        onNotify(next => {
-          hasResult = true;
-          result = next;
-        }),
-        subscribe(scheduler),
-        onDisposed(err => {
-          if (isSome(err)) {
+const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, reject) => {
+    let result = none;
+    let hasResult = false;
+    pipe(observable, forEach(next => {
+        hasResult = true;
+        result = next;
+    }), subscribe(scheduler), onDisposed(err => {
+        if (isSome(err)) {
             const { cause } = err;
             reject(cause);
-          } else if (!hasResult) {
-            reject(
-              newInstance(
-                Exception,
-                "Observable completed without producing a value",
-              ),
-            );
-          } else {
-            resolve(result as T);
-          }
-        }),
-      );
-    });*/
+        }
+        else if (!hasResult) {
+            reject(newInstance(Error, "Observable completed without producing a value"));
+        }
+        else {
+            resolve(result);
+        }
+    }));
+});
 
-export { getObservableType, map };
+export { forEach, getObservableType, map, subscribe, toPromise };
