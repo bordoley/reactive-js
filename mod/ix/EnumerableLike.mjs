@@ -9,7 +9,7 @@ import { clazz, init, mixWith, createObjectFactory, Object_init, Object_properti
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT } from '../ix.mjs';
-import { ObservableLike_observableType, RunnableObservable, EnumerableObservable, ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
+import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, disposed } from '../util.mjs';
@@ -514,28 +514,21 @@ const toEnumerableT = {
     toEnumerable,
 };
 const toObservable = /*@__PURE__*/ (() => {
-    class ToEnumerableObservable {
-        constructor(enumerable, delay) {
-            this.enumerable = enumerable;
-            this.delay = delay;
-        }
-        get [ObservableLike_observableType]() {
-            return this.delay > 0 ? RunnableObservable : EnumerableObservable;
-        }
-        [ReactiveContainerLike_sinkInto](observer) {
-            const enumerator = pipe(this.enumerable, enumerate(), bindTo(observer));
-            const options = { delay: this.delay };
+    return (options) => (enumerable) => {
+        const delay = getDelay(options);
+        const onSink = (observer) => {
+            const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
+            const options = { delay: delay };
             pipe(observer, getScheduler, schedule(() => {
                 while (!isDisposed(observer) && move(enumerator)) {
                     pipe(enumerator, getCurrent, notifySink(observer));
                     __yield(options);
                 }
             }, options));
-        }
-    }
-    return (options) => (enumerable) => {
-        const delay = getDelay(options);
-        return newInstance(ToEnumerableObservable, enumerable, delay);
+        };
+        return delay > 0
+            ? createRunnableObservable(onSink)
+            : createEnumerableObservable(onSink);
     };
 })();
 const toReadonlyArray = () => (enumerable) => {

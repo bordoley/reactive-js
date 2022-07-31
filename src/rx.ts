@@ -57,10 +57,15 @@ export interface RunnableLike<T = unknown>
   readonly TContainerOf?: RunnableLike<this["T"]>;
   readonly TStatefulContainerState?: SinkLike<this["T"]>;
 }
+export type ObservableType = 0 | 1 | 2;
+export type RunnableObservableType =
+  | typeof RunnableObservable
+  | typeof EnumerableObservable;
+export type EnumerableObservableType = typeof EnumerableObservable;
 
-export const DefaultObservable = 0;
-export const RunnableObservable = 1;
-export const EnumerableObservable = 2;
+export const DefaultObservable: ObservableType = 0;
+export const RunnableObservable: ObservableType = 1;
+export const EnumerableObservable: ObservableType = 2;
 
 /** @ignore */
 export const ObservableLike_observableType = Symbol(
@@ -76,21 +81,16 @@ export interface ObservableLike<T = unknown>
   readonly TContainerOf?: ObservableLike<this["T"]>;
   readonly TStatefulContainerState?: ObserverLike<this["T"]>;
 
-  readonly [ObservableLike_observableType]:
-    | typeof EnumerableObservable
-    | typeof RunnableObservable
-    | typeof DefaultObservable;
+  readonly [ObservableLike_observableType]: ObservableType;
 }
 
 export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
-  readonly [ObservableLike_observableType]:
-    | typeof RunnableObservable
-    | typeof EnumerableObservable;
+  readonly [ObservableLike_observableType]: RunnableObservableType;
 }
 
 export interface EnumerableObservableLike<T = unknown>
   extends RunnableObservableLike<T> {
-  readonly [ObservableLike_observableType]: typeof EnumerableObservable;
+  readonly [ObservableLike_observableType]: EnumerableObservableType;
 }
 
 /** @ignore */
@@ -198,25 +198,37 @@ const createUsing =
       )[ReactiveContainerLike_sinkInto](sink);
     });
 
-export const createObservable = /*@__PURE__*/ (() => {
-  class CreateObservable<T> implements ObservableLike<T> {
-    constructor(private readonly f: SideEffect1<ObserverLike<T>>) {}
-
-    get [ObservableLike_observableType](): typeof DefaultObservable {
-      return 0;
-    }
-
-    [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
-      try {
-        this.f(observer);
-      } catch (cause) {
-        pipe(observer, dispose({ cause }));
-      }
-    }
+class CreateObservable<T> implements ObservableLike<T> {
+  public readonly [ObservableLike_observableType]: ObservableType;
+  constructor(
+    private readonly f: SideEffect1<ObserverLike<T>>,
+    type: ObservableType,
+  ) {
+    this[ObservableLike_observableType] = type;
   }
 
+  [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
+    try {
+      this.f(observer);
+    } catch (cause) {
+      pipe(observer, dispose({ cause }));
+    }
+  }
+}
+
+export const createEnumerableObservable = /*@__PURE__*/ (() => {
   return <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T> =>
-    newInstance(CreateObservable, f);
+    newInstance(CreateObservable, f, EnumerableObservable);
+})();
+
+export const createObservable = /*@__PURE__*/ (() => {
+  return <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T> =>
+    newInstance(CreateObservable, f, DefaultObservable);
+})();
+
+export const createRunnableObservable = /*@__PURE__*/ (() => {
+  return <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T> =>
+    newInstance(CreateObservable, f, RunnableObservable);
 })();
 
 export const createObservableUsing: Using<ObservableLike>["using"] =

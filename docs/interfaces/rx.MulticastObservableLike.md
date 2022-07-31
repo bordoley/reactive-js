@@ -112,7 +112,7 @@ ___
 
 ### [ObservableLike\_observableType]
 
-• `Readonly` **[ObservableLike\_observableType]**: ``0`` \| ``2`` \| ``1``
+• `Readonly` **[ObservableLike\_observableType]**: [`ObservableType`](../modules/rx.md#observabletype)
 
 #### Inherited from
 
