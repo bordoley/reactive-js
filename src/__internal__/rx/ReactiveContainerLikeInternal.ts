@@ -1,59 +1,4 @@
-/*import {
-  Container,
-  ContainerOf,
-  ContainerOperator,
-  Empty,
-  FromArray,
-  FromValue,
-  StatefulContainerLike,
-  StatefulContainerStateOf,
-} from "../../containers";
-import {
-  Equality,
-  Factory,
-  Function1,
-  Option,
-  Predicate,
-  Reducer,
-  SideEffect1,
-  compose,
-  forEach,
-  getLength,
-  identity,
-  ignore,
-  isEmpty,
-  isSome,
-  negate,
-  newInstance,
-  newInstanceWith,
-  none,
-  pipe,
-} from "../../functions";
-import { ReactiveContainerLike } from "../../rx";
-import { sinkInto } from "../../rx/ReactiveContainerLike";
-import { DisposableLike, DisposableOrTeardown, SinkLike } from "../../util";
-import {
-  add,
-  addTo,
-  addToIgnoringChildErrors,
-  dispose,
-  isDisposed,
-  onComplete,
-  onDisposed,
-  onError,
-} from "../../util/DisposableLike";
-import { notify } from "../../util/SinkLike";
-import {
-  Lift as StatefulContainerLift,
-  StatefulContainerOperator,
-  StatefulContainerOperatorIn,
-  StatefulContainerOperatorOut,
-  TReactive,
-  lift,
-} from "../containers/StatefulContainerLikeInternal";
-
-
-
+/*
 
 type CatchErrorSink<C extends ReactiveContainerLike> = new <T>(
   delegate: StatefulContainerStateOf<C, T>,
@@ -184,47 +129,6 @@ export const createSomeSatisfyOperator =
   ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
     createSatisfyOperator(m, SomeSatisfySink, false);
 
-type ReduceSink<C extends ReactiveContainerLike> = new <T, TAcc>(
-  delegate: StatefulContainerStateOf<C, TAcc>,
-  reducer: Reducer<T, TAcc>,
-  acc: TAcc,
-) => StatefulContainerStateOf<C, T> & {
-  readonly reducer: Reducer<T, TAcc>;
-  acc: TAcc;
-};
-
-export const createReduceOperator =
-  <C extends ReactiveContainerLike>(m: FromValue<C> & Lift<C>) =>
-  (ReduceSink: ReduceSink<C>) =>
-  <T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): ContainerOperator<C, T, TAcc> =>
-    pipe(
-      (
-        delegate: StatefulContainerStateOf<C, TAcc>,
-      ): StatefulContainerStateOf<C, T> => {
-        const sink = pipe(
-          ReduceSink,
-          newInstanceWith<
-            StatefulContainerStateOf<C, T> & {
-              readonly reducer: Reducer<T, TAcc>;
-              acc: TAcc;
-            },
-            StatefulContainerStateOf<C, TAcc>,
-            Reducer<T, TAcc>,
-            TAcc
-          >(delegate, reducer, initialValue()),
-          addTo(delegate),
-          onComplete(() => {
-            pipe(sink.acc, m.fromValue(), sinkInto(delegate));
-          }),
-        );
-        return sink;
-      },
-      lift(m),
-    );
-
 export const createOnSink =
   <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
   <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<C, T, T> =>
@@ -259,16 +163,6 @@ export const decorateWithCatchErrorNotify =
         next,
       ) {
         pipe(this, getDelegate, notify(next));
-      },
-    );
-
-export const decorateWithReduceNotify =
-  <C extends ReactiveContainerLike>() =>
-  (ReduceSink: ReduceSink<C>) =>
-    decorateWithNotify(
-      ReduceSink,
-      function notifyReduce(this: InstanceType<typeof ReduceSink>, next) {
-        this.acc = this.reducer(this.acc, next);
       },
     );
 

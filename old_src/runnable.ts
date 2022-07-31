@@ -34,26 +34,6 @@ export const everySatisfyT: EverySatisfy<RunnableLike<unknown>> = {
 
 export const onSink = /*@__PURE__*/ createOnSink(createT);
 
-export const reduce: Reduce<RunnableLike<unknown>>["reduce"] =
-  /*@__PURE__*/ decorateMap(
-    class ReducerSink<T, TAcc> extends AbstractDelegatingRunnableSink<T, TAcc> {
-      constructor(
-        delegate: ReactiveSinkLike<TAcc>,
-        readonly reducer: Reducer<T, TAcc>,
-        public acc: TAcc,
-      ) {
-        super(delegate);
-      }
-    },
-    decorateWithReduceNotify<RunnableLike<unknown>>(),
-    decorateNotifyWithAssertions,
-    createReduceOperator({ ...fromArrayT, ...liftT }),
-  );
-
-export const reduceT: Reduce<RunnableLike<unknown>> = {
-  reduce,
-};
-
 export const someSatisfy: SomeSatisfy<RunnableLike<unknown>>["someSatisfy"] =
   /*@__PURE__*/ decorateMap(
     class SomeSatisfySink<T> extends AbstractDelegatingRunnableSink<

@@ -207,6 +207,36 @@ const pairwiseSinkMixin = /*@__PURE__*/ (() => {
         },
     }, mixWith(delegatingDisposableMixin), returns);
 })();
+const reduceSinkMixin = (fromArray) => {
+    const ReduceSink_private_reducer = Symbol("ReduceSink_private_reducer");
+    const ReduceSink_private_acc = Symbol("ReduceSink_private_acc");
+    return pipe({
+        [Object_properties]: {
+            [Sink_private_delegate]: none,
+            [ReduceSink_private_reducer]: none,
+            [ReduceSink_private_acc]: none,
+        },
+        [Object_init](delegate, reducer, initialValue) {
+            init(disposableMixin, this);
+            this[Sink_private_delegate] = delegate;
+            this[ReduceSink_private_reducer] = reducer;
+            try {
+                const acc = initialValue();
+                this[ReduceSink_private_acc] = acc;
+            }
+            catch (cause) {
+                pipe(this, dispose({ cause }));
+            }
+            pipe(this, addTo(delegate), onComplete(() => {
+                pipe([this[ReduceSink_private_acc]], fromArray, sinkInto(delegate));
+            }));
+        },
+        [SinkLike_notify](next) {
+            const nextAcc = this[ReduceSink_private_reducer](this[ReduceSink_private_acc], next);
+            this[ReduceSink_private_acc] = nextAcc;
+        },
+    }, mixWith(disposableMixin));
+};
 const scanSinkMixin = /*@__PURE__*/ (() => {
     const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
     const ScanSink_private_acc = Symbol("ScanSink_private_acc");
@@ -367,4 +397,4 @@ const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
     }, mixWith(disposableMixin), returns);
 })();
 
-export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

@@ -15,6 +15,7 @@
 - [keepT](rx_RunnableLike.md#keept)
 - [mapT](rx_RunnableLike.md#mapt)
 - [pairwiseT](rx_RunnableLike.md#pairwiset)
+- [reduceT](rx_RunnableLike.md#reducet)
 - [repeatT](rx_RunnableLike.md#repeatt)
 - [scanT](rx_RunnableLike.md#scant)
 - [skipFirstT](rx_RunnableLike.md#skipfirstt)
@@ -38,6 +39,7 @@
 - [last](rx_RunnableLike.md#last)
 - [map](rx_RunnableLike.md#map)
 - [pairwise](rx_RunnableLike.md#pairwise)
+- [reduce](rx_RunnableLike.md#reduce)
 - [repeat](rx_RunnableLike.md#repeat)
 - [run](rx_RunnableLike.md#run)
 - [scan](rx_RunnableLike.md#scan)
@@ -102,6 +104,12 @@ ___
 ### pairwiseT
 
 • `Const` **pairwiseT**: [`Pairwise`](containers.md#pairwise)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### reduceT
+
+• `Const` **reduceT**: [`Reduce`](containers.md#reduce)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -379,6 +387,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 

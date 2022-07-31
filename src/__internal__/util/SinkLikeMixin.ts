@@ -529,6 +529,95 @@ export const pairwiseSinkMixin: <T>() => DisposableLike & {
   );
 })();
 
+export const reduceSinkMixin: <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<TAcc>,
+  T,
+  TAcc,
+>(
+  fromArray: (v: readonly TAcc[]) => C,
+) => {
+  [Object_properties]: {
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_init](
+    this: unknown,
+    delegate: TSink,
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): void;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
+  [SinkLike_notify](next: T): void;
+} = <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<TAcc>,
+  T,
+  TAcc,
+>(
+  fromArray: (v: readonly TAcc[]) => C,
+) => {
+  const ReduceSink_private_reducer = Symbol("ReduceSink_private_reducer");
+  const ReduceSink_private_acc = Symbol("ReduceSink_private_acc");
+
+  type TProperties = {
+    [Sink_private_delegate]: TSink;
+    [ReduceSink_private_reducer]: Reducer<T, TAcc>;
+    [ReduceSink_private_acc]: TAcc;
+  } & PropertyTypeOf<[typeof disposableMixin]>;
+
+  return pipe(
+    {
+      [Object_properties]: {
+        [Sink_private_delegate]: none,
+        [ReduceSink_private_reducer]: none,
+        [ReduceSink_private_acc]: none,
+      },
+      [Object_init](
+        this: TProperties & DisposableLike,
+        delegate: TSink,
+        reducer: Reducer<T, TAcc>,
+        initialValue: Factory<TAcc>,
+      ) {
+        init(disposableMixin, this);
+        this[Sink_private_delegate] = delegate;
+        this[ReduceSink_private_reducer] = reducer;
+
+        try {
+          const acc = initialValue();
+          this[ReduceSink_private_acc] = acc;
+        } catch (cause) {
+          pipe(this, dispose({ cause }));
+        }
+
+        pipe(
+          this,
+          addTo(delegate),
+          onComplete(() => {
+            pipe(
+              [this[ReduceSink_private_acc]],
+              fromArray,
+              sinkInto<C, TSink, TAcc>(delegate),
+            );
+          }),
+        );
+      },
+      [SinkLike_notify](this: TProperties, next: T) {
+        const nextAcc = this[ReduceSink_private_reducer](
+          this[ReduceSink_private_acc],
+          next,
+        );
+        this[ReduceSink_private_acc] = nextAcc;
+      },
+    },
+    mixWith(disposableMixin),
+  );
+};
+
 export const scanSinkMixin: <T, TAcc>() => DisposableLike & {
   [Object_properties]: unknown;
   [Object_init](

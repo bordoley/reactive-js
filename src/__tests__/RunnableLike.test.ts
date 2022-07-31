@@ -14,6 +14,7 @@ import {
   last,
   mapT,
   pairwiseT,
+  reduceT,
   repeatT,
   scanT,
   skipFirstT,
@@ -33,6 +34,7 @@ import {
   keepTests,
   mapTests,
   pairwiseTests,
+  reduceTests,
   repeatTests,
   scanTests,
   skipFirstTests,
@@ -89,6 +91,11 @@ export const RunnableLikeTests = describe(
   pairwiseTests({
     fromArray: toRunnable,
     ...pairwiseT,
+    ...toReadonlyArrayT,
+  }),
+  reduceTests({
+    fromArray: toRunnable,
+    ...reduceT,
     ...toReadonlyArrayT,
   }),
   repeatTests({

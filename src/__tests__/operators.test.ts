@@ -18,6 +18,7 @@ import {
   Keep,
   Map,
   Pairwise,
+  Reduce,
   Repeat,
   Scan,
   SkipFirst,
@@ -327,6 +328,23 @@ export const pairwiseTests = <C extends ContainerLike>(
         m.pairwise<number>(),
         m.toReadonlyArray<readonly [number, number]>(),
         expectArrayEquals<readonly [number, number]>([], arrayEquality()),
+      ),
+    ),
+  );
+
+export const reduceTests = <C extends ContainerLike>(
+  m: Reduce<C> & FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "reduce",
+    test(
+      "summing all values",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray(),
+        m.reduce<number, number>((acc, next) => acc + next, returns(0)),
+        m.toReadonlyArray(),
+        expectArrayEquals([6]),
       ),
     ),
   );
