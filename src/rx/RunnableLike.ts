@@ -61,7 +61,7 @@ import {
   ThrowIfEmpty,
   ToReadonlyArray,
 } from "../containers";
-import { toRunnable } from "../containers/ReadonlyArrayLike";
+import { toRunnable as arrayToRunnable } from "../containers/ReadonlyArrayLike";
 import {
   Equality,
   Factory,
@@ -70,6 +70,7 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  identity,
   isSome,
   newInstance,
   none,
@@ -82,6 +83,7 @@ import {
 import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
+  ToRunnable,
   createRunnable,
   emptyRunnableT,
 } from "../rx";
@@ -133,7 +135,7 @@ export const buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<T>() => {
     RunnableLike,
     SinkLike<readonly T[]>,
     T
-  >(toRunnable());
+  >(arrayToRunnable());
 
   return pipe(
     typedBufferSinkMixin,
@@ -151,7 +153,7 @@ export const bufferT: Buffer<RunnableLike> = { buffer };
 
 export const concat: Concat<RunnableLike>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]
-) => pipe(runnables, toRunnable(), concatAll());
+) => pipe(runnables, arrayToRunnable(), concatAll());
 
 export const concatT: Concat<RunnableLike> = {
   concat,
@@ -204,7 +206,7 @@ export const concatAllT: ConcatAll<RunnableLike> = {
 export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
     const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(
-      toRunnable(),
+      arrayToRunnable(),
     );
 
     return pipe(
@@ -446,7 +448,7 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
     RunnableLike<T>,
     SinkLike<T>,
     T
-  >(toRunnable());
+  >(arrayToRunnable());
 
   return pipe(
     typedTakeLastSinkMixin,
@@ -519,4 +521,11 @@ export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
 
 export const toReadonlyArrayT: ToReadonlyArray<RunnableLike> = {
   toReadonlyArray,
+};
+
+export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
+  returns(identity);
+
+export const toRunnableT: ToRunnable<RunnableLike<unknown>> = {
+  toRunnable,
 };

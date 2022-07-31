@@ -13,6 +13,7 @@ import {
   ContainerOf,
   Defer,
   Empty,
+  Generate,
   Never,
   StatefulContainerLike,
   Using,
@@ -21,6 +22,7 @@ import {
   Factory,
   Function1,
   SideEffect1,
+  Updater,
   forEach,
   getLength,
   ignore,
@@ -29,13 +31,11 @@ import {
   none,
   pipe,
 } from "./functions";
-
-import { sinkInto } from "./rx/ReactiveContainerLike";
 import { ObserverLike } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
 import { getDispatcher, getScheduler } from "./scheduling/ObserverLike";
 import { schedule } from "./scheduling/SchedulerLike";
-import { DisposableLike, SinkLike } from "./util";
+import { DisposableLike, SinkLike, SinkLike_notify } from "./util";
 import {
   addIgnoringChildErrors,
   addTo,
@@ -368,13 +368,28 @@ export const deferObservableT: Defer<ObservableLike> = {
 
 export const deferRunnable: Defer<RunnableLike>["defer"] = f =>
   createRunnable(sink => {
-    pipe(f(), sinkInto(sink));
+    f()[ReactiveContainerLike_sinkInto](sink);
   });
 export const deferRunnableT: Defer<RunnableLike> = { defer: deferRunnable };
 
 export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
   createEmpty<RunnableLike, SinkLike<T>, T>(createRunnable);
 export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
+
+export const generateRunnable: Generate<RunnableLike>["generate"] = <T>(
+  generator: Updater<T>,
+  initialValue: Factory<T>,
+) =>
+  createRunnable((sink: SinkLike<T>) => {
+    let acc = initialValue();
+    while (!isDisposed(sink)) {
+      acc = generator(acc);
+      sink[SinkLike_notify](acc);
+    }
+  });
+export const generateRunnableT: Generate<RunnableLike> = {
+  generate: generateRunnable,
+};
 
 export const neverObservable: Never<ObservableLike>["never"] = <T>() =>
   createNever<ObservableLike, ObserverLike<T>, T>(createObservable);

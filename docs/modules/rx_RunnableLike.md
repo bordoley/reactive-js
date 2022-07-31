@@ -23,6 +23,7 @@
 - [takeWhileT](rx_RunnableLike.md#takewhilet)
 - [throwIfEmptyT](rx_RunnableLike.md#throwifemptyt)
 - [toReadonlyArrayT](rx_RunnableLike.md#toreadonlyarrayt)
+- [toRunnableT](rx_RunnableLike.md#torunnablet)
 
 ### Functions
 
@@ -46,6 +47,7 @@
 - [takeWhile](rx_RunnableLike.md#takewhile)
 - [throwIfEmpty](rx_RunnableLike.md#throwifempty)
 - [toReadonlyArray](rx_RunnableLike.md#toreadonlyarray)
+- [toRunnable](rx_RunnableLike.md#torunnable)
 
 ## Variables
 
@@ -148,6 +150,12 @@ ___
 ### toReadonlyArrayT
 
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### toRunnableT
+
+• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>\>
 
 ## Functions
 
@@ -588,3 +596,25 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
