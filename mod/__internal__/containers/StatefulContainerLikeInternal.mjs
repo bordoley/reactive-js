@@ -1,8 +1,6 @@
 /// <reference types="./StatefulContainerLikeInternal.d.ts" />
-import { max, pipe, partial, strictEquality, none } from '../../functions.mjs';
-import '../../util/DisposableLike.mjs';
+import { max, pipe, partial, strictEquality } from '../../functions.mjs';
 import { MAX_SAFE_INTEGER } from '../env.mjs';
-import { addIgnoringChildErrors, addTo, onComplete, dispose } from '../util/DisposableLikeInternal.mjs';
 
 const interactive = 0;
 const reactive = 1;
@@ -40,28 +38,6 @@ const createTakeWhileOperator = (m) => (operator) => (predicate, options = {}) =
     const { inclusive = false } = options;
     return pipe(operator, partial(predicate, inclusive), lift(m));
 };
-const createThrowIfEmptyOperator = (m) => (operator) => (factory) => pipe((delegate) => {
-    const lifted = pipe(delegate, operator, m.variance === interactive
-        ? addIgnoringChildErrors(delegate)
-        : addTo(delegate));
-    const { parent, child } = m.variance === interactive
-        ? { parent: lifted, child: delegate }
-        : { parent: delegate, child: lifted };
-    pipe(child, onComplete(() => {
-        let error = none;
-        if (lifted.isEmpty) {
-            let cause = none;
-            try {
-                cause = factory();
-            }
-            catch (e) {
-                cause = e;
-            }
-            error = { cause };
-        }
-        pipe(parent, dispose(error));
-    }));
-    return lifted;
-}, lift(m));
+const createThrowIfEmptyOperator = (m) => (operator) => (factory) => pipe(operator, partial(factory), lift(m));
 
 export { createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, reactive };

@@ -19,6 +19,7 @@
 - [takeFirstT](rx_RunnableLike.md#takefirstt)
 - [takeLastT](rx_RunnableLike.md#takelastt)
 - [takeWhileT](rx_RunnableLike.md#takewhilet)
+- [throwIfEmptyT](rx_RunnableLike.md#throwifemptyt)
 - [toReadonlyArrayT](rx_RunnableLike.md#toreadonlyarrayt)
 
 ### Functions
@@ -37,6 +38,7 @@
 - [takeFirst](rx_RunnableLike.md#takefirst)
 - [takeLast](rx_RunnableLike.md#takelast)
 - [takeWhile](rx_RunnableLike.md#takewhile)
+- [throwIfEmpty](rx_RunnableLike.md#throwifempty)
 - [toReadonlyArray](rx_RunnableLike.md#toreadonlyarray)
 
 ## Variables
@@ -116,6 +118,12 @@ ___
 ### takeWhileT
 
 • `Const` **takeWhileT**: [`TakeWhile`](containers.md#takewhile)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### throwIfEmptyT
+
+• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](containers.md#throwifempty)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -443,6 +451,28 @@ ___
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 | `options?` | `Object` |
 | `options.inclusive?` | `boolean` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### throwIfEmpty
+
+▸ **throwIfEmpty**<`T`\>(`factory`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`unknown`\> |
 
 #### Returns
 

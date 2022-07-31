@@ -4,6 +4,7 @@ import {
   concatAllT,
   concatT,
   distinctUntilChangedT,
+  forEachT,
   keepT,
   mapT,
   pairwiseT,
@@ -13,12 +14,14 @@ import {
   takeFirstT,
   takeLastT,
   takeWhileT,
+  throwIfEmptyT,
   toReadonlyArrayT,
 } from "../rx/RunnableLike";
 import {
   concatAllTests,
   concatTests,
   distinctUntilChangedTests,
+  forEachTests,
   keepTests,
   mapTests,
   pairwiseTests,
@@ -28,6 +31,7 @@ import {
   takeFirstTests,
   takeLastTests,
   takeWhileTests,
+  throwIfEmptyTests,
 } from "./operators.test";
 
 export const RunnableLikeTests = describe(
@@ -45,6 +49,11 @@ export const RunnableLikeTests = describe(
   distinctUntilChangedTests({
     fromArray: toRunnable,
     ...distinctUntilChangedT,
+    ...toReadonlyArrayT,
+  }),
+  forEachTests({
+    fromArray: toRunnable,
+    ...forEachT,
     ...toReadonlyArrayT,
   }),
   keepTests({
@@ -91,6 +100,11 @@ export const RunnableLikeTests = describe(
   takeWhileTests({
     fromArray: toRunnable,
     ...takeWhileT,
+    ...toReadonlyArrayT,
+  }),
+  throwIfEmptyTests({
+    fromArray: toRunnable,
+    ...throwIfEmptyT,
     ...toReadonlyArrayT,
   }),
 );

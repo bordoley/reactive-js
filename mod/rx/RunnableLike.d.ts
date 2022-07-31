@@ -1,4 +1,4 @@
-import { Concat, ConcatAll, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray } from "../containers.mjs";
+import { Concat, ConcatAll, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
 import { Predicate } from "../functions.mjs";
 import { RunnableLike } from "../rx.mjs";
 declare const concat: Concat<RunnableLike>["concat"];
@@ -28,6 +28,8 @@ declare const takeLast: TakeLast<RunnableLike>["takeLast"];
 declare const takeLastT: TakeLast<RunnableLike>;
 declare const takeWhile: TakeWhile<RunnableLike>["takeWhile"];
 declare const takeWhileT: TakeWhile<RunnableLike>;
+declare const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"];
+declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike>;
 declare const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableLike>;
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toReadonlyArray, toReadonlyArrayT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };

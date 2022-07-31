@@ -269,5 +269,36 @@ const takeWhileSinkMixin = /*@__PURE__*/ (() => {
         },
     }, mixWith(delegatingDisposableMixin), returns);
 })();
+const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
+    const ThrowIfEmptySink_private_isEmpty = Symbol("ThrowIfEmptySink_private_isEmpty");
+    return pipe({
+        [Object_properties]: {
+            [Sink_private_delegate]: none,
+            [ThrowIfEmptySink_private_isEmpty]: true,
+        },
+        [Object_init](delegate, factory) {
+            init(disposableMixin, this);
+            this[Sink_private_delegate] = delegate;
+            pipe(this, addTo(delegate), onComplete(() => {
+                let error = none;
+                if (this[ThrowIfEmptySink_private_isEmpty]) {
+                    let cause = none;
+                    try {
+                        cause = factory();
+                    }
+                    catch (e) {
+                        cause = e;
+                    }
+                    error = { cause };
+                }
+                pipe(delegate, dispose(error));
+            }));
+        },
+        [SinkLike_notify](next) {
+            this[ThrowIfEmptySink_private_isEmpty] = false;
+            pipe(this[Sink_private_delegate], notify(next));
+        },
+    }, mixWith(disposableMixin), returns);
+})();
 
-export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
