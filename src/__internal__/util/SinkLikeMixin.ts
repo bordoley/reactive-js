@@ -298,13 +298,23 @@ export const decodeWithCharsetSinkMixin: <
   );
 };
 
-export const distinctUntilChangedSinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: unknown;
+export const distinctUntilChangedSinkMixin: <T>() => {
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
   [Object_init](
-    this: unknown,
+    this: {
+      readonly [DisposableLike_isDisposed]: boolean;
+    },
     delegate: SinkLike<T>,
     equality: Equality<T>,
   ): void;
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T>() => {
   const DistinctUntilChangedSink_private_equality = Symbol(
@@ -361,13 +371,21 @@ export const distinctUntilChangedSinkMixin: <T>() => DisposableLike & {
   );
 })();
 
-export const forEachSinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: unknown;
+export const forEachSinkMixin: <T>() => {
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
   [Object_init](
     this: unknown,
     delegate: SinkLike<T>,
     effect: SideEffect1<T>,
   ): void;
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T>() => {
   const ForEachSink_private_effect = Symbol("ForEachSink_private_effect");
@@ -402,13 +420,21 @@ export const forEachSinkMixin: <T>() => DisposableLike & {
   );
 })();
 
-export const keepSinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: unknown;
+export const keepSinkMixin: <T>() => {
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
   [Object_init](
     this: unknown,
     delegate: SinkLike<T>,
     predicate: Predicate<T>,
   ): void;
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T>() => {
   const KeepSink_private_predicate = Symbol("KeepSink_private_predicate");
@@ -444,13 +470,21 @@ export const keepSinkMixin: <T>() => DisposableLike & {
   );
 })();
 
-export const mapSinkMixin: <TA, TB>() => DisposableLike & {
-  [Object_properties]: unknown;
+export const mapSinkMixin: <TA, TB>() => {
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
   [Object_init](
     this: unknown,
     delegate: SinkLike<TB>,
     mapper: Function1<TA, TB>,
   ): void;
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: TA): void;
 } = /*@__PURE__*/ (<TA, TB>() => {
   const MapSink_private_mapper = Symbol("MapSink_private_mapper");
@@ -485,9 +519,22 @@ export const mapSinkMixin: <TA, TB>() => DisposableLike & {
   );
 })();
 
-export const pairwiseSinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: unknown;
-  [Object_init](this: unknown, delegate: SinkLike<readonly [T, T]>): void;
+export const pairwiseSinkMixin: <T>() => {
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_init](
+    this: {
+      readonly [DisposableLike_isDisposed]: boolean;
+    },
+    delegate: SinkLike<readonly [T, T]>,
+  ): void;
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T>() => {
   const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
@@ -618,14 +665,22 @@ export const reduceSinkMixin: <
   );
 };
 
-export const scanSinkMixin: <T, TAcc>() => DisposableLike & {
-  [Object_properties]: unknown;
+export const scanSinkMixin: <T, TAcc>() => {
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
   [Object_init](
     this: unknown,
     delegate: SinkLike<TAcc>,
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): void;
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T, TAcc>() => {
   const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
@@ -675,9 +730,23 @@ export const scanSinkMixin: <T, TAcc>() => DisposableLike & {
   );
 })();
 
-export const skipFirstSinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: unknown;
-  [Object_init](this: unknown, delegate: SinkLike<T>, skipCount: number): void;
+export const skipFirstSinkMixin: <T>() => {
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_init](
+    this: {
+      readonly [DisposableLike_isDisposed]: boolean;
+    },
+    delegate: SinkLike<T>,
+    skipCount: number,
+  ): void;
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T>() => {
   const SkipFirstSink_private_skipCount = Symbol(
@@ -723,9 +792,23 @@ export const skipFirstSinkMixin: <T>() => DisposableLike & {
   );
 })();
 
-export const takeFirstSinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: unknown;
-  [Object_init](this: unknown, delegate: SinkLike<T>, skipCount: number): void;
+export const takeFirstSinkMixin: <T>() => {
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_init](
+    this: {
+      readonly [DisposableLike_isDisposed]: boolean;
+    },
+    delegate: SinkLike<T>,
+    skipCount: number,
+  ): void;
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T>() => {
   const TakeFirstSink_private_takeCount = Symbol(
@@ -851,14 +934,24 @@ export const takeLastSinkMixin: <
   );
 };
 
-export const takeWhileSinkMixin: <T>() => DisposableLike & {
-  [Object_properties]: unknown;
+export const takeWhileSinkMixin: <T>() => {
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
   [Object_init](
-    this: unknown,
+    this: {
+      readonly [DisposableLike_isDisposed]: boolean;
+    },
     delegate: SinkLike<T>,
     predicate: Predicate<T>,
     inclusive: boolean,
   ): void;
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
   [SinkLike_notify](next: T): void;
 } = /*@__PURE__*/ (<T>() => {
   const TakeWhileSink_private_predicate = Symbol(
