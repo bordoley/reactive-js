@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, pipe, none, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { createRunnable } from '../rx.mjs';
@@ -50,19 +50,17 @@ const createFromArray = (factory) => (options = {}) => values => {
 };
 const toEnumerable = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    const createReadonlyArrayEnumerator = pipe({
-        [Object_properties]: {
-            array: none,
-            count: 0,
-            index: 0,
-        },
-        [Object_init](array, start, count) {
-            init(disposableMixin, this);
-            init(typedEnumerator, this);
-            this.array = array;
-            this.index = start - 1;
-            this.count = count;
-        },
+    const createReadonlyArrayEnumerator = pipe(clazz(function ReadonlyArrayEnumerator(array, start, count) {
+        init(disposableMixin, this);
+        init(typedEnumerator, this);
+        this.array = array;
+        this.index = start - 1;
+        this.count = count;
+    }, {
+        array: none,
+        count: 0,
+        index: 0,
+    }, {
         [SourceLike_move]() {
             const { array } = this;
             if (!isDisposed(this)) {
@@ -77,7 +75,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(disposableMixin, typedEnumerator), createObjectFactory());
+    }), mixWith(disposableMixin, typedEnumerator), createObjectFactory());
     return createFromArray((array, start, count) => createEnumerable(() => createReadonlyArrayEnumerator(array, start, count)));
 })();
 const toEnumerableT = { toEnumerable };

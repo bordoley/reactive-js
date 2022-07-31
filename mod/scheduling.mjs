@@ -6,7 +6,7 @@ import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInCo
 export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
@@ -57,17 +57,15 @@ const createHostScheduler = /*@__PURE__*/ (() => {
         run(continuation);
         scheduler[SchedulerLike_inContinuation] = false;
     };
-    const createHostSchedulerInstance = pipe({
-        [Object_properties]: {
-            [SchedulerLike_inContinuation]: false,
-            startTime: 0,
-            yieldInterval: 0,
-            yieldRequested: false,
-        },
-        [Object_init](yieldInterval) {
-            init(disposableMixin, this);
-            this.yieldInterval = yieldInterval;
-        },
+    const createHostSchedulerInstance = pipe(clazz(function HostScheduler(yieldInterval) {
+        init(disposableMixin, this);
+        this.yieldInterval = yieldInterval;
+    }, {
+        [SchedulerLike_inContinuation]: false,
+        startTime: 0,
+        yieldInterval: 0,
+        yieldRequested: false,
+    }, {
         get [SchedulerLike_now]() {
             if (supportsPerformanceNow) {
                 return performance.now();
@@ -106,7 +104,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
                 scheduleImmediate(this, continuation);
             }
         },
-    }, mixWith(disposableMixin), createObjectFactory());
+    }), mixWith(disposableMixin), createObjectFactory());
     return (options = {}) => {
         const { yieldInterval = 5 } = options;
         return createHostSchedulerInstance(yieldInterval);
@@ -120,21 +118,19 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         return diff;
     };
     const typedEnumeratorMixin = enumeratorMixin();
-    const createVirtualTimeSchedulerInstance = pipe({
-        [Object_properties]: {
-            [SchedulerLike_inContinuation]: false,
-            [SchedulerLike_now]: 0,
-            maxMicroTaskTicks: MAX_SAFE_INTEGER,
-            microTaskTicks: 0,
-            taskIDCount: 0,
-            yieldRequested: false,
-            taskQueue: none,
-        },
-        [Object_init](maxMicroTaskTicks) {
-            init(disposableMixin, this);
-            this.maxMicroTaskTicks = maxMicroTaskTicks;
-            this.taskQueue = createPriorityQueue(comparator);
-        },
+    const createVirtualTimeSchedulerInstance = pipe(clazz(function VirtualTimeScheduler(maxMicroTaskTicks) {
+        init(disposableMixin, this);
+        this.maxMicroTaskTicks = maxMicroTaskTicks;
+        this.taskQueue = createPriorityQueue(comparator);
+    }, {
+        [SchedulerLike_inContinuation]: false,
+        [SchedulerLike_now]: 0,
+        maxMicroTaskTicks: MAX_SAFE_INTEGER,
+        microTaskTicks: 0,
+        taskIDCount: 0,
+        yieldRequested: false,
+        taskQueue: none,
+    }, {
         get [SchedulerLike_shouldYield]() {
             const self = this;
             const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation, } = self;
@@ -183,7 +179,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
                 pipe(this, dispose());
             }
         },
-    }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
+    }), mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
     return (options = {}) => {
         const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
         return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);

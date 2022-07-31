@@ -36,7 +36,9 @@ import {
 import {
   Object_init,
   Object_properties,
+  Object_prototype,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -46,28 +48,22 @@ const Sink_private_delegate = Symbol("Sink_private_delegate");
 
 export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
   pipe(
-    {
-      [Object_properties]: {},
-      [Object_init](this: PropertyTypeOf<[typeof disposableMixin]>) {
+    clazz(
+      function CreateSink(this: PropertyTypeOf<[typeof disposableMixin]>) {
         init(disposableMixin, this);
       },
-      [SinkLike_notify](_: T) {},
-    },
+      {},
+      {
+        [SinkLike_notify](_: T) {},
+      },
+    ),
     mixWith(disposableMixin),
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof disposableMixin]>
-    >(),
+    createObjectFactory<SinkLike<T>>(),
   ))();
 
 export const DelegatingSink_delegate = Symbol("DelegatingSink_delegate");
 
 export const delegatingSinkMixin: <T>() => {
-  [Object_properties]: {
-    [DelegatingSink_delegate]: SinkLike<T>;
-    [DisposableLike_error]: Option<Error>;
-    [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: {
       [DelegatingSink_delegate]: SinkLike<T>;
@@ -76,30 +72,39 @@ export const delegatingSinkMixin: <T>() => {
     },
     delegate: SinkLike<T>,
   ): void;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    [DelegatingSink_delegate]: SinkLike<T>;
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [DelegatingSink_delegate]: SinkLike<T>;
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   return pipeLazy(
-    {
-      [Object_properties]: {
-        [DelegatingSink_delegate]: none as any,
-      },
-      [Object_init](this: TProperties, delegate: SinkLike<T>) {
+    clazz(
+      function DelegatingSink(this: TProperties, delegate: SinkLike<T>) {
         init(disposableMixin, this);
         this[DelegatingSink_delegate] = delegate;
       },
-      [SinkLike_notify](this: TProperties, v: T) {
-        this[DelegatingSink_delegate][SinkLike_notify](v);
+      {
+        [DelegatingSink_delegate]: none as any,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, v: T) {
+          this[DelegatingSink_delegate][SinkLike_notify](v);
+        },
+      },
+    ),
     mixWith(disposableMixin),
   );
 })();
@@ -110,11 +115,7 @@ export const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T> =
 
     return pipe(
       typeDelegatingSinkMixin,
-      createObjectFactory<
-        SinkLike<T>,
-        PropertyTypeOf<[typeof typeDelegatingSinkMixin]>,
-        SinkLike<T>
-      >(),
+      createObjectFactory<SinkLike<T>, SinkLike<T>>(),
     );
   })();
 
@@ -125,10 +126,6 @@ export const bufferSinkMixin: <
 >(
   fromArray: (v: readonly T[][]) => C,
 ) => {
-  [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
-    [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: {
       [DisposableLike_error]: Option<Error>;
@@ -137,12 +134,18 @@ export const bufferSinkMixin: <
     delegate: TSink,
     maxBufferSize: number,
   ): void;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<readonly T[]>,
@@ -162,13 +165,8 @@ export const bufferSinkMixin: <
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [BufferSink_private_maxBufferSize]: 0,
-        [BufferSink_private_buffer]: none,
-      },
-      [Object_init](
+    clazz(
+      function BufferSink(
         this: TProperties & DisposableLike,
         delegate: TSink,
         maxBufferSize: number,
@@ -197,22 +195,29 @@ export const bufferSinkMixin: <
           }),
         );
       },
-      [SinkLike_notify](this: TProperties, next: T) {
-        const {
-          [BufferSink_private_buffer]: buffer,
-          [BufferSink_private_maxBufferSize]: maxBufferSize,
-        } = this;
-
-        buffer.push(next);
-
-        if (getLength(buffer) === maxBufferSize) {
-          const buffer = this[BufferSink_private_buffer];
-          this[BufferSink_private_buffer] = [];
-
-          pipe(this[Sink_private_delegate], notify(buffer));
-        }
+      {
+        [Sink_private_delegate]: none,
+        [BufferSink_private_maxBufferSize]: 0,
+        [BufferSink_private_buffer]: none,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, next: T) {
+          const {
+            [BufferSink_private_buffer]: buffer,
+            [BufferSink_private_maxBufferSize]: maxBufferSize,
+          } = this;
+
+          buffer.push(next);
+
+          if (getLength(buffer) === maxBufferSize) {
+            const buffer = this[BufferSink_private_buffer];
+            this[BufferSink_private_buffer] = [];
+
+            pipe(this[Sink_private_delegate], notify(buffer));
+          }
+        },
+      },
+    ),
     mixWith(disposableMixin),
   );
 };
@@ -223,10 +228,6 @@ export const decodeWithCharsetSinkMixin: <
 >(
   fromArray: (v: readonly string[]) => C,
 ) => {
-  [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
-    [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: {
       [DisposableLike_error]: Option<Error>;
@@ -235,12 +236,18 @@ export const decodeWithCharsetSinkMixin: <
     delegate: SinkLike<string>,
     charset: string,
   ): void;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: ArrayBuffer): void;
+  [Object_properties]: {
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: ArrayBuffer): void;
+  };
 } = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<string>>(
   fromArray: (v: readonly string[]) => C,
 ) => {
@@ -254,12 +261,8 @@ export const decodeWithCharsetSinkMixin: <
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [DecodeWithCharsetSink_private_textDecoder]: none,
-      },
-      [Object_init](
+    clazz(
+      function DecodeWithCharsetSink(
         this: TProperties & DisposableLike,
         delegate: SinkLike<string>,
         charset: string,
@@ -284,24 +287,27 @@ export const decodeWithCharsetSinkMixin: <
           }),
         );
       },
-      [SinkLike_notify](this: TProperties, next: ArrayBuffer) {
-        const data = this[DecodeWithCharsetSink_private_textDecoder].decode(
-          next,
-          { stream: true },
-        );
-        if (!isEmpty(data)) {
-          pipe(this[Sink_private_delegate], notify(data));
-        }
+      {
+        [Sink_private_delegate]: none,
+        [DecodeWithCharsetSink_private_textDecoder]: none,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, next: ArrayBuffer) {
+          const data = this[DecodeWithCharsetSink_private_textDecoder].decode(
+            next,
+            { stream: true },
+          );
+          if (!isEmpty(data)) {
+            pipe(this[Sink_private_delegate], notify(data));
+          }
+        },
+      },
+    ),
     mixWith(disposableMixin),
   );
 };
 
 export const distinctUntilChangedSinkMixin: <T>() => {
-  [Object_properties]: {
-    readonly [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: {
       readonly [DisposableLike_isDisposed]: boolean;
@@ -309,13 +315,18 @@ export const distinctUntilChangedSinkMixin: <T>() => {
     delegate: SinkLike<T>,
     equality: Equality<T>,
   ): void;
-  get [DisposableLike_error](): Option<Error>;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    get [DisposableLike_error](): Option<Error>;
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T>() => {
   const DistinctUntilChangedSink_private_equality = Symbol(
     "DistinctUntilChangedSink_private_equality",
@@ -335,14 +346,8 @@ export const distinctUntilChangedSinkMixin: <T>() => {
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [DistinctUntilChangedSink_private_equality]: none,
-        [DistinctUntilChangedSink_private_prev]: none,
-        [DistinctUntilChangedSink_private_hasValue]: false,
-      },
-      [Object_init](
+    clazz(
+      function DistinctUntilChanged(
         this: TProperties,
         delegate: SinkLike<T>,
         equality: Equality<T>,
@@ -351,42 +356,52 @@ export const distinctUntilChangedSinkMixin: <T>() => {
         this[Sink_private_delegate] = delegate;
         this[DistinctUntilChangedSink_private_equality] = equality;
       },
-      [SinkLike_notify](this: TProperties, next: T) {
-        const shouldEmit =
-          !this[DistinctUntilChangedSink_private_hasValue] ||
-          !this[DistinctUntilChangedSink_private_equality](
-            this[DistinctUntilChangedSink_private_prev] as T,
-            next,
-          );
-
-        if (shouldEmit) {
-          this[DistinctUntilChangedSink_private_prev] = next;
-          this[DistinctUntilChangedSink_private_hasValue] = true;
-          pipe(this[Sink_private_delegate], notify(next));
-        }
+      {
+        [Sink_private_delegate]: none,
+        [DistinctUntilChangedSink_private_equality]: none,
+        [DistinctUntilChangedSink_private_prev]: none,
+        [DistinctUntilChangedSink_private_hasValue]: false,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, next: T) {
+          const shouldEmit =
+            !this[DistinctUntilChangedSink_private_hasValue] ||
+            !this[DistinctUntilChangedSink_private_equality](
+              this[DistinctUntilChangedSink_private_prev] as T,
+              next,
+            );
+
+          if (shouldEmit) {
+            this[DistinctUntilChangedSink_private_prev] = next;
+            this[DistinctUntilChangedSink_private_hasValue] = true;
+            pipe(this[Sink_private_delegate], notify(next));
+          }
+        },
+      },
+    ),
     mixWith(delegatingDisposableMixin),
     returns,
   );
 })();
 
 export const forEachSinkMixin: <T>() => {
-  [Object_properties]: {
-    readonly [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: unknown,
     delegate: SinkLike<T>,
     effect: SideEffect1<T>,
   ): void;
-  get [DisposableLike_error](): Option<Error>;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    get [DisposableLike_error](): Option<Error>;
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T>() => {
   const ForEachSink_private_effect = Symbol("ForEachSink_private_effect");
 
@@ -396,12 +411,8 @@ export const forEachSinkMixin: <T>() => {
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [ForEachSink_private_effect]: none,
-      },
-      [Object_init](
+    clazz(
+      function ForEachSink(
         this: TProperties,
         delegate: SinkLike<T>,
         effect: SideEffect1<T>,
@@ -410,32 +421,40 @@ export const forEachSinkMixin: <T>() => {
         this[Sink_private_delegate] = delegate;
         this[ForEachSink_private_effect] = effect;
       },
-      [SinkLike_notify](this: TProperties, next: T) {
-        this[ForEachSink_private_effect](next);
-        pipe(this[Sink_private_delegate], notify(next));
+      {
+        [Sink_private_delegate]: none,
+        [ForEachSink_private_effect]: none,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, next: T) {
+          this[ForEachSink_private_effect](next);
+          pipe(this[Sink_private_delegate], notify(next));
+        },
+      },
+    ),
     mixWith(delegatingDisposableMixin),
     returns,
   );
 })();
 
 export const keepSinkMixin: <T>() => {
-  [Object_properties]: {
-    readonly [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: unknown,
     delegate: SinkLike<T>,
     predicate: Predicate<T>,
   ): void;
-  get [DisposableLike_error](): Option<Error>;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    get [DisposableLike_error](): Option<Error>;
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T>() => {
   const KeepSink_private_predicate = Symbol("KeepSink_private_predicate");
 
@@ -445,12 +464,8 @@ export const keepSinkMixin: <T>() => {
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [KeepSink_private_predicate]: none,
-      },
-      [Object_init](
+    clazz(
+      function KeepSink(
         this: TProperties,
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
@@ -459,33 +474,41 @@ export const keepSinkMixin: <T>() => {
         this[Sink_private_delegate] = delegate;
         this[KeepSink_private_predicate] = predicate;
       },
-      [SinkLike_notify](this: TProperties, next: T) {
-        if (this[KeepSink_private_predicate](next)) {
-          pipe(this[Sink_private_delegate], notify(next));
-        }
+      {
+        [Sink_private_delegate]: none,
+        [KeepSink_private_predicate]: none,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, next: T) {
+          if (this[KeepSink_private_predicate](next)) {
+            pipe(this[Sink_private_delegate], notify(next));
+          }
+        },
+      },
+    ),
     mixWith(delegatingDisposableMixin),
     returns,
   );
 })();
 
 export const mapSinkMixin: <TA, TB>() => {
-  [Object_properties]: {
-    readonly [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: unknown,
     delegate: SinkLike<TB>,
     mapper: Function1<TA, TB>,
   ): void;
-  get [DisposableLike_error](): Option<Error>;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: TA): void;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    get [DisposableLike_error](): Option<Error>;
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: TA): void;
+  };
 } = /*@__PURE__*/ (<TA, TB>() => {
   const MapSink_private_mapper = Symbol("MapSink_private_mapper");
 
@@ -495,12 +518,8 @@ export const mapSinkMixin: <TA, TB>() => {
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none as any,
-        [MapSink_private_mapper]: none as any,
-      },
-      [Object_init](
+    clazz(
+      function MapSink(
         this: TProperties,
         delegate: SinkLike<TB>,
         mapper: Function1<TA, TB>,
@@ -509,33 +528,41 @@ export const mapSinkMixin: <TA, TB>() => {
         this[Sink_private_delegate] = delegate;
         this[MapSink_private_mapper] = mapper;
       },
-      [SinkLike_notify](this: TProperties, next: TA) {
-        const mapped = this[MapSink_private_mapper](next);
-        pipe(this[Sink_private_delegate], notify(mapped));
+      {
+        [Sink_private_delegate]: none as any,
+        [MapSink_private_mapper]: none as any,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, next: TA) {
+          const mapped = this[MapSink_private_mapper](next);
+          pipe(this[Sink_private_delegate], notify(mapped));
+        },
+      },
+    ),
     mixWith(delegatingDisposableMixin),
     returns,
   );
 })();
 
 export const pairwiseSinkMixin: <T>() => {
-  [Object_properties]: {
-    readonly [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: {
       readonly [DisposableLike_isDisposed]: boolean;
     },
     delegate: SinkLike<readonly [T, T]>,
   ): void;
-  get [DisposableLike_error](): Option<Error>;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    get [DisposableLike_error](): Option<Error>;
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T>() => {
   const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
   const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
@@ -547,30 +574,35 @@ export const pairwiseSinkMixin: <T>() => {
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
+    clazz(
+      function PairwiseSink(
+        this: TProperties,
+        delegate: SinkLike<readonly [T, T]>,
+      ) {
+        init(delegatingDisposableMixin, this, delegate);
+        this[Sink_private_delegate] = delegate;
+      },
+      {
         [Sink_private_delegate]: none as any,
         [PairwiseSink_private_prev]: none,
         [PairwiseSink_private_hasPrev]: false,
       },
-      [Object_init](this: TProperties, delegate: SinkLike<readonly [T, T]>) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-      },
-      [SinkLike_notify](this: TProperties, next: T) {
-        const prev = this[PairwiseSink_private_prev];
+      {
+        [SinkLike_notify](this: TProperties, next: T) {
+          const prev = this[PairwiseSink_private_prev];
 
-        if (this[PairwiseSink_private_hasPrev]) {
-          pipe(
-            this[Sink_private_delegate],
-            notify<SinkLike<readonly [T, T]>, readonly [T, T]>([prev, next]),
-          );
-        }
+          if (this[PairwiseSink_private_hasPrev]) {
+            pipe(
+              this[Sink_private_delegate],
+              notify<SinkLike<readonly [T, T]>, readonly [T, T]>([prev, next]),
+            );
+          }
 
-        this[PairwiseSink_private_hasPrev] = true;
-        this[PairwiseSink_private_prev] = next;
+          this[PairwiseSink_private_hasPrev] = true;
+          this[PairwiseSink_private_prev] = next;
+        },
       },
-    },
+    ),
     mixWith(delegatingDisposableMixin),
     returns,
   );
@@ -584,22 +616,24 @@ export const reduceSinkMixin: <
 >(
   fromArray: (v: readonly TAcc[]) => C,
 ) => {
-  [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
-    [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: unknown,
     delegate: TSink,
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): void;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<TAcc>,
@@ -618,13 +652,8 @@ export const reduceSinkMixin: <
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [ReduceSink_private_reducer]: none,
-        [ReduceSink_private_acc]: none,
-      },
-      [Object_init](
+    clazz(
+      function ReduceSink(
         this: TProperties & DisposableLike,
         delegate: TSink,
         reducer: Reducer<T, TAcc>,
@@ -653,35 +682,44 @@ export const reduceSinkMixin: <
           }),
         );
       },
-      [SinkLike_notify](this: TProperties, next: T) {
-        const nextAcc = this[ReduceSink_private_reducer](
-          this[ReduceSink_private_acc],
-          next,
-        );
-        this[ReduceSink_private_acc] = nextAcc;
+      {
+        [Sink_private_delegate]: none,
+        [ReduceSink_private_reducer]: none,
+        [ReduceSink_private_acc]: none,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, next: T) {
+          const nextAcc = this[ReduceSink_private_reducer](
+            this[ReduceSink_private_acc],
+            next,
+          );
+          this[ReduceSink_private_acc] = nextAcc;
+        },
+      },
+    ),
     mixWith(disposableMixin),
   );
 };
 
 export const scanSinkMixin: <T, TAcc>() => {
-  [Object_properties]: {
-    readonly [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: unknown,
     delegate: SinkLike<TAcc>,
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): void;
-  get [DisposableLike_error](): Option<Error>;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    get [DisposableLike_error](): Option<Error>;
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T, TAcc>() => {
   const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
   const ScanSink_private_acc = Symbol("ScanSink_private_acc");
@@ -693,13 +731,8 @@ export const scanSinkMixin: <T, TAcc>() => {
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [ScanSink_private_reducer]: none,
-        [ScanSink_private_acc]: none,
-      },
-      [Object_init](
+    clazz(
+      function ScanSink(
         this: TProperties & DisposableLike,
         delegate: SinkLike<TAcc>,
         reducer: Reducer<T, TAcc>,
@@ -716,24 +749,28 @@ export const scanSinkMixin: <T, TAcc>() => {
           pipe(this, dispose({ cause }));
         }
       },
-      [SinkLike_notify](this: TProperties, next: T) {
-        const nextAcc = this[ScanSink_private_reducer](
-          this[ScanSink_private_acc],
-          next,
-        );
-        this[ScanSink_private_acc] = nextAcc;
-        pipe(this[Sink_private_delegate], notify(nextAcc));
+      {
+        [Sink_private_delegate]: none,
+        [ScanSink_private_reducer]: none,
+        [ScanSink_private_acc]: none,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, next: T) {
+          const nextAcc = this[ScanSink_private_reducer](
+            this[ScanSink_private_acc],
+            next,
+          );
+          this[ScanSink_private_acc] = nextAcc;
+          pipe(this[Sink_private_delegate], notify(nextAcc));
+        },
+      },
+    ),
     mixWith(delegatingDisposableMixin),
     returns,
   );
 })();
 
 export const skipFirstSinkMixin: <T>() => {
-  [Object_properties]: {
-    readonly [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: {
       readonly [DisposableLike_isDisposed]: boolean;
@@ -741,13 +778,18 @@ export const skipFirstSinkMixin: <T>() => {
     delegate: SinkLike<T>,
     skipCount: number,
   ): void;
-  get [DisposableLike_error](): Option<Error>;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    get [DisposableLike_error](): Option<Error>;
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T>() => {
   const SkipFirstSink_private_skipCount = Symbol(
     "SkipFirstSink_private_skipCount",
@@ -762,13 +804,8 @@ export const skipFirstSinkMixin: <T>() => {
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [SkipFirstSink_private_skipCount]: 0,
-        [SkipFirstSink_private_count]: 0,
-      },
-      [Object_init](
+    clazz(
+      function SkipFirst(
         this: TProperties,
         delegate: SinkLike<T>,
         skipCount: number,
@@ -777,25 +814,29 @@ export const skipFirstSinkMixin: <T>() => {
         this[Sink_private_delegate] = delegate;
         this[SkipFirstSink_private_skipCount] = skipCount;
       },
-      [SinkLike_notify](this: TProperties, next: T) {
-        this[SkipFirstSink_private_count]++;
-        if (
-          this[SkipFirstSink_private_count] >
-          this[SkipFirstSink_private_skipCount]
-        ) {
-          pipe(this[Sink_private_delegate], notify(next));
-        }
+      {
+        [Sink_private_delegate]: none,
+        [SkipFirstSink_private_skipCount]: 0,
+        [SkipFirstSink_private_count]: 0,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties, next: T) {
+          this[SkipFirstSink_private_count]++;
+          if (
+            this[SkipFirstSink_private_count] >
+            this[SkipFirstSink_private_skipCount]
+          ) {
+            pipe(this[Sink_private_delegate], notify(next));
+          }
+        },
+      },
+    ),
     mixWith(delegatingDisposableMixin),
     returns,
   );
 })();
 
 export const takeFirstSinkMixin: <T>() => {
-  [Object_properties]: {
-    readonly [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: {
       readonly [DisposableLike_isDisposed]: boolean;
@@ -803,13 +844,18 @@ export const takeFirstSinkMixin: <T>() => {
     delegate: SinkLike<T>,
     skipCount: number,
   ): void;
-  get [DisposableLike_error](): Option<Error>;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    get [DisposableLike_error](): Option<Error>;
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T>() => {
   const TakeFirstSink_private_takeCount = Symbol(
     "TakeFirstSink_private_takeCount",
@@ -824,13 +870,8 @@ export const takeFirstSinkMixin: <T>() => {
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [TakeFirstSink_private_takeCount]: 0,
-        [TakeFirstSink_private_count]: 0,
-      },
-      [Object_init](
+    clazz(
+      function TakeFirstSink(
         this: TProperties,
         delegate: SinkLike<T>,
         takeCount: number,
@@ -839,17 +880,24 @@ export const takeFirstSinkMixin: <T>() => {
         this[Sink_private_delegate] = delegate;
         this[TakeFirstSink_private_takeCount] = takeCount;
       },
-      [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-        this[TakeFirstSink_private_count]++;
-        pipe(this[Sink_private_delegate], notify(next));
-        if (
-          this[TakeFirstSink_private_count] >=
-          this[TakeFirstSink_private_takeCount]
-        ) {
-          pipe(this, dispose());
-        }
+      {
+        [Sink_private_delegate]: none,
+        [TakeFirstSink_private_takeCount]: 0,
+        [TakeFirstSink_private_count]: 0,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
+          this[TakeFirstSink_private_count]++;
+          pipe(this[Sink_private_delegate], notify(next));
+          if (
+            this[TakeFirstSink_private_count] >=
+            this[TakeFirstSink_private_takeCount]
+          ) {
+            pipe(this, dispose());
+          }
+        },
+      },
+    ),
     mixWith(delegatingDisposableMixin),
     returns,
   );
@@ -864,10 +912,6 @@ export const takeLastSinkMixin: <
 >(
   fromArray: (v: readonly T[]) => C,
 ) => {
-  [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
-    [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: {
       [DisposableLike_error]: Option<Error>;
@@ -876,12 +920,18 @@ export const takeLastSinkMixin: <
     delegate: TSink,
     takeLastCount: number,
   ): void;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
   fromArray: (v: readonly T[]) => C,
 ) => {
@@ -896,13 +946,8 @@ export const takeLastSinkMixin: <
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [TakeLastSink_private_takeLastCount]: 0,
-        [TakeLastSink_last]: none as any,
-      },
-      [Object_init](
+    clazz(
+      function TakeLastSink(
         this: TProperties & DisposableLike,
         delegate: TSink,
         takeLastCount: number,
@@ -920,24 +965,28 @@ export const takeLastSinkMixin: <
           }),
         );
       },
-      [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-        const { [TakeLastSink_last]: last } = this;
-
-        last.push(next);
-
-        if (getLength(last) > this[TakeLastSink_private_takeLastCount]) {
-          last.shift();
-        }
+      {
+        [Sink_private_delegate]: none,
+        [TakeLastSink_private_takeLastCount]: 0,
+        [TakeLastSink_last]: none as any,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
+          const { [TakeLastSink_last]: last } = this;
+
+          last.push(next);
+
+          if (getLength(last) > this[TakeLastSink_private_takeLastCount]) {
+            last.shift();
+          }
+        },
+      },
+    ),
     mixWith(disposableMixin),
   );
 };
 
 export const takeWhileSinkMixin: <T>() => {
-  [Object_properties]: {
-    readonly [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: {
       readonly [DisposableLike_isDisposed]: boolean;
@@ -946,13 +995,18 @@ export const takeWhileSinkMixin: <T>() => {
     predicate: Predicate<T>,
     inclusive: boolean,
   ): void;
-  get [DisposableLike_error](): Option<Error>;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    get [DisposableLike_error](): Option<Error>;
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T>() => {
   const TakeWhileSink_private_predicate = Symbol(
     "TakeWhileSink_private_predicate",
@@ -968,13 +1022,8 @@ export const takeWhileSinkMixin: <T>() => {
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [TakeWhileSink_private_predicate]: none,
-        [TakeWhileSink_private_inclusive]: none,
-      },
-      [Object_init](
+    clazz(
+      function TakeWhileSink(
         this: TProperties & DisposableLike,
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
@@ -985,39 +1034,49 @@ export const takeWhileSinkMixin: <T>() => {
         this[TakeWhileSink_private_predicate] = predicate;
         this[TakeWhileSink_private_inclusive] = inclusive;
       },
-      [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-        const satisfiesPredicate = this[TakeWhileSink_private_predicate](next);
-
-        if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
-          pipe(this[Sink_private_delegate], notify(next));
-        }
-
-        if (!satisfiesPredicate) {
-          pipe(this, dispose());
-        }
+      {
+        [Sink_private_delegate]: none,
+        [TakeWhileSink_private_predicate]: none,
+        [TakeWhileSink_private_inclusive]: none,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
+          const satisfiesPredicate =
+            this[TakeWhileSink_private_predicate](next);
+
+          if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
+            pipe(this[Sink_private_delegate], notify(next));
+          }
+
+          if (!satisfiesPredicate) {
+            pipe(this, dispose());
+          }
+        },
+      },
+    ),
     mixWith(delegatingDisposableMixin),
     returns,
   );
 })();
 
 export const throwIfEmptySinkMixin: <T>() => {
-  [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
-    [DisposableLike_isDisposed]: boolean;
-  };
   [Object_init](
     this: unknown,
     delegate: SinkLike<T>,
     factory: Factory<unknown>,
   ): void;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Error): void;
-  [SinkLike_notify](next: T): void;
+  [Object_properties]: {
+    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_isDisposed]: boolean;
+  };
+  [Object_prototype]: {
+    [DisposableLike_add](
+      disposable: DisposableOrTeardown,
+      ignoreChildErrors: boolean,
+    ): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+  };
 } = /*@__PURE__*/ (<T>() => {
   const ThrowIfEmptySink_private_isEmpty = Symbol(
     "ThrowIfEmptySink_private_isEmpty",
@@ -1029,12 +1088,8 @@ export const throwIfEmptySinkMixin: <T>() => {
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   return pipe(
-    {
-      [Object_properties]: {
-        [Sink_private_delegate]: none,
-        [ThrowIfEmptySink_private_isEmpty]: true,
-      },
-      [Object_init](
+    clazz(
+      function ThrowIfEmptySink(
         this: TProperties & DisposableLike,
         delegate: SinkLike<T>,
         factory: Factory<unknown>,
@@ -1063,11 +1118,17 @@ export const throwIfEmptySinkMixin: <T>() => {
           }),
         );
       },
-      [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-        this[ThrowIfEmptySink_private_isEmpty] = false;
-        pipe(this[Sink_private_delegate], notify(next));
+      {
+        [Sink_private_delegate]: none,
+        [ThrowIfEmptySink_private_isEmpty]: true,
       },
-    },
+      {
+        [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
+          this[ThrowIfEmptySink_private_isEmpty] = false;
+          pipe(this[Sink_private_delegate], notify(next));
+        },
+      },
+    ),
     mixWith(disposableMixin),
     returns,
   );

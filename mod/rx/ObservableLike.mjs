@@ -1,7 +1,7 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { reactive, createMapOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { mapSinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { pipeUnsafe, newInstance, pipe } from '../functions.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto } from '../rx.mjs';
@@ -35,13 +35,10 @@ const liftT = {
 const map = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
     const typedObserverMixin = observerMixin();
-    return pipe({
-        [Object_properties]: {},
-        [Object_init](delegate, mapper) {
-            init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-            init(typedMapSinkMixin, this, delegate, mapper);
-        },
-    }, mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory(), createMapOperator(liftT));
+    return pipe(clazz(function MapObserver(delegate, mapper) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedMapSinkMixin, this, delegate, mapper);
+    }, {}, {}), mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory(), createMapOperator(liftT));
 })();
 /**
  * Returns a Promise that completes with the last value produced by

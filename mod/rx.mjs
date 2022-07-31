@@ -1,6 +1,6 @@
 /// <reference types="./rx.d.ts" />
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, ignore, forEach, newInstance, none, getLength, max } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
@@ -76,18 +76,16 @@ const createRunnableUsingT = {
     using: createRunnableUsing,
 };
 const createSubject = /*@__PURE__*/ (() => {
-    const createSubjectInstance = pipe({
-        [Object_properties]: {
-            [MulticastObservableLike_replay]: 0,
-            observers: none,
-            replayed: none,
-        },
-        [Object_init](replay) {
-            init(disposableMixin, this);
-            this[MulticastObservableLike_replay] = replay;
-            this.observers = newInstance(Set);
-            this.replayed = [];
-        },
+    const createSubjectInstance = pipe(clazz(function Subject(replay) {
+        init(disposableMixin, this);
+        this[MulticastObservableLike_replay] = replay;
+        this.observers = newInstance(Set);
+        this.replayed = [];
+    }, {
+        [MulticastObservableLike_replay]: 0,
+        observers: none,
+        replayed: none,
+    }, {
         [ObservableLike_observableType]: 0,
         get [MulticastObservableLike_observerCount]() {
             const self = this;
@@ -125,7 +123,7 @@ const createSubject = /*@__PURE__*/ (() => {
             }
             pipe(this, addIgnoringChildErrors(dispatcher));
         },
-    }, mixWith(disposableMixin), createObjectFactory());
+    }), mixWith(disposableMixin), createObjectFactory());
     return (options) => {
         const { replay: replayOption = 0 } = options !== null && options !== void 0 ? options : {};
         const replay = max(replayOption, 0);

@@ -1,8 +1,7 @@
 import { disposableMixin } from "./__internal__/util/DisposableLikeMixins";
 import {
-  Object_init,
-  Object_properties,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -258,75 +257,76 @@ export const createSubject = /*@__PURE__*/ (() => {
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   const createSubjectInstance = pipe(
-    {
-      [Object_properties]: {
-        [MulticastObservableLike_replay]: 0,
-        observers: none,
-        replayed: none,
-      },
-      [Object_init](this: TProperties, replay: number) {
+    clazz(
+      function Subject(this: TProperties, replay: number) {
         init(disposableMixin, this);
         this[MulticastObservableLike_replay] = replay;
         this.observers = newInstance<Set<ObserverLike>>(Set);
         this.replayed = [];
       },
-
-      [ObservableLike_observableType]: 0 as typeof DefaultObservable,
-
-      get [MulticastObservableLike_observerCount]() {
-        const self = this as unknown as TProperties;
-        return self.observers.size;
+      {
+        [MulticastObservableLike_replay]: 0,
+        observers: none,
+        replayed: none,
       },
+      {
+        [ObservableLike_observableType]: 0 as typeof DefaultObservable,
 
-      [SubjectLike_publish](this: TProperties, next: unknown) {
-        if (!isDisposed(this)) {
-          const { replayed } = this;
+        get [MulticastObservableLike_observerCount]() {
+          const self = this as unknown as TProperties;
+          return self.observers.size;
+        },
 
-          const replay = this[MulticastObservableLike_replay];
+        [SubjectLike_publish](this: TProperties, next: unknown) {
+          if (!isDisposed(this)) {
+            const { replayed } = this;
 
-          if (replay > 0) {
-            replayed.push(next);
-            if (getLength(replayed) > replay) {
-              replayed.shift();
+            const replay = this[MulticastObservableLike_replay];
+
+            if (replay > 0) {
+              replayed.push(next);
+              if (getLength(replayed) > replay) {
+                replayed.shift();
+              }
+            }
+
+            for (const observer of this.observers) {
+              pipe(observer, getDispatcher, dispatch(next));
             }
           }
+        },
 
-          for (const observer of this.observers) {
-            pipe(observer, getDispatcher, dispatch(next));
+        [ReactiveContainerLike_sinkInto](
+          this: TProperties & SubjectLike,
+          observer: ObserverLike<any>,
+        ) {
+          if (!isDisposed(this)) {
+            const { observers } = this;
+            observers.add(observer);
+
+            pipe(
+              observer,
+              onDisposed(_ => {
+                observers.delete(observer);
+              }),
+            );
           }
-        }
+
+          const dispatcher = getDispatcher(observer);
+
+          // The idea here is that an onSubscribe function may
+          // call next from unscheduled sources such as event handlers.
+          // So we marshall those events back to the scheduler.
+          for (const next of this.replayed) {
+            pipe(dispatcher, dispatch(next));
+          }
+
+          pipe(this, addIgnoringChildErrors(dispatcher));
+        },
       },
-
-      [ReactiveContainerLike_sinkInto](
-        this: TProperties & SubjectLike,
-        observer: ObserverLike<any>,
-      ) {
-        if (!isDisposed(this)) {
-          const { observers } = this;
-          observers.add(observer);
-
-          pipe(
-            observer,
-            onDisposed(_ => {
-              observers.delete(observer);
-            }),
-          );
-        }
-
-        const dispatcher = getDispatcher(observer);
-
-        // The idea here is that an onSubscribe function may
-        // call next from unscheduled sources such as event handlers.
-        // So we marshall those events back to the scheduler.
-        for (const next of this.replayed) {
-          pipe(dispatcher, dispatch(next));
-        }
-
-        pipe(this, addIgnoringChildErrors(dispatcher));
-      },
-    },
+    ),
     mixWith(disposableMixin),
-    createObjectFactory<SubjectLike<any>, TProperties, number>(),
+    createObjectFactory<SubjectLike<any>, number>(),
   );
 
   return <T>(options?: { replay?: number }): SubjectLike<T> => {

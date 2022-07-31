@@ -18,8 +18,8 @@ import {
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import {
-  Object_init,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -142,12 +142,7 @@ export const buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<T>() => {
 
   return pipe(
     typedBufferSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof typedBufferSinkMixin]>,
-      SinkLike<readonly T[]>,
-      number
-    >(),
+    createObjectFactory<SinkLike<T>, SinkLike<readonly T[]>, number>(),
     createBufferOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -168,8 +163,8 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
   const typedDelegatingSinkMixin = delegatingSinkMixin<T>();
 
   return pipeLazy(
-    {
-      [Object_init](
+    clazz(
+      function RunnableConcatAll(
         this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
           DisposableLike,
         delegate: SinkLike<T>,
@@ -177,27 +172,26 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
         init(typedDelegatingSinkMixin, this, delegate);
         pipe(this, bindTo(delegate));
       },
-      [SinkLike_notify](
-        this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
-          DisposableLike,
-        next: RunnableLike<T>,
-      ) {
-        const { [DelegatingSink_delegate]: delegate } = this;
-        pipe(
-          delegate,
-          createDelegatingSink,
-          addTo<SinkLike<T>>(this),
-          sourceFrom(next),
-          dispose(),
-        );
+      {},
+      {
+        [SinkLike_notify](
+          this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
+            DisposableLike,
+          next: RunnableLike<T>,
+        ) {
+          const { [DelegatingSink_delegate]: delegate } = this;
+          pipe(
+            delegate,
+            createDelegatingSink,
+            addTo<SinkLike<T>>(this),
+            sourceFrom(next),
+            dispose(),
+          );
+        },
       },
-    },
+    ),
     mixWith(typedDelegatingSinkMixin),
-    createObjectFactory<
-      SinkLike<RunnableLike<T>>,
-      PropertyTypeOf<[typeof typedDelegatingSinkMixin]> & DisposableLike,
-      SinkLike<T>
-    >(),
+    createObjectFactory<SinkLike<RunnableLike<T>>, SinkLike<T>>(),
     lift,
   );
 })();
@@ -214,12 +208,7 @@ export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithChars
 
     return pipe(
       typedDecodeWithCharsetMixin,
-      createObjectFactory<
-        SinkLike<ArrayBuffer>,
-        PropertyTypeOf<[typeof typedDecodeWithCharsetMixin]>,
-        SinkLike<string>,
-        string
-      >(),
+      createObjectFactory<SinkLike<ArrayBuffer>, SinkLike<string>, string>(),
       createDecodeWithCharsetOperator(liftT),
     );
   })();
@@ -235,12 +224,7 @@ export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctU
 
     return pipe(
       typedDistinctUntilChangedSinkMixin,
-      createObjectFactory<
-        SinkLike<T>,
-        PropertyTypeOf<[typeof typedDistinctUntilChangedSinkMixin]>,
-        SinkLike<T>,
-        Equality<T>
-      >(),
+      createObjectFactory<SinkLike<T>, SinkLike<T>, Equality<T>>(),
       createDistinctUntilChangedOperator<RunnableLike, T, TReactive>(liftT),
     );
   })();
@@ -272,12 +256,7 @@ export const forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
 
   return pipe(
     typedForEachSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof typedForEachSinkMixin]>,
-      SinkLike<T>,
-      SideEffect1<T>
-    >(),
+    createObjectFactory<SinkLike<T>, SinkLike<T>, SideEffect1<T>>(),
     createForEachOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -289,12 +268,7 @@ export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
   return pipe(
     typedKeepSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof typedKeepSinkMixin]>,
-      SinkLike<T>,
-      Predicate<T>
-    >(),
+    createObjectFactory<SinkLike<T>, SinkLike<T>, Predicate<T>>(),
     createKeepOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -321,12 +295,7 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
 
   return pipe(
     typedMapSinkMixin,
-    createObjectFactory<
-      SinkLike<TA>,
-      PropertyTypeOf<[typeof typedMapSinkMixin]>,
-      SinkLike<TB>,
-      Function1<TA, TB>
-    >(),
+    createObjectFactory<SinkLike<TA>, SinkLike<TB>, Function1<TA, TB>>(),
     createMapOperator<RunnableLike, TA, TB, TReactive>(liftT),
   );
 })();
@@ -340,11 +309,7 @@ export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
 
   return pipe(
     typedPairwiseSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof typedPairwiseSinkMixin]>,
-      SinkLike<readonly [T, T]>
-    >(),
+    createObjectFactory<SinkLike<T>, SinkLike<readonly [T, T]>>(),
     lift,
     returns,
   );
@@ -367,7 +332,6 @@ export const reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
     typedReduceSinkMixin,
     createObjectFactory<
       SinkLike<T>,
-      PropertyTypeOf<[typeof typedReduceSinkMixin]>,
       SinkLike<TAcc>,
       Reducer<T, TAcc>,
       Factory<TAcc>
@@ -418,7 +382,6 @@ export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
     typedScanSinkMixin,
     createObjectFactory<
       SinkLike<T>,
-      PropertyTypeOf<[typeof typedScanSinkMixin]>,
       SinkLike<TAcc>,
       Reducer<T, TAcc>,
       Factory<TAcc>
@@ -436,12 +399,7 @@ export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] = /*@__PURE__*/ (<
 
   return pipe(
     typedSkipFirstSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof typedSkipFirstSinkMixin]>,
-      SinkLike<T>,
-      number
-    >(),
+    createObjectFactory<SinkLike<T>, SinkLike<T>, number>(),
     createSkipFirstOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -455,12 +413,7 @@ export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] = /*@__PURE__*/ (<
 
   return pipe(
     typedTakeFirstSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof typedTakeFirstSinkMixin]>,
-      SinkLike<T>,
-      number
-    >(),
+    createObjectFactory<SinkLike<T>, SinkLike<T>, number>(),
     createTakeFirstOperator<RunnableLike, T, TReactive>({
       ...liftT,
       ...emptyRunnableT,
@@ -481,12 +434,7 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
 
   return pipe(
     typedTakeLastSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof typedTakeLastSinkMixin]>,
-      SinkLike<T>,
-      number
-    >(),
+    createObjectFactory<SinkLike<T>, SinkLike<T>, number>(),
     createTakeLastOperator<RunnableLike, T, TReactive>({
       ...liftT,
       ...emptyRunnableT,
@@ -503,13 +451,7 @@ export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] = /*@__PURE__*/ (<
 
   return pipe(
     typedTakeWhileSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      PropertyTypeOf<[typeof typedTakeWhileSinkMixin]>,
-      SinkLike<T>,
-      Predicate<T>,
-      boolean
-    >(),
+    createObjectFactory<SinkLike<T>, SinkLike<T>, Predicate<T>, boolean>(),
     createTakeWhileOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -521,12 +463,7 @@ export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
     const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin<T>();
     return pipe(
       typedThrowIfEmptySinkMixin,
-      createObjectFactory<
-        SinkLike<T>,
-        PropertyTypeOf<[typeof typedThrowIfEmptySinkMixin]>,
-        SinkLike<T>,
-        Factory<unknown>
-      >(),
+      createObjectFactory<SinkLike<T>, SinkLike<T>, Factory<unknown>>(),
       createThrowIfEmptyOperator<RunnableLike, T, TReactive>(liftT),
     );
   })();

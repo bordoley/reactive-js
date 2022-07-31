@@ -1,7 +1,7 @@
 /// <reference types="./ix.d.ts" />
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, newInstance, forEach, none } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import './util/DisposableLike.mjs';
@@ -38,16 +38,14 @@ const createEnumerableUsingT = {
 };
 const emptyEnumerable = /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
-    const f = pipe({
-        [Object_properties]: {},
-        [Object_init]() {
-            init(disposableMixin, this);
-            init(typedEnumeratorMixin, this);
-        },
+    const f = pipe(clazz(function EmptyEnumerator() {
+        init(disposableMixin, this);
+        init(typedEnumeratorMixin, this);
+    }, {}, {
         [SourceLike_move]() {
             pipe(this, dispose());
         },
-    }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
+    }), mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
     return () => createEnumerable(f);
 })();
 const emptyEnumerableT = {
@@ -63,14 +61,12 @@ const emptyEnumerableT = {
 const generateEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    const createGenerateEnumerator = pipe({
-        [Object_properties]: { f: none },
-        [Object_init](f, acc) {
-            init(disposableMixin, this);
-            init(typedEnumerator, this);
-            this.f = f;
-            this[EnumeratorLike_current] = acc;
-        },
+    const createGenerateEnumerator = pipe(clazz(function GenerateEnumerator(f, acc) {
+        init(disposableMixin, this);
+        init(typedEnumerator, this);
+        this.f = f;
+        this[EnumeratorLike_current] = acc;
+    }, { f: none }, {
         [SourceLike_move]() {
             if (!isDisposed(this)) {
                 try {
@@ -81,7 +77,7 @@ const generateEnumerable =
                 }
             }
         },
-    }, mixWith(disposableMixin, typedEnumerator), createObjectFactory());
+    }), mixWith(disposableMixin, typedEnumerator), createObjectFactory());
     return (generator, initialValue) => createEnumerable(() => createGenerateEnumerator(generator, initialValue()));
 })();
 const generateEnumerableT = {

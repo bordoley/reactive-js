@@ -2,7 +2,7 @@
 import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
@@ -241,15 +241,13 @@ const takeWhileT = { takeWhile };
 const toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
-    const createSequenceEnumerator = pipe({
-        [Object_properties]: {
-            seq: none,
-        },
-        [Object_init](seq) {
-            init(disposableMixin, this);
-            init(typedEnumeratorMixin, this);
-            this.seq = seq;
-        },
+    const createSequenceEnumerator = pipe(clazz(function SequenceEnumerator(seq) {
+        init(disposableMixin, this);
+        init(typedEnumeratorMixin, this);
+        this.seq = seq;
+    }, {
+        seq: none,
+    }, {
         [SourceLike_move]() {
             if (!isDisposed(this)) {
                 const next = this.seq();
@@ -262,7 +260,7 @@ const toEnumerable =
                 }
             }
         },
-    }, mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
+    }), mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
     return () => (seq) => createEnumerable(() => createSequenceEnumerator(seq));
 })();
 const toEnumerableT = { toEnumerable };

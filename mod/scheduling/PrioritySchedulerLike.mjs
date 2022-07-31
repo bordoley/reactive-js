@@ -1,7 +1,7 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { pipe, none, partial } from '../functions.mjs';
 import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import '../util/DisposableLike.mjs';
@@ -16,16 +16,14 @@ import { addIgnoringChildErrors, isDisposed } from '../__internal__/util/Disposa
  * @param priority The priority to schedule work at.
  */
 const toScheduler = /*@__PURE__*/ (() => {
-    const createSchedulerInstance = pipe({
-        [Object_properties]: {
-            priorityScheduler: none,
-            priority: 0,
-        },
-        [Object_init](scheduler, priority) {
-            init(disposableMixin, this);
-            this.priorityScheduler = scheduler;
-            this.priority = priority;
-        },
+    const createSchedulerInstance = pipe(clazz(function PrioritySchedulerDelegatingScheduler(scheduler, priority) {
+        init(disposableMixin, this);
+        this.priorityScheduler = scheduler;
+        this.priority = priority;
+    }, {
+        priorityScheduler: none,
+        priority: 0,
+    }, {
         get [SchedulerLike_inContinuation]() {
             const self = this;
             return isInContinuation(self.priorityScheduler);
@@ -51,7 +49,7 @@ const toScheduler = /*@__PURE__*/ (() => {
                 });
             }
         },
-    }, mixWith(disposableMixin), createObjectFactory());
+    }), mixWith(disposableMixin), createObjectFactory());
     return (priority) => pipe(createSchedulerInstance, partial(priority));
 })();
 

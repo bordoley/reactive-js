@@ -6,15 +6,13 @@ import {
   Function4,
   Option,
 } from "../../functions";
+import { __DEV__ } from "../env";
 
 export const Object_init = Symbol("Object_init");
 export const Object_properties = Symbol("Object_properties");
+export const Object_prototype = Symbol("Object_prototype");
 
-const {
-  create: createObject,
-  getOwnPropertyDescriptors,
-  prototype: objectPrototype,
-} = Object;
+export type UnknownObject = Record<string | symbol | number, unknown>;
 
 export type PropertyTypeOf<T extends any[]> = T extends [infer F, ...infer R]
   ? (F extends {
@@ -31,203 +29,224 @@ type OptionalProps<T> = T extends object
     }
   : T;
 
+type TMixin = {
+  [Object_init](this: any, ...args: readonly any[]): void;
+  [Object_properties]: object;
+  [Object_prototype]: object;
+};
+
+const {
+  create: createObject,
+  getOwnPropertyDescriptors,
+  prototype: objectPrototype,
+} = Object;
+
+const initUnsafe = (clazz: any, self: any, ...args: readonly any[]): void => {
+  clazz[Object_init].call(self, ...args);
+};
+
 interface Init {
-  <TProperties>(
-    mixin: {
+  <TProperties, TPrototype>(
+    clazz: {
       [Object_properties]: TProperties;
-      [Object_init](this: TProperties): void;
+      [Object_init](this: TProperties & TPrototype): void;
     },
     self: TProperties,
   ): void;
 
-  <TProperties, TA>(
-    mixin: {
+  <TProperties, TPrototype, TA>(
+    clazz: {
       [Object_properties]: TProperties;
-      [Object_init](this: TProperties, a: TA): void;
+      [Object_init](this: TProperties & TPrototype, a: TA): void;
     },
     self: TProperties,
     a: TA,
   ): void;
 
-  <TProperties, TA, TB>(
-    mixin: {
+  <TProperties, TPrototype, TA, TB>(
+    clazz: {
       [Object_properties]: TProperties;
-      [Object_init](this: TProperties, a: TA, b: TB): void;
+      [Object_init](this: TProperties & TPrototype, a: TA, b: TB): void;
     },
     self: TProperties,
     a: TA,
     b: TB,
   ): void;
 }
-
-const initUnsafe = (mixin: any, self: any, ...args: readonly any[]): void => {
-  mixin[Object_init].call(self, ...args);
-};
-
 export const init: Init = initUnsafe;
 
-type Identity<T> = T extends object
-  ? {
-      [P in keyof T]: T[P];
-    }
-  : T;
-
 interface ObjectFactory {
-  <TReturn, TProperties>(): Function1<
+  <TReturn>(): Function1<
     {
-      [Object_properties]: OptionalProps<TProperties>;
-      [Object_init]: (this: TReturn & TProperties) => void;
-    } & Omit<TReturn, keyof TProperties>,
+      [Object_init]: (this: any) => void;
+      [Object_properties]: unknown;
+      [Object_prototype]: object;
+    },
     Factory<TReturn>
   >;
 
-  <TReturn, TProperties, TA>(): Function1<
+  <TReturn, TA>(): Function1<
     {
-      [Object_properties]: OptionalProps<TProperties>;
-      [Object_init]: (this: TReturn & TProperties, a: TA) => void;
-    } & Omit<TReturn, keyof TProperties>,
+      [Object_init]: (this: any, a: TA) => void;
+      [Object_properties]: unknown;
+      [Object_prototype]: object;
+    },
     Function1<TA, TReturn>
   >;
 
-  <TReturn, TProperties, TA, TB>(): Function1<
+  <TReturn, TA, TB>(): Function1<
     {
-      [Object_properties]: OptionalProps<TProperties>;
-      [Object_init]: (this: TReturn & TProperties, a: TA, b: TB) => void;
-    } & Omit<TReturn, keyof TProperties>,
+      [Object_init]: (this: any, a: TA, b: TB) => void;
+      [Object_properties]: unknown;
+      [Object_prototype]: object;
+    },
     Function2<TA, TB, TReturn>
   >;
 
-  <TReturn, TProperties, TA, TB, TC>(): Function1<
+  <TReturn, TA, TB, TC>(): Function1<
     {
-      [Object_properties]: OptionalProps<TProperties>;
-      [Object_init]: (this: TReturn & TProperties, a: TA, b: TB, c: TC) => void;
-    } & Omit<TReturn, keyof TProperties>,
+      [Object_init]: (this: any, a: TA, b: TB, c: TC) => void;
+      [Object_properties]: unknown;
+      [Object_prototype]: object;
+    },
     Function3<TA, TB, TC, TReturn>
   >;
 
-  <TReturn, TProperties, TA, TB, TC, TD>(): Function1<
+  <TReturn, TA, TB, TC, TD>(): Function1<
     {
-      [Object_properties]: OptionalProps<TProperties>;
-      [Object_init]: (
-        this: TReturn & TProperties,
-        a: TA,
-        b: TB,
-        c: TC,
-        d: TD,
-      ) => void;
-    } & Omit<TReturn, keyof TProperties>,
+      [Object_init]: (this: any, a: TA, b: TB, c: TC, d: TD) => void;
+      [Object_properties]: unknown;
+      [Object_prototype]: object;
+    },
     Function4<TA, TB, TC, TD, TReturn>
   >;
 }
-
 export const createObjectFactory: ObjectFactory =
-  <TReturn, TProperties>() =>
-  (mixin: {
-    [Object_properties]: OptionalProps<TProperties>;
-    [Object_init]: (
-      this: TReturn & TProperties,
-      ...args: readonly any[]
-    ) => void;
+  <TReturn>() =>
+  (clazz: {
+    [Object_init]: (this: any, ...args: readonly any[]) => void;
+    [Object_properties]: unknown;
+    [Object_prototype]: object;
   }): Factory<TReturn> => {
     const propertyDescription = getOwnPropertyDescriptors(
-      mixin[Object_properties],
+      clazz[Object_properties],
     );
 
-    const mixinDescription = getOwnPropertyDescriptors(mixin);
-    const {
-      [Object_properties]: _properties,
-      [Object_init]: _init,
-      ...prototypeDescription
-    } = mixinDescription;
-    const prototype = createObject(
-      objectPrototype,
-      prototypeDescription as any,
-    );
+    const constructorObject: object = __DEV__
+      ? {
+          constructor: {
+            configurable: true,
+            enumerable: true,
+            value: clazz[Object_init],
+            writable: true,
+          },
+        }
+      : {};
+
+    const prototypeDescription = {
+      ...getOwnPropertyDescriptors(clazz[Object_prototype]),
+      ...constructorObject,
+    };
+
+    const prototype = createObject(objectPrototype, prototypeDescription);
 
     return (...args: readonly any[]) => {
       const instance = createObject(prototype, propertyDescription);
-      initUnsafe(mixin, instance, ...args);
+      initUnsafe(clazz, instance, ...args);
       return instance;
     };
   };
 
 interface MixWith {
-  <TMixin0 extends object, TMixin1 extends object>(m0: TMixin0): Function1<
-    TMixin1,
-    Identity<
-      TMixin0 &
-        TMixin1 & {
-          [Object_properties]: OptionalProps<
-            PropertyTypeOf<[TMixin0, TMixin1]>
-          >;
-        }
-    >
+  <TTMixin0 extends TMixin, TTMixin1 extends TMixin>(m0: TTMixin0): Function1<
+    TTMixin1,
+    {
+      [Object_init]: TTMixin1[typeof Object_init];
+      [Object_properties]: OptionalProps<
+        TTMixin0[typeof Object_properties] & TTMixin1[typeof Object_properties]
+      >;
+      [Object_prototype]: TTMixin0[typeof Object_prototype] &
+        TTMixin1[typeof Object_prototype];
+    }
   >;
 
-  <TMixin0 extends object, TMixin1 extends object, TMixin2 extends object>(
-    m0: TMixin0,
-    m1: TMixin1,
+  <TTMixin0 extends TMixin, TTMixin1 extends TMixin, TTMixin2 extends TMixin>(
+    m0: TTMixin0,
+    m1: TTMixin1,
   ): Function1<
-    TMixin2,
-    Identity<
-      TMixin0 &
-        TMixin1 &
-        TMixin2 & {
-          [Object_properties]: OptionalProps<
-            PropertyTypeOf<[TMixin0, TMixin1, TMixin2]>
-          >;
-        }
-    >
+    TTMixin2,
+    {
+      [Object_init]: TTMixin2[typeof Object_init];
+      [Object_properties]: OptionalProps<
+        TTMixin0[typeof Object_properties] &
+          TTMixin1[typeof Object_properties] &
+          TTMixin2[typeof Object_properties]
+      >;
+      [Object_prototype]: TTMixin0[typeof Object_prototype] &
+        TTMixin1[typeof Object_prototype] &
+        TTMixin2[typeof Object_prototype];
+    }
   >;
 
   <
-    TMixin0 extends object,
-    TMixin1 extends object,
-    TMixin2 extends object,
-    TMixin3 extends object,
+    TTMixin0 extends TMixin,
+    TTMixin1 extends TMixin,
+    TTMixin2 extends TMixin,
+    TTMixin3 extends TMixin,
   >(
-    m0: TMixin0,
-    m1: TMixin1,
-    m2: TMixin2,
+    m0: TTMixin0,
+    m1: TTMixin1,
+    m2: TTMixin2,
   ): Function1<
-    TMixin3,
-    Identity<
-      TMixin0 &
-        TMixin1 &
-        TMixin2 &
-        TMixin3 & {
-          [Object_properties]: OptionalProps<
-            PropertyTypeOf<[TMixin0, TMixin1, TMixin2, TMixin3]>
-          >;
-        }
-    >
+    TTMixin3,
+    {
+      [Object_init]: TTMixin3[typeof Object_init];
+      [Object_properties]: OptionalProps<
+        TTMixin0[typeof Object_properties] &
+          TTMixin1[typeof Object_properties] &
+          TTMixin2[typeof Object_properties] &
+          TTMixin3[typeof Object_properties]
+      >;
+      [Object_prototype]: TTMixin0[typeof Object_prototype] &
+        TTMixin1[typeof Object_prototype] &
+        TTMixin2[typeof Object_prototype] &
+        TTMixin3[typeof Object_prototype];
+    }
   >;
 }
+
 export const mixWith: MixWith =
-  (
-    ...mixins: readonly {
-      [Object_properties]: object;
-    }[]
-  ) =>
-  (lastProto: { [Object_properties]: object }) => {
-    const propertyDescriptors = mixins
-      .map(mixin => getOwnPropertyDescriptors(mixin))
+  (...mixins: readonly TMixin[]) =>
+  (lastTMixin: TMixin): TMixin => {
+    const properties = [...mixins, lastTMixin]
+      .map(clazz => clazz[Object_properties])
       .reduce((acc, next) => ({ ...acc, ...next }), {});
 
-    const properties = [...mixins, lastProto]
-      .map(mixin => mixin[Object_properties])
+    const prototypeDescriptions = [...mixins, lastTMixin]
+      .map(clazz => getOwnPropertyDescriptors(clazz[Object_prototype]))
       .reduce((acc, next) => ({ ...acc, ...next }), {});
 
-    const descriptor = {
-      ...propertyDescriptors,
-      ...getOwnPropertyDescriptors(lastProto),
-      [Object_properties]: {
-        configurable: true,
-        enumerable: true,
-        value: properties,
-        writable: true,
-      },
+    return {
+      [Object_init]: lastTMixin[Object_init],
+      [Object_properties]: properties,
+      [Object_prototype]: createObject(objectPrototype, prototypeDescriptions),
     };
-
-    return createObject(objectPrototype, descriptor);
   };
+
+export const clazz = <
+  TInit extends (this: any, ...args: readonly any[]) => void,
+  TProperties extends object,
+  TPrototype extends object,
+>(
+  init: TInit,
+  properties: TProperties,
+  prototype: TPrototype,
+): {
+  [Object_init]: TInit;
+  [Object_properties]: TProperties;
+  [Object_prototype]: TPrototype;
+} => ({
+  [Object_init]: init,
+  [Object_properties]: properties,
+  [Object_prototype]: prototype,
+});
