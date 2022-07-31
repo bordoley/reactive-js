@@ -99,6 +99,9 @@ declare type Keep<C extends ContainerLike> = Container<C> & {
 declare type Map<C extends ContainerLike> = Container<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 };
+declare type Never<C extends StatefulContainerLike> = Container<C> & {
+    never<T>(): ContainerOf<C, T>;
+};
 declare type Pairwise<C extends ContainerLike> = Container<C> & {
     pairwise<T>(): ContainerOperator<C, T, readonly [
         T,
@@ -246,4 +249,4 @@ declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, IterableLike, Keep, Map, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
