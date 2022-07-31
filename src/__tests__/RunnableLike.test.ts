@@ -1,12 +1,15 @@
-import { describe } from "../__internal__/testing";
+import { describe, expectEquals, test } from "../__internal__/testing";
 import { toRunnable } from "../containers/ReadonlyArrayLike";
+import { Option, none, pipeLazy } from "../functions";
 import {
   bufferT,
   concatAllT,
   concatT,
   distinctUntilChangedT,
+  first,
   forEachT,
   keepT,
+  last,
   mapT,
   pairwiseT,
   repeatT,
@@ -114,4 +117,36 @@ export const RunnableLikeTests = describe(
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
   }),
+  describe(
+    "first",
+    test(
+      "when the source has values",
+      pipeLazy(
+        [0, 1, 2],
+        toRunnable(),
+        first(),
+        expectEquals<Option<number>>(0),
+      ),
+    ),
+    test(
+      "when the source is empty",
+      pipeLazy([], toRunnable(), first(), expectEquals<Option<number>>(none)),
+    ),
+  ),
+  describe(
+    "last",
+    test(
+      "when the source has values",
+      pipeLazy(
+        [0, 1, 2],
+        toRunnable(),
+        last(),
+        expectEquals<Option<number>>(2),
+      ),
+    ),
+    test(
+      "when the source is empty",
+      pipeLazy([], toRunnable(), last(), expectEquals<Option<number>>(none)),
+    ),
+  ),
 );

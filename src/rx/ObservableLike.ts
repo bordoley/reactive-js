@@ -30,8 +30,6 @@ import { sourceFrom } from "./ReactiveContainerLike";
 export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
   obs[ObservableLike_observableType];
 
-export const TContainerOf: ObservableLike<unknown> = undefined as any;
-
 const lift: Lift<ObservableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
     [ObservableLike_observableType]:

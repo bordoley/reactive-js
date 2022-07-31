@@ -6,7 +6,6 @@
 
 ### Variables
 
-- [TContainerOf](ix_EnumerableLike.md#tcontainerof)
 - [bufferT](ix_EnumerableLike.md#buffert)
 - [concatAllT](ix_EnumerableLike.md#concatallt)
 - [concatT](ix_EnumerableLike.md#concatt)
@@ -54,12 +53,6 @@
 - [toRunnable](ix_EnumerableLike.md#torunnable)
 
 ## Variables
-
-### TContainerOf
-
-• `Const` **TContainerOf**: [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)
-
-___
 
 ### bufferT
 

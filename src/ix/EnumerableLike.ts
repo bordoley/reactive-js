@@ -1026,8 +1026,6 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
 
 export const takeWhileT: TakeWhile<EnumerableLike> = { takeWhile };
 
-export const TContainerOf: EnumerableLike = undefined as any;
-
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
