@@ -19,6 +19,7 @@ import {
   dispose,
   getError,
   isDisposed,
+  onDisposed,
 } from "./DisposableLikeInternal";
 import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike";
 import {
@@ -29,35 +30,46 @@ import {
 } from "./Object";
 
 export const delegatingDisposableMixin: {
-  [Object_properties]: unknown;
+  [Object_properties]: {
+    readonly [DisposableLike_isDisposed]: boolean;
+  };
   [Object_init](this: unknown, delegate: DisposableLike): void;
-} & DisposableLike = /*@__PURE__*/ (() => {
+  get [DisposableLike_error](): Option<Error>;
+  [DisposableLike_add](
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+  [DisposableLike_dispose](error?: Error): void;
+} = /*@__PURE__*/ (() => {
   const DelegatingDisposable_private_delegate = Symbol(
     "DelegatingDisposable_private_delegate",
   );
 
   type TProperties = {
+    [DisposableLike_isDisposed]: boolean;
     [DelegatingDisposable_private_delegate]: DisposableLike;
   };
 
   return {
     [Object_properties]: {
       [DelegatingDisposable_private_delegate]: none,
+      [DisposableLike_isDisposed]: false,
     },
     [Object_init](this: TProperties, delegate: DisposableLike) {
       this[DelegatingDisposable_private_delegate] = delegate;
+
+      pipe(
+        delegate,
+        onDisposed(_ => {
+          this[DisposableLike_isDisposed] = true;
+        }),
+      );
     },
     get [DisposableLike_error](): Option<Error> {
       const self = this as unknown as TProperties;
 
       const delegate = self[DelegatingDisposable_private_delegate];
       return delegate[DisposableLike_error];
-    },
-    get [DisposableLike_isDisposed]() {
-      const self = this as unknown as TProperties;
-
-      const delegate = self[DelegatingDisposable_private_delegate];
-      return delegate[DisposableLike_isDisposed];
     },
     [DisposableLike_add](
       this: TProperties,
