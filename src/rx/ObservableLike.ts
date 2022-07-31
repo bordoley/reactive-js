@@ -6,9 +6,8 @@ import {
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { observerMixin } from "../__internal__/scheduling/ObserverLikeMixin";
 import {
-  Object_init,
-  Object_properties,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -95,9 +94,8 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   >;
 
   return pipe(
-    {
-      [Object_properties]: {},
-      [Object_init](
+    clazz(
+      function MapObserver(
         this: TProperties,
         delegate: ObserverLike<TB>,
         mapper: Function1<TA, TB>,
@@ -105,14 +103,11 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedMapSinkMixin, this, delegate, mapper);
       },
-    },
+      {},
+      {},
+    ),
     mixWith(typedObserverMixin, typedMapSinkMixin),
-    createObjectFactory<
-      ObserverLike,
-      TProperties,
-      ObserverLike,
-      Function1<any, any>
-    >(),
+    createObjectFactory<ObserverLike, ObserverLike, Function1<any, any>>(),
     createMapOperator(liftT),
   );
 })();

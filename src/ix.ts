@@ -4,9 +4,8 @@ import {
   enumeratorMixin,
 } from "./__internal__/util/EnumeratorLikeMixin";
 import {
-  Object_init,
-  Object_properties,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -123,9 +122,8 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
 >() => {
   const typedEnumeratorMixin = enumeratorMixin<T>();
   const f = pipe(
-    {
-      [Object_properties]: {},
-      [Object_init](
+    clazz(
+      function EmptyEnumerator(
         this: PropertyTypeOf<
           [typeof disposableMixin, typeof typedEnumeratorMixin]
         >,
@@ -133,15 +131,15 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
         init(disposableMixin, this);
         init(typedEnumeratorMixin, this);
       },
-      [SourceLike_move](this: MutableEnumeratorLike) {
-        pipe(this, dispose());
+      {},
+      {
+        [SourceLike_move](this: MutableEnumeratorLike) {
+          pipe(this, dispose());
+        },
       },
-    },
+    ),
     mixWith(disposableMixin, typedEnumeratorMixin),
-    createObjectFactory<
-      EnumeratorLike<T>,
-      PropertyTypeOf<[typeof disposableMixin, typeof typedEnumeratorMixin]>
-    >(),
+    createObjectFactory<EnumeratorLike<T>>(),
   );
 
   return () => createEnumerable(f);
@@ -166,9 +164,8 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
     > & { f: Updater<T> };
 
     const createGenerateEnumerator = pipe(
-      {
-        [Object_properties]: { f: none },
-        [Object_init](
+      clazz(
+        function GenerateEnumerator(
           this: TProperties & MutableEnumeratorLike,
           f: Updater<T>,
           acc: T,
@@ -178,25 +175,23 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
           this.f = f;
           this[EnumeratorLike_current] = acc;
         },
-        [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
-          if (!isDisposed(this)) {
-            try {
-              this[EnumeratorLike_current] = this.f(
-                this[EnumeratorLike_current],
-              );
-            } catch (cause) {
-              pipe(this, dispose({ cause }));
+        { f: none },
+        {
+          [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
+            if (!isDisposed(this)) {
+              try {
+                this[EnumeratorLike_current] = this.f(
+                  this[EnumeratorLike_current],
+                );
+              } catch (cause) {
+                pipe(this, dispose({ cause }));
+              }
             }
-          }
+          },
         },
-      },
+      ),
       mixWith(disposableMixin, typedEnumerator),
-      createObjectFactory<
-        EnumeratorLike<T>,
-        TProperties,
-        Updater<T>,
-        unknown
-      >(),
+      createObjectFactory<EnumeratorLike<T>, Updater<T>, T>(),
     );
 
     return (generator: Updater<T>, initialValue: Factory<T>) =>

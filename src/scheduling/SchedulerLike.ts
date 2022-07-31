@@ -19,9 +19,8 @@ import {
 } from "../__internal__/util/EnumeratorLikeMixin";
 import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
-  Object_init,
-  Object_properties,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -103,12 +102,8 @@ const createContinuation: Function2<
   };
 
   return pipe(
-    {
-      [Object_properties]: {
-        scheduler: none,
-        f: none,
-      },
-      [Object_init](
+    clazz(
+      function Continuation(
         this: TProperties,
         scheduler: SchedulerLike,
         f: SideEffect,
@@ -117,40 +112,41 @@ const createContinuation: Function2<
         this.scheduler = scheduler;
         this.f = f;
       },
-      [ContinuationLike_run](this: TProperties & ContinuationLike) {
-        if (!isDisposed(this)) {
-          let error: Option<Error> = none;
-          let yieldError: Option<YieldError> = none;
+      {
+        scheduler: none,
+        f: none,
+      },
+      {
+        [ContinuationLike_run](this: TProperties & ContinuationLike) {
+          if (!isDisposed(this)) {
+            let error: Option<Error> = none;
+            let yieldError: Option<YieldError> = none;
 
-          const { scheduler } = this;
-          const oldCurrentScheduler = currentScheduler;
-          currentScheduler = scheduler;
-          try {
-            this.f();
-          } catch (cause) {
-            if (isYieldError(cause)) {
-              yieldError = cause;
+            const { scheduler } = this;
+            const oldCurrentScheduler = currentScheduler;
+            currentScheduler = scheduler;
+            try {
+              this.f();
+            } catch (cause) {
+              if (isYieldError(cause)) {
+                yieldError = cause;
+              } else {
+                error = { cause };
+              }
+            }
+            currentScheduler = oldCurrentScheduler;
+
+            if (isSome(yieldError)) {
+              pipe(scheduler, schedule(this, yieldError));
             } else {
-              error = { cause };
+              pipe(this, dispose(error));
             }
           }
-          currentScheduler = oldCurrentScheduler;
-
-          if (isSome(yieldError)) {
-            pipe(scheduler, schedule(this, yieldError));
-          } else {
-            pipe(this, dispose(error));
-          }
-        }
+        },
       },
-    },
+    ),
     mixWith(disposableMixin),
-    createObjectFactory<
-      ContinuationLike,
-      TProperties,
-      SchedulerLike,
-      SideEffect
-    >(),
+    createObjectFactory<ContinuationLike, SchedulerLike, SideEffect>(),
   );
 })();
 
@@ -348,8 +344,20 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     };
 
     return pipe(
-      {
-        [Object_properties]: {
+      clazz(
+        function QueueScheduler(
+          this: TProperties & DisposableLike,
+          host: SchedulerLike,
+        ) {
+          init(disposableMixin, this);
+          init(typedEnumeratorMixin, this);
+          init(typedDisposableRefMixin, this, disposed);
+
+          this.delayed = createPriorityQueue(delayedComparator);
+          this.queue = createPriorityQueue(taskComparator);
+          this.host = host;
+        },
+        {
           [SchedulerLike_inContinuation]: false,
           delayed: none,
           dueTime: 0,
@@ -360,106 +368,99 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           taskIDCounter: 0,
           yieldRequested: false,
         },
-        [Object_init](this: TProperties & DisposableLike, host: SchedulerLike) {
-          init(disposableMixin, this);
-          init(typedEnumeratorMixin, this);
-          init(typedDisposableRefMixin, this, disposed);
+        {
+          get [SchedulerLike_now](): number {
+            const self = this as unknown as TProperties;
+            return getCurrentTime(self.host);
+          },
+          get [SchedulerLike_shouldYield](): boolean {
+            const self = this as unknown as TProperties &
+              EnumeratorLike<QueueTask>;
 
-          this.delayed = createPriorityQueue(delayedComparator);
-          this.queue = createPriorityQueue(taskComparator);
-          this.host = host;
-        },
-        get [SchedulerLike_now](): number {
-          const self = this as unknown as TProperties;
-          return getCurrentTime(self.host);
-        },
-        get [SchedulerLike_shouldYield](): boolean {
-          const self = this as unknown as TProperties &
-            EnumeratorLike<QueueTask>;
+            const {
+              [SchedulerLike_inContinuation]: inContinuation,
+              yieldRequested,
+            } = self;
 
-          const {
-            [SchedulerLike_inContinuation]: inContinuation,
-            yieldRequested,
-          } = self;
+            if (inContinuation) {
+              self.yieldRequested = false;
+            }
 
-          if (inContinuation) {
-            self.yieldRequested = false;
-          }
+            const next = peek(self);
 
-          const next = peek(self);
+            return (
+              inContinuation &&
+              (yieldRequested ||
+                isDisposed(self) ||
+                !hasCurrent(self) ||
+                self.isPaused ||
+                (isSome(next) ? priorityShouldYield(self, next) : false) ||
+                shouldYield(self.host))
+            );
+          },
+          [SourceLike_move](
+            this: TProperties & MutableEnumeratorLike<QueueTask>,
+          ): void {
+            // First fast forward through any disposed tasks.
+            peek(this);
+            const task = this.queue.pop();
 
-          return (
-            inContinuation &&
-            (yieldRequested ||
-              isDisposed(self) ||
-              !hasCurrent(self) ||
-              self.isPaused ||
-              (isSome(next) ? priorityShouldYield(self, next) : false) ||
-              shouldYield(self.host))
-          );
-        },
-        [SourceLike_move](
-          this: TProperties & MutableEnumeratorLike<QueueTask>,
-        ): void {
-          // First fast forward through any disposed tasks.
-          peek(this);
-          const task = this.queue.pop();
-
-          if (isSome(task)) {
-            this[EnumeratorLike_current] = task;
-          }
-        },
-        [SchedulerLike_requestYield](this: TProperties): void {
-          this.yieldRequested = true;
-        },
-        [PauseableLike_pause](this: TProperties & DisposableRefLike) {
-          this.isPaused = true;
-          this[MutableRefLike_current] = disposed;
-        },
-        [PauseableLike_resume](
-          this: TProperties & DisposableRefLike & EnumeratorLike,
-        ) {
-          this.isPaused = false;
-          scheduleOnHost(this);
-        },
-        [SchedulerLike_schedule](
-          this: TProperties & DisposableRefLike & EnumeratorLike<QueueTask>,
-          continuation: ContinuationLike,
-          options?: QueueSchedulerOptions,
-        ) {
-          const delay = getDelay(options);
-          const { priority } = options ?? {};
-          pipe(this, addIgnoringChildErrors(continuation));
-
-          if (!isDisposed(continuation)) {
-            const now = getCurrentTime(this.host);
-            const dueTime = max(now + delay, now);
-
-            const task =
-              isInContinuation(this) &&
-              hasCurrent(this) &&
-              getCurrent(this).continuation === continuation &&
-              delay <= 0
-                ? getCurrent(this)
-                : {
-                    taskID: this.taskIDCounter++,
-                    continuation,
-                    dueTime,
-                    priority: isSome(priority)
-                      ? max(priority as number, 0)
-                      : MAX_SAFE_INTEGER,
-                  };
-
-            const { delayed, queue } = this;
-            const targetQueue = dueTime > now ? delayed : queue;
-            targetQueue.push(task);
-
+            if (isSome(task)) {
+              this[EnumeratorLike_current] = task;
+            }
+          },
+          [SchedulerLike_requestYield](this: TProperties): void {
+            this.yieldRequested = true;
+          },
+          [PauseableLike_pause](this: TProperties & DisposableRefLike) {
+            this.isPaused = true;
+            this[MutableRefLike_current] = disposed;
+          },
+          [PauseableLike_resume](
+            this: TProperties & DisposableRefLike & EnumeratorLike,
+          ) {
+            this.isPaused = false;
             scheduleOnHost(this);
-          }
+          },
+          [SchedulerLike_schedule](
+            this: TProperties & DisposableRefLike & EnumeratorLike<QueueTask>,
+            continuation: ContinuationLike,
+            options?: QueueSchedulerOptions,
+          ) {
+            const delay = getDelay(options);
+            const { priority } = options ?? {};
+            pipe(this, addIgnoringChildErrors(continuation));
+
+            if (!isDisposed(continuation)) {
+              const now = getCurrentTime(this.host);
+              const dueTime = max(now + delay, now);
+
+              const task =
+                isInContinuation(this) &&
+                hasCurrent(this) &&
+                getCurrent(this).continuation === continuation &&
+                delay <= 0
+                  ? getCurrent(this)
+                  : {
+                      taskID: this.taskIDCounter++,
+                      continuation,
+                      dueTime,
+                      priority: isSome(priority)
+                        ? max(priority as number, 0)
+                        : MAX_SAFE_INTEGER,
+                    };
+
+              const { delayed, queue } = this;
+              const targetQueue = dueTime > now ? delayed : queue;
+              targetQueue.push(task);
+
+              scheduleOnHost(this);
+            }
+          },
         },
-      },
+      ),
       mixWith(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin),
-      createObjectFactory<QueueSchedulerLike, TProperties, SchedulerLike>(),
+      createObjectFactory<QueueSchedulerLike, SchedulerLike>(),
     );
   })();
 

@@ -1,40 +1,54 @@
 /// <reference types="./Object.d.ts" />
+import { __DEV__ } from '../env.mjs';
+
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
+const Object_prototype = Symbol("Object_prototype");
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
-const initUnsafe = (mixin, self, ...args) => {
-    mixin[Object_init].call(self, ...args);
+const initUnsafe = (clazz, self, ...args) => {
+    clazz[Object_init].call(self, ...args);
 };
 const init = initUnsafe;
-const createObjectFactory = () => (mixin) => {
-    const propertyDescription = getOwnPropertyDescriptors(mixin[Object_properties]);
-    const mixinDescription = getOwnPropertyDescriptors(mixin);
-    const { [Object_properties]: _properties, [Object_init]: _init, ...prototypeDescription } = mixinDescription;
+const createObjectFactory = () => (clazz) => {
+    const propertyDescription = getOwnPropertyDescriptors(clazz[Object_properties]);
+    const constructorObject = __DEV__
+        ? {
+            constructor: {
+                configurable: true,
+                enumerable: true,
+                value: clazz[Object_init],
+                writable: true,
+            },
+        }
+        : {};
+    const prototypeDescription = {
+        ...getOwnPropertyDescriptors(clazz[Object_prototype]),
+        ...constructorObject,
+    };
     const prototype = createObject(objectPrototype, prototypeDescription);
     return (...args) => {
         const instance = createObject(prototype, propertyDescription);
-        initUnsafe(mixin, instance, ...args);
+        initUnsafe(clazz, instance, ...args);
         return instance;
     };
 };
-const mixWith = (...mixins) => (lastProto) => {
-    const propertyDescriptors = mixins
-        .map(mixin => getOwnPropertyDescriptors(mixin))
+const mixWith = (...mixins) => (lastTMixin) => {
+    const properties = [...mixins, lastTMixin]
+        .map(clazz => clazz[Object_properties])
         .reduce((acc, next) => ({ ...acc, ...next }), {});
-    const properties = [...mixins, lastProto]
-        .map(mixin => mixin[Object_properties])
+    const prototypeDescriptions = [...mixins, lastTMixin]
+        .map(clazz => getOwnPropertyDescriptors(clazz[Object_prototype]))
         .reduce((acc, next) => ({ ...acc, ...next }), {});
-    const descriptor = {
-        ...propertyDescriptors,
-        ...getOwnPropertyDescriptors(lastProto),
-        [Object_properties]: {
-            configurable: true,
-            enumerable: true,
-            value: properties,
-            writable: true,
-        },
+    return {
+        [Object_init]: lastTMixin[Object_init],
+        [Object_properties]: properties,
+        [Object_prototype]: createObject(objectPrototype, prototypeDescriptions),
     };
-    return createObject(objectPrototype, descriptor);
 };
+const clazz = (init, properties, prototype) => ({
+    [Object_init]: init,
+    [Object_properties]: properties,
+    [Object_prototype]: prototype,
+});
 
-export { Object_init, Object_properties, createObjectFactory, init, mixWith };
+export { Object_init, Object_properties, Object_prototype, clazz, createObjectFactory, init, mixWith };

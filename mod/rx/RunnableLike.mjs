@@ -1,7 +1,7 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
 import { reactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
-import { createObjectFactory, Object_init, init, mixWith } from '../__internal__/util/Object.mjs';
+import { createObjectFactory, clazz, init, mixWith } from '../__internal__/util/Object.mjs';
 import { bufferSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, pipeUnsafe, newInstance, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
@@ -44,16 +44,15 @@ const concatT = {
 };
 const concatAll = /*@__PURE__*/ (() => {
     const typedDelegatingSinkMixin = delegatingSinkMixin();
-    return pipeLazy({
-        [Object_init](delegate) {
-            init(typedDelegatingSinkMixin, this, delegate);
-            pipe(this, bindTo(delegate));
-        },
+    return pipeLazy(clazz(function RunnableConcatAll(delegate) {
+        init(typedDelegatingSinkMixin, this, delegate);
+        pipe(this, bindTo(delegate));
+    }, {}, {
         [SinkLike_notify](next) {
             const { [DelegatingSink_delegate]: delegate } = this;
             pipe(delegate, createDelegatingSink, addTo(this), sourceFrom(next), dispose());
         },
-    }, mixWith(typedDelegatingSinkMixin), createObjectFactory(), lift);
+    }), mixWith(typedDelegatingSinkMixin), createObjectFactory(), lift);
 })();
 const concatAllT = {
     concatAll,

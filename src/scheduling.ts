@@ -16,9 +16,8 @@ import {
   enumeratorMixin,
 } from "./__internal__/util/EnumeratorLikeMixin";
 import {
-  Object_init,
-  Object_properties,
   PropertyTypeOf,
+  clazz,
   createObjectFactory,
   init,
   mixWith,
@@ -212,70 +211,71 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   };
 
   const createHostSchedulerInstance = pipe(
-    {
-      [Object_properties]: {
+    clazz(
+      function HostScheduler(this: TProperties, yieldInterval: number) {
+        init(disposableMixin, this);
+        this.yieldInterval = yieldInterval;
+      },
+      {
         [SchedulerLike_inContinuation]: false,
         startTime: 0,
         yieldInterval: 0,
         yieldRequested: false,
       },
-      [Object_init](this: TProperties, yieldInterval: number) {
-        init(disposableMixin, this);
-        this.yieldInterval = yieldInterval;
+      {
+        get [SchedulerLike_now](): number {
+          if (supportsPerformanceNow) {
+            return performance.now();
+          } else if (supportsProcessHRTime) {
+            const hr = process.hrtime();
+            return hr[0] * 1000 + hr[1] / 1e6;
+          } else {
+            return Date.now();
+          }
+        },
+
+        get [SchedulerLike_shouldYield](): boolean {
+          const self = this as unknown as TProperties & SchedulerLike;
+
+          const inContinuation = isInContinuation(self);
+          const { yieldRequested } = self;
+
+          if (inContinuation) {
+            self.yieldRequested = false;
+          }
+
+          return (
+            inContinuation &&
+            (yieldRequested ||
+              getCurrentTime(self) > self.startTime + self.yieldInterval ||
+              isInputPending())
+          );
+        },
+
+        [SchedulerLike_requestYield](this: TProperties): void {
+          this.yieldRequested = true;
+        },
+
+        [SchedulerLike_schedule](
+          this: TProperties & SchedulerLike,
+          continuation: ContinuationLike,
+          options?: { readonly delay?: number },
+        ) {
+          const delay = getDelay(options);
+
+          pipe(this, addIgnoringChildErrors(continuation));
+
+          const continuationIsDisposed = isDisposed(continuation);
+          if (!continuationIsDisposed && delay > 0) {
+            scheduleDelayed(this, continuation, delay);
+          } else if (!continuationIsDisposed) {
+            scheduleImmediate(this, continuation);
+          }
+        },
       },
-
-      get [SchedulerLike_now](): number {
-        if (supportsPerformanceNow) {
-          return performance.now();
-        } else if (supportsProcessHRTime) {
-          const hr = process.hrtime();
-          return hr[0] * 1000 + hr[1] / 1e6;
-        } else {
-          return Date.now();
-        }
-      },
-
-      get [SchedulerLike_shouldYield](): boolean {
-        const self = this as unknown as TProperties & SchedulerLike;
-
-        const inContinuation = isInContinuation(self);
-        const { yieldRequested } = self;
-
-        if (inContinuation) {
-          self.yieldRequested = false;
-        }
-
-        return (
-          inContinuation &&
-          (yieldRequested ||
-            getCurrentTime(self) > self.startTime + self.yieldInterval ||
-            isInputPending())
-        );
-      },
-
-      [SchedulerLike_requestYield](this: TProperties): void {
-        this.yieldRequested = true;
-      },
-
-      [SchedulerLike_schedule](
-        this: TProperties & SchedulerLike,
-        continuation: ContinuationLike,
-        options?: { readonly delay?: number },
-      ) {
-        const delay = getDelay(options);
-
-        pipe(this, addIgnoringChildErrors(continuation));
-
-        const continuationIsDisposed = isDisposed(continuation);
-        if (!continuationIsDisposed && delay > 0) {
-          scheduleDelayed(this, continuation, delay);
-        } else if (!continuationIsDisposed) {
-          scheduleImmediate(this, continuation);
-        }
-      },
-    },
+    ),
     mixWith(disposableMixin),
-    createObjectFactory<SchedulerLike, TProperties, number>(),
+    createObjectFactory<SchedulerLike, number>(),
   );
 
   return (
@@ -317,8 +317,16 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
   };
 
   const createVirtualTimeSchedulerInstance = pipe(
-    {
-      [Object_properties]: {
+    clazz(
+      function VirtualTimeScheduler(
+        this: TProperties,
+        maxMicroTaskTicks: number,
+      ) {
+        init(disposableMixin, this);
+        this.maxMicroTaskTicks = maxMicroTaskTicks;
+        this.taskQueue = createPriorityQueue(comparator);
+      },
+      {
         [SchedulerLike_inContinuation]: false,
         [SchedulerLike_now]: 0,
         maxMicroTaskTicks: MAX_SAFE_INTEGER,
@@ -327,81 +335,80 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         yieldRequested: false,
         taskQueue: none,
       },
-      [Object_init](this: TProperties, maxMicroTaskTicks: number) {
-        init(disposableMixin, this);
-        this.maxMicroTaskTicks = maxMicroTaskTicks;
-        this.taskQueue = createPriorityQueue(comparator);
+      {
+        get [SchedulerLike_shouldYield]() {
+          const self = this as unknown as TProperties;
+
+          const {
+            yieldRequested,
+            [SchedulerLike_inContinuation]: inContinuation,
+          } = self;
+
+          if (inContinuation) {
+            self.microTaskTicks++;
+            self.yieldRequested = false;
+          }
+
+          return (
+            inContinuation &&
+            (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks)
+          );
+        },
+        [ContinuationLike_run](
+          this: TProperties & EnumeratorLike<VirtualTask>,
+        ) {
+          while (move(this)) {
+            const task = getCurrent(this);
+            const { dueTime, continuation } = task;
+
+            this.microTaskTicks = 0;
+            this[SchedulerLike_now] = dueTime;
+            this[SchedulerLike_inContinuation] = true;
+            run(continuation);
+            this[SchedulerLike_inContinuation] = false;
+          }
+        },
+        [SchedulerLike_requestYield](this: TProperties): void {
+          this.yieldRequested = true;
+        },
+        [SchedulerLike_schedule](
+          this: TProperties & DisposableLike,
+          continuation: ContinuationLike,
+          options?: { readonly delay?: number },
+        ) {
+          const delay = getDelay(options);
+
+          pipe(this, addIgnoringChildErrors(continuation));
+
+          if (!isDisposed(continuation)) {
+            this.taskQueue.push({
+              id: this.taskIDCount++,
+              dueTime: getCurrentTime(this) + delay,
+              continuation,
+            });
+          }
+        },
+        [SourceLike_move](
+          this: TProperties & MutableEnumeratorLike<VirtualTask>,
+        ): void {
+          const taskQueue = this.taskQueue;
+
+          if (isDisposed(this)) {
+            return;
+          }
+
+          const task = taskQueue.pop();
+
+          if (isSome(task)) {
+            this[EnumeratorLike_current] = task;
+          } else {
+            pipe(this, dispose());
+          }
+        },
       },
-      get [SchedulerLike_shouldYield]() {
-        const self = this as unknown as TProperties;
-
-        const {
-          yieldRequested,
-          [SchedulerLike_inContinuation]: inContinuation,
-        } = self;
-
-        if (inContinuation) {
-          self.microTaskTicks++;
-          self.yieldRequested = false;
-        }
-
-        return (
-          inContinuation &&
-          (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks)
-        );
-      },
-      [ContinuationLike_run](this: TProperties & EnumeratorLike<VirtualTask>) {
-        while (move(this)) {
-          const task = getCurrent(this);
-          const { dueTime, continuation } = task;
-
-          this.microTaskTicks = 0;
-          this[SchedulerLike_now] = dueTime;
-          this[SchedulerLike_inContinuation] = true;
-          run(continuation);
-          this[SchedulerLike_inContinuation] = false;
-        }
-      },
-      [SchedulerLike_requestYield](this: TProperties): void {
-        this.yieldRequested = true;
-      },
-      [SchedulerLike_schedule](
-        this: TProperties & DisposableLike,
-        continuation: ContinuationLike,
-        options?: { readonly delay?: number },
-      ) {
-        const delay = getDelay(options);
-
-        pipe(this, addIgnoringChildErrors(continuation));
-
-        if (!isDisposed(continuation)) {
-          this.taskQueue.push({
-            id: this.taskIDCount++,
-            dueTime: getCurrentTime(this) + delay,
-            continuation,
-          });
-        }
-      },
-      [SourceLike_move](
-        this: TProperties & MutableEnumeratorLike<VirtualTask>,
-      ): void {
-        const taskQueue = this.taskQueue;
-
-        if (isDisposed(this)) {
-          return;
-        }
-
-        const task = taskQueue.pop();
-
-        if (isSome(task)) {
-          this[EnumeratorLike_current] = task;
-        } else {
-          pipe(this, dispose());
-        }
-      },
-    },
+    ),
     mixWith(disposableMixin, typedEnumeratorMixin),
-    createObjectFactory<VirtualTimeSchedulerLike, TProperties, number>(),
+    createObjectFactory<VirtualTimeSchedulerLike, number>(),
   );
 
   return (

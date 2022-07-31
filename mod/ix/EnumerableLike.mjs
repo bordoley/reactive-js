@@ -5,7 +5,7 @@ import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
-import { Object_properties, Object_init, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory, Object_init, Object_properties, Object_prototype } from '../__internal__/util/Object.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT } from '../ix.mjs';
@@ -21,13 +21,11 @@ import { add, dispose, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComp
 const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
 const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
     const DelegatingEnumerator_private_delegate = Symbol("DelegatingEnumerator_private_delegate");
-    return pipe({
-        [Object_properties]: {
-            [DelegatingEnumerator_private_delegate]: none,
-        },
-        [Object_init](delegate) {
-            this[DelegatingEnumerator_private_delegate] = delegate;
-        },
+    return pipe(clazz(function DelegatingEnumerator(delegate) {
+        this[DelegatingEnumerator_private_delegate] = delegate;
+    }, {
+        [DelegatingEnumerator_private_delegate]: none,
+    }, {
         get [EnumeratorLike_current]() {
             var _a, _b;
             const self = this;
@@ -41,7 +39,7 @@ const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
             const delegate = this[DelegatingEnumerator_private_delegate];
             return move(delegate);
         },
-    }, returns);
+    }), returns);
 })();
 const delegatingEnumeratorMove = (enumerator) => enumerator[DelegatingEnumerator_move_delegate]();
 const enumerate = () => (enumerable) => enumerable[InteractiveContainerLike_interact](none);
@@ -71,18 +69,16 @@ const liftT = {
 };
 const buffer = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    return pipe({
-        [Object_properties]: {
-            delegate: none,
-            maxBufferSize: 0,
-        },
-        [Object_init](delegate, maxBufferSize) {
-            init(disposableMixin, this);
-            init(typedEnumerator, this);
-            this.delegate = delegate;
-            this.maxBufferSize = maxBufferSize;
-            pipe(this, add(delegate));
-        },
+    return pipe(clazz(function BufferEnumerator(delegate, maxBufferSize) {
+        init(disposableMixin, this);
+        init(typedEnumerator, this);
+        this.delegate = delegate;
+        this.maxBufferSize = maxBufferSize;
+        pipe(this, add(delegate));
+    }, {
+        delegate: none,
+        maxBufferSize: 0,
+    }, {
         [SourceLike_move]() {
             const buffer = [];
             const { delegate, maxBufferSize } = this;
@@ -97,7 +93,7 @@ const buffer = /*@__PURE__*/ (() => {
                 pipe(this, dispose());
             }
         },
-    }, mixWith(disposableMixin, typedEnumerator), createObjectFactory(), createBufferOperator(liftT));
+    }), mixWith(disposableMixin, typedEnumerator), createObjectFactory(), createBufferOperator(liftT));
 })();
 const bufferT = {
     buffer,
@@ -106,17 +102,15 @@ const concatAll =
 /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
     const typedDisposableRefMixin = disposableRefMixin();
-    return pipe({
-        [Object_properties]: {
-            delegate: none,
-        },
-        [Object_init](delegate) {
-            init(disposableMixin, this);
-            init(typedDisposableRefMixin, this, disposed);
-            init(typedEnumerator, this);
-            this.delegate = delegate;
-            pipe(this, add(delegate));
-        },
+    return pipe(clazz(function ConcatAllEnumerator(delegate) {
+        init(disposableMixin, this);
+        init(typedDisposableRefMixin, this, disposed);
+        init(typedEnumerator, this);
+        this.delegate = delegate;
+        pipe(this, add(delegate));
+    }, {
+        delegate: none,
+    }, {
         [SourceLike_move]() {
             const { delegate } = this;
             const innerEnumerator = getCurrentRef(this);
@@ -139,7 +133,7 @@ const concatAll =
                 }
             }
         },
-    }, mixWith(disposableMixin, typedDisposableRefMixin, typedEnumerator), createObjectFactory(), lift, returns);
+    }), mixWith(disposableMixin, typedDisposableRefMixin, typedEnumerator), createObjectFactory(), lift, returns);
 })();
 const concatAllT = { concatAll };
 const concat = (...enumerables) => pipe(enumerables, toEnumerable$1(), concatAll());
@@ -149,13 +143,11 @@ const concatT = {
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
-    return pipe({
-        [Object_properties]: { equality: none },
-        [Object_init](delegate, equality) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.equality = equality;
-        },
+    return pipe(clazz(function DistinctUntilChanged(delegate, equality) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
+        this.equality = equality;
+    }, { equality: none }, {
         [SourceLike_move]() {
             const hadCurrent = hasCurrent(this);
             const prevCurrent = hadCurrent ? getCurrent(this) : none;
@@ -171,20 +163,18 @@ const distinctUntilChanged =
                 pipe(this, dispose({ cause }));
             }
         },
-    }, mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createDistinctUntilChangedOperator(liftT));
+    }), mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createDistinctUntilChangedOperator(liftT));
 })();
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
 const forEach = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
-    return pipe({
-        [Object_properties]: { effect: none },
-        [Object_init](delegate, effect) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.effect = effect;
-        },
+    return pipe(clazz(function forEachEnumerator(delegate, effect) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
+        this.effect = effect;
+    }, { effect: none }, {
         [SourceLike_move]() {
             if (delegatingEnumeratorMove(this)) {
                 try {
@@ -195,18 +185,16 @@ const forEach = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createForEachOperator(liftT));
+    }), mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createForEachOperator(liftT));
 })();
 const forEachT = { forEach };
 const keep = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
-    return pipe({
-        [Object_properties]: { predicate: none },
-        [Object_init](delegate, predicate) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.predicate = predicate;
-        },
+    return pipe(clazz(function KeepEnumerator(delegate, predicate) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
+        this.predicate = predicate;
+    }, { predicate: none }, {
         [SourceLike_move]() {
             const { predicate } = this;
             try {
@@ -217,24 +205,22 @@ const keep = /*@__PURE__*/ (() => {
                 pipe(this, dispose({ cause }));
             }
         },
-    }, mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createKeepOperator(liftT));
+    }), mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createKeepOperator(liftT));
 })();
 const keepT = {
     keep,
 };
 const map = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    return pipe({
-        [Object_properties]: {
-            mapper: none,
-            delegate: none,
-        },
-        [Object_init](delegate, mapper) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedEnumerator, this);
-            this.delegate = delegate;
-            this.mapper = mapper;
-        },
+    return pipe(clazz(function MapEnumerator(delegate, mapper) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedEnumerator, this);
+        this.delegate = delegate;
+        this.mapper = mapper;
+    }, {
+        mapper: none,
+        delegate: none,
+    }, {
         [SourceLike_move]() {
             const { delegate } = this;
             if (move(delegate)) {
@@ -246,7 +232,7 @@ const map = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory(), createMapOperator(liftT));
+    }), mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory(), createMapOperator(liftT));
 })();
 const mapT = { map };
 const pairwise = /*@__PURE__*/ (() => {
@@ -257,20 +243,23 @@ const pairwise = /*@__PURE__*/ (() => {
             init(typedEnumerator, this);
             this.delegate = delegate;
         },
-        [SourceLike_move]() {
-            const { delegate } = this;
-            const prev = hasCurrent(this)
-                ? getCurrent(this)[1]
-                : move(delegate)
-                    ? getCurrent(delegate)
-                    : none;
-            if (isSome(prev) && move(delegate)) {
-                const current = getCurrent(delegate);
-                this[EnumeratorLike_current] = [prev, current];
-            }
-            else {
-                pipe(this, dispose());
-            }
+        [Object_properties]: {},
+        [Object_prototype]: {
+            [SourceLike_move]() {
+                const { delegate } = this;
+                const prev = hasCurrent(this)
+                    ? getCurrent(this)[1]
+                    : move(delegate)
+                        ? getCurrent(delegate)
+                        : none;
+                if (isSome(prev) && move(delegate)) {
+                    const current = getCurrent(delegate);
+                    this[EnumeratorLike_current] = [prev, current];
+                }
+                else {
+                    pipe(this, dispose());
+                }
+            },
         },
     }, mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory(), lift, returns);
 })();
@@ -278,18 +267,16 @@ const pairwiseT = {
     pairwise,
 };
 const repeat = /*@__PURE__*/ (() => {
-    const createRepeatEnumerator = pipe({
-        [Object_properties]: {
-            count: 0,
-            enumerator: none,
-            shouldRepeat: none,
-            src: none,
-        },
-        [Object_init](src, shouldRepeat) {
-            init(disposableMixin, this);
-            this.src = src;
-            this.shouldRepeat = shouldRepeat;
-        },
+    const createRepeatEnumerator = pipe(clazz(function RepeatEnumerator(src, shouldRepeat) {
+        init(disposableMixin, this);
+        this.src = src;
+        this.shouldRepeat = shouldRepeat;
+    }, {
+        count: 0,
+        enumerator: none,
+        shouldRepeat: none,
+        src: none,
+    }, {
         [SourceLike_move]() {
             if (isNone(this.enumerator)) {
                 this.enumerator = pipe(this.src, enumerate(), addTo(this));
@@ -324,7 +311,7 @@ const repeat = /*@__PURE__*/ (() => {
             const self = this;
             return (_b = (_a = self.enumerator) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_hasCurrent]) !== null && _b !== void 0 ? _b : false;
         },
-    }, mixWith(disposableMixin), createObjectFactory());
+    }), mixWith(disposableMixin), createObjectFactory());
     return createRepeatOperator((delegate, predicate) => createEnumerable(() => createRepeatEnumerator(delegate, predicate)));
 })();
 const repeatT = {
@@ -332,21 +319,19 @@ const repeatT = {
 };
 const scan = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    return pipe({
-        [Object_properties]: { reducer: none, delegate: none },
-        [Object_init](delegate, reducer, initialValue) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedEnumerator, this);
-            this.delegate = delegate;
-            this.reducer = reducer;
-            try {
-                const acc = initialValue();
-                this[EnumeratorLike_current] = acc;
-            }
-            catch (cause) {
-                pipe(this, dispose({ cause }));
-            }
-        },
+    return pipe(clazz(function ScanEnumerator(delegate, reducer, initialValue) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedEnumerator, this);
+        this.delegate = delegate;
+        this.reducer = reducer;
+        try {
+            const acc = initialValue();
+            this[EnumeratorLike_current] = acc;
+        }
+        catch (cause) {
+            pipe(this, dispose({ cause }));
+        }
+    }, { reducer: none, delegate: none }, {
         [SourceLike_move]() {
             const acc = hasCurrent(this) ? getCurrent(this) : none;
             const { delegate, reducer } = this;
@@ -359,7 +344,7 @@ const scan = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }, mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory(), createScanOperator(liftT));
+    }), mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory(), createScanOperator(liftT));
 })();
 const scanT = {
     scan,
@@ -367,17 +352,15 @@ const scanT = {
 const skipFirst = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
-    return pipe({
-        [Object_properties]: {
-            skipCount: 0,
-            count: 0,
-        },
-        [Object_init](delegate, skipCount) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.skipCount = skipCount;
-            this.count = 0;
-        },
+    return pipe(clazz(function SkipFirstEnumerator(delegate, skipCount) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
+        this.skipCount = skipCount;
+        this.count = 0;
+    }, {
+        skipCount: 0,
+        count: 0,
+    }, {
         [SourceLike_move]() {
             const { skipCount } = this;
             for (let { count } = this; count < skipCount; count++) {
@@ -388,7 +371,7 @@ const skipFirst =
             this.count = skipCount;
             delegatingEnumeratorMove(this);
         },
-    }, mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createSkipFirstOperator(liftT));
+    }), mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createSkipFirstOperator(liftT));
 })();
 const skipFirstT = {
     skipFirst,
@@ -396,16 +379,14 @@ const skipFirstT = {
 const takeFirst = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
-    return pipe({
-        [Object_properties]: {
-            maxCount: 0,
-            count: 0,
-        },
-        [Object_init](delegate, maxCount) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.maxCount = maxCount;
-        },
+    return pipe(clazz(function TakeFirstEnumerator(delegate, maxCount) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
+        this.maxCount = maxCount;
+    }, {
+        maxCount: 0,
+        count: 0,
+    }, {
         [SourceLike_move]() {
             if (this.count < this.maxCount) {
                 this.count++;
@@ -415,7 +396,7 @@ const takeFirst =
                 pipe(this, dispose());
             }
         },
-    }, mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createTakeFirstOperator({
+    }), mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createTakeFirstOperator({
         ...liftT,
         ...emptyEnumerableT,
     }));
@@ -425,18 +406,16 @@ const takeFirstT = {
 };
 const takeLast = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
-    return pipe({
-        [Object_properties]: {
-            maxCount: 0,
-            isStarted: false,
-        },
-        [Object_init](delegate, maxCount) {
-            init(disposableMixin, this);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.maxCount = maxCount;
-            this.isStarted = false;
-            pipe(this, add(delegate));
-        },
+    return pipe(clazz(function TakeLastEnumerator(delegate, maxCount) {
+        init(disposableMixin, this);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
+        this.maxCount = maxCount;
+        this.isStarted = false;
+        pipe(this, add(delegate));
+    }, {
+        maxCount: 0,
+        isStarted: false,
+    }, {
         [SourceLike_move]() {
             if (!isDisposed(this) && !this.isStarted) {
                 this.isStarted = true;
@@ -452,7 +431,7 @@ const takeLast = /*@__PURE__*/ (() => {
             }
             delegatingEnumeratorMove(this);
         },
-    }, mixWith(disposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createTakeLastOperator({
+    }), mixWith(disposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createTakeLastOperator({
         ...liftT,
         ...emptyEnumerableT,
     }));
@@ -461,18 +440,16 @@ const takeLastT = { takeLast };
 const takeWhile = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
-    return pipe({
-        [Object_properties]: {
-            predicate: none,
-            inclusive: false,
-            done: false,
-        },
-        [Object_init](delegate, predicate, inclusive) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.predicate = predicate;
-            this.inclusive = inclusive;
-        },
+    return pipe(clazz(function TakeWhileEnumerator(delegate, predicate, inclusive) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
+        this.predicate = predicate;
+        this.inclusive = inclusive;
+    }, {
+        predicate: none,
+        inclusive: false,
+        done: false,
+    }, {
         [SourceLike_move]() {
             const { inclusive, predicate } = this;
             if (this.done && !isDisposed(this)) {
@@ -494,42 +471,40 @@ const takeWhile =
                 }
             }
         },
-    }, mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createTakeWhileOperator(liftT));
+    }), mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createTakeWhileOperator(liftT));
 })();
 const takeWhileT = { takeWhile };
 const throwIfEmpty = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
-    return pipe({
-        [Object_properties]: {
-            isEmpty: true,
-        },
-        [Object_init](delegate, factory) {
-            init(disposableMixin, this);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.isEmpty = true;
-            pipe(this, addIgnoringChildErrors(delegate));
-            pipe(delegate, onComplete(() => {
-                let error = none;
-                if (this.isEmpty) {
-                    let cause = none;
-                    try {
-                        cause = factory();
-                    }
-                    catch (e) {
-                        cause = e;
-                    }
-                    error = { cause };
+    return pipe(clazz(function TakeWhileEnumerator(delegate, factory) {
+        init(disposableMixin, this);
+        init(typedDelegatingEnumeratorMixin, this, delegate);
+        this.isEmpty = true;
+        pipe(this, addIgnoringChildErrors(delegate));
+        pipe(delegate, onComplete(() => {
+            let error = none;
+            if (this.isEmpty) {
+                let cause = none;
+                try {
+                    cause = factory();
                 }
-                pipe(this, dispose(error));
-            }));
-        },
+                catch (e) {
+                    cause = e;
+                }
+                error = { cause };
+            }
+            pipe(this, dispose(error));
+        }));
+    }, {
+        isEmpty: true,
+    }, {
         [SourceLike_move]() {
             if (delegatingEnumeratorMove(this)) {
                 this.isEmpty = false;
             }
         },
-    }, mixWith(disposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createThrowIfEmptyOperator(liftT));
+    }), mixWith(disposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createThrowIfEmptyOperator(liftT));
 })();
 const throwIfEmptyT = {
     throwIfEmpty,
@@ -619,25 +594,27 @@ const zip = /*@__PURE__*/ (() => {
     const allHaveCurrent = (enumerators) => pipe(enumerators, every(hasCurrent));
     const typedEnumerator = enumeratorMixin();
     const createZipEnumerator = pipe({
-        [Object_properties]: {
-            enumerators: none,
-        },
         [Object_init](enumerators) {
             init(disposableMixin, this);
             init(typedEnumerator, this);
             this.enumerators = enumerators;
         },
-        [SourceLike_move]() {
-            if (!isDisposed(this)) {
-                const { enumerators } = this;
-                moveAll(enumerators);
-                if (allHaveCurrent(enumerators)) {
-                    this[EnumeratorLike_current] = pipe(enumerators, map$1(getCurrent));
+        [Object_properties]: {
+            enumerators: none,
+        },
+        [Object_prototype]: {
+            [SourceLike_move]() {
+                if (!isDisposed(this)) {
+                    const { enumerators } = this;
+                    moveAll(enumerators);
+                    if (allHaveCurrent(enumerators)) {
+                        this[EnumeratorLike_current] = pipe(enumerators, map$1(getCurrent));
+                    }
+                    else {
+                        pipe(this, dispose());
+                    }
                 }
-                else {
-                    pipe(this, dispose());
-                }
-            }
+            },
         },
     }, mixWith(disposableMixin, typedEnumerator), createObjectFactory());
     const zipEnumerators = (enumerators) => {
@@ -649,4 +626,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, delegatingEnumeratorMixin, distinctUntilChanged, distinctUntilChangedT, enumerate, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zipT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zipT };
