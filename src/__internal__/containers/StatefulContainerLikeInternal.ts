@@ -164,6 +164,26 @@ export const createMapOperator =
   (mapper: Function1<TA, TB>) =>
     pipe(operator, partial(mapper), lift(m));
 
+export const createReduceOperator =
+  <
+    C extends StatefulContainerLike,
+    T,
+    TAcc,
+    TVar extends TInteractive | TReactive,
+  >(
+    m: Lift<C, TVar>,
+  ) =>
+  (
+    operator: Function3<
+      StatefulContainerOperatorIn<C, T, TAcc, TVar>,
+      Reducer<T, TAcc>,
+      Factory<TAcc>,
+      StatefulContainerOperatorOut<C, T, TAcc, TVar>
+    >,
+  ) =>
+  (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+    pipe(operator, partial(reducer, initialValue), lift(m));
+
 export const createScanOperator =
   <
     C extends StatefulContainerLike,

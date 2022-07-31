@@ -8,6 +8,7 @@ import {
   createForEachOperator,
   createKeepOperator,
   createMapOperator,
+  createReduceOperator,
   createScanOperator,
   createSkipFirstOperator,
   createTakeFirstOperator,
@@ -35,6 +36,7 @@ import {
   keepSinkMixin,
   mapSinkMixin,
   pairwiseSinkMixin,
+  reduceSinkMixin,
   scanSinkMixin,
   skipFirstSinkMixin,
   takeFirstSinkMixin,
@@ -52,6 +54,7 @@ import {
   Keep,
   Map,
   Pairwise,
+  Reduce,
   Repeat,
   Scan,
   SkipFirst,
@@ -348,6 +351,32 @@ export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
 })();
 
 export const pairwiseT: Pairwise<RunnableLike> = { pairwise };
+
+export const reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
+  T,
+  TAcc,
+>() => {
+  const typedReduceSinkMixin = reduceSinkMixin<
+    RunnableLike,
+    SinkLike<TAcc>,
+    T,
+    TAcc
+  >(arrayToRunnable());
+
+  return pipe(
+    typedReduceSinkMixin,
+    createObjectFactory<
+      SinkLike<T>,
+      PropertyTypeOf<[typeof typedReduceSinkMixin]>,
+      SinkLike<TAcc>,
+      Reducer<T, TAcc>,
+      Factory<TAcc>
+    >(),
+    createReduceOperator<RunnableLike, T, TAcc, TReactive>(liftT),
+  );
+})();
+
+export const reduceT: Reduce<RunnableLike> = { reduce };
 
 export const repeat = /*@__PURE__*/ (<T>() => {
   return createRepeatOperator<RunnableLike, T>((delegate, predicate) =>
