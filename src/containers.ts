@@ -192,6 +192,10 @@ export type Map<C extends ContainerLike> = Container<C> & {
   map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 };
 
+export type Never<C extends StatefulContainerLike> = Container<C> & {
+  never<T>(): ContainerOf<C, T>;
+};
+
 export type Pairwise<C extends ContainerLike> = Container<C> & {
   pairwise<T>(): ContainerOperator<C, T, readonly [T, T]>;
 };
