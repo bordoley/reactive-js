@@ -264,23 +264,6 @@ export const decorateWithCatchErrorNotify =
       },
     );
 
-export const decorateWithDecodeWithCharsetNotify =
-  <C extends ReactiveContainerLike>() =>
-  (DecodeWithCharsetSink: DecodeWithCharsetSink<C>) =>
-    decorateWithNotify(
-      DecodeWithCharsetSink,
-      function notifyDecodeWithCharset(
-        this: InstanceType<typeof DecodeWithCharsetSink>,
-        next: ArrayBuffer,
-      ) {
-        const data = this.textDecoder.decode(next, { stream: true });
-        if (!isEmpty(data)) {
-          pipe(this, getDelegate, notify(data));
-        }
-      },
-    );
-
-
 export const decorateWithReduceNotify =
   <C extends ReactiveContainerLike>() =>
   (ReduceSink: ReduceSink<C>) =>

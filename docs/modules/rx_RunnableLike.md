@@ -9,6 +9,7 @@
 - [bufferT](rx_RunnableLike.md#buffert)
 - [concatAllT](rx_RunnableLike.md#concatallt)
 - [concatT](rx_RunnableLike.md#concatt)
+- [decodeWithCharsetT](rx_RunnableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_RunnableLike.md#distinctuntilchangedt)
 - [forEachT](rx_RunnableLike.md#foreacht)
 - [keepT](rx_RunnableLike.md#keept)
@@ -28,6 +29,7 @@
 - [buffer](rx_RunnableLike.md#buffer)
 - [concat](rx_RunnableLike.md#concat)
 - [concatAll](rx_RunnableLike.md#concatall)
+- [decodeWithCharset](rx_RunnableLike.md#decodewithcharset)
 - [distinctUntilChanged](rx_RunnableLike.md#distinctuntilchanged)
 - [first](rx_RunnableLike.md#first)
 - [forEach](rx_RunnableLike.md#foreach)
@@ -62,6 +64,12 @@ ___
 ### concatT
 
 • `Const` **concatT**: [`Concat`](containers.md#concat)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### decodeWithCharsetT
+
+• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](containers.md#decodewithcharset)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -209,6 +217,22 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+
+___
+
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
 
 ___
 

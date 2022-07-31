@@ -1,6 +1,7 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   expectToThrowError,
   test,
 } from "../__internal__/testing";
@@ -9,6 +10,8 @@ import {
   Concat,
   ConcatAll,
   ContainerLike,
+  DecodeWithCharset,
+  Defer,
   DistinctUntilChanged,
   ForEach,
   FromArray,
@@ -26,6 +29,7 @@ import {
   Zip,
   emptyReadonlyArray,
 } from "../containers";
+import { encodeUtf8 } from "../containers/ContainerLike";
 import {
   alwaysTrue,
   arrayEquality,
@@ -113,6 +117,42 @@ export const concatAllTests = <C extends ContainerLike>(
     ),
     test("when an inner enumerator throw", () => {
       // FIXME: Implement me
+    }),
+  );
+
+export const decodeWithCharsetTests = <C extends ContainerLike>(
+  m: DecodeWithCharset<C> &
+    Defer<C> &
+    FromArray<C> &
+    Map<C> &
+    ToReadonlyArray<C>,
+) =>
+  describe(
+    "decodeWithCharset",
+    test("decoding ascii", () => {
+      const str = "abcdefghijklmnsopqrstuvwxyz";
+
+      pipe(
+        [str],
+        m.fromArray(),
+        encodeUtf8(m),
+        m.decodeWithCharset(),
+        m.toReadonlyArray(),
+        x => x.join(),
+        expectEquals(str),
+      );
+    }),
+    test("decoding multi-byte code points", () => {
+      const str = String.fromCodePoint(8364);
+      pipe(
+        [str],
+        m.fromArray(),
+        encodeUtf8(m),
+        m.decodeWithCharset(),
+        m.toReadonlyArray(),
+        x => x.join(),
+        expectEquals(str),
+      );
     }),
   );
 

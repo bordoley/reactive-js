@@ -64,13 +64,13 @@ ___
 
 ### [InteractiveContainerLike\_interact]
 
-▸ **[InteractiveContainerLike_interact]**(`_`): [`EnumeratorLike`](util.EnumeratorLike.md)<`T`\>
+▸ **[InteractiveContainerLike_interact]**(`ctx`): [`EnumeratorLike`](util.EnumeratorLike.md)<`T`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `_` | `void` |
+| `ctx` | `void` |
 
 #### Returns
 

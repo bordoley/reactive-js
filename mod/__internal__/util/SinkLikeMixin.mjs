@@ -1,6 +1,6 @@
 /// <reference types="./SinkLikeMixin.d.ts" />
-import { pipe, pipeLazy, none, isEmpty, getLength, returns } from '../../functions.mjs';
-import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
+import { pipe, pipeLazy, none, isEmpty, getLength, newInstance, returns } from '../../functions.mjs';
+import { s as sinkInto } from '../../ReactiveContainerLike-29f1e1fa.mjs';
 import { SinkLike_notify } from '../../util.mjs';
 import '../../util/DisposableLike.mjs';
 import { notify } from '../../util/SinkLike.mjs';
@@ -68,6 +68,36 @@ const bufferSinkMixin = (fromArray) => {
                 const buffer = this[BufferSink_private_buffer];
                 this[BufferSink_private_buffer] = [];
                 pipe(this[Sink_private_delegate], notify(buffer));
+            }
+        },
+    }, mixWith(disposableMixin));
+};
+const decodeWithCharsetSinkMixin = (fromArray) => {
+    const DecodeWithCharsetSink_private_textDecoder = Symbol("DecodeWithCharsetSink_private_textDecoder");
+    return pipe({
+        [Object_properties]: {
+            [Sink_private_delegate]: none,
+            [DecodeWithCharsetSink_private_textDecoder]: none,
+        },
+        [Object_init](delegate, charset) {
+            init(disposableMixin, this);
+            this[Sink_private_delegate] = delegate;
+            const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
+            this[DecodeWithCharsetSink_private_textDecoder] = textDecoder;
+            pipe(this, addTo(delegate), onComplete(() => {
+                const data = textDecoder.decode();
+                if (!isEmpty(data)) {
+                    pipe([data], fromArray, sinkInto(delegate));
+                }
+                else {
+                    pipe(delegate, dispose());
+                }
+            }));
+        },
+        [SinkLike_notify](next) {
+            const data = this[DecodeWithCharsetSink_private_textDecoder].decode(next, { stream: true });
+            if (!isEmpty(data)) {
+                pipe(this[Sink_private_delegate], notify(data));
             }
         },
     }, mixWith(disposableMixin));
@@ -337,4 +367,4 @@ const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
     }, mixWith(disposableMixin), returns);
 })();
 
-export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

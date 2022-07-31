@@ -1,10 +1,12 @@
 import { describe, expectEquals, test } from "../__internal__/testing";
 import { toRunnable } from "../containers/ReadonlyArrayLike";
 import { Option, none, pipeLazy } from "../functions";
+import { deferRunnableT } from "../rx";
 import {
   bufferT,
   concatAllT,
   concatT,
+  decodeWithCharsetT,
   distinctUntilChangedT,
   first,
   forEachT,
@@ -25,6 +27,7 @@ import {
   bufferTests,
   concatAllTests,
   concatTests,
+  decodeWithCharsetTests,
   distinctUntilChangedTests,
   forEachTests,
   keepTests,
@@ -54,6 +57,13 @@ export const RunnableLikeTests = describe(
   concatAllTests({
     fromArray: toRunnable,
     ...concatAllT,
+    ...toReadonlyArrayT,
+  }),
+  decodeWithCharsetTests({
+    fromArray: toRunnable,
+    ...decodeWithCharsetT,
+    ...deferRunnableT,
+    ...mapT,
     ...toReadonlyArrayT,
   }),
   distinctUntilChangedTests({

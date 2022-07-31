@@ -1,6 +1,7 @@
 /// <reference types="./operators.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals, expectToThrowError } from '../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from '../__internal__/testing.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
+import { encodeUtf8 } from '../containers/ContainerLike.mjs';
 import { pipeLazy, arrayEquality, pipe, increment, sum, returns, alwaysTrue } from '../functions.mjs';
 
 const bufferTests = (m) => createDescribe("buffer", createTest("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray(), m.buffer({ maxBufferSize: 3 }), m.toReadonlyArray(), expectArrayEquals([
@@ -15,6 +16,13 @@ const bufferTests = (m) => createDescribe("buffer", createTest("with multiple su
 const concatTests = (m) => createDescribe("concat", createTest("concats the input containers in order", pipeLazy(m.concat(pipe([1, 2, 3], m.fromArray()), pipe([4, 5, 6], m.fromArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))));
 const concatAllTests = (m) => createDescribe("concatAll", createTest("concats the input containers in order", pipeLazy([pipe([1, 2, 3], m.fromArray()), pipe([4, 5, 6], m.fromArray())], m.fromArray(), m.concatAll(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), createTest("when an inner enumerator throw", () => {
     // FIXME: Implement me
+}));
+const decodeWithCharsetTests = (m) => createDescribe("decodeWithCharset", createTest("decoding ascii", () => {
+    const str = "abcdefghijklmnsopqrstuvwxyz";
+    pipe([str], m.fromArray(), encodeUtf8(m), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
+}), createTest("decoding multi-byte code points", () => {
+    const str = String.fromCodePoint(8364);
+    pipe([str], m.fromArray(), encodeUtf8(m), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
 }));
 const distinctUntilChangedTests = (m) => createDescribe("distinctUntilChanged", createTest("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), createTest("when source is empty", pipeLazy([], m.fromArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([]))), createTest("when equality operator throws", () => {
     const err = new Error();
@@ -114,4 +122,4 @@ const zipTests = (m) => createDescribe("zip", createTest("when all inputs are th
     [3, 3, 3],
 ], arrayEquality()))));
 
-export { bufferTests, concatAllTests, concatTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };
+export { bufferTests, concatAllTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };

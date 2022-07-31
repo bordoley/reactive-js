@@ -29,6 +29,7 @@
 - [createObservableUsingT](rx.md#createobservableusingt)
 - [createRunnableUsingT](rx.md#createrunnableusingt)
 - [deferObservableT](rx.md#deferobservablet)
+- [deferRunnableT](rx.md#deferrunnablet)
 - [emptyRunnableT](rx.md#emptyrunnablet)
 - [neverObservableT](rx.md#neverobservablet)
 - [neverRunnableT](rx.md#neverrunnablet)
@@ -41,6 +42,7 @@
 - [createRunnableUsing](rx.md#createrunnableusing)
 - [createSubject](rx.md#createsubject)
 - [deferObservable](rx.md#deferobservable)
+- [deferRunnable](rx.md#deferrunnable)
 - [emptyRunnable](rx.md#emptyrunnable)
 - [neverObservable](rx.md#neverobservable)
 - [neverRunnable](rx.md#neverrunnable)
@@ -132,6 +134,12 @@ ___
 ### deferObservableT
 
 • `Const` **deferObservableT**: [`Defer`](containers.md#defer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### deferRunnableT
+
+• `Const` **deferRunnableT**: [`Defer`](containers.md#defer)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -527,6 +535,29 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
+### deferRunnable
+
+▸ **deferRunnable**<`T`\>(`factory`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 ___
 
