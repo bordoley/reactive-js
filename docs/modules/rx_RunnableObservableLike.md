@@ -6,17 +6,25 @@
 
 ### Variables
 
+- [decodeWithCharsetT](rx_RunnableObservableLike.md#decodewithcharsett)
 - [forEachT](rx_RunnableObservableLike.md#foreacht)
 - [mapT](rx_RunnableObservableLike.md#mapt)
 - [toReadonlyArrayT](rx_RunnableObservableLike.md#toreadonlyarrayt)
 
 ### Functions
 
+- [decodeWithCharset](rx_RunnableObservableLike.md#decodewithcharset)
 - [forEach](rx_RunnableObservableLike.md#foreach)
 - [map](rx_RunnableObservableLike.md#map)
 - [toReadonlyArray](rx_RunnableObservableLike.md#toreadonlyarray)
 
 ## Variables
+
+### decodeWithCharsetT
+
+• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](containers.md#decodewithcharset)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
 
 ### forEachT
 
@@ -35,6 +43,22 @@ ___
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), { `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }\>
 
 ## Functions
+
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+___
 
 ### forEach
 

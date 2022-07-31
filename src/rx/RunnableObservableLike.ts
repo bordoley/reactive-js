@@ -1,4 +1,5 @@
 import {
+  DecodeWithCharset,
   ForEach,
   Map,
   ReadonlyArrayLike,
@@ -13,10 +14,17 @@ import {
 import { run } from "../util/ContinuationLike";
 import { addTo, getException } from "../util/DisposableLike";
 import {
+  decodeWithCharset as decodeWithCharsetObs,
   forEach as forEachObs,
   map as mapObs,
   subscribe,
 } from "./ObservableLike";
+
+export const decodeWithCharset: DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"] =
+  decodeWithCharsetObs;
+export const decodeWithCharsetT: DecodeWithCharset<RunnableObservableLike> = {
+  decodeWithCharset,
+};
 
 export const forEach: ForEach<RunnableObservableLike>["forEach"] = forEachObs;
 export const forEachT: ForEach<RunnableObservableLike> = { forEach };

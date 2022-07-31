@@ -1,9 +1,16 @@
-import { ForEach, Map, ToPromise, ContainerOperator } from "../containers.mjs";
+import { DecodeWithCharset, ForEach, Map, ToPromise, ContainerOperator } from "../containers.mjs";
 import { Function1, SideEffect1 } from "../functions.mjs";
 import { ObservableLike, RunnableObservableLike, EnumerableObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
 import { DisposableLike } from "../util.mjs";
 declare const getObservableType: (obs: ObservableLike) => 0 | 1 | 2;
+interface DecodeWithCharsetObservable {
+    (charset?: string | undefined): ContainerOperator<ObservableLike, ArrayBuffer, string>;
+    (charset?: string | undefined): ContainerOperator<RunnableObservableLike, ArrayBuffer, string>;
+    (charset?: string | undefined): ContainerOperator<EnumerableObservableLike, ArrayBuffer, string>;
+}
+declare const decodeWithCharset: DecodeWithCharsetObservable;
+declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike>;
 interface ForEachObservable {
     <T>(effect: SideEffect1<T>): ContainerOperator<ObservableLike<unknown>, T, T>;
     <T>(effect: SideEffect1<T>): ContainerOperator<RunnableObservableLike<unknown>, T, T>;
@@ -26,4 +33,4 @@ declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
 declare const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"];
-export { forEach, forEachT, getObservableType, map, mapT, subscribe, toPromise };
+export { decodeWithCharset, decodeWithCharsetT, forEach, forEachT, getObservableType, map, mapT, subscribe, toPromise };
