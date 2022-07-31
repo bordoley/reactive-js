@@ -13,6 +13,7 @@ declare type Lift<C extends StatefulContainerLike, TVar extends TInteractive | T
 declare const createBufferOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function2<StatefulContainerOperatorIn<C, T, readonly T[], TVar>, number, StatefulContainerOperatorOut<C, T, readonly T[], TVar>>) => (options?: {
     readonly maxBufferSize?: number;
 }) => ContainerOperator<C, T, readonly T[]>;
+declare const createDecodeWithCharsetOperator: <C extends StatefulContainerLike, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function2<StatefulContainerOperatorIn<C, ArrayBuffer, string, TVar>, string, StatefulContainerOperatorOut<C, ArrayBuffer, string, TVar>>) => (charset?: string | undefined) => ContainerOperator<C, ArrayBuffer, string>;
 declare const createDistinctUntilChangedOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function2<StatefulContainerOperatorIn<C, T, T, TVar>, Equality<T>, StatefulContainerOperatorOut<C, T, T, TVar>>) => (options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => ContainerOperator<C, T, T>;
@@ -43,4 +44,4 @@ declare const createTakeWhileOperator: <C extends StatefulContainerLike, T, TVar
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T, T>;
 declare const createThrowIfEmptyOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function2<StatefulContainerOperatorIn<C, T, T, TVar>, Factory<unknown>, StatefulContainerOperatorOut<C, T, T, TVar>>) => (factory: Factory<unknown>) => ContainerOperator<C, T, T>;
-export { Lift, StatefulContainerOperatorIn, StatefulContainerOperatorOut, TInteractive, TReactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, reactive };
+export { Lift, StatefulContainerOperatorIn, StatefulContainerOperatorOut, TInteractive, TReactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, interactive, reactive };

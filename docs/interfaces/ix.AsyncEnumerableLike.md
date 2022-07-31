@@ -65,13 +65,13 @@ ___
 
 ### [InteractiveContainerLike\_interact]
 
-▸ **[InteractiveContainerLike_interact]**(`_`): [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>
+▸ **[InteractiveContainerLike_interact]**(`ctx`): [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`T`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `_` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
+| `ctx` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
 
 #### Returns
 

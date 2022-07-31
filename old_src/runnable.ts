@@ -10,32 +10,6 @@ export const catchErrorT: CatchError<RunnableLike<unknown>> = {
   catchError,
 };
 
-export const decodeWithCharset: DecodeWithCharset<
-  RunnableLike<unknown>
->["decodeWithCharset"] = /*@__PURE__*/ decorateMap(
-  class DecodeWithCharsetSink extends AbstractDelegatingRunnableSink<
-    ArrayBuffer,
-    string
-  > {
-    constructor(
-      delegate: ReactiveSinkLike<string>,
-      readonly textDecoder: TextDecoder,
-    ) {
-      super(delegate);
-    }
-  },
-  decorateWithDecodeWithCharsetNotify(),
-  decorateNotifyWithAssertions,
-  createDecodeWithCharsetOperator({
-    ...liftT,
-    ...fromArrayT,
-  }),
-);
-
-export const decodeWithCharsetT: DecodeWithCharset<RunnableLike<unknown>> = {
-  decodeWithCharset,
-};
-
 export const everySatisfy: EverySatisfy<RunnableLike<unknown>>["everySatisfy"] =
   /*@__PURE__*/ decorateMap(
     class EverySatisfySink<T> extends AbstractDelegatingRunnableSink<

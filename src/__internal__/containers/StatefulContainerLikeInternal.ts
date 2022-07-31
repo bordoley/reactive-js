@@ -1,6 +1,7 @@
 import {
   Container,
   ContainerOperator,
+  DecodeWithCharset,
   Empty,
   StatefulContainerLike,
   StatefulContainerStateOf,
@@ -85,6 +86,20 @@ export const createBufferOperator =
 
     return pipe(operator, partial(maxBufferSize), lift(m));
   };
+
+export const createDecodeWithCharsetOperator =
+  <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
+    m: Lift<C, TVar>,
+  ) =>
+  (
+    operator: Function2<
+      StatefulContainerOperatorIn<C, ArrayBuffer, string, TVar>,
+      string,
+      StatefulContainerOperatorOut<C, ArrayBuffer, string, TVar>
+    >,
+  ): DecodeWithCharset<C>["decodeWithCharset"] =>
+  (charset = "utf-8") =>
+    pipe(operator, partial(charset), lift(m));
 
 export const createDistinctUntilChangedOperator =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
