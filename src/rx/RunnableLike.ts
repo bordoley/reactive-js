@@ -63,11 +63,13 @@ import {
   Equality,
   Factory,
   Function1,
+  Option,
   Predicate,
   Reducer,
   SideEffect1,
   isSome,
   newInstance,
+  none,
   pipe,
   pipeLazy,
   pipeUnsafe,
@@ -217,6 +219,22 @@ export const distinctUntilChangedT: DistinctUntilChanged<RunnableLike> = {
   distinctUntilChanged,
 };
 
+export const first =
+  <T>(): Function1<RunnableLike<T>, Option<T>> =>
+  src => {
+    let result: Option<T> = none;
+
+    pipe(
+      src,
+      takeFirst(),
+      forEach(next => {
+        result = next;
+      }),
+      run(),
+    );
+    return result;
+  };
+
 export const forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
   T,
 >() => {
@@ -252,6 +270,21 @@ export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 })();
 
 export const keepT: Keep<RunnableLike> = { keep };
+
+export const last =
+  <T>(): Function1<RunnableLike<T>, Option<T>> =>
+  src => {
+    let result: Option<T> = none;
+
+    pipe(
+      src,
+      forEach(next => {
+        result = next;
+      }),
+      run(),
+    );
+    return result;
+  };
 
 export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const typedMapSinkMixin = mapSinkMixin<TA, TB>();

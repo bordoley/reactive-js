@@ -9,7 +9,6 @@ import { ObserverLike_scheduler } from '../scheduling.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
 
 const getObservableType = (obs) => obs[ObservableLike_observableType];
-const TContainerOf = undefined;
 const lift = /*@__PURE__*/ (() => {
     class LiftedObservable {
         constructor(source, operators, observableType) {
@@ -89,4 +88,4 @@ export const toPromise: ToPromise<ObservableLike, { scheduler: SchedulerLike}> =
       );
     });*/
 
-export { TContainerOf, getObservableType, map };
+export { getObservableType, map };

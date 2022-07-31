@@ -29,8 +29,10 @@
 - [concat](rx_RunnableLike.md#concat)
 - [concatAll](rx_RunnableLike.md#concatall)
 - [distinctUntilChanged](rx_RunnableLike.md#distinctuntilchanged)
+- [first](rx_RunnableLike.md#first)
 - [forEach](rx_RunnableLike.md#foreach)
 - [keep](rx_RunnableLike.md#keep)
+- [last](rx_RunnableLike.md#last)
 - [map](rx_RunnableLike.md#map)
 - [pairwise](rx_RunnableLike.md#pairwise)
 - [repeat](rx_RunnableLike.md#repeat)
@@ -233,6 +235,22 @@ ___
 
 ___
 
+### first
+
+▸ **first**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Option`](functions.md#option)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Option`](functions.md#option)<`T`\>\>
+
+___
+
 ### forEach
 
 ▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
@@ -274,6 +292,22 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### last
+
+▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Option`](functions.md#option)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Option`](functions.md#option)<`T`\>\>
 
 ___
 
