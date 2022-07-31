@@ -9,38 +9,40 @@ import {
 
 export const DisposableLike_add = Symbol("DisposableLike_add");
 export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-export const DisposableLike_error = Symbol("DisposableLike_error");
+export const DisposableLike_exception = Symbol("DisposableLike_exception");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 
-export type Error = {
+export type Exception = {
   readonly cause: unknown;
 };
 
-export type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
+export type DisposableOrTeardown =
+  | DisposableLike
+  | SideEffect1<Option<Exception>>;
 
 export interface DisposableLike {
-  readonly [DisposableLike_error]: Option<Error>;
+  readonly [DisposableLike_exception]: Option<Exception>;
   readonly [DisposableLike_isDisposed]: boolean;
   [DisposableLike_add](
     disposable: DisposableOrTeardown,
     ignoreChildErrors: boolean,
   ): void;
-  [DisposableLike_dispose](error?: Error): void;
+  [DisposableLike_dispose](error?: Exception): void;
 }
 
 /**
  * Dispose `disposable` with an optional error.
  */
 export const dispose =
-  <T extends DisposableLike>(e?: Error): Identity<T> =>
+  <T extends DisposableLike>(e?: Exception): Identity<T> =>
   disposable => {
     disposable[DisposableLike_dispose](e);
     return disposable;
   };
 
-export const getError = (disposable: {
-  [DisposableLike_error]: Option<Error>;
-}): Option<Error> => disposable[DisposableLike_error];
+export const getException = (disposable: {
+  [DisposableLike_exception]: Option<Exception>;
+}): Option<Exception> => disposable[DisposableLike_exception];
 
 export const isDisposed = (disposable: {
   [DisposableLike_isDisposed]: boolean;
@@ -92,7 +94,7 @@ export const addToIgnoringChildErrors =
 
 export const onDisposed =
   <T extends DisposableLike>(
-    teardown: SideEffect1<Option<Error>>,
+    teardown: SideEffect1<Option<Exception>>,
   ): Identity<T> =>
   disposable => {
     addDisposableOrTeardown(disposable, teardown);
@@ -100,7 +102,7 @@ export const onDisposed =
   };
 
 export const onError =
-  <T extends DisposableLike>(teardown: SideEffect1<Error>): Identity<T> =>
+  <T extends DisposableLike>(teardown: SideEffect1<Exception>): Identity<T> =>
   disposable => {
     addDisposableOrTeardown(disposable, e => {
       if (isSome(e)) {

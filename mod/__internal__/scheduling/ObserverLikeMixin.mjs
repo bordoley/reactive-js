@@ -3,7 +3,7 @@ import { getLength, pipe, isEmpty, none, isNone, returns } from '../../functions
 import { DispatcherLike_scheduler, DispatcherLike_dispatch, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../scheduling.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
-import { SinkLike_notify, DisposableLike_error } from '../../util.mjs';
+import { SinkLike_notify, DisposableLike_exception } from '../../util.mjs';
 import '../../util/DisposableLike.mjs';
 import { disposableMixin } from '../util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../util/Object.mjs';
@@ -30,7 +30,7 @@ const createObserverDispatcher = (() => {
         };
         this.onContinuationDispose = () => {
             if (isDisposed(this)) {
-                pipe(this.observer, dispose(this[DisposableLike_error]));
+                pipe(this.observer, dispose(this[DisposableLike_exception]));
             }
         };
         pipe(this, onDisposed(e => {

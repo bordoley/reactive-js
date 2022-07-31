@@ -1,7 +1,7 @@
 import {
   DisposableLike_add as DisposableLike_add_internal,
   DisposableLike_dispose as DisposableLike_dispose_internal,
-  DisposableLike_error as DisposableLike_error_internal,
+  DisposableLike_exception as DisposableLike_error_internal,
   DisposableLike_isDisposed as DisposableLike_isDisposed_internal,
 } from "./__internal__/util/DisposableLikeInternal";
 import {
@@ -19,18 +19,20 @@ export const DisposableLike_dispose: typeof DisposableLike_dispose_internal =
   DisposableLike_dispose_internal;
 
 /** @ignore */
-export const DisposableLike_error: typeof DisposableLike_error_internal =
+export const DisposableLike_exception: typeof DisposableLike_error_internal =
   DisposableLike_error_internal;
 
 /** @ignore */
 export const DisposableLike_isDisposed: typeof DisposableLike_isDisposed_internal =
   DisposableLike_isDisposed_internal;
 
-export type Error = {
+export type Exception = {
   readonly cause: unknown;
 };
 
-export type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
+export type DisposableOrTeardown =
+  | DisposableLike
+  | SideEffect1<Option<Exception>>;
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -39,7 +41,7 @@ export interface DisposableLike {
   /**
    * The error the `Disposable` was disposed with if disposed.
    */
-  readonly [DisposableLike_error]: Option<Error>;
+  readonly [DisposableLike_exception]: Option<Exception>;
 
   /**
    * `true` if this resource has been disposed, otherwise false
@@ -62,7 +64,7 @@ export interface DisposableLike {
    *
    * @param error An optional error that signals the resource is being disposed due to an error.
    */
-  [DisposableLike_dispose](error?: Error): void;
+  [DisposableLike_dispose](error?: Exception): void;
 }
 
 export const createDisposable: Factory<DisposableLike> = () =>

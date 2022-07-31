@@ -6,7 +6,7 @@ import { bufferSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDe
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, pipeUnsafe, newInstance, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT } from '../rx.mjs';
-import { SinkLike_notify, DisposableLike_error } from '../util.mjs';
+import { SinkLike_notify, DisposableLike_exception } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { dispose, bindTo, addTo, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
@@ -122,7 +122,7 @@ const repeat = /*@__PURE__*/ (() => {
     }));
 })();
 const repeatT = { repeat };
-const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose(), ({ [DisposableLike_error]: error }) => {
+const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose(), ({ [DisposableLike_exception]: error }) => {
     if (isSome(error)) {
         raise(error.cause);
     }

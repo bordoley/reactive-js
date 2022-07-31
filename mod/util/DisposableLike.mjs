@@ -1,6 +1,6 @@
 /// <reference types="./DisposableLike.d.ts" />
 import { dispose, addDisposableOrTeardown } from '../__internal__/util/DisposableLikeInternal.mjs';
-export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getError, isDisposed, onComplete, onDisposed, onError } from '../__internal__/util/DisposableLikeInternal.mjs';
+export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError } from '../__internal__/util/DisposableLikeInternal.mjs';
 import { pipe, newInstance } from '../functions.mjs';
 
 /**

@@ -1,5 +1,5 @@
 import { Option, Factory } from "../../functions.mjs";
-import { DisposableLike, DisposableLike_isDisposed, DisposableLike_error, Error, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose } from "./DisposableLikeInternal.mjs";
+import { DisposableLike, DisposableLike_isDisposed, DisposableLike_exception, Exception, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose } from "./DisposableLikeInternal.mjs";
 import { MutableRefLike } from "./MutableRefLike.mjs";
 import { Object_init, Object_properties, Object_prototype, UnknownObject } from "./Object.mjs";
 declare const delegatingDisposableMixin: {
@@ -8,22 +8,22 @@ declare const delegatingDisposableMixin: {
         readonly [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        get [DisposableLike_error](): Option<Error>;
+        get [DisposableLike_exception](): Option<Exception>;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
     };
 };
 declare const disposableMixin: {
     [Object_init](this: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     }): void;
     [Object_properties]: {
-        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_exception]: Option<Exception>;
         [DisposableLike_isDisposed]: boolean;
     };
     [Object_prototype]: {
-        [DisposableLike_dispose](error?: Error): void;
+        [DisposableLike_dispose](error?: Exception): void;
         [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     };
 };

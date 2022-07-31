@@ -1,6 +1,6 @@
 import { SideEffect1 } from "../functions.mjs";
 import { DisposableLike } from "../util.mjs";
-export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getError, isDisposed, onComplete, onDisposed, onError } from '../__internal__/util/DisposableLikeInternal.js';
+export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError } from '../__internal__/util/DisposableLikeInternal.js';
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */

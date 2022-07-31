@@ -20,10 +20,10 @@ import {
   DisposableLike,
   DisposableLike_add,
   DisposableLike_dispose,
-  DisposableLike_error,
+  DisposableLike_exception,
   DisposableLike_isDisposed,
   DisposableOrTeardown,
-  Error,
+  Exception,
   SinkLike,
   SinkLike_notify,
 } from "../../util";
@@ -67,14 +67,14 @@ export const delegatingSinkMixin: <T>() => {
   [Object_init](
     this: {
       [DelegatingSink_delegate]: SinkLike<T>;
-      [DisposableLike_error]: Option<Error>;
+      [DisposableLike_exception]: Option<Exception>;
       [DisposableLike_isDisposed]: boolean;
     },
     delegate: SinkLike<T>,
   ): void;
   [Object_properties]: {
     [DelegatingSink_delegate]: SinkLike<T>;
-    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
@@ -82,7 +82,7 @@ export const delegatingSinkMixin: <T>() => {
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T>() => {
@@ -128,14 +128,14 @@ export const bufferSinkMixin: <
 ) => {
   [Object_init](
     this: {
-      [DisposableLike_error]: Option<Error>;
+      [DisposableLike_exception]: Option<Exception>;
       [DisposableLike_isDisposed]: boolean;
     },
     delegate: TSink,
     maxBufferSize: number,
   ): void;
   [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
@@ -143,7 +143,7 @@ export const bufferSinkMixin: <
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = <
@@ -230,14 +230,14 @@ export const decodeWithCharsetSinkMixin: <
 ) => {
   [Object_init](
     this: {
-      [DisposableLike_error]: Option<Error>;
+      [DisposableLike_exception]: Option<Exception>;
       [DisposableLike_isDisposed]: boolean;
     },
     delegate: SinkLike<string>,
     charset: string,
   ): void;
   [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
@@ -245,7 +245,7 @@ export const decodeWithCharsetSinkMixin: <
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: ArrayBuffer): void;
   };
 } = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<string>>(
@@ -319,12 +319,12 @@ export const distinctUntilChangedSinkMixin: <T>() => {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T>() => {
@@ -394,12 +394,12 @@ export const forEachSinkMixin: <T>() => {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T>() => {
@@ -447,12 +447,12 @@ export const keepSinkMixin: <T>() => {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T>() => {
@@ -501,12 +501,12 @@ export const mapSinkMixin: <TA, TB>() => {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: TA): void;
   };
 } = /*@__PURE__*/ (<TA, TB>() => {
@@ -555,12 +555,12 @@ export const pairwiseSinkMixin: <T>() => {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T>() => {
@@ -623,7 +623,7 @@ export const reduceSinkMixin: <
     initialValue: Factory<TAcc>,
   ): void;
   [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
@@ -631,7 +631,7 @@ export const reduceSinkMixin: <
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = <
@@ -712,12 +712,12 @@ export const scanSinkMixin: <T, TAcc>() => {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T, TAcc>() => {
@@ -782,12 +782,12 @@ export const skipFirstSinkMixin: <T>() => {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T>() => {
@@ -848,12 +848,12 @@ export const takeFirstSinkMixin: <T>() => {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T>() => {
@@ -914,14 +914,14 @@ export const takeLastSinkMixin: <
 ) => {
   [Object_init](
     this: {
-      [DisposableLike_error]: Option<Error>;
+      [DisposableLike_exception]: Option<Exception>;
       [DisposableLike_isDisposed]: boolean;
     },
     delegate: TSink,
     takeLastCount: number,
   ): void;
   [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
@@ -929,7 +929,7 @@ export const takeLastSinkMixin: <
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
@@ -999,12 +999,12 @@ export const takeWhileSinkMixin: <T>() => {
     readonly [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
-    get [DisposableLike_error](): Option<Error>;
+    get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T>() => {
@@ -1066,7 +1066,7 @@ export const throwIfEmptySinkMixin: <T>() => {
     factory: Factory<unknown>,
   ): void;
   [Object_properties]: {
-    [DisposableLike_error]: Option<Error>;
+    [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
   };
   [Object_prototype]: {
@@ -1074,7 +1074,7 @@ export const throwIfEmptySinkMixin: <T>() => {
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
   };
 } = /*@__PURE__*/ (<T>() => {
@@ -1101,7 +1101,7 @@ export const throwIfEmptySinkMixin: <T>() => {
           this,
           addTo(delegate),
           onComplete(() => {
-            let error: Option<Error> = none;
+            let error: Option<Exception> = none;
 
             if (this[ThrowIfEmptySink_private_isEmpty]) {
               let cause: unknown = none;

@@ -1,17 +1,17 @@
-import { DisposableLike_add as DisposableLike_add$1, DisposableLike_dispose as DisposableLike_dispose$1, DisposableLike_error as DisposableLike_error$1, DisposableLike_isDisposed as DisposableLike_isDisposed$1 } from "./__internal__/util/DisposableLikeInternal.mjs";
+import { DisposableLike_add as DisposableLike_add$1, DisposableLike_dispose as DisposableLike_dispose$1, DisposableLike_exception as DisposableLike_exception$1, DisposableLike_isDisposed as DisposableLike_isDisposed$1 } from "./__internal__/util/DisposableLikeInternal.mjs";
 import { SideEffect1, Option, Factory } from "./functions.mjs";
 /** @ignore */
 declare const DisposableLike_add: typeof DisposableLike_add$1;
 /** @ignore */
 declare const DisposableLike_dispose: typeof DisposableLike_dispose$1;
 /** @ignore */
-declare const DisposableLike_error: typeof DisposableLike_error$1;
+declare const DisposableLike_exception: typeof DisposableLike_exception$1;
 /** @ignore */
 declare const DisposableLike_isDisposed: typeof DisposableLike_isDisposed$1;
-declare type Error = {
+declare type Exception = {
     readonly cause: unknown;
 };
-declare type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
+declare type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Exception>>;
 /**
  * Represents an unmanaged resource that can be disposed.
  */
@@ -19,7 +19,7 @@ interface DisposableLike {
     /**
      * The error the `Disposable` was disposed with if disposed.
      */
-    readonly [DisposableLike_error]: Option<Error>;
+    readonly [DisposableLike_exception]: Option<Exception>;
     /**
      * `true` if this resource has been disposed, otherwise false
      */
@@ -36,7 +36,7 @@ interface DisposableLike {
      *
      * @param error An optional error that signals the resource is being disposed due to an error.
      */
-    [DisposableLike_dispose](error?: Error): void;
+    [DisposableLike_dispose](error?: Exception): void;
 }
 declare const createDisposable: Factory<DisposableLike>;
 declare const disposed: DisposableLike;
@@ -84,4 +84,4 @@ interface EnumeratorLike<T = unknown> extends SourceLike {
     readonly [EnumeratorLike_current]: T;
     readonly [EnumeratorLike_hasCurrent]: boolean;
 }
-export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, Error, PauseableLike, PauseableLike_pause, PauseableLike_resume, SinkLike, SinkLike_notify, SourceLike, SourceLike_move, createDisposable, disposed };
+export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume, SinkLike, SinkLike_notify, SourceLike, SourceLike_move, createDisposable, disposed };

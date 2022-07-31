@@ -113,7 +113,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  Error,
+  Exception,
   SinkLike,
   SourceLike_move,
   disposed,
@@ -124,7 +124,7 @@ import {
   addTo,
   bindTo,
   dispose,
-  getError,
+  getException,
   isDisposed,
   onComplete,
 } from "../util/DisposableLike";
@@ -1048,7 +1048,7 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
           pipe(
             delegate,
             onComplete(() => {
-              let error: Option<Error> = none;
+              let error: Option<Exception> = none;
 
               if (this.isEmpty) {
                 let cause: unknown = none;
@@ -1154,7 +1154,7 @@ export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"]
         result.push(getCurrent(enumerator));
       }
 
-      const error = getError(enumerator);
+      const error = getException(enumerator);
 
       if (isSome(error)) {
         throw error.cause;

@@ -1,6 +1,6 @@
 /// <reference types="./DisposableLikeMixins.d.ts" />
-import { pipe, none, isNone, isSome, ignore, returns } from '../../functions.mjs';
-import { onDisposed, DisposableLike_isDisposed, DisposableLike_error, DisposableLike_add, DisposableLike_dispose, dispose, getError, isDisposed, add } from './DisposableLikeInternal.mjs';
+import { pipe, none, isSome, ignore, returns } from '../../functions.mjs';
+import { onDisposed, DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose, dispose, getException, isDisposed, add } from './DisposableLikeInternal.mjs';
 import { MutableRefLike_current } from './MutableRefLike.mjs';
 import { clazz, createObjectFactory } from './Object.mjs';
 
@@ -15,10 +15,10 @@ const delegatingDisposableMixin = /*@__PURE__*/ (() => {
         [DelegatingDisposable_private_delegate]: none,
         [DisposableLike_isDisposed]: false,
     }, {
-        get [DisposableLike_error]() {
+        get [DisposableLike_exception]() {
             const self = this;
             const delegate = self[DelegatingDisposable_private_delegate];
-            return delegate[DisposableLike_error];
+            return delegate[DisposableLike_exception];
         },
         [DisposableLike_add](disposable, ignoreChildErrors) {
             const delegate = this[DelegatingDisposable_private_delegate];
@@ -30,7 +30,7 @@ const delegatingDisposableMixin = /*@__PURE__*/ (() => {
     });
 })();
 const doDispose = (self, disposable) => {
-    const error = getError(self);
+    const error = getException(self);
     if (disposable instanceof Function) {
         try {
             disposable.call(self, error);
@@ -50,18 +50,15 @@ const disposableMixin = /*@__PURE__*/ (() => {
     return clazz(function DisposableMixin() {
         this[Disposable_private_disposables] = new Set();
     }, {
-        [DisposableLike_error]: none,
+        [DisposableLike_exception]: none,
         [DisposableLike_isDisposed]: false,
         [Disposable_private_disposables]: none,
     }, {
         [DisposableLike_dispose](error) {
             if (!isDisposed(this)) {
-                this[DisposableLike_error] = error;
+                this[DisposableLike_exception] = error;
                 this[DisposableLike_isDisposed] = true;
                 const disposables = this[Disposable_private_disposables];
-                if (isNone(disposables)) {
-                    return;
-                }
                 for (const disposable of disposables) {
                     disposables.delete(disposable);
                     doDispose(this, disposable);
@@ -92,7 +89,7 @@ const disposableMixin = /*@__PURE__*/ (() => {
 })();
 const createDisposable = /*@__PURE__*/ pipe(disposableMixin, createObjectFactory());
 const disposed = {
-    [DisposableLike_error]: none,
+    [DisposableLike_exception]: none,
     [DisposableLike_isDisposed]: true,
     [DisposableLike_add](disposable) {
         doDispose(this, disposable);
