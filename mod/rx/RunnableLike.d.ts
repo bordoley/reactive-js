@@ -1,6 +1,6 @@
 import { Buffer, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
 import { Function1, Option, Predicate } from "../functions.mjs";
-import { RunnableLike } from "../rx.mjs";
+import { RunnableLike, ToRunnable } from "../rx.mjs";
 declare const buffer: Buffer<RunnableLike>["buffer"];
 declare const bufferT: Buffer<RunnableLike>;
 declare const concat: Concat<RunnableLike>["concat"];
@@ -38,4 +38,6 @@ declare const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike>;
 declare const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableLike>;
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, first, forEach, forEachT, keep, keepT, last, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };
+declare const toRunnable: ToRunnable<RunnableLike>["toRunnable"];
+declare const toRunnableT: ToRunnable<RunnableLike<unknown>>;
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, first, forEach, forEachT, keep, keepT, last, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT };

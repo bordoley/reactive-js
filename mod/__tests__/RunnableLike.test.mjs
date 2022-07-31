@@ -2,7 +2,7 @@
 import { describe as createDescribe, test as createTest, expectEquals } from '../__internal__/testing.mjs';
 import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, none } from '../functions.mjs';
-import { d as deferRunnableT } from '../ReactiveContainerLike-29f1e1fa.mjs';
+import { deferRunnableT } from '../rx.mjs';
 import { bufferT, toReadonlyArrayT, concatT, concatAllT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT, first, last } from '../rx/RunnableLike.mjs';
 import { bufferTests, concatTests, concatAllTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from './operators.test.mjs';
 
