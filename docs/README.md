@@ -21,6 +21,7 @@ Reactive-JS
 - [rx/ObservableLike](modules/rx_ObservableLike.md)
 - [rx/ReactiveContainerLike](modules/rx_ReactiveContainerLike.md)
 - [rx/RunnableLike](modules/rx_RunnableLike.md)
+- [rx/RunnableObservableLike](modules/rx_RunnableObservableLike.md)
 - [rx/SubjectLike](modules/rx_SubjectLike.md)
 - [scheduling](modules/scheduling.md)
 - [scheduling/DispatcherLike](modules/scheduling_DispatcherLike.md)

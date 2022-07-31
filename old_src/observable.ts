@@ -451,9 +451,6 @@ export const reduceT: Reduce<ObservableLike<unknown>> = {
   reduce,
 };
 
-export const getReplay = <T>(observable: MulticastObservableLike<T>) =>
-  observable.replay;
-
 export const scan: Scan<ObservableLike<unknown>>["scan"] =
   /*@__PURE__*/ (() => {
     class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
@@ -720,30 +717,3 @@ export const toObservable: ToObservable<
 export const toObservableT: ToObservable<ObservableLike<unknown>> = {
   toObservable,
 };
-
-export const toRunnable =
-  <T>(
-    options: {
-      readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
-    } = {},
-  ): Function1<
-    ObservableLike<T> & {
-      readonly observableType: RunnableObservable | EnumerableObservable;
-    },
-    RunnableLike<T>
-  > =>
-  source =>
-    createRunnable(sink => {
-      const { schedulerFactory = createVirtualTimeScheduler } = options;
-      const scheduler = schedulerFactory();
-      pipe(
-        source,
-        onNotify(notifySink(sink)),
-        subscribe(scheduler),
-        addTo(sink),
-      );
-
-      pipe(scheduler, addTo(sink), forEach(ignore), dispose());
-    });
-
-export const TContainerOf: ObservableLike<unknown> = undefined as any;

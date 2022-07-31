@@ -24,18 +24,19 @@ import {
   Option,
   SideEffect1,
   isSome,
+  min,
   newInstance,
   none,
   pipe,
   pipeUnsafe,
 } from "../functions";
 import {
-  DefaultObservable,
-  EnumerableObservable,
+  EnumerableObservableLike,
   ObservableLike,
   ObservableLike_observableType,
+  ObservableType,
   ReactiveContainerLike_sinkInto,
-  RunnableObservable,
+  RunnableObservableLike,
 } from "../rx";
 import {
   ObserverLike,
@@ -49,12 +50,9 @@ import { sourceFrom } from "./ReactiveContainerLike";
 export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
   obs[ObservableLike_observableType];
 
-const lift: Lift<ObservableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
+const createLift = /*@__PURE__*/ (() => {
   class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
-    [ObservableLike_observableType]:
-      | typeof DefaultObservable
-      | typeof RunnableObservable
-      | typeof EnumerableObservable;
+    [ObservableLike_observableType]: ObservableType;
 
     constructor(
       readonly source: ObservableLike<TIn>,
@@ -62,10 +60,7 @@ const lift: Lift<ObservableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
         ObserverLike<any>,
         ObserverLike<any>
       >[],
-      observableType:
-        | typeof DefaultObservable
-        | typeof RunnableObservable
-        | typeof EnumerableObservable,
+      observableType: ObservableType,
     ) {
       this[ObservableLike_observableType] = observableType;
     }
@@ -79,7 +74,8 @@ const lift: Lift<ObservableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
     }
   }
 
-  return <TA, TB>(
+  return (observableType: ObservableType) =>
+    <TA, TB>(
       operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
     ): ContainerOperator<ObservableLike, TA, TB> =>
     source => {
@@ -91,23 +87,55 @@ const lift: Lift<ObservableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
           ? [operator, ...source.operators]
           : [operator];
 
+      const type = min(
+        observableType,
+        source[ObservableLike_observableType],
+        sourceSource[ObservableLike_observableType],
+      );
+
       return newInstance(
         LiftedObservable,
         sourceSource,
         allFunctions,
-        0 as typeof DefaultObservable,
+        type as ObservableType,
       );
     };
 })();
-
+/*
+const lift: Lift<ObservableLike, TReactive>["lift"] = createLift(0);
 const liftT: Lift<ObservableLike, TReactive> = {
   lift,
   variance: reactive,
+};*/
+/*
+const liftRunnableObservable: Lift<RunnableObservableLike, TReactive>["lift"] =
+  createLift(1);
+const liftRunnableObservableT: Lift<ObservableLike, TReactive> = {
+  lift: liftRunnableObservable,
+  variance: reactive,
+};*/
+
+const liftEnumerableObservable: Lift<ObservableLike, TReactive>["lift"] =
+  createLift(2);
+const liftEnumerableObservableT: Lift<EnumerableObservableLike, TReactive> = {
+  lift: liftEnumerableObservable,
+  variance: reactive,
 };
 
-export const forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
-  T,
->() => {
+interface ForEachObservable {
+  <T>(effect: SideEffect1<T>): ContainerOperator<ObservableLike<unknown>, T, T>;
+  <T>(effect: SideEffect1<T>): ContainerOperator<
+    RunnableObservableLike<unknown>,
+    T,
+    T
+  >;
+  <T>(effect: SideEffect1<T>): ContainerOperator<
+    EnumerableObservableLike<unknown>,
+    T,
+    T
+  >;
+}
+export const forEach: ForEachObservable = /*@__PURE__*/ (<T>() => {
   const typedForEachSinkMixin = forEachSinkMixin<T>();
   const typedObserverMixin = observerMixin<T>();
 
@@ -130,11 +158,31 @@ export const forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
     ),
     mixWith(typedObserverMixin, typedForEachSinkMixin),
     createObjectFactory<ObserverLike<T>, ObserverLike<T>, SideEffect1<T>>(),
-    createForEachOperator<ObservableLike, T, TReactive>(liftT),
+    createForEachOperator<ObservableLike, T, TReactive>(
+      liftEnumerableObservableT,
+    ),
   );
 })();
+export const forEachT: ForEach<ObservableLike> = { forEach };
 
-export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
+interface MapObservable {
+  <TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<
+    ObservableLike,
+    TA,
+    TB
+  >;
+  <TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<
+    RunnableObservableLike,
+    TA,
+    TB
+  >;
+  <TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<
+    EnumerableObservableLike,
+    TA,
+    TB
+  >;
+}
+export const map: MapObservable = /*@__PURE__*/ (<TA, TB>() => {
   const typedMapSinkMixin = mapSinkMixin<TA, TB>();
   const typedObserverMixin = observerMixin<TA>();
 
@@ -161,9 +209,13 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
       ObserverLike<TB>,
       Function1<TA, TB>
     >(),
-    createMapOperator<ObservableLike, TA, TB, TReactive>(liftT),
+    createMapOperator<ObservableLike, TA, TB, TReactive>(
+      liftEnumerableObservableT,
+    ),
   );
 })();
+
+export const mapT: Map<ObservableLike> = { map };
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,

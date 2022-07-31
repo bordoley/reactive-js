@@ -16,6 +16,9 @@
 
 ### Type Aliases
 
+- [EnumerableObservableType](rx.md#enumerableobservabletype)
+- [ObservableType](rx.md#observabletype)
+- [RunnableObservableType](rx.md#runnableobservabletype)
 - [ToEnumerableObservable](rx.md#toenumerableobservable)
 - [ToObservable](rx.md#toobservable)
 - [ToRunnable](rx.md#torunnable)
@@ -37,9 +40,11 @@
 
 ### Functions
 
+- [createEnumerableObservable](rx.md#createenumerableobservable)
 - [createObservable](rx.md#createobservable)
 - [createObservableUsing](rx.md#createobservableusing)
 - [createRunnable](rx.md#createrunnable)
+- [createRunnableObservable](rx.md#createrunnableobservable)
 - [createRunnableUsing](rx.md#createrunnableusing)
 - [createSubject](rx.md#createsubject)
 - [deferObservable](rx.md#deferobservable)
@@ -50,6 +55,24 @@
 - [neverRunnable](rx.md#neverrunnable)
 
 ## Type Aliases
+
+### EnumerableObservableType
+
+Ƭ **EnumerableObservableType**: typeof [`EnumerableObservable`](rx.md#enumerableobservable)
+
+___
+
+### ObservableType
+
+Ƭ **ObservableType**: ``0`` \| ``1`` \| ``2``
+
+___
+
+### RunnableObservableType
+
+Ƭ **RunnableObservableType**: typeof [`RunnableObservable`](rx.md#runnableobservable) \| typeof [`EnumerableObservable`](rx.md#enumerableobservable)
+
+___
 
 ### ToEnumerableObservable
 
@@ -105,19 +128,19 @@ ___
 
 ### DefaultObservable
 
-• `Const` **DefaultObservable**: ``0``
+• `Const` **DefaultObservable**: [`ObservableType`](rx.md#observabletype)
 
 ___
 
 ### EnumerableObservable
 
-• `Const` **EnumerableObservable**: ``2``
+• `Const` **EnumerableObservable**: [`ObservableType`](rx.md#observabletype)
 
 ___
 
 ### RunnableObservable
 
-• `Const` **RunnableObservable**: ``1``
+• `Const` **RunnableObservable**: [`ObservableType`](rx.md#observabletype)
 
 ___
 
@@ -168,6 +191,28 @@ ___
 • `Const` **neverRunnableT**: [`Never`](containers.md#never)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ## Functions
+
+### createEnumerableObservable
+
+▸ **createEnumerableObservable**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
 
 ### createObservable
 
@@ -344,6 +389,28 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
+### createRunnableObservable
+
+▸ **createRunnableObservable**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 

@@ -61,7 +61,7 @@ ___
 
 ### [ObservableLike\_observableType]
 
-• `Readonly` **[ObservableLike\_observableType]**: ``2`` \| ``1``
+• `Readonly` **[ObservableLike\_observableType]**: [`RunnableObservableType`](../modules/rx.md#runnableobservabletype)
 
 #### Overrides
 
