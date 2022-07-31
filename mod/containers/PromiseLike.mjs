@@ -1,6 +1,6 @@
 /// <reference types="./PromiseLike.d.ts" />
 import { pipe } from '../functions.mjs';
-import { f as createObservable } from '../ReactiveContainerLike-29f1e1fa.mjs';
+import { createObservable } from '../rx.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
 import { getDispatcher } from '../scheduling/ObserverLike.mjs';
 import { toErrorHandler } from '../util/DisposableLike.mjs';

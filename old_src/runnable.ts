@@ -32,24 +32,6 @@ export const everySatisfyT: EverySatisfy<RunnableLike<unknown>> = {
   everySatisfy,
 };
 
-export const generate: Generate<RunnableLike<unknown>>["generate"] = <T>(
-  generator: Updater<T>,
-  initialValue: Factory<T>,
-) => {
-  const run = (sink: ReactiveSinkLike<T>) => {
-    let acc = initialValue();
-    while (!isDisposed(sink)) {
-      acc = generator(acc);
-      sink.notify(acc);
-    }
-  };
-  return createRunnable(run);
-};
-
-export const generateT: Generate<RunnableLike<unknown>> = {
-  generate,
-};
-
 export const onSink = /*@__PURE__*/ createOnSink(createT);
 
 export const reduce: Reduce<RunnableLike<unknown>>["reduce"] =
@@ -93,12 +75,3 @@ export const someSatisfy: SomeSatisfy<RunnableLike<unknown>>["someSatisfy"] =
 export const someSatisfyT: SomeSatisfy<RunnableLike<unknown>> = {
   someSatisfy,
 };
-
-export const toRunnable: ToRunnable<RunnableLike<unknown>>["toRunnable"] = () =>
-  identity;
-
-export const toRunnableT: ToRunnable<RunnableLike<unknown>> = {
-  toRunnable,
-};
-
-export const TContainerOf: RunnableLike<unknown> = undefined as any;

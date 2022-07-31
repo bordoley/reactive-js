@@ -3,11 +3,12 @@ import { createRepeatOperator } from '../__internal__/containers/ContainerLikeIn
 import { reactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { createObjectFactory, Object_init, init, mixWith } from '../__internal__/util/Object.mjs';
 import { bufferSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
-import { toRunnable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, pipeUnsafe, newInstance, pipeLazy, none, returns, isSome, raise } from '../functions.mjs';
-import { a as ReactiveContainerLike_sinkInto, b as sourceFrom, c as createRunnable, e as emptyRunnableT } from '../ReactiveContainerLike-29f1e1fa.mjs';
+import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
+import { pipe, pipeUnsafe, newInstance, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
+import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_error } from '../util.mjs';
 import '../util/DisposableLike.mjs';
+import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { dispose, bindTo, addTo, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const lift = /*@__PURE__*/ (() => {
@@ -33,11 +34,11 @@ const liftT = {
     variance: reactive,
 };
 const buffer = /*@__PURE__*/ (() => {
-    const typedBufferSinkMixin = bufferSinkMixin(toRunnable());
+    const typedBufferSinkMixin = bufferSinkMixin(toRunnable$1());
     return pipe(typedBufferSinkMixin, createObjectFactory(), createBufferOperator(liftT));
 })();
 const bufferT = { buffer };
-const concat = (...runnables) => pipe(runnables, toRunnable(), concatAll());
+const concat = (...runnables) => pipe(runnables, toRunnable$1(), concatAll());
 const concatT = {
     concat,
 };
@@ -59,7 +60,7 @@ const concatAllT = {
 };
 const decodeWithCharset = 
 /*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(toRunnable());
+    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(toRunnable$1());
     return pipe(typedDecodeWithCharsetMixin, createObjectFactory(), createDecodeWithCharsetOperator(liftT));
 })();
 const decodeWithCharsetT = {
@@ -141,7 +142,7 @@ const takeFirst = /*@__PURE__*/ (() => {
 })();
 const takeFirstT = { takeFirst };
 const takeLast = /*@__PURE__*/ (() => {
-    const typedTakeLastSinkMixin = takeLastSinkMixin(toRunnable());
+    const typedTakeLastSinkMixin = takeLastSinkMixin(toRunnable$1());
     return pipe(typedTakeLastSinkMixin, createObjectFactory(), createTakeLastOperator({
         ...liftT,
         ...emptyRunnableT,
@@ -169,5 +170,9 @@ const toReadonlyArray = () => (runnable) => {
 const toReadonlyArrayT = {
     toReadonlyArray,
 };
+const toRunnable = returns(identity);
+const toRunnableT = {
+    toRunnable,
+};
 
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, first, forEach, forEachT, keep, keepT, last, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, first, forEach, forEachT, keep, keepT, last, map, mapT, pairwise, pairwiseT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT };
