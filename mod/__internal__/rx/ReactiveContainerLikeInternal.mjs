@@ -54,50 +54,8 @@ import {
   lift,
 } from "../containers/StatefulContainerLikeInternal";
 
-export type CreateReactiveContainer<C extends ReactiveContainerLike> =
-  Container<C> & {
-    create<T>(
-      onSink: (sink: StatefulContainerStateOf<C, T>) => void,
-    ): ContainerOf<C, T>;
-  };
 
-export type DelegatingStatefulContainerStateOf<
-  C extends StatefulContainerLike,
-  T,
-  TDelegate,
-  TDelegateStatefulContaierStateOf extends StatefulContainerStateOf<
-    C,
-    TDelegate
-  > = StatefulContainerStateOf<C, TDelegate>,
-> = StatefulContainerStateOf<C, T> & {
-  readonly delegate: TDelegateStatefulContaierStateOf;
-};
 
-export const getDelegate = <
-  C extends StatefulContainerLike,
-  T,
-  TDelegate,
-  TDelegateStatefulContaierStateOf extends StatefulContainerStateOf<
-    C,
-    TDelegate
-  > = StatefulContainerStateOf<C, TDelegate>,
->(
-  container: DelegatingStatefulContainerStateOf<
-    C,
-    T,
-    TDelegate,
-    TDelegateStatefulContaierStateOf
-  >,
-) => container.delegate;
-
-export type Lift<C extends ReactiveContainerLike> = StatefulContainerLift<
-  C,
-  TReactive
-> & {
-  lift<TA, TB>(
-    operator: StatefulContainerOperator<C, TA, TB, TReactive>,
-  ): ContainerOperator<C, TA, TB>;
-};
 
 type CatchErrorSink<C extends ReactiveContainerLike> = new <T>(
   delegate: StatefulContainerStateOf<C, T>,
@@ -177,7 +135,7 @@ export const createDecodeWithCharsetOperator =
 type SatisfySink<C extends ReactiveContainerLike> = new <T>(
   delegate: StatefulContainerStateOf<C, boolean>,
   predicate: Predicate<T>,
-) => DelegatingStatefulContainerStateOf<C, T, boolean> & {
+) => DelegatingStatefulContainerStateOf<C, T, botolean> & {
   readonly predicate: Predicate<T>;
 };
 

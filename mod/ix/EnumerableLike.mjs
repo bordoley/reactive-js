@@ -16,7 +16,7 @@ import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, dis
 import '../util/DisposableLike.mjs';
 import { move, getCurrent, hasCurrent, forEach as forEach$1 } from '../util/EnumeratorLike.mjs';
 import { notifySink } from '../util/SinkLike.mjs';
-import { add, dispose, isDisposed, addTo, bindTo, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { add, dispose, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete, getError } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
 const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
@@ -505,10 +505,25 @@ const throwIfEmpty =
         [Object_properties]: {
             isEmpty: true,
         },
-        [Object_init](delegate) {
+        [Object_init](delegate, factory) {
             init(disposableMixin, this);
             init(typedDelegatingEnumeratorMixin, this, delegate);
             this.isEmpty = true;
+            pipe(this, addIgnoringChildErrors(delegate));
+            pipe(delegate, onComplete(() => {
+                let error = none;
+                if (this.isEmpty) {
+                    let cause = none;
+                    try {
+                        cause = factory();
+                    }
+                    catch (e) {
+                        cause = e;
+                    }
+                    error = { cause };
+                }
+                pipe(this, dispose(error));
+            }));
         },
         [SourceLike_move]() {
             if (delegatingEnumeratorMove(this)) {

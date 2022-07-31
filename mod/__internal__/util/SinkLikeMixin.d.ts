@@ -82,4 +82,14 @@ declare const takeWhileSinkMixin: <T>() => DisposableLike & {
     [Object_init](this: unknown, delegate: SinkLike<T>, predicate: Predicate<T>, inclusive: boolean): void;
     [SinkLike_notify](next: T): void;
 };
-export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin };
+declare const throwIfEmptySinkMixin: <T>() => {
+    [Object_properties]: {
+        [DisposableLike_error]: Option<Error>;
+        [DisposableLike_isDisposed]: boolean;
+    };
+    [Object_init](this: unknown, delegate: SinkLike<T>, factory: Factory<unknown>): void;
+    [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
+    [DisposableLike_dispose](error?: Error): void;
+    [SinkLike_notify](next: T): void;
+};
+export { DelegatingSink_delegate, TakeLastSink_last, createDelegatingSink, createSink, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

@@ -1,8 +1,8 @@
 /// <reference types="./EnumerableLike.test.d.ts" />
 import { describe as createDescribe } from '../__internal__/testing.mjs';
 import { toEnumerable } from '../containers/ReadonlyArrayLike.mjs';
-import { bufferT, toReadonlyArrayT, concatT, concatAllT, distinctUntilChangedT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT, zipT } from '../ix/EnumerableLike.mjs';
-import { bufferTests, concatTests, concatAllTests, distinctUntilChangedTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests } from './operators.test.mjs';
+import { bufferT, toReadonlyArrayT, concatT, concatAllT, distinctUntilChangedT, forEachT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT, zipT } from '../ix/EnumerableLike.mjs';
+import { bufferTests, concatTests, concatAllTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests } from './operators.test.mjs';
 
 const EnumerableLikeTests = createDescribe("EnumerableLike", bufferTests({
     fromArray: toEnumerable,
@@ -19,6 +19,10 @@ const EnumerableLikeTests = createDescribe("EnumerableLike", bufferTests({
 }), distinctUntilChangedTests({
     fromArray: toEnumerable,
     ...distinctUntilChangedT,
+    ...toReadonlyArrayT,
+}), forEachTests({
+    fromArray: toEnumerable,
+    ...forEachT,
     ...toReadonlyArrayT,
 }), keepTests({
     fromArray: toEnumerable,

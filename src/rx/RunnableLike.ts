@@ -11,6 +11,7 @@ import {
   createTakeFirstOperator,
   createTakeLastOperator,
   createTakeWhileOperator,
+  createThrowIfEmptyOperator,
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import {
@@ -35,6 +36,7 @@ import {
   takeFirstSinkMixin,
   takeLastSinkMixin,
   takeWhileSinkMixin,
+  throwIfEmptySinkMixin,
 } from "../__internal__/util/SinkLikeMixin";
 import {
   Concat,
@@ -50,6 +52,7 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
+  ThrowIfEmpty,
   ToReadonlyArray,
 } from "../containers";
 import { toRunnable } from "../containers/ReadonlyArrayLike";
@@ -399,6 +402,25 @@ export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] = /*@__PURE__*/ (<
 })();
 
 export const takeWhileT: TakeWhile<RunnableLike> = { takeWhile };
+
+export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
+  /*@__PURE__*/ (<T>() => {
+    const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin<T>();
+    return pipe(
+      typedThrowIfEmptySinkMixin,
+      createObjectFactory<
+        SinkLike<T>,
+        PropertyTypeOf<[typeof typedThrowIfEmptySinkMixin]>,
+        SinkLike<T>,
+        Factory<unknown>
+      >(),
+      createThrowIfEmptyOperator<RunnableLike, T, TReactive>(liftT),
+    );
+  })();
+
+export const throwIfEmptyT: ThrowIfEmpty<RunnableLike> = {
+  throwIfEmpty,
+};
 
 export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
 

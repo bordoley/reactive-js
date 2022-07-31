@@ -63,7 +63,7 @@ ___
 
 ### bufferT
 
-• `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>\>
+• `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 ### repeatT
 
-• `Const` **repeatT**: [`Repeat`](containers.md#repeat)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>\>
+• `Const` **repeatT**: [`Repeat`](containers.md#repeat)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 
@@ -171,7 +171,7 @@ ___
 
 ### toRunnableT
 
-• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>\>
+• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 
