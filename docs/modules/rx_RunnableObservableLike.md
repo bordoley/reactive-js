@@ -37,6 +37,7 @@
 - [takeUntil](rx_RunnableObservableLike.md#takeuntil)
 - [takeWhile](rx_RunnableObservableLike.md#takewhile)
 - [throwIfEmpty](rx_RunnableObservableLike.md#throwifempty)
+- [toFlowable](rx_RunnableObservableLike.md#toflowable)
 - [toReadonlyArray](rx_RunnableObservableLike.md#toreadonlyarray)
 
 ## Variables
@@ -429,6 +430,22 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### toFlowable
+
+▸ **toFlowable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\>\>\>
 
 ___
 

@@ -17,13 +17,27 @@ import {
   ToReadonlyArray,
 } from "../containers";
 import { Factory, Function1, isSome, pipe } from "../functions";
-import { RunnableObservableLike } from "../rx";
+import {
+  ObservableLike,
+  RunnableObservableLike,
+  createObservable,
+} from "../rx";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
 } from "../scheduling";
+import { getScheduler } from "../scheduling/ObserverLike";
+import { toPausableScheduler } from "../scheduling/SchedulerLike";
+import { FlowMode, FlowableLike, createLiftedFlowable } from "../streaming";
 import { run } from "../util/ContinuationLike";
-import { addTo, getException } from "../util/DisposableLike";
+import {
+  add,
+  addTo,
+  bindTo,
+  getException,
+  toObservable,
+} from "../util/DisposableLike";
+import { pause, resume } from "../util/PauseableLike";
 import {
   decodeWithCharset as decodeWithCharsetObs,
   distinctUntilChanged as distinctUntilChangedObs,
@@ -35,12 +49,14 @@ import {
   scan as scanObs,
   skipFirst as skipFirstObs,
   subscribe,
+  subscribeOn,
   takeFirst as takeFirstObs,
   takeLast as takeLastObs,
   takeUntil as takeUntilObs,
   takeWhile as takeWhileObs,
   throwIfEmpty as throwIfEmptyObs,
 } from "./ObservableLike";
+import { sourceFrom } from "./ReactiveContainerLike";
 
 export const decodeWithCharset: DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"] =
   decodeWithCharsetObs;
@@ -97,7 +113,7 @@ export const throwIfEmpty: ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"] 
 export const throwIfEmptyT: ThrowIfEmpty<RunnableObservableLike> = {
   throwIfEmpty,
 };
-/*
+
 export const toFlowable =
   <T>(): Function1<RunnableObservableLike<T>, FlowableLike<T>> =>
   observable =>
@@ -111,11 +127,11 @@ export const toFlowable =
 
         pipe(
           observer,
-          sourceFromReactiveContainer(
+          sourceFrom(
             pipe(
               observable,
               subscribeOn(pausableScheduler),
-              pipe(pausableScheduler, fromDisposable, takeUntil),
+              takeUntilObs(pipe(pausableScheduler, toObservable())),
             ),
           ),
           add(
@@ -138,7 +154,7 @@ export const toFlowable =
           add(pausableScheduler),
         );
       }),
-    );*/
+    );
 
 export const toReadonlyArray: ToReadonlyArray<
   RunnableObservableLike,

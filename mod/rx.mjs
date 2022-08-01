@@ -1,11 +1,12 @@
 /// <reference types="./rx.d.ts" />
+import { getDelay, hasDelay } from './__internal__/optionalArgs.mjs';
 import { dispose, addTo, isDisposed, onDisposed, addIgnoringChildErrors } from './__internal__/util/DisposableLikeInternal.mjs';
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, ignore, forEach, newInstance, none, getLength, max } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
-import { schedule } from './scheduling/SchedulerLike.mjs';
+import { schedule, __yield } from './scheduling/SchedulerLike.mjs';
 import { SinkLike_notify } from './util.mjs';
 
 /** @ignore */
@@ -152,6 +153,24 @@ const deferRunnable = f => createRunnable(sink => {
 const deferRunnableT = { defer: deferRunnable };
 const emptyRunnable = () => createEmpty(createRunnable);
 const emptyRunnableT = { empty: emptyRunnable };
+const generateObservable = (generator, initialValue, options) => {
+    const delay = getDelay(options);
+    const { delayStart = false } = options !== null && options !== void 0 ? options : {};
+    const onSink = (observer) => {
+        let acc = initialValue();
+        const continuation = () => {
+            while (!isDisposed(observer)) {
+                acc = generator(acc);
+                observer[SinkLike_notify](acc);
+                __yield(options);
+            }
+        };
+        pipe(observer, getScheduler, schedule(continuation, delayStart && hasDelay(options) ? options : none), addTo(observer));
+    };
+    return delay > 0
+        ? createRunnableObservable(onSink)
+        : createEnumerableObservable(onSink);
+};
 const generateRunnable = (generator, initialValue) => createRunnable((sink) => {
     let acc = initialValue();
     while (!isDisposed(sink)) {
@@ -162,7 +181,7 @@ const generateRunnable = (generator, initialValue) => createRunnable((sink) => {
 const generateRunnableT = {
     generate: generateRunnable,
 };
-const neverObservable = () => createNever(createObservable);
+const neverObservable = () => createNever(createEnumerableObservable);
 const neverObservableT = {
     never: neverObservable,
 };
@@ -171,4 +190,4 @@ const neverRunnableT = {
     never: neverRunnable,
 };
 
-export { DefaultObservable, EnumerableObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, RunnableObservable, SubjectLike_publish, createEnumerableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableObservable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyRunnable, emptyRunnableT, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { DefaultObservable, EnumerableObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, RunnableObservable, SubjectLike_publish, createEnumerableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableObservable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyRunnable, emptyRunnableT, generateObservable, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };

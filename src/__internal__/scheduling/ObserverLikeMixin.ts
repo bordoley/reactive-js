@@ -85,7 +85,7 @@ const createObserverDispatcher = (<T>() => {
 
         this.onContinuationDispose = () => {
           if (isDisposed(this)) {
-            pipe(this.observer, dispose(this[DisposableLike_exception]));
+            pipe(observer, dispose(this[DisposableLike_exception]));
           }
         };
 
@@ -93,7 +93,7 @@ const createObserverDispatcher = (<T>() => {
           this,
           onDisposed(e => {
             if (isEmpty(this.nextQueue)) {
-              pipe(this, dispose(e));
+              pipe(observer, dispose(e));
             }
           }),
         );

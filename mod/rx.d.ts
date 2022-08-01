@@ -1,5 +1,5 @@
 import { StatefulContainerLike, ContainerLike, Container, ContainerOf, Using, Defer, Empty, Generate, Never } from "./containers.mjs";
-import { Function1, SideEffect1, Factory } from "./functions.mjs";
+import { Function1, SideEffect1, Factory, Updater } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
 import { DisposableLike, SinkLike } from "./util.mjs";
 /** @ignore */
@@ -27,13 +27,12 @@ declare const ObservableLike_observableType: unique symbol;
 interface ObservableLike<T = unknown> extends ReactiveContainerLike<ObserverLike<T>> {
     readonly TContainerOf?: ObservableLike<this["T"]>;
     readonly TStatefulContainerState?: ObserverLike<this["T"]>;
-    readonly [ObservableLike_observableType]: ObservableType;
 }
 interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
-    readonly [ObservableLike_observableType]: RunnableObservableType;
+    readonly [ObservableLike_observableType]?: RunnableObservableType;
 }
 interface EnumerableObservableLike<T = unknown> extends RunnableObservableLike<T> {
-    readonly [ObservableLike_observableType]: EnumerableObservableType;
+    readonly [ObservableLike_observableType]?: EnumerableObservableType;
 }
 /** @ignore */
 declare const MulticastObservableLike_observerCount: unique symbol;
@@ -86,10 +85,27 @@ declare const deferRunnable: Defer<RunnableLike>["defer"];
 declare const deferRunnableT: Defer<RunnableLike>;
 declare const emptyRunnable: Empty<RunnableLike>["empty"];
 declare const emptyRunnableT: Empty<RunnableLike>;
+/**
+ * Generates an `ObservableLike` sequence from a generator function
+ * that is applied to an accumulator value with a specified `delay`
+ * between emitted items.
+ *
+ * @param generator the generator function.
+ * @param initialValue Factory function used to generate the initial accumulator.
+ * @param delay The requested delay between emitted items by the observable.
+ */
+interface GenerateObservable {
+    <T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableObservableLike<T>;
+    <T>(generator: Updater<T>, initialValue: Factory<T>, options: {
+        readonly delay: number;
+        readonly delayStart?: boolean;
+    }): RunnableObservableLike<T>;
+}
+declare const generateObservable: GenerateObservable;
 declare const generateRunnable: Generate<RunnableLike>["generate"];
 declare const generateRunnableT: Generate<RunnableLike>;
-declare const neverObservable: Never<ObservableLike>["never"];
-declare const neverObservableT: Never<ObservableLike>;
+declare const neverObservable: Never<EnumerableObservableLike>["never"];
+declare const neverObservableT: Never<EnumerableObservableLike>;
 declare const neverRunnable: Never<RunnableLike>["never"];
 declare const neverRunnableT: Never<RunnableLike>;
-export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, EnumerableObservableType, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_observableType, ObservableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, RunnableObservableType, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createEnumerableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableObservable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyRunnable, emptyRunnableT, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { DefaultObservable, EnumerableObservable, EnumerableObservableLike, EnumerableObservableType, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_observableType, ObservableType, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservable, RunnableObservableLike, RunnableObservableType, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, createEnumerableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableObservable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyRunnable, emptyRunnableT, generateObservable, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
