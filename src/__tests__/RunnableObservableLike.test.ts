@@ -12,6 +12,7 @@ import { increment, pipe, pipeLazy, returns } from "../functions";
 import { deferObservableT, generateObservable } from "../rx";
 import { subscribe, takeUntil } from "../rx/ObservableLike";
 import {
+  concatT,
   decodeWithCharsetT,
   distinctUntilChangedT,
   forEach,
@@ -37,6 +38,7 @@ import { stream } from "../streaming/StreamableLike";
 import { run } from "../util/ContinuationLike";
 import { dispose, isDisposed } from "../util/DisposableLike";
 import {
+  concatTests,
   decodeWithCharsetTests,
   distinctUntilChangedTests,
   forEachTests,
@@ -54,6 +56,11 @@ import {
 
 export const RunnableObservableLikeTests = describe(
   "RunnableObservableLike",
+  concatTests({
+    fromArray: toObservable,
+    ...concatT,
+    ...toReadonlyArrayT,
+  }),
   decodeWithCharsetTests({
     fromArray: toObservable,
     ...decodeWithCharsetT,

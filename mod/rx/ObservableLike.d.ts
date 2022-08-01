@@ -1,9 +1,19 @@
-import { DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise } from "../containers.mjs";
+import { Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise } from "../containers.mjs";
 import { Function1, Option, Equality, SideEffect1, Predicate, Reducer, Factory } from "../functions.mjs";
 import { ObservableLike, MulticastObservableLike, RunnableObservableLike, EnumerableObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
 import { DisposableLike } from "../util.mjs";
 declare const getObservableType: (obs: ObservableLike) => 0 | 1 | 2;
+interface ConcatObservable {
+    <T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
+    <T>(fst: RunnableObservableLike<T>, snd: RunnableObservableLike<T>, ...tail: readonly RunnableObservableLike<T>[]): ObservableLike<T>;
+    <T>(fst: EnumerableObservableLike<T>, snd: EnumerableObservableLike<T>, ...tail: readonly EnumerableObservableLike<T>[]): ObservableLike<T>;
+}
+/**
+ * Creates an `ObservableLike` which emits all values from each source sequentially.
+ */
+declare const concat: ConcatObservable;
+declare const concatT: Concat<ObservableLike>;
 interface DecodeWithCharsetObservable {
     (charset?: string | undefined): ContainerOperator<ObservableLike, ArrayBuffer, string>;
     (charset?: string | undefined): ContainerOperator<RunnableObservableLike, ArrayBuffer, string>;
@@ -25,9 +35,9 @@ interface DistinctUntilChangedObservable {
 declare const distinctUntilChanged: DistinctUntilChangedObservable;
 declare const distinctUntilChangedT: DistinctUntilChanged<ObservableLike>;
 interface ForEachObservable {
-    <T>(effect: SideEffect1<T>): ContainerOperator<ObservableLike<unknown>, T, T>;
-    <T>(effect: SideEffect1<T>): ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-    <T>(effect: SideEffect1<T>): ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
+    <T>(effect: SideEffect1<T>): ContainerOperator<ObservableLike, T, T>;
+    <T>(effect: SideEffect1<T>): ContainerOperator<RunnableObservableLike, T, T>;
+    <T>(effect: SideEffect1<T>): ContainerOperator<EnumerableObservableLike, T, T>;
 }
 declare const forEach: ForEachObservable;
 declare const forEachT: ForEach<ObservableLike>;
@@ -56,15 +66,15 @@ declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
 interface PairwiseObservable {
-    <T>(): ContainerOperator<ObservableLike<unknown>, T, readonly [
+    <T>(): ContainerOperator<ObservableLike, T, readonly [
         T,
         T
     ]>;
-    <T>(): ContainerOperator<RunnableObservableLike<unknown>, T, readonly [
+    <T>(): ContainerOperator<RunnableObservableLike, T, readonly [
         T,
         T
     ]>;
-    <T>(): ContainerOperator<EnumerableObservableLike<unknown>, T, readonly [
+    <T>(): ContainerOperator<EnumerableObservableLike, T, readonly [
         T,
         T
     ]>;
@@ -72,9 +82,9 @@ interface PairwiseObservable {
 declare const pairwise: PairwiseObservable;
 declare const pairwiseT: Pairwise<ObservableLike>;
 interface ReduceObservable {
-    <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<ObservableLike<unknown>, T, TAcc>;
-    <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<RunnableObservableLike<unknown>, T, TAcc>;
-    <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<EnumerableObservableLike<unknown>, T, TAcc>;
+    <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<ObservableLike, T, TAcc>;
+    <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<RunnableObservableLike, T, TAcc>;
+    <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<EnumerableObservableLike, T, TAcc>;
 }
 declare const reduce: ReduceObservable;
 declare const reduceT: Reduce<ObservableLike>;
@@ -139,8 +149,8 @@ interface TakeLastObservable {
 declare const takeLast: TakeLastObservable;
 declare const takeLastT: TakeLast<ObservableLike>;
 interface TakeUntil {
-    <T>(notifier: ObservableLike<unknown>): ContainerOperator<ObservableLike, T, T>;
-    <T>(notifier: RunnableObservableLike<unknown>): ContainerOperator<RunnableObservableLike, T, T>;
+    <T>(notifier: ObservableLike): ContainerOperator<ObservableLike, T, T>;
+    <T>(notifier: RunnableObservableLike): ContainerOperator<RunnableObservableLike, T, T>;
 }
 declare const takeUntil: TakeUntil;
 interface TakeWhileObservable {
@@ -170,4 +180,4 @@ declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike>;
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
 declare const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"];
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
+export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
