@@ -9,7 +9,11 @@ import {
   test,
 } from "../__internal__/testing";
 import { Option, none, pipe, pipeLazy, raise } from "../functions";
+import { subscribe } from "../rx/ObservableLike";
+import { createVirtualTimeScheduler } from "../scheduling";
+import { getCurrentTime, schedule } from "../scheduling/SchedulerLike";
 import { Exception, createDisposable } from "../util";
+import { run } from "../util/ContinuationLike";
 import {
   add,
   addIgnoringChildErrors,
@@ -18,6 +22,7 @@ import {
   getException,
   isDisposed,
   onDisposed,
+  toObservable,
 } from "../util/DisposableLike";
 
 export const DisposableLikeTests = describe(
@@ -83,5 +88,32 @@ export const DisposableLikeTests = describe(
       ({ cause }: Exception = { cause: undefined }) => cause as any,
       expectEquals(cause),
     );
+  }),
+  test("toObservable", () => {
+    const disposable = createDisposable();
+    const scheduler = createVirtualTimeScheduler();
+
+    let disposedTime = 0;
+    pipe(
+      disposable,
+      toObservable(),
+      subscribe(scheduler),
+      onDisposed(_ => {
+        disposedTime = getCurrentTime(scheduler);
+      }),
+    );
+
+    pipe(
+      scheduler,
+      schedule(
+        () => {
+          pipe(disposable, dispose());
+        },
+        { delay: 2 },
+      ),
+    );
+
+    pipe(scheduler, run);
+    pipe(disposedTime, expectEquals(2));
   }),
 );

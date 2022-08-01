@@ -1,9 +1,14 @@
 /// <reference types="./DisposableLike.test.d.ts" />
 import { describe as createDescribe, test as createTest, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals } from '../__internal__/testing.mjs';
 import { pipe, pipeLazy, none, raise } from '../functions.mjs';
+import { subscribe } from '../rx/ObservableLike.mjs';
+import { createVirtualTimeScheduler } from '../scheduling.mjs';
+import { schedule } from '../scheduling/SchedulerLike.mjs';
 import { createDisposable } from '../util.mjs';
-import '../util/DisposableLike.mjs';
+import { run } from '../util/ContinuationLike.mjs';
+import { toObservable } from '../util/DisposableLike.mjs';
 import { addIgnoringChildErrors, dispose, isDisposed, onDisposed, getException, addTo, add } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { getCurrentTime } from '../__internal__/schedulingInternal.mjs';
 
 const DisposableLikeTests = createDescribe("DisposableLike", createTest("disposes child disposable when disposed", () => {
     const child = createDisposable();
@@ -39,6 +44,18 @@ const DisposableLikeTests = createDescribe("DisposableLike", createTest("dispose
     const cause = new Error();
     pipe(child, dispose({ cause }));
     pipe(parent, getException, ({ cause } = { cause: undefined }) => cause, expectEquals(cause));
+}), createTest("toObservable", () => {
+    const disposable = createDisposable();
+    const scheduler = createVirtualTimeScheduler();
+    let disposedTime = 0;
+    pipe(disposable, toObservable(), subscribe(scheduler), onDisposed(_ => {
+        disposedTime = getCurrentTime(scheduler);
+    }));
+    pipe(scheduler, schedule(() => {
+        pipe(disposable, dispose());
+    }, { delay: 2 }));
+    pipe(scheduler, run);
+    pipe(disposedTime, expectEquals(2));
 }));
 
 export { DisposableLikeTests };

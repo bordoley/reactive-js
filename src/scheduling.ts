@@ -10,6 +10,13 @@ import {
   getCurrentTime,
   isInContinuation,
 } from "./__internal__/schedulingInternal";
+import {
+  addIgnoringChildErrors,
+  addTo,
+  dispose,
+  isDisposed,
+  onDisposed,
+} from "./__internal__/util/DisposableLikeInternal";
 import { disposableMixin } from "./__internal__/util/DisposableLikeMixins";
 import {
   MutableEnumeratorLike,
@@ -35,13 +42,6 @@ import {
   createDisposable,
 } from "./util";
 import { run } from "./util/ContinuationLike";
-import {
-  addIgnoringChildErrors,
-  addTo,
-  dispose,
-  isDisposed,
-  onDisposed,
-} from "./util/DisposableLike";
 import { getCurrent, move } from "./util/EnumeratorLike";
 
 export {

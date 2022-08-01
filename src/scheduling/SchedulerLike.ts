@@ -9,6 +9,11 @@ import {
   isInContinuation,
 } from "../__internal__/schedulingInternal";
 import {
+  addIgnoringChildErrors,
+  dispose,
+  isDisposed,
+} from "../__internal__/util/DisposableLikeInternal";
+import {
   DisposableRefLike,
   disposableMixin,
   disposableRefMixin,
@@ -62,11 +67,6 @@ import {
   disposed,
 } from "../util";
 import { run } from "../util/ContinuationLike";
-import {
-  addIgnoringChildErrors,
-  dispose,
-  isDisposed,
-} from "../util/DisposableLike";
 import { getCurrent, hasCurrent } from "../util/EnumeratorLike";
 import { move } from "../util/SourceLike";
 
