@@ -91,6 +91,48 @@ export const throwIfEmpty: ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"] 
 export const throwIfEmptyT: ThrowIfEmpty<RunnableObservableLike> = {
   throwIfEmpty,
 };
+/*
+export const toFlowable =
+  <T>(): Function1<RunnableObservableLike<T>, FlowableLike<T>> =>
+  observable =>
+    createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
+      createObservable(observer => {
+        const pausableScheduler = pipe(
+          observer,
+          getScheduler,
+          toPausableScheduler,
+        );
+
+        pipe(
+          observer,
+          sourceFromReactiveContainer(
+            pipe(
+              observable,
+              subscribeOn(pausableScheduler),
+              pipe(pausableScheduler, fromDisposable, takeUntil),
+            ),
+          ),
+          add(
+            pipe(
+              modeObs,
+              forEach((mode: FlowMode) => {
+                switch (mode) {
+                  case "pause":
+                    pause(pausableScheduler);
+                    break;
+                  case "resume":
+                    resume(pausableScheduler);
+                    break;
+                }
+              }),
+              subscribe(getScheduler(observer)),
+              bindTo(pausableScheduler),
+            ),
+          ),
+          add(pausableScheduler),
+        );
+      }),
+    );*/
 
 export const toReadonlyArray: ToReadonlyArray<
   RunnableObservableLike,

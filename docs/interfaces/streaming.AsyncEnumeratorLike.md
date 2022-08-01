@@ -23,7 +23,6 @@
 ### Properties
 
 - [T](streaming.AsyncEnumeratorLike.md#t)
-- [TStatefulContainerState](streaming.AsyncEnumeratorLike.md#tstatefulcontainerstate)
 
 ### Methods
 
@@ -38,16 +37,6 @@
 #### Inherited from
 
 StreamLike.T
-
-___
-
-### TStatefulContainerState
-
-• `Optional` `Readonly` **TStatefulContainerState**: [`ObserverLike`](scheduling.ObserverLike.md)<`T`\>
-
-#### Overrides
-
-StreamLike.TStatefulContainerState
 
 ## Methods
 

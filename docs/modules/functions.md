@@ -49,6 +49,7 @@
 - [arrayEquality](functions.md#arrayequality)
 - [callWith](functions.md#callwith)
 - [compose](functions.md#compose)
+- [composeUnsafe](functions.md#composeunsafe)
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
 - [flip](functions.md#flip)
@@ -1473,6 +1474,22 @@ Composes a series of unary functions.
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, `L`\>
+
+___
+
+### composeUnsafe
+
+▸ **composeUnsafe**(...`operators`): [`Function1`](functions.md#function1)<`any`, `unknown`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...operators` | [`Function1`](functions.md#function1)<`any`, `unknown`\>[] |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`any`, `unknown`\>
 
 ___
 

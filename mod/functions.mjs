@@ -111,17 +111,16 @@ const updateReducer = (acc, updater) => updater(acc);
 /**
  * Pipes `source` through a series of unary functions.
  */
-const pipe = (source, ...operators) => {
-    return pipeUnsafe(source, ...operators);
-};
+const pipeUnsafe = (source, ...operators) => operators.reduce(updateReducer, source);
 /**
  * Pipes `source` through a series of unary functions.
  */
-const pipeUnsafe = (source, ...operators) => operators.reduce(updateReducer, source);
+const pipe = pipeUnsafe;
+const composeUnsafe = (...operators) => source => pipeUnsafe(source, ...operators);
 /**
  * Composes a series of unary functions.
  */
-const compose = (...operators) => source => pipeUnsafe(source, ...operators);
+const compose = composeUnsafe;
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
@@ -154,4 +153,4 @@ const forEach = (f) => arr => {
 };
 const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
