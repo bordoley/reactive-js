@@ -16,7 +16,10 @@ import {
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { observerMixin } from "../__internal__/scheduling/ObserverLikeMixin";
-import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
+import {
+  delegatingDisposableMixin,
+  disposableMixin,
+} from "../__internal__/util/DisposableLikeMixins";
 import {
   PropertyTypeOf,
   clazz,
@@ -92,11 +95,48 @@ import {
   SchedulerLike,
 } from "../scheduling";
 import { dispatchTo } from "../scheduling/DispatcherLike";
+import { getScheduler } from "../scheduling/ObserverLike";
 import { DisposableLike, SinkLike_notify } from "../util";
 import { addTo, bindTo, dispose, onDisposed } from "../util/DisposableLike";
 import { getObserverCount } from "./MulticastObservableLike";
 import { sourceFrom } from "./ReactiveContainerLike";
 import { publishTo } from "./SubjectLike";
+
+const createDelegatingObserver: <T>(o: ObserverLike<T>) => ObserverLike<T> =
+  /*@__PURE__*/ (<T>() => {
+    const typedObserverMixin = observerMixin<T>();
+
+    type TProperties = PropertyTypeOf<
+      [typeof delegatingDisposableMixin, typeof typedObserverMixin]
+    > & {
+      delegate: ObserverLike<T>;
+    };
+
+    return pipe(
+      clazz(
+        function DelegatingObserver(
+          this: TProperties,
+          observer: ObserverLike<T>,
+        ) {
+          init(delegatingDisposableMixin, this, observer);
+          init(typedObserverMixin, this, getScheduler(observer));
+          this.delegate = observer;
+          debugger;
+        },
+        {
+          delegate: none,
+        },
+        {
+          [SinkLike_notify](this: TProperties, next: T) {
+            debugger;
+            this.delegate[SinkLike_notify](next);
+          },
+        },
+      ),
+      mixWith(delegatingDisposableMixin, typedObserverMixin),
+      createObjectFactory<ObserverLike<T>, ObserverLike<T>>(),
+    );
+  })();
 
 export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
   obs[ObservableLike_observableType];
@@ -152,15 +192,17 @@ const createLift = /*@__PURE__*/ (() => {
       );
     };
 })();
-/*
+
 const lift: Lift<ObservableLike, TReactive>["lift"] = createLift(0);
+
+/*
 const liftT: Lift<ObservableLike, TReactive> = {
   lift,
   variance: reactive,
 };*/
-/*
+
 const liftRunnableObservable: Lift<RunnableObservableLike, TReactive>["lift"] =
-  createLift(1);
+  createLift(1); /*
 const liftRunnableObservableT: Lift<ObservableLike, TReactive> = {
   lift: liftRunnableObservable,
   variance: reactive,
@@ -748,21 +790,31 @@ export const takeLast: TakeLastObservable = /*@__PURE__*/ (<T>() => {
 })();
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 
-/*
-export const takeUntil = <T>(
+interface TakeUntil {
+  <T>(notifier: ObservableLike<unknown>): ContainerOperator<
+    ObservableLike,
+    T,
+    T
+  >;
+  <T>(notifier: RunnableObservableLike<unknown>): ContainerOperator<
+    RunnableObservableLike,
+    T,
+    T
+  >;
+}
+export const takeUntil: TakeUntil = <T>(
   notifier: ObservableLike<unknown>,
 ): ContainerOperator<ObservableLike, T, T> => {
-  const operator = (delegate: ObserverLike<T>) => {
-    const takeUntilObserver: ObserverLike<T> = pipe(
+  const operator = (delegate: ObserverLike<T>) =>
+    pipe(
       createDelegatingObserver(delegate),
-      bindTo(delegate),
       bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))),
     );
 
-    return takeUntilObserver;
-  };
-  return lift(operator);
-};*/
+  return notifier[ObservableLike_observableType] === 0
+    ? lift(operator)
+    : liftRunnableObservable(operator);
+};
 
 interface TakeWhileObservable {
   <T>(

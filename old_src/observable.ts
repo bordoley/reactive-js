@@ -288,21 +288,6 @@ export const someSatisfyT: SomeSatisfy<ObservableLike<unknown>> = {
   someSatisfy,
 };
 
-export const takeUntil = <T>(
-  notifier: ObservableLike<unknown>,
-): ObservableOperator<T, T> => {
-  const operator = (delegate: ObserverLike<T>) => {
-    const takeUntilObserver: ObserverLike<T> = pipe(
-      createDelegatingObserver(delegate),
-      bindTo(delegate),
-      bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))),
-    );
-
-    return takeUntilObserver;
-  };
-  return lift(operator);
-};
-
 export const toObservable: ToObservable<
   ObservableLike<unknown>
 >["toObservable"] = () => identity;

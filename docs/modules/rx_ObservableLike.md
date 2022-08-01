@@ -38,6 +38,7 @@
 - [subscribeOn](rx_ObservableLike.md#subscribeon)
 - [takeFirst](rx_ObservableLike.md#takefirst)
 - [takeLast](rx_ObservableLike.md#takelast)
+- [takeUntil](rx_ObservableLike.md#takeuntil)
 - [takeWhile](rx_ObservableLike.md#takewhile)
 - [throwIfEmpty](rx_ObservableLike.md#throwifempty)
 - [toPromise](rx_ObservableLike.md#topromise)
@@ -859,6 +860,46 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### takeUntil
+
+▸ **takeUntil**<`T`\>(`notifier`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

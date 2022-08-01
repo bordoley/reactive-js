@@ -1,6 +1,8 @@
-import { describe } from "../__internal__/testing";
+import { describe, expectArrayEquals, test } from "../__internal__/testing";
 import { toObservable } from "../containers/ReadonlyArrayLike";
+import { pipe, pipeLazy } from "../functions";
 import { deferObservableT } from "../rx";
+import { takeUntil } from "../rx/ObservableLike";
 import {
   decodeWithCharsetT,
   distinctUntilChangedT,
@@ -15,6 +17,7 @@ import {
   takeLastT,
   takeWhileT,
   throwIfEmptyT,
+  toReadonlyArray,
   toReadonlyArrayT,
 } from "../rx/RunnableObservableLike";
 import {
@@ -102,4 +105,14 @@ export const RunnableObservableLikeTests = describe(
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
   }),
+  test(
+    "takeUntil",
+    pipeLazy(
+      [1, 2, 3, 4, 5],
+      toObservable({ delay: 1 }),
+      takeUntil(pipe([1], toObservable({ delay: 3, delayStart: true }))),
+      toReadonlyArray(),
+      expectArrayEquals([1, 2, 3]),
+    ),
+  ),
 );

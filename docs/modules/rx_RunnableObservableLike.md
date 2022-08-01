@@ -34,6 +34,7 @@
 - [skipFirst](rx_RunnableObservableLike.md#skipfirst)
 - [takeFirst](rx_RunnableObservableLike.md#takefirst)
 - [takeLast](rx_RunnableObservableLike.md#takelast)
+- [takeUntil](rx_RunnableObservableLike.md#takeuntil)
 - [takeWhile](rx_RunnableObservableLike.md#takewhile)
 - [throwIfEmpty](rx_RunnableObservableLike.md#throwifempty)
 - [toReadonlyArray](rx_RunnableObservableLike.md#toreadonlyarray)
@@ -356,6 +357,28 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### takeUntil
+
+▸ **takeUntil**<`T`\>(`notifier`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\> |
 
 #### Returns
 
