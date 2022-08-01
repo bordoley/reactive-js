@@ -15,28 +15,27 @@ import {
 } from "./DisposableLikeInternal";
 import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike";
 import {
-  Object_init,
-  Object_properties,
-  Object_prototype,
+  Class,
+  Class1,
   UnknownObject,
   clazz,
   createObjectFactory,
 } from "./Object";
 
-export const delegatingDisposableMixin: {
-  [Object_init](this: unknown, delegate: DisposableLike): void;
-  [Object_properties]: {
+export const delegatingDisposableMixin: Class1<
+  {
     readonly [DisposableLike_isDisposed]: boolean;
-  };
-  [Object_prototype]: {
+  },
+  {
     get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
     [DisposableLike_dispose](error?: Exception): void;
-  };
-} = /*@__PURE__*/ (() => {
+  },
+  DisposableLike
+> = /*@__PURE__*/ (() => {
   const DelegatingDisposable_private_delegate = Symbol(
     "DelegatingDisposable_private_delegate",
   );
@@ -101,23 +100,19 @@ const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
   }
 };
 
-export const disposableMixin: {
-  [Object_init](this: {
+export const disposableMixin: Class<
+  {
     [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
-  }): void;
-  [Object_properties]: {
-    [DisposableLike_exception]: Option<Exception>;
-    [DisposableLike_isDisposed]: boolean;
-  };
-  [Object_prototype]: {
+  },
+  {
     [DisposableLike_dispose](error?: Exception): void;
     [DisposableLike_add](
       disposable: DisposableOrTeardown,
       ignoreChildErrors: boolean,
     ): void;
-  };
-} = /*@__PURE__*/ (() => {
+  }
+> = /*@__PURE__*/ (() => {
   const Disposable_private_disposables = Symbol(
     "Disposable_private_disposables",
   );
@@ -205,44 +200,45 @@ export interface DisposableRefLike<
 > extends DisposableLike,
     MutableRefLike<TDisposable> {}
 
-export const disposableRefMixin: <TDisposable extends DisposableLike>() => {
-  [Object_init](this: unknown, defaultValue: TDisposable): void;
-  [Object_properties]: UnknownObject;
-  [Object_prototype]: MutableRefLike<TDisposable>;
-} = /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
-  const DisposableRef_private_current = Symbol("DisposableRef_private_current");
+export const disposableRefMixin: <
+  TDisposable extends DisposableLike,
+>() => Class1<UnknownObject, MutableRefLike<TDisposable>, TDisposable> =
+  /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
+    const DisposableRef_private_current = Symbol(
+      "DisposableRef_private_current",
+    );
 
-  type TProperties = {
-    [DisposableRef_private_current]: TDisposable;
-  };
+    type TProperties = {
+      [DisposableRef_private_current]: TDisposable;
+    };
 
-  return pipe(
-    clazz(
-      function DisposableRef(
-        this: TProperties & DisposableLike,
-        defaultValue: TDisposable,
-      ) {
-        this[DisposableRef_private_current] = defaultValue;
-        pipe(this, add(defaultValue));
-      },
-      {
-        [DisposableRef_private_current]: none,
-      },
-      {
-        get [MutableRefLike_current](): TDisposable {
-          const self = this as unknown as TProperties;
-          return self[DisposableRef_private_current];
+    return pipe(
+      clazz(
+        function DisposableRef(
+          this: TProperties & DisposableLike,
+          defaultValue: TDisposable,
+        ) {
+          this[DisposableRef_private_current] = defaultValue;
+          pipe(this, add(defaultValue));
         },
-        set [MutableRefLike_current](v: TDisposable) {
-          const self = this as unknown as TProperties & DisposableLike;
-          const oldValue = self[DisposableRef_private_current];
-          pipe(oldValue, dispose());
-
-          self[DisposableRef_private_current] = v;
-          pipe(self, add(v));
+        {
+          [DisposableRef_private_current]: none,
         },
-      },
-    ),
-    returns,
-  );
-})();
+        {
+          get [MutableRefLike_current](): TDisposable {
+            const self = this as unknown as TProperties;
+            return self[DisposableRef_private_current];
+          },
+          set [MutableRefLike_current](v: TDisposable) {
+            const self = this as unknown as TProperties & DisposableLike;
+            const oldValue = self[DisposableRef_private_current];
+            pipe(oldValue, dispose());
+
+            self[DisposableRef_private_current] = v;
+            pipe(self, add(v));
+          },
+        },
+      ),
+      returns,
+    );
+  })();
