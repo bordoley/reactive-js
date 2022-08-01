@@ -1,4 +1,4 @@
-import { StatefulContainerLike, StatefulContainerStateOf, Container, ContainerOperator, ContainerOf } from "../../containers.mjs";
+import { StatefulContainerLike, StatefulContainerStateOf, Container, ContainerOperator } from "../../containers.mjs";
 import { Function1, Function2, Equality, SideEffect1, Predicate, Function3, Reducer, Factory } from "../../functions.mjs";
 declare type StatefulContainerOperatorIn<C extends StatefulContainerLike, TA, TB, TVar extends TInteractive | TReactive> = TVar extends TReactive ? StatefulContainerStateOf<C, TB> : StatefulContainerStateOf<C, TA>;
 declare type StatefulContainerOperatorOut<C extends StatefulContainerLike, TA, TB, TVar extends TInteractive | TReactive> = TVar extends TReactive ? StatefulContainerStateOf<C, TA> : StatefulContainerStateOf<C, TB>;
@@ -25,20 +25,10 @@ declare const createScanOperator: <C extends StatefulContainerLike, T, TAcc, TVa
 declare const createSkipFirstOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function2<StatefulContainerOperatorIn<C, T, T, TVar>, number, StatefulContainerOperatorOut<C, T, T, TVar>>) => (options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T, T>;
-declare const createTakeFirstOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Container<C> & {
-    empty<T_1>(options?: undefined): ContainerOf<C, T_1>;
-} & {
-    lift<TA, TB>(operator: Function1<StatefulContainerOperatorIn<C, TA, TB, TVar>, StatefulContainerOperatorOut<C, TA, TB, TVar>>): ContainerOperator<C, TA, TB>;
-    readonly variance: TVar;
-}) => (operator: Function2<StatefulContainerOperatorIn<C, T, T, TVar>, number, StatefulContainerOperatorOut<C, T, T, TVar>>) => (options?: {
+declare const createTakeFirstOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function2<StatefulContainerOperatorIn<C, T, T, TVar>, number, StatefulContainerOperatorOut<C, T, T, TVar>>) => (options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T, T>;
-declare const createTakeLastOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Container<C> & {
-    empty<T_1>(options?: undefined): ContainerOf<C, T_1>;
-} & {
-    lift<TA, TB>(operator: Function1<StatefulContainerOperatorIn<C, TA, TB, TVar>, StatefulContainerOperatorOut<C, TA, TB, TVar>>): ContainerOperator<C, TA, TB>;
-    readonly variance: TVar;
-}) => (operator: Function2<StatefulContainerOperatorIn<C, T, T, TVar>, number, StatefulContainerOperatorOut<C, T, T, TVar>>) => (options?: {
+declare const createTakeLastOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function2<StatefulContainerOperatorIn<C, T, T, TVar>, number, StatefulContainerOperatorOut<C, T, T, TVar>>) => (options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T, T>;
 declare const createTakeWhileOperator: <C extends StatefulContainerLike, T, TVar extends 0 | 1>(m: Lift<C, TVar>) => (operator: Function3<StatefulContainerOperatorIn<C, T, T, TVar>, Predicate<T>, boolean, StatefulContainerOperatorOut<C, T, T, TVar>>) => (predicate: Predicate<T>, options?: {

@@ -5,7 +5,7 @@ import { createObjectFactory, clazz, init, mixWith } from '../__internal__/util/
 import { bufferSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, pipeUnsafe, newInstance, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto, createRunnable, emptyRunnableT } from '../rx.mjs';
+import { ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
@@ -141,7 +141,6 @@ const takeFirst = /*@__PURE__*/ (() => {
     const typedTakeFirstSinkMixin = takeFirstSinkMixin();
     return pipe(typedTakeFirstSinkMixin, createObjectFactory(), createTakeFirstOperator({
         ...liftT,
-        ...emptyRunnableT,
     }));
 })();
 const takeFirstT = { takeFirst };
@@ -149,7 +148,6 @@ const takeLast = /*@__PURE__*/ (() => {
     const typedTakeLastSinkMixin = takeLastSinkMixin(toRunnable$1());
     return pipe(typedTakeLastSinkMixin, createObjectFactory(), createTakeLastOperator({
         ...liftT,
-        ...emptyRunnableT,
     }));
 })();
 const takeLastT = { takeLast };

@@ -91,7 +91,6 @@ import {
   InteractiveContainerLike_interact,
   ToEnumerable,
   createEnumerable,
-  emptyEnumerableT,
 } from "../ix";
 import {
   EnumerableObservableLike,
@@ -875,7 +874,6 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
       createObjectFactory<EnumeratorLike<T>, EnumeratorLike<T>, number>(),
       createTakeFirstOperator<EnumerableLike, T, TInteractive>({
         ...liftT,
-        ...emptyEnumerableT,
       }),
     );
   })();
@@ -946,7 +944,6 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
     createObjectFactory<EnumeratorLike<T>, EnumeratorLike<T>, number>(),
     createTakeLastOperator<EnumerableLike, T, TInteractive>({
       ...liftT,
-      ...emptyEnumerableT,
     }),
   );
 })();
