@@ -121,14 +121,12 @@ const createDelegatingObserver: <T>(o: ObserverLike<T>) => ObserverLike<T> =
           init(delegatingDisposableMixin, this, observer);
           init(typedObserverMixin, this, getScheduler(observer));
           this.delegate = observer;
-          debugger;
         },
         {
           delegate: none,
         },
         {
           [SinkLike_notify](this: TProperties, next: T) {
-            debugger;
             this.delegate[SinkLike_notify](next);
           },
         },
@@ -139,7 +137,7 @@ const createDelegatingObserver: <T>(o: ObserverLike<T>) => ObserverLike<T> =
   })();
 
 export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
-  obs[ObservableLike_observableType];
+  (obs as any)[ObservableLike_observableType] ?? 0;
 
 const createLift = /*@__PURE__*/ (() => {
   class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
@@ -180,8 +178,8 @@ const createLift = /*@__PURE__*/ (() => {
 
       const type = min(
         observableType,
-        source[ObservableLike_observableType],
-        sourceSource[ObservableLike_observableType],
+        (source as any)[ObservableLike_observableType] ?? 0,
+        (sourceSource as any)[ObservableLike_observableType] ?? 0,
       );
 
       return newInstance(
@@ -811,7 +809,7 @@ export const takeUntil: TakeUntil = <T>(
       bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))),
     );
 
-  return notifier[ObservableLike_observableType] === 0
+  return (notifier as any)[ObservableLike_observableType] === 0
     ? lift(operator)
     : liftRunnableObservable(operator);
 };

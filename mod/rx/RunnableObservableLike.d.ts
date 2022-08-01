@@ -1,5 +1,6 @@
+import { FlowableLike, FlowableStreamLike } from "../streaming.mjs";
 import { DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, ContainerOperator, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
-import { Factory } from "../functions.mjs";
+import { Function1, Factory } from "../functions.mjs";
 import { RunnableObservableLike } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
 declare const decodeWithCharset: DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"];
@@ -29,10 +30,11 @@ declare const takeWhile: TakeWhile<RunnableObservableLike>["takeWhile"];
 declare const takeWhileT: TakeWhile<RunnableObservableLike>;
 declare const throwIfEmpty: ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<RunnableObservableLike>;
+declare const toFlowable: <T>() => Function1<RunnableObservableLike<T>, FlowableLike<T, FlowableStreamLike<T>>>;
 declare const toReadonlyArray: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };
+export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toFlowable, toReadonlyArray, toReadonlyArrayT };
