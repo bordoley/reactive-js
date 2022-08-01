@@ -237,31 +237,27 @@ const map = /*@__PURE__*/ (() => {
 const mapT = { map };
 const pairwise = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    return pipe({
-        [Object_init](delegate) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedEnumerator, this);
-            this.delegate = delegate;
+    return pipe(clazz(function PairwiseEnumerator(delegate) {
+        init(delegatingDisposableMixin, this, delegate);
+        init(typedEnumerator, this);
+        this.delegate = delegate;
+    }, {}, {
+        [SourceLike_move]() {
+            const { delegate } = this;
+            const prev = hasCurrent(this)
+                ? getCurrent(this)[1]
+                : move(delegate)
+                    ? getCurrent(delegate)
+                    : none;
+            if (isSome(prev) && move(delegate)) {
+                const current = getCurrent(delegate);
+                this[EnumeratorLike_current] = [prev, current];
+            }
+            else {
+                pipe(this, dispose());
+            }
         },
-        [Object_properties]: {},
-        [Object_prototype]: {
-            [SourceLike_move]() {
-                const { delegate } = this;
-                const prev = hasCurrent(this)
-                    ? getCurrent(this)[1]
-                    : move(delegate)
-                        ? getCurrent(delegate)
-                        : none;
-                if (isSome(prev) && move(delegate)) {
-                    const current = getCurrent(delegate);
-                    this[EnumeratorLike_current] = [prev, current];
-                }
-                else {
-                    pipe(this, dispose());
-                }
-            },
-        },
-    }, mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory(), lift, returns);
+    }), mixWith(delegatingDisposableMixin, typedEnumerator), createObjectFactory(), lift, returns);
 })();
 const pairwiseT = {
     pairwise,
