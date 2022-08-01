@@ -1,8 +1,10 @@
 import { FlowableLike, FlowableStreamLike } from "../streaming.mjs";
-import { DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, ContainerOperator, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
+import { Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, ContainerOperator, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
 import { Function1, Factory } from "../functions.mjs";
 import { RunnableObservableLike } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
+declare const concat: Concat<RunnableObservableLike>["concat"];
+declare const concatT: Concat<RunnableObservableLike>;
 declare const decodeWithCharset: DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"];
 declare const decodeWithCharsetT: DecodeWithCharset<RunnableObservableLike>;
 declare const distinctUntilChanged: DistinctUntilChanged<RunnableObservableLike>["distinctUntilChanged"];
@@ -25,7 +27,7 @@ declare const takeFirst: TakeFirst<RunnableObservableLike>["takeFirst"];
 declare const takeFirstT: TakeFirst<RunnableObservableLike>;
 declare const takeLast: TakeLast<RunnableObservableLike>["takeLast"];
 declare const takeLastT: TakeLast<RunnableObservableLike>;
-declare const takeUntil: <T>(notifier: RunnableObservableLike<unknown>) => ContainerOperator<RunnableObservableLike, T, T>;
+declare const takeUntil: <T>(notifier: RunnableObservableLike) => ContainerOperator<RunnableObservableLike, T, T>;
 declare const takeWhile: TakeWhile<RunnableObservableLike>["takeWhile"];
 declare const takeWhileT: TakeWhile<RunnableObservableLike>;
 declare const throwIfEmpty: ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"];
@@ -37,4 +39,4 @@ declare const toReadonlyArray: ToReadonlyArray<RunnableObservableLike, {
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toFlowable, toReadonlyArray, toReadonlyArrayT };
+export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toFlowable, toReadonlyArray, toReadonlyArrayT };

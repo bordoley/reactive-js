@@ -45,52 +45,6 @@ export interface FlowableLike<
 }
 export interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {}
 
-export const fromObservable =
-  <T>(): Function1<ObservableLike<T>, FlowableLike<T>> =>
-  observable =>
-    createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
-      createObservable(observer => {
-        const pausableScheduler = pipe(
-          observer,
-          getScheduler,
-          createPausableScheduler,
-        );
-
-        pipe(
-          observer,
-          sourceFromReactiveContainer(
-            pipe(
-              observable,
-              subscribeOn(pausableScheduler),
-              pipe(pausableScheduler, fromDisposable, takeUntil),
-            ),
-          ),
-          add(
-            pipe(
-              modeObs,
-              onNotify((mode: FlowMode) => {
-                switch (mode) {
-                  case "pause":
-                    pausableScheduler.pause();
-                    break;
-                  case "resume":
-                    pausableScheduler.resume();
-                    break;
-                }
-              }),
-              subscribe(getScheduler(observer)),
-              bindTo(pausableScheduler),
-            ),
-          ),
-          add(pausableScheduler),
-        );
-      }),
-    );
-
-export const fromObservableT: FromObservable<FlowableLike<unknown>> = {
-  fromObservable,
-};
-
 export const toObservable =
   <T>(): Function1<FlowableLike<T>, ObservableLike<T>> =>
   src =>

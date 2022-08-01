@@ -1,12 +1,12 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { reactive, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
-import { delegatingDisposableMixin, disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
+import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
-import { toObservable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, none, pipeUnsafe, min, newInstance, returns, isNone, isSome } from '../functions.mjs';
-import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, createSubject, createObservable } from '../rx.mjs';
+import { map as map$1, toObservable } from '../containers/ReadonlyArrayLike.mjs';
+import { pipe, none, pipeUnsafe, min, newInstance, getLength, isEmpty, returns, isNone, isSome } from '../functions.mjs';
+import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, createObservable, RunnableObservable, createRunnableObservable, EnumerableObservable, createEnumerableObservable, createSubject } from '../rx.mjs';
 import { ObserverLike_scheduler, ObserverLike_dispatcher } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -15,13 +15,13 @@ import '../util/DisposableLike.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { publishTo } from './SubjectLike.mjs';
-import { bindTo, onDisposed, dispose, addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { addTo, onComplete, dispose, bindTo, onDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const createDelegatingObserver = 
 /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
     return pipe(clazz(function DelegatingObserver(observer) {
-        init(delegatingDisposableMixin, this, observer);
+        init(disposableMixin, this);
         init(typedObserverMixin, this, getScheduler(observer));
         this.delegate = observer;
     }, {
@@ -30,7 +30,7 @@ const createDelegatingObserver =
         [SinkLike_notify](next) {
             this.delegate[SinkLike_notify](next);
         },
-    }), mixWith(delegatingDisposableMixin, typedObserverMixin), createObjectFactory());
+    }), mixWith(disposableMixin, typedObserverMixin), createObjectFactory());
 })();
 const getObservableType = (obs) => { var _a; return (_a = obs[ObservableLike_observableType]) !== null && _a !== void 0 ? _a : 0; };
 const createLift = /*@__PURE__*/ (() => {
@@ -69,6 +69,41 @@ const liftEnumerableObservable = createLift(2);
 const liftEnumerableObservableT = {
     lift: liftEnumerableObservable,
     variance: reactive,
+};
+/**
+ * Creates an `ObservableLike` which emits all values from each source sequentially.
+ */
+const concat = (() => {
+    const createConcatObserver = (delegate, observables, next) => pipe(createDelegatingObserver(delegate), addTo(delegate), onComplete(() => {
+        if (next < getLength(observables)) {
+            pipe(createConcatObserver(delegate, observables, next + 1), sourceFrom(observables[next]));
+        }
+        else {
+            pipe(delegate, dispose());
+        }
+    }));
+    return (...observables) => {
+        const onSink = (observer) => {
+            if (!isEmpty(observables)) {
+                pipe(createConcatObserver(observer, observables, 1), sourceFrom(observables[0]));
+            }
+            else {
+                pipe(observer, dispose());
+            }
+        };
+        const type = pipe(observables, map$1(obs => { var _a; return (_a = obs[ObservableLike_observableType]) !== null && _a !== void 0 ? _a : 0; }), x => min(...x));
+        switch (type) {
+            case EnumerableObservable:
+                return createEnumerableObservable(onSink);
+            case RunnableObservable:
+                return createRunnableObservable(onSink);
+            default:
+                return createObservable(onSink);
+        }
+    };
+})();
+const concatT = {
+    concat,
 };
 const decodeWithCharset = 
 /*@__PURE__*/ (() => {
@@ -227,7 +262,7 @@ const takeLast = /*@__PURE__*/ (() => {
 })();
 const takeLastT = { takeLast };
 const takeUntil = (notifier) => {
-    const operator = (delegate) => pipe(createDelegatingObserver(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))));
+    const operator = (delegate) => pipe(createDelegatingObserver(delegate), bindTo(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))));
     return notifier[ObservableLike_observableType] === 0
         ? lift(operator)
         : liftRunnableObservable(operator);
@@ -278,4 +313,4 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
+export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };

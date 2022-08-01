@@ -4,18 +4,22 @@ import { toObservable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, pipe, increment, returns } from '../functions.mjs';
 import { deferObservableT, generateObservable } from '../rx.mjs';
 import { takeUntil, subscribe } from '../rx/ObservableLike.mjs';
-import { decodeWithCharsetT, mapT, toReadonlyArrayT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArray, toFlowable, forEach } from '../rx/RunnableObservableLike.mjs';
+import { concatT, toReadonlyArrayT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArray, toFlowable, forEach } from '../rx/RunnableObservableLike.mjs';
 import { createVirtualTimeScheduler } from '../scheduling.mjs';
 import { dispatch, dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { schedule } from '../scheduling/SchedulerLike.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import '../util/DisposableLike.mjs';
-import { decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from './operators.test.mjs';
+import { concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from './operators.test.mjs';
 import { dispose, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 import { getCurrentTime } from '../__internal__/schedulingInternal.mjs';
 
-const RunnableObservableLikeTests = createDescribe("RunnableObservableLike", decodeWithCharsetTests({
+const RunnableObservableLikeTests = createDescribe("RunnableObservableLike", concatTests({
+    fromArray: toObservable,
+    ...concatT,
+    ...toReadonlyArrayT,
+}), decodeWithCharsetTests({
     fromArray: toObservable,
     ...decodeWithCharsetT,
     ...deferObservableT,

@@ -1,4 +1,5 @@
 import {
+  Concat,
   ContainerOperator,
   DecodeWithCharset,
   DistinctUntilChanged,
@@ -39,6 +40,7 @@ import {
 } from "../util/DisposableLike";
 import { pause, resume } from "../util/PauseableLike";
 import {
+  concat as concatObs,
   decodeWithCharset as decodeWithCharsetObs,
   distinctUntilChanged as distinctUntilChangedObs,
   forEach as forEachObs,
@@ -57,6 +59,11 @@ import {
   throwIfEmpty as throwIfEmptyObs,
 } from "./ObservableLike";
 import { sourceFrom } from "./ReactiveContainerLike";
+
+export const concat: Concat<RunnableObservableLike>["concat"] = concatObs;
+export const concatT: Concat<RunnableObservableLike> = {
+  concat,
+};
 
 export const decodeWithCharset: DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"] =
   decodeWithCharsetObs;
@@ -101,7 +108,7 @@ export const takeLast: TakeLast<RunnableObservableLike>["takeLast"] =
 export const takeLastT: TakeLast<RunnableObservableLike> = { takeLast };
 
 export const takeUntil: <T>(
-  notifier: RunnableObservableLike<unknown>,
+  notifier: RunnableObservableLike,
 ) => ContainerOperator<RunnableObservableLike, T, T> = takeUntilObs;
 
 export const takeWhile: TakeWhile<RunnableObservableLike>["takeWhile"] =

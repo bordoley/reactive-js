@@ -6,6 +6,7 @@
 
 ### Variables
 
+- [concatT](rx_RunnableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_RunnableObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_RunnableObservableLike.md#distinctuntilchangedt)
 - [forEachT](rx_RunnableObservableLike.md#foreacht)
@@ -23,6 +24,7 @@
 
 ### Functions
 
+- [concat](rx_RunnableObservableLike.md#concat)
 - [decodeWithCharset](rx_RunnableObservableLike.md#decodewithcharset)
 - [distinctUntilChanged](rx_RunnableObservableLike.md#distinctuntilchanged)
 - [forEach](rx_RunnableObservableLike.md#foreach)
@@ -41,6 +43,12 @@
 - [toReadonlyArray](rx_RunnableObservableLike.md#toreadonlyarray)
 
 ## Variables
+
+### concatT
+
+• `Const` **concatT**: [`Concat`](containers.md#concat)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
 
 ### decodeWithCharsetT
 
@@ -125,6 +133,30 @@ ___
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), { `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }\>
 
 ## Functions
+
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `snd` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
 
 ### decodeWithCharset
 

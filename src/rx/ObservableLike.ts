@@ -16,10 +16,7 @@ import {
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { observerMixin } from "../__internal__/scheduling/ObserverLikeMixin";
-import {
-  delegatingDisposableMixin,
-  disposableMixin,
-} from "../__internal__/util/DisposableLikeMixins";
+import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   PropertyTypeOf,
   clazz,
@@ -43,6 +40,7 @@ import {
   throwIfEmptySinkMixin,
 } from "../__internal__/util/SinkLikeMixin";
 import {
+  Concat,
   ContainerOperator,
   DecodeWithCharset,
   DistinctUntilChanged,
@@ -59,7 +57,10 @@ import {
   ThrowIfEmpty,
   ToPromise,
 } from "../containers";
-import { toObservable as arrayToObservable } from "../containers/ReadonlyArrayLike";
+import {
+  toObservable as arrayToObservable,
+  map as mapArray,
+} from "../containers/ReadonlyArrayLike";
 import {
   Equality,
   Factory,
@@ -68,6 +69,8 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  getLength,
+  isEmpty,
   isNone,
   isSome,
   min,
@@ -78,14 +81,18 @@ import {
   returns,
 } from "../functions";
 import {
+  EnumerableObservable,
   EnumerableObservableLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_observableType,
   ObservableType,
   ReactiveContainerLike_sinkInto,
+  RunnableObservable,
   RunnableObservableLike,
+  createEnumerableObservable,
   createObservable,
+  createRunnableObservable,
   createSubject,
 } from "../rx";
 import {
@@ -97,7 +104,13 @@ import {
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import { getScheduler } from "../scheduling/ObserverLike";
 import { DisposableLike, SinkLike_notify } from "../util";
-import { addTo, bindTo, dispose, onDisposed } from "../util/DisposableLike";
+import {
+  addTo,
+  bindTo,
+  dispose,
+  onComplete,
+  onDisposed,
+} from "../util/DisposableLike";
 import { getObserverCount } from "./MulticastObservableLike";
 import { sourceFrom } from "./ReactiveContainerLike";
 import { publishTo } from "./SubjectLike";
@@ -107,7 +120,7 @@ const createDelegatingObserver: <T>(o: ObserverLike<T>) => ObserverLike<T> =
     const typedObserverMixin = observerMixin<T>();
 
     type TProperties = PropertyTypeOf<
-      [typeof delegatingDisposableMixin, typeof typedObserverMixin]
+      [typeof disposableMixin, typeof typedObserverMixin]
     > & {
       delegate: ObserverLike<T>;
     };
@@ -118,7 +131,7 @@ const createDelegatingObserver: <T>(o: ObserverLike<T>) => ObserverLike<T> =
           this: TProperties,
           observer: ObserverLike<T>,
         ) {
-          init(delegatingDisposableMixin, this, observer);
+          init(disposableMixin, this);
           init(typedObserverMixin, this, getScheduler(observer));
           this.delegate = observer;
         },
@@ -131,7 +144,7 @@ const createDelegatingObserver: <T>(o: ObserverLike<T>) => ObserverLike<T> =
           },
         },
       ),
-      mixWith(delegatingDisposableMixin, typedObserverMixin),
+      mixWith(disposableMixin, typedObserverMixin),
       createObjectFactory<ObserverLike<T>, ObserverLike<T>>(),
     );
   })();
@@ -211,6 +224,80 @@ const liftEnumerableObservable: Lift<ObservableLike, TReactive>["lift"] =
 const liftEnumerableObservableT: Lift<EnumerableObservableLike, TReactive> = {
   lift: liftEnumerableObservable,
   variance: reactive,
+};
+
+interface ConcatObservable {
+  <T>(
+    fst: ObservableLike<T>,
+    snd: ObservableLike<T>,
+    ...tail: readonly ObservableLike<T>[]
+  ): ObservableLike<T>;
+  <T>(
+    fst: RunnableObservableLike<T>,
+    snd: RunnableObservableLike<T>,
+    ...tail: readonly RunnableObservableLike<T>[]
+  ): ObservableLike<T>;
+  <T>(
+    fst: EnumerableObservableLike<T>,
+    snd: EnumerableObservableLike<T>,
+    ...tail: readonly EnumerableObservableLike<T>[]
+  ): ObservableLike<T>;
+}
+/**
+ * Creates an `ObservableLike` which emits all values from each source sequentially.
+ */
+export const concat: ConcatObservable = (<T>() => {
+  const createConcatObserver = <T>(
+    delegate: ObserverLike<T>,
+    observables: readonly ObservableLike<T>[],
+    next: number,
+  ) =>
+    pipe(
+      createDelegatingObserver(delegate),
+      addTo(delegate),
+      onComplete(() => {
+        if (next < getLength(observables)) {
+          pipe(
+            createConcatObserver(delegate, observables, next + 1),
+            sourceFrom(observables[next]),
+          );
+        } else {
+          pipe(delegate, dispose());
+        }
+      }),
+    );
+
+  return (...observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
+    const onSink = (observer: ObserverLike<T>) => {
+      if (!isEmpty(observables)) {
+        pipe(
+          createConcatObserver(observer, observables, 1),
+          sourceFrom(observables[0]),
+        );
+      } else {
+        pipe(observer, dispose());
+      }
+    };
+
+    const type = pipe(
+      observables,
+      mapArray(obs => (obs as any)[ObservableLike_observableType] ?? 0),
+      x => min(...x),
+    ) as ObservableType;
+
+    switch (type) {
+      case EnumerableObservable:
+        return createEnumerableObservable(onSink);
+      case RunnableObservable:
+        return createRunnableObservable(onSink);
+      default:
+        return createObservable(onSink);
+    }
+  };
+})();
+
+export const concatT: Concat<ObservableLike> = {
+  concat,
 };
 
 interface DecodeWithCharsetObservable {
@@ -311,14 +398,10 @@ export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
 };
 
 interface ForEachObservable {
-  <T>(effect: SideEffect1<T>): ContainerOperator<ObservableLike<unknown>, T, T>;
+  <T>(effect: SideEffect1<T>): ContainerOperator<ObservableLike, T, T>;
+  <T>(effect: SideEffect1<T>): ContainerOperator<RunnableObservableLike, T, T>;
   <T>(effect: SideEffect1<T>): ContainerOperator<
-    RunnableObservableLike<unknown>,
-    T,
-    T
-  >;
-  <T>(effect: SideEffect1<T>): ContainerOperator<
-    EnumerableObservableLike<unknown>,
+    EnumerableObservableLike,
     T,
     T
   >;
@@ -455,13 +538,9 @@ export const multicast =
   };
 
 interface PairwiseObservable {
-  <T>(): ContainerOperator<ObservableLike<unknown>, T, readonly [T, T]>;
-  <T>(): ContainerOperator<RunnableObservableLike<unknown>, T, readonly [T, T]>;
-  <T>(): ContainerOperator<
-    EnumerableObservableLike<unknown>,
-    T,
-    readonly [T, T]
-  >;
+  <T>(): ContainerOperator<ObservableLike, T, readonly [T, T]>;
+  <T>(): ContainerOperator<RunnableObservableLike, T, readonly [T, T]>;
+  <T>(): ContainerOperator<EnumerableObservableLike, T, readonly [T, T]>;
 }
 export const pairwise: PairwiseObservable = /*@__PURE__*/ (<T>() => {
   const typedPairwiseSinkMixin = pairwiseSinkMixin<T>();
@@ -491,15 +570,15 @@ interface ReduceObservable {
   <T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
-  ): ContainerOperator<ObservableLike<unknown>, T, TAcc>;
+  ): ContainerOperator<ObservableLike, T, TAcc>;
   <T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
-  ): ContainerOperator<RunnableObservableLike<unknown>, T, TAcc>;
+  ): ContainerOperator<RunnableObservableLike, T, TAcc>;
   <T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
-  ): ContainerOperator<EnumerableObservableLike<unknown>, T, TAcc>;
+  ): ContainerOperator<EnumerableObservableLike, T, TAcc>;
 }
 export const reduce: ReduceObservable = /*@__PURE__*/ (<T, TAcc>() => {
   const typedReduceSinkMixin = reduceSinkMixin<
@@ -789,23 +868,20 @@ export const takeLast: TakeLastObservable = /*@__PURE__*/ (<T>() => {
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 
 interface TakeUntil {
-  <T>(notifier: ObservableLike<unknown>): ContainerOperator<
-    ObservableLike,
-    T,
-    T
-  >;
-  <T>(notifier: RunnableObservableLike<unknown>): ContainerOperator<
+  <T>(notifier: ObservableLike): ContainerOperator<ObservableLike, T, T>;
+  <T>(notifier: RunnableObservableLike): ContainerOperator<
     RunnableObservableLike,
     T,
     T
   >;
 }
 export const takeUntil: TakeUntil = <T>(
-  notifier: ObservableLike<unknown>,
+  notifier: ObservableLike,
 ): ContainerOperator<ObservableLike, T, T> => {
   const operator = (delegate: ObserverLike<T>) =>
     pipe(
       createDelegatingObserver(delegate),
+      bindTo(delegate),
       bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))),
     );
 
