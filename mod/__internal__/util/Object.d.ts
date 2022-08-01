@@ -30,6 +30,10 @@ interface Init {
         [Object_properties]: TProperties;
         [Object_init](this: TProperties & TPrototype, a: TA, b: TB): void;
     }, self: TProperties, a: TA, b: TB): void;
+    <TProperties, TPrototype, TA, TB, TC>(clazz: {
+        [Object_properties]: TProperties;
+        [Object_init](this: TProperties & TPrototype, a: TA, b: TB, c: TC): void;
+    }, self: TProperties, a: TA, b: TB, c: TC): void;
 }
 declare const init: Init;
 interface ObjectFactory {

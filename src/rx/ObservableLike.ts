@@ -2,8 +2,17 @@ import {
   Lift,
   TReactive,
   createDecodeWithCharsetOperator,
+  createDistinctUntilChangedOperator,
   createForEachOperator,
+  createKeepOperator,
   createMapOperator,
+  createReduceOperator,
+  createScanOperator,
+  createSkipFirstOperator,
+  createTakeFirstOperator,
+  createTakeLastOperator,
+  createTakeWhileOperator,
+  createThrowIfEmptyOperator,
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { observerMixin } from "../__internal__/scheduling/ObserverLikeMixin";
@@ -17,20 +26,44 @@ import {
 } from "../__internal__/util/Object";
 import {
   decodeWithCharsetSinkMixin,
+  distinctUntilChangedSinkMixin,
   forEachSinkMixin,
+  keepSinkMixin,
   mapSinkMixin,
+  pairwiseSinkMixin,
+  reduceSinkMixin,
+  scanSinkMixin,
+  skipFirstSinkMixin,
+  takeFirstSinkMixin,
+  takeLastSinkMixin,
+  takeWhileSinkMixin,
+  throwIfEmptySinkMixin,
 } from "../__internal__/util/SinkLikeMixin";
 import {
   ContainerOperator,
   DecodeWithCharset,
+  DistinctUntilChanged,
   ForEach,
+  Keep,
   Map,
+  Pairwise,
+  Reduce,
+  Scan,
+  SkipFirst,
+  TakeFirst,
+  TakeLast,
+  TakeWhile,
+  ThrowIfEmpty,
   ToPromise,
 } from "../containers";
 import { toObservable as arrayToObservable } from "../containers/ReadonlyArrayLike";
 import {
+  Equality,
+  Factory,
   Function1,
   Option,
+  Predicate,
+  Reducer,
   SideEffect1,
   isSome,
   min,
@@ -38,6 +71,7 @@ import {
   none,
   pipe,
   pipeUnsafe,
+  returns,
 } from "../functions";
 import {
   EnumerableObservableLike,
@@ -185,6 +219,57 @@ export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
   decodeWithCharset,
 };
 
+interface DistinctUntilChangedObservable {
+  <T>(
+    options?: Option<{
+      readonly equality?: Equality<T>;
+    }>,
+  ): ContainerOperator<ObservableLike, T, T>;
+  <T>(
+    options?: Option<{
+      readonly equality?: Equality<T>;
+    }>,
+  ): ContainerOperator<RunnableObservableLike, T, T>;
+  <T>(
+    options?: Option<{
+      readonly equality?: Equality<T>;
+    }>,
+  ): ContainerOperator<EnumerableObservableLike, T, T>;
+}
+export const distinctUntilChanged: DistinctUntilChangedObservable =
+  /*@__PURE__*/ (<T>() => {
+    const typedDistinctUntilChangedSinkMixin =
+      distinctUntilChangedSinkMixin<T>();
+    const typedObserverMixin = observerMixin<T>();
+
+    type TProperties = PropertyTypeOf<
+      [typeof typedObserverMixin, typeof typedDistinctUntilChangedSinkMixin]
+    >;
+
+    return pipe(
+      clazz(
+        function DistinctUntilChangedObserver(
+          this: TProperties & DisposableLike,
+          delegate: ObserverLike<T>,
+          equality: Equality<T>,
+        ) {
+          init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+          init(typedDistinctUntilChangedSinkMixin, this, delegate, equality);
+        },
+        {},
+        {},
+      ),
+      mixWith(typedObserverMixin, typedDistinctUntilChangedSinkMixin),
+      createObjectFactory<ObserverLike<T>, ObserverLike<T>, Equality<T>>(),
+      createDistinctUntilChangedOperator<ObservableLike, T, TReactive>(
+        liftEnumerableObservableT,
+      ),
+    );
+  })();
+export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
+  distinctUntilChanged,
+};
+
 interface ForEachObservable {
   <T>(effect: SideEffect1<T>): ContainerOperator<ObservableLike<unknown>, T, T>;
   <T>(effect: SideEffect1<T>): ContainerOperator<
@@ -227,6 +312,43 @@ export const forEach: ForEachObservable = /*@__PURE__*/ (<T>() => {
   );
 })();
 export const forEachT: ForEach<ObservableLike> = { forEach };
+
+interface KeepObservable {
+  <T>(predicate: Predicate<T>): ContainerOperator<ObservableLike, T, T>;
+  <T>(predicate: Predicate<T>): ContainerOperator<RunnableObservableLike, T, T>;
+  <T>(predicate: Predicate<T>): ContainerOperator<
+    EnumerableObservableLike,
+    T,
+    T
+  >;
+}
+export const keep: KeepObservable = /*@__PURE__*/ (<T>() => {
+  const typedKeepSinkMixin = keepSinkMixin<T>();
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedKeepSinkMixin]
+  >;
+
+  return pipe(
+    clazz(
+      function KeepObserver(
+        this: TProperties & DisposableLike,
+        delegate: ObserverLike<T>,
+        predicate: Predicate<T>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedKeepSinkMixin, this, delegate, predicate);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedKeepSinkMixin),
+    createObjectFactory<ObserverLike<T>, ObserverLike<T>, Predicate<T>>(),
+    createKeepOperator<ObservableLike, T, TReactive>(liftEnumerableObservableT),
+  );
+})();
+export const keepT: Keep<ObservableLike> = { keep };
 
 interface MapObservable {
   <TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<
@@ -279,6 +401,197 @@ export const map: MapObservable = /*@__PURE__*/ (<TA, TB>() => {
 })();
 export const mapT: Map<ObservableLike> = { map };
 
+interface PairwiseObservable {
+  <T>(): ContainerOperator<ObservableLike<unknown>, T, readonly [T, T]>;
+  <T>(): ContainerOperator<RunnableObservableLike<unknown>, T, readonly [T, T]>;
+  <T>(): ContainerOperator<
+    EnumerableObservableLike<unknown>,
+    T,
+    readonly [T, T]
+  >;
+}
+export const pairwise: PairwiseObservable = /*@__PURE__*/ (<T>() => {
+  const typedPairwiseSinkMixin = pairwiseSinkMixin<T>();
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedPairwiseSinkMixin]
+  >;
+
+  return pipe(
+    clazz(
+      function PairwiseObserver(
+        this: TProperties,
+        delegate: ObserverLike<readonly [T, T]>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedPairwiseSinkMixin, this, delegate);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedPairwiseSinkMixin),
+    createObjectFactory<ObserverLike<T>, ObserverLike<readonly [T, T]>>(),
+    liftEnumerableObservable,
+    returns,
+  );
+})();
+export const pairwiseT: Pairwise<ObservableLike> = { pairwise };
+
+interface ReduceObservable {
+  <T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<ObservableLike<unknown>, T, TAcc>;
+  <T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<RunnableObservableLike<unknown>, T, TAcc>;
+  <T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<EnumerableObservableLike<unknown>, T, TAcc>;
+}
+export const reduce: ReduceObservable = /*@__PURE__*/ (<T, TAcc>() => {
+  const typedReduceSinkMixin = reduceSinkMixin<
+    ObservableLike,
+    ObserverLike<TAcc>,
+    T,
+    TAcc
+  >(arrayToObservable());
+
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedReduceSinkMixin]
+  >;
+
+  return pipe(
+    clazz(
+      function ReduceObserver(
+        this: TProperties,
+        delegate: ObserverLike<TAcc>,
+        reducer: Reducer<T, TAcc>,
+        initialValue: Factory<TAcc>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedReduceSinkMixin),
+    createObjectFactory<
+      ObserverLike<T>,
+      ObserverLike<TAcc>,
+      Reducer<T, TAcc>,
+      Factory<TAcc>
+    >(),
+    createReduceOperator<ObservableLike, T, TAcc, TReactive>(
+      liftEnumerableObservableT,
+    ),
+  );
+})();
+export const reduceT: Reduce<ObservableLike> = { reduce };
+
+interface ScanObservable {
+  <T, TAcc>(
+    scanner: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<ObservableLike, T, TAcc>;
+  <T, TAcc>(
+    scanner: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<RunnableObservableLike, T, TAcc>;
+  <T, TAcc>(
+    scanner: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<EnumerableObservableLike, T, TAcc>;
+}
+export const scan: ScanObservable = /*@__PURE__*/ (<T, TAcc>() => {
+  const typedScanSinkMixin = scanSinkMixin<T, TAcc>();
+
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedScanSinkMixin]
+  >;
+
+  return pipe(
+    clazz(
+      function ScanObserver(
+        this: TProperties,
+        delegate: ObserverLike<TAcc>,
+        reducer: Reducer<T, TAcc>,
+        initialValue: Factory<TAcc>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedScanSinkMixin, this, delegate, reducer, initialValue);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedScanSinkMixin),
+    createObjectFactory<
+      ObserverLike<T>,
+      ObserverLike<TAcc>,
+      Reducer<T, TAcc>,
+      Factory<TAcc>
+    >(),
+    createScanOperator<ObservableLike, T, TAcc, TReactive>(
+      liftEnumerableObservableT,
+    ),
+  );
+})();
+export const scanT: Scan<ObservableLike> = { scan };
+
+interface SkipFirstObservable {
+  <T>(options?: { readonly count?: number }): ContainerOperator<
+    ObservableLike,
+    T,
+    T
+  >;
+  <T>(options?: { readonly count?: number }): ContainerOperator<
+    RunnableObservableLike,
+    T,
+    T
+  >;
+  <T>(options?: { readonly count?: number }): ContainerOperator<
+    EnumerableObservableLike,
+    T,
+    T
+  >;
+}
+export const skipFirst: SkipFirstObservable = /*@__PURE__*/ (<T>() => {
+  const typedSkipFirstSinkMixin = skipFirstSinkMixin<T>();
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedSkipFirstSinkMixin]
+  >;
+
+  return pipe(
+    clazz(
+      function SkipFirstObserver(
+        this: TProperties,
+        delegate: ObserverLike<T>,
+        skipCount: number,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedSkipFirstSinkMixin, this, delegate, skipCount);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedSkipFirstSinkMixin),
+    createObjectFactory<ObserverLike<T>, ObserverLike<T>, number>(),
+    createSkipFirstOperator<ObservableLike, T, TReactive>(
+      liftEnumerableObservableT,
+    ),
+  );
+})();
+export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
+
 export const subscribe: <T>(
   scheduler: SchedulerLike,
 ) => Function1<ObservableLike<T>, DisposableLike> = /*@__PURE__*/ (<T>() => {
@@ -301,6 +614,204 @@ export const subscribe: <T>(
   return (scheduler: SchedulerLike) => observable =>
     pipe(scheduler, createObserver, addTo(scheduler), sourceFrom(observable));
 })();
+
+interface TakeFirstObservable {
+  <T>(options?: { readonly count?: number }): ContainerOperator<
+    ObservableLike,
+    T,
+    T
+  >;
+  <T>(options?: { readonly count?: number }): ContainerOperator<
+    RunnableObservableLike,
+    T,
+    T
+  >;
+  <T>(options?: { readonly count?: number }): ContainerOperator<
+    EnumerableObservableLike,
+    T,
+    T
+  >;
+}
+export const takeFirst: TakeFirstObservable = /*@__PURE__*/ (<T>() => {
+  const typedTakeFirstSinkMixin = takeFirstSinkMixin<T>();
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedTakeFirstSinkMixin]
+  >;
+
+  return pipe(
+    clazz(
+      function TakeFirstObserver(
+        this: TProperties,
+        delegate: ObserverLike<T>,
+        takeCount: number,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedTakeFirstSinkMixin, this, delegate, takeCount);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedTakeFirstSinkMixin),
+    createObjectFactory<ObserverLike<T>, ObserverLike<T>, number>(),
+    createTakeFirstOperator<ObservableLike, T, TReactive>({
+      ...liftEnumerableObservableT,
+    }),
+  );
+})();
+export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
+
+interface TakeLastObservable {
+  <T>(options?: { readonly count?: number }): ContainerOperator<
+    ObservableLike,
+    T,
+    T
+  >;
+  <T>(options?: { readonly count?: number }): ContainerOperator<
+    RunnableObservableLike,
+    T,
+    T
+  >;
+  <T>(options?: { readonly count?: number }): ContainerOperator<
+    EnumerableObservableLike,
+    T,
+    T
+  >;
+}
+export const takeLast: TakeLastObservable = /*@__PURE__*/ (<T>() => {
+  const typedTakeLastSinkMixin = takeLastSinkMixin<
+    ObservableLike<T>,
+    ObserverLike<T>,
+    T
+  >(arrayToObservable());
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedTakeLastSinkMixin]
+  >;
+  return pipe(
+    clazz(
+      function TakeLastObserver(
+        this: TProperties,
+        delegate: ObserverLike<T>,
+        takeCount: number,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedTakeLastSinkMixin, this, delegate, takeCount);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedTakeLastSinkMixin),
+    createObjectFactory<ObserverLike<T>, ObserverLike<T>, number>(),
+    createTakeLastOperator<ObservableLike, T, TReactive>({
+      ...liftEnumerableObservableT,
+    }),
+  );
+})();
+export const takeLastT: TakeLast<ObservableLike> = { takeLast };
+
+interface TakeWhileObservable {
+  <T>(
+    predicate: Predicate<T>,
+    options?: {
+      readonly inclusive?: boolean;
+    },
+  ): ContainerOperator<ObservableLike, T, T>;
+  <T>(
+    predicate: Predicate<T>,
+    options?: {
+      readonly inclusive?: boolean;
+    },
+  ): ContainerOperator<RunnableObservableLike, T, T>;
+  <T>(
+    predicate: Predicate<T>,
+    options?: {
+      readonly inclusive?: boolean;
+    },
+  ): ContainerOperator<EnumerableObservableLike, T, T>;
+}
+export const takeWhile: TakeWhileObservable = /*@__PURE__*/ (<T>() => {
+  const typedTakeWhileSinkMixin = takeWhileSinkMixin<T>();
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedTakeWhileSinkMixin]
+  >;
+
+  return pipe(
+    clazz(
+      function TakeWhileObserver(
+        this: TProperties,
+        delegate: ObserverLike<T>,
+        predicate: Predicate<T>,
+        inclusive: boolean,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedTakeWhileSinkMixin, this, delegate, predicate, inclusive);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedTakeWhileSinkMixin),
+    createObjectFactory<
+      ObserverLike<T>,
+      ObserverLike<T>,
+      Predicate<T>,
+      boolean
+    >(),
+    createTakeWhileOperator<ObservableLike, T, TReactive>(
+      liftEnumerableObservableT,
+    ),
+  );
+})();
+export const takeWhileT: TakeWhile<ObservableLike> = { takeWhile };
+
+interface ThrowIfEmptyObservable {
+  <T>(factory: Factory<unknown>): ContainerOperator<ObservableLike, T, T>;
+  <T>(factory: Factory<unknown>): ContainerOperator<
+    RunnableObservableLike,
+    T,
+    T
+  >;
+  <T>(factory: Factory<unknown>): ContainerOperator<
+    EnumerableObservableLike,
+    T,
+    T
+  >;
+}
+export const throwIfEmpty: ThrowIfEmptyObservable = /*@__PURE__*/ (<T>() => {
+  const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin<T>();
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedThrowIfEmptySinkMixin]
+  >;
+
+  return pipe(
+    clazz(
+      function TakeWhileObserver(
+        this: TProperties,
+        delegate: ObserverLike<T>,
+        factory: Factory<unknown>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedThrowIfEmptySinkMixin, this, delegate, factory);
+      },
+      {},
+      {},
+    ),
+    mixWith(typedObserverMixin, typedThrowIfEmptySinkMixin),
+    createObjectFactory<ObserverLike<T>, ObserverLike<T>, Factory<unknown>>(),
+    createThrowIfEmptyOperator<ObservableLike, T, TReactive>(
+      liftEnumerableObservableT,
+    ),
+  );
+})();
+export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {
+  throwIfEmpty,
+};
 
 /**
  * Returns a Promise that completes with the last value produced by

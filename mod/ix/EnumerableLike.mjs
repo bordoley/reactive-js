@@ -8,7 +8,7 @@ import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLik
 import { clazz, init, mixWith, createObjectFactory, Object_init, Object_properties, Object_prototype } from '../__internal__/util/Object.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
-import { InteractiveContainerLike_interact, createEnumerable, emptyEnumerableT } from '../ix.mjs';
+import { InteractiveContainerLike_interact, createEnumerable } from '../ix.mjs';
 import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
@@ -398,7 +398,6 @@ const takeFirst =
         },
     }), mixWith(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createTakeFirstOperator({
         ...liftT,
-        ...emptyEnumerableT,
     }));
 })();
 const takeFirstT = {
@@ -433,7 +432,6 @@ const takeLast = /*@__PURE__*/ (() => {
         },
     }), mixWith(disposableMixin, typedDelegatingEnumeratorMixin), createObjectFactory(), createTakeLastOperator({
         ...liftT,
-        ...emptyEnumerableT,
     }));
 })();
 const takeLastT = { takeLast };

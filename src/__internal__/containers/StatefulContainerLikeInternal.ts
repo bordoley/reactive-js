@@ -2,7 +2,6 @@ import {
   Container,
   ContainerOperator,
   DecodeWithCharset,
-  Empty,
   StatefulContainerLike,
   StatefulContainerStateOf,
 } from "../../containers";
@@ -223,7 +222,7 @@ export const createSkipFirstOperator =
 
 export const createTakeFirstOperator =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
-    m: Empty<C> & Lift<C, TVar>,
+    m: Lift<C, TVar>,
   ) =>
   (
     operator: Function2<
@@ -235,13 +234,12 @@ export const createTakeFirstOperator =
   (options: { readonly count?: number } = {}): ContainerOperator<C, T, T> => {
     const { count = max(options.count ?? 1, 0) } = options;
     const containerOperator = pipe(operator, partial(count), lift(m));
-    return container =>
-      count > 0 ? pipe(container, containerOperator) : m.empty();
+    return container => pipe(container, containerOperator);
   };
 
 export const createTakeLastOperator =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
-    m: Empty<C> & Lift<C, TVar>,
+    m: Lift<C, TVar>,
   ) =>
   (
     operator: Function2<
@@ -253,8 +251,7 @@ export const createTakeLastOperator =
   (options: { readonly count?: number } = {}): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
     const containerOperator = pipe(operator, partial(count), lift(m));
-    return container =>
-      count > 0 ? pipe(container, containerOperator) : m.empty();
+    return container => pipe(container, containerOperator);
   };
 
 export const createTakeWhileOperator =
