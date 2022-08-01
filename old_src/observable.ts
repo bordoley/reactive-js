@@ -230,31 +230,6 @@ export const mapAsync = <TA, TB>(
 
 export const onSubscribe = /*@__PURE__*/ createOnSink(createT);
 
-/**
- * Returns a `MulticastObservableLike` backed by a single subscription to the source.
- *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
- * @param replay The number of events that should be replayed when the `MulticastObservableLike`
- * is subscribed to.
- */
-export const multicast =
-  <T>(
-    scheduler: SchedulerLike,
-    options: { readonly replay?: number } = {},
-  ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
-  observable => {
-    const { replay = 0 } = options;
-    const subject = newInstance<Subject<T>, number>(Subject, replay);
-    pipe(
-      observable,
-      onNotify(publishTo(subject)),
-      subscribe(scheduler),
-      bindTo(subject),
-    );
-
-    return subject;
-  };
-
 export interface ScanAsync<C extends ContainerLike> extends Container<C> {
   scanAsync: <T, TAcc>(
     scanner: AsyncReducer<T, TAcc>,
@@ -291,41 +266,6 @@ export const scanAsyncT: ScanAsync<ObservableLike<unknown>> = {
   scanAsync,
 };
 
-/**
- * Returns an `ObservableLike` backed by a shared refcounted subscription to the
- * source. When the refcount goes to 0, the underlying subscription
- * to the source is disposed.
- *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
- * @param replay The number of events that should be replayed when the `ObservableLike`
- * is subscribed to.
- */
-export const share =
-  <T>(
-    scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
-  ): ObservableOperator<T, T> =>
-  source => {
-    let multicasted: Option<MulticastObservableLike<T>> = none;
-
-    return createObservable(observer => {
-      if (isNone(multicasted)) {
-        multicasted = pipe(source, multicast(scheduler, options));
-      }
-
-      pipe(
-        observer,
-        sourceFrom(multicasted),
-        onDisposed(() => {
-          if (isSome(multicasted) && getObserverCount(multicasted) === 0) {
-            pipe(multicasted, dispose());
-            multicasted = none;
-          }
-        }),
-      );
-    });
-  };
-
 export const someSatisfy: SomeSatisfy<ObservableLike<unknown>>["someSatisfy"] =
   /*@__PURE__*/ decorateMap(
     class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<
@@ -347,18 +287,6 @@ export const someSatisfy: SomeSatisfy<ObservableLike<unknown>>["someSatisfy"] =
 export const someSatisfyT: SomeSatisfy<ObservableLike<unknown>> = {
   someSatisfy,
 };
-
-export const subscribeOn =
-  <T>(scheduler: SchedulerLike): ObservableOperator<T, T> =>
-  observable =>
-    createObservable(({ dispatcher }) =>
-      pipe(
-        observable,
-        onNotify(dispatchTo(dispatcher)),
-        subscribe(scheduler),
-        bindTo(dispatcher),
-      ),
-    );
 
 export const takeUntil = <T>(
   notifier: ObservableLike<unknown>,

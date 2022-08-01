@@ -28,11 +28,14 @@
 - [getObservableType](rx_ObservableLike.md#getobservabletype)
 - [keep](rx_ObservableLike.md#keep)
 - [map](rx_ObservableLike.md#map)
+- [multicast](rx_ObservableLike.md#multicast)
 - [pairwise](rx_ObservableLike.md#pairwise)
 - [reduce](rx_ObservableLike.md#reduce)
 - [scan](rx_ObservableLike.md#scan)
+- [share](rx_ObservableLike.md#share)
 - [skipFirst](rx_ObservableLike.md#skipfirst)
 - [subscribe](rx_ObservableLike.md#subscribe)
+- [subscribeOn](rx_ObservableLike.md#subscribeon)
 - [takeFirst](rx_ObservableLike.md#takefirst)
 - [takeLast](rx_ObservableLike.md#takelast)
 - [takeWhile](rx_ObservableLike.md#takewhile)
@@ -410,6 +413,32 @@ ___
 
 ___
 
+### multicast
+
+▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
+
+Returns a `MulticastObservableLike` backed by a single subscription to the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
+| `options?` | `Object` | - |
+| `options.replay?` | `number` | - |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
+
+___
+
 ### pairwise
 
 ▸ **pairwise**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
@@ -578,6 +607,34 @@ ___
 
 ___
 
+### share
+
+▸ **share**<`T`\>(`scheduler`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns an `ObservableLike` backed by a shared refcounted subscription to the
+source. When the refcount goes to 0, the underlying subscription
+to the source is disposed.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
+| `options?` | `Object` | - |
+| `options.replay?` | `number` | - |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
 ### skipFirst
 
 ▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
@@ -658,6 +715,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
+### subscribeOn
+
+▸ **subscribeOn**<`T`\>(`scheduler`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

@@ -5,13 +5,16 @@ import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toObservable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipeUnsafe, min, newInstance, pipe, returns, none, isSome } from '../functions.mjs';
-import { ObservableLike_observableType, ReactiveContainerLike_sinkInto } from '../rx.mjs';
-import { ObserverLike_scheduler } from '../scheduling.mjs';
+import { pipeUnsafe, min, newInstance, pipe, returns, none, isNone, isSome } from '../functions.mjs';
+import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, createSubject, createObservable } from '../rx.mjs';
+import { ObserverLike_scheduler, ObserverLike_dispatcher } from '../scheduling.mjs';
+import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { SinkLike_notify } from '../util.mjs';
 import '../util/DisposableLike.mjs';
+import { getObserverCount } from './MulticastObservableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
-import { addTo, onDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { publishTo } from './SubjectLike.mjs';
+import { bindTo, onDisposed, dispose, addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const getObservableType = (obs) => obs[ObservableLike_observableType];
 const createLift = /*@__PURE__*/ (() => {
@@ -103,6 +106,19 @@ const map = /*@__PURE__*/ (() => {
     }), mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory(), createMapOperator(liftEnumerableObservableT));
 })();
 const mapT = { map };
+/**
+ * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replay The number of events that should be replayed when the `MulticastObservableLike`
+ * is subscribed to.
+ */
+const multicast = (scheduler, options = {}) => observable => {
+    const { replay = 0 } = options;
+    const subject = createSubject({ replay });
+    pipe(observable, forEach(publishTo(subject)), subscribe(scheduler), bindTo(subject));
+    return subject;
+};
 const pairwise = /*@__PURE__*/ (() => {
     const typedPairwiseSinkMixin = pairwiseSinkMixin();
     const typedObserverMixin = observerMixin();
@@ -130,6 +146,29 @@ const scan = /*@__PURE__*/ (() => {
     }), mixWith(typedObserverMixin, typedScanSinkMixin), createObjectFactory(), createScanOperator(liftEnumerableObservableT));
 })();
 const scanT = { scan };
+/**
+ * Returns an `ObservableLike` backed by a shared refcounted subscription to the
+ * source. When the refcount goes to 0, the underlying subscription
+ * to the source is disposed.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
+ * @param replay The number of events that should be replayed when the `ObservableLike`
+ * is subscribed to.
+ */
+const share = (scheduler, options) => source => {
+    let multicasted = none;
+    return createObservable(observer => {
+        if (isNone(multicasted)) {
+            multicasted = pipe(source, multicast(scheduler, options));
+        }
+        pipe(observer, sourceFrom(multicasted), onDisposed(() => {
+            if (isSome(multicasted) && getObserverCount(multicasted) === 0) {
+                pipe(multicasted, dispose());
+                multicasted = none;
+            }
+        }));
+    });
+};
 const skipFirst = /*@__PURE__*/ (() => {
     const typedSkipFirstSinkMixin = skipFirstSinkMixin();
     const typedObserverMixin = observerMixin();
@@ -149,6 +188,7 @@ const subscribe = /*@__PURE__*/ (() => {
     }), mixWith(disposableMixin, typedObserverMixin), createObjectFactory());
     return (scheduler) => observable => pipe(scheduler, createObserver, addTo(scheduler), sourceFrom(observable));
 })();
+const subscribeOn = (scheduler) => observable => createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => pipe(observable, forEach(dispatchTo(dispatcher)), subscribe(scheduler), bindTo(dispatcher)));
 const takeFirst = /*@__PURE__*/ (() => {
     const typedTakeFirstSinkMixin = takeFirstSinkMixin();
     const typedObserverMixin = observerMixin();
@@ -217,4 +257,4 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, subscribe, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
+export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };

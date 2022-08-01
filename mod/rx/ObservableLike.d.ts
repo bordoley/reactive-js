@@ -1,6 +1,6 @@
-import { DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise, ContainerOperator } from "../containers.mjs";
+import { DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise } from "../containers.mjs";
 import { Function1, Option, Equality, SideEffect1, Predicate, Reducer, Factory } from "../functions.mjs";
-import { ObservableLike, RunnableObservableLike, EnumerableObservableLike } from "../rx.mjs";
+import { ObservableLike, MulticastObservableLike, RunnableObservableLike, EnumerableObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
 import { DisposableLike } from "../util.mjs";
 declare const getObservableType: (obs: ObservableLike) => 0 | 1 | 2;
@@ -45,6 +45,16 @@ interface MapObservable {
 }
 declare const map: MapObservable;
 declare const mapT: Map<ObservableLike>;
+/**
+ * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replay The number of events that should be replayed when the `MulticastObservableLike`
+ * is subscribed to.
+ */
+declare const multicast: <T>(scheduler: SchedulerLike, options?: {
+    readonly replay?: number;
+}) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
 interface PairwiseObservable {
     <T>(): ContainerOperator<ObservableLike<unknown>, T, readonly [
         T,
@@ -75,6 +85,18 @@ interface ScanObservable {
 }
 declare const scan: ScanObservable;
 declare const scanT: Scan<ObservableLike>;
+/**
+ * Returns an `ObservableLike` backed by a shared refcounted subscription to the
+ * source. When the refcount goes to 0, the underlying subscription
+ * to the source is disposed.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
+ * @param replay The number of events that should be replayed when the `ObservableLike`
+ * is subscribed to.
+ */
+declare const share: <T>(scheduler: SchedulerLike, options?: {
+    readonly replay?: number;
+}) => ContainerOperator<ObservableLike<unknown>, T, T>;
 interface SkipFirstObservable {
     <T>(options?: {
         readonly count?: number;
@@ -89,6 +111,7 @@ interface SkipFirstObservable {
 declare const skipFirst: SkipFirstObservable;
 declare const skipFirstT: SkipFirst<ObservableLike>;
 declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, DisposableLike>;
+declare const subscribeOn: <T>(scheduler: SchedulerLike) => ContainerOperator<ObservableLike<unknown>, T, T>;
 interface TakeFirstObservable {
     <T>(options?: {
         readonly count?: number;
@@ -142,4 +165,4 @@ declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike>;
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
 declare const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"];
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, subscribe, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
+export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
