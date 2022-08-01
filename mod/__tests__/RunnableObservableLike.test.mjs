@@ -1,8 +1,10 @@
 /// <reference types="./RunnableObservableLike.test.d.ts" />
-import { describe as createDescribe } from '../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals } from '../__internal__/testing.mjs';
 import { toObservable } from '../containers/ReadonlyArrayLike.mjs';
+import { pipeLazy, pipe } from '../functions.mjs';
 import { deferObservableT } from '../rx.mjs';
-import { decodeWithCharsetT, mapT, toReadonlyArrayT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../rx/RunnableObservableLike.mjs';
+import { takeUntil } from '../rx/ObservableLike.mjs';
+import { decodeWithCharsetT, mapT, toReadonlyArrayT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArray } from '../rx/RunnableObservableLike.mjs';
 import { decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from './operators.test.mjs';
 
 const RunnableObservableLikeTests = createDescribe("RunnableObservableLike", decodeWithCharsetTests({
@@ -59,6 +61,6 @@ const RunnableObservableLikeTests = createDescribe("RunnableObservableLike", dec
     fromArray: toObservable,
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
-}));
+}), createTest("takeUntil", pipeLazy([1, 2, 3, 4, 5], toObservable({ delay: 1 }), takeUntil(pipe([1], toObservable({ delay: 3, delayStart: true }))), toReadonlyArray(), expectArrayEquals([1, 2, 3]))));
 
 export { RunnableObservableLikeTests };

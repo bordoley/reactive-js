@@ -1,4 +1,4 @@
-import { DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
+import { DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, ContainerOperator, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
 import { Factory } from "../functions.mjs";
 import { RunnableObservableLike } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
@@ -24,6 +24,7 @@ declare const takeFirst: TakeFirst<RunnableObservableLike>["takeFirst"];
 declare const takeFirstT: TakeFirst<RunnableObservableLike>;
 declare const takeLast: TakeLast<RunnableObservableLike>["takeLast"];
 declare const takeLastT: TakeLast<RunnableObservableLike>;
+declare const takeUntil: <T>(notifier: RunnableObservableLike<unknown>) => ContainerOperator<RunnableObservableLike, T, T>;
 declare const takeWhile: TakeWhile<RunnableObservableLike>["takeWhile"];
 declare const takeWhileT: TakeWhile<RunnableObservableLike>;
 declare const throwIfEmpty: ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"];
@@ -34,4 +35,4 @@ declare const toReadonlyArray: ToReadonlyArray<RunnableObservableLike, {
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };
+export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };

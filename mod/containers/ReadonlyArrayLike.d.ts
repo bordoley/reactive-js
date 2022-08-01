@@ -28,6 +28,7 @@ interface ToObservable {
         readonly start?: number;
         readonly count?: number;
         readonly delay: number;
+        readonly delayStart?: boolean;
     }): Function1<ReadonlyArrayLike<T>, RunnableObservableLike<T>>;
 }
 declare const toObservable: ToObservable;

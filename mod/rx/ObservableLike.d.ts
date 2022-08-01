@@ -138,6 +138,11 @@ interface TakeLastObservable {
 }
 declare const takeLast: TakeLastObservable;
 declare const takeLastT: TakeLast<ObservableLike>;
+interface TakeUntil {
+    <T>(notifier: ObservableLike<unknown>): ContainerOperator<ObservableLike, T, T>;
+    <T>(notifier: RunnableObservableLike<unknown>): ContainerOperator<RunnableObservableLike, T, T>;
+}
+declare const takeUntil: TakeUntil;
 interface TakeWhileObservable {
     <T>(predicate: Predicate<T>, options?: {
         readonly inclusive?: boolean;
@@ -165,4 +170,4 @@ declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike>;
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
 declare const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"];
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
+export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };

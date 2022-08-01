@@ -207,6 +207,7 @@ ___
 | `options` | `Object` |
 | `options.count?` | `number` |
 | `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
 | `options.start?` | `number` |
 
 #### Returns
