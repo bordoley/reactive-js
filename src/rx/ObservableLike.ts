@@ -65,6 +65,7 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  isNone,
   isSome,
   min,
   newInstance,
@@ -75,20 +76,27 @@ import {
 } from "../functions";
 import {
   EnumerableObservableLike,
+  MulticastObservableLike,
   ObservableLike,
   ObservableLike_observableType,
   ObservableType,
   ReactiveContainerLike_sinkInto,
   RunnableObservableLike,
+  createObservable,
+  createSubject,
 } from "../rx";
 import {
   ObserverLike,
+  ObserverLike_dispatcher,
   ObserverLike_scheduler,
   SchedulerLike,
 } from "../scheduling";
+import { dispatchTo } from "../scheduling/DispatcherLike";
 import { DisposableLike, SinkLike_notify } from "../util";
-import { addTo, onDisposed } from "../util/DisposableLike";
+import { addTo, bindTo, dispose, onDisposed } from "../util/DisposableLike";
+import { getObserverCount } from "./MulticastObservableLike";
 import { sourceFrom } from "./ReactiveContainerLike";
+import { publishTo } from "./SubjectLike";
 
 export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
   obs[ObservableLike_observableType];
@@ -381,6 +389,31 @@ export const map: MapObservable = /*@__PURE__*/ (<TA, TB>() => {
 })();
 export const mapT: Map<ObservableLike> = { map };
 
+/**
+ * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replay The number of events that should be replayed when the `MulticastObservableLike`
+ * is subscribed to.
+ */
+export const multicast =
+  <T>(
+    scheduler: SchedulerLike,
+    options: { readonly replay?: number } = {},
+  ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
+  observable => {
+    const { replay = 0 } = options;
+    const subject = createSubject({ replay });
+    pipe(
+      observable,
+      forEach(publishTo(subject)),
+      subscribe(scheduler),
+      bindTo(subject),
+    );
+
+    return subject;
+  };
+
 interface PairwiseObservable {
   <T>(): ContainerOperator<ObservableLike<unknown>, T, readonly [T, T]>;
   <T>(): ContainerOperator<RunnableObservableLike<unknown>, T, readonly [T, T]>;
@@ -513,6 +546,41 @@ export const scan: ScanObservable = /*@__PURE__*/ (<T, TAcc>() => {
 })();
 export const scanT: Scan<ObservableLike> = { scan };
 
+/**
+ * Returns an `ObservableLike` backed by a shared refcounted subscription to the
+ * source. When the refcount goes to 0, the underlying subscription
+ * to the source is disposed.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
+ * @param replay The number of events that should be replayed when the `ObservableLike`
+ * is subscribed to.
+ */
+export const share =
+  <T>(
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): ContainerOperator<ObservableLike, T, T> =>
+  source => {
+    let multicasted: Option<MulticastObservableLike<T>> = none;
+
+    return createObservable(observer => {
+      if (isNone(multicasted)) {
+        multicasted = pipe(source, multicast(scheduler, options));
+      }
+
+      pipe(
+        observer,
+        sourceFrom(multicasted),
+        onDisposed(() => {
+          if (isSome(multicasted) && getObserverCount(multicasted) === 0) {
+            pipe(multicasted, dispose());
+            multicasted = none;
+          }
+        }),
+      );
+    });
+  };
+
 interface SkipFirstObservable {
   <T>(options?: { readonly count?: number }): ContainerOperator<
     ObservableLike,
@@ -578,6 +646,18 @@ export const subscribe: <T>(
   return (scheduler: SchedulerLike) => observable =>
     pipe(scheduler, createObserver, addTo(scheduler), sourceFrom(observable));
 })();
+
+export const subscribeOn =
+  <T>(scheduler: SchedulerLike): ContainerOperator<ObservableLike, T, T> =>
+  observable =>
+    createObservable(({ [ObserverLike_dispatcher]: dispatcher }) =>
+      pipe(
+        observable,
+        forEach(dispatchTo(dispatcher)),
+        subscribe(scheduler),
+        bindTo(dispatcher),
+      ),
+    );
 
 interface TakeFirstObservable {
   <T>(options?: { readonly count?: number }): ContainerOperator<
@@ -667,6 +747,22 @@ export const takeLast: TakeLastObservable = /*@__PURE__*/ (<T>() => {
   );
 })();
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
+
+/*
+export const takeUntil = <T>(
+  notifier: ObservableLike<unknown>,
+): ContainerOperator<ObservableLike, T, T> => {
+  const operator = (delegate: ObserverLike<T>) => {
+    const takeUntilObserver: ObserverLike<T> = pipe(
+      createDelegatingObserver(delegate),
+      bindTo(delegate),
+      bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))),
+    );
+
+    return takeUntilObserver;
+  };
+  return lift(operator);
+};*/
 
 interface TakeWhileObservable {
   <T>(
