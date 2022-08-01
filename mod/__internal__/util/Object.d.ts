@@ -101,4 +101,29 @@ interface Clazz {
     };
 }
 declare const clazz: Clazz;
-export { Clazz, EmptyObject, Object_init, Object_properties, Object_prototype, PropertyTypeOf, UnknownObject, clazz, createObjectFactory, init, mixWith };
+interface Class<TProperties extends object, TPrototype extends object> {
+    [Object_init](this: unknown): void;
+    [Object_properties]: TProperties;
+    [Object_prototype]: TPrototype;
+}
+interface Class1<TProperties extends object, TPrototype extends object, TA> {
+    [Object_init](this: unknown, a: TA): void;
+    [Object_properties]: TProperties;
+    [Object_prototype]: TPrototype;
+}
+interface Class2<TProperties extends object, TPrototype extends object, TA, TB> {
+    [Object_init](this: unknown, a: TA, b: TB): void;
+    [Object_properties]: TProperties;
+    [Object_prototype]: TPrototype;
+}
+interface Class3<TProperties extends object, TPrototype extends object, TA, TB, TC> {
+    [Object_init](this: unknown, a: TA, b: TB, c: TC): void;
+    [Object_properties]: TProperties;
+    [Object_prototype]: TPrototype;
+}
+interface Class4<TProperties extends object, TPrototype extends object, TA, TB, TC, TD> {
+    [Object_init](this: unknown, a: TA, b: TB, c: TC, d: TD): void;
+    [Object_properties]: TProperties;
+    [Object_prototype]: TPrototype;
+}
+export { Class, Class1, Class2, Class3, Class4, Clazz, EmptyObject, Object_init, Object_properties, Object_prototype, PropertyTypeOf, UnknownObject, clazz, createObjectFactory, init, mixWith };
