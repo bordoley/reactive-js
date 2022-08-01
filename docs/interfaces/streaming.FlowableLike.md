@@ -44,7 +44,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`FlowableLike`](streaming.FlowableLike.md)<`T`, `TStream`\>
+• `Optional` `Readonly` **TContainerOf**: [`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`unknown`\>
 
 #### Overrides
 
