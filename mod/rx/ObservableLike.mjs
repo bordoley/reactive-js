@@ -1,14 +1,15 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { reactive, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
-import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
+import { delegatingDisposableMixin, disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toObservable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipeUnsafe, min, newInstance, pipe, returns, none, isNone, isSome } from '../functions.mjs';
+import { pipe, none, pipeUnsafe, min, newInstance, returns, isNone, isSome } from '../functions.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, createSubject, createObservable } from '../rx.mjs';
 import { ObserverLike_scheduler, ObserverLike_dispatcher } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
+import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { SinkLike_notify } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
@@ -16,6 +17,23 @@ import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { publishTo } from './SubjectLike.mjs';
 import { bindTo, onDisposed, dispose, addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
 
+const createDelegatingObserver = 
+/*@__PURE__*/ (() => {
+    const typedObserverMixin = observerMixin();
+    return pipe(clazz(function DelegatingObserver(observer) {
+        init(delegatingDisposableMixin, this, observer);
+        init(typedObserverMixin, this, getScheduler(observer));
+        this.delegate = observer;
+        debugger;
+    }, {
+        delegate: none,
+    }, {
+        [SinkLike_notify](next) {
+            debugger;
+            this.delegate[SinkLike_notify](next);
+        },
+    }), mixWith(delegatingDisposableMixin, typedObserverMixin), createObjectFactory());
+})();
 const getObservableType = (obs) => obs[ObservableLike_observableType];
 const createLift = /*@__PURE__*/ (() => {
     class LiftedObservable {
@@ -37,18 +55,16 @@ const createLift = /*@__PURE__*/ (() => {
         return newInstance(LiftedObservable, sourceSource, allFunctions, type);
     };
 })();
+const lift = createLift(0);
 /*
-const lift: Lift<ObservableLike, TReactive>["lift"] = createLift(0);
 const liftT: Lift<ObservableLike, TReactive> = {
   lift,
   variance: reactive,
 };*/
-/*
-const liftRunnableObservable: Lift<RunnableObservableLike, TReactive>["lift"] =
-  createLift(1);
+const liftRunnableObservable = createLift(1); /*
 const liftRunnableObservableT: Lift<ObservableLike, TReactive> = {
-  lift: liftRunnableObservable,
-  variance: reactive,
+lift: liftRunnableObservable,
+variance: reactive,
 };*/
 const liftEnumerableObservable = createLift(2);
 const liftEnumerableObservableT = {
@@ -211,6 +227,12 @@ const takeLast = /*@__PURE__*/ (() => {
     }));
 })();
 const takeLastT = { takeLast };
+const takeUntil = (notifier) => {
+    const operator = (delegate) => pipe(createDelegatingObserver(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))));
+    return notifier[ObservableLike_observableType] === 0
+        ? lift(operator)
+        : liftRunnableObservable(operator);
+};
 const takeWhile = /*@__PURE__*/ (() => {
     const typedTakeWhileSinkMixin = takeWhileSinkMixin();
     const typedObserverMixin = observerMixin();
@@ -257,4 +279,4 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
+export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };

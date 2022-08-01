@@ -1,4 +1,5 @@
 import {
+  ContainerOperator,
   DecodeWithCharset,
   DistinctUntilChanged,
   ForEach,
@@ -36,6 +37,7 @@ import {
   subscribe,
   takeFirst as takeFirstObs,
   takeLast as takeLastObs,
+  takeUntil as takeUntilObs,
   takeWhile as takeWhileObs,
   throwIfEmpty as throwIfEmptyObs,
 } from "./ObservableLike";
@@ -81,6 +83,10 @@ export const takeFirstT: TakeFirst<RunnableObservableLike> = { takeFirst };
 export const takeLast: TakeLast<RunnableObservableLike>["takeLast"] =
   takeLastObs;
 export const takeLastT: TakeLast<RunnableObservableLike> = { takeLast };
+
+export const takeUntil: <T>(
+  notifier: RunnableObservableLike<unknown>,
+) => ContainerOperator<RunnableObservableLike, T, T> = takeUntilObs;
 
 export const takeWhile: TakeWhile<RunnableObservableLike>["takeWhile"] =
   takeWhileObs;

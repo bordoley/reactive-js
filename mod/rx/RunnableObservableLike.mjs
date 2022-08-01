@@ -3,7 +3,7 @@ import { pipe, isSome } from '../functions.mjs';
 import { createVirtualTimeScheduler } from '../scheduling.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import '../util/DisposableLike.mjs';
-import { decodeWithCharset as decodeWithCharset$1, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, keep as keep$1, map as map$1, pairwise as pairwise$1, reduce as reduce$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, throwIfEmpty as throwIfEmpty$1, subscribe } from './ObservableLike.mjs';
+import { decodeWithCharset as decodeWithCharset$1, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, keep as keep$1, map as map$1, pairwise as pairwise$1, reduce as reduce$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeUntil as takeUntil$1, takeWhile as takeWhile$1, throwIfEmpty as throwIfEmpty$1, subscribe } from './ObservableLike.mjs';
 import { addTo, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const decodeWithCharset = decodeWithCharset$1;
@@ -30,6 +30,7 @@ const takeFirst = takeFirst$1;
 const takeFirstT = { takeFirst };
 const takeLast = takeLast$1;
 const takeLastT = { takeLast };
+const takeUntil = takeUntil$1;
 const takeWhile = takeWhile$1;
 const takeWhileT = { takeWhile };
 const throwIfEmpty = throwIfEmpty$1;
@@ -94,4 +95,4 @@ const toReadonlyArray = (options = {}) => observable => {
 };
 const toReadonlyArrayT = { toReadonlyArray };
 
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };
+export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };
