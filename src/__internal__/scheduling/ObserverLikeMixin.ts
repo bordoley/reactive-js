@@ -34,9 +34,7 @@ import {
 } from "../../util/DisposableLike";
 import { disposableMixin } from "../util/DisposableLikeMixins";
 import {
-  Object_init,
-  Object_properties,
-  Object_prototype,
+  Class1,
   PropertyTypeOf,
   clazz,
   createObjectFactory,
@@ -129,13 +127,13 @@ type TProperties = {
   dispatcher: Option<DispatcherLike>;
 };
 
-export const observerMixin: <T>() => {
-  [Object_init](this: TProperties, scheduler: SchedulerLike): void;
-  [Object_properties]: TProperties;
-  [Object_prototype]: {
+export const observerMixin: <T>() => Class1<
+  TProperties,
+  {
     get [ObserverLike_dispatcher](): DispatcherLike<T>;
-  };
-} = /*@__PURE__*/ (<T>() =>
+  },
+  SchedulerLike
+> = /*@__PURE__*/ (<T>() =>
   pipe(
     clazz(
       function ObserverMixin(this: TProperties, scheduler: SchedulerLike) {

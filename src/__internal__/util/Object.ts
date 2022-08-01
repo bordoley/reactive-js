@@ -286,3 +286,55 @@ export const clazz: Clazz = (
   [Object_properties]: properties ?? {},
   [Object_prototype]: prototype ?? {},
 });
+
+export interface Class<TProperties extends object, TPrototype extends object> {
+  [Object_init](this: unknown): void;
+  [Object_properties]: TProperties;
+  [Object_prototype]: TPrototype;
+}
+
+export interface Class1<
+  TProperties extends object,
+  TPrototype extends object,
+  TA,
+> {
+  [Object_init](this: unknown, a: TA): void;
+  [Object_properties]: TProperties;
+  [Object_prototype]: TPrototype;
+}
+
+export interface Class2<
+  TProperties extends object,
+  TPrototype extends object,
+  TA,
+  TB,
+> {
+  [Object_init](this: unknown, a: TA, b: TB): void;
+  [Object_properties]: TProperties;
+  [Object_prototype]: TPrototype;
+}
+
+export interface Class3<
+  TProperties extends object,
+  TPrototype extends object,
+  TA,
+  TB,
+  TC,
+> {
+  [Object_init](this: unknown, a: TA, b: TB, c: TC): void;
+  [Object_properties]: TProperties;
+  [Object_prototype]: TPrototype;
+}
+
+export interface Class4<
+  TProperties extends object,
+  TPrototype extends object,
+  TA,
+  TB,
+  TC,
+  TD,
+> {
+  [Object_init](this: unknown, a: TA, b: TB, c: TC, d: TD): void;
+  [Object_properties]: TProperties;
+  [Object_prototype]: TPrototype;
+}

@@ -96,7 +96,8 @@ const disposed = {
     },
     [DisposableLike_dispose]: ignore,
 };
-const disposableRefMixin = /*@__PURE__*/ (() => {
+const disposableRefMixin = 
+/*@__PURE__*/ (() => {
     const DisposableRef_private_current = Symbol("DisposableRef_private_current");
     return pipe(clazz(function DisposableRef(defaultValue) {
         this[DisposableRef_private_current] = defaultValue;

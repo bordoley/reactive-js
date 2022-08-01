@@ -5,25 +5,19 @@ import {
   EnumeratorLike_hasCurrent,
 } from "../../util";
 import { isDisposed } from "../../util/DisposableLike";
-import {
-  Object_init,
-  Object_properties,
-  Object_prototype,
-  clazz,
-} from "./Object";
+import { Class, UnknownObject, clazz } from "./Object";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
 }
 
-export const enumeratorMixin: <T>() => {
-  [Object_init](this: unknown): void;
-  [Object_properties]: Record<string | symbol | number, unknown>;
-  [Object_prototype]: {
+export const enumeratorMixin: <T>() => Class<
+  UnknownObject,
+  {
     [EnumeratorLike_current]: T;
     readonly [EnumeratorLike_hasCurrent]: boolean;
-  };
-} = /*@__PURE__*/ (<T>() => {
+  }
+> = /*@__PURE__*/ (<T>() => {
   const Enumerator_private_current = Symbol("Enumerator_private_current");
   const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
 

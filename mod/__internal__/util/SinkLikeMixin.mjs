@@ -98,7 +98,7 @@ const distinctUntilChangedSinkMixin = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
     const DistinctUntilChangedSink_private_prev = Symbol("DistinctUntilChangedSink_private_prev");
     const DistinctUntilChangedSink_private_hasValue = Symbol("DistinctUntilChangedSink_private_hasValue");
-    return pipe(clazz(function DistinctUntilChanged(delegate, equality) {
+    return pipe(clazz(function DistinctUntilChangedSink(delegate, equality) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[DistinctUntilChangedSink_private_equality] = equality;
@@ -246,7 +246,7 @@ const scanSinkMixin = /*@__PURE__*/ (() => {
 const skipFirstSinkMixin = /*@__PURE__*/ (() => {
     const SkipFirstSink_private_skipCount = Symbol("SkipFirstSink_private_skipCount");
     const SkipFirstSink_private_count = Symbol("SkipFirstSink_private_count");
-    return pipe(clazz(function SkipFirst(delegate, skipCount) {
+    return pipe(clazz(function SkipFirstSink(delegate, skipCount) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[SkipFirstSink_private_skipCount] = skipCount;

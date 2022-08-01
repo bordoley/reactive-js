@@ -31,9 +31,7 @@ import {
   setCurrentRef,
 } from "../__internal__/util/MutableRefLike";
 import {
-  Object_init,
-  Object_properties,
-  Object_prototype,
+  Class1,
   PropertyTypeOf,
   UnknownObject,
   clazz,
@@ -140,15 +138,15 @@ interface DelegatingEnumeratorLike<T> extends EnumeratorLike<T> {
   [DelegatingEnumerator_move_delegate](): boolean;
 }
 
-const delegatingEnumeratorMixin: <T>() => {
-  [Object_init](this: unknown, delegate: EnumeratorLike<T>): void;
-  [Object_properties]: UnknownObject;
-  [Object_prototype]: {
+const delegatingEnumeratorMixin: <T>() => Class1<
+  UnknownObject,
+  {
     [DelegatingEnumerator_move_delegate](): boolean;
     readonly [EnumeratorLike_current]: T;
     readonly [EnumeratorLike_hasCurrent]: boolean;
-  };
-} = /*@__PURE__*/ (<T>() => {
+  },
+  EnumeratorLike<T>
+> = /*@__PURE__*/ (<T>() => {
   const DelegatingEnumerator_private_delegate = Symbol(
     "DelegatingEnumerator_private_delegate",
   );
@@ -1214,16 +1212,19 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   };
 
   const createZipEnumerator = pipe(
-    {
-      [Object_init](this: TProperties, enumerators: readonly EnumeratorLike[]) {
+    clazz(
+      function ZipEnumerator(
+        this: TProperties,
+        enumerators: readonly EnumeratorLike[],
+      ) {
         init(disposableMixin, this);
         init(typedEnumerator, this);
         this.enumerators = enumerators;
       },
-      [Object_properties]: {
+      {
         enumerators: none,
       },
-      [Object_prototype]: {
+      {
         [SourceLike_move](
           this: TProperties & MutableEnumeratorLike<readonly unknown[]>,
         ) {
@@ -1242,7 +1243,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
           }
         },
       },
-    },
+    ),
     mixWith(disposableMixin, typedEnumerator),
     createObjectFactory<
       EnumeratorLike<readonly unknown[]>,

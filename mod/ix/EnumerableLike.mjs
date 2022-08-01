@@ -5,7 +5,7 @@ import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
-import { clazz, init, mixWith, createObjectFactory, Object_init, Object_properties, Object_prototype } from '../__internal__/util/Object.mjs';
+import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable } from '../ix.mjs';
@@ -580,30 +580,26 @@ const zip = /*@__PURE__*/ (() => {
     };
     const allHaveCurrent = (enumerators) => pipe(enumerators, every(hasCurrent));
     const typedEnumerator = enumeratorMixin();
-    const createZipEnumerator = pipe({
-        [Object_init](enumerators) {
-            init(disposableMixin, this);
-            init(typedEnumerator, this);
-            this.enumerators = enumerators;
-        },
-        [Object_properties]: {
-            enumerators: none,
-        },
-        [Object_prototype]: {
-            [SourceLike_move]() {
-                if (!isDisposed(this)) {
-                    const { enumerators } = this;
-                    moveAll(enumerators);
-                    if (allHaveCurrent(enumerators)) {
-                        this[EnumeratorLike_current] = pipe(enumerators, map$1(getCurrent));
-                    }
-                    else {
-                        pipe(this, dispose());
-                    }
+    const createZipEnumerator = pipe(clazz(function ZipEnumerator(enumerators) {
+        init(disposableMixin, this);
+        init(typedEnumerator, this);
+        this.enumerators = enumerators;
+    }, {
+        enumerators: none,
+    }, {
+        [SourceLike_move]() {
+            if (!isDisposed(this)) {
+                const { enumerators } = this;
+                moveAll(enumerators);
+                if (allHaveCurrent(enumerators)) {
+                    this[EnumeratorLike_current] = pipe(enumerators, map$1(getCurrent));
                 }
-            },
+                else {
+                    pipe(this, dispose());
+                }
+            }
         },
-    }, mixWith(disposableMixin, typedEnumerator), createObjectFactory());
+    }), mixWith(disposableMixin, typedEnumerator), createObjectFactory());
     const zipEnumerators = (enumerators) => {
         const instance = createZipEnumerator(enumerators);
         pipe(enumerators, forEach$2(addTo(instance)));
