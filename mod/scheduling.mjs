@@ -4,15 +4,14 @@ import { getDelay } from './__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from './__internal__/scheduling/queue.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from './__internal__/schedulingInternal.mjs';
 export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
+import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
 import { clazz, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
 import { pipe, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
-import './util/DisposableLike.mjs';
 import { move, getCurrent } from './util/EnumeratorLike.mjs';
-import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
 const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
