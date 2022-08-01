@@ -24,17 +24,15 @@ const createDelegatingObserver =
         init(delegatingDisposableMixin, this, observer);
         init(typedObserverMixin, this, getScheduler(observer));
         this.delegate = observer;
-        debugger;
     }, {
         delegate: none,
     }, {
         [SinkLike_notify](next) {
-            debugger;
             this.delegate[SinkLike_notify](next);
         },
     }), mixWith(delegatingDisposableMixin, typedObserverMixin), createObjectFactory());
 })();
-const getObservableType = (obs) => obs[ObservableLike_observableType];
+const getObservableType = (obs) => { var _a; return (_a = obs[ObservableLike_observableType]) !== null && _a !== void 0 ? _a : 0; };
 const createLift = /*@__PURE__*/ (() => {
     class LiftedObservable {
         constructor(source, operators, observableType) {
@@ -47,11 +45,12 @@ const createLift = /*@__PURE__*/ (() => {
         }
     }
     return (observableType) => (operator) => source => {
+        var _a, _b;
         const sourceSource = source instanceof LiftedObservable ? source.source : source;
         const allFunctions = source instanceof LiftedObservable
             ? [operator, ...source.operators]
             : [operator];
-        const type = min(observableType, source[ObservableLike_observableType], sourceSource[ObservableLike_observableType]);
+        const type = min(observableType, (_a = source[ObservableLike_observableType]) !== null && _a !== void 0 ? _a : 0, (_b = sourceSource[ObservableLike_observableType]) !== null && _b !== void 0 ? _b : 0);
         return newInstance(LiftedObservable, sourceSource, allFunctions, type);
     };
 })();

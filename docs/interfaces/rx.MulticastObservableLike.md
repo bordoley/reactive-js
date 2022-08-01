@@ -33,7 +33,6 @@
 - [[DisposableLike\_isDisposed]](rx.MulticastObservableLike.md#[disposablelike_isdisposed])
 - [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
 - [[MulticastObservableLike\_replay]](rx.MulticastObservableLike.md#[multicastobservablelike_replay])
-- [[ObservableLike\_observableType]](rx.MulticastObservableLike.md#[observablelike_observabletype])
 
 ### Methods
 
@@ -107,16 +106,6 @@ ___
 ### [MulticastObservableLike\_replay]
 
 • `Readonly` **[MulticastObservableLike\_replay]**: `number`
-
-___
-
-### [ObservableLike\_observableType]
-
-• `Readonly` **[ObservableLike\_observableType]**: [`ObservableType`](../modules/rx.md#observabletype)
-
-#### Inherited from
-
-[ObservableLike](rx.ObservableLike.md).[[ObservableLike_observableType]](rx.ObservableLike.md#[observablelike_observabletype])
 
 ## Methods
 

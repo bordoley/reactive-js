@@ -1,11 +1,20 @@
-import { describe, expectArrayEquals, test } from "../__internal__/testing";
+import {
+  describe,
+  expectArrayEquals,
+  expectEquals,
+  expectToHaveBeenCalledTimes,
+  expectTrue,
+  mockFn,
+  test,
+} from "../__internal__/testing";
 import { toObservable } from "../containers/ReadonlyArrayLike";
-import { pipe, pipeLazy } from "../functions";
-import { deferObservableT } from "../rx";
-import { takeUntil } from "../rx/ObservableLike";
+import { increment, pipe, pipeLazy, returns } from "../functions";
+import { deferObservableT, generateObservable } from "../rx";
+import { subscribe, takeUntil } from "../rx/ObservableLike";
 import {
   decodeWithCharsetT,
   distinctUntilChangedT,
+  forEach,
   forEachT,
   keepT,
   mapT,
@@ -17,9 +26,16 @@ import {
   takeLastT,
   takeWhileT,
   throwIfEmptyT,
+  toFlowable,
   toReadonlyArray,
   toReadonlyArrayT,
 } from "../rx/RunnableObservableLike";
+import { createVirtualTimeScheduler } from "../scheduling";
+import { dispatch, dispatchTo } from "../scheduling/DispatcherLike";
+import { getCurrentTime, schedule } from "../scheduling/SchedulerLike";
+import { stream } from "../streaming/StreamableLike";
+import { run } from "../util/ContinuationLike";
+import { dispose, isDisposed } from "../util/DisposableLike";
 import {
   decodeWithCharsetTests,
   distinctUntilChangedTests,
@@ -114,5 +130,59 @@ export const RunnableObservableLikeTests = describe(
       toReadonlyArray(),
       expectArrayEquals([1, 2, 3]),
     ),
+  ),
+  describe(
+    "toFlowable",
+    test("flow a generating source", () => {
+      const scheduler = createVirtualTimeScheduler();
+
+      const generateStream = pipe(
+        generateObservable(increment, returns(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
+        toFlowable(),
+        stream(scheduler),
+      );
+
+      pipe(generateStream, dispatch("resume"));
+
+      pipe(
+        scheduler,
+        schedule(pipeLazy("pause", dispatchTo(generateStream)), {
+          delay: 2,
+        }),
+      );
+
+      pipe(
+        scheduler,
+        schedule(pipeLazy("resume", dispatchTo(generateStream)), {
+          delay: 4,
+        }),
+      );
+
+      pipe(
+        scheduler,
+        schedule(pipeLazy(generateStream, dispose()), { delay: 5 }),
+      );
+
+      const f = mockFn();
+      const subscription = pipe(
+        generateStream,
+        forEach(x => {
+          f(getCurrentTime(scheduler), x);
+        }),
+        subscribe(scheduler),
+      );
+
+      pipe(scheduler, run);
+
+      pipe(f, expectToHaveBeenCalledTimes(3));
+      pipe(f.calls[0][1], expectEquals(0));
+      pipe(f.calls[1][1], expectEquals(1));
+      pipe(f.calls[2][1], expectEquals(2));
+
+      pipe(subscription, isDisposed, expectTrue);
+    }),
   ),
 );

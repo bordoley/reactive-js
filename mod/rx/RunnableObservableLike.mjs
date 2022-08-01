@@ -1,10 +1,16 @@
 /// <reference types="./RunnableObservableLike.d.ts" />
 import { pipe, isSome } from '../functions.mjs';
+import { createObservable } from '../rx.mjs';
 import { createVirtualTimeScheduler } from '../scheduling.mjs';
+import { getScheduler } from '../scheduling/ObserverLike.mjs';
+import { toPausableScheduler } from '../scheduling/SchedulerLike.mjs';
+import { createLiftedFlowable } from '../streaming.mjs';
 import { run } from '../util/ContinuationLike.mjs';
-import '../util/DisposableLike.mjs';
-import { decodeWithCharset as decodeWithCharset$1, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, keep as keep$1, map as map$1, pairwise as pairwise$1, reduce as reduce$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeUntil as takeUntil$1, takeWhile as takeWhile$1, throwIfEmpty as throwIfEmpty$1, subscribe } from './ObservableLike.mjs';
-import { addTo, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { toObservable } from '../util/DisposableLike.mjs';
+import { resume, pause } from '../util/PauseableLike.mjs';
+import { decodeWithCharset as decodeWithCharset$1, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, keep as keep$1, map as map$1, pairwise as pairwise$1, reduce as reduce$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeUntil as takeUntil$1, takeWhile as takeWhile$1, throwIfEmpty as throwIfEmpty$1, subscribeOn, subscribe } from './ObservableLike.mjs';
+import { sourceFrom } from './ReactiveContainerLike.mjs';
+import { add, bindTo, addTo, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const decodeWithCharset = decodeWithCharset$1;
 const decodeWithCharsetT = {
@@ -37,48 +43,19 @@ const throwIfEmpty = throwIfEmpty$1;
 const throwIfEmptyT = {
     throwIfEmpty,
 };
-/*
-export const toFlowable =
-  <T>(): Function1<RunnableObservableLike<T>, FlowableLike<T>> =>
-  observable =>
-    createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
-      createObservable(observer => {
-        const pausableScheduler = pipe(
-          observer,
-          getScheduler,
-          toPausableScheduler,
-        );
-
-        pipe(
-          observer,
-          sourceFromReactiveContainer(
-            pipe(
-              observable,
-              subscribeOn(pausableScheduler),
-              pipe(pausableScheduler, fromDisposable, takeUntil),
-            ),
-          ),
-          add(
-            pipe(
-              modeObs,
-              forEach((mode: FlowMode) => {
-                switch (mode) {
-                  case "pause":
-                    pause(pausableScheduler);
-                    break;
-                  case "resume":
-                    resume(pausableScheduler);
-                    break;
-                }
-              }),
-              subscribe(getScheduler(observer)),
-              bindTo(pausableScheduler),
-            ),
-          ),
-          add(pausableScheduler),
-        );
-      }),
-    );*/
+const toFlowable = () => observable => createLiftedFlowable((modeObs) => createObservable(observer => {
+    const pausableScheduler = pipe(observer, getScheduler, toPausableScheduler);
+    pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), takeUntil$1(pipe(pausableScheduler, toObservable())))), add(pipe(modeObs, forEach((mode) => {
+        switch (mode) {
+            case "pause":
+                pause(pausableScheduler);
+                break;
+            case "resume":
+                resume(pausableScheduler);
+                break;
+        }
+    }), subscribe(getScheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
+}));
 const toReadonlyArray = (options = {}) => observable => {
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
@@ -95,4 +72,4 @@ const toReadonlyArray = (options = {}) => observable => {
 };
 const toReadonlyArrayT = { toReadonlyArray };
 
-export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT };
+export { decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toFlowable, toReadonlyArray, toReadonlyArrayT };

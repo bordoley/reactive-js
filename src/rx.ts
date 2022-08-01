@@ -1,3 +1,4 @@
+import { getDelay, hasDelay } from "./__internal__/optionalArgs";
 import {
   addIgnoringChildErrors,
   addTo,
@@ -40,7 +41,7 @@ import {
 import { ObserverLike } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
 import { getDispatcher, getScheduler } from "./scheduling/ObserverLike";
-import { schedule } from "./scheduling/SchedulerLike";
+import { __yield, schedule } from "./scheduling/SchedulerLike";
 import { DisposableLike, SinkLike, SinkLike_notify } from "./util";
 
 /** @ignore */
@@ -80,17 +81,15 @@ export interface ObservableLike<T = unknown>
   extends ReactiveContainerLike<ObserverLike<T>> {
   readonly TContainerOf?: ObservableLike<this["T"]>;
   readonly TStatefulContainerState?: ObserverLike<this["T"]>;
-
-  readonly [ObservableLike_observableType]: ObservableType;
 }
 
 export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
-  readonly [ObservableLike_observableType]: RunnableObservableType;
+  readonly [ObservableLike_observableType]?: RunnableObservableType;
 }
 
 export interface EnumerableObservableLike<T = unknown>
   extends RunnableObservableLike<T> {
-  readonly [ObservableLike_observableType]: EnumerableObservableType;
+  readonly [ObservableLike_observableType]?: EnumerableObservableType;
 }
 
 /** @ignore */
@@ -388,6 +387,62 @@ export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
   createEmpty<RunnableLike, SinkLike<T>, T>(createRunnable);
 export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
 
+/**
+ * Generates an `ObservableLike` sequence from a generator function
+ * that is applied to an accumulator value with a specified `delay`
+ * between emitted items.
+ *
+ * @param generator the generator function.
+ * @param initialValue Factory function used to generate the initial accumulator.
+ * @param delay The requested delay between emitted items by the observable.
+ */
+interface GenerateObservable {
+  <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): EnumerableObservableLike<T>;
+
+  <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options: {
+      readonly delay: number;
+      readonly delayStart?: boolean;
+    },
+  ): RunnableObservableLike<T>;
+}
+export const generateObservable: GenerateObservable = <T>(
+  generator: Updater<T>,
+  initialValue: Factory<T>,
+  options?: { readonly delay?: number; readonly delayStart?: boolean },
+): ObservableLike<T> => {
+  const delay = getDelay(options);
+  const { delayStart = false } = options ?? {};
+
+  const onSink = (observer: ObserverLike<T>) => {
+    let acc = initialValue();
+
+    const continuation = () => {
+      while (!isDisposed(observer)) {
+        acc = generator(acc);
+        observer[SinkLike_notify](acc);
+        __yield(options);
+      }
+    };
+
+    pipe(
+      observer,
+      getScheduler,
+      schedule(continuation, delayStart && hasDelay(options) ? options : none),
+      addTo(observer),
+    );
+  };
+
+  return delay > 0
+    ? createRunnableObservable(onSink)
+    : createEnumerableObservable(onSink);
+};
+
 export const generateRunnable: Generate<RunnableLike>["generate"] = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
@@ -403,9 +458,11 @@ export const generateRunnableT: Generate<RunnableLike> = {
   generate: generateRunnable,
 };
 
-export const neverObservable: Never<ObservableLike>["never"] = <T>() =>
-  createNever<ObservableLike, ObserverLike<T>, T>(createObservable);
-export const neverObservableT: Never<ObservableLike> = {
+export const neverObservable: Never<EnumerableObservableLike>["never"] = <
+  T,
+>() =>
+  createNever<ObservableLike, ObserverLike<T>, T>(createEnumerableObservable);
+export const neverObservableT: Never<EnumerableObservableLike> = {
   never: neverObservable,
 };
 export const neverRunnable: Never<RunnableLike>["never"] = <T>() =>
