@@ -297,6 +297,14 @@ export const arrayEquality =
  */
 export const updateReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
 
+/**
+ * Pipes `source` through a series of unary functions.
+ */
+export const pipeUnsafe = (
+  source: unknown,
+  ...operators: Function1<any, any>[]
+): unknown => operators.reduce(updateReducer, source);
+
 interface Pipe {
   <T, A>(src: T, op1: Function1<T, A>): A;
   <T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
@@ -410,20 +418,12 @@ interface Pipe {
 /**
  * Pipes `source` through a series of unary functions.
  */
-export const pipe: Pipe = (
-  source: unknown,
-  ...operators: Function1<any, unknown>[]
-): unknown => {
-  return pipeUnsafe(source, ...operators);
-};
+export const pipe: Pipe = pipeUnsafe;
 
-/**
- * Pipes `source` through a series of unary functions.
- */
-export const pipeUnsafe = (
-  source: unknown,
-  ...operators: Function1<any, any>[]
-): unknown => operators.reduce(updateReducer, source);
+export const composeUnsafe =
+  (...operators: Function1<any, unknown>[]): Function1<any, unknown> =>
+  source =>
+    pipeUnsafe(source, ...operators);
 
 interface Compose {
   <T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
@@ -527,10 +527,7 @@ interface Compose {
 /**
  * Composes a series of unary functions.
  */
-export const compose: Compose =
-  (...operators: Function1<unknown, unknown>[]): Function1<unknown, unknown> =>
-  source =>
-    pipeUnsafe(source, ...operators);
+export const compose: Compose = composeUnsafe;
 
 interface PipeLazy {
   <T, A>(src: T, op1: Function1<T, A>): Factory<A>;

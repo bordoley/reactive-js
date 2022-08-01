@@ -153,6 +153,10 @@ declare const arrayEquality: <T>(valuesEquality?: Equality<T>) => Equality<reado
  * accumulator value.
  */
 declare const updateReducer: <T>(acc: T, updater: Updater<T>) => T;
+/**
+ * Pipes `source` through a series of unary functions.
+ */
+declare const pipeUnsafe: (source: unknown, ...operators: Function1<any, any>[]) => unknown;
 interface Pipe {
     <T, A>(src: T, op1: Function1<T, A>): A;
     <T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
@@ -171,10 +175,7 @@ interface Pipe {
  * Pipes `source` through a series of unary functions.
  */
 declare const pipe: Pipe;
-/**
- * Pipes `source` through a series of unary functions.
- */
-declare const pipeUnsafe: (source: unknown, ...operators: Function1<any, any>[]) => unknown;
+declare const composeUnsafe: (...operators: Function1<any, unknown>[]) => Function1<any, unknown>;
 interface Compose {
     <T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     <T, A, B, C>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Function1<T, C>;
@@ -252,4 +253,4 @@ interface Partial {
     <TA, TB, TC, TD, TOut>(b: TB, c: TC, d: TD): Function1<Function4<TA, TB, TC, TD, TOut>, Function1<TA, TOut>>;
 }
 declare const partial: Partial;
-export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Identity, Option, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Identity, Option, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, flip, floor, forEach, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };

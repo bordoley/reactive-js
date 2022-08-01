@@ -11,13 +11,772 @@
 - [FlowableStreamLike](../interfaces/streaming.FlowableStreamLike.md)
 - [StreamLike](../interfaces/streaming.StreamLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
+- [StreamableStateLike](../interfaces/streaming.StreamableStateLike.md)
 
 ### Type Aliases
 
 - [FlowMode](streaming.md#flowmode)
+
+### Functions
+
+- [createLiftedFlowable](streaming.md#createliftedflowable)
+- [createLiftedStreamable](streaming.md#createliftedstreamable)
+- [createStreamble](streaming.md#createstreamble)
 
 ## Type Aliases
 
 ### FlowMode
 
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
+
+## Functions
+
+### createLiftedFlowable
+
+▸ **createLiftedFlowable**<`T`, `A`\>(`op1`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`A`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`A`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`A`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`A`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`\>(`op1`, `op2`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`B`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`B`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`B`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`B`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`C`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`C`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`C`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`C`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`D`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`D`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`D`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`D`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`E`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`E`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`E`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`E`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`F`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`F`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`F`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`F`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`G`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`G`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`G`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`G`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`H`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`H`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`H`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`H`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`I`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`I`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`I`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`I`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`J`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`J`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`J`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`J`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`K`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`K`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `J`, `K`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`K`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`K`\>\>
+
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`L`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`L`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `J`, `K`\> |
+| `op12` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `K`, `L`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`L`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`L`\>\>
+
+___
+
+### createLiftedStreamable
+
+▸ **createLiftedStreamable**<`T`, `A`\>(`op1`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `A`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `A`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `A`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `A`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`\>(`op1`, `op2`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `B`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `B`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `B`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `B`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `C`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `C`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `C`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `C`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `D`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `D`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `D`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `D`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `E`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `E`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `E`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `E`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `F`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `F`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `F`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `F`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `G`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `G`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `G`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `G`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `H`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `H`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `H`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `H`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `I`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `I`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `I`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `I`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `J`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `J`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `J`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `J`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `K`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `K`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `J`, `K`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `K`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `K`\>\>
+
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `L`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `L`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `J`, `K`\> |
+| `op12` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `K`, `L`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `L`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `L`\>\>
+
+___
+
+### createStreamble
+
+▸ **createStreamble**<`TReq`, `TData`, `TStream`\>(`stream`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `TData`, `TStream`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `TData` | `TData` |
+| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `TData`, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `TData`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `stream` | (`scheduler`: [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md), `options?`: { `replay?`: `number`  }) => `TStream` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `TData`, `TStream`\>
