@@ -3,6 +3,7 @@ declare const Object_init: unique symbol;
 declare const Object_properties: unique symbol;
 declare const Object_prototype: unique symbol;
 declare type UnknownObject = Record<string | symbol | number, unknown>;
+declare type EmptyObject = Record<string | symbol | number, never>;
 declare type PropertyTypeOf<T extends any[]> = T extends [
     infer F,
     ...infer R
@@ -82,9 +83,22 @@ interface MixWith {
     }>;
 }
 declare const mixWith: MixWith;
-declare const clazz: <TInit extends (this: any, ...args: readonly any[]) => void, TProperties extends object, TPrototype extends object>(init: TInit, properties: TProperties, prototype: TPrototype) => {
-    [Object_init]: TInit;
-    [Object_properties]: TProperties;
-    [Object_prototype]: TPrototype;
-};
-export { Object_init, Object_properties, Object_prototype, PropertyTypeOf, UnknownObject, clazz, createObjectFactory, init, mixWith };
+interface Clazz {
+    <TInit extends (this: any, ...args: readonly any[]) => void, TProperties extends UnknownObject = UnknownObject, TPrototype extends UnknownObject = UnknownObject>(init: TInit, properties: TProperties, prototype: TPrototype): {
+        [Object_init]: TInit;
+        [Object_properties]: TProperties;
+        [Object_prototype]: TPrototype;
+    };
+    <TInit extends (this: any, ...args: readonly any[]) => void, TProperties extends UnknownObject = UnknownObject>(init: TInit, properties: TProperties): {
+        [Object_init]: TInit;
+        [Object_properties]: TProperties;
+        [Object_prototype]: EmptyObject;
+    };
+    <TInit extends (this: any, ...args: readonly any[]) => void>(init: TInit): {
+        [Object_init]: TInit;
+        [Object_properties]: EmptyObject;
+        [Object_prototype]: EmptyObject;
+    };
+}
+declare const clazz: Clazz;
+export { Clazz, EmptyObject, Object_init, Object_properties, Object_prototype, PropertyTypeOf, UnknownObject, clazz, createObjectFactory, init, mixWith };

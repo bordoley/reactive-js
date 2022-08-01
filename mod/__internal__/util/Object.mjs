@@ -47,8 +47,8 @@ const mixWith = (...mixins) => (lastTMixin) => {
 };
 const clazz = (init, properties, prototype) => ({
     [Object_init]: init,
-    [Object_properties]: properties,
-    [Object_prototype]: prototype,
+    [Object_properties]: properties !== null && properties !== void 0 ? properties : {},
+    [Object_prototype]: prototype !== null && prototype !== void 0 ? prototype : {},
 });
 
 export { Object_init, Object_properties, Object_prototype, clazz, createObjectFactory, init, mixWith };

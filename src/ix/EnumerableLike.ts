@@ -600,14 +600,17 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
   };
 
   return pipe(
-    {
-      [Object_init](this: TProperties, delegate: EnumeratorLike<T>) {
+    clazz(
+      function PairwiseEnumerator(
+        this: TProperties,
+        delegate: EnumeratorLike<T>,
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         init(typedEnumerator, this);
         this.delegate = delegate;
       },
-      [Object_properties]: {},
-      [Object_prototype]: {
+      {},
+      {
         [SourceLike_move](this: TProperties & MutableEnumeratorLike<[T, T]>) {
           const { delegate } = this;
 
@@ -625,7 +628,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
           }
         },
       },
-    },
+    ),
     mixWith(delegatingDisposableMixin, typedEnumerator),
     createObjectFactory<EnumeratorLike<[T, T]>, EnumeratorLike<T>>(),
     lift,
