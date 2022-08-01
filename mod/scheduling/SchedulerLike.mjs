@@ -4,6 +4,7 @@ import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from '../__internal__/scheduling/queue.mjs';
 import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from '../__internal__/schedulingInternal.mjs';
 export { getCurrentTime, isInContinuation } from '../__internal__/schedulingInternal.mjs';
+import { isDisposed, dispose, addIgnoringChildErrors } from '../__internal__/util/DisposableLikeInternal.mjs';
 import { disposableMixin, disposableRefMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
@@ -12,10 +13,8 @@ import { none, pipe, isSome, isNone, raise, newInstance, max } from '../function
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
-import '../util/DisposableLike.mjs';
 import { hasCurrent, getCurrent } from '../util/EnumeratorLike.mjs';
 import { move } from '../util/SourceLike.mjs';
-import { isDisposed, dispose, addIgnoringChildErrors } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const requestYield = (scheduler) => scheduler[SchedulerLike_requestYield]();
 const shouldYield = (scheduler) => scheduler[SchedulerLike_shouldYield];

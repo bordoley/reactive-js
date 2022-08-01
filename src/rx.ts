@@ -1,3 +1,10 @@
+import {
+  addIgnoringChildErrors,
+  addTo,
+  dispose,
+  isDisposed,
+  onDisposed,
+} from "./__internal__/util/DisposableLikeInternal";
 import { disposableMixin } from "./__internal__/util/DisposableLikeMixins";
 import {
   PropertyTypeOf,
@@ -35,13 +42,6 @@ import { dispatch } from "./scheduling/DispatcherLike";
 import { getDispatcher, getScheduler } from "./scheduling/ObserverLike";
 import { schedule } from "./scheduling/SchedulerLike";
 import { DisposableLike, SinkLike, SinkLike_notify } from "./util";
-import {
-  addIgnoringChildErrors,
-  addTo,
-  dispose,
-  isDisposed,
-  onDisposed,
-} from "./util/DisposableLike";
 
 /** @ignore */
 export const ReactiveContainerLike_sinkInto = Symbol(
