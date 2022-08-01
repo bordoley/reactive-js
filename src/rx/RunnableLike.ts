@@ -88,7 +88,6 @@ import {
   RunnableLike,
   ToRunnable,
   createRunnable,
-  emptyRunnableT,
 } from "../rx";
 import {
   DisposableLike,
@@ -146,13 +145,11 @@ export const buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<T>() => {
     createBufferOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
-
 export const bufferT: Buffer<RunnableLike> = { buffer };
 
 export const concat: Concat<RunnableLike>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]
 ) => pipe(runnables, arrayToRunnable(), concatAll());
-
 export const concatT: Concat<RunnableLike> = {
   concat,
 };
@@ -195,7 +192,6 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
     lift,
   );
 })();
-
 export const concatAllT: ConcatAll<RunnableLike> = {
   concatAll,
 };
@@ -212,7 +208,6 @@ export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithChars
       createDecodeWithCharsetOperator(liftT),
     );
   })();
-
 export const decodeWithCharsetT: DecodeWithCharset<RunnableLike> = {
   decodeWithCharset,
 };
@@ -228,7 +223,6 @@ export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctU
       createDistinctUntilChangedOperator<RunnableLike, T, TReactive>(liftT),
     );
   })();
-
 export const distinctUntilChangedT: DistinctUntilChanged<RunnableLike> = {
   distinctUntilChanged,
 };
@@ -260,7 +254,6 @@ export const forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
     createForEachOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
-
 export const forEachT: ForEach<RunnableLike> = { forEach };
 
 export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
@@ -272,7 +265,6 @@ export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     createKeepOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
-
 export const keepT: Keep<RunnableLike> = { keep };
 
 export const last =
@@ -299,7 +291,6 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     createMapOperator<RunnableLike, TA, TB, TReactive>(liftT),
   );
 })();
-
 export const mapT: Map<RunnableLike> = { map };
 
 export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
@@ -314,7 +305,6 @@ export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
     returns,
   );
 })();
-
 export const pairwiseT: Pairwise<RunnableLike> = { pairwise };
 
 export const reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
@@ -339,7 +329,6 @@ export const reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
     createReduceOperator<RunnableLike, T, TAcc, TReactive>(liftT),
   );
 })();
-
 export const reduceT: Reduce<RunnableLike> = { reduce };
 
 export const repeat = /*@__PURE__*/ (<T>() => {
@@ -358,7 +347,6 @@ export const repeat = /*@__PURE__*/ (<T>() => {
     }),
   );
 })();
-
 export const repeatT: Repeat<RunnableLike> = { repeat };
 
 export const run =
@@ -389,7 +377,6 @@ export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
     createScanOperator<RunnableLike, T, TAcc, TReactive>(liftT),
   );
 })();
-
 export const scanT: Scan<RunnableLike> = { scan };
 
 export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] = /*@__PURE__*/ (<
@@ -403,7 +390,6 @@ export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] = /*@__PURE__*/ (<
     createSkipFirstOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
-
 export const skipFirstT: SkipFirst<RunnableLike> = { skipFirst };
 
 export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] = /*@__PURE__*/ (<
@@ -416,11 +402,9 @@ export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] = /*@__PURE__*/ (<
     createObjectFactory<SinkLike<T>, SinkLike<T>, number>(),
     createTakeFirstOperator<RunnableLike, T, TReactive>({
       ...liftT,
-      ...emptyRunnableT,
     }),
   );
 })();
-
 export const takeFirstT: TakeFirst<RunnableLike> = { takeFirst };
 
 export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
@@ -437,11 +421,9 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
     createObjectFactory<SinkLike<T>, SinkLike<T>, number>(),
     createTakeLastOperator<RunnableLike, T, TReactive>({
       ...liftT,
-      ...emptyRunnableT,
     }),
   );
 })();
-
 export const takeLastT: TakeLast<RunnableLike> = { takeLast };
 
 export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] = /*@__PURE__*/ (<
@@ -455,7 +437,6 @@ export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] = /*@__PURE__*/ (<
     createTakeWhileOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
-
 export const takeWhileT: TakeWhile<RunnableLike> = { takeWhile };
 
 export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
@@ -467,7 +448,6 @@ export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
       createThrowIfEmptyOperator<RunnableLike, T, TReactive>(liftT),
     );
   })();
-
 export const throwIfEmptyT: ThrowIfEmpty<RunnableLike> = {
   throwIfEmpty,
 };
@@ -484,14 +464,12 @@ export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
       );
       return result;
     };
-
 export const toReadonlyArrayT: ToReadonlyArray<RunnableLike> = {
   toReadonlyArray,
 };
 
 export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
   returns(identity);
-
 export const toRunnableT: ToRunnable<RunnableLike<unknown>> = {
   toRunnable,
 };
