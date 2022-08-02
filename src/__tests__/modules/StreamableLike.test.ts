@@ -12,7 +12,7 @@ export const StreamableLikeTests = describe(
   "StreamableLike",
   describe(
     "stateStore",
-    test("createActionReducer", () => {
+    test("createStateStore", () => {
       const scheduler = createVirtualTimeScheduler();
       const stateStream = pipe(createStateStore(returns(1)), stream(scheduler));
 
