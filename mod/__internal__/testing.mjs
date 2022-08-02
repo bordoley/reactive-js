@@ -76,12 +76,12 @@ const expectFalse = (v) => {
         raise("expected false");
     }
 };
-const expectNone = (v) => {
+const expectIsNone = (v) => {
     if (isSome(v)) {
         raise(`expected none but recieved ${v}`);
     }
 };
-const expectSome = (v) => {
+const expectIsSome = (v) => {
     if (isNone(v)) {
         raise(`expected Some(?) but recieved None`);
     }
@@ -146,4 +146,4 @@ const runTests = (testGroups) => {
     }
 };
 
-export { DescribeType, TestAsyncType, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, createTest as test, testAsync };
+export { DescribeType, TestAsyncType, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, createTest as test, testAsync };

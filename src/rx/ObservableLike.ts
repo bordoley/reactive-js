@@ -648,7 +648,7 @@ export const multicast =
     return subject;
   };
 
-interface OnSubscribe {
+interface OnSubscribeObservable {
   <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<
     ObservableLike,
     T,
@@ -665,7 +665,7 @@ interface OnSubscribe {
     T
   >;
 }
-export const onSubscribe: OnSubscribe =
+export const onSubscribe: OnSubscribeObservable =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
   (obs: ObservableLike<T>) => {
     const type = (obs as any)[ObservableLike_observableType] ?? 0;

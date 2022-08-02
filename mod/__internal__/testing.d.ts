@@ -27,8 +27,8 @@ declare const expectEquals: <T>(b: T, valueEquality?: <T_1>(a: T_1, b: T_1) => b
 declare const expectArrayEquals: <T>(b: readonly T[], valueEquality?: Equality<T>) => (a: readonly T[]) => void;
 declare const expectTrue: (v: boolean) => void;
 declare const expectFalse: (v: boolean) => void;
-declare const expectNone: (v: Option<unknown>) => void;
-declare const expectSome: (v: Option<unknown>) => void;
+declare const expectIsNone: (v: Option<unknown>) => void;
+declare const expectIsSome: (v: Option<unknown>) => void;
 declare type MockFunction = {
     (...v: readonly any[]): any;
     readonly calls: readonly ReadonlyArray<any>[];
@@ -37,4 +37,4 @@ declare const mockFn: (retval?: any) => MockFunction;
 declare const expectToHaveBeenCalledTimes: (times: number) => (fn: MockFunction) => void;
 declare const expectPromiseToThrow: (promise: PromiseLike<any>) => Promise<void>;
 declare const runTests: (testGroups: TestGroup[]) => void;
-export { Describe, DescribeType, Test, TestAsync, TestAsyncType, TestGroup, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, createTest as test, testAsync };
+export { Describe, DescribeType, Test, TestAsync, TestAsyncType, TestGroup, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, createTest as test, testAsync };

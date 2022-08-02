@@ -203,38 +203,6 @@ export const tests = describe(
       ),
     ),
   ),
-  describe(
-    "createObservable",
-    test("disposes the observer if onSubscribe throws", () => {
-      const cause = newInstance(Error);
-      const observable = createObservable(_ => {
-        throw cause;
-      });
-      pipe(
-        () => pipe(observable, toRunnable(), last()),
-        expectToThrowError(cause),
-      );
-    }),
-    test(
-      "when queuing multiple events",
-      pipeLazy(
-        createObservable(({ dispatcher }) => {
-          dispatcher.dispatch(1);
-          dispatcher.dispatch(2);
-          dispatcher.dispatch(3);
-          pipe(dispatcher, dispose());
-        }),
-        toRunnable({
-          schedulerFactory: pipeLazy(
-            { maxMicroTaskTicks: 1 },
-            createVirtualTimeScheduler,
-          ),
-        }),
-        toArray(),
-        expectArrayEquals([1, 2, 3]),
-      ),
-    ),
-  ),
 
   test(
     "exhaustMap",
@@ -307,82 +275,6 @@ export const tests = describe(
   ),
 
   test("never", pipeLazy(never(), toRunnable(), last(), expectNone)),
-  test("observable", () => {
-    const fromValueWithDelay = (
-      delay: number,
-      value: number,
-    ): ObservableLike<number> => fromValue(fromArrayT, { delay })(value);
-    const emptyDelayed = empty(fromArrayT, { delay: 100 });
-
-    const computedObservable = observable(() => {
-      const obs1 = __memo(fromValueWithDelay, 10, 5);
-      const result1 = __observe(obs1) ?? 0;
-      const obs2 = __memo(fromValueWithDelay, 20, 10);
-      const result2 = __observe(obs2) ?? 0;
-      const obs3 = __memo(fromValueWithDelay, 30, 7);
-      const result3 = __observe(obs3) ?? 0;
-      __observe(emptyDelayed);
-
-      return result1 + result2 + result3;
-    });
-    pipe(
-      computedObservable,
-      takeLast(),
-      toRunnable(),
-      last(),
-      expectEquals(22),
-    );
-
-    // switch map test
-    const oneTwoThreeDelayed = fromArray({ delay: 1 })([1, 2, 3]);
-    const createOneTwoThree = (x: Option<unknown>) =>
-      isSome(x) ? fromArray()([1, 2, 3]) : empty(fromArrayT);
-    pipe(
-      observable(
-        () => {
-          const v = __observe(oneTwoThreeDelayed);
-          const next = __memo(createOneTwoThree, v);
-          return __observe(next);
-        },
-        { mode: "combine-latest" },
-      ),
-      toRunnable(),
-      toArray(),
-      expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
-    );
-  }),
-
-  describe(
-    "onSubscribe",
-    test("when subscribe function returns a teardown function", () => {
-      const scheduler = createVirtualTimeScheduler();
-
-      const disp = mockFn();
-      const f = mockFn(disp);
-
-      pipe(1, fromValue(fromArrayT), onSubscribe(f), subscribe(scheduler));
-
-      pipe(disp, expectToHaveBeenCalledTimes(0));
-      pipe(f, expectToHaveBeenCalledTimes(1));
-
-      pipe(scheduler, enumeratorForEach(ignore));
-
-      pipe(disp, expectToHaveBeenCalledTimes(1));
-      pipe(f, expectToHaveBeenCalledTimes(1));
-    }),
-
-    test("when callback function throws", () => {
-      const scheduler = createVirtualTimeScheduler();
-      const subscription = pipe(
-        1,
-        fromValue(fromArrayT),
-        onSubscribe(raise),
-        subscribe(scheduler),
-      );
-
-      pipe(subscription.error, expectSome);
-    }),
-  ),
 
   describe(
     "retry",
@@ -624,21 +516,6 @@ export const tests = describe(
   ),
 
   describe(
-    "toPromise",
-    testAsync(
-      "when observable completes without producing a value",
-      async () => {
-        const scheduler = createHostScheduler();
-        await pipe(
-          pipe(empty(fromArrayT), toPromise(scheduler)),
-          expectPromiseToThrow,
-        );
-        scheduler.dispose();
-      },
-    ),
-  ),
-
-  describe(
     "withLatestFrom",
     test(
       "when source and latest are interlaced",
@@ -807,20 +684,7 @@ export const tests = describe(
       ),
     ),
   ),
-  test("fromArray with no start delay", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const publishTimes: number[] = [];
-    pipe(
-      [1, 2, 3],
-      fromArray({ delay: 2, delayStart: false }),
-      onNotify(_ => publishTimes.push(scheduler.now)),
-      subscribe(scheduler),
-    );
 
-    pipe(scheduler, enumeratorForEach(ignore));
-
-    pipe(publishTimes, expectArrayEquals([0, 2, 4]));
-  }),
   test("fromIterable with no start delay", () => {
     const scheduler = createVirtualTimeScheduler();
     const publishTimes: number[] = [];
@@ -848,28 +712,5 @@ export const tests = describe(
     pipe(scheduler, enumeratorForEach(ignore));
 
     pipe(publishTimes, expectArrayEquals([0, 2, 4]));
-  }),
-  createRunnableTests({
-    ...concatT,
-    ...concatAllT,
-    ...fromArrayT,
-    ...keepT,
-    ...distinctUntilChangedT,
-    ...generateT,
-    ...mapT,
-    ...repeatT,
-    ...scanT,
-    ...skipFirstT,
-    ...takeFirstT,
-    ...takeLastT,
-    ...takeWhileT,
-    ...toRunnableT,
-  }),
-  createZippableTests({
-    ...fromArrayT,
-    ...generateT,
-    ...mapT,
-    ...toRunnableT,
-    ...zipT,
   }),
 );

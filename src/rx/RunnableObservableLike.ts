@@ -42,6 +42,7 @@ import {
 import { getScheduler } from "../scheduling/ObserverLike";
 import { toPausableScheduler } from "../scheduling/SchedulerLike";
 import { FlowMode, ToFlowable, createLiftedFlowable } from "../streaming";
+import { DisposableOrTeardown } from "../util";
 import { run } from "../util/ContinuationLike";
 import {
   add,
@@ -60,6 +61,7 @@ import {
   keep as keepObs,
   map as mapObs,
   merge as mergeObs,
+  onSubscribe as onSubscribeObs,
   pairwise as pairwiseObs,
   reduce as reduceObs,
   scan as scanObs,
@@ -192,6 +194,20 @@ export const merge: MergeRunnableObservable = mergeObs;
 export const mergeT: Concat<ObservableLike<unknown>> = {
   concat: merge,
 };
+
+interface OnSubscribeRunnableObservable {
+  <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<
+    RunnableObservableLike,
+    T,
+    T
+  >;
+  <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<
+    EnumerableObservableLike,
+    T,
+    T
+  >;
+}
+export const onSubscribe: OnSubscribeRunnableObservable = onSubscribeObs;
 
 interface PairwiseRunnableObservable {
   <T>(): ContainerOperator<RunnableObservableLike, T, readonly [T, T]>;

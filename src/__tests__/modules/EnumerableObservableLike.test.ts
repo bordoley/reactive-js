@@ -1,6 +1,13 @@
-import { describe, expectArrayEquals, test } from "../../__internal__/testing";
+import {
+  describe,
+  expectArrayEquals,
+  expectIsSome,
+  expectToHaveBeenCalledTimes,
+  mockFn,
+  test,
+} from "../../__internal__/testing";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
-import { pipeLazy } from "../../functions";
+import { pipe, pipeLazy, raise } from "../../functions";
 import { toReadonlyArray } from "../../ix/EnumerableLike";
 import { deferObservableT } from "../../rx";
 import {
@@ -10,6 +17,7 @@ import {
   forEachT,
   keepT,
   mapT,
+  onSubscribe,
   pairwiseT,
   reduceT,
   scanT,
@@ -21,6 +29,10 @@ import {
   toEnumerable,
   toReadonlyArrayT,
 } from "../../rx/EnumerableObservableLike";
+import { subscribe } from "../../rx/ObservableLike";
+import { createVirtualTimeScheduler } from "../../scheduling";
+import { run } from "../../util/ContinuationLike";
+import { getException } from "../../util/DisposableLike";
 import {
   concatTests,
   decodeWithCharsetTests,
@@ -39,7 +51,7 @@ import {
 } from "../operators";
 
 export const EnumerableObservableLikeTests = describe(
-  "RunnableObservableLike",
+  "EnumerableObservableLike",
   concatTests({
     fromArray: toObservable,
     ...concatT,
@@ -112,6 +124,37 @@ export const EnumerableObservableLikeTests = describe(
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
   }),
+  describe(
+    "onSubscribe",
+    test("when subscribe function returns a teardown function", () => {
+      const scheduler = createVirtualTimeScheduler();
+
+      const disp = mockFn();
+      const f = mockFn(disp);
+
+      pipe([1], toObservable(), onSubscribe(f), subscribe(scheduler));
+
+      pipe(disp, expectToHaveBeenCalledTimes(0));
+      pipe(f, expectToHaveBeenCalledTimes(1));
+
+      run(scheduler);
+
+      pipe(disp, expectToHaveBeenCalledTimes(1));
+      pipe(f, expectToHaveBeenCalledTimes(1));
+    }),
+
+    test("when callback function throws", () => {
+      const scheduler = createVirtualTimeScheduler();
+      const subscription = pipe(
+        [1],
+        toObservable(),
+        onSubscribe(raise),
+        subscribe(scheduler),
+      );
+
+      pipe(subscription, getException, expectIsSome);
+    }),
+  ),
   test(
     "toEnumerable",
     pipeLazy(

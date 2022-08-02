@@ -78,12 +78,12 @@ declare const mergeT: Concat<ObservableLike<unknown>>;
 declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
-interface OnSubscribe {
+interface OnSubscribeObservable {
     <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<ObservableLike, T, T>;
     <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<RunnableObservableLike, T, T>;
     <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<EnumerableObservableLike, T, T>;
 }
-declare const onSubscribe: OnSubscribe;
+declare const onSubscribe: OnSubscribeObservable;
 interface PairwiseObservable {
     <T>(): ContainerOperator<ObservableLike, T, readonly [
         T,

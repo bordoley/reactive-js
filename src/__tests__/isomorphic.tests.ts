@@ -9,7 +9,8 @@ import { EnumerableLikeTests } from "./modules/EnumerableLike.test";
 import { EnumerableObservableLikeTests } from "./modules/EnumerableObservableLike.test";
 import { FlowableLikeTests } from "./modules/FlowableLike.test";
 import { IterableLikeTests } from "./modules/IterableLike.test";
-import {PromiseableLikeTests} from "./modules/PromiseableLike.test";
+import { ObservableLikeTests } from "./modules/ObservableLike.test";
+import { PromiseableLikeTests } from "./modules/PromiseableLike.test";
 import { RunnableLikeTests } from "./modules/RunnableLike.test";
 import { RunnableObservableLikeTests } from "./modules/RunnableObservableLike.test";
 import { SequenceLikeTests } from "./modules/SequenceLike.test";
@@ -24,13 +25,14 @@ runTests([
   effectsTests,
   EnumerableLikeTests,
   EnumerableObservableLikeTests,
-  IterableLikeTests,
-  PromiseableLikeTests,
   FlowableLikeTests,
+  IterableLikeTests,
+  ObservableLikeTests,
+  PromiseableLikeTests,
+  queueTests,
   RunnableLikeTests,
   RunnableObservableLikeTests,
   SequenceLikeTests,
   StreamableLikeTests,
   SubjectLikeTests,
-  queueTests,
 ]);

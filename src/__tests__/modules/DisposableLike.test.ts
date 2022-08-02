@@ -2,7 +2,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
-  expectNone,
+  expectIsNone,
   expectToHaveBeenCalledTimes,
   expectTrue,
   mockFn,
@@ -55,7 +55,7 @@ export const DisposableLikeTests = describe(
       onDisposed(teardown),
       dispose(),
     );
-    pipe(disposable, getException, expectNone);
+    pipe(disposable, getException, expectIsNone);
   }),
   test("propogates errors when disposed with an Exception", () => {
     const error: Option<Exception> = { cause: null };

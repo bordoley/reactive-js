@@ -133,13 +133,13 @@ export const expectFalse = (v: boolean) => {
   }
 };
 
-export const expectNone = (v: Option<unknown>) => {
+export const expectIsNone = (v: Option<unknown>) => {
   if (isSome(v)) {
     raise(`expected none but recieved ${v}`);
   }
 };
 
-export const expectSome = (v: Option<unknown>) => {
+export const expectIsSome = (v: Option<unknown>) => {
   if (isNone(v)) {
     raise(`expected Some(?) but recieved None`);
   }
