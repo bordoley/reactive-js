@@ -26,97 +26,164 @@ import { createHostScheduler } from "../../scheduling";
 import { toObservable as flowableToObservable } from "../../streaming/FlowableLike";
 import { sourceFrom } from "../../streaming/StreamLike";
 import { stream } from "../../streaming/StreamableLike";
-
-const scheduler = createHostScheduler();
+import { dispose } from "../../util/DisposableLike";
 
 export const nodeTests = describe(
   "node",
   describe(
     "createWritableIOSink",
     testAsync("sinking to writable", async () => {
-      const encoder = newInstance(TextEncoder);
-      let data = "";
-      const writable = newInstance(Writable, {
-        autoDestroy: true,
-        highWaterMark: 4,
+      const scheduler = createHostScheduler();
 
-        write(chunk, _encoding, callback) {
-          data += chunk;
-          callback();
-        },
-      });
+      try {
+        const encoder = newInstance(TextEncoder);
+        let data = "";
+        const writable = newInstance(Writable, {
+          autoDestroy: true,
+          highWaterMark: 4,
 
-      const src = pipe(
-        [encoder.encode("abc"), encoder.encode("defg")],
-        toObservable(),
-        toFlowable(),
-      );
+          write(chunk, _encoding, callback) {
+            data += chunk;
+            callback();
+          },
+        });
 
-      const dest = pipe(
-        createWritableSink(returns(writable)),
-        stream(scheduler),
-        sourceFrom(src),
-      );
+        const src = pipe(
+          [encoder.encode("abc"), encoder.encode("defg")],
+          toObservable(),
+          toFlowable(),
+        );
 
-      await pipe(
-        dest,
-        endWith({ fromArray: toObservable, ...concatT }, "pause"),
-        toPromise(scheduler),
-      );
+        const dest = pipe(
+          createWritableSink(returns(writable)),
+          stream(scheduler),
+          sourceFrom(src),
+        );
 
-      pipe(writable.destroyed, expectEquals(true));
-      pipe(data, expectEquals("abcdefg"));
+        await pipe(
+          dest,
+          endWith({ fromArray: toObservable, ...concatT }, "pause"),
+          toPromise(scheduler),
+        );
+
+        pipe(writable.destroyed, expectEquals(true));
+        pipe(data, expectEquals("abcdefg"));
+      } finally {
+        pipe(scheduler, dispose());
+      }
     }),
 
     testAsync("sinking to writable that throws", async () => {
-      const encoder = newInstance(TextEncoder);
+      const scheduler = createHostScheduler();
 
-      const cause = newInstance(Error);
-      const writable = newInstance(Writable, {
-        autoDestroy: true,
-        highWaterMark: 4,
+      try {
+        const encoder = newInstance(TextEncoder);
 
-        write(_chunk, _encoding, callback) {
-          callback(cause);
-        },
-      });
+        const cause = newInstance(Error);
+        const writable = newInstance(Writable, {
+          autoDestroy: true,
+          highWaterMark: 4,
 
-      const src = pipe(
-        [encoder.encode("abc"), encoder.encode("defg")],
-        toObservable(),
-        toFlowable(),
-      );
+          write(_chunk, _encoding, callback) {
+            callback(cause);
+          },
+        });
 
-      const dest = pipe(
-        createWritableSink(returns(writable)),
-        stream(scheduler),
-        sourceFrom(src),
-      );
+        const src = pipe(
+          [encoder.encode("abc"), encoder.encode("defg")],
+          toObservable(),
+          toFlowable(),
+        );
 
-      const promise = pipe(
-        dest,
-        ignoreElements(keepT),
-        endWith({ fromArray: toObservable, ...concatT }, 0),
-        toPromise(scheduler),
-      );
+        const dest = pipe(
+          createWritableSink(returns(writable)),
+          stream(scheduler),
+          sourceFrom(src),
+        );
 
-      await expectPromiseToThrow(promise);
-      pipe(writable.destroyed, expectEquals(true));
+        const promise = pipe(
+          dest,
+          ignoreElements(keepT),
+          endWith({ fromArray: toObservable, ...concatT }, 0),
+          toPromise(scheduler),
+        );
+        await expectPromiseToThrow(promise);
+        pipe(writable.destroyed, expectEquals(true));
+      } finally {
+        pipe(scheduler, dispose());
+      }
     }),
   ),
 
   describe(
     "createReadableIOSource",
     testAsync("reading from readable", async () => {
-      function* generate() {
-        yield Buffer.from("abc", "utf8");
-        yield Buffer.from("defg", "utf8");
-      }
+      const scheduler = createHostScheduler();
 
+      try {
+        function* generate() {
+          yield Buffer.from("abc", "utf8");
+          yield Buffer.from("defg", "utf8");
+        }
+
+        const textDecoder = newInstance(TextDecoder);
+
+        const acc = await pipe(
+          createReadableSource(() => pipe(generate(), Readable.from)),
+          flowableToObservable(),
+          reduce(
+            (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+            returns(""),
+          ),
+          takeFirst({ count: 1 }),
+          toPromise(scheduler),
+        );
+        pipe(acc, expectEquals("abcdefg"));
+      } finally {
+        pipe(scheduler, dispose());
+      }
+    }),
+    testAsync("reading from readable that throws", async () => {
+      const scheduler = createHostScheduler();
+
+      try {
+        const cause = newInstance(Error);
+
+        function* generate() {
+          yield Buffer.from("abc", "utf8");
+          throw cause;
+        }
+
+        const textDecoder = newInstance(TextDecoder);
+        await pipe(
+          createReadableSource(() => pipe(generate(), Readable.from)),
+          flowableToObservable(),
+          reduce(
+            (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+            returns(""),
+          ),
+          endWith({ fromArray: toObservable, ...concatT }, ""),
+          toPromise(scheduler),
+          expectPromiseToThrow,
+        );
+      } finally {
+        pipe(scheduler, dispose());
+      }
+    }),
+  ),
+  testAsync("transform", async () => {
+    const scheduler = createHostScheduler();
+
+    try {
+      const encoder = newInstance(TextEncoder);
       const textDecoder = newInstance(TextDecoder);
 
       const acc = await pipe(
-        createReadableSource(() => pipe(generate(), Readable.from)),
+        [encoder.encode("abc"), encoder.encode("defg")],
+        toObservable(),
+        toFlowable(),
+        gzip(),
+        gunzip(),
         flowableToObservable(),
         reduce(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
@@ -125,50 +192,10 @@ export const nodeTests = describe(
         takeFirst({ count: 1 }),
         toPromise(scheduler),
       );
+
       pipe(acc, expectEquals("abcdefg"));
-    }),
-    testAsync("reading from readable that throws", async () => {
-      const cause = newInstance(Error);
-
-      function* generate() {
-        yield Buffer.from("abc", "utf8");
-        throw cause;
-      }
-
-      const textDecoder = newInstance(TextDecoder);
-
-      await pipe(
-        createReadableSource(() => pipe(generate(), Readable.from)),
-        flowableToObservable(),
-        reduce(
-          (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-          returns(""),
-        ),
-        endWith({ fromArray: toObservable, ...concatT }, ""),
-        toPromise(scheduler),
-        expectPromiseToThrow,
-      );
-    }),
-  ),
-  testAsync("transform", async () => {
-    const encoder = newInstance(TextEncoder);
-
-    const textDecoder = newInstance(TextDecoder);
-    const acc = await pipe(
-      [encoder.encode("abc"), encoder.encode("defg")],
-      toObservable(),
-      toFlowable(),
-      gzip(),
-      gunzip(),
-      flowableToObservable(),
-      reduce(
-        (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-        returns(""),
-      ),
-      takeFirst({ count: 1 }),
-      toPromise(scheduler),
-    );
-
-    pipe(acc, expectEquals("abcdefg"));
+    } finally {
+      pipe(scheduler, dispose());
+    }
   }),
 );
