@@ -1,4 +1,4 @@
-import { Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ContainerOperator, ContainerOf, ReadonlyArrayLike } from "../containers.mjs";
+import { Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ContainerOperator, ContainerOf, ReadonlyArrayLike } from "../containers.mjs";
 import { Factory, Option, Equality, SideEffect1, Predicate, Function1, Reducer } from "../functions.mjs";
 import { RunnableObservableLike, ObservableLike, EnumerableObservableLike } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
@@ -94,6 +94,12 @@ interface SkipFirstnRunnableObservable {
 }
 declare const skipFirst: SkipFirstnRunnableObservable;
 declare const skipFirstT: SkipFirst<RunnableObservableLike>;
+interface SwitchAllRunnableObservable {
+    <T>(): ContainerOperator<RunnableObservableLike, T, T>;
+    <T>(): ContainerOperator<EnumerableObservableLike, T, T>;
+}
+declare const switchAll: SwitchAllRunnableObservable;
+declare const switchAllT: ConcatAll<ObservableLike>;
 interface TakeFirstRunnableObservable {
     <T>(options?: {
         readonly count?: number;
@@ -148,4 +154,4 @@ declare const toReadonlyArray: ToReadonlyArrayObservable;
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
-export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, keep, keepT, map, mapT, merge, mergeT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };
+export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, keep, keepT, map, mapT, merge, mergeT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };

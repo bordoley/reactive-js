@@ -56,7 +56,6 @@ import {
   scanAsync,
   share,
   subscribe,
-  switchAll,
   switchAllT,
   takeFirst,
   takeLast,
@@ -379,49 +378,6 @@ export const tests = describe(
     pipe(scheduler, enumeratorForEach(ignore));
     pipe(result, expectArrayEquals([2, 4, 6]));
   }),
-
-  describe(
-    "switchAll",
-    test(
-      "with empty source",
-      pipeLazy(
-        empty(fromArrayT),
-        switchAll(),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([]),
-      ),
-    ),
-
-    test(
-      "when source throw",
-      pipeLazy(
-        pipeLazy(
-          raise,
-          throws({ ...fromArrayT, ...mapT }),
-          switchAll(),
-          toRunnable(),
-          toArray(),
-          expectArrayEquals([]),
-        ),
-        expectToThrow,
-      ),
-    ),
-  ),
-
-  test(
-    "switchMap",
-    pipeLazy(
-      [1, 2, 3],
-      fromArray({ delay: 1 }),
-      concatMap({ ...switchAllT, ...mapTObs }, _ =>
-        pipe([1, 2, 3], fromArray()),
-      ),
-      toRunnable(),
-      toArray(),
-      expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
-    ),
-  ),
 
   describe(
     "takeLast",

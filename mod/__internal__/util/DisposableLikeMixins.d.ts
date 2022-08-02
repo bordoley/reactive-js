@@ -21,4 +21,5 @@ declare const disposed: DisposableLike;
 interface DisposableRefLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike, MutableRefLike<TDisposable> {
 }
 declare const disposableRefMixin: <TDisposable extends DisposableLike>() => Class1<UnknownObject, MutableRefLike<TDisposable>, TDisposable>;
-export { DisposableRefLike, createDisposable, delegatingDisposableMixin, disposableMixin, disposableRefMixin, disposed };
+declare const createDisposableRef: <TDisposable extends DisposableLike>(initialValue: TDisposable) => DisposableRefLike<TDisposable>;
+export { DisposableRefLike, createDisposable, createDisposableRef, delegatingDisposableMixin, disposableMixin, disposableRefMixin, disposed };
