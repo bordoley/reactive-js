@@ -16,7 +16,7 @@ import '../util/DisposableLike.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { publishTo } from './SubjectLike.mjs';
-import { addTo, onComplete, dispose, bindTo, onDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { addTo, onComplete, dispose, bindTo, onDisposed, addToIgnoringChildErrors } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const createDelegatingObserver = 
 /*@__PURE__*/ (() => {
@@ -283,7 +283,7 @@ const subscribe = /*@__PURE__*/ (() => {
     }, {}, {
         [SinkLike_notify](_) { },
     }), mixWith(disposableMixin, typedObserverMixin), createObjectFactory());
-    return (scheduler) => observable => pipe(scheduler, createObserver, addTo(scheduler), sourceFrom(observable));
+    return (scheduler) => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
 })();
 const subscribeOn = (scheduler) => observable => createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => pipe(observable, forEach(dispatchTo(dispatcher)), subscribe(scheduler), bindTo(dispatcher)));
 const takeFirst = /*@__PURE__*/ (() => {

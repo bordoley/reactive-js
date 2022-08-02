@@ -30,5 +30,5 @@ declare const createEventSource: (url: string | URL, options?: EventSourceInit &
     readonly data: string;
 }>;
 declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<string | FetchRequest, ObservableLike<T>>;
-declare const fromEvent: <T>(target: EventTarget, eventName: string, selector: Function1<Event, T>) => ObservableLike<T>;
-export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamableLike, WindowLocationURI, createEventSource, fetch, fromEvent };
+declare const addEventListener: <T>(eventName: string, selector: Function1<Event, T>) => Function1<EventTarget, ObservableLike<T>>;
+export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamableLike, WindowLocationURI, addEventListener, createEventSource, fetch };

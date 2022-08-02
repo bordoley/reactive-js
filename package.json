@@ -13,10 +13,10 @@
     "perf": "yarn bootstrap && lerna run build --scope @reactive-js/perf && lerna run perf --scope @reactive-js/perf",
     "pkg": "cp README.md ./packages/core",
     "release": "lerna publish --force-publish",
-    "test": "jest",
+    "test": "jest --verbose",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest",
-    "test-deno": "deno test -r ./mod/__tests__/tests.mjs",
+    "test-deno": "deno test -r ./mod/__tests__/isomorphic.tests.mjs",
     "test-prod": "NODE_ENV=production node ./node_modules/.bin/jest",
     "typecheck": "tsc -p tsconfig.typecheck.json"
   },

@@ -13,6 +13,7 @@ Reactive-JS
 - [containers/ReadonlyArrayLike](modules/containers_ReadonlyArrayLike.md)
 - [containers/SequenceLike](modules/containers_SequenceLike.md)
 - [functions](modules/functions.md)
+- [integrations/node](modules/integrations_node.md)
 - [integrations/react](modules/integrations_react.md)
 - [integrations/web](modules/integrations_web.md)
 - [ix](modules/ix.md)

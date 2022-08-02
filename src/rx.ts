@@ -235,6 +235,7 @@ export const createRunnable = /*@__PURE__*/ (() => {
         this._run(sink);
         pipe(sink, dispose());
       } catch (cause) {
+        debugger;
         pipe(sink, dispose({ cause }));
       }
     }

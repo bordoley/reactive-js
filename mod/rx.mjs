@@ -65,6 +65,7 @@ const createRunnable = /*@__PURE__*/ (() => {
                 pipe(sink, dispose());
             }
             catch (cause) {
+                debugger;
                 pipe(sink, dispose({ cause }));
             }
         }

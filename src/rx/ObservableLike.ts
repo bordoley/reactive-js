@@ -107,6 +107,7 @@ import { getScheduler } from "../scheduling/ObserverLike";
 import { DisposableLike, DisposableOrTeardown, SinkLike_notify } from "../util";
 import {
   addTo,
+  addToIgnoringChildErrors,
   bindTo,
   dispose,
   onComplete,
@@ -903,7 +904,12 @@ export const subscribe: <T>(
     createObjectFactory<ObserverLike, SchedulerLike>(),
   );
   return (scheduler: SchedulerLike) => observable =>
-    pipe(scheduler, createObserver, addTo(scheduler), sourceFrom(observable));
+    pipe(
+      scheduler,
+      createObserver,
+      addToIgnoringChildErrors(scheduler),
+      sourceFrom(observable),
+    );
 })();
 
 export const subscribeOn =

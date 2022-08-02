@@ -34,7 +34,7 @@ export type Test = {
 export type TestAsync = {
   readonly type: typeof TestAsyncType;
   readonly name: string;
-  readonly f: Function1<string, Factory<Promise<void>>>;
+  readonly f: Function1<string, Factory<PromiseLike<void>>>;
 };
 
 export type TestGroup = Describe | Test | TestAsync;
@@ -60,7 +60,7 @@ export { createTest as test };
 
 export const testAsync = (
   name: string,
-  f: Factory<Promise<void>>,
+  f: Factory<PromiseLike<void>>,
 ): TestAsync => ({
   type: TestAsyncType,
   name,
@@ -172,7 +172,7 @@ export const expectToHaveBeenCalledTimes =
     }
   };
 
-export const expectPromiseToThrow = async (promise: Promise<any>) => {
+export const expectPromiseToThrow = async (promise: PromiseLike<any>) => {
   let didThrow = false;
   try {
     await promise;

@@ -5,12 +5,18 @@ import {
   init,
   mixWith,
 } from "./__internal__/util/Object";
-import { ContainerLike, ContainerOperator } from "./containers";
+import {
+  Container,
+  ContainerLike,
+  ContainerOf,
+  ContainerOperator,
+} from "./containers";
 import { concatWith } from "./containers/ContainerLike";
 import { toObservable } from "./containers/ReadonlyArrayLike";
 import {
   Equality,
   Factory,
+  Function1,
   Reducer,
   Updater,
   composeUnsafe,
@@ -92,6 +98,15 @@ export interface AsyncEnumeratorLike<T = unknown>
   extends SourceLike,
     StreamLike<void, T> {}
 
+export type ToFlowable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toFlowable<T>(
+    options?: TOptions,
+  ): Function1<ContainerOf<C, T>, FlowableLike<T>>;
+};
+
 export const createStream = /*@__PURE__*/ (() => {
   const createStreamInternal = (<TReq, T>() => {
     type TProperties = {
@@ -107,6 +122,8 @@ export const createStream = /*@__PURE__*/ (() => {
           scheduler: SchedulerLike,
           replay: number,
         ) {
+          this[DispatcherLike_scheduler] = scheduler;
+
           const subject = createSubject({ replay });
           this.subject = subject;
 

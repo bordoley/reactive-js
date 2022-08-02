@@ -139,25 +139,25 @@ export const fetch =
       }
     });
 
-//FIXME naming?
-export const fromEvent = <T>(
-  target: EventTarget,
-  eventName: string,
-  selector: Function1<Event, T>,
-): ObservableLike<T> =>
-  createObservable(observer => {
-    const dispatcher = pipe(
-      observer,
-      getDispatcher,
-      onDisposed(_ => {
-        target.removeEventListener(eventName, listener);
-      }),
-    );
+export const addEventListener =
+  <T>(
+    eventName: string,
+    selector: Function1<Event, T>,
+  ): Function1<EventTarget, ObservableLike<T>> =>
+  target =>
+    createObservable(observer => {
+      const dispatcher = pipe(
+        observer,
+        getDispatcher,
+        onDisposed(_ => {
+          target.removeEventListener(eventName, listener);
+        }),
+      );
 
-    const listener = (event: Event) => {
-      const result = selector(event);
-      pipe(dispatcher, dispatch(result));
-    };
+      const listener = (event: Event) => {
+        const result = selector(event);
+        pipe(dispatcher, dispatch(result));
+      };
 
-    target.addEventListener(eventName, listener, { passive: true });
-  });
+      target.addEventListener(eventName, listener, { passive: true });
+    });
