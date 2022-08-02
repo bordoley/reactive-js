@@ -3,6 +3,7 @@ import { runTests } from '../__internal__/testing.mjs';
 import { ContainerLikeTests } from './modules/ContainerLike.test.mjs';
 import { DisposableLikeTests } from './modules/DisposableLike.test.mjs';
 import { EnumerableLikeTests } from './modules/EnumerableLike.test.mjs';
+import { EnumerableObservableLikeTests } from './modules/EnumerableObservableLike.test.mjs';
 import { FlowableLikeTests } from './modules/FlowableLike.test.mjs';
 import { IterableLikeTests } from './modules/IterableLike.test.mjs';
 import { RunnableLikeTests } from './modules/RunnableLike.test.mjs';
@@ -21,6 +22,7 @@ runTests([
     DisposableLikeTests,
     effectsTests,
     EnumerableLikeTests,
+    EnumerableObservableLikeTests,
     IterableLikeTests,
     FlowableLikeTests,
     RunnableLikeTests,
