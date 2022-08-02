@@ -1,0 +1,40 @@
+import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, Option, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Equality, Updater } from "../functions.mjs";
+import { ObservableLike } from "../rx.mjs";
+import { SchedulerLike } from "../scheduling.mjs";
+import { StreamLike, StreamableLike } from "../streaming.mjs";
+import { DisposableLike } from "../util.mjs";
+declare type EffectsMode = "batched" | "combine-latest";
+declare const observable: <T>(computation: Factory<T>, { mode }?: {
+    mode?: EffectsMode | undefined;
+}) => ObservableLike<T>;
+declare function __memo<T>(fn: Factory<T>): T;
+declare function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
+declare function __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+declare function __memo<TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+declare function __memo<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
+declare function __memo<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
+declare function __memo<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
+declare const __observe: <T>(observable: ObservableLike<T>) => Option<T>;
+declare function __do(fn: SideEffect): void;
+declare function __do<TA>(fn: SideEffect1<TA>, a: TA): void;
+declare function __do<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
+declare function __do<TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: TC): void;
+declare function __do<TA, TB, TC, TD>(fn: SideEffect4<TA, TB, TC, TD>, a: TA, b: TB, c: TC, d: TD): void;
+declare function __do<TA, TB, TC, TD, TE>(fn: SideEffect5<TA, TB, TC, TD, TE>, a: TA, b: TB, c: TC, d: TD, e: TE): void;
+declare function __do<TA, TB, TC, TD, TE, TF>(fn: SideEffect6<TA, TB, TC, TD, TE, TF>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): void;
+declare function __using<T extends DisposableLike>(fn: Factory<T>): T;
+declare function __using<TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
+declare function __using<TA, TB, T extends DisposableLike>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+declare function __using<TA, TB, TC, T extends DisposableLike>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+declare function __using<TA, TB, TC, TD, T extends DisposableLike>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
+declare function __using<TA, TB, TC, TD, TE, T extends DisposableLike>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
+declare function __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
+declare function __currentScheduler(): SchedulerLike;
+declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
+    readonly replay?: number | undefined;
+    readonly scheduler?: SchedulerLike | undefined;
+}) => TStream;
+declare const __state: <T>(initialState: () => T, options?: {
+    readonly equality?: Option<Equality<T>>;
+}) => StreamLike<Updater<T>, T>;
+export { EffectsMode, __currentScheduler, __do, __memo, __observe, __state, __stream, __using, observable };
