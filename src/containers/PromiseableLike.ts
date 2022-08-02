@@ -1,11 +1,11 @@
-import { PromiseLike } from "../containers";
+import { PromiseableLike } from "../containers";
 import { pipe } from "../functions";
 import { ObservableLike, ToObservable, createObservable } from "../rx";
 import { dispatch } from "../scheduling/DispatcherLike";
 import { getDispatcher } from "../scheduling/ObserverLike";
 import { dispose, isDisposed, toErrorHandler } from "../util/DisposableLike";
 
-export const toObservable: ToObservable<PromiseLike>["toObservable"] =
+export const toObservable: ToObservable<PromiseableLike>["toObservable"] =
   <T>() =>
   (promise: PromiseLike<T>): ObservableLike<T> =>
     createObservable(observer => {
@@ -18,4 +18,4 @@ export const toObservable: ToObservable<PromiseLike>["toObservable"] =
       }, toErrorHandler(dispatcher));
     });
 
-export const toObservableT: ToObservable<PromiseLike> = { toObservable };
+export const toObservableT: ToObservable<PromiseableLike> = { toObservable };

@@ -17,8 +17,8 @@ interface SequenceLike<T = unknown> extends ContainerLike {
         readonly next: SequenceLike<T>;
     }>;
 }
-interface PromiseLike<T = unknown> extends ContainerLike, Promise<T> {
-    readonly TContainerOf?: PromiseLike<this["T"]>;
+interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike<T> {
+    readonly TContainerOf?: PromiseableLike<this["T"]>;
 }
 interface StatefulContainerLike extends ContainerLike {
     readonly TStatefulContainerState?: DisposableLike;
@@ -249,4 +249,4 @@ declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
