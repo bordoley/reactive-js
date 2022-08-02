@@ -10,6 +10,7 @@ import { FlowableLikeTests } from "./FlowableLike.test";
 import { RunnableLikeTests } from "./RunnableLike.test";
 import { RunnableObservableLikeTests } from "./RunnableObservableLike.test";
 import { SequenceLikeTests } from "./SequenceLike.test";
+import { StreamableLikeTests } from "./StreamableLike.test";
 import { SubjectLikeTests } from "./SubjectLike.test";
 import { queueTests } from "./queues.test";
 
@@ -21,6 +22,7 @@ runTests([
   RunnableLikeTests,
   RunnableObservableLikeTests,
   SequenceLikeTests,
+  StreamableLikeTests,
   SubjectLikeTests,
   queueTests,
 ]);

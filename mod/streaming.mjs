@@ -1,10 +1,12 @@
 /// <reference types="./streaming.d.ts" />
 import { delegatingDisposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
-import { pipe, none, newInstance, getLength, composeUnsafe } from './functions.mjs';
-import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto } from './rx.mjs';
+import { concatWith } from './containers/ContainerLike.mjs';
+import { toObservable } from './containers/ReadonlyArrayLike.mjs';
+import { pipe, none, newInstance, getLength, composeUnsafe, returns, updateReducer } from './functions.mjs';
+import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createObservable } from './rx.mjs';
 import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
-import { multicast } from './rx/ObservableLike.mjs';
+import { multicast, scan, mergeT, distinctUntilChanged } from './rx/ObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
 import { publish } from './rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from './scheduling.mjs';
@@ -73,5 +75,28 @@ const createLiftedStreamable = (...ops) => {
         : ops[0];
     return createStreamble((scheduler, options) => createStream(op, scheduler, options));
 };
+/**
+ * Returns a new `StreamableLike` instance that applies an accumulator function
+ * over the notified actions, emitting each intermediate result.
+ *
+ * @param reducer The accumulator function called on each notified action.
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+const createActionReducer = (reducer, initialState, options) => createLiftedStreamable(obs => createObservable(observer => {
+    const acc = initialState();
+    pipe(obs, scan(reducer, returns(acc)), concatWith(mergeT, pipe([acc], toObservable())), distinctUntilChanged(options), sinkInto(observer));
+}));
+/**
+ * Returns a new `StateStoreLike` instance that stores state which can
+ * be updated by notifying the instance with a `StateUpdater` that computes a
+ * new state based upon the previous state.
+ *
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+const createStateStore = (initialState, options) => createActionReducer(updateReducer, initialState, options);
 
-export { StreamableLike_stream, createLiftedFlowable, createLiftedStreamable, createStream, createStreamble };
+export { StreamableLike_stream, createActionReducer, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble };

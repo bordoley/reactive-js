@@ -6,13 +6,20 @@ import {
   mixWith,
 } from "./__internal__/util/Object";
 import { ContainerLike, ContainerOperator } from "./containers";
+import { concatWith } from "./containers/ContainerLike";
+import { toObservable } from "./containers/ReadonlyArrayLike";
 import {
+  Equality,
+  Factory,
+  Reducer,
   Updater,
   composeUnsafe,
   getLength,
   newInstance,
   none,
   pipe,
+  returns,
+  updateReducer,
 } from "./functions";
 import {
   MulticastObservableLike,
@@ -21,10 +28,16 @@ import {
   ObservableLike,
   ReactiveContainerLike_sinkInto,
   SubjectLike,
+  createObservable,
   createSubject,
 } from "./rx";
 import { getObserverCount, getReplay } from "./rx/MulticastObservableLike";
-import { multicast } from "./rx/ObservableLike";
+import {
+  distinctUntilChanged,
+  mergeT,
+  multicast,
+  scan,
+} from "./rx/ObservableLike";
 import { sinkInto } from "./rx/ReactiveContainerLike";
 import { publish } from "./rx/SubjectLike";
 import {
@@ -430,3 +443,45 @@ export const createLiftedStreamable: CreateLiftedStreamable = (
     createStream(op, scheduler, options),
   );
 };
+
+/**
+ * Returns a new `StreamableLike` instance that applies an accumulator function
+ * over the notified actions, emitting each intermediate result.
+ *
+ * @param reducer The accumulator function called on each notified action.
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+export const createActionReducer = <TAction, T>(
+  reducer: Reducer<TAction, T>,
+  initialState: Factory<T>,
+  options?: { readonly equality?: Equality<T> },
+): StreamableLike<TAction, T> =>
+  createLiftedStreamable(obs =>
+    createObservable(observer => {
+      const acc = initialState();
+      pipe(
+        obs,
+        scan(reducer, returns(acc)),
+        concatWith<ObservableLike, T>(mergeT, pipe([acc], toObservable())),
+        distinctUntilChanged(options),
+        sinkInto(observer),
+      );
+    }),
+  );
+
+/**
+ * Returns a new `StateStoreLike` instance that stores state which can
+ * be updated by notifying the instance with a `StateUpdater` that computes a
+ * new state based upon the previous state.
+ *
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+export const createStateStore = <T>(
+  initialState: Factory<T>,
+  options?: { readonly equality?: Equality<T> },
+): StreamableStateLike<T> =>
+  createActionReducer(updateReducer, initialState, options);
