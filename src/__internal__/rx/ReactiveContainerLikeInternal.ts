@@ -15,6 +15,7 @@ export const createOnSink = <
 ): C =>
   createReactiveContainer(sink => {
     pipe(src, sinkInto(sink));
+
     const disposable = f() || none;
     pipe(
       sink,

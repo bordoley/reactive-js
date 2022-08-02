@@ -13,6 +13,7 @@ import {
 } from "../__internal__/util/Object";
 import {
   Concat,
+  ContainerOperator,
   DecodeWithCharset,
   DistinctUntilChanged,
   ForEach,
@@ -46,6 +47,7 @@ import { ToFlowable } from "../streaming";
 import {
   ContinuationLike,
   DisposableLike,
+  DisposableOrTeardown,
   EnumeratorLike_current,
   SinkLike_notify,
   SourceLike_move,
@@ -61,6 +63,7 @@ import {
   keep as keepObs,
   map as mapObs,
   merge as mergeObs,
+  onSubscribe as onSubscribeObs,
   pairwise as pairwiseObs,
   reduce as reduceObs,
   scan as scanObs,
@@ -102,6 +105,15 @@ export const merge: Concat<EnumerableObservableLike>["concat"] = mergeObs;
 export const mergeT: Concat<EnumerableObservableLike> = {
   concat: merge,
 };
+
+interface OnSubscribeRunnableObservable {
+  <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<
+    EnumerableObservableLike,
+    T,
+    T
+  >;
+}
+export const onSubscribe: OnSubscribeRunnableObservable = onSubscribeObs;
 
 export const pairwise: Pairwise<EnumerableObservableLike>["pairwise"] =
   pairwiseObs;

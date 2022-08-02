@@ -1,13 +1,13 @@
-import { newInstance, pipe } from "../../functions";
-import { createHostScheduler } from "../../scheduling";
-import { toObservable } from "../../containers/PromiseableLike";
-import { toPromise } from "../../rx/ObservableLike";
 import {
   describe,
   expectEquals,
   expectPromiseToThrow,
   testAsync,
 } from "../../__internal__/testing";
+import { toObservable } from "../../containers/PromiseableLike";
+import { newInstance, pipe } from "../../functions";
+import { toPromise } from "../../rx/ObservableLike";
+import { createHostScheduler } from "../../scheduling";
 import { dispose } from "../../util/DisposableLike";
 
 export const PromiseableLikeTests = describe(

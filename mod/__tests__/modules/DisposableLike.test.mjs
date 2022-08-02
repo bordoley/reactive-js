@@ -1,5 +1,5 @@
 /// <reference types="./DisposableLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectIsNone, expectEquals, expectArrayEquals } from '../../__internal__/testing.mjs';
 import { pipe, pipeLazy, none, raise } from '../../functions.mjs';
 import { subscribe } from '../../rx/ObservableLike.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling.mjs';
@@ -25,7 +25,7 @@ const DisposableLikeTests = createDescribe("DisposableLike", createTest("dispose
 }), createTest("catches and swallows Errors thrown by teardown function", () => {
     const teardown = pipeLazy(none, raise);
     const disposable = pipe(createDisposable(), onDisposed(teardown), dispose());
-    pipe(disposable, getException, expectNone);
+    pipe(disposable, getException, expectIsNone);
 }), createTest("propogates errors when disposed with an Exception", () => {
     const error = { cause: null };
     const childTeardown = mockFn();
