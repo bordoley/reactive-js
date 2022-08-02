@@ -65,7 +65,6 @@ const createRunnable = /*@__PURE__*/ (() => {
                 pipe(sink, dispose());
             }
             catch (cause) {
-                debugger;
                 pipe(sink, dispose({ cause }));
             }
         }
@@ -156,7 +155,7 @@ const emptyObservable = (options) => {
             pipe(sink, getScheduler, schedule(pipeLazy(sink, dispose()), { delay }));
         })
         : createEnumerableObservable(sink => {
-            pipeLazy(sink, dispose());
+            pipe(sink, dispose());
         });
 };
 const emptyRunnable = () => createRunnable(sink => {

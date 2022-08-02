@@ -34,6 +34,7 @@
 - [keep](rx_EnumerableObservableLike.md#keep)
 - [map](rx_EnumerableObservableLike.md#map)
 - [merge](rx_EnumerableObservableLike.md#merge)
+- [onSubscribe](rx_EnumerableObservableLike.md#onsubscribe)
 - [pairwise](rx_EnumerableObservableLike.md#pairwise)
 - [reduce](rx_EnumerableObservableLike.md#reduce)
 - [scan](rx_EnumerableObservableLike.md#scan)
@@ -307,6 +308,28 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
+### onSubscribe
+
+▸ **onSubscribe**<`T`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](util.md#disposableorteardown)\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

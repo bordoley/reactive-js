@@ -235,7 +235,6 @@ export const createRunnable = /*@__PURE__*/ (() => {
         this._run(sink);
         pipe(sink, dispose());
       } catch (cause) {
-        debugger;
         pipe(sink, dispose({ cause }));
       }
     }
@@ -391,7 +390,7 @@ export const emptyObservable: EmptyObservable = <T>(options?: {
         );
       })
     : createEnumerableObservable<T>(sink => {
-        pipeLazy(sink, dispose());
+        pipe(sink, dispose());
       });
 };
 
