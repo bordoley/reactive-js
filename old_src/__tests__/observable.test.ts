@@ -236,30 +236,6 @@ export const tests = describe(
     ),
   ),
 
-  describe(
-    "Subject",
-    test("with replay", () => {
-      const subject = newInstance(Subject, 2);
-      pipe([1, 2, 3, 4], fromArrayRunnable(), forEach(publishTo(subject)));
-      pipe(subject, dispose());
-
-      pipe(subject, toRunnable(), toArray(), expectArrayEquals([3, 4]));
-    }),
-    test("with multiple observers", () => {
-      const scheduler = createVirtualTimeScheduler();
-
-      const subject = newInstance(Subject);
-      pipe(subject, getObserverCount, expectEquals(0));
-      const sub1 = pipe(subject, subscribe(scheduler));
-      pipe(subject, getObserverCount, expectEquals(1));
-      const sub2 = pipe(subject, subscribe(scheduler));
-      pipe(subject, getObserverCount, expectEquals(2));
-      pipe(sub1, dispose());
-      pipe(subject, getObserverCount, expectEquals(1));
-      pipe(sub2, dispose());
-      pipe(subject, getObserverCount, expectEquals(0));
-    }),
-  ),
   test(
     "exhaustMap",
     pipeLazy(
@@ -270,29 +246,6 @@ export const tests = describe(
       toArray(),
       expectArrayEquals([1, 2, 3]),
     ),
-  ),
-  describe(
-    "fromPromise",
-    testAsync("when the promise resolves", async () => {
-      const scheduler = createHostScheduler();
-      const factory = () => Promise.resolve(1);
-      const result = await pipe(factory, fromPromise, toPromise(scheduler));
-
-      pipe(result, expectEquals(1));
-      scheduler.dispose();
-    }),
-
-    testAsync("when the promise reject", async () => {
-      const error = newInstance(Error);
-      const factory = () => Promise.reject(error);
-      const scheduler = createHostScheduler();
-
-      await pipe(
-        pipe(factory, fromPromise, toPromise(scheduler)),
-        expectPromiseToThrow,
-      );
-      scheduler.dispose();
-    }),
   ),
 
   test(
