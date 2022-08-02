@@ -37,48 +37,6 @@ import { sinkInto as sinkIntoSink } from "./reactiveContainer";
 import { SchedulerLike } from "./scheduler";
 import { StreamLike } from "./stream";
 
-/**
- * Returns a new `StreamableLike` instance that applies an accumulator function
- * over the notified actions, emitting each intermediate result.
- *
- * @param reducer The accumulator function called on each notified action.
- * @param initialState The initial accumulation value.
- * @param equals Optional equality function that is used to compare
- * if a state value is distinct from the previous one.
- */
-export const createActionReducer = <TAction, T>(
-  reducer: Reducer<TAction, T>,
-  initialState: Factory<T>,
-  options?: { readonly equality?: Equality<T> },
-): StreamableLike<TAction, T> =>
-  createLiftedStreamable(obs =>
-    createObservable(observer => {
-      const acc = initialState();
-      return pipe(
-        obs,
-        scan(reducer, returns(acc)),
-        concatWith(mergeT, fromValue(fromArrayTObs)(acc)),
-        distinctUntilChanged(options),
-        sinkIntoSink(observer),
-      );
-    }),
-  );
-
-/**
- * Returns a new `StateStoreLike` instance that stores state which can
- * be updated by notifying the instance with a `StateUpdater` that computes a
- * new state based upon the previous state.
- *
- * @param initialState The initial accumulation value.
- * @param equals Optional equality function that is used to compare
- * if a state value is distinct from the previous one.
- */
-export const createStateStore = <T>(
-  initialState: Factory<T>,
-  options?: { readonly equality?: Equality<T> },
-): StreamableStateLike<T> =>
-  createActionReducer(updateReducer, initialState, options);
-
 const streamOnSchedulerFactory = <TReq, T, TStream extends StreamLike<TReq, T>>(
   streamable: StreamableLike<TReq, T, TStream>,
   scheduler: SchedulerLike,

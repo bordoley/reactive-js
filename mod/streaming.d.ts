@@ -1,5 +1,5 @@
 import { ContainerLike, ContainerOperator } from "./containers.mjs";
-import { Updater } from "./functions.mjs";
+import { Updater, Reducer, Factory, Equality } from "./functions.mjs";
 import { MulticastObservableLike, ObservableLike } from "./rx.mjs";
 import { DispatcherLike, SchedulerLike } from "./scheduling.mjs";
 import { PauseableLike, SourceLike } from "./util.mjs";
@@ -63,4 +63,28 @@ interface CreateLiftedStreamable {
     <T, A, B, C, D, E, F, G, H, I, J, K, L>(op1: ContainerOperator<ObservableLike, T, A>, op2: ContainerOperator<ObservableLike, A, B>, op3: ContainerOperator<ObservableLike, B, C>, op4: ContainerOperator<ObservableLike, C, D>, op5: ContainerOperator<ObservableLike, D, E>, op6: ContainerOperator<ObservableLike, E, F>, op7: ContainerOperator<ObservableLike, F, G>, op8: ContainerOperator<ObservableLike, G, H>, op9: ContainerOperator<ObservableLike, H, I>, op10: ContainerOperator<ObservableLike, I, J>, op11: ContainerOperator<ObservableLike, J, K>, op12: ContainerOperator<ObservableLike, K, L>): StreamableLike<T, L>;
 }
 declare const createLiftedStreamable: CreateLiftedStreamable;
-export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, StreamableStateLike, createLiftedFlowable, createLiftedStreamable, createStream, createStreamble };
+/**
+ * Returns a new `StreamableLike` instance that applies an accumulator function
+ * over the notified actions, emitting each intermediate result.
+ *
+ * @param reducer The accumulator function called on each notified action.
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
+    readonly equality?: Equality<T> | undefined;
+} | undefined) => StreamableLike<TAction, T, StreamLike<TAction, T>>;
+/**
+ * Returns a new `StateStoreLike` instance that stores state which can
+ * be updated by notifying the instance with a `StateUpdater` that computes a
+ * new state based upon the previous state.
+ *
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+declare const createStateStore: <T>(initialState: Factory<T>, options?: {
+    readonly equality?: Equality<T> | undefined;
+} | undefined) => StreamableStateLike<T>;
+export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, StreamableStateLike, createActionReducer, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble };
