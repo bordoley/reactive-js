@@ -15,12 +15,12 @@ declare type Test = {
 declare type TestAsync = {
     readonly type: typeof TestAsyncType;
     readonly name: string;
-    readonly f: Function1<string, Factory<Promise<void>>>;
+    readonly f: Function1<string, Factory<PromiseLike<void>>>;
 };
 declare type TestGroup = Describe | Test | TestAsync;
 declare const createDescribe: (name: string, ...tests: TestGroup[]) => Describe;
 declare const createTest: (name: string, f: SideEffect) => Test;
-declare const testAsync: (name: string, f: Factory<Promise<void>>) => TestAsync;
+declare const testAsync: (name: string, f: Factory<PromiseLike<void>>) => TestAsync;
 declare const expectToThrow: (f: SideEffect) => void;
 declare const expectToThrowError: (error: unknown) => (f: SideEffect) => void;
 declare const expectEquals: <T>(b: T, valueEquality?: <T_1>(a: T_1, b: T_1) => boolean) => (a: T) => void;
@@ -35,6 +35,6 @@ declare type MockFunction = {
 };
 declare const mockFn: (retval?: any) => MockFunction;
 declare const expectToHaveBeenCalledTimes: (times: number) => (fn: MockFunction) => void;
-declare const expectPromiseToThrow: (promise: Promise<any>) => Promise<void>;
+declare const expectPromiseToThrow: (promise: PromiseLike<any>) => Promise<void>;
 declare const runTests: (testGroups: TestGroup[]) => void;
 export { Describe, DescribeType, Test, TestAsync, TestAsyncType, TestGroup, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, createTest as test, testAsync };

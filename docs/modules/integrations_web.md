@@ -16,9 +16,9 @@
 
 ### Functions
 
+- [addEventListener](integrations_web.md#addeventlistener)
 - [createEventSource](integrations_web.md#createeventsource)
 - [fetch](integrations_web.md#fetch)
-- [fromEvent](integrations_web.md#fromevent)
 
 ## Type Aliases
 
@@ -27,6 +27,29 @@
 Ƭ **FetchRequest**: `RequestInit` & { `uri`: `string`  }
 
 ## Functions
+
+### addEventListener
+
+▸ **addEventListener**<`T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`EventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `string` |
+| `selector` | [`Function1`](functions.md#function1)<`Event`, `T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`EventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
 
 ### createEventSource
 
@@ -64,27 +87,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](integrations_web.md#fetchrequest), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-___
-
-### fromEvent
-
-▸ **fromEvent**<`T`\>(`target`, `eventName`, `selector`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `target` | `EventTarget` |
-| `eventName` | `string` |
-| `selector` | [`Function1`](functions.md#function1)<`Event`, `T`\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>

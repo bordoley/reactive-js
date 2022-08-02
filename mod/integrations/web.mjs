@@ -59,8 +59,7 @@ const fetch = (onResponse) => fetchRequest => deferObservable(() => async (obser
         pipe(observer, dispose({ cause }));
     }
 });
-//FIXME naming?
-const fromEvent = (target, eventName, selector) => createObservable(observer => {
+const addEventListener = (eventName, selector) => target => createObservable(observer => {
     const dispatcher = pipe(observer, getDispatcher, onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
@@ -71,4 +70,4 @@ const fromEvent = (target, eventName, selector) => createObservable(observer => 
     target.addEventListener(eventName, listener, { passive: true });
 });
 
-export { createEventSource, fetch, fromEvent };
+export { addEventListener, createEventSource, fetch };

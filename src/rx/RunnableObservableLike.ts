@@ -29,11 +29,10 @@ import {
 } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
 import { toPausableScheduler } from "../scheduling/SchedulerLike";
-import { FlowMode, FlowableLike, createLiftedFlowable } from "../streaming";
+import { FlowMode, ToFlowable, createLiftedFlowable } from "../streaming";
 import { run } from "../util/ContinuationLike";
 import {
   add,
-  addTo,
   bindTo,
   getException,
   toObservable,
@@ -127,9 +126,8 @@ export const throwIfEmptyT: ThrowIfEmpty<RunnableObservableLike> = {
   throwIfEmpty,
 };
 
-export const toFlowable =
-  <T>(): Function1<RunnableObservableLike<T>, FlowableLike<T>> =>
-  observable =>
+export const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
+  () => observable =>
     createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
       createObservable(observer => {
         const pausableScheduler = pipe(
@@ -168,6 +166,7 @@ export const toFlowable =
         );
       }),
     );
+export const toFlowableT: ToFlowable<RunnableObservableLike> = { toFlowable };
 
 export const toReadonlyArray: ToReadonlyArray<
   RunnableObservableLike,
@@ -185,17 +184,16 @@ export const toReadonlyArray: ToReadonlyArray<
     const scheduler = schedulerFactory();
     const result: T[] = [];
 
-    pipe(
+    const subscription = pipe(
       observable,
       forEach(next => {
         result.push(next);
       }),
       subscribe(scheduler),
-      addTo(scheduler),
     );
 
     run(scheduler);
-    const exception = getException(scheduler);
+    const exception = getException(subscription);
 
     if (isSome(exception)) {
       throw exception.cause;

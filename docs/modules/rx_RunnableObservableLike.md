@@ -21,6 +21,7 @@
 - [takeLastT](rx_RunnableObservableLike.md#takelastt)
 - [takeWhileT](rx_RunnableObservableLike.md#takewhilet)
 - [throwIfEmptyT](rx_RunnableObservableLike.md#throwifemptyt)
+- [toFlowableT](rx_RunnableObservableLike.md#toflowablet)
 - [toReadonlyArrayT](rx_RunnableObservableLike.md#toreadonlyarrayt)
 
 ### Functions
@@ -133,6 +134,12 @@ ___
 ### throwIfEmptyT
 
 • `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](containers.md#throwifempty)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### toFlowableT
+
+• `Const` **toFlowableT**: [`ToFlowable`](streaming.md#toflowable)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ___
 
@@ -499,7 +506,7 @@ ___
 
 ### toFlowable
 
-▸ **toFlowable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+▸ **toFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -507,9 +514,15 @@ ___
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 
