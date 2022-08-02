@@ -60,27 +60,26 @@ export interface StreamableLike<
   ): TStream;
 }
 
-export interface StreamableStateLike<T> extends StreamableLike<Updater<T>, T> {}
+export interface StreamableStateLike<T = unknown>
+  extends StreamableLike<Updater<T>, T> {}
 
 export type FlowMode = "resume" | "pause";
 
-export interface FlowableStreamLike<T>
+export interface FlowableStreamLike<T = unknown>
   extends StreamLike<FlowMode, T>,
     PauseableLike {}
 
-export interface FlowableLike<
-  T,
-  TStream extends FlowableStreamLike<T> = FlowableStreamLike<T>,
-> extends StreamableLike<FlowMode, T, TStream>,
+export interface FlowableLike<T = unknown>
+  extends StreamableLike<FlowMode, T, FlowableStreamLike<T>>,
     ContainerLike {
-  readonly TContainerOf?: FlowableStreamLike<this["T"]>;
+  readonly TContainerOf?: FlowableLike<this["T"]>;
 }
 
 export interface AsyncEnumeratorLike<T = unknown>
   extends SourceLike,
     StreamLike<void, T> {}
 
-const createStream = /*@__PURE__*/ (() => {
+export const createStream = /*@__PURE__*/ (() => {
   const createStreamInternal = (<TReq, T>() => {
     type TProperties = {
       subject: SubjectLike<TReq>;

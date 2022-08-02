@@ -15,6 +15,7 @@ import {
   createThrowIfEmptyOperator,
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
+import { createOnSink } from "../__internal__/rx/ReactiveContainerLikeInternal";
 import { observerMixin } from "../__internal__/scheduling/ObserverLikeMixin";
 import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
@@ -103,7 +104,7 @@ import {
 } from "../scheduling";
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import { getScheduler } from "../scheduling/ObserverLike";
-import { DisposableLike, SinkLike_notify } from "../util";
+import { DisposableLike, DisposableOrTeardown, SinkLike_notify } from "../util";
 import {
   addTo,
   bindTo,
@@ -512,6 +513,114 @@ export const map: MapObservable = /*@__PURE__*/ (<TA, TB>() => {
 })();
 export const mapT: Map<ObservableLike> = { map };
 
+const mergeImpl = /*@__PURE__*/ (() => {
+  const createMergeObserver = <T>(
+    delegate: ObserverLike<T>,
+    count: number,
+    ctx: {
+      completedCount: number;
+    },
+  ) =>
+    pipe(
+      createDelegatingObserver(delegate),
+      addTo(delegate),
+      onComplete(() => {
+        ctx.completedCount++;
+        if (ctx.completedCount >= count) {
+          pipe(delegate, dispose());
+        }
+      }),
+    );
+
+  return <T>(observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
+    const onSink = (observer: ObserverLike<T>) => {
+      const count = getLength(observables);
+      const ctx = { completedCount: 0 };
+
+      for (const observable of observables) {
+        pipe(createMergeObserver(observer, count, ctx), sourceFrom(observable));
+      }
+    };
+
+    const type = pipe(
+      observables,
+      mapArray(obs => (obs as any)[ObservableLike_observableType] ?? 0),
+      x => min(...x),
+    ) as ObservableType;
+
+    switch (type) {
+      case EnumerableObservable:
+        return createEnumerableObservable(onSink);
+      case RunnableObservable:
+        return createRunnableObservable(onSink);
+      default:
+        return createObservable(onSink);
+    }
+  };
+})();
+
+interface ForkMerge {
+  <TIn, TOut>(
+    fst: ContainerOperator<ObservableLike, TIn, TOut>,
+    snd: ContainerOperator<ObservableLike, TIn, TOut>,
+    ...tail: readonly ContainerOperator<ObservableLike, TIn, TOut>[]
+  ): ContainerOperator<ObservableLike, TIn, TOut>;
+  <TIn, TOut>(
+    fst: ContainerOperator<RunnableObservableLike, TIn, TOut>,
+    snd: ContainerOperator<RunnableObservableLike, TIn, TOut>,
+    ...tail: readonly ContainerOperator<RunnableObservableLike, TIn, TOut>[]
+  ): ContainerOperator<RunnableObservableLike, TIn, TOut>;
+  <TIn, TOut>(
+    fst: ContainerOperator<EnumerableObservableLike, TIn, TOut>,
+    snd: ContainerOperator<EnumerableObservableLike, TIn, TOut>,
+    ...tail: readonly ContainerOperator<EnumerableObservableLike, TIn, TOut>[]
+  ): ContainerOperator<EnumerableObservableLike, TIn, TOut>;
+}
+
+export const forkMerge: ForkMerge =
+  <TIn, TOut>(
+    ...ops: readonly (
+      | ContainerOperator<ObservableLike, TIn, TOut>
+      | ContainerOperator<RunnableObservableLike, TIn, TOut>
+      | ContainerOperator<EnumerableObservableLike, TIn, TOut>
+    )[]
+  ) =>
+  (obs: ObservableLike<TIn>) => {
+    const observables = pipe(
+      ops,
+      mapArray(op => pipe(obs, op)),
+    );
+    return mergeImpl(observables);
+  };
+
+interface MergeObservable {
+  <T>(
+    fst: ObservableLike<T>,
+    snd: ObservableLike<T>,
+    ...tail: readonly ObservableLike<T>[]
+  ): ObservableLike<T>;
+  <T>(
+    fst: RunnableObservableLike<T>,
+    snd: RunnableObservableLike<T>,
+    ...tail: readonly RunnableObservableLike<T>[]
+  ): ObservableLike<T>;
+  <T>(
+    fst: EnumerableObservableLike<T>,
+    snd: EnumerableObservableLike<T>,
+    ...tail: readonly EnumerableObservableLike<T>[]
+  ): ObservableLike<T>;
+}
+export const merge: MergeObservable = <T>(
+  ...observables: (
+    | ObservableLike<T>
+    | RunnableObservableLike<T>
+    | EnumerableObservableLike<T>
+  )[]
+) => mergeImpl(observables);
+export const mergeT: Concat<ObservableLike<unknown>> = {
+  concat: merge,
+};
+
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
@@ -535,6 +644,37 @@ export const multicast =
     );
 
     return subject;
+  };
+
+interface OnSubscribe {
+  <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<
+    ObservableLike,
+    T,
+    T
+  >;
+  <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<
+    RunnableObservableLike,
+    T,
+    T
+  >;
+  <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<
+    EnumerableObservableLike,
+    T,
+    T
+  >;
+}
+export const onSubscribe: OnSubscribe =
+  <T>(f: Factory<DisposableOrTeardown | void>) =>
+  (obs: ObservableLike<T>) => {
+    const type = (obs as any)[ObservableLike_observableType] ?? 0;
+    switch (type) {
+      case EnumerableObservable:
+        return createOnSink(createEnumerableObservable, obs, f);
+      case RunnableObservable:
+        return createOnSink(createRunnableObservable, obs, f);
+      default:
+        return createOnSink(createObservable, obs, f);
+    }
   };
 
 interface PairwiseObservable {

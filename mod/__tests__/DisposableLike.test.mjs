@@ -54,7 +54,7 @@ const DisposableLikeTests = createDescribe("DisposableLike", createTest("dispose
     pipe(scheduler, schedule(() => {
         pipe(disposable, dispose());
     }, { delay: 2 }));
-    pipe(scheduler, run);
+    run(scheduler);
     pipe(disposedTime, expectEquals(2));
 }));
 

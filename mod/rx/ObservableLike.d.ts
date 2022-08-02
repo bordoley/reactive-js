@@ -1,8 +1,8 @@
 import { Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise } from "../containers.mjs";
-import { Function1, Option, Equality, SideEffect1, Predicate, Reducer, Factory } from "../functions.mjs";
+import { Function1, Option, Equality, SideEffect1, Predicate, Factory, Reducer } from "../functions.mjs";
 import { ObservableLike, MulticastObservableLike, RunnableObservableLike, EnumerableObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
-import { DisposableLike } from "../util.mjs";
+import { DisposableLike, DisposableOrTeardown } from "../util.mjs";
 declare const getObservableType: (obs: ObservableLike) => 0 | 1 | 2;
 interface ConcatObservable {
     <T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
@@ -55,6 +55,19 @@ interface MapObservable {
 }
 declare const map: MapObservable;
 declare const mapT: Map<ObservableLike>;
+interface ForkMerge {
+    <TIn, TOut>(fst: ContainerOperator<ObservableLike, TIn, TOut>, snd: ContainerOperator<ObservableLike, TIn, TOut>, ...tail: readonly ContainerOperator<ObservableLike, TIn, TOut>[]): ContainerOperator<ObservableLike, TIn, TOut>;
+    <TIn, TOut>(fst: ContainerOperator<RunnableObservableLike, TIn, TOut>, snd: ContainerOperator<RunnableObservableLike, TIn, TOut>, ...tail: readonly ContainerOperator<RunnableObservableLike, TIn, TOut>[]): ContainerOperator<RunnableObservableLike, TIn, TOut>;
+    <TIn, TOut>(fst: ContainerOperator<EnumerableObservableLike, TIn, TOut>, snd: ContainerOperator<EnumerableObservableLike, TIn, TOut>, ...tail: readonly ContainerOperator<EnumerableObservableLike, TIn, TOut>[]): ContainerOperator<EnumerableObservableLike, TIn, TOut>;
+}
+declare const forkMerge: ForkMerge;
+interface MergeObservable {
+    <T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
+    <T>(fst: RunnableObservableLike<T>, snd: RunnableObservableLike<T>, ...tail: readonly RunnableObservableLike<T>[]): ObservableLike<T>;
+    <T>(fst: EnumerableObservableLike<T>, snd: EnumerableObservableLike<T>, ...tail: readonly EnumerableObservableLike<T>[]): ObservableLike<T>;
+}
+declare const merge: MergeObservable;
+declare const mergeT: Concat<ObservableLike<unknown>>;
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
@@ -65,6 +78,12 @@ declare const mapT: Map<ObservableLike>;
 declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
+interface OnSubscribe {
+    <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<ObservableLike, T, T>;
+    <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<RunnableObservableLike, T, T>;
+    <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<EnumerableObservableLike, T, T>;
+}
+declare const onSubscribe: OnSubscribe;
 interface PairwiseObservable {
     <T>(): ContainerOperator<ObservableLike, T, readonly [
         T,
@@ -180,4 +199,4 @@ declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike>;
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
 declare const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"];
-export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, getObservableType, keep, keepT, map, mapT, multicast, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
+export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };

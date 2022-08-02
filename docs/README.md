@@ -29,6 +29,8 @@ Reactive-JS
 - [scheduling/PrioritySchedulerLike](modules/scheduling_PrioritySchedulerLike.md)
 - [scheduling/SchedulerLike](modules/scheduling_SchedulerLike.md)
 - [streaming](modules/streaming.md)
+- [streaming/FlowableLike](modules/streaming_FlowableLike.md)
+- [streaming/StreamLike](modules/streaming_StreamLike.md)
 - [streaming/StreamableLike](modules/streaming_StreamableLike.md)
 - [util](modules/util.md)
 - [util/ContinuationLike](modules/util_ContinuationLike.md)

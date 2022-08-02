@@ -141,7 +141,6 @@ export {
   mergeAll,
   mergeAllT,
 } from "./observable/mergeAll";
-export { onNotify } from "./observable/onNotify";
 export { repeat, repeatT, retry } from "./observable/repeat";
 export { switchAll, switchAllT } from "./observable/switchAll";
 export { throttle } from "./observable/throttle";
@@ -150,7 +149,6 @@ export { withLatestFrom } from "./observable/withLatestFrom";
 export { zip, zipT } from "./observable/zip";
 export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 export { toEnumerable } from "./observable/toEnumerable";
-export { toPromise } from "./observable/toPromise";
 export { isEnumerable, isRunnable } from "./observable/observable";
 
 export const catchError: CatchError<ObservableLike<unknown>>["catchError"] =
@@ -183,44 +181,6 @@ export const everySatisfy: EverySatisfy<
 
 export const everySatisfyT: EverySatisfy<ObservableLike<unknown>> = {
   everySatisfy,
-};
-
-/**
- * Generates an `ObservableLike` sequence from a generator function
- * that is applied to an accumulator value with a specified `delay`
- * between emitted items.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- * @param delay The requested delay between emitted items by the observable.
- */
-export const generate = <T>(
-  generator: Updater<T>,
-  initialValue: Factory<T>,
-  options?: { readonly delay?: number; readonly delayStart?: boolean },
-): ObservableLike<T> => {
-  const { delayStart = true } = options ?? {};
-
-  const factory = () => {
-    let acc = initialValue();
-
-    return (observer: ObserverLike<T>) => {
-      while (!isDisposed(observer)) {
-        acc = generator(acc);
-        observer.notify(acc);
-        __yield(options);
-      }
-    };
-  };
-
-  return pipe(
-    defer(factory, delayStart ? options : none),
-    tagObservableType(hasDelay(options) ? 1 : 2),
-  );
-};
-
-export const generateT: Generate<ObservableLike<unknown>> = {
-  generate,
 };
 
 export const mapAsync = <TA, TB>(

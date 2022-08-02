@@ -3,6 +3,7 @@ import { runTests } from '../__internal__/testing.mjs';
 import { ContainerLikeTests } from './ContainerLike.test.mjs';
 import { DisposableLikeTests } from './DisposableLike.test.mjs';
 import { EnumerableLikeTests } from './EnumerableLike.test.mjs';
+import { FlowableLikeTests } from './FlowableLike.test.mjs';
 import { RunnableLikeTests } from './RunnableLike.test.mjs';
 import { RunnableObservableLikeTests } from './RunnableObservableLike.test.mjs';
 import { SequenceLikeTests } from './SequenceLike.test.mjs';
@@ -16,8 +17,9 @@ runTests([
     ContainerLikeTests,
     DisposableLikeTests,
     EnumerableLikeTests,
-    RunnableObservableLikeTests,
+    FlowableLikeTests,
     RunnableLikeTests,
+    RunnableObservableLikeTests,
     SequenceLikeTests,
     SubjectLikeTests,
     queueTests,

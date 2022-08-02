@@ -64,9 +64,10 @@ export const concatWith =
   <C extends ContainerLike, T>(
     { concat }: Concat<C>,
     snd: ContainerOf<C, T>,
+    ...tail: readonly ContainerOf<C, T>[]
   ): ContainerOperator<C, T, T> =>
   first =>
-    concat(first, snd);
+    concat(first, snd, ...tail);
 
 export const contains = <C extends ContainerLike, T>(
   { someSatisfy }: SomeSatisfy<C>,
@@ -185,10 +186,73 @@ export const throws =
       throw cause;
     }, compute(m, options));
 
-export const zipWith =
+interface ZipWith {
   <C extends ContainerLike, TA, TB>(
     { zip }: Zip<C>,
-    snd: ContainerOf<C, TB>,
-  ): ContainerOperator<C, TA, readonly [TA, TB]> =>
+    b: ContainerOf<C, TB>,
+  ): ContainerOperator<C, TA, readonly [TA, TB]>;
+  <C extends ContainerLike, TA, TB, TC>(
+    { zip }: Zip<C>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC]>;
+  <C extends ContainerLike, TA, TB, TC, TD>(
+    { zip }: Zip<C>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD]>;
+  <C extends ContainerLike, TA, TB, TC, TD, TE>(
+    { zip }: Zip<C>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE]>;
+  <C extends ContainerLike, TA, TB, TC, TD, TE, TF>(
+    { zip }: Zip<C>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF]>;
+  <C extends ContainerLike, TA, TB, TC, TD, TE, TF, TG>(
+    { zip }: Zip<C>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  <C extends ContainerLike, TA, TB, TC, TD, TE, TF, TG, TH>(
+    { zip }: Zip<C>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+    h: ContainerOf<C, TH>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  <C extends ContainerLike, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    { zip }: Zip<C>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+    h: ContainerOf<C, TH>,
+    i: ContainerOf<C, TI>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+export const zipWith: ZipWith =
+  <C extends ContainerLike>(
+    { zip }: Zip<C>,
+    snd: ContainerOf<C, any>,
+    ...tail: readonly ContainerOf<C, any>[]
+  ): ContainerOperator<C, any, any> =>
   fst =>
-    zip(fst, snd);
+    (zip as any)(fst, snd, ...tail);

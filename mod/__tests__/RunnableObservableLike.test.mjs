@@ -1,10 +1,11 @@
 /// <reference types="./RunnableObservableLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals, mockFn, expectToHaveBeenCalledTimes, expectEquals, expectTrue } from '../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals, expectToThrow, mockFn, expectToHaveBeenCalledTimes, expectEquals, expectTrue } from '../__internal__/testing.mjs';
+import { throws } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/ReadonlyArrayLike.mjs';
-import { pipeLazy, pipe, increment, returns } from '../functions.mjs';
+import { pipeLazy, pipe, raise, increment, returns } from '../functions.mjs';
 import { deferObservableT, generateObservable } from '../rx.mjs';
 import { takeUntil, subscribe } from '../rx/ObservableLike.mjs';
-import { concatT, toReadonlyArrayT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArray, toFlowable, forEach } from '../rx/RunnableObservableLike.mjs';
+import { concatT, toReadonlyArrayT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, merge, toReadonlyArray, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, forEach } from '../rx/RunnableObservableLike.mjs';
 import { createVirtualTimeScheduler } from '../scheduling.mjs';
 import { dispatch, dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { schedule } from '../scheduling/SchedulerLike.mjs';
@@ -41,7 +42,7 @@ const RunnableObservableLikeTests = createDescribe("RunnableObservableLike", con
     fromArray: toObservable,
     ...mapT,
     ...toReadonlyArrayT,
-}), pairwiseTests({
+}), createDescribe("merge", createTest("two arrays", pipeLazy(merge(pipe([0, 2, 3, 5, 6], toObservable({ delay: 1, delayStart: true })), pipe([1, 4, 7], toObservable({ delay: 2, delayStart: true }))), toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), createTest("when one source throws", pipeLazy(pipeLazy(merge(pipe([1, 4, 7], toObservable({ delay: 2 })), throws({ fromArray: toObservable, ...mapT }, { delay: 5 })(raise)), toReadonlyArray()), expectToThrow))), pairwiseTests({
     fromArray: toObservable,
     ...pairwiseT,
     ...toReadonlyArrayT,
@@ -65,7 +66,7 @@ const RunnableObservableLikeTests = createDescribe("RunnableObservableLike", con
     fromArray: toObservable,
     ...takeLastT,
     ...toReadonlyArrayT,
-}), takeWhileTests({
+}), createTest("takeUntil", pipeLazy([1, 2, 3, 4, 5], toObservable({ delay: 1 }), takeUntil(pipe([1], toObservable({ delay: 3, delayStart: true }))), toReadonlyArray(), expectArrayEquals([1, 2, 3]))), takeWhileTests({
     fromArray: toObservable,
     ...takeWhileT,
     ...toReadonlyArrayT,
@@ -73,7 +74,7 @@ const RunnableObservableLikeTests = createDescribe("RunnableObservableLike", con
     fromArray: toObservable,
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
-}), createTest("takeUntil", pipeLazy([1, 2, 3, 4, 5], toObservable({ delay: 1 }), takeUntil(pipe([1], toObservable({ delay: 3, delayStart: true }))), toReadonlyArray(), expectArrayEquals([1, 2, 3]))), createDescribe("toFlowable", createTest("flow a generating source", () => {
+}), createDescribe("toFlowable", createTest("flow a generating source", () => {
     const scheduler = createVirtualTimeScheduler();
     const generateStream = pipe(generateObservable(increment, returns(-1), {
         delay: 1,
@@ -91,7 +92,7 @@ const RunnableObservableLikeTests = createDescribe("RunnableObservableLike", con
     const subscription = pipe(generateStream, forEach(x => {
         f(getCurrentTime(scheduler), x);
     }), subscribe(scheduler));
-    pipe(scheduler, run);
+    run(scheduler);
     pipe(f, expectToHaveBeenCalledTimes(3));
     pipe(f.calls[0][1], expectEquals(0));
     pipe(f.calls[1][1], expectEquals(1));

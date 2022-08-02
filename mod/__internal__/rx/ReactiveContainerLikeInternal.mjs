@@ -1,5 +1,17 @@
 /// <reference types="./ReactiveContainerLikeInternal.d.ts" />
-"use strict";
+import { pipe, none, isSome, identity } from '../../functions.mjs';
+import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
+import { onDisposed, add } from '../util/DisposableLikeInternal.mjs';
+
+const createOnSink = (createReactiveContainer, src, f) => createReactiveContainer(sink => {
+    pipe(src, sinkInto(sink));
+    const disposable = f() || none;
+    pipe(sink, disposable instanceof Function
+        ? onDisposed(disposable)
+        : isSome(disposable)
+            ? add(disposable)
+            : identity);
+});
 /*
 
 type CatchErrorSink<C extends ReactiveContainerLike> = new <T>(
@@ -165,3 +177,5 @@ export const decorateWithSomeSatisfyNotify =
     decorateWithSatisfyNotify(SatisfySink, false);
 
 */
+
+export { createOnSink };

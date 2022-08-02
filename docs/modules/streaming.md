@@ -21,6 +21,7 @@
 
 - [createLiftedFlowable](streaming.md#createliftedflowable)
 - [createLiftedStreamable](streaming.md#createliftedstreamable)
+- [createStream](streaming.md#createstream)
 - [createStreamble](streaming.md#createstreamble)
 
 ## Type Aliases
@@ -33,7 +34,7 @@
 
 ### createLiftedFlowable
 
-▸ **createLiftedFlowable**<`T`, `A`\>(`op1`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`A`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`A`\>\>
+▸ **createLiftedFlowable**<`T`, `A`\>(`op1`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`A`\>
 
 #### Type parameters
 
@@ -50,9 +51,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`A`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`A`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`A`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`\>(`op1`, `op2`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`B`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`B`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`\>(`op1`, `op2`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`B`\>
 
 #### Type parameters
 
@@ -71,9 +72,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`B`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`B`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`B`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`C`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`C`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`C`\>
 
 #### Type parameters
 
@@ -94,9 +95,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`C`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`C`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`C`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`D`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`D`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`D`\>
 
 #### Type parameters
 
@@ -119,9 +120,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`D`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`D`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`D`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`E`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`E`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`E`\>
 
 #### Type parameters
 
@@ -146,9 +147,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`E`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`E`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`E`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`F`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`F`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`F`\>
 
 #### Type parameters
 
@@ -175,9 +176,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`F`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`F`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`F`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`G`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`G`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`G`\>
 
 #### Type parameters
 
@@ -206,9 +207,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`G`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`G`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`G`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`H`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`H`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`H`\>
 
 #### Type parameters
 
@@ -239,9 +240,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`H`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`H`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`H`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`I`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`I`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`I`\>
 
 #### Type parameters
 
@@ -274,9 +275,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`I`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`I`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`I`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`J`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`J`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`J`\>
 
 #### Type parameters
 
@@ -311,9 +312,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`J`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`J`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`J`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`K`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`K`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`K`\>
 
 #### Type parameters
 
@@ -350,9 +351,9 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`K`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`K`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`K`\>
 
-▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`L`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`L`\>\>
+▸ **createLiftedFlowable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`L`\>
 
 #### Type parameters
 
@@ -391,7 +392,7 @@
 
 #### Returns
 
-[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`L`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`L`\>\>
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`L`\>
 
 ___
 
@@ -756,6 +757,32 @@ ___
 #### Returns
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `L`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `L`\>\>
+
+___
+
+### createStream
+
+▸ **createStream**<`TReq`, `T`\>(`op`, `scheduler`, `options?`): [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TReq` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TReq`, `T`\> |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>
 
 ___
 

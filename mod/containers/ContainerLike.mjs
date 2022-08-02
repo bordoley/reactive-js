@@ -5,7 +5,7 @@ const compute = (m, options) => compose(x => [x], m.fromArray({
     ...options,
 }), m.map(callWith()));
 const concatMap = ({ map, concatAll }, mapper, options) => compose(map(mapper), concatAll(options));
-const concatWith = ({ concat }, snd) => first => concat(first, snd);
+const concatWith = ({ concat }, snd, ...tail) => first => concat(first, snd, ...tail);
 const contains = ({ someSatisfy }, value, options = {}) => someSatisfy(isEqualTo(value, options));
 const encodeUtf8 = (m) => obs => m.defer(() => {
     const textEncoder = newInstance(TextEncoder);
@@ -27,6 +27,6 @@ const throws = (m, options) => (errorFactory) => pipe(() => {
     const cause = errorFactory();
     throw cause;
 }, compute(m, options));
-const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
+const zipWith = ({ zip }, snd, ...tail) => fst => zip(fst, snd, ...tail);
 
 export { compute, concatMap, concatWith, contains, encodeUtf8, endWith, fromOption, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
