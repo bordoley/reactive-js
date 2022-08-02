@@ -74,4 +74,4 @@ const createLiftedStreamable = (...ops) => {
     return createStreamble((scheduler, options) => createStream(op, scheduler, options));
 };
 
-export { StreamableLike_stream, createLiftedFlowable, createLiftedStreamable, createStreamble };
+export { StreamableLike_stream, createLiftedFlowable, createLiftedStreamable, createStream, createStreamble };

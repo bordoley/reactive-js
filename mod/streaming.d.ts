@@ -17,16 +17,19 @@ interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLi
         readonly replay?: number;
     }): TStream;
 }
-interface StreamableStateLike<T> extends StreamableLike<Updater<T>, T> {
+interface StreamableStateLike<T = unknown> extends StreamableLike<Updater<T>, T> {
 }
 declare type FlowMode = "resume" | "pause";
-interface FlowableStreamLike<T> extends StreamLike<FlowMode, T>, PauseableLike {
+interface FlowableStreamLike<T = unknown> extends StreamLike<FlowMode, T>, PauseableLike {
 }
-interface FlowableLike<T, TStream extends FlowableStreamLike<T> = FlowableStreamLike<T>> extends StreamableLike<FlowMode, T, TStream>, ContainerLike {
-    readonly TContainerOf?: FlowableStreamLike<this["T"]>;
+interface FlowableLike<T = unknown> extends StreamableLike<FlowMode, T, FlowableStreamLike<T>>, ContainerLike {
+    readonly TContainerOf?: FlowableLike<this["T"]>;
 }
 interface AsyncEnumeratorLike<T = unknown> extends SourceLike, StreamLike<void, T> {
 }
+declare const createStream: <TReq, T>(op: ContainerOperator<ObservableLike<unknown>, TReq, T>, scheduler: SchedulerLike, options?: {
+    readonly replay?: number;
+}) => StreamLike<TReq, T>;
 declare const createStreamble: <TReq, TData, TStream extends StreamLike<TReq, TData> = StreamLike<TReq, TData>>(stream: (scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => TStream) => StreamableLike<TReq, TData, TStream>;
@@ -60,4 +63,4 @@ interface CreateLiftedStreamable {
     <T, A, B, C, D, E, F, G, H, I, J, K, L>(op1: ContainerOperator<ObservableLike, T, A>, op2: ContainerOperator<ObservableLike, A, B>, op3: ContainerOperator<ObservableLike, B, C>, op4: ContainerOperator<ObservableLike, C, D>, op5: ContainerOperator<ObservableLike, D, E>, op6: ContainerOperator<ObservableLike, E, F>, op7: ContainerOperator<ObservableLike, F, G>, op8: ContainerOperator<ObservableLike, G, H>, op9: ContainerOperator<ObservableLike, H, I>, op10: ContainerOperator<ObservableLike, I, J>, op11: ContainerOperator<ObservableLike, J, K>, op12: ContainerOperator<ObservableLike, K, L>): StreamableLike<T, L>;
 }
 declare const createLiftedStreamable: CreateLiftedStreamable;
-export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, StreamableStateLike, createLiftedFlowable, createLiftedStreamable, createStreamble };
+export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, StreamableStateLike, createLiftedFlowable, createLiftedStreamable, createStream, createStreamble };

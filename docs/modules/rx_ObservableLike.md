@@ -12,6 +12,7 @@
 - [forEachT](rx_ObservableLike.md#foreacht)
 - [keepT](rx_ObservableLike.md#keept)
 - [mapT](rx_ObservableLike.md#mapt)
+- [mergeT](rx_ObservableLike.md#merget)
 - [pairwiseT](rx_ObservableLike.md#pairwiset)
 - [reduceT](rx_ObservableLike.md#reducet)
 - [scanT](rx_ObservableLike.md#scant)
@@ -27,10 +28,13 @@
 - [decodeWithCharset](rx_ObservableLike.md#decodewithcharset)
 - [distinctUntilChanged](rx_ObservableLike.md#distinctuntilchanged)
 - [forEach](rx_ObservableLike.md#foreach)
+- [forkMerge](rx_ObservableLike.md#forkmerge)
 - [getObservableType](rx_ObservableLike.md#getobservabletype)
 - [keep](rx_ObservableLike.md#keep)
 - [map](rx_ObservableLike.md#map)
+- [merge](rx_ObservableLike.md#merge)
 - [multicast](rx_ObservableLike.md#multicast)
+- [onSubscribe](rx_ObservableLike.md#onsubscribe)
 - [pairwise](rx_ObservableLike.md#pairwise)
 - [reduce](rx_ObservableLike.md#reduce)
 - [scan](rx_ObservableLike.md#scan)
@@ -80,6 +84,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](containers.md#map)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### mergeT
+
+• `Const` **mergeT**: [`Concat`](containers.md#concat)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -357,6 +367,73 @@ ___
 
 ___
 
+### forkMerge
+
+▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, ...`tail`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `snd` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `...tail` | readonly [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+
+▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, ...`tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `snd` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `...tail` | readonly [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+
+▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, ...`tail`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `snd` | [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `...tail` | readonly [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+
+___
+
 ### getObservableType
 
 ▸ **getObservableType**(`obs`): ``0`` \| ``2`` \| ``1``
@@ -492,6 +569,70 @@ ___
 
 ___
 
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `snd` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **merge**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\> |
+| `snd` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **merge**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
+| `snd` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
 ### multicast
 
 ▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
@@ -515,6 +656,64 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### onSubscribe
+
+▸ **onSubscribe**<`T`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](util.md#disposableorteardown)\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **onSubscribe**<`T`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](util.md#disposableorteardown)\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **onSubscribe**<`T`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](util.md#disposableorteardown)\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

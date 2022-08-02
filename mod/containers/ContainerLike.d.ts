@@ -10,7 +10,7 @@ declare const concatMap: <C extends ContainerLike, TA, TB, O = Record<string, ne
 } & {
     concatAll: <T>(options?: Partial<O> | undefined) => ContainerOperator<C, ContainerOf<C, T>, T>;
 }, mapper: Function1<TA, ContainerOf<C, TB>>, options?: Partial<O> | undefined) => ContainerOperator<C, TA, TB>;
-declare const concatWith: <C extends ContainerLike, T>({ concat }: Concat<C>, snd: ContainerOf<C, T>) => ContainerOperator<C, T, T>;
+declare const concatWith: <C extends ContainerLike, T>({ concat }: Concat<C>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]) => ContainerOperator<C, T, T>;
 declare const contains: <C extends ContainerLike, T>({ someSatisfy }: SomeSatisfy<C>, value: T, options?: {
     readonly equality?: Equality<T> | undefined;
 }) => ContainerOperator<C, T, boolean>;
@@ -38,8 +38,67 @@ declare const throws: <C extends ContainerLike, T, O extends FromArrayOptions = 
 } & {
     fromArray<T_1>(options?: Partial<O> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 }, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Factory<unknown>, ContainerOf<C, T>>;
-declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: ContainerOf<C, TB>) => ContainerOperator<C, TA, readonly [
-    TA,
-    TB
-]>;
+interface ZipWith {
+    <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, b: ContainerOf<C, TB>): ContainerOperator<C, TA, readonly [
+        TA,
+        TB
+    ]>;
+    <C extends ContainerLike, TA, TB, TC>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>): ContainerOperator<C, TA, readonly [
+        TA,
+        TB,
+        TC
+    ]>;
+    <C extends ContainerLike, TA, TB, TC, TD>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>): ContainerOperator<C, TA, readonly [
+        TA,
+        TB,
+        TC,
+        TD
+    ]>;
+    <C extends ContainerLike, TA, TB, TC, TD, TE>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>): ContainerOperator<C, TA, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE
+    ]>;
+    <C extends ContainerLike, TA, TB, TC, TD, TE, TF>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>): ContainerOperator<C, TA, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF
+    ]>;
+    <C extends ContainerLike, TA, TB, TC, TD, TE, TF, TG>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>): ContainerOperator<C, TA, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG
+    ]>;
+    <C extends ContainerLike, TA, TB, TC, TD, TE, TF, TG, TH>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH
+    ]>;
+    <C extends ContainerLike, TA, TB, TC, TD, TE, TF, TG, TH, TI>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH,
+        TI
+    ]>;
+}
+declare const zipWith: ZipWith;
 export { compute, concatMap, concatWith, contains, encodeUtf8, endWith, fromOption, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

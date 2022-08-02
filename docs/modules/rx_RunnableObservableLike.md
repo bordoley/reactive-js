@@ -12,6 +12,7 @@
 - [forEachT](rx_RunnableObservableLike.md#foreacht)
 - [keepT](rx_RunnableObservableLike.md#keept)
 - [mapT](rx_RunnableObservableLike.md#mapt)
+- [mergeT](rx_RunnableObservableLike.md#merget)
 - [pairwiseT](rx_RunnableObservableLike.md#pairwiset)
 - [reduceT](rx_RunnableObservableLike.md#reducet)
 - [scanT](rx_RunnableObservableLike.md#scant)
@@ -30,6 +31,7 @@
 - [forEach](rx_RunnableObservableLike.md#foreach)
 - [keep](rx_RunnableObservableLike.md#keep)
 - [map](rx_RunnableObservableLike.md#map)
+- [merge](rx_RunnableObservableLike.md#merge)
 - [pairwise](rx_RunnableObservableLike.md#pairwise)
 - [reduce](rx_RunnableObservableLike.md#reduce)
 - [scan](rx_RunnableObservableLike.md#scan)
@@ -77,6 +79,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](containers.md#map)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### mergeT
+
+• `Const` **mergeT**: [`Concat`](containers.md#concat)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -261,6 +269,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `snd` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -467,7 +499,7 @@ ___
 
 ### toFlowable
 
-▸ **toFlowable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\>\>\>
+▸ **toFlowable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -477,7 +509,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\>\>\>
+[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 

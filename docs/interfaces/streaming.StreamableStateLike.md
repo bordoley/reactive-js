@@ -6,9 +6,9 @@
 
 ## Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 ## Hierarchy
 

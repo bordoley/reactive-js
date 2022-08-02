@@ -1,12 +1,12 @@
-/*import { Function1, pipe } from "../functions";
-import { StreamableLike, StreamLike } from "../streaming";
+import { Function1, pipe } from "../functions";
+import { StreamLike, StreamableLike } from "../streaming";
+import { sinkInto } from "./StreamableLike";
 
 export const sourceFrom =
-<TReq, T, TSinkStream extends StreamLike<T, TReq>>(
-  streamable: StreamableLike<TReq, T>,
-): Function1<TSinkStream, TSinkStream> =>
-dest => {
-  pipe(streamable, sinkInto(dest));
-  return dest;
-};
-*/
+  <TReq, T, TSinkStream extends StreamLike<T, TReq>>(
+    streamable: StreamableLike<TReq, T>,
+  ): Function1<TSinkStream, TSinkStream> =>
+  dest => {
+    pipe(streamable, sinkInto(dest));
+    return dest;
+  };

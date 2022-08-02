@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [streaming](../modules/streaming.md) / FlowableLike
 
-# Interface: FlowableLike<T, TStream\>
+# Interface: FlowableLike<T\>
 
 [streaming](../modules/streaming.md).FlowableLike
 
@@ -8,12 +8,11 @@
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `T` |
-| `TStream` | extends [`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`T`\> = [`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`T`\> |
+| `T` | `unknown` |
 
 ## Hierarchy
 
-- [`StreamableLike`](streaming.StreamableLike.md)<[`FlowMode`](../modules/streaming.md#flowmode), `T`, `TStream`\>
+- [`StreamableLike`](streaming.StreamableLike.md)<[`FlowMode`](../modules/streaming.md#flowmode), `T`, [`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`T`\>\>
 
 - [`ContainerLike`](containers.ContainerLike.md)
 
@@ -44,7 +43,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`unknown`\>
+• `Optional` `Readonly` **TContainerOf**: [`FlowableLike`](streaming.FlowableLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -54,7 +53,7 @@ ___
 
 ### [StreamableLike\_stream]
 
-▸ **[StreamableLike_stream]**(`scheduler`, `options?`): `TStream`
+▸ **[StreamableLike_stream]**(`scheduler`, `options?`): [`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`T`\>
 
 #### Parameters
 
@@ -66,7 +65,7 @@ ___
 
 #### Returns
 
-`TStream`
+[`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`T`\>
 
 #### Inherited from
 

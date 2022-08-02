@@ -312,38 +312,6 @@ export const tests = describe(
   ),
 
   describe(
-    "merge",
-    test(
-      "two arrays",
-      pipeLazy(
-        merge(
-          pipe([0, 2, 3, 5, 6], fromArray({ delay: 1 })),
-          pipe([1, 4, 7], fromArray({ delay: 2 })),
-        ),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
-      ),
-    ),
-    test(
-      "when one source throws",
-      pipeLazy(
-        pipeLazy(
-          [1, 4, 7],
-          fromArray({ delay: 2 }),
-          concatWith(
-            mergeT,
-            throws({ ...fromArrayT, ...mapT }, { delay: 5 })(raise),
-          ),
-          toRunnable(),
-          last(),
-        ),
-        expectToThrow,
-      ),
-    ),
-  ),
-
-  describe(
     "mergeMap",
     test(
       "when a mapped observable throws",

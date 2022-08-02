@@ -78,7 +78,7 @@ ___
 
 ### concatWith
 
-▸ **concatWith**<`C`, `T`\>(`__namedParameters`, `snd`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **concatWith**<`C`, `T`\>(`__namedParameters`, `snd`, ...`tail`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -93,6 +93,7 @@ ___
 | :------ | :------ |
 | `__namedParameters` | [`Concat`](containers.md#concat)<`C`\> |
 | `snd` | [`ContainerOf`](containers.md#containerof)<`C`, `T`\> |
+| `...tail` | readonly [`ContainerOf`](containers.md#containerof)<`C`, `T`\>[] |
 
 #### Returns
 
@@ -379,7 +380,7 @@ ___
 
 ### zipWith
 
-▸ **zipWith**<`C`, `TA`, `TB`\>(`__namedParameters`, `snd`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`C`, `TA`, `TB`\>(`__namedParameters`, `b`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -394,8 +395,211 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
-| `snd` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
+| `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
 
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`]\>
+
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`\>(`__namedParameters`, `b`, `c`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TC` | `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
+| `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`\>(`__namedParameters`, `b`, `c`, `d`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TC` | `TC` |
+| `TD` | `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
+| `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
+| `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`__namedParameters`, `b`, `c`, `d`, `e`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TC` | `TC` |
+| `TD` | `TD` |
+| `TE` | `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
+| `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
+| `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
+| `e` | [`ContainerOf`](containers.md#containerof)<`C`, `TE`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`__namedParameters`, `b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TC` | `TC` |
+| `TD` | `TD` |
+| `TE` | `TE` |
+| `TF` | `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
+| `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
+| `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
+| `e` | [`ContainerOf`](containers.md#containerof)<`C`, `TE`\> |
+| `f` | [`ContainerOf`](containers.md#containerof)<`C`, `TF`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`__namedParameters`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TC` | `TC` |
+| `TD` | `TD` |
+| `TE` | `TE` |
+| `TF` | `TF` |
+| `TG` | `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
+| `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
+| `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
+| `e` | [`ContainerOf`](containers.md#containerof)<`C`, `TE`\> |
+| `f` | [`ContainerOf`](containers.md#containerof)<`C`, `TF`\> |
+| `g` | [`ContainerOf`](containers.md#containerof)<`C`, `TG`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`__namedParameters`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TC` | `TC` |
+| `TD` | `TD` |
+| `TE` | `TE` |
+| `TF` | `TF` |
+| `TG` | `TG` |
+| `TH` | `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
+| `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
+| `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
+| `e` | [`ContainerOf`](containers.md#containerof)<`C`, `TE`\> |
+| `f` | [`ContainerOf`](containers.md#containerof)<`C`, `TF`\> |
+| `g` | [`ContainerOf`](containers.md#containerof)<`C`, `TG`\> |
+| `h` | [`ContainerOf`](containers.md#containerof)<`C`, `TH`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`__namedParameters`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TC` | `TC` |
+| `TD` | `TD` |
+| `TE` | `TE` |
+| `TF` | `TF` |
+| `TG` | `TG` |
+| `TH` | `TH` |
+| `TI` | `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
+| `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
+| `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
+| `e` | [`ContainerOf`](containers.md#containerof)<`C`, `TE`\> |
+| `f` | [`ContainerOf`](containers.md#containerof)<`C`, `TF`\> |
+| `g` | [`ContainerOf`](containers.md#containerof)<`C`, `TG`\> |
+| `h` | [`ContainerOf`](containers.md#containerof)<`C`, `TH`\> |
+| `i` | [`ContainerOf`](containers.md#containerof)<`C`, `TI`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>

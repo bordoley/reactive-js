@@ -1,32 +1,19 @@
 /// <reference types="./StreamableLike.d.ts" />
+import { ignoreElements } from '../containers/ContainerLike.mjs';
+import { pipe } from '../functions.mjs';
+import { merge, forEach, keepT, onSubscribe, subscribe } from '../rx/ObservableLike.mjs';
+import { DispatcherLike_scheduler } from '../scheduling.mjs';
+import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { StreamableLike_stream } from '../streaming.mjs';
+import '../util/DisposableLike.mjs';
+import { addTo, add } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const stream = (scheduler, options) => streamable => streamable[StreamableLike_stream](scheduler, options);
-/*
-    export const sinkInto =
-    <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) =>
-    (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
-      const { scheduler } = dest;
-      const srcStream = pipe(src, stream(scheduler));
-  
-      pipe(
-        merge(
-          pipe(
-            srcStream,
-            onNotify<T>(dispatchTo(dest)),
-            ignoreElements(keepT),
-            onSubscribe(() => dest),
-          ),
-          pipe(dest, onNotify(dispatchTo(srcStream)), ignoreElements(keepT)),
-        ),
-        ignoreElements(keepT),
-        subscribe(scheduler),
-        addTo(dest),
-        add(srcStream),
-      );
-  
-      return src;
-    };
-  */
+const sinkInto = (dest) => (src) => {
+    const { [DispatcherLike_scheduler]: scheduler } = dest;
+    const srcStream = pipe(src, stream(scheduler));
+    pipe(merge(pipe(srcStream, forEach(dispatchTo(dest)), ignoreElements(keepT), onSubscribe(() => dest)), pipe(dest, forEach(dispatchTo(srcStream)), ignoreElements(keepT))), ignoreElements(keepT), subscribe(scheduler), addTo(dest), add(srcStream));
+    return src;
+};
 
-export { stream };
+export { sinkInto, stream };
