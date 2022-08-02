@@ -8,6 +8,7 @@
 
 - [notify](util_SinkLike.md#notify)
 - [notifySink](util_SinkLike.md#notifysink)
+- [sourceFrom](util_SinkLike.md#sourcefrom)
 
 ## Functions
 
@@ -54,3 +55,27 @@ ___
 #### Returns
 
 [`SideEffect1`](functions.md#sideeffect1)<`T`\>
+
+___
+
+### sourceFrom
+
+▸ **sourceFrom**<`C`, `TSink`, `T`\>(`source`): [`Function1`](functions.md#function1)<`TSink`, `TSink`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ReactiveContainerLike`](../interfaces/rx.ReactiveContainerLike.md)<`TSink`, `C`\> |
+| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `source` | `C` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`TSink`, `TSink`\>

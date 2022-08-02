@@ -96,7 +96,7 @@ import {
   SinkLike_notify,
 } from "../util";
 import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
-import { sourceFrom } from "./ReactiveContainerLike";
+import { sourceFrom } from "../util/SinkLike";
 
 const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedRunnable<T> implements RunnableLike<T> {
