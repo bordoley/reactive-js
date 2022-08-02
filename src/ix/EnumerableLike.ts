@@ -15,7 +15,7 @@ import {
   createThrowIfEmptyOperator,
   interactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
-import { getDelay } from "../__internal__/optionalArgs";
+import { getDelay, hasDelay } from "../__internal__/optionalArgs";
 import {
   delegatingDisposableMixin,
   disposableMixin,
@@ -240,7 +240,6 @@ const lift: Lift<EnumerableLike, TInteractive>["lift"] = /*@__PURE__*/ (() => {
       );
     };
 })();
-
 const liftT: Lift<EnumerableLike, TInteractive> = {
   lift,
   variance: interactive,
@@ -306,7 +305,6 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
     createBufferOperator<EnumerableLike, T, TInteractive>(liftT),
   );
 })();
-
 export const bufferT: Buffer<EnumerableLike> = {
   buffer,
 };
@@ -386,7 +384,6 @@ export const concat: Concat<EnumerableLike>["concat"] = <T>(
   ...enumerables: readonly EnumerableLike<T>[]
 ): EnumerableLike<T> =>
   pipe(enumerables, toEnumerableReadonlyArray(), concatAll());
-
 export const concatT: Concat<EnumerableLike> = {
   concat,
 };
@@ -440,7 +437,6 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
       ),
     );
   })();
-
 export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
   distinctUntilChanged,
 };
@@ -485,7 +481,6 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
     createForEachOperator<EnumerableLike, T, TInteractive>(liftT),
   );
 })();
-
 export const forEachT: ForEach<EnumerableLike> = { forEach };
 
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
@@ -529,7 +524,6 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     createKeepOperator<EnumerableLike, T, TInteractive>(liftT),
   );
 })();
-
 export const keepT: Keep<EnumerableLike> = {
   keep,
 };
@@ -583,7 +577,6 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     createMapOperator<EnumerableLike, TA, TB, TInteractive>(liftT),
   );
 })();
-
 export const mapT: Map<EnumerableLike> = { map };
 
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
@@ -633,7 +626,6 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
     returns,
   );
 })();
-
 export const pairwiseT: Pairwise<EnumerableLike> = {
   pairwise,
 };
@@ -712,7 +704,6 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
     createEnumerable(() => createRepeatEnumerator(delegate, predicate)),
   );
 })();
-
 export const repeatT: Repeat<EnumerableLike> = {
   repeat,
 };
@@ -776,7 +767,6 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
     createScanOperator<EnumerableLike, T, TAcc, TInteractive>(liftT),
   );
 })();
-
 export const scanT: Scan<EnumerableLike> = {
   scan,
 };
@@ -829,7 +819,6 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
       createSkipFirstOperator<EnumerableLike, T, TInteractive>(liftT),
     );
   })();
-
 export const skipFirstT: SkipFirst<EnumerableLike> = {
   skipFirst,
 };
@@ -878,7 +867,6 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
       }),
     );
   })();
-
 export const takeFirstT: TakeFirst<EnumerableLike> = {
   takeFirst,
 };
@@ -948,7 +936,6 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
     }),
   );
 })();
-
 export const takeLastT: TakeLast<EnumerableLike> = { takeLast };
 
 export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
@@ -1015,7 +1002,6 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
       createTakeWhileOperator<EnumerableLike, T, TInteractive>(liftT),
     );
   })();
-
 export const takeWhileT: TakeWhile<EnumerableLike> = { takeWhile };
 
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
@@ -1080,44 +1066,44 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
       createThrowIfEmptyOperator<EnumerableLike, T, TInteractive>(liftT),
     );
   })();
-
 export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike> = {
   throwIfEmpty,
 };
 
 export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] = () =>
   identity;
-
 export const toEnumerableT: ToEnumerable<EnumerableLike> = {
   toEnumerable,
 };
 
 interface ToObservable {
   <T>(): Function1<EnumerableLike<T>, EnumerableObservableLike<T>>;
-  <T>(options?: { delay?: number }): Function1<
+  <T>(options?: { delay: number; delayStart?: boolean }): Function1<
     EnumerableLike<T>,
     RunnableObservableLike<T>
   >;
 }
-
 export const toObservable: ToObservable = /*@__PURE__*/ (() => {
-  return <T>(options?: { delay?: number }) =>
+  return <T>(options?: { delay?: number; delayStart?: boolean }) =>
     (enumerable: EnumerableLike<T>): EnumerableObservableLike<T> => {
       const delay = getDelay(options);
+      const { delayStart = false } = options ?? {};
+
       const onSink = (observer: ObserverLike<T>) => {
         const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
-
-        const options = { delay: delay };
 
         pipe(
           observer,
           getScheduler,
-          schedule(() => {
-            while (!isDisposed(observer) && move(enumerator)) {
-              pipe(enumerator, getCurrent, notifySink(observer));
-              __yield(options);
-            }
-          }, options),
+          schedule(
+            () => {
+              while (!isDisposed(observer) && move(enumerator)) {
+                pipe(enumerator, getCurrent, notifySink(observer));
+                __yield(options);
+              }
+            },
+            delayStart && hasDelay(options) ? { delay } : none,
+          ),
         );
       };
       return delay > 0
@@ -1145,7 +1131,6 @@ export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"]
 
       return result;
     };
-
 export const toReadonlyArrayT: ToReadonlyArray<EnumerableLike> = {
   toReadonlyArray,
 };
@@ -1168,7 +1153,6 @@ export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
 
     return () => enumerable => newInstance(EnumerableIterable, enumerable);
   })();
-
 export const toIterableT: ToIterable<EnumerableLike> = { toIterable };
 
 export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
@@ -1188,7 +1172,6 @@ export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
           enumerable[InteractiveContainerLike_interact](),
         );
   })();
-
 export const toRunnableT: ToRunnable<EnumerableLike> = {
   toRunnable,
 };
@@ -1264,5 +1247,4 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
       pipe(enumerables, mapReadonlyArray(enumerate()), zipEnumerators),
     );
 })();
-
 export const zipT: Zip<EnumerableLike> = { zip };

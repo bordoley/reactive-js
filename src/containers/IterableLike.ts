@@ -11,7 +11,7 @@ import {
   mixWith,
 } from "../__internal__/util/Object";
 import { IterableLike, ToIterable } from "../containers";
-import { identity, none, pipe } from "../functions";
+import { compose, Function1, identity, none, pipe } from "../functions";
 import { ToEnumerable, createEnumerable } from "../ix";
 import {
   EnumeratorLike,
@@ -19,6 +19,8 @@ import {
   SourceLike_move,
 } from "../util";
 import { dispose, isDisposed } from "../util/DisposableLike";
+import { EnumerableObservableLike, RunnableObservableLike } from "../rx";
+import { toObservable as enumerableToObservable } from "../ix/EnumerableLike";
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
@@ -60,7 +62,6 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
         createIterableEnumerator(iterable[Symbol.iterator]()),
       );
   })();
-
 export const toEnumerableT: ToEnumerable<IterableLike> = { toEnumerable };
 
 export const toIterable: ToIterable<IterableLike>["toIterable"] = () =>
@@ -68,3 +69,15 @@ export const toIterable: ToIterable<IterableLike>["toIterable"] = () =>
 export const toIterableT: ToIterable<IterableLike> = {
   toIterable,
 };
+
+interface ToObservable {
+  <T>(): Function1<IterableLike<T>, EnumerableObservableLike<T>>;
+  <T>(options?: { delay: number; delayStart?: boolean }): Function1<
+    IterableLike<T>,
+    RunnableObservableLike<T>
+  >;
+}
+export const toObservable: ToObservable = <T>(options?: {
+  delay: number;
+  delayStart?: boolean;
+}) => compose(toEnumerable<T>(), enumerableToObservable<T>(options));
