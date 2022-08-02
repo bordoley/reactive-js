@@ -2,7 +2,7 @@
 import { pipe, none, isSome, ignore, returns } from '../../functions.mjs';
 import { onDisposed, DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose, dispose, getException, isDisposed, add } from './DisposableLikeInternal.mjs';
 import { MutableRefLike_current } from './MutableRefLike.mjs';
-import { clazz, createObjectFactory } from './Object.mjs';
+import { clazz, createObjectFactory, init, mixWith } from './Object.mjs';
 
 const delegatingDisposableMixin = /*@__PURE__*/ (() => {
     const DelegatingDisposable_private_delegate = Symbol("DelegatingDisposable_private_delegate");
@@ -118,5 +118,12 @@ const disposableRefMixin =
         },
     }), returns);
 })();
+const createDisposableRef = /*@__PURE__*/ (() => {
+    const typedDisposableRefMixin = disposableRefMixin();
+    return pipe(clazz(function DisposableRef(initialValue) {
+        init(disposableMixin, this);
+        init(typedDisposableRefMixin, this, initialValue);
+    }), mixWith(disposableMixin, typedDisposableRefMixin), createObjectFactory());
+})();
 
-export { createDisposable, delegatingDisposableMixin, disposableMixin, disposableRefMixin, disposed };
+export { createDisposable, createDisposableRef, delegatingDisposableMixin, disposableMixin, disposableRefMixin, disposed };

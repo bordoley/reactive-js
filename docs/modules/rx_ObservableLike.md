@@ -17,6 +17,7 @@
 - [reduceT](rx_ObservableLike.md#reducet)
 - [scanT](rx_ObservableLike.md#scant)
 - [skipFirstT](rx_ObservableLike.md#skipfirstt)
+- [switchAllT](rx_ObservableLike.md#switchallt)
 - [takeFirstT](rx_ObservableLike.md#takefirstt)
 - [takeLastT](rx_ObservableLike.md#takelastt)
 - [takeWhileT](rx_ObservableLike.md#takewhilet)
@@ -42,6 +43,7 @@
 - [skipFirst](rx_ObservableLike.md#skipfirst)
 - [subscribe](rx_ObservableLike.md#subscribe)
 - [subscribeOn](rx_ObservableLike.md#subscribeon)
+- [switchAll](rx_ObservableLike.md#switchall)
 - [takeFirst](rx_ObservableLike.md#takefirst)
 - [takeLast](rx_ObservableLike.md#takelast)
 - [takeUntil](rx_ObservableLike.md#takeuntil)
@@ -114,6 +116,12 @@ ___
 ### skipFirstT
 
 • `Const` **skipFirstT**: [`SkipFirst`](containers.md#skipfirst)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### switchAllT
+
+• `Const` **switchAllT**: [`ConcatAll`](containers.md#concatall)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -1015,6 +1023,46 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### switchAll
+
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

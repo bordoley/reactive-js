@@ -17,7 +17,12 @@ import {
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { createOnSink } from "../__internal__/rx/ReactiveContainerLikeInternal";
 import { observerMixin } from "../__internal__/scheduling/ObserverLikeMixin";
-import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
+import {
+  DisposableRefLike,
+  createDisposableRef,
+  disposableMixin,
+} from "../__internal__/util/DisposableLikeMixins";
+import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
   PropertyTypeOf,
   clazz,
@@ -42,6 +47,7 @@ import {
 } from "../__internal__/util/SinkLikeMixin";
 import {
   Concat,
+  ConcatAll,
   ContainerOf,
   ContainerOperator,
   DecodeWithCharset,
@@ -105,16 +111,22 @@ import {
 } from "../scheduling";
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import { getScheduler } from "../scheduling/ObserverLike";
-import { DisposableLike, DisposableOrTeardown, SinkLike_notify } from "../util";
+import {
+  DisposableLike,
+  DisposableOrTeardown,
+  SinkLike_notify,
+  disposed,
+} from "../util";
 import {
   addTo,
   addToIgnoringChildErrors,
   bindTo,
   dispose,
+  isDisposed,
   onComplete,
   onDisposed,
 } from "../util/DisposableLike";
-import { sourceFrom } from "../util/SinkLike";
+import { notifySink, sourceFrom } from "../util/SinkLike";
 import { getObserverCount } from "./MulticastObservableLike";
 import { publishTo } from "./SubjectLike";
 
@@ -884,6 +896,72 @@ export const skipFirst: SkipFirstObservable = /*@__PURE__*/ (<T>() => {
   );
 })();
 export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
+
+interface SwitchAllObservable {
+  <T>(): ContainerOperator<ObservableLike, T, T>;
+  <T>(): ContainerOperator<RunnableObservableLike, T, T>;
+  <T>(): ContainerOperator<EnumerableObservableLike, T, T>;
+}
+export const switchAll: SwitchAllObservable = /*@__PURE__*/ (<T>() => {
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = {
+    currentRef: DisposableRefLike;
+    delegate: ObserverLike<T>;
+  } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
+
+  function onDispose(this: TProperties & DisposableLike) {
+    if (isDisposed(this.currentRef[MutableRefLike_current])) {
+      pipe(this.delegate, dispose());
+    }
+  }
+
+  const switchAllOperator = pipe(
+    clazz(
+      function SwitchAllObserver(
+        this: TProperties & DisposableLike,
+        delegate: ObserverLike<T>,
+      ) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, getScheduler(delegate));
+
+        this.delegate = delegate;
+        this.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
+
+        pipe(this, addTo(delegate), onComplete(onDispose));
+      },
+      {
+        currentRef: none,
+        delegate: none,
+      },
+      {
+        [SinkLike_notify](
+          this: TProperties & ObserverLike<T> & DisposableRefLike,
+          next: ObservableLike<T>,
+        ) {
+          this.currentRef[MutableRefLike_current] = pipe(
+            next,
+            forEach(notifySink(this.delegate)),
+            subscribe(getScheduler(this)),
+            onComplete(() => {
+              if (isDisposed(this)) {
+                pipe(this.delegate, dispose());
+              }
+            }),
+          );
+        },
+      },
+    ),
+    mixWith(disposableMixin, typedObserverMixin),
+    createObjectFactory<ObserverLike<ObservableLike<T>>, ObserverLike<T>>(),
+    liftEnumerableObservable,
+  );
+
+  return () => switchAllOperator;
+})();
+export const switchAllT: ConcatAll<ObservableLike> = {
+  concatAll: switchAll,
+};
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,

@@ -1,5 +1,6 @@
 import {
   Concat,
+  ConcatAll,
   ContainerOf,
   ContainerOperator,
   DecodeWithCharset,
@@ -68,6 +69,7 @@ import {
   skipFirst as skipFirstObs,
   subscribe,
   subscribeOn,
+  switchAll as switchAllObs,
   takeFirst as takeFirstObs,
   takeLast as takeLastObs,
   takeUntil as takeUntilObs,
@@ -256,6 +258,15 @@ interface SkipFirstnRunnableObservable {
 }
 export const skipFirst: SkipFirstnRunnableObservable = skipFirstObs;
 export const skipFirstT: SkipFirst<RunnableObservableLike> = { skipFirst };
+
+interface SwitchAllRunnableObservable {
+  <T>(): ContainerOperator<RunnableObservableLike, T, T>;
+  <T>(): ContainerOperator<EnumerableObservableLike, T, T>;
+}
+export const switchAll: SwitchAllRunnableObservable = switchAllObs;
+export const switchAllT: ConcatAll<ObservableLike> = {
+  concatAll: switchAll,
+};
 
 interface TakeFirstRunnableObservable {
   <T>(options?: { readonly count?: number }): ContainerOperator<
