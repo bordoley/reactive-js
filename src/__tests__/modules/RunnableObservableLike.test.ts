@@ -8,15 +8,21 @@ import {
   mockFn,
   test,
 } from "../../__internal__/testing";
-import { throws } from "../../containers/ContainerLike";
+import { concatMap, throws } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { increment, pipe, pipeLazy, raise, returns } from "../../functions";
-import { generateObservable } from "../../rx";
+import {
+  RunnableObservableLike,
+  emptyObservable,
+  generateObservable,
+} from "../../rx";
 import { subscribe, takeUntil } from "../../rx/ObservableLike";
 import {
   forEach,
   mapT,
   merge,
+  switchAll,
+  switchAllT,
   toFlowable,
   toReadonlyArray,
 } from "../../rx/RunnableObservableLike";
@@ -53,6 +59,59 @@ export const RunnableObservableLikeTests = describe(
           toReadonlyArray(),
         ),
         expectToThrow,
+      ),
+    ),
+  ),
+  describe(
+    "switchAll",
+    test(
+      "with empty source",
+      pipeLazy(
+        emptyObservable(),
+        switchAll(),
+        toReadonlyArray(),
+        expectArrayEquals([] as unknown[]),
+      ),
+    ),
+
+    test(
+      "when source throw",
+      pipeLazy(
+        pipeLazy(
+          raise,
+          throws({ fromArray: toObservable, ...mapT }),
+          switchAll(),
+          toReadonlyArray(),
+        ),
+        expectToThrow,
+      ),
+    ),
+
+    test(
+      "concating arrays",
+      pipeLazy(
+        [1, 2, 3],
+        toObservable({ delay: 1 }),
+        concatMap<RunnableObservableLike, number, number>(
+          { ...switchAllT, ...mapT },
+          _ => pipe([1, 2, 3], toObservable()),
+        ),
+        toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+
+    test(
+      "overlapping notification",
+      pipeLazy(
+        [1, 2, 3],
+        toObservable({ delay: 4 }),
+        concatMap<RunnableObservableLike, number, number>(
+          { ...switchAllT, ...mapT },
+          _ => pipe([1, 2, 3], toObservable({ delay: 2 })),
+        ),
+        toReadonlyArray(),
+        expectArrayEquals([1, 2, 1, 2, 1, 2, 3]),
       ),
     ),
   ),

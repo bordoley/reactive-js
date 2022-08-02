@@ -17,6 +17,7 @@
 - [reduceT](rx_RunnableObservableLike.md#reducet)
 - [scanT](rx_RunnableObservableLike.md#scant)
 - [skipFirstT](rx_RunnableObservableLike.md#skipfirstt)
+- [switchAllT](rx_RunnableObservableLike.md#switchallt)
 - [takeFirstT](rx_RunnableObservableLike.md#takefirstt)
 - [takeLastT](rx_RunnableObservableLike.md#takelastt)
 - [takeWhileT](rx_RunnableObservableLike.md#takewhilet)
@@ -39,6 +40,7 @@
 - [reduce](rx_RunnableObservableLike.md#reduce)
 - [scan](rx_RunnableObservableLike.md#scan)
 - [skipFirst](rx_RunnableObservableLike.md#skipfirst)
+- [switchAll](rx_RunnableObservableLike.md#switchall)
 - [takeFirst](rx_RunnableObservableLike.md#takefirst)
 - [takeLast](rx_RunnableObservableLike.md#takelast)
 - [takeUntil](rx_RunnableObservableLike.md#takeuntil)
@@ -112,6 +114,12 @@ ___
 ### skipFirstT
 
 • `Const` **skipFirstT**: [`SkipFirst`](containers.md#skipfirst)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### switchAllT
+
+• `Const` **switchAllT**: [`ConcatAll`](containers.md#concatall)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -666,6 +674,34 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### switchAll
+
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Returns
 

@@ -20,6 +20,8 @@ import {
   UnknownObject,
   clazz,
   createObjectFactory,
+  init,
+  mixWith,
 } from "./Object";
 
 export const delegatingDisposableMixin: Class1<
@@ -242,3 +244,20 @@ export const disposableRefMixin: <
       returns,
     );
   })();
+
+export const createDisposableRef: <TDisposable extends DisposableLike>(
+  initialValue: TDisposable,
+) => DisposableRefLike<TDisposable> = /*@__PURE__*/ (<
+  TDisposable extends DisposableLike,
+>() => {
+  const typedDisposableRefMixin = disposableRefMixin<TDisposable>();
+
+  return pipe(
+    clazz(function DisposableRef(this, initialValue: TDisposable) {
+      init(disposableMixin, this);
+      init(typedDisposableRefMixin, this, initialValue);
+    }),
+    mixWith(disposableMixin, typedDisposableRefMixin),
+    createObjectFactory<DisposableRefLike<TDisposable>, TDisposable>(),
+  );
+})();

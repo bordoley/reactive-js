@@ -2,7 +2,8 @@
 import { reactive, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { createOnSink } from '../__internal__/rx/ReactiveContainerLikeInternal.mjs';
 import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
-import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
+import { disposableMixin, createDisposableRef } from '../__internal__/util/DisposableLikeMixins.mjs';
+import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { map as map$1, toObservable } from '../containers/ReadonlyArrayLike.mjs';
@@ -11,12 +12,12 @@ import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, createOb
 import { ObserverLike_scheduler, ObserverLike_dispatcher } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
-import { SinkLike_notify } from '../util.mjs';
+import { SinkLike_notify, disposed } from '../util.mjs';
 import '../util/DisposableLike.mjs';
-import { sourceFrom } from '../util/SinkLike.mjs';
+import { sourceFrom, notifySink } from '../util/SinkLike.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
 import { publishTo } from './SubjectLike.mjs';
-import { addTo, onComplete, dispose, bindTo, onDisposed, addToIgnoringChildErrors } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { addTo, onComplete, dispose, bindTo, onDisposed, isDisposed, addToIgnoringChildErrors } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const createDelegatingObserver = 
 /*@__PURE__*/ (() => {
@@ -275,6 +276,36 @@ const skipFirst = /*@__PURE__*/ (() => {
     }), mixWith(typedObserverMixin, typedSkipFirstSinkMixin), createObjectFactory(), createSkipFirstOperator(liftEnumerableObservableT));
 })();
 const skipFirstT = { skipFirst };
+const switchAll = /*@__PURE__*/ (() => {
+    const typedObserverMixin = observerMixin();
+    function onDispose() {
+        if (isDisposed(this.currentRef[MutableRefLike_current])) {
+            pipe(this.delegate, dispose());
+        }
+    }
+    const switchAllOperator = pipe(clazz(function SwitchAllObserver(delegate) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, getScheduler(delegate));
+        this.delegate = delegate;
+        this.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
+        pipe(this, addTo(delegate), onComplete(onDispose));
+    }, {
+        currentRef: none,
+        delegate: none,
+    }, {
+        [SinkLike_notify](next) {
+            this.currentRef[MutableRefLike_current] = pipe(next, forEach(notifySink(this.delegate)), subscribe(getScheduler(this)), onComplete(() => {
+                if (isDisposed(this)) {
+                    pipe(this.delegate, dispose());
+                }
+            }));
+        },
+    }), mixWith(disposableMixin, typedObserverMixin), createObjectFactory(), liftEnumerableObservable);
+    return () => switchAllOperator;
+})();
+const switchAllT = {
+    concatAll: switchAll,
+};
 const subscribe = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
     const createObserver = pipe(clazz(function SubscribeObserver(scheduler) {
@@ -360,4 +391,4 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
+export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toPromise };
