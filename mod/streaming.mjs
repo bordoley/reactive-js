@@ -18,6 +18,7 @@ const StreamableLike_stream = Symbol("StreamableLike_stream");
 const createStream = /*@__PURE__*/ (() => {
     const createStreamInternal = (() => {
         return pipe(clazz(function StreamImpl(op, scheduler, replay) {
+            this[DispatcherLike_scheduler] = scheduler;
             const subject = createSubject({ replay });
             this.subject = subject;
             init(delegatingDisposableMixin, this, subject);
