@@ -7,6 +7,7 @@ import { ContainerLikeTests } from "./ContainerLike.test";
 import { DisposableLikeTests } from "./DisposableLike.test";
 import { EnumerableLikeTests } from "./EnumerableLike.test";
 import { FlowableLikeTests } from "./FlowableLike.test";
+import {IterableLikeTests} from "./IterableLike.test";
 import { RunnableLikeTests } from "./RunnableLike.test";
 import { RunnableObservableLikeTests } from "./RunnableObservableLike.test";
 import { SequenceLikeTests } from "./SequenceLike.test";
@@ -18,6 +19,7 @@ runTests([
   ContainerLikeTests,
   DisposableLikeTests,
   EnumerableLikeTests,
+  IterableLikeTests,
   FlowableLikeTests,
   RunnableLikeTests,
   RunnableObservableLikeTests,

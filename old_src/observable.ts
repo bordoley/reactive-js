@@ -114,25 +114,8 @@ export {
   zipLatest,
   zipLatestT,
 } from "./observable/latest";
-export { concat, concatT } from "./observable/concat";
-export { createObservable, createT } from "./observable/createObservable";
-export { Subject, publish, publishTo } from "./observable/subject";
-export { fromArray, fromArrayT } from "./observable/fromArray";
-export {
-  fromEnumerable,
-  fromEnumerableT,
-  fromIterable,
-  fromIterableT,
-  fromIterator,
-  fromIteratorT,
-} from "./observable/fromEnumerable";
-export { forkMerge, merge, mergeT } from "./observable/merge";
-export { never, neverT } from "./observable/never";
-export { subscribe } from "./observable/subscribe";
-export { using, usingT } from "./observable/using";
-export { defer, deferT } from "./observable/defer";
 export { buffer, bufferT } from "./observable/buffer";
-export { map, mapT } from "./observable/map";
+
 export {
   concatAll,
   concatAllT,
@@ -149,7 +132,6 @@ export { withLatestFrom } from "./observable/withLatestFrom";
 export { zip, zipT } from "./observable/zip";
 export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 export { toEnumerable } from "./observable/toEnumerable";
-export { isEnumerable, isRunnable } from "./observable/observable";
 
 export const catchError: CatchError<ObservableLike<unknown>>["catchError"] =
   /*@__PURE__*/ decorateMap(
@@ -187,8 +169,6 @@ export const mapAsync = <TA, TB>(
   f: Function1<TA, Promise<TB>>,
 ): ObservableOperator<TA, TB> =>
   concatMap({ ...switchAllT, ...mapT }, (a: TA) => fromPromise(() => f(a)));
-
-export const onSubscribe = /*@__PURE__*/ createOnSink(createT);
 
 export interface ScanAsync<C extends ContainerLike> extends Container<C> {
   scanAsync: <T, TAcc>(
