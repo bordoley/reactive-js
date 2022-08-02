@@ -13,8 +13,8 @@ import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { SinkLike_notify } from '../util.mjs';
 import '../util/DisposableLike.mjs';
+import { sourceFrom } from '../util/SinkLike.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
-import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { publishTo } from './SubjectLike.mjs';
 import { addTo, onComplete, dispose, bindTo, onDisposed, addToIgnoringChildErrors } from '../__internal__/util/DisposableLikeInternal.mjs';
 

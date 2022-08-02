@@ -50,6 +50,7 @@ import {
   toObservable,
 } from "../util/DisposableLike";
 import { pause, resume } from "../util/PauseableLike";
+import { sourceFrom } from "../util/SinkLike";
 import {
   concat as concatObs,
   decodeWithCharset as decodeWithCharsetObs,
@@ -71,7 +72,6 @@ import {
   takeWhile as takeWhileObs,
   throwIfEmpty as throwIfEmptyObs,
 } from "./ObservableLike";
-import { sourceFrom } from "./ReactiveContainerLike";
 
 interface ConcatRunnableObservable {
   <T>(

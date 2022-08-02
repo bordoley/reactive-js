@@ -8,8 +8,8 @@ import { createLiftedFlowable } from '../streaming.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import { toObservable } from '../util/DisposableLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
+import { sourceFrom } from '../util/SinkLike.mjs';
 import { concat as concat$1, decodeWithCharset as decodeWithCharset$1, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, forkMerge as forkMerge$1, keep as keep$1, map as map$1, merge as merge$1, pairwise as pairwise$1, reduce as reduce$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeUntil as takeUntil$1, takeWhile as takeWhile$1, throwIfEmpty as throwIfEmpty$1, subscribeOn, subscribe } from './ObservableLike.mjs';
-import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { add, bindTo, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const concat = concat$1;

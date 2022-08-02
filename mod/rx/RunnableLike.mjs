@@ -8,7 +8,7 @@ import { pipe, pipeUnsafe, newInstance, pipeLazy, none, returns, isSome, raise, 
 import { ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../util.mjs';
 import '../util/DisposableLike.mjs';
-import { sourceFrom } from './ReactiveContainerLike.mjs';
+import { sourceFrom } from '../util/SinkLike.mjs';
 import { dispose, bindTo, addTo, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const lift = /*@__PURE__*/ (() => {

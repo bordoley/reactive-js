@@ -5,9 +5,5 @@ const sinkInto = (sink) => source => {
     source[ReactiveContainerLike_sinkInto](sink);
     return source;
 };
-const sourceFrom = (source) => sink => {
-    source[ReactiveContainerLike_sinkInto](sink);
-    return sink;
-};
 
-export { sinkInto, sourceFrom };
+export { sinkInto };

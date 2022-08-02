@@ -114,8 +114,8 @@ import {
   onComplete,
   onDisposed,
 } from "../util/DisposableLike";
+import { sourceFrom } from "../util/SinkLike";
 import { getObserverCount } from "./MulticastObservableLike";
-import { sourceFrom } from "./ReactiveContainerLike";
 import { publishTo } from "./SubjectLike";
 
 const createDelegatingObserver: <T>(o: ObserverLike<T>) => ObserverLike<T> =
