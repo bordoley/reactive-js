@@ -1,0 +1,115 @@
+[Reactive-JS](../README.md) / integrations/react
+
+# Module: integrations/react
+
+## Table of contents
+
+### Functions
+
+- [createComponent](integrations_react.md#createcomponent)
+- [createReactIdlePriorityScheduler](integrations_react.md#createreactidlepriorityscheduler)
+- [createReactImmediatePriorityScheduler](integrations_react.md#createreactimmediatepriorityscheduler)
+- [createReactLowPriorityScheduler](integrations_react.md#createreactlowpriorityscheduler)
+- [createReactNormalPriorityScheduler](integrations_react.md#createreactnormalpriorityscheduler)
+- [createReactUserBlockingPriorityScheduler](integrations_react.md#createreactuserblockingpriorityscheduler)
+- [useObservable](integrations_react.md#useobservable)
+
+## Functions
+
+### createComponent
+
+▸ **createComponent**<`TProps`\>(`fn`, `options?`): `ComponentType`<`TProps`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TProps` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fn` | (`props`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TProps`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
+| `options?` | `Object` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+
+#### Returns
+
+`ComponentType`<`TProps`\>
+
+___
+
+### createReactIdlePriorityScheduler
+
+▸ **createReactIdlePriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
+
+### createReactImmediatePriorityScheduler
+
+▸ **createReactImmediatePriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
+
+### createReactLowPriorityScheduler
+
+▸ **createReactLowPriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
+
+### createReactNormalPriorityScheduler
+
+▸ **createReactNormalPriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
+
+### createReactUserBlockingPriorityScheduler
+
+▸ **createReactUserBlockingPriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
+
+### useObservable
+
+▸ **useObservable**<`T`\>(`observable`, `options?`): [`Option`](functions.md#option)<`T`\>
+
+Returns the current value, if defined, of `observable`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> | The `ObservableLike` to subscribe to. |
+| `options?` | `Object` | - |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> | - |
+
+#### Returns
+
+[`Option`](functions.md#option)<`T`\>

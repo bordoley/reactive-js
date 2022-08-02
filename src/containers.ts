@@ -38,8 +38,10 @@ export interface SequenceLike<T = unknown> extends ContainerLike {
   }>;
 }
 
-export interface PromiseLike<T = unknown> extends ContainerLike, Promise<T> {
-  readonly TContainerOf?: PromiseLike<this["T"]>;
+export interface PromiseableLike<T = unknown>
+  extends ContainerLike,
+    PromiseLike<T> {
+  readonly TContainerOf?: PromiseableLike<this["T"]>;
 }
 
 export interface StatefulContainerLike extends ContainerLike {

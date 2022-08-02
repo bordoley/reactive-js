@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [containers](../modules/containers.md) / PromiseLike
+[Reactive-JS](../README.md) / [containers](../modules/containers.md) / PromiseableLike
 
-# Interface: PromiseLike<T\>
+# Interface: PromiseableLike<T\>
 
-[containers](../modules/containers.md).PromiseLike
+[containers](../modules/containers.md).PromiseableLike
 
 ## Type parameters
 
@@ -14,16 +14,16 @@
 
 - [`ContainerLike`](containers.ContainerLike.md)
 
-- `Promise`<`T`\>
+- `PromiseLike`<`T`\>
 
-  ↳ **`PromiseLike`**
+  ↳ **`PromiseableLike`**
 
 ## Table of contents
 
 ### Properties
 
-- [T](containers.PromiseLike.md#t)
-- [TContainerOf](containers.PromiseLike.md#tcontainerof)
+- [T](containers.PromiseableLike.md#t)
+- [TContainerOf](containers.PromiseableLike.md#tcontainerof)
 
 ## Properties
 
@@ -39,7 +39,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`PromiseLike`](containers.PromiseLike.md)<`unknown`\>
+• `Optional` `Readonly` **TContainerOf**: [`PromiseableLike`](containers.PromiseableLike.md)<`unknown`\>
 
 #### Overrides
 
