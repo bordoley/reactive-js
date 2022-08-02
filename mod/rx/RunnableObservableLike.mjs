@@ -8,7 +8,7 @@ import { createLiftedFlowable } from '../streaming.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import { toObservable } from '../util/DisposableLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
-import { concat as concat$1, decodeWithCharset as decodeWithCharset$1, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, keep as keep$1, map as map$1, merge as merge$1, pairwise as pairwise$1, reduce as reduce$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeUntil as takeUntil$1, takeWhile as takeWhile$1, throwIfEmpty as throwIfEmpty$1, subscribeOn, subscribe } from './ObservableLike.mjs';
+import { concat as concat$1, decodeWithCharset as decodeWithCharset$1, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, forkMerge as forkMerge$1, keep as keep$1, map as map$1, merge as merge$1, pairwise as pairwise$1, reduce as reduce$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeUntil as takeUntil$1, takeWhile as takeWhile$1, throwIfEmpty as throwIfEmpty$1, subscribeOn, subscribe } from './ObservableLike.mjs';
 import { sourceFrom } from './ReactiveContainerLike.mjs';
 import { add, bindTo, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
 
@@ -24,6 +24,7 @@ const distinctUntilChanged = distinctUntilChanged$1;
 const distinctUntilChangedT = { distinctUntilChanged };
 const forEach = forEach$1;
 const forEachT = { forEach };
+const forkMerge = forkMerge$1;
 const keep = keep$1;
 const keepT = { keep };
 const map = map$1;
@@ -81,4 +82,4 @@ const toReadonlyArray = (options = {}) => observable => {
 };
 const toReadonlyArrayT = { toReadonlyArray };
 
-export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, keep, keepT, map, mapT, merge, mergeT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };
+export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, keep, keepT, map, mapT, merge, mergeT, pairwise, pairwiseT, reduce, reduceT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };
