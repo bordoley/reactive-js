@@ -8,7 +8,7 @@
 
 - [ContainerLike](../interfaces/containers.ContainerLike.md)
 - [IterableLike](../interfaces/containers.IterableLike.md)
-- [PromiseLike](../interfaces/containers.PromiseLike.md)
+- [PromiseableLike](../interfaces/containers.PromiseableLike.md)
 - [ReadonlyArrayLike](../interfaces/containers.ReadonlyArrayLike.md)
 - [SequenceLike](../interfaces/containers.SequenceLike.md)
 - [StatefulContainerLike](../interfaces/containers.StatefulContainerLike.md)
@@ -483,7 +483,7 @@ ___
 
 ### ToPromise
 
-Ƭ **ToPromise**<`C`, `Ctx`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`ctx`: `Ctx`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`PromiseLike`](../interfaces/containers.PromiseLike.md)<`T`\>\>  }
+Ƭ **ToPromise**<`C`, `Ctx`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`ctx`: `Ctx`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `PromiseLike`<`T`\>\>  }
 
 #### Type parameters
 

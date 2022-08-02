@@ -1,4 +1,4 @@
-/// <reference types="./PromiseLike.d.ts" />
+/// <reference types="./PromiseableLike.d.ts" />
 import { pipe } from '../functions.mjs';
 import { createObservable } from '../rx.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';

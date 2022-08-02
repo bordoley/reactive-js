@@ -1304,7 +1304,7 @@ ___
 
 ### toPromise
 
-▸ **toPromise**<`T`\>(`ctx`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseLike`](../interfaces/containers.PromiseLike.md)<`T`\>\>
+▸ **toPromise**<`T`\>(`ctx`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `PromiseLike`<`T`\>\>
 
 Returns a Promise that completes with the last value produced by
 the source.
@@ -1323,4 +1323,4 @@ the source.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseLike`](../interfaces/containers.PromiseLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `PromiseLike`<`T`\>\>
