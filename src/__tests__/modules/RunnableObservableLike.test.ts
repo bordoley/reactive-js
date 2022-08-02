@@ -11,28 +11,14 @@ import {
 import { throws } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { increment, pipe, pipeLazy, raise, returns } from "../../functions";
-import { deferObservableT, generateObservable } from "../../rx";
+import { generateObservable } from "../../rx";
 import { subscribe, takeUntil } from "../../rx/ObservableLike";
 import {
-  concatT,
-  decodeWithCharsetT,
-  distinctUntilChangedT,
   forEach,
-  forEachT,
-  keepT,
   mapT,
   merge,
-  pairwiseT,
-  reduceT,
-  scanT,
-  skipFirstT,
-  takeFirstT,
-  takeLastT,
-  takeWhileT,
-  throwIfEmptyT,
   toFlowable,
   toReadonlyArray,
-  toReadonlyArrayT,
 } from "../../rx/RunnableObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling";
 import { dispatch, dispatchTo } from "../../scheduling/DispatcherLike";
@@ -40,57 +26,9 @@ import { getCurrentTime, schedule } from "../../scheduling/SchedulerLike";
 import { stream } from "../../streaming/StreamableLike";
 import { run } from "../../util/ContinuationLike";
 import { dispose, isDisposed } from "../../util/DisposableLike";
-import {
-  concatTests,
-  decodeWithCharsetTests,
-  distinctUntilChangedTests,
-  forEachTests,
-  keepTests,
-  mapTests,
-  pairwiseTests,
-  reduceTests,
-  scanTests,
-  skipFirstTests,
-  takeFirstTests,
-  takeLastTests,
-  takeWhileTests,
-  throwIfEmptyTests,
-} from "../operators";
 
 export const RunnableObservableLikeTests = describe(
   "RunnableObservableLike",
-  concatTests({
-    fromArray: toObservable,
-    ...concatT,
-    ...toReadonlyArrayT,
-  }),
-  decodeWithCharsetTests({
-    fromArray: toObservable,
-    ...decodeWithCharsetT,
-    ...deferObservableT,
-    ...mapT,
-    ...toReadonlyArrayT,
-  }),
-  distinctUntilChangedTests({
-    fromArray: toObservable,
-    ...distinctUntilChangedT,
-    ...toReadonlyArrayT,
-  }),
-  forEachTests({
-    fromArray: toObservable,
-    ...forEachT,
-    ...toReadonlyArrayT,
-  }),
-  keepTests({
-    fromArray: toObservable,
-    ...keepT,
-    ...toReadonlyArrayT,
-  }),
-  mapTests({
-    fromArray: toObservable,
-    ...mapT,
-    ...toReadonlyArrayT,
-  }),
   describe(
     "merge",
     test(
@@ -118,36 +56,6 @@ export const RunnableObservableLikeTests = describe(
       ),
     ),
   ),
-  pairwiseTests({
-    fromArray: toObservable,
-    ...pairwiseT,
-    ...toReadonlyArrayT,
-  }),
-  reduceTests({
-    fromArray: toObservable,
-    ...reduceT,
-    ...toReadonlyArrayT,
-  }),
-  scanTests({
-    fromArray: toObservable,
-    ...scanT,
-    ...toReadonlyArrayT,
-  }),
-  skipFirstTests({
-    fromArray: toObservable,
-    ...skipFirstT,
-    ...toReadonlyArrayT,
-  }),
-  takeFirstTests({
-    fromArray: toObservable,
-    ...takeFirstT,
-    ...toReadonlyArrayT,
-  }),
-  takeLastTests({
-    fromArray: toObservable,
-    ...takeLastT,
-    ...toReadonlyArrayT,
-  }),
   test(
     "takeUntil",
     pipeLazy(
@@ -158,16 +66,6 @@ export const RunnableObservableLikeTests = describe(
       expectArrayEquals([1, 2, 3]),
     ),
   ),
-  takeWhileTests({
-    fromArray: toObservable,
-    ...takeWhileT,
-    ...toReadonlyArrayT,
-  }),
-  throwIfEmptyTests({
-    fromArray: toObservable,
-    ...throwIfEmptyT,
-    ...toReadonlyArrayT,
-  }),
   describe(
     "toFlowable",
     test("flow a generating source", () => {

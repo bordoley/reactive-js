@@ -42,6 +42,7 @@ import {
 } from "../__internal__/util/SinkLikeMixin";
 import {
   Concat,
+  ContainerOf,
   ContainerOperator,
   DecodeWithCharset,
   DistinctUntilChanged,
@@ -238,12 +239,12 @@ interface ConcatObservable {
     fst: RunnableObservableLike<T>,
     snd: RunnableObservableLike<T>,
     ...tail: readonly RunnableObservableLike<T>[]
-  ): ObservableLike<T>;
+  ): RunnableObservableLike<T>;
   <T>(
     fst: EnumerableObservableLike<T>,
     snd: EnumerableObservableLike<T>,
     ...tail: readonly EnumerableObservableLike<T>[]
-  ): ObservableLike<T>;
+  ): EnumerableObservableLike<T>;
 }
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
@@ -560,7 +561,7 @@ const mergeImpl = /*@__PURE__*/ (() => {
   };
 })();
 
-interface ForkMerge {
+interface ForkMergeObservable {
   <TIn, TOut>(
     fst: ContainerOperator<ObservableLike, TIn, TOut>,
     snd: ContainerOperator<ObservableLike, TIn, TOut>,
@@ -578,7 +579,7 @@ interface ForkMerge {
   ): ContainerOperator<EnumerableObservableLike, TIn, TOut>;
 }
 
-export const forkMerge: ForkMerge =
+export const forkMerge: ForkMergeObservable =
   <TIn, TOut>(
     ...ops: readonly (
       | ContainerOperator<ObservableLike, TIn, TOut>
@@ -1013,15 +1014,15 @@ export const takeLast: TakeLastObservable = /*@__PURE__*/ (<T>() => {
 })();
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 
-interface TakeUntil {
+interface TakeUntilObservable {
   <T>(notifier: ObservableLike): ContainerOperator<ObservableLike, T, T>;
-  <T>(notifier: RunnableObservableLike): ContainerOperator<
-    RunnableObservableLike,
-    T,
-    T
+  <T>(notifier: RunnableObservableLike | EnumerableObservableLike): Function1<
+    | ContainerOf<RunnableObservableLike, T>
+    | ContainerOf<EnumerableObservableLike, T>,
+    ContainerOf<RunnableObservableLike, T>
   >;
 }
-export const takeUntil: TakeUntil = <T>(
+export const takeUntil: TakeUntilObservable = <T>(
   notifier: ObservableLike,
 ): ContainerOperator<ObservableLike, T, T> => {
   const operator = (delegate: ObserverLike<T>) =>

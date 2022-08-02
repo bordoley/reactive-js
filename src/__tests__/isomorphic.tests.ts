@@ -6,6 +6,7 @@ import { runTests } from "../__internal__/testing";
 import { ContainerLikeTests } from "./modules/ContainerLike.test";
 import { DisposableLikeTests } from "./modules/DisposableLike.test";
 import { EnumerableLikeTests } from "./modules/EnumerableLike.test";
+import { EnumerableObservableLikeTests } from "./modules/EnumerableObservableLike.test";
 import { FlowableLikeTests } from "./modules/FlowableLike.test";
 import { IterableLikeTests } from "./modules/IterableLike.test";
 import { RunnableLikeTests } from "./modules/RunnableLike.test";
@@ -21,6 +22,7 @@ runTests([
   DisposableLikeTests,
   effectsTests,
   EnumerableLikeTests,
+  EnumerableObservableLikeTests,
   IterableLikeTests,
   FlowableLikeTests,
   RunnableLikeTests,

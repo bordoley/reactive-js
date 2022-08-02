@@ -165,7 +165,7 @@ Creates an `ObservableLike` which emits all values from each source sequentially
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 Creates an `ObservableLike` which emits all values from each source sequentially.
 
@@ -185,9 +185,9 @@ Creates an `ObservableLike` which emits all values from each source sequentially
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
-▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 Creates an `ObservableLike` which emits all values from each source sequentially.
 
@@ -207,7 +207,7 @@ Creates an `ObservableLike` which emits all values from each source sequentially
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 ___
 
@@ -1160,7 +1160,7 @@ ___
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **takeUntil**<`T`\>(`notifier`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeUntil**<`T`\>(`notifier`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1172,11 +1172,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `notifier` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\> |
+| `notifier` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\> \| [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
