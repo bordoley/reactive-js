@@ -10,12 +10,3 @@ export const sinkInto =
     source[ReactiveContainerLike_sinkInto](sink);
     return source;
   };
-
-export const sourceFrom =
-  <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
-    source: C,
-  ): Function1<TSink, TSink> =>
-  sink => {
-    source[ReactiveContainerLike_sinkInto](sink);
-    return sink;
-  };

@@ -31,7 +31,6 @@ import {
 import { Factory, isSome, none, pipe } from "../functions";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../ix";
 import { EnumerableObservableLike } from "../rx";
-import { sourceFrom } from "../rx/ReactiveContainerLike";
 import {
   ObserverLike,
   SchedulerLike,
@@ -53,6 +52,7 @@ import {
 } from "../util";
 import { run } from "../util/ContinuationLike";
 import { add, addTo, dispose, isDisposed } from "../util/DisposableLike";
+import { sourceFrom } from "../util/SinkLike";
 import {
   concat as concatObs,
   decodeWithCharset as decodeWithCharsetObs,
