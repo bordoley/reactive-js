@@ -46,6 +46,7 @@ import {
   forEach as forEachObs,
   keep as keepObs,
   map as mapObs,
+  merge as mergeObs,
   pairwise as pairwiseObs,
   reduce as reduceObs,
   scan as scanObs,
@@ -84,6 +85,11 @@ export const keepT: Keep<RunnableObservableLike> = { keep };
 
 export const map: Map<RunnableObservableLike>["map"] = mapObs;
 export const mapT: Map<RunnableObservableLike> = { map };
+
+export const merge: Concat<RunnableObservableLike>["concat"] = mergeObs;
+export const mergeT: Concat<ObservableLike<unknown>> = {
+  concat: merge,
+};
 
 export const pairwise: Pairwise<RunnableObservableLike>["pairwise"] =
   pairwiseObs;
@@ -188,7 +194,7 @@ export const toReadonlyArray: ToReadonlyArray<
       addTo(scheduler),
     );
 
-    pipe(scheduler, run);
+    run(scheduler);
     const exception = getException(scheduler);
 
     if (isSome(exception)) {

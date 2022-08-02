@@ -113,7 +113,7 @@ export const DisposableLikeTests = describe(
       ),
     );
 
-    pipe(scheduler, run);
+    run(scheduler);
     pipe(disposedTime, expectEquals(2));
   }),
 );

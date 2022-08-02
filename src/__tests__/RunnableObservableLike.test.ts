@@ -3,12 +3,14 @@ import {
   expectArrayEquals,
   expectEquals,
   expectToHaveBeenCalledTimes,
+  expectToThrow,
   expectTrue,
   mockFn,
   test,
 } from "../__internal__/testing";
+import { throws } from "../containers/ContainerLike";
 import { toObservable } from "../containers/ReadonlyArrayLike";
-import { increment, pipe, pipeLazy, returns } from "../functions";
+import { increment, pipe, pipeLazy, raise, returns } from "../functions";
 import { deferObservableT, generateObservable } from "../rx";
 import { subscribe, takeUntil } from "../rx/ObservableLike";
 import {
@@ -19,6 +21,7 @@ import {
   forEachT,
   keepT,
   mapT,
+  merge,
   pairwiseT,
   reduceT,
   scanT,
@@ -88,6 +91,33 @@ export const RunnableObservableLikeTests = describe(
     ...mapT,
     ...toReadonlyArrayT,
   }),
+  describe(
+    "merge",
+    test(
+      "two arrays",
+      pipeLazy(
+        merge(
+          pipe([0, 2, 3, 5, 6], toObservable({ delay: 1, delayStart: true })),
+          pipe([1, 4, 7], toObservable({ delay: 2, delayStart: true })),
+        ),
+        toReadonlyArray(),
+        expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
+      ),
+    ),
+    test(
+      "when one source throws",
+      pipeLazy(
+        pipeLazy(
+          merge(
+            pipe([1, 4, 7], toObservable({ delay: 2 })),
+            throws({ fromArray: toObservable, ...mapT }, { delay: 5 })(raise),
+          ),
+          toReadonlyArray(),
+        ),
+        expectToThrow,
+      ),
+    ),
+  ),
   pairwiseTests({
     fromArray: toObservable,
     ...pairwiseT,
@@ -118,16 +148,6 @@ export const RunnableObservableLikeTests = describe(
     ...takeLastT,
     ...toReadonlyArrayT,
   }),
-  takeWhileTests({
-    fromArray: toObservable,
-    ...takeWhileT,
-    ...toReadonlyArrayT,
-  }),
-  throwIfEmptyTests({
-    fromArray: toObservable,
-    ...throwIfEmptyT,
-    ...toReadonlyArrayT,
-  }),
   test(
     "takeUntil",
     pipeLazy(
@@ -138,6 +158,16 @@ export const RunnableObservableLikeTests = describe(
       expectArrayEquals([1, 2, 3]),
     ),
   ),
+  takeWhileTests({
+    fromArray: toObservable,
+    ...takeWhileT,
+    ...toReadonlyArrayT,
+  }),
+  throwIfEmptyTests({
+    fromArray: toObservable,
+    ...throwIfEmptyT,
+    ...toReadonlyArrayT,
+  }),
   describe(
     "toFlowable",
     test("flow a generating source", () => {
@@ -182,7 +212,7 @@ export const RunnableObservableLikeTests = describe(
         subscribe(scheduler),
       );
 
-      pipe(scheduler, run);
+      run(scheduler);
 
       pipe(f, expectToHaveBeenCalledTimes(3));
       pipe(f.calls[0][1], expectEquals(0));

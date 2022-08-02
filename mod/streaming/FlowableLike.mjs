@@ -1,29 +1,23 @@
 /// <reference types="./FlowableLike.d.ts" />
-"use strict";
-/*
-import { onSubscribe } from "../../old_src/observable";
-import { compose, Function1 } from "../functions";
-import { createObservable, ObservableLike } from "../rx";
-import { forEach } from "../rx/ObservableLike";
-import { dispatchTo } from "../scheduling/DispatcherLike";
-import { FlowableLike } from "../streaming";
+import { ignoreElements, startWith } from '../containers/ContainerLike.mjs';
+import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
+import { compose, pipe } from '../functions.mjs';
+import { createObservable } from '../rx.mjs';
+import { forEach, keepT, concatT, onSubscribe } from '../rx/ObservableLike.mjs';
+import { ObserverLike_dispatcher, ObserverLike_scheduler } from '../scheduling.mjs';
+import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
+import { createStream } from '../streaming.mjs';
+import { sourceFrom } from './StreamLike.mjs';
+import '../util/DisposableLike.mjs';
+import { addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
 
-export const toObservable =
-<T>(): Function1<FlowableLike<T>, ObservableLike<T>> =>
-src =>
-  createObservable(observer => {
-    const { dispatcher, scheduler } = observer;
-
-    const op = compose(
-      forEach<T>(dispatchTo(dispatcher)),
-      ignoreElements(keepT),
-      startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
-      onSubscribe(() => dispatcher),
-    );
-
+const toObservable = () => src => createObservable(observer => {
+    const { [ObserverLike_dispatcher]: dispatcher, [ObserverLike_scheduler]: scheduler, } = observer;
+    const op = compose(forEach(dispatchTo(dispatcher)), ignoreElements(keepT), startWith({ fromArray: toObservable$1, ...concatT }, "pause", "resume"), onSubscribe(() => dispatcher));
     pipe(createStream(op, scheduler), sourceFrom(src), addTo(observer));
-  });
+});
+const toObservableT = {
+    toObservable,
+};
 
-export const toObservableT: ToObservable<FlowableLike<unknown>> = {
-toObservable,
-};*/
+export { toObservable, toObservableT };
