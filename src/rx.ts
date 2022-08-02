@@ -37,6 +37,7 @@ import {
   newInstance,
   none,
   pipe,
+  pipeLazy,
 } from "./functions";
 import { ObserverLike } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
@@ -159,17 +160,6 @@ type CreateReactiveContainer<
   TSink extends SinkLike<T>,
   T,
 > = (onSink: SideEffect1<TSink>) => ContainerOf<C, T>;
-
-const createEmpty = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->(
-  create: CreateReactiveContainer<C, TSink, T>,
-) =>
-  create((sink: TSink) => {
-    pipe(sink, dispose());
-  });
 
 const createNever = <
   C extends ReactiveContainerLike<TSink>,
@@ -383,8 +373,31 @@ export const deferRunnable: Defer<RunnableLike>["defer"] = f =>
   });
 export const deferRunnableT: Defer<RunnableLike> = { defer: deferRunnable };
 
+interface EmptyObservable {
+  <T>(): EnumerableObservableLike<T>;
+  <T>(options: { delay: number }): RunnableObservableLike<T>;
+}
+export const emptyObservable: EmptyObservable = <T>(options?: {
+  delay: number;
+}) => {
+  const delay = getDelay(options);
+  return delay > 0
+    ? createRunnableObservable<T>(sink => {
+        pipe(
+          sink,
+          getScheduler,
+          schedule(pipeLazy(sink, dispose()), { delay }),
+        );
+      })
+    : createEnumerableObservable<T>(sink => {
+        pipeLazy(sink, dispose());
+      });
+};
+
 export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
-  createEmpty<RunnableLike, SinkLike<T>, T>(createRunnable);
+  createRunnable<T>(sink => {
+    pipe(sink, dispose());
+  });
 export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
 
 /**

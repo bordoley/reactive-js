@@ -39,7 +39,8 @@ declare const toEnumerableT: ToEnumerable<EnumerableLike>;
 interface ToObservable {
     <T>(): Function1<EnumerableLike<T>, EnumerableObservableLike<T>>;
     <T>(options?: {
-        delay?: number;
+        delay: number;
+        delayStart?: boolean;
     }): Function1<EnumerableLike<T>, RunnableObservableLike<T>>;
 }
 declare const toObservable: ToObservable;

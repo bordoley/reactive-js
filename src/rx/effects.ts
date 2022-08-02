@@ -1,15 +1,6 @@
-import { __DEV__ } from "../__internal__.env";
-import { empty } from "../container";
+import { __DEV__ } from "../__internal__/env";
 import {
-  DisposableLike,
-  Error,
-  addTo,
-  dispose,
-  disposed,
-  isDisposed,
-  onComplete,
-} from "../disposable";
-import {
+  Equality,
   Factory,
   Function1,
   Function2,
@@ -17,6 +8,7 @@ import {
   Function4,
   Function5,
   Function6,
+  Option,
   SideEffect,
   SideEffect1,
   SideEffect2,
@@ -24,22 +16,29 @@ import {
   SideEffect4,
   SideEffect5,
   SideEffect6,
+  Updater,
   arrayEquality,
   getLength,
   ignore,
+  isNone,
+  isSome,
   newInstance,
+  none,
   pipe,
   raise,
 } from "../functions";
-import { ObservableEffectMode, ObservableLike } from "../observable";
-import { ObserverLike, getScheduler } from "../observer";
-import { Option, isNone, isSome, none } from "../option";
-import { notify } from "../reactiveSink";
-import { SchedulerLike, schedule } from "../scheduler";
-import { defer } from "./defer";
-import { fromArrayT } from "./fromArray";
-import { onNotify } from "./onNotify";
-import { subscribe } from "./subscribe";
+import { ObservableLike, deferObservable, emptyObservable } from "../rx";
+import { forEach, subscribe } from "../rx/ObservableLike";
+import { ObserverLike, SchedulerLike } from "../scheduling";
+import { getScheduler } from "../scheduling/ObserverLike";
+import { schedule } from "../scheduling/SchedulerLike";
+import { StreamLike, StreamableLike, createStateStore } from "../streaming";
+import { stream } from "../streaming/StreamableLike";
+import { DisposableLike, Exception, disposed } from "../util";
+import { addTo, dispose, isDisposed, onComplete } from "../util/DisposableLike";
+import { notify } from "../util/SinkLike";
+
+export type EffectsMode = "batched" | "combine-latest";
 
 const arrayStrictEquality = arrayEquality();
 
@@ -108,7 +107,7 @@ function validateObservableEffect(
         : type === EffecTContainerOf.Observe
         ? {
             type,
-            observable: empty(fromArrayT),
+            observable: emptyObservable(),
             subscription: disposed,
             value: none,
             hasValue: false,
@@ -139,7 +138,7 @@ class ObservableContext {
   constructor(
     readonly observer: ObserverLike<unknown>,
     private readonly runComputation: () => void,
-    private readonly mode: ObservableEffectMode,
+    private readonly mode: EffectsMode,
   ) {}
 
   private readonly cleanup = () => {
@@ -187,7 +186,7 @@ class ObservableContext {
 
       const subscription = pipe(
         observable,
-        onNotify(next => {
+        forEach(next => {
           effect.value = next;
           effect.hasValue = true;
 
@@ -237,12 +236,12 @@ class ObservableContext {
 
 export const observable = <T>(
   computation: Factory<T>,
-  { mode = "batched" }: { mode?: ObservableEffectMode } = {},
+  { mode = "batched" }: { mode?: EffectsMode } = {},
 ): ObservableLike<T> =>
-  defer(() => (observer: ObserverLike<T>) => {
+  deferObservable(() => (observer: ObserverLike<T>) => {
     const runComputation = () => {
       let result: Option<T> = none;
-      let error: Option<Error> = none;
+      let error: Option<Exception> = none;
 
       currentCtx = ctx;
       try {
@@ -295,7 +294,7 @@ export const observable = <T>(
       const shouldDispose = !hasOutstandingEffects || hasError;
 
       if (shouldNotify) {
-        observer.notify(result as T);
+        pipe(observer, notify(result as T));
       }
 
       if (shouldDispose) {
@@ -357,7 +356,7 @@ export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
 };
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
-  defer(() => observer => {
+  deferObservable(() => observer => {
     f(...args);
     pipe(observer, notify(none), dispose());
   });
@@ -456,3 +455,48 @@ export function __currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
   return getScheduler(ctx.observer);
 }
+
+export const __stream = /*@__PURE__*/ (() => {
+  const streamOnSchedulerFactory = <
+    TReq,
+    T,
+    TStream extends StreamLike<TReq, T>,
+  >(
+    streamable: StreamableLike<TReq, T, TStream>,
+    scheduler: SchedulerLike,
+    replay: number,
+  ) => pipe(streamable, stream(scheduler, { replay }));
+
+  return <TReq, T, TStream extends StreamLike<TReq, T>>(
+    streamable: StreamableLike<TReq, T, TStream>,
+    {
+      replay = 0,
+      scheduler,
+    }: { readonly replay?: number; readonly scheduler?: SchedulerLike } = {},
+  ): TStream => {
+    const currentScheduler = __currentScheduler();
+    return __using(
+      streamOnSchedulerFactory,
+      streamable,
+      scheduler ?? currentScheduler,
+      replay,
+    );
+  };
+})();
+
+export const __state = /*@__PURE__*/ (() => {
+  const createStateOptions = <T>(equality: Option<Equality<T>>) =>
+    isSome(equality) ? { equality } : none;
+
+  return <T>(
+    initialState: () => T,
+    options: {
+      readonly equality?: Option<Equality<T>>;
+    } = {},
+  ): StreamLike<Updater<T>, T> => {
+    const { equality } = options;
+    const optionsMemo = __memo(createStateOptions, equality);
+    const streamable = __memo(createStateStore, initialState, optionsMemo);
+    return __stream(streamable);
+  };
+})();
