@@ -10,7 +10,7 @@ import { run } from '../../util/ContinuationLike.mjs';
 import '../../util/DisposableLike.mjs';
 import { dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
 
-const StreamableLikeTests = createDescribe("StreamableLike", createDescribe("stateStore", createTest("createActionReducer", () => {
+const StreamableLikeTests = createDescribe("StreamableLike", createDescribe("stateStore", createTest("createStateStore", () => {
     const scheduler = createVirtualTimeScheduler();
     const stateStream = pipe(createStateStore(returns(1)), stream(scheduler));
     pipe(stateStream, dispatch(returns(2)), dispatch(returns(3)), dispose());
