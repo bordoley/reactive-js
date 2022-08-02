@@ -640,7 +640,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.delay?` | `number` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 

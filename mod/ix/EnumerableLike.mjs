@@ -1,7 +1,7 @@
 /// <reference types="./EnumerableLike.d.ts" />
 import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
 import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
-import { getDelay } from '../__internal__/optionalArgs.mjs';
+import { getDelay, hasDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
@@ -510,15 +510,15 @@ const toEnumerableT = {
 const toObservable = /*@__PURE__*/ (() => {
     return (options) => (enumerable) => {
         const delay = getDelay(options);
+        const { delayStart = false } = options !== null && options !== void 0 ? options : {};
         const onSink = (observer) => {
             const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
-            const options = { delay: delay };
             pipe(observer, getScheduler, schedule(() => {
                 while (!isDisposed(observer) && move(enumerator)) {
                     pipe(enumerator, getCurrent, notifySink(observer));
                     __yield(options);
                 }
-            }, options));
+            }, delayStart && hasDelay(options) ? { delay } : none));
         };
         return delay > 0
             ? createRunnableObservable(onSink)

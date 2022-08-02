@@ -11,16 +11,16 @@ import {
   mixWith,
 } from "../__internal__/util/Object";
 import { IterableLike, ToIterable } from "../containers";
-import { compose, Function1, identity, none, pipe } from "../functions";
+import { Function1, compose, identity, none, pipe } from "../functions";
 import { ToEnumerable, createEnumerable } from "../ix";
+import { toObservable as enumerableToObservable } from "../ix/EnumerableLike";
+import { EnumerableObservableLike, RunnableObservableLike } from "../rx";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   SourceLike_move,
 } from "../util";
 import { dispose, isDisposed } from "../util/DisposableLike";
-import { EnumerableObservableLike, RunnableObservableLike } from "../rx";
-import { toObservable as enumerableToObservable } from "../ix/EnumerableLike";
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
