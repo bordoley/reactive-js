@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ObservableLike`](rx.ObservableLike.md)<`T`\>
+- [`HotObservableLike`](rx.HotObservableLike.md)<`T`\>
 
 - [`DisposableLike`](util.DisposableLike.md)
 
@@ -33,6 +33,7 @@
 - [[DisposableLike\_isDisposed]](rx.MulticastObservableLike.md#[disposablelike_isdisposed])
 - [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
 - [[MulticastObservableLike\_replay]](rx.MulticastObservableLike.md#[multicastobservablelike_replay])
+- [[ObservableLike\_observableType]](rx.MulticastObservableLike.md#[observablelike_observabletype])
 
 ### Methods
 
@@ -47,17 +48,17 @@
 
 #### Inherited from
 
-ObservableLike.T
+[HotObservableLike](rx.HotObservableLike.md).[T](rx.HotObservableLike.md#t)
 
 ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
+• `Optional` `Readonly` **TContainerOf**: [`HotObservableLike`](rx.HotObservableLike.md)<`unknown`\>
 
 #### Inherited from
 
-[ObservableLike](rx.ObservableLike.md).[TContainerOf](rx.ObservableLike.md#tcontainerof)
+[HotObservableLike](rx.HotObservableLike.md).[TContainerOf](rx.HotObservableLike.md#tcontainerof)
 
 ___
 
@@ -67,7 +68,7 @@ ___
 
 #### Inherited from
 
-[ObservableLike](rx.ObservableLike.md).[TStatefulContainerState](rx.ObservableLike.md#tstatefulcontainerstate)
+[HotObservableLike](rx.HotObservableLike.md).[TStatefulContainerState](rx.HotObservableLike.md#tstatefulcontainerstate)
 
 ___
 
@@ -106,6 +107,16 @@ ___
 ### [MulticastObservableLike\_replay]
 
 • `Readonly` **[MulticastObservableLike\_replay]**: `number`
+
+___
+
+### [ObservableLike\_observableType]
+
+• `Readonly` **[ObservableLike\_observableType]**: [`ObservableType`](../modules/rx.md#observabletype)
+
+#### Inherited from
+
+[HotObservableLike](rx.HotObservableLike.md).[[ObservableLike_observableType]](rx.HotObservableLike.md#[observablelike_observabletype])
 
 ## Methods
 

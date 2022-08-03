@@ -16,12 +16,15 @@ import {
   emptyObservable,
   generateObservable,
 } from "../../rx";
-import { subscribe, takeUntil } from "../../rx/ObservableLike";
 import {
   forEach,
-  mapT,
   merge,
+  subscribe,
   switchAll,
+  takeUntil,
+} from "../../rx/ObservableLike";
+import {
+  mapT,
   switchAllT,
   toFlowable,
   toReadonlyArray,
@@ -67,8 +70,12 @@ export const RunnableObservableLikeTests = describe(
     test(
       "with empty source",
       pipeLazy(
-        emptyObservable(),
-        switchAll(),
+        emptyObservable({ delay: 1 }),
+        switchAll<
+          RunnableObservableLike<RunnableObservableLike>,
+          RunnableObservableLike,
+          unknown
+        >(),
         toReadonlyArray(),
         expectArrayEquals([] as unknown[]),
       ),
@@ -79,8 +86,11 @@ export const RunnableObservableLikeTests = describe(
       pipeLazy(
         pipeLazy(
           raise,
-          throws({ fromArray: toObservable, ...mapT }),
-          switchAll(),
+          throws({
+            fromArray: <T>() => toObservable<T>({ delay: 0 }),
+            ...mapT,
+          }),
+          switchAll<RunnableObservableLike, RunnableObservableLike, unknown>(),
           toReadonlyArray(),
         ),
         expectToThrow,
@@ -94,7 +104,7 @@ export const RunnableObservableLikeTests = describe(
         toObservable({ delay: 1 }),
         concatMap<RunnableObservableLike, number, number>(
           { ...switchAllT, ...mapT },
-          _ => pipe([1, 2, 3], toObservable()),
+          _ => pipe([1, 2, 3], toObservable({ delay: 0 })),
         ),
         toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
@@ -120,7 +130,9 @@ export const RunnableObservableLikeTests = describe(
     pipeLazy(
       [1, 2, 3, 4, 5],
       toObservable({ delay: 1 }),
-      takeUntil(pipe([1], toObservable({ delay: 3, delayStart: true }))),
+      takeUntil<RunnableObservableLike, number>(
+        pipe([1], toObservable({ delay: 3, delayStart: true })),
+      ),
       toReadonlyArray(),
       expectArrayEquals([1, 2, 3]),
     ),
@@ -163,7 +175,7 @@ export const RunnableObservableLikeTests = describe(
       const f = mockFn();
       const subscription = pipe(
         generateStream,
-        forEach(x => {
+        forEach<number>(x => {
           f(getCurrentTime(scheduler), x);
         }),
         subscribe(scheduler),

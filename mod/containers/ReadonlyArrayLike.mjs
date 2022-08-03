@@ -1,5 +1,5 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
-import { getDelay, hasDelay } from '../__internal__/optionalArgs.mjs';
+import { hasDelay, getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
@@ -49,7 +49,7 @@ const createFromArray = (factory) => (options = {}) => values => {
             return { start, count };
         }
     })();
-    return factory(values, start, count, options);
+    return factory(values, start, count);
 };
 const toEnumerable = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
@@ -83,8 +83,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
 })();
 const toEnumerableT = { toEnumerable };
 const toObservable = /*@__PURE__*/ (() => {
-    return createFromArray((values, startIndex, count, options) => {
-        const delay = getDelay(options);
+    const createArrayObservable = (createObservable, options) => createFromArray((values, startIndex, count) => {
         const { delayStart = false } = options !== null && options !== void 0 ? options : {};
         const onSink = (observer) => {
             let index = startIndex, cnt = count;
@@ -108,9 +107,13 @@ const toObservable = /*@__PURE__*/ (() => {
             };
             pipe(observer, getScheduler, schedule(continuation, delayStart && hasDelay(options) ? options : none), addTo(observer));
         };
+        return createObservable(onSink);
+    });
+    return ((options) => {
+        const delay = getDelay(options);
         return delay > 0
-            ? createRunnableObservable(onSink)
-            : createEnumerableObservable(onSink);
+            ? createArrayObservable(createRunnableObservable, options)(options)
+            : createArrayObservable(createEnumerableObservable, options)(options);
     });
 })();
 const toReadonlyArray = () => identity;

@@ -1083,34 +1083,35 @@ interface ToObservable {
     RunnableObservableLike<T>
   >;
 }
-export const toObservable: ToObservable = /*@__PURE__*/ (() => {
-  return <T>(options?: { delay?: number; delayStart?: boolean }) =>
-    (enumerable: EnumerableLike<T>): EnumerableObservableLike<T> => {
-      const delay = getDelay(options);
-      const { delayStart = false } = options ?? {};
+export const toObservable: ToObservable = (<T>(options?: {
+    delay?: number;
+    delayStart?: boolean;
+  }) =>
+  (enumerable: EnumerableLike<T>) => {
+    const delay = getDelay(options);
+    const { delayStart = false } = options ?? {};
 
-      const onSink = (observer: ObserverLike<T>) => {
-        const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
+    const onSink = (observer: ObserverLike<T>) => {
+      const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
 
-        pipe(
-          observer,
-          getScheduler,
-          schedule(
-            () => {
-              while (!isDisposed(observer) && move(enumerator)) {
-                pipe(enumerator, getCurrent, notifySink(observer));
-                __yield(options);
-              }
-            },
-            delayStart && hasDelay(options) ? { delay } : none,
-          ),
-        );
-      };
-      return delay > 0
-        ? createRunnableObservable(onSink)
-        : createEnumerableObservable(onSink);
+      pipe(
+        observer,
+        getScheduler,
+        schedule(
+          () => {
+            while (!isDisposed(observer) && move(enumerator)) {
+              pipe(enumerator, getCurrent, notifySink(observer));
+              __yield(options);
+            }
+          },
+          delayStart && hasDelay(options) ? { delay } : none,
+        ),
+      );
     };
-})();
+    return delay > 0
+      ? createRunnableObservable(onSink)
+      : createEnumerableObservable(onSink);
+  }) as ToObservable;
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
 

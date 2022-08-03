@@ -28,21 +28,22 @@ import {
   updateReducer,
 } from "./functions";
 import {
+  HotObservableLike,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
-  ObservableLike,
   ReactiveContainerLike_sinkInto,
   SubjectLike,
-  createObservable,
+  createHotObservable,
   createSubject,
 } from "./rx";
+import { mergeT } from "./rx/HotObservableLike";
 import { getObserverCount, getReplay } from "./rx/MulticastObservableLike";
 import {
   distinctUntilChanged,
-  mergeT,
   multicast,
   scan,
+  toHotObservable,
 } from "./rx/ObservableLike";
 import { sinkInto } from "./rx/ReactiveContainerLike";
 import { publish } from "./rx/SubjectLike";
@@ -118,7 +119,7 @@ export const createStream = /*@__PURE__*/ (() => {
       clazz(
         function StreamImpl(
           this: DisposableLike & TProperties,
-          op: ContainerOperator<ObservableLike, TReq, T>,
+          op: ContainerOperator<HotObservableLike, TReq, T>,
           scheduler: SchedulerLike,
           replay: number,
         ) {
@@ -168,7 +169,7 @@ export const createStream = /*@__PURE__*/ (() => {
       mixWith(delegatingDisposableMixin),
       createObjectFactory<
         StreamLike<TReq, T>,
-        ContainerOperator<ObservableLike, TReq, T>,
+        ContainerOperator<HotObservableLike, TReq, T>,
         SchedulerLike,
         number
       >(),
@@ -176,13 +177,13 @@ export const createStream = /*@__PURE__*/ (() => {
   })();
 
   return <TReq, T>(
-    op: ContainerOperator<ObservableLike, TReq, T>,
+    op: ContainerOperator<HotObservableLike, TReq, T>,
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): StreamLike<TReq, T> => {
     const { replay = 0 } = options ?? {};
     return createStreamInternal(
-      op as ContainerOperator<ObservableLike, unknown, unknown>,
+      op as ContainerOperator<HotObservableLike, unknown, unknown>,
       scheduler,
       replay,
     );
@@ -225,114 +226,114 @@ export const createStreamble = /*@__PURE__*/ (() => {
 })();
 
 interface CreateLiftedFlowable {
-  <T, A>(op1: ContainerOperator<ObservableLike, T, A>): FlowableLike<A>;
-  <T, A, B>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
+  <A>(op1: ContainerOperator<HotObservableLike, FlowMode, A>): FlowableLike<A>;
+  <A, B>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
   ): FlowableLike<B>;
-  <T, A, B, C>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
+  <A, B, C>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
   ): FlowableLike<C>;
-  <T, A, B, C, D>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
+  <A, B, C, D>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
   ): FlowableLike<D>;
-  <T, A, B, C, D, E>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
+  <A, B, C, D, E>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
   ): FlowableLike<E>;
-  <T, A, B, C, D, E, F>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
+  <A, B, C, D, E, F>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
   ): FlowableLike<F>;
-  <T, A, B, C, D, E, F, G>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
+  <A, B, C, D, E, F, G>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
   ): FlowableLike<G>;
-  <T, A, B, C, D, E, F, G, H>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
+  <A, B, C, D, E, F, G, H>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
   ): FlowableLike<H>;
-  <T, A, B, C, D, E, F, G, H, I>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
+  <A, B, C, D, E, F, G, H, I>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
+    op9: ContainerOperator<HotObservableLike, H, I>,
   ): FlowableLike<I>;
-  <T, A, B, C, D, E, F, G, H, I, J>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-    op10: ContainerOperator<ObservableLike, I, J>,
+  <A, B, C, D, E, F, G, H, I, J>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
+    op9: ContainerOperator<HotObservableLike, H, I>,
+    op10: ContainerOperator<HotObservableLike, I, J>,
   ): FlowableLike<J>;
-  <T, A, B, C, D, E, F, G, H, I, J, K>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-    op10: ContainerOperator<ObservableLike, I, J>,
-    op11: ContainerOperator<ObservableLike, J, K>,
+  <A, B, C, D, E, F, G, H, I, J, K>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
+    op9: ContainerOperator<HotObservableLike, H, I>,
+    op10: ContainerOperator<HotObservableLike, I, J>,
+    op11: ContainerOperator<HotObservableLike, J, K>,
   ): FlowableLike<K>;
-  <T, A, B, C, D, E, F, G, H, I, J, K, L>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-    op10: ContainerOperator<ObservableLike, I, J>,
-    op11: ContainerOperator<ObservableLike, J, K>,
-    op12: ContainerOperator<ObservableLike, K, L>,
+  <A, B, C, D, E, F, G, H, I, J, K, L>(
+    op1: ContainerOperator<HotObservableLike, FlowMode, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
+    op9: ContainerOperator<HotObservableLike, H, I>,
+    op10: ContainerOperator<HotObservableLike, I, J>,
+    op11: ContainerOperator<HotObservableLike, J, K>,
+    op12: ContainerOperator<HotObservableLike, K, L>,
   ): FlowableLike<L>;
 }
 export const createLiftedFlowable: CreateLiftedFlowable = <T>(
-  ...ops: readonly ContainerOperator<ObservableLike<any>, any, any>[]
+  ...ops: readonly ContainerOperator<HotObservableLike, any, any>[]
 ) => {
   const op =
     getLength(ops) > 1
       ? (composeUnsafe(...ops) as ContainerOperator<
-          ObservableLike,
+          HotObservableLike,
           unknown,
           unknown
         >)
@@ -343,115 +344,115 @@ export const createLiftedFlowable: CreateLiftedFlowable = <T>(
 };
 
 interface CreateLiftedStreamable {
-  <T, A>(op1: ContainerOperator<ObservableLike, T, A>): StreamableLike<T, A>;
+  <T, A>(op1: ContainerOperator<HotObservableLike, T, A>): StreamableLike<T, A>;
   <T, A, B>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
   ): StreamableLike<T, B>;
   <T, A, B, C>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
   ): StreamableLike<T, C>;
   <T, A, B, C, D>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
   ): StreamableLike<T, D>;
   <T, A, B, C, D, E>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
   ): StreamableLike<T, E>;
   <T, A, B, C, D, E, F>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
   ): StreamableLike<T, F>;
   <T, A, B, C, D, E, F, G>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
   ): StreamableLike<T, G>;
   <T, A, B, C, D, E, F, G, H>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
   ): StreamableLike<T, H>;
   <T, A, B, C, D, E, F, G, H, I>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
+    op9: ContainerOperator<HotObservableLike, H, I>,
   ): StreamableLike<T, I>;
   <T, A, B, C, D, E, F, G, H, I, J>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-    op10: ContainerOperator<ObservableLike, I, J>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
+    op9: ContainerOperator<HotObservableLike, H, I>,
+    op10: ContainerOperator<HotObservableLike, I, J>,
   ): StreamableLike<T, J>;
   <T, A, B, C, D, E, F, G, H, I, J, K>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-    op10: ContainerOperator<ObservableLike, I, J>,
-    op11: ContainerOperator<ObservableLike, J, K>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
+    op9: ContainerOperator<HotObservableLike, H, I>,
+    op10: ContainerOperator<HotObservableLike, I, J>,
+    op11: ContainerOperator<HotObservableLike, J, K>,
   ): StreamableLike<T, K>;
   <T, A, B, C, D, E, F, G, H, I, J, K, L>(
-    op1: ContainerOperator<ObservableLike, T, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-    op10: ContainerOperator<ObservableLike, I, J>,
-    op11: ContainerOperator<ObservableLike, J, K>,
-    op12: ContainerOperator<ObservableLike, K, L>,
+    op1: ContainerOperator<HotObservableLike, T, A>,
+    op2: ContainerOperator<HotObservableLike, A, B>,
+    op3: ContainerOperator<HotObservableLike, B, C>,
+    op4: ContainerOperator<HotObservableLike, C, D>,
+    op5: ContainerOperator<HotObservableLike, D, E>,
+    op6: ContainerOperator<HotObservableLike, E, F>,
+    op7: ContainerOperator<HotObservableLike, F, G>,
+    op8: ContainerOperator<HotObservableLike, G, H>,
+    op9: ContainerOperator<HotObservableLike, H, I>,
+    op10: ContainerOperator<HotObservableLike, I, J>,
+    op11: ContainerOperator<HotObservableLike, J, K>,
+    op12: ContainerOperator<HotObservableLike, K, L>,
   ): StreamableLike<T, L>;
 }
 
 export const createLiftedStreamable: CreateLiftedStreamable = (
-  ...ops: readonly ContainerOperator<ObservableLike<any>, any, any>[]
+  ...ops: readonly ContainerOperator<HotObservableLike<any>, any, any>[]
 ) => {
   const op =
     getLength(ops) > 1
       ? (composeUnsafe(...ops) as ContainerOperator<
-          ObservableLike,
+          HotObservableLike,
           unknown,
           unknown
         >)
@@ -476,13 +477,16 @@ export const createActionReducer = <TAction, T>(
   options?: { readonly equality?: Equality<T> },
 ): StreamableLike<TAction, T> =>
   createLiftedStreamable(obs =>
-    createObservable(observer => {
+    createHotObservable(observer => {
       const acc = initialState();
       pipe(
         obs,
-        scan(reducer, returns(acc)),
-        concatWith<ObservableLike, T>(mergeT, pipe([acc], toObservable())),
-        distinctUntilChanged(options),
+        scan<HotObservableLike, TAction, T>(reducer, returns(acc)),
+        concatWith<HotObservableLike, T>(
+          mergeT,
+          pipe([acc], toObservable(), toHotObservable()),
+        ),
+        distinctUntilChanged<HotObservableLike, T>(options),
         sinkInto(observer),
       );
     }),

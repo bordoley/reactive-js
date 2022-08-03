@@ -3,9 +3,9 @@ import { describe as createDescribe, test as createTest, mockFn, expectToHaveBee
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe, raise, pipeLazy } from '../../functions.mjs';
 import { toReadonlyArray } from '../../ix/EnumerableLike.mjs';
-import { deferObservableT } from '../../rx.mjs';
-import { concatT, toReadonlyArrayT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, onSubscribe, toEnumerable } from '../../rx/EnumerableObservableLike.mjs';
-import { subscribe } from '../../rx/ObservableLike.mjs';
+import { deferEnumerableObservableT } from '../../rx.mjs';
+import { concatT, toReadonlyArrayT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toEnumerable } from '../../rx/EnumerableObservableLike.mjs';
+import { onSubscribe, subscribe } from '../../rx/ObservableLike.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import '../../util/DisposableLike.mjs';
@@ -19,7 +19,7 @@ const EnumerableObservableLikeTests = createDescribe("EnumerableObservableLike",
 }), decodeWithCharsetTests({
     fromArray: toObservable,
     ...decodeWithCharsetT,
-    ...deferObservableT,
+    ...deferEnumerableObservableT,
     ...mapT,
     ...toReadonlyArrayT,
 }), distinctUntilChangedTests({
