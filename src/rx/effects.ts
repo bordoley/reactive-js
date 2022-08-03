@@ -42,21 +42,21 @@ export type EffectsMode = "batched" | "combine-latest";
 
 const arrayStrictEquality = arrayEquality();
 
-const enum EffecTContainerOf {
+const enum EffectContainerOf {
   Memo = 1,
   Observe = 2,
   Using = 3,
 }
 
 type MemoEffect = {
-  readonly type: EffecTContainerOf.Memo;
+  readonly type: EffectContainerOf.Memo;
   f: (...args: any[]) => unknown;
   args: any[];
   value: unknown;
 };
 
 type ObserveEffect = {
-  readonly type: EffecTContainerOf.Observe;
+  readonly type: EffectContainerOf.Observe;
   observable: ObservableLike<unknown>;
   subscription: DisposableLike;
   value: Option<unknown>;
@@ -64,7 +64,7 @@ type ObserveEffect = {
 };
 
 type UsingEffect = {
-  readonly type: EffecTContainerOf.Using;
+  readonly type: EffectContainerOf.Using;
   f: (...args: any[]) => unknown;
   args: any[];
   value: DisposableLike;
@@ -76,19 +76,19 @@ type ObservableEffect = ObserveEffect | MemoEffect | UsingEffect;
 
 function validateObservableEffect(
   ctx: ObservableContext,
-  type: EffecTContainerOf.Observe,
+  type: EffectContainerOf.Observe,
 ): ObserveEffect;
 function validateObservableEffect(
   ctx: ObservableContext,
-  type: EffecTContainerOf.Memo,
+  type: EffectContainerOf.Memo,
 ): MemoEffect;
 function validateObservableEffect(
   ctx: ObservableContext,
-  type: EffecTContainerOf.Using,
+  type: EffectContainerOf.Using,
 ): UsingEffect;
 function validateObservableEffect(
   ctx: ObservableContext,
-  type: EffecTContainerOf,
+  type: EffectContainerOf,
 ): ObservableEffect {
   const { effects, index } = ctx;
   ctx.index++;
@@ -97,14 +97,14 @@ function validateObservableEffect(
 
   if (isNone(effect)) {
     const newEffect: ObservableEffect =
-      type === EffecTContainerOf.Memo
+      type === EffectContainerOf.Memo
         ? {
             type,
             f: ignore,
             args: [],
             value: none,
           }
-        : type === EffecTContainerOf.Observe
+        : type === EffectContainerOf.Observe
         ? {
             type,
             observable: emptyObservable(),
@@ -112,7 +112,7 @@ function validateObservableEffect(
             value: none,
             hasValue: false,
           }
-        : type === EffecTContainerOf.Using
+        : type === EffectContainerOf.Using
         ? {
             type,
             f: ignore,
@@ -147,7 +147,7 @@ class ObservableContext {
     const hasOutstandingEffects =
       effects.findIndex(
         effect =>
-          effect.type === EffecTContainerOf.Observe &&
+          effect.type === EffectContainerOf.Observe &&
           !isDisposed(effect.subscription),
       ) >= 0;
 
@@ -160,7 +160,7 @@ class ObservableContext {
   };
 
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
-    const effect = validateObservableEffect(this, EffecTContainerOf.Memo);
+    const effect = validateObservableEffect(this, EffectContainerOf.Memo);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
       return effect.value as T;
@@ -174,7 +174,7 @@ class ObservableContext {
   }
 
   observe<T>(observable: ObservableLike<T>): Option<T> {
-    const effect = validateObservableEffect(this, EffecTContainerOf.Observe);
+    const effect = validateObservableEffect(this, EffectContainerOf.Observe);
 
     if (effect.observable === observable) {
       return effect.value as Option<T>;
@@ -216,7 +216,7 @@ class ObservableContext {
   }
 
   using<T extends DisposableLike>(f: (...args: any[]) => T, ...args: any[]): T {
-    const effect = validateObservableEffect(this, EffecTContainerOf.Using);
+    const effect = validateObservableEffect(this, EffectContainerOf.Using);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
       return effect.value as T;
@@ -263,14 +263,14 @@ export const observable = <T>(
         const { type } = effect;
 
         if (
-          type === EffecTContainerOf.Observe &&
+          type === EffectContainerOf.Observe &&
           !(effect as ObserveEffect).hasValue
         ) {
           allObserveEffectsHaveValues = false;
         }
 
         if (
-          type === EffecTContainerOf.Observe &&
+          type === EffectContainerOf.Observe &&
           !isDisposed((effect as ObserveEffect).subscription)
         ) {
           hasOutstandingEffects = true;

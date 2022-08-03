@@ -23,7 +23,6 @@
 - [Function7](functions.md#function7)
 - [Function8](functions.md#function8)
 - [Function9](functions.md#function9)
-- [Identity](functions.md#identity)
 - [Option](functions.md#option)
 - [Predicate](functions.md#predicate)
 - [Reducer](functions.md#reducer)
@@ -52,11 +51,10 @@
 - [composeUnsafe](functions.md#composeunsafe)
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
-- [flip](functions.md#flip)
 - [floor](functions.md#floor)
 - [forEach](functions.md#foreach)
 - [getLength](functions.md#getlength)
-- [identity](functions.md#identity-1)
+- [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
 - [incrementBy](functions.md#incrementby)
@@ -569,18 +567,6 @@ ___
 ##### Returns
 
 `T`
-
-___
-
-### Identity
-
-Ƭ **Identity**<`T`\>: [`Function1`](functions.md#function1)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
 
 ___
 
@@ -1526,55 +1512,6 @@ Returns a function that decrements a number `x` by the value `decr`.
 #### Returns
 
 [`Updater`](functions.md#updater)<`number`\>
-
-___
-
-### flip
-
-▸ **flip**<`TA`, `TB`, `T`\>(`f`): [`Function2`](functions.md#function2)<`TB`, `TA`, `T`\>
-
-Returns a function that flips the order of arguments passed to `f`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
-
-#### Returns
-
-[`Function2`](functions.md#function2)<`TB`, `TA`, `T`\>
-
-▸ **flip**<`TA`, `TB`, `TC`, `T`\>(`f`): [`Function3`](functions.md#function3)<`TC`, `TB`, `TA`, `T`\>
-
-Returns a function that flips the order of arguments passed to `f`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Function3`](functions.md#function3)<`TA`, `TB`, `TC`, `T`\> |
-
-#### Returns
-
-[`Function3`](functions.md#function3)<`TC`, `TB`, `TA`, `T`\>
 
 ___
 

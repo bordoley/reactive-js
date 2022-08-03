@@ -98,7 +98,7 @@ export const useObservable = <T>(
 
     return pipeLazy(
       // If a scheduler is allocated, then dispose the new scheduler
-      // which will also dispose any subscriptions. Otherwise
+      // which will also dispose all subscriptions. Otherwise
       // only dispose the subscription.
       scheduler === schedulerOption ? subscription : scheduler,
       dispose(),

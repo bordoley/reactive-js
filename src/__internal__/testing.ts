@@ -185,7 +185,9 @@ export const expectPromiseToThrow = async (promise: PromiseLike<any>) => {
   }
 };
 
-declare const Deno: any;
+declare const Deno: {
+  test(name: string, f: () => void): void;
+};
 
 const createTests = (testGroup: TestGroup, parents: readonly string[]) => {
   const path = [...parents, testGroup.name];

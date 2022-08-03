@@ -85,8 +85,8 @@ export const DisposableLikeTests = describe(
     pipe(
       parent,
       getException,
-      ({ cause }: Exception = { cause: undefined }) => cause as any,
-      expectEquals(cause),
+      ({ cause }: Exception = { cause: undefined }) => cause,
+      expectEquals(cause as unknown),
     );
   }),
   test("toObservable", () => {

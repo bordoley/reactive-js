@@ -183,11 +183,7 @@ const createLift = /*@__PURE__*/ (() => {
     }
 
     [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-      pipeUnsafe(
-        observer,
-        ...this.operators,
-        sourceFrom(this.source),
-      ) as ObserverLike<any>;
+      pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
     }
   }
 

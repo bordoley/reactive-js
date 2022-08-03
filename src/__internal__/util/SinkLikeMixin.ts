@@ -37,6 +37,7 @@ import {
   Class1,
   Class2,
   Class3,
+  Object_properties,
   PropertyTypeOf,
   clazz,
   createObjectFactory,
@@ -84,13 +85,20 @@ export const delegatingSinkMixin: <T>() => Class1<
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   return pipeLazy(
-    clazz(
+    clazz<
+      (this: TProperties, delegate: SinkLike<T>) => void,
+      TProperties,
+      {
+        [SinkLike_notify](this: TProperties, v: T): void;
+      }
+    >(
       function DelegatingSink(this: TProperties, delegate: SinkLike<T>) {
         init(disposableMixin, this);
         this[DelegatingSink_delegate] = delegate;
       },
       {
-        [DelegatingSink_delegate]: none as any,
+        ...disposableMixin[Object_properties],
+        [DelegatingSink_delegate]: none,
       },
       {
         [SinkLike_notify](this: TProperties, v: T) {
@@ -496,8 +504,8 @@ export const mapSinkMixin: <TA, TB>() => Class2<
         this[MapSink_private_mapper] = mapper;
       },
       {
-        [Sink_private_delegate]: none as any,
-        [MapSink_private_mapper]: none as any,
+        [Sink_private_delegate]: none,
+        [MapSink_private_mapper]: none,
       },
       {
         [SinkLike_notify](this: TProperties, next: TA) {
@@ -545,7 +553,7 @@ export const pairwiseSinkMixin: <T>() => Class1<
         this[Sink_private_delegate] = delegate;
       },
       {
-        [Sink_private_delegate]: none as any,
+        [Sink_private_delegate]: none,
         [PairwiseSink_private_prev]: none,
         [PairwiseSink_private_hasPrev]: false,
       },
@@ -908,7 +916,7 @@ export const takeLastSinkMixin: <
       {
         [Sink_private_delegate]: none,
         [TakeLastSink_private_takeLastCount]: 0,
-        [TakeLastSink_last]: none as any,
+        [TakeLastSink_last]: none,
       },
       {
         [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
