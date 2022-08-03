@@ -1,8 +1,8 @@
-import { Identity, SideEffect1 } from "../functions.mjs";
+import { Updater, SideEffect1 } from "../functions.mjs";
 import { DispatcherLike_dispatch, DispatcherLike_scheduler, SchedulerLike } from "../scheduling.mjs";
 declare const dispatch: <T, TDispatcher extends {
     [DispatcherLike_dispatch](v: T): void;
-}>(v: T) => Identity<TDispatcher>;
+}>(v: T) => Updater<TDispatcher>;
 declare const dispatchTo: <T>(dispatcher: {
     [DispatcherLike_dispatch](v: T): void;
 }) => SideEffect1<T>;

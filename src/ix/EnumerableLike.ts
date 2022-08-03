@@ -201,21 +201,21 @@ export const enumerate =
     enumerable[InteractiveContainerLike_interact](none);
 
 const lift: Lift<EnumerableLike, TInteractive>["lift"] = /*@__PURE__*/ (() => {
-  class LiftedEnumerable<T> implements EnumerableLike<T> {
+  class LiftedEnumerable<TA, TB> implements EnumerableLike<TB> {
     constructor(
-      readonly src: EnumerableLike<any>,
+      readonly src: EnumerableLike<TA>,
       readonly operators: readonly Function1<
         EnumeratorLike<any>,
         EnumeratorLike<any>
       >[],
     ) {}
 
-    [InteractiveContainerLike_interact](): EnumeratorLike<T> {
+    [InteractiveContainerLike_interact](): EnumeratorLike<TB> {
       return pipeUnsafe(
         this.src,
         enumerate<unknown>(),
         ...this.operators,
-      ) as EnumeratorLike<T>;
+      ) as EnumeratorLike<TB>;
     }
   }
 
@@ -233,11 +233,11 @@ const lift: Lift<EnumerableLike, TInteractive>["lift"] = /*@__PURE__*/ (() => {
           ? [...enumerable.operators, operator]
           : [operator];
 
-      return newInstance<EnumerableLike<TB>, EnumerableLike<TA>, any>(
-        LiftedEnumerable,
-        src,
-        allFunctions,
-      );
+      return newInstance<
+        EnumerableLike<TB>,
+        EnumerableLike<TA>,
+        readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[]
+      >(LiftedEnumerable, src, allFunctions);
     };
 })();
 const liftT: Lift<EnumerableLike, TInteractive> = {

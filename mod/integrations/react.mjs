@@ -35,7 +35,7 @@ const useObservable = (observable, options = {}) => {
         const subscription = pipe(observable, forEach(compose(returns, updateState)), subscribe(scheduler), onError(updateError));
         return pipeLazy(
         // If a scheduler is allocated, then dispose the new scheduler
-        // which will also dispose any subscriptions. Otherwise
+        // which will also dispose all subscriptions. Otherwise
         // only dispose the subscription.
         scheduler === schedulerOption ? subscription : scheduler, dispose(), ignore);
     }, [observable, updateState, updateError, options.scheduler]);

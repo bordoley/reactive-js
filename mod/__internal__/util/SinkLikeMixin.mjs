@@ -5,7 +5,7 @@ import { SinkLike_notify } from '../../util.mjs';
 import '../../util/DisposableLike.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './DisposableLikeMixins.mjs';
-import { clazz, init, mixWith, createObjectFactory } from './Object.mjs';
+import { clazz, init, mixWith, createObjectFactory, Object_properties } from './Object.mjs';
 import { addTo, onComplete, dispose } from './DisposableLikeInternal.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
@@ -20,6 +20,7 @@ const delegatingSinkMixin = /*@__PURE__*/ (() => {
         init(disposableMixin, this);
         this[DelegatingSink_delegate] = delegate;
     }, {
+        ...disposableMixin[Object_properties],
         [DelegatingSink_delegate]: none,
     }, {
         [SinkLike_notify](v) {

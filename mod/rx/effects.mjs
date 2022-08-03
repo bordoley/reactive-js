@@ -18,14 +18,14 @@ function validateObservableEffect(ctx, type) {
     ctx.index++;
     const effect = effects[index];
     if (isNone(effect)) {
-        const newEffect = type === 1 /* EffecTContainerOf.Memo */
+        const newEffect = type === 1 /* EffectContainerOf.Memo */
             ? {
                 type,
                 f: ignore,
                 args: [],
                 value: none,
             }
-            : type === 2 /* EffecTContainerOf.Observe */
+            : type === 2 /* EffectContainerOf.Observe */
                 ? {
                     type,
                     observable: emptyObservable(),
@@ -33,7 +33,7 @@ function validateObservableEffect(ctx, type) {
                     value: none,
                     hasValue: false,
                 }
-                : type === 3 /* EffecTContainerOf.Using */
+                : type === 3 /* EffectContainerOf.Using */
                     ? {
                         type,
                         f: ignore,
@@ -60,7 +60,7 @@ class ObservableContext {
         this.scheduledComputationSubscription = disposed;
         this.cleanup = () => {
             const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* EffecTContainerOf.Observe */ &&
+            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* EffectContainerOf.Observe */ &&
                 !isDisposed(effect.subscription)) >= 0;
             if (!hasOutstandingEffects &&
                 isDisposed(this.scheduledComputationSubscription)) {
@@ -69,7 +69,7 @@ class ObservableContext {
         };
     }
     memo(f, ...args) {
-        const effect = validateObservableEffect(this, 1 /* EffecTContainerOf.Memo */);
+        const effect = validateObservableEffect(this, 1 /* EffectContainerOf.Memo */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -82,7 +82,7 @@ class ObservableContext {
         }
     }
     observe(observable) {
-        const effect = validateObservableEffect(this, 2 /* EffecTContainerOf.Observe */);
+        const effect = validateObservableEffect(this, 2 /* EffectContainerOf.Observe */);
         if (effect.observable === observable) {
             return effect.value;
         }
@@ -111,7 +111,7 @@ class ObservableContext {
         }
     }
     using(f, ...args) {
-        const effect = validateObservableEffect(this, 3 /* EffecTContainerOf.Using */);
+        const effect = validateObservableEffect(this, 3 /* EffectContainerOf.Using */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -146,11 +146,11 @@ const observable = (computation, { mode = "batched" } = {}) => deferObservable((
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
             const { type } = effect;
-            if (type === 2 /* EffecTContainerOf.Observe */ &&
+            if (type === 2 /* EffectContainerOf.Observe */ &&
                 !effect.hasValue) {
                 allObserveEffectsHaveValues = false;
             }
-            if (type === 2 /* EffecTContainerOf.Observe */ &&
+            if (type === 2 /* EffectContainerOf.Observe */ &&
                 !isDisposed(effect.subscription)) {
                 hasOutstandingEffects = true;
             }

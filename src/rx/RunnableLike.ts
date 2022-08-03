@@ -99,18 +99,14 @@ import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
 import { sourceFrom } from "../util/SinkLike";
 
 const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
-  class LiftedRunnable<T> implements RunnableLike<T> {
+  class LiftedRunnable<TA, TB> implements RunnableLike<TB> {
     constructor(
-      readonly src: RunnableLike<any>,
+      readonly src: RunnableLike<TA>,
       readonly operators: readonly Function1<SinkLike<any>, SinkLike<any>>[],
     ) {}
 
-    [ReactiveContainerLike_sinkInto](sink: SinkLike<T>) {
-      pipe(
-        pipeUnsafe(sink, ...this.operators) as SinkLike<T>,
-        sourceFrom(this.src),
-        dispose(),
-      );
+    [ReactiveContainerLike_sinkInto](sink: SinkLike<TB>) {
+      pipeUnsafe(sink, ...this.operators, sourceFrom(this.src));
     }
   }
 

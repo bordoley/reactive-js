@@ -4,12 +4,12 @@ import { reactive, createBufferOperator, createDecodeWithCharsetOperator, create
 import { createObjectFactory, clazz, init, mixWith } from '../__internal__/util/Object.mjs';
 import { bufferSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, pipeUnsafe, newInstance, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
+import { pipeUnsafe, newInstance, pipe, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../util.mjs';
 import '../util/DisposableLike.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
-import { dispose, bindTo, addTo, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { bindTo, addTo, dispose, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const lift = /*@__PURE__*/ (() => {
     class LiftedRunnable {
@@ -18,7 +18,7 @@ const lift = /*@__PURE__*/ (() => {
             this.operators = operators;
         }
         [ReactiveContainerLike_sinkInto](sink) {
-            pipe(pipeUnsafe(sink, ...this.operators), sourceFrom(this.src), dispose());
+            pipeUnsafe(sink, ...this.operators, sourceFrom(this.src));
         }
     }
     return (operator) => (runnable) => {

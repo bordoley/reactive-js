@@ -1,4 +1,4 @@
-import { Identity } from "../functions.mjs";
+import { Updater } from "../functions.mjs";
 import { ContinuationLike } from "../util.mjs";
-declare const run: Identity<ContinuationLike>;
+declare const run: Updater<ContinuationLike>;
 export { run };

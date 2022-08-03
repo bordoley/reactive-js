@@ -250,11 +250,13 @@ export const createRunnableUsingT: Using<RunnableLike> = {
   using: createRunnableUsing,
 };
 
-export const createSubject = /*@__PURE__*/ (() => {
+export const createSubject: <T>(options?: {
+  replay?: number;
+}) => SubjectLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [MulticastObservableLike_replay]: number;
-    observers: Set<ObserverLike>;
-    replayed: Array<unknown>;
+    observers: Set<ObserverLike<T>>;
+    replayed: Array<T>;
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
   const createSubjectInstance = pipe(
@@ -278,7 +280,7 @@ export const createSubject = /*@__PURE__*/ (() => {
           return self.observers.size;
         },
 
-        [SubjectLike_publish](this: TProperties, next: unknown) {
+        [SubjectLike_publish](this: TProperties, next: T) {
           if (!isDisposed(this)) {
             const { replayed } = this;
 
@@ -299,7 +301,7 @@ export const createSubject = /*@__PURE__*/ (() => {
 
         [ReactiveContainerLike_sinkInto](
           this: TProperties & SubjectLike,
-          observer: ObserverLike<any>,
+          observer: ObserverLike<T>,
         ) {
           if (!isDisposed(this)) {
             const { observers } = this;
@@ -327,10 +329,10 @@ export const createSubject = /*@__PURE__*/ (() => {
       },
     ),
     mixWith(disposableMixin),
-    createObjectFactory<SubjectLike<any>, number>(),
+    createObjectFactory<SubjectLike<T>, number>(),
   );
 
-  return <T>(options?: { replay?: number }): SubjectLike<T> => {
+  return (options?: { replay?: number }): SubjectLike<T> => {
     const { replay: replayOption = 0 } = options ?? {};
     const replay = max(replayOption, 0);
 

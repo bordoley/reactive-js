@@ -57,20 +57,22 @@ const createObserverDispatcher = (() => {
         },
     }), mixWith(disposableMixin), createObjectFactory());
 })();
-const observerMixin = /*@__PURE__*/ (() => pipe(clazz(function ObserverMixin(scheduler) {
-    this[ObserverLike_scheduler] = scheduler;
-}, {
-    [ObserverLike_scheduler]: none,
-    dispatcher: none,
-}, {
-    get [ObserverLike_dispatcher]() {
-        const self = this;
-        if (isNone(self.dispatcher)) {
-            const dispatcher = pipe(createObserverDispatcher(self), addToIgnoringChildErrors(self));
-            self.dispatcher = dispatcher;
-        }
-        return self.dispatcher;
-    },
-}), returns))();
+const observerMixin = /*@__PURE__*/ (() => {
+    return pipe(clazz(function ObserverMixin(scheduler) {
+        this[ObserverLike_scheduler] = scheduler;
+    }, {
+        [ObserverLike_scheduler]: none,
+        dispatcher: none,
+    }, {
+        get [ObserverLike_dispatcher]() {
+            const self = this;
+            if (isNone(self.dispatcher)) {
+                const dispatcher = pipe(createObserverDispatcher(self), addToIgnoringChildErrors(self));
+                self.dispatcher = dispatcher;
+            }
+            return self.dispatcher;
+        },
+    }), returns);
+})();
 
 export { observerMixin };

@@ -116,29 +116,6 @@ export const createSomeSatisfyOperator =
   ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
     createSatisfyOperator(m, SomeSatisfySink, false);
 
-export const createOnSink =
-  <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
-  <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<C, T, T> =>
-  src =>
-    pipe((sink: StatefulContainerStateOf<C, T>) => {
-      pipe(src, sinkInto(sink));
-      const disposable = f() || none;
-      pipe(
-        sink,
-        disposable instanceof Function
-          ? onDisposed(disposable)
-          : isSome(disposable)
-          ? add(disposable)
-          : identity,
-      );
-    }, create(m));
-
-const decorateWithNotify = <TThis, TNext>(
-  SinkClass: new <T>(...a: readonly any[]) => SinkLike<T>,
-  notify: (this: TThis, next: TNext) => void,
-) => {
-  SinkClass.prototype.notify = notify;
-};
 
 export const decorateWithCatchErrorNotify =
   <C extends ReactiveContainerLike>() =>
