@@ -169,6 +169,7 @@ export type FromIterable<
   ): Function1<Iterable<T>, ContainerOf<C, T>>;
 };
 
+// FIXME: Can we kill this off?
 export type FromIterator<
   C extends ContainerLike,
   O extends Record<string, unknown> = Record<string, never>,
@@ -418,9 +419,9 @@ export type Zip<C extends ContainerLike> = Container<C> & {
 };
 
 export const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"] =
-  /*@__PURE__*/ (() => {
-    const _empty: readonly any[] = [];
-    return <T>(): ReadonlyArrayLike<T> => _empty;
+  /*@__PURE__*/ (<T>() => {
+    const _empty: readonly T[] = [];
+    return (): ReadonlyArrayLike<T> => _empty;
   })();
 
 export const emptyReadonlyArrayT: Empty<ReadonlyArrayLike> = {

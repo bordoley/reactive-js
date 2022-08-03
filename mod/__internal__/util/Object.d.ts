@@ -1,4 +1,4 @@
-import { Function1, Factory, Function2, Function3, Function4, Option } from "../../functions.mjs";
+import { Option, Function1, Factory, Function2, Function3, Function4 } from "../../functions.mjs";
 declare const Object_init: unique symbol;
 declare const Object_properties: unique symbol;
 declare const Object_prototype: unique symbol;
@@ -68,28 +68,28 @@ declare const createObjectFactory: ObjectFactory;
 interface MixWith {
     <TTMixin0 extends TMixin, TTMixin1 extends TMixin>(m0: TTMixin0): Function1<TTMixin1, {
         [Object_init]: TTMixin1[typeof Object_init];
-        [Object_properties]: OptionalProps<TTMixin0[typeof Object_properties] & TTMixin1[typeof Object_properties]>;
+        [Object_properties]: TTMixin0[typeof Object_properties] & TTMixin1[typeof Object_properties];
         [Object_prototype]: TTMixin0[typeof Object_prototype] & TTMixin1[typeof Object_prototype];
     }>;
     <TTMixin0 extends TMixin, TTMixin1 extends TMixin, TTMixin2 extends TMixin>(m0: TTMixin0, m1: TTMixin1): Function1<TTMixin2, {
         [Object_init]: TTMixin2[typeof Object_init];
-        [Object_properties]: OptionalProps<TTMixin0[typeof Object_properties] & TTMixin1[typeof Object_properties] & TTMixin2[typeof Object_properties]>;
+        [Object_properties]: TTMixin0[typeof Object_properties] & TTMixin1[typeof Object_properties] & TTMixin2[typeof Object_properties];
         [Object_prototype]: TTMixin0[typeof Object_prototype] & TTMixin1[typeof Object_prototype] & TTMixin2[typeof Object_prototype];
     }>;
     <TTMixin0 extends TMixin, TTMixin1 extends TMixin, TTMixin2 extends TMixin, TTMixin3 extends TMixin>(m0: TTMixin0, m1: TTMixin1, m2: TTMixin2): Function1<TTMixin3, {
         [Object_init]: TTMixin3[typeof Object_init];
-        [Object_properties]: OptionalProps<TTMixin0[typeof Object_properties] & TTMixin1[typeof Object_properties] & TTMixin2[typeof Object_properties] & TTMixin3[typeof Object_properties]>;
+        [Object_properties]: TTMixin0[typeof Object_properties] & TTMixin1[typeof Object_properties] & TTMixin2[typeof Object_properties] & TTMixin3[typeof Object_properties];
         [Object_prototype]: TTMixin0[typeof Object_prototype] & TTMixin1[typeof Object_prototype] & TTMixin2[typeof Object_prototype] & TTMixin3[typeof Object_prototype];
     }>;
 }
 declare const mixWith: MixWith;
 interface Clazz {
-    <TInit extends (this: any, ...args: readonly any[]) => void, TProperties extends UnknownObject = UnknownObject, TPrototype extends UnknownObject = UnknownObject>(init: TInit, properties: TProperties, prototype: TPrototype): {
+    <TInit extends (this: any, ...args: readonly any[]) => void, TProperties extends UnknownObject = UnknownObject, TPrototype extends UnknownObject = UnknownObject>(init: TInit, properties: OptionalProps<TProperties>, prototype: TPrototype): {
         [Object_init]: TInit;
         [Object_properties]: TProperties;
         [Object_prototype]: TPrototype;
     };
-    <TInit extends (this: any, ...args: readonly any[]) => void, TProperties extends UnknownObject = UnknownObject>(init: TInit, properties: TProperties): {
+    <TInit extends (this: any, ...args: readonly any[]) => void, TProperties extends UnknownObject = UnknownObject>(init: TInit, properties: OptionalProps<TProperties>): {
         [Object_init]: TInit;
         [Object_properties]: TProperties;
         [Object_prototype]: EmptyObject;

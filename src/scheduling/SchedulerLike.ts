@@ -401,7 +401,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           [SourceLike_move](
             this: TProperties & MutableEnumeratorLike<QueueTask>,
           ): void {
-            // First fast forward through any disposed tasks.
+            // First fast forward through disposed tasks.
             peek(this);
             const task = this.queue.pop();
 

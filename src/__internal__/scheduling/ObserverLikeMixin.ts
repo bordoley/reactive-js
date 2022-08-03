@@ -122,25 +122,33 @@ const createObserverDispatcher = (<T>() => {
   );
 })();
 
-type TProperties = {
-  [ObserverLike_scheduler]: SchedulerLike;
-  dispatcher: Option<DispatcherLike>;
-};
-
 export const observerMixin: <T>() => Class1<
-  TProperties,
+  {
+    [ObserverLike_scheduler]: SchedulerLike;
+  },
   {
     get [ObserverLike_dispatcher](): DispatcherLike<T>;
   },
   SchedulerLike
-> = /*@__PURE__*/ (<T>() =>
-  pipe(
-    clazz(
+> = /*@__PURE__*/ (<T>() => {
+  type TProperties = {
+    [ObserverLike_scheduler]: SchedulerLike;
+    dispatcher: Option<DispatcherLike>;
+  };
+
+  return pipe(
+    clazz<
+      (this: TProperties, scheduler: SchedulerLike) => void,
+      TProperties,
+      {
+        get [ObserverLike_dispatcher](): DispatcherLike<T>;
+      }
+    >(
       function ObserverMixin(this: TProperties, scheduler: SchedulerLike) {
         this[ObserverLike_scheduler] = scheduler;
       },
       {
-        [ObserverLike_scheduler]: none as any,
+        [ObserverLike_scheduler]: none,
         dispatcher: none,
       },
       {
@@ -159,4 +167,5 @@ export const observerMixin: <T>() => Class1<
       },
     ),
     returns,
-  ))();
+  );
+})();

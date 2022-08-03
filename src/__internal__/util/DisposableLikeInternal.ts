@@ -1,8 +1,8 @@
 import {
-  Identity,
   Option,
   SideEffect,
   SideEffect1,
+  Updater,
   isNone,
   isSome,
 } from "../../functions";
@@ -34,7 +34,7 @@ export interface DisposableLike {
  * Dispose `disposable` with an optional error.
  */
 export const dispose =
-  <T extends DisposableLike>(e?: Exception): Identity<T> =>
+  <T extends DisposableLike>(e?: Exception): Updater<T> =>
   disposable => {
     disposable[DisposableLike_dispose](e);
     return disposable;
@@ -57,7 +57,7 @@ export const addDisposableOrTeardown = (
 };
 
 export const bindTo =
-  <T extends DisposableLike>(child: DisposableLike): Identity<T> =>
+  <T extends DisposableLike>(child: DisposableLike): Updater<T> =>
   (parent: T): T => {
     addDisposableOrTeardown(parent, child);
     addDisposableOrTeardown(child, parent);
@@ -79,14 +79,14 @@ export const addIgnoringChildErrors =
   };
 
 export const addTo =
-  <T extends DisposableLike>(parent: DisposableLike): Identity<T> =>
+  <T extends DisposableLike>(parent: DisposableLike): Updater<T> =>
   (child: T): T => {
     addDisposableOrTeardown(parent, child);
     return child;
   };
 
 export const addToIgnoringChildErrors =
-  <T extends DisposableLike>(parent: DisposableLike): Identity<T> =>
+  <T extends DisposableLike>(parent: DisposableLike): Updater<T> =>
   (child: T): T => {
     addDisposableOrTeardown(parent, child, true);
     return child;
@@ -95,14 +95,14 @@ export const addToIgnoringChildErrors =
 export const onDisposed =
   <T extends DisposableLike>(
     teardown: SideEffect1<Option<Exception>>,
-  ): Identity<T> =>
+  ): Updater<T> =>
   disposable => {
     addDisposableOrTeardown(disposable, teardown);
     return disposable;
   };
 
 export const onError =
-  <T extends DisposableLike>(teardown: SideEffect1<Exception>): Identity<T> =>
+  <T extends DisposableLike>(teardown: SideEffect1<Exception>): Updater<T> =>
   disposable => {
     addDisposableOrTeardown(disposable, e => {
       if (isSome(e)) {
@@ -113,7 +113,7 @@ export const onError =
   };
 
 export const onComplete =
-  <T extends DisposableLike>(teardown: SideEffect): Identity<T> =>
+  <T extends DisposableLike>(teardown: SideEffect): Updater<T> =>
   disposable => {
     addDisposableOrTeardown(disposable, e => {
       if (isNone(e)) {

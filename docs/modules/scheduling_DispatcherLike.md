@@ -14,7 +14,7 @@
 
 ### dispatch
 
-▸ **dispatch**<`T`, `TDispatcher`\>(`v`): [`Identity`](functions.md#identity)<`TDispatcher`\>
+▸ **dispatch**<`T`, `TDispatcher`\>(`v`): [`Updater`](functions.md#updater)<`TDispatcher`\>
 
 #### Type parameters
 
@@ -31,7 +31,7 @@
 
 #### Returns
 
-[`Identity`](functions.md#identity)<`TDispatcher`\>
+[`Updater`](functions.md#updater)<`TDispatcher`\>
 
 ___
 

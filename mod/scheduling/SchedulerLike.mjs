@@ -198,7 +198,7 @@ const createQueueScheduler =
                     shouldYield(self.host)));
         },
         [SourceLike_move]() {
-            // First fast forward through any disposed tasks.
+            // First fast forward through disposed tasks.
             peek(this);
             const task = this.queue.pop();
             if (isSome(task)) {

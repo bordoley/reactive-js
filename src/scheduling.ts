@@ -29,7 +29,7 @@ import {
   init,
   mixWith,
 } from "./__internal__/util/Object";
-import { isSome, none, pipe } from "./functions";
+import { Option, isSome, none, pipe } from "./functions";
 import {
   ContinuationLike,
   ContinuationLike_run,
@@ -124,6 +124,11 @@ export interface VirtualTimeSchedulerLike
   extends SchedulerLike,
     ContinuationLike {}
 
+declare const navigator: {
+  scheduling: Option<{
+    isInputPending(): boolean;
+  }>;
+};
 export const createHostScheduler = /*@__PURE__*/ (() => {
   const supportsPerformanceNow =
     typeof performance === "object" && typeof performance.now === "function";
@@ -135,11 +140,11 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
 
   const supportsIsInputPending =
     typeof navigator === "object" &&
-    (navigator as any).scheduling !== undefined &&
-    (navigator as any).scheduling.isInputPending !== undefined;
+    navigator.scheduling !== undefined &&
+    navigator.scheduling.isInputPending !== undefined;
 
   const isInputPending = (): boolean =>
-    supportsIsInputPending && (navigator as any).scheduling.isInputPending();
+    supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
 
   const scheduleImmediateWithSetImmediate = (
     scheduler: TProperties & SchedulerLike,

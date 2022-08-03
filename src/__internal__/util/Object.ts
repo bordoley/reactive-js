@@ -173,9 +173,8 @@ interface MixWith {
     TTMixin1,
     {
       [Object_init]: TTMixin1[typeof Object_init];
-      [Object_properties]: OptionalProps<
-        TTMixin0[typeof Object_properties] & TTMixin1[typeof Object_properties]
-      >;
+      [Object_properties]: TTMixin0[typeof Object_properties] &
+        TTMixin1[typeof Object_properties];
       [Object_prototype]: TTMixin0[typeof Object_prototype] &
         TTMixin1[typeof Object_prototype];
     }
@@ -188,11 +187,9 @@ interface MixWith {
     TTMixin2,
     {
       [Object_init]: TTMixin2[typeof Object_init];
-      [Object_properties]: OptionalProps<
-        TTMixin0[typeof Object_properties] &
-          TTMixin1[typeof Object_properties] &
-          TTMixin2[typeof Object_properties]
-      >;
+      [Object_properties]: TTMixin0[typeof Object_properties] &
+        TTMixin1[typeof Object_properties] &
+        TTMixin2[typeof Object_properties];
       [Object_prototype]: TTMixin0[typeof Object_prototype] &
         TTMixin1[typeof Object_prototype] &
         TTMixin2[typeof Object_prototype];
@@ -212,12 +209,10 @@ interface MixWith {
     TTMixin3,
     {
       [Object_init]: TTMixin3[typeof Object_init];
-      [Object_properties]: OptionalProps<
-        TTMixin0[typeof Object_properties] &
-          TTMixin1[typeof Object_properties] &
-          TTMixin2[typeof Object_properties] &
-          TTMixin3[typeof Object_properties]
-      >;
+      [Object_properties]: TTMixin0[typeof Object_properties] &
+        TTMixin1[typeof Object_properties] &
+        TTMixin2[typeof Object_properties] &
+        TTMixin3[typeof Object_properties];
       [Object_prototype]: TTMixin0[typeof Object_prototype] &
         TTMixin1[typeof Object_prototype] &
         TTMixin2[typeof Object_prototype] &
@@ -251,7 +246,7 @@ export interface Clazz {
     TPrototype extends UnknownObject = UnknownObject,
   >(
     init: TInit,
-    properties: TProperties,
+    properties: OptionalProps<TProperties>,
     prototype: TPrototype,
   ): {
     [Object_init]: TInit;
@@ -264,7 +259,7 @@ export interface Clazz {
     TProperties extends UnknownObject = UnknownObject,
   >(
     init: TInit,
-    properties: TProperties,
+    properties: OptionalProps<TProperties>,
   ): {
     [Object_init]: TInit;
     [Object_properties]: TProperties;

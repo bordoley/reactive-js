@@ -30,7 +30,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
     const supportsIsInputPending = typeof navigator === "object" &&
         navigator.scheduling !== undefined &&
         navigator.scheduling.isInputPending !== undefined;
-    const isInputPending = () => supportsIsInputPending && navigator.scheduling.isInputPending();
+    const isInputPending = () => { var _a, _b; return supportsIsInputPending && ((_b = (_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending()) !== null && _b !== void 0 ? _b : false); };
     const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
         const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
         const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);

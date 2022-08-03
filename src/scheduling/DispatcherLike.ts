@@ -1,4 +1,4 @@
-import { Identity, SideEffect1 } from "../functions";
+import { SideEffect1, Updater } from "../functions";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
@@ -8,7 +8,7 @@ import {
 export const dispatch =
   <T, TDispatcher extends { [DispatcherLike_dispatch](v: T): void }>(
     v: T,
-  ): Identity<TDispatcher> =>
+  ): Updater<TDispatcher> =>
   dispatcher => {
     dispatcher[DispatcherLike_dispatch](v);
     return dispatcher;
