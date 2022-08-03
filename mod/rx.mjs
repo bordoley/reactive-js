@@ -11,9 +11,9 @@ import { SinkLike_notify } from './util.mjs';
 
 /** @ignore */
 const ReactiveContainerLike_sinkInto = Symbol("ReactiveContainerLike_sinkInto");
-const DefaultObservable = 0;
-const RunnableObservable = 1;
-const EnumerableObservable = 2;
+const hotObservableType = 0;
+const runnableObservableType = 1;
+const enumerableObservableType = 2;
 /** @ignore */
 const ObservableLike_observableType = Symbol("ObservableLike_observableType");
 /** @ignore */
@@ -41,18 +41,18 @@ class CreateObservable {
     }
 }
 const createEnumerableObservable = /*@__PURE__*/ (() => {
-    return (f) => newInstance(CreateObservable, f, EnumerableObservable);
+    return (f) => newInstance(CreateObservable, f, enumerableObservableType);
 })();
-const createObservable = /*@__PURE__*/ (() => {
-    return (f) => newInstance(CreateObservable, f, DefaultObservable);
+const createHotObservable = /*@__PURE__*/ (() => {
+    return (f) => newInstance(CreateObservable, f, hotObservableType);
 })();
 const createRunnableObservable = /*@__PURE__*/ (() => {
-    return (f) => newInstance(CreateObservable, f, RunnableObservable);
+    return (f) => newInstance(CreateObservable, f, runnableObservableType);
 })();
-const createObservableUsing = 
-/*@__PURE__*/ createUsing(createObservable);
-const createObservableUsingT = {
-    using: createObservableUsing,
+const createHotObservableUsing = 
+/*@__PURE__*/ createUsing(createHotObservable);
+const createHotObservableUsingT = {
+    using: createHotObservableUsing,
 };
 const createRunnable = /*@__PURE__*/ (() => {
     class Runnable {
@@ -131,7 +131,7 @@ const createSubject = /*@__PURE__*/ (() => {
         return createSubjectInstance(replay);
     };
 })();
-const deferObservable = (factory, options) => createObservable(observer => {
+const deferHotObservable = (factory, options) => createHotObservable(observer => {
     const sideEffect = factory();
     if (typeof sideEffect === "function") {
         const callback = () => sideEffect(observer);
@@ -141,8 +141,21 @@ const deferObservable = (factory, options) => createObservable(observer => {
         sideEffect[ReactiveContainerLike_sinkInto](observer);
     }
 });
-const deferObservableT = {
-    defer: deferObservable,
+const deferHotObservableT = {
+    defer: deferHotObservable,
+};
+const deferEnumerableObservable = (factory, options) => createEnumerableObservable(observer => {
+    const sideEffect = factory();
+    if (typeof sideEffect === "function") {
+        const callback = () => sideEffect(observer);
+        pipe(observer, getScheduler, schedule(callback, options), addTo(observer));
+    }
+    else {
+        sideEffect[ReactiveContainerLike_sinkInto](observer);
+    }
+});
+const deferEnumerableObservableT = {
+    defer: deferEnumerableObservable,
 };
 const deferRunnable = f => createRunnable(sink => {
     f()[ReactiveContainerLike_sinkInto](sink);
@@ -190,13 +203,13 @@ const generateRunnable = (generator, initialValue) => createRunnable((sink) => {
 const generateRunnableT = {
     generate: generateRunnable,
 };
-const neverObservable = () => createNever(createEnumerableObservable);
-const neverObservableT = {
-    never: neverObservable,
+const neverEnumerableObservable = () => createNever(createEnumerableObservable);
+const neverEnumerableObservableT = {
+    never: neverEnumerableObservable,
 };
 const neverRunnable = () => createNever(createRunnable);
 const neverRunnableT = {
     never: neverRunnable,
 };
 
-export { DefaultObservable, EnumerableObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, RunnableObservable, SubjectLike_publish, createEnumerableObservable, createObservable, createObservableUsing, createObservableUsingT, createRunnable, createRunnableObservable, createRunnableUsing, createRunnableUsingT, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyObservable, emptyRunnable, emptyRunnableT, generateObservable, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observableType, ReactiveContainerLike_sinkInto, SubjectLike_publish, createEnumerableObservable, createHotObservable, createHotObservableUsing, createHotObservableUsingT, createRunnable, createRunnableObservable, createRunnableUsing, createRunnableUsingT, createSubject, deferEnumerableObservable, deferEnumerableObservableT, deferHotObservable, deferHotObservableT, deferRunnable, deferRunnableT, emptyObservable, emptyRunnable, emptyRunnableT, enumerableObservableType, generateObservable, generateRunnable, generateRunnableT, hotObservableType, neverEnumerableObservable, neverEnumerableObservableT, neverRunnable, neverRunnableT, runnableObservableType };

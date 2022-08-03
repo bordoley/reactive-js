@@ -12,8 +12,6 @@ import {
   mixWith,
 } from "../__internal__/util/Object";
 import {
-  ContainerLike,
-  ContainerOf,
   Keep,
   Map,
   ReadonlyArrayLike,
@@ -25,6 +23,7 @@ import {
   Function1,
   Option,
   Predicate,
+  SideEffect1,
   getLength,
   identity,
   isSome,
@@ -82,15 +81,8 @@ export type FromArrayOptions = {
 };
 
 const createFromArray =
-  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
-    factory: (
-      values: readonly T[],
-      start: number,
-      count: number,
-      options?: Partial<O>,
-    ) => ContainerOf<C, T>,
-  ) =>
-  (options: Partial<O> = {}): Function1<readonly T[], ContainerOf<C, T>> =>
+  <C, T>(factory: (values: readonly T[], start: number, count: number) => C) =>
+  (options: Partial<FromArrayOptions> = {}): Function1<readonly T[], C> =>
   values => {
     const valuesLength = getLength(values);
     const { start: startOption, count: countOption } = options;
@@ -125,7 +117,7 @@ const createFromArray =
       }
     })();
 
-    return factory(values, start, count, options);
+    return factory(values, start, count);
   };
 
 export const toEnumerable: ToEnumerable<
@@ -217,57 +209,70 @@ interface ToObservable {
   }): Function1<ReadonlyArrayLike<T>, RunnableObservableLike<T>>;
 }
 export const toObservable: ToObservable = /*@__PURE__*/ (<T>() => {
-  return createFromArray<
-    ObservableLike,
-    T,
-    {
-      readonly start: number;
-      readonly count: number;
-      readonly delay: number;
-      readonly delayStart: boolean;
-    }
-  >((values, startIndex, count, options) => {
+  const createArrayObservable = <TObs extends ObservableLike<T>>(
+    createObservable: (f: SideEffect1<ObserverLike<T>>) => TObs,
+    options?: {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    },
+  ) =>
+    createFromArray<TObs, T>(
+      (values: readonly T[], startIndex: number, count: number) => {
+        const { delayStart = false } = options ?? {};
+
+        const onSink = (observer: ObserverLike<T>) => {
+          let index = startIndex,
+            cnt = count;
+
+          const continuation = () => {
+            while (!isDisposed(observer) && cnt !== 0) {
+              const value = values[index];
+              if (cnt > 0) {
+                index++;
+                cnt--;
+              } else {
+                index--;
+                cnt++;
+              }
+
+              observer[SinkLike_notify](value);
+
+              if (cnt !== 0) {
+                __yield(options);
+              }
+            }
+            pipe(observer, dispose());
+          };
+
+          pipe(
+            observer,
+            getScheduler,
+            schedule(
+              continuation,
+              delayStart && hasDelay(options) ? options : none,
+            ),
+            addTo(observer),
+          );
+        };
+        return createObservable(onSink);
+      },
+    );
+
+  return ((options?: {
+    readonly start?: number;
+    readonly count?: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }): Function1<
+    readonly T[],
+    RunnableObservableLike<T> | EnumerableObservableLike<T>
+  > => {
     const delay = getDelay(options);
-    const { delayStart = false } = options ?? {};
 
-    const onSink = (observer: ObserverLike<T>) => {
-      let index = startIndex,
-        cnt = count;
-
-      const continuation = () => {
-        while (!isDisposed(observer) && cnt !== 0) {
-          const value = values[index];
-          if (cnt > 0) {
-            index++;
-            cnt--;
-          } else {
-            index--;
-            cnt++;
-          }
-
-          observer[SinkLike_notify](value);
-
-          if (cnt !== 0) {
-            __yield(options);
-          }
-        }
-        pipe(observer, dispose());
-      };
-
-      pipe(
-        observer,
-        getScheduler,
-        schedule(
-          continuation,
-          delayStart && hasDelay(options) ? options : none,
-        ),
-        addTo(observer),
-      );
-    };
     return delay > 0
-      ? createRunnableObservable(onSink)
-      : createEnumerableObservable(onSink);
-  });
+      ? createArrayObservable(createRunnableObservable, options)(options)
+      : createArrayObservable(createEnumerableObservable, options)(options);
+  }) as ToObservable;
 })();
 
 export const toReadonlyArray: ToReadonlyArray<
@@ -290,8 +295,8 @@ export const toReadonlyArrayT: ToReadonlyArray<
 
 export const toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
   /*@__PURE__*/ (<T>() => {
-    return createFromArray<RunnableLike, T>(
-      <T>(values: readonly T[], startIndex: number, count: number) =>
+    return createFromArray<RunnableLike<T>, T>(
+      (values: readonly T[], startIndex: number, count: number) =>
         createRunnable<T>(sink => {
           for (
             let index = startIndex, cnt = count;
@@ -328,7 +333,7 @@ export const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
           }
         : none;
 
-    return createFromArray<SequenceLike, T>(
+    return createFromArray<SequenceLike<T>, T>(
       (values: readonly T[], startIndex: number, count: number) => () =>
         _arraySequence(values, startIndex, count),
     );

@@ -4,7 +4,7 @@ import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_sch
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { none, isSome, pipe, compose, returns, pipeLazy, ignore } from '../functions.mjs';
+import { none, isSome, pipe, pipeLazy, ignore } from '../functions.mjs';
 import { createSubject } from '../rx.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { publish } from '../rx/SubjectLike.mjs';
@@ -32,7 +32,7 @@ const useObservable = (observable, options = {}) => {
         const scheduler = isSome(schedulerOption) && schedulerOption instanceof Function
             ? schedulerOption()
             : schedulerOption !== null && schedulerOption !== void 0 ? schedulerOption : createReactNormalPriorityScheduler();
-        const subscription = pipe(observable, forEach(compose(returns, updateState)), subscribe(scheduler), onError(updateError));
+        const subscription = pipe(observable, forEach(v => updateState(_ => v)), subscribe(scheduler), onError(updateError));
         return pipeLazy(
         // If a scheduler is allocated, then dispose the new scheduler
         // which will also dispose all subscriptions. Otherwise

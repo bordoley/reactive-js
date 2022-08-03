@@ -7,18 +7,19 @@ import {
 } from "../../__internal__/testing";
 import { endWith, ignoreElements } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
-import { newInstance, pipe, returns } from "../../functions";
+import { compose, newInstance, pipe, returns } from "../../functions";
 import {
   createReadableSource,
   createWritableSink,
   gunzip,
   gzip,
 } from "../../integrations/node";
+import { HotObservableLike } from "../../rx";
+import { concatT, keepT } from "../../rx/HotObservableLike";
 import {
-  concatT,
-  keepT,
   reduce,
   takeFirst,
+  toHotObservable,
   toPromise,
 } from "../../rx/ObservableLike";
 import { toFlowable } from "../../rx/RunnableObservableLike";
@@ -62,7 +63,13 @@ export const nodeTests = describe(
 
         await pipe(
           dest,
-          endWith({ fromArray: toObservable, ...concatT }, "pause"),
+          endWith(
+            {
+              fromArray: returns(compose(toObservable(), toHotObservable())),
+              ...concatT,
+            },
+            "pause",
+          ),
           toPromise(scheduler),
         );
 
@@ -104,7 +111,13 @@ export const nodeTests = describe(
         const promise = pipe(
           dest,
           ignoreElements(keepT),
-          endWith({ fromArray: toObservable, ...concatT }, 0),
+          endWith(
+            {
+              fromArray: returns(compose(toObservable(), toHotObservable())),
+              ...concatT,
+            },
+            0,
+          ),
           toPromise(scheduler),
         );
         await expectPromiseToThrow(promise);
@@ -131,11 +144,11 @@ export const nodeTests = describe(
         const acc = await pipe(
           createReadableSource(() => pipe(generate(), Readable.from)),
           flowableToObservable(),
-          reduce(
+          reduce<HotObservableLike, Uint8Array, string>(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          takeFirst({ count: 1 }),
+          takeFirst<HotObservableLike, string>({ count: 1 }),
           toPromise(scheduler),
         );
         pipe(acc, expectEquals("abcdefg"));
@@ -158,11 +171,17 @@ export const nodeTests = describe(
         await pipe(
           createReadableSource(() => pipe(generate(), Readable.from)),
           flowableToObservable(),
-          reduce(
+          reduce<HotObservableLike, Uint8Array, string>(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          endWith({ fromArray: toObservable, ...concatT }, ""),
+          endWith(
+            {
+              fromArray: returns(compose(toObservable(), toHotObservable())),
+              ...concatT,
+            },
+            "",
+          ),
           toPromise(scheduler),
           expectPromiseToThrow,
         );
@@ -185,11 +204,11 @@ export const nodeTests = describe(
         gzip(),
         gunzip(),
         flowableToObservable(),
-        reduce(
+        reduce<HotObservableLike, Uint8Array, string>(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
         ),
-        takeFirst({ count: 1 }),
+        takeFirst<string>({ count: 1 }),
         toPromise(scheduler),
       );
 

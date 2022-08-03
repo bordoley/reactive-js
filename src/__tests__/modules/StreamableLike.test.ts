@@ -19,9 +19,10 @@ export const StreamableLikeTests = describe(
       pipe(stateStream, dispatch(returns(2)), dispatch(returns(3)), dispose());
 
       let result: number[] = [];
+
       pipe(
         stateStream,
-        forEach(x => {
+        forEach<number>(x => {
           result.push(x);
         }),
         subscribe(scheduler),

@@ -18,7 +18,9 @@ The source of notifications which notifies a `ObserverLike` instance.
 
   ↳ **`ObservableLike`**
 
-  ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
+  ↳↳ [`EnumerableObservableLike`](rx.EnumerableObservableLike.md)
+
+  ↳↳ [`HotObservableLike`](rx.HotObservableLike.md)
 
   ↳↳ [`RunnableObservableLike`](rx.RunnableObservableLike.md)
 
@@ -28,12 +30,13 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 - [TContainerOf](rx.ObservableLike.md#tcontainerof)
 - [TStatefulContainerState](rx.ObservableLike.md#tstatefulcontainerstate)
+- [[ObservableLike\_observableType]](rx.ObservableLike.md#[observablelike_observabletype])
 
 ## Properties
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
+• `Optional` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -48,3 +51,9 @@ ___
 #### Overrides
 
 [ReactiveContainerLike](rx.ReactiveContainerLike.md).[TStatefulContainerState](rx.ReactiveContainerLike.md#tstatefulcontainerstate)
+
+___
+
+### [ObservableLike\_observableType]
+
+• `Readonly` **[ObservableLike\_observableType]**: [`ObservableType`](../modules/rx.md#observabletype)

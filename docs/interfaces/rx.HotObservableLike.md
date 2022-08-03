@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [rx](../modules/rx.md) / RunnableObservableLike
+[Reactive-JS](../README.md) / [rx](../modules/rx.md) / HotObservableLike
 
-# Interface: RunnableObservableLike<T\>
+# Interface: HotObservableLike<T\>
 
-[rx](../modules/rx.md).RunnableObservableLike
+[rx](../modules/rx.md).HotObservableLike
 
 ## Type parameters
 
@@ -14,16 +14,18 @@
 
 - [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
-  ↳ **`RunnableObservableLike`**
+  ↳ **`HotObservableLike`**
+
+  ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
 ## Table of contents
 
 ### Properties
 
-- [T](rx.RunnableObservableLike.md#t)
-- [TContainerOf](rx.RunnableObservableLike.md#tcontainerof)
-- [TStatefulContainerState](rx.RunnableObservableLike.md#tstatefulcontainerstate)
-- [[ObservableLike\_observableType]](rx.RunnableObservableLike.md#[observablelike_observabletype])
+- [T](rx.HotObservableLike.md#t)
+- [TContainerOf](rx.HotObservableLike.md#tcontainerof)
+- [TStatefulContainerState](rx.HotObservableLike.md#tstatefulcontainerstate)
+- [[ObservableLike\_observableType]](rx.HotObservableLike.md#[observablelike_observabletype])
 
 ## Properties
 
@@ -39,7 +41,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`RunnableObservableLike`](rx.RunnableObservableLike.md)<`unknown`\>
+• `Optional` `Readonly` **TContainerOf**: [`HotObservableLike`](rx.HotObservableLike.md)<`unknown`\>
 
 #### Overrides
 

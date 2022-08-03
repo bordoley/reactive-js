@@ -77,7 +77,11 @@ interface ToObservable {
     RunnableObservableLike<T>
   >;
 }
-export const toObservable: ToObservable = <T>(options?: {
+export const toObservable: ToObservable = (<T>(options?: {
   delay: number;
   delayStart?: boolean;
-}) => compose(toEnumerable<T>(), enumerableToObservable<T>(options));
+}) =>
+  compose(
+    toEnumerable<T>(),
+    enumerableToObservable<T>(options),
+  )) as ToObservable;
