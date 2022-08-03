@@ -21,6 +21,7 @@ Reactive-JS
 - [ix/InteractiveContainerLike](modules/ix_InteractiveContainerLike.md)
 - [rx](modules/rx.md)
 - [rx/EnumerableObservableLike](modules/rx_EnumerableObservableLike.md)
+- [rx/HotObservableLike](modules/rx_HotObservableLike.md)
 - [rx/MulticastObservableLike](modules/rx_MulticastObservableLike.md)
 - [rx/ObservableLike](modules/rx_ObservableLike.md)
 - [rx/ReactiveContainerLike](modules/rx_ReactiveContainerLike.md)

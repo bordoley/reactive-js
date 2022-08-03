@@ -37,6 +37,7 @@ const forEach = (f) => arr => {
     return arr;
 };
 const getLength = (arr) => arr.length;
+const getOrRaise = () => (v) => isSome(v) ? v : raise();
 /**
  * The identity function.
  *
@@ -147,4 +148,4 @@ const sum = (...args) => {
 const updateReducer = (acc, updater) => updater(acc);
 const { floor, max, min } = Math;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };

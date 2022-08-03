@@ -19,7 +19,7 @@ export const FlowableLikeTests = describe(
       arrayToObservable({ delay: 1 }),
       toFlowable(),
       toObservable<number>(),
-      forEach(v => {
+      forEach<number>(v => {
         result.push(v);
       }),
       subscribe(scheduler),

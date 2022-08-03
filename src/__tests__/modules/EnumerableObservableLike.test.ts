@@ -9,7 +9,7 @@ import {
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { pipe, pipeLazy, raise } from "../../functions";
 import { toReadonlyArray } from "../../ix/EnumerableLike";
-import { deferObservableT } from "../../rx";
+import { deferEnumerableObservableT } from "../../rx";
 import {
   concatT,
   decodeWithCharsetT,
@@ -17,7 +17,6 @@ import {
   forEachT,
   keepT,
   mapT,
-  onSubscribe,
   pairwiseT,
   reduceT,
   scanT,
@@ -29,7 +28,7 @@ import {
   toEnumerable,
   toReadonlyArrayT,
 } from "../../rx/EnumerableObservableLike";
-import { subscribe } from "../../rx/ObservableLike";
+import { onSubscribe, subscribe } from "../../rx/ObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling";
 import { run } from "../../util/ContinuationLike";
 import { getException } from "../../util/DisposableLike";
@@ -60,7 +59,7 @@ export const EnumerableObservableLikeTests = describe(
   decodeWithCharsetTests({
     fromArray: toObservable,
     ...decodeWithCharsetT,
-    ...deferObservableT,
+    ...deferEnumerableObservableT,
     ...mapT,
     ...toReadonlyArrayT,
   }),

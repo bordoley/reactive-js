@@ -1,6 +1,6 @@
 import { PromiseableLike } from "../containers";
 import { pipe } from "../functions";
-import { ObservableLike, ToObservable, createObservable } from "../rx";
+import { ObservableLike, ToObservable, createHotObservable } from "../rx";
 import { dispatch } from "../scheduling/DispatcherLike";
 import { getDispatcher } from "../scheduling/ObserverLike";
 import { dispose, isDisposed, toErrorHandler } from "../util/DisposableLike";
@@ -8,7 +8,7 @@ import { dispose, isDisposed, toErrorHandler } from "../util/DisposableLike";
 export const toObservable: ToObservable<PromiseableLike>["toObservable"] =
   <T>() =>
   (promise: PromiseLike<T>): ObservableLike<T> =>
-    createObservable(observer => {
+    createHotObservable(observer => {
       const dispatcher = getDispatcher(observer);
 
       promise.then(next => {

@@ -2,7 +2,7 @@
 import fs from 'fs';
 import { createBrotliDecompress, createGunzip, createInflate, createBrotliCompress, createGzip, createDeflate } from 'zlib';
 import { pipe, ignore, pipeLazy } from '../functions.mjs';
-import { createObservable } from '../rx.mjs';
+import { createHotObservable } from '../rx.mjs';
 import { forEach, subscribe } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { ObserverLike_dispatcher } from '../scheduling.mjs';
@@ -15,7 +15,7 @@ import { toErrorHandler } from '../util/DisposableLike.mjs';
 import { dispose, onError, onDisposed, onComplete } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const bindNodeCallback = (callback) => function (...args) {
-    return createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {
+    return createHotObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {
         const handler = (cause, arg) => {
             if (cause) {
                 pipe(dispatcher, dispose({ cause }));
@@ -53,7 +53,7 @@ const addToDisposable = (disposable) => stream => {
     stream.on("error", toErrorHandler(disposable));
     return stream;
 };
-const createReadableSource = (factory) => createLiftedFlowable(mode => createObservable(observer => {
+const createReadableSource = (factory) => createLiftedFlowable(mode => createHotObservable(observer => {
     const { [ObserverLike_dispatcher]: dispatcher } = observer;
     const readable = typeof factory === "function"
         ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
@@ -79,7 +79,7 @@ const createReadableSource = (factory) => createLiftedFlowable(mode => createObs
 const readFile = (path, options) => createReadableSource(() => fs.createReadStream(path, options));
 const createWritableSink = /*@__PURE__*/ (() => {
     const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
-    return (factory) => createLiftedStreamable(events => createObservable(observer => {
+    return (factory) => createLiftedStreamable(events => createHotObservable(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
         const writable = typeof factory === "function"
             ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
@@ -104,7 +104,7 @@ const createWritableSink = /*@__PURE__*/ (() => {
         pipe(dispatcher, dispatch("resume"));
     }));
 })();
-const transform = (factory) => src => createLiftedFlowable(modeObs => createObservable(observer => {
+const transform = (factory) => src => createLiftedFlowable(modeObs => createHotObservable(observer => {
     const transform = pipe(factory(), addToDisposable(observer), addDisposable(getDispatcher(observer)));
     pipe(createWritableSink(transform), stream(getScheduler(observer)), sourceFrom(src), addToNodeStream(transform));
     const transformReadableStream = pipe(createReadableSource(transform), stream(getScheduler(observer)), addToNodeStream(transform), sinkInto(observer));

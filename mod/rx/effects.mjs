@@ -1,6 +1,6 @@
 /// <reference types="./effects.d.ts" />
 import { arrayEquality, none, isNone, ignore, raise, pipe, getLength, isSome, newInstance } from '../functions.mjs';
-import { emptyObservable, deferObservable } from '../rx.mjs';
+import { emptyObservable, deferHotObservable } from '../rx.mjs';
 import { forEach, subscribe } from './ObservableLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule } from '../scheduling/SchedulerLike.mjs';
@@ -125,7 +125,7 @@ class ObservableContext {
         }
     }
 }
-const observable = (computation, { mode = "batched" } = {}) => deferObservable(() => (observer) => {
+const observable = (computation, { mode = "batched" } = {}) => deferHotObservable(() => (observer) => {
     const runComputation = () => {
         let result = none;
         let error = none;
@@ -185,7 +185,7 @@ const __observe = (observable) => {
     const ctx = assertCurrentContext();
     return ctx.observe(observable);
 };
-const deferSideEffect = (f, ...args) => deferObservable(() => observer => {
+const deferSideEffect = (f, ...args) => deferHotObservable(() => observer => {
     f(...args);
     pipe(observer, notify(none), dispose());
 });

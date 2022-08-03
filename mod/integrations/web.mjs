@@ -2,7 +2,7 @@
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, newInstance, none } from '../functions.mjs';
-import { createObservable, deferObservable } from '../rx.mjs';
+import { createHotObservable, deferHotObservable } from '../rx.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
 import { getDispatcher } from '../scheduling/ObserverLike.mjs';
@@ -14,7 +14,7 @@ const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
     const events = pipe(eventsOption, keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
-    return createObservable(observer => {
+    return createHotObservable(observer => {
         const dispatcher = pipe(observer, getDispatcher, onDisposed(_ => {
             for (const ev of events) {
                 eventSource.removeEventListener(ev, listener);
@@ -36,7 +36,7 @@ const createEventSource = (url, options = {}) => {
     });
 };
 const globalFetch = self.fetch;
-const fetch = (onResponse) => fetchRequest => deferObservable(() => async (observer) => {
+const fetch = (onResponse) => fetchRequest => deferHotObservable(() => async (observer) => {
     const signal = toAbortSignal(observer);
     let request = none;
     if (typeof fetchRequest === "string") {
@@ -59,7 +59,7 @@ const fetch = (onResponse) => fetchRequest => deferObservable(() => async (obser
         pipe(observer, dispose({ cause }));
     }
 });
-const addEventListener = (eventName, selector) => target => createObservable(observer => {
+const addEventListener = (eventName, selector) => target => createHotObservable(observer => {
     const dispatcher = pipe(observer, getDispatcher, onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));

@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`RunnableObservableLike`](rx.RunnableObservableLike.md)<`T`\>
+- [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
   ↳ **`EnumerableObservableLike`**
 
@@ -33,17 +33,17 @@
 
 #### Inherited from
 
-[RunnableObservableLike](rx.RunnableObservableLike.md).[T](rx.RunnableObservableLike.md#t)
+ObservableLike.T
 
 ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
+• `Optional` `Readonly` **TContainerOf**: [`EnumerableObservableLike`](rx.EnumerableObservableLike.md)<`unknown`\>
 
-#### Inherited from
+#### Overrides
 
-[RunnableObservableLike](rx.RunnableObservableLike.md).[TContainerOf](rx.RunnableObservableLike.md#tcontainerof)
+[ObservableLike](rx.ObservableLike.md).[TContainerOf](rx.ObservableLike.md#tcontainerof)
 
 ___
 
@@ -53,14 +53,14 @@ ___
 
 #### Inherited from
 
-[RunnableObservableLike](rx.RunnableObservableLike.md).[TStatefulContainerState](rx.RunnableObservableLike.md#tstatefulcontainerstate)
+[ObservableLike](rx.ObservableLike.md).[TStatefulContainerState](rx.ObservableLike.md#tstatefulcontainerstate)
 
 ___
 
 ### [ObservableLike\_observableType]
 
-• `Optional` `Readonly` **[ObservableLike\_observableType]**: [`ObservableType`](../modules/rx.md#observabletype)
+• `Readonly` **[ObservableLike\_observableType]**: [`ObservableType`](../modules/rx.md#observabletype)
 
 #### Overrides
 
-[RunnableObservableLike](rx.RunnableObservableLike.md).[[ObservableLike_observableType]](rx.RunnableObservableLike.md#[observablelike_observabletype])
+[ObservableLike](rx.ObservableLike.md).[[ObservableLike_observableType]](rx.ObservableLike.md#[observablelike_observabletype])

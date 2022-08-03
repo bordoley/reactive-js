@@ -507,24 +507,22 @@ const toEnumerable = () => identity;
 const toEnumerableT = {
     toEnumerable,
 };
-const toObservable = /*@__PURE__*/ (() => {
-    return (options) => (enumerable) => {
-        const delay = getDelay(options);
-        const { delayStart = false } = options !== null && options !== void 0 ? options : {};
-        const onSink = (observer) => {
-            const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
-            pipe(observer, getScheduler, schedule(() => {
-                while (!isDisposed(observer) && move(enumerator)) {
-                    pipe(enumerator, getCurrent, notifySink(observer));
-                    __yield(options);
-                }
-            }, delayStart && hasDelay(options) ? { delay } : none));
-        };
-        return delay > 0
-            ? createRunnableObservable(onSink)
-            : createEnumerableObservable(onSink);
+const toObservable = ((options) => (enumerable) => {
+    const delay = getDelay(options);
+    const { delayStart = false } = options !== null && options !== void 0 ? options : {};
+    const onSink = (observer) => {
+        const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
+        pipe(observer, getScheduler, schedule(() => {
+            while (!isDisposed(observer) && move(enumerator)) {
+                pipe(enumerator, getCurrent, notifySink(observer));
+                __yield(options);
+            }
+        }, delayStart && hasDelay(options) ? { delay } : none));
     };
-})();
+    return delay > 0
+        ? createRunnableObservable(onSink)
+        : createEnumerableObservable(onSink);
+});
 const toReadonlyArray = () => (enumerable) => {
     const enumerator = pipe(enumerable, enumerate());
     const result = [];

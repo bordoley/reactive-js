@@ -8,7 +8,8 @@ import { keepType } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { Option, isSome, pipe } from "../../functions";
 import { ObservableLike, emptyObservable } from "../../rx";
-import { forEach, keepT, subscribe, takeLast } from "../../rx/ObservableLike";
+import { keepT } from "../../rx/HotObservableLike";
+import { forEach, subscribe, takeLast } from "../../rx/ObservableLike";
 import { __memo, __observe, observable } from "../../rx/effects";
 import { createVirtualTimeScheduler } from "../../scheduling";
 import { run } from "../../util/ContinuationLike";
@@ -39,8 +40,8 @@ export const effectsTests = describe(
 
         return result1 + result2 + result3;
       }),
-      takeLast(),
-      forEach(v => {
+      takeLast<number>(),
+      forEach<number>(v => {
         result = v;
       }),
       subscribe(scheduler),

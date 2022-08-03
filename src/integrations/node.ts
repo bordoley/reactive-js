@@ -28,7 +28,7 @@ import {
   pipe,
   pipeLazy,
 } from "../functions";
-import { ObservableLike, createObservable } from "../rx";
+import { ObservableLike, createHotObservable } from "../rx";
 import { forEach, subscribe } from "../rx/ObservableLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
 import { ObserverLike_dispatcher } from "../scheduling";
@@ -107,7 +107,7 @@ export const bindNodeCallback: BindNodeCallback = <T>(
   callback: (...args: readonly any[]) => any,
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {
-    return createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {
+    return createHotObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {
       const handler = (cause: unknown, arg: any) => {
         if (cause) {
           pipe(dispatcher, dispose({ cause }));
@@ -168,7 +168,7 @@ export const createReadableSource = (
   factory: Factory<Readable> | Readable,
 ): FlowableLike<Uint8Array> =>
   createLiftedFlowable(mode =>
-    createObservable(observer => {
+    createHotObservable(observer => {
       const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
       const readable =
@@ -184,7 +184,7 @@ export const createReadableSource = (
 
       pipe(
         mode,
-        forEach(ev => {
+        forEach<FlowMode>(ev => {
           switch (ev) {
             case "pause":
               readable.pause();
@@ -225,7 +225,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
     factory: Factory<Writable> | Writable,
   ): StreamableLike<Uint8Array, FlowMode> =>
     createLiftedStreamable(events =>
-      createObservable(observer => {
+      createHotObservable(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
         const writable =
@@ -239,7 +239,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
 
         pipe(
           events,
-          forEach(ev => {
+          forEach<Uint8Array>(ev => {
             // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
             // node throws a type Error regarding expecting a Buffer, though the docs
             // say a UInt8Array should be accepted. Need to file a bug.
@@ -274,7 +274,7 @@ export const transform =
   ): ContainerOperator<FlowableLike, Uint8Array, Uint8Array> =>
   src =>
     createLiftedFlowable(modeObs =>
-      createObservable(observer => {
+      createHotObservable(observer => {
         const transform = pipe(
           factory(),
           addToDisposable(observer),
@@ -297,7 +297,7 @@ export const transform =
 
         pipe(
           modeObs,
-          forEach(dispatchTo(transformReadableStream)),
+          forEach<FlowMode>(dispatchTo(transformReadableStream)),
           subscribe(getScheduler(observer)),
           addToNodeStream(transform),
         );

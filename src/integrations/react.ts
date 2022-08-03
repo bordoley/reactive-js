@@ -30,13 +30,11 @@ import {
 import {
   Factory,
   Option,
-  compose,
   ignore,
   isSome,
   none,
   pipe,
   pipeLazy,
-  returns,
 } from "../functions";
 import { ObservableLike, SubjectLike, createSubject } from "../rx";
 import { distinctUntilChanged, forEach, subscribe } from "../rx/ObservableLike";
@@ -91,7 +89,7 @@ export const useObservable = <T>(
 
     const subscription = pipe(
       observable,
-      forEach(compose(returns, updateState)),
+      forEach<T>(v => updateState(_ => v)),
       subscribe(scheduler),
       onError(updateError),
     );
@@ -128,7 +126,7 @@ export const createComponent = <TProps>(
     pipe(propsSubject, publish(props));
 
     const elementObservable = useMemo(
-      () => pipe(propsSubject, distinctUntilChanged(), fn),
+      () => pipe(propsSubject, distinctUntilChanged<TProps>(), fn),
       [propsSubject],
     );
     return useObservable(elementObservable, options) ?? null;

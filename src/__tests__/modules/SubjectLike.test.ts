@@ -30,7 +30,7 @@ export const SubjectLikeTests = describe(
     const result: number[] = [];
     pipe(
       subject,
-      forEachObservable(x => {
+      forEachObservable<number>(x => {
         result.push(x);
       }),
       subscribe(scheduler),
