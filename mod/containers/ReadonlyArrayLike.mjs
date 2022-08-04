@@ -2,7 +2,7 @@
 import { hasDelay, getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, __extends, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, pipe, none, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
@@ -53,7 +53,7 @@ const createFromArray = (factory) => (options = {}) => values => {
 };
 const toEnumerable = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    const createReadonlyArrayEnumerator = pipe(clazz(function ReadonlyArrayEnumerator(array, start, count) {
+    const createReadonlyArrayEnumerator = pipe(clazz(__extends(disposableMixin, typedEnumerator), function ReadonlyArrayEnumerator(array, start, count) {
         init(disposableMixin, this);
         init(typedEnumerator, this);
         this.array = array;
@@ -79,7 +79,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }), mixWith(disposableMixin, typedEnumerator), createObjectFactory());
+    }), createObjectFactory());
     return createFromArray((array, start, count) => createEnumerable(() => createReadonlyArrayEnumerator(array, start, count)));
 })();
 const toEnumerableT = { toEnumerable };

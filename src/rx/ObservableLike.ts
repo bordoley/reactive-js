@@ -41,10 +41,10 @@ import {
 import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../__internal__/util/Object";
 import {
   Concat,
@@ -682,6 +682,7 @@ export const switchAll: SwitchAllOperator = /*@__PURE__*/ (<T>() => {
 
   return pipe(
     clazz(
+      __extends(disposableMixin, typedObserverMixin),
       function SwitchAllObserver(
         this: TProperties & ObserverLike<ObservableLike<T>>,
         delegate: ObserverLike<T>,
@@ -718,7 +719,6 @@ export const switchAll: SwitchAllOperator = /*@__PURE__*/ (<T>() => {
         },
       },
     ),
-    mixWith(disposableMixin, typedObserverMixin),
     createObjectFactory<ObserverLike<ObservableLike<T>>, ObserverLike<T>>(),
     liftEnumerableObservable,
     returns,
@@ -735,6 +735,7 @@ export const subscribe: <T>(
 
   const createObserver = pipe(
     clazz(
+      __extends(disposableMixin, typedObserverMixin),
       function SubscribeObserver(
         this: ObserverLike<T>,
         scheduler: SchedulerLike,
@@ -749,7 +750,6 @@ export const subscribe: <T>(
         [SinkLike_notify](_: T) {},
       },
     ),
-    mixWith(disposableMixin, typedObserverMixin),
     createObjectFactory<ObserverLike<T>, SchedulerLike>(),
   );
   return (scheduler: SchedulerLike) => (observable: ObservableLike<T>) =>

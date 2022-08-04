@@ -6,10 +6,10 @@ import {
 } from "../__internal__/util/EnumeratorLikeMixin";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../__internal__/util/Object";
 import {
   Concat,
@@ -417,6 +417,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
 
     const createSequenceEnumerator = pipe(
       clazz(
+        __extends(disposableMixin, typedEnumeratorMixin),
         function SequenceEnumerator(
           this: TProperties & EnumeratorLike<T>,
           seq: SequenceLike<T>,
@@ -444,7 +445,6 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
           },
         },
       ),
-      mixWith(disposableMixin, typedEnumeratorMixin),
       createObjectFactory<EnumeratorLike<T>, SequenceLike<T>>(),
     );
 

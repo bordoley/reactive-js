@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_scheduleCallback, unstable_cancelCallback, unstable_IdlePriority, unstable_ImmediatePriority, unstable_NormalPriority, unstable_LowPriority, unstable_UserBlockingPriority } from 'scheduler';
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
-import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, __extends, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { none, isSome, pipe, pipeLazy, ignore } from '../functions.mjs';
 import { createSubject } from '../rx.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
@@ -58,7 +58,7 @@ const createComponent = (fn, options = {}) => {
     };
     return ObservableComponent;
 };
-const createReactPriorityScheduler = /*@__PURE__*/ pipe(clazz(function ReactPriorityScheduler() {
+const createReactPriorityScheduler = /*@__PURE__*/ pipe(clazz(__extends(disposableMixin), function ReactPriorityScheduler() {
     init(disposableMixin, this);
     return this;
 }, {
@@ -90,7 +90,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ pipe(clazz(function ReactPrio
         const callbackNode = unstable_scheduleCallback(priority, callback, delay > 0 ? { delay } : none);
         const callbackNodeDisposable = pipe(createDisposable(), onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), addTo(continuation));
     },
-}), mixWith(disposableMixin), createObjectFactory());
+}), createObjectFactory());
 const createReactSchedulerFactory = (priority) => () => pipe(createReactPriorityScheduler(), toScheduler(priority));
 const createReactIdlePriorityScheduler = 
 /*@__PURE__*/ createReactSchedulerFactory(unstable_IdlePriority);

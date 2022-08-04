@@ -18,10 +18,10 @@ import {
   Class,
   Class1,
   UnknownObject,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "./Object";
 
 export const delegatingDisposableMixin: Class1<
@@ -262,13 +262,15 @@ export const createDisposableRef: <TDisposable extends DisposableLike>(
   const typedDisposableRefMixin = disposableRefMixin<TDisposable>();
 
   return pipe(
-    clazz(function DisposableRef(this, initialValue: TDisposable) {
-      init(disposableMixin, this);
-      init(typedDisposableRefMixin, this, initialValue);
+    clazz(
+      __extends(disposableMixin, typedDisposableRefMixin),
+      function DisposableRef(this, initialValue: TDisposable) {
+        init(disposableMixin, this);
+        init(typedDisposableRefMixin, this, initialValue);
 
-      return this;
-    }),
-    mixWith(disposableMixin, typedDisposableRefMixin),
+        return this;
+      },
+    ),
     createObjectFactory<DisposableRefLike<TDisposable>, TDisposable>(),
   );
 })();

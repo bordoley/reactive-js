@@ -6,10 +6,10 @@ import {
 } from "../__internal__/util/EnumeratorLikeMixin";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../__internal__/util/Object";
 import {
   Keep,
@@ -139,6 +139,7 @@ export const toEnumerable: ToEnumerable<
 
   const createReadonlyArrayEnumerator = pipe(
     clazz(
+      __extends(disposableMixin, typedEnumerator),
       function ReadonlyArrayEnumerator(
         this: TProperties & EnumeratorLike<T>,
         array: readonly unknown[],
@@ -177,7 +178,6 @@ export const toEnumerable: ToEnumerable<
         },
       },
     ),
-    mixWith(disposableMixin, typedEnumerator),
     createObjectFactory<EnumeratorLike<T>, readonly T[], number, number>(),
   );
 

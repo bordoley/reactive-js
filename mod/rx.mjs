@@ -2,7 +2,7 @@
 import { getDelay, hasDelay } from './__internal__/optionalArgs.mjs';
 import { addTo, dispose, isDisposed, onDisposed, addIgnoringChildErrors } from './__internal__/util/DisposableLikeInternal.mjs';
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
-import { clazz, init, mixWith, createObjectFactory } from './__internal__/util/Object.mjs';
+import { clazz, __extends, init, createObjectFactory } from './__internal__/util/Object.mjs';
 import { ignore, pipe, forEach, newInstance, none, getLength, max, pipeLazy } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
@@ -77,7 +77,7 @@ const createRunnableUsingT = {
     using: createRunnableUsing,
 };
 const createSubject = /*@__PURE__*/ (() => {
-    const createSubjectInstance = pipe(clazz(function Subject(replay) {
+    const createSubjectInstance = pipe(clazz(__extends(disposableMixin), function Subject(replay) {
         init(disposableMixin, this);
         this[MulticastObservableLike_replay] = replay;
         this.observers = newInstance(Set);
@@ -125,7 +125,7 @@ const createSubject = /*@__PURE__*/ (() => {
             }
             pipe(this, addIgnoringChildErrors(dispatcher));
         },
-    }), mixWith(disposableMixin), createObjectFactory());
+    }), createObjectFactory());
     return (options) => {
         const { replay: replayOption = 0 } = options !== null && options !== void 0 ? options : {};
         const replay = max(replayOption, 0);

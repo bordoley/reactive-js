@@ -2,7 +2,7 @@
 import { observerMixin } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { clazz, init, mixWith, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { clazz, __extends, init, createObjectFactory } from '../__internal__/util/Object.mjs';
 import { pipe, none, isSome } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
@@ -43,7 +43,7 @@ const toEnumerable =
 /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
     const typedObserverMixin = observerMixin();
-    const createEnumeratorScheduler = pipe(clazz(function EnumeratorScheduler() {
+    const createEnumeratorScheduler = pipe(clazz(__extends(disposableMixin, typedEnumeratorMixin), function EnumeratorScheduler() {
         init(disposableMixin, this);
         init(typedEnumeratorMixin, this);
         this.continuations = [];
@@ -80,8 +80,8 @@ const toEnumerable =
                 this.continuations.push(continuation);
             }
         },
-    }), mixWith(disposableMixin, typedEnumeratorMixin), createObjectFactory());
-    const createEnumeratorObserver = pipe(clazz(function EnumeratorObserver(enumerator) {
+    }), createObjectFactory());
+    const createEnumeratorObserver = pipe(clazz(__extends(disposableMixin, typedObserverMixin), function EnumeratorObserver(enumerator) {
         init(disposableMixin, this);
         init(typedObserverMixin, this, enumerator);
         this.enumerator = enumerator;
@@ -92,7 +92,7 @@ const toEnumerable =
         [SinkLike_notify](next) {
             this.enumerator[EnumeratorLike_current] = next;
         },
-    }), mixWith(disposableMixin, typedObserverMixin), createObjectFactory());
+    }), createObjectFactory());
     return () => (obs) => createEnumerable(() => {
         const scheduler = createEnumeratorScheduler();
         pipe(createEnumeratorObserver(scheduler), addTo(scheduler), sourceFrom(obs));
