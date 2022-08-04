@@ -25,10 +25,10 @@ import {
 import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../__internal__/util/Object";
 import {
   Function1,
@@ -103,6 +103,7 @@ const createContinuation: Function2<
 
   return pipe(
     clazz(
+      __extends(disposableMixin),
       function Continuation(
         this: TProperties & ContinuationLike,
         scheduler: SchedulerLike,
@@ -147,7 +148,6 @@ const createContinuation: Function2<
         },
       },
     ),
-    mixWith(disposableMixin),
     createObjectFactory<ContinuationLike, SchedulerLike, SideEffect>(),
   );
 })();
@@ -347,6 +347,11 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
 
     return pipe(
       clazz(
+        __extends(
+          disposableMixin,
+          typedEnumeratorMixin,
+          typedDisposableRefMixin,
+        ),
         function QueueScheduler(
           this: TProperties & QueueSchedulerLike,
           host: SchedulerLike,
@@ -463,7 +468,6 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           },
         },
       ),
-      mixWith(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin),
       createObjectFactory<QueueSchedulerLike, SchedulerLike>(),
     );
   })();

@@ -22,10 +22,10 @@ import { getDelay } from "../__internal__/optionalArgs";
 import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../__internal__/util/Object";
 import {
   Factory,
@@ -137,6 +137,7 @@ export const createComponent = <TProps>(
 
 const createReactPriorityScheduler = /*@__PURE__*/ pipe(
   clazz(
+    __extends(disposableMixin),
     function ReactPriorityScheduler(
       this: PropertyTypeOf<[typeof disposableMixin]> & PrioritySchedulerLike,
     ) {
@@ -204,7 +205,6 @@ const createReactPriorityScheduler = /*@__PURE__*/ pipe(
       },
     },
   ),
-  mixWith(disposableMixin),
   createObjectFactory<PrioritySchedulerLike>(),
 );
 

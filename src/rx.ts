@@ -9,10 +9,10 @@ import {
 import { disposableMixin } from "./__internal__/util/DisposableLikeMixins";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -245,6 +245,7 @@ export const createSubject: <T>(options?: {
 
   const createSubjectInstance = pipe(
     clazz(
+      __extends(disposableMixin),
       function Subject(this: TProperties & SubjectLike<T>, replay: number) {
         init(disposableMixin, this);
         this[MulticastObservableLike_replay] = replay;
@@ -314,7 +315,6 @@ export const createSubject: <T>(options?: {
         },
       },
     ),
-    mixWith(disposableMixin),
     createObjectFactory<SubjectLike<T>, number>(),
   );
 

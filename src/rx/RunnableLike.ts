@@ -19,10 +19,10 @@ import {
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../__internal__/util/Object";
 import {
   DelegatingSink_delegate,
@@ -157,6 +157,7 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
 
   return pipeLazy(
     clazz(
+      __extends(typedDelegatingSinkMixin),
       function RunnableConcatAll(
         this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
           SinkLike<RunnableLike<T>>,
@@ -185,7 +186,6 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
         },
       },
     ),
-    mixWith(typedDelegatingSinkMixin),
     createObjectFactory<SinkLike<RunnableLike<T>>, SinkLike<T>>(),
     lift,
   );

@@ -6,10 +6,10 @@ import {
 } from "../__internal__/util/EnumeratorLikeMixin";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../__internal__/util/Object";
 import {
   Concat,
@@ -128,6 +128,7 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
 
     const createEnumeratorScheduler = pipe(
       clazz(
+        __extends(disposableMixin, typedEnumeratorMixin),
         function EnumeratorScheduler(
           this: EnumeratorScheduler & TEnumeratorSchedulerProperties,
         ) {
@@ -180,7 +181,6 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
           },
         },
       ),
-      mixWith(disposableMixin, typedEnumeratorMixin),
       createObjectFactory<EnumeratorScheduler>(),
     );
 
@@ -190,6 +190,7 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
 
     const createEnumeratorObserver = pipe(
       clazz(
+        __extends(disposableMixin, typedObserverMixin),
         function EnumeratorObserver(
           this: TEnumeratorObserverProperties & ObserverLike<T>,
           enumerator: EnumeratorScheduler,
@@ -209,7 +210,6 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
           },
         },
       ),
-      mixWith(disposableMixin, typedObserverMixin),
       createObjectFactory<ObserverLike<T>, EnumeratorScheduler>(),
     );
 

@@ -43,10 +43,10 @@ import { disposableMixin } from "../util/DisposableLikeMixins";
 import {
   Class1,
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../util/Object";
 import {
   decodeWithCharsetSinkMixin,
@@ -86,6 +86,7 @@ const createObserverDispatcher = (<T>() => {
 
   return pipe(
     clazz(
+      disposableMixin,
       function ObserverDispatcher(
         this: TProperties & DispatcherLike<T>,
         observer: ObserverLike<T>,
@@ -141,7 +142,6 @@ const createObserverDispatcher = (<T>() => {
         },
       },
     ),
-    mixWith(disposableMixin),
     createObjectFactory<DispatcherLike<T>, ObserverLike<T>>(),
   );
 })();
@@ -218,17 +218,19 @@ export const createDecodeWithCharsetObserver = (
   >;
 
   return pipe(
-    clazz(function DecodeWithCharsetObserver(
-      this: TProperties & ObserverLike<ArrayBuffer>,
-      delegate: ObserverLike<string>,
-      charset: string,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedDecodeWithCharsetMixin, this, delegate, charset);
+    clazz(
+      __extends(typedObserverMixin, typedDecodeWithCharsetMixin),
+      function DecodeWithCharsetObserver(
+        this: TProperties & ObserverLike<ArrayBuffer>,
+        delegate: ObserverLike<string>,
+        charset: string,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedDecodeWithCharsetMixin, this, delegate, charset);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedDecodeWithCharsetMixin),
+        return this;
+      },
+    ),
     createObjectFactory<
       ObserverLike<ArrayBuffer>,
       ObserverLike<string>,
@@ -250,6 +252,7 @@ export const createDelegatingObserver: <T>(
 
   return pipe(
     clazz(
+      __extends(disposableMixin, typedObserverMixin),
       function DelegatingObserver(
         this: TProperties & ObserverLike<T>,
         observer: ObserverLike<T>,
@@ -269,7 +272,6 @@ export const createDelegatingObserver: <T>(
         },
       },
     ),
-    mixWith(disposableMixin, typedObserverMixin),
     createObjectFactory<ObserverLike<T>, ObserverLike<T>>(),
   );
 })();
@@ -286,17 +288,19 @@ export const createDistinctUntilChangedObserver: <T>(
   >;
 
   return pipe(
-    clazz(function DistinctUntilChangedObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<T>,
-      equality: Equality<T>,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedDistinctUntilChangedSinkMixin, this, delegate, equality);
+    clazz(
+      __extends(typedObserverMixin, typedDistinctUntilChangedSinkMixin),
+      function DistinctUntilChangedObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<T>,
+        equality: Equality<T>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedDistinctUntilChangedSinkMixin, this, delegate, equality);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedDistinctUntilChangedSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<ObserverLike<T>, ObserverLike<T>, Equality<T>>(),
   );
 })();
@@ -313,17 +317,19 @@ export const createForEachObserver: <T>(
   >;
 
   return pipe(
-    clazz(function ForEachObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<T>,
-      effect: SideEffect1<T>,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedForEachSinkMixin, this, delegate, effect);
+    clazz(
+      __extends(typedObserverMixin, typedForEachSinkMixin),
+      function ForEachObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<T>,
+        effect: SideEffect1<T>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedForEachSinkMixin, this, delegate, effect);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedForEachSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<ObserverLike<T>, ObserverLike<T>, SideEffect1<T>>(),
   );
 })();
@@ -340,17 +346,19 @@ export const createKeepObserver: <T>(
   >;
 
   return pipe(
-    clazz(function KeepObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<T>,
-      predicate: Predicate<T>,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedKeepSinkMixin, this, delegate, predicate);
+    clazz(
+      __extends(typedObserverMixin, typedKeepSinkMixin),
+      function KeepObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<T>,
+        predicate: Predicate<T>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedKeepSinkMixin, this, delegate, predicate);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedKeepSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<ObserverLike<T>, ObserverLike<T>, Predicate<T>>(),
   );
 })();
@@ -367,17 +375,19 @@ export const createMapObserver: <TA, TB>(
   >;
 
   return pipe(
-    clazz(function MapObserver(
-      this: TProperties & ObserverLike<TA>,
-      delegate: ObserverLike<TB>,
-      mapper: Function1<TA, TB>,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedMapSinkMixin, this, delegate, mapper);
+    clazz(
+      __extends(typedObserverMixin, typedMapSinkMixin),
+      function MapObserver(
+        this: TProperties & ObserverLike<TA>,
+        delegate: ObserverLike<TB>,
+        mapper: Function1<TA, TB>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedMapSinkMixin, this, delegate, mapper);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedMapSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<
       ObserverLike<TA>,
       ObserverLike<TB>,
@@ -397,16 +407,18 @@ export const createPairwiseObserver: <T>(
   >;
 
   return pipe(
-    clazz(function PairwiseObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<readonly [T, T]>,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedPairwiseSinkMixin, this, delegate);
+    clazz(
+      __extends(typedObserverMixin, typedPairwiseSinkMixin),
+      function PairwiseObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<readonly [T, T]>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedPairwiseSinkMixin, this, delegate);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedPairwiseSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<ObserverLike<T>, ObserverLike<readonly [T, T]>>(),
   );
 })();
@@ -429,18 +441,20 @@ export const createReduceObserver = <
   >;
 
   return pipe(
-    clazz(function ReduceObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<TAcc>,
-      reducer: Reducer<T, TAcc>,
-      initialValue: Factory<TAcc>,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
+    clazz(
+      __extends(typedObserverMixin, typedReduceSinkMixin),
+      function ReduceObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<TAcc>,
+        reducer: Reducer<T, TAcc>,
+        initialValue: Factory<TAcc>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedReduceSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<
       ObserverLike<T>,
       ObserverLike<TAcc>,
@@ -464,18 +478,20 @@ export const createScanObserver: <T, TAcc>(
   >;
 
   return pipe(
-    clazz(function ScanObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<TAcc>,
-      reducer: Reducer<T, TAcc>,
-      initialValue: Factory<TAcc>,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedScanSinkMixin, this, delegate, reducer, initialValue);
+    clazz(
+      __extends(typedObserverMixin, typedScanSinkMixin),
+      function ScanObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<TAcc>,
+        reducer: Reducer<T, TAcc>,
+        initialValue: Factory<TAcc>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedScanSinkMixin, this, delegate, reducer, initialValue);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedScanSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<
       ObserverLike<T>,
       ObserverLike<TAcc>,
@@ -497,17 +513,19 @@ export const createSkipFirstObserver: <T>(
   >;
 
   return pipe(
-    clazz(function SkipFirstObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<T>,
-      skipCount: number,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedSkipFirstSinkMixin, this, delegate, skipCount);
+    clazz(
+      __extends(typedObserverMixin, typedSkipFirstSinkMixin),
+      function SkipFirstObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<T>,
+        skipCount: number,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedSkipFirstSinkMixin, this, delegate, skipCount);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedSkipFirstSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<ObserverLike<T>, ObserverLike<T>, number>(),
   );
 })();
@@ -524,17 +542,19 @@ export const createTakeFirstObserver: <T>(
   >;
 
   return pipe(
-    clazz(function TakeFirstObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<T>,
-      takeCount: number,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedTakeFirstSinkMixin, this, delegate, takeCount);
+    clazz(
+      __extends(typedObserverMixin, typedTakeFirstSinkMixin),
+      function TakeFirstObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<T>,
+        takeCount: number,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedTakeFirstSinkMixin, this, delegate, takeCount);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedTakeFirstSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<ObserverLike<T>, ObserverLike<T>, number>(),
   );
 })();
@@ -554,17 +574,20 @@ export const createTakeLastObserver = <
     [typeof typedObserverMixin, typeof typedTakeLastSinkMixin]
   >;
   return pipe(
-    clazz(function TakeLastObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<T>,
-      takeCount: number,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedTakeLastSinkMixin, this, delegate, takeCount);
+    clazz(
+      __extends(typedObserverMixin, typedTakeLastSinkMixin),
+      function TakeLastObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<T>,
+        takeCount: number,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedTakeLastSinkMixin, this, delegate, takeCount);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedTakeLastSinkMixin),
+        return this;
+      },
+    ),
+
     createObjectFactory<ObserverLike<T>, ObserverLike<T>, number>(),
   );
 };
@@ -582,18 +605,20 @@ export const createTakeWhileObserver: <T>(
   >;
 
   return pipe(
-    clazz(function TakeWhileObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<T>,
-      predicate: Predicate<T>,
-      inclusive: boolean,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedTakeWhileSinkMixin, this, delegate, predicate, inclusive);
+    clazz(
+      __extends(typedObserverMixin, typedTakeWhileSinkMixin),
+      function TakeWhileObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<T>,
+        predicate: Predicate<T>,
+        inclusive: boolean,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedTakeWhileSinkMixin, this, delegate, predicate, inclusive);
 
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedTakeWhileSinkMixin),
+        return this;
+      },
+    ),
     createObjectFactory<
       ObserverLike<T>,
       ObserverLike<T>,
@@ -615,16 +640,18 @@ export const createThrowIfEmptyObserver: <T>(
   >;
 
   return pipe(
-    clazz(function ThrowIfEmptyObserver(
-      this: TProperties & ObserverLike<T>,
-      delegate: ObserverLike<T>,
-      factory: Factory<unknown>,
-    ) {
-      init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-      init(typedThrowIfEmptySinkMixin, this, delegate, factory);
-      return this;
-    }),
-    mixWith(typedObserverMixin, typedThrowIfEmptySinkMixin),
+    clazz(
+      __extends(typedObserverMixin, typedThrowIfEmptySinkMixin),
+      function ThrowIfEmptyObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<T>,
+        factory: Factory<unknown>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedThrowIfEmptySinkMixin, this, delegate, factory);
+        return this;
+      },
+    ),
     createObjectFactory<ObserverLike<T>, ObserverLike<T>, Factory<unknown>>(),
   );
 })();

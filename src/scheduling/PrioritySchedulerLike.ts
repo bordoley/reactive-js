@@ -2,10 +2,10 @@ import { getDelay } from "../__internal__/optionalArgs";
 import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../__internal__/util/Object";
 import { Function1, none, partial, pipe } from "../functions";
 import {
@@ -40,6 +40,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
 
   const createSchedulerInstance = pipe(
     clazz(
+      __extends(disposableMixin),
       function PrioritySchedulerDelegatingScheduler(
         this: TProperties & SchedulerLike,
         scheduler: PrioritySchedulerLike,
@@ -89,7 +90,6 @@ export const toScheduler = /*@__PURE__*/ (() => {
         },
       },
     ),
-    mixWith(disposableMixin),
     createObjectFactory<SchedulerLike, PrioritySchedulerLike, number>(),
   );
 
