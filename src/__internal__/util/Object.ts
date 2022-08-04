@@ -229,8 +229,7 @@ export const __extends: __extends = (...mixins: readonly TMixin[]) => {
 
 interface Clazz {
   <
-    TInit extends (this: any, ...args: readonly any[]) => TReturn,
-    TReturn,
+    TInit extends (this: any, ...args: readonly any[]) => unknown,
     TProperties extends UnknownObject = UnknownObject,
     TPrototype extends UnknownObject = UnknownObject,
   >(
@@ -242,34 +241,11 @@ interface Clazz {
     [Object_properties]: TProperties;
     [Object_prototype]: TPrototype;
   };
-
-  <
-    TInit extends (this: any, ...args: readonly any[]) => TReturn,
-    TReturn,
-    TProperties extends UnknownObject = UnknownObject,
-  >(
-    init: TInit,
-    properties: OptionalProps<TProperties>,
-  ): {
-    [Object_init]: TInit;
-    [Object_properties]: TProperties;
-    [Object_prototype]: EmptyObject;
-  };
-
-  <TInit extends (this: any, ...args: readonly any[]) => TReturn, TReturn>(
-    init: TInit,
-  ): {
-    [Object_init]: TInit;
-    [Object_properties]: EmptyObject;
-    [Object_prototype]: EmptyObject;
-  };
-
   <
     TParent extends TMixin,
-    TInit extends (this: any, ...args: readonly any[]) => TReturn,
-    TReturn,
-    TProperties extends UnknownObject = UnknownObject,
-    TPrototype extends UnknownObject = UnknownObject,
+    TInit extends (this: any, ...args: readonly any[]) => unknown,
+    TProperties extends UnknownObject,
+    TPrototype extends UnknownObject,
   >(
     parent: TParent,
     init: TInit,
@@ -277,29 +253,27 @@ interface Clazz {
     prototype: TPrototype,
   ): {
     [Object_init]: TInit;
-    [Object_properties]: TProperties & PropertyTypeOf<[TParent]>;
+    [Object_properties]: TProperties & TParent[typeof Object_properties];
     [Object_prototype]: TPrototype & TParent[typeof Object_prototype];
   };
 
   <
     TParent extends TMixin,
-    TInit extends (this: any, ...args: readonly any[]) => TReturn,
-    TReturn,
-    TProperties extends UnknownObject = UnknownObject,
+    TInit extends (this: any, ...args: readonly any[]) => unknown,
+    TProperties extends UnknownObject,
   >(
     parent: TParent,
     init: TInit,
     properties: OptionalProps<TProperties>,
   ): {
     [Object_init]: TInit;
-    [Object_properties]: TProperties & PropertyTypeOf<[TParent]>;
+    [Object_properties]: TProperties & TParent[typeof Object_properties];
     [Object_prototype]: TParent[typeof Object_prototype];
   };
 
   <
     TParent extends TMixin,
-    TInit extends (this: any, ...args: readonly any[]) => TReturn,
-    TReturn,
+    TInit extends (this: any, ...args: readonly any[]) => unknown,
   >(
     parent: TParent,
     init: TInit,
