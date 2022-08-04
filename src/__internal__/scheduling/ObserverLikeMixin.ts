@@ -89,7 +89,7 @@ const createObserverDispatcher = (<T>() => {
       function ObserverDispatcher(
         this: TProperties & DispatcherLike<T>,
         observer: ObserverLike<T>,
-      ): DispatcherLike<T> {
+      ) {
         init(disposableMixin, this);
         this.observer = observer;
         this.nextQueue = [];
@@ -178,7 +178,7 @@ export const observerMixin: <T>() => Class1<
       function ObserverMixin(
         this: TProperties & TObserverMixinReturn<T>,
         scheduler: SchedulerLike,
-      ): TObserverMixinReturn<T> {
+      ) {
         this[ObserverLike_scheduler] = scheduler;
         return this;
       },
@@ -222,7 +222,7 @@ export const createDecodeWithCharsetObserver = (
       this: TProperties & ObserverLike<ArrayBuffer>,
       delegate: ObserverLike<string>,
       charset: string,
-    ): ObserverLike<ArrayBuffer> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedDecodeWithCharsetMixin, this, delegate, charset);
 
@@ -253,7 +253,7 @@ export const createDelegatingObserver: <T>(
       function DelegatingObserver(
         this: TProperties & ObserverLike<T>,
         observer: ObserverLike<T>,
-      ): ObserverLike<T> {
+      ) {
         init(disposableMixin, this);
         init(typedObserverMixin, this, getScheduler(observer));
         this.delegate = observer;
@@ -290,7 +290,7 @@ export const createDistinctUntilChangedObserver: <T>(
       this: TProperties & ObserverLike<T>,
       delegate: ObserverLike<T>,
       equality: Equality<T>,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedDistinctUntilChangedSinkMixin, this, delegate, equality);
 
@@ -317,7 +317,7 @@ export const createForEachObserver: <T>(
       this: TProperties & ObserverLike<T>,
       delegate: ObserverLike<T>,
       effect: SideEffect1<T>,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedForEachSinkMixin, this, delegate, effect);
 
@@ -344,7 +344,7 @@ export const createKeepObserver: <T>(
       this: TProperties & ObserverLike<T>,
       delegate: ObserverLike<T>,
       predicate: Predicate<T>,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedKeepSinkMixin, this, delegate, predicate);
 
@@ -371,7 +371,7 @@ export const createMapObserver: <TA, TB>(
       this: TProperties & ObserverLike<TA>,
       delegate: ObserverLike<TB>,
       mapper: Function1<TA, TB>,
-    ): ObserverLike<TA> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedMapSinkMixin, this, delegate, mapper);
 
@@ -400,7 +400,7 @@ export const createPairwiseObserver: <T>(
     clazz(function PairwiseObserver(
       this: TProperties & ObserverLike<T>,
       delegate: ObserverLike<readonly [T, T]>,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedPairwiseSinkMixin, this, delegate);
 
@@ -434,7 +434,7 @@ export const creatReduceObserver = <
       delegate: ObserverLike<TAcc>,
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
 
@@ -469,7 +469,7 @@ export const creatScanObserver: <T, TAcc>(
       delegate: ObserverLike<TAcc>,
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedScanSinkMixin, this, delegate, reducer, initialValue);
 
@@ -501,7 +501,7 @@ export const createSkipFirstObserver: <T>(
       this: TProperties & ObserverLike<T>,
       delegate: ObserverLike<T>,
       skipCount: number,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedSkipFirstSinkMixin, this, delegate, skipCount);
 
@@ -528,7 +528,7 @@ export const createTakeFirstObserver: <T>(
       this: TProperties & ObserverLike<T>,
       delegate: ObserverLike<T>,
       takeCount: number,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedTakeFirstSinkMixin, this, delegate, takeCount);
 
@@ -558,7 +558,7 @@ export const createTakeLastObserver = <
       this: TProperties & ObserverLike<T>,
       delegate: ObserverLike<T>,
       takeCount: number,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedTakeLastSinkMixin, this, delegate, takeCount);
 
@@ -587,7 +587,7 @@ export const createTakeWhileObserver: <T>(
       delegate: ObserverLike<T>,
       predicate: Predicate<T>,
       inclusive: boolean,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedTakeWhileSinkMixin, this, delegate, predicate, inclusive);
 
@@ -619,7 +619,7 @@ export const createThrowIfEmptyObserver: <T>(
       this: TProperties & ObserverLike<T>,
       delegate: ObserverLike<T>,
       factory: Factory<unknown>,
-    ): ObserverLike<T> {
+    ) {
       init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
       init(typedThrowIfEmptySinkMixin, this, delegate, factory);
       return this;

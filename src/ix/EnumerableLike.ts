@@ -166,7 +166,7 @@ const delegatingEnumeratorMixin: <T>() => Class1<
       function DelegatingEnumerator(
         this: TProperties & TDelegatingEnumeratorMixinReturn<T>,
         delegate: EnumeratorLike<T>,
-      ): TDelegatingEnumeratorMixinReturn<T> {
+      ) {
         this[DelegatingEnumerator_private_delegate] = delegate;
 
         return this;
@@ -271,7 +271,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
         this: TProperties & EnumeratorLike<readonly T[]>,
         delegate: EnumeratorLike<T>,
         maxBufferSize: number,
-      ): EnumeratorLike<readonly T[]> {
+      ) {
         init(disposableMixin, this);
         init(typedEnumerator, this);
         this.delegate = delegate;
@@ -338,7 +338,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
         function ConcatAllEnumerator(
           this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike<EnumerableLike<T>>,
-        ): EnumeratorLike<T> {
+        ) {
           init(disposableMixin, this);
           init(typedDisposableRefMixin, this, disposed);
           init(typedEnumerator, this);
@@ -415,7 +415,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
           this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike<T>,
           equality: Equality<T>,
-        ): EnumeratorLike<T> {
+        ) {
           init(delegatingDisposableMixin, this, delegate);
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.equality = equality;
@@ -471,7 +471,7 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
         this: TProperties & EnumeratorLike<T>,
         delegate: EnumeratorLike<T>,
         effect: SideEffect1<T>,
-      ): EnumeratorLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.effect = effect;
@@ -513,7 +513,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         this: TProperties & EnumeratorLike<T>,
         delegate: EnumeratorLike<T>,
         predicate: Predicate<T>,
-      ): EnumeratorLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.predicate = predicate;
@@ -561,7 +561,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
         this: TProperties & EnumeratorLike<TB>,
         delegate: EnumeratorLike<TA>,
         mapper: Function1<TA, TB>,
-      ): EnumeratorLike<TB> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         init(typedEnumerator, this);
         this.delegate = delegate;
@@ -614,7 +614,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
       function PairwiseEnumerator(
         this: TProperties & EnumeratorLike<[T, T]>,
         delegate: EnumeratorLike<T>,
-      ): EnumeratorLike<[T, T]> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         init(typedEnumerator, this);
         this.delegate = delegate;
@@ -667,7 +667,7 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
         this: TProperties & EnumeratorLike<T>,
         src: EnumerableLike<T>,
         shouldRepeat: Predicate<number>,
-      ): EnumeratorLike<T> {
+      ) {
         init(disposableMixin, this);
         this.src = src;
         this.shouldRepeat = shouldRepeat;
@@ -751,7 +751,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
         delegate: EnumeratorLike<T>,
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
-      ): EnumeratorLike<TAcc> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         init(typedEnumerator, this);
         this.delegate = delegate;
@@ -813,7 +813,7 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
           this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike<T>,
           skipCount: number,
-        ): EnumeratorLike<T> {
+        ) {
           init(delegatingDisposableMixin, this, delegate);
           init(typedDelegatingEnumeratorMixin, this, delegate);
 
@@ -867,7 +867,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
           this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike<T>,
           maxCount: number,
-        ): EnumeratorLike<T> {
+        ) {
           init(delegatingDisposableMixin, this, delegate);
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.maxCount = maxCount;
@@ -918,7 +918,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
         this: TProperties & EnumeratorLike<T>,
         delegate: EnumeratorLike<T>,
         maxCount: number,
-      ): EnumeratorLike<T> {
+      ) {
         init(disposableMixin, this);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.maxCount = maxCount;
@@ -988,7 +988,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
           delegate: EnumeratorLike<T>,
           predicate: Predicate<T>,
           inclusive: boolean,
-        ): EnumeratorLike<T> {
+        ) {
           init(delegatingDisposableMixin, this, delegate);
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.predicate = predicate;
@@ -1053,7 +1053,7 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
           this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike,
           factory: Factory<unknown>,
-        ): EnumeratorLike<T> {
+        ) {
           init(disposableMixin, this);
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.isEmpty = true;
@@ -1235,7 +1235,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
       function ZipEnumerator(
         this: TProperties & EnumeratorLike<readonly unknown[]>,
         enumerators: readonly EnumeratorLike[],
-      ): EnumeratorLike<readonly unknown[]> {
+      ) {
         init(disposableMixin, this);
         init(typedEnumerator, this);
         this.enumerators = enumerators;

@@ -37,7 +37,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
         function IteratorEnumerator(
           this: TProperties & EnumeratorLike<T>,
           iterator: Iterator<T>,
-        ): EnumeratorLike<T> {
+        ) {
           init(disposableMixin, this);
           this.iterator = iterator;
 

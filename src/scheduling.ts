@@ -219,7 +219,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
       function HostScheduler(
         this: TProperties & SchedulerLike,
         yieldInterval: number,
-      ): SchedulerLike {
+      ) {
         init(disposableMixin, this);
         this.yieldInterval = yieldInterval;
         return this;
@@ -329,7 +329,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
       function VirtualTimeScheduler(
         this: TProperties & VirtualTimeSchedulerLike,
         maxMicroTaskTicks: number,
-      ): VirtualTimeSchedulerLike {
+      ) {
         init(disposableMixin, this);
         this.maxMicroTaskTicks = maxMicroTaskTicks;
         this.taskQueue = createPriorityQueue(comparator);
