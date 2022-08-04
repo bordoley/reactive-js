@@ -435,6 +435,6 @@ export const toReadonlyArrayT: ToReadonlyArray<RunnableLike> = {
 
 export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
   returns(identity);
-export const toRunnableT: ToRunnable<RunnableLike<unknown>> = {
+export const toRunnableT: ToRunnable<RunnableLike> = {
   toRunnable,
 };

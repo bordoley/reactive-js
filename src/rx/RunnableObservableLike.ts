@@ -79,7 +79,7 @@ export const keepT: Keep<RunnableObservableLike> = { keep };
 
 export const mapT: Map<RunnableObservableLike> = { map };
 
-export const mergeT: Concat<ObservableLike<unknown>> = {
+export const mergeT: Concat<ObservableLike> = {
   concat: merge,
 };
 

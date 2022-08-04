@@ -102,7 +102,7 @@ interface ForkMergeOperator {
 declare const forkMerge: ForkMergeOperator;
 /** @hidden */
 declare const merge: ConcatOperator;
-declare const mergeT: Concat<ObservableLike<unknown>>;
+declare const mergeT: Concat<ObservableLike>;
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *

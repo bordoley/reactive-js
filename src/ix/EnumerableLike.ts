@@ -221,7 +221,7 @@ const lift: Lift<EnumerableLike, TInteractive>["lift"] = /*@__PURE__*/ (() => {
     [InteractiveContainerLike_interact](): EnumeratorLike<TB> {
       return pipeUnsafe(
         this.src,
-        enumerate<unknown>(),
+        enumerate(),
         ...this.operators,
       ) as EnumeratorLike<TB>;
     }

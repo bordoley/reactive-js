@@ -101,7 +101,7 @@ export const createEnumerable: <T>(
     ),
   ))();
 
-export const createEnumerableUsing: Using<EnumerableLike<unknown>>["using"] = <
+export const createEnumerableUsing: Using<EnumerableLike>["using"] = <
   TResource extends DisposableLike,
   T,
 >(
@@ -119,7 +119,7 @@ export const createEnumerableUsing: Using<EnumerableLike<unknown>>["using"] = <
 
     return enumerator;
   });
-export const createEnumerableUsingT: Using<EnumerableLike<unknown>> = {
+export const createEnumerableUsingT: Using<EnumerableLike> = {
   using: createEnumerableUsing,
 };
 

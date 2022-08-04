@@ -44,7 +44,7 @@
 
 ### createEnumerableUsingT
 
-• `Const` **createEnumerableUsingT**: [`Using`](containers.md#using)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>\>
+• `Const` **createEnumerableUsingT**: [`Using`](containers.md#using)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 

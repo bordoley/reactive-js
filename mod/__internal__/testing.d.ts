@@ -27,8 +27,8 @@ declare const expectEquals: <T>(b: T, valueEquality?: <T_1>(a: T_1, b: T_1) => b
 declare const expectArrayEquals: <T>(b: readonly T[], valueEquality?: Equality<T>) => (a: readonly T[]) => void;
 declare const expectTrue: (v: boolean) => void;
 declare const expectFalse: (v: boolean) => void;
-declare const expectIsNone: (v: Option<unknown>) => void;
-declare const expectIsSome: (v: Option<unknown>) => void;
+declare const expectIsNone: (v: Option) => void;
+declare const expectIsSome: (v: Option) => void;
 declare type MockFunction = {
     (...v: readonly unknown[]): any;
     readonly calls: readonly ReadonlyArray<any>[];

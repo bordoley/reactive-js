@@ -499,7 +499,7 @@ export const forkMerge: ForkMergeOperator = (<TIn, TOut>(
 export const merge: ConcatOperator = (<T>(
   ...observables: ObservableLike<T>[]
 ) => mergeImpl(observables)) as ConcatOperator;
-export const mergeT: Concat<ObservableLike<unknown>> = {
+export const mergeT: Concat<ObservableLike> = {
   concat: merge,
 };
 
