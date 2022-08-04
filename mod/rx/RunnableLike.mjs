@@ -1,7 +1,7 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
 import { reactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
-import { createObjectFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
+import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { bufferSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/SinkLikeMixin.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeUnsafe, newInstance, pipe, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
@@ -35,7 +35,7 @@ const liftT = {
 };
 const buffer = /*@__PURE__*/ (() => {
     const typedBufferSinkMixin = bufferSinkMixin(toRunnable$1());
-    return pipe(typedBufferSinkMixin, createObjectFactory(), createBufferOperator(liftT));
+    return pipe(createInstanceFactory(typedBufferSinkMixin), createBufferOperator(liftT));
 })();
 const bufferT = { buffer };
 const concat = (...runnables) => pipe(runnables, toRunnable$1(), concatAll());
@@ -44,16 +44,16 @@ const concatT = {
 };
 const concatAll = /*@__PURE__*/ (() => {
     const typedDelegatingSinkMixin = delegatingSinkMixin();
-    return pipeLazy(clazz(__extends(typedDelegatingSinkMixin), function RunnableConcatAll(delegate) {
+    return pipeLazy(createInstanceFactory(clazz(__extends(typedDelegatingSinkMixin), function RunnableConcatAll(delegate) {
         init(typedDelegatingSinkMixin, this, delegate);
         pipe(this, bindTo(delegate));
         return this;
     }, {}, {
         [SinkLike_notify](next) {
             const { [DelegatingSink_delegate]: delegate } = this;
-            pipe(delegate, createDelegatingSink, addTo(this), sourceFrom(next), dispose());
+            pipe(createDelegatingSink(delegate), addTo(this), sourceFrom(next), dispose());
         },
-    }), createObjectFactory(), lift);
+    })), lift);
 })();
 const concatAllT = {
     concatAll,
@@ -61,7 +61,7 @@ const concatAllT = {
 const decodeWithCharset = 
 /*@__PURE__*/ (() => {
     const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(toRunnable$1());
-    return pipe(typedDecodeWithCharsetMixin, createObjectFactory(), createDecodeWithCharsetOperator(liftT));
+    return pipe(createInstanceFactory(typedDecodeWithCharsetMixin), createDecodeWithCharsetOperator(liftT));
 })();
 const decodeWithCharsetT = {
     decodeWithCharset,
@@ -69,7 +69,7 @@ const decodeWithCharsetT = {
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const typedDistinctUntilChangedSinkMixin = distinctUntilChangedSinkMixin();
-    return pipe(typedDistinctUntilChangedSinkMixin, createObjectFactory(), createDistinctUntilChangedOperator(liftT));
+    return pipe(createInstanceFactory(typedDistinctUntilChangedSinkMixin), createDistinctUntilChangedOperator(liftT));
 })();
 const distinctUntilChangedT = {
     distinctUntilChanged,
@@ -83,12 +83,12 @@ const first = () => src => {
 };
 const forEach = /*@__PURE__*/ (() => {
     const typedForEachSinkMixin = forEachSinkMixin();
-    return pipe(typedForEachSinkMixin, createObjectFactory(), createForEachOperator(liftT));
+    return pipe(createInstanceFactory(typedForEachSinkMixin), createForEachOperator(liftT));
 })();
 const forEachT = { forEach };
 const keep = /*@__PURE__*/ (() => {
     const typedKeepSinkMixin = keepSinkMixin();
-    return pipe(typedKeepSinkMixin, createObjectFactory(), createKeepOperator(liftT));
+    return pipe(createInstanceFactory(typedKeepSinkMixin), createKeepOperator(liftT));
 })();
 const keepT = { keep };
 const last = () => src => {
@@ -100,17 +100,17 @@ const last = () => src => {
 };
 const map = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
-    return pipe(typedMapSinkMixin, createObjectFactory(), createMapOperator(liftT));
+    return pipe(createInstanceFactory(typedMapSinkMixin), createMapOperator(liftT));
 })();
 const mapT = { map };
 const pairwise = /*@__PURE__*/ (() => {
     const typedPairwiseSinkMixin = pairwiseSinkMixin();
-    return pipe(typedPairwiseSinkMixin, createObjectFactory(), lift, returns);
+    return pipe(createInstanceFactory(typedPairwiseSinkMixin), lift, returns);
 })();
 const pairwiseT = { pairwise };
 const reduce = /*@__PURE__*/ (() => {
     const typedReduceSinkMixin = reduceSinkMixin(toRunnable$1());
-    return pipe(typedReduceSinkMixin, createObjectFactory(), createReduceOperator(liftT));
+    return pipe(createInstanceFactory(typedReduceSinkMixin), createReduceOperator(liftT));
 })();
 const reduceT = { reduce };
 const repeat = /*@__PURE__*/ (() => {
@@ -130,37 +130,37 @@ const run = () => (runnable) => pipe(createSink(), sourceFrom(runnable), dispose
 });
 const scan = /*@__PURE__*/ (() => {
     const typedScanSinkMixin = scanSinkMixin();
-    return pipe(typedScanSinkMixin, createObjectFactory(), createScanOperator(liftT));
+    return pipe(createInstanceFactory(typedScanSinkMixin), createScanOperator(liftT));
 })();
 const scanT = { scan };
 const skipFirst = /*@__PURE__*/ (() => {
     const typedSkipFirstSinkMixin = skipFirstSinkMixin();
-    return pipe(typedSkipFirstSinkMixin, createObjectFactory(), createSkipFirstOperator(liftT));
+    return pipe(createInstanceFactory(typedSkipFirstSinkMixin), createSkipFirstOperator(liftT));
 })();
 const skipFirstT = { skipFirst };
 const takeFirst = /*@__PURE__*/ (() => {
     const typedTakeFirstSinkMixin = takeFirstSinkMixin();
-    return pipe(typedTakeFirstSinkMixin, createObjectFactory(), createTakeFirstOperator({
+    return pipe(createInstanceFactory(typedTakeFirstSinkMixin), createTakeFirstOperator({
         ...liftT,
     }));
 })();
 const takeFirstT = { takeFirst };
 const takeLast = /*@__PURE__*/ (() => {
     const typedTakeLastSinkMixin = takeLastSinkMixin(toRunnable$1());
-    return pipe(typedTakeLastSinkMixin, createObjectFactory(), createTakeLastOperator({
+    return pipe(createInstanceFactory(typedTakeLastSinkMixin), createTakeLastOperator({
         ...liftT,
     }));
 })();
 const takeLastT = { takeLast };
 const takeWhile = /*@__PURE__*/ (() => {
     const typedTakeWhileSinkMixin = takeWhileSinkMixin();
-    return pipe(typedTakeWhileSinkMixin, createObjectFactory(), createTakeWhileOperator(liftT));
+    return pipe(createInstanceFactory(typedTakeWhileSinkMixin), createTakeWhileOperator(liftT));
 })();
 const takeWhileT = { takeWhile };
 const throwIfEmpty = 
 /*@__PURE__*/ (() => {
     const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin();
-    return pipe(typedThrowIfEmptySinkMixin, createObjectFactory(), createThrowIfEmptyOperator(liftT));
+    return pipe(createInstanceFactory(typedThrowIfEmptySinkMixin), createThrowIfEmptyOperator(liftT));
 })();
 const throwIfEmptyT = {
     throwIfEmpty,

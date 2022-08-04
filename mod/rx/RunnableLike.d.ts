@@ -1,5 +1,5 @@
-import { Buffer, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
 import { Function1, Option, Predicate } from "../functions.mjs";
+import { Buffer, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
 import { RunnableLike, ToRunnable } from "../rx.mjs";
 declare const buffer: Buffer<RunnableLike>["buffer"];
 declare const bufferT: Buffer<RunnableLike>;

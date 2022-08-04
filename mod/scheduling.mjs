@@ -7,7 +7,7 @@ export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/
 import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
-import { clazz, __extends, init, createObjectFactory } from './__internal__/util/Object.mjs';
+import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/Object.mjs';
 import { pipe, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
@@ -55,7 +55,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
         run(continuation);
         scheduler[SchedulerLike_inContinuation] = false;
     };
-    const createHostSchedulerInstance = pipe(clazz(__extends(disposableMixin), function HostScheduler(yieldInterval) {
+    const createHostSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin), function HostScheduler(yieldInterval) {
         init(disposableMixin, this);
         this.yieldInterval = yieldInterval;
         return this;
@@ -103,7 +103,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
                 scheduleImmediate(this, continuation);
             }
         },
-    }), createObjectFactory());
+    }));
     return (options = {}) => {
         const { yieldInterval = 5 } = options;
         return createHostSchedulerInstance(yieldInterval);
@@ -117,7 +117,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         return diff;
     };
     const typedEnumeratorMixin = enumeratorMixin();
-    const createVirtualTimeSchedulerInstance = pipe(clazz(__extends(disposableMixin, typedEnumeratorMixin), function VirtualTimeScheduler(maxMicroTaskTicks) {
+    const createVirtualTimeSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function VirtualTimeScheduler(maxMicroTaskTicks) {
         init(disposableMixin, this);
         this.maxMicroTaskTicks = maxMicroTaskTicks;
         this.taskQueue = createPriorityQueue(comparator);
@@ -179,7 +179,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
                 pipe(this, dispose());
             }
         },
-    }), createObjectFactory());
+    }));
     return (options = {}) => {
         const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
         return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);

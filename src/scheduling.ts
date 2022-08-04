@@ -26,7 +26,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "./__internal__/util/Object";
 import { Option, isSome, none, pipe } from "./functions";
@@ -214,7 +214,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     yieldRequested: boolean;
   };
 
-  const createHostSchedulerInstance = pipe(
+  const createHostSchedulerInstance = createInstanceFactory(
     clazz(
       __extends(disposableMixin),
       function HostScheduler(
@@ -283,7 +283,6 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
         },
       },
     ),
-    createObjectFactory<SchedulerLike, number>(),
   );
 
   return (
@@ -324,7 +323,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     taskQueue: QueueLike<VirtualTask>;
   };
 
-  const createVirtualTimeSchedulerInstance = pipe(
+  const createVirtualTimeSchedulerInstance = createInstanceFactory(
     clazz(
       __extends(disposableMixin, typedEnumeratorMixin),
       function VirtualTimeScheduler(
@@ -418,7 +417,6 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         },
       },
     ),
-    createObjectFactory<VirtualTimeSchedulerLike, number>(),
   );
 
   return (

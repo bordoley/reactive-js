@@ -1,20 +1,20 @@
 /// <reference types="./SinkLikeMixin.d.ts" />
-import { pipe, returns, none, isEmpty, getLength, newInstance } from '../../functions.mjs';
+import { returns, none, pipe, isEmpty, getLength, newInstance } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
 import '../../util/DisposableLike.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './DisposableLikeMixins.mjs';
-import { clazz, __extends, init, createObjectFactory, Object_properties } from './Object.mjs';
+import { createInstanceFactory, clazz, __extends, init, Object_properties } from './Object.mjs';
 import { addTo, onComplete, dispose } from './DisposableLikeInternal.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
-const createSink = /*@__PURE__*/ (() => pipe(clazz(__extends(disposableMixin), function CreateSink() {
+const createSink = /*@__PURE__*/ (() => createInstanceFactory(clazz(__extends(disposableMixin), function CreateSink() {
     init(disposableMixin, this);
     return this;
 }, {}, {
     [SinkLike_notify](_) { },
-}), createObjectFactory()))();
+})))();
 const DelegatingSink_delegate = Symbol("DelegatingSink_delegate");
 const delegatingSinkMixin = /*@__PURE__*/ (() => {
     return returns(clazz(__extends(disposableMixin), function DelegatingSink(delegate) {
@@ -33,7 +33,7 @@ const delegatingSinkMixin = /*@__PURE__*/ (() => {
 const createDelegatingSink = 
 /*@__PURE__*/ (() => {
     const typeDelegatingSinkMixin = delegatingSinkMixin();
-    return pipe(typeDelegatingSinkMixin, createObjectFactory());
+    return createInstanceFactory(typeDelegatingSinkMixin);
 })();
 const bufferSinkMixin = (fromArray) => {
     const BufferSink_private_maxBufferSize = Symbol("BufferSink_private_maxBufferSize");

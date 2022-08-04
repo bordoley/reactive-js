@@ -27,7 +27,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
 import {
@@ -101,7 +101,7 @@ const createContinuation: Function2<
     f: SideEffect;
   };
 
-  return pipe(
+  return createInstanceFactory(
     clazz(
       __extends(disposableMixin),
       function Continuation(
@@ -148,7 +148,6 @@ const createContinuation: Function2<
         },
       },
     ),
-    createObjectFactory<ContinuationLike, SchedulerLike, SideEffect>(),
   );
 })();
 
@@ -345,7 +344,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
       yieldRequested: boolean;
     };
 
-    return pipe(
+    return createInstanceFactory(
       clazz(
         __extends(
           disposableMixin,
@@ -468,7 +467,6 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           },
         },
       ),
-      createObjectFactory<QueueSchedulerLike, SchedulerLike>(),
     );
   })();
 

@@ -3,6 +3,7 @@ import { __DEV__ } from '../env.mjs';
 
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
+const Object_properties_type = Symbol("Object_properties_type");
 const Object_prototype = Symbol("Object_prototype");
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
 const initUnsafe = (clazz, self, ...args) => clazz[Object_init].call(self, ...args);
@@ -43,7 +44,7 @@ const clazz = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingOrProt
         };
     }
 });
-const createObjectFactory = () => (clazz) => {
+const createInstanceFactory = (clazz) => {
     const propertyDescription = getOwnPropertyDescriptors(clazz[Object_properties]);
     const constructorObject = __DEV__
         ? {
@@ -66,4 +67,4 @@ const createObjectFactory = () => (clazz) => {
     };
 };
 
-export { Object_init, Object_properties, Object_prototype, __extends, clazz, createObjectFactory, init };
+export { Object_init, Object_properties, Object_properties_type, Object_prototype, __extends, clazz, createInstanceFactory, init };

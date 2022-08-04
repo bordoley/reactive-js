@@ -20,7 +20,7 @@ import {
   UnknownObject,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "./Object";
 
@@ -185,10 +185,8 @@ export const disposableMixin: Class<
   );
 })();
 
-export const createDisposable = /*@__PURE__*/ pipe(
-  disposableMixin,
-  createObjectFactory<DisposableLike>(),
-);
+export const createDisposable =
+  /*@__PURE__*/ createInstanceFactory(disposableMixin);
 
 export const disposed: DisposableLike = {
   [DisposableLike_exception]: none,
@@ -261,16 +259,18 @@ export const createDisposableRef: <TDisposable extends DisposableLike>(
 >() => {
   const typedDisposableRefMixin = disposableRefMixin<TDisposable>();
 
-  return pipe(
+  return createInstanceFactory(
     clazz(
       __extends(disposableMixin, typedDisposableRefMixin),
-      function DisposableRef(this, initialValue: TDisposable) {
+      function DisposableRef(
+        this: UnknownObject & DisposableRefLike<TDisposable>,
+        initialValue: TDisposable,
+      ) {
         init(disposableMixin, this);
         init(typedDisposableRefMixin, this, initialValue);
 
         return this;
       },
     ),
-    createObjectFactory<DisposableRefLike<TDisposable>, TDisposable>(),
   );
 })();

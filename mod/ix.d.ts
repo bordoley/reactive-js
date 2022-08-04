@@ -22,7 +22,7 @@ interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T, Async
 declare type ToEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };
-declare const createEnumerable: <T>(enumerate: Factory<EnumeratorLike<T>>) => EnumerableLike<T>;
+declare const createEnumerable: <T>(f: Factory<EnumeratorLike<T>>) => EnumerableLike<T>;
 declare const createEnumerableUsing: Using<EnumerableLike<unknown>>["using"];
 declare const createEnumerableUsingT: Using<EnumerableLike<unknown>>;
 declare const emptyEnumerable: Empty<EnumerableLike>["empty"];
