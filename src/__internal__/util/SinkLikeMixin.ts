@@ -92,7 +92,6 @@ export const delegatingSinkMixin: <T>() => Class1<
     clazz<
       MixinTypeOf<typeof disposableMixin>,
       (this: TProperties & SinkLike<T>, delegate: SinkLike<T>) => SinkLike<T>,
-      SinkLike<T>,
       TProperties,
       {
         [SinkLike_notify](this: TProperties, v: T): void;
@@ -859,7 +858,6 @@ export const takeFirstSinkMixin: <T>() => Class2<
         delegate: SinkLike<T>,
         takeCount: number,
       ) => SinkLike<T>,
-      SinkLike<T>,
       TProperties,
       {
         [SinkLike_notify](this: TProperties, v: T): void;

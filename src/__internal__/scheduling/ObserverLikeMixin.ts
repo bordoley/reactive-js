@@ -169,7 +169,6 @@ export const observerMixin: <T>() => Class1<
   return pipe(
     clazz<
       (this: any, scheduler: SchedulerLike) => TObserverMixinReturn<T>,
-      TObserverMixinReturn<T>,
       TProperties,
       {
         get [ObserverLike_dispatcher](): DispatcherLike<T>;
