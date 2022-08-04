@@ -27,12 +27,7 @@ import {
   pipe,
   raise,
 } from "../functions";
-import {
-  HotObservableLike,
-  ObservableLike,
-  deferHotObservable,
-  emptyObservable,
-} from "../rx";
+import { ObservableLike, deferObservable, emptyObservable } from "../rx";
 import { forEach, subscribe } from "../rx/ObservableLike";
 import { ObserverLike, SchedulerLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
@@ -242,8 +237,8 @@ class ObservableContext {
 export const observable = <T>(
   computation: Factory<T>,
   { mode = "batched" }: { mode?: EffectsMode } = {},
-): HotObservableLike<T> =>
-  deferHotObservable(() => (observer: ObserverLike<T>) => {
+): ObservableLike<T> =>
+  deferObservable(() => (observer: ObserverLike<T>) => {
     const runComputation = () => {
       let result: Option<T> = none;
       let error: Option<Exception> = none;
@@ -361,7 +356,7 @@ export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
 };
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
-  deferHotObservable(() => observer => {
+  deferObservable(() => observer => {
     f(...args);
     pipe(observer, notify(none), dispose());
   });

@@ -20,10 +20,9 @@ import {
 import { Factory, Function1, isSome, pipe } from "../functions";
 import {
   EnumerableObservableLike,
-  HotObservableLike,
   ObservableLike,
   RunnableObservableLike,
-  createHotObservable,
+  createObservable,
 } from "../rx";
 import {
   VirtualTimeSchedulerLike,
@@ -109,8 +108,8 @@ export const throwIfEmptyT: ThrowIfEmpty<RunnableObservableLike> = {
 export const toFlowable: ToFlowable<
   RunnableObservableLike | EnumerableObservableLike
 >["toFlowable"] = () => observable =>
-  createLiftedFlowable((modeObs: HotObservableLike<FlowMode>) =>
-    createHotObservable(observer => {
+  createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
+    createObservable(observer => {
       const pausableScheduler = pipe(
         observer,
         getScheduler,
@@ -129,7 +128,7 @@ export const toFlowable: ToFlowable<
         add(
           pipe(
             modeObs,
-            forEach<HotObservableLike, FlowMode>((mode: FlowMode) => {
+            forEach<FlowMode>(mode => {
               switch (mode) {
                 case "pause":
                   pause(pausableScheduler);
@@ -148,11 +147,6 @@ export const toFlowable: ToFlowable<
     }),
   );
 export const toFlowableT: ToFlowable<RunnableObservableLike> = { toFlowable };
-
-export const toHotObservable =
-  <T>(): Function1<RunnableObservableLike<T>, HotObservableLike<T>> =>
-  v =>
-    v as unknown as HotObservableLike<T>;
 
 interface ToReadonlyArrayObservable {
   <T>(

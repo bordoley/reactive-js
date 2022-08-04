@@ -28,7 +28,6 @@
 ### Functions
 
 - [toFlowable](rx_RunnableObservableLike.md#toflowable)
-- [toHotObservable](rx_RunnableObservableLike.md#tohotobservable)
 - [toReadonlyArray](rx_RunnableObservableLike.md#toreadonlyarray)
 
 ## Variables
@@ -160,22 +159,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\> \| [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-___
-
-### toHotObservable
-
-▸ **toHotObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>\>
 
 ___
 

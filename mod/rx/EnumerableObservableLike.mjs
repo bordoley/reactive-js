@@ -102,8 +102,7 @@ const toEnumerableT = {
 };
 const toFlowable = toFlowable$1;
 const toFlowableT = { toFlowable };
-const toHotObservable = () => v => v;
 const toReadonlyArray = toReadonlyArray$1;
 const toReadonlyArrayT = { toReadonlyArray };
 
-export { concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toHotObservable, toReadonlyArray, toReadonlyArrayT };
+export { concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };

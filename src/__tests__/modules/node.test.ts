@@ -7,19 +7,18 @@ import {
 } from "../../__internal__/testing";
 import { endWith, ignoreElements } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
-import { compose, newInstance, pipe, returns } from "../../functions";
+import { newInstance, pipe, returns } from "../../functions";
 import {
   createReadableSource,
   createWritableSink,
   gunzip,
   gzip,
 } from "../../integrations/node";
-import { HotObservableLike } from "../../rx";
-import { concatT, keepT } from "../../rx/HotObservableLike";
 import {
+  concatT,
+  keepT,
   reduce,
   takeFirst,
-  toHotObservable,
   toPromise,
 } from "../../rx/ObservableLike";
 import { toFlowable } from "../../rx/RunnableObservableLike";
@@ -65,7 +64,7 @@ export const nodeTests = describe(
           dest,
           endWith(
             {
-              fromArray: returns(compose(toObservable(), toHotObservable())),
+              fromArray: toObservable,
               ...concatT,
             },
             "pause",
@@ -113,7 +112,7 @@ export const nodeTests = describe(
           ignoreElements(keepT),
           endWith(
             {
-              fromArray: returns(compose(toObservable(), toHotObservable())),
+              fromArray: toObservable,
               ...concatT,
             },
             0,
@@ -144,11 +143,11 @@ export const nodeTests = describe(
         const acc = await pipe(
           createReadableSource(() => pipe(generate(), Readable.from)),
           flowableToObservable(),
-          reduce<HotObservableLike, Uint8Array, string>(
+          reduce<Uint8Array, string>(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          takeFirst<HotObservableLike, string>({ count: 1 }),
+          takeFirst<string>({ count: 1 }),
           toPromise(scheduler),
         );
         pipe(acc, expectEquals("abcdefg"));
@@ -171,13 +170,13 @@ export const nodeTests = describe(
         await pipe(
           createReadableSource(() => pipe(generate(), Readable.from)),
           flowableToObservable(),
-          reduce<HotObservableLike, Uint8Array, string>(
+          reduce<Uint8Array, string>(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
           endWith(
             {
-              fromArray: returns(compose(toObservable(), toHotObservable())),
+              fromArray: toObservable,
               ...concatT,
             },
             "",
@@ -204,7 +203,7 @@ export const nodeTests = describe(
         gzip(),
         gunzip(),
         flowableToObservable(),
-        reduce<HotObservableLike, Uint8Array, string>(
+        reduce<Uint8Array, string>(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
         ),

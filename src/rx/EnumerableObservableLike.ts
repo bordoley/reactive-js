@@ -28,9 +28,9 @@ import {
   ThrowIfEmpty,
   ToReadonlyArray,
 } from "../containers";
-import { Factory, Function1, isSome, none, pipe } from "../functions";
+import { Factory, isSome, none, pipe } from "../functions";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../ix";
-import { EnumerableObservableLike, HotObservableLike } from "../rx";
+import { EnumerableObservableLike } from "../rx";
 import {
   ObserverLike,
   SchedulerLike,
@@ -228,11 +228,6 @@ export const toEnumerableT: ToEnumerable<EnumerableObservableLike> = {
 export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
   toFlowableObs;
 export const toFlowableT: ToFlowable<EnumerableObservableLike> = { toFlowable };
-
-export const toHotObservable =
-  <T>(): Function1<EnumerableObservableLike<T>, HotObservableLike<T>> =>
-  v =>
-    v as unknown as HotObservableLike<T>;
 
 export const toReadonlyArray: ToReadonlyArray<
   EnumerableObservableLike,

@@ -1,6 +1,6 @@
 /// <reference types="./RunnableObservableLike.d.ts" />
 import { pipe, isSome } from '../functions.mjs';
-import { createHotObservable } from '../rx.mjs';
+import { createObservable } from '../rx.mjs';
 import { createVirtualTimeScheduler } from '../scheduling.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { toPausableScheduler } from '../scheduling/SchedulerLike.mjs';
@@ -38,9 +38,9 @@ const takeWhileT = { takeWhile };
 const throwIfEmptyT = {
     throwIfEmpty,
 };
-const toFlowable = () => observable => createLiftedFlowable((modeObs) => createHotObservable(observer => {
+const toFlowable = () => observable => createLiftedFlowable((modeObs) => createObservable(observer => {
     const pausableScheduler = pipe(observer, getScheduler, toPausableScheduler);
-    pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), takeUntil(pipe(pausableScheduler, toObservable())))), add(pipe(modeObs, forEach((mode) => {
+    pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), takeUntil(pipe(pausableScheduler, toObservable())))), add(pipe(modeObs, forEach(mode => {
         switch (mode) {
             case "pause":
                 pause(pausableScheduler);
@@ -52,7 +52,6 @@ const toFlowable = () => observable => createLiftedFlowable((modeObs) => createH
     }), subscribe(getScheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
 }));
 const toFlowableT = { toFlowable };
-const toHotObservable = () => v => v;
 const toReadonlyArray = (options = {}) => observable => {
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
@@ -69,4 +68,4 @@ const toReadonlyArray = (options = {}) => observable => {
 };
 const toReadonlyArrayT = { toReadonlyArray };
 
-export { concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toHotObservable, toReadonlyArray, toReadonlyArrayT };
+export { concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };

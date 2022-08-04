@@ -48,7 +48,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): (`disposable`: [`DisposableLike`](../interfaces/util.DisposableLike.md)) => [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **toObservable**<`T`\>(): (`disposable`: [`DisposableLike`](../interfaces/util.DisposableLike.md)) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -60,7 +60,7 @@ ___
 
 `fn`
 
-▸ (`disposable`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ (`disposable`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ##### Parameters
 
@@ -70,4 +70,4 @@ ___
 
 ##### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>

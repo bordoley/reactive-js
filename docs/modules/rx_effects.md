@@ -616,7 +616,7 @@ ___
 
 ### observable
 
-▸ **observable**<`T`\>(`computation`, `__namedParameters?`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **observable**<`T`\>(`computation`, `__namedParameters?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -634,4 +634,4 @@ ___
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
