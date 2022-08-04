@@ -159,11 +159,13 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
     clazz(
       function RunnableConcatAll(
         this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
-          DisposableLike,
+          SinkLike<RunnableLike<T>>,
         delegate: SinkLike<T>,
-      ) {
+      ): SinkLike<RunnableLike<T>> {
         init(typedDelegatingSinkMixin, this, delegate);
         pipe(this, bindTo(delegate));
+
+        return this;
       },
       {},
       {

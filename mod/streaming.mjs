@@ -25,6 +25,7 @@ const createStream = /*@__PURE__*/ (() => {
             const observable = pipe(subject, op, multicast(scheduler, { replay }));
             this.observable = observable;
             pipe(this, addTo(this.observable));
+            return this;
         }, {
             subject: none,
             observable: none,

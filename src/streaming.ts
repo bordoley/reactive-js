@@ -53,7 +53,7 @@ import {
   ObserverLike,
   SchedulerLike,
 } from "./scheduling";
-import { DisposableLike, PauseableLike, SourceLike } from "./util";
+import { PauseableLike, SourceLike } from "./util";
 import { addTo } from "./util/DisposableLike";
 
 /**
@@ -117,11 +117,11 @@ export const createStream = /*@__PURE__*/ (() => {
     return pipe(
       clazz(
         function StreamImpl(
-          this: DisposableLike & TProperties,
+          this: StreamLike<TReq, T> & TProperties,
           op: ContainerOperator<ObservableLike, TReq, T>,
           scheduler: SchedulerLike,
           replay: number,
-        ) {
+        ): StreamLike<TReq, T> {
           this[DispatcherLike_scheduler] = scheduler;
 
           const subject = createSubject({ replay });
@@ -137,6 +137,8 @@ export const createStream = /*@__PURE__*/ (() => {
           this.observable = observable;
 
           pipe(this, addTo(this.observable));
+
+          return this;
         },
         {
           subject: none,

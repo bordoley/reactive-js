@@ -47,6 +47,7 @@ const toEnumerable =
         init(disposableMixin, this);
         init(typedEnumeratorMixin, this);
         this.continuations = [];
+        return this;
     }, {
         [SchedulerLike_inContinuation]: false,
         continuations: none,
@@ -84,6 +85,7 @@ const toEnumerable =
         init(disposableMixin, this);
         init(typedObserverMixin, this, enumerator);
         this.enumerator = enumerator;
+        return this;
     }, {
         enumerator: none,
     }, {

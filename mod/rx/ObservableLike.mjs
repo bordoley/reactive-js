@@ -189,6 +189,7 @@ const switchAll = /*@__PURE__*/ (() => {
         this.delegate = delegate;
         this.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
         pipe(this, addTo(delegate), onComplete(onDispose));
+        return this;
     }, {
         currentRef: none,
         delegate: none,
@@ -210,10 +211,11 @@ const subscribe = /*@__PURE__*/ (() => {
     const createObserver = pipe(clazz(function SubscribeObserver(scheduler) {
         init(disposableMixin, this);
         init(typedObserverMixin, this, scheduler);
+        return this;
     }, {}, {
         [SinkLike_notify](_) { },
     }), mixWith(disposableMixin, typedObserverMixin), createObjectFactory());
-    return (scheduler) => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
+    return (scheduler) => (observable) => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
 })();
 const subscribeOn = (scheduler) => (observable) => 
 // FIXME: type test for VTS

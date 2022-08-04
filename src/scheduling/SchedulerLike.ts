@@ -104,13 +104,15 @@ const createContinuation: Function2<
   return pipe(
     clazz(
       function Continuation(
-        this: TProperties,
+        this: TProperties & ContinuationLike,
         scheduler: SchedulerLike,
         f: SideEffect,
-      ) {
+      ): ContinuationLike {
         init(disposableMixin, this);
         this.scheduler = scheduler;
         this.f = f;
+
+        return this;
       },
       {
         scheduler: none,
@@ -346,9 +348,9 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     return pipe(
       clazz(
         function QueueScheduler(
-          this: TProperties & DisposableLike,
+          this: TProperties & QueueSchedulerLike,
           host: SchedulerLike,
-        ) {
+        ): QueueSchedulerLike {
           init(disposableMixin, this);
           init(typedEnumeratorMixin, this);
           init(typedDisposableRefMixin, this, disposed);
@@ -356,6 +358,8 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           this.delayed = createPriorityQueue(delayedComparator);
           this.queue = createPriorityQueue(taskComparator);
           this.host = host;
+
+          return this;
         },
         {
           [SchedulerLike_inContinuation]: false,

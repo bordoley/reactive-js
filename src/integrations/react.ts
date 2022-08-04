@@ -138,9 +138,10 @@ export const createComponent = <TProps>(
 const createReactPriorityScheduler = /*@__PURE__*/ pipe(
   clazz(
     function ReactPriorityScheduler(
-      this: PropertyTypeOf<[typeof disposableMixin]>,
-    ) {
+      this: PropertyTypeOf<[typeof disposableMixin]> & PrioritySchedulerLike,
+    ): PrioritySchedulerLike {
       init(disposableMixin, this);
+      return this;
     },
     {
       [SchedulerLike_inContinuation]: false,

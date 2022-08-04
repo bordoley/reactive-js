@@ -126,10 +126,13 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
       function EmptyEnumerator(
         this: PropertyTypeOf<
           [typeof disposableMixin, typeof typedEnumeratorMixin]
-        >,
-      ) {
+        > &
+          EnumeratorLike<T>,
+      ): EnumeratorLike<T> {
         init(disposableMixin, this);
         init(typedEnumeratorMixin, this);
+
+        return this;
       },
       {},
       {
@@ -166,14 +169,16 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
     const createGenerateEnumerator = pipe(
       clazz(
         function GenerateEnumerator(
-          this: TProperties & MutableEnumeratorLike,
+          this: TProperties & MutableEnumeratorLike<T>,
           f: Updater<T>,
           acc: T,
-        ) {
+        ): MutableEnumeratorLike<T> {
           init(disposableMixin, this);
           init(typedEnumerator, this);
           this.f = f;
           this[EnumeratorLike_current] = acc;
+
+          return this;
         },
         { f: none },
         {

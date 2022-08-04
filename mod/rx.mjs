@@ -82,6 +82,7 @@ const createSubject = /*@__PURE__*/ (() => {
         this[MulticastObservableLike_replay] = replay;
         this.observers = newInstance(Set);
         this.replayed = [];
+        return this;
     }, {
         [MulticastObservableLike_replay]: 0,
         observers: none,

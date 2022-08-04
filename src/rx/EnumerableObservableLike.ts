@@ -128,11 +128,13 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
 
     const createEnumeratorScheduler = pipe(
       clazz(
-        function EnumeratorScheduler(this) {
+        function EnumeratorScheduler(this): EnumeratorScheduler {
           init(disposableMixin, this);
           init(typedEnumeratorMixin, this);
 
           this.continuations = [];
+
+          return this;
         },
         {
           [SchedulerLike_inContinuation]: false,
@@ -187,12 +189,14 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
     const createEnumeratorObserver = pipe(
       clazz(
         function EnumeratorObserver(
-          this: TEnumeratorObserverProperties,
+          this: TEnumeratorObserverProperties & ObserverLike<T>,
           enumerator: EnumeratorScheduler,
-        ) {
+        ): ObserverLike<T> {
           init(disposableMixin, this);
           init(typedObserverMixin, this, enumerator);
           this.enumerator = enumerator;
+
+          return this;
         },
         {
           enumerator: none,

@@ -30,7 +30,7 @@ type OptionalProps<T> = T extends object
   : T;
 
 type TMixin = {
-  [Object_init](this: any, ...args: readonly any[]): void;
+  [Object_init](this: any, ...args: readonly any[]): unknown;
   [Object_properties]: object;
   [Object_prototype]: object;
 };
@@ -41,60 +41,67 @@ const {
   prototype: objectPrototype,
 } = Object;
 
-const initUnsafe = (
+const initUnsafe = <TReturn>(
   clazz: {
-    [Object_init](this: any, ...args: readonly any[]): void;
+    [Object_init](this: TReturn, ...args: readonly any[]): TReturn;
   },
-  self: unknown,
+  self: any,
   ...args: readonly unknown[]
-): void => {
-  clazz[Object_init].call(self, ...args);
-};
+): TReturn => clazz[Object_init].call(self, ...args) as unknown as TReturn;
 
 interface Init {
-  <TProperties, TPrototype>(
+  <TReturn, TProperties, TPrototype>(
     clazz: {
+      [Object_init](this: TReturn & TProperties & TPrototype): TReturn;
       [Object_properties]: TProperties;
-      [Object_init](this: TProperties & TPrototype): void;
     },
     self: TProperties,
-  ): void;
+  ): TReturn;
 
-  <TProperties, TPrototype, TA>(
+  <TReturn, TProperties, TPrototype, TA>(
     clazz: {
+      [Object_init](this: TReturn & TProperties & TPrototype, a: TA): TReturn;
       [Object_properties]: TProperties;
-      [Object_init](this: TProperties & TPrototype, a: TA): void;
     },
     self: TProperties,
     a: TA,
-  ): void;
+  ): TReturn;
 
-  <TProperties, TPrototype, TA, TB>(
+  <TReturn, TProperties, TPrototype, TA, TB>(
     clazz: {
+      [Object_init](
+        this: TReturn & TProperties & TPrototype,
+        a: TA,
+        b: TB,
+      ): TReturn;
       [Object_properties]: TProperties;
-      [Object_init](this: TProperties & TPrototype, a: TA, b: TB): void;
     },
     self: TProperties,
     a: TA,
     b: TB,
-  ): void;
-  <TProperties, TPrototype, TA, TB, TC>(
+  ): TReturn;
+  <TReturn, TProperties, TPrototype, TA, TB, TC>(
     clazz: {
+      [Object_init](
+        this: TReturn & TProperties & TPrototype,
+        a: TA,
+        b: TB,
+        c: TC,
+      ): TReturn;
       [Object_properties]: TProperties;
-      [Object_init](this: TProperties & TPrototype, a: TA, b: TB, c: TC): void;
     },
     self: TProperties,
     a: TA,
     b: TB,
     c: TC,
-  ): void;
+  ): TReturn;
 }
 export const init: Init = initUnsafe;
 
 interface ObjectFactory {
   <TReturn>(): Function1<
     {
-      [Object_init]: (this: any) => void;
+      [Object_init]: (this: any) => TReturn;
       [Object_properties]: unknown;
       [Object_prototype]: object;
     },
@@ -103,7 +110,7 @@ interface ObjectFactory {
 
   <TReturn, TA>(): Function1<
     {
-      [Object_init]: (this: any, a: TA) => void;
+      [Object_init]: (this: any, a: TA) => TReturn;
       [Object_properties]: unknown;
       [Object_prototype]: object;
     },
@@ -112,7 +119,7 @@ interface ObjectFactory {
 
   <TReturn, TA, TB>(): Function1<
     {
-      [Object_init]: (this: any, a: TA, b: TB) => void;
+      [Object_init]: (this: any, a: TA, b: TB) => TReturn;
       [Object_properties]: unknown;
       [Object_prototype]: object;
     },
@@ -121,7 +128,7 @@ interface ObjectFactory {
 
   <TReturn, TA, TB, TC>(): Function1<
     {
-      [Object_init]: (this: any, a: TA, b: TB, c: TC) => void;
+      [Object_init]: (this: any, a: TA, b: TB, c: TC) => TReturn;
       [Object_properties]: unknown;
       [Object_prototype]: object;
     },
@@ -130,7 +137,7 @@ interface ObjectFactory {
 
   <TReturn, TA, TB, TC, TD>(): Function1<
     {
-      [Object_init]: (this: any, a: TA, b: TB, c: TC, d: TD) => void;
+      [Object_init]: (this: any, a: TA, b: TB, c: TC, d: TD) => TReturn;
       [Object_properties]: unknown;
       [Object_prototype]: object;
     },
@@ -140,7 +147,7 @@ interface ObjectFactory {
 export const createObjectFactory: ObjectFactory =
   <TReturn>() =>
   (clazz: {
-    [Object_init]: (this: any, ...args: readonly any[]) => void;
+    [Object_init]: (this: any, ...args: readonly any[]) => TReturn;
     [Object_properties]: unknown;
     [Object_prototype]: object;
   }): Factory<TReturn> => {
@@ -166,10 +173,9 @@ export const createObjectFactory: ObjectFactory =
 
     const prototype = createObject(objectPrototype, prototypeDescription);
 
-    return (...args: readonly any[]) => {
+    return (...args: readonly unknown[]) => {
       const instance = createObject(prototype, propertyDescription);
-      initUnsafe(clazz, instance, ...args);
-      return instance;
+      return initUnsafe(clazz, instance, ...args);
     };
   };
 
@@ -246,7 +252,8 @@ export const mixWith: MixWith =
 
 export interface Clazz {
   <
-    TInit extends (this: any, ...args: readonly any[]) => void,
+    TInit extends (this: any, ...args: readonly any[]) => TReturn,
+    TReturn,
     TProperties extends UnknownObject = UnknownObject,
     TPrototype extends UnknownObject = UnknownObject,
   >(
@@ -260,7 +267,8 @@ export interface Clazz {
   };
 
   <
-    TInit extends (this: any, ...args: readonly any[]) => void,
+    TInit extends (this: any, ...args: readonly any[]) => TReturn,
+    TReturn,
     TProperties extends UnknownObject = UnknownObject,
   >(
     init: TInit,
@@ -271,14 +279,16 @@ export interface Clazz {
     [Object_prototype]: EmptyObject;
   };
 
-  <TInit extends (this: any, ...args: readonly any[]) => void>(init: TInit): {
+  <TInit extends (this: any, ...args: readonly any[]) => TReturn, TReturn>(
+    init: TInit,
+  ): {
     [Object_init]: TInit;
     [Object_properties]: EmptyObject;
     [Object_prototype]: EmptyObject;
   };
 }
-export const clazz: Clazz = (
-  init: (this: any, ...args: readonly any[]) => void,
+export const clazz: Clazz = <TReturn>(
+  init: (this: any, ...args: readonly any[]) => TReturn,
   properties?: any,
   prototype?: any,
 ) => ({
@@ -287,54 +297,62 @@ export const clazz: Clazz = (
   [Object_prototype]: prototype ?? {},
 });
 
-export interface Class<TProperties extends object, TPrototype extends object> {
-  [Object_init](this: unknown): void;
+export interface Class<
+  TReturn,
+  TProperties extends object,
+  TPrototype extends object,
+> {
+  [Object_init](this: unknown): TReturn;
   [Object_properties]: TProperties;
   [Object_prototype]: TPrototype;
 }
 
 export interface Class1<
+  TA,
+  TReturn,
   TProperties extends object,
   TPrototype extends object,
-  TA,
 > {
-  [Object_init](this: unknown, a: TA): void;
+  [Object_init](this: unknown, a: TA): TReturn;
   [Object_properties]: TProperties;
   [Object_prototype]: TPrototype;
 }
 
 export interface Class2<
-  TProperties extends object,
-  TPrototype extends object,
   TA,
   TB,
+  TReturn,
+  TProperties extends object,
+  TPrototype extends object,
 > {
-  [Object_init](this: unknown, a: TA, b: TB): void;
+  [Object_init](this: unknown, a: TA, b: TB): TReturn;
   [Object_properties]: TProperties;
   [Object_prototype]: TPrototype;
 }
 
 export interface Class3<
-  TProperties extends object,
-  TPrototype extends object,
   TA,
   TB,
   TC,
+  TReturn,
+  TProperties extends object,
+  TPrototype extends object,
 > {
-  [Object_init](this: unknown, a: TA, b: TB, c: TC): void;
+  [Object_init](this: unknown, a: TA, b: TB, c: TC): TReturn;
   [Object_properties]: TProperties;
   [Object_prototype]: TPrototype;
 }
 
 export interface Class4<
-  TProperties extends object,
-  TPrototype extends object,
   TA,
   TB,
   TC,
   TD,
+  TReturn,
+  TProperties extends object,
+  TPrototype extends object,
 > {
-  [Object_init](this: unknown, a: TA, b: TB, c: TC, d: TD): void;
+  [Object_init](this: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
   [Object_properties]: TProperties;
   [Object_prototype]: TPrototype;
 }

@@ -34,9 +34,14 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
 
     const createIterableEnumerator = pipe(
       clazz(
-        function IteratorEnumerator(this: TProperties, iterator: Iterator<T>) {
+        function IteratorEnumerator(
+          this: TProperties & EnumeratorLike<T>,
+          iterator: Iterator<T>,
+        ): EnumeratorLike<T> {
           init(disposableMixin, this);
           this.iterator = iterator;
+
+          return this;
         },
         { iterator: none },
         {

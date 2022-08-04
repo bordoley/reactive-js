@@ -30,6 +30,7 @@ const createContinuation = /*@__PURE__*/ (() => {
         init(disposableMixin, this);
         this.scheduler = scheduler;
         this.f = f;
+        return this;
     }, {
         scheduler: none,
         f: none,
@@ -167,6 +168,7 @@ const createQueueScheduler =
         this.delayed = createPriorityQueue(delayedComparator);
         this.queue = createPriorityQueue(taskComparator);
         this.host = host;
+        return this;
     }, {
         [SchedulerLike_inContinuation]: false,
         delayed: none,

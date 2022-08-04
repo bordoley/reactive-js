@@ -245,6 +245,7 @@ const toEnumerable =
         init(disposableMixin, this);
         init(typedEnumeratorMixin, this);
         this.seq = seq;
+        return this;
     }, {
         seq: none,
     }, {

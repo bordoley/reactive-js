@@ -9,6 +9,7 @@ const enumeratorMixin = /*@__PURE__*/ (() => {
     const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
     return pipe(clazz(function EnumeratorMixin() {
         this[Enumerator_private_hasCurrent] = false;
+        return this;
     }, {
         [Enumerator_private_current]: none,
         [Enumerator_private_hasCurrent]: false,
