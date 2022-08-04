@@ -7,7 +7,6 @@
 ### Interfaces
 
 - [EnumerableObservableLike](../interfaces/rx.EnumerableObservableLike.md)
-- [HotObservableLike](../interfaces/rx.HotObservableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [ReactiveContainerLike](../interfaces/rx.ReactiveContainerLike.md)
@@ -23,30 +22,30 @@
 
 ### Variables
 
-- [createHotObservableUsingT](rx.md#createhotobservableusingt)
+- [createObservableUsingT](rx.md#createobservableusingt)
 - [createRunnableUsingT](rx.md#createrunnableusingt)
 - [deferEnumerableObservableT](rx.md#deferenumerableobservablet)
-- [deferHotObservableT](rx.md#deferhotobservablet)
+- [deferObservableT](rx.md#deferobservablet)
 - [deferRunnableT](rx.md#deferrunnablet)
 - [emptyRunnableT](rx.md#emptyrunnablet)
 - [enumerableObservableType](rx.md#enumerableobservabletype)
 - [generateRunnableT](rx.md#generaterunnablet)
-- [hotObservableType](rx.md#hotobservabletype)
 - [neverEnumerableObservableT](rx.md#neverenumerableobservablet)
 - [neverRunnableT](rx.md#neverrunnablet)
+- [observableType](rx.md#observabletype-1)
 - [runnableObservableType](rx.md#runnableobservabletype)
 
 ### Functions
 
 - [createEnumerableObservable](rx.md#createenumerableobservable)
-- [createHotObservable](rx.md#createhotobservable)
-- [createHotObservableUsing](rx.md#createhotobservableusing)
+- [createObservable](rx.md#createobservable)
+- [createObservableUsing](rx.md#createobservableusing)
 - [createRunnable](rx.md#createrunnable)
 - [createRunnableObservable](rx.md#createrunnableobservable)
 - [createRunnableUsing](rx.md#createrunnableusing)
 - [createSubject](rx.md#createsubject)
 - [deferEnumerableObservable](rx.md#deferenumerableobservable)
-- [deferHotObservable](rx.md#deferhotobservable)
+- [deferObservable](rx.md#deferobservable)
 - [deferRunnable](rx.md#deferrunnable)
 - [emptyObservable](rx.md#emptyobservable)
 - [emptyRunnable](rx.md#emptyrunnable)
@@ -89,9 +88,9 @@ ___
 
 ## Variables
 
-### createHotObservableUsingT
+### createObservableUsingT
 
-• `Const` **createHotObservableUsingT**: [`Using`](containers.md#using)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)\>
+• `Const` **createObservableUsingT**: [`Using`](containers.md#using)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -107,9 +106,9 @@ ___
 
 ___
 
-### deferHotObservableT
+### deferObservableT
 
-• `Const` **deferHotObservableT**: [`Defer`](containers.md#defer)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)\>
+• `Const` **deferObservableT**: [`Defer`](containers.md#defer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -137,12 +136,6 @@ ___
 
 ___
 
-### hotObservableType
-
-• `Const` **hotObservableType**: [`ObservableType`](rx.md#observabletype)
-
-___
-
 ### neverEnumerableObservableT
 
 • `Const` **neverEnumerableObservableT**: [`Never`](containers.md#never)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
@@ -152,6 +145,12 @@ ___
 ### neverRunnableT
 
 • `Const` **neverRunnableT**: [`Never`](containers.md#never)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### observableType
+
+• `Const` **observableType**: [`ObservableType`](rx.md#observabletype)
 
 ___
 
@@ -183,9 +182,9 @@ ___
 
 ___
 
-### createHotObservable
+### createObservable
 
-▸ **createHotObservable**<`T`\>(`f`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **createObservable**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -201,13 +200,13 @@ ___
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
-### createHotObservableUsing
+### createObservableUsing
 
-▸ **createHotObservableUsing**<`TResource`, `T`\>(`resourceFactory`, `containerFactory`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **createObservableUsing**<`TResource`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -221,13 +220,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
-| `containerFactory` | [`Function1`](functions.md#function1)<`TResource`, [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>\> |
+| `containerFactory` | [`Function1`](functions.md#function1)<`TResource`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-▸ **createHotObservableUsing**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `containerFactory`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **createObservableUsing**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -242,13 +241,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\> |
-| `containerFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>\> |
+| `containerFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-▸ **createHotObservableUsing**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `containerFactory`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **createObservableUsing**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -264,13 +263,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\> |
-| `containerFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>\> |
+| `containerFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-▸ **createHotObservableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `containerFactory`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **createObservableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -287,13 +286,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
-| `containerFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>\> |
+| `containerFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-▸ **createHotObservableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `containerFactory`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **createObservableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -311,13 +310,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
-| `containerFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>\> |
+| `containerFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-▸ **createHotObservableUsing**<`TResource`, `T`\>(`resourceFactory`, `runnableFactory`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **createObservableUsing**<`TResource`, `T`\>(`resourceFactory`, `runnableFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -331,11 +330,11 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\> |
-| `runnableFactory` | (...`resources`: readonly `TResource`[]) => [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\> |
+| `runnableFactory` | (...`resources`: readonly `TResource`[]) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -582,9 +581,9 @@ ___
 
 ___
 
-### deferHotObservable
+### deferObservable
 
-▸ **deferHotObservable**<`T`\>(`factory`, `options?`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **deferObservable**<`T`\>(`factory`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -602,9 +601,9 @@ ___
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-▸ **deferHotObservable**<`T`\>(`factory`): [`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+▸ **deferObservable**<`T`\>(`factory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -616,11 +615,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 

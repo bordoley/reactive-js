@@ -4,10 +4,9 @@ import { clazz, init, mixWith, createObjectFactory } from './__internal__/util/O
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
 import { pipe, none, newInstance, getLength, composeUnsafe, returns, updateReducer } from './functions.mjs';
-import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createHotObservable } from './rx.mjs';
-import { mergeT } from './rx/HotObservableLike.mjs';
+import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createObservable } from './rx.mjs';
 import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
-import { multicast, scan, toHotObservable, distinctUntilChanged } from './rx/ObservableLike.mjs';
+import { multicast, scan, mergeT, distinctUntilChanged } from './rx/ObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
 import { publish } from './rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from './scheduling.mjs';
@@ -86,9 +85,9 @@ const createLiftedStreamable = (...ops) => {
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  */
-const createActionReducer = (reducer, initialState, options) => createLiftedStreamable(obs => createHotObservable(observer => {
+const createActionReducer = (reducer, initialState, options) => createLiftedStreamable(obs => createObservable(observer => {
     const acc = initialState();
-    pipe(obs, scan(reducer, returns(acc)), concatWith(mergeT, pipe([acc], toObservable(), toHotObservable())), distinctUntilChanged(options), sinkInto(observer));
+    pipe(obs, scan(reducer, returns(acc)), concatWith(mergeT, pipe([acc], toObservable())), distinctUntilChanged(options), sinkInto(observer));
 }));
 /**
  * Returns a new `StateStoreLike` instance that stores state which can

@@ -1,8 +1,7 @@
 /// <reference types="./StreamableLike.d.ts" />
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { pipe } from '../functions.mjs';
-import { keepT } from '../rx/HotObservableLike.mjs';
-import { merge, forEach, onSubscribe, subscribe } from '../rx/ObservableLike.mjs';
+import { merge, forEach, keepT, onSubscribe, subscribe } from '../rx/ObservableLike.mjs';
 import { DispatcherLike_scheduler } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { StreamableLike_stream } from '../streaming.mjs';

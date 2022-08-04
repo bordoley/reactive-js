@@ -20,7 +20,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
   ↳↳ [`EnumerableObservableLike`](rx.EnumerableObservableLike.md)
 
-  ↳↳ [`HotObservableLike`](rx.HotObservableLike.md)
+  ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
   ↳↳ [`RunnableObservableLike`](rx.RunnableObservableLike.md)
 

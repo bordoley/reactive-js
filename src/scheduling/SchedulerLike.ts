@@ -446,7 +446,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
                       continuation,
                       dueTime,
                       priority: isSome(priority)
-                        ? max(priority as number, 0)
+                        ? max(priority, 0)
                         : MAX_SAFE_INTEGER,
                     };
 

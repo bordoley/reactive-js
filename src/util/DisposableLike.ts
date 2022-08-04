@@ -4,7 +4,7 @@ import {
   dispose,
 } from "../__internal__/util/DisposableLikeInternal";
 import { SideEffect1, newInstance, pipe } from "../functions";
-import { HotObservableLike, createHotObservable } from "../rx";
+import { ObservableLike, createObservable } from "../rx";
 import { DisposableLike } from "../util";
 
 export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
@@ -15,8 +15,8 @@ export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
 
 export const toObservable =
   <T>() =>
-  (disposable: DisposableLike): HotObservableLike<T> =>
-    pipe(disposable, addTo, createHotObservable);
+  (disposable: DisposableLike): ObservableLike<T> =>
+    pipe(disposable, addTo, createObservable);
 
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.

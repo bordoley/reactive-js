@@ -28,7 +28,7 @@ import {
   pipe,
   pipeLazy,
 } from "../functions";
-import { ObservableLike, createHotObservable } from "../rx";
+import { ObservableLike, createObservable } from "../rx";
 import { forEach, subscribe } from "../rx/ObservableLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
 import { ObserverLike_dispatcher } from "../scheduling";
@@ -107,7 +107,7 @@ export const bindNodeCallback: BindNodeCallback = <T>(
   callback: (...args: readonly any[]) => any,
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {
-    return createHotObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {
+    return createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {
       const handler = (cause: unknown, arg: any) => {
         if (cause) {
           pipe(dispatcher, dispose({ cause }));
@@ -168,7 +168,7 @@ export const createReadableSource = (
   factory: Factory<Readable> | Readable,
 ): FlowableLike<Uint8Array> =>
   createLiftedFlowable(mode =>
-    createHotObservable(observer => {
+    createObservable(observer => {
       const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
       const readable =
@@ -225,7 +225,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
     factory: Factory<Writable> | Writable,
   ): StreamableLike<Uint8Array, FlowMode> =>
     createLiftedStreamable(events =>
-      createHotObservable(observer => {
+      createObservable(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
         const writable =
@@ -274,7 +274,7 @@ export const transform =
   ): ContainerOperator<FlowableLike, Uint8Array, Uint8Array> =>
   src =>
     createLiftedFlowable(modeObs =>
-      createHotObservable(observer => {
+      createObservable(observer => {
         const transform = pipe(
           factory(),
           addToDisposable(observer),
