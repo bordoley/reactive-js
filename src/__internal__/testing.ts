@@ -85,7 +85,7 @@ export const expectToThrow = (f: SideEffect) => {
 
 export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
   let didThrow = false;
-  let errorThrown: Option<unknown> = none;
+  let errorThrown: Option = none;
   try {
     f();
   } catch (e) {
@@ -133,13 +133,13 @@ export const expectFalse = (v: boolean) => {
   }
 };
 
-export const expectIsNone = (v: Option<unknown>) => {
+export const expectIsNone = (v: Option) => {
   if (isSome(v)) {
     raise(`expected none but recieved ${v}`);
   }
 };
 
-export const expectIsSome = (v: Option<unknown>) => {
+export const expectIsSome = (v: Option) => {
   if (isNone(v)) {
     raise(`expected Some(?) but recieved None`);
   }

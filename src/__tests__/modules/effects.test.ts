@@ -54,7 +54,7 @@ export const effectsTests = describe(
     const scheduler = createVirtualTimeScheduler();
 
     const oneTwoThreeDelayed = pipe([1, 2, 3], toObservable({ delay: 1 }));
-    const createOneTwoThree = (x: Option<unknown>) =>
+    const createOneTwoThree = (x: Option) =>
       isSome(x) ? pipe([1, 2, 3], toObservable()) : emptyObservable();
 
     const result: number[] = [];

@@ -490,9 +490,7 @@ export const toRunnableT: ToRunnable<SequenceLike> = {
 
 export const zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
   const zip =
-    (
-      ...sequences: readonly SequenceLike<unknown>[]
-    ): SequenceLike<readonly any[]> =>
+    (...sequences: readonly SequenceLike[]): SequenceLike<readonly any[]> =>
     () => {
       const nextResults = pipe(
         sequences,

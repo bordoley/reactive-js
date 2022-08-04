@@ -23,8 +23,8 @@ declare type ToEnumerable<C extends ContainerLike, TOptions = never> = Container
     toEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };
 declare const createEnumerable: <T>(f: Factory<EnumeratorLike<T>>) => EnumerableLike<T>;
-declare const createEnumerableUsing: Using<EnumerableLike<unknown>>["using"];
-declare const createEnumerableUsingT: Using<EnumerableLike<unknown>>;
+declare const createEnumerableUsing: Using<EnumerableLike>["using"];
+declare const createEnumerableUsingT: Using<EnumerableLike>;
 declare const emptyEnumerable: Empty<EnumerableLike>["empty"];
 declare const emptyEnumerableT: Empty<EnumerableLike>;
 /**

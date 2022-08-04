@@ -579,9 +579,9 @@ Represents an unboxed value of type T or undefined.
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 ___
 

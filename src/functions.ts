@@ -80,7 +80,7 @@ export type Equality<T> = Function2<T, T, boolean>;
 /**
  * Represents an unboxed value of type T or undefined.
  */
-export type Option<T> = T | undefined;
+export type Option<T = unknown> = T | undefined;
 
 /**
  * A one argument predicate function.

@@ -9,7 +9,7 @@ declare const distinctUntilChangedT: DistinctUntilChanged<RunnableObservableLike
 declare const forEachT: ForEach<RunnableObservableLike>;
 declare const keepT: Keep<RunnableObservableLike>;
 declare const mapT: Map<RunnableObservableLike>;
-declare const mergeT: Concat<ObservableLike<unknown>>;
+declare const mergeT: Concat<ObservableLike>;
 declare const pairwiseT: Pairwise<RunnableObservableLike>;
 declare const reduceT: Reduce<RunnableObservableLike>;
 declare const scanT: Scan<RunnableObservableLike>;
