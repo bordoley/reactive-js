@@ -19,11 +19,11 @@ declare const createPairwiseObserver: <T>(delegate: ObserverLike<readonly [
     T,
     T
 ]>) => ObserverLike<T>;
-declare const creatReduceObserver: <C extends ReactiveContainerLike<ObserverLike<TAcc>>, T, TAcc>(fromArray: (v: readonly unknown[]) => C) => Function3<ObserverLike<TAcc>, Reducer<T, TAcc>, Factory<TAcc>, ObserverLike<T>>;
-declare const creatScanObserver: <T, TAcc>(delegat: ObserverLike<TAcc>, reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObserverLike<T>;
+declare const createReduceObserver: <C extends ReactiveContainerLike<ObserverLike<TAcc>>, T, TAcc>(fromArray: (v: readonly unknown[]) => C) => Function3<ObserverLike<TAcc>, Reducer<T, TAcc>, Factory<TAcc>, ObserverLike<T>>;
+declare const createScanObserver: <T, TAcc>(delegat: ObserverLike<TAcc>, reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObserverLike<T>;
 declare const createSkipFirstObserver: <T>(delegate: ObserverLike<T>, count: number) => ObserverLike<T>;
 declare const createTakeFirstObserver: <T>(delegate: ObserverLike<T>, count: number) => ObserverLike<T>;
 declare const createTakeLastObserver: <C extends ReactiveContainerLike<ObserverLike<T>>, T>(fromArray: (v: readonly unknown[]) => C) => Function2<ObserverLike<T>, number, ObserverLike<T>>;
 declare const createTakeWhileObserver: <T>(delegate: ObserverLike<T>, predicate: Predicate<T>, inclusive: boolean) => ObserverLike<T>;
 declare const createThrowIfEmptyObserver: <T>(delegate: ObserverLike<T>, factory: Factory<unknown>) => ObserverLike<T>;
-export { creatReduceObserver, creatScanObserver, createDecodeWithCharsetObserver, createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };
+export { createDecodeWithCharsetObserver, createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createReduceObserver, createScanObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };

@@ -17,8 +17,6 @@ import {
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { createOnSink } from "../__internal__/rx/ReactiveContainerLikeInternal";
 import {
-  creatReduceObserver,
-  creatScanObserver,
   createDecodeWithCharsetObserver,
   createDelegatingObserver,
   createDistinctUntilChangedObserver,
@@ -26,6 +24,8 @@ import {
   createKeepObserver,
   createMapObserver,
   createPairwiseObserver,
+  createReduceObserver,
+  createScanObserver,
   createSkipFirstObserver,
   createTakeFirstObserver,
   createTakeLastObserver,
@@ -570,7 +570,7 @@ interface ReduceOperator {
 }
 export const reduce: ReduceOperator = /*@__PURE__*/ (<T, TAcc>() =>
   pipe(
-    creatReduceObserver<ObservableLike, T, TAcc>(arrayToObservable()),
+    createReduceObserver<ObservableLike, T, TAcc>(arrayToObservable()),
     createReduceOperator<ObservableLike, T, TAcc, TReactive>(
       liftEnumerableObservableT,
     ),
@@ -583,13 +583,10 @@ interface ScanOperator {
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc>;
 }
-export const scan: ScanOperator = /*@__PURE__*/ (<T, TAcc>() =>
-  pipe(
-    creatScanObserver,
-    createScanOperator<ObservableLike, T, TAcc, TReactive>(
-      liftEnumerableObservableT,
-    ),
-  ) as ScanOperator)();
+export const scan: ScanOperator = /*@__PURE__*/ pipe(
+  createScanObserver,
+  createScanOperator(liftEnumerableObservableT),
+) as ScanOperator;
 export const scanT: Scan<ObservableLike> = { scan };
 
 interface ShareOperator {
@@ -636,13 +633,12 @@ interface SkipFirstOperator {
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
 }
-export const skipFirst: SkipFirstOperator = /*@__PURE__*/ (<T>() =>
+export const skipFirst: SkipFirstOperator =
+  /*@__PURE__*/
   pipe(
     createSkipFirstObserver,
-    createSkipFirstOperator<ObservableLike, T, TReactive>(
-      liftEnumerableObservableT,
-    ),
-  ) as SkipFirstOperator)();
+    createSkipFirstOperator(liftEnumerableObservableT),
+  ) as SkipFirstOperator;
 export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
 
 interface SwitchAllOperator {
@@ -789,13 +785,10 @@ interface TakeFirstOperator {
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
 }
-export const takeFirst: TakeFirstOperator = /*@__PURE__*/ (<T>() =>
-  pipe(
-    createTakeFirstObserver,
-    createTakeFirstOperator<ObservableLike, T, TReactive>(
-      liftEnumerableObservableT,
-    ),
-  ) as TakeFirstOperator)();
+export const takeFirst: TakeFirstOperator = /*@__PURE__*/ pipe(
+  createTakeFirstObserver,
+  createTakeFirstOperator(liftEnumerableObservableT),
+) as TakeFirstOperator;
 export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
 
 interface TakeLastOperator {
@@ -803,13 +796,10 @@ interface TakeLastOperator {
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
 }
-export const takeLast: TakeLastOperator = /*@__PURE__*/ (<T>() =>
-  pipe(
-    createTakeLastObserver(arrayToObservable()),
-    createTakeLastOperator<ObservableLike, T, TReactive>(
-      liftEnumerableObservableT,
-    ),
-  ) as TakeLastOperator)();
+export const takeLast: TakeLastOperator = /*@__PURE__*/ pipe(
+  createTakeLastObserver(arrayToObservable()),
+  createTakeLastOperator(liftEnumerableObservableT),
+) as TakeLastOperator;
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 
 interface TakeUntilOperator {
@@ -845,13 +835,12 @@ interface TakeWhileOperator {
     },
   ): ContainerOperator<C, T, T>;
 }
-export const takeWhile: TakeWhileOperator = /*@__PURE__*/ (<T>() =>
+export const takeWhile: TakeWhileOperator =
+  /*@__PURE__*/
   pipe(
     createTakeWhileObserver,
-    createTakeWhileOperator<ObservableLike, T, TReactive>(
-      liftEnumerableObservableT,
-    ),
-  ) as TakeWhileOperator)();
+    createTakeWhileOperator(liftEnumerableObservableT),
+  ) as TakeWhileOperator;
 export const takeWhileT: TakeWhile<ObservableLike> = { takeWhile };
 
 interface ThrowIfEmptyOpreator {
@@ -859,13 +848,10 @@ interface ThrowIfEmptyOpreator {
     factory: Factory<unknown>,
   ): ContainerOperator<C, T, T>;
 }
-export const throwIfEmpty: ThrowIfEmptyOpreator = /*@__PURE__*/ (<T>() =>
-  pipe(
-    createThrowIfEmptyObserver,
-    createThrowIfEmptyOperator<ObservableLike, T, TReactive>(
-      liftEnumerableObservableT,
-    ),
-  ) as ThrowIfEmptyOpreator)();
+export const throwIfEmpty: ThrowIfEmptyOpreator = /*@__PURE__*/ pipe(
+  createThrowIfEmptyObserver,
+  createThrowIfEmptyOperator(liftEnumerableObservableT),
+) as ThrowIfEmptyOpreator;
 export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {
   throwIfEmpty,
 };

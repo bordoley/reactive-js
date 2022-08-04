@@ -146,7 +146,7 @@ const createPairwiseObserver = /*@__PURE__*/ (() => {
         return this;
     }), mixWith(typedObserverMixin, typedPairwiseSinkMixin), createObjectFactory());
 })();
-const creatReduceObserver = (fromArray) => {
+const createReduceObserver = (fromArray) => {
     const typedReduceSinkMixin = reduceSinkMixin(fromArray);
     const typedObserverMixin = observerMixin();
     return pipe(clazz(function ReduceObserver(delegate, reducer, initialValue) {
@@ -155,7 +155,7 @@ const creatReduceObserver = (fromArray) => {
         return this;
     }), mixWith(typedObserverMixin, typedReduceSinkMixin), createObjectFactory());
 };
-const creatScanObserver = /*@__PURE__*/ (() => {
+const createScanObserver = /*@__PURE__*/ (() => {
     const typedScanSinkMixin = scanSinkMixin();
     const typedObserverMixin = observerMixin();
     return pipe(clazz(function ScanObserver(delegate, reducer, initialValue) {
@@ -203,11 +203,11 @@ const createTakeWhileObserver = /*@__PURE__*/ (() => {
 const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin();
     const typedObserverMixin = observerMixin();
-    return pipe(clazz(function TakeWhileObserver(delegate, factory) {
+    return pipe(clazz(function ThrowIfEmptyObserver(delegate, factory) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedThrowIfEmptySinkMixin, this, delegate, factory);
         return this;
     }), mixWith(typedObserverMixin, typedThrowIfEmptySinkMixin), createObjectFactory());
 })();
 
-export { creatReduceObserver, creatScanObserver, createDecodeWithCharsetObserver, createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };
+export { createDecodeWithCharsetObserver, createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createReduceObserver, createScanObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };
