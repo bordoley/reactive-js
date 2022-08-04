@@ -138,14 +138,20 @@ interface DelegatingEnumeratorLike<T> extends EnumeratorLike<T> {
   [DelegatingEnumerator_move_delegate](): boolean;
 }
 
+type TDelegatingEnumeratorMixinReturn<T> = Omit<
+  EnumeratorLike<T>,
+  keyof DisposableLike
+>;
+
 const delegatingEnumeratorMixin: <T>() => Class1<
+  EnumeratorLike<T>,
+  TDelegatingEnumeratorMixinReturn<T>,
   UnknownObject,
   {
     [DelegatingEnumerator_move_delegate](): boolean;
     readonly [EnumeratorLike_current]: T;
     readonly [EnumeratorLike_hasCurrent]: boolean;
-  },
-  EnumeratorLike<T>
+  }
 > = /*@__PURE__*/ (<T>() => {
   const DelegatingEnumerator_private_delegate = Symbol(
     "DelegatingEnumerator_private_delegate",
@@ -158,10 +164,12 @@ const delegatingEnumeratorMixin: <T>() => Class1<
   return pipe(
     clazz(
       function DelegatingEnumerator(
-        this: TProperties,
+        this: TProperties & TDelegatingEnumeratorMixinReturn<T>,
         delegate: EnumeratorLike<T>,
-      ) {
+      ): TDelegatingEnumeratorMixinReturn<T> {
         this[DelegatingEnumerator_private_delegate] = delegate;
+
+        return this;
       },
       {
         [DelegatingEnumerator_private_delegate]: none,
@@ -260,16 +268,17 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   return pipe(
     clazz(
       function BufferEnumerator(
-        this: TProperties & DisposableLike,
+        this: TProperties & EnumeratorLike<readonly T[]>,
         delegate: EnumeratorLike<T>,
         maxBufferSize: number,
-      ) {
+      ): EnumeratorLike<readonly T[]> {
         init(disposableMixin, this);
         init(typedEnumerator, this);
         this.delegate = delegate;
         this.maxBufferSize = maxBufferSize;
 
         pipe(this, add(delegate));
+        return this;
       },
       {
         delegate: none,
@@ -327,15 +336,17 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     return pipe(
       clazz(
         function ConcatAllEnumerator(
-          this: TProperties & DisposableLike,
+          this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike<EnumerableLike<T>>,
-        ) {
+        ): EnumeratorLike<T> {
           init(disposableMixin, this);
           init(typedDisposableRefMixin, this, disposed);
           init(typedEnumerator, this);
           this.delegate = delegate;
 
           pipe(this, add(delegate));
+
+          return this;
         },
         {
           delegate: none,
@@ -401,13 +412,15 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
     return pipe(
       clazz(
         function DistinctUntilChanged(
-          this: TProperties,
+          this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike<T>,
           equality: Equality<T>,
-        ) {
+        ): EnumeratorLike<T> {
           init(delegatingDisposableMixin, this, delegate);
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.equality = equality;
+
+          return this;
         },
         { equality: none },
         {
@@ -455,13 +468,15 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   return pipe(
     clazz(
       function forEachEnumerator(
-        this: TProperties,
+        this: TProperties & EnumeratorLike<T>,
         delegate: EnumeratorLike<T>,
         effect: SideEffect1<T>,
-      ) {
+      ): EnumeratorLike<T> {
         init(delegatingDisposableMixin, this, delegate);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.effect = effect;
+
+        return this;
       },
       { effect: none },
       {
@@ -495,13 +510,15 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   return pipe(
     clazz(
       function KeepEnumerator(
-        this: TProperties,
+        this: TProperties & EnumeratorLike<T>,
         delegate: EnumeratorLike<T>,
         predicate: Predicate<T>,
-      ) {
+      ): EnumeratorLike<T> {
         init(delegatingDisposableMixin, this, delegate);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.predicate = predicate;
+
+        return this;
       },
       { predicate: none },
       {
@@ -541,14 +558,16 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   return pipe(
     clazz(
       function MapEnumerator(
-        this: TProperties,
+        this: TProperties & EnumeratorLike<TB>,
         delegate: EnumeratorLike<TA>,
         mapper: Function1<TA, TB>,
-      ) {
+      ): EnumeratorLike<TB> {
         init(delegatingDisposableMixin, this, delegate);
         init(typedEnumerator, this);
         this.delegate = delegate;
         this.mapper = mapper;
+
+        return this;
       },
       {
         mapper: none,
@@ -593,12 +612,14 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
   return pipe(
     clazz(
       function PairwiseEnumerator(
-        this: TProperties,
+        this: TProperties & EnumeratorLike<[T, T]>,
         delegate: EnumeratorLike<T>,
-      ) {
+      ): EnumeratorLike<[T, T]> {
         init(delegatingDisposableMixin, this, delegate);
         init(typedEnumerator, this);
         this.delegate = delegate;
+
+        return this;
       },
       {},
       {
@@ -643,13 +664,15 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   const createRepeatEnumerator = pipe(
     clazz(
       function RepeatEnumerator(
-        this: TProperties,
+        this: TProperties & EnumeratorLike<T>,
         src: EnumerableLike<T>,
         shouldRepeat: Predicate<number>,
-      ) {
+      ): EnumeratorLike<T> {
         init(disposableMixin, this);
         this.src = src;
         this.shouldRepeat = shouldRepeat;
+
+        return this;
       },
       {
         count: 0,
@@ -724,11 +747,11 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   return pipe(
     clazz(
       function ScanEnumerator(
-        this: TProperties & MutableEnumeratorLike,
+        this: TProperties & MutableEnumeratorLike<TAcc>,
         delegate: EnumeratorLike<T>,
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
-      ) {
+      ): EnumeratorLike<TAcc> {
         init(delegatingDisposableMixin, this, delegate);
         init(typedEnumerator, this);
         this.delegate = delegate;
@@ -740,6 +763,8 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
+
+        return this;
       },
       { reducer: none, delegate: none },
       {
@@ -785,15 +810,17 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
     return pipe(
       clazz(
         function SkipFirstEnumerator(
-          this: TProperties,
+          this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike<T>,
           skipCount: number,
-        ) {
+        ): EnumeratorLike<T> {
           init(delegatingDisposableMixin, this, delegate);
           init(typedDelegatingEnumeratorMixin, this, delegate);
 
           this.skipCount = skipCount;
           this.count = 0;
+
+          return this;
         },
         {
           skipCount: 0,
@@ -837,13 +864,15 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
     return pipe(
       clazz(
         function TakeFirstEnumerator(
-          this: TProperties,
+          this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike<T>,
           maxCount: number,
-        ) {
+        ): EnumeratorLike<T> {
           init(delegatingDisposableMixin, this, delegate);
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.maxCount = maxCount;
+
+          return this;
         },
         {
           maxCount: 0,
@@ -886,16 +915,18 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
   return pipe(
     clazz(
       function TakeLastEnumerator(
-        this: TProperties & DisposableLike,
+        this: TProperties & EnumeratorLike<T>,
         delegate: EnumeratorLike<T>,
         maxCount: number,
-      ) {
+      ): EnumeratorLike<T> {
         init(disposableMixin, this);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.maxCount = maxCount;
         this.isStarted = false;
 
         pipe(this, add(delegate));
+
+        return this;
       },
       {
         maxCount: 0,
@@ -953,15 +984,17 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
     return pipe(
       clazz(
         function TakeWhileEnumerator(
-          this: TProperties,
+          this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike<T>,
           predicate: Predicate<T>,
           inclusive: boolean,
-        ) {
+        ): EnumeratorLike<T> {
           init(delegatingDisposableMixin, this, delegate);
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.predicate = predicate;
           this.inclusive = inclusive;
+
+          return this;
         },
         {
           predicate: none,
@@ -1017,10 +1050,10 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
     return pipe(
       clazz(
         function TakeWhileEnumerator(
-          this: TProperties & DisposableLike,
+          this: TProperties & EnumeratorLike<T>,
           delegate: EnumeratorLike,
           factory: Factory<unknown>,
-        ) {
+        ): EnumeratorLike<T> {
           init(disposableMixin, this);
           init(typedDelegatingEnumeratorMixin, this, delegate);
           this.isEmpty = true;
@@ -1045,6 +1078,8 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
               pipe(this, dispose(error));
             }),
           );
+
+          return this;
         },
         {
           isEmpty: true,
@@ -1198,12 +1233,14 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const createZipEnumerator = pipe(
     clazz(
       function ZipEnumerator(
-        this: TProperties,
+        this: TProperties & EnumeratorLike<readonly unknown[]>,
         enumerators: readonly EnumeratorLike[],
-      ) {
+      ): EnumeratorLike<readonly unknown[]> {
         init(disposableMixin, this);
         init(typedEnumerator, this);
         this.enumerators = enumerators;
+
+        return this;
       },
       {
         enumerators: none,

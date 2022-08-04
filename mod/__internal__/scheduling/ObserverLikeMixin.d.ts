@@ -1,12 +1,14 @@
 import { Function2, Equality, SideEffect1, Predicate, Function1, Function3, Reducer, Factory } from "../../functions.mjs";
 import { ReactiveContainerLike } from "../../rx.mjs";
-import { ObserverLike_scheduler, SchedulerLike, ObserverLike_dispatcher, DispatcherLike, ObserverLike } from "../../scheduling.mjs";
+import { SchedulerLike, ObserverLike_scheduler, ObserverLike_dispatcher, DispatcherLike, ObserverLike } from "../../scheduling.mjs";
+import { DisposableLike, SinkLike_notify } from "../../util.mjs";
 import { Class1 } from "../util/Object.mjs";
-declare const observerMixin: <T>() => Class1<{
+declare type TObserverMixinReturn<T> = Omit<ObserverLike<T>, keyof DisposableLike | typeof SinkLike_notify>;
+declare const observerMixin: <T>() => Class1<SchedulerLike, TObserverMixinReturn<T>, {
     [ObserverLike_scheduler]: SchedulerLike;
 }, {
     get [ObserverLike_dispatcher](): DispatcherLike<T>;
-}, SchedulerLike>;
+}>;
 declare const createDecodeWithCharsetObserver: (fromArray: (v: readonly string[]) => ReactiveContainerLike<ObserverLike<string>>) => Function2<ObserverLike<string>, string, ObserverLike<ArrayBuffer>>;
 declare const createDelegatingObserver: <T>(o: ObserverLike<T>) => ObserverLike<T>;
 declare const createDistinctUntilChangedObserver: <T>(delegate: ObserverLike<T>, equality: Equality<T>) => ObserverLike<T>;

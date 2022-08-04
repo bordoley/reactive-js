@@ -40,6 +40,7 @@ const createObserverDispatcher = (() => {
                 pipe(observer, dispose(e));
             }
         }));
+        return this;
     }, {
         continuation: none,
         nextQueue: none,
@@ -61,6 +62,7 @@ const createObserverDispatcher = (() => {
 const observerMixin = /*@__PURE__*/ (() => {
     return pipe(clazz(function ObserverMixin(scheduler) {
         this[ObserverLike_scheduler] = scheduler;
+        return this;
     }, {
         [ObserverLike_scheduler]: none,
         dispatcher: none,
@@ -81,6 +83,7 @@ const createDecodeWithCharsetObserver = (fromArray) => {
     return pipe(clazz(function DecodeWithCharsetObserver(delegate, charset) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedDecodeWithCharsetMixin, this, delegate, charset);
+        return this;
     }), mixWith(typedObserverMixin, typedDecodeWithCharsetMixin), createObjectFactory());
 };
 const createDelegatingObserver = /*@__PURE__*/ (() => {
@@ -89,6 +92,7 @@ const createDelegatingObserver = /*@__PURE__*/ (() => {
         init(disposableMixin, this);
         init(typedObserverMixin, this, getScheduler(observer));
         this.delegate = observer;
+        return this;
     }, {
         delegate: none,
     }, {
@@ -103,6 +107,7 @@ const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function DistinctUntilChangedObserver(delegate, equality) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedDistinctUntilChangedSinkMixin, this, delegate, equality);
+        return this;
     }), mixWith(typedObserverMixin, typedDistinctUntilChangedSinkMixin), createObjectFactory());
 })();
 const createForEachObserver = /*@__PURE__*/ (() => {
@@ -111,6 +116,7 @@ const createForEachObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function ForEachObserver(delegate, effect) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedForEachSinkMixin, this, delegate, effect);
+        return this;
     }), mixWith(typedObserverMixin, typedForEachSinkMixin), createObjectFactory());
 })();
 const createKeepObserver = /*@__PURE__*/ (() => {
@@ -119,6 +125,7 @@ const createKeepObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function KeepObserver(delegate, predicate) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedKeepSinkMixin, this, delegate, predicate);
+        return this;
     }), mixWith(typedObserverMixin, typedKeepSinkMixin), createObjectFactory());
 })();
 const createMapObserver = /*@__PURE__*/ (() => {
@@ -127,6 +134,7 @@ const createMapObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function MapObserver(delegate, mapper) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedMapSinkMixin, this, delegate, mapper);
+        return this;
     }), mixWith(typedObserverMixin, typedMapSinkMixin), createObjectFactory());
 })();
 const createPairwiseObserver = /*@__PURE__*/ (() => {
@@ -135,6 +143,7 @@ const createPairwiseObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function PairwiseObserver(delegate) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedPairwiseSinkMixin, this, delegate);
+        return this;
     }), mixWith(typedObserverMixin, typedPairwiseSinkMixin), createObjectFactory());
 })();
 const creatReduceObserver = (fromArray) => {
@@ -143,6 +152,7 @@ const creatReduceObserver = (fromArray) => {
     return pipe(clazz(function ReduceObserver(delegate, reducer, initialValue) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
+        return this;
     }), mixWith(typedObserverMixin, typedReduceSinkMixin), createObjectFactory());
 };
 const creatScanObserver = /*@__PURE__*/ (() => {
@@ -151,6 +161,7 @@ const creatScanObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function ScanObserver(delegate, reducer, initialValue) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedScanSinkMixin, this, delegate, reducer, initialValue);
+        return this;
     }), mixWith(typedObserverMixin, typedScanSinkMixin), createObjectFactory());
 })();
 const createSkipFirstObserver = /*@__PURE__*/ (() => {
@@ -159,6 +170,7 @@ const createSkipFirstObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function SkipFirstObserver(delegate, skipCount) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedSkipFirstSinkMixin, this, delegate, skipCount);
+        return this;
     }), mixWith(typedObserverMixin, typedSkipFirstSinkMixin), createObjectFactory());
 })();
 const createTakeFirstObserver = /*@__PURE__*/ (() => {
@@ -167,6 +179,7 @@ const createTakeFirstObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function TakeFirstObserver(delegate, takeCount) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedTakeFirstSinkMixin, this, delegate, takeCount);
+        return this;
     }), mixWith(typedObserverMixin, typedTakeFirstSinkMixin), createObjectFactory());
 })();
 const createTakeLastObserver = (fromArray) => {
@@ -175,6 +188,7 @@ const createTakeLastObserver = (fromArray) => {
     return pipe(clazz(function TakeLastObserver(delegate, takeCount) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedTakeLastSinkMixin, this, delegate, takeCount);
+        return this;
     }), mixWith(typedObserverMixin, typedTakeLastSinkMixin), createObjectFactory());
 };
 const createTakeWhileObserver = /*@__PURE__*/ (() => {
@@ -183,6 +197,7 @@ const createTakeWhileObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function TakeWhileObserver(delegate, predicate, inclusive) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedTakeWhileSinkMixin, this, delegate, predicate, inclusive);
+        return this;
     }), mixWith(typedObserverMixin, typedTakeWhileSinkMixin), createObjectFactory());
 })();
 const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
@@ -191,6 +206,7 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     return pipe(clazz(function TakeWhileObserver(delegate, factory) {
         init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
         init(typedThrowIfEmptySinkMixin, this, delegate, factory);
+        return this;
     }), mixWith(typedObserverMixin, typedThrowIfEmptySinkMixin), createObjectFactory());
 })();
 

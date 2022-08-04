@@ -41,6 +41,7 @@ const emptyEnumerable = /*@__PURE__*/ (() => {
     const f = pipe(clazz(function EmptyEnumerator() {
         init(disposableMixin, this);
         init(typedEnumeratorMixin, this);
+        return this;
     }, {}, {
         [SourceLike_move]() {
             pipe(this, dispose());
@@ -66,6 +67,7 @@ const generateEnumerable =
         init(typedEnumerator, this);
         this.f = f;
         this[EnumeratorLike_current] = acc;
+        return this;
     }, { f: none }, {
         [SourceLike_move]() {
             if (!isDisposed(this)) {

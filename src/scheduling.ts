@@ -216,9 +216,13 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
 
   const createHostSchedulerInstance = pipe(
     clazz(
-      function HostScheduler(this: TProperties, yieldInterval: number) {
+      function HostScheduler(
+        this: TProperties & SchedulerLike,
+        yieldInterval: number,
+      ): SchedulerLike {
         init(disposableMixin, this);
         this.yieldInterval = yieldInterval;
+        return this;
       },
       {
         [SchedulerLike_inContinuation]: false,
@@ -323,12 +327,14 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
   const createVirtualTimeSchedulerInstance = pipe(
     clazz(
       function VirtualTimeScheduler(
-        this: TProperties,
+        this: TProperties & VirtualTimeSchedulerLike,
         maxMicroTaskTicks: number,
-      ) {
+      ): VirtualTimeSchedulerLike {
         init(disposableMixin, this);
         this.maxMicroTaskTicks = maxMicroTaskTicks;
         this.taskQueue = createPriorityQueue(comparator);
+
+        return this;
       },
       {
         [SchedulerLike_inContinuation]: false,

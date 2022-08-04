@@ -417,10 +417,15 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
 
     const createSequenceEnumerator = pipe(
       clazz(
-        function SequenceEnumerator(this: TProperties, seq: SequenceLike<T>) {
+        function SequenceEnumerator(
+          this: TProperties & EnumeratorLike<T>,
+          seq: SequenceLike<T>,
+        ): EnumeratorLike<T> {
           init(disposableMixin, this);
           init(typedEnumeratorMixin, this);
           this.seq = seq;
+
+          return this;
         },
         {
           seq: none,

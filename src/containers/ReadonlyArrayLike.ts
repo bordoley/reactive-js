@@ -140,17 +140,19 @@ export const toEnumerable: ToEnumerable<
   const createReadonlyArrayEnumerator = pipe(
     clazz(
       function ReadonlyArrayEnumerator(
-        this: TProperties,
+        this: TProperties & EnumeratorLike<T>,
         array: readonly unknown[],
         start: number,
         count: number,
-      ) {
+      ): EnumeratorLike<T> {
         init(disposableMixin, this);
         init(typedEnumerator, this);
 
         this.array = array;
         this.index = start - 1;
         this.count = count;
+
+        return this;
       },
       {
         array: none,

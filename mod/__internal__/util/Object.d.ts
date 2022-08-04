@@ -18,52 +18,52 @@ declare type OptionalProps<T> = T extends object ? {
     [P in keyof T]: T[P] extends object ? Option<T[P]> : T[P];
 } : T;
 declare type TMixin = {
-    [Object_init](this: any, ...args: readonly any[]): void;
+    [Object_init](this: any, ...args: readonly any[]): unknown;
     [Object_properties]: object;
     [Object_prototype]: object;
 };
 interface Init {
-    <TProperties, TPrototype>(clazz: {
+    <TReturn, TProperties, TPrototype>(clazz: {
+        [Object_init](this: TReturn & TProperties & TPrototype): TReturn;
         [Object_properties]: TProperties;
-        [Object_init](this: TProperties & TPrototype): void;
-    }, self: TProperties): void;
-    <TProperties, TPrototype, TA>(clazz: {
+    }, self: TProperties): TReturn;
+    <TReturn, TProperties, TPrototype, TA>(clazz: {
+        [Object_init](this: TReturn & TProperties & TPrototype, a: TA): TReturn;
         [Object_properties]: TProperties;
-        [Object_init](this: TProperties & TPrototype, a: TA): void;
-    }, self: TProperties, a: TA): void;
-    <TProperties, TPrototype, TA, TB>(clazz: {
+    }, self: TProperties, a: TA): TReturn;
+    <TReturn, TProperties, TPrototype, TA, TB>(clazz: {
+        [Object_init](this: TReturn & TProperties & TPrototype, a: TA, b: TB): TReturn;
         [Object_properties]: TProperties;
-        [Object_init](this: TProperties & TPrototype, a: TA, b: TB): void;
-    }, self: TProperties, a: TA, b: TB): void;
-    <TProperties, TPrototype, TA, TB, TC>(clazz: {
+    }, self: TProperties, a: TA, b: TB): TReturn;
+    <TReturn, TProperties, TPrototype, TA, TB, TC>(clazz: {
+        [Object_init](this: TReturn & TProperties & TPrototype, a: TA, b: TB, c: TC): TReturn;
         [Object_properties]: TProperties;
-        [Object_init](this: TProperties & TPrototype, a: TA, b: TB, c: TC): void;
-    }, self: TProperties, a: TA, b: TB, c: TC): void;
+    }, self: TProperties, a: TA, b: TB, c: TC): TReturn;
 }
 declare const init: Init;
 interface ObjectFactory {
     <TReturn>(): Function1<{
-        [Object_init]: (this: any) => void;
+        [Object_init]: (this: any) => TReturn;
         [Object_properties]: unknown;
         [Object_prototype]: object;
     }, Factory<TReturn>>;
     <TReturn, TA>(): Function1<{
-        [Object_init]: (this: any, a: TA) => void;
+        [Object_init]: (this: any, a: TA) => TReturn;
         [Object_properties]: unknown;
         [Object_prototype]: object;
     }, Function1<TA, TReturn>>;
     <TReturn, TA, TB>(): Function1<{
-        [Object_init]: (this: any, a: TA, b: TB) => void;
+        [Object_init]: (this: any, a: TA, b: TB) => TReturn;
         [Object_properties]: unknown;
         [Object_prototype]: object;
     }, Function2<TA, TB, TReturn>>;
     <TReturn, TA, TB, TC>(): Function1<{
-        [Object_init]: (this: any, a: TA, b: TB, c: TC) => void;
+        [Object_init]: (this: any, a: TA, b: TB, c: TC) => TReturn;
         [Object_properties]: unknown;
         [Object_prototype]: object;
     }, Function3<TA, TB, TC, TReturn>>;
     <TReturn, TA, TB, TC, TD>(): Function1<{
-        [Object_init]: (this: any, a: TA, b: TB, c: TC, d: TD) => void;
+        [Object_init]: (this: any, a: TA, b: TB, c: TC, d: TD) => TReturn;
         [Object_properties]: unknown;
         [Object_prototype]: object;
     }, Function4<TA, TB, TC, TD, TReturn>>;
@@ -88,45 +88,45 @@ interface MixWith {
 }
 declare const mixWith: MixWith;
 interface Clazz {
-    <TInit extends (this: any, ...args: readonly any[]) => void, TProperties extends UnknownObject = UnknownObject, TPrototype extends UnknownObject = UnknownObject>(init: TInit, properties: OptionalProps<TProperties>, prototype: TPrototype): {
+    <TInit extends (this: any, ...args: readonly any[]) => TReturn, TReturn, TProperties extends UnknownObject = UnknownObject, TPrototype extends UnknownObject = UnknownObject>(init: TInit, properties: OptionalProps<TProperties>, prototype: TPrototype): {
         [Object_init]: TInit;
         [Object_properties]: TProperties;
         [Object_prototype]: TPrototype;
     };
-    <TInit extends (this: any, ...args: readonly any[]) => void, TProperties extends UnknownObject = UnknownObject>(init: TInit, properties: OptionalProps<TProperties>): {
+    <TInit extends (this: any, ...args: readonly any[]) => TReturn, TReturn, TProperties extends UnknownObject = UnknownObject>(init: TInit, properties: OptionalProps<TProperties>): {
         [Object_init]: TInit;
         [Object_properties]: TProperties;
         [Object_prototype]: EmptyObject;
     };
-    <TInit extends (this: any, ...args: readonly any[]) => void>(init: TInit): {
+    <TInit extends (this: any, ...args: readonly any[]) => TReturn, TReturn>(init: TInit): {
         [Object_init]: TInit;
         [Object_properties]: EmptyObject;
         [Object_prototype]: EmptyObject;
     };
 }
 declare const clazz: Clazz;
-interface Class<TProperties extends object, TPrototype extends object> {
-    [Object_init](this: unknown): void;
+interface Class<TReturn, TProperties extends object, TPrototype extends object> {
+    [Object_init](this: unknown): TReturn;
     [Object_properties]: TProperties;
     [Object_prototype]: TPrototype;
 }
-interface Class1<TProperties extends object, TPrototype extends object, TA> {
-    [Object_init](this: unknown, a: TA): void;
+interface Class1<TA, TReturn, TProperties extends object, TPrototype extends object> {
+    [Object_init](this: unknown, a: TA): TReturn;
     [Object_properties]: TProperties;
     [Object_prototype]: TPrototype;
 }
-interface Class2<TProperties extends object, TPrototype extends object, TA, TB> {
-    [Object_init](this: unknown, a: TA, b: TB): void;
+interface Class2<TA, TB, TReturn, TProperties extends object, TPrototype extends object> {
+    [Object_init](this: unknown, a: TA, b: TB): TReturn;
     [Object_properties]: TProperties;
     [Object_prototype]: TPrototype;
 }
-interface Class3<TProperties extends object, TPrototype extends object, TA, TB, TC> {
-    [Object_init](this: unknown, a: TA, b: TB, c: TC): void;
+interface Class3<TA, TB, TC, TReturn, TProperties extends object, TPrototype extends object> {
+    [Object_init](this: unknown, a: TA, b: TB, c: TC): TReturn;
     [Object_properties]: TProperties;
     [Object_prototype]: TPrototype;
 }
-interface Class4<TProperties extends object, TPrototype extends object, TA, TB, TC, TD> {
-    [Object_init](this: unknown, a: TA, b: TB, c: TC, d: TD): void;
+interface Class4<TA, TB, TC, TD, TReturn, TProperties extends object, TPrototype extends object> {
+    [Object_init](this: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
     [Object_properties]: TProperties;
     [Object_prototype]: TPrototype;
 }

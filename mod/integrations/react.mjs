@@ -60,6 +60,7 @@ const createComponent = (fn, options = {}) => {
 };
 const createReactPriorityScheduler = /*@__PURE__*/ pipe(clazz(function ReactPriorityScheduler() {
     init(disposableMixin, this);
+    return this;
 }, {
     [SchedulerLike_inContinuation]: false,
 }, {

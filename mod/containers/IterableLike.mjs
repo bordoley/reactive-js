@@ -15,6 +15,7 @@ const toEnumerable =
     const createIterableEnumerator = pipe(clazz(function IteratorEnumerator(iterator) {
         init(disposableMixin, this);
         this.iterator = iterator;
+        return this;
     }, { iterator: none }, {
         [SourceLike_move]() {
             if (!isDisposed(this)) {

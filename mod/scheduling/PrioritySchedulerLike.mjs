@@ -20,6 +20,7 @@ const toScheduler = /*@__PURE__*/ (() => {
         init(disposableMixin, this);
         this.priorityScheduler = scheduler;
         this.priority = priority;
+        return this;
     }, {
         priorityScheduler: none,
         priority: 0,

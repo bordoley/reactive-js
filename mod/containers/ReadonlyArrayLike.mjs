@@ -59,6 +59,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
         this.array = array;
         this.index = start - 1;
         this.count = count;
+        return this;
     }, {
         array: none,
         count: 0,
