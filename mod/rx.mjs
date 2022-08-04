@@ -161,7 +161,7 @@ const deferRunnable = f => createRunnable(sink => {
     f()[ReactiveContainerLike_sinkInto](sink);
 });
 const deferRunnableT = { defer: deferRunnable };
-const emptyObservable = (options) => {
+const emptyObservable = ((options) => {
     const delay = getDelay(options);
     return delay > 0
         ? createRunnableObservable(sink => {
@@ -170,12 +170,12 @@ const emptyObservable = (options) => {
         : createEnumerableObservable(sink => {
             pipe(sink, dispose());
         });
-};
+});
 const emptyRunnable = () => createRunnable(sink => {
     pipe(sink, dispose());
 });
 const emptyRunnableT = { empty: emptyRunnable };
-const generateObservable = (generator, initialValue, options) => {
+const generateObservable = ((generator, initialValue, options) => {
     const delay = getDelay(options);
     const { delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
@@ -192,7 +192,7 @@ const generateObservable = (generator, initialValue, options) => {
     return delay > 0
         ? createRunnableObservable(onSink)
         : createEnumerableObservable(onSink);
-};
+});
 const generateRunnable = (generator, initialValue) => createRunnable((sink) => {
     let acc = initialValue();
     while (!isDisposed(sink)) {

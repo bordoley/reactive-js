@@ -146,13 +146,13 @@ export const expectIsSome = (v: Option<unknown>) => {
 };
 
 type MockFunction = {
-  (...v: readonly any[]): any;
+  (...v: readonly unknown[]): any;
   readonly calls: readonly ReadonlyArray<any>[];
 };
 
-export const mockFn = (retval?: any): MockFunction => {
-  const calls: ReadonlyArray<any>[] = [];
-  const cb = (...args: readonly any[]) => {
+export const mockFn = (retval?: unknown): MockFunction => {
+  const calls: ReadonlyArray<unknown>[] = [];
+  const cb = (...args: readonly unknown[]) => {
     calls.push(args);
     return retval;
   };
@@ -172,7 +172,7 @@ export const expectToHaveBeenCalledTimes =
     }
   };
 
-export const expectPromiseToThrow = async (promise: PromiseLike<any>) => {
+export const expectPromiseToThrow = async (promise: PromiseLike<unknown>) => {
   let didThrow = false;
   try {
     await promise;

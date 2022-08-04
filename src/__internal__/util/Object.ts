@@ -15,14 +15,13 @@ export const Object_prototype = Symbol("Object_prototype");
 export type UnknownObject = Record<string | symbol | number, unknown>;
 export type EmptyObject = Record<string | symbol | number, never>;
 
-export type PropertyTypeOf<T extends any[]> = T extends [infer F, ...infer R]
-  ? (F extends {
-      [Object_properties]: unknown;
-    }
-      ? F[typeof Object_properties]
-      : never) &
-      PropertyTypeOf<R>
-  : unknown;
+export type PropertyTypeOf<T extends unknown[]> = T extends [infer F]
+  ? F extends { [Object_properties]: unknown }
+    ? F[typeof Object_properties]
+    : never
+  : T extends [infer F, ...infer R]
+  ? PropertyTypeOf<[F]> & PropertyTypeOf<R>
+  : never;
 
 type OptionalProps<T> = T extends object
   ? {
@@ -42,7 +41,13 @@ const {
   prototype: objectPrototype,
 } = Object;
 
-const initUnsafe = (clazz: any, self: any, ...args: readonly any[]): void => {
+const initUnsafe = (
+  clazz: {
+    [Object_init](this: any, ...args: readonly any[]): void;
+  },
+  self: unknown,
+  ...args: readonly unknown[]
+): void => {
   clazz[Object_init].call(self, ...args);
 };
 
