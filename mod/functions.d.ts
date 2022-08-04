@@ -73,7 +73,7 @@ declare const alwaysTrue: (..._args: unknown[]) => boolean;
  * comparing their values using `valuesEquality`.
  */
 declare const arrayEquality: <T>(valuesEquality?: Equality<T>) => Equality<readonly T[]>;
-interface CallWith {
+interface callWith {
     <T>(): Function1<Factory<T>, T>;
     <TA, T>(a: TA): Function1<Function1<TA, T>, T>;
     <TA, TB, T>(a: TA, b: TB): Function1<Function2<TA, TB, T>, T>;
@@ -86,9 +86,9 @@ interface CallWith {
  * @returns A function that takes a function `f` as an argument
  * and invokes it with the provided arguments, returning the result.
  */
-declare const callWith: CallWith;
+declare const callWith: callWith;
 declare const composeUnsafe: (...operators: Function1<any, unknown>[]) => Function1<any, unknown>;
-interface Compose {
+interface compose {
     <T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     <T, A, B, C>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Function1<T, C>;
     <T, A, B, C, D>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>): Function1<T, D>;
@@ -104,7 +104,7 @@ interface Compose {
 /**
  * Composes a series of unary functions.
  */
-declare const compose: Compose;
+declare const compose: compose;
 /**
  * An updater function that returns the result of decrementing `x`.
  */
@@ -162,29 +162,29 @@ declare const isSome: <T>(option: Option<T>) => option is T;
  * Applies logical negation to the value `v`.
  */
 declare const negate: (v: boolean) => boolean;
-interface NewInstance {
+interface newInstance {
     <T>(Constructor: Constructor<T>): T;
     <T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
     <T, TA, TB>(Constructor: Constructor2<TA, TB, T>, a: TA, b: TB): T;
     <T, TA, TB, TC>(Constructor: Constructor3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
     <T, TA, TB, TC, TD>(Constructor: Constructor4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
 }
-declare const newInstance: NewInstance;
+declare const newInstance: newInstance;
 /**
  * An alias for undefined.
  */
 declare const none: undefined;
-interface Partial {
+interface partial {
     <TA, TB, TOut>(b: TB): Function1<Function2<TA, TB, TOut>, Function1<TA, TOut>>;
     <TA, TB, TC, TOut>(b: TB, c: TC): Function1<Function3<TA, TB, TC, TOut>, Function1<TA, TOut>>;
     <TA, TB, TC, TD, TOut>(b: TB, c: TC, d: TD): Function1<Function4<TA, TB, TC, TD, TOut>, Function1<TA, TOut>>;
 }
-declare const partial: Partial;
+declare const partial: partial;
 /**
  * Pipes `source` through a series of unary functions.
  */
 declare const pipeUnsafe: (source: unknown, ...operators: Function1<any, any>[]) => unknown;
-interface Pipe {
+interface pipe {
     <T, A>(src: T, op1: Function1<T, A>): A;
     <T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
     <T, A, B, C>(src: T, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): C;
@@ -201,8 +201,8 @@ interface Pipe {
 /**
  * Pipes `source` through a series of unary functions.
  */
-declare const pipe: Pipe;
-interface PipeLazy {
+declare const pipe: pipe;
+interface pipeLazy {
     <T, A>(src: T, op1: Function1<T, A>): Factory<A>;
     <T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): Factory<B>;
     <T, A, B, C>(src: T, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Factory<C>;
@@ -219,7 +219,7 @@ interface PipeLazy {
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
-declare const pipeLazy: PipeLazy;
+declare const pipeLazy: pipeLazy;
 /**
  * Throws a javascript error using the provided message.
  */

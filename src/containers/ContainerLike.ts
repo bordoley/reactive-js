@@ -186,7 +186,7 @@ export const throws =
       throw cause;
     }, compute(m, options));
 
-interface ZipWith {
+interface zipWith {
   <C extends ContainerLike, TA, TB>(
     { zip }: Zip<C>,
     b: ContainerOf<C, TB>,
@@ -248,7 +248,7 @@ interface ZipWith {
     i: ContainerOf<C, TI>,
   ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
-export const zipWith: ZipWith =
+export const zipWith: zipWith =
   <C extends ContainerLike>(
     { zip }: Zip<C>,
     snd: ContainerOf<C, any>,

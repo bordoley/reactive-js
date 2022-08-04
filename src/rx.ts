@@ -367,14 +367,14 @@ export const createSubject: <T>(options?: {
   };
 })();
 
-interface DeferObservable<C extends ObservableLike> {
+interface deferObservable<C extends ObservableLike> {
   <T>(
     factory: Factory<SideEffect1<ObserverLike<T>>>,
     options?: { readonly delay?: number },
   ): ContainerOf<C, T>;
   <T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
-export const deferObservable: DeferObservable<ObservableLike> = <T>(
+export const deferObservable: deferObservable<ObservableLike> = <T>(
   factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
   options?: { readonly delay?: number },
 ): ObservableLike<T> =>
@@ -396,7 +396,7 @@ export const deferObservableT: Defer<ObservableLike> = {
   defer: deferObservable,
 };
 
-export const deferEnumerableObservable: DeferObservable<
+export const deferEnumerableObservable: deferObservable<
   EnumerableObservableLike
 > = <T>(
   factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
@@ -426,11 +426,11 @@ export const deferRunnable: Defer<RunnableLike>["defer"] = f =>
   });
 export const deferRunnableT: Defer<RunnableLike> = { defer: deferRunnable };
 
-interface EmptyObservable {
+interface emptyObservable {
   <T>(): EnumerableObservableLike<T>;
   <T>(options: { delay: number }): RunnableObservableLike<T>;
 }
-export const emptyObservable: EmptyObservable = (<T>(options?: {
+export const emptyObservable = (<T>(options?: {
   delay: number;
 }): ObservableLike<T> => {
   const delay = getDelay(options);
@@ -445,7 +445,7 @@ export const emptyObservable: EmptyObservable = (<T>(options?: {
     : createEnumerableObservable<T>(sink => {
         pipe(sink, dispose());
       });
-}) as EmptyObservable;
+}) as emptyObservable;
 
 export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
   createRunnable<T>(sink => {
@@ -462,7 +462,7 @@ export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
  * @param initialValue Factory function used to generate the initial accumulator.
  * @param delay The requested delay between emitted items by the observable.
  */
-interface GenerateObservable {
+interface generateObservable {
   <T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
@@ -477,7 +477,7 @@ interface GenerateObservable {
     },
   ): RunnableObservableLike<T>;
 }
-export const generateObservable: GenerateObservable = (<T>(
+export const generateObservable = (<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
@@ -507,7 +507,7 @@ export const generateObservable: GenerateObservable = (<T>(
   return delay > 0
     ? createRunnableObservable(onSink)
     : createEnumerableObservable(onSink);
-}) as GenerateObservable;
+}) as generateObservable;
 
 export const generateRunnable: Generate<RunnableLike>["generate"] = <T>(
   generator: Updater<T>,

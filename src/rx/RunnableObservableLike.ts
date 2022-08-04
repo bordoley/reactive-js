@@ -148,7 +148,7 @@ export const toFlowable: ToFlowable<
   );
 export const toFlowableT: ToFlowable<RunnableObservableLike> = { toFlowable };
 
-interface ToReadonlyArrayObservable {
+interface toReadonlyArray {
   <T>(
     options?: Partial<{
       readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
@@ -160,7 +160,7 @@ interface ToReadonlyArrayObservable {
     }>,
   ): Function1<EnumerableObservableLike<T>, ReadonlyArrayLike<T>>;
 }
-export const toReadonlyArray: ToReadonlyArrayObservable =
+export const toReadonlyArray: toReadonlyArray =
   <T>(
     options: {
       readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;

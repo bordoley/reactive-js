@@ -68,25 +68,25 @@ declare const createRunnableUsingT: Using<RunnableLike>;
 declare const createSubject: <T>(options?: {
     replay?: number;
 }) => SubjectLike<T>;
-interface DeferObservable<C extends ObservableLike> {
+interface deferObservable<C extends ObservableLike> {
     <T>(factory: Factory<SideEffect1<ObserverLike<T>>>, options?: {
         readonly delay?: number;
     }): ContainerOf<C, T>;
     <T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
-declare const deferObservable: DeferObservable<ObservableLike>;
+declare const deferObservable: deferObservable<ObservableLike>;
 declare const deferObservableT: Defer<ObservableLike>;
-declare const deferEnumerableObservable: DeferObservable<EnumerableObservableLike>;
+declare const deferEnumerableObservable: deferObservable<EnumerableObservableLike>;
 declare const deferEnumerableObservableT: Defer<EnumerableObservableLike>;
 declare const deferRunnable: Defer<RunnableLike>["defer"];
 declare const deferRunnableT: Defer<RunnableLike>;
-interface EmptyObservable {
+interface emptyObservable {
     <T>(): EnumerableObservableLike<T>;
     <T>(options: {
         delay: number;
     }): RunnableObservableLike<T>;
 }
-declare const emptyObservable: EmptyObservable;
+declare const emptyObservable: emptyObservable;
 declare const emptyRunnable: Empty<RunnableLike>["empty"];
 declare const emptyRunnableT: Empty<RunnableLike>;
 /**
@@ -98,14 +98,14 @@ declare const emptyRunnableT: Empty<RunnableLike>;
  * @param initialValue Factory function used to generate the initial accumulator.
  * @param delay The requested delay between emitted items by the observable.
  */
-interface GenerateObservable {
+interface generateObservable {
     <T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableObservableLike<T>;
     <T>(generator: Updater<T>, initialValue: Factory<T>, options: {
         readonly delay: number;
         readonly delayStart?: boolean;
     }): RunnableObservableLike<T>;
 }
-declare const generateObservable: GenerateObservable;
+declare const generateObservable: generateObservable;
 declare const generateRunnable: Generate<RunnableLike>["generate"];
 declare const generateRunnableT: Generate<RunnableLike>;
 declare const neverEnumerableObservable: Never<EnumerableObservableLike>["never"];

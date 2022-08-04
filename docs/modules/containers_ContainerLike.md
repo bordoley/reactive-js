@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [zipWith](../interfaces/containers_ContainerLike.zipWith.md)
+
 ### Functions
 
 - [compute](containers_ContainerLike.md#compute)

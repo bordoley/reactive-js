@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [bindNodeCallback](../interfaces/integrations_node.bindNodeCallback.md)
+
 ### Functions
 
 - [bindNodeCallback](integrations_node.md#bindnodecallback)
