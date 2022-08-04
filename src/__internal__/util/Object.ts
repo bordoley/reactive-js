@@ -250,7 +250,7 @@ export const mixWith: MixWith =
     };
   };
 
-export interface Clazz {
+interface Clazz {
   <
     TInit extends (this: any, ...args: readonly any[]) => TReturn,
     TReturn,
