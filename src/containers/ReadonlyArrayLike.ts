@@ -8,7 +8,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
 import {
@@ -137,7 +137,7 @@ export const toEnumerable: ToEnumerable<
     index: number;
   };
 
-  const createReadonlyArrayEnumerator = pipe(
+  const createReadonlyArrayEnumerator = createInstanceFactory(
     clazz(
       __extends(disposableMixin, typedEnumerator),
       function ReadonlyArrayEnumerator(
@@ -178,7 +178,6 @@ export const toEnumerable: ToEnumerable<
         },
       },
     ),
-    createObjectFactory<EnumeratorLike<T>, readonly T[], number, number>(),
   );
 
   return createFromArray<EnumerableLike<T>, T>(

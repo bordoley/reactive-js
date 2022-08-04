@@ -2,7 +2,7 @@ import { delegatingDisposableMixin } from "./__internal__/util/DisposableLikeMix
 import {
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "./__internal__/util/Object";
 import {
@@ -114,7 +114,7 @@ export const createStream = /*@__PURE__*/ (() => {
       observable: MulticastObservableLike<T>;
       [DispatcherLike_scheduler]: SchedulerLike;
     };
-    return pipe(
+    return createInstanceFactory(
       clazz(
         __extends(delegatingDisposableMixin),
         function StreamImpl(
@@ -168,12 +168,6 @@ export const createStream = /*@__PURE__*/ (() => {
           },
         },
       ),
-      createObjectFactory<
-        StreamLike<TReq, T>,
-        ContainerOperator<ObservableLike, TReq, T>,
-        SchedulerLike,
-        number
-      >(),
     );
   })();
 

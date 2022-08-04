@@ -21,7 +21,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
 import {
@@ -66,13 +66,8 @@ import {
 } from "../containers";
 import { toRunnable as arrayToRunnable } from "../containers/ReadonlyArrayLike";
 import {
-  Equality,
-  Factory,
   Function1,
   Option,
-  Predicate,
-  Reducer,
-  SideEffect1,
   identity,
   isSome,
   newInstance,
@@ -136,8 +131,7 @@ export const buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<T>() => {
   >(arrayToRunnable());
 
   return pipe(
-    typedBufferSinkMixin,
-    createObjectFactory<SinkLike<T>, SinkLike<readonly T[]>, number>(),
+    createInstanceFactory(typedBufferSinkMixin),
     createBufferOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -156,37 +150,37 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
   const typedDelegatingSinkMixin = delegatingSinkMixin<T>();
 
   return pipeLazy(
-    clazz(
-      __extends(typedDelegatingSinkMixin),
-      function RunnableConcatAll(
-        this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
-          SinkLike<RunnableLike<T>>,
-        delegate: SinkLike<T>,
-      ) {
-        init(typedDelegatingSinkMixin, this, delegate);
-        pipe(this, bindTo(delegate));
-
-        return this;
-      },
-      {},
-      {
-        [SinkLike_notify](
+    createInstanceFactory(
+      clazz(
+        __extends(typedDelegatingSinkMixin),
+        function RunnableConcatAll(
           this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
-            DisposableLike,
-          next: RunnableLike<T>,
+            SinkLike<RunnableLike<T>>,
+          delegate: SinkLike<T>,
         ) {
-          const { [DelegatingSink_delegate]: delegate } = this;
-          pipe(
-            delegate,
-            createDelegatingSink,
-            addTo<SinkLike<T>>(this),
-            sourceFrom(next),
-            dispose(),
-          );
+          init(typedDelegatingSinkMixin, this, delegate);
+          pipe(this, bindTo(delegate));
+
+          return this;
         },
-      },
+        {},
+        {
+          [SinkLike_notify](
+            this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
+              DisposableLike,
+            next: RunnableLike<T>,
+          ) {
+            const { [DelegatingSink_delegate]: delegate } = this;
+            pipe(
+              createDelegatingSink(delegate),
+              addTo<SinkLike<T>>(this),
+              sourceFrom(next),
+              dispose(),
+            );
+          },
+        },
+      ),
     ),
-    createObjectFactory<SinkLike<RunnableLike<T>>, SinkLike<T>>(),
     lift,
   );
 })();
@@ -201,8 +195,7 @@ export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithChars
     );
 
     return pipe(
-      typedDecodeWithCharsetMixin,
-      createObjectFactory<SinkLike<ArrayBuffer>, SinkLike<string>, string>(),
+      createInstanceFactory(typedDecodeWithCharsetMixin),
       createDecodeWithCharsetOperator(liftT),
     );
   })();
@@ -216,8 +209,7 @@ export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctU
       distinctUntilChangedSinkMixin<T>();
 
     return pipe(
-      typedDistinctUntilChangedSinkMixin,
-      createObjectFactory<SinkLike<T>, SinkLike<T>, Equality<T>>(),
+      createInstanceFactory(typedDistinctUntilChangedSinkMixin),
       createDistinctUntilChangedOperator<RunnableLike, T, TReactive>(liftT),
     );
   })();
@@ -247,8 +239,7 @@ export const forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
   const typedForEachSinkMixin = forEachSinkMixin<T>();
 
   return pipe(
-    typedForEachSinkMixin,
-    createObjectFactory<SinkLike<T>, SinkLike<T>, SideEffect1<T>>(),
+    createInstanceFactory(typedForEachSinkMixin),
     createForEachOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -258,8 +249,7 @@ export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedKeepSinkMixin = keepSinkMixin<T>();
 
   return pipe(
-    typedKeepSinkMixin,
-    createObjectFactory<SinkLike<T>, SinkLike<T>, Predicate<T>>(),
+    createInstanceFactory(typedKeepSinkMixin),
     createKeepOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -284,8 +274,7 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const typedMapSinkMixin = mapSinkMixin<TA, TB>();
 
   return pipe(
-    typedMapSinkMixin,
-    createObjectFactory<SinkLike<TA>, SinkLike<TB>, Function1<TA, TB>>(),
+    createInstanceFactory(typedMapSinkMixin),
     createMapOperator<RunnableLike, TA, TB, TReactive>(liftT),
   );
 })();
@@ -296,12 +285,7 @@ export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
 >() => {
   const typedPairwiseSinkMixin = pairwiseSinkMixin<T>();
 
-  return pipe(
-    typedPairwiseSinkMixin,
-    createObjectFactory<SinkLike<T>, SinkLike<readonly [T, T]>>(),
-    lift,
-    returns,
-  );
+  return pipe(createInstanceFactory(typedPairwiseSinkMixin), lift, returns);
 })();
 export const pairwiseT: Pairwise<RunnableLike> = { pairwise };
 
@@ -317,13 +301,7 @@ export const reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
   >(arrayToRunnable());
 
   return pipe(
-    typedReduceSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      SinkLike<TAcc>,
-      Reducer<T, TAcc>,
-      Factory<TAcc>
-    >(),
+    createInstanceFactory(typedReduceSinkMixin),
     createReduceOperator<RunnableLike, T, TAcc, TReactive>(liftT),
   );
 })();
@@ -365,13 +343,7 @@ export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
   const typedScanSinkMixin = scanSinkMixin<T, TAcc>();
 
   return pipe(
-    typedScanSinkMixin,
-    createObjectFactory<
-      SinkLike<T>,
-      SinkLike<TAcc>,
-      Reducer<T, TAcc>,
-      Factory<TAcc>
-    >(),
+    createInstanceFactory(typedScanSinkMixin),
     createScanOperator<RunnableLike, T, TAcc, TReactive>(liftT),
   );
 })();
@@ -383,8 +355,7 @@ export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] = /*@__PURE__*/ (<
   const typedSkipFirstSinkMixin = skipFirstSinkMixin<T>();
 
   return pipe(
-    typedSkipFirstSinkMixin,
-    createObjectFactory<SinkLike<T>, SinkLike<T>, number>(),
+    createInstanceFactory(typedSkipFirstSinkMixin),
     createSkipFirstOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -396,8 +367,7 @@ export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] = /*@__PURE__*/ (<
   const typedTakeFirstSinkMixin = takeFirstSinkMixin<T>();
 
   return pipe(
-    typedTakeFirstSinkMixin,
-    createObjectFactory<SinkLike<T>, SinkLike<T>, number>(),
+    createInstanceFactory(typedTakeFirstSinkMixin),
     createTakeFirstOperator<RunnableLike, T, TReactive>({
       ...liftT,
     }),
@@ -415,8 +385,7 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
   >(arrayToRunnable());
 
   return pipe(
-    typedTakeLastSinkMixin,
-    createObjectFactory<SinkLike<T>, SinkLike<T>, number>(),
+    createInstanceFactory(typedTakeLastSinkMixin),
     createTakeLastOperator<RunnableLike, T, TReactive>({
       ...liftT,
     }),
@@ -430,8 +399,7 @@ export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] = /*@__PURE__*/ (<
   const typedTakeWhileSinkMixin = takeWhileSinkMixin<T>();
 
   return pipe(
-    typedTakeWhileSinkMixin,
-    createObjectFactory<SinkLike<T>, SinkLike<T>, Predicate<T>, boolean>(),
+    createInstanceFactory(typedTakeWhileSinkMixin),
     createTakeWhileOperator<RunnableLike, T, TReactive>(liftT),
   );
 })();
@@ -441,8 +409,7 @@ export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {
     const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin<T>();
     return pipe(
-      typedThrowIfEmptySinkMixin,
-      createObjectFactory<SinkLike<T>, SinkLike<T>, Factory<unknown>>(),
+      createInstanceFactory(typedThrowIfEmptySinkMixin),
       createThrowIfEmptyOperator<RunnableLike, T, TReactive>(liftT),
     );
   })();

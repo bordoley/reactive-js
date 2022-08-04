@@ -1,6 +1,6 @@
 /// <reference types="./streaming.d.ts" />
 import { delegatingDisposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
-import { clazz, __extends, init, createObjectFactory } from './__internal__/util/Object.mjs';
+import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/Object.mjs';
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
 import { pipe, none, newInstance, getLength, composeUnsafe, returns, updateReducer } from './functions.mjs';
@@ -17,7 +17,7 @@ import { addTo } from './__internal__/util/DisposableLikeInternal.mjs';
 const StreamableLike_stream = Symbol("StreamableLike_stream");
 const createStream = /*@__PURE__*/ (() => {
     const createStreamInternal = (() => {
-        return pipe(clazz(__extends(delegatingDisposableMixin), function StreamImpl(op, scheduler, replay) {
+        return createInstanceFactory(clazz(__extends(delegatingDisposableMixin), function StreamImpl(op, scheduler, replay) {
             this[DispatcherLike_scheduler] = scheduler;
             const subject = createSubject({ replay });
             this.subject = subject;
@@ -47,7 +47,7 @@ const createStream = /*@__PURE__*/ (() => {
                 const self = this;
                 pipe(self.observable, sinkInto(observer));
             },
-        }), createObjectFactory());
+        }));
     })();
     return (op, scheduler, options) => {
         const { replay = 0 } = options !== null && options !== void 0 ? options : {};

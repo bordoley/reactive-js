@@ -8,7 +8,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
 import {
@@ -126,7 +126,7 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
 
     type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
 
-    const createEnumeratorScheduler = pipe(
+    const createEnumeratorScheduler = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function EnumeratorScheduler(
@@ -181,14 +181,13 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
           },
         },
       ),
-      createObjectFactory<EnumeratorScheduler>(),
     );
 
     type TEnumeratorObserverProperties = {
       enumerator: EnumeratorScheduler;
     } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
 
-    const createEnumeratorObserver = pipe(
+    const createEnumeratorObserver = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function EnumeratorObserver(
@@ -210,7 +209,6 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
           },
         },
       ),
-      createObjectFactory<ObserverLike<T>, EnumeratorScheduler>(),
     );
 
     return () =>

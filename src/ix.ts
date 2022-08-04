@@ -7,7 +7,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "./__internal__/util/Object";
 import {
@@ -19,15 +19,7 @@ import {
   StatefulContainerLike,
   Using,
 } from "./containers";
-import {
-  Factory,
-  Function1,
-  Updater,
-  forEach,
-  newInstance,
-  none,
-  pipe,
-} from "./functions";
+import { Factory, Function1, Updater, forEach, none, pipe } from "./functions";
 import { SchedulerLike } from "./scheduling";
 import { AsyncEnumeratorLike, StreamableLike } from "./streaming";
 import {
@@ -74,26 +66,40 @@ export type ToEnumerable<
   ): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };
 
-export const createEnumerable = /*@__PURE__*/ (() => {
-  class CreateEnumerable<T> implements EnumerableLike<T> {
-    constructor(readonly _enumerate: Factory<EnumeratorLike<T>>) {}
-
-    [InteractiveContainerLike_interact](): EnumeratorLike<T> {
-      try {
-        return this._enumerate();
-      } catch (cause) {
-        const empty = emptyEnumerable<T>();
-        return pipe(
-          empty[InteractiveContainerLike_interact](),
-          dispose({ cause }),
-        );
-      }
-    }
-  }
-
-  return <T>(enumerate: Factory<EnumeratorLike<T>>): EnumerableLike<T> =>
-    newInstance(CreateEnumerable, enumerate);
-})();
+export const createEnumerable: <T>(
+  f: Factory<EnumeratorLike<T>>,
+) => EnumerableLike<T> = /*@__PURE__*/ (<T>() =>
+  createInstanceFactory(
+    clazz(
+      function CreateEnumerable(
+        this: {
+          enumerate: Factory<EnumeratorLike<T>>;
+        } & EnumerableLike<T>,
+        enumerate: Factory<EnumeratorLike<T>>,
+      ) {
+        this.enumerate = enumerate;
+        return this;
+      },
+      {
+        enumerate: none,
+      },
+      {
+        [InteractiveContainerLike_interact](this: {
+          enumerate: Factory<EnumeratorLike<T>>;
+        }): EnumeratorLike<T> {
+          try {
+            return this.enumerate();
+          } catch (cause) {
+            const empty = emptyEnumerable<T>();
+            return pipe(
+              empty[InteractiveContainerLike_interact](),
+              dispose({ cause }),
+            );
+          }
+        },
+      },
+    ),
+  ))();
 
 export const createEnumerableUsing: Using<EnumerableLike<unknown>>["using"] = <
   TResource extends DisposableLike,
@@ -121,7 +127,7 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
   T,
 >() => {
   const typedEnumeratorMixin = enumeratorMixin<T>();
-  const f = pipe(
+  const createEnumerator = createInstanceFactory(
     clazz(
       __extends(disposableMixin, typedEnumeratorMixin),
       function EmptyEnumerator(
@@ -129,7 +135,7 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
           [typeof disposableMixin, typeof typedEnumeratorMixin]
         > &
           EnumeratorLike<T>,
-      ) {
+      ): EnumeratorLike<T> {
         init(disposableMixin, this);
         init(typedEnumeratorMixin, this);
 
@@ -142,10 +148,9 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
         },
       },
     ),
-    createObjectFactory<EnumeratorLike<T>>(),
   );
 
-  return () => createEnumerable(f);
+  return () => createEnumerable(createEnumerator);
 })();
 export const emptyEnumerableT: Empty<EnumerableLike> = {
   empty: emptyEnumerable,
@@ -166,7 +171,7 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
       [typeof disposableMixin, typeof typedEnumerator]
     > & { f: Updater<T> };
 
-    const createGenerateEnumerator = pipe(
+    const createGenerateEnumerator = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedEnumerator),
         function GenerateEnumerator(
@@ -196,7 +201,6 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
           },
         },
       ),
-      createObjectFactory<EnumeratorLike<T>, Updater<T>, T>(),
     );
 
     return (generator: Updater<T>, initialValue: Factory<T>) =>

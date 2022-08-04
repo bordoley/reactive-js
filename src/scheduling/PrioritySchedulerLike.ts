@@ -4,7 +4,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
 import { Function1, none, partial, pipe } from "../functions";
@@ -38,7 +38,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
     priority: number;
   };
 
-  const createSchedulerInstance = pipe(
+  const createSchedulerInstance = createInstanceFactory(
     clazz(
       __extends(disposableMixin),
       function PrioritySchedulerDelegatingScheduler(
@@ -90,7 +90,6 @@ export const toScheduler = /*@__PURE__*/ (() => {
         },
       },
     ),
-    createObjectFactory<SchedulerLike, PrioritySchedulerLike, number>(),
   );
 
   return (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>

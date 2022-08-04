@@ -4,7 +4,7 @@ import { createOnSink } from '../__internal__/rx/ReactiveContainerLikeInternal.m
 import { createDelegatingObserver, createDecodeWithCharsetObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createReduceObserver, createScanObserver, createSkipFirstObserver, observerMixin, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
 import { disposableMixin, createDisposableRef } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { clazz, __extends, init, createObjectFactory } from '../__internal__/util/Object.mjs';
+import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { map as map$1, toObservable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeUnsafe, min, newInstance, pipe, getLength, isEmpty, returns, none, isNone, isSome } from '../functions.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, createObservable, runnableObservableType, createRunnableObservable, enumerableObservableType, createEnumerableObservable, createSubject } from '../rx.mjs';
@@ -185,7 +185,7 @@ const switchAll = /*@__PURE__*/ (() => {
             pipe(this.delegate, dispose());
         }
     }
-    return pipe(clazz(__extends(disposableMixin, typedObserverMixin), function SwitchAllObserver(delegate) {
+    return pipe(createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function SwitchAllObserver(delegate) {
         init(disposableMixin, this);
         init(typedObserverMixin, this, getScheduler(delegate));
         this.delegate = delegate;
@@ -203,20 +203,20 @@ const switchAll = /*@__PURE__*/ (() => {
                 }
             }));
         },
-    }), createObjectFactory(), liftEnumerableObservable, returns);
+    })), liftEnumerableObservable, returns);
 })();
 const switchAllT = {
     concatAll: switchAll,
 };
 const subscribe = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
-    const createObserver = pipe(clazz(__extends(disposableMixin, typedObserverMixin), function SubscribeObserver(scheduler) {
+    const createObserver = createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function SubscribeObserver(scheduler) {
         init(disposableMixin, this);
         init(typedObserverMixin, this, scheduler);
         return this;
     }, {}, {
         [SinkLike_notify](_) { },
-    }), createObjectFactory());
+    }));
     return (scheduler) => (observable) => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
 })();
 const subscribeOn = (scheduler) => (observable) => 
