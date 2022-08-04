@@ -128,7 +128,7 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
           [typeof disposableMixin, typeof typedEnumeratorMixin]
         > &
           EnumeratorLike<T>,
-      ): EnumeratorLike<T> {
+      ) {
         init(disposableMixin, this);
         init(typedEnumeratorMixin, this);
 
@@ -172,7 +172,7 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
           this: TProperties & MutableEnumeratorLike<T>,
           f: Updater<T>,
           acc: T,
-        ): MutableEnumeratorLike<T> {
+        ) {
           init(disposableMixin, this);
           init(typedEnumerator, this);
           this.f = f;

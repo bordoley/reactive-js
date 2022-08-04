@@ -35,9 +35,7 @@ export const enumeratorMixin: <T>() => Class<
 
   return pipe(
     clazz(
-      function EnumeratorMixin(
-        this: TProperties & TEnumeratorMixinReturn<T>,
-      ): TEnumeratorMixinReturn<T> {
+      function EnumeratorMixin(this: TProperties & TEnumeratorMixinReturn<T>) {
         this[Enumerator_private_hasCurrent] = false;
         return this;
       },

@@ -128,7 +128,9 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
 
     const createEnumeratorScheduler = pipe(
       clazz(
-        function EnumeratorScheduler(this): EnumeratorScheduler {
+        function EnumeratorScheduler(
+          this: EnumeratorScheduler & TEnumeratorSchedulerProperties,
+        ) {
           init(disposableMixin, this);
           init(typedEnumeratorMixin, this);
 
@@ -191,7 +193,7 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
         function EnumeratorObserver(
           this: TEnumeratorObserverProperties & ObserverLike<T>,
           enumerator: EnumeratorScheduler,
-        ): ObserverLike<T> {
+        ) {
           init(disposableMixin, this);
           init(typedObserverMixin, this, enumerator);
           this.enumerator = enumerator;

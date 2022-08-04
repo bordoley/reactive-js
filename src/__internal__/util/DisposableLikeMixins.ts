@@ -52,7 +52,7 @@ export const delegatingDisposableMixin: Class1<
     function DelegatingDisposableMixin(
       this: TProperties & DisposableLike,
       delegate: DisposableLike,
-    ): DisposableLike {
+    ) {
       this[DelegatingDisposable_private_delegate] = delegate;
 
       pipe(
@@ -130,9 +130,7 @@ export const disposableMixin: Class<
   };
 
   return clazz(
-    function DisposableMixin(
-      this: TProperties & DisposableLike,
-    ): DisposableLike {
+    function DisposableMixin(this: TProperties & DisposableLike) {
       this[Disposable_private_disposables] = new Set();
       return this;
     },
@@ -228,7 +226,7 @@ export const disposableRefMixin: <
       function DisposableRef(
         this: TProperties & DisposableRefLike<TDisposable>,
         defaultValue: TDisposable,
-      ): DisposableRefLike<TDisposable> {
+      ) {
         this[DisposableRef_private_current] = defaultValue;
         pipe(this, add(defaultValue));
 
@@ -264,10 +262,7 @@ export const createDisposableRef: <TDisposable extends DisposableLike>(
   const typedDisposableRefMixin = disposableRefMixin<TDisposable>();
 
   return pipe(
-    clazz(function DisposableRef(
-      this,
-      initialValue: TDisposable,
-    ): DisposableRefLike<TDisposable> {
+    clazz(function DisposableRef(this, initialValue: TDisposable) {
       init(disposableMixin, this);
       init(typedDisposableRefMixin, this, initialValue);
 

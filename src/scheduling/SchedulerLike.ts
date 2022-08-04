@@ -107,7 +107,7 @@ const createContinuation: Function2<
         this: TProperties & ContinuationLike,
         scheduler: SchedulerLike,
         f: SideEffect,
-      ): ContinuationLike {
+      ) {
         init(disposableMixin, this);
         this.scheduler = scheduler;
         this.f = f;
@@ -350,7 +350,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
         function QueueScheduler(
           this: TProperties & QueueSchedulerLike,
           host: SchedulerLike,
-        ): QueueSchedulerLike {
+        ) {
           init(disposableMixin, this);
           init(typedEnumeratorMixin, this);
           init(typedDisposableRefMixin, this, disposed);

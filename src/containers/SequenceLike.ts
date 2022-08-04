@@ -420,7 +420,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
         function SequenceEnumerator(
           this: TProperties & EnumeratorLike<T>,
           seq: SequenceLike<T>,
-        ): EnumeratorLike<T> {
+        ) {
           init(disposableMixin, this);
           init(typedEnumeratorMixin, this);
           this.seq = seq;

@@ -144,7 +144,7 @@ export const toEnumerable: ToEnumerable<
         array: readonly unknown[],
         start: number,
         count: number,
-      ): EnumeratorLike<T> {
+      ) {
         init(disposableMixin, this);
         init(typedEnumerator, this);
 

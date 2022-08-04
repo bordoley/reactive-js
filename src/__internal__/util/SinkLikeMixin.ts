@@ -52,7 +52,7 @@ export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
     clazz(
       function CreateSink(
         this: PropertyTypeOf<[typeof disposableMixin]> & SinkLike<T>,
-      ): SinkLike<T> {
+      ) {
         init(disposableMixin, this);
         return this;
       },
@@ -100,7 +100,7 @@ export const delegatingSinkMixin: <T>() => Class1<
       function DelegatingSink(
         this: TProperties & SinkLike<T>,
         delegate: SinkLike<T>,
-      ): SinkLike<T> {
+      ) {
         init(disposableMixin, this);
         this[DelegatingSink_delegate] = delegate;
         return this;
@@ -175,7 +175,7 @@ export const bufferSinkMixin: <
         this: TProperties & SinkLike<T>,
         delegate: TSink,
         maxBufferSize: number,
-      ): SinkLike<T> {
+      ) {
         init(disposableMixin, this);
         this[Sink_private_delegate] = delegate;
         this[BufferSink_private_maxBufferSize] = maxBufferSize;
@@ -268,7 +268,7 @@ export const decodeWithCharsetSinkMixin: <
         this: TProperties & SinkLike<ArrayBuffer>,
         delegate: SinkLike<string>,
         charset: string,
-      ): SinkLike<ArrayBuffer> {
+      ) {
         init(disposableMixin, this);
         this[Sink_private_delegate] = delegate;
 
@@ -351,7 +351,7 @@ export const distinctUntilChangedSinkMixin: <T>() => Class2<
         this: TProperties & SinkLike<T>,
         delegate: SinkLike<T>,
         equality: Equality<T>,
-      ): SinkLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[DistinctUntilChangedSink_private_equality] = equality;
@@ -416,7 +416,7 @@ export const forEachSinkMixin: <T>() => Class2<
         this: TProperties & SinkLike<T>,
         delegate: SinkLike<T>,
         effect: SideEffect1<T>,
-      ): SinkLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[ForEachSink_private_effect] = effect;
@@ -469,7 +469,7 @@ export const keepSinkMixin: <T>() => Class2<
         this: TProperties & SinkLike<T>,
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
-      ): SinkLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[KeepSink_private_predicate] = predicate;
@@ -523,7 +523,7 @@ export const mapSinkMixin: <TA, TB>() => Class2<
         this: TProperties & SinkLike<TA>,
         delegate: SinkLike<TB>,
         mapper: Function1<TA, TB>,
-      ): SinkLike<TA> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[MapSink_private_mapper] = mapper;
@@ -576,7 +576,7 @@ export const pairwiseSinkMixin: <T>() => Class1<
       function PairwiseSink(
         this: TProperties & SinkLike<T>,
         delegate: SinkLike<readonly [T, T]>,
-      ): SinkLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
 
@@ -656,7 +656,7 @@ export const reduceSinkMixin: <
         delegate: TSink,
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
-      ): SinkLike<T> {
+      ) {
         init(disposableMixin, this);
         this[Sink_private_delegate] = delegate;
         this[ReduceSink_private_reducer] = reducer;
@@ -735,7 +735,7 @@ export const scanSinkMixin: <T, TAcc>() => Class3<
         delegate: SinkLike<TAcc>,
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
-      ): SinkLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[ScanSink_private_reducer] = reducer;
@@ -805,7 +805,7 @@ export const skipFirstSinkMixin: <T>() => Class2<
         this: TProperties & SinkLike<T>,
         delegate: SinkLike<T>,
         skipCount: number,
-      ): SinkLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[SkipFirstSink_private_skipCount] = skipCount;
@@ -880,7 +880,7 @@ export const takeFirstSinkMixin: <T>() => Class2<
         this: TProperties & SinkLike<T>,
         delegate: SinkLike<T>,
         takeCount: number,
-      ): SinkLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[TakeFirstSink_private_takeCount] = takeCount;
@@ -954,7 +954,7 @@ export const takeLastSinkMixin: <
         this: TProperties & SinkLike<T>,
         delegate: TSink,
         takeLastCount: number,
-      ): SinkLike<T> {
+      ) {
         init(disposableMixin, this);
         this[Sink_private_delegate] = delegate;
         this[TakeLastSink_private_takeLastCount] = takeLastCount;
@@ -1029,7 +1029,7 @@ export const takeWhileSinkMixin: <T>() => Class3<
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
         inclusive: boolean,
-      ): SinkLike<T> {
+      ) {
         init(delegatingDisposableMixin, this, delegate);
         this[Sink_private_delegate] = delegate;
         this[TakeWhileSink_private_predicate] = predicate;
@@ -1094,7 +1094,7 @@ export const throwIfEmptySinkMixin: <T>() => Class2<
         this: TProperties & SinkLike<T>,
         delegate: SinkLike<T>,
         factory: Factory<unknown>,
-      ): SinkLike<T> {
+      ) {
         init(disposableMixin, this);
         this[Sink_private_delegate] = delegate;
 

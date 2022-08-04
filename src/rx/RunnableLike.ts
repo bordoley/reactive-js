@@ -161,7 +161,7 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
         this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
           SinkLike<RunnableLike<T>>,
         delegate: SinkLike<T>,
-      ): SinkLike<RunnableLike<T>> {
+      ) {
         init(typedDelegatingSinkMixin, this, delegate);
         pipe(this, bindTo(delegate));
 

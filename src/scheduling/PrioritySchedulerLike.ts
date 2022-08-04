@@ -44,7 +44,7 @@ export const toScheduler = /*@__PURE__*/ (() => {
         this: TProperties & SchedulerLike,
         scheduler: PrioritySchedulerLike,
         priority: number,
-      ): SchedulerLike {
+      ) {
         init(disposableMixin, this);
         this.priorityScheduler = scheduler;
         this.priority = priority;
