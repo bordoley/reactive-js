@@ -163,7 +163,7 @@ ___
 
 ### toRunnableT
 
-• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>\>
+• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ## Functions
 

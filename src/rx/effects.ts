@@ -57,9 +57,9 @@ type MemoEffect = {
 
 type ObserveEffect = {
   readonly type: EffectContainerOf.Observe;
-  observable: ObservableLike<unknown>;
+  observable: ObservableLike;
   subscription: DisposableLike;
-  value: Option<unknown>;
+  value: Option;
   hasValue: boolean;
 };
 
@@ -136,7 +136,7 @@ class ObservableContext {
   private scheduledComputationSubscription: DisposableLike = disposed;
 
   constructor(
-    readonly observer: ObserverLike<unknown>,
+    readonly observer: ObserverLike,
     private readonly runComputation: () => void,
     private readonly mode: EffectsMode,
   ) {}
