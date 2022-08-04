@@ -31,16 +31,15 @@ const createLift = /*@__PURE__*/ (() => {
         }
     }
     return (observableType) => (operator) => source => {
-        var _a, _b;
         const sourceSource = source instanceof LiftedObservable ? source.source : source;
         const allFunctions = source instanceof LiftedObservable
             ? [operator, ...source.operators]
             : [operator];
-        const type = min(observableType, (_a = source[ObservableLike_observableType]) !== null && _a !== void 0 ? _a : 0, (_b = sourceSource[ObservableLike_observableType]) !== null && _b !== void 0 ? _b : 0);
+        const type = min(observableType, getObservableType(source), getObservableType(sourceSource));
         return newInstance(LiftedObservable, sourceSource, allFunctions, type);
     };
 })();
-const liftHotObservable = createLift(0);
+const liftObservable = createLift(0);
 const liftRunnableObservable = createLift(1);
 const liftEnumerableObservable = createLift(2);
 const liftEnumerableObservableT = {
@@ -69,7 +68,7 @@ const concat = (() => {
                 pipe(observer, dispose());
             }
         };
-        const type = pipe(observables, map$1(obs => { var _a; return (_a = obs[ObservableLike_observableType]) !== null && _a !== void 0 ? _a : 0; }), x => min(...x));
+        const type = pipe(observables, map$1(getObservableType), x => min(...x));
         switch (type) {
             case enumerableObservableType:
                 return createEnumerableObservable(onSink);
@@ -83,8 +82,7 @@ const concat = (() => {
 const concatT = {
     concat,
 };
-const decodeWithCharset = 
-/*@__PURE__*/ (() => pipe(createDecodeWithCharsetObserver(toObservable()), createDecodeWithCharsetOperator(liftEnumerableObservableT)))();
+const decodeWithCharset = /*@__PURE__*/ (() => pipe(createDecodeWithCharsetObserver(toObservable()), createDecodeWithCharsetOperator(liftEnumerableObservableT)))();
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
@@ -114,7 +112,7 @@ const mergeImpl = /*@__PURE__*/ (() => {
                 pipe(createMergeObserver(observer, count, ctx), sourceFrom(observable));
             }
         };
-        const type = pipe(observables, map$1(obs => { var _a; return (_a = obs[ObservableLike_observableType]) !== null && _a !== void 0 ? _a : 0; }), x => min(...x));
+        const type = pipe(observables, map$1(getObservableType), x => min(...x));
         switch (type) {
             case enumerableObservableType:
                 return createEnumerableObservable(onSink);
@@ -125,10 +123,7 @@ const mergeImpl = /*@__PURE__*/ (() => {
         }
     };
 })();
-const forkMerge = ((...ops) => (obs) => {
-    const observables = pipe(ops, map$1(op => op(obs)));
-    return mergeImpl(observables);
-});
+const forkMerge = ((...ops) => (obs) => pipe(ops, map$1(op => op(obs)), mergeImpl));
 /** @hidden */
 const merge = ((...observables) => mergeImpl(observables));
 const mergeT = {
@@ -148,8 +143,7 @@ const multicast = (scheduler, options = {}) => observable => {
     return subject;
 };
 const onSubscribe = ((f) => (obs) => {
-    var _a;
-    const type = (_a = obs[ObservableLike_observableType]) !== null && _a !== void 0 ? _a : 0;
+    const type = getObservableType(obs);
     switch (type) {
         case enumerableObservableType:
             return createOnSink(createEnumerableObservable, obs, f);
@@ -167,6 +161,7 @@ const scan = /*@__PURE__*/ (() => pipe(creatScanObserver, createScanOperator(lif
 const scanT = { scan };
 const share = (scheduler, options) => (source) => {
     let multicasted = none;
+    // FIXME: Type test scheduler for VTS
     return createObservable(observer => {
         if (isNone(multicasted)) {
             multicasted = pipe(source, multicast(scheduler, options));
@@ -188,7 +183,7 @@ const switchAll = /*@__PURE__*/ (() => {
             pipe(this.delegate, dispose());
         }
     }
-    const switchAllOperator = pipe(clazz(function SwitchAllObserver(delegate) {
+    return pipe(clazz(function SwitchAllObserver(delegate) {
         init(disposableMixin, this);
         init(typedObserverMixin, this, getScheduler(delegate));
         this.delegate = delegate;
@@ -205,8 +200,7 @@ const switchAll = /*@__PURE__*/ (() => {
                 }
             }));
         },
-    }), mixWith(disposableMixin, typedObserverMixin), createObjectFactory());
-    return (() => liftEnumerableObservable(switchAllOperator));
+    }), mixWith(disposableMixin, typedObserverMixin), createObjectFactory(), liftEnumerableObservable, returns);
 })();
 const switchAllT = {
     concatAll: switchAll,
@@ -230,8 +224,8 @@ const takeLast = /*@__PURE__*/ (() => pipe(createTakeLastObserver(toObservable()
 const takeLastT = { takeLast };
 const takeUntil = ((notifier) => {
     const operator = (delegate) => pipe(createDelegatingObserver(delegate), bindTo(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))));
-    return notifier[ObservableLike_observableType] === 0
-        ? liftHotObservable(operator)
+    return getObservableType(notifier) === 0
+        ? liftObservable(operator)
         : liftRunnableObservable(operator);
 });
 const takeWhile = /*@__PURE__*/ (() => pipe(createTakeWhileObserver, createTakeWhileOperator(liftEnumerableObservableT)))();

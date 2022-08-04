@@ -169,8 +169,8 @@ const createLift: (
 
       const type = min(
         observableType,
-        source[ObservableLike_observableType] ?? 0,
-        sourceSource[ObservableLike_observableType] ?? 0,
+        getObservableType(source),
+        getObservableType(sourceSource),
       );
 
       return newInstance(
@@ -182,7 +182,7 @@ const createLift: (
     };
 })();
 
-const liftHotObservable = createLift(0);
+const liftObservable = createLift(0);
 const liftRunnableObservable = createLift(1);
 const liftEnumerableObservable = createLift(2);
 const liftEnumerableObservableT: Lift<ObservableLike, TReactive> = {
@@ -190,25 +190,25 @@ const liftEnumerableObservableT: Lift<ObservableLike, TReactive> = {
   variance: reactive,
 };
 
-type ConcatObservableType<TObs extends unknown[]> = TObs extends [infer F]
+type ConcattedObservable<TObs extends unknown[]> = TObs extends [infer F]
   ? F
   : TObs extends [infer F, ...infer R]
   ? F extends EnumerableObservableLike
-    ? ConcatObservableType<R>
+    ? ConcattedObservable<R>
     : F extends RunnableObservableLike
-    ? ConcatObservableType<R> extends EnumerableObservableLike
+    ? ConcattedObservable<R> extends EnumerableObservableLike
       ? F
-      : ConcatObservableType<R> extends RunnableObservableLike
+      : ConcattedObservable<R> extends RunnableObservableLike
       ? F
       : R
     : F
-  : unknown;
+  : never;
 
-interface ConcatObservable {
+interface ConcatOperator {
   <C1 extends ObservableLike<T>, C2 extends ObservableLike<T>, T>(
     c1: C1,
     c2: C2,
-  ): ConcatObservableType<[C1, C2]>;
+  ): ConcattedObservable<[C1, C2]>;
 
   <
     C1 extends ObservableLike<T>,
@@ -219,7 +219,7 @@ interface ConcatObservable {
     c1: C1,
     c2: C2,
     c3: C3,
-  ): ConcatObservableType<[C1, C2, C3]>;
+  ): ConcattedObservable<[C1, C2, C3]>;
 
   <
     C1 extends ObservableLike<T>,
@@ -232,7 +232,7 @@ interface ConcatObservable {
     c2: C2,
     c3: C3,
     c4: C4,
-  ): ConcatObservableType<[C1, C2, C3, C4]>;
+  ): ConcattedObservable<[C1, C2, C3, C4]>;
   <
     C1 extends ObservableLike<T>,
     C2 extends ObservableLike<T>,
@@ -246,7 +246,7 @@ interface ConcatObservable {
     c3: C3,
     c4: C4,
     c5: C5,
-  ): ConcatObservableType<[C1, C2, C3, C4, C5]>;
+  ): ConcattedObservable<[C1, C2, C3, C4, C5]>;
   <
     C1 extends ObservableLike<T>,
     C2 extends ObservableLike<T>,
@@ -262,7 +262,7 @@ interface ConcatObservable {
     c4: C4,
     c5: C5,
     c6: C6,
-  ): ConcatObservableType<[C1, C2, C3, C4, C5, C6]>;
+  ): ConcattedObservable<[C1, C2, C3, C4, C5, C6]>;
 
   <
     C1 extends ObservableLike<T>,
@@ -281,7 +281,7 @@ interface ConcatObservable {
     c5: C5,
     c6: C6,
     c7: C7,
-  ): ConcatObservableType<[C1, C2, C3, C4, C5, C6, C7]>;
+  ): ConcattedObservable<[C1, C2, C3, C4, C5, C6, C7]>;
 
   <
     C1 extends ObservableLike<T>,
@@ -302,13 +302,13 @@ interface ConcatObservable {
     c6: C6,
     c7: C7,
     c8: C8,
-  ): ConcatObservableType<[C1, C2, C3, C4, C5, C6, C7, C8]>;
+  ): ConcattedObservable<[C1, C2, C3, C4, C5, C6, C7, C8]>;
 }
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  * @hidden
  */
-export const concat: ConcatObservable = (<T>() => {
+export const concat: ConcatOperator = (<T>() => {
   const createConcatObserver = <T>(
     delegate: ObserverLike<T>,
     observables: readonly ObservableLike<T>[],
@@ -329,7 +329,7 @@ export const concat: ConcatObservable = (<T>() => {
       }),
     );
 
-  return (...observables: readonly ObservableLike<T>[]): any => {
+  return (...observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
     const onSink = (observer: ObserverLike<T>) => {
       if (!isEmpty(observables)) {
         pipe(
@@ -341,10 +341,8 @@ export const concat: ConcatObservable = (<T>() => {
       }
     };
 
-    const type = pipe(
-      observables,
-      mapArray(obs => obs[ObservableLike_observableType] ?? 0),
-      x => min(...x),
+    const type = pipe(observables, mapArray(getObservableType), x =>
+      min(...x),
     ) as ObservableType;
 
     switch (type) {
@@ -361,47 +359,46 @@ export const concatT: Concat<ObservableLike> = {
   concat,
 };
 
-interface DecodeWithCharsetObservable {
+interface DecodeWithCharsetOperator {
   <C extends ObservableLike = ObservableLike>(
     charset?: string | undefined,
   ): ContainerOperator<C, ArrayBuffer, string>;
 }
-export const decodeWithCharset: DecodeWithCharsetObservable =
-  /*@__PURE__*/ (() =>
-    pipe(
-      createDecodeWithCharsetObserver(arrayToObservable()),
-      createDecodeWithCharsetOperator<ObservableLike, TReactive>(
-        liftEnumerableObservableT,
-      ),
-    ))() as DecodeWithCharsetObservable;
+export const decodeWithCharset: DecodeWithCharsetOperator = /*@__PURE__*/ (() =>
+  pipe(
+    createDecodeWithCharsetObserver(arrayToObservable()),
+    createDecodeWithCharsetOperator<ObservableLike, TReactive>(
+      liftEnumerableObservableT,
+    ),
+  ))() as DecodeWithCharsetOperator;
 export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
   decodeWithCharset,
 };
 
-interface DistinctUntilChangedObservable {
+interface DistinctUntilChangedOperator {
   <T, C extends ObservableLike = ObservableLike>(options?: {
     readonly equality?: Equality<T> | undefined;
   }): ContainerOperator<C, T, T>;
 }
-export const distinctUntilChanged: DistinctUntilChangedObservable =
+export const distinctUntilChanged: DistinctUntilChangedOperator =
   /*@__PURE__*/ (<T>() =>
     pipe(
       createDistinctUntilChangedObserver,
       createDistinctUntilChangedOperator<ObservableLike, T, TReactive>(
         liftEnumerableObservableT,
       ),
-    ) as DistinctUntilChangedObservable)();
+    ) as DistinctUntilChangedOperator)();
 export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
   distinctUntilChanged,
 };
 
-interface ForEachObservable {
+interface ForEachOperator {
   <T, C extends ObservableLike = ObservableLike>(
     effect: SideEffect1<T>,
   ): ContainerOperator<C, T, T>;
   <T>(effect: SideEffect1<T>): Function1<ObservableLike<T>, ObservableLike<T>>;
 }
-export const forEach: ForEachObservable = /*@__PURE__*/ (<T>() =>
+export const forEach: ForEachOperator = /*@__PURE__*/ (<T>() =>
   pipe(
     createForEachObserver,
     createForEachOperator<ObservableLike, T, TReactive>(
@@ -410,31 +407,31 @@ export const forEach: ForEachObservable = /*@__PURE__*/ (<T>() =>
   ))();
 export const forEachT: ForEach<ObservableLike> = { forEach };
 
-interface KeepObservable {
+interface KeepOperator {
   <T, C extends ObservableLike = ObservableLike>(
     predicate: Predicate<T>,
   ): ContainerOperator<C, T, T>;
   <T>(predicate: Predicate<T>): Function1<ObservableLike<T>, ObservableLike<T>>;
 }
-export const keep: KeepObservable = /*@__PURE__*/ (<T>() =>
+export const keep: KeepOperator = /*@__PURE__*/ (<T>() =>
   pipe(
     createKeepObserver,
     createKeepOperator<ObservableLike, T, TReactive>(liftEnumerableObservableT),
   ))();
 export const keepT: Keep<ObservableLike> = { keep };
 
-interface MapObservable {
+interface MapOperator {
   <TA, TB, C extends ObservableLike = ObservableLike>(
     mapper: Function1<TA, TB>,
   ): ContainerOperator<C, TA, TB>;
 }
-export const map: MapObservable = /*@__PURE__*/ (<TA, TB>() =>
+export const map: MapOperator = /*@__PURE__*/ (<TA, TB>() =>
   pipe(
     createMapObserver,
     createMapOperator<ObservableLike, TA, TB, TReactive>(
       liftEnumerableObservableT,
     ),
-  ) as MapObservable)();
+  ) as MapOperator)();
 export const mapT: Map<ObservableLike> = { map };
 
 const mergeImpl = /*@__PURE__*/ (() => {
@@ -466,10 +463,8 @@ const mergeImpl = /*@__PURE__*/ (() => {
       }
     };
 
-    const type = pipe(
-      observables,
-      mapArray(obs => (obs as any)[ObservableLike_observableType] ?? 0),
-      x => min(...x),
+    const type = pipe(observables, mapArray(getObservableType), x =>
+      min(...x),
     ) as ObservableType;
 
     switch (type) {
@@ -483,28 +478,27 @@ const mergeImpl = /*@__PURE__*/ (() => {
   };
 })();
 
-interface ForkMergeObservable {
+interface ForkMergeOperator {
   <TIn, TOut, C extends ObservableLike = ObservableLike>(
     fst: ContainerOperator<C, TIn, TOut>,
     snd: ContainerOperator<C, TIn, TOut>,
     ...tail: readonly ContainerOperator<C, TIn, TOut>[]
   ): ContainerOperator<C, TIn, TOut>;
 }
-export const forkMerge: ForkMergeObservable = (<TIn, TOut>(
+export const forkMerge: ForkMergeOperator = (<TIn, TOut>(
     ...ops: readonly ContainerOperator<ObservableLike, TIn, TOut>[]
   ) =>
-  (obs: ObservableLike<TIn>) => {
-    const observables = pipe(
+  (obs: ObservableLike<TIn>) =>
+    pipe(
       ops,
       mapArray(op => op(obs)),
-    );
-    return mergeImpl(observables);
-  }) as ForkMergeObservable;
+      mergeImpl,
+    )) as ForkMergeOperator;
 
 /** @hidden */
-export const merge: ConcatObservable = (<T>(
+export const merge: ConcatOperator = (<T>(
   ...observables: ObservableLike<T>[]
-) => mergeImpl(observables)) as ConcatObservable;
+) => mergeImpl(observables)) as ConcatOperator;
 export const mergeT: Concat<ObservableLike<unknown>> = {
   concat: merge,
 };
@@ -534,16 +528,16 @@ export const multicast =
     return subject;
   };
 
-interface OnSubscribeObservable {
+interface OnSubscribeOperator {
   <T, C extends ObservableLike = ObservableLike>(
     f: Factory<DisposableOrTeardown | void>,
   ): Function1<C, ContainerOf<C, T>>;
 }
-export const onSubscribe: OnSubscribeObservable = (<T>(
+export const onSubscribe: OnSubscribeOperator = (<T>(
     f: Factory<DisposableOrTeardown | void>,
   ) =>
   (obs: ObservableLike<T>) => {
-    const type = (obs as any)[ObservableLike_observableType] ?? 0;
+    const type = getObservableType(obs);
     switch (type) {
       case enumerableObservableType:
         return createOnSink(createEnumerableObservable, obs, f);
@@ -552,72 +546,73 @@ export const onSubscribe: OnSubscribeObservable = (<T>(
       default:
         return createOnSink(createObservable, obs, f);
     }
-  }) as OnSubscribeObservable;
+  }) as OnSubscribeOperator;
 
-interface PairwiseObservable {
+interface PairwiseOperator {
   <T, C extends ObservableLike = ObservableLike>(): ContainerOperator<
     C,
     T,
     readonly [T, T]
   >;
 }
-export const pairwise: PairwiseObservable = /*@__PURE__*/ (() =>
+export const pairwise: PairwiseOperator = /*@__PURE__*/ (() =>
   pipe(
     liftEnumerableObservable(createPairwiseObserver),
     returns,
-  ) as PairwiseObservable)();
+  ) as PairwiseOperator)();
 export const pairwiseT: Pairwise<ObservableLike> = { pairwise };
 
-interface ReduceObservable {
+interface ReduceOperator {
   <T, TAcc, C extends ObservableLike = ObservableLike>(
     scanner: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc>;
 }
-export const reduce: ReduceObservable = /*@__PURE__*/ (<T, TAcc>() =>
+export const reduce: ReduceOperator = /*@__PURE__*/ (<T, TAcc>() =>
   pipe(
     creatReduceObserver<ObservableLike, T, TAcc>(arrayToObservable()),
     createReduceOperator<ObservableLike, T, TAcc, TReactive>(
       liftEnumerableObservableT,
     ),
-  ) as ReduceObservable)();
+  ) as ReduceOperator)();
 export const reduceT: Reduce<ObservableLike> = { reduce };
 
-interface ScanObservable {
+interface ScanOperator {
   <T, TAcc, C extends ObservableLike = ObservableLike>(
     scanner: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc>;
 }
-export const scan: ScanObservable = /*@__PURE__*/ (<T, TAcc>() =>
+export const scan: ScanOperator = /*@__PURE__*/ (<T, TAcc>() =>
   pipe(
     creatScanObserver,
     createScanOperator<ObservableLike, T, TAcc, TReactive>(
       liftEnumerableObservableT,
     ),
-  ) as ScanObservable)();
+  ) as ScanOperator)();
 export const scanT: Scan<ObservableLike> = { scan };
 
-/**
- * Returns an `ObservableLike` backed by a shared refcounted subscription to the
- * source. When the refcount goes to 0, the underlying subscription
- * to the source is disposed.
- *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
- * @param replay The number of events that should be replayed when the `ObservableLike`
- * is subscribed to.
- */
-interface Share {
+interface ShareOperator {
+  /**
+   * Returns an `ObservableLike` backed by a shared refcounted subscription to the
+   * source. When the refcount goes to 0, the underlying subscription
+   * to the source is disposed.
+   *
+   * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
+   * @param replay The number of events that should be replayed when the `ObservableLike`
+   * is subscribed to.
+   */
   <T>(
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): Function1<ObservableLike<T>, ObservableLike<T>>;
 }
-export const share: Share =
+export const share: ShareOperator =
   <T>(scheduler: SchedulerLike, options?: { readonly replay?: number }) =>
   (source: ObservableLike<T>) => {
     let multicasted: Option<MulticastObservableLike<T>> = none;
 
+    // FIXME: Type test scheduler for VTS
     return createObservable<T>(observer => {
       if (isNone(multicasted)) {
         multicasted = pipe(source, multicast(scheduler, options));
@@ -636,21 +631,21 @@ export const share: Share =
     });
   };
 
-interface SkipFirstObservable {
+interface SkipFirstOperator {
   <T, C extends ObservableLike = ObservableLike>(options?: {
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
 }
-export const skipFirst: SkipFirstObservable = /*@__PURE__*/ (<T>() =>
+export const skipFirst: SkipFirstOperator = /*@__PURE__*/ (<T>() =>
   pipe(
     createSkipFirstObserver,
     createSkipFirstOperator<ObservableLike, T, TReactive>(
       liftEnumerableObservableT,
     ),
-  ) as SkipFirstObservable)();
+  ) as SkipFirstOperator)();
 export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
 
-interface SwitchAllObservable {
+interface SwitchAllOperator {
   <T>(): Function1<ObservableLike<ObservableLike<T>>, ObservableLike<T>>;
 
   <
@@ -675,7 +670,7 @@ interface SwitchAllObservable {
     T,
   >(): Function1<C, RunnableObservableLike<T>>;
 }
-export const switchAll: SwitchAllObservable = /*@__PURE__*/ (<T>() => {
+export const switchAll: SwitchAllOperator = /*@__PURE__*/ (<T>() => {
   const typedObserverMixin = observerMixin<T>();
 
   type TProperties = {
@@ -689,7 +684,7 @@ export const switchAll: SwitchAllObservable = /*@__PURE__*/ (<T>() => {
     }
   }
 
-  const switchAllOperator = pipe(
+  return pipe(
     clazz(
       function SwitchAllObserver(
         this: TProperties & DisposableLike,
@@ -727,10 +722,9 @@ export const switchAll: SwitchAllObservable = /*@__PURE__*/ (<T>() => {
     ),
     mixWith(disposableMixin, typedObserverMixin),
     createObjectFactory<ObserverLike<ObservableLike<T>>, ObserverLike<T>>(),
-  );
-
-  return (() =>
-    liftEnumerableObservable(switchAllOperator)) as SwitchAllObservable;
+    liftEnumerableObservable,
+    returns,
+  ) as SwitchAllOperator;
 })();
 export const switchAllT: ConcatAll<ObservableLike> = {
   concatAll: switchAll,
@@ -764,13 +758,13 @@ export const subscribe: <T>(
     );
 })();
 
-interface SubscribeOn {
+interface SubscribeOnOperator {
   <T>(scheduler: SchedulerLike): Function1<
     ObservableLike<T>,
     ObservableLike<T>
   >;
 }
-export const subscribeOn: SubscribeOn =
+export const subscribeOn: SubscribeOnOperator =
   <T>(scheduler: SchedulerLike) =>
   (observable: ObservableLike<T>) =>
     // FIXME: type test for VTS
@@ -783,35 +777,35 @@ export const subscribeOn: SubscribeOn =
       ),
     );
 
-interface TakeFirstObservable {
+interface TakeFirstOperator {
   <T, C extends ObservableLike = ObservableLike>(options?: {
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
 }
-export const takeFirst: TakeFirstObservable = /*@__PURE__*/ (<T>() =>
+export const takeFirst: TakeFirstOperator = /*@__PURE__*/ (<T>() =>
   pipe(
     createTakeFirstObserver,
     createTakeFirstOperator<ObservableLike, T, TReactive>(
       liftEnumerableObservableT,
     ),
-  ) as TakeFirstObservable)();
+  ) as TakeFirstOperator)();
 export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
 
-interface TakeLastObservable {
+interface TakeLastOperator {
   <T, C extends ObservableLike = ObservableLike>(options?: {
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
 }
-export const takeLast: TakeLastObservable = /*@__PURE__*/ (<T>() =>
+export const takeLast: TakeLastOperator = /*@__PURE__*/ (<T>() =>
   pipe(
     createTakeLastObserver(arrayToObservable()),
     createTakeLastOperator<ObservableLike, T, TReactive>(
       liftEnumerableObservableT,
     ),
-  ) as TakeLastObservable)();
+  ) as TakeLastOperator)();
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 
-interface TakeUntilObservable {
+interface TakeUntilOperator {
   <C extends RunnableObservableLike<T>, T>(
     notifier: RunnableObservableLike | EnumerableObservableLike,
   ): Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
@@ -823,9 +817,7 @@ interface TakeUntilObservable {
     ObservableLike<T>
   >;
 }
-export const takeUntil: TakeUntilObservable = (<T>(
-  notifier: ObservableLike,
-) => {
+export const takeUntil: TakeUntilOperator = (<T>(notifier: ObservableLike) => {
   const operator = (delegate: ObserverLike<T>) =>
     pipe(
       createDelegatingObserver(delegate),
@@ -833,12 +825,12 @@ export const takeUntil: TakeUntilObservable = (<T>(
       bindTo(pipe(notifier, takeFirst<T>(), subscribe(getScheduler(delegate)))),
     );
 
-  return notifier[ObservableLike_observableType] === 0
-    ? liftHotObservable(operator)
+  return getObservableType(notifier) === 0
+    ? liftObservable(operator)
     : liftRunnableObservable(operator);
-}) as TakeUntilObservable;
+}) as TakeUntilOperator;
 
-interface TakeWhileObservable {
+interface TakeWhileOperator {
   <T, C extends ObservableLike = ObservableLike>(
     predicate: Predicate<T>,
     options?: {
@@ -846,27 +838,27 @@ interface TakeWhileObservable {
     },
   ): ContainerOperator<C, T, T>;
 }
-export const takeWhile: TakeWhileObservable = /*@__PURE__*/ (<T>() =>
+export const takeWhile: TakeWhileOperator = /*@__PURE__*/ (<T>() =>
   pipe(
     createTakeWhileObserver,
     createTakeWhileOperator<ObservableLike, T, TReactive>(
       liftEnumerableObservableT,
     ),
-  ) as TakeWhileObservable)();
+  ) as TakeWhileOperator)();
 export const takeWhileT: TakeWhile<ObservableLike> = { takeWhile };
 
-interface ThrowIfEmptyObservable {
+interface ThrowIfEmptyOpreator {
   <T, C extends ObservableLike = ObservableLike>(
     factory: Factory<unknown>,
   ): ContainerOperator<C, T, T>;
 }
-export const throwIfEmpty: ThrowIfEmptyObservable = /*@__PURE__*/ (<T>() =>
+export const throwIfEmpty: ThrowIfEmptyOpreator = /*@__PURE__*/ (<T>() =>
   pipe(
     createThrowIfEmptyObserver,
     createThrowIfEmptyOperator<ObservableLike, T, TReactive>(
       liftEnumerableObservableT,
     ),
-  ) as ThrowIfEmptyObservable)();
+  ) as ThrowIfEmptyOpreator)();
 export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {
   throwIfEmpty,
 };

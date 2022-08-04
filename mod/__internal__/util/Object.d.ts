@@ -4,12 +4,16 @@ declare const Object_properties: unique symbol;
 declare const Object_prototype: unique symbol;
 declare type UnknownObject = Record<string | symbol | number, unknown>;
 declare type EmptyObject = Record<string | symbol | number, never>;
-declare type PropertyTypeOf<T extends any[]> = T extends [
+declare type PropertyTypeOf<T extends unknown[]> = T extends [
+    infer F
+] ? F extends {
+    [Object_properties]: unknown;
+} ? F[typeof Object_properties] : never : T extends [
     infer F,
     ...infer R
-] ? (F extends {
-    [Object_properties]: unknown;
-} ? F[typeof Object_properties] : never) & PropertyTypeOf<R> : unknown;
+] ? PropertyTypeOf<[
+    F
+]> & PropertyTypeOf<R> : never;
 declare type OptionalProps<T> = T extends object ? {
     [P in keyof T]: T[P] extends object ? Option<T[P]> : T[P];
 } : T;

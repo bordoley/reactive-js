@@ -104,11 +104,11 @@ interface BindNodeCallback {
   ): Function5<A1, A2, A3, A4, A5, ObservableLike<void>>;
 }
 export const bindNodeCallback: BindNodeCallback = <T>(
-  callback: (...args: readonly any[]) => any,
+  callback: (...args: readonly any[]) => unknown,
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {
     return createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {
-      const handler = (cause: unknown, arg: any) => {
+      const handler = (cause: unknown, arg: unknown) => {
         if (cause) {
           pipe(dispatcher, dispose({ cause }));
         } else {
