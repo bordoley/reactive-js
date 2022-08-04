@@ -41,13 +41,15 @@ export const toScheduler = /*@__PURE__*/ (() => {
   const createSchedulerInstance = pipe(
     clazz(
       function PrioritySchedulerDelegatingScheduler(
-        this: TProperties,
+        this: TProperties & SchedulerLike,
         scheduler: PrioritySchedulerLike,
         priority: number,
-      ) {
+      ): SchedulerLike {
         init(disposableMixin, this);
         this.priorityScheduler = scheduler;
         this.priority = priority;
+
+        return this;
       },
       {
         priorityScheduler: none,

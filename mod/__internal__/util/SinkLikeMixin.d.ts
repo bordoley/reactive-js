@@ -4,7 +4,7 @@ import { SinkLike, DisposableLike_exception, Exception, DisposableLike_isDispose
 import { Class1, Class2, Class3 } from "./Object.mjs";
 declare const createSink: <T>() => SinkLike<T>;
 declare const DelegatingSink_delegate: unique symbol;
-declare const delegatingSinkMixin: <T>() => Class1<{
+declare const delegatingSinkMixin: <T>() => Class1<SinkLike<T>, SinkLike<T>, {
     [DelegatingSink_delegate]: SinkLike<T>;
     [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
@@ -12,122 +12,122 @@ declare const delegatingSinkMixin: <T>() => Class1<{
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, SinkLike<T>>;
+}>;
 declare const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T>;
-declare const bufferSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<readonly T[]>, T>(fromArray: (v: readonly T[][]) => C) => Class2<{
+declare const bufferSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<readonly T[]>, T>(fromArray: (v: readonly T[][]) => C) => Class2<TSink, number, SinkLike<T>, {
     [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
 }, {
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, TSink, number>;
-declare const decodeWithCharsetSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<string>>(fromArray: (v: readonly string[]) => C) => Class2<{
+}>;
+declare const decodeWithCharsetSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<string>>(fromArray: (v: readonly string[]) => C) => Class2<SinkLike<string>, string, SinkLike<ArrayBuffer>, {
     [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
 }, {
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: ArrayBuffer): void;
-}, SinkLike<string>, string>;
-declare const distinctUntilChangedSinkMixin: <T>() => Class2<{
+}>;
+declare const distinctUntilChangedSinkMixin: <T>() => Class2<SinkLike<T>, Equality<T>, SinkLike<T>, {
     readonly [DisposableLike_isDisposed]: boolean;
 }, {
     get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, SinkLike<T>, Equality<T>>;
-declare const forEachSinkMixin: <T>() => Class2<{
+}>;
+declare const forEachSinkMixin: <T>() => Class2<SinkLike<T>, SideEffect1<T>, SinkLike<T>, {
     readonly [DisposableLike_isDisposed]: boolean;
 }, {
     get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, SinkLike<T>, SideEffect1<T>>;
-declare const keepSinkMixin: <T>() => Class2<{
+}>;
+declare const keepSinkMixin: <T>() => Class2<SinkLike<T>, Predicate<T>, SinkLike<T>, {
     readonly [DisposableLike_isDisposed]: boolean;
 }, {
     get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, SinkLike<T>, Predicate<T>>;
-declare const mapSinkMixin: <TA, TB>() => Class2<{
+}>;
+declare const mapSinkMixin: <TA, TB>() => Class2<SinkLike<TB>, Function1<TA, TB>, SinkLike<TA>, {
     readonly [DisposableLike_isDisposed]: boolean;
 }, {
     get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: TA): void;
-}, SinkLike<TB>, Function1<TA, TB>>;
-declare const pairwiseSinkMixin: <T>() => Class1<{
-    readonly [DisposableLike_isDisposed]: boolean;
-}, {
-    get [DisposableLike_exception](): Option<Exception>;
-    [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-    [DisposableLike_dispose](error?: Exception): void;
-    [SinkLike_notify](next: T): void;
-}, SinkLike<readonly [
+}>;
+declare const pairwiseSinkMixin: <T>() => Class1<SinkLike<readonly [
     T,
     T
-]>>;
-declare const reduceSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<TAcc>, T, TAcc>(fromArray: (v: readonly TAcc[]) => C) => Class3<{
+]>, SinkLike<T>, {
+    readonly [DisposableLike_isDisposed]: boolean;
+}, {
+    get [DisposableLike_exception](): Option<Exception>;
+    [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
+    [DisposableLike_dispose](error?: Exception): void;
+    [SinkLike_notify](next: T): void;
+}>;
+declare const reduceSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<TAcc>, T, TAcc>(fromArray: (v: readonly TAcc[]) => C) => Class3<TSink, Reducer<T, TAcc>, Factory<TAcc>, SinkLike<T>, {
     [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
 }, {
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, TSink, Reducer<T, TAcc>, Factory<TAcc>>;
-declare const scanSinkMixin: <T, TAcc>() => Class3<{
+}>;
+declare const scanSinkMixin: <T, TAcc>() => Class3<SinkLike<TAcc>, Reducer<T, TAcc>, Factory<TAcc>, SinkLike<T>, {
     readonly [DisposableLike_isDisposed]: boolean;
 }, {
     get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, SinkLike<TAcc>, Reducer<T, TAcc>, Factory<TAcc>>;
-declare const skipFirstSinkMixin: <T>() => Class2<{
+}>;
+declare const skipFirstSinkMixin: <T>() => Class2<SinkLike<T>, number, SinkLike<T>, {
     readonly [DisposableLike_isDisposed]: boolean;
 }, {
     get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, SinkLike<T>, number>;
-declare const takeFirstSinkMixin: <T>() => Class2<{
+}>;
+declare const takeFirstSinkMixin: <T>() => Class2<SinkLike<T>, number, SinkLike<T>, {
     readonly [DisposableLike_isDisposed]: boolean;
 }, {
     get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, SinkLike<T>, number>;
+}>;
 declare const TakeLastSink_last: unique symbol;
-declare const takeLastSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(fromArray: (v: readonly T[]) => C) => Class2<{
+declare const takeLastSinkMixin: <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(fromArray: (v: readonly T[]) => C) => Class2<TSink, number, SinkLike<T>, {
     [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
 }, {
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, TSink, number>;
-declare const takeWhileSinkMixin: <T>() => Class3<{
+}>;
+declare const takeWhileSinkMixin: <T>() => Class3<SinkLike<T>, Predicate<T>, boolean, SinkLike<T>, {
     readonly [DisposableLike_isDisposed]: boolean;
 }, {
     get [DisposableLike_exception](): Option<Exception>;
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, SinkLike<T>, Predicate<T>, boolean>;
-declare const throwIfEmptySinkMixin: <T>() => Class2<{
+}>;
+declare const throwIfEmptySinkMixin: <T>() => Class2<SinkLike<T>, Factory<unknown>, SinkLike<T>, {
     [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
 }, {
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
-}, SinkLike<T>, Factory<unknown>>;
+}>;
 export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

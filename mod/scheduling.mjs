@@ -58,6 +58,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
     const createHostSchedulerInstance = pipe(clazz(function HostScheduler(yieldInterval) {
         init(disposableMixin, this);
         this.yieldInterval = yieldInterval;
+        return this;
     }, {
         [SchedulerLike_inContinuation]: false,
         startTime: 0,
@@ -120,6 +121,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         init(disposableMixin, this);
         this.maxMicroTaskTicks = maxMicroTaskTicks;
         this.taskQueue = createPriorityQueue(comparator);
+        return this;
     }, {
         [SchedulerLike_inContinuation]: false,
         [SchedulerLike_now]: 0,

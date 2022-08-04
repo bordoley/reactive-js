@@ -5,9 +5,7 @@ const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
 const Object_prototype = Symbol("Object_prototype");
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
-const initUnsafe = (clazz, self, ...args) => {
-    clazz[Object_init].call(self, ...args);
-};
+const initUnsafe = (clazz, self, ...args) => clazz[Object_init].call(self, ...args);
 const init = initUnsafe;
 const createObjectFactory = () => (clazz) => {
     const propertyDescription = getOwnPropertyDescriptors(clazz[Object_properties]);
@@ -28,8 +26,7 @@ const createObjectFactory = () => (clazz) => {
     const prototype = createObject(objectPrototype, prototypeDescription);
     return (...args) => {
         const instance = createObject(prototype, propertyDescription);
-        initUnsafe(clazz, instance, ...args);
-        return instance;
+        return initUnsafe(clazz, instance, ...args);
     };
 };
 const mixWith = (...mixins) => (lastTMixin) => {

@@ -687,9 +687,9 @@ export const switchAll: SwitchAllOperator = /*@__PURE__*/ (<T>() => {
   return pipe(
     clazz(
       function SwitchAllObserver(
-        this: TProperties & DisposableLike,
+        this: TProperties & ObserverLike<ObservableLike<T>>,
         delegate: ObserverLike<T>,
-      ) {
+      ): ObserverLike<ObservableLike<T>> {
         init(disposableMixin, this);
         init(typedObserverMixin, this, getScheduler(delegate));
 
@@ -697,6 +697,8 @@ export const switchAll: SwitchAllOperator = /*@__PURE__*/ (<T>() => {
         this.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
 
         pipe(this, addTo(delegate), onComplete(onDispose));
+
+        return this;
       },
       {
         currentRef: none,
@@ -737,9 +739,14 @@ export const subscribe: <T>(
 
   const createObserver = pipe(
     clazz(
-      function SubscribeObserver(this, scheduler: SchedulerLike) {
+      function SubscribeObserver(
+        this: ObserverLike<T>,
+        scheduler: SchedulerLike,
+      ): ObserverLike<T> {
         init(disposableMixin, this);
         init(typedObserverMixin, this, scheduler);
+
+        return this;
       },
       {},
       {
@@ -747,9 +754,9 @@ export const subscribe: <T>(
       },
     ),
     mixWith(disposableMixin, typedObserverMixin),
-    createObjectFactory<ObserverLike, SchedulerLike>(),
+    createObjectFactory<ObserverLike<T>, SchedulerLike>(),
   );
-  return (scheduler: SchedulerLike) => observable =>
+  return (scheduler: SchedulerLike) => (observable: ObservableLike<T>) =>
     pipe(
       scheduler,
       createObserver,

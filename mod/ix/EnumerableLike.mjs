@@ -23,6 +23,7 @@ const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
     const DelegatingEnumerator_private_delegate = Symbol("DelegatingEnumerator_private_delegate");
     return pipe(clazz(function DelegatingEnumerator(delegate) {
         this[DelegatingEnumerator_private_delegate] = delegate;
+        return this;
     }, {
         [DelegatingEnumerator_private_delegate]: none,
     }, {
@@ -75,6 +76,7 @@ const buffer = /*@__PURE__*/ (() => {
         this.delegate = delegate;
         this.maxBufferSize = maxBufferSize;
         pipe(this, add(delegate));
+        return this;
     }, {
         delegate: none,
         maxBufferSize: 0,
@@ -108,6 +110,7 @@ const concatAll =
         init(typedEnumerator, this);
         this.delegate = delegate;
         pipe(this, add(delegate));
+        return this;
     }, {
         delegate: none,
     }, {
@@ -147,6 +150,7 @@ const distinctUntilChanged =
         init(delegatingDisposableMixin, this, delegate);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.equality = equality;
+        return this;
     }, { equality: none }, {
         [SourceLike_move]() {
             const hadCurrent = hasCurrent(this);
@@ -174,6 +178,7 @@ const forEach = /*@__PURE__*/ (() => {
         init(delegatingDisposableMixin, this, delegate);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.effect = effect;
+        return this;
     }, { effect: none }, {
         [SourceLike_move]() {
             if (delegatingEnumeratorMove(this)) {
@@ -194,6 +199,7 @@ const keep = /*@__PURE__*/ (() => {
         init(delegatingDisposableMixin, this, delegate);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.predicate = predicate;
+        return this;
     }, { predicate: none }, {
         [SourceLike_move]() {
             const { predicate } = this;
@@ -217,6 +223,7 @@ const map = /*@__PURE__*/ (() => {
         init(typedEnumerator, this);
         this.delegate = delegate;
         this.mapper = mapper;
+        return this;
     }, {
         mapper: none,
         delegate: none,
@@ -241,6 +248,7 @@ const pairwise = /*@__PURE__*/ (() => {
         init(delegatingDisposableMixin, this, delegate);
         init(typedEnumerator, this);
         this.delegate = delegate;
+        return this;
     }, {}, {
         [SourceLike_move]() {
             const { delegate } = this;
@@ -267,6 +275,7 @@ const repeat = /*@__PURE__*/ (() => {
         init(disposableMixin, this);
         this.src = src;
         this.shouldRepeat = shouldRepeat;
+        return this;
     }, {
         count: 0,
         enumerator: none,
@@ -327,6 +336,7 @@ const scan = /*@__PURE__*/ (() => {
         catch (cause) {
             pipe(this, dispose({ cause }));
         }
+        return this;
     }, { reducer: none, delegate: none }, {
         [SourceLike_move]() {
             const acc = hasCurrent(this) ? getCurrent(this) : none;
@@ -353,6 +363,7 @@ const skipFirst =
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.skipCount = skipCount;
         this.count = 0;
+        return this;
     }, {
         skipCount: 0,
         count: 0,
@@ -379,6 +390,7 @@ const takeFirst =
         init(delegatingDisposableMixin, this, delegate);
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.maxCount = maxCount;
+        return this;
     }, {
         maxCount: 0,
         count: 0,
@@ -407,6 +419,7 @@ const takeLast = /*@__PURE__*/ (() => {
         this.maxCount = maxCount;
         this.isStarted = false;
         pipe(this, add(delegate));
+        return this;
     }, {
         maxCount: 0,
         isStarted: false,
@@ -439,6 +452,7 @@ const takeWhile =
         init(typedDelegatingEnumeratorMixin, this, delegate);
         this.predicate = predicate;
         this.inclusive = inclusive;
+        return this;
     }, {
         predicate: none,
         inclusive: false,
@@ -490,6 +504,7 @@ const throwIfEmpty =
             }
             pipe(this, dispose(error));
         }));
+        return this;
     }, {
         isEmpty: true,
     }, {
@@ -582,6 +597,7 @@ const zip = /*@__PURE__*/ (() => {
         init(disposableMixin, this);
         init(typedEnumerator, this);
         this.enumerators = enumerators;
+        return this;
     }, {
         enumerators: none,
     }, {
