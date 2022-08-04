@@ -43,7 +43,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
 import {
@@ -681,45 +681,49 @@ export const switchAll: SwitchAllOperator = /*@__PURE__*/ (<T>() => {
   }
 
   return pipe(
-    clazz(
-      __extends(disposableMixin, typedObserverMixin),
-      function SwitchAllObserver(
-        this: TProperties & ObserverLike<ObservableLike<T>>,
-        delegate: ObserverLike<T>,
-      ) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, getScheduler(delegate));
-
-        this.delegate = delegate;
-        this.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
-
-        pipe(this, addTo(delegate), onComplete(onDispose));
-
-        return this;
-      },
-      {
-        currentRef: none,
-        delegate: none,
-      },
-      {
-        [SinkLike_notify](
-          this: TProperties & ObserverLike<T> & DisposableRefLike,
-          next: ObservableLike<T>,
+    createInstanceFactory(
+      clazz(
+        __extends(disposableMixin, typedObserverMixin),
+        function SwitchAllObserver(
+          this: TProperties & ObserverLike<ObservableLike<T>>,
+          delegate: ObserverLike<T>,
         ) {
-          this.currentRef[MutableRefLike_current] = pipe(
-            next,
-            forEach<T>(notifySink(this.delegate)),
-            subscribe(getScheduler(this)),
-            onComplete(() => {
-              if (isDisposed(this)) {
-                pipe(this.delegate, dispose());
-              }
-            }),
+          init(disposableMixin, this);
+          init(typedObserverMixin, this, getScheduler(delegate));
+
+          this.delegate = delegate;
+          this.currentRef = pipe(
+            createDisposableRef(disposed),
+            addTo(delegate),
           );
+
+          pipe(this, addTo(delegate), onComplete(onDispose));
+
+          return this;
         },
-      },
+        {
+          currentRef: none,
+          delegate: none,
+        },
+        {
+          [SinkLike_notify](
+            this: TProperties & ObserverLike<T> & DisposableRefLike,
+            next: ObservableLike<T>,
+          ) {
+            this.currentRef[MutableRefLike_current] = pipe(
+              next,
+              forEach<T>(notifySink(this.delegate)),
+              subscribe(getScheduler(this)),
+              onComplete(() => {
+                if (isDisposed(this)) {
+                  pipe(this.delegate, dispose());
+                }
+              }),
+            );
+          },
+        },
+      ),
     ),
-    createObjectFactory<ObserverLike<ObservableLike<T>>, ObserverLike<T>>(),
     liftEnumerableObservable,
     returns,
   ) as SwitchAllOperator;
@@ -733,7 +737,7 @@ export const subscribe: <T>(
 ) => Function1<ObservableLike<T>, DisposableLike> = /*@__PURE__*/ (<T>() => {
   const typedObserverMixin = observerMixin<T>();
 
-  const createObserver = pipe(
+  const createObserver = createInstanceFactory(
     clazz(
       __extends(disposableMixin, typedObserverMixin),
       function SubscribeObserver(
@@ -750,7 +754,6 @@ export const subscribe: <T>(
         [SinkLike_notify](_: T) {},
       },
     ),
-    createObjectFactory<ObserverLike<T>, SchedulerLike>(),
   );
   return (scheduler: SchedulerLike) => (observable: ObservableLike<T>) =>
     pipe(

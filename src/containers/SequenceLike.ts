@@ -8,7 +8,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
 import {
@@ -415,7 +415,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       seq: SequenceLike<T>;
     };
 
-    const createSequenceEnumerator = pipe(
+    const createSequenceEnumerator = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function SequenceEnumerator(
@@ -445,7 +445,6 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
           },
         },
       ),
-      createObjectFactory<EnumeratorLike<T>, SequenceLike<T>>(),
     );
 
     return () => (seq: SequenceLike<T>) =>

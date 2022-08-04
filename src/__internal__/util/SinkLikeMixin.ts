@@ -41,14 +41,14 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "./Object";
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 
 export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
-  pipe(
+  createInstanceFactory(
     clazz(
       __extends(disposableMixin),
       function CreateSink(
@@ -62,7 +62,6 @@ export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
         [SinkLike_notify](_: T) {},
       },
     ),
-    createObjectFactory<SinkLike<T>>(),
   ))();
 
 export const DelegatingSink_delegate = Symbol("DelegatingSink_delegate");
@@ -123,10 +122,7 @@ export const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T> =
   /*@__PURE__*/ (<T>() => {
     const typeDelegatingSinkMixin = delegatingSinkMixin<T>();
 
-    return pipe(
-      typeDelegatingSinkMixin,
-      createObjectFactory<SinkLike<T>, SinkLike<T>>(),
-    );
+    return createInstanceFactory(typeDelegatingSinkMixin);
   })();
 
 export const bufferSinkMixin: <

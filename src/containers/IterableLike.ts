@@ -7,7 +7,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
 import { IterableLike, ToIterable } from "../containers";
@@ -32,7 +32,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
       iterator: Iterator<T>;
     };
 
-    const createIterableEnumerator = pipe(
+    const createIterableEnumerator = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function IteratorEnumerator(
@@ -59,7 +59,6 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
           },
         },
       ),
-      createObjectFactory<EnumeratorLike<T>, Iterator<T>>(),
     );
 
     return () => (iterable: Iterable<T>) =>

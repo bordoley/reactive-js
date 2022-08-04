@@ -11,7 +11,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "./__internal__/util/Object";
 import {
@@ -169,39 +169,64 @@ const createUsing =
       )[ReactiveContainerLike_sinkInto](sink);
     });
 
-class CreateObservable<T, TObservableType extends ObservableType>
-  implements ObservableLike<T>
-{
-  public readonly [ObservableLike_observableType]: TObservableType;
-  constructor(
-    private readonly f: SideEffect1<ObserverLike<T>>,
-    type: TObservableType,
-  ) {
-    this[ObservableLike_observableType] = type;
-  }
-
-  [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
-    try {
-      this.f(observer);
-    } catch (cause) {
-      pipe(observer, dispose({ cause }));
-    }
-  }
-}
+const createObservableImpl: <T>(
+  f: SideEffect1<ObserverLike<T>>,
+  type: ObservableType,
+) => ObservableLike<T> = /*@__PURE__*/ (<T>() =>
+  createInstanceFactory(
+    clazz(
+      function CreateObservable(
+        this: {
+          f: SideEffect1<ObserverLike<T>>;
+          [ObservableLike_observableType]: ObservableType;
+        } & ObservableLike<T>,
+        f: SideEffect1<ObserverLike<T>>,
+        type: ObservableType,
+      ) {
+        this.f = f;
+        this[ObservableLike_observableType] = type;
+        return this;
+      },
+      {
+        f: none,
+        [ObservableLike_observableType]: none,
+      },
+      {
+        [ReactiveContainerLike_sinkInto](
+          this: {
+            f: SideEffect1<ObserverLike<T>>;
+          },
+          observer: ObserverLike<T>,
+        ) {
+          try {
+            this.f(observer);
+          } catch (cause) {
+            pipe(observer, dispose({ cause }));
+          }
+        },
+      },
+    ),
+  ))();
 
 export const createEnumerableObservable = /*@__PURE__*/ (() => {
   return <T>(f: SideEffect1<ObserverLike<T>>): EnumerableObservableLike<T> =>
-    newInstance(CreateObservable, f, enumerableObservableType);
+    createObservableImpl(
+      f,
+      enumerableObservableType,
+    ) as EnumerableObservableLike<T>;
 })();
 
 export const createObservable = /*@__PURE__*/ (() => {
   return <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T> =>
-    newInstance(CreateObservable, f, observableType);
+    createObservableImpl(f, observableType);
 })();
 
 export const createRunnableObservable = /*@__PURE__*/ (() => {
   return <T>(f: SideEffect1<ObserverLike<T>>): RunnableObservableLike<T> =>
-    newInstance(CreateObservable, f, runnableObservableType);
+    createObservableImpl(
+      f,
+      runnableObservableType,
+    ) as RunnableObservableLike<T>;
 })();
 
 export const createObservableUsing: Using<ObservableLike>["using"] =
@@ -210,23 +235,40 @@ export const createObservableUsingT: Using<ObservableLike> = {
   using: createObservableUsing,
 };
 
-export const createRunnable = /*@__PURE__*/ (() => {
-  class Runnable<T> implements RunnableLike<T> {
-    constructor(private readonly _run: SideEffect1<SinkLike<T>>) {}
-
-    [ReactiveContainerLike_sinkInto](sink: SinkLike<T>) {
-      try {
-        this._run(sink);
-        pipe(sink, dispose());
-      } catch (cause) {
-        pipe(sink, dispose({ cause }));
-      }
-    }
-  }
-
-  return <T>(run: SideEffect1<SinkLike<T>>): RunnableLike<T> =>
-    newInstance(Runnable, run);
-})();
+export const createRunnable: <T>(
+  run: SideEffect1<SinkLike<T>>,
+) => RunnableLike<T> = /*@__PURE__*/ (<T>() =>
+  createInstanceFactory(
+    clazz(
+      function Runnable(
+        this: {
+          run: SideEffect1<SinkLike<T>>;
+        } & RunnableLike<T>,
+        run: SideEffect1<SinkLike<T>>,
+      ) {
+        this.run = run;
+        return this;
+      },
+      {
+        run: none,
+      },
+      {
+        [ReactiveContainerLike_sinkInto](
+          this: {
+            run: SideEffect1<SinkLike<T>>;
+          },
+          sink: SinkLike<T>,
+        ) {
+          try {
+            this.run(sink);
+            pipe(sink, dispose());
+          } catch (cause) {
+            pipe(sink, dispose({ cause }));
+          }
+        },
+      },
+    ),
+  ))();
 
 export const createRunnableUsing: Using<RunnableLike>["using"] =
   /*@__PURE__*/ createUsing(createRunnable);
@@ -243,7 +285,7 @@ export const createSubject: <T>(options?: {
     replayed: Array<T>;
   } & PropertyTypeOf<[typeof disposableMixin]>;
 
-  const createSubjectInstance = pipe(
+  const createSubjectInstance = createInstanceFactory(
     clazz(
       __extends(disposableMixin),
       function Subject(this: TProperties & SubjectLike<T>, replay: number) {
@@ -315,7 +357,6 @@ export const createSubject: <T>(options?: {
         },
       },
     ),
-    createObjectFactory<SubjectLike<T>, number>(),
   );
 
   return (options?: { replay?: number }): SubjectLike<T> => {

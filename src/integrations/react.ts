@@ -24,7 +24,7 @@ import {
   PropertyTypeOf,
   __extends,
   clazz,
-  createObjectFactory,
+  createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
 import {
@@ -135,7 +135,7 @@ export const createComponent = <TProps>(
   return ObservableComponent;
 };
 
-const createReactPriorityScheduler = /*@__PURE__*/ pipe(
+const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(
   clazz(
     __extends(disposableMixin),
     function ReactPriorityScheduler(
@@ -205,7 +205,6 @@ const createReactPriorityScheduler = /*@__PURE__*/ pipe(
       },
     },
   ),
-  createObjectFactory<PrioritySchedulerLike>(),
 );
 
 const createReactSchedulerFactory =

@@ -8,8 +8,8 @@ import { isDisposed, dispose, addIgnoringChildErrors } from '../__internal__/uti
 import { disposableMixin, disposableRefMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { clazz, __extends, init, createObjectFactory } from '../__internal__/util/Object.mjs';
-import { none, pipe, isSome, isNone, raise, newInstance, max } from '../functions.mjs';
+import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
+import { none, isSome, pipe, isNone, raise, newInstance, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
@@ -26,7 +26,7 @@ class YieldError {
 }
 let currentScheduler = none;
 const createContinuation = /*@__PURE__*/ (() => {
-    return pipe(clazz(__extends(disposableMixin), function Continuation(scheduler, f) {
+    return createInstanceFactory(clazz(__extends(disposableMixin), function Continuation(scheduler, f) {
         init(disposableMixin, this);
         this.scheduler = scheduler;
         this.f = f;
@@ -62,7 +62,7 @@ const createContinuation = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }), createObjectFactory());
+    }));
 })();
 const __yield = (options) => {
     const delay = getDelay(options);
@@ -161,7 +161,7 @@ const createQueueScheduler =
     };
     const typedDisposableRefMixin = disposableRefMixin();
     const typedEnumeratorMixin = enumeratorMixin();
-    return pipe(clazz(__extends(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(host) {
+    return createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(host) {
         init(disposableMixin, this);
         init(typedEnumeratorMixin, this);
         init(typedDisposableRefMixin, this, disposed);
@@ -244,7 +244,7 @@ const createQueueScheduler =
                 scheduleOnHost(this);
             }
         },
-    }), createObjectFactory());
+    }));
 })();
 const toPausableScheduler = createQueueScheduler;
 const toPriorityScheduler = createQueueScheduler;
