@@ -325,7 +325,7 @@ export const distinctUntilChangedSinkMixin: <T>() => Class2<
   type TProperties = {
     [Sink_private_delegate]: SinkLike<T>;
     [DistinctUntilChangedSink_private_equality]: Equality<T>;
-    [DistinctUntilChangedSink_private_prev]: Option<T>;
+    [DistinctUntilChangedSink_private_prev]: T;
     [DistinctUntilChangedSink_private_hasValue]: boolean;
   } & PropertyTypeOf<[typeof delegatingDisposableMixin]>;
 
@@ -351,7 +351,7 @@ export const distinctUntilChangedSinkMixin: <T>() => Class2<
           const shouldEmit =
             !this[DistinctUntilChangedSink_private_hasValue] ||
             !this[DistinctUntilChangedSink_private_equality](
-              this[DistinctUntilChangedSink_private_prev] as T,
+              this[DistinctUntilChangedSink_private_prev],
               next,
             );
 

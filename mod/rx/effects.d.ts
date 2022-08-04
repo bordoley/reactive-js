@@ -1,12 +1,12 @@
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, Option, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Equality, Updater } from "../functions.mjs";
-import { HotObservableLike, ObservableLike } from "../rx.mjs";
+import { ObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
 import { StreamLike, StreamableLike } from "../streaming.mjs";
 import { DisposableLike } from "../util.mjs";
 declare type EffectsMode = "batched" | "combine-latest";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: EffectsMode | undefined;
-}) => HotObservableLike<T>;
+}) => ObservableLike<T>;
 declare function __memo<T>(fn: Factory<T>): T;
 declare function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
 declare function __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;

@@ -8,7 +8,7 @@ import {
   none,
   pipe,
 } from "../functions";
-import { ObservableLike, createHotObservable, deferHotObservable } from "../rx";
+import { ObservableLike, createObservable, deferObservable } from "../rx";
 import { sinkInto } from "../rx/ReactiveContainerLike";
 import { SchedulerLike } from "../scheduling";
 import { dispatch } from "../scheduling/DispatcherLike";
@@ -76,13 +76,13 @@ export const createEventSource = (
   );
   const requestURL = url instanceof URL ? url.toString() : url;
 
-  return createHotObservable(observer => {
+  return createObservable(observer => {
     const dispatcher = pipe(
       observer,
       getDispatcher,
       onDisposed(_ => {
         for (const ev of events) {
-          eventSource.removeEventListener(ev, listener as EventListener);
+          eventSource.removeEventListener(ev, listener);
         }
         eventSource.close();
       }),
@@ -101,7 +101,7 @@ export const createEventSource = (
     };
 
     for (const ev of events) {
-      eventSource.addEventListener(ev, listener as EventListener);
+      eventSource.addEventListener(ev, listener);
     }
   });
 };
@@ -112,7 +112,7 @@ export const fetch =
     onResponse: Function1<Response, Promise<T> | ObservableLike<T>>,
   ): Function1<FetchRequest | string, ObservableLike<T>> =>
   fetchRequest =>
-    deferHotObservable(() => async observer => {
+    deferObservable(() => async observer => {
       const signal = toAbortSignal(observer);
 
       let request: Option<string | Request> = none;
@@ -145,7 +145,7 @@ export const addEventListener =
     selector: Function1<Event, T>,
   ): Function1<EventTarget, ObservableLike<T>> =>
   target =>
-    createHotObservable(observer => {
+    createObservable(observer => {
       const dispatcher = pipe(
         observer,
         getDispatcher,

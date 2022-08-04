@@ -1,8 +1,12 @@
 import { ignoreElements } from "../containers/ContainerLike";
 import { Function1, pipe } from "../functions";
-import { HotObservableLike } from "../rx";
-import { keepT } from "../rx/HotObservableLike";
-import { forEach, merge, onSubscribe, subscribe } from "../rx/ObservableLike";
+import {
+  forEach,
+  keepT,
+  merge,
+  onSubscribe,
+  subscribe,
+} from "../rx/ObservableLike";
 import { DispatcherLike_scheduler, SchedulerLike } from "../scheduling";
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import {
@@ -30,15 +34,11 @@ export const sinkInto =
       merge(
         pipe(
           srcStream,
-          forEach<HotObservableLike, T>(dispatchTo(dest)),
+          forEach<T>(dispatchTo(dest)),
           ignoreElements(keepT),
-          onSubscribe<HotObservableLike, unknown>(() => dest),
+          onSubscribe<unknown>(() => dest),
         ),
-        pipe(
-          dest,
-          forEach<HotObservableLike, TReq>(dispatchTo(srcStream)),
-          ignoreElements(keepT),
-        ),
+        pipe(dest, forEach<TReq>(dispatchTo(srcStream)), ignoreElements(keepT)),
       ),
       ignoreElements(keepT),
       subscribe(scheduler),

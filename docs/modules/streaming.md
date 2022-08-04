@@ -91,7 +91,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
 
 #### Returns
 
@@ -110,8 +110,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
 
 #### Returns
 
@@ -131,9 +131,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
 
 #### Returns
 
@@ -154,10 +154,10 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
 
 #### Returns
 
@@ -179,11 +179,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
 
 #### Returns
 
@@ -206,12 +206,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
 
 #### Returns
 
@@ -235,13 +235,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
 
 #### Returns
 
@@ -266,14 +266,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
 
 #### Returns
 
@@ -299,15 +299,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
-| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
 
 #### Returns
 
@@ -334,16 +334,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
-| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `H`, `I`\> |
-| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
 
 #### Returns
 
@@ -371,17 +371,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
-| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `H`, `I`\> |
-| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `I`, `J`\> |
-| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `J`, `K`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `J`, `K`\> |
 
 #### Returns
 
@@ -410,18 +410,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
-| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `H`, `I`\> |
-| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `I`, `J`\> |
-| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `J`, `K`\> |
-| `op12` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `K`, `L`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowMode`](streaming.md#flowmode), `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `J`, `K`\> |
+| `op12` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `K`, `L`\> |
 
 #### Returns
 
@@ -444,7 +444,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
 
 #### Returns
 
@@ -464,8 +464,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
 
 #### Returns
 
@@ -486,9 +486,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
 
 #### Returns
 
@@ -510,10 +510,10 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
 
 #### Returns
 
@@ -536,11 +536,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
 
 #### Returns
 
@@ -564,12 +564,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
 
 #### Returns
 
@@ -594,13 +594,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
 
 #### Returns
 
@@ -626,14 +626,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
 
 #### Returns
 
@@ -660,15 +660,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
-| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
 
 #### Returns
 
@@ -696,16 +696,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
-| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `H`, `I`\> |
-| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
 
 #### Returns
 
@@ -734,17 +734,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
-| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `H`, `I`\> |
-| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `I`, `J`\> |
-| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `J`, `K`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `J`, `K`\> |
 
 #### Returns
 
@@ -774,18 +774,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `T`, `A`\> |
-| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `A`, `B`\> |
-| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `B`, `C`\> |
-| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `C`, `D`\> |
-| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `D`, `E`\> |
-| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `E`, `F`\> |
-| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `F`, `G`\> |
-| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `G`, `H`\> |
-| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `H`, `I`\> |
-| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `I`, `J`\> |
-| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `J`, `K`\> |
-| `op12` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `K`, `L`\> |
+| `op1` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `A`\> |
+| `op2` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `A`, `B`\> |
+| `op3` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `B`, `C`\> |
+| `op4` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `C`, `D`\> |
+| `op5` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `D`, `E`\> |
+| `op6` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `E`, `F`\> |
+| `op7` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `F`, `G`\> |
+| `op8` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `G`, `H`\> |
+| `op9` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `H`, `I`\> |
+| `op10` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `I`, `J`\> |
+| `op11` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `J`, `K`\> |
+| `op12` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `K`, `L`\> |
 
 #### Returns
 
@@ -836,7 +836,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`HotObservableLike`](../interfaces/rx.HotObservableLike.md)<`unknown`\>, `TReq`, `T`\> |
+| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TReq`, `T`\> |
 | `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |

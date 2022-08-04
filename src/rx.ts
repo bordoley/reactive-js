@@ -60,7 +60,7 @@ export interface RunnableLike<T = unknown>
   readonly TStatefulContainerState?: SinkLike<this["T"]>;
 }
 export type ObservableType = 0 | 1 | 2;
-export const hotObservableType: ObservableType = 0;
+export const observableType: ObservableType = 0;
 export const runnableObservableType: ObservableType = 1;
 export const enumerableObservableType: ObservableType = 2;
 
@@ -80,11 +80,6 @@ export interface ObservableLike<T = unknown>
 
   // The observable type used by the runtime to switch implementations
   readonly [ObservableLike_observableType]: ObservableType;
-}
-
-export interface HotObservableLike<T = unknown> extends ObservableLike<T> {
-  readonly TContainerOf?: HotObservableLike<this["T"]>;
-  readonly [ObservableLike_observableType]: typeof hotObservableType;
 }
 
 export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
@@ -109,7 +104,7 @@ export const MulticastObservableLike_replay = Symbol(
 );
 
 export interface MulticastObservableLike<T = unknown>
-  extends HotObservableLike<T>,
+  extends ObservableLike<T>,
     DisposableLike {
   /**
    * The number of observers currently observing.
@@ -199,9 +194,9 @@ export const createEnumerableObservable = /*@__PURE__*/ (() => {
     newInstance(CreateObservable, f, enumerableObservableType);
 })();
 
-export const createHotObservable = /*@__PURE__*/ (() => {
-  return <T>(f: SideEffect1<ObserverLike<T>>): HotObservableLike<T> =>
-    newInstance(CreateObservable, f, hotObservableType);
+export const createObservable = /*@__PURE__*/ (() => {
+  return <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T> =>
+    newInstance(CreateObservable, f, observableType);
 })();
 
 export const createRunnableObservable = /*@__PURE__*/ (() => {
@@ -209,10 +204,10 @@ export const createRunnableObservable = /*@__PURE__*/ (() => {
     newInstance(CreateObservable, f, runnableObservableType);
 })();
 
-export const createHotObservableUsing: Using<HotObservableLike>["using"] =
-  /*@__PURE__*/ createUsing(createHotObservable);
-export const createHotObservableUsingT: Using<HotObservableLike> = {
-  using: createHotObservableUsing,
+export const createObservableUsing: Using<ObservableLike>["using"] =
+  /*@__PURE__*/ createUsing(createObservable);
+export const createObservableUsingT: Using<ObservableLike> = {
+  using: createObservableUsing,
 };
 
 export const createRunnable = /*@__PURE__*/ (() => {
@@ -262,7 +257,7 @@ export const createSubject: <T>(options?: {
         replayed: none,
       },
       {
-        [ObservableLike_observableType]: 0 as typeof hotObservableType,
+        [ObservableLike_observableType]: observableType,
 
         get [MulticastObservableLike_observerCount]() {
           const self = this as unknown as TProperties;
@@ -336,11 +331,11 @@ interface DeferObservable<C extends ObservableLike> {
   ): ContainerOf<C, T>;
   <T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
-export const deferHotObservable: DeferObservable<HotObservableLike> = <T>(
+export const deferObservable: DeferObservable<ObservableLike> = <T>(
   factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
   options?: { readonly delay?: number },
-): HotObservableLike<T> =>
-  createHotObservable(observer => {
+): ObservableLike<T> =>
+  createObservable(observer => {
     const sideEffect = factory();
     if (typeof sideEffect === "function") {
       const callback = () => sideEffect(observer);
@@ -354,8 +349,8 @@ export const deferHotObservable: DeferObservable<HotObservableLike> = <T>(
       sideEffect[ReactiveContainerLike_sinkInto](observer);
     }
   });
-export const deferHotObservableT: Defer<HotObservableLike> = {
-  defer: deferHotObservable,
+export const deferObservableT: Defer<ObservableLike> = {
+  defer: deferObservable,
 };
 
 export const deferEnumerableObservable: DeferObservable<

@@ -49,7 +49,7 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`HotObservableLike`](rx.HotObservableLike.md)<`unknown`\>
+• `Optional` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
 
 #### Inherited from
 

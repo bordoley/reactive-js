@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`HotObservableLike`](rx.HotObservableLike.md)<`T`\>
+- [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
 - [`DisposableLike`](util.DisposableLike.md)
 
@@ -48,17 +48,17 @@
 
 #### Inherited from
 
-[HotObservableLike](rx.HotObservableLike.md).[T](rx.HotObservableLike.md#t)
+ObservableLike.T
 
 ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: [`HotObservableLike`](rx.HotObservableLike.md)<`unknown`\>
+• `Optional` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
 
 #### Inherited from
 
-[HotObservableLike](rx.HotObservableLike.md).[TContainerOf](rx.HotObservableLike.md#tcontainerof)
+[ObservableLike](rx.ObservableLike.md).[TContainerOf](rx.ObservableLike.md#tcontainerof)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Inherited from
 
-[HotObservableLike](rx.HotObservableLike.md).[TStatefulContainerState](rx.HotObservableLike.md#tstatefulcontainerstate)
+[ObservableLike](rx.ObservableLike.md).[TStatefulContainerState](rx.ObservableLike.md#tstatefulcontainerstate)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 #### Inherited from
 
-[HotObservableLike](rx.HotObservableLike.md).[[ObservableLike_observableType]](rx.HotObservableLike.md#[observablelike_observabletype])
+[ObservableLike](rx.ObservableLike.md).[[ObservableLike_observableType]](rx.ObservableLike.md#[observablelike_observabletype])
 
 ## Methods
 

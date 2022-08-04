@@ -1,6 +1,6 @@
 import { Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ReadonlyArrayLike } from "../containers.mjs";
-import { Function1, Factory } from "../functions.mjs";
-import { RunnableObservableLike, ObservableLike, EnumerableObservableLike, HotObservableLike } from "../rx.mjs";
+import { Factory, Function1 } from "../functions.mjs";
+import { RunnableObservableLike, ObservableLike, EnumerableObservableLike } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
 import { ToFlowable } from "../streaming.mjs";
 declare const concatT: Concat<RunnableObservableLike>;
@@ -21,7 +21,6 @@ declare const takeWhileT: TakeWhile<RunnableObservableLike>;
 declare const throwIfEmptyT: ThrowIfEmpty<RunnableObservableLike>;
 declare const toFlowable: ToFlowable<RunnableObservableLike | EnumerableObservableLike>["toFlowable"];
 declare const toFlowableT: ToFlowable<RunnableObservableLike>;
-declare const toHotObservable: <T>() => Function1<RunnableObservableLike<T>, HotObservableLike<T>>;
 interface ToReadonlyArrayObservable {
     <T>(options?: Partial<{
         readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
@@ -34,4 +33,4 @@ declare const toReadonlyArray: ToReadonlyArrayObservable;
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
-export { concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toHotObservable, toReadonlyArray, toReadonlyArrayT };
+export { concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };
