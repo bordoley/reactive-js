@@ -63,6 +63,7 @@ interface ConcatObservable {
 }
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
+ * @hidden
  */
 declare const concat: ConcatObservable;
 declare const concatT: Concat<ObservableLike>;
@@ -99,6 +100,7 @@ interface ForkMergeObservable {
     <TIn, TOut, C extends ObservableLike = ObservableLike>(fst: ContainerOperator<C, TIn, TOut>, snd: ContainerOperator<C, TIn, TOut>, ...tail: readonly ContainerOperator<C, TIn, TOut>[]): ContainerOperator<C, TIn, TOut>;
 }
 declare const forkMerge: ForkMergeObservable;
+/** @hidden */
 declare const merge: ConcatObservable;
 declare const mergeT: Concat<ObservableLike<unknown>>;
 /**

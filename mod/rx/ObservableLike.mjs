@@ -49,6 +49,7 @@ const liftEnumerableObservableT = {
 };
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
+ * @hidden
  */
 const concat = (() => {
     const createConcatObserver = (delegate, observables, next) => pipe(createDelegatingObserver(delegate), addTo(delegate), onComplete(() => {
@@ -128,6 +129,7 @@ const forkMerge = ((...ops) => (obs) => {
     const observables = pipe(ops, map$1(op => op(obs)));
     return mergeImpl(observables);
 });
+/** @hidden */
 const merge = ((...observables) => mergeImpl(observables));
 const mergeT = {
     concat: merge,
