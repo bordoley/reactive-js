@@ -7,6 +7,42 @@ const Object_prototype = Symbol("Object_prototype");
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
 const initUnsafe = (clazz, self, ...args) => clazz[Object_init].call(self, ...args);
 const init = initUnsafe;
+const __extends = (...mixins) => {
+    if (mixins.length == 1) {
+        return mixins[0];
+    }
+    else {
+        const properties = mixins
+            .map(clazz => clazz[Object_properties])
+            .reduce((acc, next) => ({ ...acc, ...next }), {});
+        const prototypeDescriptions = mixins
+            .map(clazz => getOwnPropertyDescriptors(clazz[Object_prototype]))
+            .reduce((acc, next) => ({ ...acc, ...next }), {});
+        return {
+            [Object_properties]: properties,
+            [Object_prototype]: createObject(objectPrototype, prototypeDescriptions),
+        };
+    }
+};
+const clazz = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingOrPrototype) => {
+    if (typeof initOrParent === "function") {
+        return {
+            [Object_init]: initOrParent,
+            [Object_properties]: propertiesOrInit !== null && propertiesOrInit !== void 0 ? propertiesOrInit : {},
+            [Object_prototype]: prototypeOrParent !== null && prototypeOrParent !== void 0 ? prototypeOrParent : {},
+        };
+    }
+    else {
+        const base = __extends(initOrParent, {
+            [Object_properties]: prototypeOrParent !== null && prototypeOrParent !== void 0 ? prototypeOrParent : {},
+            [Object_prototype]: nothingOrPrototype !== null && nothingOrPrototype !== void 0 ? nothingOrPrototype : {},
+        });
+        return {
+            ...base,
+            [Object_init]: propertiesOrInit,
+        };
+    }
+});
 const createObjectFactory = () => (clazz) => {
     const propertyDescription = getOwnPropertyDescriptors(clazz[Object_properties]);
     const constructorObject = __DEV__
@@ -29,23 +65,5 @@ const createObjectFactory = () => (clazz) => {
         return initUnsafe(clazz, instance, ...args);
     };
 };
-const mixWith = (...mixins) => (lastTMixin) => {
-    const properties = [...mixins, lastTMixin]
-        .map(clazz => clazz[Object_properties])
-        .reduce((acc, next) => ({ ...acc, ...next }), {});
-    const prototypeDescriptions = [...mixins, lastTMixin]
-        .map(clazz => getOwnPropertyDescriptors(clazz[Object_prototype]))
-        .reduce((acc, next) => ({ ...acc, ...next }), {});
-    return {
-        [Object_init]: lastTMixin[Object_init],
-        [Object_properties]: properties,
-        [Object_prototype]: createObject(objectPrototype, prototypeDescriptions),
-    };
-};
-const clazz = (init, properties, prototype) => ({
-    [Object_init]: init,
-    [Object_properties]: properties !== null && properties !== void 0 ? properties : {},
-    [Object_prototype]: prototype !== null && prototype !== void 0 ? prototype : {},
-});
 
-export { Object_init, Object_properties, Object_prototype, clazz, createObjectFactory, init, mixWith };
+export { Object_init, Object_properties, Object_prototype, __extends, clazz, createObjectFactory, init };

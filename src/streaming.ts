@@ -1,9 +1,9 @@
 import { delegatingDisposableMixin } from "./__internal__/util/DisposableLikeMixins";
 import {
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -116,6 +116,7 @@ export const createStream = /*@__PURE__*/ (() => {
     };
     return pipe(
       clazz(
+        __extends(delegatingDisposableMixin),
         function StreamImpl(
           this: StreamLike<TReq, T> & TProperties,
           op: ContainerOperator<ObservableLike, TReq, T>,
@@ -167,7 +168,6 @@ export const createStream = /*@__PURE__*/ (() => {
           },
         },
       ),
-      mixWith(delegatingDisposableMixin),
       createObjectFactory<
         StreamLike<TReq, T>,
         ContainerOperator<ObservableLike, TReq, T>,

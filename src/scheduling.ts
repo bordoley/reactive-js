@@ -24,10 +24,10 @@ import {
 } from "./__internal__/util/EnumeratorLikeMixin";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "./__internal__/util/Object";
 import { Option, isSome, none, pipe } from "./functions";
 import {
@@ -216,6 +216,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
 
   const createHostSchedulerInstance = pipe(
     clazz(
+      __extends(disposableMixin),
       function HostScheduler(
         this: TProperties & SchedulerLike,
         yieldInterval: number,
@@ -282,7 +283,6 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
         },
       },
     ),
-    mixWith(disposableMixin),
     createObjectFactory<SchedulerLike, number>(),
   );
 
@@ -326,6 +326,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
 
   const createVirtualTimeSchedulerInstance = pipe(
     clazz(
+      __extends(disposableMixin, typedEnumeratorMixin),
       function VirtualTimeScheduler(
         this: TProperties & VirtualTimeSchedulerLike,
         maxMicroTaskTicks: number,
@@ -417,7 +418,6 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         },
       },
     ),
-    mixWith(disposableMixin, typedEnumeratorMixin),
     createObjectFactory<VirtualTimeSchedulerLike, number>(),
   );
 

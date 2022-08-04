@@ -5,10 +5,10 @@ import {
 } from "../__internal__/util/EnumeratorLikeMixin";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "../__internal__/util/Object";
 import { IterableLike, ToIterable } from "../containers";
 import { Function1, compose, identity, none, pipe } from "../functions";
@@ -34,6 +34,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
 
     const createIterableEnumerator = pipe(
       clazz(
+        __extends(disposableMixin, typedEnumeratorMixin),
         function IteratorEnumerator(
           this: TProperties & EnumeratorLike<T>,
           iterator: Iterator<T>,
@@ -58,7 +59,6 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
           },
         },
       ),
-      mixWith(disposableMixin, typedEnumeratorMixin),
       createObjectFactory<EnumeratorLike<T>, Iterator<T>>(),
     );
 

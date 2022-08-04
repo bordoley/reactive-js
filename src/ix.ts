@@ -5,10 +5,10 @@ import {
 } from "./__internal__/util/EnumeratorLikeMixin";
 import {
   PropertyTypeOf,
+  __extends,
   clazz,
   createObjectFactory,
   init,
-  mixWith,
 } from "./__internal__/util/Object";
 import {
   Container,
@@ -123,6 +123,7 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
   const typedEnumeratorMixin = enumeratorMixin<T>();
   const f = pipe(
     clazz(
+      __extends(disposableMixin, typedEnumeratorMixin),
       function EmptyEnumerator(
         this: PropertyTypeOf<
           [typeof disposableMixin, typeof typedEnumeratorMixin]
@@ -141,7 +142,6 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
         },
       },
     ),
-    mixWith(disposableMixin, typedEnumeratorMixin),
     createObjectFactory<EnumeratorLike<T>>(),
   );
 
@@ -168,6 +168,7 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
 
     const createGenerateEnumerator = pipe(
       clazz(
+        __extends(disposableMixin, typedEnumerator),
         function GenerateEnumerator(
           this: TProperties & MutableEnumeratorLike<T>,
           f: Updater<T>,
@@ -195,7 +196,6 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
           },
         },
       ),
-      mixWith(disposableMixin, typedEnumerator),
       createObjectFactory<EnumeratorLike<T>, Updater<T>, T>(),
     );
 
