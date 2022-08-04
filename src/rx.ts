@@ -387,9 +387,9 @@ interface EmptyObservable {
   <T>(): EnumerableObservableLike<T>;
   <T>(options: { delay: number }): RunnableObservableLike<T>;
 }
-export const emptyObservable: EmptyObservable = <T>(options?: {
+export const emptyObservable: EmptyObservable = (<T>(options?: {
   delay: number;
-}): any => {
+}): ObservableLike<T> => {
   const delay = getDelay(options);
   return delay > 0
     ? createRunnableObservable<T>(sink => {
@@ -402,7 +402,7 @@ export const emptyObservable: EmptyObservable = <T>(options?: {
     : createEnumerableObservable<T>(sink => {
         pipe(sink, dispose());
       });
-};
+}) as EmptyObservable;
 
 export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
   createRunnable<T>(sink => {
@@ -434,11 +434,11 @@ interface GenerateObservable {
     },
   ): RunnableObservableLike<T>;
 }
-export const generateObservable: GenerateObservable = <T>(
+export const generateObservable: GenerateObservable = (<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
-): any => {
+): ObservableLike<T> => {
   const delay = getDelay(options);
   const { delayStart = false } = options ?? {};
 
@@ -464,7 +464,7 @@ export const generateObservable: GenerateObservable = <T>(
   return delay > 0
     ? createRunnableObservable(onSink)
     : createEnumerableObservable(onSink);
-};
+}) as GenerateObservable;
 
 export const generateRunnable: Generate<RunnableLike>["generate"] = <T>(
   generator: Updater<T>,

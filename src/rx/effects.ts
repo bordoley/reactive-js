@@ -51,7 +51,7 @@ const enum EffectContainerOf {
 type MemoEffect = {
   readonly type: EffectContainerOf.Memo;
   f: (...args: any[]) => unknown;
-  args: any[];
+  args: unknown[];
   value: unknown;
 };
 
@@ -66,7 +66,7 @@ type ObserveEffect = {
 type UsingEffect = {
   readonly type: EffectContainerOf.Using;
   f: (...args: any[]) => unknown;
-  args: any[];
+  args: unknown[];
   value: DisposableLike;
 };
 
@@ -159,7 +159,7 @@ class ObservableContext {
     }
   };
 
-  memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
+  memo<T>(f: (...args: any[]) => T, ...args: unknown[]): T {
     const effect = validateObservableEffect(this, EffectContainerOf.Memo);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
@@ -215,7 +215,10 @@ class ObservableContext {
     }
   }
 
-  using<T extends DisposableLike>(f: (...args: any[]) => T, ...args: any[]): T {
+  using<T extends DisposableLike>(
+    f: (...args: any[]) => T,
+    ...args: unknown[]
+  ): T {
     const effect = validateObservableEffect(this, EffectContainerOf.Using);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
@@ -345,7 +348,7 @@ export function __memo<TA, TB, TC, TD, TE, TF, T>(
   e: TE,
   f: TF,
 ): T;
-export function __memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
+export function __memo<T>(f: (...args: any[]) => T, ...args: unknown[]): T {
   const ctx = assertCurrentContext();
   return ctx.memo(f, ...args);
 }
@@ -355,7 +358,7 @@ export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
   return ctx.observe(observable);
 };
 
-const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
+const deferSideEffect = (f: (...args: any[]) => void, ...args: unknown[]) =>
   deferObservable(() => observer => {
     f(...args);
     pipe(observer, notify(none), dispose());
@@ -394,7 +397,7 @@ export function __do<TA, TB, TC, TD, TE, TF>(
   e: TE,
   f: TF,
 ): void;
-export function __do(f: (...args: any[]) => void, ...args: any[]): void {
+export function __do(f: (...args: any[]) => void, ...args: unknown[]): void {
   const ctx = assertCurrentContext();
 
   const scheduler = getScheduler(ctx.observer);
@@ -445,7 +448,7 @@ export function __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(
 ): T;
 export function __using<T extends DisposableLike>(
   f: (...args: any[]) => T,
-  ...args: any[]
+  ...args: unknown[]
 ): T {
   const ctx = assertCurrentContext();
   return ctx.using(f, ...args);

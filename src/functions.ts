@@ -173,7 +173,7 @@ interface CallWith {
  * and invokes it with the provided arguments, returning the result.
  */
 export const callWith: CallWith =
-  <T>(...args: readonly any[]) =>
+  <T>(...args: readonly unknown[]) =>
   (f: (...args: readonly any[]) => T) =>
     f(...args);
 
@@ -410,9 +410,9 @@ interface NewInstance {
   ): T;
 }
 export const newInstance: NewInstance = (
-  Constructor: new (...args: readonly any[]) => any,
-  ...args: readonly any[]
-): any => new Constructor(...args);
+  Constructor: new (...args: readonly any[]) => unknown,
+  ...args: readonly unknown[]
+): unknown => new Constructor(...args);
 
 /**
  * An alias for undefined.
@@ -434,9 +434,9 @@ interface Partial {
   >;
 }
 export const partial: Partial =
-  (...args: readonly any[]) =>
-  (f: (...args: readonly any[]) => any) =>
-  (arg0: any) =>
+  (...args: readonly unknown[]) =>
+  (f: (...args: readonly any[]) => unknown) =>
+  (arg0: unknown) =>
     f(arg0, ...args);
 
 /**
