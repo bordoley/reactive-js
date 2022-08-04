@@ -306,6 +306,7 @@ interface ConcatObservable {
 }
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
+ * @hidden
  */
 export const concat: ConcatObservable = (<T>() => {
   const createConcatObserver = <T>(
@@ -500,6 +501,7 @@ export const forkMerge: ForkMergeObservable = (<TIn, TOut>(
     return mergeImpl(observables);
   }) as ForkMergeObservable;
 
+/** @hidden */
 export const merge: ConcatObservable = (<T>(
   ...observables: ObservableLike<T>[]
 ) => mergeImpl(observables)) as ConcatObservable;
