@@ -6,12 +6,12 @@ declare const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<IterableLike>;
 declare const toIterable: ToIterable<IterableLike>["toIterable"];
 declare const toIterableT: ToIterable<IterableLike>;
-interface ToObservable {
+interface toObservable {
     <T>(): Function1<IterableLike<T>, EnumerableObservableLike<T>>;
     <T>(options?: {
         delay: number;
         delayStart?: boolean;
     }): Function1<IterableLike<T>, RunnableObservableLike<T>>;
 }
-declare const toObservable: ToObservable;
+declare const toObservable: toObservable;
 export { toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable };

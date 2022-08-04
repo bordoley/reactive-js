@@ -12,6 +12,8 @@
 - [StreamLike](../interfaces/streaming.StreamLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
 - [StreamableStateLike](../interfaces/streaming.StreamableStateLike.md)
+- [createLiftedFlowable](../interfaces/streaming.createLiftedFlowable.md)
+- [createLiftedStreamable](../interfaces/streaming.createLiftedStreamable.md)
 
 ### Type Aliases
 

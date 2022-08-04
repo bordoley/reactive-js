@@ -38,7 +38,7 @@ declare const throws: <C extends ContainerLike, T, O extends FromArrayOptions = 
 } & {
     fromArray<T_1>(options?: Partial<O> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 }, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Factory<unknown>, ContainerOf<C, T>>;
-interface ZipWith {
+interface zipWith {
     <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, b: ContainerOf<C, TB>): ContainerOperator<C, TA, readonly [
         TA,
         TB
@@ -100,5 +100,5 @@ interface ZipWith {
         TI
     ]>;
 }
-declare const zipWith: ZipWith;
+declare const zipWith: zipWith;
 export { compute, concatMap, concatWith, contains, encodeUtf8, endWith, fromOption, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

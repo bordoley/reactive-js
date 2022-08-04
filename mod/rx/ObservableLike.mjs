@@ -86,8 +86,7 @@ const decodeWithCharset = /*@__PURE__*/ (() => pipe(createDecodeWithCharsetObser
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
-const distinctUntilChanged = 
-/*@__PURE__*/ (() => pipe(createDistinctUntilChangedObserver, createDistinctUntilChangedOperator(liftEnumerableObservableT)))();
+const distinctUntilChanged = /*@__PURE__*/ (() => pipe(createDistinctUntilChangedObserver, createDistinctUntilChangedOperator(liftEnumerableObservableT)))();
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
