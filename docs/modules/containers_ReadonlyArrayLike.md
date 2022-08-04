@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [toObservable](../interfaces/containers_ReadonlyArrayLike.toObservable.md)
+
 ### Type Aliases
 
 - [FromArrayOptions](containers_ReadonlyArrayLike.md#fromarrayoptions)

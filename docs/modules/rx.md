@@ -13,6 +13,9 @@
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
 - [RunnableObservableLike](../interfaces/rx.RunnableObservableLike.md)
 - [SubjectLike](../interfaces/rx.SubjectLike.md)
+- [deferObservable](../interfaces/rx.deferObservable.md)
+- [emptyObservable](../interfaces/rx.emptyObservable.md)
+- [generateObservable](../interfaces/rx.generateObservable.md)
 
 ### Type Aliases
 

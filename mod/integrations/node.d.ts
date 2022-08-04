@@ -2,10 +2,10 @@ import fs from 'fs';
 import { Readable, Writable, Transform } from 'stream';
 import { BrotliOptions, ZlibOptions } from 'zlib';
 import { ContainerOperator } from "../containers.mjs";
-import { Factory, SideEffect1, SideEffect2, Function1, SideEffect3, Function2, SideEffect4, Function3, SideEffect5, Function4, SideEffect6, Function5 } from "../functions.mjs";
+import { SideEffect1, SideEffect2, Factory, Function1, SideEffect3, Function2, SideEffect4, Function3, SideEffect5, Function4, SideEffect6, Function5 } from "../functions.mjs";
 import { ObservableLike } from "../rx.mjs";
 import { FlowableLike, StreamableLike, FlowMode } from "../streaming.mjs";
-interface BindNodeCallback {
+interface bindNodeCallback {
     <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<ObservableLike<T>>;
     (callbackFunc: SideEffect1<SideEffect1<unknown>>): Factory<ObservableLike<void>>;
     <A1, T>(callbackFunc: SideEffect2<A1, SideEffect2<unknown, T>>): Function1<A1, ObservableLike<T>>;
@@ -19,7 +19,7 @@ interface BindNodeCallback {
     <A1, A2, A3, A4, A5, T>(callbackFunc: SideEffect6<A1, A2, A3, A4, A5, SideEffect2<unknown, T>>): Function5<A1, A2, A3, A4, A5, ObservableLike<T>>;
     <A1, A2, A3, A4, A5>(callbackFunc: SideEffect6<A1, A2, A3, A4, A5, SideEffect1<unknown>>): Function5<A1, A2, A3, A4, A5, ObservableLike<void>>;
 }
-declare const bindNodeCallback: BindNodeCallback;
+declare const bindNodeCallback: bindNodeCallback;
 declare const createReadableSource: (factory: Factory<Readable> | Readable) => FlowableLike<Uint8Array>;
 declare const readFile: (path: fs.PathLike, options?: {
     readonly flags?: string;

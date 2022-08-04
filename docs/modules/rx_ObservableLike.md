@@ -4,6 +4,29 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [concat](../interfaces/rx_ObservableLike.concat.md)
+- [decodeWithCharset](../interfaces/rx_ObservableLike.decodeWithCharset.md)
+- [distinctUntilChanged](../interfaces/rx_ObservableLike.distinctUntilChanged.md)
+- [forEach](../interfaces/rx_ObservableLike.forEach.md)
+- [forkMerge](../interfaces/rx_ObservableLike.forkMerge.md)
+- [keep](../interfaces/rx_ObservableLike.keep.md)
+- [map](../interfaces/rx_ObservableLike.map.md)
+- [onSubscribe](../interfaces/rx_ObservableLike.onSubscribe.md)
+- [pairwise](../interfaces/rx_ObservableLike.pairwise.md)
+- [reduce](../interfaces/rx_ObservableLike.reduce.md)
+- [scan](../interfaces/rx_ObservableLike.scan.md)
+- [share](../interfaces/rx_ObservableLike.share.md)
+- [skipFirst](../interfaces/rx_ObservableLike.skipFirst.md)
+- [subscribeOn](../interfaces/rx_ObservableLike.subscribeOn.md)
+- [switchAll](../interfaces/rx_ObservableLike.switchAll.md)
+- [takeFirst](../interfaces/rx_ObservableLike.takeFirst.md)
+- [takeLast](../interfaces/rx_ObservableLike.takeLast.md)
+- [takeUntil](../interfaces/rx_ObservableLike.takeUntil.md)
+- [takeWhile](../interfaces/rx_ObservableLike.takeWhile.md)
+- [throwIfEmpty](../interfaces/rx_ObservableLike.throwIfEmpty.md)
+
 ### Variables
 
 - [concatT](rx_ObservableLike.md#concatt)

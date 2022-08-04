@@ -196,7 +196,7 @@ export const toEnumerableT: ToEnumerable<
   }
 > = { toEnumerable };
 
-interface ToObservable {
+interface toObservable {
   <T>(options?: {
     readonly start?: number;
     readonly count?: number;
@@ -209,7 +209,7 @@ interface ToObservable {
     readonly delayStart?: boolean;
   }): Function1<ReadonlyArrayLike<T>, RunnableObservableLike<T>>;
 }
-export const toObservable: ToObservable = /*@__PURE__*/ (<T>() => {
+export const toObservable: toObservable = /*@__PURE__*/ (<T>() => {
   const createArrayObservable = <TObs extends ObservableLike<T>>(
     createObservable: (f: SideEffect1<ObserverLike<T>>) => TObs,
     options?: {
@@ -273,7 +273,7 @@ export const toObservable: ToObservable = /*@__PURE__*/ (<T>() => {
     return delay > 0
       ? createArrayObservable(createRunnableObservable, options)(options)
       : createArrayObservable(createEnumerableObservable, options)(options);
-  }) as ToObservable;
+  }) as toObservable;
 })();
 
 export const toReadonlyArray: ToReadonlyArray<
