@@ -689,7 +689,7 @@ export const switchAll: SwitchAllOperator = /*@__PURE__*/ (<T>() => {
       function SwitchAllObserver(
         this: TProperties & ObserverLike<ObservableLike<T>>,
         delegate: ObserverLike<T>,
-      ): ObserverLike<ObservableLike<T>> {
+      ) {
         init(disposableMixin, this);
         init(typedObserverMixin, this, getScheduler(delegate));
 
@@ -742,7 +742,7 @@ export const subscribe: <T>(
       function SubscribeObserver(
         this: ObserverLike<T>,
         scheduler: SchedulerLike,
-      ): ObserverLike<T> {
+      ) {
         init(disposableMixin, this);
         init(typedObserverMixin, this, scheduler);
 

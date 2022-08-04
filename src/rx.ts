@@ -245,10 +245,7 @@ export const createSubject: <T>(options?: {
 
   const createSubjectInstance = pipe(
     clazz(
-      function Subject(
-        this: TProperties & SubjectLike<T>,
-        replay: number,
-      ): SubjectLike<T> {
+      function Subject(this: TProperties & SubjectLike<T>, replay: number) {
         init(disposableMixin, this);
         this[MulticastObservableLike_replay] = replay;
         this.observers = newInstance<Set<ObserverLike>>(Set);

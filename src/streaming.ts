@@ -121,7 +121,7 @@ export const createStream = /*@__PURE__*/ (() => {
           op: ContainerOperator<ObservableLike, TReq, T>,
           scheduler: SchedulerLike,
           replay: number,
-        ): StreamLike<TReq, T> {
+        ) {
           this[DispatcherLike_scheduler] = scheduler;
 
           const subject = createSubject({ replay });
