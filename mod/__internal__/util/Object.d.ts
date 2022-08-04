@@ -1,4 +1,4 @@
-import { Option, Function1, Factory, Function2, Function3, Function4 } from "../../functions.mjs";
+import { Function1, Factory, Function2, Function3, Function4, Option } from "../../functions.mjs";
 declare const Object_init: unique symbol;
 declare const Object_properties: unique symbol;
 declare const Object_prototype: unique symbol;
@@ -130,4 +130,4 @@ interface Class4<TA, TB, TC, TD, TReturn, TProperties extends object, TPrototype
     [Object_properties]: TProperties;
     [Object_prototype]: TPrototype;
 }
-export { Class, Class1, Class2, Class3, Class4, Clazz, EmptyObject, Object_init, Object_properties, Object_prototype, PropertyTypeOf, UnknownObject, clazz, createObjectFactory, init, mixWith };
+export { Class, Class1, Class2, Class3, Class4, EmptyObject, Object_init, Object_properties, Object_prototype, PropertyTypeOf, UnknownObject, clazz, createObjectFactory, init, mixWith };

@@ -411,7 +411,7 @@ export const createPairwiseObserver: <T>(
   );
 })();
 
-export const creatReduceObserver = <
+export const createReduceObserver = <
   C extends ReactiveContainerLike<ObserverLike<TAcc>>,
   T,
   TAcc,
@@ -450,7 +450,7 @@ export const creatReduceObserver = <
   );
 };
 
-export const creatScanObserver: <T, TAcc>(
+export const createScanObserver: <T, TAcc>(
   delegat: ObserverLike<TAcc>,
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
@@ -615,7 +615,7 @@ export const createThrowIfEmptyObserver: <T>(
   >;
 
   return pipe(
-    clazz(function TakeWhileObserver(
+    clazz(function ThrowIfEmptyObserver(
       this: TProperties & ObserverLike<T>,
       delegate: ObserverLike<T>,
       factory: Factory<unknown>,
