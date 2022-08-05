@@ -308,6 +308,11 @@ export const forEach =
 export const getLength = (arr: readonly unknown[] | string): number =>
   arr.length;
 
+export const getOrDefault =
+  <T>(defaultValue: T) =>
+  (v: Option<T>): T =>
+    isSome(v) ? v : defaultValue;
+
 export const getOrRaise =
   <T>() =>
   (v: Option<T>): T =>
