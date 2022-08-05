@@ -14,6 +14,7 @@
 
 ### Variables
 
+- [forEachT](containers_ReadonlyArrayLike.md#foreacht)
 - [keepT](containers_ReadonlyArrayLike.md#keept)
 - [mapT](containers_ReadonlyArrayLike.md#mapt)
 - [toEnumerableT](containers_ReadonlyArrayLike.md#toenumerablet)
@@ -24,8 +25,10 @@
 ### Functions
 
 - [every](containers_ReadonlyArrayLike.md#every)
+- [forEach](containers_ReadonlyArrayLike.md#foreach)
 - [keep](containers_ReadonlyArrayLike.md#keep)
 - [map](containers_ReadonlyArrayLike.md#map)
+- [some](containers_ReadonlyArrayLike.md#some)
 - [toEnumerable](containers_ReadonlyArrayLike.md#toenumerable)
 - [toObservable](containers_ReadonlyArrayLike.md#toobservable)
 - [toReadonlyArray](containers_ReadonlyArrayLike.md#toreadonlyarray)
@@ -46,6 +49,12 @@
 | `start` | `number` |
 
 ## Variables
+
+### forEachT
+
+• `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
+
+___
 
 ### keepT
 
@@ -105,6 +114,28 @@ ___
 
 ___
 
+### forEach
+
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`unknown`\>, `T`, `T`\>
@@ -147,6 +178,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### some
+
+▸ **some**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
 
 ___
 

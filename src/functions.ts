@@ -375,6 +375,8 @@ export const isEmpty = (arr: readonly unknown[] | string): boolean =>
 
 export const isEven = (x: number): boolean => x % 2 === 0;
 
+export const isFalse = (v: boolean): v is false => !v;
+
 /**
  * Returns `true` if `x` is an odd number, otherwise `false`.
  */
@@ -390,6 +392,8 @@ export const isNone = <T>(option: Option<T>): option is undefined =>
  * Returns true if `option` is not `none`.
  */
 export const isSome = <T>(option: Option<T>): option is T => option !== none;
+
+export const isTrue = (v: boolean): v is true => v;
 
 /**
  * Applies logical negation to the value `v`.

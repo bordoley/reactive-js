@@ -55,40 +55,8 @@ import { Option, isNone, isSome, none } from "./option";
 import { ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
 import { SchedulerLike, __yield } from "./scheduler";
 
-export type DefaultObservable = 0;
-export type RunnableObservable = 1;
-export type EnumerableObservable = 2;
-
-/**
- * The source of notifications which notifies a `ObserverLike` instance.
- *
- * @noInheritDoc
- */
-export interface ObservableLike<T> extends ReactiveContainerLike {
-  readonly T: unknown;
-  readonly TContainerOf: ObservableLike<this["T"]>;
-  readonly TLiftableContainerState: ObserverLike<this["T"]>;
-
-  readonly observableType:
-    | EnumerableObservable
-    | RunnableObservable
-    | DefaultObservable;
-
-  sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
-}
-
-export interface FromObservable<C extends ContainerLike> extends Container<C> {
-  fromObservable<T>(): Function1<ObservableLike<T>, ContainerOf<C, T>>;
-}
-
-/**
- * An `ObservableLike` that shares a common subscription to an underlying observable source.
- *
- * @noInheritDoc
- */
 
 export type AsyncReducer<T, TAcc> = Function2<TAcc, T, ObservableLike<TAcc>>;
-export type ObservableEffectMode = "batched" | "combine-latest";
 
 /**
  * The throttle mode used by the `throttle` operator.
@@ -98,14 +66,6 @@ export type ObservableEffectMode = "batched" | "combine-latest";
  */
 export type ThrottleMode = "first" | "last" | "interval";
 
-export {
-  observable,
-  __currentScheduler,
-  __do,
-  __memo,
-  __observe,
-  __using,
-} from "./observable/effects";
 export {
   combineLatest,
   combineLatestT,
@@ -125,13 +85,10 @@ export {
   mergeAllT,
 } from "./observable/mergeAll";
 export { repeat, repeatT, retry } from "./observable/repeat";
-export { switchAll, switchAllT } from "./observable/switchAll";
 export { throttle } from "./observable/throttle";
 export { timeout, timeoutError } from "./observable/timeout";
 export { withLatestFrom } from "./observable/withLatestFrom";
-export { zip, zipT } from "./observable/zip";
 export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
-export { toEnumerable } from "./observable/toEnumerable";
 
 export const catchError: CatchError<ObservableLike<unknown>>["catchError"] =
   /*@__PURE__*/ decorateMap(
@@ -226,12 +183,4 @@ export const someSatisfy: SomeSatisfy<ObservableLike<unknown>>["someSatisfy"] =
 
 export const someSatisfyT: SomeSatisfy<ObservableLike<unknown>> = {
   someSatisfy,
-};
-
-export const toObservable: ToObservable<
-  ObservableLike<unknown>
->["toObservable"] = () => identity;
-
-export const toObservableT: ToObservable<ObservableLike<unknown>> = {
-  toObservable,
 };
