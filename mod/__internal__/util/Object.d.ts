@@ -1,4 +1,4 @@
-import { Factory, Function1, Function2, Function3, Function4, Option } from "../../functions.mjs";
+import { Option, Factory, Function1, Function2, Function3, Function4 } from "../../functions.mjs";
 declare const Object_init: unique symbol;
 declare const Object_properties: unique symbol;
 declare const Object_properties_type: unique symbol;
@@ -57,7 +57,7 @@ interface Class4<TA, TB, TC, TD, TReturn, TProperties extends object, TPrototype
     [Object_properties_type]?: TProperties;
     [Object_prototype]: TPrototype;
 }
-interface init {
+interface Init {
     <TReturn, TProperties, TPrototype>(clazz: {
         [Object_init](this: TReturn & TProperties & TPrototype): TReturn;
     }, self: TProperties): TReturn;
@@ -71,8 +71,8 @@ interface init {
         [Object_init](this: TReturn & TProperties & TPrototype, a: TA, b: TB, c: TC): TReturn;
     }, self: TProperties, a: TA, b: TB, c: TC): TReturn;
 }
-declare const init: init;
-interface __extends {
+declare const init: Init;
+interface Extends {
     <TMixin0 extends TMixin>(m0: TMixin0): {
         [Object_properties]: TMixin0[typeof Object_properties];
         [Object_properties_type]?: PropertyTypeOf<[
@@ -108,8 +108,8 @@ interface __extends {
         [Object_prototype]: TMixin0[typeof Object_prototype] & TMixin1[typeof Object_prototype] & TMixin2[typeof Object_prototype] & TMixin3[typeof Object_prototype];
     };
 }
-declare const __extends: __extends;
-interface clazz {
+declare const __extends: Extends;
+interface Clazz {
     <TInit extends (this: any, ...args: readonly any[]) => unknown, TProperties extends UnknownObject = UnknownObject, TPrototype extends UnknownObject = UnknownObject>(init: TInit, properties: OptionalProps<TProperties>, prototype: TPrototype): {
         [Object_init]: TInit;
         [Object_properties]: OptionalProps<TProperties>;
@@ -135,8 +135,8 @@ interface clazz {
         [Object_prototype]: TParent[typeof Object_prototype];
     };
 }
-declare const clazz: clazz;
-interface createInstanceFactory {
+declare const clazz: Clazz;
+interface CreateInstanceFactory {
     <TReturn>(clazz: {
         [Object_init]: (this: any) => TReturn;
         [Object_properties]: unknown;
@@ -163,5 +163,5 @@ interface createInstanceFactory {
         [Object_prototype]: object;
     }): Function4<TA, TB, TC, TD, TReturn>;
 }
-declare const createInstanceFactory: createInstanceFactory;
+declare const createInstanceFactory: CreateInstanceFactory;
 export { Class, Class1, Class2, Class3, Class4, EmptyObject, MixinTypeOf, Object_init, Object_properties, Object_properties_type, Object_prototype, PropertyTypeOf, UnknownObject, __extends, clazz, createInstanceFactory, init };
