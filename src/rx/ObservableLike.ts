@@ -15,6 +15,7 @@ import {
   createThrowIfEmptyOperator,
   reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
+import { MAX_SAFE_INTEGER } from "../__internal__/env";
 import { createOnSink } from "../__internal__/rx/ReactiveContainerLikeInternal";
 import {
   createDecodeWithCharsetObserver,
@@ -51,7 +52,9 @@ import {
   createInstanceFactory,
   init,
 } from "../__internal__/util/Object";
+import { createEnumeratorSink } from "../__internal__/util/SinkLikeMixin";
 import {
+  Buffer,
   Concat,
   ConcatAll,
   ContainerOf,
@@ -95,6 +98,7 @@ import {
   isNone,
   isSome,
   isTrue,
+  max,
   min,
   newInstance,
   none,
@@ -121,6 +125,7 @@ import {
   createRunnableObservable,
   createSubject,
   enumerableObservableType,
+  neverEnumerableObservable,
   runnableObservableType,
 } from "../rx";
 import {
@@ -141,7 +146,6 @@ import {
   DisposableOrTeardown,
   EnumeratorLike,
   EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
   SinkLike,
   SinkLike_notify,
   SourceLike_move,
@@ -161,6 +165,7 @@ import {
 import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
 import { notify, notifySink, sourceFrom } from "../util/SinkLike";
 import { getObserverCount } from "./MulticastObservableLike";
+import { sinkInto } from "./ReactiveContainerLike";
 import { publishTo } from "./SubjectLike";
 
 export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
@@ -222,6 +227,128 @@ const liftEnumerableObservable = createLift(2);
 const liftEnumerableObservableT: Lift<ObservableLike, TReactive> = {
   lift: liftEnumerableObservable,
   variance: reactive,
+};
+
+export const buffer: <T>(options?: {
+  readonly duration?: number | Function1<unknown, ObservableLike<unknown>>;
+  readonly maxBufferSize?: number;
+}) => ContainerOperator<ObservableLike, T, readonly T[]> = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedObserverMixin = observerMixin<ArrayBuffer>();
+
+  type TBufferObserverProperties = {
+    buffer: T[];
+    delegate: ObserverLike<readonly T[]>;
+    durationFunction: Function1<T, ObservableLike<unknown>>;
+    durationSubscription: DisposableRefLike;
+    maxBufferSize: number;
+  };
+
+  const createBufferObserver = createInstanceFactory(
+    clazz(
+      __extends(typedObserverMixin, disposableMixin),
+      function BufferObserver(
+        this: TBufferObserverProperties & ObserverLike<T>,
+        delegate: ObserverLike<readonly T[]>,
+        durationFunction: Function1<T, ObservableLike<unknown>>,
+        maxBufferSize: number,
+      ) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, getScheduler(delegate));
+
+        this.buffer = [];
+        this.delegate = delegate;
+        this.durationFunction = durationFunction;
+        this.durationSubscription = createDisposableRef(disposed);
+        this.maxBufferSize = maxBufferSize;
+
+        return pipe(
+          this,
+          onComplete(() => {
+            const { buffer } = this;
+            this.buffer = [];
+
+            if (isEmpty(buffer)) {
+              pipe(delegate, dispose());
+            } else {
+              pipe([buffer], arrayToObservable(), sinkInto(delegate));
+            }
+          }),
+        );
+      },
+      {
+        buffer: none,
+        delegate: none,
+        durationFunction: none,
+        durationSubscription: none,
+        maxBufferSize: 0,
+      },
+      {
+        [SinkLike_notify](
+          this: TBufferObserverProperties & ObserverLike<T>,
+          next: T,
+        ) {
+          const { buffer, maxBufferSize } = this;
+
+          buffer.push(next);
+
+          const doOnNotify = () => {
+            this.durationSubscription[MutableRefLike_current] = disposed;
+
+            const buffer = this.buffer;
+            this.buffer = [];
+
+            pipe(this.delegate, notify(buffer));
+          };
+
+          if (getLength(buffer) === maxBufferSize) {
+            doOnNotify();
+          } else if (
+            isDisposed(this.durationSubscription[MutableRefLike_current])
+          ) {
+            this.durationSubscription[MutableRefLike_current] = pipe(
+              next,
+              this.durationFunction,
+              forEach<unknown>(doOnNotify),
+              subscribe(getScheduler(this)),
+            );
+          }
+        },
+      },
+    ),
+  );
+
+  return (
+    options: {
+      readonly duration?: Function1<T, ObservableLike<unknown>> | number;
+      readonly maxBufferSize?: number;
+    } = {},
+  ) => {
+    const durationOption = options.duration ?? MAX_SAFE_INTEGER;
+    const durationFunction =
+      durationOption === MAX_SAFE_INTEGER
+        ? neverEnumerableObservable
+        : typeof durationOption === "number"
+        ? (_: T) => pipe([none], arrayToObservable())
+        : durationOption;
+
+    const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
+
+    const operator = (delegate: ObserverLike<readonly T[]>) => {
+      return pipe(
+        createBufferObserver(delegate, durationFunction, maxBufferSize),
+        addTo(delegate),
+      );
+    };
+
+    return durationOption === MAX_SAFE_INTEGER
+      ? liftEnumerableObservable(operator)
+      : liftObservable(operator);
+  };
+})();
+export const bufferT: Buffer<ObservableLike<unknown>> = {
+  buffer,
 };
 
 type ConcattedObservable<TObs extends unknown[]> = TObs extends [infer F]
@@ -342,7 +469,7 @@ interface concat {
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  * @hidden
  */
-export const concat: concat = (<T>() => {
+export const concat: concat = /*@__PURE__*/ (<T>() => {
   const createConcatObserver = <T>(
     delegate: ObserverLike<T>,
     observables: readonly ObservableLike<T>[],
@@ -1068,7 +1195,7 @@ export const toRunnableObservable =
       ? (obs as RunnableObservableLike<T>)
       : none;
 
-export const zip: Zip<ObservableLike>["zip"] = (() => {
+export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   const typedObserverMixin = observerMixin();
 
   const shouldEmit = compose(
@@ -1079,59 +1206,6 @@ export const zip: Zip<ObservableLike>["zip"] = (() => {
   const shouldComplete = compose(
     forEachArray<EnumeratorLike<unknown>>(move),
     some(isDisposed),
-  );
-
-  type TSinkEnumeratorProperties = {
-    [EnumeratorLike_current]: unknown;
-    [EnumeratorLike_hasCurrent]: boolean;
-    buffer: unknown[];
-  };
-
-  const createSinkEnumerator = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin),
-      function SinkEnumerator(
-        this: EnumeratorLike & SinkLike & TSinkEnumeratorProperties,
-      ): EnumeratorLike & SinkLike {
-        init(disposableMixin, this);
-        this.buffer = [];
-
-        return pipe(
-          this,
-          onDisposed(() => {
-            this.buffer.length = 0;
-            this[EnumeratorLike_hasCurrent] = false;
-          }),
-        );
-      },
-      {
-        buffer: none,
-        [EnumeratorLike_current]: none,
-        [EnumeratorLike_hasCurrent]: false,
-      },
-      {
-        [SinkLike_notify](
-          this: DisposableLike & TSinkEnumeratorProperties,
-          next: unknown,
-        ) {
-          if (isDisposed(this)) {
-            return;
-          }
-          this.buffer.push(next);
-        },
-        [SourceLike_move](this: DisposableLike & TSinkEnumeratorProperties) {
-          const { buffer } = this;
-
-          if (!isDisposed(this) && getLength(buffer) > 0) {
-            const next = buffer.shift();
-            this[EnumeratorLike_current] = next;
-            this[EnumeratorLike_hasCurrent] = true;
-          } else {
-            this[EnumeratorLike_hasCurrent] = false;
-          }
-        },
-      },
-    ),
   );
 
   type TZipObserverProperties = {
@@ -1217,7 +1291,7 @@ export const zip: Zip<ObservableLike>["zip"] = (() => {
           move(enumerator);
           enumerators.push(enumerator);
         } else {
-          const enumerator = pipe(createSinkEnumerator(), addTo(observer));
+          const enumerator = pipe(createEnumeratorSink(), addTo(observer));
           enumerators.push(enumerator);
 
           pipe(

@@ -1,7 +1,8 @@
 import { Option, Equality, SideEffect1, Predicate, Function1, Reducer, Factory } from "../../functions.mjs";
 import { ReactiveContainerLike } from "../../rx.mjs";
-import { SinkLike, DisposableLike_exception, Exception, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose, SinkLike_notify } from "../../util.mjs";
+import { EnumeratorLike, SinkLike, DisposableLike_exception, Exception, DisposableLike_isDisposed, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose, SinkLike_notify } from "../../util.mjs";
 import { Class1, Class2, Class3 } from "./Object.mjs";
+declare const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T>;
 declare const createSink: <T>() => SinkLike<T>;
 declare const DelegatingSink_delegate: unique symbol;
 declare const delegatingSinkMixin: <T>() => Class1<SinkLike<T>, SinkLike<T>, {
@@ -130,4 +131,4 @@ declare const throwIfEmptySinkMixin: <T>() => Class2<SinkLike<T>, Factory<unknow
     [DisposableLike_dispose](error?: Exception): void;
     [SinkLike_notify](next: T): void;
 }>;
-export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createEnumeratorSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

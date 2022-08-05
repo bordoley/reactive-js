@@ -356,29 +356,6 @@ export const tests = describe(
     ),
   ),
 
-  test("share", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const shared = pipe(
-      [1, 2, 3],
-      fromArray({ delay: 1 }),
-      share(scheduler, { replay: 1 }),
-    );
-
-    let result: readonly number[] = [];
-    pipe(
-      zip(shared, shared),
-      map(([a, b]) => a + b),
-      buffer(),
-      onNotify(x => {
-        result = x;
-      }),
-      subscribe(scheduler),
-    );
-
-    pipe(scheduler, enumeratorForEach(ignore));
-    pipe(result, expectArrayEquals([2, 4, 6]));
-  }),
-
   describe(
     "takeLast",
     test(

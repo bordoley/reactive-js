@@ -55,7 +55,6 @@ import { Option, isNone, isSome, none } from "./option";
 import { ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
 import { SchedulerLike, __yield } from "./scheduler";
 
-
 export type AsyncReducer<T, TAcc> = Function2<TAcc, T, ObservableLike<TAcc>>;
 
 /**

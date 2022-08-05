@@ -10,6 +10,7 @@
 
 ### Variables
 
+- [bufferT](rx_RunnableObservableLike.md#buffert)
 - [concatT](rx_RunnableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_RunnableObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_RunnableObservableLike.md#distinctuntilchangedt)
@@ -35,6 +36,12 @@
 - [toReadonlyArray](rx_RunnableObservableLike.md#toreadonlyarray)
 
 ## Variables
+
+### bufferT
+
+• `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
 
 ### concatT
 

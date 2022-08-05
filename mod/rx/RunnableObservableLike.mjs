@@ -9,9 +9,12 @@ import { run } from '../util/ContinuationLike.mjs';
 import { toObservable } from '../util/DisposableLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
-import { concat, decodeWithCharset, distinctUntilChanged, forEach, keep, map, merge, pairwise, reduce, scan, skipFirst, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, subscribeOn, takeUntil, subscribe } from './ObservableLike.mjs';
+import { buffer, concat, decodeWithCharset, distinctUntilChanged, forEach, keep, map, merge, pairwise, reduce, scan, skipFirst, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, subscribeOn, takeUntil, subscribe } from './ObservableLike.mjs';
 import { add, bindTo, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
 
+const bufferT = {
+    buffer: buffer,
+};
 const concatT = {
     concat,
 };
@@ -68,4 +71,4 @@ const toReadonlyArray = (options = {}) => observable => {
 };
 const toReadonlyArrayT = { toReadonlyArray };
 
-export { concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };
+export { bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };

@@ -29,6 +29,7 @@
 
 ### Variables
 
+- [bufferT](rx_ObservableLike.md#buffert)
 - [concatT](rx_ObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_ObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_ObservableLike.md#distinctuntilchangedt)
@@ -49,6 +50,7 @@
 
 ### Functions
 
+- [buffer](rx_ObservableLike.md#buffer)
 - [decodeWithCharset](rx_ObservableLike.md#decodewithcharset)
 - [distinctUntilChanged](rx_ObservableLike.md#distinctuntilchanged)
 - [forEach](rx_ObservableLike.md#foreach)
@@ -78,6 +80,12 @@
 - [zip](rx_ObservableLike.md#zip)
 
 ## Variables
+
+### bufferT
+
+• `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\>
+
+___
 
 ### concatT
 
@@ -180,6 +188,30 @@ ___
 • `Const` **zipT**: [`Zip`](containers.md#zip)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ## Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.duration?` | `number` \| [`Function1`](functions.md#function1)<`unknown`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `options.maxBufferSize?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+___
 
 ### decodeWithCharset
 
