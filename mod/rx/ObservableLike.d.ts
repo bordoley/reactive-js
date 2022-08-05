@@ -1,10 +1,15 @@
-import { Concat, ContainerOperator, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, ContainerOf, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Zip } from "../containers.mjs";
-import { Equality, SideEffect1, Function1, Predicate, Factory, Reducer, Option } from "../functions.mjs";
+import { ContainerOperator, Buffer, Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, ContainerOf, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Zip } from "../containers.mjs";
+import { Function1, Equality, SideEffect1, Predicate, Factory, Reducer, Option } from "../functions.mjs";
 import { EnumerableLike } from "../ix.mjs";
 import { ObservableLike, MulticastObservableLike, RunnableObservableLike, EnumerableObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
 import { DisposableOrTeardown, DisposableLike } from "../util.mjs";
 declare const getObservableType: (obs: ObservableLike) => 0 | 1 | 2;
+declare const buffer: <T>(options?: {
+    readonly duration?: number | Function1<unknown, ObservableLike<unknown>>;
+    readonly maxBufferSize?: number;
+}) => ContainerOperator<ObservableLike, T, readonly T[]>;
+declare const bufferT: Buffer<ObservableLike<unknown>>;
 declare type ConcattedObservable<TObs extends unknown[]> = TObs extends [
     infer F
 ] ? F : TObs extends [
@@ -216,4 +221,4 @@ declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
 declare const toRunnableObservable: <T>() => (obs: ObservableLike<T>) => Option<RunnableObservableLike<T>>;
 declare const zip: Zip<ObservableLike>["zip"];
 declare const zipT: Zip<ObservableLike>;
-export { concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toPromise, toRunnableObservable, zip, zipT };
+export { buffer, bufferT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toPromise, toRunnableObservable, zip, zipT };

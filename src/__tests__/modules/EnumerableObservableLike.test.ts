@@ -11,6 +11,7 @@ import { pipe, pipeLazy, raise } from "../../functions";
 import { toReadonlyArray } from "../../ix/EnumerableLike";
 import { deferEnumerableObservableT } from "../../rx";
 import {
+  bufferT,
   concatT,
   decodeWithCharsetT,
   distinctUntilChangedT,
@@ -34,6 +35,7 @@ import { createVirtualTimeScheduler } from "../../scheduling";
 import { run } from "../../util/ContinuationLike";
 import { getException } from "../../util/DisposableLike";
 import {
+  bufferTests,
   concatTests,
   decodeWithCharsetTests,
   distinctUntilChangedTests,
@@ -53,6 +55,11 @@ import {
 
 export const EnumerableObservableLikeTests = describe(
   "EnumerableObservableLike",
+  bufferTests({
+    fromArray: toObservable,
+    ...bufferT,
+    ...toReadonlyArrayT,
+  }),
   concatTests({
     fromArray: toObservable,
     ...concatT,

@@ -1,4 +1,5 @@
 import {
+  Buffer,
   Concat,
   ConcatAll,
   DecodeWithCharset,
@@ -41,6 +42,7 @@ import {
 import { pause, resume } from "../util/PauseableLike";
 import { sourceFrom } from "../util/SinkLike";
 import {
+  buffer,
   concat,
   decodeWithCharset,
   distinctUntilChanged,
@@ -61,6 +63,10 @@ import {
   takeWhile,
   throwIfEmpty,
 } from "./ObservableLike";
+
+export const bufferT: Buffer<RunnableObservableLike> = {
+  buffer: buffer as Buffer<RunnableObservableLike>["buffer"],
+};
 
 export const concatT: Concat<RunnableObservableLike> = {
   concat,

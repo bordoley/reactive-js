@@ -1,8 +1,9 @@
-import { Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ReadonlyArrayLike, ToReadonlyArray } from "../containers.mjs";
+import { Buffer, Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ReadonlyArrayLike, ToReadonlyArray } from "../containers.mjs";
 import { Factory, Function1 } from "../functions.mjs";
 import { RunnableObservableLike, ObservableLike, EnumerableObservableLike } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
 import { ToFlowable } from "../streaming.mjs";
+declare const bufferT: Buffer<RunnableObservableLike>;
 declare const concatT: Concat<RunnableObservableLike>;
 declare const decodeWithCharsetT: DecodeWithCharset<RunnableObservableLike>;
 declare const distinctUntilChangedT: DistinctUntilChanged<RunnableObservableLike>;
@@ -33,4 +34,4 @@ declare const toReadonlyArray: toReadonlyArray;
 declare const toReadonlyArrayT: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
-export { concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };
+export { bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };

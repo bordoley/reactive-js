@@ -6,6 +6,7 @@
 
 ### Variables
 
+- [bufferT](rx_EnumerableObservableLike.md#buffert)
 - [concatT](rx_EnumerableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_EnumerableObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_EnumerableObservableLike.md#distinctuntilchangedt)
@@ -33,6 +34,12 @@
 - [toReadonlyArray](rx_EnumerableObservableLike.md#toreadonlyarray)
 
 ## Variables
+
+### bufferT
+
+• `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+
+___
 
 ### concatT
 
