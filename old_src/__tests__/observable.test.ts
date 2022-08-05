@@ -178,32 +178,6 @@ export const tests = describe(
   ),
 
   test(
-    "combineLatest",
-    pipeLazy(
-      generate(incrementBy(2), returns(1), { delay: 2 }),
-      takeFirst({ count: 3 }),
-      zipWith(
-        combineLatestT,
-        pipe(
-          generate(incrementBy(2), returns(0), { delay: 3 }),
-          takeFirst({ count: 2 }),
-        ),
-      ),
-      toRunnable(),
-      toArray(),
-      expectArrayEquals(
-        [
-          [3, 2],
-          [5, 2],
-          [5, 4],
-          [7, 4],
-        ],
-        arrayEquality(),
-      ),
-    ),
-  ),
-
-  test(
     "exhaustMap",
     pipeLazy(
       [fromArray()([1, 2, 3]), fromArray()([4, 5, 6]), fromArray()([7, 8, 9])],
@@ -554,22 +528,6 @@ export const tests = describe(
         ),
         expectToThrow,
       ),
-    ),
-  ),
-
-  test(
-    "zipLatestWith",
-    pipeLazy(
-      [1, 2, 3, 4, 5, 6, 7, 8],
-      fromArray({ delay: 1 }),
-      zipWith<ObservableLike<unknown>, number, number>(
-        zipLatestT,
-        pipe([1, 2, 3, 4], fromArray({ delay: 2 })),
-      ),
-      map(([a, b]) => a + b),
-      toRunnable(),
-      toArray(),
-      expectArrayEquals([2, 5, 8, 11]),
     ),
   ),
 

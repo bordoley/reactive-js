@@ -1,4 +1,4 @@
-import { ContainerOperator, Buffer, Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, ContainerOf, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Zip } from "../containers.mjs";
+import { ContainerOperator, Buffer, Zip, Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, ContainerOf, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty } from "../containers.mjs";
 import { Function1, Equality, SideEffect1, Predicate, Factory, Reducer, Option } from "../functions.mjs";
 import { EnumerableLike } from "../ix.mjs";
 import { ObservableLike, MulticastObservableLike, RunnableObservableLike, EnumerableObservableLike } from "../rx.mjs";
@@ -6,10 +6,78 @@ import { SchedulerLike } from "../scheduling.mjs";
 import { DisposableOrTeardown, DisposableLike } from "../util.mjs";
 declare const getObservableType: (obs: ObservableLike) => 0 | 1 | 2;
 declare const buffer: <T>(options?: {
-    readonly duration?: number | Function1<unknown, ObservableLike<unknown>>;
+    readonly duration?: number | Function1<T, ObservableLike>;
     readonly maxBufferSize?: number;
 }) => ContainerOperator<ObservableLike, T, readonly T[]>;
-declare const bufferT: Buffer<ObservableLike<unknown>>;
+declare const bufferT: Buffer<ObservableLike>;
+interface combineLatest {
+    <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
+        TA,
+        TB
+    ]>;
+    <TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[
+        TA,
+        TB,
+        TC
+    ]>;
+    <TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD
+    ]>;
+    <TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE
+    ]>;
+    <TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF
+    ]>;
+    <TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG
+    ]>;
+    <TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH
+    ]>;
+    <TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH,
+        TI
+    ]>;
+}
+/**
+ * Returns an `ObservableLike` that combines the latest values from
+ * multiple sources.
+ */
+declare const combineLatest: combineLatest;
+declare const combineLatestT: Zip<ObservableLike>;
 declare type ConcattedObservable<TObs extends unknown[]> = TObs extends [
     infer F
 ] ? F : TObs extends [
@@ -91,6 +159,8 @@ interface forEach {
 }
 declare const forEach: forEach;
 declare const forEachT: ForEach<ObservableLike>;
+declare const forkCombineLatest: <T>(...ops: readonly ContainerOperator<ObservableLike<unknown>, T, unknown>[]) => ContainerOperator<ObservableLike<unknown>, T, readonly unknown[]>;
+declare function forkZipLatest<T>(...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]): ContainerOperator<ObservableLike, T, readonly unknown[]>;
 interface keep {
     <T, C extends ObservableLike = ObservableLike>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
     <T>(predicate: Predicate<T>): Function1<ObservableLike<T>, ObservableLike<T>>;
@@ -221,4 +291,72 @@ declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
 declare const toRunnableObservable: <T>() => (obs: ObservableLike<T>) => Option<RunnableObservableLike<T>>;
 declare const zip: Zip<ObservableLike>["zip"];
 declare const zipT: Zip<ObservableLike>;
-export { buffer, bufferT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toPromise, toRunnableObservable, zip, zipT };
+interface zipLatest {
+    <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
+        TA,
+        TB
+    ]>;
+    <TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[
+        TA,
+        TB,
+        TC
+    ]>;
+    <TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD
+    ]>;
+    <TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE
+    ]>;
+    <TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF
+    ]>;
+    <TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG
+    ]>;
+    <TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH
+    ]>;
+    <TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH,
+        TI
+    ]>;
+}
+/**
+ * Returns an `ObservableLike` that zips the latest values from
+ * multiple sources.
+ */
+declare const zipLatest: zipLatest;
+declare const zipLatestT: Zip<ObservableLike>;
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toPromise, toRunnableObservable, zip, zipLatest, zipLatestT, zipT };

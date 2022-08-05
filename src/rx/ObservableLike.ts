@@ -230,7 +230,7 @@ const liftEnumerableObservableT: Lift<ObservableLike, TReactive> = {
 };
 
 export const buffer: <T>(options?: {
-  readonly duration?: number | Function1<unknown, ObservableLike<unknown>>;
+  readonly duration?: number | Function1<T, ObservableLike>;
   readonly maxBufferSize?: number;
 }) => ContainerOperator<ObservableLike, T, readonly T[]> = /*@__PURE__*/ (<
   T,
@@ -240,7 +240,7 @@ export const buffer: <T>(options?: {
   type TBufferObserverProperties = {
     buffer: T[];
     delegate: ObserverLike<readonly T[]>;
-    durationFunction: Function1<T, ObservableLike<unknown>>;
+    durationFunction: Function1<T, ObservableLike>;
     durationSubscription: DisposableRefLike;
     maxBufferSize: number;
   };
@@ -251,7 +251,7 @@ export const buffer: <T>(options?: {
       function BufferObserver(
         this: TBufferObserverProperties & ObserverLike<T>,
         delegate: ObserverLike<readonly T[]>,
-        durationFunction: Function1<T, ObservableLike<unknown>>,
+        durationFunction: Function1<T, ObservableLike>,
         maxBufferSize: number,
       ) {
         init(disposableMixin, this);
@@ -321,7 +321,7 @@ export const buffer: <T>(options?: {
 
   return (
     options: {
-      readonly duration?: Function1<T, ObservableLike<unknown>> | number;
+      readonly duration?: Function1<T, ObservableLike> | number;
       readonly maxBufferSize?: number;
     } = {},
   ) => {
@@ -347,8 +347,81 @@ export const buffer: <T>(options?: {
       : liftObservable(operator);
   };
 })();
-export const bufferT: Buffer<ObservableLike<unknown>> = {
+export const bufferT: Buffer<ObservableLike> = {
   buffer,
+};
+
+interface combineLatest {
+  <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<
+    [TA, TB]
+  >;
+  <TA, TB, TC, T>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+  ): ObservableLike<[TA, TB, TC]>;
+  <TA, TB, TC, TD>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+  ): ObservableLike<[TA, TB, TC, TD]>;
+  <TA, TB, TC, TD, TE>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+  ): ObservableLike<[TA, TB, TC, TD, TE]>;
+  <TA, TB, TC, TD, TE, TF>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+    f: ObservableLike<TF>,
+  ): ObservableLike<[TA, TB, TC, TD, TE, TF]>;
+  <TA, TB, TC, TD, TE, TF, TG>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+    f: ObservableLike<TF>,
+    g: ObservableLike<TG>,
+  ): ObservableLike<[TA, TB, TC, TD, TE, TF, TG]>;
+  <TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+    f: ObservableLike<TF>,
+    g: ObservableLike<TG>,
+    h: ObservableLike<TH>,
+  ): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
+  <TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+    f: ObservableLike<TF>,
+    g: ObservableLike<TG>,
+    h: ObservableLike<TH>,
+    i: ObservableLike<TI>,
+  ): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+/**
+ * Returns an `ObservableLike` that combines the latest values from
+ * multiple sources.
+ */
+export const combineLatest: combineLatest = (
+  ...observables: readonly ObservableLike<any>[]
+): ObservableLike<readonly unknown[]> =>
+  latest(observables, LatestMode.Combine);
+export const combineLatestT: Zip<ObservableLike> = {
+  zip: combineLatest,
 };
 
 type ConcattedObservable<TObs extends unknown[]> = TObs extends [infer F]
@@ -569,6 +642,155 @@ export const forEach: forEach = /*@__PURE__*/ (<T>() =>
   ))();
 export const forEachT: ForEach<ObservableLike> = { forEach };
 
+interface forkCombineLatest {
+  <T, TA, TB>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB]>;
+  <T, TA, TB, TC>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC]>;
+  <T, TA, TB, TC, TD>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD]>;
+  <T, TA, TB, TC, TD, TE>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE]>;
+  <T, TA, TB, TC, TD, TE, TF>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+    f: ContainerOperator<ObservableLike, T, TF>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF]>;
+  <T, TA, TB, TC, TD, TE, TF, TG>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+    f: ContainerOperator<ObservableLike, T, TF>,
+    g: ContainerOperator<ObservableLike, T, TG>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG]>;
+  <T, TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+    f: ContainerOperator<ObservableLike, T, TF>,
+    g: ContainerOperator<ObservableLike, T, TG>,
+    h: ContainerOperator<ObservableLike, T, TH>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  <T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+    f: ContainerOperator<ObservableLike, T, TF>,
+    g: ContainerOperator<ObservableLike, T, TG>,
+    h: ContainerOperator<ObservableLike, T, TH>,
+    i: ContainerOperator<ObservableLike, T, TI>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+export const forkCombineLatest =
+  <T>(
+    ...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]
+  ): ContainerOperator<ObservableLike, T, readonly unknown[]> =>
+  (obs: ObservableLike<T>) =>
+    latest(
+      pipe(
+        ops,
+        mapArray(op => pipe(obs, op)),
+      ),
+      LatestMode.Combine,
+    );
+interface forkZipLatest {
+  <T, TA, TB>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB]>;
+  <T, TA, TB, TC>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC]>;
+  <T, TA, TB, TC, TD>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD]>;
+  <T, TA, TB, TC, TD, TE>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE]>;
+  <T, TA, TB, TC, TD, TE, TF>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+    f: ContainerOperator<ObservableLike, T, TF>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF]>;
+  <T, TA, TB, TC, TD, TE, TF, TG>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+    f: ContainerOperator<ObservableLike, T, TF>,
+    g: ContainerOperator<ObservableLike, T, TG>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG]>;
+  <T, TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+    f: ContainerOperator<ObservableLike, T, TF>,
+    g: ContainerOperator<ObservableLike, T, TG>,
+    h: ContainerOperator<ObservableLike, T, TH>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  <T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: ContainerOperator<ObservableLike, T, TA>,
+    b: ContainerOperator<ObservableLike, T, TB>,
+    c: ContainerOperator<ObservableLike, T, TC>,
+    d: ContainerOperator<ObservableLike, T, TD>,
+    e: ContainerOperator<ObservableLike, T, TE>,
+    f: ContainerOperator<ObservableLike, T, TF>,
+    g: ContainerOperator<ObservableLike, T, TG>,
+    h: ContainerOperator<ObservableLike, T, TH>,
+    i: ContainerOperator<ObservableLike, T, TI>,
+  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+export function forkZipLatest<T>(
+  ...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]
+): ContainerOperator<ObservableLike, T, readonly unknown[]> {
+  return (obs: ObservableLike<T>) =>
+    latest(
+      pipe(
+        ops,
+        mapArray(op => pipe(obs, op)),
+      ),
+      LatestMode.Zip,
+    );
+}
+
 interface keep {
   <T, C extends ObservableLike = ObservableLike>(
     predicate: Predicate<T>,
@@ -656,6 +878,138 @@ export const forkMerge: forkMerge = (<TIn, TOut>(
       mapArray(op => op(obs)),
       mergeImpl,
     )) as forkMerge;
+
+const enum LatestMode {
+  Combine = 1,
+  Zip = 2,
+}
+const latest = /*@__PURE__*/ (() => {
+  const typedObserverMixin = observerMixin();
+  type LatestCtx = {
+    delegate: ObserverLike<readonly unknown[]>;
+    mode: LatestMode;
+    completedCount: number;
+    observers: TLatestObserverProperties[];
+  };
+
+  const add = (self: LatestCtx, observer: TLatestObserverProperties): void => {
+    self.observers.push(observer);
+  };
+
+  const onNotify = (self: LatestCtx) => {
+    const { mode, observers } = self;
+
+    const isReady = observers.every(x => x.ready);
+
+    if (isReady) {
+      const result = pipe(
+        observers,
+        mapArray(observer => observer.latest),
+      );
+      pipe(self.delegate, notify(result));
+
+      if (mode === LatestMode.Zip) {
+        for (const sub of observers) {
+          sub.ready = false;
+          sub.latest = none as any;
+        }
+      }
+    }
+  };
+
+  const onCompleted = (self: LatestCtx) => {
+    self.completedCount++;
+
+    if (self.completedCount === getLength(self.observers)) {
+      pipe(self.delegate, dispose());
+    }
+  };
+
+  type TLatestObserverProperties = {
+    ready: boolean;
+    latest: unknown;
+    ctx: LatestCtx;
+  };
+
+  const createLatestObserver = createInstanceFactory(
+    clazz(
+      __extends(typedObserverMixin, disposableMixin),
+      function LatestObserver(
+        this: TLatestObserverProperties & ObserverLike,
+        scheduler: SchedulerLike,
+        ctx: LatestCtx,
+      ) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, scheduler);
+        this.ctx = ctx;
+        return this;
+      },
+      {
+        ready: false,
+        latest: none,
+        ctx: none,
+      },
+      {
+        [SinkLike_notify](this: TLatestObserverProperties, next: unknown) {
+          const { ctx } = this;
+          this.latest = next;
+          this.ready = true;
+
+          onNotify(ctx);
+        },
+      },
+    ),
+  );
+
+  return (
+    observables: readonly ObservableLike<any>[],
+    mode: LatestMode,
+  ): ObservableLike<readonly unknown[]> => {
+    const onSink = (delegate: ObserverLike<readonly unknown[]>) => {
+      const ctx: LatestCtx = {
+        completedCount: 0,
+        observers: [],
+        delegate,
+        mode,
+      };
+
+      const onCompleteCb = () => {
+        onCompleted(ctx);
+      };
+
+      const scheduler = getScheduler(delegate);
+
+      for (const observable of observables) {
+        const innerObserver = pipe(
+          createLatestObserver(scheduler, ctx),
+          addTo(delegate),
+          onComplete(onCompleteCb),
+          sourceFrom(observable),
+        );
+
+        add(ctx, innerObserver);
+      }
+    };
+
+    const enumerableObservables = pipe(
+      observables,
+      mapArray(toEnumerableObservable()),
+      keepType(keepArrayT, isSome),
+    );
+
+    const runnableObservables = pipe(
+      observables,
+      mapArray(toRunnableObservable()),
+      keepType(keepArrayT, isSome),
+    );
+
+    return getLength(enumerableObservables) === getLength(observables)
+      ? createEnumerableObservable(onSink)
+      : getLength(runnableObservables) === getLength(observables)
+      ? createRunnableObservable(onSink)
+      : createObservable(onSink);
+  };
+})();
 
 /** @hidden */
 export const merge: concat = (<T>(...observables: ObservableLike<T>[]) =>
@@ -1204,7 +1558,7 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   );
 
   const shouldComplete = compose(
-    forEachArray<EnumeratorLike<unknown>>(move),
+    forEachArray<EnumeratorLike>(move),
     some(isDisposed),
   );
 
@@ -1276,7 +1630,7 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
 
   const onSink =
     (observables: readonly ObservableLike[]) => (observer: ObserverLike) => {
-      const enumerators: EnumeratorLike<unknown>[] = [];
+      const enumerators: EnumeratorLike[] = [];
 
       for (const next of observables) {
         if (getObservableType(next) === enumerableObservableType) {
@@ -1336,4 +1690,76 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
 })();
 export const zipT: Zip<ObservableLike> = {
   zip: zip as unknown as Zip<ObservableLike>["zip"],
+};
+
+interface zipLatest {
+  <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<
+    [TA, TB]
+  >;
+  <TA, TB, TC, T>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+  ): ObservableLike<[TA, TB, TC]>;
+  <TA, TB, TC, TD>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+  ): ObservableLike<[TA, TB, TC, TD]>;
+  <TA, TB, TC, TD, TE>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+  ): ObservableLike<[TA, TB, TC, TD, TE]>;
+  <TA, TB, TC, TD, TE, TF>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+    f: ObservableLike<TF>,
+  ): ObservableLike<[TA, TB, TC, TD, TE, TF]>;
+  <TA, TB, TC, TD, TE, TF, TG>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+    f: ObservableLike<TF>,
+    g: ObservableLike<TG>,
+  ): ObservableLike<[TA, TB, TC, TD, TE, TF, TG]>;
+  <TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+    f: ObservableLike<TF>,
+    g: ObservableLike<TG>,
+    h: ObservableLike<TH>,
+  ): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
+  <TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: ObservableLike<TA>,
+    b: ObservableLike<TB>,
+    c: ObservableLike<TC>,
+    d: ObservableLike<TD>,
+    e: ObservableLike<TE>,
+    f: ObservableLike<TF>,
+    g: ObservableLike<TG>,
+    h: ObservableLike<TH>,
+    i: ObservableLike<TI>,
+  ): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+/**
+ * Returns an `ObservableLike` that zips the latest values from
+ * multiple sources.
+ */
+export const zipLatest: zipLatest = (
+  ...observables: readonly ObservableLike<any>[]
+): ObservableLike<readonly unknown[]> => latest(observables, LatestMode.Zip);
+export const zipLatestT: Zip<ObservableLike> = {
+  zip: zipLatest,
 };

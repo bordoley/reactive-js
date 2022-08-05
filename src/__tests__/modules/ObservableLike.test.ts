@@ -12,19 +12,24 @@ import {
   arrayEquality,
   getOrDefault,
   getOrRaise,
+  incrementBy,
   pipe,
   pipeLazy,
   raise,
+  returns,
 } from "../../functions";
-import { emptyObservable } from "../../rx";
+import { emptyObservable, generateObservable } from "../../rx";
 import {
+  combineLatest,
   forEach,
   map,
   share,
   subscribe,
+  takeFirst,
   toPromise,
   toRunnableObservable,
   zip,
+  zipLatest,
 } from "../../rx/ObservableLike";
 import { mapT, toReadonlyArray } from "../../rx/RunnableObservableLike";
 import {
@@ -36,6 +41,36 @@ import { dispose } from "../../util/DisposableLike";
 
 export const ObservableLikeTests = describe(
   "ObservableLike",
+  describe(
+    "combineLatest",
+    test(
+      "combineLatest",
+      pipeLazy(
+        combineLatest(
+          pipe(
+            generateObservable(incrementBy(2), returns(1), { delay: 2 }),
+            takeFirst<number>({ count: 3 }),
+          ),
+          pipe(
+            generateObservable(incrementBy(2), returns(0), { delay: 3 }),
+            takeFirst<number>({ count: 2 }),
+          ),
+        ),
+        toRunnableObservable(),
+        getOrDefault(emptyObservable({ delay: 0 })),
+        toReadonlyArray(),
+        expectArrayEquals(
+          [
+            [3, 2],
+            [5, 2],
+            [5, 4],
+            [7, 4],
+          ],
+          arrayEquality(),
+        ),
+      ),
+    ),
+  ),
   describe(
     "share",
     test("shared observable zipped with itself", () => {
@@ -126,6 +161,26 @@ export const ObservableLikeTests = describe(
           toReadonlyArray(),
         ),
         expectToThrow,
+      ),
+    ),
+  ),
+  describe(
+    "zipLatest",
+    test(
+      "zipLatestWith",
+      pipeLazy(
+        zipLatest(
+          pipe(
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            toObservable({ delay: 1, delayStart: true }),
+          ),
+          pipe([1, 2, 3, 4], toObservable({ delay: 2, delayStart: true })),
+        ),
+        map<[number, number], number>(([a, b]) => a + b),
+        toRunnableObservable(),
+        getOrRaise(),
+        toReadonlyArray(),
+        expectArrayEquals([2, 5, 8, 11]),
       ),
     ),
   ),
