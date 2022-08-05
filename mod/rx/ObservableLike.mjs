@@ -8,8 +8,8 @@ import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { keepType } from '../containers/ContainerLike.mjs';
-import { map as map$1, toObservable, every, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipeUnsafe, min, newInstance, pipe, getLength, isEmpty, returns, none, isNone, isSome, getOrRaise } from '../functions.mjs';
+import { map as map$1, toObservable, every, forEach as forEach$1, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
+import { pipeUnsafe, min, newInstance, pipe, getLength, isEmpty, returns, none, isNone, isSome, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, createObservable, runnableObservableType, createRunnableObservable, enumerableObservableType, createEnumerableObservable, createSubject } from '../rx.mjs';
@@ -341,27 +341,26 @@ const toRunnableObservable = () => (obs) => getObservableType(obs) === runnableO
     : none;
 const zip = (() => {
     const typedObserverMixin = observerMixin();
-    const shouldEmit = (enumerators) => pipe(enumerators, every(hasCurrent));
-    const shouldComplete = (enumerators) => {
-        for (const enumerator of enumerators) {
-            move(enumerator);
-            if (isDisposed(enumerator) && !hasCurrent(enumerator)) {
-                return true;
-            }
-        }
-        return false;
-    };
-    const createZipObserverEnumerator = createInstanceFactory(clazz(__extends(disposableMixin), function ZipObserverEnumerator() {
+    const shouldEmit = compose(map$1((x) => hasCurrent(x) || move(x)), every(isTrue));
+    const shouldComplete = compose(forEach$1(move), some(isDisposed));
+    const createSinkEnumerator = createInstanceFactory(clazz(__extends(disposableMixin), function SinkEnumerator() {
         init(disposableMixin, this);
         this.buffer = [];
         return pipe(this, onDisposed(() => {
             this.buffer.length = 0;
+            this[EnumeratorLike_hasCurrent] = false;
         }));
     }, {
         buffer: none,
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
     }, {
+        [SinkLike_notify](next) {
+            if (isDisposed(this)) {
+                return;
+            }
+            this.buffer.push(next);
+        },
         [SourceLike_move]() {
             const { buffer } = this;
             if (!isDisposed(this) && getLength(buffer) > 0) {
@@ -374,41 +373,36 @@ const zip = (() => {
             }
         },
     }));
-    const createZipObserver = createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ZipObserver(delegate, enumerators, enumerator) {
+    const createZipObserver = createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ZipObserver(delegate, enumerators, sinkEnumerator) {
         init(disposableMixin, this);
         init(typedObserverMixin, this, getScheduler(delegate));
         this.delegate = delegate;
-        this.enumerator = enumerator;
+        this.sinkEnumerator = sinkEnumerator;
         this.enumerators = enumerators;
         return pipe(this, onComplete(() => {
-            if (isDisposed(enumerator) ||
-                (isEmpty(enumerator.buffer) && !hasCurrent(enumerator))) {
+            if (isDisposed(sinkEnumerator) ||
+                (!hasCurrent(sinkEnumerator) && !move(sinkEnumerator))) {
                 pipe(delegate, dispose());
             }
         }));
     }, {
         delegate: none,
         enumerators: none,
-        enumerator: none,
+        sinkEnumerator: none,
     }, {
         [SinkLike_notify](next) {
-            const { enumerator, enumerators } = this;
-            if (!isDisposed(this)) {
-                if (hasCurrent(enumerator)) {
-                    enumerator.buffer.push(next);
-                }
-                else {
-                    enumerator[EnumeratorLike_current] = next;
-                    enumerator[EnumeratorLike_hasCurrent] = true;
-                }
-                if (shouldEmit(enumerators)) {
-                    const next = pipe(enumerators, map$1(getCurrent));
-                    const shouldCompleteResult = shouldComplete(enumerators);
-                    pipe(this.delegate, notify(next));
-                    if (shouldCompleteResult) {
-                        pipe(this, dispose());
-                    }
-                }
+            const { sinkEnumerator, enumerators } = this;
+            if (isDisposed(this)) {
+                return;
+            }
+            pipe(sinkEnumerator, notify(next));
+            if (!shouldEmit(enumerators)) {
+                return;
+            }
+            const zippedNext = pipe(enumerators, map$1(getCurrent));
+            pipe(this.delegate, notify(zippedNext));
+            if (shouldComplete(enumerators)) {
+                pipe(this, dispose());
             }
         },
     }));
@@ -421,7 +415,7 @@ const zip = (() => {
                 enumerators.push(enumerator);
             }
             else {
-                const enumerator = pipe(createZipObserverEnumerator(), addTo(observer));
+                const enumerator = pipe(createSinkEnumerator(), addTo(observer));
                 enumerators.push(enumerator);
                 pipe(createZipObserver(observer, enumerators, enumerator), addTo(observer), sourceFrom(next));
             }

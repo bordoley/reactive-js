@@ -12,6 +12,7 @@ import {
   init,
 } from "../__internal__/util/Object";
 import {
+  ForEach,
   Keep,
   Map,
   ReadonlyArrayLike,
@@ -59,6 +60,14 @@ export const every =
   arr =>
     arr.every(predicate);
 
+export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
+  <T>(effect: SideEffect1<T>): Function1<readonly T[], readonly T[]> =>
+  arr => {
+    arr.forEach(effect);
+    return arr;
+  };
+export const forEachT: ForEach<ReadonlyArrayLike> = { forEach };
+
 export const keep: Keep<ReadonlyArrayLike>["keep"] =
   <T>(predicate: Predicate<T>) =>
   (arr: readonly T[]): readonly T[] => {
@@ -74,6 +83,11 @@ export const map: Map<ReadonlyArrayLike>["map"] =
   (arr: readonly TA[]): readonly TB[] =>
     arr.map(mapper);
 export const mapT: Map<ReadonlyArrayLike> = { map };
+
+export const some =
+  <T>(predicate: Predicate<T>): Function1<ReadonlyArrayLike<T>, boolean> =>
+  arr =>
+    arr.some(predicate);
 
 export type FromArrayOptions = {
   readonly start: number;

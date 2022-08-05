@@ -72,9 +72,11 @@
 - [isEmpty](functions.md#isempty)
 - [isEqualTo](functions.md#isequalto)
 - [isEven](functions.md#iseven)
+- [isFalse](functions.md#isfalse)
 - [isNone](functions.md#isnone)
 - [isOdd](functions.md#isodd)
 - [isSome](functions.md#issome)
+- [isTrue](functions.md#istrue)
 - [max](functions.md#max)
 - [min](functions.md#min)
 - [negate](functions.md#negate)
@@ -1783,6 +1785,22 @@ Returns `true` if `x` is an even number, otherwise `false`.
 
 ___
 
+### isFalse
+
+▸ **isFalse**(`v`): v is false
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `boolean` |
+
+#### Returns
+
+v is false
+
+___
+
 ### isNone
 
 ▸ **isNone**<`T`\>(`option`): option is undefined
@@ -1846,6 +1864,22 @@ Returns true if `option` is not `none`.
 #### Returns
 
 option is T
+
+___
+
+### isTrue
+
+▸ **isTrue**(`v`): v is true
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `boolean` |
+
+#### Returns
+
+v is true
 
 ___
 

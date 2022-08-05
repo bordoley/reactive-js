@@ -75,8 +75,10 @@ import { keepType } from "../containers/ContainerLike";
 import {
   toObservable as arrayToObservable,
   every,
+  forEach as forEachArray,
   keepT as keepArrayT,
   map as mapArray,
+  some,
 } from "../containers/ReadonlyArrayLike";
 import {
   Equality,
@@ -86,11 +88,13 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  compose,
   getLength,
   getOrRaise,
   isEmpty,
   isNone,
   isSome,
+  isTrue,
   min,
   newInstance,
   none,
@@ -138,6 +142,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  SinkLike,
   SinkLike_notify,
   SourceLike_move,
   disposed,
@@ -1066,29 +1071,28 @@ export const toRunnableObservable =
 export const zip: Zip<ObservableLike>["zip"] = (() => {
   const typedObserverMixin = observerMixin();
 
-  const shouldEmit = (enumerators: readonly EnumeratorLike[]) =>
-    pipe(enumerators, every(hasCurrent));
+  const shouldEmit = compose(
+    mapArray((x: EnumeratorLike) => hasCurrent(x) || move(x)),
+    every(isTrue),
+  );
 
-  const shouldComplete = (enumerators: readonly EnumeratorLike[]) => {
-    for (const enumerator of enumerators) {
-      move(enumerator);
-      if (isDisposed(enumerator) && !hasCurrent(enumerator)) {
-        return true;
-      }
-    }
-    return false;
+  const shouldComplete = compose(
+    forEachArray<EnumeratorLike<unknown>>(move),
+    some(isDisposed),
+  );
+
+  type TSinkEnumeratorProperties = {
+    [EnumeratorLike_current]: unknown;
+    [EnumeratorLike_hasCurrent]: boolean;
+    buffer: unknown[];
   };
 
-  const createZipObserverEnumerator = createInstanceFactory(
+  const createSinkEnumerator = createInstanceFactory(
     clazz(
       __extends(disposableMixin),
-      function ZipObserverEnumerator(
-        this: MutableEnumeratorLike & {
-          buffer: unknown[];
-        },
-      ): EnumeratorLike & {
-        readonly buffer: unknown[];
-      } {
+      function SinkEnumerator(
+        this: EnumeratorLike & SinkLike & TSinkEnumeratorProperties,
+      ): EnumeratorLike & SinkLike {
         init(disposableMixin, this);
         this.buffer = [];
 
@@ -1096,6 +1100,7 @@ export const zip: Zip<ObservableLike>["zip"] = (() => {
           this,
           onDisposed(() => {
             this.buffer.length = 0;
+            this[EnumeratorLike_hasCurrent] = false;
           }),
         );
       },
@@ -1105,13 +1110,16 @@ export const zip: Zip<ObservableLike>["zip"] = (() => {
         [EnumeratorLike_hasCurrent]: false,
       },
       {
-        [SourceLike_move](
-          this: DisposableLike & {
-            [EnumeratorLike_current]: unknown;
-            [EnumeratorLike_hasCurrent]: boolean;
-            buffer: unknown[];
-          },
+        [SinkLike_notify](
+          this: DisposableLike & TSinkEnumeratorProperties,
+          next: unknown,
         ) {
+          if (isDisposed(this)) {
+            return;
+          }
+          this.buffer.push(next);
+        },
+        [SourceLike_move](this: DisposableLike & TSinkEnumeratorProperties) {
           const { buffer } = this;
 
           if (!isDisposed(this) && getLength(buffer) > 0) {
@@ -1126,36 +1134,34 @@ export const zip: Zip<ObservableLike>["zip"] = (() => {
     ),
   );
 
+  type TZipObserverProperties = {
+    delegate: ObserverLike<readonly unknown[]>;
+    enumerators: readonly EnumeratorLike<any>[];
+    sinkEnumerator: EnumeratorLike & SinkLike;
+  };
+
   const createZipObserver = createInstanceFactory(
     clazz(
       __extends(disposableMixin, typedObserverMixin),
       function ZipObserver(
-        this: ObserverLike & {
-          delegate: ObserverLike<readonly unknown[]>;
-          enumerators: readonly EnumeratorLike<any>[];
-          enumerator: EnumeratorLike & {
-            buffer: unknown[];
-          };
-        },
+        this: ObserverLike & TZipObserverProperties,
         delegate: ObserverLike<readonly unknown[]>,
         enumerators: readonly EnumeratorLike<any>[],
-        enumerator: EnumeratorLike & {
-          buffer: unknown[];
-        },
+        sinkEnumerator: EnumeratorLike & SinkLike,
       ): ObserverLike {
         init(disposableMixin, this);
         init(typedObserverMixin, this, getScheduler(delegate));
 
         this.delegate = delegate;
-        this.enumerator = enumerator;
+        this.sinkEnumerator = sinkEnumerator;
         this.enumerators = enumerators;
 
         return pipe(
           this,
           onComplete(() => {
             if (
-              isDisposed(enumerator) ||
-              (isEmpty(enumerator.buffer) && !hasCurrent(enumerator))
+              isDisposed(sinkEnumerator) ||
+              (!hasCurrent(sinkEnumerator) && !move(sinkEnumerator))
             ) {
               pipe(delegate, dispose());
             }
@@ -1165,41 +1171,29 @@ export const zip: Zip<ObservableLike>["zip"] = (() => {
       {
         delegate: none,
         enumerators: none,
-        enumerator: none,
+        sinkEnumerator: none,
       },
       {
         [SinkLike_notify](
-          this: ObserverLike & {
-            delegate: ObserverLike<readonly unknown[]>;
-            enumerators: readonly EnumeratorLike<any>[];
-            enumerator: EnumeratorLike & {
-              [EnumeratorLike_current]: unknown;
-              [EnumeratorLike_hasCurrent]: boolean;
-              buffer: unknown[];
-            };
-          },
+          this: ObserverLike & TZipObserverProperties,
           next: unknown,
         ) {
-          const { enumerator, enumerators } = this;
+          const { sinkEnumerator, enumerators } = this;
+          if (isDisposed(this)) {
+            return;
+          }
 
-          if (!isDisposed(this)) {
-            if (hasCurrent(enumerator)) {
-              enumerator.buffer.push(next);
-            } else {
-              enumerator[EnumeratorLike_current] = next;
-              enumerator[EnumeratorLike_hasCurrent] = true;
-            }
+          pipe(sinkEnumerator, notify(next));
 
-            if (shouldEmit(enumerators)) {
-              const next = pipe(enumerators, mapArray(getCurrent));
-              const shouldCompleteResult = shouldComplete(enumerators);
+          if (!shouldEmit(enumerators)) {
+            return;
+          }
 
-              pipe(this.delegate, notify(next));
+          const zippedNext = pipe(enumerators, mapArray(getCurrent));
+          pipe(this.delegate, notify(zippedNext));
 
-              if (shouldCompleteResult) {
-                pipe(this, dispose());
-              }
-            }
+          if (shouldComplete(enumerators)) {
+            pipe(this, dispose());
           }
         },
       },
@@ -1223,10 +1217,7 @@ export const zip: Zip<ObservableLike>["zip"] = (() => {
           move(enumerator);
           enumerators.push(enumerator);
         } else {
-          const enumerator = pipe(
-            createZipObserverEnumerator(),
-            addTo(observer),
-          );
+          const enumerator = pipe(createSinkEnumerator(), addTo(observer));
           enumerators.push(enumerator);
 
           pipe(
