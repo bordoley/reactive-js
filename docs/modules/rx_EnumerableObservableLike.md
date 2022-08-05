@@ -24,6 +24,7 @@
 - [toEnumerableT](rx_EnumerableObservableLike.md#toenumerablet)
 - [toFlowableT](rx_EnumerableObservableLike.md#toflowablet)
 - [toReadonlyArrayT](rx_EnumerableObservableLike.md#toreadonlyarrayt)
+- [zipT](rx_EnumerableObservableLike.md#zipt)
 
 ### Functions
 
@@ -138,6 +139,12 @@ ___
 ### toReadonlyArrayT
 
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md), { `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }\>
+
+___
+
+### zipT
+
+• `Const` **zipT**: [`Zip`](containers.md#zip)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
 
 ## Functions
 

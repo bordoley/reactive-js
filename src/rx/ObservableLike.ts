@@ -33,11 +33,16 @@ import {
   createThrowIfEmptyObserver,
   observerMixin,
 } from "../__internal__/scheduling/ObserverLikeMixin";
+import { isInContinuation } from "../__internal__/schedulingInternal";
 import {
   DisposableRefLike,
   createDisposableRef,
   disposableMixin,
 } from "../__internal__/util/DisposableLikeMixins";
+import {
+  MutableEnumeratorLike,
+  enumeratorMixin,
+} from "../__internal__/util/EnumeratorLikeMixin";
 import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
   PropertyTypeOf,
@@ -64,9 +69,13 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
+  Zip,
 } from "../containers";
+import { keepType } from "../containers/ContainerLike";
 import {
   toObservable as arrayToObservable,
+  every,
+  keepT as keepArrayT,
   map as mapArray,
 } from "../containers/ReadonlyArrayLike";
 import {
@@ -78,6 +87,7 @@ import {
   Reducer,
   SideEffect1,
   getLength,
+  getOrRaise,
   isEmpty,
   isNone,
   isSome,
@@ -88,6 +98,12 @@ import {
   pipeUnsafe,
   returns,
 } from "../functions";
+import { EnumerableLike, createEnumerable } from "../ix";
+import {
+  toObservable as enumerableToObservable,
+  zip as enumerableZip,
+  enumerate,
+} from "../ix/EnumerableLike";
 import {
   EnumerableObservableLike,
   MulticastObservableLike,
@@ -107,16 +123,28 @@ import {
   ObserverLike,
   ObserverLike_dispatcher,
   SchedulerLike,
+  SchedulerLike_inContinuation,
+  SchedulerLike_now,
+  SchedulerLike_requestYield,
+  SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
 } from "../scheduling";
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import { getScheduler } from "../scheduling/ObserverLike";
 import {
+  ContinuationLike,
   DisposableLike,
   DisposableOrTeardown,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   SinkLike_notify,
+  SourceLike_move,
   disposed,
 } from "../util";
+import { run } from "../util/ContinuationLike";
 import {
+  add,
   addTo,
   addToIgnoringChildErrors,
   bindTo,
@@ -125,7 +153,8 @@ import {
   onComplete,
   onDisposed,
 } from "../util/DisposableLike";
-import { notifySink, sourceFrom } from "../util/SinkLike";
+import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
+import { notify, notifySink, sourceFrom } from "../util/SinkLike";
 import { getObserverCount } from "./MulticastObservableLike";
 import { publishTo } from "./SubjectLike";
 
@@ -859,6 +888,129 @@ export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {
   throwIfEmpty,
 };
 
+export const toEnumerable: <T>() => Function1<
+  ObservableLike<T>,
+  Option<EnumerableLike<T>>
+> = /*@__PURE__*/ (<T>() => {
+  const typedEnumeratorMixin = enumeratorMixin<T>();
+  const typedObserverMixin = observerMixin<T>();
+
+  type TEnumeratorSchedulerProperties = {
+    [SchedulerLike_inContinuation]: boolean;
+    continuations: ContinuationLike[];
+  } & PropertyTypeOf<[typeof disposableMixin, typeof typedEnumeratorMixin]>;
+
+  type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
+
+  const createEnumeratorScheduler = createInstanceFactory(
+    clazz(
+      __extends(disposableMixin, typedEnumeratorMixin),
+      function EnumeratorScheduler(
+        this: EnumeratorScheduler & TEnumeratorSchedulerProperties,
+      ) {
+        init(disposableMixin, this);
+        init(typedEnumeratorMixin, this);
+
+        this.continuations = [];
+
+        return this;
+      },
+      {
+        [SchedulerLike_inContinuation]: false,
+        continuations: none,
+      },
+      {
+        [SchedulerLike_now]: 0,
+        get [SchedulerLike_shouldYield](): boolean {
+          const self = this as unknown as TEnumeratorSchedulerProperties;
+          return isInContinuation(self);
+        },
+        [SchedulerLike_requestYield](): void {
+          // No-Op: We yield whenever the continuation is running.
+        },
+        [SourceLike_move](
+          this: TEnumeratorSchedulerProperties & MutableEnumeratorLike<T>,
+        ) {
+          if (!isDisposed(this)) {
+            const { continuations } = this;
+
+            const continuation = continuations.shift();
+            if (isSome(continuation)) {
+              this[SchedulerLike_inContinuation] = true;
+              run(continuation);
+              this[SchedulerLike_inContinuation] = false;
+            } else {
+              pipe(this, dispose());
+            }
+          }
+        },
+        [SchedulerLike_schedule](
+          this: TEnumeratorSchedulerProperties & DisposableLike,
+          continuation: ContinuationLike,
+          _?: { readonly delay?: number },
+        ): void {
+          pipe(this, add(continuation));
+
+          if (!isDisposed(continuation)) {
+            this.continuations.push(continuation);
+          }
+        },
+      },
+    ),
+  );
+
+  type TEnumeratorObserverProperties = {
+    enumerator: EnumeratorScheduler;
+  } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
+
+  const createEnumeratorObserver = createInstanceFactory(
+    clazz(
+      __extends(disposableMixin, typedObserverMixin),
+      function EnumeratorObserver(
+        this: TEnumeratorObserverProperties & ObserverLike<T>,
+        enumerator: EnumeratorScheduler,
+      ) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, enumerator);
+        this.enumerator = enumerator;
+
+        return this;
+      },
+      {
+        enumerator: none,
+      },
+      {
+        [SinkLike_notify](this: TEnumeratorObserverProperties, next: T) {
+          this.enumerator[EnumeratorLike_current] = next;
+        },
+      },
+    ),
+  );
+
+  return () =>
+    (obs: ObservableLike<T>): Option<EnumerableLike<T>> =>
+      getObservableType(obs) === enumerableObservableType
+        ? createEnumerable(() => {
+            const scheduler = createEnumeratorScheduler();
+
+            pipe(
+              createEnumeratorObserver(scheduler),
+              addTo(scheduler),
+              sourceFrom(obs),
+            );
+
+            return scheduler;
+          })
+        : none;
+})();
+
+export const toEnumerableObservable =
+  <T>() =>
+  (obs: ObservableLike<T>): Option<EnumerableObservableLike<T>> =>
+    getObservableType(obs) === enumerableObservableType
+      ? (obs as EnumerableObservableLike<T>)
+      : none;
+
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
@@ -902,3 +1054,221 @@ export const toPromise =
         }),
       );
     });
+
+export const toRunnableObservable =
+  <T>() =>
+  (obs: ObservableLike<T>): Option<RunnableObservableLike<T>> =>
+    getObservableType(obs) === runnableObservableType ||
+    getObservableType(obs) === enumerableObservableType
+      ? (obs as RunnableObservableLike<T>)
+      : none;
+
+export const zip: Zip<ObservableLike>["zip"] = (() => {
+  const typedObserverMixin = observerMixin();
+
+  const shouldEmit = (enumerators: readonly EnumeratorLike[]) =>
+    pipe(enumerators, every(hasCurrent));
+
+  const shouldComplete = (enumerators: readonly EnumeratorLike[]) => {
+    for (const enumerator of enumerators) {
+      move(enumerator);
+      if (isDisposed(enumerator) && !hasCurrent(enumerator)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const createZipObserverEnumerator = createInstanceFactory(
+    clazz(
+      __extends(disposableMixin),
+      function ZipObserverEnumerator(
+        this: MutableEnumeratorLike & {
+          buffer: unknown[];
+        },
+      ): EnumeratorLike & {
+        readonly buffer: unknown[];
+      } {
+        init(disposableMixin, this);
+        this.buffer = [];
+
+        return pipe(
+          this,
+          onDisposed(() => {
+            this.buffer.length = 0;
+          }),
+        );
+      },
+      {
+        buffer: none,
+        [EnumeratorLike_current]: none,
+        [EnumeratorLike_hasCurrent]: false,
+      },
+      {
+        [SourceLike_move](
+          this: DisposableLike & {
+            [EnumeratorLike_current]: unknown;
+            [EnumeratorLike_hasCurrent]: boolean;
+            buffer: unknown[];
+          },
+        ) {
+          const { buffer } = this;
+
+          if (!isDisposed(this) && getLength(buffer) > 0) {
+            const next = buffer.shift();
+            this[EnumeratorLike_current] = next;
+            this[EnumeratorLike_hasCurrent] = true;
+          } else {
+            this[EnumeratorLike_hasCurrent] = false;
+          }
+        },
+      },
+    ),
+  );
+
+  const createZipObserver = createInstanceFactory(
+    clazz(
+      __extends(disposableMixin, typedObserverMixin),
+      function ZipObserver(
+        this: ObserverLike & {
+          delegate: ObserverLike<readonly unknown[]>;
+          enumerators: readonly EnumeratorLike<any>[];
+          enumerator: EnumeratorLike & {
+            buffer: unknown[];
+          };
+        },
+        delegate: ObserverLike<readonly unknown[]>,
+        enumerators: readonly EnumeratorLike<any>[],
+        enumerator: EnumeratorLike & {
+          buffer: unknown[];
+        },
+      ): ObserverLike {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, getScheduler(delegate));
+
+        this.delegate = delegate;
+        this.enumerator = enumerator;
+        this.enumerators = enumerators;
+
+        return pipe(
+          this,
+          onComplete(() => {
+            if (
+              isDisposed(enumerator) ||
+              (isEmpty(enumerator.buffer) && !hasCurrent(enumerator))
+            ) {
+              pipe(delegate, dispose());
+            }
+          }),
+        );
+      },
+      {
+        delegate: none,
+        enumerators: none,
+        enumerator: none,
+      },
+      {
+        [SinkLike_notify](
+          this: ObserverLike & {
+            delegate: ObserverLike<readonly unknown[]>;
+            enumerators: readonly EnumeratorLike<any>[];
+            enumerator: EnumeratorLike & {
+              [EnumeratorLike_current]: unknown;
+              [EnumeratorLike_hasCurrent]: boolean;
+              buffer: unknown[];
+            };
+          },
+          next: unknown,
+        ) {
+          const { enumerator, enumerators } = this;
+
+          if (!isDisposed(this)) {
+            if (hasCurrent(enumerator)) {
+              enumerator.buffer.push(next);
+            } else {
+              enumerator[EnumeratorLike_current] = next;
+              enumerator[EnumeratorLike_hasCurrent] = true;
+            }
+
+            if (shouldEmit(enumerators)) {
+              const next = pipe(enumerators, mapArray(getCurrent));
+              const shouldCompleteResult = shouldComplete(enumerators);
+
+              pipe(this.delegate, notify(next));
+
+              if (shouldCompleteResult) {
+                pipe(this, dispose());
+              }
+            }
+          }
+        },
+      },
+    ),
+  );
+
+  const onSink =
+    (observables: readonly ObservableLike[]) => (observer: ObserverLike) => {
+      const enumerators: EnumeratorLike<unknown>[] = [];
+
+      for (const next of observables) {
+        if (getObservableType(next) === enumerableObservableType) {
+          const enumerator = pipe(
+            next,
+            toEnumerable(),
+            getOrRaise(),
+            enumerate(),
+            addTo(observer),
+          );
+
+          move(enumerator);
+          enumerators.push(enumerator);
+        } else {
+          const enumerator = pipe(
+            createZipObserverEnumerator(),
+            addTo(observer),
+          );
+          enumerators.push(enumerator);
+
+          pipe(
+            createZipObserver(observer, enumerators, enumerator),
+            addTo(observer),
+            sourceFrom(next),
+          );
+        }
+      }
+    };
+
+  return (
+    ...observables: readonly ObservableLike<any>[]
+  ): ObservableLike<readonly any[]> => {
+    const enumerableObservables = pipe(
+      observables,
+      mapArray(toEnumerableObservable()),
+      keepType(keepArrayT, isSome),
+    );
+
+    const runnableObservables = pipe(
+      observables,
+      mapArray(toRunnableObservable()),
+      keepType(keepArrayT, isSome),
+    );
+
+    return getLength(enumerableObservables) === getLength(observables)
+      ? pipe(
+          enumerableObservables,
+          mapArray(toEnumerable()),
+          keepType(keepArrayT, isSome),
+          enumerables =>
+            (
+              enumerableZip as unknown as (...v: any[]) => EnumerableLike<any[]>
+            )(...enumerables),
+          enumerableToObservable(),
+        )
+      : getLength(runnableObservables) === getLength(observables)
+      ? createRunnableObservable(onSink(observables))
+      : createObservable(onSink(observables));
+  };
+})();
+export const zipT: Zip<ObservableLike> = {
+  zip: zip as unknown as Zip<ObservableLike>["zip"],
+};
