@@ -159,8 +159,132 @@ interface forEach {
 }
 declare const forEach: forEach;
 declare const forEachT: ForEach<ObservableLike>;
-declare const forkCombineLatest: <T>(...ops: readonly ContainerOperator<ObservableLike<unknown>, T, unknown>[]) => ContainerOperator<ObservableLike<unknown>, T, readonly unknown[]>;
-declare function forkZipLatest<T>(...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]): ContainerOperator<ObservableLike, T, readonly unknown[]>;
+interface forkCombineLatest {
+    <T, TA, TB>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB
+    ]>;
+    <T, TA, TB, TC>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC
+    ]>;
+    <T, TA, TB, TC, TD>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD
+    ]>;
+    <T, TA, TB, TC, TD, TE>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE
+    ]>;
+    <T, TA, TB, TC, TD, TE, TF>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>, f: ContainerOperator<ObservableLike, T, TF>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF
+    ]>;
+    <T, TA, TB, TC, TD, TE, TF, TG>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>, f: ContainerOperator<ObservableLike, T, TF>, g: ContainerOperator<ObservableLike, T, TG>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG
+    ]>;
+    <T, TA, TB, TC, TD, TE, TF, TG, TH>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>, f: ContainerOperator<ObservableLike, T, TF>, g: ContainerOperator<ObservableLike, T, TG>, h: ContainerOperator<ObservableLike, T, TH>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH
+    ]>;
+    <T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>, f: ContainerOperator<ObservableLike, T, TF>, g: ContainerOperator<ObservableLike, T, TG>, h: ContainerOperator<ObservableLike, T, TH>, i: ContainerOperator<ObservableLike, T, TI>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH,
+        TI
+    ]>;
+}
+declare const forkCombineLatest: forkCombineLatest;
+interface forkZipLatest {
+    <T, TA, TB>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB
+    ]>;
+    <T, TA, TB, TC>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC
+    ]>;
+    <T, TA, TB, TC, TD>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD
+    ]>;
+    <T, TA, TB, TC, TD, TE>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE
+    ]>;
+    <T, TA, TB, TC, TD, TE, TF>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>, f: ContainerOperator<ObservableLike, T, TF>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF
+    ]>;
+    <T, TA, TB, TC, TD, TE, TF, TG>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>, f: ContainerOperator<ObservableLike, T, TF>, g: ContainerOperator<ObservableLike, T, TG>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG
+    ]>;
+    <T, TA, TB, TC, TD, TE, TF, TG, TH>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>, f: ContainerOperator<ObservableLike, T, TF>, g: ContainerOperator<ObservableLike, T, TG>, h: ContainerOperator<ObservableLike, T, TH>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH
+    ]>;
+    <T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ContainerOperator<ObservableLike, T, TA>, b: ContainerOperator<ObservableLike, T, TB>, c: ContainerOperator<ObservableLike, T, TC>, d: ContainerOperator<ObservableLike, T, TD>, e: ContainerOperator<ObservableLike, T, TE>, f: ContainerOperator<ObservableLike, T, TF>, g: ContainerOperator<ObservableLike, T, TG>, h: ContainerOperator<ObservableLike, T, TH>, i: ContainerOperator<ObservableLike, T, TI>): ContainerOperator<ObservableLike, T, readonly [
+        TA,
+        TB,
+        TC,
+        TD,
+        TE,
+        TF,
+        TG,
+        TH,
+        TI
+    ]>;
+}
+declare const forkZipLatest: forkZipLatest;
 interface keep {
     <T, C extends ObservableLike = ObservableLike>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
     <T>(predicate: Predicate<T>): Function1<ObservableLike<T>, ObservableLike<T>>;
