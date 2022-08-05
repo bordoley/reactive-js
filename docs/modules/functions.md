@@ -63,6 +63,7 @@
 - [floor](functions.md#floor)
 - [forEach](functions.md#foreach)
 - [getLength](functions.md#getlength)
+- [getOrDefault](functions.md#getordefault)
 - [getOrRaise](functions.md#getorraise)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
@@ -1576,6 +1577,40 @@ ___
 #### Returns
 
 `number`
+
+___
+
+### getOrDefault
+
+▸ **getOrDefault**<`T`\>(`defaultValue`): (`v`: [`Option`](functions.md#option)<`T`\>) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `defaultValue` | `T` |
+
+#### Returns
+
+`fn`
+
+▸ (`v`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | [`Option`](functions.md#option)<`T`\> |
+
+##### Returns
+
+`T`
 
 ___
 

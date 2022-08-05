@@ -1200,7 +1200,7 @@ export const toRunnableT: ToRunnable<EnumerableLike> = {
   toRunnable,
 };
 
-const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
+export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const moveAll = (enumerators: readonly EnumeratorLike[]) => {
     for (const enumerator of enumerators) {
       move(enumerator);

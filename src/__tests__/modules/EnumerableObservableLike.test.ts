@@ -27,6 +27,7 @@ import {
   throwIfEmptyT,
   toEnumerable,
   toReadonlyArrayT,
+  zipT,
 } from "../../rx/EnumerableObservableLike";
 import { onSubscribe, subscribe } from "../../rx/ObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling";
@@ -47,6 +48,7 @@ import {
   takeLastTests,
   takeWhileTests,
   throwIfEmptyTests,
+  zipTests,
 } from "../operators";
 
 export const EnumerableObservableLikeTests = describe(
@@ -121,6 +123,11 @@ export const EnumerableObservableLikeTests = describe(
   throwIfEmptyTests({
     fromArray: toObservable,
     ...throwIfEmptyT,
+    ...toReadonlyArrayT,
+  }),
+  zipTests({
+    fromArray: toObservable,
+    ...zipT,
     ...toReadonlyArrayT,
   }),
   describe(
