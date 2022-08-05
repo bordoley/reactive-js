@@ -20,15 +20,10 @@ declare const takeFirstT: TakeFirst<EnumerableObservableLike>;
 declare const takeLastT: TakeLast<EnumerableObservableLike>;
 declare const takeWhileT: TakeWhile<EnumerableObservableLike>;
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableObservableLike>;
-declare const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<EnumerableObservableLike>;
-declare const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"];
 declare const toFlowableT: ToFlowable<EnumerableObservableLike>;
-declare const toReadonlyArray: ToReadonlyArray<EnumerableObservableLike, {
-    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-}>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<EnumerableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
 declare const zipT: Zip<EnumerableObservableLike>;
-export { bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT, zipT };
+export { bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toEnumerableT, toFlowableT, toReadonlyArrayT, zipT };

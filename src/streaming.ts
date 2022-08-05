@@ -220,7 +220,7 @@ export const createStreamble = /*@__PURE__*/ (() => {
     newInstance(CreateStreamable, stream);
 })();
 
-interface createLiftedFlowable {
+interface CreateLiftedFlowable {
   <A>(op1: ContainerOperator<ObservableLike, FlowMode, A>): FlowableLike<A>;
   <A, B>(
     op1: ContainerOperator<ObservableLike, FlowMode, A>,
@@ -322,7 +322,7 @@ interface createLiftedFlowable {
     op12: ContainerOperator<ObservableLike, K, L>,
   ): FlowableLike<L>;
 }
-export const createLiftedFlowable: createLiftedFlowable = <T>(
+export const createLiftedFlowable: CreateLiftedFlowable = <T>(
   ...ops: readonly ContainerOperator<ObservableLike, any, any>[]
 ) => {
   const op =
@@ -338,7 +338,7 @@ export const createLiftedFlowable: createLiftedFlowable = <T>(
   ) as FlowableLike<T>;
 };
 
-interface createLiftedStreamable {
+interface CreateLiftedStreamable {
   <T, A>(op1: ContainerOperator<ObservableLike, T, A>): StreamableLike<T, A>;
   <T, A, B>(
     op1: ContainerOperator<ObservableLike, T, A>,
@@ -441,7 +441,7 @@ interface createLiftedStreamable {
   ): StreamableLike<T, L>;
 }
 
-export const createLiftedStreamable: createLiftedStreamable = (
+export const createLiftedStreamable: CreateLiftedStreamable = (
   ...ops: readonly ContainerOperator<ObservableLike<any>, any, any>[]
 ) => {
   const op =

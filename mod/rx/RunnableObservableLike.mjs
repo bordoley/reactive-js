@@ -1,45 +1,65 @@
 /// <reference types="./RunnableObservableLike.d.ts" />
-import { pipe, isSome } from '../functions.mjs';
+import { pipe } from '../functions.mjs';
 import { createObservable } from '../rx.mjs';
-import { createVirtualTimeScheduler } from '../scheduling.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { toPausableScheduler } from '../scheduling/SchedulerLike.mjs';
 import { createLiftedFlowable } from '../streaming.mjs';
-import { run } from '../util/ContinuationLike.mjs';
 import { toObservable } from '../util/DisposableLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
-import { buffer, concat, decodeWithCharset, distinctUntilChanged, forEach, keep, map, merge, pairwise, reduce, scan, skipFirst, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, subscribeOn, takeUntil, subscribe } from './ObservableLike.mjs';
-import { add, bindTo, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { buffer, concat, decodeWithCharset, distinctUntilChanged, forEach, keep, map, merge, pairwise, reduce, scan, skipFirst, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, subscribeOn, takeUntil, subscribe, toReadonlyArray } from './ObservableLike.mjs';
+import { add, bindTo } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const bufferT = {
     buffer: buffer,
 };
 const concatT = {
-    concat,
+    concat: concat,
 };
 const decodeWithCharsetT = {
-    decodeWithCharset,
+    decodeWithCharset: decodeWithCharset,
 };
-const distinctUntilChangedT = { distinctUntilChanged };
-const forEachT = { forEach };
-const keepT = { keep };
-const mapT = { map };
+const distinctUntilChangedT = {
+    distinctUntilChanged: distinctUntilChanged,
+};
+const forEachT = {
+    forEach: forEach,
+};
+const keepT = {
+    keep: keep,
+};
+const mapT = {
+    map: map,
+};
 const mergeT = {
     concat: merge,
 };
-const pairwiseT = { pairwise };
-const reduceT = { reduce };
-const scanT = { scan };
-const skipFirstT = { skipFirst };
+const pairwiseT = {
+    pairwise: pairwise,
+};
+const reduceT = {
+    reduce: reduce,
+};
+const scanT = {
+    scan: scan,
+};
+const skipFirstT = {
+    skipFirst: skipFirst,
+};
 const switchAllT = {
     concatAll: switchAll,
 };
-const takeFirstT = { takeFirst };
-const takeLastT = { takeLast };
-const takeWhileT = { takeWhile };
+const takeFirstT = {
+    takeFirst: takeFirst,
+};
+const takeLastT = {
+    takeLast: takeLast,
+};
+const takeWhileT = {
+    takeWhile: takeWhile,
+};
 const throwIfEmptyT = {
-    throwIfEmpty,
+    throwIfEmpty: throwIfEmpty,
 };
 const toFlowable = () => observable => createLiftedFlowable((modeObs) => createObservable(observer => {
     const pausableScheduler = pipe(observer, getScheduler, toPausableScheduler);
@@ -55,20 +75,6 @@ const toFlowable = () => observable => createLiftedFlowable((modeObs) => createO
     }), subscribe(getScheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
 }));
 const toFlowableT = { toFlowable };
-const toReadonlyArray = (options = {}) => observable => {
-    const { schedulerFactory = createVirtualTimeScheduler } = options;
-    const scheduler = schedulerFactory();
-    const result = [];
-    const subscription = pipe(observable, forEach(next => {
-        result.push(next);
-    }), subscribe(scheduler));
-    run(scheduler);
-    const exception = getException(subscription);
-    if (isSome(exception)) {
-        throw exception.cause;
-    }
-    return result;
-};
 const toReadonlyArrayT = { toReadonlyArray };
 
-export { bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArray, toReadonlyArrayT };
+export { bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, mapT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toFlowable, toFlowableT, toReadonlyArrayT };

@@ -8,7 +8,7 @@ import {
   none,
   pipe,
 } from "../functions";
-import { ObservableLike, createObservable, deferObservable } from "../rx";
+import { ObservableLike, createObservable } from "../rx";
 import { sinkInto } from "../rx/ReactiveContainerLike";
 import { SchedulerLike } from "../scheduling";
 import { dispatch } from "../scheduling/DispatcherLike";
@@ -112,7 +112,7 @@ export const fetch =
     onResponse: Function1<Response, Promise<T> | ObservableLike<T>>,
   ): Function1<FetchRequest | string, ObservableLike<T>> =>
   fetchRequest =>
-    deferObservable(() => async observer => {
+    createObservable(async observer => {
       const signal = toAbortSignal(observer);
 
       let request: Option<string | Request> = none;

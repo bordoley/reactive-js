@@ -147,15 +147,8 @@ const deferObservable = (factory, options) => createObservable(observer => {
 const deferObservableT = {
     defer: deferObservable,
 };
-const deferEnumerableObservable = (factory, options) => createEnumerableObservable(observer => {
-    const sideEffect = factory();
-    if (typeof sideEffect === "function") {
-        const callback = () => sideEffect(observer);
-        pipe(observer, getScheduler, schedule(callback, options), addTo(observer));
-    }
-    else {
-        sideEffect[ReactiveContainerLike_sinkInto](observer);
-    }
+const deferEnumerableObservable = (factory) => createEnumerableObservable(observer => {
+    factory()[ReactiveContainerLike_sinkInto](observer);
 });
 const deferEnumerableObservableT = {
     defer: deferEnumerableObservable,

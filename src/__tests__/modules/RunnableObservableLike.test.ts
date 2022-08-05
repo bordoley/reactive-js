@@ -22,13 +22,9 @@ import {
   subscribe,
   switchAll,
   takeUntil,
-} from "../../rx/ObservableLike";
-import {
-  mapT,
-  switchAllT,
-  toFlowable,
   toReadonlyArray,
-} from "../../rx/RunnableObservableLike";
+} from "../../rx/ObservableLike";
+import { mapT, switchAllT, toFlowable } from "../../rx/RunnableObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling";
 import { dispatch, dispatchTo } from "../../scheduling/DispatcherLike";
 import { getCurrentTime, schedule } from "../../scheduling/SchedulerLike";
@@ -71,11 +67,7 @@ export const RunnableObservableLikeTests = describe(
       "with empty source",
       pipeLazy(
         emptyObservable({ delay: 1 }),
-        switchAll<
-          RunnableObservableLike<RunnableObservableLike>,
-          RunnableObservableLike,
-          unknown
-        >(),
+        switchAll(),
         toReadonlyArray(),
         expectArrayEquals([] as unknown[]),
       ),
@@ -90,7 +82,7 @@ export const RunnableObservableLikeTests = describe(
             fromArray: <T>() => toObservable<T>({ delay: 0 }),
             ...mapT,
           }),
-          switchAll<RunnableObservableLike, RunnableObservableLike, unknown>(),
+          switchAll(),
           toReadonlyArray(),
         ),
         expectToThrow,
@@ -130,9 +122,7 @@ export const RunnableObservableLikeTests = describe(
     pipeLazy(
       [1, 2, 3, 4, 5],
       toObservable({ delay: 1 }),
-      takeUntil<RunnableObservableLike, number>(
-        pipe([1], toObservable({ delay: 3, delayStart: true })),
-      ),
+      takeUntil(pipe([1], toObservable({ delay: 3, delayStart: true }))),
       toReadonlyArray(),
       expectArrayEquals([1, 2, 3]),
     ),

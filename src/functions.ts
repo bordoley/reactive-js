@@ -155,7 +155,7 @@ export const arrayEquality =
   (a: readonly T[], b: readonly T[]) =>
     getLength(a) === getLength(b) && a.every((v, i) => valuesEquality(b[i], v));
 
-interface callWith {
+interface CallWith {
   <T>(): Function1<Factory<T>, T>;
   <TA, T>(a: TA): Function1<Function1<TA, T>, T>;
   <TA, TB, T>(a: TA, b: TB): Function1<Function2<TA, TB, T>, T>;
@@ -172,7 +172,7 @@ interface callWith {
  * @returns A function that takes a function `f` as an argument
  * and invokes it with the provided arguments, returning the result.
  */
-export const callWith: callWith =
+export const callWith: CallWith =
   <T>(...args: readonly unknown[]) =>
   (f: (...args: readonly any[]) => T) =>
     f(...args);
@@ -182,7 +182,7 @@ export const composeUnsafe =
   source =>
     pipeUnsafe(source, ...operators);
 
-interface compose {
+interface Compose {
   <T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   <T, A, B, C>(
     op1: Function1<T, A>,
@@ -283,7 +283,7 @@ interface compose {
 /**
  * Composes a series of unary functions.
  */
-export const compose: compose = composeUnsafe;
+export const compose: Compose = composeUnsafe;
 
 /**
  * An updater function that returns the result of decrementing `x`.
@@ -400,7 +400,7 @@ export const isTrue = (v: boolean): v is true => v;
  */
 export const negate = (v: boolean): boolean => !v;
 
-interface newInstance {
+interface NewInstance {
   <T>(Constructor: Constructor<T>): T;
   <T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
   <T, TA, TB>(Constructor: Constructor2<TA, TB, T>, a: TA, b: TB): T;
@@ -418,7 +418,7 @@ interface newInstance {
     d: TD,
   ): T;
 }
-export const newInstance: newInstance = (
+export const newInstance: NewInstance = (
   Constructor: new (...args: readonly any[]) => unknown,
   ...args: readonly unknown[]
 ): unknown => new Constructor(...args);
@@ -428,7 +428,7 @@ export const newInstance: newInstance = (
  */
 export const none = undefined;
 
-interface partial {
+interface Partial {
   <TA, TB, TOut>(b: TB): Function1<
     Function2<TA, TB, TOut>,
     Function1<TA, TOut>
@@ -442,7 +442,7 @@ interface partial {
     Function1<TA, TOut>
   >;
 }
-export const partial: partial =
+export const partial: Partial =
   (...args: readonly unknown[]) =>
   (f: (...args: readonly any[]) => unknown) =>
   (arg0: unknown) =>
@@ -456,7 +456,7 @@ export const pipeUnsafe = (
   ...operators: Function1<any, any>[]
 ): unknown => operators.reduce(updateReducer, source);
 
-interface pipe {
+interface Pipe {
   <T, A>(src: T, op1: Function1<T, A>): A;
   <T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
   <T, A, B, C>(
@@ -568,9 +568,9 @@ interface pipe {
 /**
  * Pipes `source` through a series of unary functions.
  */
-export const pipe: pipe = pipeUnsafe;
+export const pipe: Pipe = pipeUnsafe;
 
-interface pipeLazy {
+interface PipeLazy {
   <T, A>(src: T, op1: Function1<T, A>): Factory<A>;
   <T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): Factory<B>;
   <T, A, B, C>(
@@ -682,7 +682,7 @@ interface pipeLazy {
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
-export const pipeLazy: pipeLazy =
+export const pipeLazy: PipeLazy =
   (
     source: unknown,
     ...operators: Function1<unknown, unknown>[]

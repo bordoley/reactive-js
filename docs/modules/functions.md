@@ -4,15 +4,6 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [callWith](../interfaces/functions.callWith.md)
-- [compose](../interfaces/functions.compose.md)
-- [newInstance](../interfaces/functions.newInstance.md)
-- [partial](../interfaces/functions.partial.md)
-- [pipe](../interfaces/functions.pipe.md)
-- [pipeLazy](../interfaces/functions.pipeLazy.md)
-
 ### Type Aliases
 
 - [Comparator](functions.md#comparator)

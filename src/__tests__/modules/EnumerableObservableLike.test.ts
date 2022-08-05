@@ -26,11 +26,10 @@ import {
   takeLastT,
   takeWhileT,
   throwIfEmptyT,
-  toEnumerable,
   toReadonlyArrayT,
   zipT,
 } from "../../rx/EnumerableObservableLike";
-import { onSubscribe, subscribe } from "../../rx/ObservableLike";
+import { onSubscribe, subscribe, toEnumerable } from "../../rx/ObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling";
 import { run } from "../../util/ContinuationLike";
 import { getException } from "../../util/DisposableLike";
