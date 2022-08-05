@@ -646,25 +646,25 @@ interface forkCombineLatest {
   <T, TA, TB>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB]>;
   <T, TA, TB, TC>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
     c: ContainerOperator<ObservableLike, T, TC>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB, TC]>;
   <T, TA, TB, TC, TD>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
     c: ContainerOperator<ObservableLike, T, TC>,
     d: ContainerOperator<ObservableLike, T, TD>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB, TC, TD]>;
   <T, TA, TB, TC, TD, TE>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
     c: ContainerOperator<ObservableLike, T, TC>,
     d: ContainerOperator<ObservableLike, T, TD>,
     e: ContainerOperator<ObservableLike, T, TE>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB, TC, TD, TE]>;
   <T, TA, TB, TC, TD, TE, TF>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
@@ -672,7 +672,7 @@ interface forkCombineLatest {
     d: ContainerOperator<ObservableLike, T, TD>,
     e: ContainerOperator<ObservableLike, T, TE>,
     f: ContainerOperator<ObservableLike, T, TF>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB, TC, TD, TE, TF]>;
   <T, TA, TB, TC, TD, TE, TF, TG>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
@@ -681,7 +681,11 @@ interface forkCombineLatest {
     e: ContainerOperator<ObservableLike, T, TE>,
     f: ContainerOperator<ObservableLike, T, TF>,
     g: ContainerOperator<ObservableLike, T, TG>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG]>;
+  ): ContainerOperator<
+    ObservableLike,
+    T,
+    readonly [TA, TB, TC, TD, TE, TF, TG]
+  >;
   <T, TA, TB, TC, TD, TE, TF, TG, TH>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
@@ -691,7 +695,11 @@ interface forkCombineLatest {
     f: ContainerOperator<ObservableLike, T, TF>,
     g: ContainerOperator<ObservableLike, T, TG>,
     h: ContainerOperator<ObservableLike, T, TH>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): ContainerOperator<
+    ObservableLike,
+    T,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+  >;
   <T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
@@ -702,10 +710,13 @@ interface forkCombineLatest {
     g: ContainerOperator<ObservableLike, T, TG>,
     h: ContainerOperator<ObservableLike, T, TH>,
     i: ContainerOperator<ObservableLike, T, TI>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): ContainerOperator<
+    ObservableLike,
+    T,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+  >;
 }
-export const forkCombineLatest =
-  <T>(
+export const forkCombineLatest: forkCombineLatest = (<T>(
     ...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]
   ): ContainerOperator<ObservableLike, T, readonly unknown[]> =>
   (obs: ObservableLike<T>) =>
@@ -715,30 +726,30 @@ export const forkCombineLatest =
         mapArray(op => pipe(obs, op)),
       ),
       LatestMode.Combine,
-    );
+    )) as unknown as forkCombineLatest;
 interface forkZipLatest {
   <T, TA, TB>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB]>;
   <T, TA, TB, TC>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
     c: ContainerOperator<ObservableLike, T, TC>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB, TC]>;
   <T, TA, TB, TC, TD>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
     c: ContainerOperator<ObservableLike, T, TC>,
     d: ContainerOperator<ObservableLike, T, TD>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB, TC, TD]>;
   <T, TA, TB, TC, TD, TE>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
     c: ContainerOperator<ObservableLike, T, TC>,
     d: ContainerOperator<ObservableLike, T, TD>,
     e: ContainerOperator<ObservableLike, T, TE>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB, TC, TD, TE]>;
   <T, TA, TB, TC, TD, TE, TF>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
@@ -746,7 +757,7 @@ interface forkZipLatest {
     d: ContainerOperator<ObservableLike, T, TD>,
     e: ContainerOperator<ObservableLike, T, TE>,
     f: ContainerOperator<ObservableLike, T, TF>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF]>;
+  ): ContainerOperator<ObservableLike, T, readonly [TA, TB, TC, TD, TE, TF]>;
   <T, TA, TB, TC, TD, TE, TF, TG>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
@@ -755,7 +766,11 @@ interface forkZipLatest {
     e: ContainerOperator<ObservableLike, T, TE>,
     f: ContainerOperator<ObservableLike, T, TF>,
     g: ContainerOperator<ObservableLike, T, TG>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG]>;
+  ): ContainerOperator<
+    ObservableLike,
+    T,
+    readonly [TA, TB, TC, TD, TE, TF, TG]
+  >;
   <T, TA, TB, TC, TD, TE, TF, TG, TH>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
@@ -765,7 +780,11 @@ interface forkZipLatest {
     f: ContainerOperator<ObservableLike, T, TF>,
     g: ContainerOperator<ObservableLike, T, TG>,
     h: ContainerOperator<ObservableLike, T, TH>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): ContainerOperator<
+    ObservableLike,
+    T,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+  >;
   <T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: ContainerOperator<ObservableLike, T, TA>,
     b: ContainerOperator<ObservableLike, T, TB>,
@@ -776,20 +795,23 @@ interface forkZipLatest {
     g: ContainerOperator<ObservableLike, T, TG>,
     h: ContainerOperator<ObservableLike, T, TH>,
     i: ContainerOperator<ObservableLike, T, TI>,
-  ): ContainerOperator<ObservableLike, T, [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): ContainerOperator<
+    ObservableLike,
+    T,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+  >;
 }
-export function forkZipLatest<T>(
-  ...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]
-): ContainerOperator<ObservableLike, T, readonly unknown[]> {
-  return (obs: ObservableLike<T>) =>
+export const forkZipLatest: forkZipLatest = (<T>(
+    ...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]
+  ): ContainerOperator<ObservableLike, T, readonly any[]> =>
+  (obs: ObservableLike<T>) =>
     latest(
       pipe(
         ops,
         mapArray(op => pipe(obs, op)),
       ),
       LatestMode.Zip,
-    );
-}
+    )) as unknown as forkZipLatest;
 
 interface keep {
   <T, C extends ObservableLike = ObservableLike>(
