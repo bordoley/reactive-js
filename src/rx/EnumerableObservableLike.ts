@@ -1,4 +1,5 @@
 import {
+  Buffer,
   Concat,
   DecodeWithCharset,
   DistinctUntilChanged,
@@ -22,6 +23,7 @@ import { EnumerableObservableLike } from "../rx";
 import { VirtualTimeSchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import {
+  buffer,
   concat,
   decodeWithCharset,
   distinctUntilChanged,
@@ -45,6 +47,10 @@ import {
   toFlowable as toFlowableObs,
   toReadonlyArray as toReadonlyArrayObs,
 } from "./RunnableObservableLike";
+
+export const bufferT: Buffer<EnumerableObservableLike> = {
+  buffer: buffer as Buffer<EnumerableObservableLike>["buffer"],
+};
 
 export const concatT: Concat<EnumerableObservableLike> = {
   concat,

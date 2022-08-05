@@ -1,14 +1,46 @@
 /// <reference types="./SinkLikeMixin.d.ts" />
-import { returns, none, pipe, isEmpty, getLength, newInstance } from '../../functions.mjs';
+import { pipe, none, getLength, returns, isEmpty, newInstance } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
-import { SinkLike_notify } from '../../util.mjs';
+import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SinkLike_notify, SourceLike_move } from '../../util.mjs';
 import '../../util/DisposableLike.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './DisposableLikeMixins.mjs';
 import { createInstanceFactory, clazz, __extends, init, Object_properties } from './Object.mjs';
-import { addTo, onComplete, dispose } from './DisposableLikeInternal.mjs';
+import { onDisposed, isDisposed, addTo, onComplete, dispose } from './DisposableLikeInternal.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
+const createEnumeratorSink = (() => {
+    return createInstanceFactory(clazz(__extends(disposableMixin), function EnumeratorSink() {
+        init(disposableMixin, this);
+        this.buffer = [];
+        return pipe(this, onDisposed(() => {
+            this.buffer.length = 0;
+            this[EnumeratorLike_hasCurrent] = false;
+        }));
+    }, {
+        buffer: none,
+        [EnumeratorLike_current]: none,
+        [EnumeratorLike_hasCurrent]: false,
+    }, {
+        [SinkLike_notify](next) {
+            if (isDisposed(this)) {
+                return;
+            }
+            this.buffer.push(next);
+        },
+        [SourceLike_move]() {
+            const { buffer } = this;
+            if (!isDisposed(this) && getLength(buffer) > 0) {
+                const next = buffer.shift();
+                this[EnumeratorLike_current] = next;
+                this[EnumeratorLike_hasCurrent] = true;
+            }
+            else {
+                this[EnumeratorLike_hasCurrent] = false;
+            }
+        },
+    }));
+})();
 const createSink = /*@__PURE__*/ (() => createInstanceFactory(clazz(__extends(disposableMixin), function CreateSink() {
     init(disposableMixin, this);
     return this;
@@ -383,4 +415,4 @@ const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createEnumeratorSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

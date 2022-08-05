@@ -22,11 +22,21 @@ import {
   DisposableLike_exception,
   DisposableLike_isDisposed,
   DisposableOrTeardown,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   Exception,
   SinkLike,
   SinkLike_notify,
+  SourceLike_move,
 } from "../../util";
-import { addTo, dispose, onComplete } from "../../util/DisposableLike";
+import {
+  addTo,
+  dispose,
+  isDisposed,
+  onComplete,
+  onDisposed,
+} from "../../util/DisposableLike";
 import { notify } from "../../util/SinkLike";
 import {
   delegatingDisposableMixin,
@@ -46,6 +56,63 @@ import {
 } from "./Object";
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
+
+export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
+  T,
+>() => {
+  type TEnumeratorSinkProperties = {
+    [EnumeratorLike_current]: T;
+    [EnumeratorLike_hasCurrent]: boolean;
+    buffer: T[];
+  };
+
+  return createInstanceFactory(
+    clazz(
+      __extends(disposableMixin),
+      function EnumeratorSink(
+        this: EnumeratorLike<T> & SinkLike<T> & TEnumeratorSinkProperties,
+      ): EnumeratorLike<T> & SinkLike<T> {
+        init(disposableMixin, this);
+        this.buffer = [];
+
+        return pipe(
+          this,
+          onDisposed(() => {
+            this.buffer.length = 0;
+            this[EnumeratorLike_hasCurrent] = false;
+          }),
+        );
+      },
+      {
+        buffer: none,
+        [EnumeratorLike_current]: none,
+        [EnumeratorLike_hasCurrent]: false,
+      },
+      {
+        [SinkLike_notify](
+          this: DisposableLike & TEnumeratorSinkProperties,
+          next: T,
+        ) {
+          if (isDisposed(this)) {
+            return;
+          }
+          this.buffer.push(next);
+        },
+        [SourceLike_move](this: DisposableLike & TEnumeratorSinkProperties) {
+          const { buffer } = this;
+
+          if (!isDisposed(this) && getLength(buffer) > 0) {
+            const next = buffer.shift() as T;
+            this[EnumeratorLike_current] = next;
+            this[EnumeratorLike_hasCurrent] = true;
+          } else {
+            this[EnumeratorLike_hasCurrent] = false;
+          }
+        },
+      },
+    ),
+  );
+})();
 
 export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(

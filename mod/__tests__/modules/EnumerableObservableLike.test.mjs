@@ -4,15 +4,19 @@ import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe, raise, pipeLazy } from '../../functions.mjs';
 import { toReadonlyArray } from '../../ix/EnumerableLike.mjs';
 import { deferEnumerableObservableT } from '../../rx.mjs';
-import { concatT, toReadonlyArrayT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, zipT, toEnumerable } from '../../rx/EnumerableObservableLike.mjs';
+import { bufferT, toReadonlyArrayT, concatT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, zipT, toEnumerable } from '../../rx/EnumerableObservableLike.mjs';
 import { onSubscribe, subscribe } from '../../rx/ObservableLike.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import '../../util/DisposableLike.mjs';
-import { concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests } from '../operators.mjs';
+import { bufferTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests } from '../operators.mjs';
 import { getException } from '../../__internal__/util/DisposableLikeInternal.mjs';
 
-const EnumerableObservableLikeTests = createDescribe("EnumerableObservableLike", concatTests({
+const EnumerableObservableLikeTests = createDescribe("EnumerableObservableLike", bufferTests({
+    fromArray: toObservable,
+    ...bufferT,
+    ...toReadonlyArrayT,
+}), concatTests({
     fromArray: toObservable,
     ...concatT,
     ...toReadonlyArrayT,
