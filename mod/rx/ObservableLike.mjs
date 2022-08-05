@@ -10,8 +10,8 @@ import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs'
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { createEnumeratorSink } from '../__internal__/util/SinkLikeMixin.mjs';
 import { keepType } from '../containers/ContainerLike.mjs';
-import { toObservable, map as map$1, every, forEach as forEach$1, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipeUnsafe, min, newInstance, pipe, isEmpty, none, getLength, max, returns, isNone, isSome, compose, isTrue, getOrRaise } from '../functions.mjs';
+import { toObservable, map as map$1, keepT as keepT$1, every, forEach as forEach$1, some } from '../containers/ReadonlyArrayLike.mjs';
+import { pipeUnsafe, min, newInstance, pipe, isEmpty, none, getLength, max, isSome, returns, isNone, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, neverEnumerableObservable, createObservable, runnableObservableType, createRunnableObservable, enumerableObservableType, createEnumerableObservable, createSubject } from '../rx.mjs';
@@ -121,6 +121,14 @@ const bufferT = {
     buffer,
 };
 /**
+ * Returns an `ObservableLike` that combines the latest values from
+ * multiple sources.
+ */
+const combineLatest = (...observables) => latest(observables, 1 /* LatestMode.Combine */);
+const combineLatestT = {
+    zip: combineLatest,
+};
+/**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  * @hidden
  */
@@ -166,6 +174,10 @@ const distinctUntilChangedT = {
 };
 const forEach = /*@__PURE__*/ (() => pipe(createForEachObserver, createForEachOperator(liftEnumerableObservableT)))();
 const forEachT = { forEach };
+const forkCombineLatest = (...ops) => (obs) => latest(pipe(ops, map$1(op => pipe(obs, op))), 1 /* LatestMode.Combine */);
+function forkZipLatest(...ops) {
+    return (obs) => latest(pipe(ops, map$1(op => pipe(obs, op))), 2 /* LatestMode.Zip */);
+}
 const keep = /*@__PURE__*/ (() => pipe(createKeepObserver, createKeepOperator(liftEnumerableObservableT)))();
 const keepT = { keep };
 const map = /*@__PURE__*/ (() => pipe(createMapObserver, createMapOperator(liftEnumerableObservableT)))();
@@ -197,6 +209,74 @@ const mergeImpl = /*@__PURE__*/ (() => {
     };
 })();
 const forkMerge = ((...ops) => (obs) => pipe(ops, map$1(op => op(obs)), mergeImpl));
+const latest = /*@__PURE__*/ (() => {
+    const typedObserverMixin = observerMixin();
+    const add = (self, observer) => {
+        self.observers.push(observer);
+    };
+    const onNotify = (self) => {
+        const { mode, observers } = self;
+        const isReady = observers.every(x => x.ready);
+        if (isReady) {
+            const result = pipe(observers, map$1(observer => observer.latest));
+            pipe(self.delegate, notify(result));
+            if (mode === 2 /* LatestMode.Zip */) {
+                for (const sub of observers) {
+                    sub.ready = false;
+                    sub.latest = none;
+                }
+            }
+        }
+    };
+    const onCompleted = (self) => {
+        self.completedCount++;
+        if (self.completedCount === getLength(self.observers)) {
+            pipe(self.delegate, dispose());
+        }
+    };
+    const createLatestObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, disposableMixin), function LatestObserver(scheduler, ctx) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, scheduler);
+        this.ctx = ctx;
+        return this;
+    }, {
+        ready: false,
+        latest: none,
+        ctx: none,
+    }, {
+        [SinkLike_notify](next) {
+            const { ctx } = this;
+            this.latest = next;
+            this.ready = true;
+            onNotify(ctx);
+        },
+    }));
+    return (observables, mode) => {
+        const onSink = (delegate) => {
+            const ctx = {
+                completedCount: 0,
+                observers: [],
+                delegate,
+                mode,
+            };
+            const onCompleteCb = () => {
+                onCompleted(ctx);
+            };
+            const scheduler = getScheduler(delegate);
+            for (const observable of observables) {
+                const innerObserver = pipe(createLatestObserver(scheduler, ctx), addTo(delegate), onComplete(onCompleteCb), sourceFrom(observable));
+                add(ctx, innerObserver);
+            }
+        };
+        const enumerableObservables = pipe(observables, map$1(toEnumerableObservable()), keepType(keepT$1, isSome));
+        const runnableObservables = pipe(observables, map$1(toRunnableObservable()), keepType(keepT$1, isSome));
+        return getLength(enumerableObservables) === getLength(observables)
+            ? createEnumerableObservable(onSink)
+            : getLength(runnableObservables) === getLength(observables)
+                ? createRunnableObservable(onSink)
+                : createObservable(onSink);
+    };
+})();
 /** @hidden */
 const merge = ((...observables) => mergeImpl(observables));
 const mergeT = {
@@ -471,5 +551,13 @@ const zip = /*@__PURE__*/ (() => {
 const zipT = {
     zip: zip,
 };
+/**
+ * Returns an `ObservableLike` that zips the latest values from
+ * multiple sources.
+ */
+const zipLatest = (...observables) => latest(observables, 2 /* LatestMode.Zip */);
+const zipLatestT = {
+    zip: zipLatest,
+};
 
-export { buffer, bufferT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkMerge, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toPromise, toRunnableObservable, zip, zipT };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toPromise, toRunnableObservable, zip, zipLatest, zipLatestT, zipT };
