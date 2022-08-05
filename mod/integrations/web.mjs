@@ -2,7 +2,7 @@
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, newInstance, none } from '../functions.mjs';
-import { createObservable, deferObservable } from '../rx.mjs';
+import { createObservable } from '../rx.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
 import { getDispatcher } from '../scheduling/ObserverLike.mjs';
@@ -36,7 +36,7 @@ const createEventSource = (url, options = {}) => {
     });
 };
 const globalFetch = self.fetch;
-const fetch = (onResponse) => fetchRequest => deferObservable(() => async (observer) => {
+const fetch = (onResponse) => fetchRequest => createObservable(async (observer) => {
     const signal = toAbortSignal(observer);
     let request = none;
     if (typeof fetchRequest === "string") {

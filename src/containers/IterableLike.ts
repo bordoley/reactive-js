@@ -74,18 +74,18 @@ export const toIterableT: ToIterable<IterableLike> = {
   toIterable,
 };
 
-interface toObservable {
+interface ToObservable {
   <T>(): Function1<IterableLike<T>, EnumerableObservableLike<T>>;
   <T>(options?: { delay: number; delayStart?: boolean }): Function1<
     IterableLike<T>,
     RunnableObservableLike<T>
   >;
 }
-export const toObservable: toObservable = (<T>(options?: {
+export const toObservable: ToObservable = (<T>(options?: {
   delay: number;
   delayStart?: boolean;
 }) =>
   compose(
     toEnumerable<T>(),
     enumerableToObservable<T>(options),
-  )) as toObservable;
+  )) as ToObservable;

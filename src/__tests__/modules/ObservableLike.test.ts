@@ -10,8 +10,6 @@ import { throws } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import {
   arrayEquality,
-  getOrDefault,
-  getOrRaise,
   incrementBy,
   pipe,
   pipeLazy,
@@ -27,11 +25,11 @@ import {
   subscribe,
   takeFirst,
   toPromise,
-  toRunnableObservable,
+  toReadonlyArray,
   zip,
   zipLatest,
 } from "../../rx/ObservableLike";
-import { mapT, toReadonlyArray } from "../../rx/RunnableObservableLike";
+import { mapT } from "../../rx/RunnableObservableLike";
 import {
   createHostScheduler,
   createVirtualTimeScheduler,
@@ -56,16 +54,9 @@ export const ObservableLikeTests = describe(
             takeFirst<number>({ count: 2 }),
           ),
         ),
-        toRunnableObservable(),
-        getOrDefault(emptyObservable({ delay: 0 })),
         toReadonlyArray(),
         expectArrayEquals(
-          [
-            [3, 2],
-            [5, 2],
-            [5, 4],
-            [7, 4],
-          ],
+          [[3, 2] as readonly [number, number], [5, 2], [5, 4], [7, 4]],
           arrayEquality(),
         ),
       ),
@@ -122,8 +113,6 @@ export const ObservableLikeTests = describe(
           pipe([2, 3], toObservable()),
           pipe([3, 4, 5], toObservable({ delay: 1 })),
         ),
-        toRunnableObservable(),
-        getOrRaise(),
         toReadonlyArray(),
         expectArrayEquals(
           [[1, 2, 3] as readonly number[], [2, 3, 4]],
@@ -138,8 +127,6 @@ export const ObservableLikeTests = describe(
           pipe([1, 2, 3], toObservable({ delay: 1 })),
           pipe([1, 2, 3], toObservable({ delay: 5 })),
         ),
-        toRunnableObservable(),
-        getOrRaise(),
         toReadonlyArray(),
         expectArrayEquals(
           [[1, 1] as readonly number[], [2, 2], [3, 3]],
@@ -156,8 +143,6 @@ export const ObservableLikeTests = describe(
             pipe([1, 2, 3], toObservable()),
           ),
           map<readonly [unknown, number], number>(([, b]) => b),
-          toRunnableObservable(),
-          getOrDefault(emptyObservable({ delay: 0 })),
           toReadonlyArray(),
         ),
         expectToThrow,
@@ -177,8 +162,6 @@ export const ObservableLikeTests = describe(
           pipe([1, 2, 3, 4], toObservable({ delay: 2, delayStart: true })),
         ),
         map<[number, number], number>(([a, b]) => a + b),
-        toRunnableObservable(),
-        getOrRaise(),
         toReadonlyArray(),
         expectArrayEquals([2, 5, 8, 11]),
       ),

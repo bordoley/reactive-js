@@ -13,9 +13,6 @@
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
 - [RunnableObservableLike](../interfaces/rx.RunnableObservableLike.md)
 - [SubjectLike](../interfaces/rx.SubjectLike.md)
-- [deferObservable](../interfaces/rx.deferObservable.md)
-- [emptyObservable](../interfaces/rx.emptyObservable.md)
-- [generateObservable](../interfaces/rx.generateObservable.md)
 
 ### Type Aliases
 
@@ -556,27 +553,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\>\> |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-▸ **deferEnumerableObservable**<`T`\>(`factory`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\> |
+| `options?` | `undefined` |
 
 #### Returns
 
@@ -598,27 +576,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> \| [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\>\> |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-▸ **deferObservable**<`T`\>(`factory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 

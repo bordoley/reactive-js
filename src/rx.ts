@@ -367,14 +367,7 @@ export const createSubject: <T>(options?: {
   };
 })();
 
-interface deferObservable<C extends ObservableLike> {
-  <T>(
-    factory: Factory<SideEffect1<ObserverLike<T>>>,
-    options?: { readonly delay?: number },
-  ): ContainerOf<C, T>;
-  <T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
-}
-export const deferObservable: deferObservable<ObservableLike> = <T>(
+export const deferObservable = <T>(
   factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
   options?: { readonly delay?: number },
 ): ObservableLike<T> =>
@@ -396,26 +389,13 @@ export const deferObservableT: Defer<ObservableLike> = {
   defer: deferObservable,
 };
 
-export const deferEnumerableObservable: deferObservable<
-  EnumerableObservableLike
-> = <T>(
-  factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
-  options?: { readonly delay?: number },
-): EnumerableObservableLike<T> =>
-  createEnumerableObservable(observer => {
-    const sideEffect = factory();
-    if (typeof sideEffect === "function") {
-      const callback = () => sideEffect(observer);
-      pipe(
-        observer,
-        getScheduler,
-        schedule(callback, options),
-        addTo(observer),
-      );
-    } else {
-      sideEffect[ReactiveContainerLike_sinkInto](observer);
-    }
-  });
+export const deferEnumerableObservable: Defer<EnumerableObservableLike>["defer"] =
+  <T>(
+    factory: Factory<EnumerableObservableLike<T>>,
+  ): EnumerableObservableLike<T> =>
+    createEnumerableObservable(observer => {
+      factory()[ReactiveContainerLike_sinkInto](observer);
+    });
 export const deferEnumerableObservableT: Defer<EnumerableObservableLike> = {
   defer: deferEnumerableObservable,
 };
@@ -426,13 +406,13 @@ export const deferRunnable: Defer<RunnableLike>["defer"] = f =>
   });
 export const deferRunnableT: Defer<RunnableLike> = { defer: deferRunnable };
 
-interface emptyObservable {
+interface EmptyObservable {
   <T>(): EnumerableObservableLike<T>;
   <T>(options: { delay: number }): RunnableObservableLike<T>;
 }
-export const emptyObservable = (<T>(options?: {
+export const emptyObservable: EmptyObservable = (<T>(options?: {
   delay: number;
-}): ObservableLike<T> => {
+}) => {
   const delay = getDelay(options);
   return delay > 0
     ? createRunnableObservable<T>(sink => {
@@ -445,7 +425,7 @@ export const emptyObservable = (<T>(options?: {
     : createEnumerableObservable<T>(sink => {
         pipe(sink, dispose());
       });
-}) as emptyObservable;
+}) as EmptyObservable;
 
 export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
   createRunnable<T>(sink => {
@@ -462,7 +442,7 @@ export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
  * @param initialValue Factory function used to generate the initial accumulator.
  * @param delay The requested delay between emitted items by the observable.
  */
-interface generateObservable {
+interface GenerateObservable {
   <T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
@@ -477,7 +457,7 @@ interface generateObservable {
     },
   ): RunnableObservableLike<T>;
 }
-export const generateObservable = (<T>(
+export const generateObservable: GenerateObservable = (<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
@@ -507,7 +487,7 @@ export const generateObservable = (<T>(
   return delay > 0
     ? createRunnableObservable(onSink)
     : createEnumerableObservable(onSink);
-}) as generateObservable;
+}) as GenerateObservable;
 
 export const generateRunnable: Generate<RunnableLike>["generate"] = <T>(
   generator: Updater<T>,

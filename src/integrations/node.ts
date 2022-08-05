@@ -56,7 +56,7 @@ import {
   toErrorHandler,
 } from "../util/DisposableLike";
 
-interface bindNodeCallback {
+interface BindNodeCallback {
   <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<
     ObservableLike<T>
   >;
@@ -103,7 +103,7 @@ interface bindNodeCallback {
     callbackFunc: SideEffect6<A1, A2, A3, A4, A5, SideEffect1<unknown>>,
   ): Function5<A1, A2, A3, A4, A5, ObservableLike<void>>;
 }
-export const bindNodeCallback: bindNodeCallback = <T>(
+export const bindNodeCallback: BindNodeCallback = <T>(
   callback: (...args: readonly any[]) => unknown,
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {

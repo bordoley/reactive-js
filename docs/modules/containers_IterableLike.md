@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [toObservable](../interfaces/containers_IterableLike.toObservable.md)
-
 ### Variables
 
 - [toEnumerableT](containers_IterableLike.md#toenumerablet)

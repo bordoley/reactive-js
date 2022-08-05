@@ -1,7 +1,7 @@
 import { ForEach, ReadonlyArrayLike, Keep, Map, ToReadonlyArray, ToSequence } from "../containers.mjs";
 import { Predicate, Function1 } from "../functions.mjs";
 import { ToEnumerable } from "../ix.mjs";
-import { EnumerableObservableLike, RunnableObservableLike, ToRunnable } from "../rx.mjs";
+import { ToRunnable, EnumerableObservableLike, RunnableObservableLike } from "../rx.mjs";
 declare const every: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
 declare const forEach: ForEach<ReadonlyArrayLike>["forEach"];
 declare const forEachT: ForEach<ReadonlyArrayLike>;
@@ -22,7 +22,7 @@ declare const toEnumerableT: ToEnumerable<ReadonlyArrayLike, {
     readonly start: number;
     readonly count: number;
 }>;
-interface toObservable {
+interface ToObservable {
     <T>(options?: {
         readonly start?: number;
         readonly count?: number;
@@ -34,7 +34,7 @@ interface toObservable {
         readonly delayStart?: boolean;
     }): Function1<ReadonlyArrayLike<T>, RunnableObservableLike<T>>;
 }
-declare const toObservable: toObservable;
+declare const toObservable: ToObservable;
 declare const toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike, {
     readonly start: number;
     readonly count: number;

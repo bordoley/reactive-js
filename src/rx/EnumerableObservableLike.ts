@@ -40,79 +40,99 @@ import {
   takeWhile,
   throwIfEmpty,
   toEnumerable as toEnumerableObs,
+  toReadonlyArray,
   zip,
 } from "./ObservableLike";
 
-import {
-  toFlowable as toFlowableObs,
-  toReadonlyArray as toReadonlyArrayObs,
-} from "./RunnableObservableLike";
+import { toFlowable } from "./RunnableObservableLike";
 
 export const bufferT: Buffer<EnumerableObservableLike> = {
   buffer: buffer as Buffer<EnumerableObservableLike>["buffer"],
 };
 
 export const concatT: Concat<EnumerableObservableLike> = {
-  concat,
+  concat: concat as Concat<EnumerableObservableLike>["concat"],
 };
 
 export const decodeWithCharsetT: DecodeWithCharset<EnumerableObservableLike> = {
-  decodeWithCharset,
+  decodeWithCharset:
+    decodeWithCharset as DecodeWithCharset<EnumerableObservableLike>["decodeWithCharset"],
 };
 
 export const distinctUntilChangedT: DistinctUntilChanged<EnumerableObservableLike> =
-  { distinctUntilChanged };
-export const forEachT: ForEach<EnumerableObservableLike> = { forEach };
+  {
+    distinctUntilChanged:
+      distinctUntilChanged as DistinctUntilChanged<EnumerableObservableLike>["distinctUntilChanged"],
+  };
+export const forEachT: ForEach<EnumerableObservableLike> = {
+  forEach: forEach as ForEach<EnumerableObservableLike>["forEach"],
+};
 
-export const keepT: Keep<EnumerableObservableLike> = { keep };
+export const keepT: Keep<EnumerableObservableLike> = {
+  keep: keep as Keep<EnumerableObservableLike>["keep"],
+};
 
-export const mapT: Map<EnumerableObservableLike> = { map };
+export const mapT: Map<EnumerableObservableLike> = {
+  map: map as Map<EnumerableObservableLike>["map"],
+};
 
 export const mergeT: Concat<EnumerableObservableLike> = {
-  concat: merge,
+  concat: merge as Concat<EnumerableObservableLike>["concat"],
 };
 
-export const pairwiseT: Pairwise<EnumerableObservableLike> = { pairwise };
+export const pairwiseT: Pairwise<EnumerableObservableLike> = {
+  pairwise: pairwise as Pairwise<EnumerableObservableLike>["pairwise"],
+};
 
-export const reduceT: Reduce<EnumerableObservableLike> = { reduce };
+export const reduceT: Reduce<EnumerableObservableLike> = {
+  reduce: reduce as Reduce<EnumerableObservableLike>["reduce"],
+};
 
-export const scanT: Scan<EnumerableObservableLike> = { scan };
+export const scanT: Scan<EnumerableObservableLike> = {
+  scan: scan as Scan<EnumerableObservableLike>["scan"],
+};
 
-export const skipFirstT: SkipFirst<EnumerableObservableLike> = { skipFirst };
+export const skipFirstT: SkipFirst<EnumerableObservableLike> = {
+  skipFirst: skipFirst as SkipFirst<EnumerableObservableLike>["skipFirst"],
+};
 
-export const takeFirstT: TakeFirst<EnumerableObservableLike> = { takeFirst };
+export const takeFirstT: TakeFirst<EnumerableObservableLike> = {
+  takeFirst: takeFirst as TakeFirst<EnumerableObservableLike>["takeFirst"],
+};
 
-export const takeLastT: TakeLast<EnumerableObservableLike> = { takeLast };
+export const takeLastT: TakeLast<EnumerableObservableLike> = {
+  takeLast: takeLast as TakeLast<EnumerableObservableLike>["takeLast"],
+};
 
-export const takeWhileT: TakeWhile<EnumerableObservableLike> = { takeWhile };
+export const takeWhileT: TakeWhile<EnumerableObservableLike> = {
+  takeWhile: takeWhile as TakeWhile<EnumerableObservableLike>["takeWhile"],
+};
 
 export const throwIfEmptyT: ThrowIfEmpty<EnumerableObservableLike> = {
-  throwIfEmpty,
+  throwIfEmpty:
+    throwIfEmpty as ThrowIfEmpty<EnumerableObservableLike>["throwIfEmpty"],
 };
 
-export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"] =
-  toEnumerableObs as ToEnumerable<EnumerableObservableLike>["toEnumerable"];
 export const toEnumerableT: ToEnumerable<EnumerableObservableLike> = {
-  toEnumerable,
+  toEnumerable:
+    toEnumerableObs as ToEnumerable<EnumerableObservableLike>["toEnumerable"],
 };
 
-export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
-  toFlowableObs;
 export const toFlowableT: ToFlowable<EnumerableObservableLike> = { toFlowable };
-
-export const toReadonlyArray: ToReadonlyArray<
-  EnumerableObservableLike,
-  {
-    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-  }
->["toReadonlyArray"] = toReadonlyArrayObs;
 
 export const toReadonlyArrayT: ToReadonlyArray<
   EnumerableObservableLike,
   {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
   }
-> = { toReadonlyArray };
+> = {
+  toReadonlyArray: toReadonlyArray as unknown as ToReadonlyArray<
+    EnumerableObservableLike,
+    {
+      readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
+    }
+  >["toReadonlyArray"],
+};
 
 export const zipT: Zip<EnumerableObservableLike> = {
   zip: zip as unknown as Zip<EnumerableObservableLike>["zip"],

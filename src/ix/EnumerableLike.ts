@@ -1099,14 +1099,14 @@ export const toEnumerableT: ToEnumerable<EnumerableLike> = {
   toEnumerable,
 };
 
-interface toObservable {
+interface ToObservable {
   <T>(): Function1<EnumerableLike<T>, EnumerableObservableLike<T>>;
   <T>(options?: { delay: number; delayStart?: boolean }): Function1<
     EnumerableLike<T>,
     RunnableObservableLike<T>
   >;
 }
-export const toObservable: toObservable = (<T>(options?: {
+export const toObservable: ToObservable = (<T>(options?: {
     delay?: number;
     delayStart?: boolean;
   }) =>
@@ -1134,7 +1134,7 @@ export const toObservable: toObservable = (<T>(options?: {
     return delay > 0
       ? createRunnableObservable(onSink)
       : createEnumerableObservable(onSink);
-  }) as toObservable;
+  }) as ToObservable;
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
 

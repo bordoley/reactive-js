@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [toObservable](../interfaces/ix_EnumerableLike.toObservable.md)
-
 ### Variables
 
 - [bufferT](ix_EnumerableLike.md#buffert)

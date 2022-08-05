@@ -120,7 +120,7 @@ const initUnsafe = <TReturn>(
   ...args: readonly unknown[]
 ): TReturn => clazz[Object_init].call(self, ...args) as unknown as TReturn;
 
-interface init {
+interface Init {
   <TReturn, TProperties, TPrototype>(
     clazz: {
       [Object_init](this: TReturn & TProperties & TPrototype): TReturn;
@@ -163,9 +163,9 @@ interface init {
     c: TC,
   ): TReturn;
 }
-export const init: init = initUnsafe;
+export const init: Init = initUnsafe;
 
-interface __extends {
+interface Extends {
   <TMixin0 extends TMixin>(m0: TMixin0): {
     [Object_properties]: TMixin0[typeof Object_properties];
     [Object_properties_type]?: PropertyTypeOf<[TMixin0]>;
@@ -217,7 +217,7 @@ interface __extends {
       TMixin3[typeof Object_prototype];
   };
 }
-export const __extends: __extends = (...mixins: readonly TMixin[]) => {
+export const __extends: Extends = (...mixins: readonly TMixin[]) => {
   if (mixins.length == 1) {
     return mixins[0];
   } else {
@@ -236,7 +236,7 @@ export const __extends: __extends = (...mixins: readonly TMixin[]) => {
   }
 };
 
-interface clazz {
+interface Clazz {
   <
     TInit extends (this: any, ...args: readonly any[]) => unknown,
     TProperties extends UnknownObject = UnknownObject,
@@ -307,7 +307,7 @@ interface clazz {
     [Object_prototype]: TParent[typeof Object_prototype];
   };
 }
-export const clazz: clazz = ((
+export const clazz: Clazz = ((
   initOrParent: any,
   propertiesOrInit: any,
   prototypeOrParent?: any,
@@ -329,9 +329,9 @@ export const clazz: clazz = ((
       [Object_init]: propertiesOrInit,
     };
   }
-}) as clazz;
+}) as Clazz;
 
-interface createInstanceFactory {
+interface CreateInstanceFactory {
   <TReturn>(clazz: {
     [Object_init]: (this: any) => TReturn;
     [Object_properties]: unknown;
@@ -362,7 +362,7 @@ interface createInstanceFactory {
     [Object_prototype]: object;
   }): Function4<TA, TB, TC, TD, TReturn>;
 }
-export const createInstanceFactory: createInstanceFactory = <TReturn>(clazz: {
+export const createInstanceFactory: CreateInstanceFactory = <TReturn>(clazz: {
   [Object_init]: (this: any, ...args: readonly any[]) => TReturn;
   [Object_properties]: unknown;
   [Object_prototype]: object;
