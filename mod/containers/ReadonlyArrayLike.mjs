@@ -13,6 +13,11 @@ import '../util/DisposableLike.mjs';
 import { isDisposed, dispose, addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const every = (predicate) => arr => arr.every(predicate);
+const forEach = (effect) => arr => {
+    arr.forEach(effect);
+    return arr;
+};
+const forEachT = { forEach };
 const keep = (predicate) => (arr) => {
     const result = arr.filter(predicate);
     return result;
@@ -20,6 +25,7 @@ const keep = (predicate) => (arr) => {
 const keepT = { keep };
 const map = (mapper) => (arr) => arr.map(mapper);
 const mapT = { map };
+const some = (predicate) => arr => arr.some(predicate);
 const createFromArray = (factory) => (options = {}) => values => {
     const valuesLength = getLength(values);
     const { start: startOption, count: countOption } = options;
@@ -144,4 +150,4 @@ const toSequenceT = {
     toSequence,
 };
 
-export { every, keep, keepT, map, mapT, toEnumerable, toEnumerableT, toObservable, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, toSequence, toSequenceT };
+export { every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableT, toObservable, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, toSequence, toSequenceT };

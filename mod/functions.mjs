@@ -78,6 +78,7 @@ const isEmpty = (arr) => getLength(arr) === 0;
  * Returns `true` if `x` is an even number, otherwise `false`.
  */
 const isEven = (x) => x % 2 === 0;
+const isFalse = (v) => !v;
 /**
  * Returns `true` if `x` is an odd number, otherwise `false`.
  */
@@ -90,6 +91,7 @@ const isNone = (option) => option === none;
  * Returns true if `option` is not `none`.
  */
 const isSome = (option) => option !== none;
+const isTrue = (v) => v;
 /**
  * Applies logical negation to the value `v`.
  */
@@ -149,4 +151,4 @@ const sum = (...args) => {
 const updateReducer = (acc, updater) => updater(acc);
 const { floor, max, min } = Math;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isNone, isOdd, isSome, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isNone, isOdd, isSome, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
