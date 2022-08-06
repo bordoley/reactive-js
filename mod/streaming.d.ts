@@ -1,5 +1,5 @@
 import { ContainerLike, ContainerOperator } from "./containers.mjs";
-import { Updater, Reducer, Factory, Equality, Function1 } from "./functions.mjs";
+import { Updater, Reducer, Factory, Equality } from "./functions.mjs";
 import { MulticastObservableLike, ObservableLike } from "./rx.mjs";
 import { DispatcherLike, SchedulerLike } from "./scheduling.mjs";
 import { PauseableLike, SourceLike } from "./util.mjs";
@@ -87,5 +87,4 @@ declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, in
 declare const createStateStore: <T>(initialState: Factory<T>, options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => StreamableStateLike<T>;
-declare const flow: <T>() => Function1<ObservableLike<unknown>, FlowableLike<T>>;
-export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, StreamableStateLike, createActionReducer, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble, flow };
+export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, StreamableStateLike, createActionReducer, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble };

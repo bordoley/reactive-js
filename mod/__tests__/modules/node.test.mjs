@@ -5,9 +5,8 @@ import { endWith, ignoreElements } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { newInstance, pipe, returns } from '../../functions.mjs';
 import { createWritableSink, createReadableSource, gzip, gunzip } from '../../integrations/node.mjs';
-import { concatT, toPromise, keepT, reduce, takeFirst } from '../../rx/ObservableLike.mjs';
+import { toFlowable, concatT, toPromise, keepT, reduce, takeFirst } from '../../rx/ObservableLike.mjs';
 import { createHostScheduler } from '../../scheduling.mjs';
-import { flow } from '../../streaming.mjs';
 import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs';
 import { sourceFrom } from '../../streaming/StreamLike.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
@@ -27,7 +26,7 @@ const nodeTests = createDescribe("node", createDescribe("createWritableIOSink", 
                 callback();
             },
         });
-        const src = pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), flow());
+        const src = pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), toFlowable());
         const dest = pipe(createWritableSink(returns(writable)), stream(scheduler), sourceFrom(src));
         await pipe(dest, endWith({
             fromArray: toObservable,
@@ -51,7 +50,7 @@ const nodeTests = createDescribe("node", createDescribe("createWritableIOSink", 
                 callback(cause);
             },
         });
-        const src = pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), flow());
+        const src = pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), toFlowable());
         const dest = pipe(createWritableSink(returns(writable)), stream(scheduler), sourceFrom(src));
         const promise = pipe(dest, ignoreElements(keepT), endWith({
             fromArray: toObservable,
@@ -99,7 +98,7 @@ const nodeTests = createDescribe("node", createDescribe("createWritableIOSink", 
     try {
         const encoder = newInstance(TextEncoder);
         const textDecoder = newInstance(TextDecoder);
-        const acc = await pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), flow(), gzip(), gunzip(), toObservable$1(), reduce((acc, next) => acc + textDecoder.decode(next), returns("")), takeFirst({ count: 1 }), toPromise(scheduler));
+        const acc = await pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), toFlowable(), gzip(), gunzip(), toObservable$1(), reduce((acc, next) => acc + textDecoder.decode(next), returns("")), takeFirst({ count: 1 }), toPromise(scheduler));
         pipe(acc, expectEquals("abcdefg"));
     }
     finally {
