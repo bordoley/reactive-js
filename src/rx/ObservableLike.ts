@@ -82,6 +82,7 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
+  ToPromise,
   ToReadonlyArray,
   Zip,
 } from "../containers";
@@ -111,7 +112,12 @@ import {
   pipe,
   returns,
 } from "../functions";
-import { EnumerableLike, createEnumerable, emptyEnumerable } from "../ix";
+import {
+  EnumerableLike,
+  ToEnumerable,
+  createEnumerable,
+  emptyEnumerable,
+} from "../ix";
 import {
   toObservable as enumerableToObservable,
   zip as enumerableZip,
@@ -140,7 +146,7 @@ import {
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import { getScheduler } from "../scheduling/ObserverLike";
 import { toPausableScheduler } from "../scheduling/SchedulerLike";
-import { FlowMode, FlowableLike, createLiftedFlowable } from "../streaming";
+import { FlowMode, ToFlowable, createLiftedFlowable } from "../streaming";
 import {
   ContinuationLike,
   DisposableLike,
@@ -743,125 +749,123 @@ export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {
   throwIfEmpty,
 };
 
-export const toEnumerable: <T>() => Function1<
-  ObservableLike<T>,
-  EnumerableLike<T>
-> = /*@__PURE__*/ (<T>() => {
-  const typedEnumeratorMixin = enumeratorMixin<T>();
-  const typedObserverMixin = observerMixin<T>();
+export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
+  /*@__PURE__*/ (<T>() => {
+    const typedEnumeratorMixin = enumeratorMixin<T>();
+    const typedObserverMixin = observerMixin<T>();
 
-  type TEnumeratorSchedulerProperties = {
-    [SchedulerLike_inContinuation]: boolean;
-    continuations: ContinuationLike[];
-  } & PropertyTypeOf<[typeof disposableMixin, typeof typedEnumeratorMixin]>;
+    type TEnumeratorSchedulerProperties = {
+      [SchedulerLike_inContinuation]: boolean;
+      continuations: ContinuationLike[];
+    } & PropertyTypeOf<[typeof disposableMixin, typeof typedEnumeratorMixin]>;
 
-  type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
+    type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
 
-  const createEnumeratorScheduler = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedEnumeratorMixin),
-      function EnumeratorScheduler(
-        this: EnumeratorScheduler & TEnumeratorSchedulerProperties,
-      ) {
-        init(disposableMixin, this);
-        init(typedEnumeratorMixin, this);
-
-        this.continuations = [];
-
-        return this;
-      },
-      {
-        [SchedulerLike_inContinuation]: false,
-        continuations: none,
-      },
-      {
-        [SchedulerLike_now]: 0,
-        get [SchedulerLike_shouldYield](): boolean {
-          const self = this as unknown as TEnumeratorSchedulerProperties;
-          return isInContinuation(self);
-        },
-        [SchedulerLike_requestYield](): void {
-          // No-Op: We yield whenever the continuation is running.
-        },
-        [SourceLike_move](
-          this: TEnumeratorSchedulerProperties & MutableEnumeratorLike<T>,
+    const createEnumeratorScheduler = createInstanceFactory(
+      clazz(
+        __extends(disposableMixin, typedEnumeratorMixin),
+        function EnumeratorScheduler(
+          this: EnumeratorScheduler & TEnumeratorSchedulerProperties,
         ) {
-          if (!isDisposed(this)) {
-            const { continuations } = this;
+          init(disposableMixin, this);
+          init(typedEnumeratorMixin, this);
 
-            const continuation = continuations.shift();
-            if (isSome(continuation)) {
-              this[SchedulerLike_inContinuation] = true;
-              run(continuation);
-              this[SchedulerLike_inContinuation] = false;
-            } else {
-              pipe(this, dispose());
+          this.continuations = [];
+
+          return this;
+        },
+        {
+          [SchedulerLike_inContinuation]: false,
+          continuations: none,
+        },
+        {
+          [SchedulerLike_now]: 0,
+          get [SchedulerLike_shouldYield](): boolean {
+            const self = this as unknown as TEnumeratorSchedulerProperties;
+            return isInContinuation(self);
+          },
+          [SchedulerLike_requestYield](): void {
+            // No-Op: We yield whenever the continuation is running.
+          },
+          [SourceLike_move](
+            this: TEnumeratorSchedulerProperties & MutableEnumeratorLike<T>,
+          ) {
+            if (!isDisposed(this)) {
+              const { continuations } = this;
+
+              const continuation = continuations.shift();
+              if (isSome(continuation)) {
+                this[SchedulerLike_inContinuation] = true;
+                run(continuation);
+                this[SchedulerLike_inContinuation] = false;
+              } else {
+                pipe(this, dispose());
+              }
             }
-          }
+          },
+          [SchedulerLike_schedule](
+            this: TEnumeratorSchedulerProperties & DisposableLike,
+            continuation: ContinuationLike,
+            _?: { readonly delay?: number },
+          ): void {
+            pipe(this, add(continuation));
+
+            if (!isDisposed(continuation)) {
+              this.continuations.push(continuation);
+            }
+          },
         },
-        [SchedulerLike_schedule](
-          this: TEnumeratorSchedulerProperties & DisposableLike,
-          continuation: ContinuationLike,
-          _?: { readonly delay?: number },
-        ): void {
-          pipe(this, add(continuation));
+      ),
+    );
 
-          if (!isDisposed(continuation)) {
-            this.continuations.push(continuation);
-          }
+    type TEnumeratorObserverProperties = {
+      enumerator: EnumeratorScheduler;
+    } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
+
+    const createEnumeratorObserver = createInstanceFactory(
+      clazz(
+        __extends(disposableMixin, typedObserverMixin),
+        function EnumeratorObserver(
+          this: TEnumeratorObserverProperties & ObserverLike<T>,
+          enumerator: EnumeratorScheduler,
+        ) {
+          init(disposableMixin, this);
+          init(typedObserverMixin, this, enumerator);
+          this.enumerator = enumerator;
+
+          return this;
         },
-      },
-    ),
-  );
-
-  type TEnumeratorObserverProperties = {
-    enumerator: EnumeratorScheduler;
-  } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
-
-  const createEnumeratorObserver = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedObserverMixin),
-      function EnumeratorObserver(
-        this: TEnumeratorObserverProperties & ObserverLike<T>,
-        enumerator: EnumeratorScheduler,
-      ) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, enumerator);
-        this.enumerator = enumerator;
-
-        return this;
-      },
-      {
-        enumerator: none,
-      },
-      {
-        [SinkLike_notify](this: TEnumeratorObserverProperties, next: T) {
-          this.enumerator[EnumeratorLike_current] = next;
+        {
+          enumerator: none,
         },
-      },
-    ),
-  );
+        {
+          [SinkLike_notify](this: TEnumeratorObserverProperties, next: T) {
+            this.enumerator[EnumeratorLike_current] = next;
+          },
+        },
+      ),
+    );
 
-  return () =>
-    (obs: ObservableLike<T>): EnumerableLike<T> =>
-      getObservableType(obs) === enumerableObservableType
-        ? createEnumerable(() => {
-            const scheduler = createEnumeratorScheduler();
+    return () =>
+      (obs: ObservableLike<T>): EnumerableLike<T> =>
+        getObservableType(obs) === enumerableObservableType
+          ? createEnumerable(() => {
+              const scheduler = createEnumeratorScheduler();
 
-            pipe(
-              createEnumeratorObserver(scheduler),
-              addTo(scheduler),
-              sourceFrom(obs),
-            );
+              pipe(
+                createEnumeratorObserver(scheduler),
+                addTo(scheduler),
+                sourceFrom(obs),
+              );
 
-            return scheduler;
-          })
-        : emptyEnumerable();
-})();
+              return scheduler;
+            })
+          : emptyEnumerable();
+  })();
+export const toEnumerableT: ToEnumerable<ObservableLike> = { toEnumerable };
 
-export const toFlowable =
-  <T>(): Function1<ObservableLike, FlowableLike<T>> =>
-  observable =>
+export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
+  () => observable =>
     getObservableType(observable) > 0
       ? createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
           createObservable(observer => {
@@ -904,6 +908,7 @@ export const toFlowable =
           }),
         )
       : createLiftedFlowable(_ => emptyObservable());
+export const toFlowableT: ToFlowable<ObservableLike> = { toFlowable };
 
 /**
  * Returns a Promise that completes with the last value produced by
@@ -911,9 +916,9 @@ export const toFlowable =
  *
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
-export const toPromise =
-  <T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, Promise<T>> =>
-  observable =>
+export const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"] =
+  <T>(scheduler: SchedulerLike) =>
+  (observable: ObservableLike<T>): PromiseLike<T> =>
     newInstance<
       Promise<T>,
       (
@@ -948,6 +953,9 @@ export const toPromise =
         }),
       );
     });
+export const toPromiseT: ToPromise<ObservableLike, SchedulerLike> = {
+  toPromise,
+};
 
 export const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"] =
 

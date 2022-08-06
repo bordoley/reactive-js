@@ -23,6 +23,9 @@
 - [takeLastT](rx_ObservableLike.md#takelastt)
 - [takeWhileT](rx_ObservableLike.md#takewhilet)
 - [throwIfEmptyT](rx_ObservableLike.md#throwifemptyt)
+- [toEnumerableT](rx_ObservableLike.md#toenumerablet)
+- [toFlowableT](rx_ObservableLike.md#toflowablet)
+- [toPromiseT](rx_ObservableLike.md#topromiset)
 - [toReadonlyArrayT](rx_ObservableLike.md#toreadonlyarrayt)
 - [zipLatestT](rx_ObservableLike.md#ziplatestt)
 - [zipT](rx_ObservableLike.md#zipt)
@@ -158,6 +161,24 @@ ___
 ### throwIfEmptyT
 
 • `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](containers.md#throwifempty)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### toEnumerableT
+
+• `Const` **toEnumerableT**: [`ToEnumerable`](ix.md#toenumerable)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### toFlowableT
+
+• `Const` **toFlowableT**: [`ToFlowable`](streaming.md#toflowable)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### toPromiseT
+
+• `Const` **toPromiseT**: [`ToPromise`](containers.md#topromise)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\>
 
 ___
 
@@ -1312,13 +1333,19 @@ ___
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
 
 #### Returns
 
@@ -1328,7 +1355,7 @@ ___
 
 ### toFlowable
 
-▸ **toFlowable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+▸ **toFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1336,15 +1363,21 @@ ___
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 
 ### toPromise
 
-▸ **toPromise**<`T`\>(`scheduler`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `Promise`<`T`\>\>
+▸ **toPromise**<`T`\>(`ctx`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `PromiseLike`<`T`\>\>
 
 Returns a Promise that completes with the last value produced by
 the source.
@@ -1357,13 +1390,13 @@ the source.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | The scheduler upon which to subscribe to the source. |
+| Name | Type |
+| :------ | :------ |
+| `ctx` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `Promise`<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `PromiseLike`<`T`\>\>
 
 ___
 
