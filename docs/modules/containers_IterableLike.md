@@ -8,6 +8,7 @@
 
 - [toEnumerableT](containers_IterableLike.md#toenumerablet)
 - [toIterableT](containers_IterableLike.md#toiterablet)
+- [toObservableT](containers_IterableLike.md#toobservablet)
 
 ### Functions
 
@@ -26,6 +27,12 @@ ___
 ### toIterableT
 
 • `Const` **toIterableT**: [`ToIterable`](containers.md#toiterable)<[`IterableLike`](../interfaces/containers.IterableLike.md)\>
+
+___
+
+### toObservableT
+
+• `Const` **toObservableT**: [`ToObservable`](rx.md#toobservable)<[`IterableLike`](../interfaces/containers.IterableLike.md), { `delay`: `number` ; `delayStart`: `boolean`  }\>
 
 ## Functions
 
@@ -75,19 +82,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -100,9 +95,9 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.delay` | `number` |
+| `options.delay?` | `number` |
 | `options.delayStart?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>

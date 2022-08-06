@@ -9,7 +9,7 @@ import { clazz, createInstanceFactory, __extends, init } from '../__internal__/u
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable } from '../ix.mjs';
-import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
+import { createObservable, runnableObservableType, enumerableObservableType, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, disposed } from '../util.mjs';
@@ -522,7 +522,7 @@ const toEnumerable = () => identity;
 const toEnumerableT = {
     toEnumerable,
 };
-const toObservable = ((options) => (enumerable) => {
+const toObservable = (options) => enumerable => {
     const delay = getDelay(options);
     const { delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
@@ -534,10 +534,11 @@ const toObservable = ((options) => (enumerable) => {
             }
         }, delayStart && hasDelay(options) ? { delay } : none));
     };
-    return delay > 0
-        ? createRunnableObservable(onSink)
-        : createEnumerableObservable(onSink);
-});
+    return createObservable(onSink, {
+        type: delay > 0 ? runnableObservableType : enumerableObservableType,
+    });
+};
+const toObservableT = { toObservable };
 const toReadonlyArray = () => (enumerable) => {
     const enumerator = pipe(enumerable, enumerate());
     const result = [];
@@ -623,4 +624,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };

@@ -23,6 +23,7 @@
 - [throwIfEmptyT](ix_EnumerableLike.md#throwifemptyt)
 - [toEnumerableT](ix_EnumerableLike.md#toenumerablet)
 - [toIterableT](ix_EnumerableLike.md#toiterablet)
+- [toObservableT](ix_EnumerableLike.md#toobservablet)
 - [toReadonlyArrayT](ix_EnumerableLike.md#toreadonlyarrayt)
 - [toRunnableT](ix_EnumerableLike.md#torunnablet)
 - [zipT](ix_EnumerableLike.md#zipt)
@@ -153,6 +154,12 @@ ___
 ### toIterableT
 
 • `Const` **toIterableT**: [`ToIterable`](containers.md#toiterable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
+
+___
+
+### toObservableT
+
+• `Const` **toObservableT**: [`ToObservable`](rx.md#toobservable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md), { `delay?`: `number` ; `delayStart?`: `boolean`  }\>
 
 ___
 
@@ -616,19 +623,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -641,12 +636,12 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.delay` | `number` |
+| `options.delay?` | `number` |
 | `options.delayStart?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 

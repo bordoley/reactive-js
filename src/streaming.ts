@@ -5,12 +5,7 @@ import {
   createInstanceFactory,
   init,
 } from "./__internal__/util/Object";
-import {
-  Container,
-  ContainerLike,
-  ContainerOf,
-  ContainerOperator,
-} from "./containers";
+import { ContainerLike, ContainerOperator } from "./containers";
 import { concatWith } from "./containers/ContainerLike";
 import { toObservable } from "./containers/ReadonlyArrayLike";
 import {
@@ -36,13 +31,19 @@ import {
   SubjectLike,
   createObservable,
   createSubject,
+  emptyObservable,
 } from "./rx";
 import { getObserverCount, getReplay } from "./rx/MulticastObservableLike";
 import {
   distinctUntilChanged,
+  forEach,
+  getObservableType,
   mergeT,
   multicast,
   scan,
+  subscribe,
+  subscribeOn,
+  takeUntil,
 } from "./rx/ObservableLike";
 import { sinkInto } from "./rx/ReactiveContainerLike";
 import { publish } from "./rx/SubjectLike";
@@ -53,8 +54,17 @@ import {
   ObserverLike,
   SchedulerLike,
 } from "./scheduling";
+import { getScheduler } from "./scheduling/ObserverLike";
+import { toPausableScheduler } from "./scheduling/SchedulerLike";
 import { PauseableLike, SourceLike } from "./util";
-import { addTo } from "./util/DisposableLike";
+import {
+  add,
+  addTo,
+  bindTo,
+  toObservable as disposableToObservable,
+} from "./util/DisposableLike";
+import { pause, resume } from "./util/PauseableLike";
+import { sourceFrom } from "./util/SinkLike";
 
 /**
  * Represents a duplex stream
@@ -97,15 +107,6 @@ export interface FlowableLike<T = unknown>
 export interface AsyncEnumeratorLike<T = unknown>
   extends SourceLike,
     StreamLike<void, T> {}
-
-export type ToFlowable<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
-  toFlowable<T>(
-    options?: TOptions,
-  ): Function1<ContainerOf<C, T>, FlowableLike<T>>;
-};
 
 export const createStream = /*@__PURE__*/ (() => {
   const createStreamInternal = (<TReq, T>() => {
@@ -498,3 +499,49 @@ export const createStateStore = <T>(
   options?: { readonly equality?: Equality<T> },
 ): StreamableStateLike<T> =>
   createActionReducer(updateReducer, initialState, options);
+
+export const flow =
+  <T>(): Function1<ObservableLike, FlowableLike<T>> =>
+  observable =>
+    getObservableType(observable) > 0
+      ? createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
+          createObservable(observer => {
+            const pausableScheduler = pipe(
+              observer,
+              getScheduler,
+              toPausableScheduler,
+            );
+
+            pipe(
+              observer,
+              sourceFrom(
+                pipe(
+                  observable,
+                  subscribeOn(pausableScheduler),
+                  takeUntil<unknown>(
+                    pipe(pausableScheduler, disposableToObservable()),
+                  ),
+                ),
+              ),
+              add(
+                pipe(
+                  modeObs,
+                  forEach<FlowMode>(mode => {
+                    switch (mode) {
+                      case "pause":
+                        pause(pausableScheduler);
+                        break;
+                      case "resume":
+                        resume(pausableScheduler);
+                        break;
+                    }
+                  }),
+                  subscribe(getScheduler(observer)),
+                  bindTo(pausableScheduler),
+                ),
+              ),
+              add(pausableScheduler),
+            );
+          }),
+        )
+      : createLiftedFlowable(_ => emptyObservable());

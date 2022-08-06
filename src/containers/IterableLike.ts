@@ -11,10 +11,10 @@ import {
   init,
 } from "../__internal__/util/Object";
 import { IterableLike, ToIterable } from "../containers";
-import { Function1, compose, identity, none, pipe } from "../functions";
+import { compose, identity, none, pipe } from "../functions";
 import { ToEnumerable, createEnumerable } from "../ix";
 import { toObservable as enumerableToObservable } from "../ix/EnumerableLike";
-import { EnumerableObservableLike, RunnableObservableLike } from "../rx";
+import { ToObservable } from "../rx";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -74,18 +74,18 @@ export const toIterableT: ToIterable<IterableLike> = {
   toIterable,
 };
 
-interface ToObservable {
-  <T>(): Function1<IterableLike<T>, EnumerableObservableLike<T>>;
-  <T>(options?: { delay: number; delayStart?: boolean }): Function1<
-    IterableLike<T>,
-    RunnableObservableLike<T>
-  >;
-}
-export const toObservable: ToObservable = (<T>(options?: {
-  delay: number;
-  delayStart?: boolean;
-}) =>
-  compose(
-    toEnumerable<T>(),
-    enumerableToObservable<T>(options),
-  )) as ToObservable;
+export const toObservable: ToObservable<
+  IterableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toObservable"] = options =>
+  compose(toEnumerable(), enumerableToObservable(options));
+export const toObservableT: ToObservable<
+  IterableLike,
+  {
+    readonly delay: number;
+    readonly delayStart: boolean;
+  }
+> = { toObservable };
