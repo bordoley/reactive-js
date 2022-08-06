@@ -24,6 +24,7 @@
 - [takeLastT](rx_ObservableLike.md#takelastt)
 - [takeWhileT](rx_ObservableLike.md#takewhilet)
 - [throwIfEmptyT](rx_ObservableLike.md#throwifemptyt)
+- [toReadonlyArrayT](rx_ObservableLike.md#toreadonlyarrayt)
 - [zipLatestT](rx_ObservableLike.md#ziplatestt)
 - [zipT](rx_ObservableLike.md#zipt)
 
@@ -38,6 +39,7 @@
 - [forkCombineLatest](rx_ObservableLike.md#forkcombinelatest)
 - [forkMerge](rx_ObservableLike.md#forkmerge)
 - [forkZipLatest](rx_ObservableLike.md#forkziplatest)
+- [getMinObservableType](rx_ObservableLike.md#getminobservabletype)
 - [getObservableType](rx_ObservableLike.md#getobservabletype)
 - [keep](rx_ObservableLike.md#keep)
 - [map](rx_ObservableLike.md#map)
@@ -58,10 +60,8 @@
 - [takeWhile](rx_ObservableLike.md#takewhile)
 - [throwIfEmpty](rx_ObservableLike.md#throwifempty)
 - [toEnumerable](rx_ObservableLike.md#toenumerable)
-- [toEnumerableObservable](rx_ObservableLike.md#toenumerableobservable)
 - [toPromise](rx_ObservableLike.md#topromise)
 - [toReadonlyArray](rx_ObservableLike.md#toreadonlyarray)
-- [toRunnableObservable](rx_ObservableLike.md#torunnableobservable)
 - [zip](rx_ObservableLike.md#zip)
 - [zipLatest](rx_ObservableLike.md#ziplatest)
 
@@ -172,6 +172,12 @@ ___
 ### throwIfEmptyT
 
 • `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](containers.md#throwifempty)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### toReadonlyArrayT
+
+• `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -1023,6 +1029,22 @@ ___
 
 ___
 
+### getMinObservableType
+
+▸ **getMinObservableType**(`observables`): [`ObservableType`](rx.md#observabletype)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>[] |
+
+#### Returns
+
+[`ObservableType`](rx.md#observabletype)
+
+___
+
 ### getObservableType
 
 ▸ **getObservableType**(`obs`): ``0`` \| ``2`` \| ``1``
@@ -1491,34 +1513,6 @@ ___
 
 ___
 
-### toEnumerableObservable
-
-▸ **toEnumerableObservable**<`T`\>(): (`obs`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => [`Option`](functions.md#option)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-`fn`
-
-▸ (`obs`): [`Option`](functions.md#option)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `obs` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
-
-##### Returns
-
-[`Option`](functions.md#option)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
-
-___
-
 ### toPromise
 
 ▸ **toPromise**<`T`\>(`scheduler`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `Promise`<`T`\>\>
@@ -1563,34 +1557,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
-
-___
-
-### toRunnableObservable
-
-▸ **toRunnableObservable**<`T`\>(): (`obs`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-`fn`
-
-▸ (`obs`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `obs` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
-
-##### Returns
-
-[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 ___
 

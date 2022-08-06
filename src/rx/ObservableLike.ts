@@ -82,7 +82,6 @@ import {
   toObservable as arrayToObservable,
   every,
   forEach as forEachArray,
-  keep as keepArray,
   keepT as keepArrayT,
   map as mapArray,
   some,
@@ -113,21 +112,15 @@ import {
   enumerate,
 } from "../ix/EnumerableLike";
 import {
-  EnumerableObservableLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_observableType,
   ObservableType,
   ReactiveContainerLike_sinkInto,
-  RunnableObservableLike,
-  createEnumerableObservable,
   createObservable,
-  createRunnableObservable,
   createSubject,
-  emptyObservable,
   enumerableObservableType,
-  neverEnumerableObservable,
-  runnableObservableType,
+  neverObservable,
 } from "../rx";
 import {
   ObserverLike,
@@ -174,6 +167,13 @@ import { publishTo } from "./SubjectLike";
 
 export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
   obs[ObservableLike_observableType];
+
+export const getMinObservableType = (
+  observables: readonly ObservableLike[],
+): ObservableType =>
+  pipe(observables, mapArray(getObservableType), x =>
+    min(...x),
+  ) as ObservableType;
 
 const createLift: (
   observableType: 0 | 1 | 2,
@@ -332,7 +332,7 @@ export const buffer: <T>(options?: {
     const durationOption = options.duration ?? MAX_SAFE_INTEGER;
     const durationFunction =
       durationOption === MAX_SAFE_INTEGER
-        ? neverEnumerableObservable
+        ? neverObservable
         : typeof durationOption === "number"
         ? (_: T) => pipe([none], arrayToObservable())
         : durationOption;
@@ -405,18 +405,9 @@ export const concat: Concat<ObservableLike>["concat"] = /*@__PURE__*/ (<
       }
     };
 
-    const type = pipe(observables, mapArray(getObservableType), x =>
-      min(...x),
-    ) as ObservableType;
+    const type = getMinObservableType(observables);
 
-    switch (type) {
-      case enumerableObservableType:
-        return createEnumerableObservable(onSink);
-      case runnableObservableType:
-        return createRunnableObservable(onSink);
-      default:
-        return createObservable(onSink);
-    }
+    return createObservable(onSink, { type });
   };
 })();
 export const concatT: Concat<ObservableLike> = {
@@ -527,18 +518,8 @@ const mergeImpl = /*@__PURE__*/ (() => {
       }
     };
 
-    const type = pipe(observables, mapArray(getObservableType), x =>
-      min(...x),
-    ) as ObservableType;
-
-    switch (type) {
-      case enumerableObservableType:
-        return createEnumerableObservable(onSink);
-      case runnableObservableType:
-        return createRunnableObservable(onSink);
-      default:
-        return createObservable(onSink);
-    }
+    const type = getMinObservableType(observables);
+    return createObservable(onSink, { type });
   };
 })();
 
@@ -665,25 +646,8 @@ const latest = /*@__PURE__*/ (() => {
       }
     };
 
-    const enumerableObservables = pipe(
-      observables,
-      keepArray(obs => getObservableType(obs) === enumerableObservableType),
-    );
-
-    const runnableObservables = pipe(
-      observables,
-      keepArray(
-        obs =>
-          getObservableType(obs) === enumerableObservableType ||
-          getObservableType(obs) === runnableObservableType,
-      ),
-    );
-
-    return getLength(enumerableObservables) === getLength(observables)
-      ? createEnumerableObservable(onSink)
-      : getLength(runnableObservables) === getLength(observables)
-      ? createRunnableObservable(onSink)
-      : createObservable(onSink);
+    const type = getMinObservableType(observables);
+    return createObservable(onSink, { type });
   };
 })();
 
@@ -723,14 +687,7 @@ export const onSubscribe =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
   (obs: ObservableLike<T>): ObservableLike<T> => {
     const type = getObservableType(obs);
-    switch (type) {
-      case enumerableObservableType:
-        return createOnSink(createEnumerableObservable, obs, f);
-      case runnableObservableType:
-        return createOnSink(createRunnableObservable, obs, f);
-      default:
-        return createOnSink(createObservable, obs, f);
-    }
+    return createOnSink(obs => createObservable(obs, { type }), obs, f);
   };
 
 export const pairwise: Pairwise<ObservableLike>["pairwise"] =
@@ -1074,13 +1031,6 @@ export const toEnumerable: <T>() => Function1<
         : emptyEnumerable();
 })();
 
-export const toEnumerableObservable =
-  <T>() =>
-  (obs: ObservableLike<T>): Option<EnumerableObservableLike<T>> =>
-    getObservableType(obs) === enumerableObservableType
-      ? (obs as EnumerableObservableLike<T>)
-      : emptyObservable();
-
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
@@ -1125,7 +1075,7 @@ export const toPromise =
       );
     });
 
-export const toReadonlyArray: ToReadonlyArray<ObservableLike >["toReadonlyArray"] =
+export const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"] =
 
     <T>(
       options: {
@@ -1158,14 +1108,9 @@ export const toReadonlyArray: ToReadonlyArray<ObservableLike >["toReadonlyArray"
         return [];
       }
     };
-
-export const toRunnableObservable =
-  <T>() =>
-  (obs: ObservableLike<T>): RunnableObservableLike<T> =>
-    getObservableType(obs) === runnableObservableType ||
-    getObservableType(obs) === enumerableObservableType
-      ? (obs as RunnableObservableLike<T>)
-      : emptyObservable({ delay: 0 });
+export const toReadonlyArrayT: ToReadonlyArray<ObservableLike> = {
+  toReadonlyArray,
+};
 
 export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   const typedObserverMixin = observerMixin();
@@ -1278,23 +1223,10 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   return (
     ...observables: readonly ObservableLike<any>[]
   ): ObservableLike<readonly any[]> => {
-    const enumerableObservables = pipe(
-      observables,
-      keepArray(obs => getObservableType(obs) === enumerableObservableType),
-    );
-
-    const runnableObservables = pipe(
-      observables,
-      keepArray(
-        obs =>
-          getObservableType(obs) === enumerableObservableType ||
-          getObservableType(obs) === runnableObservableType,
-      ),
-    );
-
-    return getLength(enumerableObservables) === getLength(observables)
+    const type = getMinObservableType(observables);
+    return type === enumerableObservableType
       ? pipe(
-          enumerableObservables,
+          observables,
           mapArray(toEnumerable()),
           keepType(keepArrayT, isSome),
           enumerables =>
@@ -1303,9 +1235,7 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
             )(...enumerables),
           enumerableToObservable(),
         )
-      : getLength(runnableObservables) === getLength(observables)
-      ? createRunnableObservable(onSink(observables))
-      : createObservable(onSink(observables));
+      : createObservable(onSink(observables), { type });
   };
 })();
 export const zipT: Zip<ObservableLike> = {

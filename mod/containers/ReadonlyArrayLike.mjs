@@ -5,7 +5,7 @@ import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
-import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
+import { createObservable, runnableObservableType, enumerableObservableType, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { __yield, schedule } from '../scheduling/SchedulerLike.mjs';
 import { SourceLike_move, EnumeratorLike_current, SinkLike_notify } from '../util.mjs';
@@ -116,13 +116,15 @@ const toObservable = /*@__PURE__*/ (() => {
         };
         return createObservable(onSink);
     });
-    return ((options) => {
+    return (options) => {
         const delay = getDelay(options);
-        return delay > 0
-            ? createArrayObservable(createRunnableObservable, options)(options)
-            : createArrayObservable(createEnumerableObservable, options)(options);
-    });
+        const createObservableWithType = (f) => createObservable(f, {
+            type: delay > 0 ? runnableObservableType : enumerableObservableType,
+        });
+        return createArrayObservable(createObservableWithType, options)(options);
+    };
 })();
+const toObservableT = { toObservable };
 const toReadonlyArray = () => identity;
 const toReadonlyArrayT = {
     toReadonlyArray,
@@ -150,4 +152,4 @@ const toSequenceT = {
     toSequence,
 };
 
-export { every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableT, toObservable, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, toSequence, toSequenceT };
+export { every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, toSequence, toSequenceT };

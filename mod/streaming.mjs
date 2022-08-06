@@ -4,14 +4,18 @@ import { createInstanceFactory, clazz, __extends, init } from './__internal__/ut
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
 import { pipe, none, newInstance, getLength, composeUnsafe, returns, updateReducer } from './functions.mjs';
-import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createObservable } from './rx.mjs';
+import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createObservable, emptyObservable } from './rx.mjs';
 import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
-import { multicast, scan, mergeT, distinctUntilChanged } from './rx/ObservableLike.mjs';
+import { multicast, scan, mergeT, distinctUntilChanged, getObservableType, subscribeOn, takeUntil, forEach, subscribe } from './rx/ObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
 import { publish } from './rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from './scheduling.mjs';
-import './util/DisposableLike.mjs';
-import { addTo } from './__internal__/util/DisposableLikeInternal.mjs';
+import { getScheduler } from './scheduling/ObserverLike.mjs';
+import { toPausableScheduler } from './scheduling/SchedulerLike.mjs';
+import { toObservable as toObservable$1 } from './util/DisposableLike.mjs';
+import { resume, pause } from './util/PauseableLike.mjs';
+import { sourceFrom } from './util/SinkLike.mjs';
+import { addTo, add, bindTo } from './__internal__/util/DisposableLikeInternal.mjs';
 
 /** @ignore */
 const StreamableLike_stream = Symbol("StreamableLike_stream");
@@ -100,5 +104,20 @@ const createActionReducer = (reducer, initialState, options) => createLiftedStre
  * if a state value is distinct from the previous one.
  */
 const createStateStore = (initialState, options) => createActionReducer(updateReducer, initialState, options);
+const flow = () => observable => getObservableType(observable) > 0
+    ? createLiftedFlowable((modeObs) => createObservable(observer => {
+        const pausableScheduler = pipe(observer, getScheduler, toPausableScheduler);
+        pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), takeUntil(pipe(pausableScheduler, toObservable$1())))), add(pipe(modeObs, forEach(mode => {
+            switch (mode) {
+                case "pause":
+                    pause(pausableScheduler);
+                    break;
+                case "resume":
+                    resume(pausableScheduler);
+                    break;
+            }
+        }), subscribe(getScheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
+    }))
+    : createLiftedFlowable(_ => emptyObservable());
 
-export { StreamableLike_stream, createActionReducer, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble };
+export { StreamableLike_stream, createActionReducer, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble, flow };

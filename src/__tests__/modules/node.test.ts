@@ -21,8 +21,8 @@ import {
   takeFirst,
   toPromise,
 } from "../../rx/ObservableLike";
-import { toFlowable } from "../../rx/RunnableObservableLike";
 import { createHostScheduler } from "../../scheduling";
+import { flow } from "../../streaming";
 import { toObservable as flowableToObservable } from "../../streaming/FlowableLike";
 import { sourceFrom } from "../../streaming/StreamLike";
 import { stream } from "../../streaming/StreamableLike";
@@ -51,7 +51,7 @@ export const nodeTests = describe(
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
           toObservable(),
-          toFlowable(),
+          flow(),
         );
 
         const dest = pipe(
@@ -98,7 +98,7 @@ export const nodeTests = describe(
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
           toObservable(),
-          toFlowable(),
+          flow(),
         );
 
         const dest = pipe(
@@ -199,7 +199,7 @@ export const nodeTests = describe(
       const acc = await pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         toObservable(),
-        toFlowable(),
+        flow(),
         gzip(),
         gunzip(),
         flowableToObservable(),

@@ -35,14 +35,14 @@ import {
 } from "../functions";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../ix";
 import {
-  EnumerableObservableLike,
   ObservableLike,
   RunnableLike,
-  RunnableObservableLike,
+  ToObservable,
   ToRunnable,
-  createEnumerableObservable,
+  createObservable,
   createRunnable,
-  createRunnableObservable,
+  enumerableObservableType,
+  runnableObservableType,
 } from "../rx";
 import { ObserverLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
@@ -96,7 +96,9 @@ export type FromArrayOptions = {
 
 const createFromArray =
   <C, T>(factory: (values: readonly T[], start: number, count: number) => C) =>
-  (options: Partial<FromArrayOptions> = {}): Function1<readonly T[], C> =>
+  (
+    options: Partial<FromArrayOptions> = {},
+  ): Function1<ReadonlyArrayLike<T>, C> =>
   values => {
     const valuesLength = getLength(values);
     const { start: startOption, count: countOption } = options;
@@ -210,28 +212,23 @@ export const toEnumerableT: ToEnumerable<
   }
 > = { toEnumerable };
 
-interface ToObservable {
-  <T>(options?: {
-    readonly start?: number;
+export const toObservable: ToObservable<
+  ReadonlyArrayLike,
+  {
     readonly count?: number;
-  }): Function1<ReadonlyArrayLike<T>, EnumerableObservableLike<T>>;
-
-  <T>(options: {
-    readonly start?: number;
-    readonly count?: number;
-    readonly delay: number;
+    readonly delay?: number;
     readonly delayStart?: boolean;
-  }): Function1<ReadonlyArrayLike<T>, RunnableObservableLike<T>>;
-}
-export const toObservable: ToObservable = /*@__PURE__*/ (<T>() => {
-  const createArrayObservable = <TObs extends ObservableLike<T>>(
-    createObservable: (f: SideEffect1<ObserverLike<T>>) => TObs,
+    readonly start?: number;
+  }
+>["toObservable"] = /*@__PURE__*/ (() => {
+  const createArrayObservable = <T>(
+    createObservable: (f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>,
     options?: {
       readonly delay?: number;
       readonly delayStart?: boolean;
     },
   ) =>
-    createFromArray<TObs, T>(
+    createFromArray<ObservableLike<T>, T>(
       (values: readonly T[], startIndex: number, count: number) => {
         const { delayStart = false } = options ?? {};
 
@@ -273,22 +270,30 @@ export const toObservable: ToObservable = /*@__PURE__*/ (<T>() => {
       },
     );
 
-  return ((options?: {
-    readonly start?: number;
+  return <T>(options?: {
     readonly count?: number;
     readonly delay?: number;
     readonly delayStart?: boolean;
-  }): Function1<
-    readonly T[],
-    RunnableObservableLike<T> | EnumerableObservableLike<T>
-  > => {
+    readonly start?: number;
+  }) => {
     const delay = getDelay(options);
+    const createObservableWithType = (f: SideEffect1<ObserverLike<T>>) =>
+      createObservable(f, {
+        type: delay > 0 ? runnableObservableType : enumerableObservableType,
+      });
 
-    return delay > 0
-      ? createArrayObservable(createRunnableObservable, options)(options)
-      : createArrayObservable(createEnumerableObservable, options)(options);
-  }) as ToObservable;
+    return createArrayObservable(createObservableWithType, options)(options);
+  };
 })();
+export const toObservableT: ToObservable<
+  ReadonlyArrayLike,
+  {
+    readonly count?: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+  }
+> = { toObservable };
 
 export const toReadonlyArray: ToReadonlyArray<
   ReadonlyArrayLike,
