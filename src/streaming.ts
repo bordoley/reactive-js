@@ -1,3 +1,9 @@
+import {
+  distinctUntilChanged,
+  mergeT,
+  multicast,
+  scan,
+} from "./__internal__/rx/ObservableLikeInternal";
 import { delegatingDisposableMixin } from "./__internal__/util/DisposableLikeMixins";
 import {
   __extends,
@@ -11,7 +17,6 @@ import { toObservable } from "./containers/ReadonlyArrayLike";
 import {
   Equality,
   Factory,
-  Function1,
   Reducer,
   Updater,
   composeUnsafe,
@@ -31,20 +36,8 @@ import {
   SubjectLike,
   createObservable,
   createSubject,
-  emptyObservable,
 } from "./rx";
 import { getObserverCount, getReplay } from "./rx/MulticastObservableLike";
-import {
-  distinctUntilChanged,
-  forEach,
-  getObservableType,
-  mergeT,
-  multicast,
-  scan,
-  subscribe,
-  subscribeOn,
-  takeUntil,
-} from "./rx/ObservableLike";
 import { sinkInto } from "./rx/ReactiveContainerLike";
 import { publish } from "./rx/SubjectLike";
 import {
@@ -54,18 +47,8 @@ import {
   ObserverLike,
   SchedulerLike,
 } from "./scheduling";
-import { getScheduler } from "./scheduling/ObserverLike";
-import { toPausableScheduler } from "./scheduling/SchedulerLike";
 import { PauseableLike, SourceLike } from "./util";
-import {
-  add,
-  addTo,
-  bindTo,
-  toObservable as disposableToObservable,
-} from "./util/DisposableLike";
-import { pause, resume } from "./util/PauseableLike";
-import { sourceFrom } from "./util/SinkLike";
-
+import { addTo } from "./util/DisposableLike";
 /**
  * Represents a duplex stream
  *
@@ -499,49 +482,3 @@ export const createStateStore = <T>(
   options?: { readonly equality?: Equality<T> },
 ): StreamableStateLike<T> =>
   createActionReducer(updateReducer, initialState, options);
-
-export const flow =
-  <T>(): Function1<ObservableLike, FlowableLike<T>> =>
-  observable =>
-    getObservableType(observable) > 0
-      ? createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
-          createObservable(observer => {
-            const pausableScheduler = pipe(
-              observer,
-              getScheduler,
-              toPausableScheduler,
-            );
-
-            pipe(
-              observer,
-              sourceFrom(
-                pipe(
-                  observable,
-                  subscribeOn(pausableScheduler),
-                  takeUntil<unknown>(
-                    pipe(pausableScheduler, disposableToObservable()),
-                  ),
-                ),
-              ),
-              add(
-                pipe(
-                  modeObs,
-                  forEach<FlowMode>(mode => {
-                    switch (mode) {
-                      case "pause":
-                        pause(pausableScheduler);
-                        break;
-                      case "resume":
-                        resume(pausableScheduler);
-                        break;
-                    }
-                  }),
-                  subscribe(getScheduler(observer)),
-                  bindTo(pausableScheduler),
-                ),
-              ),
-              add(pausableScheduler),
-            );
-          }),
-        )
-      : createLiftedFlowable(_ => emptyObservable());

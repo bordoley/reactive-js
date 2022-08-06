@@ -4,13 +4,14 @@ import { toRunnable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
 import { createSubject } from '../../rx.mjs';
 import { getObserverCount } from '../../rx/MulticastObservableLike.mjs';
-import { forEach as forEach$1, subscribe } from '../../rx/ObservableLike.mjs';
+import '../../rx/ObservableLike.mjs';
 import { forEach, run } from '../../rx/RunnableLike.mjs';
 import { publishTo } from '../../rx/SubjectLike.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling.mjs';
 import { run as run$1 } from '../../util/ContinuationLike.mjs';
 import '../../util/DisposableLike.mjs';
 import { dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
+import { forEach as forEach$1, subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
 
 const SubjectLikeTests = createDescribe("SubjectLike", createTest("with replay", () => {
     const scheduler = createVirtualTimeScheduler();

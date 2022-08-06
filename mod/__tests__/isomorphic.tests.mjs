@@ -13,7 +13,6 @@ import { StreamableLikeTests } from './modules/StreamableLike.test.mjs';
 import { SubjectLikeTests } from './modules/SubjectLike.test.mjs';
 import { effectsTests } from './modules/effects.test.mjs';
 import { queueTests } from './modules/queues.test.mjs';
-import { streamingTests } from './modules/streaming.test.mjs';
 
 /**
  * @jest-environment node
@@ -31,6 +30,5 @@ runTests([
     RunnableLikeTests,
     SequenceLikeTests,
     StreamableLikeTests,
-    streamingTests,
     SubjectLikeTests,
 ]);

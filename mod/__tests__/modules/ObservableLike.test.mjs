@@ -1,16 +1,21 @@
 /// <reference types="./ObservableLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals, expectToThrow, mockFn, expectToHaveBeenCalledTimes, expectIsSome, testAsync, expectPromiseToThrow } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals, expectToThrow, mockFn, expectToHaveBeenCalledTimes, expectIsSome, expectEquals, expectTrue, testAsync, expectPromiseToThrow } from '../../__internal__/testing.mjs';
 import { throws, concatMap } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
-import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise } from '../../functions.mjs';
+import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, increment } from '../../functions.mjs';
 import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/EnumerableLike.mjs';
 import { generateObservable, deferObservable, enumerableObservableType, emptyObservable } from '../../rx.mjs';
-import { bufferT, toReadonlyArrayT, combineLatest, takeFirst, toReadonlyArray, concatT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, merge, onSubscribe, subscribe, pairwiseT, reduceT, scanT, share, zip, map, forEach, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeUntil, takeWhileT, throwIfEmptyT, toEnumerable, toPromise, zipT, zipLatest } from '../../rx/ObservableLike.mjs';
+import { bufferT, toReadonlyArrayT, combineLatest, takeFirst, toReadonlyArray, concatT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, onSubscribe, pairwiseT, reduceT, scanT, share, zip, map, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeUntil, takeWhileT, throwIfEmptyT, toEnumerable, toFlowable, toPromise, zipT, zipLatest } from '../../rx/ObservableLike.mjs';
 import { createVirtualTimeScheduler, createHostScheduler } from '../../scheduling.mjs';
+import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
+import { schedule } from '../../scheduling/SchedulerLike.mjs';
+import { stream } from '../../streaming/StreamableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import '../../util/DisposableLike.mjs';
 import { bufferTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests } from '../operators.mjs';
-import { getException, dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
+import { merge, subscribe, forEach } from '../../__internal__/rx/ObservableLikeInternal.mjs';
+import { getException, dispose, isDisposed } from '../../__internal__/util/DisposableLikeInternal.mjs';
+import { getCurrentTime } from '../../__internal__/schedulingInternal.mjs';
 
 const ObservableLikeTests = createDescribe("ObservableLike", bufferTests({
     fromArray: toObservable,
@@ -100,7 +105,31 @@ const ObservableLikeTests = createDescribe("ObservableLike", bufferTests({
     fromArray: toObservable,
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
-}), createDescribe("toEnumerable", createTest("with an enumerable observable", pipeLazy([1, 2, 3, 4], toObservable(), toEnumerable(), toReadonlyArray$1(), expectArrayEquals([1, 2, 3, 4])))), createDescribe("toPromise", testAsync("when observable completes without producing a value", async () => {
+}), createDescribe("toEnumerable", createTest("with an enumerable observable", pipeLazy([1, 2, 3, 4], toObservable(), toEnumerable(), toReadonlyArray$1(), expectArrayEquals([1, 2, 3, 4])))), createDescribe("toFlowable", createTest("flow a generating source", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const generateStream = pipe(generateObservable(increment, returns(-1), {
+        delay: 1,
+        delayStart: true,
+    }), toFlowable(), stream(scheduler));
+    pipe(generateStream, dispatch("resume"));
+    pipe(scheduler, schedule(pipeLazy("pause", dispatchTo(generateStream)), {
+        delay: 2,
+    }));
+    pipe(scheduler, schedule(pipeLazy("resume", dispatchTo(generateStream)), {
+        delay: 4,
+    }));
+    pipe(scheduler, schedule(pipeLazy(generateStream, dispose()), { delay: 5 }));
+    const f = mockFn();
+    const subscription = pipe(generateStream, forEach(x => {
+        f(getCurrentTime(scheduler), x);
+    }), subscribe(scheduler));
+    run(scheduler);
+    pipe(f, expectToHaveBeenCalledTimes(3));
+    pipe(f.calls[0][1], expectEquals(0));
+    pipe(f.calls[1][1], expectEquals(1));
+    pipe(f.calls[2][1], expectEquals(2));
+    pipe(subscription, isDisposed, expectTrue);
+})), createDescribe("toPromise", testAsync("when observable completes without producing a value", async () => {
     const scheduler = createHostScheduler();
     try {
         await pipe(pipe(emptyObservable(), toPromise(scheduler)), expectPromiseToThrow);

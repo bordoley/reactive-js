@@ -1,32 +1,40 @@
 import {
-  Lift,
   TReactive,
   createDecodeWithCharsetOperator,
-  createDistinctUntilChangedOperator,
-  createForEachOperator,
   createKeepOperator,
   createMapOperator,
   createReduceOperator,
-  createScanOperator,
   createSkipFirstOperator,
   createTakeFirstOperator,
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
-  reactive,
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { MAX_SAFE_INTEGER } from "../__internal__/env";
+import {
+  distinctUntilChanged,
+  forEach,
+  getMinObservableType,
+  getObservableType,
+  liftEnumerableObservable,
+  liftEnumerableObservableT,
+  liftObservable,
+  liftRunnableObservable,
+  merge,
+  mergeImpl,
+  mergeT,
+  multicast,
+  scan,
+  subscribe,
+} from "../__internal__/rx/ObservableLikeInternal";
 import { createOnSink } from "../__internal__/rx/ReactiveContainerLikeInternal";
 import {
   createDecodeWithCharsetObserver,
   createDelegatingObserver,
-  createDistinctUntilChangedObserver,
-  createForEachObserver,
   createKeepObserver,
   createMapObserver,
   createPairwiseObserver,
   createReduceObserver,
-  createScanObserver,
   createSkipFirstObserver,
   createTakeFirstObserver,
   createTakeLastObserver,
@@ -98,11 +106,9 @@ import {
   isSome,
   isTrue,
   max,
-  min,
   newInstance,
   none,
   pipe,
-  pipeUnsafe,
   returns,
 } from "../functions";
 import { EnumerableLike, createEnumerable, emptyEnumerable } from "../ix";
@@ -114,11 +120,8 @@ import {
 import {
   MulticastObservableLike,
   ObservableLike,
-  ObservableLike_observableType,
-  ObservableType,
-  ReactiveContainerLike_sinkInto,
   createObservable,
-  createSubject,
+  emptyObservable,
   enumerableObservableType,
   neverObservable,
 } from "../rx";
@@ -136,6 +139,8 @@ import {
 } from "../scheduling";
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import { getScheduler } from "../scheduling/ObserverLike";
+import { toPausableScheduler } from "../scheduling/SchedulerLike";
+import { FlowMode, FlowableLike, createLiftedFlowable } from "../streaming";
 import {
   ContinuationLike,
   DisposableLike,
@@ -151,8 +156,8 @@ import { run } from "../util/ContinuationLike";
 import {
   add,
   addTo,
-  addToIgnoringChildErrors,
   bindTo,
+  toObservable as disposableToObservable,
   dispose,
   getException,
   isDisposed,
@@ -160,78 +165,10 @@ import {
   onDisposed,
 } from "../util/DisposableLike";
 import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
+import { pause, resume } from "../util/PauseableLike";
 import { notify, notifySink, sourceFrom } from "../util/SinkLike";
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
-import { publishTo } from "./SubjectLike";
-
-export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
-  obs[ObservableLike_observableType];
-
-export const getMinObservableType = (
-  observables: readonly ObservableLike[],
-): ObservableType =>
-  pipe(observables, mapArray(getObservableType), x =>
-    min(...x),
-  ) as ObservableType;
-
-const createLift: (
-  observableType: 0 | 1 | 2,
-) => Lift<ObservableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
-  class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
-    [ObservableLike_observableType]: ObservableType;
-
-    constructor(
-      readonly source: ObservableLike<TIn>,
-      readonly operators: readonly Function1<
-        ObserverLike<any>,
-        ObserverLike<any>
-      >[],
-      observableType: ObservableType,
-    ) {
-      this[ObservableLike_observableType] = observableType;
-    }
-
-    [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-      pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
-    }
-  }
-
-  return (observableType: ObservableType) =>
-    <TA, TB>(
-      operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-    ): Function1<ObservableLike<TA>, ObservableLike<TB>> =>
-    source => {
-      const sourceSource =
-        source instanceof LiftedObservable ? source.source : source;
-
-      const allFunctions =
-        source instanceof LiftedObservable
-          ? [operator, ...source.operators]
-          : [operator];
-
-      const type = min(
-        observableType,
-        getObservableType(source),
-        getObservableType(sourceSource),
-      );
-
-      return newInstance(
-        LiftedObservable,
-        sourceSource,
-        allFunctions,
-        type as ObservableType,
-      );
-    };
-})();
-
-const liftObservable = createLift(0);
-const liftRunnableObservable = createLift(1);
-const liftEnumerableObservable = createLift(2);
-const liftEnumerableObservableT: Lift<ObservableLike, TReactive> = {
-  lift: liftEnumerableObservable,
-  variance: reactive,
-};
 
 export const buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableLike>;
@@ -426,27 +363,12 @@ export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
   decodeWithCharset,
 };
 
-export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
-  /*@__PURE__*/ (<T>() =>
-    pipe(
-      createDistinctUntilChangedObserver,
-      createDistinctUntilChangedOperator<ObservableLike, T, TReactive>(
-        liftEnumerableObservableT,
-      ),
-    ))();
+export { distinctUntilChanged };
 export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
   distinctUntilChanged,
 };
 
-export const forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
-  T,
->() =>
-  pipe(
-    createForEachObserver,
-    createForEachOperator<ObservableLike, T, TReactive>(
-      liftEnumerableObservableT,
-    ),
-  ))();
+export { forEach };
 export const forEachT: ForEach<ObservableLike> = { forEach };
 
 export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
@@ -460,6 +382,17 @@ export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
       ),
       LatestMode.Combine,
     )) as ForkZip<ObservableLike>["forkZip"];
+
+export const forkMerge: ForkConcat<ObservableLike>["forkConcat"] =
+  <TIn, TOut>(
+    ...ops: readonly ContainerOperator<ObservableLike, TIn, TOut>[]
+  ) =>
+  (obs: ObservableLike<TIn>) =>
+    pipe(
+      ops,
+      mapArray(op => op(obs)),
+      mergeImpl,
+    );
 
 export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
     ...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]
@@ -489,50 +422,7 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() =>
   ))();
 export const mapT: Map<ObservableLike> = { map };
 
-const mergeImpl = /*@__PURE__*/ (() => {
-  const createMergeObserver = <T>(
-    delegate: ObserverLike<T>,
-    count: number,
-    ctx: {
-      completedCount: number;
-    },
-  ) =>
-    pipe(
-      createDelegatingObserver(delegate),
-      addTo(delegate),
-      onComplete(() => {
-        ctx.completedCount++;
-        if (ctx.completedCount >= count) {
-          pipe(delegate, dispose());
-        }
-      }),
-    );
-
-  return <T>(observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
-    const onSink = (observer: ObserverLike<T>) => {
-      const count = getLength(observables);
-      const ctx = { completedCount: 0 };
-
-      for (const observable of observables) {
-        pipe(createMergeObserver(observer, count, ctx), sourceFrom(observable));
-      }
-    };
-
-    const type = getMinObservableType(observables);
-    return createObservable(onSink, { type });
-  };
-})();
-
-export const forkMerge: ForkConcat<ObservableLike>["forkConcat"] =
-  <TIn, TOut>(
-    ...ops: readonly ContainerOperator<ObservableLike, TIn, TOut>[]
-  ) =>
-  (obs: ObservableLike<TIn>) =>
-    pipe(
-      ops,
-      mapArray(op => op(obs)),
-      mergeImpl,
-    );
+export { merge, mergeT };
 
 const enum LatestMode {
   Combine = 1,
@@ -651,37 +541,7 @@ const latest = /*@__PURE__*/ (() => {
   };
 })();
 
-export const merge: Concat<ObservableLike>["concat"] = <T>(
-  ...observables: ObservableLike<T>[]
-) => mergeImpl(observables);
-export const mergeT: Concat<ObservableLike> = {
-  concat: merge,
-};
-
-/**
- * Returns a `MulticastObservableLike` backed by a single subscription to the source.
- *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
- * @param replay The number of events that should be replayed when the `MulticastObservableLike`
- * is subscribed to.
- */
-export const multicast =
-  <T>(
-    scheduler: SchedulerLike,
-    options: { readonly replay?: number } = {},
-  ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
-  observable => {
-    const { replay = 0 } = options;
-    const subject = createSubject({ replay });
-    pipe(
-      observable,
-      forEach<T>(publishTo(subject)),
-      subscribe(scheduler),
-      bindTo(subject),
-    );
-
-    return subject;
-  };
+export { multicast };
 
 export const onSubscribe =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
@@ -707,10 +567,7 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   ))();
 export const reduceT: Reduce<ObservableLike> = { reduce };
 
-export const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ pipe(
-  createScanObserver,
-  createScanOperator(liftEnumerableObservableT),
-);
+export { scan };
 export const scanT: Scan<ObservableLike> = { scan };
 
 /**
@@ -824,37 +681,7 @@ export const switchAllT: ConcatAll<ObservableLike> = {
   concatAll: switchAll,
 };
 
-export const subscribe: <T>(
-  scheduler: SchedulerLike,
-) => Function1<ObservableLike<T>, DisposableLike> = /*@__PURE__*/ (<T>() => {
-  const typedObserverMixin = observerMixin<T>();
-
-  const createObserver = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedObserverMixin),
-      function SubscribeObserver(
-        this: ObserverLike<T>,
-        scheduler: SchedulerLike,
-      ) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, scheduler);
-
-        return this;
-      },
-      {},
-      {
-        [SinkLike_notify](_: T) {},
-      },
-    ),
-  );
-  return (scheduler: SchedulerLike) => (observable: ObservableLike<T>) =>
-    pipe(
-      scheduler,
-      createObserver,
-      addToIgnoringChildErrors(scheduler),
-      sourceFrom(observable),
-    );
-})();
+export { subscribe };
 
 export const subscribeOn =
   <T>(scheduler: SchedulerLike) =>
@@ -874,6 +701,7 @@ export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
     createTakeFirstObserver,
     createTakeFirstOperator(liftEnumerableObservableT),
   );
+
 export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
 
 export const takeLast: TakeLast<ObservableLike>["takeLast"] =
@@ -1030,6 +858,52 @@ export const toEnumerable: <T>() => Function1<
           })
         : emptyEnumerable();
 })();
+
+export const toFlowable =
+  <T>(): Function1<ObservableLike, FlowableLike<T>> =>
+  observable =>
+    getObservableType(observable) > 0
+      ? createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
+          createObservable(observer => {
+            const pausableScheduler = pipe(
+              observer,
+              getScheduler,
+              toPausableScheduler,
+            );
+
+            pipe(
+              observer,
+              sourceFrom(
+                pipe(
+                  observable,
+                  subscribeOn(pausableScheduler),
+                  takeUntil<unknown>(
+                    pipe(pausableScheduler, disposableToObservable()),
+                  ),
+                ),
+              ),
+              add(
+                pipe(
+                  modeObs,
+                  forEach<FlowMode>(mode => {
+                    switch (mode) {
+                      case "pause":
+                        pause(pausableScheduler);
+                        break;
+                      case "resume":
+                        resume(pausableScheduler);
+                        break;
+                    }
+                  }),
+                  subscribe(getScheduler(observer)),
+                  bindTo(pausableScheduler),
+                ),
+              ),
+              add(pausableScheduler),
+            );
+          }),
+        )
+      : createLiftedFlowable(_ => emptyObservable());
 
 /**
  * Returns a Promise that completes with the last value produced by

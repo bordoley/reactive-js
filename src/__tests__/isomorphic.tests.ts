@@ -16,7 +16,6 @@ import { StreamableLikeTests } from "./modules/StreamableLike.test";
 import { SubjectLikeTests } from "./modules/SubjectLike.test";
 import { effectsTests } from "./modules/effects.test";
 import { queueTests } from "./modules/queues.test";
-import { streamingTests } from "./modules/streaming.test";
 
 runTests([
   ContainerLikeTests,
@@ -31,6 +30,5 @@ runTests([
   RunnableLikeTests,
   SequenceLikeTests,
   StreamableLikeTests,
-  streamingTests,
   SubjectLikeTests,
 ]);
