@@ -1,10 +1,12 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   expectIsSome,
   expectPromiseToThrow,
   expectToHaveBeenCalledTimes,
   expectToThrow,
+  expectTrue,
   mockFn,
   test,
   testAsync,
@@ -13,6 +15,7 @@ import { concatMap, throws } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import {
   arrayEquality,
+  increment,
   incrementBy,
   pipe,
   pipeLazy,
@@ -55,6 +58,7 @@ import {
   takeWhileT,
   throwIfEmptyT,
   toEnumerable,
+  toFlowable,
   toPromise,
   toReadonlyArray,
   toReadonlyArrayT,
@@ -66,8 +70,11 @@ import {
   createHostScheduler,
   createVirtualTimeScheduler,
 } from "../../scheduling";
+import { dispatch, dispatchTo } from "../../scheduling/DispatcherLike";
+import { getCurrentTime, schedule } from "../../scheduling/SchedulerLike";
+import { stream } from "../../streaming/StreamableLike";
 import { run } from "../../util/ContinuationLike";
-import { dispose, getException } from "../../util/DisposableLike";
+import { dispose, getException, isDisposed } from "../../util/DisposableLike";
 import {
   bufferTests,
   concatTests,
@@ -349,6 +356,60 @@ export const ObservableLikeTests = describe(
         expectArrayEquals([1, 2, 3, 4]),
       ),
     ),
+  ),
+  describe(
+    "toFlowable",
+    test("flow a generating source", () => {
+      const scheduler = createVirtualTimeScheduler();
+
+      const generateStream = pipe(
+        generateObservable(increment, returns(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
+        toFlowable(),
+        stream(scheduler),
+      );
+
+      pipe(generateStream, dispatch("resume"));
+
+      pipe(
+        scheduler,
+        schedule(pipeLazy("pause", dispatchTo(generateStream)), {
+          delay: 2,
+        }),
+      );
+
+      pipe(
+        scheduler,
+        schedule(pipeLazy("resume", dispatchTo(generateStream)), {
+          delay: 4,
+        }),
+      );
+
+      pipe(
+        scheduler,
+        schedule(pipeLazy(generateStream, dispose()), { delay: 5 }),
+      );
+
+      const f = mockFn();
+      const subscription = pipe(
+        generateStream,
+        forEach<number>(x => {
+          f(getCurrentTime(scheduler), x);
+        }),
+        subscribe(scheduler),
+      );
+
+      run(scheduler);
+
+      pipe(f, expectToHaveBeenCalledTimes(3));
+      pipe(f.calls[0][1], expectEquals(0));
+      pipe(f.calls[1][1], expectEquals(1));
+      pipe(f.calls[2][1], expectEquals(2));
+
+      pipe(subscription, isDisposed, expectTrue);
+    }),
   ),
   describe(
     "toPromise",
