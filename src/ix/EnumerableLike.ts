@@ -91,13 +91,14 @@ import {
   createEnumerable,
 } from "../ix";
 import {
-  EnumerableObservableLike,
+  ObservableLike,
   RunnableLike,
-  RunnableObservableLike,
+  ToObservable,
   ToRunnable,
-  createEnumerableObservable,
+  createObservable,
   createRunnable,
-  createRunnableObservable,
+  enumerableObservableType,
+  runnableObservableType,
 } from "../rx";
 import { ObserverLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
@@ -1099,18 +1100,18 @@ export const toEnumerableT: ToEnumerable<EnumerableLike> = {
   toEnumerable,
 };
 
-interface ToObservable {
-  <T>(): Function1<EnumerableLike<T>, EnumerableObservableLike<T>>;
-  <T>(options?: { delay: number; delayStart?: boolean }): Function1<
-    EnumerableLike<T>,
-    RunnableObservableLike<T>
-  >;
-}
-export const toObservable: ToObservable = (<T>(options?: {
+export const toObservable: ToObservable<
+  EnumerableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toObservable"] =
+  <T>(options?: {
     delay?: number;
     delayStart?: boolean;
-  }) =>
-  (enumerable: EnumerableLike<T>) => {
+  }): Function1<EnumerableLike<T>, ObservableLike<T>> =>
+  enumerable => {
     const delay = getDelay(options);
     const { delayStart = false } = options ?? {};
 
@@ -1131,10 +1132,17 @@ export const toObservable: ToObservable = (<T>(options?: {
         ),
       );
     };
-    return delay > 0
-      ? createRunnableObservable(onSink)
-      : createEnumerableObservable(onSink);
-  }) as ToObservable;
+    return createObservable(onSink, {
+      type: delay > 0 ? runnableObservableType : enumerableObservableType,
+    });
+  };
+export const toObservableT: ToObservable<
+  EnumerableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+> = { toObservable };
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
 

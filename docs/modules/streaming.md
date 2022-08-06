@@ -16,7 +16,6 @@
 ### Type Aliases
 
 - [FlowMode](streaming.md#flowmode)
-- [ToFlowable](streaming.md#toflowable)
 
 ### Functions
 
@@ -26,25 +25,13 @@
 - [createStateStore](streaming.md#createstatestore)
 - [createStream](streaming.md#createstream)
 - [createStreamble](streaming.md#createstreamble)
+- [flow](streaming.md#flow)
 
 ## Type Aliases
 
 ### FlowMode
 
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
-
-___
-
-### ToFlowable
-
-Ƭ **ToFlowable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toFlowable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
 
 ## Functions
 
@@ -868,3 +855,19 @@ ___
 #### Returns
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `TData`, `TStream`\>
+
+___
+
+### flow
+
+▸ **flow**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>

@@ -10,11 +10,11 @@ import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs'
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { createEnumeratorSink } from '../__internal__/util/SinkLikeMixin.mjs';
 import { keepType } from '../containers/ContainerLike.mjs';
-import { toObservable, map as map$1, keep as keep$1, every, forEach as forEach$1, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipeUnsafe, min, newInstance, pipe, isEmpty, none, getLength, max, returns, isNone, isSome, compose, isTrue, getOrRaise } from '../functions.mjs';
+import { map as map$1, toObservable, every, forEach as forEach$1, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
+import { pipe, min, pipeUnsafe, newInstance, isEmpty, none, getLength, max, returns, isNone, isSome, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { createEnumerable, emptyEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';
-import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, neverEnumerableObservable, createObservable, runnableObservableType, createRunnableObservable, enumerableObservableType, createEnumerableObservable, createSubject, emptyObservable } from '../rx.mjs';
+import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, neverObservable, createObservable, createSubject, enumerableObservableType } from '../rx.mjs';
 import { ObserverLike_dispatcher, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, createVirtualTimeScheduler } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -29,6 +29,7 @@ import { publishTo } from './SubjectLike.mjs';
 import { onComplete, dispose, isDisposed, addTo, bindTo, onDisposed, addToIgnoringChildErrors, add, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const getObservableType = (obs) => obs[ObservableLike_observableType];
+const getMinObservableType = (observables) => pipe(observables, map$1(getObservableType), x => min(...x));
 const createLift = /*@__PURE__*/ (() => {
     class LiftedObservable {
         constructor(source, operators, observableType) {
@@ -104,7 +105,7 @@ const buffer = /*@__PURE__*/ (() => {
         var _a, _b;
         const durationOption = (_a = options.duration) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER;
         const durationFunction = durationOption === MAX_SAFE_INTEGER
-            ? neverEnumerableObservable
+            ? neverObservable
             : typeof durationOption === "number"
                 ? (_) => pipe([none], toObservable())
                 : durationOption;
@@ -149,15 +150,8 @@ const concat = /*@__PURE__*/ (() => {
                 pipe(observer, dispose());
             }
         };
-        const type = pipe(observables, map$1(getObservableType), x => min(...x));
-        switch (type) {
-            case enumerableObservableType:
-                return createEnumerableObservable(onSink);
-            case runnableObservableType:
-                return createRunnableObservable(onSink);
-            default:
-                return createObservable(onSink);
-        }
+        const type = getMinObservableType(observables);
+        return createObservable(onSink, { type });
     };
 })();
 const concatT = {
@@ -196,15 +190,8 @@ const mergeImpl = /*@__PURE__*/ (() => {
                 pipe(createMergeObserver(observer, count, ctx), sourceFrom(observable));
             }
         };
-        const type = pipe(observables, map$1(getObservableType), x => min(...x));
-        switch (type) {
-            case enumerableObservableType:
-                return createEnumerableObservable(onSink);
-            case runnableObservableType:
-                return createRunnableObservable(onSink);
-            default:
-                return createObservable(onSink);
-        }
+        const type = getMinObservableType(observables);
+        return createObservable(onSink, { type });
     };
 })();
 const forkMerge = (...ops) => (obs) => pipe(ops, map$1(op => op(obs)), mergeImpl);
@@ -267,14 +254,8 @@ const latest = /*@__PURE__*/ (() => {
                 add(ctx, innerObserver);
             }
         };
-        const enumerableObservables = pipe(observables, keep$1(obs => getObservableType(obs) === enumerableObservableType));
-        const runnableObservables = pipe(observables, keep$1(obs => getObservableType(obs) === enumerableObservableType ||
-            getObservableType(obs) === runnableObservableType));
-        return getLength(enumerableObservables) === getLength(observables)
-            ? createEnumerableObservable(onSink)
-            : getLength(runnableObservables) === getLength(observables)
-                ? createRunnableObservable(onSink)
-                : createObservable(onSink);
+        const type = getMinObservableType(observables);
+        return createObservable(onSink, { type });
     };
 })();
 const merge = (...observables) => mergeImpl(observables);
@@ -296,14 +277,7 @@ const multicast = (scheduler, options = {}) => observable => {
 };
 const onSubscribe = (f) => (obs) => {
     const type = getObservableType(obs);
-    switch (type) {
-        case enumerableObservableType:
-            return createOnSink(createEnumerableObservable, obs, f);
-        case runnableObservableType:
-            return createOnSink(createRunnableObservable, obs, f);
-        default:
-            return createOnSink(createObservable, obs, f);
-    }
+    return createOnSink(obs => createObservable(obs, { type }), obs, f);
 };
 const pairwise = 
 /*@__PURE__*/ (() => pipe(liftEnumerableObservable(createPairwiseObserver), returns))();
@@ -467,9 +441,6 @@ const toEnumerable = /*@__PURE__*/ (() => {
         })
         : emptyEnumerable();
 })();
-const toEnumerableObservable = () => (obs) => getObservableType(obs) === enumerableObservableType
-    ? obs
-    : emptyObservable();
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
@@ -514,10 +485,9 @@ const toReadonlyArray = (options = {}) => observable => {
         return [];
     }
 };
-const toRunnableObservable = () => (obs) => getObservableType(obs) === runnableObservableType ||
-    getObservableType(obs) === enumerableObservableType
-    ? obs
-    : emptyObservable({ delay: 0 });
+const toReadonlyArrayT = {
+    toReadonlyArray,
+};
 const zip = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
     const shouldEmit = compose(map$1((x) => hasCurrent(x) || move(x)), every(isTrue));
@@ -571,14 +541,10 @@ const zip = /*@__PURE__*/ (() => {
         }
     };
     return (...observables) => {
-        const enumerableObservables = pipe(observables, keep$1(obs => getObservableType(obs) === enumerableObservableType));
-        const runnableObservables = pipe(observables, keep$1(obs => getObservableType(obs) === enumerableObservableType ||
-            getObservableType(obs) === runnableObservableType));
-        return getLength(enumerableObservables) === getLength(observables)
-            ? pipe(enumerableObservables, map$1(toEnumerable()), keepType(keepT$1, isSome), enumerables => zip$1(...enumerables), toObservable$1())
-            : getLength(runnableObservables) === getLength(observables)
-                ? createRunnableObservable(onSink(observables))
-                : createObservable(onSink(observables));
+        const type = getMinObservableType(observables);
+        return type === enumerableObservableType
+            ? pipe(observables, map$1(toEnumerable()), keepType(keepT$1, isSome), enumerables => zip$1(...enumerables), toObservable$1())
+            : createObservable(onSink(observables), { type });
     };
 })();
 const zipT = {
@@ -593,4 +559,4 @@ const zipLatestT = {
     zip: zipLatest,
 };
 
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toPromise, toReadonlyArray, toRunnableObservable, zip, zipLatest, zipLatestT, zipT };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, getMinObservableType, getObservableType, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toPromise, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };
