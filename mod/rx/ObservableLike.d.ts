@@ -1,10 +1,10 @@
 export { distinctUntilChanged, forEach, merge, mergeT, multicast, scan, subscribe } from '../__internal__/rx/ObservableLikeInternal.js';
-import { ContainerOperator, Buffer, Zip, Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, ForkZip, ForkConcat, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
+import { ContainerOperator, Buffer, Zip, Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, ForkZip, ForkConcat, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise, ToReadonlyArray } from "../containers.mjs";
 import { Function1, Factory } from "../functions.mjs";
-import { EnumerableLike } from "../ix.mjs";
+import { ToEnumerable } from "../ix.mjs";
 import { ObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
-import { FlowableLike } from "../streaming.mjs";
+import { ToFlowable } from "../streaming.mjs";
 import { DisposableOrTeardown } from "../util.mjs";
 declare const buffer: <T>(options?: {
     readonly duration?: number | Function1<T, ObservableLike>;
@@ -65,15 +65,18 @@ declare const takeWhile: TakeWhile<ObservableLike>["takeWhile"];
 declare const takeWhileT: TakeWhile<ObservableLike>;
 declare const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike>;
-declare const toEnumerable: <T>() => Function1<ObservableLike<T>, EnumerableLike<T>>;
-declare const toFlowable: <T>() => Function1<ObservableLike<unknown>, FlowableLike<T>>;
+declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
+declare const toEnumerableT: ToEnumerable<ObservableLike>;
+declare const toFlowable: ToFlowable<ObservableLike>["toFlowable"];
+declare const toFlowableT: ToFlowable<ObservableLike>;
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
  *
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
-declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, Promise<T>>;
+declare const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"];
+declare const toPromiseT: ToPromise<ObservableLike, SchedulerLike>;
 declare const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<ObservableLike>;
 declare const zip: Zip<ObservableLike>["zip"];
@@ -84,4 +87,4 @@ declare const zipT: Zip<ObservableLike>;
  */
 declare const zipLatest: Zip<ObservableLike>["zip"];
 declare const zipLatestT: Zip<ObservableLike>;
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChangedT, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scanT, share, skipFirst, skipFirstT, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toFlowable, toPromise, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChangedT, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scanT, share, skipFirst, skipFirstT, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };

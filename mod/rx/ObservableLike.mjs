@@ -304,7 +304,8 @@ const throwIfEmpty =
 const throwIfEmptyT = {
     throwIfEmpty,
 };
-const toEnumerable = /*@__PURE__*/ (() => {
+const toEnumerable = 
+/*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
     const typedObserverMixin = observerMixin();
     const createEnumeratorScheduler = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function EnumeratorScheduler() {
@@ -365,6 +366,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
         })
         : emptyEnumerable();
 })();
+const toEnumerableT = { toEnumerable };
 const toFlowable = () => observable => getObservableType(observable) > 0
     ? createLiftedFlowable((modeObs) => createObservable(observer => {
         const pausableScheduler = pipe(observer, getScheduler, toPausableScheduler);
@@ -380,13 +382,14 @@ const toFlowable = () => observable => getObservableType(observable) > 0
         }), subscribe(getScheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
     }))
     : createLiftedFlowable(_ => emptyObservable());
+const toFlowableT = { toFlowable };
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
  *
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
-const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, reject) => {
+const toPromise = (scheduler) => (observable) => newInstance(Promise, (resolve, reject) => {
     let result = none;
     let hasResult = false;
     pipe(observable, forEach(next => {
@@ -405,6 +408,9 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
         }
     }));
 });
+const toPromiseT = {
+    toPromise,
+};
 const toReadonlyArray = (options = {}) => observable => {
     if (getObservableType(observable) > 0) {
         const { schedulerFactory = createVirtualTimeScheduler } = options;
@@ -498,4 +504,4 @@ const zipLatestT = {
     zip: zipLatest,
 };
 
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChangedT, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scanT, share, skipFirst, skipFirstT, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toFlowable, toPromise, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChangedT, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scanT, share, skipFirst, skipFirstT, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };

@@ -11,12 +11,18 @@ import {
   createInstanceFactory,
   init,
 } from "./__internal__/util/Object";
-import { ContainerLike, ContainerOperator } from "./containers";
+import {
+  Container,
+  ContainerLike,
+  ContainerOf,
+  ContainerOperator,
+} from "./containers";
 import { concatWith } from "./containers/ContainerLike";
 import { toObservable } from "./containers/ReadonlyArrayLike";
 import {
   Equality,
   Factory,
+  Function1,
   Reducer,
   Updater,
   composeUnsafe,
@@ -86,6 +92,15 @@ export interface FlowableLike<T = unknown>
     ContainerLike {
   readonly TContainerOf?: FlowableLike<this["T"]>;
 }
+
+export type ToFlowable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toFlowable<T>(
+    options?: TOptions,
+  ): Function1<ContainerOf<C, T>, FlowableLike<T>>;
+};
 
 export interface AsyncEnumeratorLike<T = unknown>
   extends SourceLike,
