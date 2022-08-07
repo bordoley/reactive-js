@@ -31,13 +31,13 @@
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `DisposableLike` |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | `DisposableLike` |
+| `child` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -65,13 +65,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `DisposableLike` |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | `DisposableLike` |
+| `child` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -99,13 +99,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `DisposableLike` |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `parent` | `DisposableLike` |
+| `parent` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -121,13 +121,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `DisposableLike` |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `parent` | `DisposableLike` |
+| `parent` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -137,19 +137,19 @@ ___
 
 ### bindTo
 
-▸ **bindTo**<`T`\>(`child`): [`Updater`](functions.md#updater)<`T`\>
+▸ **bindTo**<`T`\>(`parent`): [`Updater`](functions.md#updater)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `DisposableLike` |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | `DisposableLike` |
+| `parent` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -165,13 +165,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `DisposableLike` |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `e?` | `Exception` |
+| `e?` | [`Exception`](util.md#exception) |
 
 #### Returns
 
@@ -221,7 +221,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `DisposableLike` |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
@@ -243,13 +243,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `DisposableLike` |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](functions.md#option)<`Exception`\>\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](functions.md#option)<[`Exception`](util.md#exception)\>\> |
 
 #### Returns
 
@@ -265,13 +265,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `DisposableLike` |
+| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<`Exception`\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Exception`](util.md#exception)\> |
 
 #### Returns
 
