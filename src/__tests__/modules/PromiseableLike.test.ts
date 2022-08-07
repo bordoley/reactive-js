@@ -10,7 +10,7 @@ import { toPromise } from "../../rx/ObservableLike";
 import { createHostScheduler } from "../../scheduling";
 import { dispose } from "../../util/DisposableLike";
 
-export const PromiseableLikeTests = describe(
+export default describe(
   "PromiseableLike",
   describe(
     "toObservable",

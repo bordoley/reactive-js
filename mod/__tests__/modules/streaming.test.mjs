@@ -1,4 +1,4 @@
-/// <reference types="./StreamableLike.test.d.ts" />
+/// <reference types="./streaming.test.d.ts" />
 import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/testing.mjs';
 import { pipe, returns } from '../../functions.mjs';
 import '../../rx/ObservableLike.mjs';
@@ -11,7 +11,7 @@ import '../../util/DisposableLike.mjs';
 import { dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
 import { forEach, subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
 
-const StreamableLikeTests = createDescribe("StreamableLike", createDescribe("stateStore", createTest("createStateStore", () => {
+var streamingTests = createDescribe("StreamableLike", createDescribe("stateStore", createTest("createStateStore", () => {
     const scheduler = createVirtualTimeScheduler();
     const stateStream = pipe(createStateStore(returns(1)), stream(scheduler));
     pipe(stateStream, dispatch(returns(2)), dispatch(returns(3)), dispose());
@@ -23,4 +23,4 @@ const StreamableLikeTests = createDescribe("StreamableLike", createDescribe("sta
     pipe(result, expectArrayEquals([1, 2, 3]));
 })));
 
-export { StreamableLikeTests };
+export { streamingTests as default };

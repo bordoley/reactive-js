@@ -8,7 +8,7 @@ import { stream } from "../../streaming/StreamableLike";
 import { run } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
 
-export const StreamableLikeTests = describe(
+export default describe(
   "StreamableLike",
   describe(
     "stateStore",

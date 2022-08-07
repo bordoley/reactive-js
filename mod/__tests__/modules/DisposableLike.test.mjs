@@ -11,7 +11,7 @@ import { addIgnoringChildErrors, dispose, isDisposed, onDisposed, getException, 
 import { subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
 import { getCurrentTime } from '../../__internal__/schedulingInternal.mjs';
 
-const DisposableLikeTests = createDescribe("DisposableLike", createTest("disposes child disposable when disposed", () => {
+var DisposableLikeTests = createDescribe("DisposableLike", createTest("disposes child disposable when disposed", () => {
     const child = createDisposable();
     pipe(createDisposable(), addIgnoringChildErrors(child), dispose());
     pipe(child, isDisposed, expectTrue);
@@ -59,4 +59,4 @@ const DisposableLikeTests = createDescribe("DisposableLike", createTest("dispose
     pipe(disposedTime, expectEquals(2));
 }));
 
-export { DisposableLikeTests };
+export { DisposableLikeTests as default };

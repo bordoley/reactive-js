@@ -26,7 +26,7 @@ const makeShuffledArray = (n: number) => {
   return result;
 };
 
-export const queueTests = describe(
+export default describe(
   "priority queue",
   test("push", () => {
     const queue = createPriorityQueue(compare);

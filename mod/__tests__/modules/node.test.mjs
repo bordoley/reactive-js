@@ -13,7 +13,7 @@ import { stream } from '../../streaming/StreamableLike.mjs';
 import '../../util/DisposableLike.mjs';
 import { dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
 
-const nodeTests = createDescribe("node", createDescribe("createWritableIOSink", testAsync("sinking to writable", async () => {
+var nodeTests = createDescribe("node", createDescribe("createWritableIOSink", testAsync("sinking to writable", async () => {
     const scheduler = createHostScheduler();
     try {
         const encoder = newInstance(TextEncoder);
@@ -106,4 +106,4 @@ const nodeTests = createDescribe("node", createDescribe("createWritableIOSink", 
     }
 }));
 
-export { nodeTests };
+export { nodeTests as default };

@@ -10,7 +10,7 @@ import { createVirtualTimeScheduler } from '../../scheduling.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import { forEach, subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
 
-const effectsTests = createDescribe("effects", createTest("batch mode", () => {
+var effectsTests = createDescribe("effects", createTest("batch mode", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueWithDelay = (delay, value) => pipe([value], toObservable({ delay }));
     const emptyDelayed = emptyObservable({ delay: 100 });
@@ -46,4 +46,4 @@ const effectsTests = createDescribe("effects", createTest("batch mode", () => {
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }));
 
-export { effectsTests };
+export { effectsTests as default };

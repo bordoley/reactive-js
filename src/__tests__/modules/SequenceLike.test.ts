@@ -32,7 +32,7 @@ import {
   zipTests,
 } from "../operators";
 
-export const SequenceLikeTests = describe(
+export default describe(
   "SequenceLike",
   concatTests({
     fromArray: toSequence,
