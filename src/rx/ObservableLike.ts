@@ -705,7 +705,9 @@ export const switchAllT: ConcatAll<ObservableLike> = {
   concatAll: switchAll,
 };
 
-export const subscribe = subscribeInternal;
+export const subscribe: <T>(
+  scheduler: SchedulerLike,
+) => Function1<ObservableLike<T>, DisposableLike> = subscribeInternal;
 
 export const subscribeOn =
   <T>(scheduler: SchedulerLike) =>

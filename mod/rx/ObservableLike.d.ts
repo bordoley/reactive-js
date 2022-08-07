@@ -1,11 +1,10 @@
-import { DisposableLike } from "../__internal__/util/DisposableLikeInternal.mjs";
 import { Function1, Equality, SideEffect1, Factory, Reducer } from "../functions.mjs";
 import { ContainerOperator, Buffer, Zip, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, ForEach, ForkZip, ForkConcat, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise, ToReadonlyArray } from "../containers.mjs";
 import { ToEnumerable } from "../ix.mjs";
 import { ObservableLike, MulticastObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
 import { ToFlowable } from "../streaming.mjs";
-import { DisposableOrTeardown } from "../util.mjs";
+import { DisposableOrTeardown, DisposableLike } from "../util.mjs";
 declare const buffer: <T>(options?: {
     readonly duration?: number | Function1<T, ObservableLike>;
     readonly maxBufferSize?: number;
