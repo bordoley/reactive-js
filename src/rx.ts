@@ -64,7 +64,7 @@ export const ObservableLike_isEnumerable = Symbol(
 );
 
 // @ignore
-export const ObservableLike_isRunnable = Symbol("ObservableLike_isEnumerable");
+export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
