@@ -329,59 +329,41 @@ export const createSubject: <T>(options?: {
   };
 })();
 
-interface DeferObservable {
-  <T>(factory: SideEffect1<ObserverLike<T>>): ObservableLike<T>;
-  <T>(
-    factory: SideEffect1<ObserverLike<T>>,
-    options: { readonly delay: number },
-  ): ObservableLike<T>;
-  <T>(
-    factory: SideEffect1<ObserverLike<T>>,
-    options: { readonly isRunnable: true; readonly delay?: number },
-  ): RunnableObservableLike<T>;
-  <T>(
-    factory: SideEffect1<ObserverLike<T>>,
-    options: { readonly isEnumerable: true },
-  ): EnumerableObservableLike<T>;
-
-  <T>(factory: Factory<ObservableLike>): ObservableLike<T>;
-  <T>(
-    factory: Factory<ObservableLike>,
-    options: { readonly delay: number },
-  ): ObservableLike<T>;
-  <T>(
-    factory: Factory<RunnableObservableLike>,
-    options: { readonly isRunnable: true; readonly delay?: number },
-  ): RunnableObservableLike<T>;
-  <T>(
-    factory: Factory<EnumerableObservableLike>,
-    options: { readonly isEnumerable: true },
-  ): EnumerableObservableLike<T>;
-}
-export const deferObservable: DeferObservable = (<T>(
-  factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
+const deferObservableImpl = <T>(
+  factory: Factory<ObservableLike<T>>,
   options?: {
-    readonly delay?: number;
     readonly isEnumerable?: boolean;
     readonly isRunnable?: boolean;
   },
 ): ObservableLike<T> =>
   createObservable(observer => {
-    const sideEffect = factory();
-    if (typeof sideEffect === "function") {
-      const callback = () => sideEffect(observer);
-      pipe(
-        observer,
-        getScheduler,
-        schedule(callback, options),
-        addTo(observer),
-      );
-    } else {
-      sideEffect[ReactiveContainerLike_sinkInto](observer);
-    }
-  }, options as any)) as DeferObservable;
+    factory()[ReactiveContainerLike_sinkInto](observer);
+  }, options as any);
+
+export const deferEnumerableObservable: Defer<EnumerableObservableLike>["defer"] =
+  (f =>
+    deferObservableImpl(f, {
+      isEnumerable: true,
+    })) as Defer<EnumerableObservableLike>["defer"];
+export const deferEnumerableObservableT: Defer<EnumerableObservableLike> = {
+  defer: deferEnumerableObservable,
+};
+
+export const deferObservable: Defer<ObservableLike>["defer"] =
+  deferObservableImpl;
 export const deferObservableT: Defer<ObservableLike> = {
   defer: deferObservable,
+};
+
+export const deferRunnableObservable: Defer<
+  RunnableObservableLike,
+  { delay: number }
+>["defer"] = (f =>
+  deferObservableImpl(f, {
+    isRunnable: true,
+  })) as Defer<RunnableObservableLike>["defer"];
+export const deferRunnableObservableT: Defer<RunnableObservableLike> = {
+  defer: deferRunnableObservable,
 };
 
 export const deferRunnable: Defer<RunnableLike>["defer"] = f =>

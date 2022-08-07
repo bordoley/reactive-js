@@ -1,6 +1,6 @@
 /// <reference types="./effects.d.ts" />
 import { arrayEquality, none, isNone, ignore, raise, pipe, getLength, isSome, newInstance } from '../functions.mjs';
-import { emptyObservable, deferObservable } from '../rx.mjs';
+import { emptyObservable, createObservable } from '../rx.mjs';
 import { forEach, subscribe } from './ObservableLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule } from '../scheduling/SchedulerLike.mjs';
@@ -124,7 +124,7 @@ class ObservableContext {
         }
     }
 }
-const observable = (computation, { mode = "batched" } = {}) => deferObservable(() => (observer) => {
+const observable = (computation, { mode = "batched" } = {}) => createObservable((observer) => {
     const runComputation = () => {
         let result = none;
         let error = none;
@@ -171,7 +171,7 @@ const observable = (computation, { mode = "batched" } = {}) => deferObservable((
         }
     };
     const ctx = newInstance(ObservableContext, observer, runComputation, mode);
-    return runComputation();
+    pipe(observer, getScheduler, schedule(runComputation), addTo(observer));
 });
 const assertCurrentContext = () => isNone(currentCtx)
     ? raise("effect must be called within a computational expression")
@@ -184,9 +184,12 @@ const __observe = (observable) => {
     const ctx = assertCurrentContext();
     return ctx.observe(observable);
 };
-const deferSideEffect = (f, ...args) => deferObservable(() => (observer) => {
-    f(...args);
-    pipe(observer, notify(none), dispose());
+const deferSideEffect = (f, ...args) => createObservable(observer => {
+    const callback = () => {
+        f(...args);
+        pipe(observer, notify(none), dispose());
+    };
+    pipe(observer, getScheduler, schedule(callback), addTo(observer));
 });
 function __do(f, ...args) {
     const ctx = assertCurrentContext();

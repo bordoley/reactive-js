@@ -4,7 +4,7 @@ import { throws, concatMap } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, identity, increment } from '../../functions.mjs';
 import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/EnumerableLike.mjs';
-import { generateObservable, emptyObservable, deferObservable } from '../../rx.mjs';
+import { generateObservable, emptyObservable, deferRunnableObservableT } from '../../rx.mjs';
 import { combineLatest, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, share, zip, map, forEach, takeUntil, toEnumerable, toFlowable, toPromise, zipLatest } from '../../rx/ObservableLike.mjs';
 import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
 import { createVirtualTimeScheduler, createHostScheduler } from '../../scheduling.mjs';
@@ -103,7 +103,7 @@ var ObservableLikeTests = createDescribe("ObservableLike", bufferTests({
     ...toReadonlyArrayT,
 }), decodeWithCharsetTests({
     fromArray: toObservable,
-    defer: (f) => deferObservable(f, { isRunnable: true }),
+    ...deferRunnableObservableT,
     ...decodeWithCharsetT,
     ...mapT,
     ...toReadonlyArrayT,
