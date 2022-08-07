@@ -9,7 +9,7 @@ import { clazz, createInstanceFactory, __extends, init } from '../__internal__/u
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable } from '../ix.mjs';
-import { createObservable, createRunnable } from '../rx.mjs';
+import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, disposed } from '../util.mjs';
@@ -534,12 +534,8 @@ const toObservable = ((options) => enumerable => {
         }, delayStart && hasDelay(options) ? { delay } : none));
     };
     return delay > 0
-        ? createObservable(onSink, {
-            isRunnable: true,
-        })
-        : createObservable(onSink, {
-            isEnumerable: true,
-        });
+        ? createRunnableObservable(onSink)
+        : createEnumerableObservable(onSink);
 });
 const toObservableT = { toObservable };
 const toReadonlyArray = () => (enumerable) => {

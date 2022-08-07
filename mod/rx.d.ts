@@ -54,16 +54,9 @@ declare type ToObservable<C extends ContainerLike, TOptions = never> = Container
 declare type ToRunnable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toRunnable<T>(options?: TOptions): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
-interface CreateObservable {
-    <T>(f: SideEffect1<ObserverLike<T>>, options: {
-        readonly isRunnable: true;
-    }): RunnableObservableLike<T>;
-    <T>(f: SideEffect1<ObserverLike<T>>, options: {
-        readonly isEnumerable: true;
-    }): EnumerableObservableLike<T>;
-    <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T>;
-}
-declare const createObservable: CreateObservable;
+declare const createEnumerableObservable: <T>(f: SideEffect1<ObserverLike<T>>) => EnumerableObservableLike<T>;
+declare const createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
+declare const createRunnableObservable: <T>(f: SideEffect1<ObserverLike<T>>) => RunnableObservableLike<T>;
 declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
 declare const createSubject: <T>(options?: {
     replay?: number;
@@ -85,7 +78,11 @@ interface EmptyObservable {
     }): RunnableObservableLike<T>;
 }
 declare const emptyObservable: EmptyObservable;
+declare const emptyEnumerableObservableT: Empty<EnumerableObservableLike>;
 declare const emptyObservableT: Empty<ObservableLike, {
+    delay: number;
+}>;
+declare const emptyRunnableObservableT: Empty<RunnableObservableLike, {
     delay: number;
 }>;
 declare const emptyRunnable: Empty<RunnableLike>["empty"];
@@ -107,14 +104,21 @@ interface GenerateObservable {
  * @param delay The requested delay between emitted items by the observable.
  */
 declare const generateObservable: GenerateObservable;
+declare const generateEnumerableObservableT: Generate<EnumerableObservableLike>;
 declare const generateObservableT: Generate<ObservableLike, {
+    readonly delay: number;
+    readonly delayStart: boolean;
+}>;
+declare const generateRunnableObservableT: Generate<RunnableObservableLike, {
     readonly delay: number;
     readonly delayStart: boolean;
 }>;
 declare const generateRunnable: Generate<RunnableLike>["generate"];
 declare const generateRunnableT: Generate<RunnableLike>;
 declare const neverObservable: Never<EnumerableObservableLike>["never"];
+declare const neverEnumerableObservableT: Never<EnumerableObservableLike>;
 declare const neverObservableT: Never<ObservableLike>;
+declare const neverRunnableObservableT: Never<RunnableObservableLike>;
 declare const neverRunnable: Never<RunnableLike>["never"];
 declare const neverRunnableT: Never<RunnableLike>;
-export { EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable, createObservable, createRunnable, createSubject, deferEnumerableObservable, deferEnumerableObservableT, deferObservable, deferObservableT, deferRunnable, deferRunnableObservable, deferRunnableObservableT, deferRunnableT, emptyObservable, emptyObservableT, emptyRunnable, emptyRunnableT, generateObservable, generateObservableT, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable, createEnumerableObservable, createObservable, createRunnable, createRunnableObservable, createSubject, deferEnumerableObservable, deferEnumerableObservableT, deferObservable, deferObservableT, deferRunnable, deferRunnableObservable, deferRunnableObservableT, deferRunnableT, emptyEnumerableObservableT, emptyObservable, emptyObservableT, emptyRunnable, emptyRunnableObservableT, emptyRunnableT, generateEnumerableObservableT, generateObservable, generateObservableT, generateRunnable, generateRunnableObservableT, generateRunnableT, neverEnumerableObservableT, neverObservable, neverObservableT, neverRunnable, neverRunnableObservableT, neverRunnableT };
