@@ -25,7 +25,7 @@ import {
   toObservable,
 } from "../../util/DisposableLike";
 
-export const DisposableLikeTests = describe(
+export default describe(
   "DisposableLike",
   test("disposes child disposable when disposed", () => {
     const child = createDisposable();

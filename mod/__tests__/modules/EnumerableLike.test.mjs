@@ -4,7 +4,7 @@ import { toEnumerable } from '../../containers/ReadonlyArrayLike.mjs';
 import { bufferT, toReadonlyArrayT, concatT, concatAllT, distinctUntilChangedT, forEachT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT, zipT } from '../../ix/EnumerableLike.mjs';
 import { bufferTests, concatTests, concatAllTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests } from '../operators.mjs';
 
-const EnumerableLikeTests = createDescribe("EnumerableLike", bufferTests({
+var EnumerableLikeTests = createDescribe("EnumerableLike", bufferTests({
     fromArray: toEnumerable,
     ...bufferT,
     ...toReadonlyArrayT,
@@ -71,4 +71,4 @@ const EnumerableLikeTests = createDescribe("EnumerableLike", bufferTests({
     ...toReadonlyArrayT,
 }));
 
-export { EnumerableLikeTests };
+export { EnumerableLikeTests as default };

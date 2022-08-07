@@ -4,7 +4,7 @@ import { toSequence } from '../../containers/ReadonlyArrayLike.mjs';
 import { concatT, toReadonlyArrayT, concatAllT, distinctUntilChangedT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, zipT } from '../../containers/SequenceLike.mjs';
 import { concatTests, concatAllTests, distinctUntilChangedTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests } from '../operators.mjs';
 
-const SequenceLikeTests = createDescribe("SequenceLike", concatTests({
+var SequenceLikeTests = createDescribe("SequenceLike", concatTests({
     fromArray: toSequence,
     ...concatT,
     ...toReadonlyArrayT,
@@ -59,4 +59,4 @@ const SequenceLikeTests = createDescribe("SequenceLike", concatTests({
     ...toReadonlyArrayT,
 }));
 
-export { SequenceLikeTests };
+export { SequenceLikeTests as default };

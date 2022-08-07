@@ -4,6 +4,6 @@ import { toObservable } from '../../containers/IterableLike.mjs';
 import { pipeLazy } from '../../functions.mjs';
 import { toReadonlyArray } from '../../rx/ObservableLike.mjs';
 
-const IterableLikeTests = createDescribe("IterableLike", createDescribe("toObservable", createTest("without delay", pipeLazy([1, 2, 3, 4, 5], toObservable(), toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), createTest("with delay", pipeLazy([1, 2, 3, 4, 5], toObservable({ delay: 1 }), toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))));
+var IterableLikeTests = createDescribe("IterableLike", createDescribe("toObservable", createTest("without delay", pipeLazy([1, 2, 3, 4, 5], toObservable(), toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), createTest("with delay", pipeLazy([1, 2, 3, 4, 5], toObservable({ delay: 1 }), toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))));
 
-export { IterableLikeTests };
+export { IterableLikeTests as default };
