@@ -23,7 +23,6 @@ declare const getException: (disposable: {
 declare const isDisposed: (disposable: {
     [DisposableLike_isDisposed]: boolean;
 }) => boolean;
-declare const addDisposableOrTeardown: (parent: DisposableLike, child: DisposableOrTeardown, ignoreChildErrors?: boolean) => void;
 declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Updater<T>;
 declare const add: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
 declare const addIgnoringChildErrors: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
@@ -32,4 +31,4 @@ declare const addToIgnoringChildErrors: <T extends DisposableLike>(parent: Dispo
 declare const onDisposed: <T extends DisposableLike>(teardown: SideEffect1<Option<Exception>>) => Updater<T>;
 declare const onError: <T extends DisposableLike>(teardown: SideEffect1<Exception>) => Updater<T>;
 declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Updater<T>;
-export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, Exception, add, addDisposableOrTeardown, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError };
+export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, Exception, add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError };

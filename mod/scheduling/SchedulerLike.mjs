@@ -2,20 +2,21 @@
 import { MAX_SAFE_INTEGER } from '../__internal__/env.mjs';
 import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from '../__internal__/scheduling/queue.mjs';
-import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from '../__internal__/schedulingInternal.mjs';
-export { getCurrentTime, isInContinuation } from '../__internal__/schedulingInternal.mjs';
+import { isInContinuation as isInContinuation$1, getCurrentTime as getCurrentTime$1 } from '../__internal__/schedulingInternal.mjs';
 import { isDisposed, dispose, addIgnoringChildErrors } from '../__internal__/util/DisposableLikeInternal.mjs';
 import { disposableMixin, disposableRefMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { none, isSome, pipe, isNone, raise, newInstance, max } from '../functions.mjs';
-import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
+import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_now } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import { hasCurrent, getCurrent } from '../util/EnumeratorLike.mjs';
 import { move } from '../util/SourceLike.mjs';
 
+const isInContinuation = isInContinuation$1;
+const getCurrentTime = getCurrentTime$1;
 const requestYield = (scheduler) => scheduler[SchedulerLike_requestYield]();
 const shouldYield = (scheduler) => scheduler[SchedulerLike_shouldYield];
 const isYieldError = (e) => e instanceof YieldError;
@@ -249,4 +250,4 @@ const createQueueScheduler =
 const toPausableScheduler = createQueueScheduler;
 const toPriorityScheduler = createQueueScheduler;
 
-export { __yield, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };
+export { __yield, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };

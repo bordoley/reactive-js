@@ -1,15 +1,12 @@
 /// <reference types="./DisposableLike.test.d.ts" />
 import { describe as createDescribe, test as createTest, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectIsNone, expectEquals, expectArrayEquals } from '../../__internal__/testing.mjs';
 import { pipe, pipeLazy, none, raise } from '../../functions.mjs';
-import '../../rx/ObservableLike.mjs';
+import { subscribe } from '../../rx/ObservableLike.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling.mjs';
-import { schedule } from '../../scheduling/SchedulerLike.mjs';
+import { getCurrentTime, schedule } from '../../scheduling/SchedulerLike.mjs';
 import { createDisposable } from '../../util.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
-import { toObservable } from '../../util/DisposableLike.mjs';
-import { addIgnoringChildErrors, dispose, isDisposed, onDisposed, getException, addTo, add } from '../../__internal__/util/DisposableLikeInternal.mjs';
-import { subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
-import { getCurrentTime } from '../../__internal__/schedulingInternal.mjs';
+import { addIgnoringChildErrors, dispose, isDisposed, onDisposed, getException, addTo, add, toObservable } from '../../util/DisposableLike.mjs';
 
 var DisposableLikeTests = createDescribe("DisposableLike", createTest("disposes child disposable when disposed", () => {
     const child = createDisposable();

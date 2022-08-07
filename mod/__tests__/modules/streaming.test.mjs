@@ -1,15 +1,13 @@
 /// <reference types="./streaming.test.d.ts" />
 import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/testing.mjs';
 import { pipe, returns } from '../../functions.mjs';
-import '../../rx/ObservableLike.mjs';
+import { forEach, subscribe } from '../../rx/ObservableLike.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling.mjs';
 import { dispatch } from '../../scheduling/DispatcherLike.mjs';
 import { createStateStore } from '../../streaming.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
-import '../../util/DisposableLike.mjs';
-import { dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
-import { forEach, subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
+import { dispose } from '../../util/DisposableLike.mjs';
 
 var streamingTests = createDescribe("StreamableLike", createDescribe("stateStore", createTest("createStateStore", () => {
     const scheduler = createVirtualTimeScheduler();

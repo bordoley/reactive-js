@@ -3,11 +3,9 @@ import { getDelay } from '../__internal__/optionalArgs.mjs';
 import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { none, pipe, partial } from '../functions.mjs';
-import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
-import '../util/DisposableLike.mjs';
-import { shouldYield, requestYield } from './SchedulerLike.mjs';
-import { SchedulerLike_inContinuation, isInContinuation, SchedulerLike_now, getCurrentTime } from '../__internal__/schedulingInternal.mjs';
-import { addIgnoringChildErrors, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
+import { addIgnoringChildErrors, isDisposed } from '../util/DisposableLike.mjs';
+import { isInContinuation, getCurrentTime, shouldYield, requestYield } from './SchedulerLike.mjs';
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.

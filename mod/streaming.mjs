@@ -10,8 +10,7 @@ import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
 import { publish } from './rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from './scheduling.mjs';
-import './util/DisposableLike.mjs';
-import { addTo } from './__internal__/util/DisposableLikeInternal.mjs';
+import { addTo } from './util/DisposableLike.mjs';
 
 /** @ignore */
 const StreamableLike_stream = Symbol("StreamableLike_stream");

@@ -7,6 +7,8 @@
 ### Functions
 
 - [\_\_yield](scheduling_SchedulerLike.md#__yield)
+- [getCurrentTime](scheduling_SchedulerLike.md#getcurrenttime)
+- [isInContinuation](scheduling_SchedulerLike.md#isincontinuation)
 - [requestYield](scheduling_SchedulerLike.md#requestyield)
 - [schedule](scheduling_SchedulerLike.md#schedule)
 - [shouldYield](scheduling_SchedulerLike.md#shouldyield)
@@ -29,6 +31,40 @@
 #### Returns
 
 `void`
+
+___
+
+### getCurrentTime
+
+▸ **getCurrentTime**(`scheduler`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | `Object` |
+| `scheduler.[SchedulerLike_now]` | `number` |
+
+#### Returns
+
+`number`
+
+___
+
+### isInContinuation
+
+▸ **isInContinuation**(`scheduler`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | `Object` |
+| `scheduler.[SchedulerLike_inContinuation]` | `boolean` |
+
+#### Returns
+
+`boolean`
 
 ___
 

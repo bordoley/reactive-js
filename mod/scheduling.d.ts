@@ -1,6 +1,9 @@
-import { SchedulerLike_inContinuation, SchedulerLike_now } from "./__internal__/schedulingInternal.mjs";
-export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.js';
+import { SchedulerLike_inContinuation as SchedulerLike_inContinuation$1, SchedulerLike_now as SchedulerLike_now$1 } from "./__internal__/schedulingInternal.mjs";
 import { DisposableLike, ContinuationLike, PauseableLike, SinkLike } from "./util.mjs";
+/** @ignore */
+declare const SchedulerLike_inContinuation: typeof SchedulerLike_inContinuation$1;
+/** @ignore */
+declare const SchedulerLike_now: typeof SchedulerLike_now$1;
 /** @ignore */
 declare const SchedulerLike_requestYield: unique symbol;
 /** @ignore */
@@ -69,4 +72,4 @@ interface ObserverLike<T = unknown> extends SinkLike<T> {
     readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
     readonly [ObserverLike_scheduler]: SchedulerLike;
 }
-export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike, createHostScheduler, createVirtualTimeScheduler };
+export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike, createHostScheduler, createVirtualTimeScheduler };

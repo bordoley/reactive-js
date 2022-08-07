@@ -6,17 +6,14 @@ import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { none, isSome, pipe, pipeLazy, ignore } from '../functions.mjs';
 import { createSubject } from '../rx.mjs';
-import '../rx/ObservableLike.mjs';
+import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { publish } from '../rx/SubjectLike.mjs';
-import { SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { toScheduler } from '../scheduling/PrioritySchedulerLike.mjs';
-import '../scheduling/SchedulerLike.mjs';
+import { isInContinuation } from '../scheduling/SchedulerLike.mjs';
 import { createDisposable } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
-import '../util/DisposableLike.mjs';
-import { forEach, subscribe, distinctUntilChanged } from '../__internal__/rx/ObservableLikeInternal.mjs';
-import { onError, dispose, addIgnoringChildErrors, isDisposed, onDisposed, addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
-import { SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from '../__internal__/schedulingInternal.mjs';
+import { onError, dispose, addIgnoringChildErrors, isDisposed, onDisposed, addTo } from '../util/DisposableLike.mjs';
 
 /**
  * Returns the current value, if defined, of `observable`.

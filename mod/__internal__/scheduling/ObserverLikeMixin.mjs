@@ -4,11 +4,10 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch, ObserverLike_schedul
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../../util.mjs';
-import '../../util/DisposableLike.mjs';
+import { addTo, onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
 import { disposableMixin } from '../util/DisposableLikeMixins.mjs';
 import { createInstanceFactory, clazz, init, __extends } from '../util/Object.mjs';
 import { decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../util/SinkLikeMixin.mjs';
-import { addTo, onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../util/DisposableLikeInternal.mjs';
 
 const createObserverDispatcher = (() => {
     const scheduleDrainQueue = (dispatcher) => {
@@ -137,6 +136,17 @@ const createMapObserver = /*@__PURE__*/ (() => {
         return this;
     }));
 })();
+const createObserver = 
+/*@__PURE__*/ (() => {
+    const typedObserverMixin = observerMixin();
+    return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function Observer(scheduler) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, scheduler);
+        return this;
+    }, {}, {
+        [SinkLike_notify](_) { },
+    }));
+})();
 const createPairwiseObserver = /*@__PURE__*/ (() => {
     const typedPairwiseSinkMixin = pairwiseSinkMixin();
     const typedObserverMixin = observerMixin();
@@ -210,4 +220,4 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { createDecodeWithCharsetObserver, createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createReduceObserver, createScanObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };
+export { createDecodeWithCharsetObserver, createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createObserver, createPairwiseObserver, createReduceObserver, createScanObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };

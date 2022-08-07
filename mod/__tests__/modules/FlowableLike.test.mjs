@@ -2,11 +2,10 @@
 import { describe as createDescribe, test as createTest } from '../../__internal__/testing.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
-import { toFlowable } from '../../rx/ObservableLike.mjs';
+import { toFlowable, forEach, subscribe } from '../../rx/ObservableLike.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling.mjs';
 import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
-import { forEach, subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
 
 var FlowableLikeTests = createDescribe("FlowableLike", createTest("toObservable", () => {
     const scheduler = createVirtualTimeScheduler();

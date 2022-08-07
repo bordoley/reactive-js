@@ -19,7 +19,6 @@ import {
 } from "../../rx";
 import { publishTo } from "../../rx/SubjectLike";
 import { ObserverLike, SchedulerLike } from "../../scheduling";
-import { SinkLike_notify } from "../../util";
 import { sourceFrom } from "../../util/SinkLike";
 import {
   Lift,
@@ -33,8 +32,8 @@ import {
   createDelegatingObserver,
   createDistinctUntilChangedObserver,
   createForEachObserver,
+  createObserver,
   createScanObserver,
-  observerMixin,
 } from "../scheduling/ObserverLikeMixin";
 import {
   DisposableLike,
@@ -44,8 +43,6 @@ import {
   dispose,
   onComplete,
 } from "../util/DisposableLikeInternal";
-import { disposableMixin } from "../util/DisposableLikeMixins";
-import { __extends, clazz, createInstanceFactory, init } from "../util/Object";
 
 export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
   obs[ObservableLike_observableType];
@@ -207,32 +204,12 @@ export const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ pipe(
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
-) => Function1<ObservableLike<T>, DisposableLike> = /*@__PURE__*/ (<T>() => {
-  const typedObserverMixin = observerMixin<T>();
-
-  const createObserver = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedObserverMixin),
-      function SubscribeObserver(
-        this: ObserverLike<T>,
-        scheduler: SchedulerLike,
-      ) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, scheduler);
-
-        return this;
-      },
-      {},
-      {
-        [SinkLike_notify](_: T) {},
-      },
-    ),
-  );
-  return (scheduler: SchedulerLike) => (observable: ObservableLike<T>) =>
+) => Function1<ObservableLike<T>, DisposableLike> = /*@__PURE__*/ (
+  () => scheduler => observable =>
     pipe(
       scheduler,
       createObserver,
       addToIgnoringChildErrors(scheduler),
       sourceFrom(observable),
-    );
-})();
+    )
+)();

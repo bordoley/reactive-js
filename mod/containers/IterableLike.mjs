@@ -6,8 +6,7 @@ import { none, pipe, identity, compose } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
-import '../util/DisposableLike.mjs';
-import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { isDisposed, dispose } from '../util/DisposableLike.mjs';
 
 const toEnumerable = 
 /*@__PURE__*/ (() => {

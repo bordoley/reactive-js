@@ -5,8 +5,8 @@ import {
   createPriorityQueue,
 } from "../__internal__/scheduling/queue";
 import {
-  getCurrentTime,
-  isInContinuation,
+  getCurrentTime as getCurrentTimeInternal,
+  isInContinuation as isInContinuationInternal,
 } from "../__internal__/schedulingInternal";
 import {
   addIgnoringChildErrors,
@@ -70,10 +70,12 @@ import { run } from "../util/ContinuationLike";
 import { getCurrent, hasCurrent } from "../util/EnumeratorLike";
 import { move } from "../util/SourceLike";
 
-export {
-  isInContinuation,
-  getCurrentTime,
-} from "../__internal__/schedulingInternal";
+export const isInContinuation: (scheduler: {
+  readonly [SchedulerLike_inContinuation]: boolean;
+}) => boolean = isInContinuationInternal;
+export const getCurrentTime: (scheduler: {
+  readonly [SchedulerLike_now]: number;
+}) => number = getCurrentTimeInternal;
 
 export const requestYield = (scheduler: {
   [SchedulerLike_requestYield](): void;

@@ -382,6 +382,27 @@ export const createMapObserver: <TA, TB>(
   );
 })();
 
+export const createObserver: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
+  /*@__PURE__*/ (<T>() => {
+    const typedObserverMixin = observerMixin<T>();
+
+    return createInstanceFactory(
+      clazz(
+        __extends(disposableMixin, typedObserverMixin),
+        function Observer(this: ObserverLike<T>, scheduler: SchedulerLike) {
+          init(disposableMixin, this);
+          init(typedObserverMixin, this, scheduler);
+
+          return this;
+        },
+        {},
+        {
+          [SinkLike_notify](_: T) {},
+        },
+      ),
+    );
+  })();
+
 export const createPairwiseObserver: <T>(
   delegate: ObserverLike<readonly [T, T]>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {

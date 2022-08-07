@@ -6,11 +6,278 @@
 
 ### Functions
 
+- [add](util_DisposableLike.md#add)
+- [addIgnoringChildErrors](util_DisposableLike.md#addignoringchilderrors)
+- [addTo](util_DisposableLike.md#addto)
+- [addToIgnoringChildErrors](util_DisposableLike.md#addtoignoringchilderrors)
+- [bindTo](util_DisposableLike.md#bindto)
+- [dispose](util_DisposableLike.md#dispose)
+- [getException](util_DisposableLike.md#getexception)
+- [isDisposed](util_DisposableLike.md#isdisposed)
+- [onComplete](util_DisposableLike.md#oncomplete)
+- [onDisposed](util_DisposableLike.md#ondisposed)
+- [onError](util_DisposableLike.md#onerror)
 - [toAbortSignal](util_DisposableLike.md#toabortsignal)
 - [toErrorHandler](util_DisposableLike.md#toerrorhandler)
 - [toObservable](util_DisposableLike.md#toobservable)
 
 ## Functions
+
+### add
+
+▸ **add**<`T`\>(`child`): (`parent`: `T`) => `T`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `DisposableLike` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `child` | `DisposableLike` |
+
+#### Returns
+
+`fn`
+
+▸ (`parent`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `parent` | `T` |
+
+##### Returns
+
+`T`
+
+___
+
+### addIgnoringChildErrors
+
+▸ **addIgnoringChildErrors**<`T`\>(`child`): (`parent`: `T`) => `T`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `DisposableLike` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `child` | `DisposableLike` |
+
+#### Returns
+
+`fn`
+
+▸ (`parent`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `parent` | `T` |
+
+##### Returns
+
+`T`
+
+___
+
+### addTo
+
+▸ **addTo**<`T`\>(`parent`): [`Updater`](functions.md#updater)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `DisposableLike` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `parent` | `DisposableLike` |
+
+#### Returns
+
+[`Updater`](functions.md#updater)<`T`\>
+
+___
+
+### addToIgnoringChildErrors
+
+▸ **addToIgnoringChildErrors**<`T`\>(`parent`): [`Updater`](functions.md#updater)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `DisposableLike` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `parent` | `DisposableLike` |
+
+#### Returns
+
+[`Updater`](functions.md#updater)<`T`\>
+
+___
+
+### bindTo
+
+▸ **bindTo**<`T`\>(`child`): [`Updater`](functions.md#updater)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `DisposableLike` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `child` | `DisposableLike` |
+
+#### Returns
+
+[`Updater`](functions.md#updater)<`T`\>
+
+___
+
+### dispose
+
+▸ **dispose**<`T`\>(`e?`): [`Updater`](functions.md#updater)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `DisposableLike` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `e?` | `Exception` |
+
+#### Returns
+
+[`Updater`](functions.md#updater)<`T`\>
+
+___
+
+### getException
+
+▸ **getException**(`disposable`): [`Option`](functions.md#option)<[`Exception`](util.md#exception)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `disposable` | `Object` |
+| `disposable.[DisposableLike_exception]` | [`Option`](functions.md#option)<[`Exception`](util.md#exception)\> |
+
+#### Returns
+
+[`Option`](functions.md#option)<[`Exception`](util.md#exception)\>
+
+___
+
+### isDisposed
+
+▸ **isDisposed**(`disposable`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `disposable` | `Object` |
+| `disposable.[DisposableLike_isDisposed]` | `boolean` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### onComplete
+
+▸ **onComplete**<`T`\>(`teardown`): [`Updater`](functions.md#updater)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `DisposableLike` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `teardown` | [`SideEffect`](functions.md#sideeffect) |
+
+#### Returns
+
+[`Updater`](functions.md#updater)<`T`\>
+
+___
+
+### onDisposed
+
+▸ **onDisposed**<`T`\>(`teardown`): [`Updater`](functions.md#updater)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `DisposableLike` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](functions.md#option)<`Exception`\>\> |
+
+#### Returns
+
+[`Updater`](functions.md#updater)<`T`\>
+
+___
+
+### onError
+
+▸ **onError**<`T`\>(`teardown`): [`Updater`](functions.md#updater)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `DisposableLike` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<`Exception`\> |
+
+#### Returns
+
+[`Updater`](functions.md#updater)<`T`\>
+
+___
 
 ### toAbortSignal
 

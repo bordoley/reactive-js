@@ -13,10 +13,9 @@ import { createObservable, runnableObservableType, enumerableObservableType, cre
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, disposed } from '../util.mjs';
-import '../util/DisposableLike.mjs';
+import { add, dispose, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete, getException } from '../util/DisposableLike.mjs';
 import { move, getCurrent, hasCurrent, forEach as forEach$1 } from '../util/EnumeratorLike.mjs';
 import { notifySink } from '../util/SinkLike.mjs';
-import { add, dispose, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete, getException } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
 const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
