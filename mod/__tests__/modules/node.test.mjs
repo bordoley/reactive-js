@@ -10,8 +10,7 @@ import { createHostScheduler } from '../../scheduling.mjs';
 import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs';
 import { sourceFrom } from '../../streaming/StreamLike.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
-import '../../util/DisposableLike.mjs';
-import { dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
+import { dispose } from '../../util/DisposableLike.mjs';
 
 var nodeTests = createDescribe("node", createDescribe("createWritableIOSink", testAsync("sinking to writable", async () => {
     const scheduler = createHostScheduler();

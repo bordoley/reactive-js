@@ -3,7 +3,7 @@ import fs from 'fs';
 import { createBrotliDecompress, createGunzip, createInflate, createBrotliCompress, createGzip, createDeflate } from 'zlib';
 import { pipe, ignore, pipeLazy } from '../functions.mjs';
 import { createObservable } from '../rx.mjs';
-import '../rx/ObservableLike.mjs';
+import { forEach, subscribe } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { ObserverLike_dispatcher } from '../scheduling.mjs';
 import { dispatch, dispatchTo, getScheduler as getScheduler$1 } from '../scheduling/DispatcherLike.mjs';
@@ -11,9 +11,7 @@ import { getScheduler, getDispatcher } from '../scheduling/ObserverLike.mjs';
 import { createLiftedFlowable, createLiftedStreamable } from '../streaming.mjs';
 import { sourceFrom } from '../streaming/StreamLike.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
-import { toErrorHandler } from '../util/DisposableLike.mjs';
-import { dispose, onError, onDisposed, onComplete } from '../__internal__/util/DisposableLikeInternal.mjs';
-import { forEach, subscribe } from '../__internal__/rx/ObservableLikeInternal.mjs';
+import { dispose, toErrorHandler, onError, onDisposed, onComplete } from '../util/DisposableLike.mjs';
 
 const bindNodeCallback = (callback) => function (...args) {
     return createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {

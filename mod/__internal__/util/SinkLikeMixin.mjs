@@ -2,11 +2,10 @@
 import { pipe, none, getLength, returns, isEmpty, newInstance } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SinkLike_notify, SourceLike_move } from '../../util.mjs';
-import '../../util/DisposableLike.mjs';
+import { onDisposed, isDisposed, addTo, onComplete, dispose } from '../../util/DisposableLike.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './DisposableLikeMixins.mjs';
 import { createInstanceFactory, clazz, __extends, init, Object_properties } from './Object.mjs';
-import { onDisposed, isDisposed, addTo, onComplete, dispose } from './DisposableLikeInternal.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 const createEnumeratorSink = (() => {

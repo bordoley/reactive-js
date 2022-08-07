@@ -4,8 +4,7 @@ import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
 import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/Object.mjs';
 import { none, pipe, forEach } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
-import './util/DisposableLike.mjs';
-import { dispose, addTo, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
+import { dispose, addTo, isDisposed } from './util/DisposableLike.mjs';
 
 /** @ignore */
 const InteractiveContainerLike_interact = Symbol("InteractiveContainerLike_interact");

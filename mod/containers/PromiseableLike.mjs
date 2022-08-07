@@ -3,8 +3,7 @@ import { pipe } from '../functions.mjs';
 import { createObservable } from '../rx.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
 import { getDispatcher } from '../scheduling/ObserverLike.mjs';
-import { toErrorHandler } from '../util/DisposableLike.mjs';
-import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { isDisposed, dispose, toErrorHandler } from '../util/DisposableLike.mjs';
 
 const toObservable = () => (promise) => createObservable(observer => {
     const dispatcher = getDispatcher(observer);

@@ -5,8 +5,8 @@ import {
   createPriorityQueue,
 } from "./__internal__/scheduling/queue";
 import {
-  SchedulerLike_inContinuation,
-  SchedulerLike_now,
+  SchedulerLike_inContinuation as SchedulerLike_inContinuation_internal,
+  SchedulerLike_now as SchedulerLike_now_internal,
   getCurrentTime,
   isInContinuation,
 } from "./__internal__/schedulingInternal";
@@ -44,10 +44,13 @@ import {
 import { run } from "./util/ContinuationLike";
 import { getCurrent, move } from "./util/EnumeratorLike";
 
-export {
-  SchedulerLike_inContinuation,
-  SchedulerLike_now,
-} from "./__internal__/schedulingInternal";
+/** @ignore */
+export const SchedulerLike_inContinuation: typeof SchedulerLike_inContinuation_internal =
+  SchedulerLike_inContinuation_internal;
+
+/** @ignore */
+export const SchedulerLike_now: typeof SchedulerLike_now_internal =
+  SchedulerLike_now_internal;
 
 /** @ignore */
 export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");

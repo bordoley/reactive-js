@@ -6,8 +6,7 @@ import { createObservable } from '../rx.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
 import { getDispatcher } from '../scheduling/ObserverLike.mjs';
-import { toAbortSignal } from '../util/DisposableLike.mjs';
-import { onDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { onDisposed, toAbortSignal, dispose } from '../util/DisposableLike.mjs';
 
 const reservedEvents = ["error", "open"];
 const createEventSource = (url, options = {}) => {

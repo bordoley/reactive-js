@@ -7,9 +7,8 @@ import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs'
 import { pipeUnsafe, newInstance, pipe, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../util.mjs';
-import '../util/DisposableLike.mjs';
+import { bindTo, addTo, dispose, isDisposed } from '../util/DisposableLike.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
-import { bindTo, addTo, dispose, isDisposed } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const lift = /*@__PURE__*/ (() => {
     class LiftedRunnable {

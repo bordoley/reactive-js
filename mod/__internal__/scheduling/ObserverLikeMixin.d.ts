@@ -15,6 +15,7 @@ declare const createDistinctUntilChangedObserver: <T>(delegate: ObserverLike<T>,
 declare const createForEachObserver: <T>(delegate: ObserverLike<T>, effect: SideEffect1<T>) => ObserverLike<T>;
 declare const createKeepObserver: <T>(delegate: ObserverLike<T>, predicate: Predicate<T>) => ObserverLike<T>;
 declare const createMapObserver: <TA, TB>(delegate: ObserverLike<TB>, predicate: Function1<TA, TB>) => ObserverLike<TA>;
+declare const createObserver: <T>(scheduler: SchedulerLike) => ObserverLike<T>;
 declare const createPairwiseObserver: <T>(delegate: ObserverLike<readonly [
     T,
     T
@@ -26,4 +27,4 @@ declare const createTakeFirstObserver: <T>(delegate: ObserverLike<T>, count: num
 declare const createTakeLastObserver: <C extends ReactiveContainerLike<ObserverLike<T>>, T>(fromArray: (v: readonly unknown[]) => C) => Function2<ObserverLike<T>, number, ObserverLike<T>>;
 declare const createTakeWhileObserver: <T>(delegate: ObserverLike<T>, predicate: Predicate<T>, inclusive: boolean) => ObserverLike<T>;
 declare const createThrowIfEmptyObserver: <T>(delegate: ObserverLike<T>, factory: Factory<unknown>) => ObserverLike<T>;
-export { createDecodeWithCharsetObserver, createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createReduceObserver, createScanObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };
+export { createDecodeWithCharsetObserver, createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createObserver, createPairwiseObserver, createReduceObserver, createScanObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };
