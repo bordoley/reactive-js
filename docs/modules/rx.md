@@ -23,7 +23,9 @@
 
 - [ObservableLike\_isEnumerable](rx.md#observablelike_isenumerable)
 - [ObservableLike\_isRunnable](rx.md#observablelike_isrunnable)
+- [deferEnumerableObservableT](rx.md#deferenumerableobservablet)
 - [deferObservableT](rx.md#deferobservablet)
+- [deferRunnableObservableT](rx.md#deferrunnableobservablet)
 - [deferRunnableT](rx.md#deferrunnablet)
 - [emptyObservableT](rx.md#emptyobservablet)
 - [emptyRunnableT](rx.md#emptyrunnablet)
@@ -37,8 +39,10 @@
 - [createObservable](rx.md#createobservable)
 - [createRunnable](rx.md#createrunnable)
 - [createSubject](rx.md#createsubject)
+- [deferEnumerableObservable](rx.md#deferenumerableobservable)
 - [deferObservable](rx.md#deferobservable)
 - [deferRunnable](rx.md#deferrunnable)
+- [deferRunnableObservable](rx.md#deferrunnableobservable)
 - [emptyObservable](rx.md#emptyobservable)
 - [emptyRunnable](rx.md#emptyrunnable)
 - [generateObservable](rx.md#generateobservable)
@@ -86,9 +90,21 @@ ___
 
 ___
 
+### deferEnumerableObservableT
+
+• `Const` **deferEnumerableObservableT**: [`Defer`](containers.md#defer)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+
+___
+
 ### deferObservableT
 
 • `Const` **deferObservableT**: [`Defer`](containers.md#defer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### deferRunnableObservableT
+
+• `Const` **deferRunnableObservableT**: [`Defer`](containers.md#defer)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ___
 
@@ -241,9 +257,32 @@ ___
 
 ___
 
+### deferEnumerableObservable
+
+▸ **deferEnumerableObservable**<`T`\>(`factory`, `options?`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+___
+
 ### deferObservable
 
-▸ **deferObservable**<`T`\>(`factory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **deferObservable**<`T`\>(`factory`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -255,151 +294,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
+| `options?` | `undefined` |
 
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-▸ **deferObservable**<`T`\>(`factory`, `options`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
-| `options` | `Object` |
-| `options.delay` | `number` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-▸ **deferObservable**<`T`\>(`factory`, `options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
-| `options` | `Object` |
-| `options.delay?` | `number` |
-| `options.isRunnable` | ``true`` |
-
-#### Returns
-
-[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-▸ **deferObservable**<`T`\>(`factory`, `options`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
-| `options` | `Object` |
-| `options.isEnumerable` | ``true`` |
-
-#### Returns
-
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-▸ **deferObservable**<`T`\>(`factory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-▸ **deferObservable**<`T`\>(`factory`, `options`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
-| `options` | `Object` |
-| `options.delay` | `number` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-▸ **deferObservable**<`T`\>(`factory`, `options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>\> |
-| `options` | `Object` |
-| `options.delay?` | `number` |
-| `options.isRunnable` | ``true`` |
-
-#### Returns
-
-[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-▸ **deferObservable**<`T`\>(`factory`, `options`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>\> |
-| `options` | `Object` |
-| `options.isEnumerable` | ``true`` |
-
-#### Returns
-
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 ___
 
@@ -423,6 +323,29 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
+### deferRunnableObservable
+
+▸ **deferRunnableObservable**<`T`\>(`factory`, `options?`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\> |
+| `options?` | `Partial`<{ `delay`: `number`  }\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 ___
 

@@ -25,9 +25,8 @@ import {
 } from "../../functions";
 import { toReadonlyArray as enumerableToReadonlyArray } from "../../ix/EnumerableLike";
 import {
-  ObservableLike,
   RunnableObservableLike,
-  deferObservable,
+  deferRunnableObservableT,
   emptyObservable,
   generateObservable,
 } from "../../rx";
@@ -464,8 +463,7 @@ export default describe(
   }),
   decodeWithCharsetTests({
     fromArray: toObservable,
-    defer: <T>(f: () => ObservableLike<T>) =>
-      deferObservable<T>(f, { isRunnable: true }),
+    ...deferRunnableObservableT,
     ...decodeWithCharsetT,
     ...mapT,
     ...toReadonlyArrayT,

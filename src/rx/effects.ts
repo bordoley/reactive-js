@@ -27,7 +27,7 @@ import {
   pipe,
   raise,
 } from "../functions";
-import { ObservableLike, deferObservable, emptyObservable } from "../rx";
+import { ObservableLike, createObservable, emptyObservable } from "../rx";
 import { forEach, subscribe } from "../rx/ObservableLike";
 import { ObserverLike, SchedulerLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
@@ -241,7 +241,7 @@ export const observable = <T>(
   computation: Factory<T>,
   { mode = "batched" }: { mode?: EffectsMode } = {},
 ): ObservableLike<T> =>
-  deferObservable(() => (observer: ObserverLike<T>) => {
+  createObservable((observer: ObserverLike<T>) => {
     const runComputation = () => {
       let result: Option<T> = none;
       let error: Option<Exception> = none;
@@ -307,7 +307,7 @@ export const observable = <T>(
 
     const ctx = newInstance(ObservableContext, observer, runComputation, mode);
 
-    return runComputation();
+    pipe(observer, getScheduler, schedule(runComputation), addTo(observer));
   });
 
 const assertCurrentContext = (): ObservableContext =>
@@ -359,9 +359,13 @@ export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
 };
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: unknown[]) =>
-  deferObservable(() => (observer: ObserverLike) => {
-    f(...args);
-    pipe(observer, notify(none), dispose());
+  createObservable(observer => {
+    const callback = () => {
+      f(...args);
+      pipe(observer, notify(none), dispose());
+    };
+
+    pipe(observer, getScheduler, schedule(callback), addTo(observer));
   });
 
 export function __do(fn: SideEffect): void;
