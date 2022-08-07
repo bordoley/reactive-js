@@ -70,6 +70,7 @@
 - [toFlowable](rx_ObservableLike.md#toflowable)
 - [toPromise](rx_ObservableLike.md#topromise)
 - [toReadonlyArray](rx_ObservableLike.md#toreadonlyarray)
+- [withLatestFrom](rx_ObservableLike.md#withlatestfrom)
 - [zip](rx_ObservableLike.md#zip)
 - [zipLatest](rx_ObservableLike.md#ziplatest)
 
@@ -1668,6 +1669,31 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### withLatestFrom
+
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `other` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `T`\>
 
 ___
 

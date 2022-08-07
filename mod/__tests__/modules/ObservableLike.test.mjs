@@ -1,11 +1,11 @@
 /// <reference types="./ObservableLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals, expectToThrow, mockFn, expectToHaveBeenCalledTimes, expectIsSome, expectEquals, expectTrue, testAsync, expectPromiseToThrow } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals, expectToThrow, mockFn, expectToHaveBeenCalledTimes, expectIsSome, expectEquals, expectTrue, testAsync, expectPromiseToThrow, expectToThrowError } from '../../__internal__/testing.mjs';
 import { throws, concatMap } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
-import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, identity, increment } from '../../functions.mjs';
+import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, identity, increment, sum, newInstance } from '../../functions.mjs';
 import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/EnumerableLike.mjs';
 import { generateObservable, emptyObservable, deferRunnableObservableT } from '../../rx.mjs';
-import { combineLatest, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, share, zip, map, forEach, takeUntil, toEnumerable, toFlowable, toPromise, zipLatest } from '../../rx/ObservableLike.mjs';
+import { combineLatest, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, share, zip, map, forEach, takeUntil, toEnumerable, toFlowable, toPromise, withLatestFrom, zipLatest } from '../../rx/ObservableLike.mjs';
 import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
 import { createVirtualTimeScheduler, createHostScheduler } from '../../scheduling.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
@@ -87,6 +87,18 @@ const toPromiseTests = createDescribe("toPromise", testAsync("when observable co
         pipe(scheduler, dispose());
     }
 }));
+const withLatestFromTest = createDescribe("withLatestFrom", createTest("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], toObservable({ delay: 1 }), withLatestFrom(pipe([0, 1, 2, 3], toObservable({ delay: 2 })), (a, b) => [
+    a,
+    b,
+]), toReadonlyArray(), expectArrayEquals([
+    [0, 0],
+    [1, 0],
+    [2, 1],
+    [3, 1],
+], arrayEquality()))), createTest("when latest produces no values", pipeLazy([0], toObservable({ delay: 1 }), withLatestFrom(emptyObservable(), sum), toReadonlyArray(), expectArrayEquals([]))), createTest("when latest throws", () => {
+    const error = newInstance(Error);
+    pipe(pipeLazy([0], toObservable({ delay: 1 }), withLatestFrom(throws({ fromArray: toObservable, ...mapT })(returns(error)), sum), toReadonlyArray(), expectArrayEquals([])), expectToThrowError(error));
+}));
 const zipTests = createDescribe("zip", ...zipTests$1({
     fromArray: toObservable,
     ...zipT,
@@ -155,6 +167,6 @@ var ObservableLikeTests = createDescribe("ObservableLike", bufferTests({
     fromArray: toObservable,
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
-}), toEnumerableTests, toFlowableTests, toPromiseTests, zipTests, zipLatestTests);
+}), toEnumerableTests, toFlowableTests, toPromiseTests, withLatestFromTest, zipTests, zipLatestTests);
 
 export { ObservableLikeTests as default };
