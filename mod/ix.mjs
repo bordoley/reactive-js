@@ -2,9 +2,9 @@
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
 import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/Object.mjs';
-import { none, pipe, forEach } from './functions.mjs';
+import { none, pipe } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
-import { dispose, addTo, isDisposed } from './util/DisposableLike.mjs';
+import { dispose, isDisposed } from './util/DisposableLike.mjs';
 
 /** @ignore */
 const InteractiveContainerLike_interact = Symbol("InteractiveContainerLike_interact");
@@ -24,16 +24,6 @@ const createEnumerable = /*@__PURE__*/ (() => createInstanceFactory(clazz(functi
         }
     },
 })))();
-const createEnumerableUsing = (resourceFactory, enumerableFactory) => createEnumerable(() => {
-    const resources = resourceFactory();
-    const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    const enumerator = enumerableFactory(...resourcesArray)[InteractiveContainerLike_interact]();
-    pipe(resourcesArray, forEach(addTo(enumerator)));
-    return enumerator;
-});
-const createEnumerableUsingT = {
-    using: createEnumerableUsing,
-};
 const emptyEnumerable = /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
     const createEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function EmptyEnumerator() {
@@ -84,4 +74,4 @@ const generateEnumerableT = {
     generate: generateEnumerable,
 };
 
-export { InteractiveContainerLike_interact, createEnumerable, createEnumerableUsing, createEnumerableUsingT, emptyEnumerable, emptyEnumerableT, generateEnumerable, generateEnumerableT };
+export { InteractiveContainerLike_interact, createEnumerable, emptyEnumerable, emptyEnumerableT, generateEnumerable, generateEnumerableT };

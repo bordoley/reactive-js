@@ -184,7 +184,7 @@ const __observe = (observable) => {
     const ctx = assertCurrentContext();
     return ctx.observe(observable);
 };
-const deferSideEffect = (f, ...args) => deferObservable(() => observer => {
+const deferSideEffect = (f, ...args) => deferObservable(() => (observer) => {
     f(...args);
     pipe(observer, notify(none), dispose());
 });

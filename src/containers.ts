@@ -2,10 +2,6 @@ import {
   Equality,
   Factory,
   Function1,
-  Function2,
-  Function3,
-  Function4,
-  Function5,
   Option,
   Predicate,
   Reducer,
@@ -347,80 +343,6 @@ export type ToSequence<C extends ContainerLike, O = never> = Container<C> & {
   toSequence<T>(
     options?: Partial<O>,
   ): Function1<ContainerOf<C, T>, SequenceLike<T>>;
-};
-
-export type Using<C extends ContainerLike> = Container<C> & {
-  using<TResource extends DisposableLike, T>(
-    resourceFactory: Factory<TResource>,
-    containerFactory: Function1<TResource, ContainerOf<C, T>>,
-  ): ContainerOf<C, T>;
-
-  using<
-    TResource1 extends DisposableLike,
-    TResource2 extends DisposableLike,
-    T,
-  >(
-    resourceFactory: Factory<[TResource1, TResource2]>,
-    containerFactory: Function2<TResource1, TResource2, ContainerOf<C, T>>,
-  ): ContainerOf<C, T>;
-
-  using<
-    TResource1 extends DisposableLike,
-    TResource2 extends DisposableLike,
-    TResource3 extends DisposableLike,
-    T,
-  >(
-    resourceFactory: Factory<[TResource1, TResource2, TResource3]>,
-    containerFactory: Function3<
-      TResource1,
-      TResource2,
-      TResource3,
-      ContainerOf<C, T>
-    >,
-  ): ContainerOf<C, T>;
-
-  using<
-    TResource1 extends DisposableLike,
-    TResource2 extends DisposableLike,
-    TResource3 extends DisposableLike,
-    TResource4 extends DisposableLike,
-    T,
-  >(
-    resourceFactory: Factory<[TResource1, TResource2, TResource3, TResource4]>,
-    containerFactory: Function4<
-      TResource1,
-      TResource2,
-      TResource3,
-      TResource4,
-      ContainerOf<C, T>
-    >,
-  ): ContainerOf<C, T>;
-
-  using<
-    TResource1 extends DisposableLike,
-    TResource2 extends DisposableLike,
-    TResource3 extends DisposableLike,
-    TResource4 extends DisposableLike,
-    TResource5 extends DisposableLike,
-    T,
-  >(
-    resourceFactory: Factory<
-      [TResource1, TResource2, TResource3, TResource4, TResource5]
-    >,
-    containerFactory: Function5<
-      TResource1,
-      TResource2,
-      TResource3,
-      TResource4,
-      TResource5,
-      ContainerOf<C, T>
-    >,
-  ): ContainerOf<C, T>;
-
-  using<TResource extends DisposableLike, T>(
-    resourceFactory: Factory<TResource | readonly TResource[]>,
-    runnableFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
-  ): ContainerOf<C, T>;
 };
 
 export type Zip<C extends ContainerLike> = Container<C> & {

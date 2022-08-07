@@ -20,13 +20,16 @@ The source of notifications which notifies a `ObserverLike` instance.
 
   ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
+  ↳↳ [`RunnableObservableLike`](rx.RunnableObservableLike.md)
+
 ## Table of contents
 
 ### Properties
 
 - [TContainerOf](rx.ObservableLike.md#tcontainerof)
 - [TStatefulContainerState](rx.ObservableLike.md#tstatefulcontainerstate)
-- [[ObservableLike\_observableType]](rx.ObservableLike.md#[observablelike_observabletype])
+- [[ObservableLike\_isEnumerable]](rx.ObservableLike.md#[observablelike_isenumerable])
+- [[ObservableLike\_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])
 
 ## Properties
 
@@ -50,6 +53,12 @@ ___
 
 ___
 
-### [ObservableLike\_observableType]
+### [ObservableLike\_isEnumerable]
 
-• `Readonly` **[ObservableLike\_observableType]**: [`ObservableType`](../modules/rx.md#observabletype)
+• `Readonly` **[ObservableLike\_isEnumerable]**: `boolean`
+
+___
+
+### [ObservableLike\_isRunnable]
+
+• `Readonly` **[ObservableLike\_isRunnable]**: `boolean`

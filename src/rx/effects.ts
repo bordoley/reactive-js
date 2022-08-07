@@ -359,7 +359,7 @@ export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
 };
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: unknown[]) =>
-  deferObservable(() => observer => {
+  deferObservable(() => (observer: ObserverLike) => {
     f(...args);
     pipe(observer, notify(none), dispose());
   });

@@ -53,7 +53,6 @@
 - [ToPromise](containers.md#topromise)
 - [ToReadonlyArray](containers.md#toreadonlyarray)
 - [ToSequence](containers.md#tosequence)
-- [Using](containers.md#using)
 - [Zip](containers.md#zip)
 
 ### Variables
@@ -531,18 +530,6 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `O` | `never` |
-
-___
-
-### Using
-
-Ƭ **Using**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `using`: <TResource, T\>(`resourceFactory`: [`Factory`](functions.md#factory)<`TResource`\>, `containerFactory`: [`Function1`](functions.md#function1)<`TResource`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\><TResource1, TResource2, T\>(`resourceFactory`: [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\>, `containerFactory`: [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\><TResource1, TResource2, TResource3, T\>(`resourceFactory`: [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\>, `containerFactory`: [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\><TResource1, TResource2, TResource3, TResource4, T\>(`resourceFactory`: [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\>, `containerFactory`: [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\><TResource1, TResource2, TResource3, TResource4, TResource5, T\>(`resourceFactory`: [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\>, `containerFactory`: [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\><TResource, T\>(`resourceFactory`: [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\>, `runnableFactory`: (...`resources`: readonly `TResource`[]) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 
 ___
 

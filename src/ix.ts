@@ -17,9 +17,8 @@ import {
   Empty,
   Generate,
   StatefulContainerLike,
-  Using,
 } from "./containers";
-import { Factory, Function1, Updater, forEach, none, pipe } from "./functions";
+import { Factory, Function1, Updater, none, pipe } from "./functions";
 import { SchedulerLike } from "./scheduling";
 import { AsyncEnumeratorLike, StreamableLike } from "./streaming";
 import {
@@ -28,7 +27,7 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "./util";
-import { addTo, dispose, isDisposed } from "./util/DisposableLike";
+import { dispose, isDisposed } from "./util/DisposableLike";
 
 /** @ignore */
 export const InteractiveContainerLike_interact = Symbol(
@@ -100,28 +99,6 @@ export const createEnumerable: <T>(
       },
     ),
   ))();
-
-export const createEnumerableUsing: Using<EnumerableLike>["using"] = <
-  TResource extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<TResource | readonly TResource[]>,
-  enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
-): EnumerableLike<T> =>
-  createEnumerable<T>(() => {
-    const resources = resourceFactory();
-    const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    const enumerator = enumerableFactory(...resourcesArray)[
-      InteractiveContainerLike_interact
-    ]();
-
-    pipe(resourcesArray, forEach(addTo(enumerator)));
-
-    return enumerator;
-  });
-export const createEnumerableUsingT: Using<EnumerableLike> = {
-  using: createEnumerableUsing,
-};
 
 export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
   T,
