@@ -242,7 +242,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<`Record`<`string`, `never`\>\> |
+| `options?` | `undefined` |
 
 #### Returns
 

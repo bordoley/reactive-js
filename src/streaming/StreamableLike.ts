@@ -34,9 +34,9 @@ export const sinkInto =
       merge(
         pipe(
           srcStream,
-          forEach<T>(dispatchTo(dest)),
+          forEach(dispatchTo(dest)),
           ignoreElements(keepT),
-          onSubscribe<unknown>(() => dest),
+          onSubscribe(() => dest),
         ),
         pipe(dest, forEach<TReq>(dispatchTo(srcStream)), ignoreElements(keepT)),
       ),

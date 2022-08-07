@@ -99,6 +99,7 @@ import {
   Factory,
   Function1,
   Option,
+  SideEffect,
   compose,
   getLength,
   getOrRaise,
@@ -109,6 +110,7 @@ import {
   max,
   newInstance,
   none,
+  partial,
   pipe,
   returns,
 } from "../functions";
@@ -257,7 +259,7 @@ export const buffer: <T>(options?: {
             this.durationSubscription[MutableRefLike_current] = pipe(
               next,
               this.durationFunction,
-              forEach<unknown>(doOnNotify),
+              forEach(doOnNotify),
               subscribe(getScheduler(this)),
             );
           }
@@ -357,6 +359,29 @@ export const concatT: Concat<ObservableLike> = {
   concat,
 };
 
+/**
+ * Converts a higher-order `ObservableLike` into a first-order
+ * `ObservableLike` by concatenating the inner sources in order.
+ *
+ * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
+ */
+export const concatAll: ConcatAll<
+  ObservableLike,
+  {
+    maxBufferSize?: number;
+  }
+>["concatAll"] = (options: { readonly maxBufferSize?: number } = {}) => {
+  const { maxBufferSize = MAX_SAFE_INTEGER } = options;
+  return mergeAll({ maxBufferSize, maxConcurrency: 1 });
+};
+
+export const concatAllT: ConcatAll<
+  ObservableLike,
+  { readonly maxBufferSize: number }
+> = {
+  concatAll,
+};
+
 export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() =>
     pipe(
@@ -373,6 +398,18 @@ export const distinctUntilChanged = distinctUntilChangedInternal;
 export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
   distinctUntilChanged,
 };
+
+/**
+ * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
+ * by dropping inner sources while the previous inner source
+ * has not yet been disposed.
+ */
+export const exhaust: ConcatAll<ObservableLike>["concatAll"] = <T>() =>
+  mergeAll<T>({
+    maxBufferSize: 1,
+    maxConcurrency: 1,
+  });
+export const exhaustT: ConcatAll<ObservableLike> = { concatAll: exhaust };
 
 export const forEach = forEachInternal;
 export const forEachT: ForEach<ObservableLike> = { forEach };
@@ -418,18 +455,6 @@ export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() =>
     createKeepOperator<ObservableLike, T, TReactive>(liftEnumerableObservableT),
   ))();
 export const keepT: Keep<ObservableLike> = { keep };
-
-export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() =>
-  pipe(
-    createMapObserver,
-    createMapOperator<ObservableLike, TA, TB, TReactive>(
-      liftEnumerableObservableT,
-    ),
-  ))();
-export const mapT: Map<ObservableLike> = { map };
-
-export const merge = mergeInternal;
-export const mergeT = mergeTInternal;
 
 const enum LatestMode {
   Combine = 1,
@@ -548,6 +573,145 @@ const latest = /*@__PURE__*/ (() => {
   };
 })();
 
+export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() =>
+  pipe(
+    createMapObserver,
+    createMapOperator<ObservableLike, TA, TB, TReactive>(
+      liftEnumerableObservableT,
+    ),
+  ))();
+export const mapT: Map<ObservableLike> = { map };
+
+export const merge = mergeInternal;
+export const mergeT = mergeTInternal;
+
+export const mergeAll: ConcatAll<
+  ObservableLike,
+  {
+    readonly maxBufferSize?: number;
+    readonly maxConcurrency?: number;
+  }
+>["concatAll"] = /*@__PURE__*/ (<T>() => {
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = {
+    activeCount: number;
+    delegate: ObserverLike<T>;
+    maxBufferSize: number;
+    maxConcurrency: number;
+    onDispose: SideEffect;
+    queue: ObservableLike<T>[];
+  };
+
+  const subscribeNext = <T>(observer: TProperties & ObserverLike<T>) => {
+    if (observer.activeCount < observer.maxConcurrency) {
+      const nextObs = observer.queue.shift();
+
+      if (isSome(nextObs)) {
+        observer.activeCount++;
+
+        pipe(
+          nextObs,
+          forEach(notifySink(observer.delegate)),
+          subscribe(getScheduler(observer)),
+          addTo(observer.delegate),
+          onComplete(observer.onDispose),
+        );
+      } else if (isDisposed(observer)) {
+        pipe(observer.delegate, dispose());
+      }
+    }
+  };
+
+  const createMergeAllObserver = createInstanceFactory(
+    clazz(
+      __extends(disposableMixin, typedObserverMixin),
+      function Observer(
+        this: TProperties & ObserverLike<ObservableLike<T>>,
+        delegate: ObserverLike<T>,
+        maxBufferSize: number,
+        maxConcurrency: number,
+      ) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, getScheduler(delegate));
+
+        this.delegate = delegate;
+        this.maxBufferSize = maxBufferSize;
+        this.maxConcurrency = maxConcurrency;
+
+        this.activeCount = 0;
+        this.onDispose = () => {
+          this.activeCount--;
+          subscribeNext(this);
+        };
+
+        this.queue = [];
+
+        return pipe(
+          this,
+          addTo(delegate),
+          onComplete(() => {
+            if (isDisposed(delegate)) {
+              this.queue.length = 0;
+            } else if (getLength(this.queue) + this.activeCount === 0) {
+              pipe(this.delegate, dispose());
+            }
+          }),
+        );
+      },
+      {
+        activeCount: 0,
+        delegate: none,
+        maxBufferSize: 0,
+        maxConcurrency: 0,
+        onDispose: none,
+        queue: none,
+      },
+      {
+        [SinkLike_notify](
+          this: TProperties & ObserverLike<ObservableLike<T>>,
+          next: ObservableLike<T>,
+        ) {
+          const { queue } = this;
+
+          queue.push(next);
+
+          // Drop old events if the maxBufferSize has been exceeded
+          if (getLength(queue) + this.activeCount > this.maxBufferSize) {
+            queue.shift();
+          }
+          subscribeNext(this);
+        },
+      },
+    ),
+  );
+
+  return (
+    options: {
+      readonly maxBufferSize?: number;
+      readonly maxConcurrency?: number;
+    } = {},
+  ) => {
+    const {
+      maxBufferSize = MAX_SAFE_INTEGER,
+      maxConcurrency = MAX_SAFE_INTEGER,
+    } = options;
+
+    return pipe(
+      createMergeAllObserver,
+      partial(maxBufferSize, maxConcurrency),
+      liftObservable,
+    );
+  };
+})();
+export const mergeAllT: ConcatAll<
+  ObservableLike,
+  {
+    readonly maxBufferSize?: number;
+    readonly maxConcurrency?: number;
+  }
+> = { concatAll: mergeAll };
+
 export const multicast = multicastInternal;
 
 export const onSubscribe =
@@ -567,7 +731,7 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   TAcc,
 >() =>
   pipe(
-    createReduceObserver<ObservableLike, T, TAcc>(arrayToObservable()),
+    createReduceObserver<T, TAcc>(arrayToObservable()),
     createReduceOperator<ObservableLike, T, TAcc, TReactive>(
       liftEnumerableObservableT,
     ),
@@ -680,7 +844,7 @@ export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
           },
         ),
       ),
-      liftEnumerableObservable,
+      liftObservable,
       returns,
     );
   })();
@@ -882,9 +1046,7 @@ export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
                 pipe(
                   observable,
                   subscribeOn(pausableScheduler),
-                  takeUntil<unknown>(
-                    pipe(pausableScheduler, disposableToObservable()),
-                  ),
+                  takeUntil(pipe(pausableScheduler, disposableToObservable())),
                 ),
               ),
               add(
