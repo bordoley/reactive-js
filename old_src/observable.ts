@@ -1,9 +1,7 @@
 import { decorateMap } from "./__internal__.functions";
-import { hasDelay } from "./__internal__.optionalArgs";
 import {
   createCatchErrorOperator,
   createEverySatisfyOperator,
-  createOnSink,
   createSomeSatisfyOperator,
   decorateWithCatchErrorNotify,
   decorateWithEverySatisfyNotify,
@@ -12,48 +10,34 @@ import {
 import {
   Container,
   ContainerLike,
-  ContainerOf,
   ContainerOperator,
   EverySatisfy,
-  Generate,
   SomeSatisfy,
   concatMap,
 } from "./container";
-import { dispatchTo } from "./dispatcher";
-import { bindTo, dispose, isDisposed, onDisposed } from "./disposable";
 import {
   Factory,
   Function1,
   Function2,
   Predicate,
-  Updater,
-  identity,
   instanceFactory,
-  newInstance,
   pipe,
 } from "./functions";
 import { CatchError } from "./liftableContainer";
-import { createObservable, createT } from "./observable/createObservable";
-import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";
-import { lift, liftEnumerableT, liftT } from "./observable/lift";
+import { liftEnumerableT } from "./observable/lift";
 import { mapT } from "./observable/map";
-import { tagObservableType } from "./observable/observable";
 import {
   AbstractDelegatingObserver,
-  createDelegatingObserver,
   decorateNotifyWithAssertions,
 } from "./observable/observer";
 import { onNotify } from "./observable/onNotify";
 import { Subject, publish, publishTo } from "./observable/subject";
-import { subscribe } from "./observable/subscribe";
 import { switchAll, switchAllT } from "./observable/switchAll";
 import { using } from "./observable/using";
 import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
-import { ObserverLike, getScheduler } from "./observer";
-import { Option, isNone, isSome, none } from "./option";
-import { ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
-import { SchedulerLike, __yield } from "./scheduler";
+import { ObserverLike } from "./observer";
+import { __yield } from "./scheduler";
 
 export type AsyncReducer<T, TAcc> = Function2<TAcc, T, ObservableLike<TAcc>>;
 
@@ -65,24 +49,6 @@ export type AsyncReducer<T, TAcc> = Function2<TAcc, T, ObservableLike<TAcc>>;
  */
 export type ThrottleMode = "first" | "last" | "interval";
 
-export {
-  combineLatest,
-  combineLatestT,
-  forkCombineLatest,
-  forkZipLatest,
-  zipLatest,
-  zipLatestT,
-} from "./observable/latest";
-export { buffer, bufferT } from "./observable/buffer";
-
-export {
-  concatAll,
-  concatAllT,
-  exhaust,
-  exhaustT,
-  mergeAll,
-  mergeAllT,
-} from "./observable/mergeAll";
 export { repeat, repeatT, retry } from "./observable/repeat";
 export { throttle } from "./observable/throttle";
 export { timeout, timeoutError } from "./observable/timeout";

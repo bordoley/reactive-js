@@ -8,12 +8,15 @@
 
 - [bufferT](rx_ObservableLike.md#buffert)
 - [combineLatestT](rx_ObservableLike.md#combinelatestt)
+- [concatAllT](rx_ObservableLike.md#concatallt)
 - [concatT](rx_ObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_ObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_ObservableLike.md#distinctuntilchangedt)
+- [exhaustT](rx_ObservableLike.md#exhaustt)
 - [forEachT](rx_ObservableLike.md#foreacht)
 - [keepT](rx_ObservableLike.md#keept)
 - [mapT](rx_ObservableLike.md#mapt)
+- [mergeAllT](rx_ObservableLike.md#mergeallt)
 - [mergeT](rx_ObservableLike.md#merget)
 - [pairwiseT](rx_ObservableLike.md#pairwiset)
 - [reduceT](rx_ObservableLike.md#reducet)
@@ -36,8 +39,10 @@
 - [buffer](rx_ObservableLike.md#buffer)
 - [combineLatest](rx_ObservableLike.md#combinelatest)
 - [concat](rx_ObservableLike.md#concat)
+- [concatAll](rx_ObservableLike.md#concatall)
 - [decodeWithCharset](rx_ObservableLike.md#decodewithcharset)
 - [distinctUntilChanged](rx_ObservableLike.md#distinctuntilchanged)
+- [exhaust](rx_ObservableLike.md#exhaust)
 - [forEach](rx_ObservableLike.md#foreach)
 - [forkCombineLatest](rx_ObservableLike.md#forkcombinelatest)
 - [forkMerge](rx_ObservableLike.md#forkmerge)
@@ -45,6 +50,7 @@
 - [keep](rx_ObservableLike.md#keep)
 - [map](rx_ObservableLike.md#map)
 - [merge](rx_ObservableLike.md#merge)
+- [mergeAll](rx_ObservableLike.md#mergeall)
 - [multicast](rx_ObservableLike.md#multicast)
 - [onSubscribe](rx_ObservableLike.md#onsubscribe)
 - [pairwise](rx_ObservableLike.md#pairwise)
@@ -81,6 +87,12 @@ ___
 
 ___
 
+### concatAllT
+
+• `Const` **concatAllT**: [`ConcatAll`](containers.md#concatall)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), { `maxBufferSize`: `number`  }\>
+
+___
+
 ### concatT
 
 • `Const` **concatT**: [`Concat`](containers.md#concat)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
@@ -99,6 +111,12 @@ ___
 
 ___
 
+### exhaustT
+
+• `Const` **exhaustT**: [`ConcatAll`](containers.md#concatall)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
 ### forEachT
 
 • `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
@@ -114,6 +132,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](containers.md#map)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### mergeAllT
+
+• `Const` **mergeAllT**: [`ConcatAll`](containers.md#concatall)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), { `maxBufferSize?`: `number` ; `maxConcurrency?`: `number`  }\>
 
 ___
 
@@ -507,6 +531,31 @@ Creates an `ObservableLike` which emits all values from each source sequentially
 
 ___
 
+### concatAll
+
+▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
+
+Converts a higher-order `ObservableLike` into a first-order
+`ObservableLike` by concatenating the inner sources in order.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<{ `maxBufferSize?`: `number`  }\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
+
+___
+
 ### decodeWithCharset
 
 ▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
@@ -543,6 +592,32 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### exhaust
+
+▸ **exhaust**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
+
+Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
+by dropping inner sources while the previous inner source
+has not yet been disposed.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -1118,6 +1193,28 @@ ___
 
 ___
 
+### mergeAll
+
+▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<{ `maxBufferSize?`: `number` ; `maxConcurrency?`: `number`  }\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
+
+___
+
 ### multicast
 
 ▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
@@ -1361,7 +1458,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<`Record`<`string`, `never`\>\> |
+| `options?` | `undefined` |
 
 #### Returns
 

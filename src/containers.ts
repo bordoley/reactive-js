@@ -106,10 +106,7 @@ export type Concat<C extends ContainerLike> = Container<C> & {
   ): ContainerOf<C, T>;
 };
 
-export type ConcatAll<
-  C extends ContainerLike,
-  O = Record<string, never>,
-> = Container<C> & {
+export type ConcatAll<C extends ContainerLike, O = never> = Container<C> & {
   concatAll: <T>(
     options?: Partial<O>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>;

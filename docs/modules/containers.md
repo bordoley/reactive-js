@@ -113,7 +113,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | `Record`<`string`, `never`\> |
+| `O` | `never` |
 
 ___
 
