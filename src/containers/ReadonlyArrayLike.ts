@@ -41,8 +41,9 @@ import {
   RunnableObservableLike,
   ToObservable,
   ToRunnable,
-  createObservable,
+  createEnumerableObservable,
   createRunnable,
+  createRunnableObservable,
 } from "../rx";
 import { ObserverLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
@@ -282,9 +283,7 @@ export const toObservable: ReadonlyArrayToObservable = /*@__PURE__*/ (() => {
   }) => {
     const delay = getDelay(options);
     const createObservableWithType = (f: SideEffect1<ObserverLike<T>>) =>
-      delay > 0
-        ? createObservable(f, { isRunnable: true })
-        : createObservable(f, { isEnumerable: true });
+      delay > 0 ? createRunnableObservable(f) : createEnumerableObservable(f);
 
     return createArrayObservable(createObservableWithType, options)(options);
   };

@@ -5,7 +5,7 @@ import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
-import { createObservable, createRunnable } from '../rx.mjs';
+import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { __yield, schedule } from '../scheduling/SchedulerLike.mjs';
 import { SourceLike_move, EnumeratorLike_current, SinkLike_notify } from '../util.mjs';
@@ -117,9 +117,7 @@ const toObservable = /*@__PURE__*/ (() => {
     });
     return (options) => {
         const delay = getDelay(options);
-        const createObservableWithType = (f) => delay > 0
-            ? createObservable(f, { isRunnable: true })
-            : createObservable(f, { isEnumerable: true });
+        const createObservableWithType = (f) => delay > 0 ? createRunnableObservable(f) : createEnumerableObservable(f);
         return createArrayObservable(createObservableWithType, options)(options);
     };
 })();

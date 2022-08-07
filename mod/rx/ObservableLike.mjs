@@ -15,7 +15,7 @@ import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as
 import { pipe, isEmpty, none, getLength, max, returns, isNone, isSome, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { createEnumerable, emptyEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$2 } from '../ix/EnumerableLike.mjs';
-import { neverObservable, createObservable, ObservableLike_isEnumerable, ObservableLike_isRunnable, emptyObservable } from '../rx.mjs';
+import { neverObservable, createEnumerableObservable, createRunnableObservable, createObservable, ObservableLike_isEnumerable, ObservableLike_isRunnable, emptyObservable } from '../rx.mjs';
 import { ObserverLike_dispatcher, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, createVirtualTimeScheduler } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -126,9 +126,9 @@ const concat = /*@__PURE__*/ (() => {
         const isEnumerable = allAreEnumerable(observables);
         const isRunnable = allAreRunnable(observables);
         return isEnumerable
-            ? createObservable(onSink, { isEnumerable: true })
+            ? createEnumerableObservable(onSink)
             : isRunnable
-                ? createObservable(onSink, { isRunnable: true })
+                ? createRunnableObservable(onSink)
                 : createObservable(onSink);
     };
 })();
@@ -236,9 +236,9 @@ const latest = /*@__PURE__*/ (() => {
         const isEnumerable = allAreEnumerable(observables);
         const isRunnable = allAreRunnable(observables);
         return isEnumerable
-            ? createObservable(onSink, { isEnumerable: true })
+            ? createEnumerableObservable(onSink)
             : isRunnable
-                ? createObservable(onSink, { isRunnable: true })
+                ? createRunnableObservable(onSink)
                 : createObservable(onSink);
     };
 })();
@@ -251,9 +251,9 @@ const mergeAllT = { concatAll: mergeAll };
 const multicast = multicast$1;
 const onSubscribe = (f) => (obs) => {
     return createOnSink(onSink => obs[ObservableLike_isEnumerable]
-        ? createObservable(onSink, { isEnumerable: true })
+        ? createEnumerableObservable(onSink)
         : obs[ObservableLike_isRunnable]
-            ? createObservable(onSink, { isRunnable: true })
+            ? createRunnableObservable(onSink)
             : createObservable(onSink), obs, f);
 };
 const pairwise = 
@@ -507,7 +507,7 @@ const zip = /*@__PURE__*/ (() => {
         return isEnumerable
             ? pipe(observables, map$1(toEnumerable()), keepType(keepT$1, isSome), enumerables => zip$1(...enumerables), toObservable$2())
             : isRunnable
-                ? createObservable(onSink(observables), { isRunnable: true })
+                ? createRunnableObservable(onSink(observables))
                 : createObservable(onSink(observables));
     };
 })();
