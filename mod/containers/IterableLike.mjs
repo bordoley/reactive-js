@@ -35,7 +35,7 @@ const toIterable = () => identity;
 const toIterableT = {
     toIterable,
 };
-const toObservable = options => compose(toEnumerable(), toObservable$1(options));
+const toObservable = (options => compose(toEnumerable(), toObservable$1(options)));
 const toObservableT = { toObservable };
 
 export { toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT };

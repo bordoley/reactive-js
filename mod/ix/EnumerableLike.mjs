@@ -9,7 +9,7 @@ import { clazz, createInstanceFactory, __extends, init } from '../__internal__/u
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable } from '../ix.mjs';
-import { createObservable, runnableObservableType, enumerableObservableType, createRunnable } from '../rx.mjs';
+import { createObservable, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, disposed } from '../util.mjs';
@@ -521,7 +521,7 @@ const toEnumerable = () => identity;
 const toEnumerableT = {
     toEnumerable,
 };
-const toObservable = (options) => enumerable => {
+const toObservable = ((options) => enumerable => {
     const delay = getDelay(options);
     const { delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
@@ -533,10 +533,14 @@ const toObservable = (options) => enumerable => {
             }
         }, delayStart && hasDelay(options) ? { delay } : none));
     };
-    return createObservable(onSink, {
-        type: delay > 0 ? runnableObservableType : enumerableObservableType,
-    });
-};
+    return delay > 0
+        ? createObservable(onSink, {
+            isRunnable: true,
+        })
+        : createObservable(onSink, {
+            isEnumerable: true,
+        });
+});
 const toObservableT = { toObservable };
 const toReadonlyArray = () => (enumerable) => {
     const enumerator = pipe(enumerable, enumerate());

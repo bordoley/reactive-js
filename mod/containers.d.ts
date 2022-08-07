@@ -1,4 +1,4 @@
-import { Option, Function1, Factory, Equality, Predicate, SideEffect1, Updater, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
+import { Option, Function1, Factory, Equality, Predicate, SideEffect1, Updater, Reducer } from "./functions.mjs";
 import { DisposableLike } from "./util.mjs";
 interface ContainerLike {
     readonly T?: unknown;
@@ -222,32 +222,6 @@ declare type ToReadonlyArray<C extends ContainerLike, O = never> = Container<C> 
 declare type ToSequence<C extends ContainerLike, O = never> = Container<C> & {
     toSequence<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 };
-declare type Using<C extends ContainerLike> = Container<C> & {
-    using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource>, containerFactory: Function1<TResource, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, T>(resourceFactory: Factory<[
-        TResource1,
-        TResource2
-    ]>, containerFactory: Function2<TResource1, TResource2, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, T>(resourceFactory: Factory<[
-        TResource1,
-        TResource2,
-        TResource3
-    ]>, containerFactory: Function3<TResource1, TResource2, TResource3, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, TResource4 extends DisposableLike, T>(resourceFactory: Factory<[
-        TResource1,
-        TResource2,
-        TResource3,
-        TResource4
-    ]>, containerFactory: Function4<TResource1, TResource2, TResource3, TResource4, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, TResource4 extends DisposableLike, TResource5 extends DisposableLike, T>(resourceFactory: Factory<[
-        TResource1,
-        TResource2,
-        TResource3,
-        TResource4,
-        TResource5
-    ]>, containerFactory: Function5<TResource1, TResource2, TResource3, TResource4, TResource5, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, runnableFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>): ContainerOf<C, T>;
-};
 declare type Zip<C extends ContainerLike> = Container<C> & {
     zip<TA, TB>(a: ContainerOf<C, TA>, b: ContainerOf<C, TB>): ContainerOf<C, readonly [
         TA,
@@ -314,4 +288,4 @@ declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Using, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };

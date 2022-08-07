@@ -23,14 +23,12 @@ import {
   Generate,
   Never,
   StatefulContainerLike,
-  Using,
 } from "./containers";
 import {
   Factory,
   Function1,
   SideEffect1,
   Updater,
-  forEach,
   getLength,
   ignore,
   max,
@@ -59,15 +57,15 @@ export interface RunnableLike<T = unknown>
   readonly TContainerOf?: RunnableLike<this["T"]>;
   readonly TStatefulContainerState?: SinkLike<this["T"]>;
 }
-export type ObservableType = 0 | 1 | 2;
-export const observableType: ObservableType = 0;
-export const runnableObservableType: ObservableType = 1;
-export const enumerableObservableType: ObservableType = 2;
 
-/** @ignore */
-export const ObservableLike_observableType = Symbol(
-  "ObservableLike_observableType",
+// @ignore
+export const ObservableLike_isEnumerable = Symbol(
+  "ObservableLike_isEnumerable",
 );
+
+// @ignore
+export const ObservableLike_isRunnable = Symbol("ObservableLike_isEnumerable");
+
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
  *
@@ -78,8 +76,21 @@ export interface ObservableLike<T = unknown>
   readonly TStatefulContainerState?: ObserverLike<this["T"]>;
   TContainerOf?: ObservableLike<this["T"]>;
 
-  // The observable type used by the runtime to switch implementations
-  readonly [ObservableLike_observableType]: ObservableType;
+  readonly [ObservableLike_isEnumerable]: boolean;
+  readonly [ObservableLike_isRunnable]: boolean;
+}
+
+export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
+  TContainerOf?: RunnableObservableLike<this["T"]>;
+
+  readonly [ObservableLike_isRunnable]: true;
+}
+
+export interface EnumerableObservableLike<T = unknown>
+  extends RunnableObservableLike<T> {
+  TContainerOf?: EnumerableObservableLike<this["T"]>;
+
+  readonly [ObservableLike_isEnumerable]: true;
 }
 
 /** @ignore */
@@ -126,51 +137,40 @@ export type ToRunnable<
   ): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
 
-type CreateReactiveContainer<
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
-> = (onSink: SideEffect1<TSink>) => ContainerOf<C, T>;
-
-const createUsing =
-  <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
-    create: CreateReactiveContainer<C, TSink, T>,
-  ) =>
-  <TResource extends DisposableLike>(
-    resourceFactory: Factory<TResource | readonly TResource[]>,
-    sourceFactory: (...resources: readonly TResource[]) => C,
-  ): ContainerOf<C, T> =>
-    create((sink: TSink) => {
-      pipe(
-        resourceFactory(),
-        resources => (Array.isArray(resources) ? resources : [resources]),
-        forEach<TResource>(addTo(sink)),
-        resources => sourceFactory(...resources),
-        //sinkInto<C, TSink, T>(sink),
-      )[ReactiveContainerLike_sinkInto](sink);
-    });
-
-export const createObservable: <T>(
-  f: SideEffect1<ObserverLike<T>>,
-  options?: { readonly type?: ObservableType },
-) => ObservableLike<T> = /*@__PURE__*/ (<T>() => {
+interface CreateObservable {
+  <T>(
+    f: SideEffect1<ObserverLike<T>>,
+    options: { readonly isRunnable: true },
+  ): RunnableObservableLike<T>;
+  <T>(
+    f: SideEffect1<ObserverLike<T>>,
+    options: { readonly isEnumerable: true },
+  ): EnumerableObservableLike<T>;
+  <T>(f: SideEffect1<ObserverLike<T>>): ObservableLike<T>;
+}
+export const createObservable: CreateObservable = /*@__PURE__*/ (<T>() => {
   const createObservableInternal = createInstanceFactory(
     clazz(
       function CreateObservable(
         this: {
           f: SideEffect1<ObserverLike<T>>;
-          [ObservableLike_observableType]: ObservableType;
+          [ObservableLike_isRunnable]: boolean;
+          [ObservableLike_isEnumerable]: boolean;
         } & ObservableLike<T>,
         f: SideEffect1<ObserverLike<T>>,
-        type: ObservableType,
+
+        isEnumerable: boolean,
+        isRunnable: boolean,
       ) {
         this.f = f;
-        this[ObservableLike_observableType] = type;
+        this[ObservableLike_isEnumerable] = isEnumerable;
+        this[ObservableLike_isRunnable] = isRunnable;
         return this;
       },
       {
         f: none,
-        [ObservableLike_observableType]: none,
+        [ObservableLike_isRunnable]: false,
+        [ObservableLike_isEnumerable]: false,
       },
       {
         [ReactiveContainerLike_sinkInto](
@@ -191,18 +191,16 @@ export const createObservable: <T>(
 
   return (
     f: SideEffect1<ObserverLike<T>>,
-    options?: { readonly type?: ObservableType },
+    options?: { readonly isEnumerable?: boolean; readonly isRunnable?: true },
   ) => {
-    const { type = observableType } = options ?? {};
-    return createObservableInternal(f, type);
+    const { isEnumerable = false, isRunnable = false } = options ?? {};
+    return createObservableInternal(
+      f,
+      isEnumerable,
+      isEnumerable || isRunnable,
+    );
   };
-})();
-
-export const createObservableUsing: Using<ObservableLike>["using"] =
-  /*@__PURE__*/ createUsing(createObservable);
-export const createObservableUsingT: Using<ObservableLike> = {
-  using: createObservableUsing,
-};
+})() as CreateObservable;
 
 export const createRunnable: <T>(
   run: SideEffect1<SinkLike<T>>,
@@ -239,12 +237,6 @@ export const createRunnable: <T>(
     ),
   ))();
 
-export const createRunnableUsing: Using<RunnableLike>["using"] =
-  /*@__PURE__*/ createUsing(createRunnable);
-export const createRunnableUsingT: Using<RunnableLike> = {
-  using: createRunnableUsing,
-};
-
 export const createSubject: <T>(options?: {
   replay?: number;
 }) => SubjectLike<T> = /*@__PURE__*/ (<T>() => {
@@ -271,7 +263,8 @@ export const createSubject: <T>(options?: {
         replayed: none,
       },
       {
-        [ObservableLike_observableType]: observableType,
+        [ObservableLike_isEnumerable]: false,
+        [ObservableLike_isRunnable]: false,
 
         get [MulticastObservableLike_observerCount]() {
           const self = this as unknown as TProperties;
@@ -336,9 +329,42 @@ export const createSubject: <T>(options?: {
   };
 })();
 
-export const deferObservable = <T>(
+interface DeferObservable {
+  <T>(factory: SideEffect1<ObserverLike<T>>): ObservableLike<T>;
+  <T>(
+    factory: SideEffect1<ObserverLike<T>>,
+    options: { readonly delay: number },
+  ): ObservableLike<T>;
+  <T>(
+    factory: SideEffect1<ObserverLike<T>>,
+    options: { readonly isRunnable: true; readonly delay?: number },
+  ): RunnableObservableLike<T>;
+  <T>(
+    factory: SideEffect1<ObserverLike<T>>,
+    options: { readonly isEnumerable: true },
+  ): EnumerableObservableLike<T>;
+
+  <T>(factory: Factory<ObservableLike>): ObservableLike<T>;
+  <T>(
+    factory: Factory<ObservableLike>,
+    options: { readonly delay: number },
+  ): ObservableLike<T>;
+  <T>(
+    factory: Factory<RunnableObservableLike>,
+    options: { readonly isRunnable: true; readonly delay?: number },
+  ): RunnableObservableLike<T>;
+  <T>(
+    factory: Factory<EnumerableObservableLike>,
+    options: { readonly isEnumerable: true },
+  ): EnumerableObservableLike<T>;
+}
+export const deferObservable: DeferObservable = (<T>(
   factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
-  options?: { readonly delay?: number; readonly type?: ObservableType },
+  options?: {
+    readonly delay?: number;
+    readonly isEnumerable?: boolean;
+    readonly isRunnable?: boolean;
+  },
 ): ObservableLike<T> =>
   createObservable(observer => {
     const sideEffect = factory();
@@ -353,7 +379,7 @@ export const deferObservable = <T>(
     } else {
       sideEffect[ReactiveContainerLike_sinkInto](observer);
     }
-  }, options);
+  }, options as any)) as DeferObservable;
 export const deferObservableT: Defer<ObservableLike> = {
   defer: deferObservable,
 };
@@ -364,10 +390,13 @@ export const deferRunnable: Defer<RunnableLike>["defer"] = f =>
   });
 export const deferRunnableT: Defer<RunnableLike> = { defer: deferRunnable };
 
-export const emptyObservable: Empty<
-  ObservableLike,
-  { delay: number }
->["empty"] = <T>(options?: { delay: number }) => {
+interface EmptyObservable {
+  <T>(): EnumerableObservableLike<T>;
+  <T>(options: { delay: number }): RunnableObservableLike<T>;
+}
+export const emptyObservable: EmptyObservable = (<T>(options?: {
+  delay: number;
+}) => {
   const delay = getDelay(options);
   return delay > 0
     ? createObservable<T>(
@@ -378,15 +407,15 @@ export const emptyObservable: Empty<
             schedule(pipeLazy(sink, dispose()), { delay }),
           );
         },
-        { type: runnableObservableType },
+        { isRunnable: true },
       )
     : createObservable<T>(
         sink => {
           pipe(sink, dispose());
         },
-        { type: enumerableObservableType },
+        { isEnumerable: true },
       );
-};
+}) as EmptyObservable;
 export const emptyObservableT: Empty<ObservableLike, { delay: number }> = {
   empty: emptyObservable,
 };
@@ -397,6 +426,22 @@ export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
   });
 export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
 
+interface GenerateObservable {
+  <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): EnumerableObservableLike<T>;
+
+  <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options: {
+      readonly delay: number;
+      readonly delayStart?: boolean;
+    },
+  ): RunnableObservableLike<T>;
+}
+
 /**
  * Generates an `ObservableLike` sequence from a generator function
  * that is applied to an accumulator value with a specified `delay`
@@ -406,10 +451,7 @@ export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
  * @param initialValue Factory function used to generate the initial accumulator.
  * @param delay The requested delay between emitted items by the observable.
  */
-export const generateObservable: Generate<
-  ObservableLike,
-  { readonly delay: number; readonly delayStart: boolean }
->["generate"] = <T>(
+export const generateObservable: GenerateObservable = (<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
@@ -436,10 +478,14 @@ export const generateObservable: Generate<
     );
   };
 
-  return createObservable(onSink, {
-    type: delay > 0 ? runnableObservableType : enumerableObservableType,
-  });
-};
+  return delay > 0
+    ? createObservable(onSink, {
+        isRunnable: true,
+      })
+    : createObservable(onSink, {
+        isEnumerable: true,
+      });
+}) as GenerateObservable;
 export const generateObservableT: Generate<
   ObservableLike,
   { readonly delay: number; readonly delayStart: boolean }
@@ -460,8 +506,9 @@ export const generateRunnableT: Generate<RunnableLike> = {
   generate: generateRunnable,
 };
 
-export const neverObservable: Never<ObservableLike>["never"] = () =>
-  createObservable(ignore, { type: enumerableObservableType });
+export const neverObservable: Never<EnumerableObservableLike>["never"] = () =>
+  createObservable(ignore, { isEnumerable: true });
+
 export const neverObservableT: Never<ObservableLike> = {
   never: neverObservable,
 };
