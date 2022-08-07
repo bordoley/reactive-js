@@ -119,18 +119,24 @@ const createSubject = /*@__PURE__*/ (() => {
         return createSubjectInstance(replay);
     };
 })();
-const deferObservable = ((factory, options) => createObservable(observer => {
-    const sideEffect = factory();
-    if (typeof sideEffect === "function") {
-        const callback = () => sideEffect(observer);
-        pipe(observer, getScheduler, schedule(callback, options), addTo(observer));
-    }
-    else {
-        sideEffect[ReactiveContainerLike_sinkInto](observer);
-    }
-}, options));
+const deferObservableImpl = (factory, options) => createObservable(observer => {
+    factory()[ReactiveContainerLike_sinkInto](observer);
+}, options);
+const deferEnumerableObservable = (f => deferObservableImpl(f, {
+    isEnumerable: true,
+}));
+const deferEnumerableObservableT = {
+    defer: deferEnumerableObservable,
+};
+const deferObservable = deferObservableImpl;
 const deferObservableT = {
     defer: deferObservable,
+};
+const deferRunnableObservable = (f => deferObservableImpl(f, {
+    isRunnable: true,
+}));
+const deferRunnableObservableT = {
+    defer: deferRunnableObservable,
 };
 const deferRunnable = f => createRunnable(sink => {
     f()[ReactiveContainerLike_sinkInto](sink);
@@ -204,4 +210,4 @@ const neverRunnableT = {
     never: neverRunnable,
 };
 
-export { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, SubjectLike_publish, createObservable, createRunnable, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyObservable, emptyObservableT, emptyRunnable, emptyRunnableT, generateObservable, generateObservableT, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, SubjectLike_publish, createObservable, createRunnable, createSubject, deferEnumerableObservable, deferEnumerableObservableT, deferObservable, deferObservableT, deferRunnable, deferRunnableObservable, deferRunnableObservableT, deferRunnableT, emptyObservable, emptyObservableT, emptyRunnable, emptyRunnableT, generateObservable, generateObservableT, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };

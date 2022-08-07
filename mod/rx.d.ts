@@ -1,5 +1,5 @@
 import { StatefulContainerLike, ContainerLike, Container, ContainerOf, Defer, Empty, Generate, Never } from "./containers.mjs";
-import { Function1, SideEffect1, Factory, Updater } from "./functions.mjs";
+import { Function1, SideEffect1, Updater, Factory } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
 import { DisposableLike, SinkLike } from "./util.mjs";
 /** @ignore */
@@ -68,32 +68,14 @@ declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike
 declare const createSubject: <T>(options?: {
     replay?: number;
 }) => SubjectLike<T>;
-interface DeferObservable {
-    <T>(factory: SideEffect1<ObserverLike<T>>): ObservableLike<T>;
-    <T>(factory: SideEffect1<ObserverLike<T>>, options: {
-        readonly delay: number;
-    }): ObservableLike<T>;
-    <T>(factory: SideEffect1<ObserverLike<T>>, options: {
-        readonly isRunnable: true;
-        readonly delay?: number;
-    }): RunnableObservableLike<T>;
-    <T>(factory: SideEffect1<ObserverLike<T>>, options: {
-        readonly isEnumerable: true;
-    }): EnumerableObservableLike<T>;
-    <T>(factory: Factory<ObservableLike>): ObservableLike<T>;
-    <T>(factory: Factory<ObservableLike>, options: {
-        readonly delay: number;
-    }): ObservableLike<T>;
-    <T>(factory: Factory<RunnableObservableLike>, options: {
-        readonly isRunnable: true;
-        readonly delay?: number;
-    }): RunnableObservableLike<T>;
-    <T>(factory: Factory<EnumerableObservableLike>, options: {
-        readonly isEnumerable: true;
-    }): EnumerableObservableLike<T>;
-}
-declare const deferObservable: DeferObservable;
+declare const deferEnumerableObservable: Defer<EnumerableObservableLike>["defer"];
+declare const deferEnumerableObservableT: Defer<EnumerableObservableLike>;
+declare const deferObservable: Defer<ObservableLike>["defer"];
 declare const deferObservableT: Defer<ObservableLike>;
+declare const deferRunnableObservable: Defer<RunnableObservableLike, {
+    delay: number;
+}>["defer"];
+declare const deferRunnableObservableT: Defer<RunnableObservableLike>;
 declare const deferRunnable: Defer<RunnableLike>["defer"];
 declare const deferRunnableT: Defer<RunnableLike>;
 interface EmptyObservable {
@@ -135,4 +117,4 @@ declare const neverObservable: Never<EnumerableObservableLike>["never"];
 declare const neverObservableT: Never<ObservableLike>;
 declare const neverRunnable: Never<RunnableLike>["never"];
 declare const neverRunnableT: Never<RunnableLike>;
-export { EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable, createObservable, createRunnable, createSubject, deferObservable, deferObservableT, deferRunnable, deferRunnableT, emptyObservable, emptyObservableT, emptyRunnable, emptyRunnableT, generateObservable, generateObservableT, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
+export { EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable, createObservable, createRunnable, createSubject, deferEnumerableObservable, deferEnumerableObservableT, deferObservable, deferObservableT, deferRunnable, deferRunnableObservable, deferRunnableObservableT, deferRunnableT, emptyObservable, emptyObservableT, emptyRunnable, emptyRunnableT, generateObservable, generateObservableT, generateRunnable, generateRunnableT, neverObservable, neverObservableT, neverRunnable, neverRunnableT };
