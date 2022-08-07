@@ -27,7 +27,9 @@ import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ReactiveContainerLike_sinkInto,
+  createEnumerableObservable,
   createObservable,
+  createRunnableObservable,
   createSubject,
 } from "../../rx";
 import { publishTo } from "../../rx/SubjectLike";
@@ -384,9 +386,9 @@ export const mergeImpl = /*@__PURE__*/ (() => {
     const isRunnable = allAreRunnable(observables);
 
     return isEnumerable
-      ? createObservable(onSink, { isEnumerable: true })
+      ? createEnumerableObservable(onSink)
       : isRunnable
-      ? createObservable(onSink, { isRunnable: true })
+      ? createRunnableObservable(onSink)
       : createObservable(onSink);
   };
 })();

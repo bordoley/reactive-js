@@ -1,7 +1,7 @@
 /// <reference types="./ObservableLikeInternal.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
 import { compose, isTrue, pipeUnsafe, newInstance, isSome, pipe, getLength, none, partial } from '../../functions.mjs';
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createObservable, createSubject } from '../../rx.mjs';
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createEnumerableObservable, createRunnableObservable, createObservable, createSubject } from '../../rx.mjs';
 import { publishTo } from '../../rx/SubjectLike.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
@@ -154,9 +154,9 @@ const mergeImpl = /*@__PURE__*/ (() => {
         const isEnumerable = allAreEnumerable(observables);
         const isRunnable = allAreRunnable(observables);
         return isEnumerable
-            ? createObservable(onSink, { isEnumerable: true })
+            ? createEnumerableObservable(onSink)
             : isRunnable
-                ? createObservable(onSink, { isRunnable: true })
+                ? createRunnableObservable(onSink)
                 : createObservable(onSink);
     };
 })();

@@ -130,7 +130,9 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  createEnumerableObservable,
   createObservable,
+  createRunnableObservable,
   emptyObservable,
   neverObservable,
 } from "../rx";
@@ -355,9 +357,9 @@ export const concat: Concat<ObservableLike>["concat"] = /*@__PURE__*/ (<
     const isRunnable = allAreRunnable(observables);
 
     return isEnumerable
-      ? createObservable(onSink, { isEnumerable: true })
+      ? createEnumerableObservable(onSink)
       : isRunnable
-      ? createObservable(onSink, { isRunnable: true })
+      ? createRunnableObservable(onSink)
       : createObservable(onSink);
   };
 })();
@@ -578,9 +580,9 @@ const latest = /*@__PURE__*/ (() => {
     const isRunnable = allAreRunnable(observables);
 
     return isEnumerable
-      ? createObservable(onSink, { isEnumerable: true })
+      ? createEnumerableObservable(onSink)
       : isRunnable
-      ? createObservable(onSink, { isRunnable: true })
+      ? createRunnableObservable(onSink)
       : createObservable(onSink);
   };
 })();
@@ -626,9 +628,9 @@ export const onSubscribe =
     return createOnSink(
       onSink =>
         obs[ObservableLike_isEnumerable]
-          ? createObservable(onSink, { isEnumerable: true })
+          ? createEnumerableObservable(onSink)
           : obs[ObservableLike_isRunnable]
-          ? createObservable(onSink, { isRunnable: true })
+          ? createRunnableObservable(onSink)
           : createObservable(onSink),
       obs,
       f,
@@ -1138,7 +1140,7 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
           enumerableToObservable(),
         )
       : isRunnable
-      ? createObservable(onSink(observables), { isRunnable: true })
+      ? createRunnableObservable(onSink(observables))
       : createObservable(onSink(observables));
   };
 })();

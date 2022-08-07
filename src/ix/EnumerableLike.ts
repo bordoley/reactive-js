@@ -97,8 +97,9 @@ import {
   RunnableObservableLike,
   ToObservable,
   ToRunnable,
-  createObservable,
+  createEnumerableObservable,
   createRunnable,
+  createRunnableObservable,
 } from "../rx";
 import { ObserverLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
@@ -1133,12 +1134,8 @@ export const toObservable: EnumerableToObservable = (<T>(options?: {
       );
     };
     return delay > 0
-      ? createObservable(onSink, {
-          isRunnable: true,
-        })
-      : createObservable(onSink, {
-          isEnumerable: true,
-        });
+      ? createRunnableObservable(onSink)
+      : createEnumerableObservable(onSink);
   }) as EnumerableToObservable;
 export const toObservableT: ToObservable<
   EnumerableLike,
