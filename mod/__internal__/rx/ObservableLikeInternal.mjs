@@ -3,13 +3,10 @@ import { map } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe, min, pipeUnsafe, newInstance, getLength } from '../../functions.mjs';
 import { ObservableLike_observableType, ReactiveContainerLike_sinkInto, createObservable, createSubject } from '../../rx.mjs';
 import { publishTo } from '../../rx/SubjectLike.mjs';
-import { SinkLike_notify } from '../../util.mjs';
 import { sourceFrom } from '../../util/SinkLike.mjs';
 import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createScanOperator } from '../containers/StatefulContainerLikeInternal.mjs';
-import { createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, observerMixin } from '../scheduling/ObserverLikeMixin.mjs';
+import { createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, createObserver } from '../scheduling/ObserverLikeMixin.mjs';
 import { addTo, onComplete, dispose, bindTo, addToIgnoringChildErrors } from '../util/DisposableLikeInternal.mjs';
-import { disposableMixin } from '../util/DisposableLikeMixins.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../util/Object.mjs';
 
 const getObservableType = (obs) => obs[ObservableLike_observableType];
 const getMinObservableType = (observables) => pipe(observables, map(getObservableType), x => min(...x));
@@ -80,16 +77,6 @@ const multicast = (scheduler, options = {}) => observable => {
     return subject;
 };
 const scan = /*@__PURE__*/ pipe(createScanObserver, createScanOperator(liftEnumerableObservableT));
-const subscribe = /*@__PURE__*/ (() => {
-    const typedObserverMixin = observerMixin();
-    const createObserver = createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function SubscribeObserver(scheduler) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, scheduler);
-        return this;
-    }, {}, {
-        [SinkLike_notify](_) { },
-    }));
-    return (scheduler) => (observable) => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
-})();
+const subscribe = /*@__PURE__*/ (() => scheduler => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable)))();
 
 export { distinctUntilChanged, forEach, getMinObservableType, getObservableType, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, scan, subscribe };

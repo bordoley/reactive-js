@@ -9,8 +9,7 @@ import { createObservable, runnableObservableType, enumerableObservableType, cre
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { __yield, schedule } from '../scheduling/SchedulerLike.mjs';
 import { SourceLike_move, EnumeratorLike_current, SinkLike_notify } from '../util.mjs';
-import '../util/DisposableLike.mjs';
-import { isDisposed, dispose, addTo } from '../__internal__/util/DisposableLikeInternal.mjs';
+import { isDisposed, dispose, addTo } from '../util/DisposableLike.mjs';
 
 const every = (predicate) => arr => arr.every(predicate);
 const forEach = (effect) => arr => {

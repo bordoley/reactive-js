@@ -59,4 +59,4 @@ const onComplete = (teardown) => disposable => {
     return disposable;
 };
 
-export { DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, add, addDisposableOrTeardown, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError };
+export { DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError };

@@ -14,6 +14,7 @@
 - [forEachT](rx_ObservableLike.md#foreacht)
 - [keepT](rx_ObservableLike.md#keept)
 - [mapT](rx_ObservableLike.md#mapt)
+- [mergeT](rx_ObservableLike.md#merget)
 - [pairwiseT](rx_ObservableLike.md#pairwiset)
 - [reduceT](rx_ObservableLike.md#reducet)
 - [scanT](rx_ObservableLike.md#scant)
@@ -36,16 +37,22 @@
 - [combineLatest](rx_ObservableLike.md#combinelatest)
 - [concat](rx_ObservableLike.md#concat)
 - [decodeWithCharset](rx_ObservableLike.md#decodewithcharset)
+- [distinctUntilChanged](rx_ObservableLike.md#distinctuntilchanged)
+- [forEach](rx_ObservableLike.md#foreach)
 - [forkCombineLatest](rx_ObservableLike.md#forkcombinelatest)
 - [forkMerge](rx_ObservableLike.md#forkmerge)
 - [forkZipLatest](rx_ObservableLike.md#forkziplatest)
 - [keep](rx_ObservableLike.md#keep)
 - [map](rx_ObservableLike.md#map)
+- [merge](rx_ObservableLike.md#merge)
+- [multicast](rx_ObservableLike.md#multicast)
 - [onSubscribe](rx_ObservableLike.md#onsubscribe)
 - [pairwise](rx_ObservableLike.md#pairwise)
 - [reduce](rx_ObservableLike.md#reduce)
+- [scan](rx_ObservableLike.md#scan)
 - [share](rx_ObservableLike.md#share)
 - [skipFirst](rx_ObservableLike.md#skipfirst)
+- [subscribe](rx_ObservableLike.md#subscribe)
 - [subscribeOn](rx_ObservableLike.md#subscribeon)
 - [switchAll](rx_ObservableLike.md#switchall)
 - [takeFirst](rx_ObservableLike.md#takefirst)
@@ -107,6 +114,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](containers.md#map)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### mergeT
+
+• `Const` **mergeT**: [`Concat`](containers.md#concat)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -507,6 +520,51 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+___
+
+### distinctUntilChanged
+
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### forEach
+
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -1036,6 +1094,54 @@ ___
 
 ___
 
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `snd` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
+### multicast
+
+▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
+
+___
+
 ### onSubscribe
 
 ▸ **onSubscribe**<`T`\>(`f`): (`obs`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
@@ -1110,6 +1216,30 @@ ___
 
 ___
 
+### scan
+
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+___
+
 ### share
 
 ▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
@@ -1158,6 +1288,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### subscribe
+
+▸ **subscribe**<`T`\>(`scheduler`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `DisposableLike`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `DisposableLike`\>
 
 ___
 

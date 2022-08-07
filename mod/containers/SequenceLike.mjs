@@ -6,10 +6,9 @@ import { createInstanceFactory, clazz, __extends, init } from '../__internal__/u
 import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
-import '../util/DisposableLike.mjs';
+import { isDisposed, dispose } from '../util/DisposableLike.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
-import { isDisposed, dispose } from '../__internal__/util/DisposableLikeInternal.mjs';
 
 const createNext = (data, next) => ({
     data,

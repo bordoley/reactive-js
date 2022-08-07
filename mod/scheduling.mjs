@@ -2,8 +2,7 @@
 import { MAX_SAFE_INTEGER } from './__internal__/env.mjs';
 import { getDelay } from './__internal__/optionalArgs.mjs';
 import { createPriorityQueue } from './__internal__/scheduling/queue.mjs';
-import { getCurrentTime, SchedulerLike_inContinuation, SchedulerLike_now, isInContinuation } from './__internal__/schedulingInternal.mjs';
-export { SchedulerLike_inContinuation, SchedulerLike_now } from './__internal__/schedulingInternal.mjs';
+import { SchedulerLike_inContinuation as SchedulerLike_inContinuation$1, SchedulerLike_now as SchedulerLike_now$1, getCurrentTime, isInContinuation } from './__internal__/schedulingInternal.mjs';
 import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
 import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
@@ -13,6 +12,10 @@ import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike
 import { run } from './util/ContinuationLike.mjs';
 import { move, getCurrent } from './util/EnumeratorLike.mjs';
 
+/** @ignore */
+const SchedulerLike_inContinuation = SchedulerLike_inContinuation$1;
+/** @ignore */
+const SchedulerLike_now = SchedulerLike_now$1;
 /** @ignore */
 const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
 /** @ignore */
@@ -190,4 +193,4 @@ const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
 /** @ignore */
 const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
 
-export { DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike_dispatcher, ObserverLike_scheduler, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, createHostScheduler, createVirtualTimeScheduler };
+export { DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike_dispatcher, ObserverLike_scheduler, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, createHostScheduler, createVirtualTimeScheduler };

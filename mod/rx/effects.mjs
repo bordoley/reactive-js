@@ -1,16 +1,14 @@
 /// <reference types="./effects.d.ts" />
 import { arrayEquality, none, isNone, ignore, raise, pipe, getLength, isSome, newInstance } from '../functions.mjs';
 import { emptyObservable, deferObservable } from '../rx.mjs';
-import './ObservableLike.mjs';
+import { forEach, subscribe } from './ObservableLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { schedule } from '../scheduling/SchedulerLike.mjs';
 import { createStateStore } from '../streaming.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
 import { disposed } from '../util.mjs';
-import '../util/DisposableLike.mjs';
+import { isDisposed, dispose, addTo, onComplete } from '../util/DisposableLike.mjs';
 import { notify } from '../util/SinkLike.mjs';
-import { isDisposed, dispose, addTo, onComplete } from '../__internal__/util/DisposableLikeInternal.mjs';
-import { forEach, subscribe } from '../__internal__/rx/ObservableLikeInternal.mjs';
 
 const arrayStrictEquality = arrayEquality();
 let currentCtx = none;

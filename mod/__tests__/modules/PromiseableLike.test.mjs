@@ -4,8 +4,7 @@ import { toObservable } from '../../containers/PromiseableLike.mjs';
 import { pipe, newInstance } from '../../functions.mjs';
 import { toPromise } from '../../rx/ObservableLike.mjs';
 import { createHostScheduler } from '../../scheduling.mjs';
-import '../../util/DisposableLike.mjs';
-import { dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
+import { dispose } from '../../util/DisposableLike.mjs';
 
 var PromiseableLikeTests = createDescribe("PromiseableLike", createDescribe("toObservable", testAsync("when the promise resolves", async () => {
     const scheduler = createHostScheduler();

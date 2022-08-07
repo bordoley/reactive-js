@@ -4,11 +4,10 @@ import { keepType } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe, isSome } from '../../functions.mjs';
 import { emptyObservable } from '../../rx.mjs';
-import { takeLast, keepT } from '../../rx/ObservableLike.mjs';
+import { takeLast, forEach, subscribe, keepT } from '../../rx/ObservableLike.mjs';
 import { observable, __memo, __observe } from '../../rx/effects.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
-import { forEach, subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
 
 var effectsTests = createDescribe("effects", createTest("batch mode", () => {
     const scheduler = createVirtualTimeScheduler();

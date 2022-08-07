@@ -12,20 +12,20 @@ import {
 } from "../__internal__/containers/StatefulContainerLikeInternal";
 import { MAX_SAFE_INTEGER } from "../__internal__/env";
 import {
-  distinctUntilChanged,
-  forEach,
+  distinctUntilChanged as distinctUntilChangedInternal,
+  forEach as forEachInternal,
   getMinObservableType,
   getObservableType,
   liftEnumerableObservable,
   liftEnumerableObservableT,
   liftObservable,
   liftRunnableObservable,
-  merge,
   mergeImpl,
-  mergeT,
-  multicast,
-  scan,
-  subscribe,
+  merge as mergeInternal,
+  mergeT as mergeTInternal,
+  multicast as multicastInternal,
+  scan as scanInternal,
+  subscribe as subscribeInternal,
 } from "../__internal__/rx/ObservableLikeInternal";
 import { createOnSink } from "../__internal__/rx/ReactiveContainerLikeInternal";
 import {
@@ -369,12 +369,12 @@ export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
   decodeWithCharset,
 };
 
-export { distinctUntilChanged };
+export const distinctUntilChanged = distinctUntilChangedInternal;
 export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
   distinctUntilChanged,
 };
 
-export { forEach };
+export const forEach = forEachInternal;
 export const forEachT: ForEach<ObservableLike> = { forEach };
 
 export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
@@ -428,7 +428,8 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() =>
   ))();
 export const mapT: Map<ObservableLike> = { map };
 
-export { merge, mergeT };
+export const merge = mergeInternal;
+export const mergeT = mergeTInternal;
 
 const enum LatestMode {
   Combine = 1,
@@ -547,7 +548,7 @@ const latest = /*@__PURE__*/ (() => {
   };
 })();
 
-export { multicast };
+export const multicast = multicastInternal;
 
 export const onSubscribe =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
@@ -573,7 +574,7 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   ))();
 export const reduceT: Reduce<ObservableLike> = { reduce };
 
-export { scan };
+export const scan = scanInternal;
 export const scanT: Scan<ObservableLike> = { scan };
 
 /**
@@ -687,7 +688,7 @@ export const switchAllT: ConcatAll<ObservableLike> = {
   concatAll: switchAll,
 };
 
-export { subscribe };
+export const subscribe = subscribeInternal;
 
 export const subscribeOn =
   <T>(scheduler: SchedulerLike) =>

@@ -48,7 +48,7 @@ export const isDisposed = (disposable: {
   [DisposableLike_isDisposed]: boolean;
 }): boolean => disposable[DisposableLike_isDisposed];
 
-export const addDisposableOrTeardown = (
+const addDisposableOrTeardown = (
   parent: DisposableLike,
   child: DisposableOrTeardown,
   ignoreChildErrors = false,
