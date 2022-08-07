@@ -8,7 +8,7 @@ import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs
 import { run } from '../../util/ContinuationLike.mjs';
 import { forEach, subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
 
-const FlowableLikeTests = createDescribe("FlowableLike", createTest("toObservable", () => {
+var FlowableLikeTests = createDescribe("FlowableLike", createTest("toObservable", () => {
     const scheduler = createVirtualTimeScheduler();
     const result = [];
     pipe([0, 1, 2, 3, 4], toObservable({ delay: 1 }), toFlowable(), toObservable$1(), forEach(v => {
@@ -17,4 +17,4 @@ const FlowableLikeTests = createDescribe("FlowableLike", createTest("toObservabl
     run(scheduler);
 }));
 
-export { FlowableLikeTests };
+export { FlowableLikeTests as default };

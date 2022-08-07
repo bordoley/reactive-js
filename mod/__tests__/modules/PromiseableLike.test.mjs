@@ -7,7 +7,7 @@ import { createHostScheduler } from '../../scheduling.mjs';
 import '../../util/DisposableLike.mjs';
 import { dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
 
-const PromiseableLikeTests = createDescribe("PromiseableLike", createDescribe("toObservable", testAsync("when the promise resolves", async () => {
+var PromiseableLikeTests = createDescribe("PromiseableLike", createDescribe("toObservable", testAsync("when the promise resolves", async () => {
     const scheduler = createHostScheduler();
     const promise = Promise.resolve(1);
     try {
@@ -29,4 +29,4 @@ const PromiseableLikeTests = createDescribe("PromiseableLike", createDescribe("t
     }
 })));
 
-export { PromiseableLikeTests };
+export { PromiseableLikeTests as default };

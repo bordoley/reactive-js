@@ -28,7 +28,7 @@ import { sourceFrom } from "../../streaming/StreamLike";
 import { stream } from "../../streaming/StreamableLike";
 import { dispose } from "../../util/DisposableLike";
 
-export const nodeTests = describe(
+export default describe(
   "node",
   describe(
     "createWritableIOSink",

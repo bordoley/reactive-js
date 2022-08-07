@@ -18,7 +18,7 @@ import { createVirtualTimeScheduler } from "../../scheduling";
 import { run as runContinuation } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
 
-export const SubjectLikeTests = describe(
+export default describe(
   "SubjectLike",
   test("with replay", () => {
     const scheduler = createVirtualTimeScheduler();

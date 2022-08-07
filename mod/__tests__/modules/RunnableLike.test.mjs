@@ -6,7 +6,7 @@ import { deferRunnableT } from '../../rx.mjs';
 import { bufferT, toReadonlyArrayT, concatT, concatAllT, decodeWithCharsetT, mapT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT, first, last } from '../../rx/RunnableLike.mjs';
 import { bufferTests, concatTests, concatAllTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
 
-const RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
+var RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
     fromArray: toRunnable,
     ...bufferT,
     ...toReadonlyArrayT,
@@ -79,4 +79,4 @@ const RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
     ...toReadonlyArrayT,
 }), createDescribe("first", createTest("when the source has values", pipeLazy([0, 1, 2], toRunnable(), first(), expectEquals(0))), createTest("when the source is empty", pipeLazy([], toRunnable(), first(), expectEquals(none)))), createDescribe("last", createTest("when the source has values", pipeLazy([0, 1, 2], toRunnable(), last(), expectEquals(2))), createTest("when the source is empty", pipeLazy([], toRunnable(), last(), expectEquals(none)))));
 
-export { RunnableLikeTests };
+export { RunnableLikeTests as default };

@@ -13,7 +13,7 @@ import { __memo, __observe, observable } from "../../rx/effects";
 import { createVirtualTimeScheduler } from "../../scheduling";
 import { run } from "../../util/ContinuationLike";
 
-export const effectsTests = describe(
+export default describe(
   "effects",
   test("batch mode", () => {
     const scheduler = createVirtualTimeScheduler();

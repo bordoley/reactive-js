@@ -21,7 +21,7 @@ import {
   zipT,
 } from "../../ix/EnumerableLike";
 
-export const ContainerLikeTests = describe(
+export default describe(
   "ContainerLike",
   describe(
     "concatMap",

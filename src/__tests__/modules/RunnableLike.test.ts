@@ -44,7 +44,7 @@ import {
   throwIfEmptyTests,
 } from "../operators";
 
-export const RunnableLikeTests = describe(
+export default describe(
   "RunnableLike",
   bufferTests({
     fromArray: toRunnable,

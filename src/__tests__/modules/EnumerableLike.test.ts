@@ -38,7 +38,7 @@ import {
   zipTests,
 } from "../operators";
 
-export const EnumerableLikeTests = describe(
+export default describe(
   "EnumerableLike",
   bufferTests({
     fromArray: toEnumerable,

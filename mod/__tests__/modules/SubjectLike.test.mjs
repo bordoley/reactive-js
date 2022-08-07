@@ -13,7 +13,7 @@ import '../../util/DisposableLike.mjs';
 import { dispose } from '../../__internal__/util/DisposableLikeInternal.mjs';
 import { forEach as forEach$1, subscribe } from '../../__internal__/rx/ObservableLikeInternal.mjs';
 
-const SubjectLikeTests = createDescribe("SubjectLike", createTest("with replay", () => {
+var SubjectLikeTests = createDescribe("SubjectLike", createTest("with replay", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject({ replay: 2 });
     pipe([1, 2, 3, 4], toRunnable(), forEach(publishTo(subject)), run());
@@ -38,4 +38,4 @@ const SubjectLikeTests = createDescribe("SubjectLike", createTest("with replay",
     pipe(subject, getObserverCount, expectEquals(0));
 }));
 
-export { SubjectLikeTests };
+export { SubjectLikeTests as default };

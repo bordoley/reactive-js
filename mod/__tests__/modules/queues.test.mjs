@@ -21,7 +21,7 @@ const makeShuffledArray = (n) => {
     }
     return result;
 };
-const queueTests = createDescribe("priority queue", createTest("push", () => {
+var queueTests = createDescribe("priority queue", createTest("push", () => {
     const queue = createPriorityQueue(compare);
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray.length; i++) {
@@ -34,4 +34,4 @@ const queueTests = createDescribe("priority queue", createTest("push", () => {
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
 }));
 
-export { queueTests };
+export { queueTests as default };

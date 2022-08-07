@@ -6,7 +6,7 @@ import { createVirtualTimeScheduler } from "../../scheduling";
 import { toObservable } from "../../streaming/FlowableLike";
 import { run } from "../../util/ContinuationLike";
 
-export const FlowableLikeTests = describe(
+export default describe(
   "FlowableLike",
   test("toObservable", () => {
     const scheduler = createVirtualTimeScheduler();

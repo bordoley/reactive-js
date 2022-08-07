@@ -3,7 +3,7 @@ import { toObservable } from "../../containers/IterableLike";
 import { pipeLazy } from "../../functions";
 import { toReadonlyArray } from "../../rx/ObservableLike";
 
-export const IterableLikeTests = describe(
+export default describe(
   "IterableLike",
   describe(
     "toObservable",
