@@ -6,6 +6,7 @@ import {
   expectPromiseToThrow,
   expectToHaveBeenCalledTimes,
   expectToThrow,
+  expectToThrowError,
   expectTrue,
   mockFn,
   test,
@@ -18,10 +19,12 @@ import {
   identity,
   increment,
   incrementBy,
+  newInstance,
   pipe,
   pipeLazy,
   raise,
   returns,
+  sum,
 } from "../../functions";
 import { toReadonlyArray as enumerableToReadonlyArray } from "../../ix/EnumerableLike";
 import {
@@ -44,6 +47,7 @@ import {
   toFlowable,
   toPromise,
   toReadonlyArray,
+  withLatestFrom,
   zip,
   zipLatest,
 } from "../../rx/ObservableLike";
@@ -377,6 +381,58 @@ const toPromiseTests = describe(
   }),
 );
 
+const withLatestFromTest = describe(
+  "withLatestFrom",
+  test(
+    "when source and latest are interlaced",
+    pipeLazy(
+      [0, 1, 2, 3],
+      toObservable({ delay: 1 }),
+      withLatestFrom(pipe([0, 1, 2, 3], toObservable({ delay: 2 })), (a, b) => [
+        a,
+        b,
+      ]),
+      toReadonlyArray(),
+      expectArrayEquals(
+        [
+          [0, 0],
+          [1, 0],
+          [2, 1],
+          [3, 1],
+        ],
+        arrayEquality(),
+      ),
+    ),
+  ),
+  test(
+    "when latest produces no values",
+    pipeLazy(
+      [0],
+      toObservable({ delay: 1 }),
+      withLatestFrom(emptyObservable(), sum),
+      toReadonlyArray(),
+      expectArrayEquals([] as number[]),
+    ),
+  ),
+  test("when latest throws", () => {
+    const error = newInstance(Error);
+
+    pipe(
+      pipeLazy(
+        [0],
+        toObservable({ delay: 1 }),
+        withLatestFrom(
+          throws({ fromArray: toObservable, ...mapT })(returns(error)),
+          sum,
+        ),
+        toReadonlyArray(),
+        expectArrayEquals([] as number[]),
+      ),
+      expectToThrowError(error),
+    );
+  }),
+);
+
 const zipTests = describe(
   "zip",
   ...zipOperatorTests({
@@ -537,6 +593,7 @@ export default describe(
   toEnumerableTests,
   toFlowableTests,
   toPromiseTests,
+  withLatestFromTest,
   zipTests,
   zipLatestTests,
 );

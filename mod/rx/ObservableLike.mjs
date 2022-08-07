@@ -5,14 +5,14 @@ import { liftEnumerableObservable, liftObservable, allAreEnumerable, allAreRunna
 import { createOnSink } from '../__internal__/rx/ReactiveContainerLikeInternal.mjs';
 import { observerMixin, createDelegatingObserver, createDecodeWithCharsetObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createReduceObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
 import { isInContinuation } from '../__internal__/schedulingInternal.mjs';
-import { disposableMixin, createDisposableRef } from '../__internal__/util/DisposableLikeMixins.mjs';
+import { disposableMixin, createDisposableRef, delegatingDisposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
 import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
 import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
 import { createEnumeratorSink } from '../__internal__/util/SinkLikeMixin.mjs';
 import { keepType } from '../containers/ContainerLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, isEmpty, none, getLength, max, returns, isNone, isSome, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
+import { pipe, isEmpty, none, getLength, max, returns, isNone, isSome, newInstance, partial, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { createEnumerable, emptyEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$2 } from '../ix/EnumerableLike.mjs';
 import { neverObservable, createEnumerableObservable, createRunnableObservable, createObservable, ObservableLike_isEnumerable, ObservableLike_isRunnable, emptyObservable } from '../rx.mjs';
@@ -306,10 +306,13 @@ const takeLast =
 /*@__PURE__*/ pipe(createTakeLastObserver(toObservable()), createTakeLastOperator(liftEnumerableObservableT));
 const takeLastT = { takeLast };
 const takeUntil = (notifier) => {
+    const lift = notifier[ObservableLike_isEnumerable]
+        ? liftEnumerableObservable
+        : notifier[ObservableLike_isRunnable]
+            ? liftRunnableObservable
+            : liftObservable;
     const operator = (delegate) => pipe(createDelegatingObserver(delegate), bindTo(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))));
-    return notifier[ObservableLike_isRunnable]
-        ? liftRunnableObservable(operator)
-        : liftObservable(operator);
+    return lift(operator);
 };
 const takeWhile = 
 /*@__PURE__*/
@@ -449,6 +452,46 @@ const toReadonlyArray = (options = {}) => observable => {
 const toReadonlyArrayT = {
     toReadonlyArray,
 };
+const withLatestFrom = /*@__PURE__*/ (() => {
+    const createWithLatestObserver = (() => {
+        const typedObserverMixin = observerMixin();
+        return createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedObserverMixin), function WithLatestFromObserver(delegate, other, selector) {
+            init(delegatingDisposableMixin, this, delegate);
+            init(typedObserverMixin, this, getScheduler(delegate));
+            this.delegate = delegate;
+            this.selector = selector;
+            pipe(other, forEach(next => {
+                this.hasLatest = true;
+                this.otherLatest = next;
+            }), subscribe(getScheduler(delegate)), addTo(this), onComplete(() => {
+                if (!this.hasLatest) {
+                    pipe(this, dispose());
+                }
+            }));
+            return this;
+        }, {
+            delegate: none,
+            hasLatest: false,
+            otherLatest: none,
+            selector: none,
+        }, {
+            [SinkLike_notify](next) {
+                if (!isDisposed(this) && this.hasLatest) {
+                    const result = this.selector(next, this.otherLatest);
+                    pipe(this.delegate, notify(result));
+                }
+            },
+        }));
+    })();
+    return (other, selector) => {
+        const lift = other[ObservableLike_isEnumerable]
+            ? liftEnumerableObservable
+            : other[ObservableLike_isRunnable]
+                ? liftRunnableObservable
+                : liftObservable;
+        return pipe(createWithLatestObserver, partial(other, selector), lift);
+    };
+})();
 const zip = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
     const shouldEmit = compose(map$1((x) => hasCurrent(x) || move(x)), every(isTrue));
@@ -523,4 +566,4 @@ const zipLatestT = {
     zip: zipLatest,
 };
 
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT };

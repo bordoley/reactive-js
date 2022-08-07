@@ -48,6 +48,7 @@ import { isInContinuation } from "../__internal__/schedulingInternal";
 import {
   DisposableRefLike,
   createDisposableRef,
+  delegatingDisposableMixin,
   disposableMixin,
 } from "../__internal__/util/DisposableLikeMixins";
 import {
@@ -100,6 +101,7 @@ import {
 import {
   Factory,
   Function1,
+  Function2,
   Option,
   compose,
   getLength,
@@ -111,6 +113,7 @@ import {
   max,
   newInstance,
   none,
+  partial,
   pipe,
   returns,
 } from "../functions";
@@ -742,16 +745,19 @@ export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 export const takeUntil = <T>(
   notifier: ObservableLike,
 ): Function1<ObservableLike<T>, ObservableLike<T>> => {
+  const lift = notifier[ObservableLike_isEnumerable]
+    ? liftEnumerableObservable
+    : notifier[ObservableLike_isRunnable]
+    ? liftRunnableObservable
+    : liftObservable;
+
   const operator = (delegate: ObserverLike<T>) =>
     pipe(
       createDelegatingObserver(delegate),
       bindTo(delegate),
       bindTo(pipe(notifier, takeFirst<T>(), subscribe(getScheduler(delegate)))),
     );
-
-  return notifier[ObservableLike_isRunnable]
-    ? liftRunnableObservable(operator)
-    : liftObservable(operator);
+  return lift(operator);
 };
 
 export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
@@ -1013,6 +1019,93 @@ export const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"]
 export const toReadonlyArrayT: ToReadonlyArray<ObservableLike> = {
   toReadonlyArray,
 };
+
+export const withLatestFrom: <TA, TB, T>(
+  other: ObservableLike<TB>,
+  selector: Function2<TA, TB, T>,
+) => ContainerOperator<ObservableLike, TA, T> = /*@__PURE__*/ (() => {
+  const createWithLatestObserver: <TA, TB, T>(
+    delegate: ObserverLike<T>,
+    other: ObservableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ) => ObserverLike<TA> = (<TA, TB, T>() => {
+    const typedObserverMixin = observerMixin<TA>();
+
+    type TProperties = PropertyTypeOf<
+      [typeof disposableMixin, typeof typedObserverMixin]
+    > & {
+      delegate: ObserverLike<T>;
+      hasLatest: boolean;
+      otherLatest: Option<TB>;
+      selector: Function2<TA, TB, T>;
+    };
+
+    return createInstanceFactory(
+      clazz(
+        __extends(delegatingDisposableMixin, typedObserverMixin),
+        function WithLatestFromObserver(
+          this: TProperties & ObserverLike<TA>,
+          delegate: ObserverLike<T>,
+          other: ObservableLike<TB>,
+          selector: Function2<TA, TB, T>,
+        ): ObserverLike<TA> {
+          init(delegatingDisposableMixin, this, delegate);
+          init(typedObserverMixin, this, getScheduler(delegate));
+
+          this.delegate = delegate;
+          this.selector = selector;
+
+          pipe(
+            other,
+            forEach(next => {
+              this.hasLatest = true;
+              this.otherLatest = next;
+            }),
+            subscribe(getScheduler(delegate)),
+            addTo(this),
+            onComplete(() => {
+              if (!this.hasLatest) {
+                pipe(this, dispose());
+              }
+            }),
+          );
+
+          return this;
+        },
+        {
+          delegate: none,
+          hasLatest: false,
+          otherLatest: none,
+          selector: none,
+        },
+        {
+          [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
+            if (!isDisposed(this) && this.hasLatest) {
+              const result = this.selector(next, this.otherLatest as TB);
+              pipe(this.delegate, notify(result));
+            }
+          },
+        },
+      ),
+    );
+  })();
+
+  return <TA, TB, T>(
+    other: ObservableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ) => {
+    const lift = other[ObservableLike_isEnumerable]
+      ? liftEnumerableObservable
+      : other[ObservableLike_isRunnable]
+      ? liftRunnableObservable
+      : liftObservable;
+    return pipe(
+      createWithLatestObserver,
+      partial(other, selector),
+      lift,
+    ) as ContainerOperator<ObservableLike, TA, T>;
+  };
+})();
 
 export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   const typedObserverMixin = observerMixin();

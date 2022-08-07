@@ -1,4 +1,4 @@
-import { Function1, Equality, SideEffect1, Factory, Reducer } from "../functions.mjs";
+import { Function1, Equality, SideEffect1, Factory, Reducer, Function2 } from "../functions.mjs";
 import { ContainerOperator, Buffer, Zip, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, ForEach, ForkZip, ForkConcat, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise, ToReadonlyArray } from "../containers.mjs";
 import { ToEnumerable } from "../ix.mjs";
 import { ObservableLike, MulticastObservableLike } from "../rx.mjs";
@@ -116,6 +116,7 @@ declare const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"];
 declare const toPromiseT: ToPromise<ObservableLike, SchedulerLike>;
 declare const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<ObservableLike>;
+declare const withLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike, TA, T>;
 declare const zip: Zip<ObservableLike>["zip"];
 declare const zipT: Zip<ObservableLike>;
 /**
@@ -124,4 +125,4 @@ declare const zipT: Zip<ObservableLike>;
  */
 declare const zipLatest: Zip<ObservableLike>["zip"];
 declare const zipLatestT: Zip<ObservableLike>;
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT };

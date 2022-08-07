@@ -14,7 +14,7 @@ const ReactiveContainerLike_sinkInto = Symbol("ReactiveContainerLike_sinkInto");
 // @ignore
 const ObservableLike_isEnumerable = Symbol("ObservableLike_isEnumerable");
 // @ignore
-const ObservableLike_isRunnable = Symbol("ObservableLike_isEnumerable");
+const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 /** @ignore */
 const MulticastObservableLike_observerCount = Symbol("MulticastObservableLike_observerCount");
 /** @ignore */
