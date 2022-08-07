@@ -1,7 +1,7 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { createDecodeWithCharsetOperator, createKeepOperator, createMapOperator, createReduceOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
 import { MAX_SAFE_INTEGER } from '../__internal__/env.mjs';
-import { liftEnumerableObservable, liftObservable, getMinObservableType, liftEnumerableObservableT, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, merge as merge$1, mergeT as mergeT$1, multicast as multicast$1, getObservableType, scan as scan$1, subscribe as subscribe$1, liftRunnableObservable } from '../__internal__/rx/ObservableLikeInternal.mjs';
+import { liftEnumerableObservable, liftObservable, allAreEnumerable, allAreRunnable, liftEnumerableObservableT, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, merge as merge$1, mergeT as mergeT$1, createMergeAll, multicast as multicast$1, scan as scan$1, createSwitchAll, subscribe as subscribe$1, liftRunnableObservable } from '../__internal__/rx/ObservableLikeInternal.mjs';
 import { createOnSink } from '../__internal__/rx/ReactiveContainerLikeInternal.mjs';
 import { observerMixin, createDelegatingObserver, createDecodeWithCharsetObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createReduceObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver } from '../__internal__/scheduling/ObserverLikeMixin.mjs';
 import { isInContinuation } from '../__internal__/schedulingInternal.mjs';
@@ -12,10 +12,10 @@ import { createInstanceFactory, clazz, __extends, init } from '../__internal__/u
 import { createEnumeratorSink } from '../__internal__/util/SinkLikeMixin.mjs';
 import { keepType } from '../containers/ContainerLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, isEmpty, none, getLength, max, isSome, partial, returns, isNone, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
+import { pipe, isEmpty, none, getLength, max, returns, isNone, isSome, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { createEnumerable, emptyEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$2 } from '../ix/EnumerableLike.mjs';
-import { neverObservable, createObservable, enumerableObservableType, emptyObservable } from '../rx.mjs';
+import { neverObservable, createObservable, ObservableLike_isEnumerable, ObservableLike_isRunnable, emptyObservable } from '../rx.mjs';
 import { ObserverLike_dispatcher, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, createVirtualTimeScheduler } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -26,7 +26,7 @@ import { run } from '../util/ContinuationLike.mjs';
 import { onComplete, dispose, isDisposed, addTo, onDisposed, bindTo, add, toObservable as toObservable$1, getException } from '../util/DisposableLike.mjs';
 import { hasCurrent, move, getCurrent } from '../util/EnumeratorLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
-import { notify, sourceFrom, notifySink } from '../util/SinkLike.mjs';
+import { notify, sourceFrom } from '../util/SinkLike.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
 import { sinkInto } from './ReactiveContainerLike.mjs';
 
@@ -123,8 +123,13 @@ const concat = /*@__PURE__*/ (() => {
                 pipe(observer, dispose());
             }
         };
-        const type = getMinObservableType(observables);
-        return createObservable(onSink, { type });
+        const isEnumerable = allAreEnumerable(observables);
+        const isRunnable = allAreRunnable(observables);
+        return isEnumerable
+            ? createObservable(onSink, { isEnumerable: true })
+            : isRunnable
+                ? createObservable(onSink, { isRunnable: true })
+                : createObservable(onSink);
     };
 })();
 const concatT = {
@@ -228,76 +233,28 @@ const latest = /*@__PURE__*/ (() => {
                 add(ctx, innerObserver);
             }
         };
-        const type = getMinObservableType(observables);
-        return createObservable(onSink, { type });
+        const isEnumerable = allAreEnumerable(observables);
+        const isRunnable = allAreRunnable(observables);
+        return isEnumerable
+            ? createObservable(onSink, { isEnumerable: true })
+            : isRunnable
+                ? createObservable(onSink, { isRunnable: true })
+                : createObservable(onSink);
     };
 })();
 const map = /*@__PURE__*/ (() => pipe(createMapObserver, createMapOperator(liftEnumerableObservableT)))();
 const mapT = { map };
 const merge = merge$1;
 const mergeT = mergeT$1;
-const mergeAll = /*@__PURE__*/ (() => {
-    const typedObserverMixin = observerMixin();
-    const subscribeNext = (observer) => {
-        if (observer.activeCount < observer.maxConcurrency) {
-            const nextObs = observer.queue.shift();
-            if (isSome(nextObs)) {
-                observer.activeCount++;
-                pipe(nextObs, forEach(notifySink(observer.delegate)), subscribe(getScheduler(observer)), addTo(observer.delegate), onComplete(observer.onDispose));
-            }
-            else if (isDisposed(observer)) {
-                pipe(observer.delegate, dispose());
-            }
-        }
-    };
-    const createMergeAllObserver = createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function Observer(delegate, maxBufferSize, maxConcurrency) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, getScheduler(delegate));
-        this.delegate = delegate;
-        this.maxBufferSize = maxBufferSize;
-        this.maxConcurrency = maxConcurrency;
-        this.activeCount = 0;
-        this.onDispose = () => {
-            this.activeCount--;
-            subscribeNext(this);
-        };
-        this.queue = [];
-        return pipe(this, addTo(delegate), onComplete(() => {
-            if (isDisposed(delegate)) {
-                this.queue.length = 0;
-            }
-            else if (getLength(this.queue) + this.activeCount === 0) {
-                pipe(this.delegate, dispose());
-            }
-        }));
-    }, {
-        activeCount: 0,
-        delegate: none,
-        maxBufferSize: 0,
-        maxConcurrency: 0,
-        onDispose: none,
-        queue: none,
-    }, {
-        [SinkLike_notify](next) {
-            const { queue } = this;
-            queue.push(next);
-            // Drop old events if the maxBufferSize has been exceeded
-            if (getLength(queue) + this.activeCount > this.maxBufferSize) {
-                queue.shift();
-            }
-            subscribeNext(this);
-        },
-    }));
-    return (options = {}) => {
-        const { maxBufferSize = MAX_SAFE_INTEGER, maxConcurrency = MAX_SAFE_INTEGER, } = options;
-        return pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency), liftObservable);
-    };
-})();
+const mergeAll = createMergeAll(liftObservable);
 const mergeAllT = { concatAll: mergeAll };
 const multicast = multicast$1;
 const onSubscribe = (f) => (obs) => {
-    const type = getObservableType(obs);
-    return createOnSink(obs => createObservable(obs, { type }), obs, f);
+    return createOnSink(onSink => obs[ObservableLike_isEnumerable]
+        ? createObservable(onSink, { isEnumerable: true })
+        : obs[ObservableLike_isRunnable]
+            ? createObservable(onSink, { isRunnable: true })
+            : createObservable(onSink), obs, f);
 };
 const pairwise = 
 /*@__PURE__*/ (() => pipe(liftEnumerableObservable(createPairwiseObserver), returns))();
@@ -334,34 +291,7 @@ const skipFirst =
 /*@__PURE__*/
 pipe(createSkipFirstObserver, createSkipFirstOperator(liftEnumerableObservableT));
 const skipFirstT = { skipFirst };
-const switchAll = 
-/*@__PURE__*/ (() => {
-    const typedObserverMixin = observerMixin();
-    function onDispose() {
-        if (isDisposed(this.currentRef[MutableRefLike_current])) {
-            pipe(this.delegate, dispose());
-        }
-    }
-    return pipe(createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function SwitchAllObserver(delegate) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, getScheduler(delegate));
-        this.delegate = delegate;
-        this.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
-        pipe(this, addTo(delegate), onComplete(onDispose));
-        return this;
-    }, {
-        currentRef: none,
-        delegate: none,
-    }, {
-        [SinkLike_notify](next) {
-            this.currentRef[MutableRefLike_current] = pipe(next, forEach(notifySink(this.delegate)), subscribe(getScheduler(this)), onComplete(() => {
-                if (isDisposed(this)) {
-                    pipe(this.delegate, dispose());
-                }
-            }));
-        },
-    })), liftObservable, returns);
-})();
+const switchAll = createSwitchAll(liftObservable);
 const switchAllT = {
     concatAll: switchAll,
 };
@@ -377,9 +307,9 @@ const takeLast =
 const takeLastT = { takeLast };
 const takeUntil = (notifier) => {
     const operator = (delegate) => pipe(createDelegatingObserver(delegate), bindTo(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))));
-    return getObservableType(notifier) === 0
-        ? liftObservable(operator)
-        : liftRunnableObservable(operator);
+    return notifier[ObservableLike_isRunnable]
+        ? liftRunnableObservable(operator)
+        : liftObservable(operator);
 };
 const takeWhile = 
 /*@__PURE__*/
@@ -444,7 +374,7 @@ const toEnumerable =
             this.enumerator[EnumeratorLike_current] = next;
         },
     }));
-    return () => (obs) => getObservableType(obs) === enumerableObservableType
+    return () => (obs) => obs[ObservableLike_isEnumerable]
         ? createEnumerable(() => {
             const scheduler = createEnumeratorScheduler();
             pipe(createEnumeratorObserver(scheduler), addTo(scheduler), sourceFrom(obs));
@@ -453,7 +383,7 @@ const toEnumerable =
         : emptyEnumerable();
 })();
 const toEnumerableT = { toEnumerable };
-const toFlowable = () => observable => getObservableType(observable) > 0
+const toFlowable = () => observable => observable[ObservableLike_isRunnable]
     ? createLiftedFlowable((modeObs) => createObservable(observer => {
         const pausableScheduler = pipe(observer, getScheduler, toPausableScheduler);
         pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), takeUntil(pipe(pausableScheduler, toObservable$1())))), add(pipe(modeObs, forEach(mode => {
@@ -498,7 +428,7 @@ const toPromiseT = {
     toPromise,
 };
 const toReadonlyArray = (options = {}) => observable => {
-    if (getObservableType(observable) > 0) {
+    if (observable[ObservableLike_isRunnable]) {
         const { schedulerFactory = createVirtualTimeScheduler } = options;
         const scheduler = schedulerFactory();
         const result = [];
@@ -559,7 +489,7 @@ const zip = /*@__PURE__*/ (() => {
     const onSink = (observables) => (observer) => {
         const enumerators = [];
         for (const next of observables) {
-            if (getObservableType(next) === enumerableObservableType) {
+            if (next[ObservableLike_isEnumerable]) {
                 const enumerator = pipe(next, toEnumerable(), getOrRaise(), enumerate(), addTo(observer));
                 move(enumerator);
                 enumerators.push(enumerator);
@@ -572,10 +502,13 @@ const zip = /*@__PURE__*/ (() => {
         }
     };
     return (...observables) => {
-        const type = getMinObservableType(observables);
-        return type === enumerableObservableType
+        const isEnumerable = allAreEnumerable(observables);
+        const isRunnable = allAreRunnable(observables);
+        return isEnumerable
             ? pipe(observables, map$1(toEnumerable()), keepType(keepT$1, isSome), enumerables => zip$1(...enumerables), toObservable$2())
-            : createObservable(onSink(observables), { type });
+            : isRunnable
+                ? createObservable(onSink(observables), { isRunnable: true })
+                : createObservable(onSink(observables));
     };
 })();
 const zipT = {

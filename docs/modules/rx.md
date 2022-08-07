@@ -6,40 +6,36 @@
 
 ### Interfaces
 
+- [EnumerableObservableLike](../interfaces/rx.EnumerableObservableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [ReactiveContainerLike](../interfaces/rx.ReactiveContainerLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
+- [RunnableObservableLike](../interfaces/rx.RunnableObservableLike.md)
 - [SubjectLike](../interfaces/rx.SubjectLike.md)
 
 ### Type Aliases
 
-- [ObservableType](rx.md#observabletype)
 - [ToObservable](rx.md#toobservable)
 - [ToRunnable](rx.md#torunnable)
 
 ### Variables
 
-- [createObservableUsingT](rx.md#createobservableusingt)
-- [createRunnableUsingT](rx.md#createrunnableusingt)
+- [ObservableLike\_isEnumerable](rx.md#observablelike_isenumerable)
+- [ObservableLike\_isRunnable](rx.md#observablelike_isrunnable)
 - [deferObservableT](rx.md#deferobservablet)
 - [deferRunnableT](rx.md#deferrunnablet)
 - [emptyObservableT](rx.md#emptyobservablet)
 - [emptyRunnableT](rx.md#emptyrunnablet)
-- [enumerableObservableType](rx.md#enumerableobservabletype)
 - [generateObservableT](rx.md#generateobservablet)
 - [generateRunnableT](rx.md#generaterunnablet)
 - [neverObservableT](rx.md#neverobservablet)
 - [neverRunnableT](rx.md#neverrunnablet)
-- [observableType](rx.md#observabletype-1)
-- [runnableObservableType](rx.md#runnableobservabletype)
 
 ### Functions
 
 - [createObservable](rx.md#createobservable)
-- [createObservableUsing](rx.md#createobservableusing)
 - [createRunnable](rx.md#createrunnable)
-- [createRunnableUsing](rx.md#createrunnableusing)
 - [createSubject](rx.md#createsubject)
 - [deferObservable](rx.md#deferobservable)
 - [deferRunnable](rx.md#deferrunnable)
@@ -51,12 +47,6 @@
 - [neverRunnable](rx.md#neverrunnable)
 
 ## Type Aliases
-
-### ObservableType
-
-Ƭ **ObservableType**: ``0`` \| ``1`` \| ``2``
-
-___
 
 ### ToObservable
 
@@ -84,15 +74,15 @@ ___
 
 ## Variables
 
-### createObservableUsingT
+### ObservableLike\_isEnumerable
 
-• `Const` **createObservableUsingT**: [`Using`](containers.md#using)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+• `Const` **ObservableLike\_isEnumerable**: unique `symbol`
 
 ___
 
-### createRunnableUsingT
+### ObservableLike\_isRunnable
 
-• `Const` **createRunnableUsingT**: [`Using`](containers.md#using)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+• `Const` **ObservableLike\_isRunnable**: unique `symbol`
 
 ___
 
@@ -120,12 +110,6 @@ ___
 
 ___
 
-### enumerableObservableType
-
-• `Const` **enumerableObservableType**: [`ObservableType`](rx.md#observabletype)
-
-___
-
 ### generateObservableT
 
 • `Const` **generateObservableT**: [`Generate`](containers.md#generate)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), { `delay`: `number` ; `delayStart`: `boolean`  }\>
@@ -148,23 +132,11 @@ ___
 
 • `Const` **neverRunnableT**: [`Never`](containers.md#never)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
-___
-
-### observableType
-
-• `Const` **observableType**: [`ObservableType`](rx.md#observabletype)
-
-___
-
-### runnableObservableType
-
-• `Const` **runnableObservableType**: [`ObservableType`](rx.md#observabletype)
-
 ## Functions
 
 ### createObservable
 
-▸ **createObservable**<`T`\>(`f`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **createObservable**<`T`\>(`f`, `options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -177,142 +149,46 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
-| `options?` | `Object` |
-| `options.type?` | [`ObservableType`](rx.md#observabletype) |
+| `options` | `Object` |
+| `options.isRunnable` | ``true`` |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
-___
-
-### createObservableUsing
-
-▸ **createObservableUsing**<`TResource`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **createObservable**<`T`\>(`f`, `options`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
-| `containerFactory` | [`Function1`](functions.md#function1)<`TResource`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+| `options` | `Object` |
+| `options.isEnumerable` | ``true`` |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
-▸ **createObservableUsing**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **createObservable**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\> |
-| `containerFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-▸ **createObservableUsing**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\> |
-| `containerFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-▸ **createObservableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource4` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
-| `containerFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-▸ **createObservableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource4` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource5` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
-| `containerFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-▸ **createObservableUsing**<`TResource`, `T`\>(`resourceFactory`, `runnableFactory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\> |
-| `runnableFactory` | (...`resources`: readonly `TResource`[]) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -335,140 +211,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `run` | [`SideEffect1`](functions.md#sideeffect1)<[`SinkLike`](../interfaces/util.SinkLike.md)<`T`\>\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-___
-
-### createRunnableUsing
-
-▸ **createRunnableUsing**<`TResource`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
-| `containerFactory` | [`Function1`](functions.md#function1)<`TResource`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-▸ **createRunnableUsing**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\> |
-| `containerFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-▸ **createRunnableUsing**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\> |
-| `containerFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-▸ **createRunnableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource4` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
-| `containerFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-▸ **createRunnableUsing**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `containerFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource4` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `TResource5` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
-| `containerFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-▸ **createRunnableUsing**<`TResource`, `T`\>(`resourceFactory`, `runnableFactory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\> |
-| `runnableFactory` | (...`resources`: readonly `TResource`[]) => [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
 
 #### Returns
 
@@ -501,7 +243,7 @@ ___
 
 ### deferObservable
 
-▸ **deferObservable**<`T`\>(`factory`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **deferObservable**<`T`\>(`factory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -513,14 +255,151 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> \| [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\>\> |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.type?` | [`ObservableType`](rx.md#observabletype) |
+| `factory` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
 
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **deferObservable**<`T`\>(`factory`, `options`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **deferObservable**<`T`\>(`factory`, `options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+| `options` | `Object` |
+| `options.delay?` | `number` |
+| `options.isRunnable` | ``true`` |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+▸ **deferObservable**<`T`\>(`factory`, `options`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+| `options` | `Object` |
+| `options.isEnumerable` | ``true`` |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+▸ **deferObservable**<`T`\>(`factory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **deferObservable**<`T`\>(`factory`, `options`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **deferObservable**<`T`\>(`factory`, `options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>\> |
+| `options` | `Object` |
+| `options.delay?` | `number` |
+| `options.isRunnable` | ``true`` |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+▸ **deferObservable**<`T`\>(`factory`, `options`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>\> |
+| `options` | `Object` |
+| `options.isEnumerable` | ``true`` |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 ___
 
@@ -549,7 +428,19 @@ ___
 
 ### emptyObservable
 
-▸ **emptyObservable**<`T`\>(`options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **emptyObservable**<`T`\>(): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+▸ **emptyObservable**<`T`\>(`options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -561,11 +452,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `delay`: `number`  }\> |
+| `options` | `Object` |
+| `options.delay` | `number` |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 ___
 
@@ -593,7 +485,7 @@ ___
 
 ### generateObservable
 
-▸ **generateObservable**<`T`\>(`generator`, `initialValue`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **generateObservable**<`T`\>(`generator`, `initialValue`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 Generates an `ObservableLike` sequence from a generator function
 that is applied to an accumulator value with a specified `delay`
@@ -611,11 +503,36 @@ between emitted items.
 | :------ | :------ | :------ |
 | `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
-| `options?` | `Partial`<{ `delay`: `number` ; `delayStart`: `boolean`  }\> | - |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+▸ **generateObservable**<`T`\>(`generator`, `initialValue`, `options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+Generates an `ObservableLike` sequence from a generator function
+that is applied to an accumulator value with a specified `delay`
+between emitted items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+| `options` | `Object` | - |
+| `options.delay` | `number` | - |
+| `options.delayStart?` | `boolean` | - |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 ___
 
@@ -645,7 +562,7 @@ ___
 
 ### neverObservable
 
-▸ **neverObservable**<`T`\>(): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **neverObservable**<`T`\>(): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -655,7 +572,7 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 ___
 

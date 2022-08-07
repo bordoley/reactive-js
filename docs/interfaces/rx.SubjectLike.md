@@ -27,7 +27,8 @@
 - [[DisposableLike\_isDisposed]](rx.SubjectLike.md#[disposablelike_isdisposed])
 - [[MulticastObservableLike\_observerCount]](rx.SubjectLike.md#[multicastobservablelike_observercount])
 - [[MulticastObservableLike\_replay]](rx.SubjectLike.md#[multicastobservablelike_replay])
-- [[ObservableLike\_observableType]](rx.SubjectLike.md#[observablelike_observabletype])
+- [[ObservableLike\_isEnumerable]](rx.SubjectLike.md#[observablelike_isenumerable])
+- [[ObservableLike\_isRunnable]](rx.SubjectLike.md#[observablelike_isrunnable])
 
 ### Methods
 
@@ -113,13 +114,23 @@ ___
 
 ___
 
-### [ObservableLike\_observableType]
+### [ObservableLike\_isEnumerable]
 
-• `Readonly` **[ObservableLike\_observableType]**: [`ObservableType`](../modules/rx.md#observabletype)
+• `Readonly` **[ObservableLike\_isEnumerable]**: `boolean`
 
 #### Inherited from
 
-[MulticastObservableLike](rx.MulticastObservableLike.md).[[ObservableLike_observableType]](rx.MulticastObservableLike.md#[observablelike_observabletype])
+[MulticastObservableLike](rx.MulticastObservableLike.md).[[ObservableLike_isEnumerable]](rx.MulticastObservableLike.md#[observablelike_isenumerable])
+
+___
+
+### [ObservableLike\_isRunnable]
+
+• `Readonly` **[ObservableLike\_isRunnable]**: `boolean`
+
+#### Inherited from
+
+[MulticastObservableLike](rx.MulticastObservableLike.md).[[ObservableLike_isRunnable]](rx.MulticastObservableLike.md#[observablelike_isrunnable])
 
 ## Methods
 

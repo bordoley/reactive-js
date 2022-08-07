@@ -26,47 +26,50 @@ import {
 import { toReadonlyArray as enumerableToReadonlyArray } from "../../ix/EnumerableLike";
 import {
   ObservableLike,
+  RunnableObservableLike,
   deferObservable,
   emptyObservable,
-  enumerableObservableType,
   generateObservable,
 } from "../../rx";
 import {
-  bufferT,
   combineLatest,
-  concatT,
-  decodeWithCharsetT,
-  distinctUntilChangedT,
   forEach,
-  forEachT,
-  keepT,
   map,
-  mapT,
   merge,
   onSubscribe,
-  pairwiseT,
-  reduceT,
-  scanT,
   share,
-  skipFirstT,
   subscribe,
-  switchAll,
-  switchAllT,
   takeFirst,
-  takeFirstT,
-  takeLastT,
   takeUntil,
-  takeWhileT,
-  throwIfEmptyT,
   toEnumerable,
   toFlowable,
   toPromise,
   toReadonlyArray,
-  toReadonlyArrayT,
   zip,
   zipLatest,
-  zipT,
 } from "../../rx/ObservableLike";
+import {
+  bufferT,
+  concatT,
+  decodeWithCharsetT,
+  distinctUntilChangedT,
+  exhaust,
+  forEachT,
+  keepT,
+  mapT,
+  pairwiseT,
+  reduceT,
+  scanT,
+  skipFirstT,
+  switchAll,
+  switchAllT,
+  takeFirstT,
+  takeLastT,
+  takeWhileT,
+  throwIfEmptyT,
+  toReadonlyArrayT,
+  zipT,
+} from "../../rx/RunnableObservableLike";
 import {
   createHostScheduler,
   createVirtualTimeScheduler,
@@ -125,10 +128,14 @@ const exhaustTests = describe(
     "when the initial observable never disposes",
     pipeLazy(
       [
-        pipe([1, 2, 3], toObservable({ delay: 10 })),
+        pipe([1, 2, 3], toObservable({ delay: 3 })),
         pipe([4, 5, 6], toObservable()),
+        pipe([7, 8, 9], toObservable({ delay: 2 })),
       ],
-      toObservable(),
+      toObservable({ delay: 5 }),
+      exhaust(),
+      toReadonlyArray(),
+      expectArrayEquals([1, 2, 3, 7, 8, 9]),
     ),
   ),
 );
@@ -226,8 +233,7 @@ const switchAllTests = describe(
       emptyObservable({ delay: 1 }),
       switchAll(),
       toReadonlyArray(),
-      // FIXME
-      //expectArrayEquals([] as unknown[]),
+      expectArrayEquals([] as unknown[]),
     ),
   ),
   test(
@@ -242,8 +248,7 @@ const switchAllTests = describe(
         switchAll(),
         toReadonlyArray(),
       ),
-      // FIXME
-      //expectToThrow,
+      expectToThrow,
       identity,
     ),
   ),
@@ -252,13 +257,12 @@ const switchAllTests = describe(
     pipeLazy(
       [1, 2, 3],
       toObservable({ delay: 1 }),
-      concatMap<ObservableLike, number, number>({ ...switchAllT, ...mapT }, _ =>
-        pipe([1, 2, 3], toObservable({ delay: 0 })),
+      concatMap<RunnableObservableLike, number, number>(
+        { ...switchAllT, ...mapT },
+        _ => pipe([1, 2, 3], toObservable({ delay: 0 })),
       ),
       toReadonlyArray(),
-
-      // FIXME
-      //expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+      expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
     ),
   ),
   test(
@@ -266,13 +270,12 @@ const switchAllTests = describe(
     pipeLazy(
       [1, 2, 3],
       toObservable({ delay: 4 }),
-      concatMap<ObservableLike, number, number>({ ...switchAllT, ...mapT }, _ =>
-        pipe([1, 2, 3], toObservable({ delay: 2 })),
+      concatMap<RunnableObservableLike, number, number>(
+        { ...switchAllT, ...mapT },
+        _ => pipe([1, 2, 3], toObservable({ delay: 2 })),
       ),
       toReadonlyArray(),
-
-      // FIXME
-      //expectArrayEquals([1, 2, 1, 2, 1, 2, 3]),
+      expectArrayEquals([1, 2, 1, 2, 1, 2, 3]),
     ),
   ),
 );
@@ -461,7 +464,8 @@ export default describe(
   }),
   decodeWithCharsetTests({
     fromArray: toObservable,
-    defer: f => deferObservable(f, { type: enumerableObservableType }),
+    defer: <T>(f: () => ObservableLike<T>) =>
+      deferObservable<T>(f, { isRunnable: true }),
     ...decodeWithCharsetT,
     ...mapT,
     ...toReadonlyArrayT,

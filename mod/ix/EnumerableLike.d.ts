@@ -1,6 +1,7 @@
 import { Buffer, ConcatAll, Concat, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
+import { Function1 } from "../functions.mjs";
 import { EnumerableLike, ToEnumerable } from "../ix.mjs";
-import { ToObservable, ToRunnable } from "../rx.mjs";
+import { ToObservable, ToRunnable, EnumerableObservableLike, RunnableObservableLike } from "../rx.mjs";
 import { EnumeratorLike } from "../util.mjs";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
 declare const buffer: Buffer<EnumerableLike>["buffer"];
@@ -35,10 +36,14 @@ declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike>;
 declare const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<EnumerableLike>;
-declare const toObservable: ToObservable<EnumerableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["toObservable"];
+interface EnumerableToObservable {
+    <T>(): Function1<EnumerableLike<T>, EnumerableObservableLike<T>>;
+    <T>(options: {
+        delay: number;
+        delayStart?: boolean;
+    }): Function1<EnumerableLike<T>, RunnableObservableLike<T>>;
+}
+declare const toObservable: EnumerableToObservable;
 declare const toObservableT: ToObservable<EnumerableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;

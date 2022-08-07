@@ -1,25 +1,40 @@
-import { Concat, DistinctUntilChanged, ForEach, Scan } from "../../containers";
-import { map as mapArray } from "../../containers/ReadonlyArrayLike";
+import {
+  Concat,
+  ConcatAll,
+  ContainerOf,
+  DistinctUntilChanged,
+  ForEach,
+  Scan,
+  StatefulContainerStateOf,
+} from "../../containers";
+import { every, map as mapArray } from "../../containers/ReadonlyArrayLike";
 import {
   Function1,
+  SideEffect,
+  compose,
   getLength,
-  min,
+  isSome,
+  isTrue,
   newInstance,
+  none,
+  partial,
   pipe,
   pipeUnsafe,
 } from "../../functions";
 import {
   MulticastObservableLike,
   ObservableLike,
-  ObservableLike_observableType,
-  ObservableType,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   ReactiveContainerLike_sinkInto,
   createObservable,
   createSubject,
 } from "../../rx";
 import { publishTo } from "../../rx/SubjectLike";
 import { ObserverLike, SchedulerLike } from "../../scheduling";
-import { sourceFrom } from "../../util/SinkLike";
+import { getScheduler } from "../../scheduling/ObserverLike";
+import { SinkLike_notify } from "../../util";
+import { notifySink, sourceFrom } from "../../util/SinkLike";
 import {
   Lift,
   TReactive,
@@ -28,12 +43,14 @@ import {
   createScanOperator,
   reactive,
 } from "../containers/StatefulContainerLikeInternal";
+import { MAX_SAFE_INTEGER } from "../env";
 import {
   createDelegatingObserver,
   createDistinctUntilChangedObserver,
   createForEachObserver,
   createObserver,
   createScanObserver,
+  observerMixin,
 } from "../scheduling/ObserverLikeMixin";
 import {
   DisposableLike,
@@ -41,24 +58,41 @@ import {
   addToIgnoringChildErrors,
   bindTo,
   dispose,
+  isDisposed,
   onComplete,
 } from "../util/DisposableLikeInternal";
+import {
+  DisposableRefLike,
+  createDisposableRef,
+  disposableMixin,
+  disposed,
+} from "../util/DisposableLikeMixins";
+import { MutableRefLike_current } from "../util/MutableRefLike";
+import {
+  PropertyTypeOf,
+  __extends,
+  clazz,
+  createInstanceFactory,
+  init,
+} from "../util/Object";
 
-export const getObservableType = (obs: ObservableLike): 0 | 1 | 2 =>
-  obs[ObservableLike_observableType];
+export const allAreEnumerable = compose(
+  mapArray((obs: ObservableLike) => obs[ObservableLike_isEnumerable]),
+  every(isTrue),
+);
 
-export const getMinObservableType = (
-  observables: readonly ObservableLike[],
-): ObservableType =>
-  pipe(observables, mapArray(getObservableType), x =>
-    min(...x),
-  ) as ObservableType;
+export const allAreRunnable = compose(
+  mapArray((obs: ObservableLike) => obs[ObservableLike_isRunnable]),
+  every(isTrue),
+);
 
 const createLift: (
-  observableType: 0 | 1 | 2,
+  isEnumerable: boolean,
+  isRunnable: boolean,
 ) => Lift<ObservableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
-    [ObservableLike_observableType]: ObservableType;
+    readonly [ObservableLike_isEnumerable]: boolean;
+    readonly [ObservableLike_isRunnable]: boolean;
 
     constructor(
       readonly source: ObservableLike<TIn>,
@@ -66,9 +100,11 @@ const createLift: (
         ObserverLike<any>,
         ObserverLike<any>
       >[],
-      observableType: ObservableType,
+      isEnumerable: boolean,
+      isRunnable: boolean,
     ) {
-      this[ObservableLike_observableType] = observableType;
+      this[ObservableLike_isEnumerable] = isEnumerable;
+      this[ObservableLike_isRunnable] = isRunnable;
     }
 
     [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
@@ -76,7 +112,7 @@ const createLift: (
     }
   }
 
-  return (observableType: ObservableType) =>
+  return (isEnumerable, isRunnable) =>
     <TA, TB>(
       operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
     ): Function1<ObservableLike<TA>, ObservableLike<TB>> =>
@@ -89,27 +125,211 @@ const createLift: (
           ? [operator, ...source.operators]
           : [operator];
 
-      const type = min(
-        observableType,
-        getObservableType(source),
-        getObservableType(sourceSource),
-      );
-
       return newInstance(
         LiftedObservable,
         sourceSource,
         allFunctions,
-        type as ObservableType,
+        isEnumerable,
+        isEnumerable || isRunnable,
       );
     };
 })();
 
-export const liftObservable = createLift(0);
-export const liftRunnableObservable = createLift(1);
-export const liftEnumerableObservable = createLift(2);
+export const liftObservable = createLift(false, false);
+export const liftRunnableObservable = createLift(false, true);
+export const liftEnumerableObservable = createLift(true, true);
 export const liftEnumerableObservableT: Lift<ObservableLike, TReactive> = {
   lift: liftEnumerableObservable,
   variance: reactive,
+};
+
+export const createMergeAll = <C extends ObservableLike>(
+  lift: Lift<C, TReactive>["lift"],
+): ConcatAll<C>["concatAll"] => {
+  const createMergeAllObserver: <T>(
+    delegate: StatefulContainerStateOf<C, T>,
+    maxBufferSize: number,
+    maxConcurrency: number,
+  ) => StatefulContainerStateOf<C, ContainerOf<C, T>> = (<T>() => {
+    const typedObserverMixin = observerMixin<T>();
+
+    type TProperties = {
+      activeCount: number;
+      delegate: StatefulContainerStateOf<C, T>;
+      maxBufferSize: number;
+      maxConcurrency: number;
+      onDispose: SideEffect;
+      queue: ContainerOf<C, T>[];
+    } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
+
+    const subscribeNext = <T>(observer: TProperties & ObserverLike<T>) => {
+      if (observer.activeCount < observer.maxConcurrency) {
+        const nextObs = observer.queue.shift();
+
+        if (isSome(nextObs)) {
+          observer.activeCount++;
+
+          pipe(
+            nextObs,
+            forEach(notifySink(observer.delegate)),
+            subscribe(getScheduler(observer)),
+            addTo(observer.delegate),
+            onComplete(observer.onDispose),
+          );
+        } else if (isDisposed(observer)) {
+          pipe(observer.delegate, dispose());
+        }
+      }
+    };
+
+    return createInstanceFactory(
+      clazz(
+        __extends(disposableMixin, typedObserverMixin),
+        function Observer(
+          this: TProperties & StatefulContainerStateOf<C, ContainerOf<C, T>>,
+          delegate: StatefulContainerStateOf<C, T>,
+          maxBufferSize: number,
+          maxConcurrency: number,
+        ): StatefulContainerStateOf<C, ContainerOf<C, T>> {
+          init(disposableMixin, this);
+          init(typedObserverMixin, this, getScheduler(delegate));
+
+          this.delegate = delegate;
+          this.maxBufferSize = maxBufferSize;
+          this.maxConcurrency = maxConcurrency;
+
+          this.activeCount = 0;
+          this.onDispose = () => {
+            this.activeCount--;
+            subscribeNext(this);
+          };
+
+          this.queue = [];
+
+          pipe(
+            this,
+            addTo(delegate),
+            onComplete(() => {
+              if (isDisposed(delegate)) {
+                this.queue.length = 0;
+              } else if (getLength(this.queue) + this.activeCount === 0) {
+                pipe(this.delegate, dispose());
+              }
+            }),
+          );
+
+          return this;
+        },
+        {
+          activeCount: 0,
+          delegate: none,
+          maxBufferSize: 0,
+          maxConcurrency: 0,
+          onDispose: none,
+          queue: none,
+        },
+        {
+          [SinkLike_notify](
+            this: TProperties & StatefulContainerStateOf<C, ContainerOf<C, T>>,
+            next: ContainerOf<C, T>,
+          ) {
+            const { queue } = this;
+
+            queue.push(next);
+
+            // Drop old events if the maxBufferSize has been exceeded
+            if (getLength(queue) + this.activeCount > this.maxBufferSize) {
+              queue.shift();
+            }
+            subscribeNext(this);
+          },
+        },
+      ),
+    );
+  })();
+
+  return (
+    options: {
+      readonly maxBufferSize?: number;
+      readonly maxConcurrency?: number;
+    } = {},
+  ) => {
+    const {
+      maxBufferSize = MAX_SAFE_INTEGER,
+      maxConcurrency = MAX_SAFE_INTEGER,
+    } = options;
+
+    return lift(
+      pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency)),
+    );
+  };
+};
+
+export const createSwitchAll = <C extends ObservableLike>(
+  lift: Lift<C, TReactive>["lift"],
+): ConcatAll<C>["concatAll"] => {
+  const createSwitchAllObserver: <T>() => StatefulContainerStateOf<C, T> = (<
+    T,
+  >() => {
+    const typedObserverMixin = observerMixin<T>();
+
+    type TProperties = {
+      currentRef: DisposableRefLike;
+      delegate: StatefulContainerStateOf<C, T>;
+    } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
+
+    function onDispose(this: TProperties & DisposableLike) {
+      if (isDisposed(this.currentRef[MutableRefLike_current])) {
+        pipe(this.delegate, dispose());
+      }
+    }
+
+    return createInstanceFactory(
+      clazz(
+        __extends(disposableMixin, typedObserverMixin),
+        function SwitchAllObserver(
+          this: TProperties & StatefulContainerStateOf<C, ContainerOf<C, T>>,
+          delegate: StatefulContainerStateOf<C, T>,
+        ): StatefulContainerStateOf<C, ContainerOf<C, T>> {
+          init(disposableMixin, this);
+          init(typedObserverMixin, this, getScheduler(delegate));
+
+          this.delegate = delegate;
+          this.currentRef = pipe(
+            createDisposableRef(disposed),
+            addTo(delegate),
+          );
+
+          pipe(this, addTo(delegate), onComplete(onDispose));
+
+          return this;
+        },
+        {
+          currentRef: none,
+          delegate: none,
+        },
+        {
+          [SinkLike_notify](
+            this: TProperties & ObserverLike<T> & DisposableRefLike,
+            next: ContainerOf<C, T>,
+          ) {
+            this.currentRef[MutableRefLike_current] = pipe(
+              next,
+              forEach(notifySink(this.delegate)),
+              subscribe(getScheduler(this)),
+              onComplete(() => {
+                if (isDisposed(this)) {
+                  pipe(this.delegate, dispose());
+                }
+              }),
+            );
+          },
+        },
+      ),
+    );
+  })() as unknown as <T>() => StatefulContainerStateOf<C, T>;
+
+  return () => lift(createSwitchAllObserver);
 };
 
 export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
@@ -160,8 +380,14 @@ export const mergeImpl = /*@__PURE__*/ (() => {
       }
     };
 
-    const type = getMinObservableType(observables);
-    return createObservable(onSink, { type });
+    const isEnumerable = allAreEnumerable(observables);
+    const isRunnable = allAreRunnable(observables);
+
+    return isEnumerable
+      ? createObservable(onSink, { isEnumerable: true })
+      : isRunnable
+      ? createObservable(onSink, { isRunnable: true })
+      : createObservable(onSink);
   };
 })();
 
