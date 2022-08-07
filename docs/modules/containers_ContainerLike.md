@@ -60,7 +60,7 @@ ___
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `O` | `Record`<`string`, `never`\> |
+| `O` | `never` |
 
 #### Parameters
 

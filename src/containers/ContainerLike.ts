@@ -49,12 +49,7 @@ export const compute = <
     m.map(callWith()),
   );
 
-export const concatMap = <
-  C extends ContainerLike,
-  TA,
-  TB,
-  O = Record<string, never>,
->(
+export const concatMap = <C extends ContainerLike, TA, TB, O = never>(
   { map, concatAll }: Map<C> & ConcatAll<C, O>,
   mapper: Function1<TA, ContainerOf<C, TB>>,
   options?: Partial<O>,

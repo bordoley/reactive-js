@@ -1,6 +1,6 @@
 import { DisposableLike } from "../__internal__/util/DisposableLikeInternal.mjs";
 import { Function1, Equality, SideEffect1, Factory, Reducer } from "../functions.mjs";
-import { ContainerOperator, Buffer, Zip, Concat, DecodeWithCharset, DistinctUntilChanged, ForEach, ForkZip, ForkConcat, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, ConcatAll, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise, ToReadonlyArray } from "../containers.mjs";
+import { ContainerOperator, Buffer, Zip, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, ForEach, ForkZip, ForkConcat, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise, ToReadonlyArray } from "../containers.mjs";
 import { ToEnumerable } from "../ix.mjs";
 import { ObservableLike, MulticastObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
@@ -22,12 +22,31 @@ declare const combineLatestT: Zip<ObservableLike>;
  */
 declare const concat: Concat<ObservableLike>["concat"];
 declare const concatT: Concat<ObservableLike>;
+/**
+ * Converts a higher-order `ObservableLike` into a first-order
+ * `ObservableLike` by concatenating the inner sources in order.
+ *
+ * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
+ */
+declare const concatAll: ConcatAll<ObservableLike, {
+    maxBufferSize?: number;
+}>["concatAll"];
+declare const concatAllT: ConcatAll<ObservableLike, {
+    readonly maxBufferSize: number;
+}>;
 declare const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"];
 declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike>;
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => ContainerOperator<ObservableLike<unknown>, T, T>;
 declare const distinctUntilChangedT: DistinctUntilChanged<ObservableLike>;
+/**
+ * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
+ * by dropping inner sources while the previous inner source
+ * has not yet been disposed.
+ */
+declare const exhaust: ConcatAll<ObservableLike>["concatAll"];
+declare const exhaustT: ConcatAll<ObservableLike>;
 declare const forEach: <T>(effect: SideEffect1<T>) => ContainerOperator<ObservableLike<unknown>, T, T>;
 declare const forEachT: ForEach<ObservableLike>;
 declare const forkCombineLatest: ForkZip<ObservableLike>["forkZip"];
@@ -39,6 +58,14 @@ declare const map: Map<ObservableLike>["map"];
 declare const mapT: Map<ObservableLike>;
 declare const merge: <T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]) => ObservableLike<T>;
 declare const mergeT: Concat<ObservableLike<unknown>>;
+declare const mergeAll: ConcatAll<ObservableLike, {
+    readonly maxBufferSize?: number;
+    readonly maxConcurrency?: number;
+}>["concatAll"];
+declare const mergeAllT: ConcatAll<ObservableLike, {
+    readonly maxBufferSize?: number;
+    readonly maxConcurrency?: number;
+}>;
 declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
@@ -98,4 +125,4 @@ declare const zipT: Zip<ObservableLike>;
  */
 declare const zipLatest: Zip<ObservableLike>["zip"];
 declare const zipLatestT: Zip<ObservableLike>;
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };

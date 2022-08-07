@@ -54,7 +54,7 @@ declare type CatchError<C extends ContainerLike> = Container<C> & {
 declare type Concat<C extends ContainerLike> = Container<C> & {
     concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
 };
-declare type ConcatAll<C extends ContainerLike, O = Record<string, never>> = Container<C> & {
+declare type ConcatAll<C extends ContainerLike, O = never> = Container<C> & {
     concatAll: <T>(options?: Partial<O>) => ContainerOperator<C, ContainerOf<C, T>, T>;
 };
 declare type DecodeWithCharset<C extends ContainerLike> = Container<C> & {

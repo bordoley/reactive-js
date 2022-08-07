@@ -12,7 +12,7 @@ import { createInstanceFactory, clazz, __extends, init } from '../__internal__/u
 import { createEnumeratorSink } from '../__internal__/util/SinkLikeMixin.mjs';
 import { keepType } from '../containers/ContainerLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, isEmpty, none, getLength, max, returns, isNone, isSome, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
+import { pipe, isEmpty, none, getLength, max, isSome, partial, returns, isNone, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { createEnumerable, emptyEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$2 } from '../ix/EnumerableLike.mjs';
 import { neverObservable, createObservable, enumerableObservableType, emptyObservable } from '../rx.mjs';
@@ -130,6 +130,19 @@ const concat = /*@__PURE__*/ (() => {
 const concatT = {
     concat,
 };
+/**
+ * Converts a higher-order `ObservableLike` into a first-order
+ * `ObservableLike` by concatenating the inner sources in order.
+ *
+ * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
+ */
+const concatAll = (options = {}) => {
+    const { maxBufferSize = MAX_SAFE_INTEGER } = options;
+    return mergeAll({ maxBufferSize, maxConcurrency: 1 });
+};
+const concatAllT = {
+    concatAll,
+};
 const decodeWithCharset = 
 /*@__PURE__*/ (() => pipe(createDecodeWithCharsetObserver(toObservable()), createDecodeWithCharsetOperator(liftEnumerableObservableT)))();
 const decodeWithCharsetT = {
@@ -139,6 +152,16 @@ const distinctUntilChanged = distinctUntilChanged$1;
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
+/**
+ * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
+ * by dropping inner sources while the previous inner source
+ * has not yet been disposed.
+ */
+const exhaust = () => mergeAll({
+    maxBufferSize: 1,
+    maxConcurrency: 1,
+});
+const exhaustT = { concatAll: exhaust };
 const forEach = forEach$1;
 const forEachT = { forEach };
 const forkCombineLatest = ((...ops) => (obs) => latest(pipe(ops, map$1(op => pipe(obs, op))), 1 /* LatestMode.Combine */));
@@ -146,10 +169,6 @@ const forkMerge = (...ops) => (obs) => pipe(ops, map$1(op => op(obs)), mergeImpl
 const forkZipLatest = ((...ops) => (obs) => latest(pipe(ops, map$1(op => pipe(obs, op))), 2 /* LatestMode.Zip */));
 const keep = /*@__PURE__*/ (() => pipe(createKeepObserver, createKeepOperator(liftEnumerableObservableT)))();
 const keepT = { keep };
-const map = /*@__PURE__*/ (() => pipe(createMapObserver, createMapOperator(liftEnumerableObservableT)))();
-const mapT = { map };
-const merge = merge$1;
-const mergeT = mergeT$1;
 const latest = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
     const add = (self, observer) => {
@@ -213,6 +232,68 @@ const latest = /*@__PURE__*/ (() => {
         return createObservable(onSink, { type });
     };
 })();
+const map = /*@__PURE__*/ (() => pipe(createMapObserver, createMapOperator(liftEnumerableObservableT)))();
+const mapT = { map };
+const merge = merge$1;
+const mergeT = mergeT$1;
+const mergeAll = /*@__PURE__*/ (() => {
+    const typedObserverMixin = observerMixin();
+    const subscribeNext = (observer) => {
+        if (observer.activeCount < observer.maxConcurrency) {
+            const nextObs = observer.queue.shift();
+            if (isSome(nextObs)) {
+                observer.activeCount++;
+                pipe(nextObs, forEach(notifySink(observer.delegate)), subscribe(getScheduler(observer)), addTo(observer.delegate), onComplete(observer.onDispose));
+            }
+            else if (isDisposed(observer)) {
+                pipe(observer.delegate, dispose());
+            }
+        }
+    };
+    const createMergeAllObserver = createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function Observer(delegate, maxBufferSize, maxConcurrency) {
+        init(disposableMixin, this);
+        init(typedObserverMixin, this, getScheduler(delegate));
+        this.delegate = delegate;
+        this.maxBufferSize = maxBufferSize;
+        this.maxConcurrency = maxConcurrency;
+        this.activeCount = 0;
+        this.onDispose = () => {
+            this.activeCount--;
+            subscribeNext(this);
+        };
+        this.queue = [];
+        return pipe(this, addTo(delegate), onComplete(() => {
+            if (isDisposed(delegate)) {
+                this.queue.length = 0;
+            }
+            else if (getLength(this.queue) + this.activeCount === 0) {
+                pipe(this.delegate, dispose());
+            }
+        }));
+    }, {
+        activeCount: 0,
+        delegate: none,
+        maxBufferSize: 0,
+        maxConcurrency: 0,
+        onDispose: none,
+        queue: none,
+    }, {
+        [SinkLike_notify](next) {
+            const { queue } = this;
+            queue.push(next);
+            // Drop old events if the maxBufferSize has been exceeded
+            if (getLength(queue) + this.activeCount > this.maxBufferSize) {
+                queue.shift();
+            }
+            subscribeNext(this);
+        },
+    }));
+    return (options = {}) => {
+        const { maxBufferSize = MAX_SAFE_INTEGER, maxConcurrency = MAX_SAFE_INTEGER, } = options;
+        return pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency), liftObservable);
+    };
+})();
+const mergeAllT = { concatAll: mergeAll };
 const multicast = multicast$1;
 const onSubscribe = (f) => (obs) => {
     const type = getObservableType(obs);
@@ -279,7 +360,7 @@ const switchAll =
                 }
             }));
         },
-    })), liftEnumerableObservable, returns);
+    })), liftObservable, returns);
 })();
 const switchAllT = {
     concatAll: switchAll,
@@ -509,4 +590,4 @@ const zipLatestT = {
     zip: zipLatest,
 };
 
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, merge, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, zip, zipLatest, zipLatestT, zipT };

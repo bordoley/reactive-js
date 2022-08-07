@@ -16,7 +16,7 @@ import {
   pipe,
   returns,
 } from "../../functions";
-import { ReactiveContainerLike } from "../../rx";
+import { ObservableLike } from "../../rx";
 import {
   DispatcherLike,
   DispatcherLike_dispatch,
@@ -206,9 +206,7 @@ export const observerMixin: <T>() => Class1<
 })();
 
 export const createDecodeWithCharsetObserver = (
-  fromArray: (
-    v: readonly string[],
-  ) => ReactiveContainerLike<ObserverLike<string>>,
+  fromArray: (v: readonly string[]) => ObservableLike<string>,
 ): Function2<ObserverLike<string>, string, ObserverLike<ArrayBuffer>> => {
   const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(fromArray);
   const typedObserverMixin = observerMixin<ArrayBuffer>();
@@ -429,21 +427,20 @@ export const createPairwiseObserver: <T>(
   );
 })();
 
-export const createReduceObserver = <
-  C extends ReactiveContainerLike<ObserverLike<TAcc>>,
-  T,
-  TAcc,
->(
-  fromArray: (v: readonly unknown[]) => C,
+export const createReduceObserver = <T, TAcc>(
+  fromArray: <T>(v: readonly T[]) => ObservableLike<T>,
 ): Function3<
   ObserverLike<TAcc>,
   Reducer<T, TAcc>,
   Factory<TAcc>,
   ObserverLike<T>
 > => {
-  const typedReduceSinkMixin = reduceSinkMixin<C, ObserverLike<TAcc>, T, TAcc>(
-    fromArray,
-  );
+  const typedReduceSinkMixin = reduceSinkMixin<
+    ObservableLike<TAcc>,
+    ObserverLike<TAcc>,
+    T,
+    TAcc
+  >(fromArray);
 
   const typedObserverMixin = observerMixin<T>();
 
@@ -556,15 +553,10 @@ export const createTakeFirstObserver: <T>(
   );
 })();
 
-export const createTakeLastObserver = <
-  C extends ReactiveContainerLike<ObserverLike<T>>,
-  T,
->(
-  fromArray: (v: readonly unknown[]) => C,
+export const createTakeLastObserver = <T>(
+  fromArray: <T>(v: readonly T[]) => ObservableLike<T>,
 ): Function2<ObserverLike<T>, number, ObserverLike<T>> => {
-  const typedTakeLastSinkMixin = takeLastSinkMixin<C, ObserverLike<T>, T>(
-    fromArray,
-  );
+  const typedTakeLastSinkMixin = takeLastSinkMixin(fromArray);
   const typedObserverMixin = observerMixin<T>();
 
   type TProperties = PropertyTypeOf<
