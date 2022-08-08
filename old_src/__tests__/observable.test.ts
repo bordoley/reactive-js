@@ -196,58 +196,6 @@ export const tests = describe(
       ),
     ),
   ),
-  describe(
-    "throttle",
-    test(
-      "first",
-      pipeLazy(
-        generate(increment, returns<number>(-1), { delay: 1 }),
-        takeFirst({ count: 100 }),
-        throttle(50, { mode: "first" }),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([0, 49]),
-      ),
-    ),
-
-    test(
-      "last",
-      pipeLazy(
-        generate(increment, returns<number>(-1), { delay: 1 }),
-        takeFirst({ count: 200 }),
-        throttle(50, { mode: "last" }),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([49, 99, 149, 199]),
-      ),
-    ),
-
-    test(
-      "interval",
-      pipeLazy(
-        generate(increment, returns<number>(-1), { delay: 1 }),
-        takeFirst({ count: 200 }),
-        throttle(75, { mode: "interval" }),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([0, 74, 149, 199]),
-      ),
-    ),
-
-    test(
-      "when duration observable throws",
-      pipeLazy(
-        pipeLazy(
-          [1, 2, 3, 4, 5],
-          fromArray({ delay: 1 }),
-          throttle(_ => throws({ ...fromArrayT, ...mapT })(raise)),
-          toRunnable(),
-          last(),
-        ),
-        expectToThrow,
-      ),
-    ),
-  ),
 
   describe(
     "timeout",

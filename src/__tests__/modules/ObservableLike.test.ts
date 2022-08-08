@@ -45,6 +45,7 @@ import {
   subscribe,
   takeFirst,
   takeUntil,
+  throttle,
   toEnumerable,
   toFlowable,
   toPromise,
@@ -381,6 +382,66 @@ const takeUntilTests = describe(
       expectArrayEquals([1, 2, 3]),
     ),
   ),
+);
+
+export const throttleTests = describe(
+  "throttle",
+  test(
+    "first",
+    pipeLazy(
+      generateObservable(increment, returns<number>(-1), {
+        delay: 1,
+        delayStart: true,
+      }),
+      takeFirst({ count: 100 }),
+      throttle(50, { mode: "first" }),
+      toReadonlyArray(),
+      expectArrayEquals([0, 49, 99]),
+    ),
+  ),
+
+  test(
+    "last",
+    pipeLazy(
+      generateObservable(increment, returns<number>(-1), {
+        delay: 1,
+        delayStart: true,
+      }),
+      takeFirst({ count: 200 }),
+      throttle(50, { mode: "last" }),
+      toReadonlyArray(),
+      expectArrayEquals([49, 99, 149, 199]),
+    ),
+  ),
+
+  test(
+    "interval",
+    pipeLazy(
+      generateObservable(increment, returns<number>(-1), {
+        delay: 1,
+        delayStart: true,
+      }),
+      takeFirst({ count: 200 }),
+      throttle(75, { mode: "interval" }),
+      toReadonlyArray(),
+      expectArrayEquals([0, 74, 149, 199]),
+    ),
+  ),
+
+  /*
+  test(
+    "when duration observable throws",
+    pipeLazy(
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        fromArray({ delay: 1 }),
+        throttle(_ => throws({ ...fromArrayT, ...mapT })(raise)),
+        toRunnable(),
+        last(),
+      ),
+      expectToThrow,
+    ),
+  ),*/
 );
 
 const toEnumerableTests = describe(
@@ -732,6 +793,7 @@ export default describe(
     ...takeWhileT,
     ...toReadonlyArrayT,
   }),
+  throttleTests,
   throwIfEmptyTests({
     fromArray: toObservable,
     ...throwIfEmptyT,
