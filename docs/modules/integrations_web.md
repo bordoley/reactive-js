@@ -14,17 +14,28 @@
 
 - [FetchRequest](integrations_web.md#fetchrequest)
 
+### Variables
+
+- [windowLocation](integrations_web.md#windowlocation)
+
 ### Functions
 
 - [addEventListener](integrations_web.md#addeventlistener)
 - [createEventSource](integrations_web.md#createeventsource)
 - [fetch](integrations_web.md#fetch)
+- [replaceWindowLocation](integrations_web.md#replacewindowlocation)
 
 ## Type Aliases
 
 ### FetchRequest
 
 Ƭ **FetchRequest**: `RequestInit` & { `uri`: `string`  }
+
+## Variables
+
+### windowLocation
+
+• `Const` **windowLocation**: [`WindowLocationStreamableLike`](../interfaces/integrations_web.WindowLocationStreamableLike.md)
 
 ## Functions
 
@@ -87,3 +98,19 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](integrations_web.md#fetchrequest), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### replaceWindowLocation
+
+▸ **replaceWindowLocation**(`uri`): [`Function1`](functions.md#function1)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md), [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `uri` | [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md), [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
