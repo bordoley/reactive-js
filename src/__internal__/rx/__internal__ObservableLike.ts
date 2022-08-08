@@ -2,17 +2,24 @@ import {
   Concat,
   ConcatAll,
   ContainerOf,
+  ContainerOperator,
   DistinctUntilChanged,
   ForEach,
   Scan,
   StatefulContainerStateOf,
+  TakeFirst,
 } from "../../containers";
 import { every, map as mapArray } from "../../containers/ReadonlyArrayLike";
 import {
+  Factory,
   Function1,
+  Function2,
+  Option,
   SideEffect,
+  SideEffect1,
   compose,
   getLength,
+  isEmpty,
   isSome,
   isTrue,
   newInstance,
@@ -22,21 +29,26 @@ import {
   pipeUnsafe,
 } from "../../functions";
 import {
+  AsyncReducer,
+  EnumerableObservableLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ReactiveContainerLike_sinkInto,
+  RunnableObservableLike,
+  ScanAsync,
   createEnumerableObservable,
   createObservable,
   createRunnableObservable,
   createSubject,
 } from "../../rx";
-import { publishTo } from "../../rx/SubjectLike";
+import { sinkInto } from "../../rx/ReactiveContainerLike";
+import { publish, publishTo } from "../../rx/SubjectLike";
 import { ObserverLike, SchedulerLike } from "../../scheduling";
 import { getScheduler } from "../../scheduling/ObserverLike";
-import { SinkLike_notify } from "../../util";
-import { notifySink, sourceFrom } from "../../util/SinkLike";
+import { DisposableOrTeardown, SinkLike_notify } from "../../util";
+import { notify, notifySink, sourceFrom } from "../../util/SinkLike";
 import { MAX_SAFE_INTEGER } from "../__internal__env";
 import {
   Lift,
@@ -44,6 +56,7 @@ import {
   createDistinctUntilChangedOperator,
   createForEachOperator,
   createScanOperator,
+  createTakeFirstOperator,
   reactive,
 } from "../containers/__internal__StatefulContainerLike";
 import {
@@ -52,6 +65,7 @@ import {
   createForEachObserver,
   createObserver,
   createScanObserver,
+  createTakeFirstObserver,
   observerMixin,
 } from "../scheduling/__internal__Observers";
 import {
@@ -77,6 +91,7 @@ import {
   createInstanceFactory,
   init,
 } from "../util/__internal__Objects";
+import { createOnSink } from "./__internal__ReactiveContainerLike";
 
 export const allAreEnumerable = compose(
   mapArray((obs: ObservableLike) => obs[ObservableLike_isEnumerable]),
@@ -267,6 +282,34 @@ export const createMergeAll = <C extends ObservableLike>(
   };
 };
 
+export const createScanAsync = <C extends ObservableLike>(
+  createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
+): ScanAsync<C>["scanAsync"] => {
+  return <T, TAcc>(
+      scanner: AsyncReducer<C, T, TAcc>,
+      initialValue: Factory<TAcc>,
+    ): ContainerOperator<C, T, TAcc> =>
+    observable => {
+      const onSink = (observer: ObserverLike<TAcc>) => {
+        const accFeedbackStream = pipe(createSubject(), addTo(observer));
+
+        pipe(
+          observable,
+          zipWithLatestFrom(accFeedbackStream, (next, acc: TAcc) =>
+            pipe(scanner(acc, next), takeFirst()),
+          ),
+          // switchAll
+          switchAll(),
+          forEach(publishTo(accFeedbackStream)),
+          onSubscribe(() => pipe(accFeedbackStream, publish(initialValue()))),
+          sinkInto(observer),
+        );
+      };
+
+      return createObservable(onSink);
+    };
+};
+
 export const createSwitchAll = <C extends ObservableLike>(
   lift: Lift<C, TReactive>["lift"],
 ): ConcatAll<C>["concatAll"] => {
@@ -353,6 +396,14 @@ export const forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
     ),
   ))();
 
+export const isEnumerable = (
+  obs: ObservableLike,
+): obs is EnumerableObservableLike => obs[ObservableLike_isEnumerable];
+
+export const isRunnable = (
+  obs: ObservableLike,
+): obs is RunnableObservableLike => obs[ObservableLike_isRunnable];
+
 export const mergeImpl = /*@__PURE__*/ (() => {
   const createMergeObserver = <T>(
     delegate: ObserverLike<T>,
@@ -425,10 +476,28 @@ export const multicast =
     return subject;
   };
 
+export const onSubscribe =
+  <T>(f: Factory<DisposableOrTeardown | void>) =>
+  (obs: ObservableLike<T>): ObservableLike<T> => {
+    return createOnSink(
+      onSink =>
+        isEnumerable(obs)
+          ? createEnumerableObservable(onSink)
+          : isRunnable(obs)
+          ? createRunnableObservable(onSink)
+          : createObservable(onSink),
+      obs,
+      f,
+    );
+  };
+
 export const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ pipe(
   createScanObserver,
   createScanOperator(liftEnumerableObservableT),
 );
+
+export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
+  createSwitchAll<ObservableLike>(liftObservable);
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
@@ -439,3 +508,113 @@ export const subscribe: <T>(
     addToIgnoringChildErrors(scheduler),
     sourceFrom(observable),
   );
+
+export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
+  /*@__PURE__*/ pipe(
+    createTakeFirstObserver,
+    createTakeFirstOperator(liftEnumerableObservableT),
+  );
+
+export const zipWithLatestFrom: <TA, TB, T>(
+  other: ObservableLike<TB>,
+  selector: Function2<TA, TB, T>,
+) => ContainerOperator<ObservableLike, TA, T> = /*@__PURE__*/ (() => {
+  const createZipWithLatestFromObserver: <TA, TB, T>(
+    delegate: ObserverLike<T>,
+    other: ObservableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ) => ObserverLike<TA> = (<TA, TB, T>() => {
+    const typedObserverMixin = observerMixin<TA>();
+
+    type TProperties = PropertyTypeOf<
+      [typeof disposableMixin, typeof typedObserverMixin]
+    > & {
+      delegate: ObserverLike<T>;
+      hasLatest: boolean;
+      otherLatest: Option<TB>;
+      queue: TA[];
+      selector: Function2<TA, TB, T>;
+    };
+
+    const notifyDelegate = (observer: TProperties & ObserverLike<TA>) => {
+      if (getLength(observer.queue) > 0 && observer.hasLatest) {
+        observer.hasLatest = false;
+        const next = observer.queue.shift() as TA;
+        const result = observer.selector(next, observer.otherLatest as TB);
+        pipe(observer.delegate, notify(result));
+      }
+    };
+
+    return createInstanceFactory(
+      clazz(
+        __extends(disposableMixin, typedObserverMixin),
+        function ZipWithLatestFromObserer(
+          this: TProperties & ObserverLike<TA>,
+          delegate: ObserverLike<T>,
+          other: ObservableLike<TB>,
+          selector: Function2<TA, TB, T>,
+        ): ObserverLike<TA> {
+          init(disposableMixin, this);
+          init(typedObserverMixin, this, getScheduler(delegate));
+
+          this.delegate = delegate;
+          this.queue = [];
+          this.selector = selector;
+
+          const disposeDelegate = () => {
+            if (isDisposed(this) && isDisposed(otherSubscription)) {
+              pipe(delegate, dispose());
+            }
+          };
+
+          const otherSubscription = pipe(
+            other,
+            forEach(otherLatest => {
+              this.hasLatest = true;
+              this.otherLatest = otherLatest;
+              notifyDelegate(this);
+
+              if (isDisposed(this) && isEmpty(this.queue)) {
+                pipe(this.delegate, dispose());
+              }
+            }),
+            subscribe(getScheduler(delegate)),
+            onComplete(disposeDelegate),
+            addTo(delegate),
+          );
+
+          return pipe(this, addTo(delegate), onComplete(disposeDelegate));
+        },
+        {
+          delegate: none,
+          hasLatest: false,
+          otherLatest: none,
+          queue: none,
+          selector: none,
+        },
+        {
+          [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
+            this.queue.push(next);
+            notifyDelegate(this);
+          },
+        },
+      ),
+    );
+  })();
+
+  return <TA, TB, T>(
+    other: ObservableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ) => {
+    const lift = isEnumerable(other)
+      ? liftEnumerableObservable
+      : isRunnable(other)
+      ? liftRunnableObservable
+      : liftObservable;
+    return pipe(
+      createZipWithLatestFromObserver,
+      partial(other, selector),
+      lift,
+    ) as ContainerOperator<ObservableLike, TA, T>;
+  };
+})();
