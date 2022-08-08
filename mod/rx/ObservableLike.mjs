@@ -617,5 +617,58 @@ const zipLatest = (...observables) => latest(observables, 2 /* LatestMode.Zip */
 const zipLatestT = {
     zip: zipLatest,
 };
+const zipWithLatestFrom = /*@__PURE__*/ (() => {
+    const createZipWithLatestFromObserver = (() => {
+        const typedObserverMixin = observerMixin();
+        const notifyDelegate = (observer) => {
+            if (getLength(observer.queue) > 0 && observer.hasLatest) {
+                observer.hasLatest = false;
+                const next = observer.queue.shift();
+                const result = observer.selector(next, observer.otherLatest);
+                pipe(observer.delegate, notify(result));
+            }
+        };
+        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(delegate, other, selector) {
+            init(disposableMixin, this);
+            init(typedObserverMixin, this, getScheduler(delegate));
+            this.delegate = delegate;
+            this.queue = [];
+            this.selector = selector;
+            const disposeDelegate = () => {
+                if (isDisposed(this) && isDisposed(otherSubscription)) {
+                    pipe(delegate, dispose());
+                }
+            };
+            const otherSubscription = pipe(other, forEach(otherLatest => {
+                this.hasLatest = true;
+                this.otherLatest = otherLatest;
+                notifyDelegate(this);
+                if (isDisposed(this) && isEmpty(this.queue)) {
+                    pipe(this.delegate, dispose());
+                }
+            }), subscribe(getScheduler(delegate)), onComplete(disposeDelegate), addTo(delegate));
+            return pipe(this, addTo(delegate), onComplete(disposeDelegate));
+        }, {
+            delegate: none,
+            hasLatest: false,
+            otherLatest: none,
+            queue: none,
+            selector: none,
+        }, {
+            [SinkLike_notify](next) {
+                this.queue.push(next);
+                notifyDelegate(this);
+            },
+        }));
+    })();
+    return (other, selector) => {
+        const lift = isEnumerable(other)
+            ? liftEnumerableObservable
+            : isRunnable(other)
+                ? liftRunnableObservable
+                : liftObservable;
+        return pipe(createZipWithLatestFromObserver, partial(other, selector), lift);
+    };
+})();
 
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };

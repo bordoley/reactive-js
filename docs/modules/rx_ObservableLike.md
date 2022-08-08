@@ -78,6 +78,7 @@
 - [withLatestFrom](rx_ObservableLike.md#withlatestfrom)
 - [zip](rx_ObservableLike.md#zip)
 - [zipLatest](rx_ObservableLike.md#ziplatest)
+- [zipWithLatestFrom](rx_ObservableLike.md#zipwithlatestfrom)
 
 ## Variables
 
@@ -2287,3 +2288,28 @@ multiple sources.
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+### zipWithLatestFrom
+
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `other` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `T`\>
