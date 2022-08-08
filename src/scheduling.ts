@@ -1,34 +1,34 @@
-import { MAX_SAFE_INTEGER } from "./__internal__/env";
-import { getDelay } from "./__internal__/optionalArgs";
-import {
-  QueueLike,
-  createPriorityQueue,
-} from "./__internal__/scheduling/queue";
+import { MAX_SAFE_INTEGER } from "./__internal__/__internal__env";
+import { getDelay } from "./__internal__/__internal__optionParsing";
 import {
   SchedulerLike_inContinuation as SchedulerLike_inContinuation_internal,
   SchedulerLike_now as SchedulerLike_now_internal,
   getCurrentTime,
   isInContinuation,
-} from "./__internal__/schedulingInternal";
+} from "./__internal__/__internal__scheduling";
+import {
+  QueueLike,
+  createPriorityQueue,
+} from "./__internal__/scheduling/__internal__queue";
 import {
   addIgnoringChildErrors,
   addTo,
   dispose,
   isDisposed,
   onDisposed,
-} from "./__internal__/util/DisposableLikeInternal";
-import { disposableMixin } from "./__internal__/util/DisposableLikeMixins";
+} from "./__internal__/util/__internal__DisposableLike";
+import { disposableMixin } from "./__internal__/util/__internal__Disposables";
 import {
   MutableEnumeratorLike,
   enumeratorMixin,
-} from "./__internal__/util/EnumeratorLikeMixin";
+} from "./__internal__/util/__internal__Enumerators";
 import {
   PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
-} from "./__internal__/util/Object";
+} from "./__internal__/util/__internal__Objects";
 import { Option, isSome, none, pipe } from "./functions";
 import {
   ContinuationLike,

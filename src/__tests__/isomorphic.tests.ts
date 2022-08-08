@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { runTests } from "../__internal__/testing";
+import { runTests } from "../__internal__/__internal__testing";
 import ContainerLikeTests from "./modules/ContainerLike.test";
 import DisposableLikeTests from "./modules/DisposableLike.test";
 import EnumerableLikeTests from "./modules/EnumerableLike.test";

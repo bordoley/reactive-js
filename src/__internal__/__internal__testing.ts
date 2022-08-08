@@ -13,7 +13,7 @@ import {
   raise,
   strictEquality,
 } from "../functions";
-import { __DENO__ } from "./env";
+import { __DENO__ } from "./__internal__env";
 
 export const DescribeType = 1;
 export const TestType = 2;

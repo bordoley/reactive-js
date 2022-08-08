@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Type Aliases
-
-- [EffectsMode](rx_effects.md#effectsmode)
-
 ### Functions
 
 - [\_\_currentScheduler](rx_effects.md#__currentscheduler)
@@ -18,12 +14,6 @@
 - [\_\_stream](rx_effects.md#__stream)
 - [\_\_using](rx_effects.md#__using)
 - [observable](rx_effects.md#observable)
-
-## Type Aliases
-
-### EffectsMode
-
-Ƭ **EffectsMode**: ``"batched"`` \| ``"combine-latest"``
 
 ## Functions
 
@@ -630,7 +620,7 @@ ___
 | :------ | :------ |
 | `computation` | [`Factory`](functions.md#factory)<`T`\> |
 | `__namedParameters?` | `Object` |
-| `__namedParameters.mode?` | [`EffectsMode`](rx_effects.md#effectsmode) |
+| `__namedParameters.mode?` | ``"batched"`` \| ``"combine-latest"`` |
 
 #### Returns
 

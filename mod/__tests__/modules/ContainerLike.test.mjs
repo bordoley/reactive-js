@@ -1,5 +1,5 @@
 /// <reference types="./ContainerLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
 import { emptyReadonlyArray } from '../../containers.mjs';
 import { concatMap, concatWith, endWith, ignoreElements, mapTo, startWith, zipWith } from '../../containers/ContainerLike.mjs';
 import { toEnumerable } from '../../containers/ReadonlyArrayLike.mjs';

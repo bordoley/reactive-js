@@ -1,5 +1,5 @@
 /// <reference types="./PromiseableLike.test.d.ts" />
-import { describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../../__internal__/__internal__testing.mjs';
 import { toObservable } from '../../containers/PromiseableLike.mjs';
 import { pipe, newInstance } from '../../functions.mjs';
 import { toPromise } from '../../rx/ObservableLike.mjs';

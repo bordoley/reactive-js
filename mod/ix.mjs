@@ -1,7 +1,7 @@
 /// <reference types="./ix.d.ts" />
-import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
-import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
-import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/Object.mjs';
+import { disposableMixin } from './__internal__/util/__internal__Disposables.mjs';
+import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs';
+import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/__internal__Objects.mjs';
 import { none, pipe } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { dispose, isDisposed } from './util/DisposableLike.mjs';

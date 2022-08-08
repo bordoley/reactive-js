@@ -1,5 +1,5 @@
 /// <reference types="./effects.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectEquals, expectArrayEquals } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectEquals, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
 import { keepType } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe, isSome } from '../../functions.mjs';

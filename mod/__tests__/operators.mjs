@@ -1,5 +1,5 @@
 /// <reference types="./operators.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from '../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from '../__internal__/__internal__testing.mjs';
 import { emptyReadonlyArray } from '../containers.mjs';
 import { encodeUtf8 } from '../containers/ContainerLike.mjs';
 import { pipeLazy, arrayEquality, pipe, increment, returns, sum, alwaysTrue } from '../functions.mjs';

@@ -3,11 +3,11 @@ import {
   DisposableLike_dispose as DisposableLike_dispose_internal,
   DisposableLike_exception as DisposableLike_error_internal,
   DisposableLike_isDisposed as DisposableLike_isDisposed_internal,
-} from "./__internal__/util/DisposableLikeInternal";
+} from "./__internal__/util/__internal__DisposableLike";
 import {
   createDisposable as createDisposableInternal,
   disposed as disposedInternal,
-} from "./__internal__/util/DisposableLikeMixins";
+} from "./__internal__/util/__internal__Disposables";
 import { Factory, Option, SideEffect1 } from "./functions";
 
 /** @ignore */

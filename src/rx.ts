@@ -1,19 +1,19 @@
-import { getDelay, hasDelay } from "./__internal__/optionalArgs";
+import { getDelay, hasDelay } from "./__internal__/__internal__optionParsing";
 import {
   addIgnoringChildErrors,
   addTo,
   dispose,
   isDisposed,
   onDisposed,
-} from "./__internal__/util/DisposableLikeInternal";
-import { disposableMixin } from "./__internal__/util/DisposableLikeMixins";
+} from "./__internal__/util/__internal__DisposableLike";
+import { disposableMixin } from "./__internal__/util/__internal__Disposables";
 import {
   PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
-} from "./__internal__/util/Object";
+} from "./__internal__/util/__internal__Objects";
 import {
   Container,
   ContainerLike,

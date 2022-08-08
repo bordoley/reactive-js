@@ -1,16 +1,16 @@
-import { getDelay, hasDelay } from "../__internal__/optionalArgs";
-import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
+import { getDelay, hasDelay } from "../__internal__/__internal__optionParsing";
+import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   MutableEnumeratorLike,
   enumeratorMixin,
-} from "../__internal__/util/EnumeratorLikeMixin";
+} from "../__internal__/util/__internal__Enumerators";
 import {
   PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
-} from "../__internal__/util/Object";
+} from "../__internal__/util/__internal__Objects";
 import {
   ForEach,
   Keep,

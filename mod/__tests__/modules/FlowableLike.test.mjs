@@ -1,5 +1,5 @@
 /// <reference types="./FlowableLike.test.d.ts" />
-import { describe as createDescribe, test as createTest } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest } from '../../__internal__/__internal__testing.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
 import { toFlowable, forEach, subscribe } from '../../rx/ObservableLike.mjs';

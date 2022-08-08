@@ -1,7 +1,7 @@
 /// <reference types="./streaming.d.ts" />
-import { multicast, scan, mergeT, distinctUntilChanged } from './__internal__/rx/ObservableLikeInternal.mjs';
-import { delegatingDisposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
-import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/Object.mjs';
+import { multicast, scan, mergeT, distinctUntilChanged } from './__internal__/rx/__internal__ObservableLike.mjs';
+import { delegatingDisposableMixin } from './__internal__/util/__internal__Disposables.mjs';
+import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/__internal__Objects.mjs';
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
 import { pipe, none, newInstance, getLength, composeUnsafe, returns, updateReducer } from './functions.mjs';

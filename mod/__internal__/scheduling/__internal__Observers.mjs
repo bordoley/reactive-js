@@ -1,13 +1,13 @@
-/// <reference types="./ObserverLikeMixin.d.ts" />
+/// <reference types="./__internal__Observers.d.ts" />
 import { getLength, pipe, isEmpty, none, isNone, returns } from '../../functions.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../scheduling.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../../util.mjs';
 import { addTo, onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
-import { disposableMixin } from '../util/DisposableLikeMixins.mjs';
-import { createInstanceFactory, clazz, init, __extends } from '../util/Object.mjs';
-import { decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../util/SinkLikeMixin.mjs';
+import { disposableMixin } from '../util/__internal__Disposables.mjs';
+import { createInstanceFactory, clazz, init, __extends } from '../util/__internal__Objects.mjs';
+import { decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../util/__internal__Sinks.mjs';
 
 const createObserverDispatcher = (() => {
     const scheduleDrainQueue = (dispatcher) => {

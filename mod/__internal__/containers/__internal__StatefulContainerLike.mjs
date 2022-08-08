@@ -1,6 +1,6 @@
-/// <reference types="./StatefulContainerLikeInternal.d.ts" />
+/// <reference types="./__internal__StatefulContainerLike.d.ts" />
 import { max, pipe, partial, strictEquality } from '../../functions.mjs';
-import { MAX_SAFE_INTEGER } from '../env.mjs';
+import { MAX_SAFE_INTEGER } from '../__internal__env.mjs';
 
 const interactive = 0;
 const reactive = 1;

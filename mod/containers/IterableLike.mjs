@@ -1,7 +1,7 @@
 /// <reference types="./IterableLike.d.ts" />
-import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
-import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
+import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
+import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
+import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { none, pipe, identity, compose } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';

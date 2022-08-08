@@ -1,6 +1,6 @@
 /// <reference types="./util.d.ts" />
-import { DisposableLike_add as DisposableLike_add$1, DisposableLike_dispose as DisposableLike_dispose$1, DisposableLike_exception as DisposableLike_exception$1, DisposableLike_isDisposed as DisposableLike_isDisposed$1 } from './__internal__/util/DisposableLikeInternal.mjs';
-import { createDisposable as createDisposable$1, disposed as disposed$1 } from './__internal__/util/DisposableLikeMixins.mjs';
+import { DisposableLike_add as DisposableLike_add$1, DisposableLike_dispose as DisposableLike_dispose$1, DisposableLike_exception as DisposableLike_exception$1, DisposableLike_isDisposed as DisposableLike_isDisposed$1 } from './__internal__/util/__internal__DisposableLike.mjs';
+import { createDisposable as createDisposable$1, disposed as disposed$1 } from './__internal__/util/__internal__Disposables.mjs';
 
 /** @ignore */
 const DisposableLike_add = DisposableLike_add$1;

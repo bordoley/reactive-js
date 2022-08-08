@@ -1,8 +1,8 @@
 /// <reference types="./SequenceLike.d.ts" />
-import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
-import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
-import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
+import { createRepeatOperator } from '../__internal__/containers/__internal__ContainerLike.mjs';
+import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
+import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
+import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';

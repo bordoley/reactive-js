@@ -3,7 +3,7 @@ import {
   expectEquals,
   expectPromiseToThrow,
   testAsync,
-} from "../../__internal__/testing";
+} from "../../__internal__/__internal__testing";
 import { toObservable } from "../../containers/PromiseableLike";
 import { newInstance, pipe } from "../../functions";
 import { toPromise } from "../../rx/ObservableLike";

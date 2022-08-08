@@ -1,4 +1,5 @@
-import { createRepeatOperator } from "../__internal__/containers/ContainerLikeInternal";
+import { getDelay, hasDelay } from "../__internal__/__internal__optionParsing";
+import { createRepeatOperator } from "../__internal__/containers/__internal__ContainerLike";
 import {
   Lift,
   TInteractive,
@@ -14,22 +15,21 @@ import {
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
   interactive,
-} from "../__internal__/containers/StatefulContainerLikeInternal";
-import { getDelay, hasDelay } from "../__internal__/optionalArgs";
+} from "../__internal__/containers/__internal__StatefulContainerLike";
 import {
   delegatingDisposableMixin,
   disposableMixin,
   disposableRefMixin,
-} from "../__internal__/util/DisposableLikeMixins";
+} from "../__internal__/util/__internal__Disposables";
 import {
   MutableEnumeratorLike,
   enumeratorMixin,
-} from "../__internal__/util/EnumeratorLikeMixin";
+} from "../__internal__/util/__internal__Enumerators";
 import {
   MutableRefLike,
   getCurrentRef,
   setCurrentRef,
-} from "../__internal__/util/MutableRefLike";
+} from "../__internal__/util/__internal__MutableRefLike";
 import {
   Class1,
   PropertyTypeOf,
@@ -38,7 +38,7 @@ import {
   clazz,
   createInstanceFactory,
   init,
-} from "../__internal__/util/Object";
+} from "../__internal__/util/__internal__Objects";
 import {
   Buffer,
   Concat,

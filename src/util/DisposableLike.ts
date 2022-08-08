@@ -10,7 +10,7 @@ import {
   onComplete as onCompleteInternal,
   onDisposed as onDisposedInternal,
   onError as onErrorInternal,
-} from "../__internal__/util/DisposableLikeInternal";
+} from "../__internal__/util/__internal__DisposableLike";
 import {
   Option,
   SideEffect,

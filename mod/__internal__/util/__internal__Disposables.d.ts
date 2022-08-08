@@ -1,7 +1,7 @@
 import { Option, Factory } from "../../functions.mjs";
-import { DisposableLike, DisposableLike_isDisposed, DisposableLike_exception, Exception, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose } from "./DisposableLikeInternal.mjs";
-import { MutableRefLike } from "./MutableRefLike.mjs";
-import { Class1, Class, UnknownObject } from "./Object.mjs";
+import { DisposableLike, DisposableLike_isDisposed, DisposableLike_exception, Exception, DisposableLike_add, DisposableOrTeardown, DisposableLike_dispose } from "./__internal__DisposableLike.mjs";
+import { MutableRefLike } from "./__internal__MutableRefLike.mjs";
+import { Class1, Class, UnknownObject } from "./__internal__Objects.mjs";
 declare const delegatingDisposableMixin: Class1<DisposableLike, DisposableLike, {
     readonly [DisposableLike_isDisposed]: boolean;
 }, {

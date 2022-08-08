@@ -1,11 +1,11 @@
 /// <reference types="./EnumerableLike.d.ts" />
-import { createRepeatOperator } from '../__internal__/containers/ContainerLikeInternal.mjs';
-import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLikeInternal.mjs';
-import { getDelay, hasDelay } from '../__internal__/optionalArgs.mjs';
-import { disposableMixin, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
-import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
-import { clazz, createInstanceFactory, __extends, init } from '../__internal__/util/Object.mjs';
+import { getDelay, hasDelay } from '../__internal__/__internal__optionParsing.mjs';
+import { createRepeatOperator } from '../__internal__/containers/__internal__ContainerLike.mjs';
+import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
+import { disposableMixin, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
+import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
+import { getCurrentRef, setCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';
+import { clazz, createInstanceFactory, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable } from '../ix.mjs';

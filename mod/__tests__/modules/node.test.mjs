@@ -1,6 +1,6 @@
 /// <reference types="./node.test.d.ts" />
 import { Writable, Readable } from 'stream';
-import { describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../../__internal__/__internal__testing.mjs';
 import { endWith, ignoreElements } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { newInstance, pipe, returns } from '../../functions.mjs';

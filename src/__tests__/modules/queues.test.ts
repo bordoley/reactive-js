@@ -1,5 +1,9 @@
-import { createPriorityQueue } from "../../__internal__/scheduling/queue";
-import { describe, expectArrayEquals, test } from "../../__internal__/testing";
+import {
+  describe,
+  expectArrayEquals,
+  test,
+} from "../../__internal__/__internal__testing";
+import { createPriorityQueue } from "../../__internal__/scheduling/__internal__queue";
 import { floor, newInstance, pipe } from "../../functions";
 
 const compare = (a: number, b: number): number => a - b;

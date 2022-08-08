@@ -18,15 +18,15 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
-import { getDelay } from "../__internal__/optionalArgs";
-import { disposableMixin } from "../__internal__/util/DisposableLikeMixins";
+import { getDelay } from "../__internal__/__internal__optionParsing";
+import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
-} from "../__internal__/util/Object";
+} from "../__internal__/util/__internal__Objects";
 import {
   Factory,
   Option,

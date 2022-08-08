@@ -4,7 +4,7 @@ import {
   expectEquals,
   expectPromiseToThrow,
   testAsync,
-} from "../../__internal__/testing";
+} from "../../__internal__/__internal__testing";
 import { endWith, ignoreElements } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { newInstance, pipe, returns } from "../../functions";

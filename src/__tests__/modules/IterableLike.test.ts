@@ -1,4 +1,8 @@
-import { describe, expectArrayEquals, test } from "../../__internal__/testing";
+import {
+  describe,
+  expectArrayEquals,
+  test,
+} from "../../__internal__/__internal__testing";
 import { toObservable } from "../../containers/IterableLike";
 import { pipeLazy } from "../../functions";
 import { toReadonlyArray } from "../../rx/ObservableLike";

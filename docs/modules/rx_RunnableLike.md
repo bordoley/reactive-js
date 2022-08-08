@@ -38,6 +38,7 @@
 - [keep](rx_RunnableLike.md#keep)
 - [last](rx_RunnableLike.md#last)
 - [map](rx_RunnableLike.md#map)
+- [onRun](rx_RunnableLike.md#onrun)
 - [pairwise](rx_RunnableLike.md#pairwise)
 - [reduce](rx_RunnableLike.md#reduce)
 - [repeat](rx_RunnableLike.md#repeat)
@@ -371,6 +372,40 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### onRun
+
+▸ **onRun**<`T`\>(`f`): (`runnable`: [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>) => [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](util.md#disposableorteardown)\> |
+
+#### Returns
+
+`fn`
+
+▸ (`runnable`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `runnable` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
+
+##### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 ___
 

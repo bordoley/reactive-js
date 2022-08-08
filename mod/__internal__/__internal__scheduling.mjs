@@ -1,4 +1,4 @@
-/// <reference types="./schedulingInternal.d.ts" />
+/// <reference types="./__internal__scheduling.d.ts" />
 const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
 const SchedulerLike_now = Symbol("SchedulerLike_now");
 const isInContinuation = (scheduler) => scheduler[SchedulerLike_inContinuation];

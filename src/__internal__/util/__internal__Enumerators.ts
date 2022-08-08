@@ -5,8 +5,8 @@ import {
   EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../../util";
-import { DisposableLike, isDisposed } from "./DisposableLikeInternal";
-import { Class, UnknownObject, clazz } from "./Object";
+import { DisposableLike, isDisposed } from "./__internal__DisposableLike";
+import { Class, UnknownObject, clazz } from "./__internal__Objects";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
