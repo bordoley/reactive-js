@@ -18,7 +18,7 @@
 
 ### Methods
 
-- [dispatch](integrations_web.WindowLocationStreamLike.md#dispatch)
+- [[DispatcherLike\_dispatch]](integrations_web.WindowLocationStreamLike.md#[dispatcherlike_dispatch])
 - [goBack](integrations_web.WindowLocationStreamLike.md#goback)
 
 ## Properties
@@ -33,9 +33,9 @@ StreamLike.T
 
 ## Methods
 
-### dispatch
+### [DispatcherLike\_dispatch]
 
-▸ **dispatch**(`this`, `stateOrUpdater`, `options?`): `void`
+▸ **[DispatcherLike_dispatch]**(`this`, `stateOrUpdater`, `options?`): `void`
 
 #### Parameters
 
@@ -49,6 +49,10 @@ StreamLike.T
 #### Returns
 
 `void`
+
+#### Overrides
+
+StreamLike.\_\_@DispatcherLike\_dispatch@23542
 
 ___
 
