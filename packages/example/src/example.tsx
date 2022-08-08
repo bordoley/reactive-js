@@ -1,51 +1,67 @@
 import React from "react";
 import ReactDOMClient from "react-dom/client";
+import { generateObservable } from "@reactive-js/core/rx";
 import {
   __observe,
   observable,
-  generate,
   __do,
   __memo,
-} from "@reactive-js/core/observable";
-import { fromObservable, FlowMode } from "@reactive-js/core/flowable";
-import { __state, __stream } from "@reactive-js/core/streamable";
+  __state,
+  __stream,
+} from "@reactive-js/core/rx/effects";
+import { toFlowable } from "@reactive-js/core/rx/ObservableLike";
+import { FlowMode } from "@reactive-js/core/streaming";
 import {
   createComponent,
   createReactNormalPriorityScheduler,
   useObservable,
-} from "@reactive-js/core/react";
-import { windowLocation, WindowLocationURI } from "@reactive-js/core/web";
+} from "@reactive-js/core/integrations/react";
+import {
+  replaceWindowLocation,
+  windowLocation,
+  WindowLocationURI,
+} from "@reactive-js/core/integrations/web";
 import { increment, pipe, returns, Updater } from "@reactive-js/core/functions";
-import { DispatcherLike } from "@reactive-js/core/dispatcher";
+import { DispatcherLike } from "@reactive-js/core/scheduling";
+import {
+  dispatch,
+  dispatchTo,
+} from "@reactive-js/core/scheduling/DispatcherLike";
+import { stream } from "@reactive-js/core/streaming/StreamableLike";
 
 const normalPriorityScheduler = createReactNormalPriorityScheduler();
 
 // History must be globally unique to an application
-const historyStream = windowLocation.stream(normalPriorityScheduler, {
-  replay: 1,
-});
+const historyStream = pipe(
+  windowLocation,
+  stream(normalPriorityScheduler, {
+    replay: 1,
+  }),
+);
 
 const counterFlowable = pipe(
-  generate(increment, returns(0), { delay: 1000 }),
-  fromObservable(),
+  generateObservable(increment, returns(0), { delay: 100 }),
+  toFlowable(),
 );
 
 const createActions = (
   stateDispatcher: DispatcherLike<Updater<FlowMode>>,
   counterDispatcher: DispatcherLike<FlowMode>,
 ) => ({
-  onValueChanged: (value: number) => {
-    historyStream.dispatch(
-      (uri: WindowLocationURI) => ({
+  onValueChanged: (value: number) =>
+    pipe(
+      historyStream,
+      replaceWindowLocation((uri: WindowLocationURI) => ({
         ...uri,
         query: `v=${value}`,
-      }),
-      { replace: true },
-    );
-  },
+      })),
+    ),
   toggleStateMode: () =>
-    stateDispatcher.dispatch(mode => (mode === "pause" ? "resume" : "pause")),
-  setCounterMode: (mode: FlowMode) => counterDispatcher.dispatch(mode),
+    pipe(
+      (mode: FlowMode) => (mode === "pause" ? "resume" : "pause"),
+      dispatchTo(stateDispatcher),
+    ),
+  setCounterMode: (mode: FlowMode) => pipe(counterDispatcher, dispatch(mode)),
 });
 
 const initialFlowModeState = () => "pause" as FlowMode;
@@ -81,10 +97,13 @@ const StreamPauseResume = createComponent(() =>
 const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
   const { value: path } = ev.target;
 
-  historyStream.dispatch((uri: WindowLocationURI) => ({
-    ...uri,
-    path,
-  }));
+  pipe(
+    historyStream,
+    dispatch((uri: WindowLocationURI) => ({
+      ...uri,
+      path,
+    })),
+  );
 };
 
 const goBack = () => {

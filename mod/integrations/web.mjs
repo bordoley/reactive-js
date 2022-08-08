@@ -5,7 +5,7 @@ import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, newInstance, none, isEmpty, getLength, isSome, raise, compose } from '../functions.mjs';
-import { createObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable } from '../rx.mjs';
+import { createObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
 import { map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
@@ -14,7 +14,6 @@ import { dispatch, getScheduler, dispatchTo } from '../scheduling/DispatcherLike
 import { getDispatcher } from '../scheduling/ObserverLike.mjs';
 import { createStreamble, createActionReducer } from '../streaming.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
-import { SinkLike_notify } from '../util.mjs';
 import { onDisposed, toAbortSignal, dispose, addTo } from '../util/DisposableLike.mjs';
 
 const reservedEvents = ["error", "open"];
@@ -145,7 +144,7 @@ const windowLocation =
             }
             return canGoBack;
         },
-        [SinkLike_notify](observer) {
+        [ReactiveContainerLike_sinkInto](observer) {
             pipe(this.delegate, map(({ uri }) => uri), sinkInto(observer));
         },
     }));

@@ -27,6 +27,7 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ReactiveContainerLike_sinkInto,
   createObservable,
 } from "../rx";
 import { getObserverCount, getReplay } from "../rx/MulticastObservableLike";
@@ -61,7 +62,6 @@ import {
   createStreamble,
 } from "../streaming";
 import { stream } from "../streaming/StreamableLike";
-import { SinkLike_notify } from "../util";
 import {
   addTo,
   dispose,
@@ -345,7 +345,7 @@ export const windowLocation: WindowLocationStreamableLike =
             return canGoBack;
           },
 
-          [SinkLike_notify](
+          [ReactiveContainerLike_sinkInto](
             this: TProperties,
             observer: ObserverLike<WindowLocationURI>,
           ): void {
@@ -467,7 +467,7 @@ export const windowLocation: WindowLocationStreamableLike =
 
 export const replaceWindowLocation =
   (
-    uri: WindowLocationURI,
+    uri: Updater<WindowLocationURI> | WindowLocationURI,
   ): Function1<WindowLocationStreamLike, WindowLocationStreamLike> =>
   stream => {
     stream[DispatcherLike_dispatch](uri, { replace: true });

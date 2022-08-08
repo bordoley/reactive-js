@@ -32,5 +32,5 @@ declare const createEventSource: (url: string | URL, options?: EventSourceInit &
 declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<FetchRequest | string, ObservableLike<T>>;
 declare const addEventListener: <T>(eventName: string, selector: Function1<Event, T>) => Function1<EventTarget, ObservableLike<T>>;
 declare const windowLocation: WindowLocationStreamableLike;
-declare const replaceWindowLocation: (uri: WindowLocationURI) => Function1<WindowLocationStreamLike, WindowLocationStreamLike>;
+declare const replaceWindowLocation: (uri: Updater<WindowLocationURI> | WindowLocationURI) => Function1<WindowLocationStreamLike, WindowLocationStreamLike>;
 export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamableLike, WindowLocationURI, addEventListener, createEventSource, fetch, replaceWindowLocation, windowLocation };
