@@ -93,7 +93,8 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { keepType } from "../containers/ContainerLike";
+import { concatMap, keepType } from "../containers/ContainerLike";
+import { toObservable as promiseToObservable } from "../containers/PromiseableLike";
 import {
   toObservable as arrayToObservable,
   every,
@@ -614,6 +615,13 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() =>
     ),
   ))();
 export const mapT: Map<ObservableLike> = { map };
+
+export const mapAsync = <TA, TB>(
+  f: Function1<TA, Promise<TB>>,
+): ContainerOperator<ObservableLike, TA, TB> =>
+  concatMap({ ...switchAllT, ...mapT }, (a: TA) =>
+    pipe(a, f, promiseToObservable()),
+  );
 
 export const merge = mergeInternal;
 export const mergeT = mergeTInternal;
