@@ -1,7 +1,7 @@
 import { Updater, Function1 } from "../functions.mjs";
 import { ObservableLike } from "../rx.mjs";
-import { SchedulerLike } from "../scheduling.mjs";
-import { StreamLike, StreamableLike } from "../streaming.mjs";
+import { DispatcherLike_dispatch, SchedulerLike } from "../scheduling.mjs";
+import { StreamLike, StreamableLike, StreamableLike_stream } from "../streaming.mjs";
 interface WindowLocationURI {
     title: string;
     path: string;
@@ -9,13 +9,13 @@ interface WindowLocationURI {
     fragment: string;
 }
 interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
-    dispatch(this: WindowLocationStreamLike, stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
+    [DispatcherLike_dispatch](this: WindowLocationStreamLike, stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
     }): void;
     goBack(this: WindowLocationStreamLike): boolean;
 }
 interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike> {
-    stream(this: WindowLocationStreamableLike, scheduler: SchedulerLike, options?: {
+    [StreamableLike_stream](this: WindowLocationStreamableLike, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): WindowLocationStreamLike;
 }
@@ -29,6 +29,8 @@ declare const createEventSource: (url: string | URL, options?: EventSourceInit &
     readonly type: string;
     readonly data: string;
 }>;
-declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<string | FetchRequest, ObservableLike<T>>;
+declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<FetchRequest | string, ObservableLike<T>>;
 declare const addEventListener: <T>(eventName: string, selector: Function1<Event, T>) => Function1<EventTarget, ObservableLike<T>>;
-export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamableLike, WindowLocationURI, addEventListener, createEventSource, fetch };
+declare const windowLocation: WindowLocationStreamableLike;
+declare const replaceWindowLocation: (uri: WindowLocationURI) => Function1<WindowLocationStreamLike, WindowLocationStreamLike>;
+export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamableLike, WindowLocationURI, addEventListener, createEventSource, fetch, replaceWindowLocation, windowLocation };

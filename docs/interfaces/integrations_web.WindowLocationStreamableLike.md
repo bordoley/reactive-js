@@ -15,35 +15,12 @@
 ### Methods
 
 - [[StreamableLike\_stream]](integrations_web.WindowLocationStreamableLike.md#[streamablelike_stream])
-- [stream](integrations_web.WindowLocationStreamableLike.md#stream)
 
 ## Methods
 
 ### [StreamableLike\_stream]
 
-▸ **[StreamableLike_stream]**(`scheduler`, `options?`): [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
-
-#### Inherited from
-
-[StreamableLike](streaming.StreamableLike.md).[[StreamableLike_stream]](streaming.StreamableLike.md#[streamablelike_stream])
-
-___
-
-### stream
-
-▸ **stream**(`this`, `scheduler`, `options?`): [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
+▸ **[StreamableLike_stream]**(`this`, `scheduler`, `options?`): [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
 
 #### Parameters
 
@@ -57,3 +34,7 @@ ___
 #### Returns
 
 [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
+
+#### Overrides
+
+[StreamableLike](streaming.StreamableLike.md).[[StreamableLike_stream]](streaming.StreamableLike.md#[streamablelike_stream])
