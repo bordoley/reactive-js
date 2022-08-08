@@ -1,32 +1,17 @@
-import { Factory, identity, isSome, none, pipe } from "../../functions";
-import { ReactiveContainerLike } from "../../rx";
-import { sinkInto } from "../../rx/ReactiveContainerLike";
-import { DisposableOrTeardown, SinkLike } from "../../util";
-import { add, onDisposed } from "../util/DisposableLikeInternal";
+/// <reference types="./__internal__ReactiveContainerLike.d.ts" />
+import { pipe, none, isSome, identity } from '../../functions.mjs';
+import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
+import { onDisposed, add } from '../util/__internal__DisposableLike.mjs';
 
-export const createOnSink = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->(
-  createReactiveContainer: (f: (onSink: TSink) => void) => C,
-  src: C,
-  f: Factory<DisposableOrTeardown | void>,
-): C =>
-  createReactiveContainer(sink => {
+const createOnSink = (createReactiveContainer, src, f) => createReactiveContainer(sink => {
     pipe(src, sinkInto(sink));
-
     const disposable = f() || none;
-    pipe(
-      sink,
-      disposable instanceof Function
+    pipe(sink, disposable instanceof Function
         ? onDisposed(disposable)
         : isSome(disposable)
-        ? add(disposable)
-        : identity,
-    );
-  });
-
+            ? add(disposable)
+            : identity);
+});
 /*
 
 type CatchErrorSink<C extends ReactiveContainerLike> = new <T>(
@@ -169,3 +154,5 @@ export const decorateWithSomeSatisfyNotify =
     decorateWithSatisfyNotify(SatisfySink, false);
 
 */
+
+export { createOnSink };

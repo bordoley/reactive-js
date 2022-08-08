@@ -1,5 +1,5 @@
 /// <reference types="./IterableLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
 import { toObservable } from '../../containers/IterableLike.mjs';
 import { pipeLazy } from '../../functions.mjs';
 import { toReadonlyArray } from '../../rx/ObservableLike.mjs';

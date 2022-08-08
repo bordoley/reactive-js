@@ -1,6 +1,6 @@
 import { EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move } from "../../util.mjs";
-import { DisposableLike } from "./DisposableLikeInternal.mjs";
-import { Class, UnknownObject } from "./Object.mjs";
+import { DisposableLike } from "./__internal__DisposableLike.mjs";
+import { Class, UnknownObject } from "./__internal__Objects.mjs";
 interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
     [EnumeratorLike_current]: T;
 }

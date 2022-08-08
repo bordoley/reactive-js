@@ -1,4 +1,4 @@
-import { createRepeatOperator } from "../__internal__/containers/ContainerLikeInternal";
+import { createRepeatOperator } from "../__internal__/containers/__internal__ContainerLike";
 import {
   Lift,
   TReactive,
@@ -16,14 +16,15 @@ import {
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
   reactive,
-} from "../__internal__/containers/StatefulContainerLikeInternal";
+} from "../__internal__/containers/__internal__StatefulContainerLike";
+import { createOnSink } from "../__internal__/rx/__internal__ReactiveContainerLike";
 import {
   PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
-} from "../__internal__/util/Object";
+} from "../__internal__/util/__internal__Objects";
 import {
   DelegatingSink_delegate,
   bufferSinkMixin,
@@ -43,7 +44,7 @@ import {
   takeLastSinkMixin,
   takeWhileSinkMixin,
   throwIfEmptySinkMixin,
-} from "../__internal__/util/SinkLikeMixin";
+} from "../__internal__/util/__internal__Sinks";
 import {
   Buffer,
   Concat,
@@ -66,6 +67,7 @@ import {
 } from "../containers";
 import { toRunnable as arrayToRunnable } from "../containers/ReadonlyArrayLike";
 import {
+  Factory,
   Function1,
   Option,
   identity,
@@ -87,6 +89,7 @@ import {
 import {
   DisposableLike,
   DisposableLike_exception,
+  DisposableOrTeardown,
   SinkLike,
   SinkLike_notify,
 } from "../util";
@@ -279,6 +282,12 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   );
 })();
 export const mapT: Map<RunnableLike> = { map };
+
+export const onRun =
+  <T>(f: Factory<DisposableOrTeardown | void>) =>
+  (runnable: RunnableLike<T>): RunnableLike<T> => {
+    return createOnSink(createRunnable, runnable, f);
+  };
 
 export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
   T,

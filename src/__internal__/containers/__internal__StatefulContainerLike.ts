@@ -19,7 +19,7 @@ import {
   pipe,
   strictEquality,
 } from "../../functions";
-import { MAX_SAFE_INTEGER } from "../env";
+import { MAX_SAFE_INTEGER } from "../__internal__env";
 
 export type StatefulContainerOperatorIn<
   C extends StatefulContainerLike,

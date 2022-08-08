@@ -1,4 +1,4 @@
-/// <reference types="./ObservableLikeInternal.d.ts" />
+/// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
 import { compose, isTrue, pipeUnsafe, newInstance, isSome, pipe, getLength, none, partial } from '../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createEnumerableObservable, createRunnableObservable, createObservable, createSubject } from '../../rx.mjs';
@@ -6,13 +6,13 @@ import { publishTo } from '../../rx/SubjectLike.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
 import { sourceFrom, notifySink } from '../../util/SinkLike.mjs';
-import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createScanOperator } from '../containers/StatefulContainerLikeInternal.mjs';
-import { MAX_SAFE_INTEGER } from '../env.mjs';
-import { observerMixin, createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, createObserver } from '../scheduling/ObserverLikeMixin.mjs';
-import { addTo, onComplete, isDisposed, dispose, bindTo, addToIgnoringChildErrors } from '../util/DisposableLikeInternal.mjs';
-import { disposableMixin, createDisposableRef, disposed } from '../util/DisposableLikeMixins.mjs';
-import { MutableRefLike_current } from '../util/MutableRefLike.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../util/Object.mjs';
+import { MAX_SAFE_INTEGER } from '../__internal__env.mjs';
+import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createScanOperator } from '../containers/__internal__StatefulContainerLike.mjs';
+import { observerMixin, createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, createObserver } from '../scheduling/__internal__Observers.mjs';
+import { addTo, onComplete, isDisposed, dispose, bindTo, addToIgnoringChildErrors } from '../util/__internal__DisposableLike.mjs';
+import { disposableMixin, createDisposableRef, disposed } from '../util/__internal__Disposables.mjs';
+import { MutableRefLike_current } from '../util/__internal__MutableRefLike.mjs';
+import { createInstanceFactory, clazz, __extends, init } from '../util/__internal__Objects.mjs';
 
 const allAreEnumerable = compose(map((obs) => obs[ObservableLike_isEnumerable]), every(isTrue));
 const allAreRunnable = compose(map((obs) => obs[ObservableLike_isRunnable]), every(isTrue));
@@ -178,6 +178,6 @@ const multicast = (scheduler, options = {}) => observable => {
     return subject;
 };
 const scan = /*@__PURE__*/ pipe(createScanObserver, createScanOperator(liftEnumerableObservableT));
-const subscribe = /*@__PURE__*/ (() => scheduler => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable)))();
+const subscribe = scheduler => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
 
 export { allAreEnumerable, allAreRunnable, createMergeAll, createSwitchAll, distinctUntilChanged, forEach, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, scan, subscribe };

@@ -1,4 +1,8 @@
-import { describe, expectEquals, test } from "../../__internal__/testing";
+import {
+  describe,
+  expectEquals,
+  test,
+} from "../../__internal__/__internal__testing";
 import { toRunnable } from "../../containers/ReadonlyArrayLike";
 import { Option, none, pipeLazy } from "../../functions";
 import { deferRunnableT } from "../../rx";

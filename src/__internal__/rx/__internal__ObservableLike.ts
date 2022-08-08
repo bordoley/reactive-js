@@ -37,6 +37,7 @@ import { ObserverLike, SchedulerLike } from "../../scheduling";
 import { getScheduler } from "../../scheduling/ObserverLike";
 import { SinkLike_notify } from "../../util";
 import { notifySink, sourceFrom } from "../../util/SinkLike";
+import { MAX_SAFE_INTEGER } from "../__internal__env";
 import {
   Lift,
   TReactive,
@@ -44,8 +45,7 @@ import {
   createForEachOperator,
   createScanOperator,
   reactive,
-} from "../containers/StatefulContainerLikeInternal";
-import { MAX_SAFE_INTEGER } from "../env";
+} from "../containers/__internal__StatefulContainerLike";
 import {
   createDelegatingObserver,
   createDistinctUntilChangedObserver,
@@ -53,7 +53,7 @@ import {
   createObserver,
   createScanObserver,
   observerMixin,
-} from "../scheduling/ObserverLikeMixin";
+} from "../scheduling/__internal__Observers";
 import {
   DisposableLike,
   addTo,
@@ -62,21 +62,21 @@ import {
   dispose,
   isDisposed,
   onComplete,
-} from "../util/DisposableLikeInternal";
+} from "../util/__internal__DisposableLike";
 import {
   DisposableRefLike,
   createDisposableRef,
   disposableMixin,
   disposed,
-} from "../util/DisposableLikeMixins";
-import { MutableRefLike_current } from "../util/MutableRefLike";
+} from "../util/__internal__Disposables";
+import { MutableRefLike_current } from "../util/__internal__MutableRefLike";
 import {
   PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
-} from "../util/Object";
+} from "../util/__internal__Objects";
 
 export const allAreEnumerable = compose(
   mapArray((obs: ObservableLike) => obs[ObservableLike_isEnumerable]),
@@ -432,12 +432,10 @@ export const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ pipe(
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
-) => Function1<ObservableLike<T>, DisposableLike> = /*@__PURE__*/ (
-  () => scheduler => observable =>
-    pipe(
-      scheduler,
-      createObserver,
-      addToIgnoringChildErrors(scheduler),
-      sourceFrom(observable),
-    )
-)();
+) => Function1<ObservableLike<T>, DisposableLike> = scheduler => observable =>
+  pipe(
+    scheduler,
+    createObserver,
+    addToIgnoringChildErrors(scheduler),
+    sourceFrom(observable),
+  );

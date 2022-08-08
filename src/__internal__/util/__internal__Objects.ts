@@ -6,7 +6,7 @@ import {
   Function4,
   Option,
 } from "../../functions";
-import { __DEV__ } from "../env";
+import { __DEV__ } from "../__internal__env";
 
 export const Object_init = Symbol("Object_init");
 export const Object_properties = Symbol("Object_properties");

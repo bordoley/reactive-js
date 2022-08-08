@@ -1,35 +1,35 @@
-import { MAX_SAFE_INTEGER } from "../__internal__/env";
-import { getDelay } from "../__internal__/optionalArgs";
-import {
-  QueueLike,
-  createPriorityQueue,
-} from "../__internal__/scheduling/queue";
+import { MAX_SAFE_INTEGER } from "../__internal__/__internal__env";
+import { getDelay } from "../__internal__/__internal__optionParsing";
 import {
   getCurrentTime as getCurrentTimeInternal,
   isInContinuation as isInContinuationInternal,
-} from "../__internal__/schedulingInternal";
+} from "../__internal__/__internal__scheduling";
+import {
+  QueueLike,
+  createPriorityQueue,
+} from "../__internal__/scheduling/__internal__queue";
 import {
   addIgnoringChildErrors,
   dispose,
   isDisposed,
-} from "../__internal__/util/DisposableLikeInternal";
+} from "../__internal__/util/__internal__DisposableLike";
 import {
   DisposableRefLike,
   disposableMixin,
   disposableRefMixin,
-} from "../__internal__/util/DisposableLikeMixins";
+} from "../__internal__/util/__internal__Disposables";
 import {
   MutableEnumeratorLike,
   enumeratorMixin,
-} from "../__internal__/util/EnumeratorLikeMixin";
-import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
+} from "../__internal__/util/__internal__Enumerators";
+import { MutableRefLike_current } from "../__internal__/util/__internal__MutableRefLike";
 import {
   PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
-} from "../__internal__/util/Object";
+} from "../__internal__/util/__internal__Objects";
 import {
   Function1,
   Function2,

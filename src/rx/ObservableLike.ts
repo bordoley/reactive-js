@@ -1,3 +1,5 @@
+import { MAX_SAFE_INTEGER } from "../__internal__/__internal__env";
+import { isInContinuation } from "../__internal__/__internal__scheduling";
 import {
   TReactive,
   createDecodeWithCharsetOperator,
@@ -9,8 +11,7 @@ import {
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
-} from "../__internal__/containers/StatefulContainerLikeInternal";
-import { MAX_SAFE_INTEGER } from "../__internal__/env";
+} from "../__internal__/containers/__internal__StatefulContainerLike";
 import {
   allAreEnumerable,
   allAreRunnable,
@@ -28,8 +29,8 @@ import {
   multicast as multicastInternal,
   scan as scanInternal,
   subscribe as subscribeInternal,
-} from "../__internal__/rx/ObservableLikeInternal";
-import { createOnSink } from "../__internal__/rx/ReactiveContainerLikeInternal";
+} from "../__internal__/rx/__internal__ObservableLike";
+import { createOnSink } from "../__internal__/rx/__internal__ReactiveContainerLike";
 import {
   createDecodeWithCharsetObserver,
   createDelegatingObserver,
@@ -43,27 +44,26 @@ import {
   createTakeWhileObserver,
   createThrowIfEmptyObserver,
   observerMixin,
-} from "../__internal__/scheduling/ObserverLikeMixin";
-import { isInContinuation } from "../__internal__/schedulingInternal";
+} from "../__internal__/scheduling/__internal__Observers";
 import {
   DisposableRefLike,
   createDisposableRef,
   delegatingDisposableMixin,
   disposableMixin,
-} from "../__internal__/util/DisposableLikeMixins";
+} from "../__internal__/util/__internal__Disposables";
 import {
   MutableEnumeratorLike,
   enumeratorMixin,
-} from "../__internal__/util/EnumeratorLikeMixin";
-import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
+} from "../__internal__/util/__internal__Enumerators";
+import { MutableRefLike_current } from "../__internal__/util/__internal__MutableRefLike";
 import {
   PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
-} from "../__internal__/util/Object";
-import { createEnumeratorSink } from "../__internal__/util/SinkLikeMixin";
+} from "../__internal__/util/__internal__Objects";
+import { createEnumeratorSink } from "../__internal__/util/__internal__Sinks";
 import {
   Buffer,
   Concat,

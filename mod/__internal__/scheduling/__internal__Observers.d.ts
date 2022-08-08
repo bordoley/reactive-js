@@ -2,7 +2,7 @@ import { Function2, Equality, SideEffect1, Predicate, Function1, Function3, Redu
 import { ObservableLike } from "../../rx.mjs";
 import { SchedulerLike, ObserverLike_scheduler, ObserverLike_dispatcher, DispatcherLike, ObserverLike } from "../../scheduling.mjs";
 import { DisposableLike, SinkLike_notify } from "../../util.mjs";
-import { Class1 } from "../util/Object.mjs";
+import { Class1 } from "../util/__internal__Objects.mjs";
 declare type TObserverMixinReturn<T> = Omit<ObserverLike<T>, keyof DisposableLike | typeof SinkLike_notify>;
 declare const observerMixin: <T>() => Class1<SchedulerLike, TObserverMixinReturn<T>, {
     [ObserverLike_scheduler]: SchedulerLike;

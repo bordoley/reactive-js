@@ -3,7 +3,7 @@ import {
   expectArrayEquals,
   expectEquals,
   test,
-} from "../../__internal__/testing";
+} from "../../__internal__/__internal__testing";
 import { keepType } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { Option, isSome, pipe } from "../../functions";

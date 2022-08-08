@@ -1,4 +1,4 @@
-import { Describe } from "../__internal__/testing.mjs";
+import { Describe } from "../__internal__/__internal__testing.mjs";
 import { Function1, Factory, Equality, SideEffect1, Predicate, Reducer } from "../functions.mjs";
 import { ContainerLike, Container, ContainerOperator, FromArrayOptions, ContainerOf, ReadonlyArrayLike } from "../containers.mjs";
 declare const bufferTests: <C extends ContainerLike>(m: Container<C> & {

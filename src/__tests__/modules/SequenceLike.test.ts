@@ -1,4 +1,4 @@
-import { describe } from "../../__internal__/testing";
+import { describe } from "../../__internal__/__internal__testing";
 import { toSequence } from "../../containers/ReadonlyArrayLike";
 import {
   concatAllT,

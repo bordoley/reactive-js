@@ -1,5 +1,5 @@
 /// <reference types="./RunnableLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectEquals } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectEquals } from '../../__internal__/__internal__testing.mjs';
 import { toRunnable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, none } from '../../functions.mjs';
 import { deferRunnableT } from '../../rx.mjs';

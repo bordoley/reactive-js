@@ -2,8 +2,8 @@ import { ReadonlyArrayLike, ContainerOperator, StatefulContainerStateOf, Contain
 import { Function1 } from "../../functions.mjs";
 import { ObservableLike, MulticastObservableLike } from "../../rx.mjs";
 import { ObserverLike, SchedulerLike } from "../../scheduling.mjs";
-import { Lift, TReactive } from "../containers/StatefulContainerLikeInternal.mjs";
-import { DisposableLike } from "../util/DisposableLikeInternal.mjs";
+import { Lift, TReactive } from "../containers/__internal__StatefulContainerLike.mjs";
+import { DisposableLike } from "../util/__internal__DisposableLike.mjs";
 declare const allAreEnumerable: Function1<ReadonlyArrayLike<ObservableLike<unknown>>, boolean>;
 declare const allAreRunnable: Function1<ReadonlyArrayLike<ObservableLike<unknown>>, boolean>;
 declare const liftObservable: <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;

@@ -1,5 +1,5 @@
 /// <reference types="./isomorphic.tests.d.ts" />
-import { runTests } from '../__internal__/testing.mjs';
+import { runTests } from '../__internal__/__internal__testing.mjs';
 import ContainerLikeTests from './modules/ContainerLike.test.mjs';
 import DisposableLikeTests from './modules/DisposableLike.test.mjs';
 import EnumerableLikeTests from './modules/EnumerableLike.test.mjs';

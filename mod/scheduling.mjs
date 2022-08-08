@@ -1,12 +1,12 @@
 /// <reference types="./scheduling.d.ts" />
-import { MAX_SAFE_INTEGER } from './__internal__/env.mjs';
-import { getDelay } from './__internal__/optionalArgs.mjs';
-import { createPriorityQueue } from './__internal__/scheduling/queue.mjs';
-import { SchedulerLike_inContinuation as SchedulerLike_inContinuation$1, SchedulerLike_now as SchedulerLike_now$1, getCurrentTime, isInContinuation } from './__internal__/schedulingInternal.mjs';
-import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './__internal__/util/DisposableLikeInternal.mjs';
-import { disposableMixin } from './__internal__/util/DisposableLikeMixins.mjs';
-import { enumeratorMixin } from './__internal__/util/EnumeratorLikeMixin.mjs';
-import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/Object.mjs';
+import { MAX_SAFE_INTEGER } from './__internal__/__internal__env.mjs';
+import { getDelay } from './__internal__/__internal__optionParsing.mjs';
+import { SchedulerLike_inContinuation as SchedulerLike_inContinuation$1, SchedulerLike_now as SchedulerLike_now$1, getCurrentTime, isInContinuation } from './__internal__/__internal__scheduling.mjs';
+import { createPriorityQueue } from './__internal__/scheduling/__internal__queue.mjs';
+import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './__internal__/util/__internal__DisposableLike.mjs';
+import { disposableMixin } from './__internal__/util/__internal__Disposables.mjs';
+import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs';
+import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/__internal__Objects.mjs';
 import { pipe, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';

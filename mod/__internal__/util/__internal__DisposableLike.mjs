@@ -1,4 +1,4 @@
-/// <reference types="./DisposableLikeInternal.d.ts" />
+/// <reference types="./__internal__DisposableLike.d.ts" />
 import { isSome, isNone } from '../../functions.mjs';
 
 const DisposableLike_add = Symbol("DisposableLike_add");

@@ -1,6 +1,6 @@
 /// <reference types="./EnumerableObservableLike.d.ts" />
-import { MAX_SAFE_INTEGER } from '../__internal__/env.mjs';
-import { createMergeAll, createSwitchAll } from '../__internal__/rx/ObservableLikeInternal.mjs';
+import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
+import { createMergeAll, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
 import { pipeUnsafe, newInstance } from '../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';

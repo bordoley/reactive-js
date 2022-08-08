@@ -3,7 +3,7 @@ import {
   expectArrayEquals,
   expectEquals,
   test,
-} from "../../__internal__/testing";
+} from "../../__internal__/__internal__testing";
 import { toRunnable as arrayToRunnable } from "../../containers/ReadonlyArrayLike";
 import { pipe } from "../../functions";
 import { createSubject } from "../../rx";

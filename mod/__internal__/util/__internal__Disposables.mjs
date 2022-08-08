@@ -1,8 +1,8 @@
-/// <reference types="./DisposableLikeMixins.d.ts" />
+/// <reference types="./__internal__Disposables.d.ts" />
 import { pipe, none, isSome, ignore, returns } from '../../functions.mjs';
-import { onDisposed, DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose, dispose, getException, isDisposed, add } from './DisposableLikeInternal.mjs';
-import { MutableRefLike_current } from './MutableRefLike.mjs';
-import { clazz, createInstanceFactory, __extends, init } from './Object.mjs';
+import { onDisposed, DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose, dispose, getException, isDisposed, add } from './__internal__DisposableLike.mjs';
+import { MutableRefLike_current } from './__internal__MutableRefLike.mjs';
+import { clazz, createInstanceFactory, __extends, init } from './__internal__Objects.mjs';
 
 const delegatingDisposableMixin = /*@__PURE__*/ (() => {
     const DelegatingDisposable_private_delegate = Symbol("DelegatingDisposable_private_delegate");
