@@ -53,6 +53,7 @@
 - [isRunnable](rx_ObservableLike.md#isrunnable)
 - [keep](rx_ObservableLike.md#keep)
 - [map](rx_ObservableLike.md#map)
+- [mapAsync](rx_ObservableLike.md#mapasync)
 - [merge](rx_ObservableLike.md#merge)
 - [mergeAll](rx_ObservableLike.md#mergeall)
 - [multicast](rx_ObservableLike.md#multicast)
@@ -1215,6 +1216,29 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### mapAsync
+
+▸ **mapAsync**<`TA`, `TB`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Function1`](functions.md#function1)<`TA`, `Promise`<`TB`\>\> |
 
 #### Returns
 
