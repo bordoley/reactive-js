@@ -147,6 +147,29 @@ declare const takeLastT: TakeLast<ObservableLike>;
 declare const takeUntil: <T>(notifier: ObservableLike) => Function1<ObservableLike<T>, ObservableLike<T>>;
 declare const takeWhile: TakeWhile<ObservableLike>["takeWhile"];
 declare const takeWhileT: TakeWhile<ObservableLike>;
+interface Throttle {
+    /**
+     * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
+     *
+     * @param duration Function function that is used to determine the silence duration in between emitted values.
+     * @param mode The throttle mode.
+     */
+    <T>(duration: Function1<T, ObservableLike>, options?: {
+        readonly mode?: "first" | "last" | "interval";
+    }): ContainerOperator<ObservableLike, T, T>;
+    /**
+     * Returns an `ObservableLike` which emits a value from the source,
+     * then ignores subsequent source values for `duration` milliseconds.
+     *
+     * @param duration Time to wait before emitting another value after
+     * emitting the last value, measured in milliseconds.
+     * @param mode The throttle mode.
+     */
+    <T>(duration: number, options?: {
+        readonly mode?: "first" | "last" | "interval";
+    }): ContainerOperator<ObservableLike, T, T>;
+}
+declare const throttle: Throttle;
 declare const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike>;
 declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
@@ -173,4 +196,4 @@ declare const zipT: Zip<ObservableLike>;
 declare const zipLatest: Zip<ObservableLike>["zip"];
 declare const zipLatestT: Zip<ObservableLike>;
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike, TA, T>;
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
