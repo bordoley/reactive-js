@@ -1,9 +1,4 @@
-import {
-  concatMap,
-  concatWith,
-  fromValue,
-  throws,
-} from "../container";
+import { concatMap, concatWith, fromValue, throws } from "../container";
 import { forEach as enumeratorForEach } from "../enumerator";
 import {
   identity,
@@ -39,15 +34,8 @@ import {
   timeout,
   toRunnable,
 } from "../observable";
-import {
-  last,
-  toArray,
-} from "../runnable";
-import {
-  concatT,
-  fromArrayT,
-  mapT,
-} from "../runnableObservable";
+import { last, toArray } from "../runnable";
+import { concatT, fromArrayT, mapT } from "../runnableObservable";
 import { createVirtualTimeScheduler } from "../scheduler";
 import {
   describe,
@@ -56,7 +44,6 @@ import {
   expectToThrow,
   test,
 } from "../testing";
-
 
 export const tests = describe(
   "observable",
