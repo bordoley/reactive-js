@@ -85,7 +85,8 @@ const scanAsyncT = { scanAsync };
 const skipFirstT = {
     skipFirst: skipFirst,
 };
-const switchAll = createSwitchAll(lift);
+const switchAll = 
+/*@__PURE__*/ createSwitchAll(lift);
 const switchAllT = {
     concatAll: switchAll,
 };

@@ -109,7 +109,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `uri` | [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) |
+| `uri` | [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\> |
 
 #### Returns
 

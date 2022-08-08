@@ -203,7 +203,7 @@ export const skipFirstT: SkipFirst<RunnableObservableLike> = {
 };
 
 export const switchAll: ConcatAll<RunnableObservableLike>["concatAll"] =
-  createSwitchAll<RunnableObservableLike>(lift);
+  /*@__PURE__*/ createSwitchAll<RunnableObservableLike>(lift);
 export const switchAllT: ConcatAll<RunnableObservableLike> = {
   concatAll: switchAll,
 };

@@ -497,7 +497,7 @@ export const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ pipe(
 );
 
 export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
-  createSwitchAll<ObservableLike>(liftObservable);
+  /*@__PURE__*/ createSwitchAll<ObservableLike>(liftObservable);
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,

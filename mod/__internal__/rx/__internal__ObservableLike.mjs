@@ -200,7 +200,8 @@ const onSubscribe = (f) => (obs) => {
             : createObservable(onSink), obs, f);
 };
 const scan = /*@__PURE__*/ pipe(createScanObserver, createScanOperator(liftEnumerableObservableT));
-const switchAll = createSwitchAll(liftObservable);
+const switchAll = 
+/*@__PURE__*/ createSwitchAll(liftObservable);
 const subscribe = scheduler => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
 const takeFirst = 
 /*@__PURE__*/ pipe(createTakeFirstObserver, createTakeFirstOperator(liftEnumerableObservableT));
