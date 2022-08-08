@@ -79,6 +79,7 @@ import {
   Pairwise,
   ReadonlyArrayLike,
   Reduce,
+  Repeat,
   Scan,
   SkipFirst,
   TakeFirst,
@@ -103,6 +104,7 @@ import {
   Function1,
   Function2,
   Option,
+  Predicate,
   compose,
   getLength,
   getOrRaise,
@@ -129,10 +131,12 @@ import {
   enumerate,
 } from "../ix/EnumerableLike";
 import {
+  EnumerableObservableLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  RunnableObservableLike,
   createEnumerableObservable,
   createObservable,
   createRunnableObservable,
@@ -161,6 +165,7 @@ import {
   DisposableOrTeardown,
   EnumeratorLike,
   EnumeratorLike_current,
+  Exception,
   SinkLike,
   SinkLike_notify,
   SourceLike_move,
@@ -170,6 +175,7 @@ import { run } from "../util/ContinuationLike";
 import {
   add,
   addTo,
+  addToIgnoringChildErrors,
   bindTo,
   toObservable as disposableToObservable,
   dispose,
@@ -180,7 +186,7 @@ import {
 } from "../util/DisposableLike";
 import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
 import { pause, resume } from "../util/PauseableLike";
-import { notify, sourceFrom } from "../util/SinkLike";
+import { notify, notifySink, sourceFrom } from "../util/SinkLike";
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
 
@@ -460,6 +466,14 @@ export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
       LatestMode.Zip,
     )) as ForkZip<ObservableLike>["forkZip"];
 
+export const isEnumerable = (
+  obs: ObservableLike,
+): obs is EnumerableObservableLike => obs[ObservableLike_isEnumerable];
+
+export const isRunnable = (
+  obs: ObservableLike,
+): obs is RunnableObservableLike => obs[ObservableLike_isRunnable];
+
 export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() =>
   pipe(
     createKeepObserver,
@@ -630,9 +644,9 @@ export const onSubscribe =
   (obs: ObservableLike<T>): ObservableLike<T> => {
     return createOnSink(
       onSink =>
-        obs[ObservableLike_isEnumerable]
+        isEnumerable(obs)
           ? createEnumerableObservable(onSink)
-          : obs[ObservableLike_isRunnable]
+          : isRunnable(obs)
           ? createRunnableObservable(onSink)
           : createObservable(onSink),
       obs,
@@ -656,6 +670,129 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
     ),
   ))();
 export const reduceT: Reduce<ObservableLike> = { reduce };
+
+const repeatImpl: <T>(
+  shouldRepeat: (count: number, error?: Exception) => boolean,
+) => ContainerOperator<ObservableLike, T, T> = /*@__PURE__*/ (() => {
+  const createRepeatObserver = <T>(
+    delegate: ObserverLike<T>,
+    observable: ObservableLike<T>,
+    shouldRepeat: (count: number, error?: Exception) => boolean,
+  ) => {
+    let count = 1;
+
+    const doOnDispose = (e?: Exception) => {
+      let shouldComplete = false;
+      try {
+        shouldComplete = !shouldRepeat(count, e);
+      } catch (cause) {
+        shouldComplete = true;
+        e = { cause, parent: e } as Exception;
+      }
+
+      if (shouldComplete) {
+        pipe(delegate, dispose(e));
+      } else {
+        count++;
+
+        pipe(
+          observable,
+          forEach(notifySink(delegate)),
+          subscribe(getScheduler(delegate)),
+          addToIgnoringChildErrors(delegate),
+          onDisposed(doOnDispose),
+        );
+      }
+    };
+
+    return pipe(
+      createDelegatingObserver(delegate),
+      addToIgnoringChildErrors(delegate),
+      onDisposed(doOnDispose),
+    );
+  };
+
+  return <T>(shouldRepeat: (count: number, error?: Exception) => boolean) =>
+    (observable: ObservableLike<T>) => {
+      const operator = pipe(
+        createRepeatObserver,
+        partial(observable, shouldRepeat),
+      );
+      return pipe(observable, liftEnumerableObservable(operator));
+    };
+})();
+
+interface RepeatOperator {
+  /**
+   * Returns an `ObservableLike` that applies the predicate function each time the source
+   * completes to determine if the subscription should be renewed.
+   *
+   * @param predicate The predicate function to apply.
+   */
+  <T>(predicate: Predicate<number>): ContainerOperator<ObservableLike, T, T>;
+
+  /**
+   * Returns an `ObservableLike` that repeats the source count times.
+   * @param count
+   */
+  <T>(count: number): ContainerOperator<ObservableLike, T, T>;
+
+  /**
+   * Returns an `ObservableLike` that continually repeats the source.
+   */
+  <T>(): ContainerOperator<ObservableLike, T, T>;
+}
+export const repeat: RepeatOperator = /*@__PURE__*/ (() => {
+  const defaultRepeatPredicate = (_: number, e?: Exception): boolean =>
+    isNone(e);
+
+  return (predicate?: Predicate<number> | number) => {
+    const repeatPredicate = isNone(predicate)
+      ? defaultRepeatPredicate
+      : typeof predicate === "number"
+      ? (count: number, e?: Exception) => isNone(e) && count < predicate
+      : (count: number, e?: Exception) => isNone(e) && predicate(count);
+
+    return repeatImpl(repeatPredicate);
+  };
+})();
+export const repeatT: Repeat<ObservableLike> = {
+  repeat,
+};
+
+interface Retry {
+  /**
+   * Returns an `ObservableLike` that mirrors the source, re-subscribing
+   * if the source completes with an error.
+   */
+  <T>(): ContainerOperator<ObservableLike, T, T>;
+
+  /**
+   * Returns an `ObservableLike` that mirrors the source, resubscrbing
+   * if the source completes with an error which satisfies the predicate function.
+   *
+   * @param predicate
+   */
+  <T>(predicate: Function2<number, unknown, boolean>): ContainerOperator<
+    ObservableLike,
+    T,
+    T
+  >;
+}
+
+export const retry: Retry = /*@__PURE__*/ (() => {
+  const defaultRetryPredicate = (_: number, error?: Exception): boolean =>
+    isSome(error);
+
+  return (predicate?: (count: number, error: unknown) => boolean) => {
+    const retryPredicate = isNone(predicate)
+      ? defaultRetryPredicate
+      : (count: number, error?: Exception) =>
+          isSome(error) && predicate(count, error.cause);
+
+    return repeatImpl(retryPredicate);
+  };
+})();
 
 export const scan = scanInternal;
 export const scanT: Scan<ObservableLike> = { scan };
@@ -745,9 +882,9 @@ export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 export const takeUntil = <T>(
   notifier: ObservableLike,
 ): Function1<ObservableLike<T>, ObservableLike<T>> => {
-  const lift = notifier[ObservableLike_isEnumerable]
+  const lift = isEnumerable(notifier)
     ? liftEnumerableObservable
-    : notifier[ObservableLike_isRunnable]
+    : isRunnable(notifier)
     ? liftRunnableObservable
     : liftObservable;
 
@@ -876,7 +1013,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
     return () =>
       (obs: ObservableLike<T>): EnumerableLike<T> =>
-        obs[ObservableLike_isEnumerable]
+        isEnumerable(obs)
           ? createEnumerable(() => {
               const scheduler = createEnumeratorScheduler();
 
@@ -894,7 +1031,7 @@ export const toEnumerableT: ToEnumerable<ObservableLike> = { toEnumerable };
 
 export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
   () => observable =>
-    observable[ObservableLike_isRunnable]
+    isRunnable(observable)
       ? createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
           createObservable(observer => {
             const pausableScheduler = pipe(
@@ -991,7 +1128,7 @@ export const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"]
       } = {},
     ): Function1<ObservableLike<T>, ReadonlyArrayLike<T>> =>
     observable => {
-      if (observable[ObservableLike_isRunnable]) {
+      if (isRunnable(observable)) {
         const { schedulerFactory = createVirtualTimeScheduler } = options;
         const scheduler = schedulerFactory();
         const result: T[] = [];
@@ -1094,9 +1231,9 @@ export const withLatestFrom: <TA, TB, T>(
     other: ObservableLike<TB>,
     selector: Function2<TA, TB, T>,
   ) => {
-    const lift = other[ObservableLike_isEnumerable]
+    const lift = isEnumerable(other)
       ? liftEnumerableObservable
-      : other[ObservableLike_isRunnable]
+      : isRunnable(other)
       ? liftRunnableObservable
       : liftObservable;
     return pipe(
@@ -1191,7 +1328,7 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
       const enumerators: EnumeratorLike[] = [];
 
       for (const next of observables) {
-        if (next[ObservableLike_isEnumerable]) {
+        if (isEnumerable(next)) {
           const enumerator = pipe(
             next,
             toEnumerable(),
