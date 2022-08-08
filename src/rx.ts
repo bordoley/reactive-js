@@ -18,6 +18,7 @@ import {
   Container,
   ContainerLike,
   ContainerOf,
+  ContainerOperator,
   Defer,
   Empty,
   Generate,
@@ -27,6 +28,7 @@ import {
 import {
   Factory,
   Function1,
+  Function2,
   SideEffect1,
   Updater,
   getLength,
@@ -117,6 +119,19 @@ export interface MulticastObservableLike<T = unknown>
 export const SubjectLike_publish = Symbol("SubjectLike_publish");
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
   [SubjectLike_publish](next: T): void;
+}
+
+export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
+  TAcc,
+  T,
+  ContainerOf<C, TAcc>
+>;
+
+export interface ScanAsync<C extends ObservableLike> extends Container<C> {
+  scanAsync: <T, TAcc>(
+    scanner: AsyncReducer<C, T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ) => ContainerOperator<C, T, TAcc>;
 }
 
 export type ToObservable<

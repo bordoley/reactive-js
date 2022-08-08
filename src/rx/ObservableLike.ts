@@ -7,7 +7,6 @@ import {
   createMapOperator,
   createReduceOperator,
   createSkipFirstOperator,
-  createTakeFirstOperator,
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
@@ -16,9 +15,11 @@ import {
   allAreEnumerable,
   allAreRunnable,
   createMergeAll,
-  createSwitchAll,
+  createScanAsync,
   distinctUntilChanged as distinctUntilChangedInternal,
   forEach as forEachInternal,
+  isEnumerable as isEnumerableInternal,
+  isRunnable as isRunnableInternal,
   liftEnumerableObservable,
   liftEnumerableObservableT,
   liftObservable,
@@ -27,10 +28,13 @@ import {
   merge as mergeInternal,
   mergeT as mergeTInternal,
   multicast as multicastInternal,
+  onSubscribe as onSubscribeInternal,
   scan as scanInternal,
   subscribe as subscribeInternal,
+  switchAll as switchAllInternal,
+  takeFirst as takeFirstInternal,
+  zipWithLatestFrom as zipWithLatestFromInternal,
 } from "../__internal__/rx/__internal__ObservableLike";
-import { createOnSink } from "../__internal__/rx/__internal__ReactiveContainerLike";
 import {
   createDecodeWithCharsetObserver,
   createDelegatingObserver,
@@ -39,7 +43,6 @@ import {
   createPairwiseObserver,
   createReduceObserver,
   createSkipFirstObserver,
-  createTakeFirstObserver,
   createTakeLastObserver,
   createTakeWhileObserver,
   createThrowIfEmptyObserver,
@@ -134,9 +137,8 @@ import {
   EnumerableObservableLike,
   MulticastObservableLike,
   ObservableLike,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
   RunnableObservableLike,
+  ScanAsync,
   createEnumerableObservable,
   createObservable,
   createRunnableObservable,
@@ -466,13 +468,13 @@ export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
       LatestMode.Zip,
     )) as ForkZip<ObservableLike>["forkZip"];
 
-export const isEnumerable = (
+export const isEnumerable: (
   obs: ObservableLike,
-): obs is EnumerableObservableLike => obs[ObservableLike_isEnumerable];
+) => obs is EnumerableObservableLike = isEnumerableInternal;
 
-export const isRunnable = (
+export const isRunnable: (
   obs: ObservableLike,
-): obs is RunnableObservableLike => obs[ObservableLike_isRunnable];
+) => obs is RunnableObservableLike = isRunnableInternal;
 
 export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() =>
   pipe(
@@ -639,20 +641,9 @@ export const mergeAllT: ConcatAll<
 
 export const multicast = multicastInternal;
 
-export const onSubscribe =
-  <T>(f: Factory<DisposableOrTeardown | void>) =>
-  (obs: ObservableLike<T>): ObservableLike<T> => {
-    return createOnSink(
-      onSink =>
-        isEnumerable(obs)
-          ? createEnumerableObservable(onSink)
-          : isRunnable(obs)
-          ? createRunnableObservable(onSink)
-          : createObservable(onSink),
-      obs,
-      f,
-    );
-  };
+export const onSubscribe: <T>(
+  f: Factory<DisposableOrTeardown | void>,
+) => ContainerOperator<ObservableLike, T, T> = onSubscribeInternal;
 
 export const pairwise: Pairwise<ObservableLike>["pairwise"] =
   /*@__PURE__*/ (() =>
@@ -798,6 +789,19 @@ export const scan = scanInternal;
 export const scanT: Scan<ObservableLike> = { scan };
 
 /**
+ * Returns the `ObservableLike` that applies an asynchronous accumulator function
+ * over the source, and emits each intermediate result.
+ *
+ * @param scanner The accumulator function called on each source value.
+ * @param initialValue The initial accumulation value.
+ */
+export const scanAsync: ScanAsync<ObservableLike>["scanAsync"] =
+  createScanAsync<ObservableLike>(createObservable);
+export const scanAsyncT: ScanAsync<ObservableLike> = {
+  scanAsync,
+};
+
+/**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription
  * to the source is disposed.
@@ -842,7 +846,7 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
 export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
 
 export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
-  createSwitchAll<ObservableLike>(liftObservable);
+  switchAllInternal;
 export const switchAllT: ConcatAll<ObservableLike> = {
   concatAll: switchAll,
 };
@@ -865,11 +869,7 @@ export const subscribeOn =
     );
 
 export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
-  /*@__PURE__*/ pipe(
-    createTakeFirstObserver,
-    createTakeFirstOperator(liftEnumerableObservableT),
-  );
-
+  takeFirstInternal;
 export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
 
 export const takeLast: TakeLast<ObservableLike>["takeLast"] =
@@ -1392,103 +1392,4 @@ export const zipLatestT: Zip<ObservableLike> = {
 export const zipWithLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
-) => ContainerOperator<ObservableLike, TA, T> = /*@__PURE__*/ (() => {
-  const createZipWithLatestFromObserver: <TA, TB, T>(
-    delegate: ObserverLike<T>,
-    other: ObservableLike<TB>,
-    selector: Function2<TA, TB, T>,
-  ) => ObserverLike<TA> = (<TA, TB, T>() => {
-    const typedObserverMixin = observerMixin<TA>();
-
-    type TProperties = PropertyTypeOf<
-      [typeof disposableMixin, typeof typedObserverMixin]
-    > & {
-      delegate: ObserverLike<T>;
-      hasLatest: boolean;
-      otherLatest: Option<TB>;
-      queue: TA[];
-      selector: Function2<TA, TB, T>;
-    };
-
-    const notifyDelegate = (observer: TProperties & ObserverLike<TA>) => {
-      if (getLength(observer.queue) > 0 && observer.hasLatest) {
-        observer.hasLatest = false;
-        const next = observer.queue.shift() as TA;
-        const result = observer.selector(next, observer.otherLatest as TB);
-        pipe(observer.delegate, notify(result));
-      }
-    };
-
-    return createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedObserverMixin),
-        function ZipWithLatestFromObserer(
-          this: TProperties & ObserverLike<TA>,
-          delegate: ObserverLike<T>,
-          other: ObservableLike<TB>,
-          selector: Function2<TA, TB, T>,
-        ): ObserverLike<TA> {
-          init(disposableMixin, this);
-          init(typedObserverMixin, this, getScheduler(delegate));
-
-          this.delegate = delegate;
-          this.queue = [];
-          this.selector = selector;
-
-          const disposeDelegate = () => {
-            if (isDisposed(this) && isDisposed(otherSubscription)) {
-              pipe(delegate, dispose());
-            }
-          };
-
-          const otherSubscription = pipe(
-            other,
-            forEach(otherLatest => {
-              this.hasLatest = true;
-              this.otherLatest = otherLatest;
-              notifyDelegate(this);
-
-              if (isDisposed(this) && isEmpty(this.queue)) {
-                pipe(this.delegate, dispose());
-              }
-            }),
-            subscribe(getScheduler(delegate)),
-            onComplete(disposeDelegate),
-            addTo(delegate),
-          );
-
-          return pipe(this, addTo(delegate), onComplete(disposeDelegate));
-        },
-        {
-          delegate: none,
-          hasLatest: false,
-          otherLatest: none,
-          queue: none,
-          selector: none,
-        },
-        {
-          [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
-            this.queue.push(next);
-            notifyDelegate(this);
-          },
-        },
-      ),
-    );
-  })();
-
-  return <TA, TB, T>(
-    other: ObservableLike<TB>,
-    selector: Function2<TA, TB, T>,
-  ) => {
-    const lift = isEnumerable(other)
-      ? liftEnumerableObservable
-      : isRunnable(other)
-      ? liftRunnableObservable
-      : liftObservable;
-    return pipe(
-      createZipWithLatestFromObserver,
-      partial(other, selector),
-      lift,
-    ) as ContainerOperator<ObservableLike, TA, T>;
-  };
-})();
+) => ContainerOperator<ObservableLike, TA, T> = zipWithLatestFromInternal;

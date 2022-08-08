@@ -12,10 +12,12 @@
 - [ReactiveContainerLike](../interfaces/rx.ReactiveContainerLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
 - [RunnableObservableLike](../interfaces/rx.RunnableObservableLike.md)
+- [ScanAsync](../interfaces/rx.ScanAsync.md)
 - [SubjectLike](../interfaces/rx.SubjectLike.md)
 
 ### Type Aliases
 
+- [AsyncReducer](rx.md#asyncreducer)
 - [ToObservable](rx.md#toobservable)
 - [ToRunnable](rx.md#torunnable)
 
@@ -59,6 +61,20 @@
 - [neverRunnable](rx.md#neverrunnable)
 
 ## Type Aliases
+
+### AsyncReducer
+
+Ƭ **AsyncReducer**<`C`, `T`, `TAcc`\>: [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ContainerOf`](containers.md#containerof)<`C`, `TAcc`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
+| `T` | `T` |
+| `TAcc` | `TAcc` |
+
+___
 
 ### ToObservable
 

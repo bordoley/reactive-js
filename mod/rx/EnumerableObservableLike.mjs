@@ -1,8 +1,8 @@
 /// <reference types="./EnumerableObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
-import { createMergeAll, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
+import { createMergeAll, createScanAsync, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
 import { pipeUnsafe, newInstance } from '../functions.mjs';
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createEnumerableObservable } from '../rx.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, forEach, keep, map, merge, pairwise, reduce, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
 
@@ -80,6 +80,8 @@ const reduceT = {
 const scanT = {
     scan: scan,
 };
+const scanAsync = createScanAsync(createEnumerableObservable);
+const scanAsyncT = { scanAsync };
 const skipFirstT = {
     skipFirst: skipFirst,
 };
@@ -104,4 +106,4 @@ const zipT = {
     zip: zip,
 };
 
-export { bufferT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

@@ -1,16 +1,11 @@
 import {
-  compute,
   concatMap,
   concatWith,
-  empty,
   fromValue,
   throws,
-  zipWith,
 } from "../container";
-import { dispose } from "../disposable";
 import { forEach as enumeratorForEach } from "../enumerator";
 import {
-  arrayEquality,
   identity,
   ignore,
   increment,
@@ -20,96 +15,48 @@ import {
   pipeLazy,
   raise,
   returns,
-  sum,
 } from "../functions";
 import { genMap } from "../liftableContainer";
 import {
   ObservableLike,
-  Subject,
   __do,
   __memo,
   __observe,
-  buffer,
   catchError,
-  combineLatestT,
-  concat,
   concatAllT as concatAllTObs,
-  createObservable,
   exhaustT,
   fromArray,
   fromIterable,
   fromIteratorT,
-  fromPromise,
   generate,
-  getObserverCount,
-  map,
   mapT as mapTObs,
-  merge,
   mergeAllT,
-  mergeT,
-  never,
-  observable,
   onNotify,
-  onSubscribe,
-  publishTo,
-  scanAsync,
-  share,
   subscribe,
-  switchAllT,
   takeFirst,
   takeLast,
   throttle,
-  throwIfEmpty,
   timeout,
-  toPromise,
   toRunnable,
-  withLatestFrom,
-  zip,
-  zipLatestT,
-  zipT as zipTObs,
-  zipWithLatestFrom,
 } from "../observable";
-import { Option, isSome } from "../option";
 import {
-  forEach,
-  fromArray as fromArrayRunnable,
   last,
   toArray,
 } from "../runnable";
 import {
-  concatAllT,
   concatT,
-  distinctUntilChangedT,
   fromArrayT,
-  generateT,
-  keepT,
   mapT,
-  repeatT,
-  scanT,
-  skipFirstT,
-  takeFirstT,
-  takeLastT,
-  takeWhileT,
-  toRunnableT,
-  zipT,
 } from "../runnableObservable";
-import { createHostScheduler, createVirtualTimeScheduler } from "../scheduler";
+import { createVirtualTimeScheduler } from "../scheduler";
 import {
   describe,
   expectArrayEquals,
   expectEquals,
-  expectNone,
-  expectPromiseToThrow,
-  expectSome,
-  expectToHaveBeenCalledTimes,
   expectToThrow,
-  expectToThrowError,
-  mockFn,
   test,
-  testAsync,
 } from "../testing";
-import { createZippableTests } from "./enumerable.test";
-import { createRunnableTests } from "./runnable.test";
+
 
 export const tests = describe(
   "observable",
@@ -242,69 +189,6 @@ export const tests = describe(
           last(),
         ),
         expectToThrow,
-      ),
-    ),
-  ),
-
-  describe(
-    "scanAsync",
-    test(
-      "fast lib, slow acc",
-      pipeLazy(
-        [1, 2, 3],
-        fromArray(),
-        scanAsync<number, number>(
-          (acc, x) => fromValue(fromArrayT, { delay: 4 })(x + acc),
-          returns(0),
-        ),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([1, 3, 6]),
-      ),
-    ),
-
-    test(
-      "slow lib, fast acc",
-      pipeLazy(
-        [1, 2, 3],
-        fromArray({ delay: 4 }),
-        scanAsync<number, number>(
-          (acc, x) => fromValue(fromArrayT)(x + acc),
-          returns(0),
-        ),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([1, 3, 6]),
-      ),
-    ),
-
-    test(
-      "slow lib, slow acc",
-      pipeLazy(
-        [1, 2, 3],
-        fromArray({ delay: 4 }),
-        scanAsync<number, number>(
-          (acc, x) => fromValue(fromArrayT, { delay: 4 })(x + acc),
-          returns(0),
-        ),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([1, 3, 6]),
-      ),
-    ),
-
-    test(
-      "fast lib, fast acc",
-      pipeLazy(
-        [1, 2, 3],
-        fromArray(),
-        scanAsync<number, number>(
-          (acc, x) => fromValue(fromArrayT)(x + acc),
-          returns(0),
-        ),
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([1, 3, 6]),
       ),
     ),
   ),
