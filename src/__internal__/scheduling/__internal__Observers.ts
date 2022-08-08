@@ -2,8 +2,6 @@ import {
   Equality,
   Factory,
   Function1,
-  Function2,
-  Function3,
   Option,
   Predicate,
   Reducer,
@@ -16,7 +14,6 @@ import {
   pipe,
   returns,
 } from "../../functions";
-import { ObservableLike } from "../../rx";
 import {
   DispatcherLike,
   DispatcherLike_dispatch,
@@ -51,17 +48,14 @@ import {
   init,
 } from "../util/__internal__Objects";
 import {
-  decodeWithCharsetSinkMixin,
   distinctUntilChangedSinkMixin,
   forEachSinkMixin,
   keepSinkMixin,
   mapSinkMixin,
   pairwiseSinkMixin,
-  reduceSinkMixin,
   scanSinkMixin,
   skipFirstSinkMixin,
   takeFirstSinkMixin,
-  takeLastSinkMixin,
   takeWhileSinkMixin,
   throwIfEmptySinkMixin,
 } from "../util/__internal__Sinks";
@@ -204,33 +198,6 @@ export const observerMixin: <T>() => Class1<
     returns,
   );
 })();
-
-export const createDecodeWithCharsetObserver = (
-  fromArray: (v: readonly string[]) => ObservableLike<string>,
-): Function2<ObserverLike<string>, string, ObserverLike<ArrayBuffer>> => {
-  const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(fromArray);
-  const typedObserverMixin = observerMixin<ArrayBuffer>();
-
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedDecodeWithCharsetMixin]
-  >;
-
-  return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedDecodeWithCharsetMixin),
-      function DecodeWithCharsetObserver(
-        this: TProperties & ObserverLike<ArrayBuffer>,
-        delegate: ObserverLike<string>,
-        charset: string,
-      ): ObserverLike<ArrayBuffer> {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedDecodeWithCharsetMixin, this, delegate, charset);
-
-        return this;
-      },
-    ),
-  );
-};
 
 export const createDelegatingObserver: <T>(
   o: ObserverLike<T>,
@@ -427,45 +394,6 @@ export const createPairwiseObserver: <T>(
   );
 })();
 
-export const createReduceObserver = <T, TAcc>(
-  fromArray: <T>(v: readonly T[]) => ObservableLike<T>,
-): Function3<
-  ObserverLike<TAcc>,
-  Reducer<T, TAcc>,
-  Factory<TAcc>,
-  ObserverLike<T>
-> => {
-  const typedReduceSinkMixin = reduceSinkMixin<
-    ObservableLike<TAcc>,
-    ObserverLike<TAcc>,
-    T,
-    TAcc
-  >(fromArray);
-
-  const typedObserverMixin = observerMixin<T>();
-
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedReduceSinkMixin]
-  >;
-
-  return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedReduceSinkMixin),
-      function ReduceObserver(
-        this: TProperties & ObserverLike<T>,
-        delegate: ObserverLike<TAcc>,
-        reducer: Reducer<T, TAcc>,
-        initialValue: Factory<TAcc>,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
-
-        return this;
-      },
-    ),
-  );
-};
-
 export const createScanObserver: <T, TAcc>(
   delegat: ObserverLike<TAcc>,
   reducer: Reducer<T, TAcc>,
@@ -552,32 +480,6 @@ export const createTakeFirstObserver: <T>(
     ),
   );
 })();
-
-export const createTakeLastObserver = <T>(
-  fromArray: <T>(v: readonly T[]) => ObservableLike<T>,
-): Function2<ObserverLike<T>, number, ObserverLike<T>> => {
-  const typedTakeLastSinkMixin = takeLastSinkMixin(fromArray);
-  const typedObserverMixin = observerMixin<T>();
-
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedTakeLastSinkMixin]
-  >;
-  return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedTakeLastSinkMixin),
-      function TakeLastObserver(
-        this: TProperties & ObserverLike<T>,
-        delegate: ObserverLike<T>,
-        takeCount: number,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedTakeLastSinkMixin, this, delegate, takeCount);
-
-        return this;
-      },
-    ),
-  );
-};
 
 export const createTakeWhileObserver: <T>(
   delegate: ObserverLike<T>,

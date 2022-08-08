@@ -36,14 +36,11 @@ import {
   zipWithLatestFrom as zipWithLatestFromInternal,
 } from "../__internal__/rx/__internal__ObservableLike";
 import {
-  createDecodeWithCharsetObserver,
   createDelegatingObserver,
   createKeepObserver,
   createMapObserver,
   createPairwiseObserver,
-  createReduceObserver,
   createSkipFirstObserver,
-  createTakeLastObserver,
   createTakeWhileObserver,
   createThrowIfEmptyObserver,
   observerMixin,
@@ -70,7 +67,12 @@ import {
   createInstanceFactory,
   init,
 } from "../__internal__/util/__internal__Objects";
-import { createEnumeratorSink } from "../__internal__/util/__internal__Sinks";
+import {
+  createEnumeratorSink,
+  decodeWithCharsetSinkMixin,
+  reduceSinkMixin,
+  takeLastSinkMixin,
+} from "../__internal__/util/__internal__Sinks";
 import {
   Buffer,
   Concat,
@@ -113,6 +115,7 @@ import {
   Function2,
   Option,
   Predicate,
+  Reducer,
   SideEffect,
   compose,
   getLength,
@@ -154,6 +157,7 @@ import {
 import {
   ObserverLike,
   ObserverLike_dispatcher,
+  ObserverLike_scheduler,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -408,13 +412,39 @@ export const concatAllT: ConcatAll<
 };
 
 export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
-  /*@__PURE__*/ (() =>
-    pipe(
-      createDecodeWithCharsetObserver(arrayToObservable()),
+  /*@__PURE__*/ (() => {
+    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(
+      arrayToObservable(),
+    );
+    const typedObserverMixin = observerMixin<ArrayBuffer>();
+
+    type TProperties = PropertyTypeOf<
+      [typeof typedObserverMixin, typeof typedDecodeWithCharsetMixin]
+    >;
+
+    const createDecodeWithCharsetObserver = createInstanceFactory(
+      clazz(
+        __extends(typedObserverMixin, typedDecodeWithCharsetMixin),
+        function DecodeWithCharsetObserver(
+          this: TProperties & ObserverLike<ArrayBuffer>,
+          delegate: ObserverLike<string>,
+          charset: string,
+        ): ObserverLike<ArrayBuffer> {
+          init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+          init(typedDecodeWithCharsetMixin, this, delegate, charset);
+
+          return this;
+        },
+      ),
+    );
+
+    return pipe(
+      createDecodeWithCharsetObserver,
       createDecodeWithCharsetOperator<ObservableLike, TReactive>(
         liftEnumerableObservableT,
       ),
-    ))();
+    );
+  })();
 export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
   decodeWithCharset,
 };
@@ -668,13 +698,44 @@ export const pairwiseT: Pairwise<ObservableLike> = { pairwise };
 export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   T,
   TAcc,
->() =>
-  pipe(
-    createReduceObserver<T, TAcc>(arrayToObservable()),
+>() => {
+  const typedReduceSinkMixin = reduceSinkMixin<
+    ObservableLike<TAcc>,
+    ObserverLike<TAcc>,
+    T,
+    TAcc
+  >(arrayToObservable());
+
+  const typedObserverMixin = observerMixin<T>();
+
+  type TProperties = PropertyTypeOf<
+    [typeof typedObserverMixin, typeof typedReduceSinkMixin]
+  >;
+
+  const createReduceObserver = createInstanceFactory(
+    clazz(
+      __extends(typedObserverMixin, typedReduceSinkMixin),
+      function ReduceObserver(
+        this: TProperties & ObserverLike<T>,
+        delegate: ObserverLike<TAcc>,
+        reducer: Reducer<T, TAcc>,
+        initialValue: Factory<TAcc>,
+      ) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
+
+        return this;
+      },
+    ),
+  );
+
+  return pipe(
+    createReduceObserver,
     createReduceOperator<ObservableLike, T, TAcc, TReactive>(
       liftEnumerableObservableT,
     ),
-  ))();
+  );
+})();
 export const reduceT: Reduce<ObservableLike> = { reduce };
 
 const repeatImpl: <T>(
@@ -888,10 +949,35 @@ export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
 export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
 
 export const takeLast: TakeLast<ObservableLike>["takeLast"] =
-  /*@__PURE__*/ pipe(
-    createTakeLastObserver(arrayToObservable()),
-    createTakeLastOperator(liftEnumerableObservableT),
-  );
+  /*@__PURE__*/ (() => {
+    const typedTakeLastSinkMixin = takeLastSinkMixin(arrayToObservable());
+    const typedObserverMixin = observerMixin();
+
+    type TProperties = PropertyTypeOf<
+      [typeof typedObserverMixin, typeof typedTakeLastSinkMixin]
+    >;
+
+    const createTakeLastObserver = createInstanceFactory(
+      clazz(
+        __extends(typedObserverMixin, typedTakeLastSinkMixin),
+        function TakeLastObserver(
+          this: TProperties & ObserverLike,
+          delegate: ObserverLike,
+          takeCount: number,
+        ) {
+          init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+          init(typedTakeLastSinkMixin, this, delegate, takeCount);
+
+          return this;
+        },
+      ),
+    );
+
+    return pipe(
+      createTakeLastObserver,
+      createTakeLastOperator(liftEnumerableObservableT),
+    );
+  })();
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 
 export const takeUntil = <T>(

@@ -6,7 +6,6 @@ import {
   Function4,
   Option,
 } from "../../functions";
-import { __DEV__ } from "../__internal__env";
 
 export const Object_init = Symbol("Object_init");
 export const Object_properties = Symbol("Object_properties");
@@ -371,20 +370,14 @@ export const createInstanceFactory: CreateInstanceFactory = <TReturn>(clazz: {
     clazz[Object_properties],
   );
 
-  const constructorObject: object = __DEV__
-    ? {
-        constructor: {
-          configurable: true,
-          enumerable: true,
-          value: clazz[Object_init],
-          writable: true,
-        },
-      }
-    : {};
-
   const prototypeDescription = {
     ...getOwnPropertyDescriptors(clazz[Object_prototype]),
-    ...constructorObject,
+    constructor: {
+      configurable: true,
+      enumerable: true,
+      value: clazz[Object_init],
+      writable: true,
+    },
   };
 
   const prototype = createObject(objectPrototype, prototypeDescription);

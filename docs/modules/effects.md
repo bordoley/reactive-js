@@ -1,21 +1,43 @@
-[Reactive-JS](../README.md) / rx/effects
+[Reactive-JS](../README.md) / effects
 
-# Module: rx/effects
+# Module: effects
 
 ## Table of contents
 
 ### Functions
 
-- [\_\_currentScheduler](rx_effects.md#__currentscheduler)
-- [\_\_do](rx_effects.md#__do)
-- [\_\_memo](rx_effects.md#__memo)
-- [\_\_observe](rx_effects.md#__observe)
-- [\_\_state](rx_effects.md#__state)
-- [\_\_stream](rx_effects.md#__stream)
-- [\_\_using](rx_effects.md#__using)
-- [observable](rx_effects.md#observable)
+- [\_\_await](effects.md#__await)
+- [\_\_currentScheduler](effects.md#__currentscheduler)
+- [\_\_do](effects.md#__do)
+- [\_\_memo](effects.md#__memo)
+- [\_\_state](effects.md#__state)
+- [\_\_stream](effects.md#__stream)
+- [\_\_using](effects.md#__using)
+- [async](effects.md#async)
 
 ## Functions
+
+### \_\_await
+
+▸ **__await**<`T`\>(`observable`): [`Option`](functions.md#option)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+
+#### Returns
+
+[`Option`](functions.md#option)<`T`\>
+
+___
 
 ### \_\_currentScheduler
 
@@ -359,28 +381,6 @@ ___
 
 ___
 
-### \_\_observe
-
-▸ **__observe**<`T`\>(`observable`): [`Option`](functions.md#option)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
-
-#### Returns
-
-[`Option`](functions.md#option)<`T`\>
-
-___
-
 ### \_\_state
 
 ▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
@@ -604,9 +604,9 @@ ___
 
 ___
 
-### observable
+### async
 
-▸ **observable**<`T`\>(`computation`, `__namedParameters?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **async**<`T`\>(`computation`, `__namedParameters?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 

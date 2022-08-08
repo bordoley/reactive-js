@@ -7,7 +7,7 @@ import { SinkLike_notify, DisposableLike_exception } from '../../util.mjs';
 import { addTo, onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
 import { disposableMixin } from '../util/__internal__Disposables.mjs';
 import { createInstanceFactory, clazz, init, __extends } from '../util/__internal__Objects.mjs';
-import { decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../util/__internal__Sinks.mjs';
+import { distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../util/__internal__Sinks.mjs';
 
 const createObserverDispatcher = (() => {
     const scheduleDrainQueue = (dispatcher) => {
@@ -76,15 +76,6 @@ const observerMixin = /*@__PURE__*/ (() => {
         },
     }), returns);
 })();
-const createDecodeWithCharsetObserver = (fromArray) => {
-    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(fromArray);
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedDecodeWithCharsetMixin), function DecodeWithCharsetObserver(delegate, charset) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedDecodeWithCharsetMixin, this, delegate, charset);
-        return this;
-    }));
-};
 const createDelegatingObserver = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
     return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function DelegatingObserver(observer) {
@@ -156,15 +147,6 @@ const createPairwiseObserver = /*@__PURE__*/ (() => {
         return this;
     }));
 })();
-const createReduceObserver = (fromArray) => {
-    const typedReduceSinkMixin = reduceSinkMixin(fromArray);
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedReduceSinkMixin), function ReduceObserver(delegate, reducer, initialValue) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
-        return this;
-    }));
-};
 const createScanObserver = /*@__PURE__*/ (() => {
     const typedScanSinkMixin = scanSinkMixin();
     const typedObserverMixin = observerMixin();
@@ -192,15 +174,6 @@ const createTakeFirstObserver = /*@__PURE__*/ (() => {
         return this;
     }));
 })();
-const createTakeLastObserver = (fromArray) => {
-    const typedTakeLastSinkMixin = takeLastSinkMixin(fromArray);
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedTakeLastSinkMixin), function TakeLastObserver(delegate, takeCount) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedTakeLastSinkMixin, this, delegate, takeCount);
-        return this;
-    }));
-};
 const createTakeWhileObserver = /*@__PURE__*/ (() => {
     const typedTakeWhileSinkMixin = takeWhileSinkMixin();
     const typedObserverMixin = observerMixin();
@@ -220,4 +193,4 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { createDecodeWithCharsetObserver, createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createObserver, createPairwiseObserver, createReduceObserver, createScanObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };
+export { createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createObserver, createPairwiseObserver, createScanObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };
