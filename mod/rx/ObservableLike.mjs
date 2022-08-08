@@ -3,12 +3,12 @@ import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
 import { isInContinuation } from '../__internal__/__internal__scheduling.mjs';
 import { createDecodeWithCharsetOperator, createKeepOperator, createMapOperator, createReduceOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
 import { liftEnumerableObservable, liftObservable, allAreEnumerable, allAreRunnable, liftEnumerableObservableT, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, createMergeAll, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, createScanAsync, switchAll as switchAll$1, subscribe as subscribe$1, takeFirst as takeFirst$1, liftRunnableObservable, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/__internal__ObservableLike.mjs';
-import { observerMixin, createDelegatingObserver, createDecodeWithCharsetObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createReduceObserver, createSkipFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver } from '../__internal__/scheduling/__internal__Observers.mjs';
+import { observerMixin, createDelegatingObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createSkipFirstObserver, createTakeWhileObserver, createThrowIfEmptyObserver } from '../__internal__/scheduling/__internal__Observers.mjs';
 import { disposableMixin, createDisposableRef, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { createEnumeratorSink } from '../__internal__/util/__internal__Sinks.mjs';
+import { decodeWithCharsetSinkMixin, reduceSinkMixin, takeLastSinkMixin, createEnumeratorSink } from '../__internal__/util/__internal__Sinks.mjs';
 import { concatMap, keepType } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/PromiseableLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
@@ -16,7 +16,7 @@ import { pipe, isEmpty, none, getLength, max, returns, partial, isNone, isSome, 
 import { createEnumerable, emptyEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$3 } from '../ix/EnumerableLike.mjs';
 import { neverObservable, createEnumerableObservable, createRunnableObservable, createObservable, emptyObservable } from '../rx.mjs';
-import { ObserverLike_dispatcher, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, createVirtualTimeScheduler } from '../scheduling.mjs';
+import { ObserverLike_scheduler, ObserverLike_dispatcher, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, createVirtualTimeScheduler } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { toPausableScheduler } from '../scheduling/SchedulerLike.mjs';
@@ -149,7 +149,16 @@ const concatAllT = {
     concatAll,
 };
 const decodeWithCharset = 
-/*@__PURE__*/ (() => pipe(createDecodeWithCharsetObserver(toObservable()), createDecodeWithCharsetOperator(liftEnumerableObservableT)))();
+/*@__PURE__*/ (() => {
+    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(toObservable());
+    const typedObserverMixin = observerMixin();
+    const createDecodeWithCharsetObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, typedDecodeWithCharsetMixin), function DecodeWithCharsetObserver(delegate, charset) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedDecodeWithCharsetMixin, this, delegate, charset);
+        return this;
+    }));
+    return pipe(createDecodeWithCharsetObserver, createDecodeWithCharsetOperator(liftEnumerableObservableT));
+})();
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
@@ -256,7 +265,16 @@ const onSubscribe = onSubscribe$1;
 const pairwise = 
 /*@__PURE__*/ (() => pipe(liftEnumerableObservable(createPairwiseObserver), returns))();
 const pairwiseT = { pairwise };
-const reduce = /*@__PURE__*/ (() => pipe(createReduceObserver(toObservable()), createReduceOperator(liftEnumerableObservableT)))();
+const reduce = /*@__PURE__*/ (() => {
+    const typedReduceSinkMixin = reduceSinkMixin(toObservable());
+    const typedObserverMixin = observerMixin();
+    const createReduceObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, typedReduceSinkMixin), function ReduceObserver(delegate, reducer, initialValue) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
+        return this;
+    }));
+    return pipe(createReduceObserver, createReduceOperator(liftEnumerableObservableT));
+})();
 const reduceT = { reduce };
 const repeatImpl = /*@__PURE__*/ (() => {
     const createRepeatObserver = (delegate, observable, shouldRepeat) => {
@@ -360,7 +378,16 @@ createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => pipe(observable,
 const takeFirst = takeFirst$1;
 const takeFirstT = { takeFirst };
 const takeLast = 
-/*@__PURE__*/ pipe(createTakeLastObserver(toObservable()), createTakeLastOperator(liftEnumerableObservableT));
+/*@__PURE__*/ (() => {
+    const typedTakeLastSinkMixin = takeLastSinkMixin(toObservable());
+    const typedObserverMixin = observerMixin();
+    const createTakeLastObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, typedTakeLastSinkMixin), function TakeLastObserver(delegate, takeCount) {
+        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
+        init(typedTakeLastSinkMixin, this, delegate, takeCount);
+        return this;
+    }));
+    return pipe(createTakeLastObserver, createTakeLastOperator(liftEnumerableObservableT));
+})();
 const takeLastT = { takeLast };
 const takeUntil = (notifier) => {
     const lift = isEnumerable(notifier)

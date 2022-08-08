@@ -6,10 +6,10 @@ import {
 } from "../../__internal__/__internal__testing";
 import { keepType } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
+import { __await, __memo, async } from "../../effects";
 import { Option, isSome, pipe } from "../../functions";
 import { ObservableLike, emptyObservable } from "../../rx";
 import { forEach, keepT, subscribe, takeLast } from "../../rx/ObservableLike";
-import { __memo, __observe, observable } from "../../rx/effects";
 import { createVirtualTimeScheduler } from "../../scheduling";
 import { run } from "../../util/ContinuationLike";
 
@@ -28,14 +28,14 @@ export default describe(
     let result = -1;
 
     pipe(
-      observable(() => {
+      async(() => {
         const obs1 = __memo(fromValueWithDelay, 10, 5);
-        const result1 = __observe(obs1) ?? 0;
+        const result1 = __await(obs1) ?? 0;
         const obs2 = __memo(fromValueWithDelay, 20, 10);
-        const result2 = __observe(obs2) ?? 0;
+        const result2 = __await(obs2) ?? 0;
         const obs3 = __memo(fromValueWithDelay, 30, 7);
-        const result3 = __observe(obs3) ?? 0;
-        __observe(emptyDelayed);
+        const result3 = __await(obs3) ?? 0;
+        __await(emptyDelayed);
 
         return result1 + result2 + result3;
       }),
@@ -60,11 +60,11 @@ export default describe(
     const result: number[] = [];
 
     pipe(
-      observable(
+      async(
         () => {
-          const v = __observe(oneTwoThreeDelayed);
+          const v = __await(oneTwoThreeDelayed);
           const next = __memo(createOneTwoThree, v);
-          return __observe(next);
+          return __await(next);
         },
         { mode: "combine-latest" },
       ),

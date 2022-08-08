@@ -1,6 +1,4 @@
 /// <reference types="./__internal__Objects.d.ts" />
-import { __DEV__ } from '../__internal__env.mjs';
-
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
 const Object_properties_type = Symbol("Object_properties_type");
@@ -46,19 +44,14 @@ const clazz = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingOrProt
 });
 const createInstanceFactory = (clazz) => {
     const propertyDescription = getOwnPropertyDescriptors(clazz[Object_properties]);
-    const constructorObject = __DEV__
-        ? {
-            constructor: {
-                configurable: true,
-                enumerable: true,
-                value: clazz[Object_init],
-                writable: true,
-            },
-        }
-        : {};
     const prototypeDescription = {
         ...getOwnPropertyDescriptors(clazz[Object_prototype]),
-        ...constructorObject,
+        constructor: {
+            configurable: true,
+            enumerable: true,
+            value: clazz[Object_init],
+            writable: true,
+        },
     };
     const prototype = createObject(objectPrototype, prototypeDescription);
     return (...args) => {
