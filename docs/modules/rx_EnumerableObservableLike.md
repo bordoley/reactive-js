@@ -18,6 +18,7 @@
 - [mergeT](rx_EnumerableObservableLike.md#merget)
 - [pairwiseT](rx_EnumerableObservableLike.md#pairwiset)
 - [reduceT](rx_EnumerableObservableLike.md#reducet)
+- [scanAsyncT](rx_EnumerableObservableLike.md#scanasynct)
 - [scanT](rx_EnumerableObservableLike.md#scant)
 - [skipFirstT](rx_EnumerableObservableLike.md#skipfirstt)
 - [switchAllT](rx_EnumerableObservableLike.md#switchallt)
@@ -33,6 +34,7 @@
 - [concatAll](rx_EnumerableObservableLike.md#concatall)
 - [exhaust](rx_EnumerableObservableLike.md#exhaust)
 - [mergeAll](rx_EnumerableObservableLike.md#mergeall)
+- [scanAsync](rx_EnumerableObservableLike.md#scanasync)
 - [switchAll](rx_EnumerableObservableLike.md#switchall)
 
 ## Variables
@@ -106,6 +108,12 @@ ___
 ### reduceT
 
 • `Const` **reduceT**: [`Reduce`](containers.md#reduce)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+
+___
+
+### scanAsyncT
+
+• `Const` **scanAsyncT**: [`ScanAsync`](../interfaces/rx.ScanAsync.md)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
 
 ___
 
@@ -229,6 +237,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### scanAsync
+
+▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 

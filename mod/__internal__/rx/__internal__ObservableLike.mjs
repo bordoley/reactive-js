@@ -1,18 +1,20 @@
 /// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
-import { compose, isTrue, pipeUnsafe, newInstance, isSome, pipe, getLength, none, partial } from '../../functions.mjs';
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createEnumerableObservable, createRunnableObservable, createObservable, createSubject } from '../../rx.mjs';
-import { publishTo } from '../../rx/SubjectLike.mjs';
+import { compose, isTrue, pipeUnsafe, newInstance, isSome, pipe, getLength, none, partial, isEmpty } from '../../functions.mjs';
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createSubject, createEnumerableObservable, createRunnableObservable, createObservable } from '../../rx.mjs';
+import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
+import { publishTo, publish } from '../../rx/SubjectLike.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
-import { sourceFrom, notifySink } from '../../util/SinkLike.mjs';
+import { sourceFrom, notifySink, notify } from '../../util/SinkLike.mjs';
 import { MAX_SAFE_INTEGER } from '../__internal__env.mjs';
-import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createScanOperator } from '../containers/__internal__StatefulContainerLike.mjs';
-import { observerMixin, createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, createObserver } from '../scheduling/__internal__Observers.mjs';
+import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createScanOperator, createTakeFirstOperator } from '../containers/__internal__StatefulContainerLike.mjs';
+import { observerMixin, createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, createObserver, createTakeFirstObserver } from '../scheduling/__internal__Observers.mjs';
 import { addTo, onComplete, isDisposed, dispose, bindTo, addToIgnoringChildErrors } from '../util/__internal__DisposableLike.mjs';
 import { disposableMixin, createDisposableRef, disposed } from '../util/__internal__Disposables.mjs';
 import { MutableRefLike_current } from '../util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../util/__internal__Objects.mjs';
+import { createOnSink } from './__internal__ReactiveContainerLike.mjs';
 
 const allAreEnumerable = compose(map((obs) => obs[ObservableLike_isEnumerable]), every(isTrue));
 const allAreRunnable = compose(map((obs) => obs[ObservableLike_isRunnable]), every(isTrue));
@@ -103,6 +105,17 @@ const createMergeAll = (lift) => {
         return lift(pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency)));
     };
 };
+const createScanAsync = (createObservable) => {
+    return (scanner, initialValue) => observable => {
+        const onSink = (observer) => {
+            const accFeedbackStream = pipe(createSubject(), addTo(observer));
+            pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), 
+            // switchAll
+            switchAll(), forEach(publishTo(accFeedbackStream)), onSubscribe(() => pipe(accFeedbackStream, publish(initialValue()))), sinkInto(observer));
+        };
+        return createObservable(onSink);
+    };
+};
 const createSwitchAll = (lift) => {
     const createSwitchAllObserver = (() => {
         const typedObserverMixin = observerMixin();
@@ -136,6 +149,8 @@ const createSwitchAll = (lift) => {
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => pipe(createDistinctUntilChangedObserver, createDistinctUntilChangedOperator(liftEnumerableObservableT)))();
 const forEach = /*@__PURE__*/ (() => pipe(createForEachObserver, createForEachOperator(liftEnumerableObservableT)))();
+const isEnumerable = (obs) => obs[ObservableLike_isEnumerable];
+const isRunnable = (obs) => obs[ObservableLike_isRunnable];
 const mergeImpl = /*@__PURE__*/ (() => {
     const createMergeObserver = (delegate, count, ctx) => pipe(createDelegatingObserver(delegate), addTo(delegate), onComplete(() => {
         ctx.completedCount++;
@@ -177,7 +192,70 @@ const multicast = (scheduler, options = {}) => observable => {
     pipe(observable, forEach(publishTo(subject)), subscribe(scheduler), bindTo(subject));
     return subject;
 };
+const onSubscribe = (f) => (obs) => {
+    return createOnSink(onSink => isEnumerable(obs)
+        ? createEnumerableObservable(onSink)
+        : isRunnable(obs)
+            ? createRunnableObservable(onSink)
+            : createObservable(onSink), obs, f);
+};
 const scan = /*@__PURE__*/ pipe(createScanObserver, createScanOperator(liftEnumerableObservableT));
+const switchAll = createSwitchAll(liftObservable);
 const subscribe = scheduler => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
+const takeFirst = 
+/*@__PURE__*/ pipe(createTakeFirstObserver, createTakeFirstOperator(liftEnumerableObservableT));
+const zipWithLatestFrom = /*@__PURE__*/ (() => {
+    const createZipWithLatestFromObserver = (() => {
+        const typedObserverMixin = observerMixin();
+        const notifyDelegate = (observer) => {
+            if (getLength(observer.queue) > 0 && observer.hasLatest) {
+                observer.hasLatest = false;
+                const next = observer.queue.shift();
+                const result = observer.selector(next, observer.otherLatest);
+                pipe(observer.delegate, notify(result));
+            }
+        };
+        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(delegate, other, selector) {
+            init(disposableMixin, this);
+            init(typedObserverMixin, this, getScheduler(delegate));
+            this.delegate = delegate;
+            this.queue = [];
+            this.selector = selector;
+            const disposeDelegate = () => {
+                if (isDisposed(this) && isDisposed(otherSubscription)) {
+                    pipe(delegate, dispose());
+                }
+            };
+            const otherSubscription = pipe(other, forEach(otherLatest => {
+                this.hasLatest = true;
+                this.otherLatest = otherLatest;
+                notifyDelegate(this);
+                if (isDisposed(this) && isEmpty(this.queue)) {
+                    pipe(this.delegate, dispose());
+                }
+            }), subscribe(getScheduler(delegate)), onComplete(disposeDelegate), addTo(delegate));
+            return pipe(this, addTo(delegate), onComplete(disposeDelegate));
+        }, {
+            delegate: none,
+            hasLatest: false,
+            otherLatest: none,
+            queue: none,
+            selector: none,
+        }, {
+            [SinkLike_notify](next) {
+                this.queue.push(next);
+                notifyDelegate(this);
+            },
+        }));
+    })();
+    return (other, selector) => {
+        const lift = isEnumerable(other)
+            ? liftEnumerableObservable
+            : isRunnable(other)
+                ? liftRunnableObservable
+                : liftObservable;
+        return pipe(createZipWithLatestFromObserver, partial(other, selector), lift);
+    };
+})();
 
-export { allAreEnumerable, allAreRunnable, createMergeAll, createSwitchAll, distinctUntilChanged, forEach, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, scan, subscribe };
+export { allAreEnumerable, allAreRunnable, createMergeAll, createScanAsync, createSwitchAll, distinctUntilChanged, forEach, isEnumerable, isRunnable, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, onSubscribe, scan, subscribe, switchAll, takeFirst, zipWithLatestFrom };

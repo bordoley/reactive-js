@@ -18,6 +18,7 @@
 - [mergeT](rx_RunnableObservableLike.md#merget)
 - [pairwiseT](rx_RunnableObservableLike.md#pairwiset)
 - [reduceT](rx_RunnableObservableLike.md#reducet)
+- [scanAsyncT](rx_RunnableObservableLike.md#scanasynct)
 - [scanT](rx_RunnableObservableLike.md#scant)
 - [skipFirstT](rx_RunnableObservableLike.md#skipfirstt)
 - [switchAllT](rx_RunnableObservableLike.md#switchallt)
@@ -33,6 +34,7 @@
 - [concatAll](rx_RunnableObservableLike.md#concatall)
 - [exhaust](rx_RunnableObservableLike.md#exhaust)
 - [mergeAll](rx_RunnableObservableLike.md#mergeall)
+- [scanAsync](rx_RunnableObservableLike.md#scanasync)
 - [switchAll](rx_RunnableObservableLike.md#switchall)
 
 ## Variables
@@ -106,6 +108,12 @@ ___
 ### reduceT
 
 • `Const` **reduceT**: [`Reduce`](containers.md#reduce)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### scanAsyncT
+
+• `Const` **scanAsyncT**: [`ScanAsync`](../interfaces/rx.ScanAsync.md)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ___
 
@@ -229,6 +237,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### scanAsync
+
+▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 

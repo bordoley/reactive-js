@@ -65,6 +65,7 @@ import {
   mapT,
   pairwiseT,
   reduceT,
+  scanAsync,
   scanT,
   skipFirstT,
   switchAll,
@@ -225,6 +226,65 @@ const retryTests = describe(
       takeFirst({ count: 6 }),
       toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 1, 2, 3]),
+    ),
+  ),
+);
+
+const scanAsyncTests = describe(
+  "scanAsync",
+  test(
+    "fast lib, slow acc",
+    pipeLazy(
+      [1, 2, 3],
+      toObservable(),
+      scanAsync<number, number>(
+        (acc, x) => pipe([x + acc], toObservable({ delay: 4 })),
+        returns(0),
+      ),
+      toReadonlyArray(),
+      expectArrayEquals([1, 3, 6]),
+    ),
+  ),
+
+  test(
+    "slow lib, fast acc",
+    pipeLazy(
+      [1, 2, 3],
+      toObservable({ delay: 4 }),
+      scanAsync<number, number>(
+        (acc, x) => pipe([x + acc], toObservable({ delay: 4 })),
+        returns(0),
+      ),
+      toReadonlyArray(),
+      expectArrayEquals([1, 3, 6]),
+    ),
+  ),
+
+  test(
+    "slow lib, slow acc",
+    pipeLazy(
+      [1, 2, 3],
+      toObservable({ delay: 4 }),
+      scanAsync<number, number>(
+        (acc, x) => pipe([x + acc], toObservable({ delay: 4 })),
+        returns(0),
+      ),
+      toReadonlyArray(),
+      expectArrayEquals([1, 3, 6]),
+    ),
+  ),
+
+  test(
+    "fast lib, fast acc",
+    pipeLazy(
+      [1, 2, 3],
+      toObservable(),
+      scanAsync<number, number>(
+        (acc, x) => pipe([x + acc], toObservable()),
+        returns(0),
+      ),
+      toReadonlyArray(),
+      expectArrayEquals([1, 3, 6]),
     ),
   ),
 );
@@ -648,6 +708,7 @@ export default describe(
     ...scanT,
     ...toReadonlyArrayT,
   }),
+  scanAsyncTests,
   shareTests,
   skipFirstTests({
     fromArray: toObservable,

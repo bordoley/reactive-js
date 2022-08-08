@@ -21,6 +21,7 @@
 - [pairwiseT](rx_ObservableLike.md#pairwiset)
 - [reduceT](rx_ObservableLike.md#reducet)
 - [repeatT](rx_ObservableLike.md#repeatt)
+- [scanAsyncT](rx_ObservableLike.md#scanasynct)
 - [scanT](rx_ObservableLike.md#scant)
 - [skipFirstT](rx_ObservableLike.md#skipfirstt)
 - [switchAllT](rx_ObservableLike.md#switchallt)
@@ -61,6 +62,7 @@
 - [repeat](rx_ObservableLike.md#repeat)
 - [retry](rx_ObservableLike.md#retry)
 - [scan](rx_ObservableLike.md#scan)
+- [scanAsync](rx_ObservableLike.md#scanasync)
 - [share](rx_ObservableLike.md#share)
 - [skipFirst](rx_ObservableLike.md#skipfirst)
 - [subscribe](rx_ObservableLike.md#subscribe)
@@ -169,6 +171,12 @@ ___
 ### repeatT
 
 • `Const` **repeatT**: [`Repeat`](containers.md#repeat)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### scanAsyncT
+
+• `Const` **scanAsyncT**: [`ScanAsync`](../interfaces/rx.ScanAsync.md)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -1286,7 +1294,7 @@ ___
 
 ### onSubscribe
 
-▸ **onSubscribe**<`T`\>(`f`): (`obs`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **onSubscribe**<`T`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1302,19 +1310,7 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ (`obs`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `obs` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
-
-##### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -1461,6 +1457,33 @@ ___
 | :------ | :------ |
 | `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+___
+
+### scanAsync
+
+▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+Returns the `ObservableLike` that applies an asynchronous accumulator function
+over the source, and emits each intermediate result.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\> | The accumulator function called on each source value. |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
 
 #### Returns
 

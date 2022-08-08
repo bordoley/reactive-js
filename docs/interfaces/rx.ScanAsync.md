@@ -1,0 +1,61 @@
+[Reactive-JS](../README.md) / [rx](../modules/rx.md) / ScanAsync
+
+# Interface: ScanAsync<C\>
+
+[rx](../modules/rx.md).ScanAsync
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ObservableLike`](rx.ObservableLike.md) |
+
+## Hierarchy
+
+- [`Container`](../modules/containers.md#container)<`C`\>
+
+  ↳ **`ScanAsync`**
+
+## Table of contents
+
+### Properties
+
+- [TContainerOf](rx.ScanAsync.md#tcontainerof)
+
+### Methods
+
+- [scanAsync](rx.ScanAsync.md#scanasync)
+
+## Properties
+
+### TContainerOf
+
+• `Optional` `Readonly` **TContainerOf**: `C`
+
+#### Inherited from
+
+Container.TContainerOf
+
+## Methods
+
+### scanAsync
+
+▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`AsyncReducer`](../modules/rx.md#asyncreducer)<`C`, `T`, `TAcc`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `TAcc`\>

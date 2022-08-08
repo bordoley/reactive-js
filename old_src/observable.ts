@@ -98,35 +98,6 @@ export interface ScanAsync<C extends ContainerLike> extends Container<C> {
     initialValue: Factory<TAcc>,
   ) => ContainerOperator<C, T, TAcc>;
 }
-/**
- * Returns the `ObservableLike` that applies an asynchronous accumulator function
- * over the source, and emits each intermediate result.
- *
- * @param scanner The accumulator function called on each source value.
- * @param initialValue The initial accumulation value.
- */
-export const scanAsync: ScanAsync<ObservableLike<unknown>>["scanAsync"] =
-  <T, TAcc>(
-    scanner: AsyncReducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): ObservableOperator<T, TAcc> =>
-  observable =>
-    using(instanceFactory<Subject<TAcc>>(Subject), accFeedbackStream =>
-      pipe(
-        observable,
-        zipWithLatestFrom<T, TAcc, ObservableLike<TAcc>>(
-          accFeedbackStream,
-          (next, acc) => pipe(scanner(acc, next), takeFirst()),
-        ),
-        switchAll<TAcc>(),
-        onNotify(publishTo(accFeedbackStream)),
-        onSubscribe(() => pipe(accFeedbackStream, publish(initialValue()))),
-      ),
-    );
-
-export const scanAsyncT: ScanAsync<ObservableLike<unknown>> = {
-  scanAsync,
-};
 
 export const someSatisfy: SomeSatisfy<ObservableLike<unknown>>["someSatisfy"] =
   /*@__PURE__*/ decorateMap(

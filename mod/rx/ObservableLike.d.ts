@@ -1,7 +1,7 @@
 import { Function1, Equality, SideEffect1, Factory, Reducer, Function2, Predicate } from "../functions.mjs";
 import { ContainerOperator, Buffer, Zip, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, ForEach, ForkZip, ForkConcat, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise, ToReadonlyArray } from "../containers.mjs";
 import { ToEnumerable } from "../ix.mjs";
-import { ObservableLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike } from "../rx.mjs";
+import { ObservableLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
 import { ToFlowable } from "../streaming.mjs";
 import { DisposableOrTeardown, DisposableLike } from "../util.mjs";
@@ -51,8 +51,8 @@ declare const forEachT: ForEach<ObservableLike>;
 declare const forkCombineLatest: ForkZip<ObservableLike>["forkZip"];
 declare const forkMerge: ForkConcat<ObservableLike>["forkConcat"];
 declare const forkZipLatest: ForkZip<ObservableLike>["forkZip"];
-declare const isEnumerable: (obs: ObservableLike) => obs is EnumerableObservableLike<unknown>;
-declare const isRunnable: (obs: ObservableLike) => obs is RunnableObservableLike<unknown>;
+declare const isEnumerable: (obs: ObservableLike) => obs is EnumerableObservableLike;
+declare const isRunnable: (obs: ObservableLike) => obs is RunnableObservableLike;
 declare const keep: Keep<ObservableLike>["keep"];
 declare const keepT: Keep<ObservableLike>;
 declare const map: Map<ObservableLike>["map"];
@@ -70,7 +70,7 @@ declare const mergeAllT: ConcatAll<ObservableLike, {
 declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
-declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => (obs: ObservableLike<T>) => ObservableLike<T>;
+declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<ObservableLike, T, T>;
 declare const pairwise: Pairwise<ObservableLike>["pairwise"];
 declare const pairwiseT: Pairwise<ObservableLike>;
 declare const reduce: Reduce<ObservableLike>["reduce"];
@@ -112,6 +112,15 @@ interface Retry {
 declare const retry: Retry;
 declare const scan: <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<ObservableLike<unknown>, T, TAcc>;
 declare const scanT: Scan<ObservableLike>;
+/**
+ * Returns the `ObservableLike` that applies an asynchronous accumulator function
+ * over the source, and emits each intermediate result.
+ *
+ * @param scanner The accumulator function called on each source value.
+ * @param initialValue The initial accumulation value.
+ */
+declare const scanAsync: ScanAsync<ObservableLike>["scanAsync"];
+declare const scanAsyncT: ScanAsync<ObservableLike>;
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription
@@ -163,4 +172,4 @@ declare const zipT: Zip<ObservableLike>;
 declare const zipLatest: Zip<ObservableLike>["zip"];
 declare const zipLatestT: Zip<ObservableLike>;
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike, TA, T>;
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };

@@ -1,6 +1,6 @@
 import { Buffer, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.mjs";
 import { Factory } from "../functions.mjs";
-import { EnumerableObservableLike } from "../rx.mjs";
+import { EnumerableObservableLike, ScanAsync } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
 declare const bufferT: Buffer<EnumerableObservableLike>;
 declare const concatT: Concat<EnumerableObservableLike>;
@@ -32,6 +32,8 @@ declare const mergeAllT: ConcatAll<EnumerableObservableLike, {
 declare const pairwiseT: Pairwise<EnumerableObservableLike>;
 declare const reduceT: Reduce<EnumerableObservableLike>;
 declare const scanT: Scan<EnumerableObservableLike>;
+declare const scanAsync: ScanAsync<EnumerableObservableLike>["scanAsync"];
+declare const scanAsyncT: ScanAsync<EnumerableObservableLike>;
 declare const skipFirstT: SkipFirst<EnumerableObservableLike>;
 declare const switchAll: ConcatAll<EnumerableObservableLike>["concatAll"];
 declare const switchAllT: ConcatAll<EnumerableObservableLike>;
@@ -43,4 +45,4 @@ declare const toReadonlyArrayT: ToReadonlyArray<EnumerableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
 declare const zipT: Zip<EnumerableObservableLike>;
-export { bufferT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanT, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

@@ -5,6 +5,7 @@ import {
 } from "../__internal__/containers/__internal__StatefulContainerLike";
 import {
   createMergeAll,
+  createScanAsync,
   createSwitchAll,
 } from "../__internal__/rx/__internal__ObservableLike";
 import {
@@ -33,6 +34,8 @@ import {
   ObservableLike_isRunnable,
   ReactiveContainerLike_sinkInto,
   RunnableObservableLike,
+  ScanAsync,
+  createRunnableObservable,
 } from "../rx";
 import { ObserverLike, VirtualTimeSchedulerLike } from "../scheduling";
 import { sourceFrom } from "../util/SinkLike";
@@ -190,6 +193,10 @@ export const reduceT: Reduce<RunnableObservableLike> = {
 export const scanT: Scan<RunnableObservableLike> = {
   scan: scan as Scan<RunnableObservableLike>["scan"],
 };
+
+export const scanAsync: ScanAsync<RunnableObservableLike>["scanAsync"] =
+  createScanAsync<RunnableObservableLike>(createRunnableObservable);
+export const scanAsyncT: ScanAsync<RunnableObservableLike> = { scanAsync };
 
 export const skipFirstT: SkipFirst<RunnableObservableLike> = {
   skipFirst: skipFirst as SkipFirst<RunnableObservableLike>["skipFirst"],
