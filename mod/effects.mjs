@@ -1,14 +1,14 @@
 /// <reference types="./effects.d.ts" />
-import { isNone, ignore, none, raise, arrayEquality, pipe, getLength, isSome, newInstance } from '../functions.mjs';
-import { emptyObservable, createObservable } from '../rx.mjs';
-import { forEach, subscribe } from './ObservableLike.mjs';
-import { getScheduler } from '../scheduling/ObserverLike.mjs';
-import { schedule } from '../scheduling/SchedulerLike.mjs';
-import { createStateStore } from '../streaming.mjs';
-import { stream } from '../streaming/StreamableLike.mjs';
-import { disposed } from '../util.mjs';
-import { isDisposed, dispose, addTo, onComplete } from '../util/DisposableLike.mjs';
-import { notify } from '../util/SinkLike.mjs';
+import { isNone, ignore, none, raise, arrayEquality, pipe, getLength, isSome, newInstance } from './functions.mjs';
+import { emptyObservable, createObservable } from './rx.mjs';
+import { forEach, subscribe } from './rx/ObservableLike.mjs';
+import { getScheduler } from './scheduling/ObserverLike.mjs';
+import { schedule } from './scheduling/SchedulerLike.mjs';
+import { createStateStore } from './streaming.mjs';
+import { stream } from './streaming/StreamableLike.mjs';
+import { disposed } from './util.mjs';
+import { isDisposed, dispose, addTo, onComplete } from './util/DisposableLike.mjs';
+import { notify } from './util/SinkLike.mjs';
 
 const validateObservableEffect = ((ctx, type) => {
     const { effects, index } = ctx;
@@ -124,7 +124,7 @@ class ObservableContext {
     }
 }
 let currentCtx = none;
-const observable = (computation, { mode = "batched" } = {}) => createObservable((observer) => {
+const async = (computation, { mode = "batched" } = {}) => createObservable((observer) => {
     const runComputation = () => {
         let result = none;
         let error = none;
@@ -180,7 +180,7 @@ const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
     return ctx.memo(f, ...args);
 };
-const __observe = (observable) => {
+const __await = (observable) => {
     const ctx = assertCurrentContext();
     return ctx.observe(observable);
 };
@@ -225,4 +225,4 @@ const __state = /*@__PURE__*/ (() => {
     };
 })();
 
-export { __currentScheduler, __do, __memo, __observe, __state, __stream, __using, observable };
+export { __await, __currentScheduler, __do, __memo, __state, __stream, __using, async };

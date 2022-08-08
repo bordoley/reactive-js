@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOMClient from "react-dom/client";
 import { generateObservable } from "@reactive-js/core/rx";
 import {
-  __observe,
-  observable,
+  __await,
+  async,
   __do,
   __memo,
   __state,
   __stream,
-} from "@reactive-js/core/rx/effects";
+} from "@reactive-js/core/effects";
 import { toFlowable } from "@reactive-js/core/rx/ObservableLike";
 import { FlowMode } from "@reactive-js/core/streaming";
 import {
@@ -67,7 +67,7 @@ const createActions = (
 const initialFlowModeState = () => "pause" as FlowMode;
 
 const StreamPauseResume = createComponent(() =>
-  observable(() => {
+  async(() => {
     const counter = __stream(counterFlowable);
     const state = __state(initialFlowModeState);
 
@@ -77,8 +77,8 @@ const StreamPauseResume = createComponent(() =>
       counter,
     );
 
-    const value = __observe(counter) ?? 0;
-    const mode = __observe(state) ?? "pause";
+    const value = __await(counter) ?? 0;
+    const mode = __await(state) ?? "pause";
 
     __do(setCounterMode, mode);
     __do(onValueChanged, value);

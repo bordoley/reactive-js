@@ -1,4 +1,3 @@
-import { __DEV__ } from "../__internal__/__internal__env";
 import {
   Equality,
   Factory,
@@ -26,17 +25,17 @@ import {
   none,
   pipe,
   raise,
-} from "../functions";
-import { ObservableLike, createObservable, emptyObservable } from "../rx";
-import { forEach, subscribe } from "../rx/ObservableLike";
-import { ObserverLike, SchedulerLike } from "../scheduling";
-import { getScheduler } from "../scheduling/ObserverLike";
-import { schedule } from "../scheduling/SchedulerLike";
-import { StreamLike, StreamableLike, createStateStore } from "../streaming";
-import { stream } from "../streaming/StreamableLike";
-import { DisposableLike, Exception, disposed } from "../util";
-import { addTo, dispose, isDisposed, onComplete } from "../util/DisposableLike";
-import { notify } from "../util/SinkLike";
+} from "./functions";
+import { ObservableLike, createObservable, emptyObservable } from "./rx";
+import { forEach, subscribe } from "./rx/ObservableLike";
+import { ObserverLike, SchedulerLike } from "./scheduling";
+import { getScheduler } from "./scheduling/ObserverLike";
+import { schedule } from "./scheduling/SchedulerLike";
+import { StreamLike, StreamableLike, createStateStore } from "./streaming";
+import { stream } from "./streaming/StreamableLike";
+import { DisposableLike, Exception, disposed } from "./util";
+import { addTo, dispose, isDisposed, onComplete } from "./util/DisposableLike";
+import { notify } from "./util/SinkLike";
 
 type EffectsMode = "batched" | "combine-latest";
 
@@ -229,7 +228,7 @@ class ObservableContext {
 
 let currentCtx: Option<ObservableContext> = none;
 
-export const observable = <T>(
+export const async = <T>(
   computation: Factory<T>,
   { mode = "batched" }: { mode?: "batched" | "combine-latest" } = {},
 ): ObservableLike<T> =>
@@ -345,7 +344,7 @@ export const __memo: __Memo = <T>(
   return ctx.memo(f, ...args);
 };
 
-export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
+export const __await = <T>(observable: ObservableLike<T>): Option<T> => {
   const ctx = assertCurrentContext();
   return ctx.observe(observable);
 };
