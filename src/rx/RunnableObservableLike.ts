@@ -167,7 +167,9 @@ export const mergeAll: ConcatAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = createMergeAll<RunnableObservableLike>(lift) as ConcatAll<
+>["concatAll"] = /*@__PURE__*/ createMergeAll<RunnableObservableLike>(
+  lift,
+) as ConcatAll<
   RunnableObservableLike,
   {
     readonly maxBufferSize?: number;

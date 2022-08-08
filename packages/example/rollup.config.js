@@ -29,7 +29,12 @@ export default [
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
-      // terser(),
+      terser({
+        compress:{
+          unsafe: true,
+        unsafe_symbols: true
+        }
+      }),
     ],
   },
 ];
