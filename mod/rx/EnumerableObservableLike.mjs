@@ -69,7 +69,7 @@ const mapT = {
 const mergeT = {
     concat: merge,
 };
-const mergeAll = createMergeAll(lift);
+const mergeAll = /*@__PURE__*/ createMergeAll(lift);
 const mergeAllT = { concatAll: mergeAll };
 const pairwiseT = {
     pairwise: pairwise,

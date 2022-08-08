@@ -249,7 +249,7 @@ const mapT = { map };
 const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => pipe(a, f, toObservable$1()));
 const merge = merge$1;
 const mergeT = mergeT$1;
-const mergeAll = createMergeAll(liftObservable);
+const mergeAll = /*@__PURE__*/ createMergeAll(liftObservable);
 const mergeAllT = { concatAll: mergeAll };
 const multicast = multicast$1;
 const onSubscribe = onSubscribe$1;
