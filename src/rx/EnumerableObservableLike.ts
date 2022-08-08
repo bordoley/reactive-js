@@ -208,7 +208,7 @@ export const skipFirstT: SkipFirst<EnumerableObservableLike> = {
 };
 
 export const switchAll: ConcatAll<EnumerableObservableLike>["concatAll"] =
-  createSwitchAll<EnumerableObservableLike>(lift);
+  /*@__PURE__*/ createSwitchAll<EnumerableObservableLike>(lift);
 export const switchAllT: ConcatAll<EnumerableObservableLike> = {
   concatAll: switchAll,
 };
