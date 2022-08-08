@@ -4,7 +4,7 @@ import {
   expectEquals,
   expectToThrowError,
   test,
-} from "../__internal__/testing";
+} from "../__internal__/__internal__testing";
 import {
   Buffer,
   Concat,

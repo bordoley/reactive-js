@@ -1,6 +1,6 @@
 /// <reference types="./queues.test.d.ts" />
-import { createPriorityQueue } from '../../__internal__/scheduling/queue.mjs';
-import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
+import { createPriorityQueue } from '../../__internal__/scheduling/__internal__queue.mjs';
 import { newInstance, floor, pipe } from '../../functions.mjs';
 
 const compare = (a, b) => a - b;

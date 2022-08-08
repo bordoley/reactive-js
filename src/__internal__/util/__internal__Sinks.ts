@@ -41,7 +41,7 @@ import { notify } from "../../util/SinkLike";
 import {
   delegatingDisposableMixin,
   disposableMixin,
-} from "../util/DisposableLikeMixins";
+} from "./__internal__Disposables";
 import {
   Class1,
   Class2,
@@ -53,7 +53,7 @@ import {
   clazz,
   createInstanceFactory,
   init,
-} from "./Object";
+} from "./__internal__Objects";
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 

@@ -1,4 +1,4 @@
-/// <reference types="./ContainerLikeInternal.d.ts" />
+/// <reference types="./__internal__ContainerLike.d.ts" />
 import { isNone, alwaysTrue } from '../../functions.mjs';
 
 const createRepeatOperator = (f) => (predicate) => {

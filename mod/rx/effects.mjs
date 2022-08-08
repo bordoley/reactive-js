@@ -1,5 +1,5 @@
 /// <reference types="./effects.d.ts" />
-import { arrayEquality, none, isNone, ignore, raise, pipe, getLength, isSome, newInstance } from '../functions.mjs';
+import { isNone, ignore, none, raise, arrayEquality, pipe, getLength, isSome, newInstance } from '../functions.mjs';
 import { emptyObservable, createObservable } from '../rx.mjs';
 import { forEach, subscribe } from './ObservableLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -10,9 +10,7 @@ import { disposed } from '../util.mjs';
 import { isDisposed, dispose, addTo, onComplete } from '../util/DisposableLike.mjs';
 import { notify } from '../util/SinkLike.mjs';
 
-const arrayStrictEquality = arrayEquality();
-let currentCtx = none;
-function validateObservableEffect(ctx, type) {
+const validateObservableEffect = ((ctx, type) => {
     const { effects, index } = ctx;
     ctx.index++;
     const effect = effects[index];
@@ -48,7 +46,8 @@ function validateObservableEffect(ctx, type) {
             ? effect
             : raise("observable effect called out of order");
     }
-}
+});
+const arrayStrictEquality = arrayEquality();
 class ObservableContext {
     constructor(observer, runComputation, mode) {
         this.observer = observer;
@@ -124,6 +123,7 @@ class ObservableContext {
         }
     }
 }
+let currentCtx = none;
 const observable = (computation, { mode = "batched" } = {}) => createObservable((observer) => {
     const runComputation = () => {
         let result = none;
@@ -176,32 +176,34 @@ const observable = (computation, { mode = "batched" } = {}) => createObservable(
 const assertCurrentContext = () => isNone(currentCtx)
     ? raise("effect must be called within a computational expression")
     : currentCtx;
-function __memo(f, ...args) {
+const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
     return ctx.memo(f, ...args);
-}
+};
 const __observe = (observable) => {
     const ctx = assertCurrentContext();
     return ctx.observe(observable);
 };
-const deferSideEffect = (f, ...args) => createObservable(observer => {
-    const callback = () => {
-        f(...args);
-        pipe(observer, notify(none), dispose());
+const __do = /*@__PURE__*/ (() => {
+    const deferSideEffect = (f, ...args) => createObservable(observer => {
+        const callback = () => {
+            f(...args);
+            pipe(observer, notify(none), dispose());
+        };
+        pipe(observer, getScheduler, schedule(callback), addTo(observer));
+    });
+    return (f, ...args) => {
+        const ctx = assertCurrentContext();
+        const scheduler = getScheduler(ctx.observer);
+        const observable = ctx.memo(deferSideEffect, f, ...args);
+        const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
+        ctx.using(subscribeOnScheduler, observable);
     };
-    pipe(observer, getScheduler, schedule(callback), addTo(observer));
-});
-function __do(f, ...args) {
-    const ctx = assertCurrentContext();
-    const scheduler = getScheduler(ctx.observer);
-    const observable = ctx.memo(deferSideEffect, f, ...args);
-    const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
-    ctx.using(subscribeOnScheduler, observable);
-}
-function __using(f, ...args) {
+})();
+const __using = (f, ...args) => {
     const ctx = assertCurrentContext();
     return ctx.using(f, ...args);
-}
+};
 function __currentScheduler() {
     const ctx = assertCurrentContext();
     return getScheduler(ctx.observer);

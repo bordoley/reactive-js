@@ -1,4 +1,4 @@
-import { __DEV__ } from "../__internal__/env";
+import { __DEV__ } from "../__internal__/__internal__env";
 import {
   Equality,
   Factory,
@@ -38,9 +38,7 @@ import { DisposableLike, Exception, disposed } from "../util";
 import { addTo, dispose, isDisposed, onComplete } from "../util/DisposableLike";
 import { notify } from "../util/SinkLike";
 
-export type EffectsMode = "batched" | "combine-latest";
-
-const arrayStrictEquality = arrayEquality();
+type EffectsMode = "batched" | "combine-latest";
 
 const enum EffectContainerOf {
   Memo = 1,
@@ -69,27 +67,17 @@ type UsingEffect = {
   args: unknown[];
   value: DisposableLike;
 };
-
-let currentCtx: Option<ObservableContext> = none;
-
 type ObservableEffect = ObserveEffect | MemoEffect | UsingEffect;
 
-function validateObservableEffect(
-  ctx: ObservableContext,
-  type: EffectContainerOf.Observe,
-): ObserveEffect;
-function validateObservableEffect(
-  ctx: ObservableContext,
-  type: EffectContainerOf.Memo,
-): MemoEffect;
-function validateObservableEffect(
-  ctx: ObservableContext,
-  type: EffectContainerOf.Using,
-): UsingEffect;
-function validateObservableEffect(
+interface ValidateObservableEffect {
+  (ctx: ObservableContext, type: EffectContainerOf.Observe): ObserveEffect;
+  (ctx: ObservableContext, type: EffectContainerOf.Memo): MemoEffect;
+  (ctx: ObservableContext, type: EffectContainerOf.Using): UsingEffect;
+}
+const validateObservableEffect: ValidateObservableEffect = ((
   ctx: ObservableContext,
   type: EffectContainerOf,
-): ObservableEffect {
+): ObservableEffect => {
   const { effects, index } = ctx;
   ctx.index++;
 
@@ -128,7 +116,9 @@ function validateObservableEffect(
       ? effect
       : raise("observable effect called out of order");
   }
-}
+}) as ValidateObservableEffect;
+
+const arrayStrictEquality = arrayEquality();
 
 class ObservableContext {
   index = 0;
@@ -237,9 +227,11 @@ class ObservableContext {
   }
 }
 
+let currentCtx: Option<ObservableContext> = none;
+
 export const observable = <T>(
   computation: Factory<T>,
-  { mode = "batched" }: { mode?: EffectsMode } = {},
+  { mode = "batched" }: { mode?: "batched" | "combine-latest" } = {},
 ): ObservableLike<T> =>
   createObservable((observer: ObserverLike<T>) => {
     const runComputation = () => {
@@ -315,148 +307,142 @@ const assertCurrentContext = (): ObservableContext =>
     ? raise("effect must be called within a computational expression")
     : currentCtx;
 
-export function __memo<T>(fn: Factory<T>): T;
-export function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
-export function __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
-export function __memo<TA, TB, TC, T>(
-  fn: Function3<TA, TB, TC, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-): T;
-export function __memo<TA, TB, TC, TD, T>(
-  fn: Function4<TA, TB, TC, TD, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-): T;
-export function __memo<TA, TB, TC, TD, TE, T>(
-  fn: Function5<TA, TB, TC, TD, TE, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-): T;
-export function __memo<TA, TB, TC, TD, TE, TF, T>(
-  fn: Function6<TA, TB, TC, TD, TE, TF, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-  f: TF,
-): T;
-export function __memo<T>(f: (...args: any[]) => T, ...args: unknown[]): T {
+interface __Memo {
+  <T>(fn: Factory<T>): T;
+  <TA, T>(fn: Function1<TA, T>, a: TA): T;
+  <TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+  <TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+  <TA, TB, TC, TD, T>(
+    fn: Function4<TA, TB, TC, TD, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): T;
+  <TA, TB, TC, TD, TE, T>(
+    fn: Function5<TA, TB, TC, TD, TE, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): T;
+  <TA, TB, TC, TD, TE, TF, T>(
+    fn: Function6<TA, TB, TC, TD, TE, TF, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): T;
+}
+export const __memo: __Memo = <T>(
+  f: (...args: any[]) => T,
+  ...args: unknown[]
+): T => {
   const ctx = assertCurrentContext();
   return ctx.memo(f, ...args);
-}
+};
 
 export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
   const ctx = assertCurrentContext();
   return ctx.observe(observable);
 };
 
-const deferSideEffect = (f: (...args: any[]) => void, ...args: unknown[]) =>
-  createObservable(observer => {
-    const callback = () => {
-      f(...args);
-      pipe(observer, notify(none), dispose());
-    };
-
-    pipe(observer, getScheduler, schedule(callback), addTo(observer));
-  });
-
-export function __do(fn: SideEffect): void;
-export function __do<TA>(fn: SideEffect1<TA>, a: TA): void;
-export function __do<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
-export function __do<TA, TB, TC>(
-  fn: SideEffect3<TA, TB, TC>,
-  a: TA,
-  b: TB,
-  c: TC,
-): void;
-export function __do<TA, TB, TC, TD>(
-  fn: SideEffect4<TA, TB, TC, TD>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-): void;
-export function __do<TA, TB, TC, TD, TE>(
-  fn: SideEffect5<TA, TB, TC, TD, TE>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-): void;
-export function __do<TA, TB, TC, TD, TE, TF>(
-  fn: SideEffect6<TA, TB, TC, TD, TE, TF>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-  f: TF,
-): void;
-export function __do(f: (...args: any[]) => void, ...args: unknown[]): void {
-  const ctx = assertCurrentContext();
-
-  const scheduler = getScheduler(ctx.observer);
-  const observable = ctx.memo(deferSideEffect, f, ...args);
-  const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
-  ctx.using(subscribeOnScheduler, observable);
+interface __Do {
+  (fn: SideEffect): void;
+  <TA>(fn: SideEffect1<TA>, a: TA): void;
+  <TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
+  <TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: TC): void;
+  <TA, TB, TC, TD>(
+    fn: SideEffect4<TA, TB, TC, TD>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): void;
+  <TA, TB, TC, TD, TE>(
+    fn: SideEffect5<TA, TB, TC, TD, TE>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): void;
+  <TA, TB, TC, TD, TE, TF>(
+    fn: SideEffect6<TA, TB, TC, TD, TE, TF>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): void;
 }
+export const __do: __Do = /*@__PURE__*/ (() => {
+  const deferSideEffect = (f: (...args: any[]) => void, ...args: unknown[]) =>
+    createObservable(observer => {
+      const callback = () => {
+        f(...args);
+        pipe(observer, notify(none), dispose());
+      };
 
-export function __using<T extends DisposableLike>(fn: Factory<T>): T;
-export function __using<TA, T extends DisposableLike>(
-  fn: Function1<TA, T>,
-  a: TA,
-): T;
-export function __using<TA, TB, T extends DisposableLike>(
-  fn: Function2<TA, TB, T>,
-  a: TA,
-  b: TB,
-): T;
-export function __using<TA, TB, TC, T extends DisposableLike>(
-  fn: Function3<TA, TB, TC, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-): T;
-export function __using<TA, TB, TC, TD, T extends DisposableLike>(
-  fn: Function4<TA, TB, TC, TD, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-): T;
-export function __using<TA, TB, TC, TD, TE, T extends DisposableLike>(
-  fn: Function5<TA, TB, TC, TD, TE, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-): T;
-export function __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(
-  fn: Function6<TA, TB, TC, TD, TE, TF, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-  f: TF,
-): T;
-export function __using<T extends DisposableLike>(
+      pipe(observer, getScheduler, schedule(callback), addTo(observer));
+    });
+
+  return (f: (...args: any[]) => void, ...args: unknown[]): void => {
+    const ctx = assertCurrentContext();
+
+    const scheduler = getScheduler(ctx.observer);
+    const observable = ctx.memo(deferSideEffect, f, ...args);
+    const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
+    ctx.using(subscribeOnScheduler, observable);
+  };
+})();
+
+interface __Using {
+  <T extends DisposableLike>(fn: Factory<T>): T;
+  <TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
+  <TA, TB, T extends DisposableLike>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+  <TA, TB, TC, T extends DisposableLike>(
+    fn: Function3<TA, TB, TC, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+  ): T;
+  <TA, TB, TC, TD, T extends DisposableLike>(
+    fn: Function4<TA, TB, TC, TD, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): T;
+  <TA, TB, TC, TD, TE, T extends DisposableLike>(
+    fn: Function5<TA, TB, TC, TD, TE, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): T;
+  <TA, TB, TC, TD, TE, TF, T extends DisposableLike>(
+    fn: Function6<TA, TB, TC, TD, TE, TF, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): T;
+}
+export const __using: __Using = <T extends DisposableLike>(
   f: (...args: any[]) => T,
   ...args: unknown[]
-): T {
+): T => {
   const ctx = assertCurrentContext();
   return ctx.using(f, ...args);
-}
+};
 
 export function __currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();

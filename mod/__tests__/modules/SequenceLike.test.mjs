@@ -1,5 +1,5 @@
 /// <reference types="./SequenceLike.test.d.ts" />
-import { describe as createDescribe } from '../../__internal__/testing.mjs';
+import { describe as createDescribe } from '../../__internal__/__internal__testing.mjs';
 import { toSequence } from '../../containers/ReadonlyArrayLike.mjs';
 import { concatT, toReadonlyArrayT, concatAllT, distinctUntilChangedT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, zipT } from '../../containers/SequenceLike.mjs';
 import { concatTests, concatAllTests, distinctUntilChangedTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests } from '../operators.mjs';

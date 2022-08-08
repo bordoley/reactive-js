@@ -1,5 +1,5 @@
 /// <reference types="./SubjectLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals } from '../../__internal__/testing.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals } from '../../__internal__/__internal__testing.mjs';
 import { toRunnable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
 import { createSubject } from '../../rx.mjs';

@@ -1,4 +1,8 @@
-import { describe, expectArrayEquals, test } from "../../__internal__/testing";
+import {
+  describe,
+  expectArrayEquals,
+  test,
+} from "../../__internal__/__internal__testing";
 import { emptyReadonlyArray } from "../../containers";
 import {
   concatMap,

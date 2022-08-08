@@ -41,7 +41,7 @@ import {
   onComplete,
   onDisposed,
 } from "../../util/DisposableLike";
-import { disposableMixin } from "../util/DisposableLikeMixins";
+import { disposableMixin } from "../util/__internal__Disposables";
 import {
   Class1,
   PropertyTypeOf,
@@ -49,7 +49,7 @@ import {
   clazz,
   createInstanceFactory,
   init,
-} from "../util/Object";
+} from "../util/__internal__Objects";
 import {
   decodeWithCharsetSinkMixin,
   distinctUntilChangedSinkMixin,
@@ -64,7 +64,7 @@ import {
   takeLastSinkMixin,
   takeWhileSinkMixin,
   throwIfEmptySinkMixin,
-} from "../util/SinkLikeMixin";
+} from "../util/__internal__Sinks";
 
 const createObserverDispatcher = (<T>() => {
   const scheduleDrainQueue = (dispatcher: TProperties) => {

@@ -12,8 +12,11 @@ import {
   getException,
   isDisposed,
   onDisposed,
-} from "./DisposableLikeInternal";
-import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike";
+} from "./__internal__DisposableLike";
+import {
+  MutableRefLike,
+  MutableRefLike_current,
+} from "./__internal__MutableRefLike";
 import {
   Class,
   Class1,
@@ -22,7 +25,7 @@ import {
   clazz,
   createInstanceFactory,
   init,
-} from "./Object";
+} from "./__internal__Objects";
 
 export const delegatingDisposableMixin: Class1<
   DisposableLike,

@@ -7,7 +7,7 @@ import {
   expectTrue,
   mockFn,
   test,
-} from "../../__internal__/testing";
+} from "../../__internal__/__internal__testing";
 import { Option, none, pipe, pipeLazy, raise } from "../../functions";
 import { subscribe } from "../../rx/ObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling";

@@ -1,8 +1,8 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
-import { hasDelay, getDelay } from '../__internal__/optionalArgs.mjs';
-import { disposableMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
-import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
+import { hasDelay, getDelay } from '../__internal__/__internal__optionParsing.mjs';
+import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
+import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
+import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';

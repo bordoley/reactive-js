@@ -1,4 +1,8 @@
-import { describe, expectArrayEquals, test } from "../../__internal__/testing";
+import {
+  describe,
+  expectArrayEquals,
+  test,
+} from "../../__internal__/__internal__testing";
 import { pipe, returns } from "../../functions";
 import { forEach, subscribe } from "../../rx/ObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling";

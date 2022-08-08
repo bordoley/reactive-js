@@ -1,12 +1,12 @@
+import { MAX_SAFE_INTEGER } from "../__internal__/__internal__env";
 import {
   Lift,
   TReactive,
-} from "../__internal__/containers/StatefulContainerLikeInternal";
-import { MAX_SAFE_INTEGER } from "../__internal__/env";
+} from "../__internal__/containers/__internal__StatefulContainerLike";
 import {
   createMergeAll,
   createSwitchAll,
-} from "../__internal__/rx/ObservableLikeInternal";
+} from "../__internal__/rx/__internal__ObservableLike";
 import {
   Buffer,
   Concat,

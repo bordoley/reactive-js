@@ -11,7 +11,7 @@ import {
   mockFn,
   test,
   testAsync,
-} from "../../__internal__/testing";
+} from "../../__internal__/__internal__testing";
 import { concatMap, throws } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import {

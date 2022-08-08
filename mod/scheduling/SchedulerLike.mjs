@@ -1,13 +1,13 @@
 /// <reference types="./SchedulerLike.d.ts" />
-import { MAX_SAFE_INTEGER } from '../__internal__/env.mjs';
-import { getDelay } from '../__internal__/optionalArgs.mjs';
-import { createPriorityQueue } from '../__internal__/scheduling/queue.mjs';
-import { isInContinuation as isInContinuation$1, getCurrentTime as getCurrentTime$1 } from '../__internal__/schedulingInternal.mjs';
-import { isDisposed, dispose, addIgnoringChildErrors } from '../__internal__/util/DisposableLikeInternal.mjs';
-import { disposableMixin, disposableRefMixin } from '../__internal__/util/DisposableLikeMixins.mjs';
-import { enumeratorMixin } from '../__internal__/util/EnumeratorLikeMixin.mjs';
-import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/Object.mjs';
+import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
+import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
+import { isInContinuation as isInContinuation$1, getCurrentTime as getCurrentTime$1 } from '../__internal__/__internal__scheduling.mjs';
+import { createPriorityQueue } from '../__internal__/scheduling/__internal__queue.mjs';
+import { isDisposed, dispose, addIgnoringChildErrors } from '../__internal__/util/__internal__DisposableLike.mjs';
+import { disposableMixin, disposableRefMixin } from '../__internal__/util/__internal__Disposables.mjs';
+import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
+import { MutableRefLike_current } from '../__internal__/util/__internal__MutableRefLike.mjs';
+import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { none, isSome, pipe, isNone, raise, newInstance, max } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_now } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';

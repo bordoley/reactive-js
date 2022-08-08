@@ -3,14 +3,14 @@ import {
   mergeT,
   multicast,
   scan,
-} from "./__internal__/rx/ObservableLikeInternal";
-import { delegatingDisposableMixin } from "./__internal__/util/DisposableLikeMixins";
+} from "./__internal__/rx/__internal__ObservableLike";
+import { delegatingDisposableMixin } from "./__internal__/util/__internal__Disposables";
 import {
   __extends,
   clazz,
   createInstanceFactory,
   init,
-} from "./__internal__/util/Object";
+} from "./__internal__/util/__internal__Objects";
 import {
   Container,
   ContainerLike,

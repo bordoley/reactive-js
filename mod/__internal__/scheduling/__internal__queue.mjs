@@ -1,4 +1,4 @@
-/// <reference types="./queue.d.ts" />
+/// <reference types="./__internal__queue.d.ts" />
 import { floor, getLength, isSome, none, newInstance } from '../../functions.mjs';
 
 const computeParentIndex = (index) => floor((index - 1) / 2);
