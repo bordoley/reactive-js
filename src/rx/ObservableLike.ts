@@ -1169,7 +1169,7 @@ export const withLatestFrom: <TA, TB, T>(
     const typedObserverMixin = observerMixin<TA>();
 
     type TProperties = PropertyTypeOf<
-      [typeof disposableMixin, typeof typedObserverMixin]
+      [typeof delegatingDisposableMixin, typeof typedObserverMixin]
     > & {
       delegate: ObserverLike<T>;
       hasLatest: boolean;
@@ -1388,3 +1388,107 @@ export const zipLatest: Zip<ObservableLike>["zip"] = (
 export const zipLatestT: Zip<ObservableLike> = {
   zip: zipLatest,
 };
+
+export const zipWithLatestFrom: <TA, TB, T>(
+  other: ObservableLike<TB>,
+  selector: Function2<TA, TB, T>,
+) => ContainerOperator<ObservableLike, TA, T> = /*@__PURE__*/ (() => {
+  const createZipWithLatestFromObserver: <TA, TB, T>(
+    delegate: ObserverLike<T>,
+    other: ObservableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ) => ObserverLike<TA> = (<TA, TB, T>() => {
+    const typedObserverMixin = observerMixin<TA>();
+
+    type TProperties = PropertyTypeOf<
+      [typeof disposableMixin, typeof typedObserverMixin]
+    > & {
+      delegate: ObserverLike<T>;
+      hasLatest: boolean;
+      otherLatest: Option<TB>;
+      queue: TA[];
+      selector: Function2<TA, TB, T>;
+    };
+
+    const notifyDelegate = (observer: TProperties & ObserverLike<TA>) => {
+      if (getLength(observer.queue) > 0 && observer.hasLatest) {
+        observer.hasLatest = false;
+        const next = observer.queue.shift() as TA;
+        const result = observer.selector(next, observer.otherLatest as TB);
+        pipe(observer.delegate, notify(result));
+      }
+    };
+
+    return createInstanceFactory(
+      clazz(
+        __extends(disposableMixin, typedObserverMixin),
+        function ZipWithLatestFromObserer(
+          this: TProperties & ObserverLike<TA>,
+          delegate: ObserverLike<T>,
+          other: ObservableLike<TB>,
+          selector: Function2<TA, TB, T>,
+        ): ObserverLike<TA> {
+          init(disposableMixin, this);
+          init(typedObserverMixin, this, getScheduler(delegate));
+
+          this.delegate = delegate;
+          this.queue = [];
+          this.selector = selector;
+
+          const disposeDelegate = () => {
+            if (isDisposed(this) && isDisposed(otherSubscription)) {
+              pipe(delegate, dispose());
+            }
+          };
+
+          const otherSubscription = pipe(
+            other,
+            forEach(otherLatest => {
+              this.hasLatest = true;
+              this.otherLatest = otherLatest;
+              notifyDelegate(this);
+
+              if (isDisposed(this) && isEmpty(this.queue)) {
+                pipe(this.delegate, dispose());
+              }
+            }),
+            subscribe(getScheduler(delegate)),
+            onComplete(disposeDelegate),
+            addTo(delegate),
+          );
+
+          return pipe(this, addTo(delegate), onComplete(disposeDelegate));
+        },
+        {
+          delegate: none,
+          hasLatest: false,
+          otherLatest: none,
+          queue: none,
+          selector: none,
+        },
+        {
+          [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
+            this.queue.push(next);
+            notifyDelegate(this);
+          },
+        },
+      ),
+    );
+  })();
+
+  return <TA, TB, T>(
+    other: ObservableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ) => {
+    const lift = isEnumerable(other)
+      ? liftEnumerableObservable
+      : isRunnable(other)
+      ? liftRunnableObservable
+      : liftObservable;
+    return pipe(
+      createZipWithLatestFromObserver,
+      partial(other, selector),
+      lift,
+    ) as ContainerOperator<ObservableLike, TA, T>;
+  };
+})();

@@ -52,6 +52,7 @@ import {
   withLatestFrom,
   zip,
   zipLatest,
+  zipWithLatestFrom,
 } from "../../rx/ObservableLike";
 import {
   bufferT,
@@ -529,6 +530,65 @@ const zipLatestTests = describe(
   ),
 );
 
+const zipWithLatestTests = describe(
+  "zipWithLatestFrom",
+  test(
+    "when source throws",
+    pipeLazy(
+      pipeLazy(
+        throws({ fromArray: toObservable, ...mapT })(raise),
+        zipWithLatestFrom(pipe([1], toObservable()), (_, b) => b),
+        toReadonlyArray(),
+      ),
+      expectToThrow,
+    ),
+  ),
+
+  test(
+    "when other throws",
+    pipeLazy(
+      pipeLazy(
+        [1, 2, 3],
+        toObservable({ delay: 1 }),
+        zipWithLatestFrom(
+          throws({ fromArray: toObservable, ...mapT })(raise),
+          (_, b) => b,
+        ),
+        toReadonlyArray(),
+      ),
+      expectToThrow,
+    ),
+  ),
+
+  test(
+    "when other completes first",
+    pipeLazy(
+      [1, 2, 3],
+      toObservable({ delay: 2 }),
+      zipWithLatestFrom(
+        pipe([2, 4], toObservable({ delay: 1 })),
+        (a, b) => a + b,
+      ),
+      toReadonlyArray(),
+      expectArrayEquals([3, 6]),
+    ),
+  ),
+
+  test(
+    "when this completes first",
+    pipeLazy(
+      [1, 2, 3],
+      toObservable({ delay: 2 }),
+      zipWithLatestFrom(
+        pipe([2, 4, 6, 8], toObservable({ delay: 1 })),
+        (a, b) => a + b,
+      ),
+      toReadonlyArray(),
+      expectArrayEquals([3, 6, 11]),
+    ),
+  ),
+);
+
 export default describe(
   "ObservableLike",
   bufferTests({
@@ -622,4 +682,5 @@ export default describe(
   withLatestFromTest,
   zipTests,
   zipLatestTests,
+  zipWithLatestTests,
 );
