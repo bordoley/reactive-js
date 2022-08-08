@@ -52,7 +52,6 @@ import {
   onNotify,
   onSubscribe,
   publishTo,
-  retry,
   scanAsync,
   share,
   subscribe,
@@ -248,24 +247,6 @@ export const tests = describe(
   ),
 
   test("never", pipeLazy(never(), toRunnable(), last(), expectNone)),
-
-  describe(
-    "retry",
-    test("repeats the observable n times", () => {
-      let retried = false;
-      const src = createObservable(({ dispatcher }) => {
-        dispatcher.dispatch(1);
-        if (retried) {
-          dispatcher.dispatch(2);
-          dispatcher.dispose();
-        } else {
-          retried = true;
-          pipe(dispatcher, dispose({ cause: newInstance(Error) }));
-        }
-      });
-      pipe(src, retry(), toRunnable(), toArray(), expectArrayEquals([1, 1, 2]));
-    }),
-  ),
 
   describe(
     "scanAsync",

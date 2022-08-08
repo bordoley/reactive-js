@@ -5,7 +5,7 @@ import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, identity, increment, sum, newInstance } from '../../functions.mjs';
 import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/EnumerableLike.mjs';
 import { generateObservable, emptyObservable, deferRunnableObservableT } from '../../rx.mjs';
-import { combineLatest, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, share, zip, map, forEach, takeUntil, toEnumerable, toFlowable, toPromise, withLatestFrom, zipLatest } from '../../rx/ObservableLike.mjs';
+import { combineLatest, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, concat, retry, share, zip, map, forEach, takeUntil, toEnumerable, toFlowable, toPromise, withLatestFrom, zipLatest } from '../../rx/ObservableLike.mjs';
 import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
 import { createVirtualTimeScheduler, createHostScheduler } from '../../scheduling.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
@@ -37,6 +37,10 @@ const onSubscribeTests = createDescribe("onSubscribe", createTest("when subscrib
     const subscription = pipe([1], toObservable(), onSubscribe(raise), subscribe(scheduler));
     pipe(subscription, getException, expectIsSome);
 }));
+const retryTests = createDescribe("retry", createTest("repeats the observable n times", pipeLazy(concat(pipe([1, 2, 3], toObservable()), pipe(raise, throws({
+    fromArray: toObservable,
+    ...mapT,
+}))), retry(), takeFirst({ count: 6 }), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
 const shareTests = createDescribe("share", createTest("shared observable zipped with itself", () => {
     const scheduler = createVirtualTimeScheduler();
     const shared = pipe([1, 2, 3], toObservable({ delay: 1 }), share(scheduler, { replay: 1 }));
@@ -48,7 +52,7 @@ const shareTests = createDescribe("share", createTest("shared observable zipped 
     pipe(result, expectArrayEquals([2, 4, 6]));
 }));
 const switchAllTests = createDescribe("switchAll", createTest("with empty source", pipeLazy(emptyObservable({ delay: 1 }), switchAll(), toReadonlyArray(), expectArrayEquals([]))), createTest("when source throw", pipeLazy(pipeLazy(raise, throws({
-    fromArray: () => toObservable({ delay: 0 }),
+    fromArray: toObservable,
     ...mapT,
 }), switchAll(), toReadonlyArray()), expectToThrow, identity)), createTest("concating arrays", pipeLazy([1, 2, 3], toObservable({ delay: 1 }), concatMap({ ...switchAllT, ...mapT }, _ => pipe([1, 2, 3], toObservable({ delay: 0 }))), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), createTest("overlapping notification", pipeLazy([1, 2, 3], toObservable({ delay: 4 }), concatMap({ ...switchAllT, ...mapT }, _ => pipe([1, 2, 3], toObservable({ delay: 2 }))), toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))));
 const takeUntilTests = createDescribe("takeUntil", createTest("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], toObservable({ delay: 1 }), takeUntil(pipe([1], toObservable({ delay: 3, delayStart: true }))), toReadonlyArray(), expectArrayEquals([1, 2, 3]))));
@@ -143,7 +147,7 @@ var ObservableLikeTests = createDescribe("ObservableLike", bufferTests({
     fromArray: toObservable,
     ...reduceT,
     ...toReadonlyArrayT,
-}), scanTests({
+}), retryTests, scanTests({
     fromArray: toObservable,
     ...scanT,
     ...toReadonlyArrayT,

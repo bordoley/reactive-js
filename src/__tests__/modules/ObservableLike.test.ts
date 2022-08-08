@@ -35,10 +35,12 @@ import {
 } from "../../rx";
 import {
   combineLatest,
+  concat,
   forEach,
   map,
   merge,
   onSubscribe,
+  retry,
   share,
   subscribe,
   takeFirst,
@@ -203,6 +205,29 @@ const onSubscribeTests = describe(
   }),
 );
 
+const retryTests = describe(
+  "retry",
+  test(
+    "repeats the observable n times",
+    pipeLazy(
+      concat(
+        pipe([1, 2, 3], toObservable()),
+        pipe(
+          raise,
+          throws<RunnableObservableLike, number>({
+            fromArray: toObservable,
+            ...mapT,
+          }),
+        ),
+      ),
+      retry(),
+      takeFirst({ count: 6 }),
+      toReadonlyArray(),
+      expectArrayEquals([1, 2, 3, 1, 2, 3]),
+    ),
+  ),
+);
+
 const shareTests = describe(
   "share",
   test("shared observable zipped with itself", () => {
@@ -245,7 +270,7 @@ const switchAllTests = describe(
       pipeLazy(
         raise,
         throws({
-          fromArray: <T>() => toObservable<T>({ delay: 0 }),
+          fromArray: toObservable,
           ...mapT,
         }),
         switchAll(),
@@ -557,6 +582,7 @@ export default describe(
     ...reduceT,
     ...toReadonlyArrayT,
   }),
+  retryTests,
   scanTests({
     fromArray: toObservable,
     ...scanT,
