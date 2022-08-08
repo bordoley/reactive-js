@@ -58,7 +58,11 @@ import {
   MutableEnumeratorLike,
   enumeratorMixin,
 } from "../__internal__/util/__internal__Enumerators";
-import { MutableRefLike_current } from "../__internal__/util/__internal__MutableRefLike";
+import {
+  MutableRefLike_current,
+  getCurrentRef,
+  setCurrentRef,
+} from "../__internal__/util/__internal__MutableRefLike";
 import {
   PropertyTypeOf,
   __extends,
@@ -109,6 +113,7 @@ import {
   Function2,
   Option,
   Predicate,
+  SideEffect,
   compose,
   getLength,
   getOrRaise,
@@ -912,6 +917,161 @@ export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
     createTakeWhileOperator(liftEnumerableObservableT),
   );
 export const takeWhileT: TakeWhile<ObservableLike> = { takeWhile };
+
+interface Throttle {
+  /**
+   * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
+   *
+   * @param duration Function function that is used to determine the silence duration in between emitted values.
+   * @param mode The throttle mode.
+   */
+  <T>(
+    duration: Function1<T, ObservableLike>,
+    options?: { readonly mode?: "first" | "last" | "interval" },
+  ): ContainerOperator<ObservableLike, T, T>;
+
+  /**
+   * Returns an `ObservableLike` which emits a value from the source,
+   * then ignores subsequent source values for `duration` milliseconds.
+   *
+   * @param duration Time to wait before emitting another value after
+   * emitting the last value, measured in milliseconds.
+   * @param mode The throttle mode.
+   */
+  <T>(
+    duration: number,
+    options?: { readonly mode?: "first" | "last" | "interval" },
+  ): ContainerOperator<ObservableLike, T, T>;
+}
+export const throttle: Throttle = /*@__PURE__*/ (() => {
+  type ThrottleMode = "first" | "last" | "interval";
+
+  const createThrottleObserver: <T>(
+    delegate: ObserverLike<T>,
+    durationFunction: Function1<T, ObservableLike<unknown>>,
+    mode: ThrottleMode,
+  ) => ObserverLike<T> = (<T>() => {
+    const typedObserverMixin = observerMixin<T>();
+
+    type TProperties = {
+      delegate: ObserverLike<T>;
+      value: Option<T>;
+      hasValue: boolean;
+      durationSubscription: DisposableRefLike;
+      durationFunction: Function1<T, ObservableLike>;
+      mode: ThrottleMode;
+      onNotify: SideEffect;
+    };
+
+    const setupDurationSubscription = (
+      observer: ObserverLike<T> & TProperties,
+      next: T,
+    ) => {
+      pipe(
+        observer.durationSubscription,
+        setCurrentRef(
+          pipe(
+            observer.durationFunction(next),
+            forEach(observer.onNotify),
+            subscribe(getScheduler(observer)),
+          ),
+        ),
+      );
+    };
+
+    return createInstanceFactory(
+      clazz(
+        __extends(disposableMixin, typedObserverMixin),
+        function ThrottleObserver(
+          this: ObserverLike<T> & TProperties,
+          delegate: ObserverLike<T>,
+          durationFunction: Function1<T, ObservableLike<unknown>>,
+          mode: ThrottleMode,
+        ): ObserverLike<T> {
+          init(disposableMixin, this);
+          init(typedObserverMixin, this, getScheduler(delegate));
+
+          this.delegate = delegate;
+          this.durationFunction = durationFunction;
+          this.mode = mode;
+
+          this.durationSubscription = pipe(
+            createDisposableRef(disposed),
+            addTo(delegate),
+          );
+
+          this.onNotify = (_?: unknown) => {
+            if (this.hasValue) {
+              const value = this.value as T;
+              this.value = none;
+              this.hasValue = false;
+
+              pipe(this.delegate, notify(value));
+
+              setupDurationSubscription(this, value);
+            }
+          };
+
+          return pipe(
+            this,
+            addTo(delegate),
+            onComplete(() => {
+              if (
+                this.mode !== "first" &&
+                this.hasValue &&
+                !isDisposed(delegate)
+              ) {
+                pipe([this.value], arrayToObservable(), sinkInto(delegate));
+              }
+            }),
+          );
+        },
+        {},
+        {
+          [SinkLike_notify](this: ObserverLike<T> & TProperties, next: T) {
+            this.value = next;
+            this.hasValue = true;
+
+            const durationSubscriptionDisposableIsDisposed = pipe(
+              this.durationSubscription,
+              getCurrentRef,
+              isDisposed,
+            );
+
+            if (
+              durationSubscriptionDisposableIsDisposed &&
+              this.mode !== "last"
+            ) {
+              this.onNotify();
+            } else if (durationSubscriptionDisposableIsDisposed) {
+              setupDurationSubscription(this, next);
+            }
+          },
+        },
+      ),
+    );
+  })();
+
+  return <T>(
+    duration: Function1<T, ObservableLike<unknown>> | number,
+    options: { readonly mode?: ThrottleMode } = {},
+  ) => {
+    const { mode = "interval" } = options;
+    const durationFunction =
+      typeof duration === "number"
+        ? (_: T) =>
+            pipe(
+              [none],
+              arrayToObservable({ delay: duration, delayStart: true }),
+            )
+        : duration;
+    return pipe(
+      createThrottleObserver,
+      partial(durationFunction, mode),
+      typeof duration === "number" ? liftRunnableObservable : liftObservable,
+    );
+  };
+})();
 
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   /*@__PURE__*/ pipe(

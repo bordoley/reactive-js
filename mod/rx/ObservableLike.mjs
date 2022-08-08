@@ -6,7 +6,7 @@ import { liftEnumerableObservable, liftObservable, allAreEnumerable, allAreRunna
 import { observerMixin, createDelegatingObserver, createDecodeWithCharsetObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createReduceObserver, createSkipFirstObserver, createTakeLastObserver, createTakeWhileObserver, createThrowIfEmptyObserver } from '../__internal__/scheduling/__internal__Observers.mjs';
 import { disposableMixin, createDisposableRef, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
-import { MutableRefLike_current } from '../__internal__/util/__internal__MutableRefLike.mjs';
+import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { createEnumeratorSink } from '../__internal__/util/__internal__Sinks.mjs';
 import { concatMap, keepType } from '../containers/ContainerLike.mjs';
@@ -375,6 +375,58 @@ const takeWhile =
 /*@__PURE__*/
 pipe(createTakeWhileObserver, createTakeWhileOperator(liftEnumerableObservableT));
 const takeWhileT = { takeWhile };
+const throttle = /*@__PURE__*/ (() => {
+    const createThrottleObserver = (() => {
+        const typedObserverMixin = observerMixin();
+        const setupDurationSubscription = (observer, next) => {
+            pipe(observer.durationSubscription, setCurrentRef(pipe(observer.durationFunction(next), forEach(observer.onNotify), subscribe(getScheduler(observer)))));
+        };
+        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ThrottleObserver(delegate, durationFunction, mode) {
+            init(disposableMixin, this);
+            init(typedObserverMixin, this, getScheduler(delegate));
+            this.delegate = delegate;
+            this.durationFunction = durationFunction;
+            this.mode = mode;
+            this.durationSubscription = pipe(createDisposableRef(disposed), addTo(delegate));
+            this.onNotify = (_) => {
+                if (this.hasValue) {
+                    const value = this.value;
+                    this.value = none;
+                    this.hasValue = false;
+                    pipe(this.delegate, notify(value));
+                    setupDurationSubscription(this, value);
+                }
+            };
+            return pipe(this, addTo(delegate), onComplete(() => {
+                if (this.mode !== "first" &&
+                    this.hasValue &&
+                    !isDisposed(delegate)) {
+                    pipe([this.value], toObservable(), sinkInto(delegate));
+                }
+            }));
+        }, {}, {
+            [SinkLike_notify](next) {
+                this.value = next;
+                this.hasValue = true;
+                const durationSubscriptionDisposableIsDisposed = pipe(this.durationSubscription, getCurrentRef, isDisposed);
+                if (durationSubscriptionDisposableIsDisposed &&
+                    this.mode !== "last") {
+                    this.onNotify();
+                }
+                else if (durationSubscriptionDisposableIsDisposed) {
+                    setupDurationSubscription(this, next);
+                }
+            },
+        }));
+    })();
+    return (duration, options = {}) => {
+        const { mode = "interval" } = options;
+        const durationFunction = typeof duration === "number"
+            ? (_) => pipe([none], toObservable({ delay: duration, delayStart: true }))
+            : duration;
+        return pipe(createThrottleObserver, partial(durationFunction, mode), typeof duration === "number" ? liftRunnableObservable : liftObservable);
+    };
+})();
 const throwIfEmpty = 
 /*@__PURE__*/ pipe(createThrowIfEmptyObserver, createThrowIfEmptyOperator(liftEnumerableObservableT));
 const throwIfEmptyT = {
@@ -624,4 +676,4 @@ const zipLatestT = {
 };
 const zipWithLatestFrom = zipWithLatestFrom$1;
 
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
