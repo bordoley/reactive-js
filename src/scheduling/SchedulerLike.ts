@@ -35,6 +35,7 @@ import {
   Function2,
   Option,
   SideEffect,
+  compose,
   isNone,
   isSome,
   max,
@@ -68,6 +69,7 @@ import {
 } from "../util";
 import { run } from "../util/ContinuationLike";
 import { getCurrent, hasCurrent } from "../util/EnumeratorLike";
+import { pause } from "../util/PauseableLike";
 import { move } from "../util/SourceLike";
 
 export const isInContinuation: (scheduler: {
@@ -475,7 +477,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
 export const toPausableScheduler: Function1<
   SchedulerLike,
   PauseableSchedulerLike
-> = createQueueScheduler;
+> = compose(createQueueScheduler, pause);
 
 export const toPriorityScheduler: Function1<
   SchedulerLike,

@@ -10,6 +10,7 @@
 - [\_\_currentScheduler](effects.md#__currentscheduler)
 - [\_\_do](effects.md#__do)
 - [\_\_memo](effects.md#__memo)
+- [\_\_observe](effects.md#__observe)
 - [\_\_state](effects.md#__state)
 - [\_\_stream](effects.md#__stream)
 - [\_\_using](effects.md#__using)
@@ -19,7 +20,7 @@
 
 ### \_\_await
 
-▸ **__await**<`T`\>(`observable`): [`Option`](functions.md#option)<`T`\>
+▸ **__await**<`T`\>(`observable`): `T`
 
 #### Type parameters
 
@@ -35,7 +36,7 @@
 
 #### Returns
 
-[`Option`](functions.md#option)<`T`\>
+`T`
 
 ___
 
@@ -378,6 +379,28 @@ ___
 #### Returns
 
 `T`
+
+___
+
+### \_\_observe
+
+▸ **__observe**<`T`\>(`observable`): [`Option`](functions.md#option)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+
+#### Returns
+
+[`Option`](functions.md#option)<`T`\>
 
 ___
 

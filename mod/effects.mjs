@@ -10,19 +10,19 @@ import { disposed } from './util.mjs';
 import { isDisposed, dispose, addTo, onComplete } from './util/DisposableLike.mjs';
 import { notify } from './util/SinkLike.mjs';
 
-const validateObservableEffect = ((ctx, type) => {
+const validateAsyncEffect = ((ctx, type) => {
     const { effects, index } = ctx;
     ctx.index++;
     const effect = effects[index];
     if (isNone(effect)) {
-        const newEffect = type === 1 /* EffectContainerOf.Memo */
+        const newEffect = type === 1 /* AsyncEffectType.Memo */
             ? {
                 type,
                 f: ignore,
                 args: [],
                 value: none,
             }
-            : type === 2 /* EffectContainerOf.Observe */
+            : type === 2 /* AsyncEffectType.Await */ || type === 3 /* AsyncEffectType.Observe */
                 ? {
                     type,
                     observable: emptyObservable(),
@@ -30,7 +30,7 @@ const validateObservableEffect = ((ctx, type) => {
                     value: none,
                     hasValue: false,
                 }
-                : type === 3 /* EffectContainerOf.Using */
+                : type === 4 /* AsyncEffectType.Using */
                     ? {
                         type,
                         f: ignore,
@@ -48,7 +48,8 @@ const validateObservableEffect = ((ctx, type) => {
     }
 });
 const arrayStrictEquality = arrayEquality();
-class ObservableContext {
+const awaiting = {};
+class AsyncContext {
     constructor(observer, runComputation, mode) {
         this.observer = observer;
         this.runComputation = runComputation;
@@ -58,7 +59,8 @@ class ObservableContext {
         this.scheduledComputationSubscription = disposed;
         this.cleanup = () => {
             const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* EffectContainerOf.Observe */ &&
+            const hasOutstandingEffects = effects.findIndex(effect => (effect.type === 2 /* AsyncEffectType.Await */ ||
+                effect.type === 3 /* AsyncEffectType.Observe */) &&
                 !isDisposed(effect.subscription)) >= 0;
             if (!hasOutstandingEffects &&
                 isDisposed(this.scheduledComputationSubscription)) {
@@ -67,7 +69,7 @@ class ObservableContext {
         };
     }
     memo(f, ...args) {
-        const effect = validateObservableEffect(this, 1 /* EffectContainerOf.Memo */);
+        const effect = validateAsyncEffect(this, 1 /* AsyncEffectType.Memo */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -79,8 +81,10 @@ class ObservableContext {
             return value;
         }
     }
-    observe(observable) {
-        const effect = validateObservableEffect(this, 2 /* EffectContainerOf.Observe */);
+    awaitOrObserve(observable, shouldAwait) {
+        const effect = shouldAwait
+            ? validateAsyncEffect(this, 2 /* AsyncEffectType.Await */)
+            : validateAsyncEffect(this, 3 /* AsyncEffectType.Observe */);
         if (effect.observable === observable) {
             return effect.value;
         }
@@ -105,11 +109,11 @@ class ObservableContext {
             effect.subscription = subscription;
             effect.value = none;
             effect.hasValue = false;
-            return none;
+            return shouldAwait ? raise(awaiting) : none;
         }
     }
     using(f, ...args) {
-        const effect = validateObservableEffect(this, 3 /* EffectContainerOf.Using */);
+        const effect = validateAsyncEffect(this, 4 /* AsyncEffectType.Using */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -128,12 +132,16 @@ const async = (computation, { mode = "batched" } = {}) => createObservable((obse
     const runComputation = () => {
         let result = none;
         let error = none;
+        let isAwaiting = false;
         currentCtx = ctx;
         try {
             result = computation();
         }
         catch (cause) {
-            error = { cause };
+            isAwaiting = cause === awaiting;
+            if (!isAwaiting) {
+                error = { cause };
+            }
         }
         currentCtx = none;
         ctx.index = 0;
@@ -145,11 +153,13 @@ const async = (computation, { mode = "batched" } = {}) => createObservable((obse
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
             const { type } = effect;
-            if (type === 2 /* EffectContainerOf.Observe */ &&
+            if ((type === 2 /* AsyncEffectType.Await */ ||
+                type === 3 /* AsyncEffectType.Observe */) &&
                 !effect.hasValue) {
                 allObserveEffectsHaveValues = false;
             }
-            if (type === 2 /* EffectContainerOf.Observe */ &&
+            if ((type === 2 /* AsyncEffectType.Await */ ||
+                type === 3 /* AsyncEffectType.Observe */) &&
                 !isDisposed(effect.subscription)) {
                 hasOutstandingEffects = true;
             }
@@ -161,7 +171,9 @@ const async = (computation, { mode = "batched" } = {}) => createObservable((obse
             allObserveEffectsHaveValues &&
             hasOutstandingEffects;
         const hasError = isSome(error);
-        const shouldNotify = !hasError && (combineLatestModeShouldNotify || mode === "batched");
+        const shouldNotify = !hasError &&
+            !isAwaiting &&
+            (combineLatestModeShouldNotify || mode === "batched");
         const shouldDispose = !hasOutstandingEffects || hasError;
         if (shouldNotify) {
             pipe(observer, notify(result));
@@ -170,7 +182,7 @@ const async = (computation, { mode = "batched" } = {}) => createObservable((obse
             pipe(observer, dispose(error));
         }
     };
-    const ctx = newInstance(ObservableContext, observer, runComputation, mode);
+    const ctx = newInstance(AsyncContext, observer, runComputation, mode);
     pipe(observer, getScheduler, schedule(runComputation), addTo(observer));
 });
 const assertCurrentContext = () => isNone(currentCtx)
@@ -182,7 +194,11 @@ const __memo = (f, ...args) => {
 };
 const __await = (observable) => {
     const ctx = assertCurrentContext();
-    return ctx.observe(observable);
+    return ctx.awaitOrObserve(observable, true);
+};
+const __observe = (observable) => {
+    const ctx = assertCurrentContext();
+    return ctx.awaitOrObserve(observable, false);
 };
 const __do = /*@__PURE__*/ (() => {
     const deferSideEffect = (f, ...args) => createObservable(observer => {
@@ -225,4 +241,4 @@ const __state = /*@__PURE__*/ (() => {
     };
 })();
 
-export { __await, __currentScheduler, __do, __memo, __state, __stream, __using, async };
+export { __await, __currentScheduler, __do, __memo, __observe, __state, __stream, __using, async };
