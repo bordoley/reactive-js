@@ -1036,7 +1036,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
 
   const createThrottleObserver: <T>(
     delegate: ObserverLike<T>,
-    durationFunction: Function1<T, ObservableLike<unknown>>,
+    durationFunction: Function1<T, ObservableLike>,
     mode: ThrottleMode,
   ) => ObserverLike<T> = (<T>() => {
     const typedObserverMixin = observerMixin<T>();
@@ -1073,7 +1073,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
         function ThrottleObserver(
           this: ObserverLike<T> & TProperties,
           delegate: ObserverLike<T>,
-          durationFunction: Function1<T, ObservableLike<unknown>>,
+          durationFunction: Function1<T, ObservableLike>,
           mode: ThrottleMode,
         ): ObserverLike<T> {
           init(disposableMixin, this);
@@ -1141,7 +1141,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
   })();
 
   return <T>(
-    duration: Function1<T, ObservableLike<unknown>> | number,
+    duration: Function1<T, ObservableLike> | number,
     options: { readonly mode?: ThrottleMode } = {},
   ) => {
     const { mode = "interval" } = options;
