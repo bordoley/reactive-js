@@ -16,7 +16,8 @@ interface __Memo {
     <TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 }
 declare const __memo: __Memo;
-declare const __await: <T>(observable: ObservableLike<T>) => Option<T>;
+declare const __await: <T>(observable: ObservableLike<T>) => T;
+declare const __observe: <T>(observable: ObservableLike<T>) => Option<T>;
 interface __Do {
     (fn: SideEffect): void;
     <TA>(fn: SideEffect1<TA>, a: TA): void;
@@ -45,4 +46,4 @@ declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamabl
 declare const __state: <T>(initialState: () => T, options?: {
     readonly equality?: Option<Equality<T>>;
 }) => StreamLike<Updater<T>, T>;
-export { __await, __currentScheduler, __do, __memo, __state, __stream, __using, async };
+export { __await, __currentScheduler, __do, __memo, __observe, __state, __stream, __using, async };

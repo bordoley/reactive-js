@@ -39,21 +39,30 @@ import { notify } from "./util/SinkLike";
 
 type EffectsMode = "batched" | "combine-latest";
 
-const enum EffectContainerOf {
+const enum AsyncEffectType {
   Memo = 1,
-  Observe = 2,
-  Using = 3,
+  Await = 2,
+  Observe = 3,
+  Using = 4,
 }
 
 type MemoEffect = {
-  readonly type: EffectContainerOf.Memo;
+  readonly type: AsyncEffectType.Memo;
   f: (...args: any[]) => unknown;
   args: unknown[];
   value: unknown;
 };
 
+type AwaitEffect = {
+  readonly type: AsyncEffectType.Await;
+  observable: ObservableLike;
+  subscription: DisposableLike;
+  value: Option;
+  hasValue: boolean;
+};
+
 type ObserveEffect = {
-  readonly type: EffectContainerOf.Observe;
+  readonly type: AsyncEffectType.Observe;
   observable: ObservableLike;
   subscription: DisposableLike;
   value: Option;
@@ -61,37 +70,38 @@ type ObserveEffect = {
 };
 
 type UsingEffect = {
-  readonly type: EffectContainerOf.Using;
+  readonly type: AsyncEffectType.Using;
   f: (...args: any[]) => unknown;
   args: unknown[];
   value: DisposableLike;
 };
-type ObservableEffect = ObserveEffect | MemoEffect | UsingEffect;
+type AsyncEffect = AwaitEffect | MemoEffect | ObserveEffect | UsingEffect;
 
-interface ValidateObservableEffect {
-  (ctx: ObservableContext, type: EffectContainerOf.Observe): ObserveEffect;
-  (ctx: ObservableContext, type: EffectContainerOf.Memo): MemoEffect;
-  (ctx: ObservableContext, type: EffectContainerOf.Using): UsingEffect;
+interface ValidateAsyncEffect {
+  (ctx: AsyncContext, type: AsyncEffectType.Await): AwaitEffect;
+  (ctx: AsyncContext, type: AsyncEffectType.Memo): MemoEffect;
+  (ctx: AsyncContext, type: AsyncEffectType.Observe): ObserveEffect;
+  (ctx: AsyncContext, type: AsyncEffectType.Using): UsingEffect;
 }
-const validateObservableEffect: ValidateObservableEffect = ((
-  ctx: ObservableContext,
-  type: EffectContainerOf,
-): ObservableEffect => {
+const validateAsyncEffect: ValidateAsyncEffect = ((
+  ctx: AsyncContext,
+  type: AsyncEffectType,
+): AsyncEffect => {
   const { effects, index } = ctx;
   ctx.index++;
 
   const effect = effects[index];
 
   if (isNone(effect)) {
-    const newEffect: ObservableEffect =
-      type === EffectContainerOf.Memo
+    const newEffect: AsyncEffect =
+      type === AsyncEffectType.Memo
         ? {
             type,
             f: ignore,
             args: [],
             value: none,
           }
-        : type === EffectContainerOf.Observe
+        : type === AsyncEffectType.Await || type === AsyncEffectType.Observe
         ? {
             type,
             observable: emptyObservable(),
@@ -99,7 +109,7 @@ const validateObservableEffect: ValidateObservableEffect = ((
             value: none,
             hasValue: false,
           }
-        : type === EffectContainerOf.Using
+        : type === AsyncEffectType.Using
         ? {
             type,
             f: ignore,
@@ -115,13 +125,15 @@ const validateObservableEffect: ValidateObservableEffect = ((
       ? effect
       : raise("observable effect called out of order");
   }
-}) as ValidateObservableEffect;
+}) as ValidateAsyncEffect;
 
 const arrayStrictEquality = arrayEquality();
 
-class ObservableContext {
+const awaiting = {};
+
+class AsyncContext {
   index = 0;
-  readonly effects: ObservableEffect[] = [];
+  readonly effects: AsyncEffect[] = [];
   private scheduledComputationSubscription: DisposableLike = disposed;
 
   constructor(
@@ -136,7 +148,8 @@ class ObservableContext {
     const hasOutstandingEffects =
       effects.findIndex(
         effect =>
-          effect.type === EffectContainerOf.Observe &&
+          (effect.type === AsyncEffectType.Await ||
+            effect.type === AsyncEffectType.Observe) &&
           !isDisposed(effect.subscription),
       ) >= 0;
 
@@ -149,7 +162,7 @@ class ObservableContext {
   };
 
   memo<T>(f: (...args: any[]) => T, ...args: unknown[]): T {
-    const effect = validateObservableEffect(this, EffectContainerOf.Memo);
+    const effect = validateAsyncEffect(this, AsyncEffectType.Memo);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
       return effect.value as T;
@@ -162,11 +175,16 @@ class ObservableContext {
     }
   }
 
-  observe<T>(observable: ObservableLike<T>): Option<T> {
-    const effect = validateObservableEffect(this, EffectContainerOf.Observe);
+  awaitOrObserve<T>(
+    observable: ObservableLike<T>,
+    shouldAwait: boolean,
+  ): Option<T> {
+    const effect = shouldAwait
+      ? validateAsyncEffect(this, AsyncEffectType.Await)
+      : validateAsyncEffect(this, AsyncEffectType.Observe);
 
     if (effect.observable === observable) {
-      return effect.value as Option<T>;
+      return effect.value as T;
     } else {
       pipe(effect.subscription, dispose());
 
@@ -200,7 +218,8 @@ class ObservableContext {
       effect.subscription = subscription;
       effect.value = none;
       effect.hasValue = false;
-      return none;
+
+      return shouldAwait ? raise(awaiting) : none;
     }
   }
 
@@ -208,7 +227,7 @@ class ObservableContext {
     f: (...args: any[]) => T,
     ...args: unknown[]
   ): T {
-    const effect = validateObservableEffect(this, EffectContainerOf.Using);
+    const effect = validateAsyncEffect(this, AsyncEffectType.Using);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
       return effect.value as T;
@@ -226,7 +245,7 @@ class ObservableContext {
   }
 }
 
-let currentCtx: Option<ObservableContext> = none;
+let currentCtx: Option<AsyncContext> = none;
 
 export const async = <T>(
   computation: Factory<T>,
@@ -236,12 +255,16 @@ export const async = <T>(
     const runComputation = () => {
       let result: Option<T> = none;
       let error: Option<Exception> = none;
+      let isAwaiting = false;
 
       currentCtx = ctx;
       try {
         result = computation();
       } catch (cause) {
-        error = { cause };
+        isAwaiting = cause === awaiting;
+        if (!isAwaiting) {
+          error = { cause };
+        }
       }
       currentCtx = none;
       ctx.index = 0;
@@ -257,14 +280,16 @@ export const async = <T>(
         const { type } = effect;
 
         if (
-          type === EffectContainerOf.Observe &&
+          (type === AsyncEffectType.Await ||
+            type === AsyncEffectType.Observe) &&
           !(effect as ObserveEffect).hasValue
         ) {
           allObserveEffectsHaveValues = false;
         }
 
         if (
-          type === EffectContainerOf.Observe &&
+          (type === AsyncEffectType.Await ||
+            type === AsyncEffectType.Observe) &&
           !isDisposed((effect as ObserveEffect).subscription)
         ) {
           hasOutstandingEffects = true;
@@ -283,7 +308,9 @@ export const async = <T>(
       const hasError = isSome(error);
 
       const shouldNotify =
-        !hasError && (combineLatestModeShouldNotify || mode === "batched");
+        !hasError &&
+        !isAwaiting &&
+        (combineLatestModeShouldNotify || mode === "batched");
 
       const shouldDispose = !hasOutstandingEffects || hasError;
 
@@ -296,12 +323,12 @@ export const async = <T>(
       }
     };
 
-    const ctx = newInstance(ObservableContext, observer, runComputation, mode);
+    const ctx = newInstance(AsyncContext, observer, runComputation, mode);
 
     pipe(observer, getScheduler, schedule(runComputation), addTo(observer));
   });
 
-const assertCurrentContext = (): ObservableContext =>
+const assertCurrentContext = (): AsyncContext =>
   isNone(currentCtx)
     ? raise("effect must be called within a computational expression")
     : currentCtx;
@@ -344,9 +371,14 @@ export const __memo: __Memo = <T>(
   return ctx.memo(f, ...args);
 };
 
-export const __await = <T>(observable: ObservableLike<T>): Option<T> => {
+export const __await = <T>(observable: ObservableLike<T>): T => {
   const ctx = assertCurrentContext();
-  return ctx.observe(observable);
+  return ctx.awaitOrObserve(observable, true) as T;
+};
+
+export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
+  const ctx = assertCurrentContext();
+  return ctx.awaitOrObserve(observable, false);
 };
 
 interface __Do {

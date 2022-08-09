@@ -1,7 +1,15 @@
 import { PauseableLike_pause, PauseableLike_resume } from "../util";
 
-export const pause = (pausable: { [PauseableLike_pause](): void }): void =>
+export const pause = <TPauseable extends { [PauseableLike_pause](): void }>(
+  pausable: TPauseable,
+): TPauseable => {
   pausable[PauseableLike_pause]();
+  return pausable;
+};
 
-export const resume = (pausable: { [PauseableLike_resume](): void }): void =>
+export const resume = <TPauseable extends { [PauseableLike_resume](): void }>(
+  pausable: TPauseable,
+): TPauseable => {
   pausable[PauseableLike_resume]();
+  return pausable;
+};
