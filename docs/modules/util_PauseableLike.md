@@ -13,32 +13,42 @@
 
 ### pause
 
-▸ **pause**(`pausable`): `void`
+▸ **pause**<`TPauseable`\>(`pausable`): `TPauseable`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TPauseable` | extends `Object` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `pausable` | `Object` |
-| `pausable.[PauseableLike_pause]` | () => `void` |
+| `pausable` | `TPauseable` |
 
 #### Returns
 
-`void`
+`TPauseable`
 
 ___
 
 ### resume
 
-▸ **resume**(`pausable`): `void`
+▸ **resume**<`TPauseable`\>(`pausable`): `TPauseable`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TPauseable` | extends `Object` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `pausable` | `Object` |
-| `pausable.[PauseableLike_resume]` | () => `void` |
+| `pausable` | `TPauseable` |
 
 #### Returns
 
-`void`
+`TPauseable`

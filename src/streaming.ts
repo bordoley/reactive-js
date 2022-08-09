@@ -53,6 +53,7 @@ import {
   ObserverLike,
   SchedulerLike,
 } from "./scheduling";
+import { dispatch } from "./scheduling/DispatcherLike";
 import { PauseableLike, SourceLike } from "./util";
 import { addTo } from "./util/DisposableLike";
 /**
@@ -332,9 +333,14 @@ export const createLiftedFlowable: CreateLiftedFlowable = <T>(
           unknown
         >)
       : ops[0];
-  return createStreamble((scheduler, options) =>
-    createStream(op, scheduler, options),
-  ) as FlowableLike<T>;
+  return createStreamble((scheduler, options) => {
+    const stream = createStream<FlowMode, unknown>(
+      op,
+      scheduler,
+      options,
+    ) as FlowableStreamLike;
+    return pipe(stream, dispatch("pause"));
+  }) as FlowableLike<T>;
 };
 
 interface CreateLiftedStreamable {

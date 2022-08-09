@@ -10,6 +10,7 @@ import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
 import { publish } from './rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from './scheduling.mjs';
+import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { addTo } from './util/DisposableLike.mjs';
 
 /** @ignore */
@@ -68,7 +69,10 @@ const createLiftedFlowable = (...ops) => {
     const op = getLength(ops) > 1
         ? composeUnsafe(...ops)
         : ops[0];
-    return createStreamble((scheduler, options) => createStream(op, scheduler, options));
+    return createStreamble((scheduler, options) => {
+        const stream = createStream(op, scheduler, options);
+        return pipe(stream, dispatch("pause"));
+    });
 };
 const createLiftedStreamable = (...ops) => {
     const op = getLength(ops) > 1

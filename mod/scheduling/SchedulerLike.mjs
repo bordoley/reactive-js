@@ -8,11 +8,12 @@ import { disposableMixin, disposableRefMixin } from '../__internal__/util/__inte
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current } from '../__internal__/util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { none, isSome, pipe, isNone, raise, newInstance, max } from '../functions.mjs';
+import { none, isSome, pipe, isNone, raise, newInstance, max, compose } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_now } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import { hasCurrent, getCurrent } from '../util/EnumeratorLike.mjs';
+import { pause } from '../util/PauseableLike.mjs';
 import { move } from '../util/SourceLike.mjs';
 
 const isInContinuation = isInContinuation$1;
@@ -247,7 +248,7 @@ const createQueueScheduler =
         },
     }));
 })();
-const toPausableScheduler = createQueueScheduler;
+const toPausableScheduler = compose(createQueueScheduler, pause);
 const toPriorityScheduler = createQueueScheduler;
 
 export { __yield, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };

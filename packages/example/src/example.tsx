@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOMClient from "react-dom/client";
 import { generateObservable } from "@reactive-js/core/rx";
 import {
-  __await,
   async,
+  __await,
   __do,
   __memo,
+  __observe,
   __state,
   __stream,
 } from "@reactive-js/core/effects";
@@ -77,10 +78,10 @@ const StreamPauseResume = createComponent(() =>
       counter,
     );
 
-    const value = __await(counter) ?? 0;
-    const mode = __await(state) ?? "pause";
-
+    const mode = __await(state);
     __do(setCounterMode, mode);
+
+    const value = __observe(counter) ?? 0;
     __do(onValueChanged, value);
 
     const label = mode === "resume" ? "PAUSE" : "RESUME";
