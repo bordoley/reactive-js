@@ -1,5 +1,6 @@
 /// <reference types="./isomorphic.tests.d.ts" />
 import { runTests } from '../__internal__/__internal__testing.mjs';
+import AsyncEnumerableTest from './modules/AsyncEnumerable.test.mjs';
 import ContainerLikeTests from './modules/ContainerLike.test.mjs';
 import DisposableLikeTests from './modules/DisposableLike.test.mjs';
 import EnumerableLikeTests from './modules/EnumerableLike.test.mjs';
@@ -18,6 +19,7 @@ import streamingTests from './modules/streaming.test.mjs';
  * @jest-environment node
  */
 runTests([
+    AsyncEnumerableTest,
     ContainerLikeTests,
     DisposableLikeTests,
     effectsTests,
