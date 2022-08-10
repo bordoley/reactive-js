@@ -156,11 +156,11 @@ export const toEnumerable: ToEnumerable<
     clazz(
       __extends(disposableMixin, typedEnumerator),
       function ReadonlyArrayEnumerator(
-        instance: unknown,
+        instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
         array: readonly T[],
         start: number,
         count: number,
-      ): asserts instance is EnumeratorLike<T> {
+      ): EnumeratorLike<T> {
         init(disposableMixin, instance);
         init(typedEnumerator, instance);
         unsafeCast<TProperties>(instance);
@@ -168,6 +168,8 @@ export const toEnumerable: ToEnumerable<
         instance.array = array;
         instance.index = start - 1;
         instance.count = count;
+
+        return instance;
       },
       {
         array: none,

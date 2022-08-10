@@ -2,20 +2,20 @@ import { Updater, Function1 } from "../functions.mjs";
 import { ObservableLike } from "../rx.mjs";
 import { DispatcherLike_dispatch, SchedulerLike } from "../scheduling.mjs";
 import { StreamLike, StreamableLike, StreamableLike_stream } from "../streaming.mjs";
-interface WindowLocationURI {
+declare type WindowLocationURI = {
     title: string;
     path: string;
     query: string;
     fragment: string;
-}
+};
 interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
-    [DispatcherLike_dispatch](this: WindowLocationStreamLike, stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
+    [DispatcherLike_dispatch](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
     }): void;
-    goBack(this: WindowLocationStreamLike): boolean;
+    goBack(): boolean;
 }
 interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike> {
-    [StreamableLike_stream](this: WindowLocationStreamableLike, scheduler: SchedulerLike, options?: {
+    [StreamableLike_stream](scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): WindowLocationStreamLike;
 }

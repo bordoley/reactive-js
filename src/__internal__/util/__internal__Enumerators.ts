@@ -6,7 +6,7 @@ import {
   SourceLike_move,
 } from "../../util";
 import { DisposableLike, isDisposed } from "./__internal__DisposableLike";
-import { Class, clazz } from "./__internal__Objects";
+import { Mixin, clazz } from "./__internal__Objects";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
@@ -17,7 +17,7 @@ type TEnumeratorMixinReturn<T> = Omit<
   keyof DisposableLike | typeof SourceLike_move
 >;
 
-export const enumeratorMixin: <T>() => Class<TEnumeratorMixinReturn<T>> =
+export const enumeratorMixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
   /*@__PURE__*/ (<T>() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");
     const Enumerator_private_hasCurrent = Symbol(
@@ -32,10 +32,15 @@ export const enumeratorMixin: <T>() => Class<TEnumeratorMixinReturn<T>> =
     return pipe(
       clazz(
         function EnumeratorMixin(
-          instance: unknown,
-        ): asserts instance is TEnumeratorMixinReturn<T> {
+          instance: Pick<
+            EnumeratorLike<T>,
+            typeof EnumeratorLike_current | typeof EnumeratorLike_hasCurrent
+          >,
+        ): TEnumeratorMixinReturn<T> {
           unsafeCast<TProperties>(instance);
           instance[Enumerator_private_hasCurrent] = false;
+
+          return instance;
         },
         {
           [Enumerator_private_current]: none,

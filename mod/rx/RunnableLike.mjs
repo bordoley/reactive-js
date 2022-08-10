@@ -47,6 +47,7 @@ const concatAll = /*@__PURE__*/ (() => {
     return pipeLazy(createInstanceFactory(clazz(__extends(typedDelegatingSinkMixin), function RunnableConcatAll(instance, delegate) {
         init(typedDelegatingSinkMixin, instance, delegate);
         pipe(instance, bindTo(delegate));
+        return instance;
     }, {}, {
         [SinkLike_notify](next) {
             const { [DelegatingSink_delegate]: delegate } = this;

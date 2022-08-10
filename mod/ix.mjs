@@ -11,6 +11,7 @@ const InteractiveContainerLike_interact = Symbol("InteractiveContainerLike_inter
 const createEnumerable = /*@__PURE__*/ (() => createInstanceFactory(clazz(function CreateEnumerable(instance, enumerate) {
     unsafeCast(instance);
     instance.enumerate = enumerate;
+    return instance;
 }, {
     enumerate: none,
 }, {
@@ -29,6 +30,7 @@ const emptyEnumerable = /*@__PURE__*/ (() => {
     const createEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function EmptyEnumerator(instance) {
         init(disposableMixin, instance);
         init(typedEnumeratorMixin, instance);
+        return instance;
     }, {}, {
         [SourceLike_move]() {
             pipe(this, dispose());
@@ -55,6 +57,7 @@ const generateEnumerable =
         unsafeCast(instance);
         instance.f = f;
         instance[EnumeratorLike_current] = acc;
+        return instance;
     }, { f: none }, {
         [SourceLike_move]() {
             if (!isDisposed(this)) {

@@ -62,6 +62,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
         init(disposableMixin, instance);
         unsafeCast(instance);
         instance.yieldInterval = yieldInterval;
+        return instance;
     }, {
         [SchedulerLike_inContinuation]: false,
         startTime: 0,
@@ -125,6 +126,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         unsafeCast(instance);
         instance.maxMicroTaskTicks = maxMicroTaskTicks;
         instance.taskQueue = createPriorityQueue(comparator);
+        return instance;
     }, {
         [SchedulerLike_inContinuation]: false,
         [SchedulerLike_now]: 0,

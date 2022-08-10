@@ -51,6 +51,7 @@ const buffer = /*@__PURE__*/ (() => {
                 pipe([buffer], toObservable(), sinkInto(delegate));
             }
         }));
+        return instance;
     }, {
         buffer: none,
         delegate: none,
@@ -156,6 +157,7 @@ const decodeWithCharset =
     const createDecodeWithCharsetObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, typedDecodeWithCharsetMixin), function DecodeWithCharsetObserver(instance, delegate, charset) {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedDecodeWithCharsetMixin, instance, delegate, charset);
+        return instance;
     }));
     return pipe(createDecodeWithCharsetObserver, createDecodeWithCharsetOperator(liftEnumerableObservableT));
 })();
@@ -215,6 +217,7 @@ const latest = /*@__PURE__*/ (() => {
         init(typedObserverMixin, instance, scheduler);
         unsafeCast(instance);
         instance.ctx = ctx;
+        return instance;
     }, {
         ready: false,
         latest: none,
@@ -271,6 +274,7 @@ const reduce = /*@__PURE__*/ (() => {
     const createReduceObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, typedReduceSinkMixin), function ReduceObserver(instance, delegate, reducer, initialValue) {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedReduceSinkMixin, instance, delegate, reducer, initialValue);
+        return instance;
     }));
     return pipe(createReduceObserver, createReduceOperator(liftEnumerableObservableT));
 })();
@@ -383,6 +387,7 @@ const takeLast =
     const createTakeLastObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, typedTakeLastSinkMixin), function TakeLastObserver(instance, delegate, takeCount) {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedTakeLastSinkMixin, instance, delegate, takeCount);
+        return instance;
     }));
     return pipe(createTakeLastObserver, createTakeLastOperator(liftEnumerableObservableT));
 })();
@@ -430,6 +435,7 @@ const throttle = /*@__PURE__*/ (() => {
                     pipe([instance.value], toObservable(), sinkInto(delegate));
                 }
             }));
+            return instance;
         }, {}, {
             [SinkLike_notify](next) {
                 this.value = next;
@@ -467,6 +473,7 @@ const toEnumerable =
         init(typedEnumeratorMixin, instance);
         unsafeCast(instance);
         instance.continuations = [];
+        return instance;
     }, {
         [SchedulerLike_inContinuation]: false,
         continuations: none,
@@ -505,6 +512,7 @@ const toEnumerable =
         init(typedObserverMixin, instance, enumerator);
         unsafeCast(instance);
         instance.enumerator = enumerator;
+        return instance;
     }, {
         enumerator: none,
     }, {
@@ -604,6 +612,7 @@ const withLatestFrom = /*@__PURE__*/ (() => {
                     pipe(instance, dispose());
                 }
             }));
+            return instance;
         }, {
             delegate: none,
             hasLatest: false,
@@ -644,6 +653,7 @@ const zip = /*@__PURE__*/ (() => {
                 pipe(delegate, dispose());
             }
         }));
+        return instance;
     }, {
         delegate: none,
         enumerators: none,

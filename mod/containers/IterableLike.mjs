@@ -13,8 +13,10 @@ const toEnumerable =
     const typedEnumeratorMixin = enumeratorMixin();
     const createIterableEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function IteratorEnumerator(instance, iterator) {
         init(disposableMixin, instance);
+        init(typedEnumeratorMixin, instance);
         unsafeCast(instance);
         instance.iterator = iterator;
+        return instance;
     }, { iterator: none }, {
         [SourceLike_move]() {
             if (!isDisposed(this)) {

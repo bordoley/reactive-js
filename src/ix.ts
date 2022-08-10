@@ -77,14 +77,18 @@ export const createEnumerable: <T>(
   createInstanceFactory(
     clazz(
       function CreateEnumerable(
-        instance: unknown,
+        instance: Pick<
+          EnumerableLike<T>,
+          typeof InteractiveContainerLike_interact
+        >,
         enumerate: Factory<EnumeratorLike<T>>,
-      ): asserts instance is EnumerableLike<T> {
+      ): EnumerableLike<T> {
         unsafeCast<{
           enumerate: Factory<EnumeratorLike<T>>;
         }>(instance);
 
         instance.enumerate = enumerate;
+        return instance;
       },
       {
         enumerate: none,
@@ -115,10 +119,12 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
     clazz(
       __extends(disposableMixin, typedEnumeratorMixin),
       function EmptyEnumerator(
-        instance: unknown,
-      ): asserts instance is EnumeratorLike<T> {
+        instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+      ): EnumeratorLike<T> {
         init(disposableMixin, instance);
         init(typedEnumeratorMixin, instance);
+
+        return instance;
       },
       {},
       {
@@ -152,17 +158,18 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
       clazz(
         __extends(disposableMixin, typedEnumerator),
         function GenerateEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
           f: Updater<T>,
           acc: T,
-        ): asserts instance is EnumeratorLike<T> {
+        ): EnumeratorLike<T> {
           init(disposableMixin, instance);
           init(typedEnumerator, instance);
           unsafeCast<TProperties>(instance);
 
           instance.f = f;
-
           instance[EnumeratorLike_current] = acc;
+
+          return instance;
         },
         { f: none },
         {

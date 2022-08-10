@@ -6,7 +6,6 @@ import {
   DistinctUntilChanged,
   ForEach,
   Scan,
-  StatefulContainerStateOf,
   TakeFirst,
 } from "../../containers";
 import { every, map as mapArray } from "../../containers/ReadonlyArrayLike";
@@ -161,25 +160,29 @@ export const liftEnumerableObservableT: Lift<ObservableLike, TReactive> = {
 };
 
 export const createMergeAll = <C extends ObservableLike>(
-  lift: Lift<C, TReactive>["lift"],
+  lift: <T>(
+    f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
+  ) => ContainerOperator<C, ContainerOf<C, T>, T>,
 ): ConcatAll<C>["concatAll"] => {
   const createMergeAllObserver: <T>(
-    delegate: StatefulContainerStateOf<C, T>,
+    delegate: ObserverLike<T>,
     maxBufferSize: number,
     maxConcurrency: number,
-  ) => StatefulContainerStateOf<C, ContainerOf<C, T>> = (<T>() => {
-    const typedObserverMixin = observerMixin<T>();
+  ) => ObserverLike<ContainerOf<C, T>> = (<T>() => {
+    const typedObserverMixin = observerMixin<ContainerOf<C, T>>();
 
     type TProperties = {
       activeCount: number;
-      delegate: StatefulContainerStateOf<C, T>;
+      delegate: ObserverLike<T>;
       maxBufferSize: number;
       maxConcurrency: number;
       onDispose: SideEffect;
       queue: ContainerOf<C, T>[];
     };
 
-    const subscribeNext = <T>(observer: TProperties & ObserverLike<T>) => {
+    const subscribeNext = <T>(
+      observer: TProperties & ObserverLike<ContainerOf<C, T>>,
+    ) => {
       if (observer.activeCount < observer.maxConcurrency) {
         const nextObs = observer.queue.shift();
 
@@ -203,14 +206,17 @@ export const createMergeAll = <C extends ObservableLike>(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function Observer(
-          instance: unknown,
-          delegate: StatefulContainerStateOf<C, T>,
+          instance: Pick<
+            ObserverLike<ContainerOf<C, T>>,
+            typeof SinkLike_notify
+          >,
+          delegate: ObserverLike<T>,
           maxBufferSize: number,
           maxConcurrency: number,
-        ): asserts instance is StatefulContainerStateOf<C, ContainerOf<C, T>> {
+        ): ObserverLike<ContainerOf<C, T>> {
           init(disposableMixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
-          unsafeCast<TProperties & ObserverLike<T>>(instance);
+          unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.maxBufferSize = maxBufferSize;
@@ -237,6 +243,8 @@ export const createMergeAll = <C extends ObservableLike>(
               }
             }),
           );
+
+          return instance;
         },
         {
           activeCount: 0,
@@ -248,7 +256,7 @@ export const createMergeAll = <C extends ObservableLike>(
         },
         {
           [SinkLike_notify](
-            this: TProperties & StatefulContainerStateOf<C, ContainerOf<C, T>>,
+            this: TProperties & ObserverLike<ContainerOf<C, T>>,
             next: ContainerOf<C, T>,
           ) {
             const { queue } = this;
@@ -312,16 +320,18 @@ export const createScanAsync = <C extends ObservableLike>(
 };
 
 export const createSwitchAll = <C extends ObservableLike>(
-  lift: Lift<C, TReactive>["lift"],
+  lift: <T>(
+    f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
+  ) => ContainerOperator<C, ContainerOf<C, T>, T>,
 ): ConcatAll<C>["concatAll"] => {
-  const createSwitchAllObserver: <T>() => StatefulContainerStateOf<C, T> = (<
-    T,
-  >() => {
-    const typedObserverMixin = observerMixin<T>();
+  const createSwitchAllObserver: <T>(
+    o: ObserverLike<T>,
+  ) => ObserverLike<ContainerOf<C, T>> = (<T>() => {
+    const typedObserverMixin = observerMixin<ContainerOf<C, T>>();
 
     type TProperties = {
       currentRef: DisposableRefLike;
-      delegate: StatefulContainerStateOf<C, T>;
+      delegate: ObserverLike<T>;
     };
 
     function onDispose(this: TProperties & DisposableLike) {
@@ -334,9 +344,12 @@ export const createSwitchAll = <C extends ObservableLike>(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function SwitchAllObserver(
-          instance: unknown,
-          delegate: StatefulContainerStateOf<C, T>,
-        ): asserts instance is StatefulContainerStateOf<C, ContainerOf<C, T>> {
+          instance: Pick<
+            ObserverLike<ContainerOf<C, T>>,
+            typeof SinkLike_notify
+          >,
+          delegate: ObserverLike<T>,
+        ): ObserverLike<ContainerOf<C, T>> {
           init(disposableMixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
           unsafeCast<TProperties>(instance);
@@ -348,6 +361,8 @@ export const createSwitchAll = <C extends ObservableLike>(
           );
 
           pipe(instance, addTo(delegate), onComplete(onDispose));
+
+          return instance;
         },
         {
           currentRef: none,
@@ -355,7 +370,9 @@ export const createSwitchAll = <C extends ObservableLike>(
         },
         {
           [SinkLike_notify](
-            this: TProperties & ObserverLike<T> & DisposableRefLike,
+            this: TProperties &
+              ObserverLike<ContainerOf<C, T>> &
+              DisposableRefLike,
             next: ContainerOf<C, T>,
           ) {
             this.currentRef[MutableRefLike_current] = pipe(
@@ -372,7 +389,7 @@ export const createSwitchAll = <C extends ObservableLike>(
         },
       ),
     );
-  })() as unknown as <T>() => StatefulContainerStateOf<C, T>;
+  })();
 
   return () => lift(createSwitchAllObserver);
 };
@@ -551,7 +568,7 @@ export const zipWithLatestFrom: <TA, TB, T>(
           delegate: ObserverLike<T>,
           other: ObservableLike<TB>,
           selector: Function2<TA, TB, T>,
-        ): asserts instance is ObserverLike<TA> {
+        ): ObserverLike<TA> {
           init(disposableMixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
           unsafeCast<TProperties & ObserverLike<TA>>(instance);
@@ -583,6 +600,8 @@ export const zipWithLatestFrom: <TA, TB, T>(
           );
 
           pipe(instance, addTo(delegate), onComplete(disposeDelegate));
+
+          return instance;
         },
         {
           delegate: none,

@@ -417,14 +417,16 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function SequenceEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
           seq: SequenceLike<T>,
-        ): asserts instance is EnumeratorLike<T> {
+        ): EnumeratorLike<T> {
           init(disposableMixin, instance);
           init(typedEnumeratorMixin, instance);
           unsafeCast<TProperties>(instance);
 
           instance.seq = seq;
+
+          return instance;
         },
         {
           seq: none,

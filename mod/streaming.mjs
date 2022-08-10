@@ -5,7 +5,7 @@ import { createInstanceFactory, clazz, __extends, init } from './__internal__/ut
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
 import { unsafeCast, pipe, none, newInstance, getLength, composeUnsafe, returns, updateReducer } from './functions.mjs';
-import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createObservable } from './rx.mjs';
+import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createObservable } from './rx.mjs';
 import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
 import { publish } from './rx/SubjectLike.mjs';
@@ -24,6 +24,7 @@ const createStream = /*@__PURE__*/ (() => {
             instance[DispatcherLike_scheduler] = scheduler;
             instance.subject = subject;
             instance.observable = pipe(subject, op, multicast(scheduler, { replay }), add(instance));
+            return instance;
         }, {
             subject: none,
             observable: none,
@@ -37,6 +38,8 @@ const createStream = /*@__PURE__*/ (() => {
                 unsafeCast(this);
                 return getReplay(this.observable);
             },
+            [ObservableLike_isEnumerable]: false,
+            [ObservableLike_isRunnable]: false,
             [DispatcherLike_dispatch](req) {
                 unsafeCast(this);
                 pipe(this.subject, publish(req));

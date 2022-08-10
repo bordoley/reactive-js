@@ -70,7 +70,7 @@ import {
   toAbortSignal,
 } from "../util/DisposableLike";
 
-export interface WindowLocationURI {
+export type WindowLocationURI = {
   title: string;
   // FIXME: Can we enforce non-empty string in the type system
   // should we enforce valid typing to make sure the various strings are
@@ -78,7 +78,7 @@ export interface WindowLocationURI {
   path: string;
   query: string;
   fragment: string;
-}
+};
 
 export interface WindowLocationStreamLike
   extends StreamLike<
@@ -86,12 +86,11 @@ export interface WindowLocationStreamLike
     WindowLocationURI
   > {
   [DispatcherLike_dispatch](
-    this: WindowLocationStreamLike,
     stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI,
     options?: { readonly replace?: boolean },
   ): void;
 
-  goBack(this: WindowLocationStreamLike): boolean;
+  goBack(): boolean;
 }
 
 export interface WindowLocationStreamableLike
@@ -101,7 +100,6 @@ export interface WindowLocationStreamableLike
     WindowLocationStreamLike
   > {
   [StreamableLike_stream](
-    this: WindowLocationStreamableLike,
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): WindowLocationStreamLike;
@@ -301,14 +299,26 @@ export const windowLocation: WindowLocationStreamableLike =
       clazz(
         __extends(delegatingDisposableMixin),
         function WindowLocationStream(
-          instance: unknown,
+          instance: Pick<
+            WindowLocationStreamLike,
+            | typeof MulticastObservableLike_observerCount
+            | typeof MulticastObservableLike_replay
+            | typeof DispatcherLike_scheduler
+            | typeof ObservableLike_isEnumerable
+            | typeof ObservableLike_isRunnable
+            | typeof DispatcherLike_dispatch
+            | "goBack"
+            | typeof ReactiveContainerLike_sinkInto
+          >,
           delegate: StreamLike<TAction, TState>,
-        ): asserts instance is WindowLocationStreamLike & TProperties {
+        ): WindowLocationStreamLike & TProperties {
           init(delegatingDisposableMixin, instance, delegate);
           unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.historyCounter = -1;
+
+          return instance;
         },
         {
           delegate: none,
@@ -342,6 +352,7 @@ export const windowLocation: WindowLocationStreamableLike =
           },
 
           goBack(this: TProperties): boolean {
+            unsafeCast<TProperties>(this);
             const canGoBack = this.historyCounter > 0;
 
             if (canGoBack) {

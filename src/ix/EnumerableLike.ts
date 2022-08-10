@@ -31,7 +31,7 @@ import {
   setCurrentRef,
 } from "../__internal__/util/__internal__MutableRefLike";
 import {
-  Class1,
+  Mixin1,
   __extends,
   clazz,
   createInstanceFactory,
@@ -141,12 +141,12 @@ interface DelegatingEnumeratorLike<T> extends EnumeratorLike<T> {
 
 type TDelegatingEnumeratorMixinReturn<T> = Omit<
   EnumeratorLike<T>,
-  keyof DisposableLike
+  keyof DisposableLike | typeof SourceLike_move
 >;
 
-const delegatingEnumeratorMixin: <T>() => Class1<
-  EnumeratorLike<T>,
-  TDelegatingEnumeratorMixinReturn<T>
+const delegatingEnumeratorMixin: <T>() => Mixin1<
+  TDelegatingEnumeratorMixinReturn<T>,
+  EnumeratorLike<T>
 > = /*@__PURE__*/ (<T>() => {
   const DelegatingEnumerator_private_delegate = Symbol(
     "DelegatingEnumerator_private_delegate",
@@ -159,12 +159,19 @@ const delegatingEnumeratorMixin: <T>() => Class1<
   return pipe(
     clazz(
       function DelegatingEnumerator(
-        instance: unknown,
+        instance: Pick<
+          DelegatingEnumeratorLike<T>,
+          | typeof EnumeratorLike_current
+          | typeof EnumeratorLike_hasCurrent
+          | typeof DelegatingEnumerator_move_delegate
+        >,
         delegate: EnumeratorLike<T>,
-      ): asserts instance is TDelegatingEnumeratorMixinReturn<T> {
+      ): TDelegatingEnumeratorMixinReturn<T> {
         unsafeCast<TProperties>(instance);
 
         instance[DelegatingEnumerator_private_delegate] = delegate;
+
+        return instance;
       },
       {
         [DelegatingEnumerator_private_delegate]: none,
@@ -263,10 +270,10 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
       clazz(
         __extends(disposableMixin, typedEnumerator),
         function BufferEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<readonly T[]>, typeof SourceLike_move>,
           delegate: EnumeratorLike<T>,
           maxBufferSize: number,
-        ): asserts instance is EnumeratorLike<readonly T[]> {
+        ): EnumeratorLike<readonly T[]> {
           init(disposableMixin, instance);
           init(typedEnumerator, instance);
           unsafeCast<TProperties>(instance);
@@ -275,6 +282,8 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
           instance.maxBufferSize = maxBufferSize;
 
           pipe(instance, add(delegate));
+
+          return instance;
         },
         {
           delegate: none,
@@ -323,9 +332,9 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
         clazz(
           __extends(disposableMixin, typedDisposableRefMixin, typedEnumerator),
           function ConcatAllEnumerator(
-            instance: unknown,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
             delegate: EnumeratorLike<EnumerableLike<T>>,
-          ): asserts instance is EnumeratorLike<T> {
+          ): EnumeratorLike<T> {
             init(disposableMixin, instance);
             init(typedDisposableRefMixin, instance, disposed);
             init(typedEnumerator, instance);
@@ -334,6 +343,8 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
             instance.delegate = delegate;
 
             pipe(instance, add(delegate));
+
+            return instance;
           },
           {
             delegate: none,
@@ -395,15 +406,17 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function DistinctUntilChanged(
-            instance: unknown,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
             delegate: EnumeratorLike<T>,
             equality: Equality<T>,
-          ): asserts instance is EnumeratorLike<T> {
+          ): EnumeratorLike<T> {
             init(delegatingDisposableMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
             unsafeCast<TProperties>(instance);
 
             instance.equality = equality;
+
+            return instance;
           },
           { equality: none },
           {
@@ -450,15 +463,17 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
       clazz(
         __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
         function forEachEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
           delegate: EnumeratorLike<T>,
           effect: SideEffect1<T>,
-        ): asserts instance is EnumeratorLike<T> {
+        ): EnumeratorLike<T> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
           unsafeCast<TProperties>(instance);
 
           instance.effect = effect;
+
+          return instance;
         },
         { effect: none },
         {
@@ -491,15 +506,17 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
       clazz(
         __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
         function KeepEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
           delegate: EnumeratorLike<T>,
           predicate: Predicate<T>,
-        ): asserts instance is EnumeratorLike<T> {
+        ): EnumeratorLike<T> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
           unsafeCast<TProperties>(instance);
 
           instance.predicate = predicate;
+
+          return instance;
         },
         { predicate: none },
         {
@@ -538,16 +555,18 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
       clazz(
         __extends(delegatingDisposableMixin, typedEnumerator),
         function MapEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<TB>, typeof SourceLike_move>,
           delegate: EnumeratorLike<TA>,
           mapper: Function1<TA, TB>,
-        ): asserts instance is EnumeratorLike<TB> {
+        ): EnumeratorLike<TB> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedEnumerator, instance);
           unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.mapper = mapper;
+
+          return instance;
         },
         {
           mapper: none,
@@ -589,14 +608,16 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
       clazz(
         __extends(delegatingDisposableMixin, typedEnumerator),
         function PairwiseEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
           delegate: EnumeratorLike<T>,
-        ): asserts instance is EnumeratorLike<readonly [T, T]> {
+        ): EnumeratorLike<readonly [T, T]> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedEnumerator, instance);
           unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
+
+          return instance;
         },
         {},
         {
@@ -641,15 +662,22 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
     clazz(
       __extends(disposableMixin),
       function RepeatEnumerator(
-        instance: unknown,
+        instance: Pick<
+          EnumeratorLike<T>,
+          | typeof SourceLike_move
+          | typeof EnumeratorLike_current
+          | typeof EnumeratorLike_hasCurrent
+        >,
         src: EnumerableLike<T>,
         shouldRepeat: Predicate<number>,
-      ): asserts instance is EnumeratorLike<T> {
+      ): EnumeratorLike<T> {
         init(disposableMixin, instance);
         unsafeCast<TProperties>(instance);
 
         instance.src = src;
         instance.shouldRepeat = shouldRepeat;
+
+        return instance;
       },
       {
         count: 0,
@@ -718,11 +746,11 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
       clazz(
         __extends(delegatingDisposableMixin, typedEnumerator),
         function ScanEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
           delegate: EnumeratorLike<T>,
           reducer: Reducer<T, TAcc>,
           initialValue: Factory<TAcc>,
-        ): asserts instance is MutableEnumeratorLike<TAcc> {
+        ): MutableEnumeratorLike<TAcc> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedEnumerator, instance);
           unsafeCast<TProperties>(instance);
@@ -736,6 +764,8 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
           } catch (cause) {
             pipe(instance, dispose({ cause }));
           }
+
+          return instance;
         },
         { reducer: none, delegate: none },
         {
@@ -778,16 +808,18 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function SkipFirstEnumerator(
-            instance: unknown,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
             delegate: EnumeratorLike<T>,
             skipCount: number,
-          ): asserts instance is EnumeratorLike<T> {
+          ): EnumeratorLike<T> {
             init(delegatingDisposableMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
             unsafeCast<TProperties>(instance);
 
             instance.skipCount = skipCount;
             instance.count = 0;
+
+            return instance;
           },
           {
             skipCount: 0,
@@ -830,15 +862,17 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function TakeFirstEnumerator(
-            instance: unknown,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
             delegate: EnumeratorLike<T>,
             maxCount: number,
-          ): asserts instance is EnumeratorLike<T> {
+          ): EnumeratorLike<T> {
             init(delegatingDisposableMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
             unsafeCast<TProperties>(instance);
 
             instance.maxCount = maxCount;
+
+            return instance;
           },
           {
             maxCount: 0,
@@ -880,10 +914,10 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
       clazz(
         __extends(disposableMixin, typedDelegatingEnumeratorMixin),
         function TakeLastEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
           delegate: EnumeratorLike<T>,
           maxCount: number,
-        ): asserts instance is EnumeratorLike<T> {
+        ): EnumeratorLike<T> {
           init(disposableMixin, instance);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
           unsafeCast<TProperties>(instance);
@@ -892,6 +926,8 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
           instance.isStarted = false;
 
           pipe(instance, add(delegate));
+
+          return instance;
         },
         {
           maxCount: 0,
@@ -948,17 +984,19 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function TakeWhileEnumerator(
-            instance: unknown,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
             delegate: EnumeratorLike<T>,
             predicate: Predicate<T>,
             inclusive: boolean,
-          ): asserts instance is EnumeratorLike<T> {
+          ): EnumeratorLike<T> {
             init(delegatingDisposableMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
             unsafeCast<TProperties>(instance);
 
             instance.predicate = predicate;
             instance.inclusive = inclusive;
+
+            return instance;
           },
           {
             predicate: none,
@@ -1008,10 +1046,10 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
         clazz(
           __extends(disposableMixin, typedDelegatingEnumeratorMixin),
           function TakeWhileEnumerator(
-            instance: unknown,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
             delegate: EnumeratorLike,
             factory: Factory<unknown>,
-          ): asserts instance is EnumeratorLike<T> {
+          ): EnumeratorLike<T> {
             init(disposableMixin, instance);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
             unsafeCast<TProperties>(instance);
@@ -1038,6 +1076,8 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
                 pipe(instance, dispose(error));
               }),
             );
+
+            return instance;
           },
           {
             isEmpty: true,
@@ -1192,14 +1232,19 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
     clazz(
       __extends(disposableMixin, typedEnumerator),
       function ZipEnumerator(
-        instance: unknown,
+        instance: Pick<
+          EnumeratorLike<readonly unknown[]>,
+          typeof SourceLike_move
+        >,
         enumerators: readonly EnumeratorLike[],
-      ): asserts instance is EnumeratorLike<readonly unknown[]> {
+      ): EnumeratorLike<readonly unknown[]> {
         init(disposableMixin, instance);
         init(typedEnumerator, instance);
         unsafeCast<TProperties>(instance);
 
         instance.enumerators = enumerators;
+
+        return instance;
       },
       {
         enumerators: none,

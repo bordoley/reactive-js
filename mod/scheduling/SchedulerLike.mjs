@@ -33,6 +33,7 @@ const createContinuation = /*@__PURE__*/ (() => {
         unsafeCast(instance);
         instance.scheduler = scheduler;
         instance.f = f;
+        return instance;
     }, {
         scheduler: none,
         f: none,
@@ -171,6 +172,7 @@ const createQueueScheduler =
         instance.delayed = createPriorityQueue(delayedComparator);
         instance.queue = createPriorityQueue(taskComparator);
         instance.host = host;
+        return instance;
     }, {
         [SchedulerLike_inContinuation]: false,
         delayed: none,
