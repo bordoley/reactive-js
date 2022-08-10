@@ -4,7 +4,6 @@ import {
   enumeratorMixin,
 } from "./__internal__/util/__internal__Enumerators";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
@@ -18,7 +17,14 @@ import {
   Generate,
   StatefulContainerLike,
 } from "./containers";
-import { Factory, Function1, Updater, none, pipe } from "./functions";
+import {
+  Factory,
+  Function1,
+  Updater,
+  none,
+  pipe,
+  unsafeCast,
+} from "./functions";
 import { SchedulerLike } from "./scheduling";
 import { AsyncEnumeratorLike, StreamableLike } from "./streaming";
 import {
@@ -71,13 +77,14 @@ export const createEnumerable: <T>(
   createInstanceFactory(
     clazz(
       function CreateEnumerable(
-        this: {
-          enumerate: Factory<EnumeratorLike<T>>;
-        } & EnumerableLike<T>,
+        instance: unknown,
         enumerate: Factory<EnumeratorLike<T>>,
-      ) {
-        this.enumerate = enumerate;
-        return this;
+      ): asserts instance is EnumerableLike<T> {
+        unsafeCast<{
+          enumerate: Factory<EnumeratorLike<T>>;
+        }>(instance);
+
+        instance.enumerate = enumerate;
       },
       {
         enumerate: none,
@@ -108,15 +115,10 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
     clazz(
       __extends(disposableMixin, typedEnumeratorMixin),
       function EmptyEnumerator(
-        this: PropertyTypeOf<
-          [typeof disposableMixin, typeof typedEnumeratorMixin]
-        > &
-          EnumeratorLike<T>,
-      ): EnumeratorLike<T> {
-        init(disposableMixin, this);
-        init(typedEnumeratorMixin, this);
-
-        return this;
+        instance: unknown,
+      ): asserts instance is EnumeratorLike<T> {
+        init(disposableMixin, instance);
+        init(typedEnumeratorMixin, instance);
       },
       {},
       {
@@ -144,24 +146,23 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
   /*@__PURE__*/ (<T>() => {
     const typedEnumerator = enumeratorMixin<T>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof disposableMixin, typeof typedEnumerator]
-    > & { f: Updater<T> };
+    type TProperties = { f: Updater<T> };
 
     const createGenerateEnumerator = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedEnumerator),
         function GenerateEnumerator(
-          this: TProperties & MutableEnumeratorLike<T>,
+          instance: unknown,
           f: Updater<T>,
           acc: T,
-        ) {
-          init(disposableMixin, this);
-          init(typedEnumerator, this);
-          this.f = f;
-          this[EnumeratorLike_current] = acc;
+        ): asserts instance is EnumeratorLike<T> {
+          init(disposableMixin, instance);
+          init(typedEnumerator, instance);
+          unsafeCast<TProperties>(instance);
 
-          return this;
+          instance.f = f;
+
+          instance[EnumeratorLike_current] = acc;
         },
         { f: none },
         {

@@ -61,7 +61,6 @@ import {
   setCurrentRef,
 } from "../__internal__/util/__internal__MutableRefLike";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
@@ -130,6 +129,7 @@ import {
   partial,
   pipe,
   returns,
+  unsafeCast,
 } from "../functions";
 import {
   EnumerableLike,
@@ -222,25 +222,26 @@ export const buffer: <T>(options?: {
     clazz(
       __extends(typedObserverMixin, disposableMixin),
       function BufferObserver(
-        this: TBufferObserverProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<readonly T[]>,
         durationFunction: Function1<T, ObservableLike>,
         maxBufferSize: number,
-      ) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, getScheduler(delegate));
+      ): asserts instance is ObserverLike<T> {
+        init(disposableMixin, instance);
+        init(typedObserverMixin, instance, getScheduler(delegate));
+        unsafeCast<TBufferObserverProperties>(instance);
 
-        this.buffer = [];
-        this.delegate = delegate;
-        this.durationFunction = durationFunction;
-        this.durationSubscription = createDisposableRef(disposed);
-        this.maxBufferSize = maxBufferSize;
+        instance.buffer = [];
+        instance.delegate = delegate;
+        instance.durationFunction = durationFunction;
+        instance.durationSubscription = createDisposableRef(disposed);
+        instance.maxBufferSize = maxBufferSize;
 
-        return pipe(
-          this,
+        pipe(
+          instance,
           onComplete(() => {
-            const { buffer } = this;
-            this.buffer = [];
+            const { buffer } = instance;
+            instance.buffer = [];
 
             if (isEmpty(buffer)) {
               pipe(delegate, dispose());
@@ -418,22 +419,16 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
     );
     const typedObserverMixin = observerMixin<ArrayBuffer>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof typedObserverMixin, typeof typedDecodeWithCharsetMixin]
-    >;
-
     const createDecodeWithCharsetObserver = createInstanceFactory(
       clazz(
         __extends(typedObserverMixin, typedDecodeWithCharsetMixin),
         function DecodeWithCharsetObserver(
-          this: TProperties & ObserverLike<ArrayBuffer>,
+          instance: unknown,
           delegate: ObserverLike<string>,
           charset: string,
-        ): ObserverLike<ArrayBuffer> {
-          init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-          init(typedDecodeWithCharsetMixin, this, delegate, charset);
-
-          return this;
+        ): asserts instance is ObserverLike<ArrayBuffer> {
+          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+          init(typedDecodeWithCharsetMixin, instance, delegate, charset);
         },
       ),
     );
@@ -532,12 +527,15 @@ const latest = /*@__PURE__*/ (() => {
     observers: TLatestObserverProperties[];
   };
 
-  const add = (self: LatestCtx, observer: TLatestObserverProperties): void => {
-    self.observers.push(observer);
+  const add = (
+    instance: LatestCtx,
+    observer: TLatestObserverProperties,
+  ): void => {
+    instance.observers.push(observer);
   };
 
-  const onNotify = (self: LatestCtx) => {
-    const { mode, observers } = self;
+  const onNotify = (instance: LatestCtx) => {
+    const { mode, observers } = instance;
 
     const isReady = observers.every(x => x.ready);
 
@@ -546,7 +544,7 @@ const latest = /*@__PURE__*/ (() => {
         observers,
         mapArray(observer => observer.latest),
       );
-      pipe(self.delegate, notify(result));
+      pipe(instance.delegate, notify(result));
 
       if (mode === LatestMode.Zip) {
         for (const sub of observers) {
@@ -557,11 +555,11 @@ const latest = /*@__PURE__*/ (() => {
     }
   };
 
-  const onCompleted = (self: LatestCtx) => {
-    self.completedCount++;
+  const onCompleted = (instance: LatestCtx) => {
+    instance.completedCount++;
 
-    if (self.completedCount === getLength(self.observers)) {
-      pipe(self.delegate, dispose());
+    if (instance.completedCount === getLength(instance.observers)) {
+      pipe(instance.delegate, dispose());
     }
   };
 
@@ -575,14 +573,15 @@ const latest = /*@__PURE__*/ (() => {
     clazz(
       __extends(typedObserverMixin, disposableMixin),
       function LatestObserver(
-        this: TLatestObserverProperties & ObserverLike,
+        instance: unknown,
         scheduler: SchedulerLike,
         ctx: LatestCtx,
-      ) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, scheduler);
-        this.ctx = ctx;
-        return this;
+      ): asserts instance is ObserverLike & TLatestObserverProperties {
+        init(disposableMixin, instance);
+        init(typedObserverMixin, instance, scheduler);
+        unsafeCast<TLatestObserverProperties>(instance);
+
+        instance.ctx = ctx;
       },
       {
         ready: false,
@@ -708,23 +707,17 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
 
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedReduceSinkMixin]
-  >;
-
   const createReduceObserver = createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedReduceSinkMixin),
       function ReduceObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<TAcc>,
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedReduceSinkMixin, this, delegate, reducer, initialValue);
-
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedReduceSinkMixin, instance, delegate, reducer, initialValue);
       },
     ),
   );
@@ -953,22 +946,16 @@ export const takeLast: TakeLast<ObservableLike>["takeLast"] =
     const typedTakeLastSinkMixin = takeLastSinkMixin(arrayToObservable());
     const typedObserverMixin = observerMixin();
 
-    type TProperties = PropertyTypeOf<
-      [typeof typedObserverMixin, typeof typedTakeLastSinkMixin]
-    >;
-
     const createTakeLastObserver = createInstanceFactory(
       clazz(
         __extends(typedObserverMixin, typedTakeLastSinkMixin),
         function TakeLastObserver(
-          this: TProperties & ObserverLike,
+          instance: unknown,
           delegate: ObserverLike,
           takeCount: number,
-        ) {
-          init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-          init(typedTakeLastSinkMixin, this, delegate, takeCount);
-
-          return this;
+        ): asserts instance is ObserverLike {
+          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+          init(typedTakeLastSinkMixin, instance, delegate, takeCount);
         },
       ),
     );
@@ -1071,45 +1058,46 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function ThrottleObserver(
-          this: ObserverLike<T> & TProperties,
+          instance: unknown,
           delegate: ObserverLike<T>,
           durationFunction: Function1<T, ObservableLike>,
           mode: ThrottleMode,
-        ): ObserverLike<T> {
-          init(disposableMixin, this);
-          init(typedObserverMixin, this, getScheduler(delegate));
+        ): asserts instance is ObserverLike<T> {
+          init(disposableMixin, instance);
+          init(typedObserverMixin, instance, getScheduler(delegate));
+          unsafeCast<TProperties & ObserverLike<T>>(instance);
 
-          this.delegate = delegate;
-          this.durationFunction = durationFunction;
-          this.mode = mode;
+          instance.delegate = delegate;
+          instance.durationFunction = durationFunction;
+          instance.mode = mode;
 
-          this.durationSubscription = pipe(
+          instance.durationSubscription = pipe(
             createDisposableRef(disposed),
             addTo(delegate),
           );
 
-          this.onNotify = (_?: unknown) => {
-            if (this.hasValue) {
-              const value = this.value as T;
-              this.value = none;
-              this.hasValue = false;
+          instance.onNotify = (_?: unknown) => {
+            if (instance.hasValue) {
+              const value = instance.value as T;
+              instance.value = none;
+              instance.hasValue = false;
 
-              pipe(this.delegate, notify(value));
+              pipe(instance.delegate, notify(value));
 
-              setupDurationSubscription(this, value);
+              setupDurationSubscription(instance, value);
             }
           };
 
-          return pipe(
-            this,
+          pipe(
+            instance,
             addTo(delegate),
             onComplete(() => {
               if (
-                this.mode !== "first" &&
-                this.hasValue &&
+                instance.mode !== "first" &&
+                instance.hasValue &&
                 !isDisposed(delegate)
               ) {
-                pipe([this.value], arrayToObservable(), sinkInto(delegate));
+                pipe([instance.value], arrayToObservable(), sinkInto(delegate));
               }
             }),
           );
@@ -1178,7 +1166,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
     type TEnumeratorSchedulerProperties = {
       [SchedulerLike_inContinuation]: boolean;
       continuations: ContinuationLike[];
-    } & PropertyTypeOf<[typeof disposableMixin, typeof typedEnumeratorMixin]>;
+    };
 
     type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
 
@@ -1186,14 +1174,13 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function EnumeratorScheduler(
-          this: EnumeratorScheduler & TEnumeratorSchedulerProperties,
-        ) {
-          init(disposableMixin, this);
-          init(typedEnumeratorMixin, this);
+          instance: unknown,
+        ): asserts instance is EnumeratorScheduler {
+          init(disposableMixin, instance);
+          init(typedEnumeratorMixin, instance);
+          unsafeCast<TEnumeratorSchedulerProperties>(instance);
 
-          this.continuations = [];
-
-          return this;
+          instance.continuations = [];
         },
         {
           [SchedulerLike_inContinuation]: false,
@@ -1202,8 +1189,8 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
         {
           [SchedulerLike_now]: 0,
           get [SchedulerLike_shouldYield](): boolean {
-            const self = this as unknown as TEnumeratorSchedulerProperties;
-            return isInContinuation(self);
+            unsafeCast<TEnumeratorSchedulerProperties>(this);
+            return isInContinuation(this);
           },
           [SchedulerLike_requestYield](): void {
             // No-Op: We yield whenever the continuation is running.
@@ -1241,20 +1228,20 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
     type TEnumeratorObserverProperties = {
       enumerator: EnumeratorScheduler;
-    } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
+    };
 
     const createEnumeratorObserver = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function EnumeratorObserver(
-          this: TEnumeratorObserverProperties & ObserverLike<T>,
+          instance: unknown,
           enumerator: EnumeratorScheduler,
-        ) {
-          init(disposableMixin, this);
-          init(typedObserverMixin, this, enumerator);
-          this.enumerator = enumerator;
+        ): asserts instance is ObserverLike<T> {
+          init(disposableMixin, instance);
+          init(typedObserverMixin, instance, enumerator);
+          unsafeCast<TEnumeratorObserverProperties>(instance);
 
-          return this;
+          instance.enumerator = enumerator;
         },
         {
           enumerator: none,
@@ -1424,9 +1411,7 @@ export const withLatestFrom: <TA, TB, T>(
   ) => ObserverLike<TA> = (<TA, TB, T>() => {
     const typedObserverMixin = observerMixin<TA>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof delegatingDisposableMixin, typeof typedObserverMixin]
-    > & {
+    type TProperties = {
       delegate: ObserverLike<T>;
       hasLatest: boolean;
       otherLatest: Option<TB>;
@@ -1437,33 +1422,32 @@ export const withLatestFrom: <TA, TB, T>(
       clazz(
         __extends(delegatingDisposableMixin, typedObserverMixin),
         function WithLatestFromObserver(
-          this: TProperties & ObserverLike<TA>,
+          instance: unknown,
           delegate: ObserverLike<T>,
           other: ObservableLike<TB>,
           selector: Function2<TA, TB, T>,
-        ): ObserverLike<TA> {
-          init(delegatingDisposableMixin, this, delegate);
-          init(typedObserverMixin, this, getScheduler(delegate));
+        ): asserts instance is ObserverLike<TA> {
+          init(delegatingDisposableMixin, instance, delegate);
+          init(typedObserverMixin, instance, getScheduler(delegate));
+          unsafeCast<TProperties>(instance);
 
-          this.delegate = delegate;
-          this.selector = selector;
+          instance.delegate = delegate;
+          instance.selector = selector;
 
           pipe(
             other,
             forEach(next => {
-              this.hasLatest = true;
-              this.otherLatest = next;
+              instance.hasLatest = true;
+              instance.otherLatest = next;
             }),
             subscribe(getScheduler(delegate)),
-            addTo(this),
+            addTo(instance),
             onComplete(() => {
-              if (!this.hasLatest) {
-                pipe(this, dispose());
+              if (!instance.hasLatest) {
+                pipe(instance, dispose());
               }
             }),
           );
-
-          return this;
         },
         {
           delegate: none,
@@ -1523,20 +1507,21 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
     clazz(
       __extends(disposableMixin, typedObserverMixin),
       function ZipObserver(
-        this: ObserverLike & TZipObserverProperties,
+        instance: unknown,
         delegate: ObserverLike<readonly unknown[]>,
         enumerators: readonly EnumeratorLike<any>[],
         sinkEnumerator: EnumeratorLike & SinkLike,
-      ): ObserverLike {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, getScheduler(delegate));
+      ): asserts instance is ObserverLike {
+        init(disposableMixin, instance);
+        init(typedObserverMixin, instance, getScheduler(delegate));
+        unsafeCast<TZipObserverProperties>(instance);
 
-        this.delegate = delegate;
-        this.sinkEnumerator = sinkEnumerator;
-        this.enumerators = enumerators;
+        instance.delegate = delegate;
+        instance.sinkEnumerator = sinkEnumerator;
+        instance.enumerators = enumerators;
 
-        return pipe(
-          this,
+        pipe(
+          instance,
           onComplete(() => {
             if (
               isDisposed(sinkEnumerator) ||

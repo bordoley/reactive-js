@@ -4,7 +4,7 @@ import { createInstanceFactory, clazz, __extends, init } from '../__internal__/u
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, newInstance, none, isEmpty, getLength, isSome, raise, compose } from '../functions.mjs';
+import { pipe, newInstance, none, isEmpty, getLength, unsafeCast, isSome, raise, compose } from '../functions.mjs';
 import { createObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
 import { map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
@@ -104,33 +104,33 @@ const windowLocation =
             a.path === b.path &&
             a.query === b.query &&
             a.fragment === b.fragment);
-    const windowHistoryReplaceState = (self, title, uri) => {
-        history.replaceState({ counter: self.historyCounter, title }, "", uri);
+    const windowHistoryReplaceState = (instance, title, uri) => {
+        history.replaceState({ counter: instance.historyCounter, title }, "", uri);
     };
-    const windowHistoryPushState = (self, title, uri) => {
-        self.historyCounter++;
-        history.pushState({ counter: self.historyCounter, title }, "", uri);
+    const windowHistoryPushState = (instance, title, uri) => {
+        instance.historyCounter++;
+        history.pushState({ counter: instance.historyCounter, title }, "", uri);
     };
-    const createWindowLocationStream = createInstanceFactory(clazz(__extends(delegatingDisposableMixin), function WindowLocationStream(delegate) {
-        init(delegatingDisposableMixin, this, delegate);
-        this.delegate = delegate;
-        this.historyCounter = -1;
-        return this;
+    const createWindowLocationStream = createInstanceFactory(clazz(__extends(delegatingDisposableMixin), function WindowLocationStream(instance, delegate) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance.delegate = delegate;
+        instance.historyCounter = -1;
     }, {
         delegate: none,
         historyCounter: -1,
     }, {
         get [MulticastObservableLike_observerCount]() {
-            const self = this;
-            return pipe(self.delegate, getObserverCount);
+            unsafeCast(this);
+            return pipe(this.delegate, getObserverCount);
         },
         get [MulticastObservableLike_replay]() {
-            const self = this;
-            return pipe(self.delegate, getReplay);
+            unsafeCast(this);
+            return pipe(this.delegate, getReplay);
         },
         get [DispatcherLike_scheduler]() {
-            const self = this;
-            return pipe(self.delegate, getScheduler);
+            unsafeCast(this);
+            return pipe(this.delegate, getScheduler);
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

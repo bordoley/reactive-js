@@ -19,13 +19,13 @@ import {
 } from "../__internal__/containers/__internal__StatefulContainerLike";
 import { createOnSink } from "../__internal__/rx/__internal__ReactiveContainerLike";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
 } from "../__internal__/util/__internal__Objects";
 import {
+  DelegateSinkLike,
   DelegatingSink_delegate,
   bufferSinkMixin,
   createDelegatingSink,
@@ -87,7 +87,6 @@ import {
   createRunnable,
 } from "../rx";
 import {
-  DisposableLike,
   DisposableLike_exception,
   DisposableOrTeardown,
   SinkLike,
@@ -157,22 +156,15 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
       clazz(
         __extends(typedDelegatingSinkMixin),
         function RunnableConcatAll(
-          this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
-            SinkLike<RunnableLike<T>>,
+          instance: unknown,
           delegate: SinkLike<T>,
-        ) {
-          init(typedDelegatingSinkMixin, this, delegate);
-          pipe(this, bindTo(delegate));
-
-          return this;
+        ): asserts instance is SinkLike<RunnableLike<T>> {
+          init(typedDelegatingSinkMixin, instance, delegate);
+          pipe(instance, bindTo(delegate));
         },
         {},
         {
-          [SinkLike_notify](
-            this: PropertyTypeOf<[typeof typedDelegatingSinkMixin]> &
-              DisposableLike,
-            next: RunnableLike<T>,
-          ) {
+          [SinkLike_notify](this: DelegateSinkLike<T>, next: RunnableLike<T>) {
             const { [DelegatingSink_delegate]: delegate } = this;
             pipe(
               createDelegatingSink(delegate),

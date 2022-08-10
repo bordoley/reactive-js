@@ -144,6 +144,7 @@ const sum = (...args) => {
     }
     return acc;
 };
+function unsafeCast(_v) { }
 /**
  * A `Reducer` functions that applies `updater` to `acc` to compute the next
  * accumulator value.
@@ -151,4 +152,4 @@ const sum = (...args) => {
 const updateReducer = (acc, updater) => updater(acc);
 const { floor, max, min } = Math;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isNone, isOdd, isSome, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isNone, isOdd, isSome, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast, updateReducer };

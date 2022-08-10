@@ -23,13 +23,12 @@ import {
   enumeratorMixin,
 } from "./__internal__/util/__internal__Enumerators";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
 } from "./__internal__/util/__internal__Objects";
-import { Option, isSome, none, pipe } from "./functions";
+import { Option, isSome, none, pipe, unsafeCast } from "./functions";
 import {
   ContinuationLike,
   ContinuationLike_run,
@@ -210,7 +209,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     scheduler[SchedulerLike_inContinuation] = false;
   };
 
-  type TProperties = PropertyTypeOf<[typeof disposableMixin]> & {
+  type TProperties = {
     [SchedulerLike_inContinuation]: boolean;
     startTime: number;
     yieldInterval: number;
@@ -221,12 +220,13 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     clazz(
       __extends(disposableMixin),
       function HostScheduler(
-        this: TProperties & SchedulerLike,
+        instance: unknown,
         yieldInterval: number,
-      ) {
-        init(disposableMixin, this);
-        this.yieldInterval = yieldInterval;
-        return this;
+      ): asserts instance is SchedulerLike {
+        init(disposableMixin, instance);
+        unsafeCast<TProperties>(instance);
+
+        instance.yieldInterval = yieldInterval;
       },
       {
         [SchedulerLike_inContinuation]: false,
@@ -247,19 +247,19 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
         },
 
         get [SchedulerLike_shouldYield](): boolean {
-          const self = this as unknown as TProperties & SchedulerLike;
+          unsafeCast<TProperties & SchedulerLike>(this);
 
-          const inContinuation = isInContinuation(self);
-          const { yieldRequested } = self;
+          const inContinuation = isInContinuation(this);
+          const { yieldRequested } = this;
 
           if (inContinuation) {
-            self.yieldRequested = false;
+            this.yieldRequested = false;
           }
 
           return (
             inContinuation &&
             (yieldRequested ||
-              getCurrentTime(self) > self.startTime + self.yieldInterval ||
+              getCurrentTime(this) > this.startTime + this.yieldInterval ||
               isInputPending())
           );
         },
@@ -314,9 +314,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
 
   const typedEnumeratorMixin = enumeratorMixin<VirtualTask>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof disposableMixin & typeof typedEnumeratorMixin]
-  > & {
+  type TProperties = {
     [SchedulerLike_inContinuation]: boolean;
     [SchedulerLike_now]: number;
     maxMicroTaskTicks: number;
@@ -330,14 +328,14 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     clazz(
       __extends(disposableMixin, typedEnumeratorMixin),
       function VirtualTimeScheduler(
-        this: TProperties & VirtualTimeSchedulerLike,
+        instance: unknown,
         maxMicroTaskTicks: number,
-      ) {
-        init(disposableMixin, this);
-        this.maxMicroTaskTicks = maxMicroTaskTicks;
-        this.taskQueue = createPriorityQueue(comparator);
+      ): asserts instance is VirtualTimeSchedulerLike {
+        init(disposableMixin, instance);
+        unsafeCast<TProperties>(instance);
 
-        return this;
+        instance.maxMicroTaskTicks = maxMicroTaskTicks;
+        instance.taskQueue = createPriorityQueue(comparator);
       },
       {
         [SchedulerLike_inContinuation]: false,
@@ -350,21 +348,21 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
       },
       {
         get [SchedulerLike_shouldYield]() {
-          const self = this as unknown as TProperties;
+          unsafeCast<TProperties>(this);
 
           const {
             yieldRequested,
             [SchedulerLike_inContinuation]: inContinuation,
-          } = self;
+          } = this;
 
           if (inContinuation) {
-            self.microTaskTicks++;
-            self.yieldRequested = false;
+            this.microTaskTicks++;
+            this.yieldRequested = false;
           }
 
           return (
             inContinuation &&
-            (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks)
+            (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks)
           );
         },
         [ContinuationLike_run](

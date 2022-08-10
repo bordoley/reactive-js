@@ -31,6 +31,7 @@ import {
   none,
   pipe,
   returns,
+  unsafeCast,
   updateReducer,
 } from "./functions";
 import {
@@ -55,7 +56,7 @@ import {
 } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
 import { PauseableLike, SourceLike } from "./util";
-import { addTo } from "./util/DisposableLike";
+import { add } from "./util/DisposableLike";
 /**
  * Represents a duplex stream
  *
@@ -118,28 +119,25 @@ export const createStream = /*@__PURE__*/ (() => {
       clazz(
         __extends(delegatingDisposableMixin),
         function StreamImpl(
-          this: StreamLike<TReq, T> & TProperties,
+          instance: unknown,
           op: ContainerOperator<ObservableLike, TReq, T>,
           scheduler: SchedulerLike,
           replay: number,
-        ): StreamLike<TReq, T> {
-          this[DispatcherLike_scheduler] = scheduler;
-
+        ): asserts instance is StreamLike<TReq, T> {
           const subject = createSubject({ replay });
-          this.subject = subject;
 
-          init(delegatingDisposableMixin, this, subject);
+          init(delegatingDisposableMixin, instance, subject);
+          unsafeCast<TProperties>(instance);
 
-          const observable = pipe(
+          instance[DispatcherLike_scheduler] = scheduler;
+          instance.subject = subject;
+
+          instance.observable = pipe(
             subject,
             op,
             multicast<T>(scheduler, { replay }),
+            add(instance),
           );
-          this.observable = observable;
-
-          pipe(this, addTo(this.observable));
-
-          return this;
         },
         {
           subject: none,
@@ -148,23 +146,23 @@ export const createStream = /*@__PURE__*/ (() => {
         },
         {
           get [MulticastObservableLike_observerCount](): number {
-            const self = this as unknown as TProperties;
-            return getObserverCount(self.observable);
+            unsafeCast<TProperties>(this);
+            return getObserverCount(this.observable);
           },
 
           get [MulticastObservableLike_replay](): number {
-            const self = this as unknown as TProperties;
-            return getReplay(self.observable);
+            unsafeCast<TProperties>(this);
+            return getReplay(this.observable);
           },
 
           [DispatcherLike_dispatch](req: TReq) {
-            const self = this as unknown as TProperties;
-            pipe(self.subject, publish(req));
+            unsafeCast<TProperties>(this);
+            pipe(this.subject, publish(req));
           },
 
           [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
-            const self = this as unknown as TProperties;
-            pipe(self.observable, sinkInto(observer));
+            unsafeCast<TProperties>(this);
+            pipe(this.observable, sinkInto(observer));
           },
         },
       ),

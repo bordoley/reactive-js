@@ -5,7 +5,6 @@ import {
   enumeratorMixin,
 } from "../__internal__/util/__internal__Enumerators";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
@@ -43,6 +42,7 @@ import {
   pipe,
   returns,
   strictEquality,
+  unsafeCast,
 } from "../functions";
 import { ToEnumerable, createEnumerable } from "../ix";
 import {
@@ -409,9 +409,7 @@ export const takeWhileT: TakeWhile<SequenceLike> = { takeWhile };
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
     const typedEnumeratorMixin = enumeratorMixin<T>();
-    type TProperties = PropertyTypeOf<
-      [typeof disposableMixin, typeof typedEnumeratorMixin]
-    > & {
+    type TProperties = {
       seq: SequenceLike<T>;
     };
 
@@ -419,14 +417,14 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function SequenceEnumerator(
-          this: TProperties & EnumeratorLike<T>,
+          instance: unknown,
           seq: SequenceLike<T>,
-        ) {
-          init(disposableMixin, this);
-          init(typedEnumeratorMixin, this);
-          this.seq = seq;
+        ): asserts instance is EnumeratorLike<T> {
+          init(disposableMixin, instance);
+          init(typedEnumeratorMixin, instance);
+          unsafeCast<TProperties>(instance);
 
-          return this;
+          instance.seq = seq;
         },
         {
           seq: none,

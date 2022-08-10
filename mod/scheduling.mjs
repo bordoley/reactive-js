@@ -7,7 +7,7 @@ import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from '
 import { disposableMixin } from './__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs';
 import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/__internal__Objects.mjs';
-import { pipe, none, isSome } from './functions.mjs';
+import { pipe, unsafeCast, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
 import { move, getCurrent } from './util/EnumeratorLike.mjs';
@@ -58,10 +58,10 @@ const createHostScheduler = /*@__PURE__*/ (() => {
         run(continuation);
         scheduler[SchedulerLike_inContinuation] = false;
     };
-    const createHostSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin), function HostScheduler(yieldInterval) {
-        init(disposableMixin, this);
-        this.yieldInterval = yieldInterval;
-        return this;
+    const createHostSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin), function HostScheduler(instance, yieldInterval) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance.yieldInterval = yieldInterval;
     }, {
         [SchedulerLike_inContinuation]: false,
         startTime: 0,
@@ -81,15 +81,15 @@ const createHostScheduler = /*@__PURE__*/ (() => {
             }
         },
         get [SchedulerLike_shouldYield]() {
-            const self = this;
-            const inContinuation = isInContinuation(self);
-            const { yieldRequested } = self;
+            unsafeCast(this);
+            const inContinuation = isInContinuation(this);
+            const { yieldRequested } = this;
             if (inContinuation) {
-                self.yieldRequested = false;
+                this.yieldRequested = false;
             }
             return (inContinuation &&
                 (yieldRequested ||
-                    getCurrentTime(self) > self.startTime + self.yieldInterval ||
+                    getCurrentTime(this) > this.startTime + this.yieldInterval ||
                     isInputPending()));
         },
         [SchedulerLike_requestYield]() {
@@ -120,11 +120,11 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         return diff;
     };
     const typedEnumeratorMixin = enumeratorMixin();
-    const createVirtualTimeSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function VirtualTimeScheduler(maxMicroTaskTicks) {
-        init(disposableMixin, this);
-        this.maxMicroTaskTicks = maxMicroTaskTicks;
-        this.taskQueue = createPriorityQueue(comparator);
-        return this;
+    const createVirtualTimeSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance.maxMicroTaskTicks = maxMicroTaskTicks;
+        instance.taskQueue = createPriorityQueue(comparator);
     }, {
         [SchedulerLike_inContinuation]: false,
         [SchedulerLike_now]: 0,
@@ -135,14 +135,14 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         taskQueue: none,
     }, {
         get [SchedulerLike_shouldYield]() {
-            const self = this;
-            const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation, } = self;
+            unsafeCast(this);
+            const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation, } = this;
             if (inContinuation) {
-                self.microTaskTicks++;
-                self.yieldRequested = false;
+                this.microTaskTicks++;
+                this.yieldRequested = false;
             }
             return (inContinuation &&
-                (yieldRequested || self.microTaskTicks >= self.maxMicroTaskTicks));
+                (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks));
         },
         [ContinuationLike_run]() {
             while (move(this)) {

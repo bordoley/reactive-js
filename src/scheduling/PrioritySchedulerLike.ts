@@ -1,13 +1,12 @@
 import { getDelay } from "../__internal__/__internal__optionParsing";
 import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
 } from "../__internal__/util/__internal__Objects";
-import { Function1, none, partial, pipe } from "../functions";
+import { Function1, none, partial, pipe, unsafeCast } from "../functions";
 import {
   PrioritySchedulerLike,
   SchedulerLike,
@@ -33,7 +32,7 @@ import {
  * @param priority The priority to schedule work at.
  */
 export const toScheduler = /*@__PURE__*/ (() => {
-  type TProperties = PropertyTypeOf<[typeof disposableMixin]> & {
+  type TProperties = {
     priorityScheduler: PrioritySchedulerLike;
     priority: number;
   };
@@ -42,15 +41,15 @@ export const toScheduler = /*@__PURE__*/ (() => {
     clazz(
       __extends(disposableMixin),
       function PrioritySchedulerDelegatingScheduler(
-        this: TProperties & SchedulerLike,
+        instance: unknown,
         scheduler: PrioritySchedulerLike,
         priority: number,
-      ) {
-        init(disposableMixin, this);
-        this.priorityScheduler = scheduler;
-        this.priority = priority;
+      ): asserts instance is SchedulerLike {
+        init(disposableMixin, instance);
+        unsafeCast<TProperties>(instance);
 
-        return this;
+        instance.priorityScheduler = scheduler;
+        instance.priority = priority;
       },
       {
         priorityScheduler: none,
@@ -58,16 +57,16 @@ export const toScheduler = /*@__PURE__*/ (() => {
       },
       {
         get [SchedulerLike_inContinuation]() {
-          const self = this as unknown as TProperties;
-          return isInContinuation(self.priorityScheduler);
+          unsafeCast<TProperties>(this);
+          return isInContinuation(this.priorityScheduler);
         },
         get [SchedulerLike_now]() {
-          const self = this as unknown as TProperties;
-          return getCurrentTime(self.priorityScheduler);
+          unsafeCast<TProperties>(this);
+          return getCurrentTime(this.priorityScheduler);
         },
         get [SchedulerLike_shouldYield]() {
-          const self = this as unknown as TProperties;
-          return shouldYield(self.priorityScheduler);
+          unsafeCast<TProperties>(this);
+          return shouldYield(this.priorityScheduler);
         },
         [SchedulerLike_requestYield](this: TProperties): void {
           requestYield(this.priorityScheduler);

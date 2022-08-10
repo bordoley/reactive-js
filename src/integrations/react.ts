@@ -21,7 +21,6 @@ import {
 import { getDelay } from "../__internal__/__internal__optionParsing";
 import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
@@ -35,6 +34,7 @@ import {
   none,
   pipe,
   pipeLazy,
+  unsafeCast,
 } from "../functions";
 import { ObservableLike, SubjectLike, createSubject } from "../rx";
 import { distinctUntilChanged, forEach, subscribe } from "../rx/ObservableLike";
@@ -139,10 +139,9 @@ const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(
   clazz(
     __extends(disposableMixin),
     function ReactPriorityScheduler(
-      this: PropertyTypeOf<[typeof disposableMixin]> & PrioritySchedulerLike,
-    ) {
-      init(disposableMixin, this);
-      return this;
+      instance: unknown,
+    ): asserts instance is PrioritySchedulerLike {
+      init(disposableMixin, instance);
     },
     {
       [SchedulerLike_inContinuation]: false,
@@ -153,10 +152,10 @@ const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(
       },
 
       get [SchedulerLike_shouldYield](): boolean {
-        const self = this as unknown as {
+        unsafeCast<{
           [SchedulerLike_inContinuation]: boolean;
-        };
-        return isInContinuation(self) && unstable_shouldYield();
+        }>(this);
+        return isInContinuation(this) && unstable_shouldYield();
       },
 
       [SchedulerLike_requestYield]() {

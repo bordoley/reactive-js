@@ -1,5 +1,5 @@
 /// <reference types="./__internal__Sinks.d.ts" />
-import { pipe, none, getLength, returns, isEmpty, newInstance } from '../../functions.mjs';
+import { unsafeCast, pipe, none, getLength, returns, isEmpty, newInstance } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SinkLike_notify, SourceLike_move } from '../../util.mjs';
 import { onDisposed, isDisposed, addTo, onComplete, dispose } from '../../util/DisposableLike.mjs';
@@ -9,12 +9,13 @@ import { createInstanceFactory, clazz, __extends, init, Object_properties } from
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 const createEnumeratorSink = (() => {
-    return createInstanceFactory(clazz(__extends(disposableMixin), function EnumeratorSink() {
-        init(disposableMixin, this);
-        this.buffer = [];
-        return pipe(this, onDisposed(() => {
-            this.buffer.length = 0;
-            this[EnumeratorLike_hasCurrent] = false;
+    return createInstanceFactory(clazz(__extends(disposableMixin), function EnumeratorSink(instance) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance.buffer = [];
+        pipe(instance, onDisposed(() => {
+            instance.buffer.length = 0;
+            instance[EnumeratorLike_hasCurrent] = false;
         }));
     }, {
         buffer: none,
@@ -40,18 +41,17 @@ const createEnumeratorSink = (() => {
         },
     }));
 })();
-const createSink = /*@__PURE__*/ (() => createInstanceFactory(clazz(__extends(disposableMixin), function CreateSink() {
-    init(disposableMixin, this);
-    return this;
+const createSink = /*@__PURE__*/ (() => createInstanceFactory(clazz(__extends(disposableMixin), function CreateSink(instance) {
+    init(disposableMixin, instance);
 }, {}, {
     [SinkLike_notify](_) { },
 })))();
 const DelegatingSink_delegate = Symbol("DelegatingSink_delegate");
 const delegatingSinkMixin = /*@__PURE__*/ (() => {
-    return returns(clazz(__extends(disposableMixin), function DelegatingSink(delegate) {
-        init(disposableMixin, this);
-        this[DelegatingSink_delegate] = delegate;
-        return this;
+    return returns(clazz(__extends(disposableMixin), function DelegatingSink(instance, delegate) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance[DelegatingSink_delegate] = delegate;
     }, {
         ...disposableMixin[Object_properties],
         [DelegatingSink_delegate]: none,
@@ -69,22 +69,22 @@ const createDelegatingSink =
 const bufferSinkMixin = (fromArray) => {
     const BufferSink_private_maxBufferSize = Symbol("BufferSink_private_maxBufferSize");
     const BufferSink_private_buffer = Symbol("BufferSink_private_buffer");
-    return clazz(__extends(disposableMixin), function BufferSink(delegate, maxBufferSize) {
-        init(disposableMixin, this);
-        this[Sink_private_delegate] = delegate;
-        this[BufferSink_private_maxBufferSize] = maxBufferSize;
-        this[BufferSink_private_buffer] = [];
-        pipe(this, addTo(delegate), onComplete(() => {
-            const { [BufferSink_private_buffer]: buffer } = this;
-            this[BufferSink_private_buffer] = [];
+    return clazz(__extends(disposableMixin), function BufferSink(instance, delegate, maxBufferSize) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[BufferSink_private_maxBufferSize] = maxBufferSize;
+        instance[BufferSink_private_buffer] = [];
+        pipe(instance, addTo(delegate), onComplete(() => {
+            const { [BufferSink_private_buffer]: buffer } = instance;
+            instance[BufferSink_private_buffer] = [];
             if (isEmpty(buffer)) {
-                pipe(this[Sink_private_delegate], dispose());
+                pipe(instance[Sink_private_delegate], dispose());
             }
             else {
-                pipe([buffer], fromArray, sinkInto(this[Sink_private_delegate]));
+                pipe([buffer], fromArray, sinkInto(instance[Sink_private_delegate]));
             }
         }));
-        return this;
     }, {
         [Sink_private_delegate]: none,
         [BufferSink_private_maxBufferSize]: 0,
@@ -103,12 +103,13 @@ const bufferSinkMixin = (fromArray) => {
 };
 const decodeWithCharsetSinkMixin = (fromArray) => {
     const DecodeWithCharsetSink_private_textDecoder = Symbol("DecodeWithCharsetSink_private_textDecoder");
-    return clazz(__extends(disposableMixin), function DecodeWithCharsetSink(delegate, charset) {
-        init(disposableMixin, this);
-        this[Sink_private_delegate] = delegate;
+    return clazz(__extends(disposableMixin), function DecodeWithCharsetSink(instance, delegate, charset) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
         const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
-        this[DecodeWithCharsetSink_private_textDecoder] = textDecoder;
-        pipe(this, addTo(delegate), onComplete(() => {
+        instance[DecodeWithCharsetSink_private_textDecoder] = textDecoder;
+        instance[Sink_private_delegate] = delegate;
+        pipe(instance, addTo(delegate), onComplete(() => {
             const data = textDecoder.decode();
             if (!isEmpty(data)) {
                 pipe([data], fromArray, sinkInto(delegate));
@@ -117,7 +118,6 @@ const decodeWithCharsetSinkMixin = (fromArray) => {
                 pipe(delegate, dispose());
             }
         }));
-        return this;
     }, {
         [Sink_private_delegate]: none,
         [DecodeWithCharsetSink_private_textDecoder]: none,
@@ -134,11 +134,11 @@ const distinctUntilChangedSinkMixin = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
     const DistinctUntilChangedSink_private_prev = Symbol("DistinctUntilChangedSink_private_prev");
     const DistinctUntilChangedSink_private_hasValue = Symbol("DistinctUntilChangedSink_private_hasValue");
-    return returns(clazz(__extends(delegatingDisposableMixin), function DistinctUntilChangedSink(delegate, equality) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        this[DistinctUntilChangedSink_private_equality] = equality;
-        return this;
+    return returns(clazz(__extends(delegatingDisposableMixin), function DistinctUntilChangedSink(instance, delegate, equality) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[DistinctUntilChangedSink_private_equality] = equality;
     }, {
         [Sink_private_delegate]: none,
         [DistinctUntilChangedSink_private_equality]: none,
@@ -158,11 +158,11 @@ const distinctUntilChangedSinkMixin = /*@__PURE__*/ (() => {
 })();
 const forEachSinkMixin = /*@__PURE__*/ (() => {
     const ForEachSink_private_effect = Symbol("ForEachSink_private_effect");
-    return returns(clazz(__extends(delegatingDisposableMixin), function ForEachSink(delegate, effect) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        this[ForEachSink_private_effect] = effect;
-        return this;
+    return returns(clazz(__extends(delegatingDisposableMixin), function ForEachSink(instance, delegate, effect) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[ForEachSink_private_effect] = effect;
     }, {
         [Sink_private_delegate]: none,
         [ForEachSink_private_effect]: none,
@@ -175,11 +175,11 @@ const forEachSinkMixin = /*@__PURE__*/ (() => {
 })();
 const keepSinkMixin = /*@__PURE__*/ (() => {
     const KeepSink_private_predicate = Symbol("KeepSink_private_predicate");
-    return returns(clazz(__extends(delegatingDisposableMixin), function KeepSink(delegate, predicate) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        this[KeepSink_private_predicate] = predicate;
-        return this;
+    return returns(clazz(__extends(delegatingDisposableMixin), function KeepSink(instance, delegate, predicate) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[KeepSink_private_predicate] = predicate;
     }, {
         [Sink_private_delegate]: none,
         [KeepSink_private_predicate]: none,
@@ -193,11 +193,11 @@ const keepSinkMixin = /*@__PURE__*/ (() => {
 })();
 const mapSinkMixin = /*@__PURE__*/ (() => {
     const MapSink_private_mapper = Symbol("MapSink_private_mapper");
-    return returns(clazz(__extends(delegatingDisposableMixin), function MapSink(delegate, mapper) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        this[MapSink_private_mapper] = mapper;
-        return this;
+    return returns(clazz(__extends(delegatingDisposableMixin), function MapSink(instance, delegate, mapper) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[MapSink_private_mapper] = mapper;
     }, {
         [Sink_private_delegate]: none,
         [MapSink_private_mapper]: none,
@@ -211,10 +211,10 @@ const mapSinkMixin = /*@__PURE__*/ (() => {
 const pairwiseSinkMixin = /*@__PURE__*/ (() => {
     const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
     const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
-    return returns(clazz(__extends(delegatingDisposableMixin), function PairwiseSink(delegate) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        return this;
+    return returns(clazz(__extends(delegatingDisposableMixin), function PairwiseSink(instance, delegate) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
     }, {
         [Sink_private_delegate]: none,
         [PairwiseSink_private_prev]: none,
@@ -233,21 +233,21 @@ const pairwiseSinkMixin = /*@__PURE__*/ (() => {
 const reduceSinkMixin = (fromArray) => {
     const ReduceSink_private_reducer = Symbol("ReduceSink_private_reducer");
     const ReduceSink_private_acc = Symbol("ReduceSink_private_acc");
-    return clazz(__extends(disposableMixin), function ReduceSink(delegate, reducer, initialValue) {
-        init(disposableMixin, this);
-        this[Sink_private_delegate] = delegate;
-        this[ReduceSink_private_reducer] = reducer;
+    return clazz(__extends(disposableMixin), function ReduceSink(instance, delegate, reducer, initialValue) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[ReduceSink_private_reducer] = reducer;
         try {
             const acc = initialValue();
-            this[ReduceSink_private_acc] = acc;
+            instance[ReduceSink_private_acc] = acc;
         }
         catch (cause) {
-            pipe(this, dispose({ cause }));
+            pipe(instance, dispose({ cause }));
         }
-        pipe(this, addTo(delegate), onComplete(() => {
-            pipe([this[ReduceSink_private_acc]], fromArray, sinkInto(delegate));
+        pipe(instance, addTo(delegate), onComplete(() => {
+            pipe([instance[ReduceSink_private_acc]], fromArray, sinkInto(delegate));
         }));
-        return this;
     }, {
         [Sink_private_delegate]: none,
         [ReduceSink_private_reducer]: none,
@@ -262,18 +262,18 @@ const reduceSinkMixin = (fromArray) => {
 const scanSinkMixin = /*@__PURE__*/ (() => {
     const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
     const ScanSink_private_acc = Symbol("ScanSink_private_acc");
-    return returns(clazz(__extends(delegatingDisposableMixin), function ScanSink(delegate, reducer, initialValue) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        this[ScanSink_private_reducer] = reducer;
+    return returns(clazz(__extends(delegatingDisposableMixin), function ScanSink(instance, delegate, reducer, initialValue) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[ScanSink_private_reducer] = reducer;
         try {
             const acc = initialValue();
-            this[ScanSink_private_acc] = acc;
+            instance[ScanSink_private_acc] = acc;
         }
         catch (cause) {
-            pipe(this, dispose({ cause }));
+            pipe(instance, dispose({ cause }));
         }
-        return this;
     }, {
         [Sink_private_delegate]: none,
         [ScanSink_private_reducer]: none,
@@ -289,11 +289,11 @@ const scanSinkMixin = /*@__PURE__*/ (() => {
 const skipFirstSinkMixin = /*@__PURE__*/ (() => {
     const SkipFirstSink_private_skipCount = Symbol("SkipFirstSink_private_skipCount");
     const SkipFirstSink_private_count = Symbol("SkipFirstSink_private_count");
-    return returns(clazz(__extends(delegatingDisposableMixin), function SkipFirstSink(delegate, skipCount) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        this[SkipFirstSink_private_skipCount] = skipCount;
-        return this;
+    return returns(clazz(__extends(delegatingDisposableMixin), function SkipFirstSink(instance, delegate, skipCount) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[SkipFirstSink_private_skipCount] = skipCount;
     }, {
         [Sink_private_delegate]: none,
         [SkipFirstSink_private_skipCount]: 0,
@@ -311,11 +311,11 @@ const skipFirstSinkMixin = /*@__PURE__*/ (() => {
 const takeFirstSinkMixin = /*@__PURE__*/ (() => {
     const TakeFirstSink_private_takeCount = Symbol("TakeFirstSink_private_takeCount");
     const TakeFirstSink_private_count = Symbol("TakeFirstSink_private_count");
-    return returns(clazz(__extends(delegatingDisposableMixin), function TakeFirstSink(delegate, takeCount) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        this[TakeFirstSink_private_takeCount] = takeCount;
-        return this;
+    return returns(clazz(__extends(delegatingDisposableMixin), function TakeFirstSink(instance, delegate, takeCount) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[TakeFirstSink_private_takeCount] = takeCount;
     }, {
         ...delegatingDisposableMixin[Object_properties],
         [Sink_private_delegate]: none,
@@ -335,15 +335,15 @@ const takeFirstSinkMixin = /*@__PURE__*/ (() => {
 const TakeLastSink_last = Symbol("TakeLastSink_last");
 const takeLastSinkMixin = (fromArray) => {
     const TakeLastSink_private_takeLastCount = Symbol("TakeLastSink_private_takeLastCount");
-    return clazz(__extends(disposableMixin), function TakeLastSink(delegate, takeLastCount) {
-        init(disposableMixin, this);
-        this[Sink_private_delegate] = delegate;
-        this[TakeLastSink_private_takeLastCount] = takeLastCount;
-        this[TakeLastSink_last] = [];
-        pipe(this, addTo(delegate), onComplete(() => {
-            pipe(this[TakeLastSink_last], fromArray, sinkInto(delegate));
+    return clazz(__extends(disposableMixin), function TakeLastSink(instance, delegate, takeLastCount) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[TakeLastSink_private_takeLastCount] = takeLastCount;
+        instance[TakeLastSink_last] = [];
+        pipe(instance, addTo(delegate), onComplete(() => {
+            pipe(instance[TakeLastSink_last], fromArray, sinkInto(delegate));
         }));
-        return this;
     }, {
         [Sink_private_delegate]: none,
         [TakeLastSink_private_takeLastCount]: 0,
@@ -361,12 +361,12 @@ const takeLastSinkMixin = (fromArray) => {
 const takeWhileSinkMixin = /*@__PURE__*/ (() => {
     const TakeWhileSink_private_predicate = Symbol("TakeWhileSink_private_predicate");
     const TakeWhileSink_private_inclusive = Symbol("TakeWhileSink_private_inclusive");
-    return returns(clazz(__extends(delegatingDisposableMixin), function TakeWhileSink(delegate, predicate, inclusive) {
-        init(delegatingDisposableMixin, this, delegate);
-        this[Sink_private_delegate] = delegate;
-        this[TakeWhileSink_private_predicate] = predicate;
-        this[TakeWhileSink_private_inclusive] = inclusive;
-        return this;
+    return returns(clazz(__extends(delegatingDisposableMixin), function TakeWhileSink(instance, delegate, predicate, inclusive) {
+        init(delegatingDisposableMixin, instance, delegate);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[TakeWhileSink_private_predicate] = predicate;
+        instance[TakeWhileSink_private_inclusive] = inclusive;
     }, {
         [Sink_private_delegate]: none,
         [TakeWhileSink_private_predicate]: none,
@@ -385,12 +385,13 @@ const takeWhileSinkMixin = /*@__PURE__*/ (() => {
 })();
 const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
     const ThrowIfEmptySink_private_isEmpty = Symbol("ThrowIfEmptySink_private_isEmpty");
-    return returns(clazz(__extends(disposableMixin), function ThrowIfEmptySink(delegate, factory) {
-        init(disposableMixin, this);
-        this[Sink_private_delegate] = delegate;
-        pipe(this, addTo(delegate), onComplete(() => {
+    return returns(clazz(__extends(disposableMixin), function ThrowIfEmptySink(instance, delegate, factory) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance[Sink_private_delegate] = delegate;
+        pipe(instance, addTo(delegate), onComplete(() => {
             let error = none;
-            if (this[ThrowIfEmptySink_private_isEmpty]) {
+            if (instance[ThrowIfEmptySink_private_isEmpty]) {
                 let cause = none;
                 try {
                     cause = factory();
@@ -402,7 +403,6 @@ const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
             }
             pipe(delegate, dispose(error));
         }));
-        return this;
     }, {
         [Sink_private_delegate]: none,
         [ThrowIfEmptySink_private_isEmpty]: true,
