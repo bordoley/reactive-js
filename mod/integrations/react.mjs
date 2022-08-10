@@ -58,6 +58,8 @@ const createComponent = (fn, options = {}) => {
 };
 const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(clazz(__extends(disposableMixin), function ReactPriorityScheduler(instance) {
     init(disposableMixin, instance);
+    unsafeCast(instance);
+    return instance;
 }, {
     [SchedulerLike_inContinuation]: false,
 }, {

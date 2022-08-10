@@ -139,9 +139,17 @@ const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(
   clazz(
     __extends(disposableMixin),
     function ReactPriorityScheduler(
-      instance: unknown,
-    ): asserts instance is PrioritySchedulerLike {
+      instance: Omit<
+        PrioritySchedulerLike,
+        typeof SchedulerLike_inContinuation | keyof DisposableLike
+      >,
+    ): PrioritySchedulerLike {
       init(disposableMixin, instance);
+      unsafeCast<{
+        [SchedulerLike_inContinuation]: boolean;
+      }>(instance);
+
+      return instance;
     },
     {
       [SchedulerLike_inContinuation]: false,

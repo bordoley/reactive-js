@@ -109,15 +109,17 @@ const createContinuation: Function2<
     clazz(
       __extends(disposableMixin),
       function Continuation(
-        instance: unknown,
+        instance: Pick<ContinuationLike, typeof ContinuationLike_run>,
         scheduler: SchedulerLike,
         f: SideEffect,
-      ): asserts instance is ContinuationLike {
+      ): ContinuationLike {
         init(disposableMixin, instance);
         unsafeCast<TProperties>(instance);
 
         instance.scheduler = scheduler;
         instance.f = f;
+
+        return instance;
       },
       {
         scheduler: none,
@@ -350,9 +352,17 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           typedDisposableRefMixin,
         ),
         function QueueScheduler(
-          instance: unknown,
+          instance: Pick<
+            QueueSchedulerLike,
+            | typeof SchedulerLike_now
+            | typeof SchedulerLike_shouldYield
+            | typeof SchedulerLike_requestYield
+            | typeof PauseableLike_pause
+            | typeof PauseableLike_resume
+            | typeof SchedulerLike_schedule
+          >,
           host: SchedulerLike,
-        ): asserts instance is QueueSchedulerLike {
+        ): QueueSchedulerLike {
           init(disposableMixin, instance);
           init(typedEnumeratorMixin, instance);
           init(typedDisposableRefMixin, instance, disposed);
@@ -361,6 +371,8 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           instance.delayed = createPriorityQueue(delayedComparator);
           instance.queue = createPriorityQueue(taskComparator);
           instance.host = host;
+
+          return instance;
         },
         {
           [SchedulerLike_inContinuation]: false,

@@ -116,6 +116,7 @@ const windowLocation =
         unsafeCast(instance);
         instance.delegate = delegate;
         instance.historyCounter = -1;
+        return instance;
     }, {
         delegate: none,
         historyCounter: -1,
@@ -138,6 +139,7 @@ const windowLocation =
             pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
         },
         goBack() {
+            unsafeCast(this);
             const canGoBack = this.historyCounter > 0;
             if (canGoBack) {
                 history.back();

@@ -82,6 +82,7 @@ const createMergeAll = (lift) => {
                     pipe(instance.delegate, dispose());
                 }
             }));
+            return instance;
         }, {
             activeCount: 0,
             delegate: none,
@@ -132,6 +133,7 @@ const createSwitchAll = (lift) => {
             instance.delegate = delegate;
             instance.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
             pipe(instance, addTo(delegate), onComplete(onDispose));
+            return instance;
         }, {
             currentRef: none,
             delegate: none,
@@ -238,6 +240,7 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
                 }
             }), subscribe(getScheduler(delegate)), onComplete(disposeDelegate), addTo(delegate));
             pipe(instance, addTo(delegate), onComplete(disposeDelegate));
+            return instance;
         }, {
             delegate: none,
             hasLatest: false,

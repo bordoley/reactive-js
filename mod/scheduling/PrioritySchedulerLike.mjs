@@ -19,6 +19,7 @@ const toScheduler = /*@__PURE__*/ (() => {
         unsafeCast(instance);
         instance.priorityScheduler = scheduler;
         instance.priority = priority;
+        return instance;
     }, {
         priorityScheduler: none,
         priority: 0,

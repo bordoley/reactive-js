@@ -41,15 +41,24 @@ export const toScheduler = /*@__PURE__*/ (() => {
     clazz(
       __extends(disposableMixin),
       function PrioritySchedulerDelegatingScheduler(
-        instance: unknown,
+        instance: Pick<
+          SchedulerLike,
+          | typeof SchedulerLike_inContinuation
+          | typeof SchedulerLike_now
+          | typeof SchedulerLike_shouldYield
+          | typeof SchedulerLike_requestYield
+          | typeof SchedulerLike_schedule
+        >,
         scheduler: PrioritySchedulerLike,
         priority: number,
-      ): asserts instance is SchedulerLike {
+      ): SchedulerLike {
         init(disposableMixin, instance);
         unsafeCast<TProperties>(instance);
 
         instance.priorityScheduler = scheduler;
         instance.priority = priority;
+
+        return instance;
       },
       {
         priorityScheduler: none,

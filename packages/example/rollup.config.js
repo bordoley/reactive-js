@@ -30,10 +30,10 @@ export default [
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
       terser({
-      compress: {
-      unsafe: true,
-       unsafe_symbols: true,
-      },
+        compress: {
+          unsafe: true,
+          unsafe_symbols: true,
+        },
       }),
     ],
   },

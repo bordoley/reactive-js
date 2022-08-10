@@ -159,11 +159,11 @@ const createObservableImpl: <T>(
 ) => ObservableLike<T> = /*@__PURE__*/ createInstanceFactory(
   clazz(
     function CreateObservable(
-      instance: unknown,
+      instance: Pick<ObservableLike, typeof ReactiveContainerLike_sinkInto>,
       f: SideEffect1<ObserverLike>,
       isEnumerable: boolean,
       isRunnable: boolean,
-    ): asserts instance is ObservableLike {
+    ): ObservableLike {
       unsafeCast<{
         f: SideEffect1<ObserverLike>;
         [ObservableLike_isEnumerable]: boolean;
@@ -173,6 +173,8 @@ const createObservableImpl: <T>(
       instance.f = f;
       instance[ObservableLike_isEnumerable] = isEnumerable;
       instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
+
+      return instance;
     },
     {
       f: none,
@@ -216,14 +218,15 @@ export const createRunnable: <T>(
   createInstanceFactory(
     clazz(
       function Runnable(
-        instance: unknown,
+        instance: Pick<RunnableLike, typeof ReactiveContainerLike_sinkInto>,
         run: SideEffect1<SinkLike<T>>,
-      ): asserts instance is RunnableLike<T> {
+      ): RunnableLike<T> {
         unsafeCast<{
           run: SideEffect1<SinkLike<T>>;
         }>(instance);
 
         instance.run = run;
+        return instance;
       },
       {
         run: none,
@@ -259,15 +262,24 @@ export const createSubject: <T>(options?: {
     clazz(
       __extends(disposableMixin),
       function Subject(
-        instance: unknown,
+        instance: Pick<
+          SubjectLike<T>,
+          | typeof ReactiveContainerLike_sinkInto
+          | typeof ObservableLike_isEnumerable
+          | typeof ObservableLike_isRunnable
+          | typeof MulticastObservableLike_observerCount
+          | typeof SubjectLike_publish
+        >,
         replay: number,
-      ): asserts instance is SubjectLike<T> {
+      ): SubjectLike<T> {
         init(disposableMixin, instance);
         unsafeCast<TProperties>(instance);
 
         instance[MulticastObservableLike_replay] = replay;
         instance.observers = newInstance<Set<ObserverLike>>(Set);
         instance.replayed = [];
+
+        return instance;
       },
       {
         [MulticastObservableLike_replay]: 0,
