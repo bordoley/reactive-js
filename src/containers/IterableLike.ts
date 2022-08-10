@@ -44,13 +44,16 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function IteratorEnumerator(
-          instance: unknown,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
           iterator: Iterator<T>,
-        ): asserts instance is EnumeratorLike<T> {
+        ): EnumeratorLike<T> {
           init(disposableMixin, instance);
+          init(typedEnumeratorMixin, instance);
           unsafeCast<TProperties>(instance);
 
           instance.iterator = iterator;
+
+          return instance;
         },
         { iterator: none },
         {

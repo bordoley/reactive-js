@@ -63,4 +63,4 @@ const createInstanceFactory = (clazz) => {
     };
 };
 
-export { Object_init, Object_properties, Object_prototype, __extends, clazz, createInstanceFactory, init };
+export { __extends, clazz, createInstanceFactory, init };

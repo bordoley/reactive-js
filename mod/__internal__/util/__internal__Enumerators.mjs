@@ -11,6 +11,7 @@ const enumeratorMixin =
     return pipe(clazz(function EnumeratorMixin(instance) {
         unsafeCast(instance);
         instance[Enumerator_private_hasCurrent] = false;
+        return instance;
     }, {
         [Enumerator_private_current]: none,
         [Enumerator_private_hasCurrent]: false,

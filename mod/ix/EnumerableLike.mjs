@@ -23,6 +23,7 @@ const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
     return pipe(clazz(function DelegatingEnumerator(instance, delegate) {
         unsafeCast(instance);
         instance[DelegatingEnumerator_private_delegate] = delegate;
+        return instance;
     }, {
         [DelegatingEnumerator_private_delegate]: none,
     }, {
@@ -76,6 +77,7 @@ const buffer = /*@__PURE__*/ (() => {
         instance.delegate = delegate;
         instance.maxBufferSize = maxBufferSize;
         pipe(instance, add(delegate));
+        return instance;
     }, {
         delegate: none,
         maxBufferSize: 0,
@@ -110,6 +112,7 @@ const concatAll =
         unsafeCast(instance);
         instance.delegate = delegate;
         pipe(instance, add(delegate));
+        return instance;
     }, {
         delegate: none,
     }, {
@@ -150,6 +153,7 @@ const distinctUntilChanged =
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         unsafeCast(instance);
         instance.equality = equality;
+        return instance;
     }, { equality: none }, {
         [SourceLike_move]() {
             const hadCurrent = hasCurrent(this);
@@ -178,6 +182,7 @@ const forEach = /*@__PURE__*/ (() => {
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         unsafeCast(instance);
         instance.effect = effect;
+        return instance;
     }, { effect: none }, {
         [SourceLike_move]() {
             if (delegatingEnumeratorMove(this)) {
@@ -199,6 +204,7 @@ const keep = /*@__PURE__*/ (() => {
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         unsafeCast(instance);
         instance.predicate = predicate;
+        return instance;
     }, { predicate: none }, {
         [SourceLike_move]() {
             const { predicate } = this;
@@ -223,6 +229,7 @@ const map = /*@__PURE__*/ (() => {
         unsafeCast(instance);
         instance.delegate = delegate;
         instance.mapper = mapper;
+        return instance;
     }, {
         mapper: none,
         delegate: none,
@@ -248,6 +255,7 @@ const pairwise = /*@__PURE__*/ (() => {
         init(typedEnumerator, instance);
         unsafeCast(instance);
         instance.delegate = delegate;
+        return instance;
     }, {}, {
         [SourceLike_move]() {
             const { delegate } = this;
@@ -275,6 +283,7 @@ const repeat = /*@__PURE__*/ (() => {
         unsafeCast(instance);
         instance.src = src;
         instance.shouldRepeat = shouldRepeat;
+        return instance;
     }, {
         count: 0,
         enumerator: none,
@@ -336,6 +345,7 @@ const scan = /*@__PURE__*/ (() => {
         catch (cause) {
             pipe(instance, dispose({ cause }));
         }
+        return instance;
     }, { reducer: none, delegate: none }, {
         [SourceLike_move]() {
             const acc = hasCurrent(this) ? getCurrent(this) : none;
@@ -363,6 +373,7 @@ const skipFirst =
         unsafeCast(instance);
         instance.skipCount = skipCount;
         instance.count = 0;
+        return instance;
     }, {
         skipCount: 0,
         count: 0,
@@ -390,6 +401,7 @@ const takeFirst =
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         unsafeCast(instance);
         instance.maxCount = maxCount;
+        return instance;
     }, {
         maxCount: 0,
         count: 0,
@@ -419,6 +431,7 @@ const takeLast = /*@__PURE__*/ (() => {
         instance.maxCount = maxCount;
         instance.isStarted = false;
         pipe(instance, add(delegate));
+        return instance;
     }, {
         maxCount: 0,
         isStarted: false,
@@ -452,6 +465,7 @@ const takeWhile =
         unsafeCast(instance);
         instance.predicate = predicate;
         instance.inclusive = inclusive;
+        return instance;
     }, {
         predicate: none,
         inclusive: false,
@@ -504,6 +518,7 @@ const throwIfEmpty =
             }
             pipe(instance, dispose(error));
         }));
+        return instance;
     }, {
         isEmpty: true,
     }, {
@@ -598,6 +613,7 @@ const zip = /*@__PURE__*/ (() => {
         init(typedEnumerator, instance);
         unsafeCast(instance);
         instance.enumerators = enumerators;
+        return instance;
     }, {
         enumerators: none,
     }, {

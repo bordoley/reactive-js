@@ -220,13 +220,21 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
     clazz(
       __extends(disposableMixin),
       function HostScheduler(
-        instance: unknown,
+        instance: Pick<
+          SchedulerLike,
+          | typeof SchedulerLike_now
+          | typeof SchedulerLike_shouldYield
+          | typeof SchedulerLike_requestYield
+          | typeof SchedulerLike_schedule
+        >,
         yieldInterval: number,
-      ): asserts instance is SchedulerLike {
+      ): SchedulerLike {
         init(disposableMixin, instance);
         unsafeCast<TProperties>(instance);
 
         instance.yieldInterval = yieldInterval;
+
+        return instance;
       },
       {
         [SchedulerLike_inContinuation]: false,
@@ -328,14 +336,22 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     clazz(
       __extends(disposableMixin, typedEnumeratorMixin),
       function VirtualTimeScheduler(
-        instance: unknown,
+        instance: Pick<
+          VirtualTimeSchedulerLike,
+          | typeof ContinuationLike_run
+          | typeof SchedulerLike_shouldYield
+          | typeof SchedulerLike_requestYield
+          | typeof SchedulerLike_schedule
+        >,
         maxMicroTaskTicks: number,
-      ): asserts instance is VirtualTimeSchedulerLike {
+      ): VirtualTimeSchedulerLike {
         init(disposableMixin, instance);
         unsafeCast<TProperties>(instance);
 
         instance.maxMicroTaskTicks = maxMicroTaskTicks;
         instance.taskQueue = createPriorityQueue(comparator);
+
+        return instance;
       },
       {
         [SchedulerLike_inContinuation]: false,

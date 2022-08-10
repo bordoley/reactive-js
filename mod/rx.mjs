@@ -26,6 +26,7 @@ const createObservableImpl = /*@__PURE__*/ createInstanceFactory(clazz(function 
     instance.f = f;
     instance[ObservableLike_isEnumerable] = isEnumerable;
     instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
+    return instance;
 }, {
     f: none,
     [ObservableLike_isRunnable]: false,
@@ -46,6 +47,7 @@ const createRunnableObservable = (f) => createObservableImpl(f, false, true);
 const createRunnable = /*@__PURE__*/ (() => createInstanceFactory(clazz(function Runnable(instance, run) {
     unsafeCast(instance);
     instance.run = run;
+    return instance;
 }, {
     run: none,
 }, {
@@ -66,6 +68,7 @@ const createSubject = /*@__PURE__*/ (() => {
         instance[MulticastObservableLike_replay] = replay;
         instance.observers = newInstance(Set);
         instance.replayed = [];
+        return instance;
     }, {
         [MulticastObservableLike_replay]: 0,
         observers: none,

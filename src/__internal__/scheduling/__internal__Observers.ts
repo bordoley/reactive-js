@@ -41,7 +41,7 @@ import {
 } from "../../util/DisposableLike";
 import { disposableMixin } from "../util/__internal__Disposables";
 import {
-  Class1,
+  Mixin1,
   __extends,
   clazz,
   createInstanceFactory,
@@ -84,9 +84,12 @@ const createObserverDispatcher = (<T>() => {
     clazz(
       disposableMixin,
       function ObserverDispatcher(
-        instance: unknown,
+        instance: Pick<
+          DispatcherLike,
+          typeof DispatcherLike_scheduler | typeof DispatcherLike_dispatch
+        >,
         observer: ObserverLike<T>,
-      ): asserts instance is DispatcherLike<T> {
+      ): DispatcherLike<T> {
         init(disposableMixin, instance);
         unsafeCast<TProperties>(instance);
 
@@ -117,6 +120,8 @@ const createObserverDispatcher = (<T>() => {
             }
           }),
         );
+
+        return instance;
       },
       {
         continuation: none,
@@ -145,9 +150,9 @@ type TObserverMixinReturn<T> = Omit<
   keyof DisposableLike | typeof SinkLike_notify
 >;
 
-export const observerMixin: <T>() => Class1<
-  SchedulerLike,
-  TObserverMixinReturn<T>
+export const observerMixin: <T>() => Mixin1<
+  TObserverMixinReturn<T>,
+  SchedulerLike
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [ObserverLike_scheduler]: SchedulerLike;
@@ -157,11 +162,13 @@ export const observerMixin: <T>() => Class1<
   return pipe(
     clazz(
       function ObserverMixin(
-        instance: unknown,
+        instance: Pick<ObserverLike, typeof ObserverLike_dispatcher>,
         scheduler: SchedulerLike,
-      ): asserts instance is TObserverMixinReturn<T> {
+      ): TObserverMixinReturn<T> {
         unsafeCast<TProperties>(instance);
         instance[ObserverLike_scheduler] = scheduler;
+
+        return instance;
       },
       {
         [ObserverLike_scheduler]: none,
@@ -199,14 +206,16 @@ export const createDelegatingObserver: <T>(
     clazz(
       __extends(disposableMixin, typedObserverMixin),
       function DelegatingObserver(
-        instance: unknown,
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
         observer: ObserverLike<T>,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, getScheduler(observer));
         unsafeCast<TProperties>(instance);
 
         instance.delegate = observer;
+
+        return instance;
       },
       {
         delegate: none,
@@ -234,9 +243,11 @@ export const createDistinctUntilChangedObserver: <T>(
         instance: unknown,
         delegate: ObserverLike<T>,
         equality: Equality<T>,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedDistinctUntilChangedSinkMixin, instance, delegate, equality);
+
+        return instance;
       },
     ),
   );
@@ -256,9 +267,11 @@ export const createForEachObserver: <T>(
         instance: unknown,
         delegate: ObserverLike<T>,
         effect: SideEffect1<T>,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedForEachSinkMixin, instance, delegate, effect);
+
+        return instance;
       },
     ),
   );
@@ -278,9 +291,11 @@ export const createKeepObserver: <T>(
         instance: unknown,
         delegate: ObserverLike<T>,
         predicate: Predicate<T>,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedKeepSinkMixin, instance, delegate, predicate);
+
+        return instance;
       },
     ),
   );
@@ -300,9 +315,11 @@ export const createMapObserver: <TA, TB>(
         instance: unknown,
         delegate: ObserverLike<TB>,
         mapper: Function1<TA, TB>,
-      ): asserts instance is ObserverLike<TA> {
+      ): ObserverLike<TA> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedMapSinkMixin, instance, delegate, mapper);
+
+        return instance;
       },
     ),
   );
@@ -316,11 +333,13 @@ export const createObserver: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function Observer(
-          instance: unknown,
+          instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
           scheduler: SchedulerLike,
-        ): asserts instance is ObserverLike<T> {
+        ): ObserverLike<T> {
           init(disposableMixin, instance);
           init(typedObserverMixin, instance, scheduler);
+
+          return instance;
         },
         {},
         {
@@ -342,9 +361,11 @@ export const createPairwiseObserver: <T>(
       function PairwiseObserver(
         instance: unknown,
         delegate: ObserverLike<readonly [T, T]>,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedPairwiseSinkMixin, instance, delegate);
+
+        return instance;
       },
     ),
   );
@@ -367,9 +388,11 @@ export const createScanObserver: <T, TAcc>(
         delegate: ObserverLike<TAcc>,
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedScanSinkMixin, instance, delegate, reducer, initialValue);
+
+        return instance;
       },
     ),
   );
@@ -389,9 +412,11 @@ export const createSkipFirstObserver: <T>(
         instance: unknown,
         delegate: ObserverLike<T>,
         skipCount: number,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedSkipFirstSinkMixin, instance, delegate, skipCount);
+
+        return instance;
       },
     ),
   );
@@ -411,9 +436,11 @@ export const createTakeFirstObserver: <T>(
         instance: unknown,
         delegate: ObserverLike<T>,
         takeCount: number,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedTakeFirstSinkMixin, instance, delegate, takeCount);
+
+        return instance;
       },
     ),
   );
@@ -435,9 +462,11 @@ export const createTakeWhileObserver: <T>(
         delegate: ObserverLike<T>,
         predicate: Predicate<T>,
         inclusive: boolean,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedTakeWhileSinkMixin, instance, delegate, predicate, inclusive);
+
+        return instance;
       },
     ),
   );
@@ -457,9 +486,11 @@ export const createThrowIfEmptyObserver: <T>(
         instance: unknown,
         delegate: ObserverLike<T>,
         factory: Factory<unknown>,
-      ): asserts instance is ObserverLike<T> {
+      ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(typedThrowIfEmptySinkMixin, instance, delegate, factory);
+
+        return instance;
       },
     ),
   );

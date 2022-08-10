@@ -39,6 +39,8 @@ import {
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
   ObservableLike,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   ReactiveContainerLike_sinkInto,
   SubjectLike,
   createObservable,
@@ -119,11 +121,19 @@ export const createStream = /*@__PURE__*/ (() => {
       clazz(
         __extends(delegatingDisposableMixin),
         function StreamImpl(
-          instance: unknown,
+          instance: Pick<
+            StreamLike<TReq, T>,
+            | typeof MulticastObservableLike_observerCount
+            | typeof MulticastObservableLike_replay
+            | typeof DispatcherLike_dispatch
+            | typeof ReactiveContainerLike_sinkInto
+            | typeof ObservableLike_isEnumerable
+            | typeof ObservableLike_isRunnable
+          >,
           op: ContainerOperator<ObservableLike, TReq, T>,
           scheduler: SchedulerLike,
           replay: number,
-        ): asserts instance is StreamLike<TReq, T> {
+        ): StreamLike<TReq, T> {
           const subject = createSubject({ replay });
 
           init(delegatingDisposableMixin, instance, subject);
@@ -138,6 +148,8 @@ export const createStream = /*@__PURE__*/ (() => {
             multicast<T>(scheduler, { replay }),
             add(instance),
           );
+
+          return instance;
         },
         {
           subject: none,
@@ -154,6 +166,10 @@ export const createStream = /*@__PURE__*/ (() => {
             unsafeCast<TProperties>(this);
             return getReplay(this.observable);
           },
+
+          [ObservableLike_isEnumerable]: false,
+
+          [ObservableLike_isRunnable]: false,
 
           [DispatcherLike_dispatch](req: TReq) {
             unsafeCast<TProperties>(this);

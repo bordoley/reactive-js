@@ -13,6 +13,7 @@ const delegatingDisposableMixin =
         pipe(delegate, onDisposed(_ => {
             instance[DisposableLike_isDisposed] = true;
         }));
+        return instance;
     }, {
         [DelegatingDisposable_private_delegate]: none,
         [DisposableLike_isDisposed]: false,
@@ -52,6 +53,7 @@ const disposableMixin = /*@__PURE__*/ (() => {
     return clazz(function DisposableMixin(instance) {
         unsafeCast(instance);
         instance[Disposable_private_disposables] = new Set();
+        return instance;
     }, {
         [DisposableLike_exception]: none,
         [DisposableLike_isDisposed]: false,
@@ -106,6 +108,7 @@ const disposableRefMixin = /*@__PURE__*/ (() => {
         unsafeCast(instance);
         instance[DisposableRef_private_current] = defaultValue;
         pipe(instance, add(defaultValue));
+        return instance;
     }, {
         [DisposableRef_private_current]: none,
     }, {
@@ -127,6 +130,7 @@ const createDisposableRef = /*@__PURE__*/ (() => {
     return createInstanceFactory(clazz(__extends(disposableMixin, typedDisposableRefMixin), function DisposableRef(instance, initialValue) {
         init(disposableMixin, instance);
         init(typedDisposableRefMixin, instance, initialValue);
+        return instance;
     }));
 })();
 

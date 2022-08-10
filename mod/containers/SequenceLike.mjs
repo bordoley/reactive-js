@@ -245,6 +245,7 @@ const toEnumerable =
         init(typedEnumeratorMixin, instance);
         unsafeCast(instance);
         instance.seq = seq;
+        return instance;
     }, {
         seq: none,
     }, {

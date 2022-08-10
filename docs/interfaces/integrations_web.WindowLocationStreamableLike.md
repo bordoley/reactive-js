@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streaming.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\> \| [`WindowLocationURI`](integrations_web.WindowLocationURI.md), [`WindowLocationURI`](integrations_web.WindowLocationURI.md), [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)\>
+- [`StreamableLike`](streaming.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri)\> \| [`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri), [`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri), [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)\>
 
   ↳ **`WindowLocationStreamableLike`**
 
@@ -20,13 +20,12 @@
 
 ### [StreamableLike\_stream]
 
-▸ **[StreamableLike_stream]**(`this`, `scheduler`, `options?`): [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
+▸ **[StreamableLike_stream]**(`scheduler`, `options?`): [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`WindowLocationStreamableLike`](integrations_web.WindowLocationStreamableLike.md) |
 | `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
