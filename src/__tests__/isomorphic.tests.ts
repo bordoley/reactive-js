@@ -3,6 +3,7 @@
  */
 
 import { runTests } from "../__internal__/__internal__testing";
+import AsyncEnumerableTest from "./modules/AsyncEnumerable.test";
 import ContainerLikeTests from "./modules/ContainerLike.test";
 import DisposableLikeTests from "./modules/DisposableLike.test";
 import EnumerableLikeTests from "./modules/EnumerableLike.test";
@@ -18,6 +19,7 @@ import queueTests from "./modules/queues.test";
 import streamingTests from "./modules/streaming.test";
 
 runTests([
+  AsyncEnumerableTest,
   ContainerLikeTests,
   DisposableLikeTests,
   effectsTests,
