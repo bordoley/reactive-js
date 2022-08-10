@@ -33,6 +33,9 @@ interface AsyncEnumeratorLike<T = unknown> extends SourceLike, StreamLike<void, 
 declare const createStream: <TReq, T>(op: ContainerOperator<ObservableLike<unknown>, TReq, T>, scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => StreamLike<TReq, T>;
+declare const createAsyncEnumerator: <T>(op: ContainerOperator<ObservableLike<unknown>, void, T>, scheduler: SchedulerLike, options?: {
+    readonly replay?: number;
+}) => AsyncEnumeratorLike<T>;
 declare const createStreamble: <TReq, TData, TStream extends StreamLike<TReq, TData> = StreamLike<TReq, TData>>(stream: (scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => TStream) => StreamableLike<TReq, TData, TStream>;
@@ -90,4 +93,4 @@ declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, in
 declare const createStateStore: <T>(initialState: Factory<T>, options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => StreamableStateLike<T>;
-export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, StreamableStateLike, ToFlowable, createActionReducer, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble };
+export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, StreamableStateLike, ToFlowable, createActionReducer, createAsyncEnumerator, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble };

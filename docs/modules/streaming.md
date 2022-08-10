@@ -21,6 +21,7 @@
 ### Functions
 
 - [createActionReducer](streaming.md#createactionreducer)
+- [createAsyncEnumerator](streaming.md#createasyncenumerator)
 - [createLiftedFlowable](streaming.md#createliftedflowable)
 - [createLiftedStreamable](streaming.md#createliftedstreamable)
 - [createStateStore](streaming.md#createstatestore)
@@ -74,6 +75,31 @@ over the notified actions, emitting each intermediate result.
 #### Returns
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TAction`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TAction`, `T`\>\>
+
+___
+
+### createAsyncEnumerator
+
+▸ **createAsyncEnumerator**<`T`\>(`op`, `scheduler`, `options?`): [`AsyncEnumeratorLike`](../interfaces/streaming.AsyncEnumeratorLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `void`, `T`\> |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`AsyncEnumeratorLike`](../interfaces/streaming.AsyncEnumeratorLike.md)<`T`\>
 
 ___
 

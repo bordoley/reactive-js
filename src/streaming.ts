@@ -6,6 +6,7 @@ import {
 } from "./__internal__/rx/__internal__ObservableLike";
 import { delegatingDisposableMixin } from "./__internal__/util/__internal__Disposables";
 import {
+  Mixin3,
   __extends,
   clazz,
   createInstanceFactory,
@@ -57,7 +58,7 @@ import {
   SchedulerLike,
 } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
-import { PauseableLike, SourceLike } from "./util";
+import { PauseableLike, SourceLike, SourceLike_move } from "./util";
 import { add } from "./util/DisposableLike";
 /**
  * Represents a duplex stream
@@ -110,80 +111,93 @@ export interface AsyncEnumeratorLike<T = unknown>
   extends SourceLike,
     StreamLike<void, T> {}
 
+const streamMixin: <TReq, T>() => Mixin3<
+  StreamLike<TReq, T>,
+  ContainerOperator<ObservableLike, TReq, T>,
+  SchedulerLike,
+  number
+> = (<TReq, T>() => {
+  type TProperties = {
+    subject: SubjectLike<TReq>;
+    observable: MulticastObservableLike<T>;
+    [DispatcherLike_scheduler]: SchedulerLike;
+  };
+
+  return pipe(
+    clazz(
+      __extends(delegatingDisposableMixin),
+      function Stream(
+        instance: Pick<
+          StreamLike<TReq, T>,
+          | typeof MulticastObservableLike_observerCount
+          | typeof MulticastObservableLike_replay
+          | typeof DispatcherLike_dispatch
+          | typeof ReactiveContainerLike_sinkInto
+          | typeof ObservableLike_isEnumerable
+          | typeof ObservableLike_isRunnable
+        >,
+        op: ContainerOperator<ObservableLike, TReq, T>,
+        scheduler: SchedulerLike,
+        replay: number,
+      ): StreamLike<TReq, T> {
+        const subject = createSubject({ replay });
+
+        init(delegatingDisposableMixin, instance, subject);
+        unsafeCast<TProperties>(instance);
+
+        instance[DispatcherLike_scheduler] = scheduler;
+        instance.subject = subject;
+
+        instance.observable = pipe(
+          subject,
+          op,
+          multicast<T>(scheduler, { replay }),
+          add(instance),
+        );
+
+        return instance;
+      },
+      {
+        subject: none,
+        observable: none,
+        [DispatcherLike_scheduler]: none,
+      },
+      {
+        get [MulticastObservableLike_observerCount](): number {
+          unsafeCast<TProperties>(this);
+          return getObserverCount(this.observable);
+        },
+
+        get [MulticastObservableLike_replay](): number {
+          unsafeCast<TProperties>(this);
+          return getReplay(this.observable);
+        },
+
+        [ObservableLike_isEnumerable]: false,
+
+        [ObservableLike_isRunnable]: false,
+
+        [DispatcherLike_dispatch](req: TReq) {
+          unsafeCast<TProperties>(this);
+          pipe(this.subject, publish(req));
+        },
+
+        [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
+          unsafeCast<TProperties>(this);
+          pipe(this.observable, sinkInto(observer));
+        },
+      },
+    ),
+    returns,
+  );
+})();
+
 export const createStream = /*@__PURE__*/ (() => {
-  const createStreamInternal = (<TReq, T>() => {
-    type TProperties = {
-      subject: SubjectLike<TReq>;
-      observable: MulticastObservableLike<T>;
-      [DispatcherLike_scheduler]: SchedulerLike;
-    };
-    return createInstanceFactory(
-      clazz(
-        __extends(delegatingDisposableMixin),
-        function StreamImpl(
-          instance: Pick<
-            StreamLike<TReq, T>,
-            | typeof MulticastObservableLike_observerCount
-            | typeof MulticastObservableLike_replay
-            | typeof DispatcherLike_dispatch
-            | typeof ReactiveContainerLike_sinkInto
-            | typeof ObservableLike_isEnumerable
-            | typeof ObservableLike_isRunnable
-          >,
-          op: ContainerOperator<ObservableLike, TReq, T>,
-          scheduler: SchedulerLike,
-          replay: number,
-        ): StreamLike<TReq, T> {
-          const subject = createSubject({ replay });
-
-          init(delegatingDisposableMixin, instance, subject);
-          unsafeCast<TProperties>(instance);
-
-          instance[DispatcherLike_scheduler] = scheduler;
-          instance.subject = subject;
-
-          instance.observable = pipe(
-            subject,
-            op,
-            multicast<T>(scheduler, { replay }),
-            add(instance),
-          );
-
-          return instance;
-        },
-        {
-          subject: none,
-          observable: none,
-          [DispatcherLike_scheduler]: none,
-        },
-        {
-          get [MulticastObservableLike_observerCount](): number {
-            unsafeCast<TProperties>(this);
-            return getObserverCount(this.observable);
-          },
-
-          get [MulticastObservableLike_replay](): number {
-            unsafeCast<TProperties>(this);
-            return getReplay(this.observable);
-          },
-
-          [ObservableLike_isEnumerable]: false,
-
-          [ObservableLike_isRunnable]: false,
-
-          [DispatcherLike_dispatch](req: TReq) {
-            unsafeCast<TProperties>(this);
-            pipe(this.subject, publish(req));
-          },
-
-          [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
-            unsafeCast<TProperties>(this);
-            pipe(this.observable, sinkInto(observer));
-          },
-        },
-      ),
-    );
-  })();
+  const createStreamInternal: <TReq, T>(
+    op: ContainerOperator<ObservableLike, TReq, T>,
+    scheduler: SchedulerLike,
+    replay: number,
+  ) => StreamLike<TReq, T> = createInstanceFactory(streamMixin());
 
   return <TReq, T>(
     op: ContainerOperator<ObservableLike, TReq, T>,
@@ -192,6 +206,50 @@ export const createStream = /*@__PURE__*/ (() => {
   ): StreamLike<TReq, T> => {
     const { replay = 0 } = options ?? {};
     return createStreamInternal(
+      op as ContainerOperator<ObservableLike, unknown, unknown>,
+      scheduler,
+      replay,
+    );
+  };
+})();
+
+export const createAsyncEnumerator = /*@__PURE__*/ (() => {
+  const createAsyncEnumeratorInternal: <T>(
+    op: ContainerOperator<ObservableLike, void, T>,
+    scheduler: SchedulerLike,
+    replay: number,
+  ) => AsyncEnumeratorLike<T> = (<T>() => {
+    const typedStreamMixin = streamMixin<void, T>();
+    return createInstanceFactory(
+      clazz(
+        __extends(typedStreamMixin),
+        function AsyncEnumerator(
+          instance: Pick<SourceLike, typeof SourceLike_move>,
+          op: ContainerOperator<ObservableLike, void, T>,
+          scheduler: SchedulerLike,
+          replay: number,
+        ): AsyncEnumeratorLike<T> {
+          init(typedStreamMixin, instance, op, scheduler, replay);
+
+          return instance;
+        },
+        {},
+        {
+          [SourceLike_move](this: StreamLike<void, T>) {
+            pipe(this, dispatch(none));
+          },
+        },
+      ),
+    );
+  })();
+
+  return <T>(
+    op: ContainerOperator<ObservableLike, void, T>,
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): AsyncEnumeratorLike<T> => {
+    const { replay = 0 } = options ?? {};
+    return createAsyncEnumeratorInternal(
       op as ContainerOperator<ObservableLike, unknown, unknown>,
       scheduler,
       replay,
