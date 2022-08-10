@@ -1,10 +1,12 @@
 /// <reference types="./__internal__Objects.d.ts" />
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
-const Object_properties_type = Symbol("Object_properties_type");
 const Object_prototype = Symbol("Object_prototype");
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
-const initUnsafe = (clazz, self, ...args) => clazz[Object_init].call(self, ...args);
+function initUnsafe(clazz, instance, ...args) {
+    const f = clazz[Object_init];
+    f.call(undefined, instance, ...args);
+}
 const init = initUnsafe;
 const __extends = (...mixins) => {
     if (mixins.length == 1) {
@@ -56,8 +58,9 @@ const createInstanceFactory = (clazz) => {
     const prototype = createObject(objectPrototype, prototypeDescription);
     return (...args) => {
         const instance = createObject(prototype, propertyDescription);
-        return initUnsafe(clazz, instance, ...args);
+        initUnsafe(clazz, instance, ...args);
+        return instance;
     };
 };
 
-export { Object_init, Object_properties, Object_properties_type, Object_prototype, __extends, clazz, createInstanceFactory, init };
+export { Object_init, Object_properties, Object_prototype, __extends, clazz, createInstanceFactory, init };

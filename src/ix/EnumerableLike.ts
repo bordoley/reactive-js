@@ -32,8 +32,6 @@ import {
 } from "../__internal__/util/__internal__MutableRefLike";
 import {
   Class1,
-  PropertyTypeOf,
-  UnknownObject,
   __extends,
   clazz,
   createInstanceFactory,
@@ -83,6 +81,7 @@ import {
   pipeUnsafe,
   raise,
   returns,
+  unsafeCast,
 } from "../functions";
 import {
   EnumerableLike,
@@ -147,13 +146,7 @@ type TDelegatingEnumeratorMixinReturn<T> = Omit<
 
 const delegatingEnumeratorMixin: <T>() => Class1<
   EnumeratorLike<T>,
-  TDelegatingEnumeratorMixinReturn<T>,
-  UnknownObject,
-  {
-    [DelegatingEnumerator_move_delegate](): boolean;
-    readonly [EnumeratorLike_current]: T;
-    readonly [EnumeratorLike_hasCurrent]: boolean;
-  }
+  TDelegatingEnumeratorMixinReturn<T>
 > = /*@__PURE__*/ (<T>() => {
   const DelegatingEnumerator_private_delegate = Symbol(
     "DelegatingEnumerator_private_delegate",
@@ -166,28 +159,28 @@ const delegatingEnumeratorMixin: <T>() => Class1<
   return pipe(
     clazz(
       function DelegatingEnumerator(
-        this: TProperties & TDelegatingEnumeratorMixinReturn<T>,
+        instance: unknown,
         delegate: EnumeratorLike<T>,
-      ) {
-        this[DelegatingEnumerator_private_delegate] = delegate;
+      ): asserts instance is TDelegatingEnumeratorMixinReturn<T> {
+        unsafeCast<TProperties>(instance);
 
-        return this;
+        instance[DelegatingEnumerator_private_delegate] = delegate;
       },
       {
         [DelegatingEnumerator_private_delegate]: none,
       },
       {
         get [EnumeratorLike_current](): T {
-          const self = this as unknown as TProperties;
+          unsafeCast<TProperties>(this);
           return (
-            self[DelegatingEnumerator_private_delegate]?.[
+            this[DelegatingEnumerator_private_delegate]?.[
               EnumeratorLike_current
             ] ?? raise()
           );
         },
         get [EnumeratorLike_hasCurrent](): boolean {
-          const self = this as unknown as TProperties;
-          return self[DelegatingEnumerator_private_delegate][
+          unsafeCast<TProperties>(this);
+          return this[DelegatingEnumerator_private_delegate][
             EnumeratorLike_hasCurrent
           ];
         },
@@ -260,9 +253,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
 >() => {
   const typedEnumerator = enumeratorMixin<readonly T[]>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof disposableMixin, typeof typedEnumerator]
-  > & {
+  type TProperties = {
     delegate: EnumeratorLike<T>;
     maxBufferSize: number;
   };
@@ -272,17 +263,18 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
       clazz(
         __extends(disposableMixin, typedEnumerator),
         function BufferEnumerator(
-          this: TProperties & EnumeratorLike<readonly T[]>,
+          instance: unknown,
           delegate: EnumeratorLike<T>,
           maxBufferSize: number,
-        ) {
-          init(disposableMixin, this);
-          init(typedEnumerator, this);
-          this.delegate = delegate;
-          this.maxBufferSize = maxBufferSize;
+        ): asserts instance is EnumeratorLike<readonly T[]> {
+          init(disposableMixin, instance);
+          init(typedEnumerator, instance);
+          unsafeCast<TProperties>(instance);
 
-          pipe(this, add(delegate));
-          return this;
+          instance.delegate = delegate;
+          instance.maxBufferSize = maxBufferSize;
+
+          pipe(instance, add(delegate));
         },
         {
           delegate: none,
@@ -322,13 +314,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     const typedEnumerator = enumeratorMixin<T>();
     const typedDisposableRefMixin = disposableRefMixin<EnumeratorLike<T>>();
 
-    type TProperties = PropertyTypeOf<
-      [
-        typeof disposableMixin,
-        typeof typedDisposableRefMixin,
-        typeof typedEnumerator,
-      ]
-    > & {
+    type TProperties = {
       delegate: EnumeratorLike<EnumerableLike<T>>;
     };
 
@@ -337,17 +323,17 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
         clazz(
           __extends(disposableMixin, typedDisposableRefMixin, typedEnumerator),
           function ConcatAllEnumerator(
-            this: TProperties & EnumeratorLike<T>,
+            instance: unknown,
             delegate: EnumeratorLike<EnumerableLike<T>>,
-          ) {
-            init(disposableMixin, this);
-            init(typedDisposableRefMixin, this, disposed);
-            init(typedEnumerator, this);
-            this.delegate = delegate;
+          ): asserts instance is EnumeratorLike<T> {
+            init(disposableMixin, instance);
+            init(typedDisposableRefMixin, instance, disposed);
+            init(typedEnumerator, instance);
+            unsafeCast<TProperties>(instance);
 
-            pipe(this, add(delegate));
+            instance.delegate = delegate;
 
-            return this;
+            pipe(instance, add(delegate));
           },
           {
             delegate: none,
@@ -400,9 +386,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
-    > & {
+    type TProperties = {
       equality: Equality<T>;
     };
 
@@ -411,15 +395,15 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function DistinctUntilChanged(
-            this: TProperties & EnumeratorLike<T>,
+            instance: unknown,
             delegate: EnumeratorLike<T>,
             equality: Equality<T>,
-          ) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.equality = equality;
+          ): asserts instance is EnumeratorLike<T> {
+            init(delegatingDisposableMixin, instance, delegate);
+            init(typedDelegatingEnumeratorMixin, instance, delegate);
+            unsafeCast<TProperties>(instance);
 
-            return this;
+            instance.equality = equality;
           },
           { equality: none },
           {
@@ -457,9 +441,7 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
 >() => {
   const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
-  > & {
+  type TProperties = {
     effect: SideEffect1<T>;
   };
 
@@ -468,15 +450,15 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
       clazz(
         __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
         function forEachEnumerator(
-          this: TProperties & EnumeratorLike<T>,
+          instance: unknown,
           delegate: EnumeratorLike<T>,
           effect: SideEffect1<T>,
-        ) {
-          init(delegatingDisposableMixin, this, delegate);
-          init(typedDelegatingEnumeratorMixin, this, delegate);
-          this.effect = effect;
+        ): asserts instance is EnumeratorLike<T> {
+          init(delegatingDisposableMixin, instance, delegate);
+          init(typedDelegatingEnumeratorMixin, instance, delegate);
+          unsafeCast<TProperties>(instance);
 
-          return this;
+          instance.effect = effect;
         },
         { effect: none },
         {
@@ -500,9 +482,7 @@ export const forEachT: ForEach<EnumerableLike> = { forEach };
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
-  > & {
+  type TProperties = {
     predicate: Predicate<T>;
   };
 
@@ -511,15 +491,15 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
       clazz(
         __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
         function KeepEnumerator(
-          this: TProperties & EnumeratorLike<T>,
+          instance: unknown,
           delegate: EnumeratorLike<T>,
           predicate: Predicate<T>,
-        ) {
-          init(delegatingDisposableMixin, this, delegate);
-          init(typedDelegatingEnumeratorMixin, this, delegate);
-          this.predicate = predicate;
+        ): asserts instance is EnumeratorLike<T> {
+          init(delegatingDisposableMixin, instance, delegate);
+          init(typedDelegatingEnumeratorMixin, instance, delegate);
+          unsafeCast<TProperties>(instance);
 
-          return this;
+          instance.predicate = predicate;
         },
         { predicate: none },
         {
@@ -548,9 +528,7 @@ export const keepT: Keep<EnumerableLike> = {
 export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const typedEnumerator = enumeratorMixin<TB>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof delegatingDisposableMixin, typeof typedEnumerator]
-  > & {
+  type TProperties = {
     mapper: Function1<TA, TB>;
     delegate: EnumeratorLike<TA>;
   };
@@ -560,16 +538,16 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
       clazz(
         __extends(delegatingDisposableMixin, typedEnumerator),
         function MapEnumerator(
-          this: TProperties & EnumeratorLike<TB>,
+          instance: unknown,
           delegate: EnumeratorLike<TA>,
           mapper: Function1<TA, TB>,
-        ) {
-          init(delegatingDisposableMixin, this, delegate);
-          init(typedEnumerator, this);
-          this.delegate = delegate;
-          this.mapper = mapper;
+        ): asserts instance is EnumeratorLike<TB> {
+          init(delegatingDisposableMixin, instance, delegate);
+          init(typedEnumerator, instance);
+          unsafeCast<TProperties>(instance);
 
-          return this;
+          instance.delegate = delegate;
+          instance.mapper = mapper;
         },
         {
           mapper: none,
@@ -602,9 +580,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
 >() => {
   const typedEnumerator = enumeratorMixin<[T, T]>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof delegatingDisposableMixin, typeof typedEnumerator]
-  > & {
+  type TProperties = {
     delegate: EnumeratorLike<T>;
   };
 
@@ -613,14 +589,14 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
       clazz(
         __extends(delegatingDisposableMixin, typedEnumerator),
         function PairwiseEnumerator(
-          this: TProperties & EnumeratorLike<[T, T]>,
+          instance: unknown,
           delegate: EnumeratorLike<T>,
-        ) {
-          init(delegatingDisposableMixin, this, delegate);
-          init(typedEnumerator, this);
-          this.delegate = delegate;
+        ): asserts instance is EnumeratorLike<readonly [T, T]> {
+          init(delegatingDisposableMixin, instance, delegate);
+          init(typedEnumerator, instance);
+          unsafeCast<TProperties>(instance);
 
-          return this;
+          instance.delegate = delegate;
         },
         {},
         {
@@ -654,7 +630,7 @@ export const pairwiseT: Pairwise<EnumerableLike> = {
 export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   T,
 >() => {
-  type TProperties = PropertyTypeOf<[typeof disposableMixin]> & {
+  type TProperties = {
     count: number;
     enumerator: Option<EnumeratorLike<T>>;
     shouldRepeat: Predicate<number>;
@@ -665,15 +641,15 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
     clazz(
       __extends(disposableMixin),
       function RepeatEnumerator(
-        this: TProperties & EnumeratorLike<T>,
+        instance: unknown,
         src: EnumerableLike<T>,
         shouldRepeat: Predicate<number>,
-      ) {
-        init(disposableMixin, this);
-        this.src = src;
-        this.shouldRepeat = shouldRepeat;
+      ): asserts instance is EnumeratorLike<T> {
+        init(disposableMixin, instance);
+        unsafeCast<TProperties>(instance);
 
-        return this;
+        instance.src = src;
+        instance.shouldRepeat = shouldRepeat;
       },
       {
         count: 0,
@@ -705,14 +681,14 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
           }
         },
         get [EnumeratorLike_current](): T {
-          const self = this as unknown as TProperties;
+          unsafeCast<TProperties>(this);
           return hasCurrent(this)
-            ? self.enumerator?.[EnumeratorLike_current] ?? raise()
+            ? this.enumerator?.[EnumeratorLike_current] ?? raise()
             : raise();
         },
         get [EnumeratorLike_hasCurrent]() {
-          const self = this as unknown as TProperties;
-          return self.enumerator?.[EnumeratorLike_hasCurrent] ?? false;
+          unsafeCast<TProperties>(this);
+          return this.enumerator?.[EnumeratorLike_hasCurrent] ?? false;
         },
       },
     ),
@@ -732,9 +708,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
 >() => {
   const typedEnumerator = enumeratorMixin<TAcc>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof delegatingDisposableMixin, typeof typedEnumerator]
-  > & {
+  type TProperties = {
     reducer: Reducer<T, TAcc>;
     delegate: EnumeratorLike<T>;
   };
@@ -744,24 +718,24 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
       clazz(
         __extends(delegatingDisposableMixin, typedEnumerator),
         function ScanEnumerator(
-          this: TProperties & MutableEnumeratorLike<TAcc>,
+          instance: unknown,
           delegate: EnumeratorLike<T>,
           reducer: Reducer<T, TAcc>,
           initialValue: Factory<TAcc>,
-        ) {
-          init(delegatingDisposableMixin, this, delegate);
-          init(typedEnumerator, this);
-          this.delegate = delegate;
-          this.reducer = reducer;
+        ): asserts instance is MutableEnumeratorLike<TAcc> {
+          init(delegatingDisposableMixin, instance, delegate);
+          init(typedEnumerator, instance);
+          unsafeCast<TProperties>(instance);
+
+          instance.delegate = delegate;
+          instance.reducer = reducer;
 
           try {
             const acc = initialValue();
-            this[EnumeratorLike_current] = acc;
+            instance[EnumeratorLike_current] = acc;
           } catch (cause) {
-            pipe(this, dispose({ cause }));
+            pipe(instance, dispose({ cause }));
           }
-
-          return this;
         },
         { reducer: none, delegate: none },
         {
@@ -794,9 +768,7 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
-    > & {
+    type TProperties = {
       skipCount: number;
       count: number;
     };
@@ -806,17 +778,16 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function SkipFirstEnumerator(
-            this: TProperties & EnumeratorLike<T>,
+            instance: unknown,
             delegate: EnumeratorLike<T>,
             skipCount: number,
-          ) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
+          ): asserts instance is EnumeratorLike<T> {
+            init(delegatingDisposableMixin, instance, delegate);
+            init(typedDelegatingEnumeratorMixin, instance, delegate);
+            unsafeCast<TProperties>(instance);
 
-            this.skipCount = skipCount;
-            this.count = 0;
-
-            return this;
+            instance.skipCount = skipCount;
+            instance.count = 0;
           },
           {
             skipCount: 0,
@@ -849,9 +820,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
-    > & {
+    type TProperties = {
       maxCount: number;
       count: number;
     };
@@ -861,15 +830,15 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function TakeFirstEnumerator(
-            this: TProperties & EnumeratorLike<T>,
+            instance: unknown,
             delegate: EnumeratorLike<T>,
             maxCount: number,
-          ) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.maxCount = maxCount;
+          ): asserts instance is EnumeratorLike<T> {
+            init(delegatingDisposableMixin, instance, delegate);
+            init(typedDelegatingEnumeratorMixin, instance, delegate);
+            unsafeCast<TProperties>(instance);
 
-            return this;
+            instance.maxCount = maxCount;
           },
           {
             maxCount: 0,
@@ -901,9 +870,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
 >() => {
   const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof disposableMixin, typeof typedDelegatingEnumeratorMixin]
-  > & {
+  type TProperties = {
     maxCount: number;
     isStarted: boolean;
   };
@@ -913,18 +880,18 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
       clazz(
         __extends(disposableMixin, typedDelegatingEnumeratorMixin),
         function TakeLastEnumerator(
-          this: TProperties & EnumeratorLike<T>,
+          instance: unknown,
           delegate: EnumeratorLike<T>,
           maxCount: number,
-        ) {
-          init(disposableMixin, this);
-          init(typedDelegatingEnumeratorMixin, this, delegate);
-          this.maxCount = maxCount;
-          this.isStarted = false;
+        ): asserts instance is EnumeratorLike<T> {
+          init(disposableMixin, instance);
+          init(typedDelegatingEnumeratorMixin, instance, delegate);
+          unsafeCast<TProperties>(instance);
 
-          pipe(this, add(delegate));
+          instance.maxCount = maxCount;
+          instance.isStarted = false;
 
-          return this;
+          pipe(instance, add(delegate));
         },
         {
           maxCount: 0,
@@ -970,9 +937,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof delegatingDisposableMixin, typeof typedDelegatingEnumeratorMixin]
-    > & {
+    type TProperties = {
       predicate: Predicate<T>;
       inclusive: boolean;
       done: boolean;
@@ -983,17 +948,17 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function TakeWhileEnumerator(
-            this: TProperties & EnumeratorLike<T>,
+            instance: unknown,
             delegate: EnumeratorLike<T>,
             predicate: Predicate<T>,
             inclusive: boolean,
-          ) {
-            init(delegatingDisposableMixin, this, delegate);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.predicate = predicate;
-            this.inclusive = inclusive;
+          ): asserts instance is EnumeratorLike<T> {
+            init(delegatingDisposableMixin, instance, delegate);
+            init(typedDelegatingEnumeratorMixin, instance, delegate);
+            unsafeCast<TProperties>(instance);
 
-            return this;
+            instance.predicate = predicate;
+            instance.inclusive = inclusive;
           },
           {
             predicate: none,
@@ -1034,9 +999,7 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof disposableMixin, typeof typedDelegatingEnumeratorMixin]
-    > & {
+    type TProperties = {
       isEmpty: boolean;
     };
 
@@ -1045,21 +1008,23 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
         clazz(
           __extends(disposableMixin, typedDelegatingEnumeratorMixin),
           function TakeWhileEnumerator(
-            this: TProperties & EnumeratorLike<T>,
+            instance: unknown,
             delegate: EnumeratorLike,
             factory: Factory<unknown>,
-          ) {
-            init(disposableMixin, this);
-            init(typedDelegatingEnumeratorMixin, this, delegate);
-            this.isEmpty = true;
+          ): asserts instance is EnumeratorLike<T> {
+            init(disposableMixin, instance);
+            init(typedDelegatingEnumeratorMixin, instance, delegate);
+            unsafeCast<TProperties>(instance);
 
-            pipe(this, addIgnoringChildErrors(delegate));
+            instance.isEmpty = true;
+
+            pipe(instance, addIgnoringChildErrors(delegate));
             pipe(
               delegate,
               onComplete(() => {
                 let error: Option<Exception> = none;
 
-                if (this.isEmpty) {
+                if (instance.isEmpty) {
                   let cause: unknown = none;
                   try {
                     cause = factory();
@@ -1070,11 +1035,9 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
                   error = { cause };
                 }
 
-                pipe(this, dispose(error));
+                pipe(instance, dispose(error));
               }),
             );
-
-            return this;
           },
           {
             isEmpty: true,
@@ -1221,9 +1184,7 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
 
   const typedEnumerator = enumeratorMixin<readonly unknown[]>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof disposableMixin, typeof typedEnumerator]
-  > & {
+  type TProperties = {
     enumerators: readonly EnumeratorLike[];
   };
 
@@ -1231,14 +1192,14 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
     clazz(
       __extends(disposableMixin, typedEnumerator),
       function ZipEnumerator(
-        this: TProperties & EnumeratorLike<readonly unknown[]>,
+        instance: unknown,
         enumerators: readonly EnumeratorLike[],
-      ) {
-        init(disposableMixin, this);
-        init(typedEnumerator, this);
-        this.enumerators = enumerators;
+      ): asserts instance is EnumeratorLike<readonly unknown[]> {
+        init(disposableMixin, instance);
+        init(typedEnumerator, instance);
+        unsafeCast<TProperties>(instance);
 
-        return this;
+        instance.enumerators = enumerators;
       },
       {
         enumerators: none,

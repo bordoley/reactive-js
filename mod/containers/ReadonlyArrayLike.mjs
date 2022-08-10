@@ -3,7 +3,7 @@ import { hasDelay, getDelay } from '../__internal__/__internal__optionParsing.mj
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
+import { getLength, isSome, max, min, unsafeCast, none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -58,13 +58,13 @@ const createFromArray = (factory) => (options = {}) => values => {
 };
 const toEnumerable = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    const createReadonlyArrayEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumerator), function ReadonlyArrayEnumerator(array, start, count) {
-        init(disposableMixin, this);
-        init(typedEnumerator, this);
-        this.array = array;
-        this.index = start - 1;
-        this.count = count;
-        return this;
+    const createReadonlyArrayEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumerator), function ReadonlyArrayEnumerator(instance, array, start, count) {
+        init(disposableMixin, instance);
+        init(typedEnumerator, instance);
+        unsafeCast(instance);
+        instance.array = array;
+        instance.index = start - 1;
+        instance.count = count;
     }, {
         array: none,
         count: 0,

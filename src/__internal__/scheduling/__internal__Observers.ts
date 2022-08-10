@@ -13,6 +13,7 @@ import {
   none,
   pipe,
   returns,
+  unsafeCast,
 } from "../../functions";
 import {
   DispatcherLike,
@@ -41,7 +42,6 @@ import {
 import { disposableMixin } from "../util/__internal__Disposables";
 import {
   Class1,
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
@@ -78,23 +78,24 @@ const createObserverDispatcher = (<T>() => {
     nextQueue: T[];
     observer: ObserverLike<T>;
     onContinuationDispose: SideEffect;
-  } & PropertyTypeOf<[typeof disposableMixin]>;
+  };
 
   return createInstanceFactory(
     clazz(
       disposableMixin,
       function ObserverDispatcher(
-        this: TProperties & DispatcherLike<T>,
+        instance: unknown,
         observer: ObserverLike<T>,
-      ) {
-        init(disposableMixin, this);
-        this.observer = observer;
-        this.nextQueue = [];
+      ): asserts instance is DispatcherLike<T> {
+        init(disposableMixin, instance);
+        unsafeCast<TProperties>(instance);
 
-        this.continuation = () => {
-          const { nextQueue } = this;
+        instance.observer = observer;
+        instance.nextQueue = [];
 
-          const { observer } = this;
+        instance.continuation = () => {
+          const { nextQueue, observer } = instance;
+
           while (getLength(nextQueue) > 0) {
             const next = nextQueue.shift() as T;
             observer[SinkLike_notify](next);
@@ -102,22 +103,20 @@ const createObserverDispatcher = (<T>() => {
           }
         };
 
-        this.onContinuationDispose = () => {
-          if (isDisposed(this)) {
-            pipe(observer, dispose(this[DisposableLike_exception]));
+        instance.onContinuationDispose = () => {
+          if (isDisposed(instance)) {
+            pipe(observer, dispose(instance[DisposableLike_exception]));
           }
         };
 
         pipe(
-          this,
+          instance,
           onDisposed(e => {
-            if (isEmpty(this.nextQueue)) {
+            if (isEmpty(instance.nextQueue)) {
               pipe(observer, dispose(e));
             }
           }),
         );
-
-        return this;
       },
       {
         continuation: none,
@@ -127,10 +126,10 @@ const createObserverDispatcher = (<T>() => {
       },
       {
         get [DispatcherLike_scheduler]() {
-          const self = this as unknown as TProperties;
-          return getScheduler(self.observer);
+          unsafeCast<TProperties>(this);
+          return getScheduler(this.observer);
         },
-        [DispatcherLike_dispatch](this: TProperties, next: T) {
+        [DispatcherLike_dispatch](this: TProperties & DisposableLike, next: T) {
           if (!isDisposed(this)) {
             this.nextQueue.push(next);
             scheduleDrainQueue(this);
@@ -148,33 +147,21 @@ type TObserverMixinReturn<T> = Omit<
 
 export const observerMixin: <T>() => Class1<
   SchedulerLike,
-  TObserverMixinReturn<T>,
-  {
-    [ObserverLike_scheduler]: SchedulerLike;
-  },
-  {
-    get [ObserverLike_dispatcher](): DispatcherLike<T>;
-  }
+  TObserverMixinReturn<T>
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [ObserverLike_scheduler]: SchedulerLike;
-    dispatcher: Option<DispatcherLike>;
+    dispatcher: Option<DispatcherLike<T>>;
   };
 
   return pipe(
-    clazz<
-      (this: any, scheduler: SchedulerLike) => TObserverMixinReturn<T>,
-      TProperties,
-      {
-        get [ObserverLike_dispatcher](): DispatcherLike<T>;
-      }
-    >(
+    clazz(
       function ObserverMixin(
-        this: TProperties & TObserverMixinReturn<T>,
+        instance: unknown,
         scheduler: SchedulerLike,
-      ) {
-        this[ObserverLike_scheduler] = scheduler;
-        return this;
+      ): asserts instance is TObserverMixinReturn<T> {
+        unsafeCast<TProperties>(instance);
+        instance[ObserverLike_scheduler] = scheduler;
       },
       {
         [ObserverLike_scheduler]: none,
@@ -182,16 +169,16 @@ export const observerMixin: <T>() => Class1<
       },
       {
         get [ObserverLike_dispatcher](): DispatcherLike<T> {
-          const self = this as unknown as ObserverLike<T> & TProperties;
-          if (isNone(self.dispatcher)) {
-            const dispatcher = pipe(
-              createObserverDispatcher(self),
-              addToIgnoringChildErrors(self),
+          unsafeCast<ObserverLike<T> & TProperties>(this);
+          let { dispatcher } = this;
+          if (isNone(dispatcher)) {
+            dispatcher = pipe(
+              createObserverDispatcher(this),
+              addToIgnoringChildErrors<DispatcherLike<T>>(this),
             );
-
-            self.dispatcher = dispatcher;
+            this.dispatcher = dispatcher;
           }
-          return self.dispatcher;
+          return dispatcher;
         },
       },
     ),
@@ -204,9 +191,7 @@ export const createDelegatingObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof disposableMixin, typeof typedObserverMixin]
-  > & {
+  type TProperties = {
     delegate: ObserverLike<T>;
   };
 
@@ -214,14 +199,14 @@ export const createDelegatingObserver: <T>(
     clazz(
       __extends(disposableMixin, typedObserverMixin),
       function DelegatingObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         observer: ObserverLike<T>,
-      ) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, getScheduler(observer));
-        this.delegate = observer;
+      ): asserts instance is ObserverLike<T> {
+        init(disposableMixin, instance);
+        init(typedObserverMixin, instance, getScheduler(observer));
+        unsafeCast<TProperties>(instance);
 
-        return this;
+        instance.delegate = observer;
       },
       {
         delegate: none,
@@ -242,22 +227,16 @@ export const createDistinctUntilChangedObserver: <T>(
   const typedDistinctUntilChangedSinkMixin = distinctUntilChangedSinkMixin<T>();
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedDistinctUntilChangedSinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedDistinctUntilChangedSinkMixin),
       function DistinctUntilChangedObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<T>,
         equality: Equality<T>,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedDistinctUntilChangedSinkMixin, this, delegate, equality);
-
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedDistinctUntilChangedSinkMixin, instance, delegate, equality);
       },
     ),
   );
@@ -270,22 +249,16 @@ export const createForEachObserver: <T>(
   const typedForEachSinkMixin = forEachSinkMixin<T>();
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedForEachSinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedForEachSinkMixin),
       function ForEachObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<T>,
         effect: SideEffect1<T>,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedForEachSinkMixin, this, delegate, effect);
-
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedForEachSinkMixin, instance, delegate, effect);
       },
     ),
   );
@@ -298,22 +271,16 @@ export const createKeepObserver: <T>(
   const typedKeepSinkMixin = keepSinkMixin<T>();
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedKeepSinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedKeepSinkMixin),
       function KeepObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<T>,
         predicate: Predicate<T>,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedKeepSinkMixin, this, delegate, predicate);
-
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedKeepSinkMixin, instance, delegate, predicate);
       },
     ),
   );
@@ -326,22 +293,16 @@ export const createMapObserver: <TA, TB>(
   const typedMapSinkMixin = mapSinkMixin<TA, TB>();
   const typedObserverMixin = observerMixin<TA>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedMapSinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedMapSinkMixin),
       function MapObserver(
-        this: TProperties & ObserverLike<TA>,
+        instance: unknown,
         delegate: ObserverLike<TB>,
         mapper: Function1<TA, TB>,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedMapSinkMixin, this, delegate, mapper);
-
-        return this;
+      ): asserts instance is ObserverLike<TA> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedMapSinkMixin, instance, delegate, mapper);
       },
     ),
   );
@@ -354,11 +315,12 @@ export const createObserver: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
     return createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
-        function Observer(this: ObserverLike<T>, scheduler: SchedulerLike) {
-          init(disposableMixin, this);
-          init(typedObserverMixin, this, scheduler);
-
-          return this;
+        function Observer(
+          instance: unknown,
+          scheduler: SchedulerLike,
+        ): asserts instance is ObserverLike<T> {
+          init(disposableMixin, instance);
+          init(typedObserverMixin, instance, scheduler);
         },
         {},
         {
@@ -374,21 +336,15 @@ export const createPairwiseObserver: <T>(
   const typedPairwiseSinkMixin = pairwiseSinkMixin<T>();
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedPairwiseSinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedPairwiseSinkMixin),
       function PairwiseObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<readonly [T, T]>,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedPairwiseSinkMixin, this, delegate);
-
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedPairwiseSinkMixin, instance, delegate);
       },
     ),
   );
@@ -403,23 +359,17 @@ export const createScanObserver: <T, TAcc>(
 
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedScanSinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedScanSinkMixin),
       function ScanObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<TAcc>,
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedScanSinkMixin, this, delegate, reducer, initialValue);
-
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedScanSinkMixin, instance, delegate, reducer, initialValue);
       },
     ),
   );
@@ -432,22 +382,16 @@ export const createSkipFirstObserver: <T>(
   const typedSkipFirstSinkMixin = skipFirstSinkMixin<T>();
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedSkipFirstSinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedSkipFirstSinkMixin),
       function SkipFirstObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<T>,
         skipCount: number,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedSkipFirstSinkMixin, this, delegate, skipCount);
-
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedSkipFirstSinkMixin, instance, delegate, skipCount);
       },
     ),
   );
@@ -460,22 +404,16 @@ export const createTakeFirstObserver: <T>(
   const typedTakeFirstSinkMixin = takeFirstSinkMixin<T>();
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedTakeFirstSinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedTakeFirstSinkMixin),
       function TakeFirstObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<T>,
         takeCount: number,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedTakeFirstSinkMixin, this, delegate, takeCount);
-
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedTakeFirstSinkMixin, instance, delegate, takeCount);
       },
     ),
   );
@@ -489,23 +427,17 @@ export const createTakeWhileObserver: <T>(
   const typedTakeWhileSinkMixin = takeWhileSinkMixin<T>();
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedTakeWhileSinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedTakeWhileSinkMixin),
       function TakeWhileObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<T>,
         predicate: Predicate<T>,
         inclusive: boolean,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedTakeWhileSinkMixin, this, delegate, predicate, inclusive);
-
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedTakeWhileSinkMixin, instance, delegate, predicate, inclusive);
       },
     ),
   );
@@ -518,21 +450,16 @@ export const createThrowIfEmptyObserver: <T>(
   const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin<T>();
   const typedObserverMixin = observerMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof typedObserverMixin, typeof typedThrowIfEmptySinkMixin]
-  >;
-
   return createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, typedThrowIfEmptySinkMixin),
       function ThrowIfEmptyObserver(
-        this: TProperties & ObserverLike<T>,
+        instance: unknown,
         delegate: ObserverLike<T>,
         factory: Factory<unknown>,
-      ) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedThrowIfEmptySinkMixin, this, delegate, factory);
-        return this;
+      ): asserts instance is ObserverLike<T> {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedThrowIfEmptySinkMixin, instance, delegate, factory);
       },
     ),
   );

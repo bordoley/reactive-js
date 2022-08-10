@@ -2,7 +2,7 @@
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { none, pipe, partial } from '../functions.mjs';
+import { unsafeCast, none, pipe, partial } from '../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { addIgnoringChildErrors, isDisposed } from '../util/DisposableLike.mjs';
 import { isInContinuation, getCurrentTime, shouldYield, requestYield } from './SchedulerLike.mjs';
@@ -14,26 +14,26 @@ import { isInContinuation, getCurrentTime, shouldYield, requestYield } from './S
  * @param priority The priority to schedule work at.
  */
 const toScheduler = /*@__PURE__*/ (() => {
-    const createSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin), function PrioritySchedulerDelegatingScheduler(scheduler, priority) {
-        init(disposableMixin, this);
-        this.priorityScheduler = scheduler;
-        this.priority = priority;
-        return this;
+    const createSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance.priorityScheduler = scheduler;
+        instance.priority = priority;
     }, {
         priorityScheduler: none,
         priority: 0,
     }, {
         get [SchedulerLike_inContinuation]() {
-            const self = this;
-            return isInContinuation(self.priorityScheduler);
+            unsafeCast(this);
+            return isInContinuation(this.priorityScheduler);
         },
         get [SchedulerLike_now]() {
-            const self = this;
-            return getCurrentTime(self.priorityScheduler);
+            unsafeCast(this);
+            return getCurrentTime(this.priorityScheduler);
         },
         get [SchedulerLike_shouldYield]() {
-            const self = this;
-            return shouldYield(self.priorityScheduler);
+            unsafeCast(this);
+            return shouldYield(this.priorityScheduler);
         },
         [SchedulerLike_requestYield]() {
             requestYield(this.priorityScheduler);

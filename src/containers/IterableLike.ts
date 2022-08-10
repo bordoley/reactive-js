@@ -4,14 +4,20 @@ import {
   enumeratorMixin,
 } from "../__internal__/util/__internal__Enumerators";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
   init,
 } from "../__internal__/util/__internal__Objects";
 import { IterableLike, ToIterable } from "../containers";
-import { Function1, compose, identity, none, pipe } from "../functions";
+import {
+  Function1,
+  compose,
+  identity,
+  none,
+  pipe,
+  unsafeCast,
+} from "../functions";
 import { ToEnumerable, createEnumerable } from "../ix";
 import { toObservable as enumerableToObservable } from "../ix/EnumerableLike";
 import {
@@ -30,9 +36,7 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
     const typedEnumeratorMixin = enumeratorMixin<T>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof disposableMixin, typeof typedEnumeratorMixin]
-    > & {
+    type TProperties = {
       iterator: Iterator<T>;
     };
 
@@ -40,13 +44,13 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function IteratorEnumerator(
-          this: TProperties & EnumeratorLike<T>,
+          instance: unknown,
           iterator: Iterator<T>,
-        ) {
-          init(disposableMixin, this);
-          this.iterator = iterator;
+        ): asserts instance is EnumeratorLike<T> {
+          init(disposableMixin, instance);
+          unsafeCast<TProperties>(instance);
 
-          return this;
+          instance.iterator = iterator;
         },
         { iterator: none },
         {

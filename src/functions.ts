@@ -726,6 +726,8 @@ export const sum = (...args: number[]) => {
   return acc;
 };
 
+export function unsafeCast<T>(_v: unknown): asserts _v is T {}
+
 /**
  * A `Reducer` functions that applies `updater` to `acc` to compute the next
  * accumulator value.
