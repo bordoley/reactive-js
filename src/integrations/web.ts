@@ -20,6 +20,7 @@ import {
   none,
   pipe,
   raise,
+  unsafeCast,
 } from "../functions";
 import {
   MulticastObservableLike_observerCount,
@@ -271,20 +272,24 @@ export const windowLocation: WindowLocationStreamableLike =
         a.fragment === b.fragment);
 
     const windowHistoryReplaceState = (
-      self: WindowLocationStreamLike & TProperties,
+      instance: WindowLocationStreamLike & TProperties,
       title: string,
       uri: string,
     ) => {
-      history.replaceState({ counter: self.historyCounter, title }, "", uri);
+      history.replaceState(
+        { counter: instance.historyCounter, title },
+        "",
+        uri,
+      );
     };
 
     const windowHistoryPushState = (
-      self: WindowLocationStreamLike & TProperties,
+      instance: WindowLocationStreamLike & TProperties,
       title: string,
       uri: string,
     ) => {
-      self.historyCounter++;
-      history.pushState({ counter: self.historyCounter, title }, "", uri);
+      instance.historyCounter++;
+      history.pushState({ counter: instance.historyCounter, title }, "", uri);
     };
 
     type TProperties = {
@@ -296,13 +301,14 @@ export const windowLocation: WindowLocationStreamableLike =
       clazz(
         __extends(delegatingDisposableMixin),
         function WindowLocationStream(
-          this: WindowLocationStreamLike & TProperties,
+          instance: unknown,
           delegate: StreamLike<TAction, TState>,
-        ): WindowLocationStreamLike & TProperties {
-          init(delegatingDisposableMixin, this, delegate);
-          this.delegate = delegate;
-          this.historyCounter = -1;
-          return this;
+        ): asserts instance is WindowLocationStreamLike & TProperties {
+          init(delegatingDisposableMixin, instance, delegate);
+          unsafeCast<TProperties>(instance);
+
+          instance.delegate = delegate;
+          instance.historyCounter = -1;
         },
         {
           delegate: none,
@@ -310,18 +316,18 @@ export const windowLocation: WindowLocationStreamableLike =
         },
         {
           get [MulticastObservableLike_observerCount]() {
-            const self = this as unknown as TProperties;
-            return pipe(self.delegate, getObserverCount);
+            unsafeCast<TProperties>(this);
+            return pipe(this.delegate, getObserverCount);
           },
 
           get [MulticastObservableLike_replay](): number {
-            const self = this as unknown as TProperties;
-            return pipe(self.delegate, getReplay);
+            unsafeCast<TProperties>(this);
+            return pipe(this.delegate, getReplay);
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
-            const self = this as unknown as TProperties;
-            return pipe(self.delegate, getScheduler);
+            unsafeCast<TProperties>(this);
+            return pipe(this.delegate, getScheduler);
           },
 
           [ObservableLike_isEnumerable]: false,

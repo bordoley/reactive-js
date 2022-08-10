@@ -2,15 +2,15 @@
 import { disposableMixin } from './__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs';
 import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/__internal__Objects.mjs';
-import { none, pipe } from './functions.mjs';
+import { unsafeCast, none, pipe } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { dispose, isDisposed } from './util/DisposableLike.mjs';
 
 /** @ignore */
 const InteractiveContainerLike_interact = Symbol("InteractiveContainerLike_interact");
-const createEnumerable = /*@__PURE__*/ (() => createInstanceFactory(clazz(function CreateEnumerable(enumerate) {
-    this.enumerate = enumerate;
-    return this;
+const createEnumerable = /*@__PURE__*/ (() => createInstanceFactory(clazz(function CreateEnumerable(instance, enumerate) {
+    unsafeCast(instance);
+    instance.enumerate = enumerate;
 }, {
     enumerate: none,
 }, {
@@ -26,10 +26,9 @@ const createEnumerable = /*@__PURE__*/ (() => createInstanceFactory(clazz(functi
 })))();
 const emptyEnumerable = /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
-    const createEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function EmptyEnumerator() {
-        init(disposableMixin, this);
-        init(typedEnumeratorMixin, this);
-        return this;
+    const createEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function EmptyEnumerator(instance) {
+        init(disposableMixin, instance);
+        init(typedEnumeratorMixin, instance);
     }, {}, {
         [SourceLike_move]() {
             pipe(this, dispose());
@@ -50,12 +49,12 @@ const emptyEnumerableT = {
 const generateEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    const createGenerateEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumerator), function GenerateEnumerator(f, acc) {
-        init(disposableMixin, this);
-        init(typedEnumerator, this);
-        this.f = f;
-        this[EnumeratorLike_current] = acc;
-        return this;
+    const createGenerateEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumerator), function GenerateEnumerator(instance, f, acc) {
+        init(disposableMixin, instance);
+        init(typedEnumerator, instance);
+        unsafeCast(instance);
+        instance.f = f;
+        instance[EnumeratorLike_current] = acc;
     }, { f: none }, {
         [SourceLike_move]() {
             if (!isDisposed(this)) {

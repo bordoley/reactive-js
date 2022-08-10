@@ -8,7 +8,7 @@ import { disposableMixin, disposableRefMixin } from '../__internal__/util/__inte
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current } from '../__internal__/util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { none, isSome, pipe, isNone, raise, newInstance, max, compose } from '../functions.mjs';
+import { none, unsafeCast, isSome, pipe, isNone, raise, newInstance, max, compose } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_now } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
@@ -28,11 +28,11 @@ class YieldError {
 }
 let currentScheduler = none;
 const createContinuation = /*@__PURE__*/ (() => {
-    return createInstanceFactory(clazz(__extends(disposableMixin), function Continuation(scheduler, f) {
-        init(disposableMixin, this);
-        this.scheduler = scheduler;
-        this.f = f;
-        return this;
+    return createInstanceFactory(clazz(__extends(disposableMixin), function Continuation(instance, scheduler, f) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance.scheduler = scheduler;
+        instance.f = f;
     }, {
         scheduler: none,
         f: none,
@@ -94,9 +94,9 @@ const createQueueScheduler =
         diff = diff !== 0 ? diff : a.taskID - b.taskID;
         return diff;
     };
-    const peek = (self) => {
-        const { delayed, queue } = self;
-        const now = getCurrentTime(self.host);
+    const peek = (instance) => {
+        const { delayed, queue } = instance;
+        const now = getCurrentTime(instance.host);
         while (true) {
             const task = delayed.peek();
             if (isNone(task)) {
@@ -124,53 +124,53 @@ const createQueueScheduler =
         }
         return task !== null && task !== void 0 ? task : delayed.peek();
     };
-    const priorityShouldYield = (self, next) => {
-        const { [EnumeratorLike_current]: current } = self;
+    const priorityShouldYield = (instance, next) => {
+        const { [EnumeratorLike_current]: current } = instance;
         return (current !== next &&
-            next.dueTime <= getCurrentTime(self.host) &&
+            next.dueTime <= getCurrentTime(instance.host) &&
             next.priority > current.priority);
     };
-    const scheduleOnHost = (self) => {
+    const scheduleOnHost = (instance) => {
         var _a;
-        const task = peek(self);
-        const continuationActive = !isDisposed(self[MutableRefLike_current]) &&
+        const task = peek(instance);
+        const continuationActive = !isDisposed(instance[MutableRefLike_current]) &&
             isSome(task) &&
-            self.dueTime <= task.dueTime;
-        if (isNone(task) || continuationActive || self.isPaused) {
+            instance.dueTime <= task.dueTime;
+        if (isNone(task) || continuationActive || instance.isPaused) {
             return;
         }
         const dueTime = task.dueTime;
-        const delay = max(dueTime - getCurrentTime(self.host), 0);
-        self.dueTime = dueTime;
-        const continuation = (_a = self.hostContinuation) !== null && _a !== void 0 ? _a : (() => {
-            for (let task = peek(self); isSome(task) && !isDisposed(self); task = peek(self)) {
+        const delay = max(dueTime - getCurrentTime(instance.host), 0);
+        instance.dueTime = dueTime;
+        const continuation = (_a = instance.hostContinuation) !== null && _a !== void 0 ? _a : (() => {
+            for (let task = peek(instance); isSome(task) && !isDisposed(instance); task = peek(instance)) {
                 const { continuation, dueTime } = task;
-                const delay = max(dueTime - getCurrentTime(self.host), 0);
+                const delay = max(dueTime - getCurrentTime(instance.host), 0);
                 if (delay === 0) {
-                    move(self);
-                    self[SchedulerLike_inContinuation] = true;
+                    move(instance);
+                    instance[SchedulerLike_inContinuation] = true;
                     run(continuation);
-                    self[SchedulerLike_inContinuation] = false;
+                    instance[SchedulerLike_inContinuation] = false;
                 }
                 else {
-                    self.dueTime = getCurrentTime(self.host) + delay;
+                    instance.dueTime = getCurrentTime(instance.host) + delay;
                 }
                 __yield({ delay });
             }
         });
-        self.hostContinuation = continuation;
-        self[MutableRefLike_current] = pipe(self.host, schedule(continuation, { delay }));
+        instance.hostContinuation = continuation;
+        instance[MutableRefLike_current] = pipe(instance.host, schedule(continuation, { delay }));
     };
     const typedDisposableRefMixin = disposableRefMixin();
     const typedEnumeratorMixin = enumeratorMixin();
-    return createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(host) {
-        init(disposableMixin, this);
-        init(typedEnumeratorMixin, this);
-        init(typedDisposableRefMixin, this, disposed);
-        this.delayed = createPriorityQueue(delayedComparator);
-        this.queue = createPriorityQueue(taskComparator);
-        this.host = host;
-        return this;
+    return createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
+        init(disposableMixin, instance);
+        init(typedEnumeratorMixin, instance);
+        init(typedDisposableRefMixin, instance, disposed);
+        unsafeCast(instance);
+        instance.delayed = createPriorityQueue(delayedComparator);
+        instance.queue = createPriorityQueue(taskComparator);
+        instance.host = host;
     }, {
         [SchedulerLike_inContinuation]: false,
         delayed: none,
@@ -183,23 +183,23 @@ const createQueueScheduler =
         yieldRequested: false,
     }, {
         get [SchedulerLike_now]() {
-            const self = this;
-            return getCurrentTime(self.host);
+            unsafeCast(this);
+            return getCurrentTime(this.host);
         },
         get [SchedulerLike_shouldYield]() {
-            const self = this;
-            const { [SchedulerLike_inContinuation]: inContinuation, yieldRequested, } = self;
+            unsafeCast(this);
+            const { [SchedulerLike_inContinuation]: inContinuation, yieldRequested, } = this;
             if (inContinuation) {
-                self.yieldRequested = false;
+                this.yieldRequested = false;
             }
-            const next = peek(self);
+            const next = peek(this);
             return (inContinuation &&
                 (yieldRequested ||
-                    isDisposed(self) ||
-                    !hasCurrent(self) ||
-                    self.isPaused ||
-                    (isSome(next) ? priorityShouldYield(self, next) : false) ||
-                    shouldYield(self.host)));
+                    isDisposed(this) ||
+                    !hasCurrent(this) ||
+                    this.isPaused ||
+                    (isSome(next) ? priorityShouldYield(this, next) : false) ||
+                    shouldYield(this.host)));
         },
         [SourceLike_move]() {
             // First fast forward through disposed tasks.

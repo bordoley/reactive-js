@@ -1,6 +1,6 @@
 /// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
-import { compose, isTrue, pipeUnsafe, newInstance, isSome, pipe, getLength, none, partial, isEmpty } from '../../functions.mjs';
+import { compose, isTrue, pipeUnsafe, newInstance, isSome, pipe, unsafeCast, getLength, none, partial, isEmpty } from '../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createSubject, createEnumerableObservable, createRunnableObservable, createObservable } from '../../rx.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { publishTo, publish } from '../../rx/SubjectLike.mjs';
@@ -60,27 +60,28 @@ const createMergeAll = (lift) => {
                 }
             }
         };
-        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function Observer(delegate, maxBufferSize, maxConcurrency) {
-            init(disposableMixin, this);
-            init(typedObserverMixin, this, getScheduler(delegate));
-            this.delegate = delegate;
-            this.maxBufferSize = maxBufferSize;
-            this.maxConcurrency = maxConcurrency;
-            this.activeCount = 0;
-            this.onDispose = () => {
-                this.activeCount--;
-                subscribeNext(this);
+        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
+            init(disposableMixin, instance);
+            init(typedObserverMixin, instance, getScheduler(delegate));
+            unsafeCast(instance);
+            instance.delegate = delegate;
+            instance.maxBufferSize = maxBufferSize;
+            instance.maxConcurrency = maxConcurrency;
+            instance.activeCount = 0;
+            instance.onDispose = () => {
+                instance.activeCount--;
+                subscribeNext(instance);
             };
-            this.queue = [];
-            pipe(this, addTo(delegate), onComplete(() => {
+            instance.queue = [];
+            pipe(instance, addTo(delegate), onComplete(() => {
                 if (isDisposed(delegate)) {
-                    this.queue.length = 0;
+                    instance.queue.length = 0;
                 }
-                else if (getLength(this.queue) + this.activeCount === 0) {
-                    pipe(this.delegate, dispose());
+                else if (getLength(instance.queue) + instance.activeCount ===
+                    0) {
+                    pipe(instance.delegate, dispose());
                 }
             }));
-            return this;
         }, {
             activeCount: 0,
             delegate: none,
@@ -124,13 +125,13 @@ const createSwitchAll = (lift) => {
                 pipe(this.delegate, dispose());
             }
         }
-        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function SwitchAllObserver(delegate) {
-            init(disposableMixin, this);
-            init(typedObserverMixin, this, getScheduler(delegate));
-            this.delegate = delegate;
-            this.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
-            pipe(this, addTo(delegate), onComplete(onDispose));
-            return this;
+        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
+            init(disposableMixin, instance);
+            init(typedObserverMixin, instance, getScheduler(delegate));
+            unsafeCast(instance);
+            instance.delegate = delegate;
+            instance.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
+            pipe(instance, addTo(delegate), onComplete(onDispose));
         }, {
             currentRef: none,
             delegate: none,
@@ -216,26 +217,27 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
                 pipe(observer.delegate, notify(result));
             }
         };
-        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(delegate, other, selector) {
-            init(disposableMixin, this);
-            init(typedObserverMixin, this, getScheduler(delegate));
-            this.delegate = delegate;
-            this.queue = [];
-            this.selector = selector;
+        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
+            init(disposableMixin, instance);
+            init(typedObserverMixin, instance, getScheduler(delegate));
+            unsafeCast(instance);
+            instance.delegate = delegate;
+            instance.queue = [];
+            instance.selector = selector;
             const disposeDelegate = () => {
-                if (isDisposed(this) && isDisposed(otherSubscription)) {
+                if (isDisposed(instance) && isDisposed(otherSubscription)) {
                     pipe(delegate, dispose());
                 }
             };
             const otherSubscription = pipe(other, forEach(otherLatest => {
-                this.hasLatest = true;
-                this.otherLatest = otherLatest;
-                notifyDelegate(this);
-                if (isDisposed(this) && isEmpty(this.queue)) {
-                    pipe(this.delegate, dispose());
+                instance.hasLatest = true;
+                instance.otherLatest = otherLatest;
+                notifyDelegate(instance);
+                if (isDisposed(instance) && isEmpty(instance.queue)) {
+                    pipe(instance.delegate, dispose());
                 }
             }), subscribe(getScheduler(delegate)), onComplete(disposeDelegate), addTo(delegate));
-            return pipe(this, addTo(delegate), onComplete(disposeDelegate));
+            pipe(instance, addTo(delegate), onComplete(disposeDelegate));
         }, {
             delegate: none,
             hasLatest: false,

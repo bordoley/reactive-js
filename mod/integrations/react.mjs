@@ -4,7 +4,7 @@ import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_sch
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { none, isSome, pipe, pipeLazy, ignore } from '../functions.mjs';
+import { none, isSome, pipe, pipeLazy, ignore, unsafeCast } from '../functions.mjs';
 import { createSubject } from '../rx.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { publish } from '../rx/SubjectLike.mjs';
@@ -56,9 +56,8 @@ const createComponent = (fn, options = {}) => {
     };
     return ObservableComponent;
 };
-const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(clazz(__extends(disposableMixin), function ReactPriorityScheduler() {
-    init(disposableMixin, this);
-    return this;
+const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(clazz(__extends(disposableMixin), function ReactPriorityScheduler(instance) {
+    init(disposableMixin, instance);
 }, {
     [SchedulerLike_inContinuation]: false,
 }, {
@@ -66,8 +65,8 @@ const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(clazz(_
         return unstable_now();
     },
     get [SchedulerLike_shouldYield]() {
-        const self = this;
-        return isInContinuation(self) && unstable_shouldYield();
+        unsafeCast(this);
+        return isInContinuation(this) && unstable_shouldYield();
     },
     [SchedulerLike_requestYield]() {
         unstable_requestPaint();

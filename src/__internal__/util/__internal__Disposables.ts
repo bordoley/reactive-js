@@ -1,4 +1,12 @@
-import { Option, ignore, isSome, none, pipe, returns } from "../../functions";
+import {
+  Option,
+  ignore,
+  isSome,
+  none,
+  pipe,
+  returns,
+  unsafeCast,
+} from "../../functions";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -20,84 +28,74 @@ import {
 import {
   Class,
   Class1,
-  UnknownObject,
+  OptionalProps,
   __extends,
   clazz,
   createInstanceFactory,
   init,
 } from "./__internal__Objects";
 
-export const delegatingDisposableMixin: Class1<
-  DisposableLike,
-  DisposableLike,
-  {
-    readonly [DisposableLike_isDisposed]: boolean;
-  },
-  {
-    get [DisposableLike_exception](): Option<Exception>;
-    [DisposableLike_add](
-      disposable: DisposableOrTeardown,
-      ignoreChildErrors: boolean,
-    ): void;
-    [DisposableLike_dispose](error?: Exception): void;
-  }
-> = /*@__PURE__*/ (() => {
-  const DelegatingDisposable_private_delegate = Symbol(
-    "DelegatingDisposable_private_delegate",
-  );
+export const delegatingDisposableMixin: Class1<DisposableLike, DisposableLike> =
+  /*@__PURE__*/ (() => {
+    const DelegatingDisposable_private_delegate = Symbol(
+      "DelegatingDisposable_private_delegate",
+    );
 
-  type TProperties = {
-    [DisposableLike_isDisposed]: boolean;
-    [DelegatingDisposable_private_delegate]: DisposableLike;
-  };
+    type TProperties = {
+      [DisposableLike_isDisposed]: boolean;
+      [DelegatingDisposable_private_delegate]: DisposableLike;
+    };
 
-  return clazz(
-    function DelegatingDisposableMixin(
-      this: TProperties & DisposableLike,
-      delegate: DisposableLike,
-    ) {
-      this[DelegatingDisposable_private_delegate] = delegate;
+    return clazz(
+      function DelegatingDisposableMixin(
+        instance: unknown,
+        delegate: DisposableLike,
+      ): asserts instance is DisposableLike {
+        unsafeCast<TProperties>(instance);
 
-      pipe(
-        delegate,
-        onDisposed(_ => {
-          this[DisposableLike_isDisposed] = true;
-        }),
-      );
+        instance[DelegatingDisposable_private_delegate] = delegate;
 
-      return this;
-    },
-    {
-      [DelegatingDisposable_private_delegate]: none,
-      [DisposableLike_isDisposed]: false,
-    },
-    {
-      get [DisposableLike_exception](): Option<Exception> {
-        const self = this as unknown as TProperties;
-
-        const delegate = self[DelegatingDisposable_private_delegate];
-        return delegate[DisposableLike_exception];
+        pipe(
+          delegate,
+          onDisposed(_ => {
+            instance[DisposableLike_isDisposed] = true;
+          }),
+        );
       },
-      [DisposableLike_add](
-        this: TProperties,
-        disposable: DisposableOrTeardown,
-        ignoreChildErrors: boolean,
-      ) {
-        const delegate = this[DelegatingDisposable_private_delegate];
-        delegate[DisposableLike_add](disposable, ignoreChildErrors);
+      {
+        [DelegatingDisposable_private_delegate]: none,
+        [DisposableLike_isDisposed]: false,
       },
-      [DisposableLike_dispose](this: TProperties, error?: Exception) {
-        pipe(this[DelegatingDisposable_private_delegate], dispose(error));
-      },
-    },
-  );
-})();
+      {
+        get [DisposableLike_exception](): Option<Exception> {
+          unsafeCast<TProperties>(this);
 
-const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
-  const error = getException(self);
+          const delegate = this[DelegatingDisposable_private_delegate];
+          return delegate[DisposableLike_exception];
+        },
+        [DisposableLike_add](
+          this: TProperties,
+          disposable: DisposableOrTeardown,
+          ignoreChildErrors: boolean,
+        ) {
+          const delegate = this[DelegatingDisposable_private_delegate];
+          delegate[DisposableLike_add](disposable, ignoreChildErrors);
+        },
+        [DisposableLike_dispose](this: TProperties, error?: Exception) {
+          pipe(this[DelegatingDisposable_private_delegate], dispose(error));
+        },
+      },
+    );
+  })();
+
+const doDispose = (
+  instance: DisposableLike,
+  disposable: DisposableOrTeardown,
+) => {
+  const error = getException(instance);
   if (disposable instanceof Function) {
     try {
-      disposable.call(self, error);
+      disposable.call(instance, error);
     } catch (_) {
       /* Proactively catch Errors thrown in teardown logic. Teardown functions
        * shouldn't throw, so this is to prevent unexpected Errors.
@@ -108,20 +106,7 @@ const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
   }
 };
 
-export const disposableMixin: Class<
-  DisposableLike,
-  {
-    [DisposableLike_exception]: Option<Exception>;
-    [DisposableLike_isDisposed]: boolean;
-  },
-  {
-    [DisposableLike_dispose](error?: Exception): void;
-    [DisposableLike_add](
-      disposable: DisposableOrTeardown,
-      ignoreChildErrors: boolean,
-    ): void;
-  }
-> = /*@__PURE__*/ (() => {
+export const disposableMixin: Class<DisposableLike> = /*@__PURE__*/ (() => {
   const Disposable_private_disposables = Symbol(
     "Disposable_private_disposables",
   );
@@ -133,15 +118,17 @@ export const disposableMixin: Class<
   };
 
   return clazz(
-    function DisposableMixin(this: TProperties & DisposableLike) {
-      this[Disposable_private_disposables] = new Set();
-      return this;
+    function DisposableMixin(
+      instance: unknown,
+    ): asserts instance is DisposableLike {
+      unsafeCast<TProperties>(instance);
+      instance[Disposable_private_disposables] = new Set();
     },
     {
       [DisposableLike_exception]: none,
       [DisposableLike_isDisposed]: false,
       [Disposable_private_disposables]: none,
-    },
+    } as OptionalProps<TProperties>,
     {
       [DisposableLike_dispose](
         this: TProperties & DisposableLike,
@@ -210,12 +197,9 @@ export interface DisposableRefLike<
 
 export const disposableRefMixin: <
   TDisposable extends DisposableLike,
->() => Class1<
-  TDisposable,
-  DisposableRefLike<TDisposable>,
-  UnknownObject,
-  MutableRefLike<TDisposable>
-> = /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
+>() => Class1<TDisposable, MutableRefLike<TDisposable>> = /*@__PURE__*/ (<
+  TDisposable extends DisposableLike,
+>() => {
   const DisposableRef_private_current = Symbol("DisposableRef_private_current");
 
   type TProperties = {
@@ -225,29 +209,29 @@ export const disposableRefMixin: <
   return pipe(
     clazz(
       function DisposableRef(
-        this: TProperties & DisposableRefLike<TDisposable>,
+        instance: unknown,
         defaultValue: TDisposable,
-      ) {
-        this[DisposableRef_private_current] = defaultValue;
-        pipe(this, add(defaultValue));
+      ): asserts instance is DisposableRefLike<TDisposable> {
+        unsafeCast<TProperties & DisposableLike>(instance);
 
-        return this;
+        instance[DisposableRef_private_current] = defaultValue;
+        pipe(instance, add(defaultValue));
       },
       {
         [DisposableRef_private_current]: none,
-      },
+      } as OptionalProps<TProperties>,
       {
         get [MutableRefLike_current](): TDisposable {
-          const self = this as unknown as TProperties;
-          return self[DisposableRef_private_current];
+          unsafeCast<TProperties>(this);
+          return this[DisposableRef_private_current];
         },
         set [MutableRefLike_current](v: TDisposable) {
-          const self = this as unknown as TProperties & DisposableLike;
-          const oldValue = self[DisposableRef_private_current];
+          unsafeCast<TProperties & DisposableLike>(this);
+          const oldValue = this[DisposableRef_private_current];
           pipe(oldValue, dispose());
 
-          self[DisposableRef_private_current] = v;
-          pipe(self, add(v));
+          this[DisposableRef_private_current] = v;
+          pipe(this, add(v));
         },
       },
     ),
@@ -266,13 +250,11 @@ export const createDisposableRef: <TDisposable extends DisposableLike>(
     clazz(
       __extends(disposableMixin, typedDisposableRefMixin),
       function DisposableRef(
-        this: UnknownObject & DisposableRefLike<TDisposable>,
+        instance: unknown,
         initialValue: TDisposable,
-      ) {
-        init(disposableMixin, this);
-        init(typedDisposableRefMixin, this, initialValue);
-
-        return this;
+      ): asserts instance is DisposableRefLike<TDisposable> {
+        init(disposableMixin, instance);
+        init(typedDisposableRefMixin, instance, initialValue);
       },
     ),
   );

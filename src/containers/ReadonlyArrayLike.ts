@@ -5,7 +5,6 @@ import {
   enumeratorMixin,
 } from "../__internal__/util/__internal__Enumerators";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
@@ -32,6 +31,7 @@ import {
   min,
   none,
   pipe,
+  unsafeCast,
 } from "../functions";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../ix";
 import {
@@ -146,10 +146,8 @@ export const toEnumerable: ToEnumerable<
 >["toEnumerable"] = /*@__PURE__*/ (<T>() => {
   const typedEnumerator = enumeratorMixin<T>();
 
-  type TProperties = PropertyTypeOf<
-    [typeof disposableMixin & typeof typedEnumerator]
-  > & {
-    array: readonly unknown[];
+  type TProperties = {
+    array: readonly T[];
     count: number;
     index: number;
   };
@@ -158,19 +156,18 @@ export const toEnumerable: ToEnumerable<
     clazz(
       __extends(disposableMixin, typedEnumerator),
       function ReadonlyArrayEnumerator(
-        this: TProperties & EnumeratorLike<T>,
-        array: readonly unknown[],
+        instance: unknown,
+        array: readonly T[],
         start: number,
         count: number,
-      ) {
-        init(disposableMixin, this);
-        init(typedEnumerator, this);
+      ): asserts instance is EnumeratorLike<T> {
+        init(disposableMixin, instance);
+        init(typedEnumerator, instance);
+        unsafeCast<TProperties>(instance);
 
-        this.array = array;
-        this.index = start - 1;
-        this.count = count;
-
-        return this;
+        instance.array = array;
+        instance.index = start - 1;
+        instance.count = count;
       },
       {
         array: none,
@@ -178,7 +175,7 @@ export const toEnumerable: ToEnumerable<
         index: 0,
       },
       {
-        [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
           const { array } = this;
           if (!isDisposed(this)) {
             this.index++;

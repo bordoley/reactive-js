@@ -1,5 +1,5 @@
 /// <reference types="./__internal__Observers.d.ts" />
-import { getLength, pipe, isEmpty, none, isNone, returns } from '../../functions.mjs';
+import { getLength, pipe, unsafeCast, isEmpty, none, isNone, returns } from '../../functions.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../scheduling.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
@@ -16,30 +16,29 @@ const createObserverDispatcher = (() => {
             pipe(getScheduler(observer), schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
         }
     };
-    return createInstanceFactory(clazz(disposableMixin, function ObserverDispatcher(observer) {
-        init(disposableMixin, this);
-        this.observer = observer;
-        this.nextQueue = [];
-        this.continuation = () => {
-            const { nextQueue } = this;
-            const { observer } = this;
+    return createInstanceFactory(clazz(disposableMixin, function ObserverDispatcher(instance, observer) {
+        init(disposableMixin, instance);
+        unsafeCast(instance);
+        instance.observer = observer;
+        instance.nextQueue = [];
+        instance.continuation = () => {
+            const { nextQueue, observer } = instance;
             while (getLength(nextQueue) > 0) {
                 const next = nextQueue.shift();
                 observer[SinkLike_notify](next);
                 __yield();
             }
         };
-        this.onContinuationDispose = () => {
-            if (isDisposed(this)) {
-                pipe(observer, dispose(this[DisposableLike_exception]));
+        instance.onContinuationDispose = () => {
+            if (isDisposed(instance)) {
+                pipe(observer, dispose(instance[DisposableLike_exception]));
             }
         };
-        pipe(this, onDisposed(e => {
-            if (isEmpty(this.nextQueue)) {
+        pipe(instance, onDisposed(e => {
+            if (isEmpty(instance.nextQueue)) {
                 pipe(observer, dispose(e));
             }
         }));
-        return this;
     }, {
         continuation: none,
         nextQueue: none,
@@ -47,8 +46,8 @@ const createObserverDispatcher = (() => {
         onContinuationDispose: none,
     }, {
         get [DispatcherLike_scheduler]() {
-            const self = this;
-            return getScheduler(self.observer);
+            unsafeCast(this);
+            return getScheduler(this.observer);
         },
         [DispatcherLike_dispatch](next) {
             if (!isDisposed(this)) {
@@ -59,30 +58,31 @@ const createObserverDispatcher = (() => {
     }));
 })();
 const observerMixin = /*@__PURE__*/ (() => {
-    return pipe(clazz(function ObserverMixin(scheduler) {
-        this[ObserverLike_scheduler] = scheduler;
-        return this;
+    return pipe(clazz(function ObserverMixin(instance, scheduler) {
+        unsafeCast(instance);
+        instance[ObserverLike_scheduler] = scheduler;
     }, {
         [ObserverLike_scheduler]: none,
         dispatcher: none,
     }, {
         get [ObserverLike_dispatcher]() {
-            const self = this;
-            if (isNone(self.dispatcher)) {
-                const dispatcher = pipe(createObserverDispatcher(self), addToIgnoringChildErrors(self));
-                self.dispatcher = dispatcher;
+            unsafeCast(this);
+            let { dispatcher } = this;
+            if (isNone(dispatcher)) {
+                dispatcher = pipe(createObserverDispatcher(this), addToIgnoringChildErrors(this));
+                this.dispatcher = dispatcher;
             }
-            return self.dispatcher;
+            return dispatcher;
         },
     }), returns);
 })();
 const createDelegatingObserver = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function DelegatingObserver(observer) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, getScheduler(observer));
-        this.delegate = observer;
-        return this;
+    return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function DelegatingObserver(instance, observer) {
+        init(disposableMixin, instance);
+        init(typedObserverMixin, instance, getScheduler(observer));
+        unsafeCast(instance);
+        instance.delegate = observer;
     }, {
         delegate: none,
     }, {
@@ -94,46 +94,41 @@ const createDelegatingObserver = /*@__PURE__*/ (() => {
 const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => {
     const typedDistinctUntilChangedSinkMixin = distinctUntilChangedSinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedDistinctUntilChangedSinkMixin), function DistinctUntilChangedObserver(delegate, equality) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedDistinctUntilChangedSinkMixin, this, delegate, equality);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedDistinctUntilChangedSinkMixin), function DistinctUntilChangedObserver(instance, delegate, equality) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedDistinctUntilChangedSinkMixin, instance, delegate, equality);
     }));
 })();
 const createForEachObserver = /*@__PURE__*/ (() => {
     const typedForEachSinkMixin = forEachSinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedForEachSinkMixin), function ForEachObserver(delegate, effect) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedForEachSinkMixin, this, delegate, effect);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedForEachSinkMixin), function ForEachObserver(instance, delegate, effect) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedForEachSinkMixin, instance, delegate, effect);
     }));
 })();
 const createKeepObserver = /*@__PURE__*/ (() => {
     const typedKeepSinkMixin = keepSinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedKeepSinkMixin), function KeepObserver(delegate, predicate) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedKeepSinkMixin, this, delegate, predicate);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedKeepSinkMixin), function KeepObserver(instance, delegate, predicate) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedKeepSinkMixin, instance, delegate, predicate);
     }));
 })();
 const createMapObserver = /*@__PURE__*/ (() => {
     const typedMapSinkMixin = mapSinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedMapSinkMixin), function MapObserver(delegate, mapper) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedMapSinkMixin, this, delegate, mapper);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedMapSinkMixin), function MapObserver(instance, delegate, mapper) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedMapSinkMixin, instance, delegate, mapper);
     }));
 })();
 const createObserver = 
 /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function Observer(scheduler) {
-        init(disposableMixin, this);
-        init(typedObserverMixin, this, scheduler);
-        return this;
+    return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function Observer(instance, scheduler) {
+        init(disposableMixin, instance);
+        init(typedObserverMixin, instance, scheduler);
     }, {}, {
         [SinkLike_notify](_) { },
     }));
@@ -141,55 +136,49 @@ const createObserver =
 const createPairwiseObserver = /*@__PURE__*/ (() => {
     const typedPairwiseSinkMixin = pairwiseSinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedPairwiseSinkMixin), function PairwiseObserver(delegate) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedPairwiseSinkMixin, this, delegate);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedPairwiseSinkMixin), function PairwiseObserver(instance, delegate) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedPairwiseSinkMixin, instance, delegate);
     }));
 })();
 const createScanObserver = /*@__PURE__*/ (() => {
     const typedScanSinkMixin = scanSinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedScanSinkMixin), function ScanObserver(delegate, reducer, initialValue) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedScanSinkMixin, this, delegate, reducer, initialValue);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedScanSinkMixin), function ScanObserver(instance, delegate, reducer, initialValue) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedScanSinkMixin, instance, delegate, reducer, initialValue);
     }));
 })();
 const createSkipFirstObserver = /*@__PURE__*/ (() => {
     const typedSkipFirstSinkMixin = skipFirstSinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedSkipFirstSinkMixin), function SkipFirstObserver(delegate, skipCount) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedSkipFirstSinkMixin, this, delegate, skipCount);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedSkipFirstSinkMixin), function SkipFirstObserver(instance, delegate, skipCount) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedSkipFirstSinkMixin, instance, delegate, skipCount);
     }));
 })();
 const createTakeFirstObserver = /*@__PURE__*/ (() => {
     const typedTakeFirstSinkMixin = takeFirstSinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedTakeFirstSinkMixin), function TakeFirstObserver(delegate, takeCount) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedTakeFirstSinkMixin, this, delegate, takeCount);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedTakeFirstSinkMixin), function TakeFirstObserver(instance, delegate, takeCount) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedTakeFirstSinkMixin, instance, delegate, takeCount);
     }));
 })();
 const createTakeWhileObserver = /*@__PURE__*/ (() => {
     const typedTakeWhileSinkMixin = takeWhileSinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedTakeWhileSinkMixin), function TakeWhileObserver(delegate, predicate, inclusive) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedTakeWhileSinkMixin, this, delegate, predicate, inclusive);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedTakeWhileSinkMixin), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedTakeWhileSinkMixin, instance, delegate, predicate, inclusive);
     }));
 })();
 const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin();
     const typedObserverMixin = observerMixin();
-    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedThrowIfEmptySinkMixin), function ThrowIfEmptyObserver(delegate, factory) {
-        init(typedObserverMixin, this, delegate[ObserverLike_scheduler]);
-        init(typedThrowIfEmptySinkMixin, this, delegate, factory);
-        return this;
+    return createInstanceFactory(clazz(__extends(typedObserverMixin, typedThrowIfEmptySinkMixin), function ThrowIfEmptyObserver(instance, delegate, factory) {
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedThrowIfEmptySinkMixin, instance, delegate, factory);
     }));
 })();
 

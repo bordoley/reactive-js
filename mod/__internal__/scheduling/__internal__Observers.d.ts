@@ -1,13 +1,9 @@
 import { Equality, SideEffect1, Predicate, Function1, Reducer, Factory } from "../../functions.mjs";
-import { SchedulerLike, ObserverLike_scheduler, ObserverLike_dispatcher, DispatcherLike, ObserverLike } from "../../scheduling.mjs";
+import { SchedulerLike, ObserverLike } from "../../scheduling.mjs";
 import { DisposableLike, SinkLike_notify } from "../../util.mjs";
 import { Class1 } from "../util/__internal__Objects.mjs";
 declare type TObserverMixinReturn<T> = Omit<ObserverLike<T>, keyof DisposableLike | typeof SinkLike_notify>;
-declare const observerMixin: <T>() => Class1<SchedulerLike, TObserverMixinReturn<T>, {
-    [ObserverLike_scheduler]: SchedulerLike;
-}, {
-    get [ObserverLike_dispatcher](): DispatcherLike<T>;
-}>;
+declare const observerMixin: <T>() => Class1<SchedulerLike, TObserverMixinReturn<T>>;
 declare const createDelegatingObserver: <T>(o: ObserverLike<T>) => ObserverLike<T>;
 declare const createDistinctUntilChangedObserver: <T>(delegate: ObserverLike<T>, equality: Equality<T>) => ObserverLike<T>;
 declare const createForEachObserver: <T>(delegate: ObserverLike<T>, effect: SideEffect1<T>) => ObserverLike<T>;

@@ -27,6 +27,7 @@ import {
   partial,
   pipe,
   pipeUnsafe,
+  unsafeCast,
 } from "../../functions";
 import {
   AsyncReducer,
@@ -85,7 +86,6 @@ import {
 } from "../util/__internal__Disposables";
 import { MutableRefLike_current } from "../util/__internal__MutableRefLike";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
@@ -177,7 +177,7 @@ export const createMergeAll = <C extends ObservableLike>(
       maxConcurrency: number;
       onDispose: SideEffect;
       queue: ContainerOf<C, T>[];
-    } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
+    };
 
     const subscribeNext = <T>(observer: TProperties & ObserverLike<T>) => {
       if (observer.activeCount < observer.maxConcurrency) {
@@ -203,39 +203,40 @@ export const createMergeAll = <C extends ObservableLike>(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function Observer(
-          this: TProperties & StatefulContainerStateOf<C, ContainerOf<C, T>>,
+          instance: unknown,
           delegate: StatefulContainerStateOf<C, T>,
           maxBufferSize: number,
           maxConcurrency: number,
-        ): StatefulContainerStateOf<C, ContainerOf<C, T>> {
-          init(disposableMixin, this);
-          init(typedObserverMixin, this, getScheduler(delegate));
+        ): asserts instance is StatefulContainerStateOf<C, ContainerOf<C, T>> {
+          init(disposableMixin, instance);
+          init(typedObserverMixin, instance, getScheduler(delegate));
+          unsafeCast<TProperties & ObserverLike<T>>(instance);
 
-          this.delegate = delegate;
-          this.maxBufferSize = maxBufferSize;
-          this.maxConcurrency = maxConcurrency;
+          instance.delegate = delegate;
+          instance.maxBufferSize = maxBufferSize;
+          instance.maxConcurrency = maxConcurrency;
 
-          this.activeCount = 0;
-          this.onDispose = () => {
-            this.activeCount--;
-            subscribeNext(this);
+          instance.activeCount = 0;
+          instance.onDispose = () => {
+            instance.activeCount--;
+            subscribeNext(instance);
           };
-
-          this.queue = [];
+          instance.queue = [];
 
           pipe(
-            this,
+            instance,
             addTo(delegate),
             onComplete(() => {
               if (isDisposed(delegate)) {
-                this.queue.length = 0;
-              } else if (getLength(this.queue) + this.activeCount === 0) {
-                pipe(this.delegate, dispose());
+                instance.queue.length = 0;
+              } else if (
+                getLength(instance.queue) + instance.activeCount ===
+                0
+              ) {
+                pipe(instance.delegate, dispose());
               }
             }),
           );
-
-          return this;
         },
         {
           activeCount: 0,
@@ -321,7 +322,7 @@ export const createSwitchAll = <C extends ObservableLike>(
     type TProperties = {
       currentRef: DisposableRefLike;
       delegate: StatefulContainerStateOf<C, T>;
-    } & PropertyTypeOf<[typeof disposableMixin, typeof typedObserverMixin]>;
+    };
 
     function onDispose(this: TProperties & DisposableLike) {
       if (isDisposed(this.currentRef[MutableRefLike_current])) {
@@ -333,21 +334,20 @@ export const createSwitchAll = <C extends ObservableLike>(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function SwitchAllObserver(
-          this: TProperties & StatefulContainerStateOf<C, ContainerOf<C, T>>,
+          instance: unknown,
           delegate: StatefulContainerStateOf<C, T>,
-        ): StatefulContainerStateOf<C, ContainerOf<C, T>> {
-          init(disposableMixin, this);
-          init(typedObserverMixin, this, getScheduler(delegate));
+        ): asserts instance is StatefulContainerStateOf<C, ContainerOf<C, T>> {
+          init(disposableMixin, instance);
+          init(typedObserverMixin, instance, getScheduler(delegate));
+          unsafeCast<TProperties>(instance);
 
-          this.delegate = delegate;
-          this.currentRef = pipe(
+          instance.delegate = delegate;
+          instance.currentRef = pipe(
             createDisposableRef(disposed),
             addTo(delegate),
           );
 
-          pipe(this, addTo(delegate), onComplete(onDispose));
-
-          return this;
+          pipe(instance, addTo(delegate), onComplete(onDispose));
         },
         {
           currentRef: none,
@@ -526,9 +526,7 @@ export const zipWithLatestFrom: <TA, TB, T>(
   ) => ObserverLike<TA> = (<TA, TB, T>() => {
     const typedObserverMixin = observerMixin<TA>();
 
-    type TProperties = PropertyTypeOf<
-      [typeof disposableMixin, typeof typedObserverMixin]
-    > & {
+    type TProperties = {
       delegate: ObserverLike<T>;
       hasLatest: boolean;
       otherLatest: Option<TB>;
@@ -549,20 +547,21 @@ export const zipWithLatestFrom: <TA, TB, T>(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function ZipWithLatestFromObserer(
-          this: TProperties & ObserverLike<TA>,
+          instance: unknown,
           delegate: ObserverLike<T>,
           other: ObservableLike<TB>,
           selector: Function2<TA, TB, T>,
-        ): ObserverLike<TA> {
-          init(disposableMixin, this);
-          init(typedObserverMixin, this, getScheduler(delegate));
+        ): asserts instance is ObserverLike<TA> {
+          init(disposableMixin, instance);
+          init(typedObserverMixin, instance, getScheduler(delegate));
+          unsafeCast<TProperties & ObserverLike<TA>>(instance);
 
-          this.delegate = delegate;
-          this.queue = [];
-          this.selector = selector;
+          instance.delegate = delegate;
+          instance.queue = [];
+          instance.selector = selector;
 
           const disposeDelegate = () => {
-            if (isDisposed(this) && isDisposed(otherSubscription)) {
+            if (isDisposed(instance) && isDisposed(otherSubscription)) {
               pipe(delegate, dispose());
             }
           };
@@ -570,12 +569,12 @@ export const zipWithLatestFrom: <TA, TB, T>(
           const otherSubscription = pipe(
             other,
             forEach(otherLatest => {
-              this.hasLatest = true;
-              this.otherLatest = otherLatest;
-              notifyDelegate(this);
+              instance.hasLatest = true;
+              instance.otherLatest = otherLatest;
+              notifyDelegate(instance);
 
-              if (isDisposed(this) && isEmpty(this.queue)) {
-                pipe(this.delegate, dispose());
+              if (isDisposed(instance) && isEmpty(instance.queue)) {
+                pipe(instance.delegate, dispose());
               }
             }),
             subscribe(getScheduler(delegate)),
@@ -583,7 +582,7 @@ export const zipWithLatestFrom: <TA, TB, T>(
             addTo(delegate),
           );
 
-          return pipe(this, addTo(delegate), onComplete(disposeDelegate));
+          pipe(instance, addTo(delegate), onComplete(disposeDelegate));
         },
         {
           delegate: none,

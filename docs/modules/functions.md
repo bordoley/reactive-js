@@ -80,6 +80,7 @@
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
 - [sum](functions.md#sum)
+- [unsafeCast](functions.md#unsafecast)
 - [updateReducer](functions.md#updatereducer)
 
 ## Type Aliases
@@ -3028,6 +3029,28 @@ it's arguments.
 #### Returns
 
 `number`
+
+___
+
+### unsafeCast
+
+▸ **unsafeCast**<`T`\>(`_v`): asserts \_v is T
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `_v` | `unknown` |
+
+#### Returns
+
+asserts \_v is T
 
 ___
 

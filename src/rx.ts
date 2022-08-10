@@ -8,7 +8,6 @@ import {
 } from "./__internal__/util/__internal__DisposableLike";
 import { disposableMixin } from "./__internal__/util/__internal__Disposables";
 import {
-  PropertyTypeOf,
   __extends,
   clazz,
   createInstanceFactory,
@@ -38,6 +37,7 @@ import {
   none,
   pipe,
   pipeLazy,
+  unsafeCast,
 } from "./functions";
 import { ObserverLike } from "./scheduling";
 import { dispatch } from "./scheduling/DispatcherLike";
@@ -159,19 +159,20 @@ const createObservableImpl: <T>(
 ) => ObservableLike<T> = /*@__PURE__*/ createInstanceFactory(
   clazz(
     function CreateObservable(
-      this: {
-        f: SideEffect1<ObserverLike>;
-        [ObservableLike_isEnumerable]: boolean;
-        [ObservableLike_isRunnable]: boolean;
-      } & ObservableLike,
+      instance: unknown,
       f: SideEffect1<ObserverLike>,
       isEnumerable: boolean,
       isRunnable: boolean,
-    ) {
-      this.f = f;
-      this[ObservableLike_isEnumerable] = isEnumerable;
-      this[ObservableLike_isRunnable] = isEnumerable || isRunnable;
-      return this;
+    ): asserts instance is ObservableLike {
+      unsafeCast<{
+        f: SideEffect1<ObserverLike>;
+        [ObservableLike_isEnumerable]: boolean;
+        [ObservableLike_isRunnable]: boolean;
+      }>(instance);
+
+      instance.f = f;
+      instance[ObservableLike_isEnumerable] = isEnumerable;
+      instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
     },
     {
       f: none,
@@ -215,13 +216,14 @@ export const createRunnable: <T>(
   createInstanceFactory(
     clazz(
       function Runnable(
-        this: {
-          run: SideEffect1<SinkLike<T>>;
-        } & RunnableLike<T>,
+        instance: unknown,
         run: SideEffect1<SinkLike<T>>,
-      ) {
-        this.run = run;
-        return this;
+      ): asserts instance is RunnableLike<T> {
+        unsafeCast<{
+          run: SideEffect1<SinkLike<T>>;
+        }>(instance);
+
+        instance.run = run;
       },
       {
         run: none,
@@ -251,18 +253,21 @@ export const createSubject: <T>(options?: {
     [MulticastObservableLike_replay]: number;
     observers: Set<ObserverLike<T>>;
     replayed: Array<T>;
-  } & PropertyTypeOf<[typeof disposableMixin]>;
+  };
 
   const createSubjectInstance = createInstanceFactory(
     clazz(
       __extends(disposableMixin),
-      function Subject(this: TProperties & SubjectLike<T>, replay: number) {
-        init(disposableMixin, this);
-        this[MulticastObservableLike_replay] = replay;
-        this.observers = newInstance<Set<ObserverLike>>(Set);
-        this.replayed = [];
+      function Subject(
+        instance: unknown,
+        replay: number,
+      ): asserts instance is SubjectLike<T> {
+        init(disposableMixin, instance);
+        unsafeCast<TProperties>(instance);
 
-        return this;
+        instance[MulticastObservableLike_replay] = replay;
+        instance.observers = newInstance<Set<ObserverLike>>(Set);
+        instance.replayed = [];
       },
       {
         [MulticastObservableLike_replay]: 0,
@@ -274,11 +279,11 @@ export const createSubject: <T>(options?: {
         [ObservableLike_isRunnable]: false,
 
         get [MulticastObservableLike_observerCount]() {
-          const self = this as unknown as TProperties;
-          return self.observers.size;
+          unsafeCast<TProperties>(this);
+          return this.observers.size;
         },
 
-        [SubjectLike_publish](this: TProperties, next: T) {
+        [SubjectLike_publish](this: TProperties & SubjectLike<T>, next: T) {
           if (!isDisposed(this)) {
             const { replayed } = this;
 

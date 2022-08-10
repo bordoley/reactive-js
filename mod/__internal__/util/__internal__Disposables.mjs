@@ -1,24 +1,25 @@
 /// <reference types="./__internal__Disposables.d.ts" />
-import { pipe, none, isSome, ignore, returns } from '../../functions.mjs';
+import { unsafeCast, pipe, none, isSome, ignore, returns } from '../../functions.mjs';
 import { onDisposed, DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose, dispose, getException, isDisposed, add } from './__internal__DisposableLike.mjs';
 import { MutableRefLike_current } from './__internal__MutableRefLike.mjs';
 import { clazz, createInstanceFactory, __extends, init } from './__internal__Objects.mjs';
 
-const delegatingDisposableMixin = /*@__PURE__*/ (() => {
+const delegatingDisposableMixin = 
+/*@__PURE__*/ (() => {
     const DelegatingDisposable_private_delegate = Symbol("DelegatingDisposable_private_delegate");
-    return clazz(function DelegatingDisposableMixin(delegate) {
-        this[DelegatingDisposable_private_delegate] = delegate;
+    return clazz(function DelegatingDisposableMixin(instance, delegate) {
+        unsafeCast(instance);
+        instance[DelegatingDisposable_private_delegate] = delegate;
         pipe(delegate, onDisposed(_ => {
-            this[DisposableLike_isDisposed] = true;
+            instance[DisposableLike_isDisposed] = true;
         }));
-        return this;
     }, {
         [DelegatingDisposable_private_delegate]: none,
         [DisposableLike_isDisposed]: false,
     }, {
         get [DisposableLike_exception]() {
-            const self = this;
-            const delegate = self[DelegatingDisposable_private_delegate];
+            unsafeCast(this);
+            const delegate = this[DelegatingDisposable_private_delegate];
             return delegate[DisposableLike_exception];
         },
         [DisposableLike_add](disposable, ignoreChildErrors) {
@@ -30,11 +31,11 @@ const delegatingDisposableMixin = /*@__PURE__*/ (() => {
         },
     });
 })();
-const doDispose = (self, disposable) => {
-    const error = getException(self);
+const doDispose = (instance, disposable) => {
+    const error = getException(instance);
     if (disposable instanceof Function) {
         try {
-            disposable.call(self, error);
+            disposable.call(instance, error);
         }
         catch (_) {
             /* Proactively catch Errors thrown in teardown logic. Teardown functions
@@ -48,9 +49,9 @@ const doDispose = (self, disposable) => {
 };
 const disposableMixin = /*@__PURE__*/ (() => {
     const Disposable_private_disposables = Symbol("Disposable_private_disposables");
-    return clazz(function DisposableMixin() {
-        this[Disposable_private_disposables] = new Set();
-        return this;
+    return clazz(function DisposableMixin(instance) {
+        unsafeCast(instance);
+        instance[Disposable_private_disposables] = new Set();
     }, {
         [DisposableLike_exception]: none,
         [DisposableLike_isDisposed]: false,
@@ -101,32 +102,31 @@ const disposed = {
 };
 const disposableRefMixin = /*@__PURE__*/ (() => {
     const DisposableRef_private_current = Symbol("DisposableRef_private_current");
-    return pipe(clazz(function DisposableRef(defaultValue) {
-        this[DisposableRef_private_current] = defaultValue;
-        pipe(this, add(defaultValue));
-        return this;
+    return pipe(clazz(function DisposableRef(instance, defaultValue) {
+        unsafeCast(instance);
+        instance[DisposableRef_private_current] = defaultValue;
+        pipe(instance, add(defaultValue));
     }, {
         [DisposableRef_private_current]: none,
     }, {
         get [MutableRefLike_current]() {
-            const self = this;
-            return self[DisposableRef_private_current];
+            unsafeCast(this);
+            return this[DisposableRef_private_current];
         },
         set [MutableRefLike_current](v) {
-            const self = this;
-            const oldValue = self[DisposableRef_private_current];
+            unsafeCast(this);
+            const oldValue = this[DisposableRef_private_current];
             pipe(oldValue, dispose());
-            self[DisposableRef_private_current] = v;
-            pipe(self, add(v));
+            this[DisposableRef_private_current] = v;
+            pipe(this, add(v));
         },
     }), returns);
 })();
 const createDisposableRef = /*@__PURE__*/ (() => {
     const typedDisposableRefMixin = disposableRefMixin();
-    return createInstanceFactory(clazz(__extends(disposableMixin, typedDisposableRefMixin), function DisposableRef(initialValue) {
-        init(disposableMixin, this);
-        init(typedDisposableRefMixin, this, initialValue);
-        return this;
+    return createInstanceFactory(clazz(__extends(disposableMixin, typedDisposableRefMixin), function DisposableRef(instance, initialValue) {
+        init(disposableMixin, instance);
+        init(typedDisposableRefMixin, instance, initialValue);
     }));
 })();
 
