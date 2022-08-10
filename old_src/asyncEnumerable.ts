@@ -7,7 +7,7 @@ import {
   createTakeWhileOperator,
 } from "./__internal__.liftable";
 import { getDelay } from "./__internal__.optionalArgs";
-import { AbstractAsyncEnumerable, lift, liftT } from "./asyncEnumerable/lift";
+import { lift, liftT } from "./asyncEnumerable/lift";
 import { AsyncEnumeratorLike } from "./asyncEnumerator";
 import {
   FromArray,
@@ -20,12 +20,8 @@ import {
   concatWith,
   fromValue,
 } from "./container";
-import {
-  DispatcherLike,
-  dispatch,
-  getScheduler as getDispatcherScheduler,
-} from "./dispatcher";
-import { Disposable, add, addTo, bindTo } from "./disposable";
+import { dispatch, getScheduler as getDispatcherScheduler } from "./dispatcher";
+import { add, addTo, bindTo } from "./disposable";
 import {
   EnumerableLike,
   FromEnumerable,
@@ -40,16 +36,12 @@ import {
   Reducer,
   Updater,
   compose,
-  getLength,
   increment,
-  newInstance,
   newInstanceWith,
   pipe,
   pipeLazy,
-  raise,
   returns,
 } from "./functions";
-import { InteractiveContainerLike } from "./interactiveContainer";
 import { FromIterable } from "./liftableContainer";
 import {
   AsyncReducer,
@@ -86,263 +78,7 @@ import { none } from "./option";
 import { sinkInto } from "./reactiveContainer";
 import { SchedulerLike } from "./scheduler";
 import { StreamLike } from "./stream";
-import { StreamableLike, stream } from "./streamable";
-
-export interface AsyncEnumerableLike<T>
-  extends StreamableLike<void, T, AsyncEnumeratorLike<T>>,
-    InteractiveContainerLike {
-  readonly T: unknown;
-  readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
-  readonly TLiftableContainerState: AsyncEnumeratorLike<this["T"]>;
-  readonly TCtx: SchedulerLike;
-}
-
-export type AsyncEnumerableOperator<TA, TB> = Function1<
-  AsyncEnumerableLike<TA>,
-  AsyncEnumerableLike<TB>
->;
-
-abstract class AsyncEnumerator<T>
-  extends Disposable
-  implements AsyncEnumeratorLike<T>
-{
-  get T(): T {
-    return raise();
-  }
-
-  get TContainerOf(): this {
-    return this;
-  }
-
-  get TLiftableContainerState(): ObserverLike<this["T"]> {
-    return raise();
-  }
-
-  readonly observableType: DefaultObservable = 0;
-
-  abstract scheduler: SchedulerLike;
-  abstract observerCount: number;
-  abstract replay: number;
-
-  abstract dispatch(this: DispatcherLike<void>, req: void): void;
-  abstract sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
-
-  move(): void {
-    pipe(this, dispatch(none));
-  }
-}
-
-class CreateAsyncEnumerable<T> extends AbstractAsyncEnumerable<T> {
-  constructor(
-    readonly stream: (
-      scheduler: SchedulerLike,
-      options?: { readonly replay?: number },
-    ) => AsyncEnumerator<T>,
-  ) {
-    super();
-  }
-
-  interact(scheduler: SchedulerLike): AsyncEnumerator<T> {
-    return pipe(this, stream(scheduler));
-  }
-}
-
-const createAsyncEnumerable = <T>(
-  stream: (
-    scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
-  ) => AsyncEnumerator<T>,
-): AsyncEnumerableLike<T> => newInstance(CreateAsyncEnumerable, stream);
-
-class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
-  private readonly subject: Subject<void>;
-  private readonly observable: MulticastObservableLike<T>;
-
-  constructor(
-    //FIXME: Needs to tag ObservableOperator so only operators that are unary
-    // maybe provided as an argument.
-    readonly op: ObservableOperator<void, T>,
-    readonly scheduler: SchedulerLike,
-    replay: number,
-  ) {
-    super();
-
-    const subject = newInstance<Subject<void>>(Subject);
-    const observable = pipe(subject, op, multicast<T>(scheduler, { replay }));
-
-    this.subject = subject;
-    this.observable = observable;
-
-    return pipe(this, add(subject), addTo(this.observable));
-  }
-
-  get observerCount(): number {
-    return getObserverCount(this.observable);
-  }
-
-  get replay(): number {
-    return getReplay(this.observable);
-  }
-
-  dispatch(req: void) {
-    pipe(this.subject, publish(req));
-  }
-
-  sinkInto(observer: ObserverLike<T>) {
-    pipe(this.observable, sinkInto(observer));
-  }
-}
-
-function createLiftedAsyncEnumerable<A>(
-  op1: ObservableOperator<void, A>,
-): AsyncEnumerableLike<A>;
-function createLiftedAsyncEnumerable<A, B>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-): AsyncEnumerableLike<B>;
-function createLiftedAsyncEnumerable<A, B, C>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-): AsyncEnumerableLike<C>;
-function createLiftedAsyncEnumerable<A, B, C, D>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-): AsyncEnumerableLike<D>;
-function createLiftedAsyncEnumerable<A, B, C, D, E>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-): AsyncEnumerableLike<E>;
-function createLiftedAsyncEnumerable<A, B, C, D, E, F>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-): AsyncEnumerableLike<F>;
-function createLiftedAsyncEnumerable<A, B, C, D, E, F, G>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-): AsyncEnumerableLike<G>;
-function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-  op8: ObservableOperator<G, H>,
-): AsyncEnumerableLike<H>;
-function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-  op8: ObservableOperator<G, H>,
-  op9: ObservableOperator<H, I>,
-): AsyncEnumerableLike<I>;
-function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-  op8: ObservableOperator<G, H>,
-  op9: ObservableOperator<H, I>,
-  op10: ObservableOperator<I, J>,
-): AsyncEnumerableLike<J>;
-function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-  op8: ObservableOperator<G, H>,
-  op9: ObservableOperator<H, I>,
-  op10: ObservableOperator<I, J>,
-  op11: ObservableOperator<J, K>,
-): AsyncEnumerableLike<K>;
-function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K, L>(
-  op1: ObservableOperator<void, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-  op8: ObservableOperator<G, H>,
-  op9: ObservableOperator<H, I>,
-  op10: ObservableOperator<I, J>,
-  op11: ObservableOperator<J, K>,
-  op12: ObservableOperator<K, L>,
-): AsyncEnumerableLike<L>;
-function createLiftedAsyncEnumerable(
-  ...ops: readonly ObservableOperator<unknown, unknown>[]
-): AsyncEnumerableLike<unknown> {
-  const op = getLength(ops) > 1 ? (compose as any)(...ops) : ops[0];
-
-  return createAsyncEnumerable((scheduler, options) => {
-    const replay = options?.replay ?? 0;
-    return newInstance(LiftedAsyncEnumerator, op, scheduler, replay);
-  });
-}
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided array.
- *
- * @param values The array.
- */
-
-export const fromArray = /*@__PURE__*/ createFromArray<
-  AsyncEnumerableLike<unknown>,
-  {
-    readonly delay: number;
-    readonly startIndex: number;
-    readonly endIndex: number;
-  }
->(
-  <T>(
-    values: readonly T[],
-    startIndex: number,
-    endIndex: number,
-    options?: {
-      readonly delay?: number;
-    },
-  ) => {
-    const fromValueWithDelay = fromValue(fromArrayTObs, options);
-
-    return createLiftedAsyncEnumerable(
-      scanObs(increment, returns(startIndex - 1)),
-      concatMap({ ...mapTObs, ...concatAllT }, (i: number) =>
-        fromValueWithDelay(values[i]),
-      ),
-      takeFirst({ count: endIndex - startIndex }),
-    ) as AsyncEnumerableLike<T>;
-  },
-);
-
-export const fromArrayT: FromArray<AsyncEnumerableLike<unknown>> = {
-  fromArray,
-};
+import { stream } from "./streamable";
 
 const _fromEnumerable = <T>(
   enumerable: EnumerableLike<T>,
@@ -429,77 +165,6 @@ export const generate = <T>(
 
 export const generateT: Generate<AsyncEnumerableLike<unknown>> = {
   generate,
-};
-
-abstract class AbstractDelegatingAsyncEnumerator<TA, TB>
-  extends AsyncEnumerator<TB>
-  implements StreamLike<void, TB>
-{
-  constructor(readonly delegate: StreamLike<void, TA>) {
-    super();
-  }
-
-  readonly observableType: DefaultObservable = 0;
-
-  get observerCount() {
-    return pipe(this, getDelegate, getObserverCount);
-  }
-
-  get replay(): number {
-    return pipe(this, getDelegate, getReplay);
-  }
-
-  get scheduler(): SchedulerLike {
-    return pipe(this, getDelegate, getDispatcherScheduler);
-  }
-
-  dispatch(req: void): void {
-    pipe(this, getDelegate, dispatch(req));
-  }
-
-  abstract sinkInto(observer: ObserverLike<TB>): void;
-}
-
-export const keep: <T>(
-  predicate: Predicate<T>,
-) => AsyncEnumerableOperator<T, T> = /*@__PURE__*/ createKeepOperator(
-  liftT,
-  class KeepAsyncEnumerator<T> extends AbstractDelegatingAsyncEnumerator<T, T> {
-    readonly obs: MulticastObservableLike<T>;
-
-    constructor(delegate: AsyncEnumeratorLike<T>, predicate: Predicate<T>) {
-      super(delegate);
-
-      this.obs = pipe(
-        delegate,
-        onNotify(x => {
-          if (!predicate(x)) {
-            pipe(this, getDelegate, dispatch(none));
-          }
-        }),
-        keepObs(predicate),
-        multicast(delegate.scheduler),
-      );
-    }
-
-    get observerCount() {
-      return getObserverCount(this.obs);
-    }
-
-    get replay(): number {
-      return getReplay(this.obs);
-    }
-
-    readonly observableType: DefaultObservable = 0;
-
-    sinkInto(observer: ObserverLike<T>): void {
-      pipe(this.obs, sinkInto(observer));
-    }
-  },
-);
-
-export const keepT: Keep<AsyncEnumerableLike<unknown>> = {
-  keep,
 };
 
 export const map: <TA, TB>(
@@ -659,31 +324,3 @@ export const takeWhile: <T>(
 export const takeWhileT: TakeWhile<AsyncEnumerableLike<unknown>> = {
   takeWhile,
 };
-
-export const toObservable =
-  <T>(): Function1<AsyncEnumerableLike<T>, ObservableLike<T>> =>
-  enumerable =>
-    createObservable(observer => {
-      const enumerator = pipe(
-        enumerable,
-        stream(getScheduler(observer)),
-        addTo(observer),
-      );
-
-      pipe(
-        enumerator,
-        onNotify(_ => {
-          pipe(enumerator, dispatch(none));
-        }),
-        onSubscribe(() => {
-          pipe(enumerator, dispatch(none));
-        }),
-        sinkInto(observer),
-      );
-    });
-
-export const toObservableT: ToObservable<AsyncEnumerableLike<unknown>> = {
-  toObservable,
-};
-
-export const TContainerOf: AsyncEnumerableLike<unknown> = undefined as any;

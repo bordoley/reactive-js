@@ -18,6 +18,7 @@ Reactive-JS
 - [integrations/react](modules/integrations_react.md)
 - [integrations/web](modules/integrations_web.md)
 - [ix](modules/ix.md)
+- [ix/AsyncEnumerableLike](modules/ix_AsyncEnumerableLike.md)
 - [ix/EnumerableLike](modules/ix_EnumerableLike.md)
 - [ix/InteractiveContainerLike](modules/ix_InteractiveContainerLike.md)
 - [rx](modules/rx.md)
