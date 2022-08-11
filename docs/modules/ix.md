@@ -12,6 +12,7 @@
 
 ### Type Aliases
 
+- [ToAsyncEnumerable](ix.md#toasyncenumerable)
 - [ToEnumerable](ix.md#toenumerable)
 
 ### Variables
@@ -26,6 +27,19 @@
 - [generateEnumerable](ix.md#generateenumerable)
 
 ## Type Aliases
+
+### ToAsyncEnumerable
+
+Ƭ **ToAsyncEnumerable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toAsyncEnumerable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
+
+___
 
 ### ToEnumerable
 

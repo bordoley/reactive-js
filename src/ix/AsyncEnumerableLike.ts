@@ -22,6 +22,7 @@ import {
 import {
   ContainerOperator,
   FromArrayOptions,
+  Generate,
   Keep,
   Map,
   Scan,
@@ -35,6 +36,7 @@ import {
   Function1,
   Predicate,
   Reducer,
+  Updater,
   compose,
   getLength,
   increment,
@@ -46,7 +48,12 @@ import {
   returns,
   unsafeCast,
 } from "../functions";
-import { AsyncEnumerableLike, InteractiveContainerLike_interact } from "../ix";
+import {
+  AsyncEnumerableLike,
+  EnumerableLike,
+  InteractiveContainerLike_interact,
+  ToAsyncEnumerable,
+} from "../ix";
 import {
   AsyncReducer,
   MulticastObservableLike,
@@ -59,6 +66,7 @@ import {
   ScanAsync,
   SubjectLike,
   ToObservable,
+  createObservable,
   createRunnableObservable,
   createSubject,
 } from "../rx";
@@ -93,8 +101,11 @@ import {
   StreamableLike_stream,
 } from "../streaming";
 import { stream } from "../streaming/StreamableLike";
-import { SourceLike_move } from "../util";
+import { EnumeratorLike, SourceLike_move } from "../util";
 import { add, addTo } from "../util/DisposableLike";
+import { getCurrent, hasCurrent } from "../util/EnumeratorLike";
+import { move } from "../util/SourceLike";
+import { enumerate } from "./EnumerableLike";
 
 const createAsyncEnumerable: <T>(
   f: (
@@ -339,35 +350,60 @@ const createLiftedAsyncEnumerable: CreateLiftedAsyncEnumerable = (
   });
 };
 
-const fromArrayInternal = <T>(
-  values: readonly T[],
-  start: number,
-  count: number,
-  options?: {
-    readonly delay?: number;
-  },
-): AsyncEnumerableLike<T> => {
-  const delay = getDelay(options);
+export const fromArray = /*@__PURE__*/ (() => {
+  const fromArrayInternal = <T>(
+    values: readonly T[],
+    start: number,
+    count: number,
+    options?: {
+      readonly delay?: number;
+    },
+  ): AsyncEnumerableLike<T> => {
+    const delay = getDelay(options);
 
-  const fromArrayWithDelay =
-    delay > 0 ? arrayToObservable<T>({ delay }) : arrayToObservable<T>();
+    const fromArrayWithDelay =
+      delay > 0 ? arrayToObservable<T>({ delay }) : arrayToObservable<T>();
 
-  return createLiftedAsyncEnumerable(
-    scanObs(increment, returns(start - 1)),
-    concatMap<ObservableLike, number, T>(
-      { ...mapTObs, ...concatAllTObs },
-      (i: number) => pipe([values[i]], fromArrayWithDelay),
-    ),
-    takeFirstObs({ count }),
-  );
-};
+    return createLiftedAsyncEnumerable(
+      scanObs(increment, returns(start - 1)),
+      concatMap<ObservableLike, number, T>(
+        { ...mapTObs, ...concatAllTObs },
+        (i: number) => pipe([values[i]], fromArrayWithDelay),
+      ),
+      takeFirstObs({ count }),
+    );
+  };
 
-export const fromArray =
-  <T>(
-    _?: Partial<FromArrayOptions>,
-  ): Function1<readonly T[], AsyncEnumerableLike<T>> =>
-  values =>
-    fromArrayInternal(values, 0, values.length);
+  return <T>(
+      _?: Partial<FromArrayOptions>,
+    ): Function1<readonly T[], AsyncEnumerableLike<T>> =>
+    values =>
+      fromArrayInternal(values, 0, values.length);
+})();
+
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+export const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"] =
+  /*@__PURE__*/ (<T>() =>
+    returns(
+      (enumerable: EnumerableLike<T>): AsyncEnumerableLike<T> =>
+        createLiftedAsyncEnumerable(observable =>
+          createObservable(observer => {
+            const enumerator = pipe(enumerable, enumerate(), addTo(observer));
+
+            pipe(
+              observable,
+              mapObs(_ => move(enumerator)),
+              takeWhileObs<EnumeratorLike<T>>(hasCurrent),
+              mapObs(getCurrent),
+              sinkInto(observer),
+            );
+          }),
+        ),
+    ))();
 
 class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
   constructor(
@@ -390,6 +426,57 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
     return pipeUnsafe(src, ...this.operators) as AsyncEnumeratorLike<T>;
   }
 }
+
+/**
+ * Generates an `AsyncEnumerableLike` sequence from a generator function
+ * that is applied to an accumulator value.
+ *
+ * @param generator The generator function.
+ * @param initialValue Factory function to generate the initial accumulator.
+ */
+export const generate: Generate<
+  AsyncEnumerableLike,
+  { delay: number }
+>["generate"] = /*@__PURE__*/ (() => {
+  const generateScanner =
+    <T>(generator: Updater<T>) =>
+    (acc: T, _: unknown) =>
+      generator(acc);
+
+  const asyncGeneratorScanner = <T>(
+    generator: Updater<T>,
+    options?: { readonly delay?: number },
+  ) => {
+    const delay = getDelay(options);
+
+    const fromArrayWithDelay =
+      delay > 0 ? arrayToObservable<T>({ delay }) : arrayToObservable<T>();
+
+    return (acc: T, _: unknown) =>
+      pipe(acc, generator, x => [x], fromArrayWithDelay);
+  };
+
+  return <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: { readonly delay?: number },
+  ): AsyncEnumerableLike<T> => {
+    const delay = getDelay(options);
+
+    return createLiftedAsyncEnumerable(
+      delay > 0
+        ? scanAsyncObs<void, T>(
+            asyncGeneratorScanner(generator, options),
+            initialValue,
+          )
+        : scanObs(generateScanner(generator), initialValue),
+    );
+  };
+})();
+
+export const generateT: Generate<AsyncEnumerableLike, { delay: number }> = {
+  generate,
+};
 
 const lift =
   <TA, TB>(
