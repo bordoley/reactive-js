@@ -197,29 +197,6 @@ export const tests = describe(
     ),
   ),
 
-  describe(
-    "timeout",
-    test(
-      "throws when a timeout occurs",
-      pipeLazy(
-        pipeLazy(1, fromValue(fromArrayT, { delay: 2 }), timeout(1), toArray()),
-        expectToThrow,
-      ),
-    ),
-
-    test(
-      "when timeout is greater than observed time",
-      pipeLazy(
-        1,
-        fromValue(fromArrayT, { delay: 2 }),
-        timeout(3),
-        toRunnable(),
-        last(),
-        expectEquals(1),
-      ),
-    ),
-  ),
-
   test("fromIterable with no start delay", () => {
     const scheduler = createVirtualTimeScheduler();
     const publishTimes: number[] = [];

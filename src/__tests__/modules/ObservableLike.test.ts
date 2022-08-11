@@ -46,6 +46,7 @@ import {
   takeFirst,
   takeUntil,
   throttle,
+  timeout,
   toEnumerable,
   toFlowable,
   toPromise,
@@ -326,7 +327,34 @@ const takeUntilTests = describe(
   ),
 );
 
-export const throttleTests = describe(
+const timeoutTests = describe(
+  "timeout",
+  test(
+    "throws when a timeout occurs",
+    pipeLazy(
+      pipeLazy(
+        [1],
+        toObservable({ delay: 2, delayStart: true }),
+        timeout(1),
+        toReadonlyArray(),
+      ),
+      expectToThrow,
+    ),
+  ),
+
+  test(
+    "when timeout is greater than observed time",
+    pipeLazy(
+      [1],
+      toObservable({ delay: 2, delayStart: true }),
+      timeout(3),
+      toReadonlyArray(),
+      expectArrayEquals([1]),
+    ),
+  ),
+);
+
+const throttleTests = describe(
   "throttle",
   test(
     "first",
@@ -750,6 +778,7 @@ export default describe(
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
   }),
+  timeoutTests,
   toEnumerableTests,
   toFlowableTests,
   toPromiseTests,

@@ -50,12 +50,14 @@ import {
   createDisposableRef,
   delegatingDisposableMixin,
   disposableMixin,
+  disposableRefMixin,
 } from "../__internal__/util/__internal__Disposables";
 import {
   MutableEnumeratorLike,
   enumeratorMixin,
 } from "../__internal__/util/__internal__Enumerators";
 import {
+  MutableRefLike,
   MutableRefLike_current,
   getCurrentRef,
   setCurrentRef,
@@ -98,7 +100,7 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { concatMap, keepType } from "../containers/ContainerLike";
+import { concatMap, keepType, throws } from "../containers/ContainerLike";
 import { toObservable as promiseToObservable } from "../containers/PromiseableLike";
 import {
   toObservable as arrayToObservable,
@@ -1170,6 +1172,108 @@ export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
 export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {
   throwIfEmpty,
 };
+
+interface Timeout {
+  /**
+   * Returns an `ObservableLike` that completes with an error if the source
+   * does not emit a value in given time span.
+   *
+   * @param duration Time in ms within which the source must emit values.
+   */
+  <T>(duration: number): ContainerOperator<ObservableLike, T, T>;
+
+  /**
+   *
+   * @param duration
+   */
+  <T>(duration: ObservableLike<unknown>): ContainerOperator<
+    ObservableLike,
+    T,
+    T
+  >;
+}
+export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
+  const timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
+
+  const typedDisposableRefMixin = disposableRefMixin();
+  const typedObserverMixin = observerMixin();
+
+  type TProperties = {
+    delegate: ObserverLike<T>;
+    duration: ObservableLike<unknown>;
+  };
+
+  const setupDurationSubscription = (
+    observer: MutableRefLike<DisposableLike> & TProperties,
+  ) => {
+    observer[MutableRefLike_current] = pipe(
+      observer.duration,
+      subscribe(getScheduler(observer.delegate)),
+    );
+  };
+
+  const createTimeoutObserver = createInstanceFactory(
+    clazz(
+      __extends(
+        typedObserverMixin,
+        delegatingDisposableMixin,
+        typedDisposableRefMixin,
+      ),
+      function TimeoutObserver(
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        delegate: ObserverLike<T>,
+        duration: ObservableLike<unknown>,
+      ): ObserverLike<T> {
+        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(delegatingDisposableMixin, instance, delegate);
+        init(typedDisposableRefMixin, instance, disposed);
+        unsafeCast<TProperties>(instance);
+
+        instance.delegate = delegate;
+        instance.duration = duration;
+
+        setupDurationSubscription(instance);
+
+        return instance;
+      },
+      {
+        delegate: none,
+        duration: none,
+      },
+      {
+        [SinkLike_notify](
+          this: TProperties & MutableRefLike<DisposableLike>,
+          next: T,
+        ) {
+          pipe(this, getCurrentRef, dispose());
+          pipe(this.delegate, notify(next));
+        },
+      },
+    ),
+  );
+
+  const returnTimeoutError = returns(timeoutError);
+
+  return (duration: number | ObservableLike<unknown>) => {
+    const durationObs =
+      typeof duration === "number"
+        ? throws(
+            { fromArray: arrayToObservable, ...mapT },
+            { delay: duration, delayStart: true },
+          )(returnTimeoutError)
+        : concat(
+            duration,
+            throws({ fromArray: arrayToObservable, ...mapT })(
+              returnTimeoutError,
+            ),
+          );
+    const lift =
+      typeof duration === "number" || isRunnable(duration)
+        ? liftRunnableObservable
+        : liftObservable;
+    return pipe(createTimeoutObserver, partial(durationObs), lift);
+  };
+})();
 
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
