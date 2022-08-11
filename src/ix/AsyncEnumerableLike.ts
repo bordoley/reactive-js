@@ -4,6 +4,8 @@ import {
   TInteractive,
   createKeepOperator,
   createMapOperator,
+  createScanOperator,
+  createTakeWhileOperator,
   interactive,
 } from "../__internal__/containers/__internal__StatefulContainerLike";
 import {
@@ -22,13 +24,17 @@ import {
   FromArrayOptions,
   Keep,
   Map,
+  Scan,
+  TakeWhile,
   ToReadonlyArray,
 } from "../containers";
 import { concatMap } from "../containers/ContainerLike";
 import { toObservable as arrayToObservable } from "../containers/ReadonlyArrayLike";
 import {
+  Factory,
   Function1,
   Predicate,
+  Reducer,
   compose,
   getLength,
   increment,
@@ -65,6 +71,7 @@ import {
   onSubscribe,
   scan as scanObs,
   takeFirst as takeFirstObs,
+  takeWhile as takeWhileObs,
 } from "../rx/ObservableLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
 import { publish } from "../rx/SubjectLike";
@@ -464,7 +471,6 @@ const delegatingAsyncEnumerator: <T>() => Mixin1<
 export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     obs: MulticastObservableLike<T>;
-    delegate: AsyncEnumeratorLike<T>;
   };
 
   const createKeepAsyncEnumerator = createInstanceFactory(
@@ -484,12 +490,11 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         init(delegatingAsyncEnumerator(), instance, delegate);
         unsafeCast<TProperties>(instance);
 
-        instance.delegate = delegate;
         instance.obs = pipe(
           delegate,
           forEachObs(x => {
             if (!predicate(x)) {
-              pipe(instance.delegate, dispatch(none));
+              pipe(delegate, dispatch(none));
             }
           }),
           keepObs(predicate),
@@ -499,7 +504,6 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
       },
       {
         obs: none,
-        delegate: none,
       },
       {
         get [MulticastObservableLike_observerCount]() {
@@ -591,6 +595,134 @@ export const map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
 
 export const mapT: Map<AsyncEnumerableLike> = {
   map,
+};
+
+export const scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
+  T,
+  TAcc,
+>() => {
+  type TProperties = {
+    op: ContainerOperator<ObservableLike, T, TAcc>;
+    delegate: AsyncEnumeratorLike<T>;
+  };
+
+  const createScanAsyncEnumerator = createInstanceFactory(
+    clazz(
+      __extends(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+      function ScanAsyncEnumerator(
+        instance: Pick<
+          AsyncEnumeratorLike<TAcc>,
+          | typeof ReactiveContainerLike_sinkInto
+          | typeof MulticastObservableLike_observerCount
+          | typeof MulticastObservableLike_replay
+        >,
+        delegate: AsyncEnumeratorLike<T>,
+        reducer: Reducer<T, TAcc>,
+        acc: Factory<TAcc>,
+      ): AsyncEnumeratorLike<TAcc> {
+        init(delegatingDisposableMixin, instance, delegate);
+        init(delegatingAsyncEnumerator(), instance, delegate);
+        unsafeCast<TProperties>(instance);
+
+        instance.delegate = delegate;
+        instance.op = scanObs(reducer, acc);
+        return instance;
+      },
+      {
+        op: none,
+        delegate: none,
+      },
+      {
+        get [MulticastObservableLike_observerCount]() {
+          unsafeCast<TProperties>(this);
+          return getObserverCount(this.delegate);
+        },
+        get [MulticastObservableLike_replay]() {
+          unsafeCast<TProperties>(this);
+          return getReplay(this.delegate);
+        },
+        [ReactiveContainerLike_sinkInto](
+          this: TProperties,
+          observer: ObserverLike<TAcc>,
+        ): void {
+          pipe(this.delegate, this.op, sinkInto(observer));
+        },
+      },
+    ),
+  );
+
+  return pipe(
+    createScanAsyncEnumerator,
+    createScanOperator<AsyncEnumerableLike, T, TAcc, TInteractive>(liftT),
+  );
+})();
+
+export const scanT: Scan<AsyncEnumerableLike> = {
+  scan,
+};
+
+export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
+  /*@__PURE__*/ (<T>() => {
+    type TProperties = {
+      obs: MulticastObservableLike<T>;
+    };
+
+    const createTakeWhileAsyncEnumerator = createInstanceFactory(
+      clazz(
+        __extends(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+        function TakeWhileAsyncEnumerator(
+          instance: Pick<
+            AsyncEnumeratorLike<T>,
+            | typeof ReactiveContainerLike_sinkInto
+            | typeof MulticastObservableLike_observerCount
+            | typeof MulticastObservableLike_replay
+          >,
+          delegate: AsyncEnumeratorLike<T>,
+          predicate: Predicate<T>,
+          inclusive: boolean,
+        ): AsyncEnumeratorLike<T> {
+          init(delegatingDisposableMixin, instance, delegate);
+          init(delegatingAsyncEnumerator(), instance, delegate);
+          unsafeCast<TProperties>(instance);
+
+          instance.obs = pipe(
+            delegate,
+            takeWhileObs(predicate, { inclusive }),
+            multicast(getScheduler(delegate)),
+            add(instance),
+          );
+          return instance;
+        },
+        {
+          obs: none,
+        },
+        {
+          get [MulticastObservableLike_observerCount]() {
+            unsafeCast<TProperties>(this);
+            return getObserverCount(this.obs);
+          },
+          get [MulticastObservableLike_replay]() {
+            unsafeCast<TProperties>(this);
+            return getReplay(this.obs);
+          },
+          [ReactiveContainerLike_sinkInto](
+            this: TProperties,
+            observer: ObserverLike<T>,
+          ): void {
+            pipe(this.obs, sinkInto(observer));
+          },
+        },
+      ),
+    );
+
+    return pipe(
+      createTakeWhileAsyncEnumerator,
+      createTakeWhileOperator<AsyncEnumerableLike, T, TInteractive>(liftT),
+    );
+  })();
+
+export const takeWhileT: TakeWhile<AsyncEnumerableLike> = {
+  takeWhile,
 };
 
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =

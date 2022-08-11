@@ -523,6 +523,16 @@ export const takeFirstTests = <C extends ContainerLike>(
         expectArrayEquals([1]),
       ),
     ),
+    test(
+      "when count is 0",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray(),
+        m.takeFirst({ count: 0 }),
+        m.toReadonlyArray(),
+        expectArrayEquals([] as number[]),
+      ),
+    ),
   );
 
 export const takeLastTests = <C extends ContainerLike>(

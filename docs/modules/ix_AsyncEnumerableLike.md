@@ -8,6 +8,8 @@
 
 - [keepT](ix_AsyncEnumerableLike.md#keept)
 - [mapT](ix_AsyncEnumerableLike.md#mapt)
+- [scanT](ix_AsyncEnumerableLike.md#scant)
+- [takeWhileT](ix_AsyncEnumerableLike.md#takewhilet)
 - [toObservableT](ix_AsyncEnumerableLike.md#toobservablet)
 - [toReadonlyArrayT](ix_AsyncEnumerableLike.md#toreadonlyarrayt)
 
@@ -16,6 +18,8 @@
 - [fromArray](ix_AsyncEnumerableLike.md#fromarray)
 - [keep](ix_AsyncEnumerableLike.md#keep)
 - [map](ix_AsyncEnumerableLike.md#map)
+- [scan](ix_AsyncEnumerableLike.md#scan)
+- [takeWhile](ix_AsyncEnumerableLike.md#takewhile)
 - [toObservable](ix_AsyncEnumerableLike.md#toobservable)
 - [toReadonlyArray](ix_AsyncEnumerableLike.md#toreadonlyarray)
 
@@ -30,6 +34,18 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](containers.md#map)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
+
+___
+
+### scanT
+
+• `Const` **scanT**: [`Scan`](containers.md#scan)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
+
+___
+
+### takeWhileT
+
+• `Const` **takeWhileT**: [`TakeWhile`](containers.md#takewhile)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
 
 ___
 
@@ -109,6 +125,54 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### scan
+
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+___
+
+### takeWhile
+
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `options?` | `Object` |
+| `options.inclusive?` | `boolean` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
