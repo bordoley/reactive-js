@@ -19,6 +19,9 @@ interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T, Async
     readonly TContainerOf?: AsyncEnumerableLike<this["T"]>;
     readonly TStatefulContainerState?: AsyncEnumeratorLike<this["T"]>;
 }
+declare type ToAsyncEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
+    toAsyncEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
+};
 declare type ToEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };
@@ -34,4 +37,4 @@ declare const emptyEnumerableT: Empty<EnumerableLike>;
  */
 declare const generateEnumerable: Generate<EnumerableLike>["generate"];
 declare const generateEnumerableT: Generate<EnumerableLike>;
-export { AsyncEnumerableLike, EnumerableLike, InteractiveContainerLike, InteractiveContainerLike_interact, ToEnumerable, createEnumerable, emptyEnumerable, emptyEnumerableT, generateEnumerable, generateEnumerableT };
+export { AsyncEnumerableLike, EnumerableLike, InteractiveContainerLike, InteractiveContainerLike_interact, ToAsyncEnumerable, ToEnumerable, createEnumerable, emptyEnumerable, emptyEnumerableT, generateEnumerable, generateEnumerableT };

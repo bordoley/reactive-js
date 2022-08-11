@@ -2,12 +2,22 @@
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { unsafeCast, none, pipe, identity, compose } from '../functions.mjs';
+import { compose, unsafeCast, none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
+import { fromEnumerable } from '../ix/AsyncEnumerableLike.mjs';
 import { toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
 import { isDisposed, dispose } from '../util/DisposableLike.mjs';
 
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+const toAsyncEnumerable = () => compose(toEnumerable(), fromEnumerable());
+const toAsyncEnumerableT = {
+    toAsyncEnumerable,
+};
 const toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
@@ -40,4 +50,4 @@ const toIterableT = {
 const toObservable = (options => compose(toEnumerable(), toObservable$1(options)));
 const toObservableT = { toObservable };
 
-export { toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT };
+export { toAsyncEnumerable, toAsyncEnumerableT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT };

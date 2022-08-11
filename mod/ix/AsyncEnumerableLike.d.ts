@@ -1,8 +1,27 @@
-import { FromArrayOptions, Keep, Map, Scan, TakeWhile, ToReadonlyArray } from "../containers.mjs";
+import { FromArrayOptions, Generate, Keep, Map, Scan, TakeWhile, ToReadonlyArray } from "../containers.mjs";
 import { Function1 } from "../functions.mjs";
-import { AsyncEnumerableLike } from "../ix.mjs";
+import { AsyncEnumerableLike, ToAsyncEnumerable, EnumerableLike } from "../ix.mjs";
 import { ScanAsync, ObservableLike, ToObservable } from "../rx.mjs";
 declare const fromArray: <T>(_?: Partial<FromArrayOptions>) => Function1<readonly T[], AsyncEnumerableLike<T>>;
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+declare const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"];
+/**
+ * Generates an `AsyncEnumerableLike` sequence from a generator function
+ * that is applied to an accumulator value.
+ *
+ * @param generator The generator function.
+ * @param initialValue Factory function to generate the initial accumulator.
+ */
+declare const generate: Generate<AsyncEnumerableLike, {
+    delay: number;
+}>["generate"];
+declare const generateT: Generate<AsyncEnumerableLike, {
+    delay: number;
+}>;
 declare const keep: Keep<AsyncEnumerableLike>["keep"];
 declare const keepT: Keep<AsyncEnumerableLike>;
 declare const map: Map<AsyncEnumerableLike>["map"];
@@ -17,4 +36,4 @@ declare const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"];
 declare const toObservableT: ToObservable<AsyncEnumerableLike>;
 declare const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<AsyncEnumerableLike>;
-export { fromArray, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { fromArray, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
