@@ -1,4 +1,4 @@
-import { StatefulContainerLike, ContainerOf, Container, ContainerOperator, ContainerLike, Defer, Empty, Generate, Never } from "./containers.mjs";
+import { StatefulContainerLike, ContainerOf, ContainerLike, Container, ContainerOperator, Defer, Empty, Generate, Never } from "./containers.mjs";
 import { Function2, Factory, Function1, SideEffect1, Updater } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
 import { DisposableLike, SinkLike } from "./util.mjs";
@@ -49,8 +49,8 @@ interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;
 }
 declare type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
-interface ScanAsync<C extends ObservableLike> extends Container<C> {
-    scanAsync: <T, TAcc>(scanner: AsyncReducer<C, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
+interface ScanAsync<C extends ContainerLike, CInner extends ObservableLike> extends Container<C> {
+    scanAsync: <T, TAcc>(scanner: AsyncReducer<CInner, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
 }
 declare type ToObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toObservable: <T>(options?: TOptions) => Function1<ContainerOf<C, T>, ObservableLike<T>>;

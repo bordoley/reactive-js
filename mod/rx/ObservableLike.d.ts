@@ -120,8 +120,8 @@ declare const scanT: Scan<ObservableLike>;
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-declare const scanAsync: ScanAsync<ObservableLike>["scanAsync"];
-declare const scanAsyncT: ScanAsync<ObservableLike>;
+declare const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"];
+declare const scanAsyncT: ScanAsync<ObservableLike, ObservableLike>;
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription

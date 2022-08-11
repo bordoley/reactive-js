@@ -40,6 +40,7 @@ import {
   increment,
   newInstance,
   none,
+  partial,
   pipe,
   pipeUnsafe,
   returns,
@@ -47,6 +48,7 @@ import {
 } from "../functions";
 import { AsyncEnumerableLike, InteractiveContainerLike_interact } from "../ix";
 import {
+  AsyncReducer,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
@@ -54,6 +56,7 @@ import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ReactiveContainerLike_sinkInto,
+  ScanAsync,
   SubjectLike,
   ToObservable,
   createRunnableObservable,
@@ -69,6 +72,7 @@ import {
   multicast,
   toReadonlyArray as obsToReadonlyArray,
   onSubscribe,
+  scanAsync as scanAsyncObs,
   scan as scanObs,
   takeFirst as takeFirstObs,
   takeWhile as takeWhileObs,
@@ -659,6 +663,72 @@ export const scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
 
 export const scanT: Scan<AsyncEnumerableLike> = {
   scan,
+};
+
+export const scanAsync: ScanAsync<
+  AsyncEnumerableLike,
+  ObservableLike
+>["scanAsync"] = /*@__PURE__*/ (<T, TAcc>() => {
+  type TProperties = {
+    obs: MulticastObservableLike<TAcc>;
+  };
+
+  const creatScanAsyncAsyncEnumerator = createInstanceFactory(
+    clazz(
+      __extends(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+      function ScanAsyncAsyncEnumerator(
+        instance: Pick<
+          AsyncEnumeratorLike<TAcc>,
+          | typeof ReactiveContainerLike_sinkInto
+          | typeof MulticastObservableLike_observerCount
+          | typeof MulticastObservableLike_replay
+        >,
+        delegate: AsyncEnumeratorLike<T>,
+        reducer: AsyncReducer<ObservableLike, T, TAcc>,
+        initialValue: Factory<TAcc>,
+      ): AsyncEnumeratorLike<TAcc> {
+        init(delegatingDisposableMixin, instance, delegate);
+        init(delegatingAsyncEnumerator(), instance, delegate);
+        unsafeCast<TProperties>(instance);
+
+        instance.obs = pipe(
+          delegate,
+          scanAsyncObs(reducer, initialValue),
+          multicast(getScheduler(delegate)),
+        );
+        return instance;
+      },
+      {
+        obs: none,
+      },
+      {
+        get [MulticastObservableLike_observerCount]() {
+          unsafeCast<TProperties>(this);
+          return getObserverCount(this.obs);
+        },
+        get [MulticastObservableLike_replay]() {
+          unsafeCast<TProperties>(this);
+          return getReplay(this.obs);
+        },
+        [ReactiveContainerLike_sinkInto](
+          this: TProperties,
+          observer: ObserverLike<TAcc>,
+        ): void {
+          pipe(this.obs, sinkInto(observer));
+        },
+      },
+    ),
+  );
+
+  return (
+    reducer: AsyncReducer<ObservableLike, T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<AsyncEnumerableLike, T, TAcc> =>
+    pipe(creatScanAsyncAsyncEnumerator, partial(reducer, initialValue), lift);
+})();
+
+export const scanAsyncT: ScanAsync<AsyncEnumerableLike, ObservableLike> = {
+  scanAsync,
 };
 
 export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =

@@ -291,11 +291,14 @@ export const createMergeAll = <C extends ObservableLike>(
   };
 };
 
-export const createScanAsync = <C extends ObservableLike>(
+export const createScanAsync = <
+  C extends ObservableLike,
+  CInner extends ObservableLike,
+>(
   createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
-): ScanAsync<C>["scanAsync"] => {
+): ScanAsync<C, CInner>["scanAsync"] => {
   return <T, TAcc>(
-      scanner: AsyncReducer<C, T, TAcc>,
+      scanner: AsyncReducer<CInner, T, TAcc>,
       initialValue: Factory<TAcc>,
     ): ContainerOperator<C, T, TAcc> =>
     observable => {

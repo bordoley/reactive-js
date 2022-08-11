@@ -8,6 +8,7 @@
 
 - [keepT](ix_AsyncEnumerableLike.md#keept)
 - [mapT](ix_AsyncEnumerableLike.md#mapt)
+- [scanAsyncT](ix_AsyncEnumerableLike.md#scanasynct)
 - [scanT](ix_AsyncEnumerableLike.md#scant)
 - [takeWhileT](ix_AsyncEnumerableLike.md#takewhilet)
 - [toObservableT](ix_AsyncEnumerableLike.md#toobservablet)
@@ -19,6 +20,7 @@
 - [keep](ix_AsyncEnumerableLike.md#keep)
 - [map](ix_AsyncEnumerableLike.md#map)
 - [scan](ix_AsyncEnumerableLike.md#scan)
+- [scanAsync](ix_AsyncEnumerableLike.md#scanasync)
 - [takeWhile](ix_AsyncEnumerableLike.md#takewhile)
 - [toObservable](ix_AsyncEnumerableLike.md#toobservable)
 - [toReadonlyArray](ix_AsyncEnumerableLike.md#toreadonlyarray)
@@ -34,6 +36,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](containers.md#map)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
+
+___
+
+### scanAsyncT
+
+• `Const` **scanAsyncT**: [`ScanAsync`](../interfaces/rx.ScanAsync.md)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -144,6 +152,30 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+___
+
+### scanAsync
+
+▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns

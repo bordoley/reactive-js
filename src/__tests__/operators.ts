@@ -15,6 +15,7 @@ import {
   DistinctUntilChanged,
   ForEach,
   FromArray,
+  FromArrayOptions,
   Keep,
   Map,
   Pairwise,
@@ -40,6 +41,7 @@ import {
   returns,
   sum,
 } from "../functions";
+import { ObservableLike, ScanAsync } from "../rx";
 
 export const bufferTests = <C extends ContainerLike>(
   m: Buffer<C> & FromArray<C> & ToReadonlyArray<C>,
@@ -449,6 +451,74 @@ export const scanTests = <C extends ContainerLike>(
         expectToThrowError(err),
       );
     }),
+  );
+
+export const scanAsyncTests = <
+  C extends ContainerLike,
+  CInner extends ObservableLike,
+>(
+  m: ScanAsync<C, CInner> &
+    FromArray<C, FromArrayOptions & { delay: number }> &
+    ToReadonlyArray<C>,
+  mInner: FromArray<CInner, FromArrayOptions & { delay: number }>,
+) =>
+  describe(
+    "scanAsync",
+    test(
+      "fast lib, slow acc",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray(),
+        m.scanAsync<number, number>(
+          (acc, x) => pipe([x + acc], mInner.fromArray({ delay: 4 })),
+          returns(0),
+        ),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 3, 6]),
+      ),
+    ),
+
+    test(
+      "slow lib, fast acc",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray({ delay: 4 }),
+        m.scanAsync<number, number>(
+          (acc, x) => pipe([x + acc], mInner.fromArray({ delay: 4 })),
+          returns(0),
+        ),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 3, 6]),
+      ),
+    ),
+
+    test(
+      "slow lib, slow acc",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray({ delay: 4 }),
+        m.scanAsync<number, number>(
+          (acc, x) => pipe([x + acc], mInner.fromArray({ delay: 4 })),
+          returns(0),
+        ),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 3, 6]),
+      ),
+    ),
+
+    test(
+      "fast lib, fast acc",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray(),
+        m.scanAsync<number, number>(
+          (acc, x) => pipe([x + acc], mInner.fromArray()),
+          returns(0),
+        ),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 3, 6]),
+      ),
+    ),
   );
 
 export const skipFirstTests = <C extends ContainerLike>(
