@@ -3,8 +3,8 @@ import {
   Lift,
   TInteractive,
   createKeepOperator,
+  createMapOperator,
   interactive,
-  // createMapOperator,
 } from "../__internal__/containers/__internal__StatefulContainerLike";
 import {
   delegatingDisposableMixin,
@@ -21,6 +21,7 @@ import {
   ContainerOperator,
   FromArrayOptions,
   Keep,
+  Map,
   ToReadonlyArray,
 } from "../containers";
 import { concatMap } from "../containers/ContainerLike";
@@ -57,6 +58,7 @@ import {
   concatAllT as concatAllTObs,
   forEach as forEachObs,
   keep as keepObs,
+  map as mapObs,
   mapT as mapTObs,
   multicast,
   toReadonlyArray as obsToReadonlyArray,
@@ -437,7 +439,9 @@ const delegatingAsyncEnumerator: <T>() => Mixin1<
 
         return instance;
       },
-      {},
+      {
+        delegate: none,
+      },
       {
         [DispatcherLike_dispatch](this: TProperties, _: void) {
           pipe(this.delegate, dispatch(none));
@@ -461,7 +465,6 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     obs: MulticastObservableLike<T>;
     delegate: AsyncEnumeratorLike<T>;
-    predicate: Predicate<T>;
   };
 
   const createKeepAsyncEnumerator = createInstanceFactory(
@@ -494,7 +497,10 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         );
         return instance;
       },
-      {},
+      {
+        obs: none,
+        delegate: none,
+      },
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
@@ -522,6 +528,69 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
 export const keepT: Keep<AsyncEnumerableLike> = {
   keep,
+};
+
+export const map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
+  TA,
+  TB,
+>() => {
+  type TProperties = {
+    op: ContainerOperator<ObservableLike, TA, TB>;
+    delegate: AsyncEnumeratorLike<TA>;
+  };
+
+  const createMapAsyncEnumerator = createInstanceFactory(
+    clazz(
+      __extends(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+      function MapAsyncEnumerator(
+        instance: Pick<
+          AsyncEnumeratorLike<TB>,
+          | typeof ReactiveContainerLike_sinkInto
+          | typeof MulticastObservableLike_observerCount
+          | typeof MulticastObservableLike_replay
+        >,
+        delegate: AsyncEnumeratorLike<TA>,
+        mapper: Function1<TA, TB>,
+      ): AsyncEnumeratorLike<TB> {
+        init(delegatingDisposableMixin, instance, delegate);
+        init(delegatingAsyncEnumerator(), instance, delegate);
+        unsafeCast<TProperties>(instance);
+
+        instance.delegate = delegate;
+        instance.op = mapObs(mapper);
+        return instance;
+      },
+      {
+        op: none,
+        delegate: none,
+      },
+      {
+        get [MulticastObservableLike_observerCount]() {
+          unsafeCast<TProperties>(this);
+          return getObserverCount(this.delegate);
+        },
+        get [MulticastObservableLike_replay]() {
+          unsafeCast<TProperties>(this);
+          return getReplay(this.delegate);
+        },
+        [ReactiveContainerLike_sinkInto](
+          this: TProperties,
+          observer: ObserverLike<TB>,
+        ): void {
+          pipe(this.delegate, this.op, sinkInto(observer));
+        },
+      },
+    ),
+  );
+
+  return pipe(
+    createMapAsyncEnumerator,
+    createMapOperator<AsyncEnumerableLike, TA, TB, TInteractive>(liftT),
+  );
+})();
+
+export const mapT: Map<AsyncEnumerableLike> = {
+  map,
 };
 
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =

@@ -1,12 +1,14 @@
-import { FromArrayOptions, Keep, ToReadonlyArray } from "../containers.mjs";
+import { FromArrayOptions, Keep, Map, ToReadonlyArray } from "../containers.mjs";
 import { Function1 } from "../functions.mjs";
 import { AsyncEnumerableLike } from "../ix.mjs";
 import { ToObservable } from "../rx.mjs";
 declare const fromArray: <T>(_?: Partial<FromArrayOptions>) => Function1<readonly T[], AsyncEnumerableLike<T>>;
 declare const keep: Keep<AsyncEnumerableLike>["keep"];
 declare const keepT: Keep<AsyncEnumerableLike>;
+declare const map: Map<AsyncEnumerableLike>["map"];
+declare const mapT: Map<AsyncEnumerableLike>;
 declare const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"];
 declare const toObservableT: ToObservable<AsyncEnumerableLike>;
 declare const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<AsyncEnumerableLike>;
-export { fromArray, keep, keepT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { fromArray, keep, keepT, map, mapT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
