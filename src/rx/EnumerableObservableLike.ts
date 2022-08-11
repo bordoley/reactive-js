@@ -201,9 +201,17 @@ export const scanT: Scan<EnumerableObservableLike> = {
   scan: scan as Scan<EnumerableObservableLike>["scan"],
 };
 
-export const scanAsync: ScanAsync<EnumerableObservableLike>["scanAsync"] =
-  createScanAsync<EnumerableObservableLike>(createEnumerableObservable);
-export const scanAsyncT: ScanAsync<EnumerableObservableLike> = { scanAsync };
+export const scanAsync: ScanAsync<
+  EnumerableObservableLike,
+  EnumerableObservableLike
+>["scanAsync"] = createScanAsync<
+  EnumerableObservableLike,
+  EnumerableObservableLike
+>(createEnumerableObservable);
+export const scanAsyncT: ScanAsync<
+  EnumerableObservableLike,
+  EnumerableObservableLike
+> = { scanAsync };
 
 export const skipFirstT: SkipFirst<EnumerableObservableLike> = {
   skipFirst: skipFirst as SkipFirst<EnumerableObservableLike>["skipFirst"],

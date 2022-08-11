@@ -32,8 +32,8 @@ declare const mergeAllT: ConcatAll<RunnableObservableLike, {
 declare const pairwiseT: Pairwise<RunnableObservableLike>;
 declare const reduceT: Reduce<RunnableObservableLike>;
 declare const scanT: Scan<RunnableObservableLike>;
-declare const scanAsync: ScanAsync<RunnableObservableLike>["scanAsync"];
-declare const scanAsyncT: ScanAsync<RunnableObservableLike>;
+declare const scanAsync: ScanAsync<RunnableObservableLike, RunnableObservableLike>["scanAsync"];
+declare const scanAsyncT: ScanAsync<RunnableObservableLike, RunnableObservableLike>;
 declare const skipFirstT: SkipFirst<RunnableObservableLike>;
 declare const switchAll: ConcatAll<RunnableObservableLike>["concatAll"];
 declare const switchAllT: ConcatAll<RunnableObservableLike>;
