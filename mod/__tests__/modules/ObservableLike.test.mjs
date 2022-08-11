@@ -6,14 +6,14 @@ import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, identity, i
 import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/EnumerableLike.mjs';
 import { generateObservable, emptyObservable, deferRunnableObservableT } from '../../rx.mjs';
 import { combineLatest, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, concat, retry, share, zip, map, forEach, takeUntil, throttle, toEnumerable, toFlowable, toPromise, withLatestFrom, zipLatest, zipWithLatestFrom } from '../../rx/ObservableLike.mjs';
-import { exhaust, mapT, scanAsync, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
+import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, scanAsyncT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
 import { createVirtualTimeScheduler, createHostScheduler } from '../../scheduling.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
 import { schedule, getCurrentTime } from '../../scheduling/SchedulerLike.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import { getException, dispose, isDisposed } from '../../util/DisposableLike.mjs';
-import { zipTests as zipTests$1, bufferTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
+import { zipTests as zipTests$1, bufferTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, scanAsyncTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
 
 const combineLatestTests = createDescribe("combineLatest", createTest("combineLatest", pipeLazy(combineLatest(pipe(generateObservable(incrementBy(2), returns(1), { delay: 2 }), takeFirst({ count: 3 })), pipe(generateObservable(incrementBy(2), returns(0), { delay: 3 }), takeFirst({ count: 2 }))), toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality()))));
 const exhaustTests = createDescribe("exhaust", createTest("when the initial observable never disposes", pipeLazy([
@@ -41,7 +41,6 @@ const retryTests = createDescribe("retry", createTest("repeats the observable n 
     fromArray: toObservable,
     ...mapT,
 }))), retry(), takeFirst({ count: 6 }), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
-const scanAsyncTests = createDescribe("scanAsync", createTest("fast lib, slow acc", pipeLazy([1, 2, 3], toObservable(), scanAsync((acc, x) => pipe([x + acc], toObservable({ delay: 4 })), returns(0)), toReadonlyArray(), expectArrayEquals([1, 3, 6]))), createTest("slow lib, fast acc", pipeLazy([1, 2, 3], toObservable({ delay: 4 }), scanAsync((acc, x) => pipe([x + acc], toObservable({ delay: 4 })), returns(0)), toReadonlyArray(), expectArrayEquals([1, 3, 6]))), createTest("slow lib, slow acc", pipeLazy([1, 2, 3], toObservable({ delay: 4 }), scanAsync((acc, x) => pipe([x + acc], toObservable({ delay: 4 })), returns(0)), toReadonlyArray(), expectArrayEquals([1, 3, 6]))), createTest("fast lib, fast acc", pipeLazy([1, 2, 3], toObservable(), scanAsync((acc, x) => pipe([x + acc], toObservable()), returns(0)), toReadonlyArray(), expectArrayEquals([1, 3, 6]))));
 const shareTests = createDescribe("share", createTest("shared observable zipped with itself", () => {
     const scheduler = createVirtualTimeScheduler();
     const shared = pipe([1, 2, 3], toObservable({ delay: 1 }), share(scheduler, { replay: 1 }));
@@ -163,7 +162,13 @@ var ObservableLikeTests = createDescribe("ObservableLike", bufferTests({
     fromArray: toObservable,
     ...scanT,
     ...toReadonlyArrayT,
-}), scanAsyncTests, shareTests, skipFirstTests({
+}), scanAsyncTests({
+    fromArray: toObservable,
+    ...scanAsyncT,
+    ...toReadonlyArrayT,
+}, {
+    fromArray: toObservable,
+}), shareTests, skipFirstTests({
     fromArray: toObservable,
     ...skipFirstT,
     ...toReadonlyArrayT,

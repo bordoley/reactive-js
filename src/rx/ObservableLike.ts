@@ -873,9 +873,9 @@ export const scanT: Scan<ObservableLike> = { scan };
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-export const scanAsync: ScanAsync<ObservableLike>["scanAsync"] =
-  createScanAsync<ObservableLike>(createObservable);
-export const scanAsyncT: ScanAsync<ObservableLike> = {
+export const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"] =
+  createScanAsync<ObservableLike, ObservableLike>(createObservable);
+export const scanAsyncT: ScanAsync<ObservableLike, ObservableLike> = {
   scanAsync,
 };
 

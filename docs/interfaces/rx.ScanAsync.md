@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / ScanAsync
 
-# Interface: ScanAsync<C\>
+# Interface: ScanAsync<C, CInner\>
 
 [rx](../modules/rx.md).ScanAsync
 
@@ -8,7 +8,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ObservableLike`](rx.ObservableLike.md) |
+| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `CInner` | extends [`ObservableLike`](rx.ObservableLike.md) |
 
 ## Hierarchy
 
@@ -53,7 +54,7 @@ Container.TContainerOf
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`AsyncReducer`](../modules/rx.md#asyncreducer)<`C`, `T`, `TAcc`\> |
+| `scanner` | [`AsyncReducer`](../modules/rx.md#asyncreducer)<`CInner`, `T`, `TAcc`\> |
 | `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
 
 #### Returns

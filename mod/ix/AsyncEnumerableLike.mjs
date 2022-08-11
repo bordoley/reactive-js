@@ -5,11 +5,11 @@ import { disposableMixin, delegatingDisposableMixin } from '../__internal__/util
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { unsafeCast, pipe, none, getLength, compose, increment, returns, pipeUnsafe, newInstance } from '../functions.mjs';
+import { unsafeCast, pipe, none, getLength, compose, increment, returns, pipeUnsafe, newInstance, partial } from '../functions.mjs';
 import { InteractiveContainerLike_interact } from '../ix.mjs';
 import { createSubject, ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createRunnableObservable } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, forEach, keep as keep$1, map as map$1, takeWhile as takeWhile$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
+import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, forEach, keep as keep$1, map as map$1, scanAsync as scanAsync$1, takeWhile as takeWhile$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { publish } from '../rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
@@ -222,6 +222,33 @@ const scan = /*@__PURE__*/ (() => {
 const scanT = {
     scan,
 };
+const scanAsync = /*@__PURE__*/ (() => {
+    const creatScanAsyncAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function ScanAsyncAsyncEnumerator(instance, delegate, reducer, initialValue) {
+        init(delegatingDisposableMixin, instance, delegate);
+        init(delegatingAsyncEnumerator(), instance, delegate);
+        unsafeCast(instance);
+        instance.obs = pipe(delegate, scanAsync$1(reducer, initialValue), multicast(getScheduler(delegate)));
+        return instance;
+    }, {
+        obs: none,
+    }, {
+        get [MulticastObservableLike_observerCount]() {
+            unsafeCast(this);
+            return getObserverCount(this.obs);
+        },
+        get [MulticastObservableLike_replay]() {
+            unsafeCast(this);
+            return getReplay(this.obs);
+        },
+        [ReactiveContainerLike_sinkInto](observer) {
+            pipe(this.obs, sinkInto(observer));
+        },
+    }));
+    return (reducer, initialValue) => pipe(creatScanAsyncAsyncEnumerator, partial(reducer, initialValue), lift);
+})();
+const scanAsyncT = {
+    scanAsync,
+};
 const takeWhile = 
 /*@__PURE__*/ (() => {
     const createTakeWhileAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function TakeWhileAsyncEnumerator(instance, delegate, predicate, inclusive) {
@@ -266,4 +293,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { fromArray, keep, keepT, map, mapT, scan, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { fromArray, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };

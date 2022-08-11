@@ -127,9 +127,12 @@ export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
   ContainerOf<C, TAcc>
 >;
 
-export interface ScanAsync<C extends ObservableLike> extends Container<C> {
+export interface ScanAsync<
+  C extends ContainerLike,
+  CInner extends ObservableLike,
+> extends Container<C> {
   scanAsync: <T, TAcc>(
-    scanner: AsyncReducer<C, T, TAcc>,
+    scanner: AsyncReducer<CInner, T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ContainerOperator<C, T, TAcc>;
 }

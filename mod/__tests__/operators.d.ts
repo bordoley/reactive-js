@@ -1,6 +1,7 @@
 import { Describe } from "../__internal__/__internal__testing.mjs";
 import { Function1, Factory, Equality, SideEffect1, Predicate, Reducer } from "../functions.mjs";
-import { ContainerLike, Container, ContainerOperator, FromArrayOptions, ContainerOf, ReadonlyArrayLike } from "../containers.mjs";
+import { ContainerLike, Container, ContainerOperator, FromArrayOptions, ContainerOf, ReadonlyArrayLike, FromArray } from "../containers.mjs";
+import { ObservableLike, ScanAsync } from "../rx.mjs";
 declare const bufferTests: <C extends ContainerLike>(m: Container<C> & {
     buffer: <T>(options?: {
         readonly maxBufferSize?: number | undefined;
@@ -102,6 +103,15 @@ declare const scanTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
+declare const scanAsyncTests: <C extends ContainerLike, CInner extends ObservableLike<unknown>>(m: ScanAsync<C, CInner> & Container<C> & {
+    fromArray<T>(options?: Partial<FromArrayOptions & {
+        delay: number;
+    }> | undefined): Function1<readonly T[], ContainerOf<C, T>>;
+} & {
+    toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
+}, mInner: FromArray<CInner, FromArrayOptions & {
+    delay: number;
+}>) => Describe;
 declare const skipFirstTests: <C extends ContainerLike>(m: Container<C> & {
     skipFirst<T>(options?: {
         readonly count?: number | undefined;
@@ -211,4 +221,4 @@ declare const zipTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
-export { bufferTests, concatAllTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };
+export { bufferTests, concatAllTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanAsyncTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };

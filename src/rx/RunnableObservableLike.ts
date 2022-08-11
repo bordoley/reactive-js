@@ -196,9 +196,17 @@ export const scanT: Scan<RunnableObservableLike> = {
   scan: scan as Scan<RunnableObservableLike>["scan"],
 };
 
-export const scanAsync: ScanAsync<RunnableObservableLike>["scanAsync"] =
-  createScanAsync<RunnableObservableLike>(createRunnableObservable);
-export const scanAsyncT: ScanAsync<RunnableObservableLike> = { scanAsync };
+export const scanAsync: ScanAsync<
+  RunnableObservableLike,
+  RunnableObservableLike
+>["scanAsync"] = createScanAsync<
+  RunnableObservableLike,
+  RunnableObservableLike
+>(createRunnableObservable);
+export const scanAsyncT: ScanAsync<
+  RunnableObservableLike,
+  RunnableObservableLike
+> = { scanAsync };
 
 export const skipFirstT: SkipFirst<RunnableObservableLike> = {
   skipFirst: skipFirst as SkipFirst<RunnableObservableLike>["skipFirst"],

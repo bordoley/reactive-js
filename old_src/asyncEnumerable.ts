@@ -1,12 +1,5 @@
 import { getDelay } from "./__internal__.optionalArgs";
-import { lift } from "./asyncEnumerable/lift";
-import { AsyncEnumeratorLike } from "./asyncEnumerator";
-import {
-  Generate,
-  concatWith,
-  fromValue,
-} from "./container";
-import { bindTo } from "./disposable";
+import { Generate, concatWith, fromValue } from "./container";
 import {
   EnumerableLike,
   FromEnumerable,
@@ -19,21 +12,14 @@ import {
   Function1,
   Updater,
   compose,
-  newInstanceWith,
   pipe,
   pipeLazy,
 } from "./functions";
 import { FromIterable } from "./liftableContainer";
 import {
-  AsyncReducer,
-  MulticastObservableLike,
-  ScanAsync,
   concatT,
   fromArrayT as fromArrayTObs,
-  getObserverCount,
-  getReplay,
   map as mapObs,
-  multicast,
   never,
   scanAsync as scanAsyncObs,
   scan as scanObs,
@@ -41,8 +27,6 @@ import {
   using,
   withLatestFrom,
 } from "./observable";
-import { ObserverLike } from "./observer";
-import { sinkInto } from "./reactiveContainer";
 
 const _fromEnumerable = <T>(
   enumerable: EnumerableLike<T>,
@@ -129,60 +113,4 @@ export const generate = <T>(
 
 export const generateT: Generate<AsyncEnumerableLike<unknown>> = {
   generate,
-};
-
-class ScanAsyncAsyncEnumerator<
-  T,
-  TAcc,
-> extends AbstractDelegatingAsyncEnumerator<T, TAcc> {
-  readonly obs: MulticastObservableLike<TAcc>;
-
-  constructor(
-    delegate: AsyncEnumeratorLike<T>,
-    reducer: AsyncReducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ) {
-    super(delegate);
-
-    this.obs = pipe(
-      delegate,
-      scanAsyncObs(reducer, initialValue),
-      multicast(delegate.scheduler),
-    );
-  }
-
-  get observerCount() {
-    return getObserverCount(this.obs);
-  }
-
-  get replay(): number {
-    return getReplay(this.obs);
-  }
-
-  sinkInto(observer: ObserverLike<TAcc>): void {
-    pipe(this.obs, sinkInto(observer));
-  }
-}
-
-export const scanAsync = <T, TAcc>(
-  reducer: AsyncReducer<T, TAcc>,
-  initialValue: Factory<TAcc>,
-): AsyncEnumerableOperator<T, TAcc> =>
-  pipe(
-    (delegate: AsyncEnumeratorLike<T>) =>
-      pipe(
-        ScanAsyncAsyncEnumerator,
-        newInstanceWith<
-          ScanAsyncAsyncEnumerator<T, TAcc>,
-          AsyncEnumeratorLike<T>,
-          AsyncReducer<T, TAcc>,
-          Factory<TAcc>
-        >(delegate, reducer, initialValue),
-        bindTo(delegate),
-      ),
-    lift,
-  );
-
-export const scanAsyncT: ScanAsync<AsyncEnumerableLike<unknown>> = {
-  scanAsync,
 };
