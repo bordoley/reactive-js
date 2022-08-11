@@ -32,8 +32,6 @@ export const everySatisfyT: EverySatisfy<RunnableLike<unknown>> = {
   everySatisfy,
 };
 
-export const onSink = /*@__PURE__*/ createOnSink(createT);
-
 export const someSatisfy: SomeSatisfy<RunnableLike<unknown>>["someSatisfy"] =
   /*@__PURE__*/ decorateMap(
     class SomeSatisfySink<T> extends AbstractDelegatingRunnableSink<

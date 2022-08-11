@@ -5,7 +5,7 @@ import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, identity, increment, sum, newInstance } from '../../functions.mjs';
 import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/EnumerableLike.mjs';
 import { generateObservable, emptyObservable, deferRunnableObservableT } from '../../rx.mjs';
-import { combineLatest, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, concat, retry, share, zip, map, forEach, takeUntil, throttle, toEnumerable, toFlowable, toPromise, withLatestFrom, zipLatest, zipWithLatestFrom } from '../../rx/ObservableLike.mjs';
+import { combineLatest, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, concat, retry, share, zip, map, forEach, takeUntil, timeout, throttle, toEnumerable, toFlowable, toPromise, withLatestFrom, zipLatest, zipWithLatestFrom } from '../../rx/ObservableLike.mjs';
 import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, scanAsyncT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
 import { createVirtualTimeScheduler, createHostScheduler } from '../../scheduling.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
@@ -56,6 +56,7 @@ const switchAllTests = createDescribe("switchAll", createTest("with empty source
     ...mapT,
 }), switchAll(), toReadonlyArray()), expectToThrow, identity)), createTest("concating arrays", pipeLazy([1, 2, 3], toObservable({ delay: 1 }), concatMap({ ...switchAllT, ...mapT }, _ => pipe([1, 2, 3], toObservable({ delay: 0 }))), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), createTest("overlapping notification", pipeLazy([1, 2, 3], toObservable({ delay: 4 }), concatMap({ ...switchAllT, ...mapT }, _ => pipe([1, 2, 3], toObservable({ delay: 2 }))), toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))));
 const takeUntilTests = createDescribe("takeUntil", createTest("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], toObservable({ delay: 1 }), takeUntil(pipe([1], toObservable({ delay: 3, delayStart: true }))), toReadonlyArray(), expectArrayEquals([1, 2, 3]))));
+const timeoutTests = createDescribe("timeout", createTest("throws when a timeout occurs", pipeLazy(pipeLazy([1], toObservable({ delay: 2, delayStart: true }), timeout(1), toReadonlyArray()), expectToThrow)), createTest("when timeout is greater than observed time", pipeLazy([1], toObservable({ delay: 2, delayStart: true }), timeout(3), toReadonlyArray(), expectArrayEquals([1]))));
 const throttleTests = createDescribe("throttle", createTest("first", pipeLazy(generateObservable(increment, returns(-1), {
     delay: 1,
     delayStart: true,
@@ -188,6 +189,6 @@ var ObservableLikeTests = createDescribe("ObservableLike", bufferTests({
     fromArray: toObservable,
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
-}), toEnumerableTests, toFlowableTests, toPromiseTests, withLatestFromTest, zipTests, zipLatestTests, zipWithLatestTests);
+}), timeoutTests, toEnumerableTests, toFlowableTests, toPromiseTests, withLatestFromTest, zipTests, zipLatestTests, zipWithLatestTests);
 
-export { ObservableLikeTests as default, throttleTests };
+export { ObservableLikeTests as default };

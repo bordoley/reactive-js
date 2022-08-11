@@ -141,12 +141,18 @@ const createLift: (
           ? [operator, ...source.operators]
           : [operator];
 
+      const isLiftedEnumerable =
+        isEnumerable && sourceSource[ObservableLike_isEnumerable];
+      const isLiftedRunnable =
+        isLiftedEnumerable ||
+        (isRunnable && sourceSource[ObservableLike_isRunnable]);
+
       return newInstance(
         LiftedObservable,
         sourceSource,
         allFunctions,
-        isEnumerable,
-        isEnumerable || isRunnable,
+        isLiftedEnumerable,
+        isLiftedRunnable,
       );
     };
 })();

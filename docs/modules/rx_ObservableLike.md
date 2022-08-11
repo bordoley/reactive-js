@@ -75,6 +75,7 @@
 - [takeWhile](rx_ObservableLike.md#takewhile)
 - [throttle](rx_ObservableLike.md#throttle)
 - [throwIfEmpty](rx_ObservableLike.md#throwifempty)
+- [timeout](rx_ObservableLike.md#timeout)
 - [toEnumerable](rx_ObservableLike.md#toenumerable)
 - [toFlowable](rx_ObservableLike.md#toflowable)
 - [toPromise](rx_ObservableLike.md#topromise)
@@ -1796,6 +1797,46 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### timeout
+
+▸ **timeout**<`T`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `duration` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **timeout**<`T`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `duration` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\> |
 
 #### Returns
 

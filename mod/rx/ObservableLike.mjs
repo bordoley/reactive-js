@@ -4,12 +4,12 @@ import { isInContinuation } from '../__internal__/__internal__scheduling.mjs';
 import { createDecodeWithCharsetOperator, createKeepOperator, createMapOperator, createReduceOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
 import { liftEnumerableObservable, liftObservable, allAreEnumerable, allAreRunnable, liftEnumerableObservableT, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, createMergeAll, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, createScanAsync, switchAll as switchAll$1, subscribe as subscribe$1, takeFirst as takeFirst$1, liftRunnableObservable, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/__internal__ObservableLike.mjs';
 import { observerMixin, createDelegatingObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createSkipFirstObserver, createTakeWhileObserver, createThrowIfEmptyObserver } from '../__internal__/scheduling/__internal__Observers.mjs';
-import { disposableMixin, createDisposableRef, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
+import { disposableMixin, createDisposableRef, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { decodeWithCharsetSinkMixin, reduceSinkMixin, takeLastSinkMixin, createEnumeratorSink } from '../__internal__/util/__internal__Sinks.mjs';
-import { concatMap, keepType } from '../containers/ContainerLike.mjs';
+import { concatMap, throws, keepType } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/PromiseableLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { unsafeCast, pipe, isEmpty, none, getLength, max, returns, partial, isNone, isSome, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
@@ -464,6 +464,42 @@ const throwIfEmpty =
 const throwIfEmptyT = {
     throwIfEmpty,
 };
+const timeout = /*@__PURE__*/ (() => {
+    const timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
+    const typedDisposableRefMixin = disposableRefMixin();
+    const typedObserverMixin = observerMixin();
+    const setupDurationSubscription = (observer) => {
+        observer[MutableRefLike_current] = pipe(observer.duration, subscribe(getScheduler(observer.delegate)));
+    };
+    const createTimeoutObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, delegatingDisposableMixin, typedDisposableRefMixin), function TimeoutObserver(instance, delegate, duration) {
+        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(delegatingDisposableMixin, instance, delegate);
+        init(typedDisposableRefMixin, instance, disposed);
+        unsafeCast(instance);
+        instance.delegate = delegate;
+        instance.duration = duration;
+        setupDurationSubscription(instance);
+        return instance;
+    }, {
+        delegate: none,
+        duration: none,
+    }, {
+        [SinkLike_notify](next) {
+            pipe(this, getCurrentRef, dispose());
+            pipe(this.delegate, notify(next));
+        },
+    }));
+    const returnTimeoutError = returns(timeoutError);
+    return (duration) => {
+        const durationObs = typeof duration === "number"
+            ? throws({ fromArray: toObservable, ...mapT }, { delay: duration, delayStart: true })(returnTimeoutError)
+            : concat(duration, throws({ fromArray: toObservable, ...mapT })(returnTimeoutError));
+        const lift = typeof duration === "number" || isRunnable(duration)
+            ? liftRunnableObservable
+            : liftObservable;
+        return pipe(createTimeoutObserver, partial(durationObs), lift);
+    };
+})();
 const toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
@@ -713,4 +749,4 @@ const zipLatestT = {
 };
 const zipWithLatestFrom = zipWithLatestFrom$1;
 
-export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { buffer, bufferT, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };

@@ -19,17 +19,6 @@ import {
 import { ObserverLike } from "./observer";
 import { __yield } from "./scheduler";
 
-/**
- * The throttle mode used by the `throttle` operator.
- * first - Takes a leading value.
- * last - Takes the trailing value.
- * interval -  Takes both the leading and trailing values.
- */
-export type ThrottleMode = "first" | "last" | "interval";
-
-export { throttle } from "./observable/throttle";
-export { timeout, timeoutError } from "./observable/timeout";
-
 export const catchError: CatchError<ObservableLike<unknown>>["catchError"] =
   /*@__PURE__*/ decorateMap(
     class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {},

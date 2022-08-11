@@ -35,7 +35,10 @@ const createLift = /*@__PURE__*/ (() => {
         const allFunctions = source instanceof LiftedObservable
             ? [operator, ...source.operators]
             : [operator];
-        return newInstance(LiftedObservable, sourceSource, allFunctions, isEnumerable, isEnumerable || isRunnable);
+        const isLiftedEnumerable = isEnumerable && sourceSource[ObservableLike_isEnumerable];
+        const isLiftedRunnable = isLiftedEnumerable ||
+            (isRunnable && sourceSource[ObservableLike_isRunnable]);
+        return newInstance(LiftedObservable, sourceSource, allFunctions, isLiftedEnumerable, isLiftedRunnable);
     };
 })();
 const liftObservable = createLift(false, false);
