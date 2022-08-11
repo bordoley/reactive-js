@@ -3,9 +3,11 @@ import {
   fromArray,
   keepT,
   mapT,
+  scanT,
+  takeWhileT,
   toReadonlyArrayT,
 } from "../../ix/AsyncEnumerableLike";
-import { keepTests, mapTests } from "../operators";
+import { keepTests, mapTests, scanTests, takeWhileTests } from "../operators";
 
 export default describe(
   "AsyncEnumerableLike",
@@ -17,6 +19,16 @@ export default describe(
   mapTests({
     fromArray: fromArray,
     ...mapT,
+    ...toReadonlyArrayT,
+  }),
+  scanTests({
+    fromArray: fromArray,
+    ...scanT,
+    ...toReadonlyArrayT,
+  }),
+  takeWhileTests({
+    fromArray: fromArray,
+    ...takeWhileT,
     ...toReadonlyArrayT,
   }),
 );

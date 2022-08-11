@@ -1,6 +1,6 @@
 /// <reference types="./AsyncEnumerableLike.d.ts" />
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
-import { interactive, createKeepOperator, createMapOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
+import { interactive, createKeepOperator, createMapOperator, createScanOperator, createTakeWhileOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
@@ -9,7 +9,7 @@ import { unsafeCast, pipe, none, getLength, compose, increment, returns, pipeUns
 import { InteractiveContainerLike_interact } from '../ix.mjs';
 import { createSubject, ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createRunnableObservable } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { multicast, scan, mapT as mapT$1, concatAllT, takeFirst, forEach, keep as keep$1, map as map$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
+import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, forEach, keep as keep$1, map as map$1, takeWhile as takeWhile$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { publish } from '../rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
@@ -84,7 +84,7 @@ const createLiftedAsyncEnumerable = (...ops) => {
 const fromArrayInternal = (values, start, count, options) => {
     const delay = getDelay(options);
     const fromArrayWithDelay = delay > 0 ? toObservable$1({ delay }) : toObservable$1();
-    return createLiftedAsyncEnumerable(scan(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
+    return createLiftedAsyncEnumerable(scan$1(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
 };
 const fromArray = (_) => values => fromArrayInternal(values, 0, values.length);
 class LiftedAsyncEnumerable {
@@ -138,16 +138,14 @@ const keep = /*@__PURE__*/ (() => {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
         unsafeCast(instance);
-        instance.delegate = delegate;
         instance.obs = pipe(delegate, forEach(x => {
             if (!predicate(x)) {
-                pipe(instance.delegate, dispatch(none));
+                pipe(delegate, dispatch(none));
             }
         }), keep$1(predicate), multicast(getScheduler(delegate)));
         return instance;
     }, {
         obs: none,
-        delegate: none,
     }, {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
@@ -195,6 +193,63 @@ const map = /*@__PURE__*/ (() => {
 const mapT = {
     map,
 };
+const scan = /*@__PURE__*/ (() => {
+    const createScanAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function ScanAsyncEnumerator(instance, delegate, reducer, acc) {
+        init(delegatingDisposableMixin, instance, delegate);
+        init(delegatingAsyncEnumerator(), instance, delegate);
+        unsafeCast(instance);
+        instance.delegate = delegate;
+        instance.op = scan$1(reducer, acc);
+        return instance;
+    }, {
+        op: none,
+        delegate: none,
+    }, {
+        get [MulticastObservableLike_observerCount]() {
+            unsafeCast(this);
+            return getObserverCount(this.delegate);
+        },
+        get [MulticastObservableLike_replay]() {
+            unsafeCast(this);
+            return getReplay(this.delegate);
+        },
+        [ReactiveContainerLike_sinkInto](observer) {
+            pipe(this.delegate, this.op, sinkInto(observer));
+        },
+    }));
+    return pipe(createScanAsyncEnumerator, createScanOperator(liftT));
+})();
+const scanT = {
+    scan,
+};
+const takeWhile = 
+/*@__PURE__*/ (() => {
+    const createTakeWhileAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function TakeWhileAsyncEnumerator(instance, delegate, predicate, inclusive) {
+        init(delegatingDisposableMixin, instance, delegate);
+        init(delegatingAsyncEnumerator(), instance, delegate);
+        unsafeCast(instance);
+        instance.obs = pipe(delegate, takeWhile$1(predicate, { inclusive }), multicast(getScheduler(delegate)), add(instance));
+        return instance;
+    }, {
+        obs: none,
+    }, {
+        get [MulticastObservableLike_observerCount]() {
+            unsafeCast(this);
+            return getObserverCount(this.obs);
+        },
+        get [MulticastObservableLike_replay]() {
+            unsafeCast(this);
+            return getReplay(this.obs);
+        },
+        [ReactiveContainerLike_sinkInto](observer) {
+            pipe(this.obs, sinkInto(observer));
+        },
+    }));
+    return pipe(createTakeWhileAsyncEnumerator, createTakeWhileOperator(liftT));
+})();
+const takeWhileT = {
+    takeWhile,
+};
 const toObservable = () => enumerable => createRunnableObservable(observer => {
     const enumerator = pipe(enumerable, stream(getScheduler$1(observer)), addTo(observer));
     pipe(enumerator, forEach(_ => {
@@ -211,4 +266,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { fromArray, keep, keepT, map, mapT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { fromArray, keep, keepT, map, mapT, scan, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
