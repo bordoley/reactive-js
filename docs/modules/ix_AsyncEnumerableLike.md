@@ -7,6 +7,7 @@
 ### Variables
 
 - [keepT](ix_AsyncEnumerableLike.md#keept)
+- [mapT](ix_AsyncEnumerableLike.md#mapt)
 - [toObservableT](ix_AsyncEnumerableLike.md#toobservablet)
 - [toReadonlyArrayT](ix_AsyncEnumerableLike.md#toreadonlyarrayt)
 
@@ -14,6 +15,7 @@
 
 - [fromArray](ix_AsyncEnumerableLike.md#fromarray)
 - [keep](ix_AsyncEnumerableLike.md#keep)
+- [map](ix_AsyncEnumerableLike.md#map)
 - [toObservable](ix_AsyncEnumerableLike.md#toobservable)
 - [toReadonlyArray](ix_AsyncEnumerableLike.md#toreadonlyarray)
 
@@ -22,6 +24,12 @@
 ### keepT
 
 • `Const` **keepT**: [`Keep`](containers.md#keep)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
+
+___
+
+### mapT
+
+• `Const` **mapT**: [`Map`](containers.md#map)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
 
 ___
 
@@ -78,6 +86,29 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### map
+
+▸ **map**<`TA`, `TB`\>(`mapper`): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 

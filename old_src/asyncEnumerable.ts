@@ -167,34 +167,6 @@ export const generateT: Generate<AsyncEnumerableLike<unknown>> = {
   generate,
 };
 
-export const map: <TA, TB>(
-  mapper: Function1<TA, TB>,
-) => AsyncEnumerableOperator<TA, TB> = /*@__PURE__*/ createMapOperator(
-  liftT,
-  class MapAsyncEnumerator<TA, TB> extends AbstractDelegatingAsyncEnumerator<
-    TA,
-    TB
-  > {
-    readonly op: ObservableOperator<TA, TB>;
-
-    constructor(
-      delegate: AsyncEnumeratorLike<TA>,
-      readonly mapper: Function1<TA, TB>,
-    ) {
-      super(delegate);
-      this.op = mapObs(this.mapper);
-    }
-
-    sinkInto(observer: ObserverLike<TB>): void {
-      pipe(this, getDelegate, this.op, sinkInto(observer));
-    }
-  },
-);
-
-export const mapT: Map<AsyncEnumerableLike<unknown>> = {
-  map,
-};
-
 export const scan: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
