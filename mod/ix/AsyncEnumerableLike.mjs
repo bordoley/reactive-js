@@ -1,6 +1,6 @@
 /// <reference types="./AsyncEnumerableLike.d.ts" />
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
-import { interactive, createKeepOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
+import { interactive, createKeepOperator, createMapOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
@@ -9,7 +9,7 @@ import { unsafeCast, pipe, none, getLength, compose, increment, returns, pipeUns
 import { InteractiveContainerLike_interact } from '../ix.mjs';
 import { createSubject, ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createRunnableObservable } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { multicast, scan, mapT, concatAllT, takeFirst, forEach, keep as keep$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
+import { multicast, scan, mapT as mapT$1, concatAllT, takeFirst, forEach, keep as keep$1, map as map$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { publish } from '../rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
@@ -84,7 +84,7 @@ const createLiftedAsyncEnumerable = (...ops) => {
 const fromArrayInternal = (values, start, count, options) => {
     const delay = getDelay(options);
     const fromArrayWithDelay = delay > 0 ? toObservable$1({ delay }) : toObservable$1();
-    return createLiftedAsyncEnumerable(scan(increment, returns(start - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
+    return createLiftedAsyncEnumerable(scan(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
 };
 const fromArray = (_) => values => fromArrayInternal(values, 0, values.length);
 class LiftedAsyncEnumerable {
@@ -116,7 +116,9 @@ const delegatingAsyncEnumerator = /*@__PURE__*/ (() => {
         unsafeCast(instance);
         instance.delegate = delegate;
         return instance;
-    }, {}, {
+    }, {
+        delegate: none,
+    }, {
         [DispatcherLike_dispatch](_) {
             pipe(this.delegate, dispatch(none));
         },
@@ -143,7 +145,10 @@ const keep = /*@__PURE__*/ (() => {
             }
         }), keep$1(predicate), multicast(getScheduler(delegate)));
         return instance;
-    }, {}, {
+    }, {
+        obs: none,
+        delegate: none,
+    }, {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return getObserverCount(this.obs);
@@ -161,6 +166,35 @@ const keep = /*@__PURE__*/ (() => {
 const keepT = {
     keep,
 };
+const map = /*@__PURE__*/ (() => {
+    const createMapAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function MapAsyncEnumerator(instance, delegate, mapper) {
+        init(delegatingDisposableMixin, instance, delegate);
+        init(delegatingAsyncEnumerator(), instance, delegate);
+        unsafeCast(instance);
+        instance.delegate = delegate;
+        instance.op = map$1(mapper);
+        return instance;
+    }, {
+        op: none,
+        delegate: none,
+    }, {
+        get [MulticastObservableLike_observerCount]() {
+            unsafeCast(this);
+            return getObserverCount(this.delegate);
+        },
+        get [MulticastObservableLike_replay]() {
+            unsafeCast(this);
+            return getReplay(this.delegate);
+        },
+        [ReactiveContainerLike_sinkInto](observer) {
+            pipe(this.delegate, this.op, sinkInto(observer));
+        },
+    }));
+    return pipe(createMapAsyncEnumerator, createMapOperator(liftT));
+})();
+const mapT = {
+    map,
+};
 const toObservable = () => enumerable => createRunnableObservable(observer => {
     const enumerator = pipe(enumerable, stream(getScheduler$1(observer)), addTo(observer));
     pipe(enumerator, forEach(_ => {
@@ -177,4 +211,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { fromArray, keep, keepT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { fromArray, keep, keepT, map, mapT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
