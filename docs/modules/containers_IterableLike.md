@@ -6,17 +6,25 @@
 
 ### Variables
 
+- [toAsyncEnumerableT](containers_IterableLike.md#toasyncenumerablet)
 - [toEnumerableT](containers_IterableLike.md#toenumerablet)
 - [toIterableT](containers_IterableLike.md#toiterablet)
 - [toObservableT](containers_IterableLike.md#toobservablet)
 
 ### Functions
 
+- [toAsyncEnumerable](containers_IterableLike.md#toasyncenumerable)
 - [toEnumerable](containers_IterableLike.md#toenumerable)
 - [toIterable](containers_IterableLike.md#toiterable)
 - [toObservable](containers_IterableLike.md#toobservable)
 
 ## Variables
+
+### toAsyncEnumerableT
+
+• `Const` **toAsyncEnumerableT**: [`ToAsyncEnumerable`](ix.md#toasyncenumerable)<[`IterableLike`](../interfaces/containers.IterableLike.md)\>
+
+___
 
 ### toEnumerableT
 
@@ -35,6 +43,30 @@ ___
 • `Const` **toObservableT**: [`ToObservable`](rx.md#toobservable)<[`IterableLike`](../interfaces/containers.IterableLike.md), { `delay`: `number` ; `delayStart`: `boolean`  }\>
 
 ## Functions
+
+### toAsyncEnumerable
+
+▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+
+Returns an `AsyncEnumerableLike` from the provided iterable.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+
+___
 
 ### toEnumerable
 

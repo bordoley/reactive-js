@@ -6,6 +6,7 @@
 
 ### Variables
 
+- [generateT](ix_AsyncEnumerableLike.md#generatet)
 - [keepT](ix_AsyncEnumerableLike.md#keept)
 - [mapT](ix_AsyncEnumerableLike.md#mapt)
 - [scanAsyncT](ix_AsyncEnumerableLike.md#scanasynct)
@@ -17,6 +18,8 @@
 ### Functions
 
 - [fromArray](ix_AsyncEnumerableLike.md#fromarray)
+- [fromEnumerable](ix_AsyncEnumerableLike.md#fromenumerable)
+- [generate](ix_AsyncEnumerableLike.md#generate)
 - [keep](ix_AsyncEnumerableLike.md#keep)
 - [map](ix_AsyncEnumerableLike.md#map)
 - [scan](ix_AsyncEnumerableLike.md#scan)
@@ -26,6 +29,12 @@
 - [toReadonlyArray](ix_AsyncEnumerableLike.md#toreadonlyarray)
 
 ## Variables
+
+### generateT
+
+• `Const` **generateT**: [`Generate`](containers.md#generate)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md), { `delay`: `number`  }\>
+
+___
 
 ### keepT
 
@@ -88,6 +97,57 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+
+Returns an `AsyncEnumerableLike` from the provided iterable.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>
+
+Generates an `AsyncEnumerableLike` sequence from a generator function
+that is applied to an accumulator value.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | The generator function. |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function to generate the initial accumulator. |
+| `options?` | `Partial`<{ `delay`: `number`  }\> | - |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>
 
 ___
 

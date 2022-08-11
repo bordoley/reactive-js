@@ -18,7 +18,8 @@ import {
   pipe,
   unsafeCast,
 } from "../functions";
-import { ToEnumerable, createEnumerable } from "../ix";
+import { ToAsyncEnumerable, ToEnumerable, createEnumerable } from "../ix";
+import { fromEnumerable } from "../ix/AsyncEnumerableLike";
 import { toObservable as enumerableToObservable } from "../ix/EnumerableLike";
 import {
   EnumerableObservableLike,
@@ -31,6 +32,17 @@ import {
   SourceLike_move,
 } from "../util";
 import { dispose, isDisposed } from "../util/DisposableLike";
+
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+export const toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"] =
+  () => compose(toEnumerable(), fromEnumerable());
+export const toAsyncEnumerableT: ToAsyncEnumerable<IterableLike> = {
+  toAsyncEnumerable,
+};
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {

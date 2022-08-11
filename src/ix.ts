@@ -62,6 +62,15 @@ export interface AsyncEnumerableLike<T = unknown>
   readonly TStatefulContainerState?: AsyncEnumeratorLike<this["T"]>;
 }
 
+export type ToAsyncEnumerable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toAsyncEnumerable<T>(
+    options?: TOptions,
+  ): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
+};
+
 export type ToEnumerable<
   C extends ContainerLike,
   TOptions = never,

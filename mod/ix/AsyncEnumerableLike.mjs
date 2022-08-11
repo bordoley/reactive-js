@@ -7,9 +7,9 @@ import { concatMap } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { unsafeCast, pipe, none, getLength, compose, increment, returns, pipeUnsafe, newInstance, partial } from '../functions.mjs';
 import { InteractiveContainerLike_interact } from '../ix.mjs';
-import { createSubject, ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createRunnableObservable } from '../rx.mjs';
+import { createSubject, ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createObservable, createRunnableObservable } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, forEach, keep as keep$1, map as map$1, scanAsync as scanAsync$1, takeWhile as takeWhile$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
+import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { publish } from '../rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
@@ -19,6 +19,9 @@ import { StreamableLike_stream } from '../streaming.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
 import { SourceLike_move } from '../util.mjs';
 import { add, addTo } from '../util/DisposableLike.mjs';
+import { hasCurrent, getCurrent } from '../util/EnumeratorLike.mjs';
+import { move } from '../util/SourceLike.mjs';
+import { enumerate } from './EnumerableLike.mjs';
 
 const createAsyncEnumerable = /*@__PURE__*/ (() => {
     return createInstanceFactory(clazz(function AsyncEnumerable(instance, stream) {
@@ -81,12 +84,24 @@ const createLiftedAsyncEnumerable = (...ops) => {
         return createLiftedAsyncEnumerator(op, scheduler, replay);
     });
 };
-const fromArrayInternal = (values, start, count, options) => {
-    const delay = getDelay(options);
-    const fromArrayWithDelay = delay > 0 ? toObservable$1({ delay }) : toObservable$1();
-    return createLiftedAsyncEnumerable(scan$1(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
-};
-const fromArray = (_) => values => fromArrayInternal(values, 0, values.length);
+const fromArray = /*@__PURE__*/ (() => {
+    const fromArrayInternal = (values, start, count, options) => {
+        const delay = getDelay(options);
+        const fromArrayWithDelay = delay > 0 ? toObservable$1({ delay }) : toObservable$1();
+        return createLiftedAsyncEnumerable(scan$1(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
+    };
+    return (_) => values => fromArrayInternal(values, 0, values.length);
+})();
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+const fromEnumerable = 
+/*@__PURE__*/ (() => returns((enumerable) => createLiftedAsyncEnumerable(observable => createObservable(observer => {
+    const enumerator = pipe(enumerable, enumerate(), addTo(observer));
+    pipe(observable, map$1(_ => move(enumerator)), takeWhile$1(hasCurrent), map$1(getCurrent), sinkInto(observer));
+}))))();
 class LiftedAsyncEnumerable {
     constructor(src, operators) {
         this.src = src;
@@ -100,6 +115,30 @@ class LiftedAsyncEnumerable {
         return pipeUnsafe(src, ...this.operators);
     }
 }
+/**
+ * Generates an `AsyncEnumerableLike` sequence from a generator function
+ * that is applied to an accumulator value.
+ *
+ * @param generator The generator function.
+ * @param initialValue Factory function to generate the initial accumulator.
+ */
+const generate = /*@__PURE__*/ (() => {
+    const generateScanner = (generator) => (acc, _) => generator(acc);
+    const asyncGeneratorScanner = (generator, options) => {
+        const delay = getDelay(options);
+        const fromArrayWithDelay = delay > 0 ? toObservable$1({ delay }) : toObservable$1();
+        return (acc, _) => pipe(acc, generator, x => [x], fromArrayWithDelay);
+    };
+    return (generator, initialValue, options) => {
+        const delay = getDelay(options);
+        return createLiftedAsyncEnumerable(delay > 0
+            ? scanAsync$1(asyncGeneratorScanner(generator, options), initialValue)
+            : scan$1(generateScanner(generator), initialValue));
+    };
+})();
+const generateT = {
+    generate,
+};
 const lift = (operator) => enumerable => {
     const src = enumerable instanceof LiftedAsyncEnumerable ? enumerable.src : enumerable;
     const allFunctions = enumerable instanceof LiftedAsyncEnumerable
@@ -293,4 +332,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { fromArray, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { fromArray, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };

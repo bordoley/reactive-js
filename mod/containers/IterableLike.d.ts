@@ -1,7 +1,14 @@
 import { IterableLike, ToIterable } from "../containers.mjs";
 import { Function1 } from "../functions.mjs";
-import { ToEnumerable } from "../ix.mjs";
+import { ToAsyncEnumerable, ToEnumerable } from "../ix.mjs";
 import { ToObservable, EnumerableObservableLike, RunnableObservableLike } from "../rx.mjs";
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+declare const toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"];
+declare const toAsyncEnumerableT: ToAsyncEnumerable<IterableLike>;
 declare const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<IterableLike>;
 declare const toIterable: ToIterable<IterableLike>["toIterable"];
@@ -18,4 +25,4 @@ declare const toObservableT: ToObservable<IterableLike, {
     readonly delay: number;
     readonly delayStart: boolean;
 }>;
-export { toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT };
+export { toAsyncEnumerable, toAsyncEnumerableT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT };
