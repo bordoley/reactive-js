@@ -328,6 +328,9 @@ const takeFirstSinkMixin = /*@__PURE__*/ (() => {
         unsafeCast(instance);
         instance[Sink_private_delegate] = delegate;
         instance[TakeFirstSink_private_takeCount] = takeCount;
+        if (takeCount === 0) {
+            pipe(instance, dispose());
+        }
         return instance;
     }, {
         [Sink_private_delegate]: none,
