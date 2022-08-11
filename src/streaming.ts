@@ -116,14 +116,14 @@ const streamMixin: <TReq, T>() => Mixin3<
   ContainerOperator<ObservableLike, TReq, T>,
   SchedulerLike,
   number
-> = (<TReq, T>() => {
+> = /*@__PURE__*/ (<TReq, T>() => {
   type TProperties = {
     subject: SubjectLike<TReq>;
     observable: MulticastObservableLike<T>;
     [DispatcherLike_scheduler]: SchedulerLike;
   };
 
-  return pipe(
+  return returns(
     clazz(
       __extends(delegatingDisposableMixin),
       function Stream(
@@ -188,7 +188,6 @@ const streamMixin: <TReq, T>() => Mixin3<
         },
       },
     ),
-    returns,
   );
 })();
 

@@ -4,7 +4,7 @@ import { delegatingDisposableMixin } from './__internal__/util/__internal__Dispo
 import { clazz, __extends, init, createInstanceFactory } from './__internal__/util/__internal__Objects.mjs';
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
-import { pipe, unsafeCast, none, returns, newInstance, getLength, composeUnsafe, updateReducer } from './functions.mjs';
+import { returns, unsafeCast, pipe, none, newInstance, getLength, composeUnsafe, updateReducer } from './functions.mjs';
 import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createObservable } from './rx.mjs';
 import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
@@ -16,8 +16,8 @@ import { add } from './util/DisposableLike.mjs';
 
 /** @ignore */
 const StreamableLike_stream = Symbol("StreamableLike_stream");
-const streamMixin = (() => {
-    return pipe(clazz(__extends(delegatingDisposableMixin), function Stream(instance, op, scheduler, replay) {
+const streamMixin = /*@__PURE__*/ (() => {
+    return returns(clazz(__extends(delegatingDisposableMixin), function Stream(instance, op, scheduler, replay) {
         const subject = createSubject({ replay });
         init(delegatingDisposableMixin, instance, subject);
         unsafeCast(instance);
@@ -48,7 +48,7 @@ const streamMixin = (() => {
             unsafeCast(this);
             pipe(this.observable, sinkInto(observer));
         },
-    }), returns);
+    }));
 })();
 const createStream = /*@__PURE__*/ (() => {
     const createStreamInternal = createInstanceFactory(streamMixin());
