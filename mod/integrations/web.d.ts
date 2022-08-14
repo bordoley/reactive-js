@@ -8,11 +8,13 @@ declare type WindowLocationURI = {
     query: string;
     fragment: string;
 };
+/** @ignore */
+declare const WindowLocationStreamLike_goBack: unique symbol;
 interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
     [DispatcherLike_dispatch](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
     }): void;
-    goBack(): boolean;
+    [WindowLocationStreamLike_goBack](): boolean;
 }
 interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike> {
     [StreamableLike_stream](scheduler: SchedulerLike, options?: {
@@ -32,5 +34,4 @@ declare const createEventSource: (url: string | URL, options?: EventSourceInit &
 declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<FetchRequest | string, ObservableLike<T>>;
 declare const addEventListener: <T>(eventName: string, selector: Function1<Event, T>) => Function1<EventTarget, ObservableLike<T>>;
 declare const windowLocation: WindowLocationStreamableLike;
-declare const replaceWindowLocation: (uri: Updater<WindowLocationURI> | WindowLocationURI) => Function1<WindowLocationStreamLike, WindowLocationStreamLike>;
-export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamableLike, WindowLocationURI, addEventListener, createEventSource, fetch, replaceWindowLocation, windowLocation };
+export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamLike_goBack, WindowLocationStreamableLike, WindowLocationURI, addEventListener, createEventSource, fetch, windowLocation };

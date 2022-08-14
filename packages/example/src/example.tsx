@@ -18,11 +18,20 @@ import {
   useObservable,
 } from "@reactive-js/core/integrations/react";
 import {
-  replaceWindowLocation,
   windowLocation,
   WindowLocationURI,
 } from "@reactive-js/core/integrations/web";
-import { increment, pipe, returns, Updater } from "@reactive-js/core/functions";
+import {
+  replaceWindowLocation,
+  goBack,
+} from "@reactive-js/core/integrations/web/WindowLocationStreamLike";
+import {
+  increment,
+  pipe,
+  pipeLazy,
+  returns,
+  Updater,
+} from "@reactive-js/core/functions";
 import { DispatcherLike } from "@reactive-js/core/scheduling";
 import {
   dispatch,
@@ -107,9 +116,7 @@ const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
   );
 };
 
-const goBack = () => {
-  historyStream.goBack();
-};
+const onGoBack = pipeLazy(historyStream, goBack);
 
 const Root = () => {
   const uri = useObservable(historyStream);
@@ -122,7 +129,7 @@ const Root = () => {
           onChange={onChange}
           value={String(uri?.path ?? "")}
         ></input>
-        <button onClick={goBack}>Back</button>
+        <button onClick={onGoBack}>Back</button>
       </div>
       <StreamPauseResume />
     </div>

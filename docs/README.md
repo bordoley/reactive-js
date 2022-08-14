@@ -17,6 +17,7 @@ Reactive-JS
 - [integrations/node](modules/integrations_node.md)
 - [integrations/react](modules/integrations_react.md)
 - [integrations/web](modules/integrations_web.md)
+- [integrations/web/WindowLocationStreamLike](modules/integrations_web_WindowLocationStreamLike.md)
 - [ix](modules/ix.md)
 - [ix/AsyncEnumerableLike](modules/ix_AsyncEnumerableLike.md)
 - [ix/EnumerableLike](modules/ix_EnumerableLike.md)
