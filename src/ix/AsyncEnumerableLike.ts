@@ -221,8 +221,7 @@ const createLiftedAsyncEnumerator = (<T>() => {
           return getReplay(this.observable);
         },
 
-        [DispatcherLike_dispatch](req: void) {
-          unsafeCast<TProperties>(this);
+        [DispatcherLike_dispatch](this: TProperties, req: void) {
           pipe(this.subject, publish(req));
         },
 

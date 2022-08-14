@@ -65,7 +65,6 @@ const createLiftedAsyncEnumerator = (() => {
             return getReplay(this.observable);
         },
         [DispatcherLike_dispatch](req) {
-            unsafeCast(this);
             pipe(this.subject, publish(req));
         },
         [ReactiveContainerLike_sinkInto](observer) {
