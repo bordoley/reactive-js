@@ -1,4 +1,4 @@
-import { describe } from "../../__internal__/__internal__testing";
+import { testModule } from "../../__internal__/__internal__testing";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { AsyncEnumerableLike } from "../../ix";
 import {
@@ -19,7 +19,7 @@ import {
   takeWhileTests,
 } from "../operators";
 
-export default describe(
+testModule(
   "AsyncEnumerableLike",
   keepTests({
     fromArray: fromArray,

@@ -219,8 +219,6 @@ const createTests = (testGroup: TestGroup, parents: readonly string[]) => {
   }
 };
 
-export const runTests = (testGroups: TestGroup[]) => {
-  for (const test of testGroups) {
-    createTests(test, []);
-  }
+export const testModule = (name: string, ...testGroups: TestGroup[]): void => {
+  createTests(createDescribe(name, ...testGroups), []);
 };

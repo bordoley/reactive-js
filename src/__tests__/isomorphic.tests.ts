@@ -2,35 +2,17 @@
  * @jest-environment node
  */
 
-import { runTests } from "../__internal__/__internal__testing";
-import AsyncEnumerableTest from "./modules/AsyncEnumerable.test";
-import ContainerLikeTests from "./modules/ContainerLike.test";
-import DisposableLikeTests from "./modules/DisposableLike.test";
-import EnumerableLikeTests from "./modules/EnumerableLike.test";
-import FlowableLikeTests from "./modules/FlowableLike.test";
-import IterableLikeTests from "./modules/IterableLike.test";
-import ObservableLikeTests from "./modules/ObservableLike.test";
-import PromiseableLikeTests from "./modules/PromiseableLike.test";
-import RunnableLikeTests from "./modules/RunnableLike.test";
-import SequenceLikeTests from "./modules/SequenceLike.test";
-import SubjectLikeTests from "./modules/SubjectLike.test";
-import effectsTests from "./modules/effects.test";
-import queueTests from "./modules/queues.test";
-import streamingTests from "./modules/streaming.test";
-
-runTests([
-  AsyncEnumerableTest,
-  ContainerLikeTests,
-  DisposableLikeTests,
-  effectsTests,
-  EnumerableLikeTests,
-  FlowableLikeTests,
-  IterableLikeTests,
-  ObservableLikeTests,
-  PromiseableLikeTests,
-  queueTests,
-  RunnableLikeTests,
-  SequenceLikeTests,
-  streamingTests,
-  SubjectLikeTests,
-]);
+import "./modules/AsyncEnumerable.test";
+import "./modules/ContainerLike.test";
+import "./modules/DisposableLike.test";
+import "./modules/EnumerableLike.test";
+import "./modules/FlowableLike.test";
+import "./modules/IterableLike.test";
+import "./modules/ObservableLike.test";
+import "./modules/PromiseableLike.test";
+import "./modules/RunnableLike.test";
+import "./modules/SequenceLike.test";
+import "./modules/SubjectLike.test";
+import "./modules/effects.test";
+import "./modules/queues.test";
+import "./modules/streaming.test";

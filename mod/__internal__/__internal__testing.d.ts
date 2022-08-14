@@ -36,5 +36,5 @@ declare type MockFunction = {
 declare const mockFn: (retval?: unknown) => MockFunction;
 declare const expectToHaveBeenCalledTimes: (times: number) => (fn: MockFunction) => void;
 declare const expectPromiseToThrow: (promise: PromiseLike<unknown>) => Promise<void>;
-declare const runTests: (testGroups: TestGroup[]) => void;
-export { Describe, DescribeType, Test, TestAsync, TestAsyncType, TestGroup, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, createTest as test, testAsync };
+declare const testModule: (name: string, ...testGroups: TestGroup[]) => void;
+export { Describe, DescribeType, Test, TestAsync, TestAsyncType, TestGroup, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, createTest as test, testAsync, testModule };

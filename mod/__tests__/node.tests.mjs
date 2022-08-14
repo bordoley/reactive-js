@@ -1,5 +1,2 @@
 /// <reference types="./node.tests.d.ts" />
-import { runTests } from '../__internal__/__internal__testing.mjs';
-import nodeTests from './modules/node.test.mjs';
-
-runTests([nodeTests]);
+import './modules/node.test.mjs';

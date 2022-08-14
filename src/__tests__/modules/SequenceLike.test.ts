@@ -1,4 +1,4 @@
-import { describe } from "../../__internal__/__internal__testing";
+import { testModule } from "../../__internal__/__internal__testing";
 import { toSequence } from "../../containers/ReadonlyArrayLike";
 import {
   concatAllT,
@@ -32,7 +32,7 @@ import {
   zipTests,
 } from "../operators";
 
-export default describe(
+testModule(
   "SequenceLike",
   concatTests({
     fromArray: toSequence,

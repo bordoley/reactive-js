@@ -1,8 +1,8 @@
 import {
-  describe,
   expectArrayEquals,
   expectEquals,
   test,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { toRunnable as arrayToRunnable } from "../../containers/ReadonlyArrayLike";
 import { pipe } from "../../functions";
@@ -18,7 +18,7 @@ import { createVirtualTimeScheduler } from "../../scheduling";
 import { run as runContinuation } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
 
-export default describe(
+testModule(
   "SubjectLike",
   test("with replay", () => {
     const scheduler = createVirtualTimeScheduler();

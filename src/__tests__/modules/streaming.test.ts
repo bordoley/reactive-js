@@ -2,6 +2,7 @@ import {
   describe,
   expectArrayEquals,
   test,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { pipe, returns } from "../../functions";
 import { forEach, subscribe } from "../../rx/ObservableLike";
@@ -12,7 +13,7 @@ import { stream } from "../../streaming/StreamableLike";
 import { run } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
 
-export default describe(
+testModule(
   "StreamableLike",
   describe(
     "stateStore",

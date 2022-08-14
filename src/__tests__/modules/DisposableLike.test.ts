@@ -1,5 +1,4 @@
 import {
-  describe,
   expectArrayEquals,
   expectEquals,
   expectIsNone,
@@ -7,6 +6,7 @@ import {
   expectTrue,
   mockFn,
   test,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { Option, none, pipe, pipeLazy, raise } from "../../functions";
 import { subscribe } from "../../rx/ObservableLike";
@@ -25,7 +25,7 @@ import {
   toObservable,
 } from "../../util/DisposableLike";
 
-export default describe(
+testModule(
   "DisposableLike",
   test("disposes child disposable when disposed", () => {
     const child = createDisposable();

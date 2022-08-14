@@ -1,5 +1,5 @@
 /// <reference types="./effects.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectEquals, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
+import { testModule, test as createTest, expectEquals, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
 import { keepType } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { async, __memo, __await } from '../../effects.mjs';
@@ -8,7 +8,7 @@ import { takeLast, forEach, subscribe, keepT } from '../../rx/ObservableLike.mjs
 import { createVirtualTimeScheduler } from '../../scheduling.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 
-var effectsTests = createDescribe("effects", createTest("batch mode", () => {
+testModule("effects", createTest("batch mode", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueWithDelay = (delay, value) => pipe([value], toObservable({ delay }));
     let result = -1;
@@ -40,5 +40,3 @@ var effectsTests = createDescribe("effects", createTest("batch mode", () => {
     run(scheduler);
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }));
-
-export { effectsTests as default };

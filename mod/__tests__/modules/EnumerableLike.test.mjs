@@ -1,10 +1,10 @@
 /// <reference types="./EnumerableLike.test.d.ts" />
-import { describe as createDescribe } from '../../__internal__/__internal__testing.mjs';
+import { testModule } from '../../__internal__/__internal__testing.mjs';
 import { toEnumerable } from '../../containers/ReadonlyArrayLike.mjs';
 import { bufferT, toReadonlyArrayT, concatT, concatAllT, distinctUntilChangedT, forEachT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT, zipT } from '../../ix/EnumerableLike.mjs';
 import { bufferTests, concatTests, concatAllTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests } from '../operators.mjs';
 
-var EnumerableLikeTests = createDescribe("EnumerableLike", bufferTests({
+testModule("EnumerableLike", bufferTests({
     fromArray: toEnumerable,
     ...bufferT,
     ...toReadonlyArrayT,
@@ -70,5 +70,3 @@ var EnumerableLikeTests = createDescribe("EnumerableLike", bufferTests({
     ...zipT,
     ...toReadonlyArrayT,
 }));
-
-export { EnumerableLikeTests as default };

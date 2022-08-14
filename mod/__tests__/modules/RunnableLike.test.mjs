@@ -1,12 +1,12 @@
 /// <reference types="./RunnableLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectEquals } from '../../__internal__/__internal__testing.mjs';
+import { testModule, describe as createDescribe, test as createTest, expectEquals } from '../../__internal__/__internal__testing.mjs';
 import { toRunnable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, none } from '../../functions.mjs';
 import { deferRunnableT } from '../../rx.mjs';
 import { bufferT, toReadonlyArrayT, catchErrorT, mapT, concatT, concatAllT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, forEachT, keepT, pairwiseT, reduceT, repeatT, takeFirstT, scanT, skipFirstT, someSatisfyT, takeLastT, takeWhileT, throwIfEmptyT, first, last } from '../../rx/RunnableLike.mjs';
 import { bufferTests, catchErrorTests, concatTests, concatAllTests, decodeWithCharsetTests, distinctUntilChangedTests, everySatisfyTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanTests, skipFirstTests, someSatisfyTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
 
-var RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
+testModule("RunnableLike", bufferTests({
     fromArray: toRunnable,
     ...bufferT,
     ...toReadonlyArrayT,
@@ -91,5 +91,3 @@ var RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
 }), createDescribe("first", createTest("when the source has values", pipeLazy([0, 1, 2], toRunnable(), first(), expectEquals(0))), createTest("when the source is empty", pipeLazy([], toRunnable(), first(), expectEquals(none)))), createDescribe("last", createTest("when the source has values", pipeLazy([0, 1, 2], toRunnable(), last(), expectEquals(2))), createTest("when the source is empty", pipeLazy([], toRunnable(), last(), expectEquals(none)))));
-
-export { RunnableLikeTests as default };

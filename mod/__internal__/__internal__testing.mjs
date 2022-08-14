@@ -140,10 +140,8 @@ const createTests = (testGroup, parents) => {
         }
     }
 };
-const runTests = (testGroups) => {
-    for (const test of testGroups) {
-        createTests(test, []);
-    }
+const testModule = (name, ...testGroups) => {
+    createTests(createDescribe(name, ...testGroups), []);
 };
 
-export { DescribeType, TestAsyncType, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, createTest as test, testAsync };
+export { DescribeType, TestAsyncType, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, createTest as test, testAsync, testModule };
