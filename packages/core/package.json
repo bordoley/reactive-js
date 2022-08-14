@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/core",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "keywords": [
     "asynchronous",
     "data flow",
@@ -43,7 +43,7 @@
     "access": "public"
   },
   "exports": {
-    "./*":  "./*",
+    "./*": "./*",
     "./__internal__/*": null
   }
 }
