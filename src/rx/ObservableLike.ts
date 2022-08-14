@@ -63,10 +63,12 @@ import {
   setCurrentRef,
 } from "../__internal__/util/__internal__MutableRefLike";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import {
   createEnumeratorSink,
@@ -213,26 +215,26 @@ export const buffer: <T>(options?: {
 >() => {
   const typedObserverMixin = observerMixin<T>();
 
-  type TBufferObserverProperties = {
+  type TProperties = {
     buffer: T[];
-    delegate: ObserverLike<readonly T[]>;
-    durationFunction: Function1<T, ObservableLike>;
-    durationSubscription: DisposableRefLike;
-    maxBufferSize: number;
+    readonly delegate: ObserverLike<readonly T[]>;
+    readonly durationFunction: Function1<T, ObservableLike>;
+    readonly durationSubscription: DisposableRefLike;
+    readonly maxBufferSize: number;
   };
 
   const createBufferObserver = createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, disposableMixin),
       function BufferObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: ObserverLike<readonly T[]>,
         durationFunction: Function1<T, ObservableLike>,
         maxBufferSize: number,
       ): ObserverLike<T> {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, getScheduler(delegate));
-        unsafeCast<TBufferObserverProperties>(instance);
 
         instance.buffer = [];
         instance.delegate = delegate;
@@ -256,18 +258,15 @@ export const buffer: <T>(options?: {
 
         return instance;
       },
-      {
+      props<TProperties>({
         buffer: none,
         delegate: none,
         durationFunction: none,
         durationSubscription: none,
         maxBufferSize: 0,
-      },
+      }),
       {
-        [SinkLike_notify](
-          this: TBufferObserverProperties & ObserverLike<T>,
-          next: T,
-        ) {
+        [SinkLike_notify](this: TProperties & ObserverLike<T>, next: T) {
           const { buffer, maxBufferSize } = this;
 
           buffer.push(next);
@@ -531,13 +530,10 @@ const latest = /*@__PURE__*/ (() => {
     delegate: ObserverLike<readonly unknown[]>;
     mode: LatestMode;
     completedCount: number;
-    observers: TLatestObserverProperties[];
+    observers: TProperties[];
   };
 
-  const add = (
-    instance: LatestCtx,
-    observer: TLatestObserverProperties,
-  ): void => {
+  const add = (instance: LatestCtx, observer: TProperties): void => {
     instance.observers.push(observer);
   };
 
@@ -570,35 +566,35 @@ const latest = /*@__PURE__*/ (() => {
     }
   };
 
-  type TLatestObserverProperties = {
+  type TProperties = {
     ready: boolean;
     latest: unknown;
-    ctx: LatestCtx;
+    readonly ctx: LatestCtx;
   };
 
   const createLatestObserver = createInstanceFactory(
     clazz(
       __extends(typedObserverMixin, disposableMixin),
       function LatestObserver(
-        instance: Pick<ObserverLike, typeof SinkLike_notify>,
+        instance: Pick<ObserverLike, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         scheduler: SchedulerLike,
         ctx: LatestCtx,
-      ): ObserverLike & TLatestObserverProperties {
+      ): ObserverLike & TProperties {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, scheduler);
-        unsafeCast<TLatestObserverProperties>(instance);
 
         instance.ctx = ctx;
 
         return instance;
       },
-      {
+      props<TProperties>({
         ready: false,
         latest: none,
         ctx: none,
-      },
+      }),
       {
-        [SinkLike_notify](this: TLatestObserverProperties, next: unknown) {
+        [SinkLike_notify](this: TProperties, next: unknown) {
           const { ctx } = this;
           this.latest = next;
           this.ready = true;
@@ -1042,13 +1038,13 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin<T>();
 
     type TProperties = {
-      delegate: ObserverLike<T>;
+      readonly delegate: ObserverLike<T>;
       value: Option<T>;
       hasValue: boolean;
-      durationSubscription: DisposableRefLike;
-      durationFunction: Function1<T, ObservableLike>;
-      mode: ThrottleMode;
-      onNotify: SideEffect;
+      readonly durationSubscription: DisposableRefLike;
+      readonly durationFunction: Function1<T, ObservableLike>;
+      readonly mode: ThrottleMode;
+      readonly onNotify: SideEffect;
     };
 
     const setupDurationSubscription = (
@@ -1071,14 +1067,14 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function ThrottleObserver(
-          instance: unknown,
+          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+            Mutable<TProperties>,
           delegate: ObserverLike<T>,
           durationFunction: Function1<T, ObservableLike>,
           mode: ThrottleMode,
         ): ObserverLike<T> {
           init(disposableMixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
-          unsafeCast<TProperties & ObserverLike<T>>(instance);
 
           instance.delegate = delegate;
           instance.durationFunction = durationFunction;
@@ -1117,7 +1113,15 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
 
           return instance;
         },
-        {},
+        props<TProperties>({
+          delegate: none,
+          value: none,
+          hasValue: false,
+          durationSubscription: none,
+          durationFunction: none,
+          mode: "interval",
+          onNotify: none,
+        }),
         {
           [SinkLike_notify](this: ObserverLike<T> & TProperties, next: T) {
             this.value = next;
@@ -1199,8 +1203,8 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
   const typedObserverMixin = observerMixin();
 
   type TProperties = {
-    delegate: ObserverLike<T>;
-    duration: ObservableLike<unknown>;
+    readonly delegate: ObserverLike<T>;
+    readonly duration: ObservableLike<unknown>;
   };
 
   const setupDurationSubscription = (
@@ -1220,14 +1224,14 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
         typedDisposableRefMixin,
       ),
       function TimeoutObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: ObserverLike<T>,
         duration: ObservableLike<unknown>,
       ): ObserverLike<T> {
         init(typedObserverMixin, instance, getScheduler(delegate));
         init(delegatingDisposableMixin, instance, delegate);
         init(typedDisposableRefMixin, instance, disposed);
-        unsafeCast<TProperties>(instance);
 
         instance.delegate = delegate;
         instance.duration = duration;
@@ -1236,10 +1240,10 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
 
         return instance;
       },
-      {
+      props<TProperties>({
         delegate: none,
         duration: none,
-      },
+      }),
       {
         [SinkLike_notify](
           this: TProperties & MutableRefLike<DisposableLike>,
@@ -1282,7 +1286,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
     type TEnumeratorSchedulerProperties = {
       [SchedulerLike_inContinuation]: boolean;
-      continuations: ContinuationLike[];
+      readonly continuations: ContinuationLike[];
     };
 
     type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
@@ -1298,20 +1302,20 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
             | typeof SchedulerLike_schedule
             | typeof SchedulerLike_shouldYield
             | typeof SourceLike_move
-          >,
+          > &
+            Mutable<TEnumeratorSchedulerProperties>,
         ): EnumeratorScheduler {
           init(disposableMixin, instance);
           init(typedEnumeratorMixin, instance);
-          unsafeCast<TEnumeratorSchedulerProperties>(instance);
 
           instance.continuations = [];
 
           return instance;
         },
-        {
+        props<TEnumeratorSchedulerProperties>({
           [SchedulerLike_inContinuation]: false,
           continuations: none,
-        },
+        }),
         {
           [SchedulerLike_now]: 0,
           get [SchedulerLike_shouldYield](): boolean {
@@ -1353,27 +1357,27 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
     );
 
     type TEnumeratorObserverProperties = {
-      enumerator: EnumeratorScheduler;
+      readonly enumerator: EnumeratorScheduler;
     };
 
     const createEnumeratorObserver = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function EnumeratorObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+            Mutable<TEnumeratorObserverProperties>,
           enumerator: EnumeratorScheduler,
         ): ObserverLike<T> {
           init(disposableMixin, instance);
           init(typedObserverMixin, instance, enumerator);
-          unsafeCast<TEnumeratorObserverProperties>(instance);
 
           instance.enumerator = enumerator;
 
           return instance;
         },
-        {
+        props<TEnumeratorObserverProperties>({
           enumerator: none,
-        },
+        }),
         {
           [SinkLike_notify](this: TEnumeratorObserverProperties, next: T) {
             this.enumerator[EnumeratorLike_current] = next;
@@ -1540,24 +1544,24 @@ export const withLatestFrom: <TA, TB, T>(
     const typedObserverMixin = observerMixin<TA>();
 
     type TProperties = {
-      delegate: ObserverLike<T>;
+      readonly delegate: ObserverLike<T>;
       hasLatest: boolean;
       otherLatest: Option<TB>;
-      selector: Function2<TA, TB, T>;
+      readonly selector: Function2<TA, TB, T>;
     };
 
     return createInstanceFactory(
       clazz(
         __extends(delegatingDisposableMixin, typedObserverMixin),
         function WithLatestFromObserver(
-          instance: Pick<ObserverLike<TA>, typeof SinkLike_notify>,
+          instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
+            Mutable<TProperties>,
           delegate: ObserverLike<T>,
           other: ObservableLike<TB>,
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedObserverMixin, instance, getScheduler(delegate));
-          unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.selector = selector;
@@ -1579,12 +1583,12 @@ export const withLatestFrom: <TA, TB, T>(
 
           return instance;
         },
-        {
+        props<TProperties>({
           delegate: none,
           hasLatest: false,
           otherLatest: none,
           selector: none,
-        },
+        }),
         {
           [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
             if (!isDisposed(this) && this.hasLatest) {
@@ -1627,24 +1631,24 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
     some(isDisposed),
   );
 
-  type TZipObserverProperties = {
-    delegate: ObserverLike<readonly unknown[]>;
-    enumerators: readonly EnumeratorLike<any>[];
-    sinkEnumerator: EnumeratorLike & SinkLike;
+  type TProperties = {
+    readonly delegate: ObserverLike<readonly unknown[]>;
+    readonly enumerators: readonly EnumeratorLike<any>[];
+    readonly sinkEnumerator: EnumeratorLike & SinkLike;
   };
 
   const createZipObserver = createInstanceFactory(
     clazz(
       __extends(disposableMixin, typedObserverMixin),
       function ZipObserver(
-        instance: Pick<ObserverLike, typeof SinkLike_notify>,
+        instance: Pick<ObserverLike, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: ObserverLike<readonly unknown[]>,
         enumerators: readonly EnumeratorLike<any>[],
         sinkEnumerator: EnumeratorLike & SinkLike,
       ): ObserverLike {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, getScheduler(delegate));
-        unsafeCast<TZipObserverProperties>(instance);
 
         instance.delegate = delegate;
         instance.sinkEnumerator = sinkEnumerator;
@@ -1664,16 +1668,13 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
 
         return instance;
       },
-      {
+      props<TProperties>({
         delegate: none,
         enumerators: none,
         sinkEnumerator: none,
-      },
+      }),
       {
-        [SinkLike_notify](
-          this: ObserverLike & TZipObserverProperties,
-          next: unknown,
-        ) {
+        [SinkLike_notify](this: ObserverLike & TProperties, next: unknown) {
           const { sinkEnumerator, enumerators } = this;
           if (isDisposed(this)) {
             return;

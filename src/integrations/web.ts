@@ -1,9 +1,11 @@
 import { delegatingDisposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import { ignoreElements } from "../containers/ContainerLike";
 import { toObservable } from "../containers/PromiseableLike";
@@ -291,7 +293,7 @@ export const windowLocation: WindowLocationStreamableLike =
     };
 
     type TProperties = {
-      delegate: StreamLike<TAction, TState>;
+      readonly delegate: StreamLike<TAction, TState>;
       historyCounter: number;
     };
 
@@ -309,21 +311,21 @@ export const windowLocation: WindowLocationStreamableLike =
             | typeof DispatcherLike_dispatch
             | "goBack"
             | typeof ReactiveContainerLike_sinkInto
-          >,
+          > &
+            Mutable<TProperties>,
           delegate: StreamLike<TAction, TState>,
         ): WindowLocationStreamLike & TProperties {
           init(delegatingDisposableMixin, instance, delegate);
-          unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.historyCounter = -1;
 
           return instance;
         },
-        {
+        props<TProperties>({
           delegate: none,
           historyCounter: -1,
-        },
+        }),
         {
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);
@@ -352,7 +354,6 @@ export const windowLocation: WindowLocationStreamableLike =
           },
 
           goBack(this: TProperties): boolean {
-            unsafeCast<TProperties>(this);
             const canGoBack = this.historyCounter > 0;
 
             if (canGoBack) {

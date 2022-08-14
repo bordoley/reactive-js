@@ -42,10 +42,12 @@ import {
 import { disposableMixin } from "../util/__internal__Disposables";
 import {
   Mixin1,
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../util/__internal__Objects";
 import {
   distinctUntilChangedSinkMixin,
@@ -74,10 +76,10 @@ const createObserverDispatcher = (<T>() => {
   };
 
   type TProperties = {
-    continuation: SideEffect;
-    nextQueue: T[];
-    observer: ObserverLike<T>;
-    onContinuationDispose: SideEffect;
+    readonly continuation: SideEffect;
+    readonly nextQueue: T[];
+    readonly observer: ObserverLike<T>;
+    readonly onContinuationDispose: SideEffect;
   };
 
   return createInstanceFactory(
@@ -87,11 +89,11 @@ const createObserverDispatcher = (<T>() => {
         instance: Pick<
           DispatcherLike,
           typeof DispatcherLike_scheduler | typeof DispatcherLike_dispatch
-        >,
+        > &
+          Mutable<TProperties>,
         observer: ObserverLike<T>,
       ): DispatcherLike<T> {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance.observer = observer;
         instance.nextQueue = [];
@@ -123,12 +125,12 @@ const createObserverDispatcher = (<T>() => {
 
         return instance;
       },
-      {
+      props<TProperties>({
         continuation: none,
         nextQueue: none,
         observer: none,
         onContinuationDispose: none,
-      },
+      }),
       {
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
@@ -155,25 +157,25 @@ export const observerMixin: <T>() => Mixin1<
   SchedulerLike
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [ObserverLike_scheduler]: SchedulerLike;
+    readonly [ObserverLike_scheduler]: SchedulerLike;
     dispatcher: Option<DispatcherLike<T>>;
   };
 
   return pipe(
     clazz(
       function ObserverMixin(
-        instance: Pick<ObserverLike, typeof ObserverLike_dispatcher>,
+        instance: Pick<ObserverLike, typeof ObserverLike_dispatcher> &
+          Mutable<TProperties>,
         scheduler: SchedulerLike,
       ): TObserverMixinReturn<T> {
-        unsafeCast<TProperties>(instance);
         instance[ObserverLike_scheduler] = scheduler;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [ObserverLike_scheduler]: none,
         dispatcher: none,
-      },
+      }),
       {
         get [ObserverLike_dispatcher](): DispatcherLike<T> {
           unsafeCast<ObserverLike<T> & TProperties>(this);
@@ -206,20 +208,20 @@ export const createDelegatingObserver: <T>(
     clazz(
       __extends(disposableMixin, typedObserverMixin),
       function DelegatingObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         observer: ObserverLike<T>,
       ): ObserverLike<T> {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, getScheduler(observer));
-        unsafeCast<TProperties>(instance);
 
         instance.delegate = observer;
 
         return instance;
       },
-      {
+      props<TProperties>({
         delegate: none,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
           this.delegate[SinkLike_notify](next);

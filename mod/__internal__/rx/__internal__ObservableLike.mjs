@@ -1,6 +1,6 @@
 /// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
-import { compose, isTrue, pipeUnsafe, newInstance, isSome, pipe, unsafeCast, getLength, none, partial, isEmpty } from '../../functions.mjs';
+import { compose, isTrue, pipeUnsafe, newInstance, isSome, pipe, getLength, none, partial, isEmpty } from '../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createSubject, createEnumerableObservable, createRunnableObservable, createObservable } from '../../rx.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { publishTo, publish } from '../../rx/SubjectLike.mjs';
@@ -13,7 +13,7 @@ import { observerMixin, createDistinctUntilChangedObserver, createForEachObserve
 import { addTo, onComplete, isDisposed, dispose, bindTo, addToIgnoringChildErrors } from '../util/__internal__DisposableLike.mjs';
 import { disposableMixin, createDisposableRef, disposed } from '../util/__internal__Disposables.mjs';
 import { MutableRefLike_current } from '../util/__internal__MutableRefLike.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../util/__internal__Objects.mjs';
+import { createInstanceFactory, clazz, __extends, init, props } from '../util/__internal__Objects.mjs';
 import { createOnSink } from './__internal__ReactiveContainerLike.mjs';
 
 const allAreEnumerable = compose(map((obs) => obs[ObservableLike_isEnumerable]), every(isTrue));
@@ -66,7 +66,6 @@ const createMergeAll = (lift) => {
         return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
-            unsafeCast(instance);
             instance.delegate = delegate;
             instance.maxBufferSize = maxBufferSize;
             instance.maxConcurrency = maxConcurrency;
@@ -86,14 +85,14 @@ const createMergeAll = (lift) => {
                 }
             }));
             return instance;
-        }, {
+        }, props({
             activeCount: 0,
             delegate: none,
             maxBufferSize: 0,
             maxConcurrency: 0,
             onDispose: none,
             queue: none,
-        }, {
+        }), {
             [SinkLike_notify](next) {
                 const { queue } = this;
                 queue.push(next);
@@ -132,15 +131,14 @@ const createSwitchAll = (lift) => {
         return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
-            unsafeCast(instance);
             instance.delegate = delegate;
             instance.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
             pipe(instance, addTo(delegate), onComplete(onDispose));
             return instance;
-        }, {
+        }, props({
             currentRef: none,
             delegate: none,
-        }, {
+        }), {
             [SinkLike_notify](next) {
                 this.currentRef[MutableRefLike_current] = pipe(next, forEach(notifySink(this.delegate)), subscribe(getScheduler(this)), onComplete(() => {
                     if (isDisposed(this)) {
@@ -225,7 +223,6 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
         return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
-            unsafeCast(instance);
             instance.delegate = delegate;
             instance.queue = [];
             instance.selector = selector;
@@ -244,13 +241,13 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
             }), subscribe(getScheduler(delegate)), onComplete(disposeDelegate), addTo(delegate));
             pipe(instance, addTo(delegate), onComplete(disposeDelegate));
             return instance;
-        }, {
+        }, props({
             delegate: none,
             hasLatest: false,
             otherLatest: none,
             queue: none,
             selector: none,
-        }, {
+        }), {
             [SinkLike_notify](next) {
                 this.queue.push(next);
                 notifyDelegate(this);

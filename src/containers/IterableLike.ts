@@ -4,20 +4,15 @@ import {
   enumeratorMixin,
 } from "../__internal__/util/__internal__Enumerators";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import { IterableLike, ToIterable } from "../containers";
-import {
-  Function1,
-  compose,
-  identity,
-  none,
-  pipe,
-  unsafeCast,
-} from "../functions";
+import { Function1, compose, identity, none, pipe } from "../functions";
 import { ToAsyncEnumerable, ToEnumerable, createEnumerable } from "../ix";
 import { fromEnumerable } from "../ix/AsyncEnumerableLike";
 import { toObservable as enumerableToObservable } from "../ix/EnumerableLike";
@@ -49,25 +44,25 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
     const typedEnumeratorMixin = enumeratorMixin<T>();
 
     type TProperties = {
-      iterator: Iterator<T>;
+      readonly iterator: Iterator<T>;
     };
 
     const createIterableEnumerator = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function IteratorEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+            Mutable<TProperties>,
           iterator: Iterator<T>,
         ): EnumeratorLike<T> {
           init(disposableMixin, instance);
           init(typedEnumeratorMixin, instance);
-          unsafeCast<TProperties>(instance);
 
           instance.iterator = iterator;
 
           return instance;
         },
-        { iterator: none },
+        props<TProperties>({ iterator: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
             if (!isDisposed(this)) {

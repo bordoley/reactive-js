@@ -9,6 +9,7 @@ import {
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import {
   Concat,
@@ -42,7 +43,6 @@ import {
   pipe,
   returns,
   strictEquality,
-  unsafeCast,
 } from "../functions";
 import { ToEnumerable, createEnumerable } from "../ix";
 import {
@@ -417,20 +417,20 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
       clazz(
         __extends(disposableMixin, typedEnumeratorMixin),
         function SequenceEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+            TProperties,
           seq: SequenceLike<T>,
         ): EnumeratorLike<T> {
           init(disposableMixin, instance);
           init(typedEnumeratorMixin, instance);
-          unsafeCast<TProperties>(instance);
 
           instance.seq = seq;
 
           return instance;
         },
-        {
+        props<TProperties>({
           seq: none,
-        },
+        }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
             if (!isDisposed(this)) {

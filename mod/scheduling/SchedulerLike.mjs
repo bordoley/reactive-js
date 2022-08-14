@@ -7,8 +7,8 @@ import { isDisposed, dispose, addIgnoringChildErrors } from '../__internal__/uti
 import { disposableMixin, disposableRefMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current } from '../__internal__/util/__internal__MutableRefLike.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { none, unsafeCast, isSome, pipe, isNone, raise, newInstance, max, compose } from '../functions.mjs';
+import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { none, isSome, pipe, isNone, raise, newInstance, max, unsafeCast, compose } from '../functions.mjs';
 import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_now } from '../scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, disposed, SourceLike_move, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
@@ -30,14 +30,13 @@ let currentScheduler = none;
 const createContinuation = /*@__PURE__*/ (() => {
     return createInstanceFactory(clazz(__extends(disposableMixin), function Continuation(instance, scheduler, f) {
         init(disposableMixin, instance);
-        unsafeCast(instance);
         instance.scheduler = scheduler;
         instance.f = f;
         return instance;
-    }, {
+    }, props({
         scheduler: none,
         f: none,
-    }, {
+    }), {
         [ContinuationLike_run]() {
             if (!isDisposed(this)) {
                 let error = none;
@@ -168,12 +167,11 @@ const createQueueScheduler =
         init(disposableMixin, instance);
         init(typedEnumeratorMixin, instance);
         init(typedDisposableRefMixin, instance, disposed);
-        unsafeCast(instance);
         instance.delayed = createPriorityQueue(delayedComparator);
         instance.queue = createPriorityQueue(taskComparator);
         instance.host = host;
         return instance;
-    }, {
+    }, props({
         [SchedulerLike_inContinuation]: false,
         delayed: none,
         dueTime: 0,
@@ -183,7 +181,7 @@ const createQueueScheduler =
         queue: none,
         taskIDCounter: 0,
         yieldRequested: false,
-    }, {
+    }), {
         get [SchedulerLike_now]() {
             unsafeCast(this);
             return getCurrentTime(this.host);

@@ -23,10 +23,12 @@ import {
   enumeratorMixin,
 } from "./__internal__/util/__internal__Enumerators";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "./__internal__/util/__internal__Objects";
 import { Option, isSome, none, pipe, unsafeCast } from "./functions";
 import {
@@ -212,7 +214,7 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   type TProperties = {
     [SchedulerLike_inContinuation]: boolean;
     startTime: number;
-    yieldInterval: number;
+    readonly yieldInterval: number;
     yieldRequested: boolean;
   };
 
@@ -226,22 +228,22 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
           | typeof SchedulerLike_shouldYield
           | typeof SchedulerLike_requestYield
           | typeof SchedulerLike_schedule
-        >,
+        > &
+          Mutable<TProperties>,
         yieldInterval: number,
       ): SchedulerLike {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance.yieldInterval = yieldInterval;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [SchedulerLike_inContinuation]: false,
         startTime: 0,
         yieldInterval: 0,
         yieldRequested: false,
-      },
+      }),
       {
         get [SchedulerLike_now](): number {
           if (supportsPerformanceNow) {
@@ -325,11 +327,11 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
   type TProperties = {
     [SchedulerLike_inContinuation]: boolean;
     [SchedulerLike_now]: number;
-    maxMicroTaskTicks: number;
+    readonly maxMicroTaskTicks: number;
     microTaskTicks: number;
     taskIDCount: number;
     yieldRequested: boolean;
-    taskQueue: QueueLike<VirtualTask>;
+    readonly taskQueue: QueueLike<VirtualTask>;
   };
 
   const createVirtualTimeSchedulerInstance = createInstanceFactory(
@@ -342,18 +344,18 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
           | typeof SchedulerLike_shouldYield
           | typeof SchedulerLike_requestYield
           | typeof SchedulerLike_schedule
-        >,
+        > &
+          Mutable<TProperties>,
         maxMicroTaskTicks: number,
       ): VirtualTimeSchedulerLike {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance.maxMicroTaskTicks = maxMicroTaskTicks;
         instance.taskQueue = createPriorityQueue(comparator);
 
         return instance;
       },
-      {
+      props<TProperties>({
         [SchedulerLike_inContinuation]: false,
         [SchedulerLike_now]: 0,
         maxMicroTaskTicks: MAX_SAFE_INTEGER,
@@ -361,7 +363,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         taskIDCount: 0,
         yieldRequested: false,
         taskQueue: none,
-      },
+      }),
       {
         get [SchedulerLike_shouldYield]() {
           unsafeCast<TProperties>(this);

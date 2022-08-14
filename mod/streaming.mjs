@@ -1,10 +1,10 @@
 /// <reference types="./streaming.d.ts" />
 import { multicast, scan, mergeT, distinctUntilChanged } from './__internal__/rx/__internal__ObservableLike.mjs';
 import { delegatingDisposableMixin } from './__internal__/util/__internal__Disposables.mjs';
-import { clazz, __extends, init, createInstanceFactory } from './__internal__/util/__internal__Objects.mjs';
+import { clazz, __extends, init, props, createInstanceFactory } from './__internal__/util/__internal__Objects.mjs';
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
-import { returns, unsafeCast, pipe, none, newInstance, getLength, composeUnsafe, updateReducer } from './functions.mjs';
+import { returns, pipe, none, unsafeCast, newInstance, getLength, composeUnsafe, updateReducer } from './functions.mjs';
 import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createObservable } from './rx.mjs';
 import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
@@ -20,16 +20,15 @@ const streamMixin = /*@__PURE__*/ (() => {
     return returns(clazz(__extends(delegatingDisposableMixin), function Stream(instance, op, scheduler, replay) {
         const subject = createSubject({ replay });
         init(delegatingDisposableMixin, instance, subject);
-        unsafeCast(instance);
         instance[DispatcherLike_scheduler] = scheduler;
         instance.subject = subject;
         instance.observable = pipe(subject, op, multicast(scheduler, { replay }), add(instance));
         return instance;
-    }, {
+    }, props({
         subject: none,
         observable: none,
         [DispatcherLike_scheduler]: none,
-    }, {
+    }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return getObserverCount(this.observable);
@@ -41,11 +40,9 @@ const streamMixin = /*@__PURE__*/ (() => {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [DispatcherLike_dispatch](req) {
-            unsafeCast(this);
             pipe(this.subject, publish(req));
         },
         [ReactiveContainerLike_sinkInto](observer) {
-            unsafeCast(this);
             pipe(this.observable, sinkInto(observer));
         },
     }));
