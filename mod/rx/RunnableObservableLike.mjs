@@ -4,7 +4,7 @@ import { createCatchError, createMergeAll, createScanAsync, createSwitchAll } fr
 import { pipeUnsafe, newInstance } from '../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createRunnableObservable } from '../rx.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
-import { buffer, concat, decodeWithCharset, distinctUntilChanged, forEach, keep, map, merge, pairwise, reduce, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
+import { buffer, concat, decodeWithCharset, distinctUntilChanged, everySatisfy, forEach, keep, map, merge, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
 
 const lift = 
 /*@__PURE__*/ (() => {
@@ -53,6 +53,9 @@ const decodeWithCharsetT = {
 const distinctUntilChangedT = {
     distinctUntilChanged: distinctUntilChanged,
 };
+const everySatisfyT = {
+    everySatisfy: everySatisfy,
+};
 const exhaust = () => mergeAll({
     maxBufferSize: 1,
     maxConcurrency: 1,
@@ -88,6 +91,9 @@ const scanAsyncT = { scanAsync };
 const skipFirstT = {
     skipFirst: skipFirst,
 };
+const someSatisfyT = {
+    someSatisfy: someSatisfy,
+};
 const switchAll = 
 /*@__PURE__*/ createSwitchAll(lift);
 const switchAllT = {
@@ -110,4 +116,4 @@ const zipT = {
     zip: zip,
 };
 
-export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

@@ -34,6 +34,7 @@ import {
   decodeWithCharsetSinkMixin,
   delegatingSinkMixin,
   distinctUntilChangedSinkMixin,
+  everySatisfySinkMixin,
   forEachSinkMixin,
   keepSinkMixin,
   mapSinkMixin,
@@ -41,6 +42,7 @@ import {
   reduceSinkMixin,
   scanSinkMixin,
   skipFirstSinkMixin,
+  someSatisfySinkMixin,
   takeFirstSinkMixin,
   takeLastSinkMixin,
   takeWhileSinkMixin,
@@ -53,6 +55,7 @@ import {
   ConcatAll,
   DecodeWithCharset,
   DistinctUntilChanged,
+  EverySatisfy,
   ForEach,
   Keep,
   Map,
@@ -61,6 +64,7 @@ import {
   Repeat,
   Scan,
   SkipFirst,
+  SomeSatisfy,
   TakeFirst,
   TakeLast,
   TakeWhile,
@@ -72,6 +76,7 @@ import {
   Factory,
   Function1,
   Option,
+  Predicate,
   identity,
   isSome,
   newInstance,
@@ -234,6 +239,23 @@ export const distinctUntilChangedT: DistinctUntilChanged<RunnableLike> = {
   distinctUntilChanged,
 };
 
+export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
+  /*@__PURE__*/ (<T>() => {
+    const typedEverySatisfySinkMixin = everySatisfySinkMixin<
+      RunnableLike<boolean>,
+      SinkLike<boolean>,
+      T
+    >(arrayToRunnable());
+
+    return (predicate: Predicate<T>) =>
+      pipe(
+        createInstanceFactory(typedEverySatisfySinkMixin),
+        partial(predicate),
+        lift,
+      );
+  })();
+export const everySatisfyT: EverySatisfy<RunnableLike> = { everySatisfy };
+
 export const first =
   <T>(): Function1<RunnableLike<T>, Option<T>> =>
   src => {
@@ -383,6 +405,23 @@ export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] = /*@__PURE__*/ (<
   );
 })();
 export const skipFirstT: SkipFirst<RunnableLike> = { skipFirst };
+
+export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
+  /*@__PURE__*/ (<T>() => {
+    const typedSomeSatisfySinkMixin = someSatisfySinkMixin<
+      RunnableLike<boolean>,
+      SinkLike<boolean>,
+      T
+    >(arrayToRunnable());
+
+    return (predicate: Predicate<T>) =>
+      pipe(
+        createInstanceFactory(typedSomeSatisfySinkMixin),
+        partial(predicate),
+        lift,
+      );
+  })();
+export const someSatisfyT: SomeSatisfy<RunnableLike> = { someSatisfy };
 
 export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] = /*@__PURE__*/ (<
   T,

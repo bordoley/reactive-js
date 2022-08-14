@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.mjs";
+import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.mjs";
 import { Factory } from "../functions.mjs";
 import { EnumerableObservableLike, ScanAsync } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
@@ -17,6 +17,7 @@ declare const concatAll: ConcatAll<EnumerableObservableLike, {
 }>["concatAll"];
 declare const decodeWithCharsetT: DecodeWithCharset<EnumerableObservableLike>;
 declare const distinctUntilChangedT: DistinctUntilChanged<EnumerableObservableLike>;
+declare const everySatisfyT: EverySatisfy<EnumerableObservableLike>;
 declare const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"];
 declare const exhaustT: ConcatAll<EnumerableObservableLike>;
 declare const forEachT: ForEach<EnumerableObservableLike>;
@@ -37,6 +38,7 @@ declare const scanT: Scan<EnumerableObservableLike>;
 declare const scanAsync: ScanAsync<EnumerableObservableLike, EnumerableObservableLike>["scanAsync"];
 declare const scanAsyncT: ScanAsync<EnumerableObservableLike, EnumerableObservableLike>;
 declare const skipFirstT: SkipFirst<EnumerableObservableLike>;
+declare const someSatisfyT: SomeSatisfy<EnumerableObservableLike>;
 declare const switchAll: ConcatAll<EnumerableObservableLike>["concatAll"];
 declare const switchAllT: ConcatAll<EnumerableObservableLike>;
 declare const takeFirstT: TakeFirst<EnumerableObservableLike>;
@@ -47,4 +49,4 @@ declare const toReadonlyArrayT: ToReadonlyArray<EnumerableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
 declare const zipT: Zip<EnumerableObservableLike>;
-export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

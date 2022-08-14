@@ -74,7 +74,9 @@ import {
 import {
   createEnumeratorSink,
   decodeWithCharsetSinkMixin,
+  everySatisfySinkMixin,
   reduceSinkMixin,
+  someSatisfySinkMixin,
   takeLastSinkMixin,
 } from "../__internal__/util/__internal__Sinks";
 import {
@@ -85,6 +87,7 @@ import {
   ContainerOperator,
   DecodeWithCharset,
   DistinctUntilChanged,
+  EverySatisfy,
   ForEach,
   ForkConcat,
   ForkZip,
@@ -96,6 +99,7 @@ import {
   Repeat,
   Scan,
   SkipFirst,
+  SomeSatisfy,
   TakeFirst,
   TakeLast,
   TakeWhile,
@@ -459,6 +463,38 @@ export const distinctUntilChanged = distinctUntilChangedInternal;
 export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
   distinctUntilChanged,
 };
+
+export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
+  /*@__PURE__*/ (<T>() => {
+    const typedObserverMixin = observerMixin();
+    const typedEverySatisfySinkMixin = everySatisfySinkMixin<
+      ObservableLike<boolean>,
+      SinkLike<boolean>,
+      T
+    >(arrayToObservable());
+
+    const everySatisfyObserverMixin = clazz(
+      __extends(typedEverySatisfySinkMixin, typedObserverMixin),
+      function EverySatisfyObserver(
+        instance: unknown,
+        delegate: ObserverLike<boolean>,
+        predicate: Predicate<T>,
+      ): ObserverLike<T> {
+        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(typedEverySatisfySinkMixin, instance, delegate, predicate);
+
+        return instance;
+      },
+    );
+
+    return (predicate: Predicate<T>) =>
+      pipe(
+        createInstanceFactory(everySatisfyObserverMixin),
+        partial(predicate),
+        liftEnumerableObservable,
+      );
+  })();
+export const everySatisfyT: EverySatisfy<ObservableLike> = { everySatisfy };
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
@@ -925,6 +961,38 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
     createSkipFirstOperator(liftEnumerableObservableT),
   );
 export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
+
+export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
+  /*@__PURE__*/ (<T>() => {
+    const typedObserverMixin = observerMixin();
+    const typedSomeSatisfySinkMixin = someSatisfySinkMixin<
+      ObservableLike<boolean>,
+      SinkLike<boolean>,
+      T
+    >(arrayToObservable());
+
+    const someSatisfyObserverMixin = clazz(
+      __extends(typedSomeSatisfySinkMixin, typedObserverMixin),
+      function EverySatisfyObserver(
+        instance: unknown,
+        delegate: ObserverLike<boolean>,
+        predicate: Predicate<T>,
+      ): ObserverLike<T> {
+        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(typedSomeSatisfySinkMixin, instance, delegate, predicate);
+
+        return instance;
+      },
+    );
+
+    return (predicate: Predicate<T>) =>
+      pipe(
+        createInstanceFactory(someSatisfyObserverMixin),
+        partial(predicate),
+        liftEnumerableObservable,
+      );
+  })();
+export const someSatisfyT: SomeSatisfy<ObservableLike> = { someSatisfy };
 
 export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
   switchAllInternal;

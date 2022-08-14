@@ -1,5 +1,5 @@
 /// <reference types="./ContainerLike.d.ts" />
-import { compose, callWith, isEqualTo, newInstance, pipe, isSome, pipeLazy, alwaysFalse, returns, negate } from '../functions.mjs';
+import { compose, callWith, isEqualTo, newInstance, pipe, isSome, alwaysFalse, returns, negate } from '../functions.mjs';
 
 const compute = (m, options) => compose(x => [x], m.fromArray({
     ...options,
@@ -15,7 +15,7 @@ function endWith(m, ...values) {
     return concatWith(m, m.fromArray()(values));
 }
 const fromOption = ({ fromArray }, options) => option => pipe(isSome(option) ? [option] : [], fromArray({ ...options }));
-const genMap = (m, mapper, options) => compose(m.map(x => pipe(pipeLazy(x, mapper), m.fromIterator(options))), m.concatAll(options));
+const genMap = (m, mapper, options) => compose(m.map(x => pipe(x, mapper, m.fromIterable(options))), m.concatAll(options));
 const keepType = ({ keep }, predicate) => keep(predicate);
 const ignoreElements = ({ keep, }) => keep(alwaysFalse);
 const mapTo = ({ map }, value) => pipe(value, returns, map);

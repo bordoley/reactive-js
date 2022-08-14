@@ -8,7 +8,7 @@ import {
   EverySatisfy,
   FromArray,
   FromArrayOptions,
-  FromIterator,
+  FromIterable,
   Keep,
   Map,
   SomeSatisfy,
@@ -29,7 +29,6 @@ import {
   negate,
   newInstance,
   pipe,
-  pipeLazy,
   returns,
 } from "../functions";
 
@@ -115,17 +114,15 @@ export const genMap = <
   C extends ContainerLike,
   TA,
   TB,
-  OConcatAll extends Record<string, never> = Record<string, never>,
-  OFromIterator extends Record<string, never> = Record<string, never>,
-  TReturn = any,
-  TNext = unknown,
+  OConcatAll = never,
+  OFromIterable = never,
 >(
-  m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>,
-  mapper: Function1<TA, Generator<TB, TReturn, TNext>>,
-  options?: Partial<OConcatAll & OFromIterator>,
+  m: Map<C> & ConcatAll<C, OConcatAll> & FromIterable<C, OFromIterable>,
+  mapper: Function1<TA, Generator<TB, any, any>>,
+  options?: Partial<OConcatAll & OFromIterable>,
 ): ContainerOperator<C, TA, TB> =>
   compose(
-    m.map(x => pipe(pipeLazy(x, mapper), m.fromIterator<TB>(options))),
+    m.map(x => pipe(x, mapper, m.fromIterable<TB>(options))),
     m.concatAll(options),
   );
 

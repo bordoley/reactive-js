@@ -16,6 +16,7 @@ import {
   ConcatAll,
   DecodeWithCharset,
   DistinctUntilChanged,
+  EverySatisfy,
   ForEach,
   Keep,
   Map,
@@ -23,6 +24,7 @@ import {
   Reduce,
   Scan,
   SkipFirst,
+  SomeSatisfy,
   TakeFirst,
   TakeLast,
   TakeWhile,
@@ -46,6 +48,7 @@ import {
   concat,
   decodeWithCharset,
   distinctUntilChanged,
+  everySatisfy,
   forEach,
   keep,
   map,
@@ -54,6 +57,7 @@ import {
   reduce,
   scan,
   skipFirst,
+  someSatisfy,
   takeFirst,
   takeLast,
   takeWhile,
@@ -147,6 +151,11 @@ export const distinctUntilChangedT: DistinctUntilChanged<EnumerableObservableLik
       distinctUntilChanged as DistinctUntilChanged<EnumerableObservableLike>["distinctUntilChanged"],
   };
 
+export const everySatisfyT: EverySatisfy<EnumerableObservableLike> = {
+  everySatisfy:
+    everySatisfy as EverySatisfy<EnumerableObservableLike>["everySatisfy"],
+};
+
 export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] = <
   T,
 >() =>
@@ -223,6 +232,11 @@ export const scanAsyncT: ScanAsync<
 
 export const skipFirstT: SkipFirst<EnumerableObservableLike> = {
   skipFirst: skipFirst as SkipFirst<EnumerableObservableLike>["skipFirst"],
+};
+
+export const someSatisfyT: SomeSatisfy<EnumerableObservableLike> = {
+  someSatisfy:
+    someSatisfy as SomeSatisfy<EnumerableObservableLike>["someSatisfy"],
 };
 
 export const switchAll: ConcatAll<EnumerableObservableLike>["concatAll"] =

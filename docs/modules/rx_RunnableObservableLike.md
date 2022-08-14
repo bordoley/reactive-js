@@ -11,6 +11,7 @@
 - [concatT](rx_RunnableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_RunnableObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_RunnableObservableLike.md#distinctuntilchangedt)
+- [everySatisfyT](rx_RunnableObservableLike.md#everysatisfyt)
 - [exhaustT](rx_RunnableObservableLike.md#exhaustt)
 - [forEachT](rx_RunnableObservableLike.md#foreacht)
 - [keepT](rx_RunnableObservableLike.md#keept)
@@ -22,6 +23,7 @@
 - [scanAsyncT](rx_RunnableObservableLike.md#scanasynct)
 - [scanT](rx_RunnableObservableLike.md#scant)
 - [skipFirstT](rx_RunnableObservableLike.md#skipfirstt)
+- [someSatisfyT](rx_RunnableObservableLike.md#somesatisfyt)
 - [switchAllT](rx_RunnableObservableLike.md#switchallt)
 - [takeFirstT](rx_RunnableObservableLike.md#takefirstt)
 - [takeLastT](rx_RunnableObservableLike.md#takelastt)
@@ -68,6 +70,12 @@ ___
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### everySatisfyT
+
+• `Const` **everySatisfyT**: [`EverySatisfy`](containers.md#everysatisfy)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ___
 
@@ -134,6 +142,12 @@ ___
 ### skipFirstT
 
 • `Const` **skipFirstT**: [`SkipFirst`](containers.md#skipfirst)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### someSatisfyT
+
+• `Const` **someSatisfyT**: [`SomeSatisfy`](containers.md#somesatisfy)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ___
 

@@ -14,6 +14,7 @@ import {
   DecodeWithCharset,
   Defer,
   DistinctUntilChanged,
+  EverySatisfy,
   ForEach,
   FromArray,
   FromArrayOptions,
@@ -24,6 +25,7 @@ import {
   Repeat,
   Scan,
   SkipFirst,
+  SomeSatisfy,
   TakeFirst,
   TakeLast,
   TakeWhile,
@@ -32,8 +34,9 @@ import {
   Zip,
   emptyReadonlyArray,
 } from "../containers";
-import { encodeUtf8, throws } from "../containers/ContainerLike";
+import { contains, encodeUtf8, throws } from "../containers/ContainerLike";
 import {
+  alwaysFalse,
   alwaysTrue,
   arrayEquality,
   increment,
@@ -228,6 +231,43 @@ export const distinctUntilChangedTests = <C extends ContainerLike>(
         expectToThrowError(err),
       );
     }),
+  );
+
+export const everySatisfyTests = <C extends ContainerLike>(
+  m: EverySatisfy<C> & FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "everySatisfy",
+    test(
+      "source is empty",
+      pipeLazy(
+        [],
+        m.fromArray(),
+        m.everySatisfy(alwaysFalse),
+        m.toReadonlyArray(),
+        expectArrayEquals([true]),
+      ),
+    ),
+    test(
+      "source values pass predicate",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray(),
+        m.everySatisfy(alwaysTrue),
+        m.toReadonlyArray(),
+        expectArrayEquals([true]),
+      ),
+    ),
+    test(
+      "source values fail predicate",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromArray(),
+        m.everySatisfy(alwaysFalse),
+        m.toReadonlyArray(),
+        expectArrayEquals([false]),
+      ),
+    ),
   );
 
 export const forEachTests = <C extends ContainerLike>(
@@ -572,6 +612,43 @@ export const skipFirstTests = <C extends ContainerLike>(
         m.skipFirst({ count: 4 }),
         m.toReadonlyArray(),
         expectArrayEquals(emptyReadonlyArray()),
+      ),
+    ),
+  );
+
+export const someSatisfyTests = <C extends ContainerLike>(
+  m: SomeSatisfy<C> & FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "someSatisfy",
+    test(
+      "source is empty",
+      pipeLazy(
+        [],
+        m.fromArray(),
+        contains<C, number>(m, 1),
+        m.toReadonlyArray(),
+        expectArrayEquals([false]),
+      ),
+    ),
+    test(
+      "source contains value",
+      pipeLazy(
+        [0, 1, 2],
+        m.fromArray(),
+        contains(m, 1),
+        m.toReadonlyArray(),
+        expectArrayEquals([true]),
+      ),
+    ),
+    test(
+      "source does not contain value",
+      pipeLazy(
+        [2, 3, 4],
+        m.fromArray(),
+        contains(m, 1),
+        m.toReadonlyArray(),
+        expectArrayEquals([false]),
       ),
     ),
   );

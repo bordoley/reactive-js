@@ -1,5 +1,5 @@
 import { Describe } from "../__internal__/__internal__testing.mjs";
-import { Function1, Factory, Equality, SideEffect1, Predicate, Reducer } from "../functions.mjs";
+import { Function1, Factory, Equality, Predicate, SideEffect1, Reducer } from "../functions.mjs";
 import { ContainerLike, Container, ContainerOperator, FromArrayOptions, ContainerOf, ReadonlyArrayLike, FromArray } from "../containers.mjs";
 import { ObservableLike, ScanAsync } from "../rx.mjs";
 declare const bufferTests: <C extends ContainerLike>(m: Container<C> & {
@@ -49,6 +49,13 @@ declare const distinctUntilChangedTests: <C extends ContainerLike>(m: Container<
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T> | undefined;
     } | undefined): ContainerOperator<C, T, T>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
+declare const everySatisfyTests: <C extends ContainerLike>(m: Container<C> & {
+    everySatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 } & {
     fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 } & {
@@ -125,6 +132,13 @@ declare const skipFirstTests: <C extends ContainerLike>(m: Container<C> & {
     skipFirst<T>(options?: {
         readonly count?: number | undefined;
     } | undefined): ContainerOperator<C, T, T>;
+} & {
+    fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
+}) => Describe;
+declare const someSatisfyTests: <C extends ContainerLike>(m: Container<C> & {
+    someSatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 } & {
     fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 } & {
@@ -230,4 +244,4 @@ declare const zipTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
-export { bufferTests, catchErrorTests, concatAllTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanAsyncTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };
+export { bufferTests, catchErrorTests, concatAllTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, everySatisfyTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests };
