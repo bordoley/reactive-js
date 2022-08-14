@@ -24,17 +24,17 @@
 
 ### Properties
 
-- [T](containers.ContainerLike.md#t)
-- [TContainerOf](containers.ContainerLike.md#tcontainerof)
+- [[ContainerLike\_T]](containers.ContainerLike.md#[containerlike_t])
+- [[ContainerLike\_type]](containers.ContainerLike.md#[containerlike_type])
 
 ## Properties
 
-### T
+### [ContainerLike\_T]
 
-• `Optional` `Readonly` **T**: `unknown`
+• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
 
 ___
 
-### TContainerOf
+### [ContainerLike\_type]
 
-• `Optional` `Readonly` **TContainerOf**: `unknown`
+• `Optional` `Readonly` **[ContainerLike\_type]**: `unknown`

@@ -26,30 +26,20 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ### Properties
 
-- [TContainerOf](rx.ObservableLike.md#tcontainerof)
-- [TStatefulContainerState](rx.ObservableLike.md#tstatefulcontainerstate)
+- [[ContainerLike\_type]](rx.ObservableLike.md#[containerlike_type])
 - [[ObservableLike\_isEnumerable]](rx.ObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])
+- [[StableContainerLike\_state]](rx.ObservableLike.md#[stablecontainerlike_state])
 
 ## Properties
 
-### TContainerOf
+### [ContainerLike\_type]
 
-• `Optional` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
-
-#### Overrides
-
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[TContainerOf](rx.ReactiveContainerLike.md#tcontainerof)
-
-___
-
-### TStatefulContainerState
-
-• `Optional` `Readonly` **TStatefulContainerState**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
+• `Optional` `Readonly` **[ContainerLike\_type]**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[TStatefulContainerState](rx.ReactiveContainerLike.md#tstatefulcontainerstate)
+[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[ContainerLike_type]](rx.ReactiveContainerLike.md#[containerlike_type])
 
 ___
 
@@ -62,3 +52,13 @@ ___
 ### [ObservableLike\_isRunnable]
 
 • `Readonly` **[ObservableLike\_isRunnable]**: `boolean`
+
+___
+
+### [StableContainerLike\_state]
+
+• `Optional` `Readonly` **[StableContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
+
+#### Overrides
+
+[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[StableContainerLike_state]](rx.ReactiveContainerLike.md#[stablecontainerlike_state])

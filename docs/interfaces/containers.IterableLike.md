@@ -22,25 +22,25 @@
 
 ### Properties
 
-- [T](containers.IterableLike.md#t)
-- [TContainerOf](containers.IterableLike.md#tcontainerof)
+- [[ContainerLike\_T]](containers.IterableLike.md#[containerlike_t])
+- [[ContainerLike\_type]](containers.IterableLike.md#[containerlike_type])
 
 ## Properties
 
-### T
+### [ContainerLike\_T]
 
-• `Optional` `Readonly` **T**: `unknown`
+• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
 
 #### Inherited from
 
-[ContainerLike](containers.ContainerLike.md).[T](containers.ContainerLike.md#t)
+[ContainerLike](containers.ContainerLike.md).[[ContainerLike_T]](containers.ContainerLike.md#[containerlike_t])
 
 ___
 
-### TContainerOf
+### [ContainerLike\_type]
 
-• `Optional` `Readonly` **TContainerOf**: [`IterableLike`](containers.IterableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[ContainerLike\_type]**: [`IterableLike`](containers.IterableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[TContainerOf](containers.ContainerLike.md#tcontainerof)
+[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])

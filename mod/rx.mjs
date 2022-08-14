@@ -3,6 +3,7 @@ import { getDelay, hasDelay } from './__internal__/__internal__optionParsing.mjs
 import { dispose, isDisposed, onDisposed, addIgnoringChildErrors, addTo } from './__internal__/util/__internal__DisposableLike.mjs';
 import { disposableMixin } from './__internal__/util/__internal__Disposables.mjs';
 import { createInstanceFactory, clazz, props, __extends, init } from './__internal__/util/__internal__Objects.mjs';
+import './containers.mjs';
 import { none, pipe, newInstance, unsafeCast, getLength, max, pipeLazy, ignore } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
@@ -11,9 +12,9 @@ import { SinkLike_notify } from './util.mjs';
 
 /** @ignore */
 const ReactiveContainerLike_sinkInto = Symbol("ReactiveContainerLike_sinkInto");
-// @ignore
+/**  @ignore */
 const ObservableLike_isEnumerable = Symbol("ObservableLike_isEnumerable");
-// @ignore
+/**  @ignore */
 const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 /** @ignore */
 const MulticastObservableLike_observerCount = Symbol("MulticastObservableLike_observerCount");

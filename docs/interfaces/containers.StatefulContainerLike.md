@@ -18,32 +18,32 @@
 
 ### Properties
 
-- [T](containers.StatefulContainerLike.md#t)
-- [TContainerOf](containers.StatefulContainerLike.md#tcontainerof)
-- [TStatefulContainerState](containers.StatefulContainerLike.md#tstatefulcontainerstate)
+- [[ContainerLike\_T]](containers.StatefulContainerLike.md#[containerlike_t])
+- [[ContainerLike\_type]](containers.StatefulContainerLike.md#[containerlike_type])
+- [[StableContainerLike\_state]](containers.StatefulContainerLike.md#[stablecontainerlike_state])
 
 ## Properties
 
-### T
+### [ContainerLike\_T]
 
-• `Optional` `Readonly` **T**: `unknown`
-
-#### Inherited from
-
-[ContainerLike](containers.ContainerLike.md).[T](containers.ContainerLike.md#t)
-
-___
-
-### TContainerOf
-
-• `Optional` `Readonly` **TContainerOf**: `unknown`
+• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
 
 #### Inherited from
 
-[ContainerLike](containers.ContainerLike.md).[TContainerOf](containers.ContainerLike.md#tcontainerof)
+[ContainerLike](containers.ContainerLike.md).[[ContainerLike_T]](containers.ContainerLike.md#[containerlike_t])
 
 ___
 
-### TStatefulContainerState
+### [ContainerLike\_type]
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`DisposableLike`](util.DisposableLike.md)
+• `Optional` `Readonly` **[ContainerLike\_type]**: `unknown`
+
+#### Inherited from
+
+[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+
+___
+
+### [StableContainerLike\_state]
+
+• `Optional` `Readonly` **[StableContainerLike\_state]**: [`DisposableLike`](util.DisposableLike.md)

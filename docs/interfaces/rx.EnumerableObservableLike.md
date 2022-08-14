@@ -20,41 +20,20 @@
 
 ### Properties
 
-- [T](rx.EnumerableObservableLike.md#t)
-- [TContainerOf](rx.EnumerableObservableLike.md#tcontainerof)
-- [TStatefulContainerState](rx.EnumerableObservableLike.md#tstatefulcontainerstate)
+- [[ContainerLike\_type]](rx.EnumerableObservableLike.md#[containerlike_type])
 - [[ObservableLike\_isEnumerable]](rx.EnumerableObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.EnumerableObservableLike.md#[observablelike_isrunnable])
+- [[StableContainerLike\_state]](rx.EnumerableObservableLike.md#[stablecontainerlike_state])
 
 ## Properties
 
-### T
+### [ContainerLike\_type]
 
-• `Optional` `Readonly` **T**: `unknown`
-
-#### Inherited from
-
-[RunnableObservableLike](rx.RunnableObservableLike.md).[T](rx.RunnableObservableLike.md#t)
-
-___
-
-### TContainerOf
-
-• `Optional` **TContainerOf**: [`EnumerableObservableLike`](rx.EnumerableObservableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[ContainerLike\_type]**: [`EnumerableObservableLike`](rx.EnumerableObservableLike.md)<`unknown`\>
 
 #### Overrides
 
-[RunnableObservableLike](rx.RunnableObservableLike.md).[TContainerOf](rx.RunnableObservableLike.md#tcontainerof)
-
-___
-
-### TStatefulContainerState
-
-• `Optional` `Readonly` **TStatefulContainerState**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
-
-#### Inherited from
-
-[RunnableObservableLike](rx.RunnableObservableLike.md).[TStatefulContainerState](rx.RunnableObservableLike.md#tstatefulcontainerstate)
+[RunnableObservableLike](rx.RunnableObservableLike.md).[[ContainerLike_type]](rx.RunnableObservableLike.md#[containerlike_type])
 
 ___
 
@@ -75,3 +54,13 @@ ___
 #### Inherited from
 
 [RunnableObservableLike](rx.RunnableObservableLike.md).[[ObservableLike_isRunnable]](rx.RunnableObservableLike.md#[observablelike_isrunnable])
+
+___
+
+### [StableContainerLike\_state]
+
+• `Optional` `Readonly` **[StableContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
+
+#### Inherited from
+
+[RunnableObservableLike](rx.RunnableObservableLike.md).[[StableContainerLike_state]](rx.RunnableObservableLike.md#[stablecontainerlike_state])
