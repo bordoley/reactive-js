@@ -1,4 +1,4 @@
-import { describe, test } from "../../__internal__/__internal__testing";
+import { test, testModule } from "../../__internal__/__internal__testing";
 import { toObservable as arrayToObservable } from "../../containers/ReadonlyArrayLike";
 import { pipe } from "../../functions";
 import { forEach, subscribe, toFlowable } from "../../rx/ObservableLike";
@@ -6,7 +6,7 @@ import { createVirtualTimeScheduler } from "../../scheduling";
 import { toObservable } from "../../streaming/FlowableLike";
 import { run } from "../../util/ContinuationLike";
 
-export default describe(
+testModule(
   "FlowableLike",
   test("toObservable", () => {
     const scheduler = createVirtualTimeScheduler();

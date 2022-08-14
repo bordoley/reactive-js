@@ -2,6 +2,7 @@ import {
   describe,
   expectEquals,
   test,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { toRunnable } from "../../containers/ReadonlyArrayLike";
 import { Option, none, pipeLazy } from "../../functions";
@@ -54,7 +55,7 @@ import {
   throwIfEmptyTests,
 } from "../operators";
 
-export default describe(
+testModule(
   "RunnableLike",
   bufferTests({
     fromArray: toRunnable,

@@ -2,6 +2,7 @@ import {
   describe,
   expectArrayEquals,
   test,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { emptyReadonlyArray } from "../../containers";
 import {
@@ -27,7 +28,7 @@ import {
   zipT,
 } from "../../ix/EnumerableLike";
 
-export default describe(
+testModule(
   "ContainerLike",
   describe(
     "concatMap",

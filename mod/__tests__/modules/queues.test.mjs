@@ -1,5 +1,5 @@
 /// <reference types="./queues.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
+import { testModule, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
 import { createPriorityQueue } from '../../__internal__/scheduling/__internal__queue.mjs';
 import { newInstance, floor, pipe } from '../../functions.mjs';
 
@@ -21,7 +21,7 @@ const makeShuffledArray = (n) => {
     }
     return result;
 };
-var queueTests = createDescribe("priority queue", createTest("push", () => {
+testModule("priority queue", createTest("push", () => {
     const queue = createPriorityQueue(compare);
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray.length; i++) {
@@ -33,5 +33,3 @@ var queueTests = createDescribe("priority queue", createTest("push", () => {
     }
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
 }));
-
-export { queueTests as default };

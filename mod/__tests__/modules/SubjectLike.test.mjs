@@ -1,5 +1,5 @@
 /// <reference types="./SubjectLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals } from '../../__internal__/__internal__testing.mjs';
+import { testModule, test as createTest, expectArrayEquals, expectEquals } from '../../__internal__/__internal__testing.mjs';
 import { toRunnable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
 import { createSubject } from '../../rx.mjs';
@@ -11,7 +11,7 @@ import { createVirtualTimeScheduler } from '../../scheduling.mjs';
 import { run as run$1 } from '../../util/ContinuationLike.mjs';
 import { dispose } from '../../util/DisposableLike.mjs';
 
-var SubjectLikeTests = createDescribe("SubjectLike", createTest("with replay", () => {
+testModule("SubjectLike", createTest("with replay", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject({ replay: 2 });
     pipe([1, 2, 3, 4], toRunnable(), forEach(publishTo(subject)), run());
@@ -35,5 +35,3 @@ var SubjectLikeTests = createDescribe("SubjectLike", createTest("with replay", (
     pipe(sub2, dispose());
     pipe(subject, getObserverCount, expectEquals(0));
 }));
-
-export { SubjectLikeTests as default };

@@ -1,7 +1,7 @@
 import {
-  describe,
   expectArrayEquals,
   test,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { createPriorityQueue } from "../../__internal__/scheduling/__internal__queue";
 import { floor, newInstance, pipe } from "../../functions";
@@ -30,7 +30,7 @@ const makeShuffledArray = (n: number) => {
   return result;
 };
 
-export default describe(
+testModule(
   "priority queue",
   test("push", () => {
     const queue = createPriorityQueue(compare);

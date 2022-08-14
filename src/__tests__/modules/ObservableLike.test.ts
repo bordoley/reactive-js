@@ -11,6 +11,7 @@ import {
   mockFn,
   test,
   testAsync,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { concatMap, throws } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
@@ -686,7 +687,7 @@ const zipWithLatestTests = describe(
   ),
 );
 
-export default describe(
+testModule(
   "ObservableLike",
   bufferTests({
     fromArray: toObservable,

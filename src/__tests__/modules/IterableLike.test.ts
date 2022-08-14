@@ -2,12 +2,13 @@ import {
   describe,
   expectArrayEquals,
   test,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { toObservable } from "../../containers/IterableLike";
 import { pipeLazy } from "../../functions";
 import { toReadonlyArray } from "../../rx/ObservableLike";
 
-export default describe(
+testModule(
   "IterableLike",
   describe(
     "toObservable",

@@ -1,8 +1,8 @@
 import {
-  describe,
   expectArrayEquals,
   expectEquals,
   test,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { keepType } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
@@ -13,7 +13,7 @@ import { forEach, keepT, subscribe, takeLast } from "../../rx/ObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling";
 import { run } from "../../util/ContinuationLike";
 
-export default describe(
+testModule(
   "effects",
   test("batch mode", () => {
     const scheduler = createVirtualTimeScheduler();

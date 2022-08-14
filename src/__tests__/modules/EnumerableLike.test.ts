@@ -1,4 +1,4 @@
-import { describe } from "../../__internal__/__internal__testing";
+import { testModule } from "../../__internal__/__internal__testing";
 import { toEnumerable } from "../../containers/ReadonlyArrayLike";
 import {
   bufferT,
@@ -38,7 +38,7 @@ import {
   zipTests,
 } from "../operators";
 
-export default describe(
+testModule(
   "EnumerableLike",
   bufferTests({
     fromArray: toEnumerable,

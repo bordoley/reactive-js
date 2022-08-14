@@ -1,5 +1,5 @@
 /// <reference types="./ContainerLike.test.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
+import { testModule, describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
 import { emptyReadonlyArray } from '../../containers.mjs';
 import { concatMap, concatWith, endWith, genMap, ignoreElements, mapTo, startWith, zipWith } from '../../containers/ContainerLike.mjs';
 import { toEnumerable as toEnumerable$1 } from '../../containers/IterableLike.mjs';
@@ -7,7 +7,7 @@ import { toEnumerable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, pipe, none, arrayEquality } from '../../functions.mjs';
 import { concatAllT, mapT, toReadonlyArray, concatT, keepT, zipT } from '../../ix/EnumerableLike.mjs';
 
-var ContainerLikeTests = createDescribe("ContainerLike", createDescribe("concatMap", createTest("maps each value to a container and flattens", pipeLazy([0, 1], toEnumerable(), concatMap({ ...concatAllT, ...mapT }, pipeLazy([1, 2, 3], toEnumerable())), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), createDescribe("concatWith", createTest("concats two containers together", pipeLazy([0, 1], toEnumerable(), concatWith(concatT, pipe([2, 3, 4], toEnumerable())), toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), createDescribe("endWith", createTest("appends the additional values to the end of the container", pipeLazy([0, 1], toEnumerable(), endWith({ ...concatT, fromArray: toEnumerable }, 2, 3, 4), toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), createDescribe("genMap", createTest("maps the incoming value with the inline generator function", pipeLazy([none, none], toEnumerable(), genMap({ fromIterable: toEnumerable$1, ...concatAllT, ...mapT }, function* (_) {
+testModule("ContainerLike", createDescribe("concatMap", createTest("maps each value to a container and flattens", pipeLazy([0, 1], toEnumerable(), concatMap({ ...concatAllT, ...mapT }, pipeLazy([1, 2, 3], toEnumerable())), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), createDescribe("concatWith", createTest("concats two containers together", pipeLazy([0, 1], toEnumerable(), concatWith(concatT, pipe([2, 3, 4], toEnumerable())), toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), createDescribe("endWith", createTest("appends the additional values to the end of the container", pipeLazy([0, 1], toEnumerable(), endWith({ ...concatT, fromArray: toEnumerable }, 2, 3, 4), toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), createDescribe("genMap", createTest("maps the incoming value with the inline generator function", pipeLazy([none, none], toEnumerable(), genMap({ fromIterable: toEnumerable$1, ...concatAllT, ...mapT }, function* (_) {
     yield 1;
     yield 2;
     yield 3;
@@ -16,5 +16,3 @@ var ContainerLikeTests = createDescribe("ContainerLike", createDescribe("concatM
     [2, 2],
     [3, 3],
 ], arrayEquality())))));
-
-export { ContainerLikeTests as default };

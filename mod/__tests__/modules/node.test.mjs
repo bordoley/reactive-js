@@ -1,6 +1,6 @@
 /// <reference types="./node.test.d.ts" />
 import { Writable, Readable } from 'stream';
-import { describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../../__internal__/__internal__testing.mjs';
+import { testModule, describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../../__internal__/__internal__testing.mjs';
 import { endWith, ignoreElements } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { newInstance, pipe, returns } from '../../functions.mjs';
@@ -12,7 +12,7 @@ import { sourceFrom } from '../../streaming/StreamLike.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
 import { dispose } from '../../util/DisposableLike.mjs';
 
-var nodeTests = createDescribe("node", createDescribe("createWritableIOSink", testAsync("sinking to writable", async () => {
+testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to writable", async () => {
     const scheduler = createHostScheduler();
     try {
         const encoder = newInstance(TextEncoder);
@@ -104,5 +104,3 @@ var nodeTests = createDescribe("node", createDescribe("createWritableIOSink", te
         pipe(scheduler, dispose());
     }
 }));
-
-export { nodeTests as default };

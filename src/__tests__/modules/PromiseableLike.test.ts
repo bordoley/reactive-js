@@ -3,6 +3,7 @@ import {
   expectEquals,
   expectPromiseToThrow,
   testAsync,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { toObservable } from "../../containers/PromiseableLike";
 import { newInstance, pipe } from "../../functions";
@@ -10,7 +11,7 @@ import { toPromise } from "../../rx/ObservableLike";
 import { createHostScheduler } from "../../scheduling";
 import { dispose } from "../../util/DisposableLike";
 
-export default describe(
+testModule(
   "PromiseableLike",
   describe(
     "toObservable",

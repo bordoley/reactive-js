@@ -4,6 +4,7 @@ import {
   expectEquals,
   expectPromiseToThrow,
   testAsync,
+  testModule,
 } from "../../__internal__/__internal__testing";
 import { endWith, ignoreElements } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
@@ -28,7 +29,7 @@ import { sourceFrom } from "../../streaming/StreamLike";
 import { stream } from "../../streaming/StreamableLike";
 import { dispose } from "../../util/DisposableLike";
 
-export default describe(
+testModule(
   "node",
   describe(
     "createWritableIOSink",
