@@ -21,7 +21,7 @@
 
 ### Properties
 
-- [TContainerOf](rx.ScanAsync.md#tcontainerof)
+- [ContainerLike\_type](rx.ScanAsync.md#containerlike_type)
 
 ### Methods
 
@@ -29,13 +29,13 @@
 
 ## Properties
 
-### TContainerOf
+### ContainerLike\_type
 
-• `Optional` `Readonly` **TContainerOf**: `C`
+• `Optional` `Readonly` **ContainerLike\_type**: `C`
 
 #### Inherited from
 
-Container.TContainerOf
+Container.ContainerLike\_type
 
 ## Methods
 

@@ -20,9 +20,9 @@
 
 ### Properties
 
-- [T](rx.RunnableLike.md#t)
-- [TContainerOf](rx.RunnableLike.md#tcontainerof)
-- [TStatefulContainerState](rx.RunnableLike.md#tstatefulcontainerstate)
+- [[ContainerLike\_T]](rx.RunnableLike.md#[containerlike_t])
+- [[ContainerLike\_type]](rx.RunnableLike.md#[containerlike_type])
+- [[StableContainerLike\_state]](rx.RunnableLike.md#[stablecontainerlike_state])
 
 ### Methods
 
@@ -30,33 +30,33 @@
 
 ## Properties
 
-### T
+### [ContainerLike\_T]
 
-• `Optional` `Readonly` **T**: `unknown`
+• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
 
 #### Inherited from
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[T](rx.ReactiveContainerLike.md#t)
+[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[ContainerLike_T]](rx.ReactiveContainerLike.md#[containerlike_t])
 
 ___
 
-### TContainerOf
+### [ContainerLike\_type]
 
-• `Optional` `Readonly` **TContainerOf**: [`RunnableLike`](rx.RunnableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[ContainerLike\_type]**: [`RunnableLike`](rx.RunnableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[TContainerOf](rx.ReactiveContainerLike.md#tcontainerof)
+[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[ContainerLike_type]](rx.ReactiveContainerLike.md#[containerlike_type])
 
 ___
 
-### TStatefulContainerState
+### [StableContainerLike\_state]
 
-• `Optional` `Readonly` **TStatefulContainerState**: [`SinkLike`](util.SinkLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StableContainerLike\_state]**: [`SinkLike`](util.SinkLike.md)<`unknown`\>
 
 #### Overrides
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[TStatefulContainerState](rx.ReactiveContainerLike.md#tstatefulcontainerstate)
+[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[StableContainerLike_state]](rx.ReactiveContainerLike.md#[stablecontainerlike_state])
 
 ## Methods
 

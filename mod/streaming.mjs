@@ -2,6 +2,7 @@
 import { multicast, scan, mergeT, distinctUntilChanged } from './__internal__/rx/__internal__ObservableLike.mjs';
 import { delegatingDisposableMixin } from './__internal__/util/__internal__Disposables.mjs';
 import { clazz, __extends, init, props, createInstanceFactory } from './__internal__/util/__internal__Objects.mjs';
+import './containers.mjs';
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
 import { returns, pipe, none, unsafeCast, newInstance, getLength, composeUnsafe, updateReducer } from './functions.mjs';

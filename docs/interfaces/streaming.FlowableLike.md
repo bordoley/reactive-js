@@ -22,8 +22,8 @@
 
 ### Properties
 
-- [T](streaming.FlowableLike.md#t)
-- [TContainerOf](streaming.FlowableLike.md#tcontainerof)
+- [[ContainerLike\_T]](streaming.FlowableLike.md#[containerlike_t])
+- [[ContainerLike\_type]](streaming.FlowableLike.md#[containerlike_type])
 
 ### Methods
 
@@ -31,23 +31,23 @@
 
 ## Properties
 
-### T
+### [ContainerLike\_T]
 
-• `Optional` `Readonly` **T**: `unknown`
+• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
 
 #### Inherited from
 
-[ContainerLike](containers.ContainerLike.md).[T](containers.ContainerLike.md#t)
+[ContainerLike](containers.ContainerLike.md).[[ContainerLike_T]](containers.ContainerLike.md#[containerlike_t])
 
 ___
 
-### TContainerOf
+### [ContainerLike\_type]
 
-• `Optional` `Readonly` **TContainerOf**: [`FlowableLike`](streaming.FlowableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[ContainerLike\_type]**: [`FlowableLike`](streaming.FlowableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[TContainerOf](containers.ContainerLike.md#tcontainerof)
+[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
 
 ## Methods
 

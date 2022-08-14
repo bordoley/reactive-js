@@ -17,6 +17,8 @@ import {
 import {
   Container,
   ContainerLike,
+  ContainerLike_T,
+  ContainerLike_type,
   ContainerOf,
   ContainerOperator,
 } from "./containers";
@@ -97,7 +99,7 @@ export interface FlowableStreamLike<T = unknown>
 export interface FlowableLike<T = unknown>
   extends StreamableLike<FlowMode, T, FlowableStreamLike<T>>,
     ContainerLike {
-  readonly TContainerOf?: FlowableLike<this["T"]>;
+  readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 
 export type ToFlowable<

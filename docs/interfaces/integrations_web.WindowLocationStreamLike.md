@@ -12,24 +12,10 @@
 
 ## Table of contents
 
-### Properties
-
-- [T](integrations_web.WindowLocationStreamLike.md#t)
-
 ### Methods
 
 - [[DispatcherLike\_dispatch]](integrations_web.WindowLocationStreamLike.md#[dispatcherlike_dispatch])
 - [goBack](integrations_web.WindowLocationStreamLike.md#goback)
-
-## Properties
-
-### T
-
-• `Optional` `Readonly` **T**: `unknown`
-
-#### Inherited from
-
-StreamLike.T
 
 ## Methods
 
@@ -51,7 +37,7 @@ StreamLike.T
 
 #### Overrides
 
-StreamLike.\_\_@DispatcherLike\_dispatch@23546
+StreamLike.\_\_@DispatcherLike\_dispatch@23559
 
 ___
 

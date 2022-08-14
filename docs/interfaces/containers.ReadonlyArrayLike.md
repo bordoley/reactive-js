@@ -22,25 +22,25 @@
 
 ### Properties
 
-- [T](containers.ReadonlyArrayLike.md#t)
-- [TContainerOf](containers.ReadonlyArrayLike.md#tcontainerof)
+- [[ContainerLike\_T]](containers.ReadonlyArrayLike.md#[containerlike_t])
+- [[ContainerLike\_type]](containers.ReadonlyArrayLike.md#[containerlike_type])
 
 ## Properties
 
-### T
+### [ContainerLike\_T]
 
-• `Optional` `Readonly` **T**: `unknown`
+• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
 
 #### Inherited from
 
-[ContainerLike](containers.ContainerLike.md).[T](containers.ContainerLike.md#t)
+[ContainerLike](containers.ContainerLike.md).[[ContainerLike_T]](containers.ContainerLike.md#[containerlike_t])
 
 ___
 
-### TContainerOf
+### [ContainerLike\_type]
 
-• `Optional` `Readonly` **TContainerOf**: [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)<`unknown`\>
+• `Optional` `Readonly` **[ContainerLike\_type]**: [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[TContainerOf](containers.ContainerLike.md#tcontainerof)
+[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])

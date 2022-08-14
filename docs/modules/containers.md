@@ -130,13 +130,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TContainerOf?` | `C` |
+| `ContainerLike_type?` | `C` |
 
 ___
 
 ### ContainerOf
 
-Ƭ **ContainerOf**<`C`, `T`\>: `C` extends { `TContainerOf?`: `unknown`  } ? `NonNullable`<`C` & { `T`: `T`  }[``"TContainerOf"``]\> : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **ContainerOf**<`C`, `T`\>: `C` extends { `[ContainerLike_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[ContainerLike_T]`: `T`  }[typeof `ContainerLike_type`]\> : { `_C`: `C` ; `_T`: () => `T`  }
 
 #### Type parameters
 
@@ -422,7 +422,7 @@ ___
 
 ### StatefulContainerStateOf
 
-Ƭ **StatefulContainerStateOf**<`C`, `T`\>: `C` extends { `TStatefulContainerState?`: [`DisposableLike`](../interfaces/util.DisposableLike.md)  } ? `NonNullable`<`C` & { `T`: `T`  }[``"TStatefulContainerState"``]\> : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **StatefulContainerStateOf**<`C`, `T`\>: `C` extends { `[StableContainerLike_state]?`: [`DisposableLike`](../interfaces/util.DisposableLike.md)  } ? `NonNullable`<`C` & { `[ContainerLike_T]`: `T`  }[typeof `StableContainerLike_state`]\> : { `_C`: `C` ; `_T`: () => `T`  }
 
 #### Type parameters
 

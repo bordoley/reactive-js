@@ -23,8 +23,6 @@
 
 ### Variables
 
-- [ObservableLike\_isEnumerable](rx.md#observablelike_isenumerable)
-- [ObservableLike\_isRunnable](rx.md#observablelike_isrunnable)
 - [deferEnumerableObservableT](rx.md#deferenumerableobservablet)
 - [deferObservableT](rx.md#deferobservablet)
 - [deferRunnableObservableT](rx.md#deferrunnableobservablet)
@@ -101,18 +99,6 @@ ___
 | `TOptions` | `never` |
 
 ## Variables
-
-### ObservableLike\_isEnumerable
-
-• `Const` **ObservableLike\_isEnumerable**: unique `symbol`
-
-___
-
-### ObservableLike\_isRunnable
-
-• `Const` **ObservableLike\_isRunnable**: unique `symbol`
-
-___
 
 ### deferEnumerableObservableT
 

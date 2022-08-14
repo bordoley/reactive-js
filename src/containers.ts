@@ -10,23 +10,31 @@ import {
 } from "./functions";
 import { DisposableLike } from "./util";
 
+/**  @ignore */
+export const ContainerLike_T = Symbol("ContainerLike_T");
+
+/**  @ignore */
+export const ContainerLike_type = Symbol("ContainerLike_type");
+
 export interface ContainerLike {
-  readonly T?: unknown;
-  readonly TContainerOf?: unknown;
+  readonly [ContainerLike_T]?: unknown;
+  readonly [ContainerLike_type]?: unknown;
 }
 
 export interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
-  readonly TContainerOf?: IterableLike<this["T"]>;
+  readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
 }
 
 export interface ReadonlyArrayLike<T = unknown>
   extends ContainerLike,
     ReadonlyArray<T> {
-  readonly TContainerOf?: ReadonlyArrayLike<this["T"]>;
+  readonly [ContainerLike_type]?: ReadonlyArrayLike<
+    this[typeof ContainerLike_T]
+  >;
 }
 
 export interface SequenceLike<T = unknown> extends ContainerLike {
-  readonly TContainerOf?: SequenceLike<this["T"]>;
+  readonly [ContainerLike_type]?: SequenceLike<this[typeof ContainerLike_T]>;
 
   (): Option<{
     readonly data: T;
@@ -37,20 +45,23 @@ export interface SequenceLike<T = unknown> extends ContainerLike {
 export interface PromiseableLike<T = unknown>
   extends ContainerLike,
     PromiseLike<T> {
-  readonly TContainerOf?: PromiseableLike<this["T"]>;
+  readonly [ContainerLike_type]?: PromiseableLike<this[typeof ContainerLike_T]>;
 }
 
+/**  @ignore */
+export const StableContainerLike_state = Symbol("StableContainerLike_state");
+
 export interface StatefulContainerLike extends ContainerLike {
-  readonly TStatefulContainerState?: DisposableLike;
+  readonly [StableContainerLike_state]?: DisposableLike;
 }
 
 export type ContainerOf<C extends ContainerLike, T> = C extends {
-  readonly TContainerOf?: unknown;
+  readonly [ContainerLike_type]?: unknown;
 }
   ? NonNullable<
       (C & {
-        readonly T: T;
-      })["TContainerOf"]
+        readonly [ContainerLike_T]: T;
+      })[typeof ContainerLike_type]
     >
   : {
       readonly _C: C;
@@ -61,12 +72,12 @@ export type StatefulContainerStateOf<
   C extends StatefulContainerLike,
   T,
 > = C extends {
-  readonly TStatefulContainerState?: DisposableLike;
+  readonly [StableContainerLike_state]?: DisposableLike;
 }
   ? NonNullable<
       (C & {
-        readonly T: T;
-      })["TStatefulContainerState"]
+        readonly [ContainerLike_T]: T;
+      })[typeof StableContainerLike_state]
     >
   : {
       readonly _C: C;
@@ -79,7 +90,7 @@ export type ContainerOperator<C, TA, TB> = Function1<
 >;
 
 export type Container<C extends ContainerLike> = {
-  readonly TContainerOf?: C;
+  readonly ContainerLike_type?: C;
 };
 
 export type Buffer<C extends ContainerLike> = Container<C> & {
