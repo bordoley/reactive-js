@@ -28,6 +28,7 @@ import {
   DelegateSinkLike,
   DelegatingSink_delegate,
   bufferSinkMixin,
+  catchErrorSinkMixin,
   createDelegatingSink,
   createSink,
   decodeWithCharsetSinkMixin,
@@ -47,6 +48,7 @@ import {
 } from "../__internal__/util/__internal__Sinks";
 import {
   Buffer,
+  CatchError,
   Concat,
   ConcatAll,
   DecodeWithCharset,
@@ -74,6 +76,7 @@ import {
   isSome,
   newInstance,
   none,
+  partial,
   pipe,
   pipeLazy,
   pipeUnsafe,
@@ -138,6 +141,23 @@ export const buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<T>() => {
   );
 })();
 export const bufferT: Buffer<RunnableLike> = { buffer };
+
+export const catchError: CatchError<RunnableLike>["catchError"] =
+  /*@__PURE__*/ (() => {
+    const createCatchErrorObserver = (<T>() =>
+      createInstanceFactory(
+        catchErrorSinkMixin<RunnableLike, SinkLike<T>, T>(),
+      ))();
+
+    return (errorHandler =>
+      pipe(
+        createCatchErrorObserver,
+        partial(errorHandler),
+        lift,
+      )) as CatchError<RunnableLike>["catchError"];
+  })();
+
+export const catchErrorT: CatchError<RunnableLike> = { catchError };
 
 export const concat: Concat<RunnableLike>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]

@@ -1,6 +1,6 @@
 /// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
-import { compose, isTrue, pipeUnsafe, newInstance, isSome, pipe, getLength, none, partial, isEmpty } from '../../functions.mjs';
+import { compose, isTrue, pipeUnsafe, newInstance, pipe, partial, isSome, getLength, none, isEmpty } from '../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createSubject, createEnumerableObservable, createRunnableObservable, createObservable } from '../../rx.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { publishTo, publish } from '../../rx/SubjectLike.mjs';
@@ -14,6 +14,7 @@ import { addTo, onComplete, isDisposed, dispose, bindTo, addToIgnoringChildError
 import { disposableMixin, createDisposableRef, disposed } from '../util/__internal__Disposables.mjs';
 import { MutableRefLike_current } from '../util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init, props } from '../util/__internal__Objects.mjs';
+import { catchErrorSinkMixin } from '../util/__internal__Sinks.mjs';
 import { createOnSink } from './__internal__ReactiveContainerLike.mjs';
 
 const allAreEnumerable = compose(map((obs) => obs[ObservableLike_isEnumerable]), every(isTrue));
@@ -42,11 +43,27 @@ const createLift = /*@__PURE__*/ (() => {
     };
 })();
 const liftObservable = createLift(false, false);
+const liftObservableT = {
+    lift: liftObservable,
+    variance: reactive,
+};
 const liftRunnableObservable = createLift(false, true);
 const liftEnumerableObservable = createLift(true, true);
 const liftEnumerableObservableT = {
     lift: liftEnumerableObservable,
     variance: reactive,
+};
+const createCatchError = (lift) => {
+    const createCatchErrorObserver = (() => {
+        const typedCatchErrorSink = catchErrorSinkMixin();
+        const typedObserverMixin = observerMixin();
+        return createInstanceFactory(clazz(__extends(typedCatchErrorSink, typedObserverMixin), function CatchErrorObserver(instance, delegate, errorHandler) {
+            init(typedCatchErrorSink, instance, delegate, errorHandler);
+            init(typedObserverMixin, instance, getScheduler(delegate));
+            return instance;
+        }));
+    })();
+    return ((errorHandler) => pipe(createCatchErrorObserver, partial(errorHandler), lift));
 };
 const createMergeAll = (lift) => {
     const createMergeAllObserver = (() => {
@@ -264,4 +281,4 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
     };
 })();
 
-export { allAreEnumerable, allAreRunnable, createMergeAll, createScanAsync, createSwitchAll, distinctUntilChanged, forEach, isEnumerable, isRunnable, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, onSubscribe, scan, subscribe, switchAll, takeFirst, zipWithLatestFrom };
+export { allAreEnumerable, allAreRunnable, createCatchError, createMergeAll, createScanAsync, createSwitchAll, distinctUntilChanged, forEach, isEnumerable, isRunnable, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftObservableT, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, onSubscribe, scan, subscribe, switchAll, takeFirst, zipWithLatestFrom };

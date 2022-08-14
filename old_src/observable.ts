@@ -19,18 +19,6 @@ import {
 import { ObserverLike } from "./observer";
 import { __yield } from "./scheduler";
 
-export const catchError: CatchError<ObservableLike<unknown>>["catchError"] =
-  /*@__PURE__*/ decorateMap(
-    class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {},
-    decorateWithCatchErrorNotify<ObservableLike<unknown>>(),
-    decorateNotifyWithAssertions,
-    createCatchErrorOperator(liftEnumerableT),
-  );
-
-export const catchErrorT: CatchError<ObservableLike<unknown>> = {
-  catchError,
-};
-
 export const everySatisfy: EverySatisfy<
   ObservableLike<unknown>
 >["everySatisfy"] = /*@__PURE__*/ decorateMap(

@@ -7,6 +7,7 @@
 ### Variables
 
 - [bufferT](rx_RunnableObservableLike.md#buffert)
+- [catchErrorT](rx_RunnableObservableLike.md#catcherrort)
 - [concatT](rx_RunnableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_RunnableObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_RunnableObservableLike.md#distinctuntilchangedt)
@@ -31,6 +32,7 @@
 
 ### Functions
 
+- [catchError](rx_RunnableObservableLike.md#catcherror)
 - [concatAll](rx_RunnableObservableLike.md#concatall)
 - [exhaust](rx_RunnableObservableLike.md#exhaust)
 - [mergeAll](rx_RunnableObservableLike.md#mergeall)
@@ -42,6 +44,12 @@
 ### bufferT
 
 • `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### catchErrorT
+
+• `Const` **catchErrorT**: [`CatchError`](containers.md#catcherror)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ___
 
@@ -170,6 +178,28 @@ ___
 • `Const` **zipT**: [`Zip`](containers.md#zip)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ## Functions
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
 
 ### concatAll
 

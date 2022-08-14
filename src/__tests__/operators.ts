@@ -7,6 +7,7 @@ import {
 } from "../__internal__/__internal__testing";
 import {
   Buffer,
+  CatchError,
   Concat,
   ConcatAll,
   ContainerLike,
@@ -31,7 +32,7 @@ import {
   Zip,
   emptyReadonlyArray,
 } from "../containers";
-import { encodeUtf8 } from "../containers/ContainerLike";
+import { encodeUtf8, throws } from "../containers/ContainerLike";
 import {
   alwaysTrue,
   arrayEquality,
@@ -81,6 +82,33 @@ export const bufferTests = <C extends ContainerLike>(
           ],
           arrayEquality(),
         ),
+      ),
+    ),
+  );
+
+export const catchErrorTests = <C extends ContainerLike>(
+  m: CatchError<C> & Map<C> & FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "catchError",
+    test("when source throws", () => {
+      const e = {};
+      pipe(
+        () => e,
+        throws<C, number>(m),
+        m.catchError(_ => pipe([1, 2, 3], m.fromArray())),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      );
+    }),
+    test(
+      "when source does not throw",
+      pipeLazy(
+        [4, 5, 6],
+        m.fromArray(),
+        m.catchError(_ => pipe([1, 2, 3], m.fromArray())),
+        m.toReadonlyArray(),
+        expectArrayEquals([4, 5, 6]),
       ),
     ),
   );

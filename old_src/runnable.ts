@@ -1,15 +1,3 @@
-export const catchError: CatchError<RunnableLike<unknown>>["catchError"] =
-  /*@__PURE__*/ decorateMap(
-    class CatchErrorSink<T> extends AbstractDelegatingRunnableSink<T, T> {},
-    decorateWithCatchErrorNotify(),
-    decorateNotifyWithAssertions,
-    createCatchErrorOperator(liftT),
-  );
-
-export const catchErrorT: CatchError<RunnableLike<unknown>> = {
-  catchError,
-};
-
 export const everySatisfy: EverySatisfy<RunnableLike<unknown>>["everySatisfy"] =
   /*@__PURE__*/ decorateMap(
     class EverySatisfySink<T> extends AbstractDelegatingRunnableSink<

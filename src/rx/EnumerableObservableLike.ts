@@ -4,12 +4,14 @@ import {
   TReactive,
 } from "../__internal__/containers/__internal__StatefulContainerLike";
 import {
+  createCatchError,
   createMergeAll,
   createScanAsync,
   createSwitchAll,
 } from "../__internal__/rx/__internal__ObservableLike";
 import {
   Buffer,
+  CatchError,
   Concat,
   ConcatAll,
   DecodeWithCharset,
@@ -107,6 +109,12 @@ const lift: Lift<EnumerableObservableLike, TReactive>["lift"] =
 export const bufferT: Buffer<EnumerableObservableLike> = {
   buffer: buffer as Buffer<EnumerableObservableLike>["buffer"],
 };
+
+export const catchError: CatchError<EnumerableObservableLike>["catchError"] =
+  /*@__PURE__*/ createCatchError<EnumerableObservableLike>(
+    lift,
+  ) as CatchError<EnumerableObservableLike>["catchError"];
+export const catchErrorT: CatchError<EnumerableObservableLike> = { catchError };
 
 export const concatT: Concat<EnumerableObservableLike> = {
   concat: concat as Concat<EnumerableObservableLike>["concat"],

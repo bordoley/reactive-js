@@ -1,8 +1,8 @@
 /// <reference types="./__internal__Sinks.d.ts" />
-import { pipe, none, getLength, returns, isEmpty, newInstance } from '../../functions.mjs';
+import { pipe, none, getLength, returns, isEmpty, isSome, newInstance } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SinkLike_notify, SourceLike_move } from '../../util.mjs';
-import { onDisposed, isDisposed, addTo, onComplete, dispose } from '../../util/DisposableLike.mjs';
+import { onDisposed, isDisposed, addTo, onComplete, dispose, addToIgnoringChildErrors, onError } from '../../util/DisposableLike.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './__internal__Disposables.mjs';
 import { createInstanceFactory, clazz, __extends, init, props } from './__internal__Objects.mjs';
@@ -101,6 +101,36 @@ const bufferSinkMixin = (fromArray) => {
         },
     });
 };
+const catchErrorSinkMixin = 
+/*@__PURE__*/ (() => {
+    return returns(clazz(__extends(disposableMixin), function CatchErrorSink(instance, delegate, errorHandler) {
+        init(disposableMixin, instance);
+        instance[Sink_private_delegate] = delegate;
+        pipe(instance, addToIgnoringChildErrors(delegate), onComplete(() => {
+            pipe(delegate, dispose());
+        }), onError((e) => {
+            try {
+                const result = errorHandler(e.cause) || none;
+                if (isSome(result)) {
+                    pipe(result, sinkInto(delegate));
+                }
+                else {
+                    pipe(delegate, dispose());
+                }
+            }
+            catch (cause) {
+                pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
+            }
+        }));
+        return instance;
+    }, props({
+        [Sink_private_delegate]: none,
+    }), {
+        [SinkLike_notify](next) {
+            this[Sink_private_delegate][SinkLike_notify](next);
+        },
+    }));
+})();
 const decodeWithCharsetSinkMixin = (fromArray) => {
     const DecodeWithCharsetSink_private_textDecoder = Symbol("DecodeWithCharsetSink_private_textDecoder");
     return clazz(__extends(disposableMixin), function DecodeWithCharsetSink(instance, delegate, charset) {
@@ -416,4 +446,4 @@ const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, createDelegatingSink, createEnumeratorSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, catchErrorSinkMixin, createDelegatingSink, createEnumeratorSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

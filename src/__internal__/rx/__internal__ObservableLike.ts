@@ -1,4 +1,5 @@
 import {
+  CatchError,
   Concat,
   ConcatAll,
   ContainerOf,
@@ -91,6 +92,7 @@ import {
   init,
   props,
 } from "../util/__internal__Objects";
+import { catchErrorSinkMixin } from "../util/__internal__Sinks";
 import { createOnSink } from "./__internal__ReactiveContainerLike";
 
 export const allAreEnumerable = compose(
@@ -159,11 +161,49 @@ const createLift: (
 })();
 
 export const liftObservable = createLift(false, false);
+export const liftObservableT: Lift<ObservableLike, TReactive> = {
+  lift: liftObservable,
+  variance: reactive,
+};
 export const liftRunnableObservable = createLift(false, true);
 export const liftEnumerableObservable = createLift(true, true);
 export const liftEnumerableObservableT: Lift<ObservableLike, TReactive> = {
   lift: liftEnumerableObservable,
   variance: reactive,
+};
+
+export const createCatchError = <C extends ObservableLike>(
+  lift: <T>(
+    f: Function1<ObserverLike<T>, ObserverLike<T>>,
+  ) => ContainerOperator<C, T, T>,
+): CatchError<C>["catchError"] => {
+  const createCatchErrorObserver = (<T>() => {
+    const typedCatchErrorSink = catchErrorSinkMixin<C, ObserverLike<T>, T>();
+    const typedObserverMixin = observerMixin<T>();
+
+    return createInstanceFactory(
+      clazz(
+        __extends(typedCatchErrorSink, typedObserverMixin),
+        function CatchErrorObserver(
+          instance: unknown,
+          delegate: ObserverLike<T>,
+          errorHandler: Function1<unknown, ObservableLike<T> | void>,
+        ): ObserverLike<T> {
+          init(typedCatchErrorSink, instance, delegate, errorHandler);
+          init(typedObserverMixin, instance, getScheduler(delegate));
+
+          return instance;
+        },
+      ),
+    );
+  })();
+
+  return (<T>(errorHandler: Function1<unknown, ObservableLike<T> | void>) =>
+    pipe(
+      createCatchErrorObserver,
+      partial(errorHandler),
+      lift,
+    )) as CatchError<C>["catchError"];
 };
 
 export const createMergeAll = <C extends ObservableLike>(

@@ -29,54 +29,6 @@ export const createOnSink = <
 
 /*
 
-type CatchErrorSink<C extends ReactiveContainerLike> = new <T>(
-  delegate: StatefulContainerStateOf<C, T>,
-) => StatefulContainerStateOf<C, T> & {
-  delegate: StatefulContainerStateOf<C, T>;
-};
-
-export const createCatchErrorOperator =
-  <C extends ReactiveContainerLike>(m: Lift<C>) =>
-  (CatchErrorSink: CatchErrorSink<C>) =>
-  <T>(
-    f: Function1<unknown, ContainerOf<C, T> | void>,
-  ): ContainerOperator<C, T, T> => {
-    return pipe(
-      (
-        delegate: StatefulContainerStateOf<C, T>,
-      ): StatefulContainerStateOf<C, T> =>
-        pipe(
-          CatchErrorSink,
-          newInstanceWith<
-            DelegatingStatefulContainerStateOf<C, T, T>,
-            StatefulContainerStateOf<C, T>
-          >(delegate),
-          addToIgnoringChildErrors(delegate),
-          onComplete(() => pipe(delegate, dispose())),
-          onError(e => {
-            try {
-              const result = f(e.cause) || none;
-              if (isSome(result)) {
-                pipe(result, sinkInto(delegate));
-              } else {
-                pipe(delegate, dispose());
-              }
-            } catch (cause) {
-              pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
-            }
-          }),
-        ),
-      lift(m),
-    );
-  };
-
-type DecodeWithCharsetSink<C extends ReactiveContainerLike> = new (
-  delegate: StatefulContainerStateOf<C, string>,
-  textDecoder: TextDecoder,
-) => DelegatingStatefulContainerStateOf<C, ArrayBuffer, string> & {
-  readonly textDecoder: TextDecoder;
-};
-
 type SatisfySink<C extends ReactiveContainerLike> = new <T>(
   delegate: StatefulContainerStateOf<C, boolean>,
   predicate: Predicate<T>,
@@ -132,18 +84,6 @@ export const createSomeSatisfyOperator =
     createSatisfyOperator(m, SomeSatisfySink, false);
 
 
-export const decorateWithCatchErrorNotify =
-  <C extends ReactiveContainerLike>() =>
-  (CatchErrorSink: CatchErrorSink<C>) =>
-    decorateWithNotify(
-      CatchErrorSink,
-      function notifyCatchError(
-        this: InstanceType<typeof CatchErrorSink>,
-        next,
-      ) {
-        pipe(this, getDelegate, notify(next));
-      },
-    );
 
 const decorateWithSatisfyNotify = <C extends ReactiveContainerLike>(
   SatisfySink: SatisfySink<C>,
