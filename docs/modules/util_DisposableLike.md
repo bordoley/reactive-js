@@ -315,7 +315,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): (`disposable`: [`DisposableLike`](../interfaces/util.DisposableLike.md)) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/util.DisposableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -325,16 +325,4 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ (`disposable`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `disposable` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-
-##### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/util.DisposableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
