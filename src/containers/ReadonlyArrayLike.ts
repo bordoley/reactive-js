@@ -5,10 +5,12 @@ import {
   enumeratorMixin,
 } from "../__internal__/util/__internal__Enumerators";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import {
   ForEach,
@@ -31,7 +33,6 @@ import {
   min,
   none,
   pipe,
-  unsafeCast,
 } from "../functions";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../ix";
 import {
@@ -147,7 +148,7 @@ export const toEnumerable: ToEnumerable<
   const typedEnumerator = enumeratorMixin<T>();
 
   type TProperties = {
-    array: readonly T[];
+    readonly array: readonly T[];
     count: number;
     index: number;
   };
@@ -156,14 +157,14 @@ export const toEnumerable: ToEnumerable<
     clazz(
       __extends(disposableMixin, typedEnumerator),
       function ReadonlyArrayEnumerator(
-        instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+        instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+          Mutable<TProperties>,
         array: readonly T[],
         start: number,
         count: number,
       ): EnumeratorLike<T> {
         init(disposableMixin, instance);
         init(typedEnumerator, instance);
-        unsafeCast<TProperties>(instance);
 
         instance.array = array;
         instance.index = start - 1;
@@ -171,11 +172,11 @@ export const toEnumerable: ToEnumerable<
 
         return instance;
       },
-      {
+      props<TProperties>({
         array: none,
         count: 0,
         index: 0,
-      },
+      }),
       {
         [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
           const { array } = this;

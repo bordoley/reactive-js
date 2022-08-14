@@ -2,8 +2,8 @@
 import { hasDelay, getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { getLength, isSome, max, min, unsafeCast, none, pipe, identity } from '../functions.mjs';
+import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -61,16 +61,15 @@ const toEnumerable = /*@__PURE__*/ (() => {
     const createReadonlyArrayEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumerator), function ReadonlyArrayEnumerator(instance, array, start, count) {
         init(disposableMixin, instance);
         init(typedEnumerator, instance);
-        unsafeCast(instance);
         instance.array = array;
         instance.index = start - 1;
         instance.count = count;
         return instance;
-    }, {
+    }, props({
         array: none,
         count: 0,
         index: 0,
-    }, {
+    }), {
         [SourceLike_move]() {
             const { array } = this;
             if (!isDisposed(this)) {

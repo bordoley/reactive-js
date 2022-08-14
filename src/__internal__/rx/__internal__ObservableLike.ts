@@ -26,7 +26,6 @@ import {
   partial,
   pipe,
   pipeUnsafe,
-  unsafeCast,
 } from "../../functions";
 import {
   AsyncReducer,
@@ -85,10 +84,12 @@ import {
 } from "../util/__internal__Disposables";
 import { MutableRefLike_current } from "../util/__internal__MutableRefLike";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../util/__internal__Objects";
 import { createOnSink } from "./__internal__ReactiveContainerLike";
 
@@ -179,11 +180,11 @@ export const createMergeAll = <C extends ObservableLike>(
 
     type TProperties = {
       activeCount: number;
-      delegate: ObserverLike<T>;
-      maxBufferSize: number;
-      maxConcurrency: number;
-      onDispose: SideEffect;
-      queue: ContainerOf<C, T>[];
+      readonly delegate: ObserverLike<T>;
+      readonly maxBufferSize: number;
+      readonly maxConcurrency: number;
+      readonly onDispose: SideEffect;
+      readonly queue: ContainerOf<C, T>[];
     };
 
     const subscribeNext = <T>(
@@ -215,14 +216,14 @@ export const createMergeAll = <C extends ObservableLike>(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
             typeof SinkLike_notify
-          >,
+          > &
+            Mutable<TProperties>,
           delegate: ObserverLike<T>,
           maxBufferSize: number,
           maxConcurrency: number,
         ): ObserverLike<ContainerOf<C, T>> {
           init(disposableMixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
-          unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.maxBufferSize = maxBufferSize;
@@ -252,14 +253,14 @@ export const createMergeAll = <C extends ObservableLike>(
 
           return instance;
         },
-        {
+        props<TProperties>({
           activeCount: 0,
           delegate: none,
           maxBufferSize: 0,
           maxConcurrency: 0,
           onDispose: none,
           queue: none,
-        },
+        }),
         {
           [SinkLike_notify](
             this: TProperties & ObserverLike<ContainerOf<C, T>>,
@@ -339,8 +340,8 @@ export const createSwitchAll = <C extends ObservableLike>(
     const typedObserverMixin = observerMixin<ContainerOf<C, T>>();
 
     type TProperties = {
-      currentRef: DisposableRefLike;
-      delegate: ObserverLike<T>;
+      readonly currentRef: DisposableRefLike;
+      readonly delegate: ObserverLike<T>;
     };
 
     function onDispose(this: TProperties & DisposableLike) {
@@ -356,12 +357,12 @@ export const createSwitchAll = <C extends ObservableLike>(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
             typeof SinkLike_notify
-          >,
+          > &
+            Mutable<TProperties>,
           delegate: ObserverLike<T>,
         ): ObserverLike<ContainerOf<C, T>> {
           init(disposableMixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
-          unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.currentRef = pipe(
@@ -373,10 +374,10 @@ export const createSwitchAll = <C extends ObservableLike>(
 
           return instance;
         },
-        {
+        props<TProperties>({
           currentRef: none,
           delegate: none,
-        },
+        }),
         {
           [SinkLike_notify](
             this: TProperties &
@@ -553,11 +554,11 @@ export const zipWithLatestFrom: <TA, TB, T>(
     const typedObserverMixin = observerMixin<TA>();
 
     type TProperties = {
-      delegate: ObserverLike<T>;
+      readonly delegate: ObserverLike<T>;
       hasLatest: boolean;
       otherLatest: Option<TB>;
-      queue: TA[];
-      selector: Function2<TA, TB, T>;
+      readonly queue: TA[];
+      readonly selector: Function2<TA, TB, T>;
     };
 
     const notifyDelegate = (observer: TProperties & ObserverLike<TA>) => {
@@ -573,14 +574,14 @@ export const zipWithLatestFrom: <TA, TB, T>(
       clazz(
         __extends(disposableMixin, typedObserverMixin),
         function ZipWithLatestFromObserer(
-          instance: unknown,
+          instance: Pick<ObserverLike, typeof SinkLike_notify> &
+            Mutable<TProperties>,
           delegate: ObserverLike<T>,
           other: ObservableLike<TB>,
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
           init(disposableMixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
-          unsafeCast<TProperties & ObserverLike<TA>>(instance);
 
           instance.delegate = delegate;
           instance.queue = [];
@@ -612,13 +613,13 @@ export const zipWithLatestFrom: <TA, TB, T>(
 
           return instance;
         },
-        {
+        props<TProperties>({
           delegate: none,
           hasLatest: false,
           otherLatest: none,
           queue: none,
           selector: none,
-        },
+        }),
         {
           [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
             this.queue.push(next);

@@ -7,12 +7,12 @@ import { observerMixin, createDelegatingObserver, createKeepObserver, createMapO
 import { disposableMixin, createDisposableRef, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { decodeWithCharsetSinkMixin, reduceSinkMixin, takeLastSinkMixin, createEnumeratorSink } from '../__internal__/util/__internal__Sinks.mjs';
 import { concatMap, throws, keepType } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/PromiseableLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { unsafeCast, pipe, isEmpty, none, getLength, max, returns, partial, isNone, isSome, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
+import { pipe, isEmpty, none, getLength, max, returns, partial, isNone, isSome, unsafeCast, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { createEnumerable, emptyEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$3 } from '../ix/EnumerableLike.mjs';
 import { neverObservable, createEnumerableObservable, createRunnableObservable, createObservable, emptyObservable } from '../rx.mjs';
@@ -35,7 +35,6 @@ const buffer = /*@__PURE__*/ (() => {
     const createBufferObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, disposableMixin), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, getScheduler(delegate));
-        unsafeCast(instance);
         instance.buffer = [];
         instance.delegate = delegate;
         instance.durationFunction = durationFunction;
@@ -52,13 +51,13 @@ const buffer = /*@__PURE__*/ (() => {
             }
         }));
         return instance;
-    }, {
+    }, props({
         buffer: none,
         delegate: none,
         durationFunction: none,
         durationSubscription: none,
         maxBufferSize: 0,
-    }, {
+    }), {
         [SinkLike_notify](next) {
             const { buffer, maxBufferSize } = this;
             buffer.push(next);
@@ -215,14 +214,13 @@ const latest = /*@__PURE__*/ (() => {
     const createLatestObserver = createInstanceFactory(clazz(__extends(typedObserverMixin, disposableMixin), function LatestObserver(instance, scheduler, ctx) {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, scheduler);
-        unsafeCast(instance);
         instance.ctx = ctx;
         return instance;
-    }, {
+    }, props({
         ready: false,
         latest: none,
         ctx: none,
-    }, {
+    }), {
         [SinkLike_notify](next) {
             const { ctx } = this;
             this.latest = next;
@@ -414,7 +412,6 @@ const throttle = /*@__PURE__*/ (() => {
         return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ThrottleObserver(instance, delegate, durationFunction, mode) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
-            unsafeCast(instance);
             instance.delegate = delegate;
             instance.durationFunction = durationFunction;
             instance.mode = mode;
@@ -436,7 +433,15 @@ const throttle = /*@__PURE__*/ (() => {
                 }
             }));
             return instance;
-        }, {}, {
+        }, props({
+            delegate: none,
+            value: none,
+            hasValue: false,
+            durationSubscription: none,
+            durationFunction: none,
+            mode: "interval",
+            onNotify: none,
+        }), {
             [SinkLike_notify](next) {
                 this.value = next;
                 this.hasValue = true;
@@ -475,15 +480,14 @@ const timeout = /*@__PURE__*/ (() => {
         init(typedObserverMixin, instance, getScheduler(delegate));
         init(delegatingDisposableMixin, instance, delegate);
         init(typedDisposableRefMixin, instance, disposed);
-        unsafeCast(instance);
         instance.delegate = delegate;
         instance.duration = duration;
         setupDurationSubscription(instance);
         return instance;
-    }, {
+    }, props({
         delegate: none,
         duration: none,
-    }, {
+    }), {
         [SinkLike_notify](next) {
             pipe(this, getCurrentRef, dispose());
             pipe(this.delegate, notify(next));
@@ -507,13 +511,12 @@ const toEnumerable =
     const createEnumeratorScheduler = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function EnumeratorScheduler(instance) {
         init(disposableMixin, instance);
         init(typedEnumeratorMixin, instance);
-        unsafeCast(instance);
         instance.continuations = [];
         return instance;
-    }, {
+    }, props({
         [SchedulerLike_inContinuation]: false,
         continuations: none,
-    }, {
+    }), {
         [SchedulerLike_now]: 0,
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
@@ -546,12 +549,11 @@ const toEnumerable =
     const createEnumeratorObserver = createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function EnumeratorObserver(instance, enumerator) {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, enumerator);
-        unsafeCast(instance);
         instance.enumerator = enumerator;
         return instance;
-    }, {
+    }, props({
         enumerator: none,
-    }, {
+    }), {
         [SinkLike_notify](next) {
             this.enumerator[EnumeratorLike_current] = next;
         },
@@ -637,7 +639,6 @@ const withLatestFrom = /*@__PURE__*/ (() => {
         return createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedObserverMixin), function WithLatestFromObserver(instance, delegate, other, selector) {
             init(delegatingDisposableMixin, instance, delegate);
             init(typedObserverMixin, instance, getScheduler(delegate));
-            unsafeCast(instance);
             instance.delegate = delegate;
             instance.selector = selector;
             pipe(other, forEach(next => {
@@ -649,12 +650,12 @@ const withLatestFrom = /*@__PURE__*/ (() => {
                 }
             }));
             return instance;
-        }, {
+        }, props({
             delegate: none,
             hasLatest: false,
             otherLatest: none,
             selector: none,
-        }, {
+        }), {
             [SinkLike_notify](next) {
                 if (!isDisposed(this) && this.hasLatest) {
                     const result = this.selector(next, this.otherLatest);
@@ -679,7 +680,6 @@ const zip = /*@__PURE__*/ (() => {
     const createZipObserver = createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ZipObserver(instance, delegate, enumerators, sinkEnumerator) {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, getScheduler(delegate));
-        unsafeCast(instance);
         instance.delegate = delegate;
         instance.sinkEnumerator = sinkEnumerator;
         instance.enumerators = enumerators;
@@ -690,11 +690,11 @@ const zip = /*@__PURE__*/ (() => {
             }
         }));
         return instance;
-    }, {
+    }, props({
         delegate: none,
         enumerators: none,
         sinkEnumerator: none,
-    }, {
+    }), {
         [SinkLike_notify](next) {
             const { sinkEnumerator, enumerators } = this;
             if (isDisposed(this)) {

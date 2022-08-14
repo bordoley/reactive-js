@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_scheduleCallback, unstable_cancelCallback, unstable_IdlePriority, unstable_ImmediatePriority, unstable_NormalPriority, unstable_LowPriority, unstable_UserBlockingPriority } from 'scheduler';
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { none, isSome, pipe, pipeLazy, ignore, unsafeCast } from '../functions.mjs';
 import { createSubject } from '../rx.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
@@ -56,40 +56,41 @@ const createComponent = (fn, options = {}) => {
     };
     return ObservableComponent;
 };
-const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(clazz(__extends(disposableMixin), function ReactPriorityScheduler(instance) {
-    init(disposableMixin, instance);
-    unsafeCast(instance);
-    return instance;
-}, {
-    [SchedulerLike_inContinuation]: false,
-}, {
-    get [SchedulerLike_now]() {
-        return unstable_now();
-    },
-    get [SchedulerLike_shouldYield]() {
-        unsafeCast(this);
-        return isInContinuation(this) && unstable_shouldYield();
-    },
-    [SchedulerLike_requestYield]() {
-        unstable_requestPaint();
-    },
-    [SchedulerLike_schedule](continuation, options) {
-        const delay = getDelay(options);
-        const { priority } = options;
-        pipe(this, addIgnoringChildErrors(continuation));
-        if (isDisposed(continuation)) {
-            return;
-        }
-        const callback = () => {
-            pipe(callbackNodeDisposable, dispose());
-            this[SchedulerLike_inContinuation] = true;
-            run(continuation);
-            this[SchedulerLike_inContinuation] = false;
-        };
-        const callbackNode = unstable_scheduleCallback(priority, callback, delay > 0 ? { delay } : none);
-        const callbackNodeDisposable = pipe(createDisposable(), onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), addTo(continuation));
-    },
-}));
+const createReactPriorityScheduler = /*@__PURE__*/ (() => {
+    return createInstanceFactory(clazz(__extends(disposableMixin), function ReactPriorityScheduler(instance) {
+        init(disposableMixin, instance);
+        return instance;
+    }, props({
+        [SchedulerLike_inContinuation]: false,
+    }), {
+        get [SchedulerLike_now]() {
+            return unstable_now();
+        },
+        get [SchedulerLike_shouldYield]() {
+            unsafeCast(this);
+            return isInContinuation(this) && unstable_shouldYield();
+        },
+        [SchedulerLike_requestYield]() {
+            unstable_requestPaint();
+        },
+        [SchedulerLike_schedule](continuation, options) {
+            const delay = getDelay(options);
+            const { priority } = options;
+            pipe(this, addIgnoringChildErrors(continuation));
+            if (isDisposed(continuation)) {
+                return;
+            }
+            const callback = () => {
+                pipe(callbackNodeDisposable, dispose());
+                this[SchedulerLike_inContinuation] = true;
+                run(continuation);
+                this[SchedulerLike_inContinuation] = false;
+            };
+            const callbackNode = unstable_scheduleCallback(priority, callback, delay > 0 ? { delay } : none);
+            const callbackNodeDisposable = pipe(createDisposable(), onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), addTo(continuation));
+        },
+    }));
+})();
 const createReactSchedulerFactory = (priority) => () => pipe(createReactPriorityScheduler(), toScheduler(priority));
 const createReactIdlePriorityScheduler = 
 /*@__PURE__*/ createReactSchedulerFactory(unstable_IdlePriority);

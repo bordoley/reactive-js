@@ -2,6 +2,7 @@
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
 const Object_prototype = Symbol("Object_prototype");
+const Object_private_initializedProperties = Symbol("Object_private_initializedProperties");
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
 function initUnsafe(clazz, instance, ...args) {
     const f = clazz[Object_init];
@@ -62,5 +63,8 @@ const createInstanceFactory = (clazz) => {
         return instance;
     };
 };
+const props = (o) => {
+    return o;
+};
 
-export { __extends, clazz, createInstanceFactory, init };
+export { __extends, clazz, createInstanceFactory, init, props };

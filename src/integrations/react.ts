@@ -25,6 +25,7 @@ import {
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import {
   Factory,
@@ -135,84 +136,85 @@ export const createComponent = <TProps>(
   return ObservableComponent;
 };
 
-const createReactPriorityScheduler = /*@__PURE__*/ createInstanceFactory(
-  clazz(
-    __extends(disposableMixin),
-    function ReactPriorityScheduler(
-      instance: Omit<
-        PrioritySchedulerLike,
-        typeof SchedulerLike_inContinuation | keyof DisposableLike
-      >,
-    ): PrioritySchedulerLike {
-      init(disposableMixin, instance);
-      unsafeCast<{
-        [SchedulerLike_inContinuation]: boolean;
-      }>(instance);
+const createReactPriorityScheduler = /*@__PURE__*/ (() => {
+  type TProperties = {
+    [SchedulerLike_inContinuation]: boolean;
+  };
 
-      return instance;
-    },
-    {
-      [SchedulerLike_inContinuation]: false,
-    },
-    {
-      get [SchedulerLike_now](): number {
-        return unstable_now();
+  return createInstanceFactory(
+    clazz(
+      __extends(disposableMixin),
+      function ReactPriorityScheduler(
+        instance: Omit<
+          PrioritySchedulerLike,
+          typeof SchedulerLike_inContinuation | keyof DisposableLike
+        > &
+          TProperties,
+      ): PrioritySchedulerLike {
+        init(disposableMixin, instance);
+        return instance;
       },
-
-      get [SchedulerLike_shouldYield](): boolean {
-        unsafeCast<{
-          [SchedulerLike_inContinuation]: boolean;
-        }>(this);
-        return isInContinuation(this) && unstable_shouldYield();
-      },
-
-      [SchedulerLike_requestYield]() {
-        unstable_requestPaint();
-      },
-
-      [SchedulerLike_schedule](
-        this: DisposableLike & {
-          [SchedulerLike_inContinuation]: boolean;
+      props<TProperties>({
+        [SchedulerLike_inContinuation]: false,
+      }),
+      {
+        get [SchedulerLike_now](): number {
+          return unstable_now();
         },
-        continuation: ContinuationLike,
-        options: {
-          priority: number;
-          delay?: number;
+
+        get [SchedulerLike_shouldYield](): boolean {
+          unsafeCast<TProperties>(this);
+          return isInContinuation(this) && unstable_shouldYield();
         },
-      ) {
-        const delay = getDelay(options);
 
-        const { priority } = options;
+        [SchedulerLike_requestYield]() {
+          unstable_requestPaint();
+        },
 
-        pipe(this, addIgnoringChildErrors(continuation));
+        [SchedulerLike_schedule](
+          this: DisposableLike & {
+            [SchedulerLike_inContinuation]: boolean;
+          },
+          continuation: ContinuationLike,
+          options: {
+            priority: number;
+            delay?: number;
+          },
+        ) {
+          const delay = getDelay(options);
 
-        if (isDisposed(continuation)) {
-          return;
-        }
+          const { priority } = options;
 
-        const callback = () => {
-          pipe(callbackNodeDisposable, dispose());
+          pipe(this, addIgnoringChildErrors(continuation));
 
-          this[SchedulerLike_inContinuation] = true;
-          run(continuation);
-          this[SchedulerLike_inContinuation] = false;
-        };
+          if (isDisposed(continuation)) {
+            return;
+          }
 
-        const callbackNode = unstable_scheduleCallback(
-          priority,
-          callback,
-          delay > 0 ? { delay } : none,
-        );
+          const callback = () => {
+            pipe(callbackNodeDisposable, dispose());
 
-        const callbackNodeDisposable = pipe(
-          createDisposable(),
-          onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)),
-          addTo(continuation),
-        );
+            this[SchedulerLike_inContinuation] = true;
+            run(continuation);
+            this[SchedulerLike_inContinuation] = false;
+          };
+
+          const callbackNode = unstable_scheduleCallback(
+            priority,
+            callback,
+            delay > 0 ? { delay } : none,
+          );
+
+          const callbackNodeDisposable = pipe(
+            createDisposable(),
+            onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)),
+            addTo(continuation),
+          );
+        },
       },
-    },
-  ),
-);
+    ),
+  );
+})();
 
 const createReactSchedulerFactory =
   (priority: number): Factory<SchedulerLike> =>

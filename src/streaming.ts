@@ -7,10 +7,12 @@ import {
 import { delegatingDisposableMixin } from "./__internal__/util/__internal__Disposables";
 import {
   Mixin3,
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "./__internal__/util/__internal__Objects";
 import {
   Container,
@@ -118,9 +120,9 @@ const streamMixin: <TReq, T>() => Mixin3<
   number
 > = /*@__PURE__*/ (<TReq, T>() => {
   type TProperties = {
-    subject: SubjectLike<TReq>;
-    observable: MulticastObservableLike<T>;
-    [DispatcherLike_scheduler]: SchedulerLike;
+    readonly subject: SubjectLike<TReq>;
+    readonly observable: MulticastObservableLike<T>;
+    readonly [DispatcherLike_scheduler]: SchedulerLike;
   };
 
   return returns(
@@ -135,7 +137,8 @@ const streamMixin: <TReq, T>() => Mixin3<
           | typeof ReactiveContainerLike_sinkInto
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
-        >,
+        > &
+          Mutable<TProperties>,
         op: ContainerOperator<ObservableLike, TReq, T>,
         scheduler: SchedulerLike,
         replay: number,
@@ -143,7 +146,6 @@ const streamMixin: <TReq, T>() => Mixin3<
         const subject = createSubject({ replay });
 
         init(delegatingDisposableMixin, instance, subject);
-        unsafeCast<TProperties>(instance);
 
         instance[DispatcherLike_scheduler] = scheduler;
         instance.subject = subject;
@@ -157,11 +159,11 @@ const streamMixin: <TReq, T>() => Mixin3<
 
         return instance;
       },
-      {
+      props<TProperties>({
         subject: none,
         observable: none,
         [DispatcherLike_scheduler]: none,
-      },
+      }),
       {
         get [MulticastObservableLike_observerCount](): number {
           unsafeCast<TProperties>(this);
@@ -177,13 +179,14 @@ const streamMixin: <TReq, T>() => Mixin3<
 
         [ObservableLike_isRunnable]: false,
 
-        [DispatcherLike_dispatch](req: TReq) {
-          unsafeCast<TProperties>(this);
+        [DispatcherLike_dispatch](this: TProperties, req: TReq) {
           pipe(this.subject, publish(req));
         },
 
-        [ReactiveContainerLike_sinkInto](observer: ObserverLike<T>) {
-          unsafeCast<TProperties>(this);
+        [ReactiveContainerLike_sinkInto](
+          this: TProperties,
+          observer: ObserverLike<T>,
+        ) {
           pipe(this.observable, sinkInto(observer));
         },
       },

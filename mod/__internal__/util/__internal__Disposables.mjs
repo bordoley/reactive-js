@@ -1,23 +1,22 @@
 /// <reference types="./__internal__Disposables.d.ts" />
-import { unsafeCast, pipe, none, isSome, ignore, returns } from '../../functions.mjs';
+import { pipe, none, unsafeCast, isSome, ignore, returns } from '../../functions.mjs';
 import { onDisposed, DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose, dispose, getException, isDisposed, add } from './__internal__DisposableLike.mjs';
 import { MutableRefLike_current } from './__internal__MutableRefLike.mjs';
-import { clazz, createInstanceFactory, __extends, init } from './__internal__Objects.mjs';
+import { clazz, props, createInstanceFactory, __extends, init } from './__internal__Objects.mjs';
 
 const delegatingDisposableMixin = 
 /*@__PURE__*/ (() => {
     const DelegatingDisposable_private_delegate = Symbol("DelegatingDisposable_private_delegate");
     return clazz(function DelegatingDisposableMixin(instance, delegate) {
-        unsafeCast(instance);
         instance[DelegatingDisposable_private_delegate] = delegate;
         pipe(delegate, onDisposed(_ => {
             instance[DisposableLike_isDisposed] = true;
         }));
         return instance;
-    }, {
+    }, props({
         [DelegatingDisposable_private_delegate]: none,
         [DisposableLike_isDisposed]: false,
-    }, {
+    }), {
         get [DisposableLike_exception]() {
             unsafeCast(this);
             const delegate = this[DelegatingDisposable_private_delegate];
@@ -51,14 +50,13 @@ const doDispose = (instance, disposable) => {
 const disposableMixin = /*@__PURE__*/ (() => {
     const Disposable_private_disposables = Symbol("Disposable_private_disposables");
     return clazz(function DisposableMixin(instance) {
-        unsafeCast(instance);
         instance[Disposable_private_disposables] = new Set();
         return instance;
-    }, {
+    }, props({
         [DisposableLike_exception]: none,
         [DisposableLike_isDisposed]: false,
         [Disposable_private_disposables]: none,
-    }, {
+    }), {
         [DisposableLike_dispose](error) {
             if (!isDisposed(this)) {
                 this[DisposableLike_exception] = error;
@@ -109,9 +107,9 @@ const disposableRefMixin = /*@__PURE__*/ (() => {
         instance[DisposableRef_private_current] = defaultValue;
         pipe(instance, add(defaultValue));
         return instance;
-    }, {
+    }, props({
         [DisposableRef_private_current]: none,
-    }, {
+    }), {
         get [MutableRefLike_current]() {
             unsafeCast(this);
             return this[DisposableRef_private_current];

@@ -28,10 +28,12 @@ import {
 import {
   Mixin,
   Mixin1,
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "./__internal__Objects";
 
 export const delegatingDisposableMixin: Mixin1<DisposableLike, DisposableLike> =
@@ -42,7 +44,7 @@ export const delegatingDisposableMixin: Mixin1<DisposableLike, DisposableLike> =
 
     type TProperties = {
       [DisposableLike_isDisposed]: boolean;
-      [DelegatingDisposable_private_delegate]: DisposableLike;
+      readonly [DelegatingDisposable_private_delegate]: DisposableLike;
     };
 
     return clazz(
@@ -52,11 +54,10 @@ export const delegatingDisposableMixin: Mixin1<DisposableLike, DisposableLike> =
           | typeof DisposableLike_exception
           | typeof DisposableLike_add
           | typeof DisposableLike_dispose
-        >,
+        > &
+          Mutable<TProperties>,
         delegate: DisposableLike,
       ): DisposableLike {
-        unsafeCast<TProperties>(instance);
-
         instance[DelegatingDisposable_private_delegate] = delegate;
 
         pipe(
@@ -68,10 +69,10 @@ export const delegatingDisposableMixin: Mixin1<DisposableLike, DisposableLike> =
 
         return instance;
       },
-      {
+      props<TProperties>({
         [DelegatingDisposable_private_delegate]: none,
         [DisposableLike_isDisposed]: false,
-      },
+      }),
       {
         get [DisposableLike_exception](): Option<Exception> {
           unsafeCast<TProperties>(this);
@@ -120,7 +121,7 @@ export const disposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
   type TProperties = {
     [DisposableLike_exception]: Option<Exception>;
     [DisposableLike_isDisposed]: boolean;
-    [Disposable_private_disposables]: Set<DisposableOrTeardown>;
+    readonly [Disposable_private_disposables]: Set<DisposableOrTeardown>;
   };
 
   return clazz(
@@ -128,18 +129,18 @@ export const disposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
       instance: Pick<
         DisposableLike,
         typeof DisposableLike_dispose | typeof DisposableLike_add
-      >,
+      > &
+        Mutable<TProperties>,
     ): DisposableLike {
-      unsafeCast<TProperties>(instance);
       instance[Disposable_private_disposables] = new Set();
 
       return instance;
     },
-    {
+    props<TProperties>({
       [DisposableLike_exception]: none,
       [DisposableLike_isDisposed]: false,
       [Disposable_private_disposables]: none,
-    },
+    }),
     {
       [DisposableLike_dispose](
         this: TProperties & DisposableLike,
@@ -223,19 +224,20 @@ export const disposableRefMixin: <
         instance: Pick<
           DisposableRefLike<TDisposable>,
           typeof MutableRefLike_current
-        >,
+        > &
+          Mutable<TProperties>,
         defaultValue: TDisposable,
       ): MutableRefLike<TDisposable> {
-        unsafeCast<TProperties & DisposableLike>(instance);
+        unsafeCast<DisposableLike>(instance);
 
         instance[DisposableRef_private_current] = defaultValue;
         pipe(instance, add(defaultValue));
 
         return instance;
       },
-      {
+      props<TProperties>({
         [DisposableRef_private_current]: none,
-      },
+      }),
       {
         get [MutableRefLike_current](): TDisposable {
           unsafeCast<TProperties>(this);

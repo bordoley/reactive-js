@@ -6,7 +6,7 @@ import { createPriorityQueue } from './__internal__/scheduling/__internal__queue
 import { addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from './__internal__/util/__internal__DisposableLike.mjs';
 import { disposableMixin } from './__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs';
-import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, clazz, __extends, init, props } from './__internal__/util/__internal__Objects.mjs';
 import { pipe, unsafeCast, none, isSome } from './functions.mjs';
 import { createDisposable, ContinuationLike_run, SourceLike_move, EnumeratorLike_current } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
@@ -60,15 +60,14 @@ const createHostScheduler = /*@__PURE__*/ (() => {
     };
     const createHostSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin), function HostScheduler(instance, yieldInterval) {
         init(disposableMixin, instance);
-        unsafeCast(instance);
         instance.yieldInterval = yieldInterval;
         return instance;
-    }, {
+    }, props({
         [SchedulerLike_inContinuation]: false,
         startTime: 0,
         yieldInterval: 0,
         yieldRequested: false,
-    }, {
+    }), {
         get [SchedulerLike_now]() {
             if (supportsPerformanceNow) {
                 return performance.now();
@@ -123,11 +122,10 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
     const createVirtualTimeSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
         init(disposableMixin, instance);
-        unsafeCast(instance);
         instance.maxMicroTaskTicks = maxMicroTaskTicks;
         instance.taskQueue = createPriorityQueue(comparator);
         return instance;
-    }, {
+    }, props({
         [SchedulerLike_inContinuation]: false,
         [SchedulerLike_now]: 0,
         maxMicroTaskTicks: MAX_SAFE_INTEGER,
@@ -135,7 +133,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         taskIDCount: 0,
         yieldRequested: false,
         taskQueue: none,
-    }, {
+    }), {
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
             const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation, } = this;

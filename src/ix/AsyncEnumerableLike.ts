@@ -14,10 +14,12 @@ import {
 } from "../__internal__/util/__internal__Disposables";
 import {
   Mixin1,
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import {
   ContainerOperator,
@@ -114,10 +116,10 @@ const createAsyncEnumerable: <T>(
   ) => AsyncEnumeratorLike<T>,
 ) => AsyncEnumerableLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [StreamableLike_stream](
+    readonly [StreamableLike_stream]: (
       scheduler: SchedulerLike,
       options?: { readonly replay?: number },
-    ): AsyncEnumeratorLike<T>;
+    ) => AsyncEnumeratorLike<T>;
   };
 
   return createInstanceFactory(
@@ -127,18 +129,20 @@ const createAsyncEnumerable: <T>(
           AsyncEnumerableLike<T>,
           | typeof StreamableLike_stream
           | typeof InteractiveContainerLike_interact
-        >,
+        > &
+          Mutable<TProperties>,
         stream: (
           scheduler: SchedulerLike,
           options?: { readonly replay?: number },
         ) => AsyncEnumeratorLike<T>,
       ): AsyncEnumerableLike<T> {
-        unsafeCast<TProperties>(instance);
         instance[StreamableLike_stream] = stream;
 
         return instance;
       },
-      {},
+      props<TProperties>({
+        [StreamableLike_stream]: none,
+      }),
       {
         [StreamableLike_stream](
           this: TProperties,
@@ -159,10 +163,10 @@ const createAsyncEnumerable: <T>(
 
 const createLiftedAsyncEnumerator = (<T>() => {
   type TProperties = {
-    observable: MulticastObservableLike<T>;
-    op: ContainerOperator<ObservableLike, void, T>;
-    [DispatcherLike_scheduler]: SchedulerLike;
-    subject: SubjectLike<void>;
+    readonly observable: MulticastObservableLike<T>;
+    readonly op: ContainerOperator<ObservableLike, void, T>;
+    readonly [DispatcherLike_scheduler]: SchedulerLike;
+    readonly subject: SubjectLike<void>;
   };
 
   return createInstanceFactory(
@@ -178,13 +182,13 @@ const createLiftedAsyncEnumerator = (<T>() => {
           | typeof SourceLike_move
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
-        >,
+        > &
+          Mutable<TProperties>,
         op: ContainerOperator<ObservableLike, void, T>,
         scheduler: SchedulerLike,
         replay: number,
       ): AsyncEnumeratorLike<T> {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance.op = op;
         instance[DispatcherLike_scheduler] = scheduler;
@@ -197,12 +201,12 @@ const createLiftedAsyncEnumerator = (<T>() => {
 
         return pipe(instance, add(subject), addTo(observable));
       },
-      {
+      props<TProperties>({
+        [DispatcherLike_scheduler]: none,
         observable: none,
         op: none,
-        scheduler: none,
         subject: none,
-      },
+      }),
       {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
@@ -515,8 +519,9 @@ const delegatingAsyncEnumerator: <T>() => Mixin1<
   AsyncEnumeratorLike<T>
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    delegate: AsyncEnumeratorLike<T>;
+    readonly delegate: AsyncEnumeratorLike<T>;
   };
+
   type TReturn = Pick<
     AsyncEnumeratorLike<T>,
     | typeof DispatcherLike_dispatch
@@ -529,17 +534,16 @@ const delegatingAsyncEnumerator: <T>() => Mixin1<
   return pipe(
     clazz(
       function DelegatingAsyncEnumerator(
-        instance: TReturn,
+        instance: Mutable<TProperties> & TReturn,
         delegate: AsyncEnumeratorLike<T>,
       ): TReturn {
-        unsafeCast<TProperties>(instance);
         instance.delegate = delegate;
 
         return instance;
       },
-      {
+      props<TProperties>({
         delegate: none,
-      },
+      }),
       {
         [DispatcherLike_dispatch](this: TProperties, _: void) {
           pipe(this.delegate, dispatch(none));
@@ -561,7 +565,7 @@ const delegatingAsyncEnumerator: <T>() => Mixin1<
 
 export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    obs: MulticastObservableLike<T>;
+    readonly obs: MulticastObservableLike<T>;
   };
 
   const createKeepAsyncEnumerator = createInstanceFactory(
@@ -573,13 +577,13 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
           | typeof ReactiveContainerLike_sinkInto
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
-        >,
+        > &
+          Mutable<TProperties>,
         delegate: AsyncEnumeratorLike<T>,
         predicate: Predicate<T>,
       ): AsyncEnumeratorLike<T> {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance.obs = pipe(
           delegate,
@@ -593,9 +597,9 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         );
         return instance;
       },
-      {
+      props<TProperties>({
         obs: none,
-      },
+      }),
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
@@ -630,8 +634,8 @@ export const map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
   TB,
 >() => {
   type TProperties = {
-    op: ContainerOperator<ObservableLike, TA, TB>;
-    delegate: AsyncEnumeratorLike<TA>;
+    readonly op: ContainerOperator<ObservableLike, TA, TB>;
+    readonly delegate: AsyncEnumeratorLike<TA>;
   };
 
   const createMapAsyncEnumerator = createInstanceFactory(
@@ -643,22 +647,22 @@ export const map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
           | typeof ReactiveContainerLike_sinkInto
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
-        >,
+        > &
+          Mutable<TProperties>,
         delegate: AsyncEnumeratorLike<TA>,
         mapper: Function1<TA, TB>,
       ): AsyncEnumeratorLike<TB> {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance.delegate = delegate;
         instance.op = mapObs(mapper);
         return instance;
       },
-      {
+      props<TProperties>({
         op: none,
         delegate: none,
-      },
+      }),
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
@@ -693,8 +697,8 @@ export const scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
   TAcc,
 >() => {
   type TProperties = {
-    op: ContainerOperator<ObservableLike, T, TAcc>;
-    delegate: AsyncEnumeratorLike<T>;
+    readonly op: ContainerOperator<ObservableLike, T, TAcc>;
+    readonly delegate: AsyncEnumeratorLike<T>;
   };
 
   const createScanAsyncEnumerator = createInstanceFactory(
@@ -706,23 +710,23 @@ export const scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
           | typeof ReactiveContainerLike_sinkInto
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
-        >,
+        > &
+          Mutable<TProperties>,
         delegate: AsyncEnumeratorLike<T>,
         reducer: Reducer<T, TAcc>,
         acc: Factory<TAcc>,
       ): AsyncEnumeratorLike<TAcc> {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance.delegate = delegate;
         instance.op = scanObs(reducer, acc);
         return instance;
       },
-      {
+      props<TProperties>({
         op: none,
         delegate: none,
-      },
+      }),
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
@@ -757,7 +761,7 @@ export const scanAsync: ScanAsync<
   ObservableLike
 >["scanAsync"] = /*@__PURE__*/ (<T, TAcc>() => {
   type TProperties = {
-    obs: MulticastObservableLike<TAcc>;
+    readonly obs: MulticastObservableLike<TAcc>;
   };
 
   const creatScanAsyncAsyncEnumerator = createInstanceFactory(
@@ -769,14 +773,14 @@ export const scanAsync: ScanAsync<
           | typeof ReactiveContainerLike_sinkInto
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
-        >,
+        > &
+          Mutable<TProperties>,
         delegate: AsyncEnumeratorLike<T>,
         reducer: AsyncReducer<ObservableLike, T, TAcc>,
         initialValue: Factory<TAcc>,
       ): AsyncEnumeratorLike<TAcc> {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance.obs = pipe(
           delegate,
@@ -785,9 +789,9 @@ export const scanAsync: ScanAsync<
         );
         return instance;
       },
-      {
+      props<TProperties>({
         obs: none,
-      },
+      }),
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
@@ -821,7 +825,7 @@ export const scanAsyncT: ScanAsync<AsyncEnumerableLike, ObservableLike> = {
 export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
-      obs: MulticastObservableLike<T>;
+      readonly obs: MulticastObservableLike<T>;
     };
 
     const createTakeWhileAsyncEnumerator = createInstanceFactory(
@@ -833,14 +837,14 @@ export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
             | typeof ReactiveContainerLike_sinkInto
             | typeof MulticastObservableLike_observerCount
             | typeof MulticastObservableLike_replay
-          >,
+          > &
+            Mutable<TProperties>,
           delegate: AsyncEnumeratorLike<T>,
           predicate: Predicate<T>,
           inclusive: boolean,
         ): AsyncEnumeratorLike<T> {
           init(delegatingDisposableMixin, instance, delegate);
           init(delegatingAsyncEnumerator(), instance, delegate);
-          unsafeCast<TProperties>(instance);
 
           instance.obs = pipe(
             delegate,
@@ -850,9 +854,9 @@ export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
           );
           return instance;
         },
-        {
+        props<TProperties>({
           obs: none,
-        },
+        }),
         {
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);

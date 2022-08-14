@@ -4,10 +4,12 @@ import {
   enumeratorMixin,
 } from "./__internal__/util/__internal__Enumerators";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "./__internal__/util/__internal__Objects";
 import {
   Container,
@@ -17,14 +19,7 @@ import {
   Generate,
   StatefulContainerLike,
 } from "./containers";
-import {
-  Factory,
-  Function1,
-  Updater,
-  none,
-  pipe,
-  unsafeCast,
-} from "./functions";
+import { Factory, Function1, Updater, none, pipe } from "./functions";
 import { SchedulerLike } from "./scheduling";
 import { AsyncEnumeratorLike, StreamableLike } from "./streaming";
 import {
@@ -82,26 +77,27 @@ export type ToEnumerable<
 
 export const createEnumerable: <T>(
   f: Factory<EnumeratorLike<T>>,
-) => EnumerableLike<T> = /*@__PURE__*/ (<T>() =>
-  createInstanceFactory(
+) => EnumerableLike<T> = /*@__PURE__*/ (<T>() => {
+  type TProperties = {
+    readonly enumerate: Factory<EnumeratorLike<T>>;
+  };
+
+  return createInstanceFactory(
     clazz(
       function CreateEnumerable(
         instance: Pick<
           EnumerableLike<T>,
           typeof InteractiveContainerLike_interact
-        >,
+        > &
+          Mutable<TProperties>,
         enumerate: Factory<EnumeratorLike<T>>,
       ): EnumerableLike<T> {
-        unsafeCast<{
-          enumerate: Factory<EnumeratorLike<T>>;
-        }>(instance);
-
         instance.enumerate = enumerate;
         return instance;
       },
-      {
+      props<TProperties>({
         enumerate: none,
-      },
+      }),
       {
         [InteractiveContainerLike_interact](this: {
           enumerate: Factory<EnumeratorLike<T>>;
@@ -118,7 +114,8 @@ export const createEnumerable: <T>(
         },
       },
     ),
-  ))();
+  );
+})();
 
 export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
   T,
@@ -161,26 +158,26 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
   /*@__PURE__*/ (<T>() => {
     const typedEnumerator = enumeratorMixin<T>();
 
-    type TProperties = { f: Updater<T> };
+    type TProperties = { readonly f: Updater<T> };
 
     const createGenerateEnumerator = createInstanceFactory(
       clazz(
         __extends(disposableMixin, typedEnumerator),
         function GenerateEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+            Mutable<TProperties>,
           f: Updater<T>,
           acc: T,
         ): EnumeratorLike<T> {
           init(disposableMixin, instance);
           init(typedEnumerator, instance);
-          unsafeCast<TProperties>(instance);
 
           instance.f = f;
           instance[EnumeratorLike_current] = acc;
 
           return instance;
         },
-        { f: none },
+        props<TProperties>({ f: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
             if (!isDisposed(this)) {
