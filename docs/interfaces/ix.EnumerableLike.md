@@ -24,7 +24,7 @@ Interface for iterating a Container of items.
 
 - [[ContainerLike\_T]](ix.EnumerableLike.md#[containerlike_t])
 - [[ContainerLike\_type]](ix.EnumerableLike.md#[containerlike_type])
-- [[StableContainerLike\_state]](ix.EnumerableLike.md#[stablecontainerlike_state])
+- [[StatefulContainerLike\_state]](ix.EnumerableLike.md#[statefulcontainerlike_state])
 
 ### Methods
 
@@ -52,13 +52,13 @@ ___
 
 ___
 
-### [StableContainerLike\_state]
+### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StableContainerLike\_state]**: [`EnumeratorLike`](util.EnumeratorLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`EnumeratorLike`](util.EnumeratorLike.md)<`unknown`\>
 
 #### Overrides
 
-[InteractiveContainerLike](ix.InteractiveContainerLike.md).[[StableContainerLike_state]](ix.InteractiveContainerLike.md#[stablecontainerlike_state])
+[InteractiveContainerLike](ix.InteractiveContainerLike.md).[[StatefulContainerLike_state]](ix.InteractiveContainerLike.md#[statefulcontainerlike_state])
 
 ## Methods
 

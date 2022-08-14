@@ -27,7 +27,7 @@
 
 - [[ContainerLike\_T]](ix.InteractiveContainerLike.md#[containerlike_t])
 - [[ContainerLike\_type]](ix.InteractiveContainerLike.md#[containerlike_type])
-- [[StableContainerLike\_state]](ix.InteractiveContainerLike.md#[stablecontainerlike_state])
+- [[StatefulContainerLike\_state]](ix.InteractiveContainerLike.md#[statefulcontainerlike_state])
 
 ### Methods
 
@@ -55,13 +55,13 @@ ___
 
 ___
 
-### [StableContainerLike\_state]
+### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StableContainerLike\_state]**: [`DisposableLike`](util.DisposableLike.md)
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`DisposableLike`](util.DisposableLike.md)
 
 #### Inherited from
 
-[StatefulContainerLike](containers.StatefulContainerLike.md).[[StableContainerLike_state]](containers.StatefulContainerLike.md#[stablecontainerlike_state])
+[StatefulContainerLike](containers.StatefulContainerLike.md).[[StatefulContainerLike_state]](containers.StatefulContainerLike.md#[statefulcontainerlike_state])
 
 ## Methods
 

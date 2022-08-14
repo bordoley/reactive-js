@@ -1,5 +1,5 @@
 import { ContainerLike, ContainerLike_type, ContainerLike_T, Container, ContainerOf, ContainerOperator } from "./containers.mjs";
-import { Updater, Function1, Reducer, Factory, Equality } from "./functions.mjs";
+import { Function1, Reducer, Factory, Equality, Updater } from "./functions.mjs";
 import { MulticastObservableLike, ObservableLike } from "./rx.mjs";
 import { DispatcherLike, SchedulerLike } from "./scheduling.mjs";
 import { PauseableLike, SourceLike } from "./util.mjs";
@@ -16,8 +16,6 @@ interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLi
     [StreamableLike_stream](scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): TStream;
-}
-interface StreamableStateLike<T = unknown> extends StreamableLike<Updater<T>, T> {
 }
 declare type FlowMode = "resume" | "pause";
 interface FlowableStreamLike<T = unknown> extends StreamLike<FlowMode, T>, PauseableLike {
@@ -92,5 +90,5 @@ declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, in
  */
 declare const createStateStore: <T>(initialState: Factory<T>, options?: {
     readonly equality?: Equality<T> | undefined;
-} | undefined) => StreamableStateLike<T>;
-export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, StreamableStateLike, ToFlowable, createActionReducer, createAsyncEnumerator, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble };
+} | undefined) => StreamableLike<Updater<T>, T, StreamLike<Updater<T>, T>>;
+export { AsyncEnumeratorLike, FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, ToFlowable, createActionReducer, createAsyncEnumerator, createLiftedFlowable, createLiftedStreamable, createStateStore, createStream, createStreamble };

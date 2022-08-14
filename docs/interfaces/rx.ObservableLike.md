@@ -29,7 +29,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 - [[ContainerLike\_type]](rx.ObservableLike.md#[containerlike_type])
 - [[ObservableLike\_isEnumerable]](rx.ObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])
-- [[StableContainerLike\_state]](rx.ObservableLike.md#[stablecontainerlike_state])
+- [[StatefulContainerLike\_state]](rx.ObservableLike.md#[statefulcontainerlike_state])
 
 ## Properties
 
@@ -55,10 +55,10 @@ ___
 
 ___
 
-### [StableContainerLike\_state]
+### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StableContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
 
 #### Overrides
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[StableContainerLike_state]](rx.ReactiveContainerLike.md#[stablecontainerlike_state])
+[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[StatefulContainerLike_state]](rx.ReactiveContainerLike.md#[statefulcontainerlike_state])

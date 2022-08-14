@@ -23,7 +23,7 @@
 - [[ContainerLike\_type]](rx.EnumerableObservableLike.md#[containerlike_type])
 - [[ObservableLike\_isEnumerable]](rx.EnumerableObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.EnumerableObservableLike.md#[observablelike_isrunnable])
-- [[StableContainerLike\_state]](rx.EnumerableObservableLike.md#[stablecontainerlike_state])
+- [[StatefulContainerLike\_state]](rx.EnumerableObservableLike.md#[statefulcontainerlike_state])
 
 ## Properties
 
@@ -57,10 +57,10 @@ ___
 
 ___
 
-### [StableContainerLike\_state]
+### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StableContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
 
 #### Inherited from
 
-[RunnableObservableLike](rx.RunnableObservableLike.md).[[StableContainerLike_state]](rx.RunnableObservableLike.md#[stablecontainerlike_state])
+[RunnableObservableLike](rx.RunnableObservableLike.md).[[StatefulContainerLike_state]](rx.RunnableObservableLike.md#[statefulcontainerlike_state])

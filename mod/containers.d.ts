@@ -25,9 +25,9 @@ interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike<T> {
     readonly [ContainerLike_type]?: PromiseableLike<this[typeof ContainerLike_T]>;
 }
 /**  @ignore */
-declare const StableContainerLike_state: unique symbol;
+declare const StatefulContainerLike_state: unique symbol;
 interface StatefulContainerLike extends ContainerLike {
-    readonly [StableContainerLike_state]?: DisposableLike;
+    readonly [StatefulContainerLike_state]?: DisposableLike;
 }
 declare type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly [ContainerLike_type]?: unknown;
@@ -38,10 +38,10 @@ declare type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly _T: () => T;
 };
 declare type StatefulContainerStateOf<C extends StatefulContainerLike, T> = C extends {
-    readonly [StableContainerLike_state]?: DisposableLike;
+    readonly [StatefulContainerLike_state]?: DisposableLike;
 } ? NonNullable<(C & {
     readonly [ContainerLike_T]: T;
-})[typeof StableContainerLike_state]> : {
+})[typeof StatefulContainerLike_state]> : {
     readonly _C: C;
     readonly _T: () => T;
 };
@@ -83,9 +83,9 @@ declare type Empty<C extends ContainerLike, O = never> = Container<C> & {
 declare type ForEach<C extends ContainerLike> = Container<C> & {
     forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
 };
-interface ForkConcat<C extends ContainerLike> {
+declare type ForkConcat<C extends ContainerLike> = Container<C> & {
     forkConcat<TIn, TOut>(fst: ContainerOperator<C, TIn, TOut>, snd: ContainerOperator<C, TIn, TOut>, ...tail: readonly ContainerOperator<C, TIn, TOut>[]): ContainerOperator<C, TIn, TOut>;
-}
+};
 declare type ForkZip<C extends ContainerLike> = Container<C> & {
     forkZip<T, TA, TB>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>): ContainerOperator<C, T, readonly [
         TA,
@@ -291,4 +291,4 @@ declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromIterable, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StableContainerLike_state, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromIterable, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };

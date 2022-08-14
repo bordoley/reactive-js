@@ -7,7 +7,6 @@
 ### Interfaces
 
 - [ContainerLike](../interfaces/containers.ContainerLike.md)
-- [ForkConcat](../interfaces/containers.ForkConcat.md)
 - [IterableLike](../interfaces/containers.IterableLike.md)
 - [PromiseableLike](../interfaces/containers.PromiseableLike.md)
 - [ReadonlyArrayLike](../interfaces/containers.ReadonlyArrayLike.md)
@@ -29,6 +28,7 @@
 - [Empty](containers.md#empty)
 - [EverySatisfy](containers.md#everysatisfy)
 - [ForEach](containers.md#foreach)
+- [ForkConcat](containers.md#forkconcat)
 - [ForkZip](containers.md#forkzip)
 - [FromArray](containers.md#fromarray)
 - [FromArrayOptions](containers.md#fromarrayoptions)
@@ -234,6 +234,18 @@ ___
 
 ___
 
+### ForkConcat
+
+Ƭ **ForkConcat**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `forkConcat`: <TIn, TOut\>(`fst`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `TIn`, `TOut`\>, `snd`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `TIn`, `TOut`\>, ...`tail`: readonly [`ContainerOperator`](containers.md#containeroperator)<`C`, `TIn`, `TOut`\>[]) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TIn`, `TOut`\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+
+___
+
 ### ForkZip
 
 Ƭ **ForkZip**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `forkZip`: <T, TA, TB\>(`a`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TA`\>, `b`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`TA`, `TB`]\><T, TA, TB, TC\>(`a`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TA`\>, `b`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TB`\>, `c`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TC`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`TA`, `TB`, `TC`]\><T, TA, TB, TC, TD\>(`a`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TA`\>, `b`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TB`\>, `c`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TC`\>, `d`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TD`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`TA`, `TB`, `TC`, `TD`]\><T, TA, TB, TC, TD, TE\>(`a`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TA`\>, `b`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TB`\>, `c`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TC`\>, `d`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TD`\>, `e`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TE`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\><T, TA, TB, TC, TD, TE, TF\>(`a`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TA`\>, `b`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TB`\>, `c`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TC`\>, `d`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TD`\>, `e`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TE`\>, `f`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TF`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\><T, TA, TB, TC, TD, TE, TF, TG\>(`a`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TA`\>, `b`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TB`\>, `c`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TC`\>, `d`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TD`\>, `e`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TE`\>, `f`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TF`\>, `g`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TG`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\><T, TA, TB, TC, TD, TE, TF, TG, TH\>(`a`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TA`\>, `b`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TB`\>, `c`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TC`\>, `d`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TD`\>, `e`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TE`\>, `f`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TF`\>, `g`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TG`\>, `h`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TH`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\><T, TA, TB, TC, TD, TE, TF, TG, TH, TI\>(`a`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TA`\>, `b`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TB`\>, `c`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TC`\>, `d`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TD`\>, `e`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TE`\>, `f`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TF`\>, `g`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TG`\>, `h`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TH`\>, `i`: [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TI`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>  }
@@ -408,7 +420,7 @@ ___
 
 ### StatefulContainerStateOf
 
-Ƭ **StatefulContainerStateOf**<`C`, `T`\>: `C` extends { `[StableContainerLike_state]?`: [`DisposableLike`](../interfaces/util.DisposableLike.md)  } ? `NonNullable`<`C` & { `[ContainerLike_T]`: `T`  }[typeof `StableContainerLike_state`]\> : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **StatefulContainerStateOf**<`C`, `T`\>: `C` extends { `[StatefulContainerLike_state]?`: [`DisposableLike`](../interfaces/util.DisposableLike.md)  } ? `NonNullable`<`C` & { `[ContainerLike_T]`: `T`  }[typeof `StatefulContainerLike_state`]\> : { `_C`: `C` ; `_T`: () => `T`  }
 
 #### Type parameters
 

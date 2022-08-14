@@ -26,8 +26,8 @@ import {
   Empty,
   Generate,
   Never,
-  StableContainerLike_state,
   StatefulContainerLike,
+  StatefulContainerLike_state,
 } from "./containers";
 import {
   Factory,
@@ -62,7 +62,9 @@ export interface ReactiveContainerLike<TSink extends DisposableLike>
 export interface RunnableLike<T = unknown>
   extends ReactiveContainerLike<SinkLike<T>> {
   readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
-  readonly [StableContainerLike_state]?: SinkLike<this[typeof ContainerLike_T]>;
+  readonly [StatefulContainerLike_state]?: SinkLike<
+    this[typeof ContainerLike_T]
+  >;
 }
 
 /**  @ignore */
@@ -80,7 +82,7 @@ export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
  */
 export interface ObservableLike<T = unknown>
   extends ReactiveContainerLike<ObserverLike<T>> {
-  readonly [StableContainerLike_state]?: ObserverLike<
+  readonly [StatefulContainerLike_state]?: ObserverLike<
     this[typeof ContainerLike_T]
   >;
   readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
@@ -138,15 +140,15 @@ export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
   ContainerOf<C, TAcc>
 >;
 
-export interface ScanAsync<
+export type ScanAsync<
   C extends ContainerLike,
   CInner extends ObservableLike,
-> extends Container<C> {
+> = Container<C> & {
   scanAsync: <T, TAcc>(
     scanner: AsyncReducer<CInner, T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ContainerOperator<C, T, TAcc>;
-}
+};
 
 export type ToObservable<
   C extends ContainerLike,

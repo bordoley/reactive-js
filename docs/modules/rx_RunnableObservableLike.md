@@ -129,7 +129,7 @@ ___
 
 ### scanAsyncT
 
-• `Const` **scanAsyncT**: [`ScanAsync`](../interfaces/rx.ScanAsync.md)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+• `Const` **scanAsyncT**: [`ScanAsync`](rx.md#scanasync)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ___
 
