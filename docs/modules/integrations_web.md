@@ -23,7 +23,6 @@
 - [addEventListener](integrations_web.md#addeventlistener)
 - [createEventSource](integrations_web.md#createeventsource)
 - [fetch](integrations_web.md#fetch)
-- [replaceWindowLocation](integrations_web.md#replacewindowlocation)
 
 ## Type Aliases
 
@@ -113,19 +112,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](integrations_web.md#fetchrequest), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-___
-
-### replaceWindowLocation
-
-▸ **replaceWindowLocation**(`uri`): [`Function1`](functions.md#function1)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md), [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `uri` | [`WindowLocationURI`](integrations_web.md#windowlocationuri) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](integrations_web.md#windowlocationuri)\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md), [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>

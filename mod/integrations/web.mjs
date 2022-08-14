@@ -16,6 +16,8 @@ import { createStreamble, createActionReducer } from '../streaming.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
 import { onDisposed, toAbortSignal, dispose, addTo } from '../util/DisposableLike.mjs';
 
+/** @ignore */
+const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
 const reservedEvents = ["error", "open"];
 const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
@@ -137,7 +139,7 @@ const windowLocation =
         [DispatcherLike_dispatch](stateOrUpdater, { replace } = { replace: false }) {
             pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
         },
-        goBack() {
+        [WindowLocationStreamLike_goBack]() {
             const canGoBack = this.historyCounter > 0;
             if (canGoBack) {
                 history.back();
@@ -194,14 +196,10 @@ const windowLocation =
             return { counter, uri };
         }), forEach(({ counter, uri }) => {
             windowLocationStream.historyCounter = counter;
-            pipe(windowLocationStream, replaceWindowLocation(uri));
+            windowLocationStream[DispatcherLike_dispatch](uri, { replace: true });
         }), subscribe(scheduler), addTo(windowLocationStream));
         return windowLocationStream;
     });
 })();
-const replaceWindowLocation = (uri) => stream => {
-    stream[DispatcherLike_dispatch](uri, { replace: true });
-    return stream;
-};
 
-export { addEventListener, createEventSource, fetch, replaceWindowLocation, windowLocation };
+export { WindowLocationStreamLike_goBack, addEventListener, createEventSource, fetch, windowLocation };

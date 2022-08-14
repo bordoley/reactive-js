@@ -15,7 +15,7 @@
 ### Methods
 
 - [[DispatcherLike\_dispatch]](integrations_web.WindowLocationStreamLike.md#[dispatcherlike_dispatch])
-- [goBack](integrations_web.WindowLocationStreamLike.md#goback)
+- [[WindowLocationStreamLike\_goBack]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_goback])
 
 ## Methods
 
@@ -41,9 +41,9 @@ StreamLike.\_\_@DispatcherLike\_dispatch@23550
 
 ___
 
-### goBack
+### [WindowLocationStreamLike\_goBack]
 
-▸ **goBack**(): `boolean`
+▸ **[WindowLocationStreamLike_goBack]**(): `boolean`
 
 #### Returns
 

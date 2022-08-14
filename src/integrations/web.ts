@@ -82,6 +82,10 @@ export type WindowLocationURI = {
   fragment: string;
 };
 
+/** @ignore */
+export const WindowLocationStreamLike_goBack = Symbol(
+  "WindowLocationStreamLike_goBack",
+);
 export interface WindowLocationStreamLike
   extends StreamLike<
     Updater<WindowLocationURI> | WindowLocationURI,
@@ -92,7 +96,7 @@ export interface WindowLocationStreamLike
     options?: { readonly replace?: boolean },
   ): void;
 
-  goBack(): boolean;
+  [WindowLocationStreamLike_goBack](): boolean;
 }
 
 export interface WindowLocationStreamableLike
@@ -309,7 +313,7 @@ export const windowLocation: WindowLocationStreamableLike =
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof DispatcherLike_dispatch
-            | "goBack"
+            | typeof WindowLocationStreamLike_goBack
             | typeof ReactiveContainerLike_sinkInto
           > &
             Mutable<TProperties>,
@@ -353,7 +357,7 @@ export const windowLocation: WindowLocationStreamableLike =
             pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
           },
 
-          goBack(this: TProperties): boolean {
+          [WindowLocationStreamLike_goBack](this: TProperties): boolean {
             const canGoBack = this.historyCounter > 0;
 
             if (canGoBack) {
@@ -473,7 +477,7 @@ export const windowLocation: WindowLocationStreamableLike =
         }),
         forEachObs(({ counter, uri }) => {
           windowLocationStream.historyCounter = counter;
-          pipe(windowLocationStream, replaceWindowLocation(uri));
+          windowLocationStream[DispatcherLike_dispatch](uri, { replace: true });
         }),
         subscribe(scheduler),
         addTo(windowLocationStream),
@@ -482,12 +486,3 @@ export const windowLocation: WindowLocationStreamableLike =
       return windowLocationStream;
     });
   })();
-
-export const replaceWindowLocation =
-  (
-    uri: Updater<WindowLocationURI> | WindowLocationURI,
-  ): Function1<WindowLocationStreamLike, WindowLocationStreamLike> =>
-  stream => {
-    stream[DispatcherLike_dispatch](uri, { replace: true });
-    return stream;
-  };
