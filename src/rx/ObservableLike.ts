@@ -14,6 +14,7 @@ import {
 import {
   allAreEnumerable,
   allAreRunnable,
+  createCatchError,
   createMergeAll,
   createScanAsync,
   distinctUntilChanged as distinctUntilChangedInternal,
@@ -78,6 +79,7 @@ import {
 } from "../__internal__/util/__internal__Sinks";
 import {
   Buffer,
+  CatchError,
   Concat,
   ConcatAll,
   ContainerOperator,
@@ -328,6 +330,9 @@ export const buffer: <T>(options?: {
 export const bufferT: Buffer<ObservableLike> = {
   buffer,
 };
+
+export const catchError: CatchError<ObservableLike>["catchError"] =
+  /*@__PURE__*/ createCatchError<ObservableLike>(liftObservable);
 
 /**
  * Returns an `ObservableLike` that combines the latest values from

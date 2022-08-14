@@ -1,6 +1,6 @@
 /// <reference types="./RunnableObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
-import { createMergeAll, createScanAsync, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
+import { createCatchError, createMergeAll, createScanAsync, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
 import { pipeUnsafe, newInstance } from '../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createRunnableObservable } from '../rx.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
@@ -31,6 +31,9 @@ const lift =
 const bufferT = {
     buffer: buffer,
 };
+const catchError = 
+/*@__PURE__*/ createCatchError(lift);
+const catchErrorT = { catchError };
 const concatT = {
     concat: concat,
 };
@@ -107,4 +110,4 @@ const zipT = {
     zip: zip,
 };
 
-export { bufferT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

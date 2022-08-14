@@ -39,6 +39,7 @@
 ### Functions
 
 - [buffer](rx_ObservableLike.md#buffer)
+- [catchError](rx_ObservableLike.md#catcherror)
 - [combineLatest](rx_ObservableLike.md#combinelatest)
 - [concat](rx_ObservableLike.md#concat)
 - [concatAll](rx_ObservableLike.md#concatall)
@@ -282,6 +283,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+___
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
