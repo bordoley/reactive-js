@@ -49,10 +49,12 @@ export interface PromiseableLike<T = unknown>
 }
 
 /**  @ignore */
-export const StableContainerLike_state = Symbol("StableContainerLike_state");
+export const StatefulContainerLike_state = Symbol(
+  "StatefulContainerLike_state",
+);
 
 export interface StatefulContainerLike extends ContainerLike {
-  readonly [StableContainerLike_state]?: DisposableLike;
+  readonly [StatefulContainerLike_state]?: DisposableLike;
 }
 
 export type ContainerOf<C extends ContainerLike, T> = C extends {
@@ -72,12 +74,12 @@ export type StatefulContainerStateOf<
   C extends StatefulContainerLike,
   T,
 > = C extends {
-  readonly [StableContainerLike_state]?: DisposableLike;
+  readonly [StatefulContainerLike_state]?: DisposableLike;
 }
   ? NonNullable<
       (C & {
         readonly [ContainerLike_T]: T;
-      })[typeof StableContainerLike_state]
+      })[typeof StatefulContainerLike_state]
     >
   : {
       readonly _C: C;
@@ -150,13 +152,13 @@ export type ForEach<C extends ContainerLike> = Container<C> & {
   forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
 };
 
-export interface ForkConcat<C extends ContainerLike> {
+export type ForkConcat<C extends ContainerLike> = Container<C> & {
   forkConcat<TIn, TOut>(
     fst: ContainerOperator<C, TIn, TOut>,
     snd: ContainerOperator<C, TIn, TOut>,
     ...tail: readonly ContainerOperator<C, TIn, TOut>[]
   ): ContainerOperator<C, TIn, TOut>;
-}
+};
 
 export type ForkZip<C extends ContainerLike> = Container<C> & {
   forkZip<T, TA, TB>(

@@ -19,8 +19,8 @@ import {
   ContainerOf,
   Empty,
   Generate,
-  StableContainerLike_state,
   StatefulContainerLike,
+  StatefulContainerLike_state,
 } from "./containers";
 import { Factory, Function1, Updater, none, pipe } from "./functions";
 import { SchedulerLike } from "./scheduling";
@@ -51,7 +51,7 @@ export interface InteractiveContainerLike<
 export interface EnumerableLike<T = unknown>
   extends InteractiveContainerLike<EnumeratorLike<T>> {
   readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
-  readonly [StableContainerLike_state]?: EnumeratorLike<
+  readonly [StatefulContainerLike_state]?: EnumeratorLike<
     this[typeof ContainerLike_T]
   >;
 }
@@ -61,7 +61,7 @@ export interface AsyncEnumerableLike<T = unknown>
   readonly [ContainerLike_type]?: AsyncEnumerableLike<
     this[typeof ContainerLike_T]
   >;
-  readonly [StableContainerLike_state]?: AsyncEnumeratorLike<
+  readonly [StatefulContainerLike_state]?: AsyncEnumeratorLike<
     this[typeof ContainerLike_T]
   >;
 }

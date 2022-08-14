@@ -24,7 +24,7 @@
 
 - [[ContainerLike\_T]](ix.AsyncEnumerableLike.md#[containerlike_t])
 - [[ContainerLike\_type]](ix.AsyncEnumerableLike.md#[containerlike_type])
-- [[StableContainerLike\_state]](ix.AsyncEnumerableLike.md#[stablecontainerlike_state])
+- [[StatefulContainerLike\_state]](ix.AsyncEnumerableLike.md#[statefulcontainerlike_state])
 
 ### Methods
 
@@ -53,13 +53,13 @@ ___
 
 ___
 
-### [StableContainerLike\_state]
+### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StableContainerLike\_state]**: [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)<`unknown`\>
 
 #### Overrides
 
-[InteractiveContainerLike](ix.InteractiveContainerLike.md).[[StableContainerLike_state]](ix.InteractiveContainerLike.md#[stablecontainerlike_state])
+[InteractiveContainerLike](ix.InteractiveContainerLike.md).[[StatefulContainerLike_state]](ix.InteractiveContainerLike.md#[statefulcontainerlike_state])
 
 ## Methods
 

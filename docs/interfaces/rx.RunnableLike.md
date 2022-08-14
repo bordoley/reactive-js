@@ -22,7 +22,7 @@
 
 - [[ContainerLike\_T]](rx.RunnableLike.md#[containerlike_t])
 - [[ContainerLike\_type]](rx.RunnableLike.md#[containerlike_type])
-- [[StableContainerLike\_state]](rx.RunnableLike.md#[stablecontainerlike_state])
+- [[StatefulContainerLike\_state]](rx.RunnableLike.md#[statefulcontainerlike_state])
 
 ### Methods
 
@@ -50,13 +50,13 @@ ___
 
 ___
 
-### [StableContainerLike\_state]
+### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StableContainerLike\_state]**: [`SinkLike`](util.SinkLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`SinkLike`](util.SinkLike.md)<`unknown`\>
 
 #### Overrides
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[StableContainerLike_state]](rx.ReactiveContainerLike.md#[stablecontainerlike_state])
+[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[StatefulContainerLike_state]](rx.ReactiveContainerLike.md#[statefulcontainerlike_state])
 
 ## Methods
 

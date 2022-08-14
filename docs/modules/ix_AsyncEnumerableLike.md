@@ -50,7 +50,7 @@ ___
 
 ### scanAsyncT
 
-• `Const` **scanAsyncT**: [`ScanAsync`](../interfaces/rx.ScanAsync.md)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+• `Const` **scanAsyncT**: [`ScanAsync`](rx.md#scanasync)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 

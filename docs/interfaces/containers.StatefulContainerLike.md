@@ -20,7 +20,7 @@
 
 - [[ContainerLike\_T]](containers.StatefulContainerLike.md#[containerlike_t])
 - [[ContainerLike\_type]](containers.StatefulContainerLike.md#[containerlike_type])
-- [[StableContainerLike\_state]](containers.StatefulContainerLike.md#[stablecontainerlike_state])
+- [[StatefulContainerLike\_state]](containers.StatefulContainerLike.md#[statefulcontainerlike_state])
 
 ## Properties
 
@@ -44,6 +44,6 @@ ___
 
 ___
 
-### [StableContainerLike\_state]
+### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StableContainerLike\_state]**: [`DisposableLike`](util.DisposableLike.md)
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`DisposableLike`](util.DisposableLike.md)

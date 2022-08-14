@@ -87,9 +87,6 @@ export interface StreamableLike<
   ): TStream;
 }
 
-export interface StreamableStateLike<T = unknown>
-  extends StreamableLike<Updater<T>, T> {}
-
 export type FlowMode = "resume" | "pause";
 
 export interface FlowableStreamLike<T = unknown>
@@ -577,5 +574,5 @@ export const createActionReducer = <TAction, T>(
 export const createStateStore = <T>(
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-): StreamableStateLike<T> =>
+): StreamableLike<Updater<T>, T> =>
   createActionReducer(updateReducer, initialState, options);

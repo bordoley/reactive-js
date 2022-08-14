@@ -11,7 +11,6 @@
 - [FlowableStreamLike](../interfaces/streaming.FlowableStreamLike.md)
 - [StreamLike](../interfaces/streaming.StreamLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
-- [StreamableStateLike](../interfaces/streaming.StreamableStateLike.md)
 
 ### Type Aliases
 
@@ -821,7 +820,7 @@ ___
 
 ### createStateStore
 
-▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableStateLike`](../interfaces/streaming.StreamableStateLike.md)<`T`\>
+▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -843,7 +842,7 @@ new state based upon the previous state.
 
 #### Returns
 
-[`StreamableStateLike`](../interfaces/streaming.StreamableStateLike.md)<`T`\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
 ___
 

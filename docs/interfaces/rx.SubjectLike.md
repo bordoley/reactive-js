@@ -27,7 +27,7 @@
 - [[MulticastObservableLike\_replay]](rx.SubjectLike.md#[multicastobservablelike_replay])
 - [[ObservableLike\_isEnumerable]](rx.SubjectLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.SubjectLike.md#[observablelike_isrunnable])
-- [[StableContainerLike\_state]](rx.SubjectLike.md#[stablecontainerlike_state])
+- [[StatefulContainerLike\_state]](rx.SubjectLike.md#[statefulcontainerlike_state])
 
 ### Methods
 
@@ -113,13 +113,13 @@ ___
 
 ___
 
-### [StableContainerLike\_state]
+### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StableContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
 
 #### Inherited from
 
-[MulticastObservableLike](rx.MulticastObservableLike.md).[[StableContainerLike_state]](rx.MulticastObservableLike.md#[stablecontainerlike_state])
+[MulticastObservableLike](rx.MulticastObservableLike.md).[[StatefulContainerLike_state]](rx.MulticastObservableLike.md#[statefulcontainerlike_state])
 
 ## Methods
 

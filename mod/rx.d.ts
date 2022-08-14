@@ -1,4 +1,4 @@
-import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StableContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator, Defer, Empty, Generate, Never } from "./containers.mjs";
+import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator, Defer, Empty, Generate, Never } from "./containers.mjs";
 import { Function2, Factory, Function1, SideEffect1, Updater } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
 import { DisposableLike, SinkLike } from "./util.mjs";
@@ -9,7 +9,7 @@ interface ReactiveContainerLike<TSink extends DisposableLike> extends StatefulCo
 }
 interface RunnableLike<T = unknown> extends ReactiveContainerLike<SinkLike<T>> {
     readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
-    readonly [StableContainerLike_state]?: SinkLike<this[typeof ContainerLike_T]>;
+    readonly [StatefulContainerLike_state]?: SinkLike<this[typeof ContainerLike_T]>;
 }
 /**  @ignore */
 declare const ObservableLike_isEnumerable: unique symbol;
@@ -21,7 +21,7 @@ declare const ObservableLike_isRunnable: unique symbol;
  * @noInheritDoc
  */
 interface ObservableLike<T = unknown> extends ReactiveContainerLike<ObserverLike<T>> {
-    readonly [StableContainerLike_state]?: ObserverLike<this[typeof ContainerLike_T]>;
+    readonly [StatefulContainerLike_state]?: ObserverLike<this[typeof ContainerLike_T]>;
     readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
@@ -51,9 +51,9 @@ interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;
 }
 declare type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
-interface ScanAsync<C extends ContainerLike, CInner extends ObservableLike> extends Container<C> {
+declare type ScanAsync<C extends ContainerLike, CInner extends ObservableLike> = Container<C> & {
     scanAsync: <T, TAcc>(scanner: AsyncReducer<CInner, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
-}
+};
 declare type ToObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toObservable: <T>(options?: TOptions) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 };

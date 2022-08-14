@@ -22,8 +22,6 @@
 
   ↳ [`FlowableLike`](streaming.FlowableLike.md)
 
-  ↳ [`StreamableStateLike`](streaming.StreamableStateLike.md)
-
 ## Table of contents
 
 ### Methods

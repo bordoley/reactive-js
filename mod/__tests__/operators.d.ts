@@ -1,7 +1,7 @@
+import { ObservableLike, AsyncReducer } from "../rx.mjs";
 import { Describe } from "../__internal__/__internal__testing.mjs";
 import { Function1, Factory, Equality, Predicate, SideEffect1, Reducer } from "../functions.mjs";
 import { ContainerLike, Container, ContainerOperator, FromArrayOptions, ContainerOf, ReadonlyArrayLike, FromArray } from "../containers.mjs";
-import { ObservableLike, ScanAsync } from "../rx.mjs";
 declare const bufferTests: <C extends ContainerLike>(m: Container<C> & {
     buffer: <T>(options?: {
         readonly maxBufferSize?: number | undefined;
@@ -119,12 +119,14 @@ declare const scanTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
-declare const scanAsyncTests: <C extends ContainerLike, CInner extends ObservableLike<unknown>>(m: ScanAsync<C, CInner> & Container<C> & {
-    fromArray<T>(options?: Partial<FromArrayOptions & {
-        delay: number;
-    }> | undefined): Function1<readonly T[], ContainerOf<C, T>>;
+declare const scanAsyncTests: <C extends ContainerLike, CInner extends ObservableLike<unknown>>(m: Container<C> & {
+    scanAsync: <T, TAcc>(scanner: AsyncReducer<CInner, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
 } & {
-    toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
+    fromArray<T_1>(options?: Partial<FromArrayOptions & {
+        delay: number;
+    }> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }, mInner: FromArray<CInner, FromArrayOptions & {
     delay: number;
 }>) => Describe;
