@@ -43,7 +43,7 @@
     "access": "public"
   },
   "exports": {
-    "./__internal__*": null,
-    "./*":  "./*"
+    "./*":  "./*",
+    "./__internal__/*": null
   }
 }
