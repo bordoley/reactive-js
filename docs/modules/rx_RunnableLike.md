@@ -7,6 +7,7 @@
 ### Variables
 
 - [bufferT](rx_RunnableLike.md#buffert)
+- [catchErrorT](rx_RunnableLike.md#catcherrort)
 - [concatAllT](rx_RunnableLike.md#concatallt)
 - [concatT](rx_RunnableLike.md#concatt)
 - [decodeWithCharsetT](rx_RunnableLike.md#decodewithcharsett)
@@ -29,6 +30,7 @@
 ### Functions
 
 - [buffer](rx_RunnableLike.md#buffer)
+- [catchError](rx_RunnableLike.md#catcherror)
 - [concat](rx_RunnableLike.md#concat)
 - [concatAll](rx_RunnableLike.md#concatall)
 - [decodeWithCharset](rx_RunnableLike.md#decodewithcharset)
@@ -57,6 +59,12 @@
 ### bufferT
 
 • `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### catchErrorT
+
+• `Const` **catchErrorT**: [`CatchError`](containers.md#catcherror)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -188,6 +196,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+___
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

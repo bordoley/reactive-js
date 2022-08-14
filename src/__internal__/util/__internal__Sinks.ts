@@ -8,6 +8,7 @@ import {
   SideEffect1,
   getLength,
   isEmpty,
+  isSome,
   newInstance,
   none,
   pipe,
@@ -27,10 +28,12 @@ import {
 } from "../../util";
 import {
   addTo,
+  addToIgnoringChildErrors,
   dispose,
   isDisposed,
   onComplete,
   onDisposed,
+  onError,
 } from "../../util/DisposableLike";
 import { notify } from "../../util/SinkLike";
 import {
@@ -260,6 +263,67 @@ export const bufferSinkMixin: <
     },
   );
 };
+
+export const catchErrorSinkMixin: <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<T>,
+  T,
+>() => Mixin2<SinkLike<T>, SinkLike<T>, Function1<unknown, C | void>> =
+  /*@__PURE__*/ (<
+    C extends ReactiveContainerLike<TSink>,
+    TSink extends SinkLike<T>,
+    T,
+  >() => {
+    type TProperties = {
+      readonly [Sink_private_delegate]: SinkLike<T>;
+    };
+
+    return returns(
+      clazz(
+        __extends(disposableMixin),
+        function CatchErrorSink(
+          instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+            Mutable<TProperties>,
+          delegate: SinkLike<T>,
+          errorHandler: Function1<unknown, C | void>,
+        ): SinkLike<T> {
+          init(disposableMixin, instance);
+
+          instance[Sink_private_delegate] = delegate;
+
+          pipe(
+            instance,
+            addToIgnoringChildErrors(delegate),
+            onComplete(() => {
+              pipe(delegate, dispose());
+            }),
+            onError((e: Exception) => {
+              try {
+                const result = errorHandler(e.cause) || none;
+                if (isSome(result)) {
+                  pipe(result, sinkInto(delegate));
+                } else {
+                  pipe(delegate, dispose());
+                }
+              } catch (cause) {
+                pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
+              }
+            }),
+          );
+
+          return instance;
+        },
+        props<TProperties>({
+          [Sink_private_delegate]: none,
+        }),
+        {
+          [SinkLike_notify](this: TProperties, next: T) {
+            this[Sink_private_delegate][SinkLike_notify](next);
+          },
+        },
+      ),
+    );
+  })();
 
 export const decodeWithCharsetSinkMixin: <
   C extends ReactiveContainerLike<TSink>,

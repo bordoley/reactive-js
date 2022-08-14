@@ -8,6 +8,7 @@ import { Option, none, pipeLazy } from "../../functions";
 import { deferRunnableT } from "../../rx";
 import {
   bufferT,
+  catchErrorT,
   concatAllT,
   concatT,
   decodeWithCharsetT,
@@ -30,6 +31,7 @@ import {
 } from "../../rx/RunnableLike";
 import {
   bufferTests,
+  catchErrorTests,
   concatAllTests,
   concatTests,
   decodeWithCharsetTests,
@@ -53,6 +55,12 @@ export default describe(
   bufferTests({
     fromArray: toRunnable,
     ...bufferT,
+    ...toReadonlyArrayT,
+  }),
+  catchErrorTests({
+    fromArray: toRunnable,
+    ...catchErrorT,
+    ...mapT,
     ...toReadonlyArrayT,
   }),
   concatTests({

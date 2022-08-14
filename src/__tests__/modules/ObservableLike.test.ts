@@ -58,6 +58,7 @@ import {
 } from "../../rx/ObservableLike";
 import {
   bufferT,
+  catchErrorT,
   concatT,
   decodeWithCharsetT,
   distinctUntilChangedT,
@@ -90,6 +91,7 @@ import { run } from "../../util/ContinuationLike";
 import { dispose, getException, isDisposed } from "../../util/DisposableLike";
 import {
   bufferTests,
+  catchErrorTests,
   concatTests,
   decodeWithCharsetTests,
   distinctUntilChangedTests,
@@ -685,6 +687,12 @@ export default describe(
   bufferTests({
     fromArray: toObservable,
     ...bufferT,
+    ...toReadonlyArrayT,
+  }),
+  catchErrorTests({
+    fromArray: toObservable,
+    ...catchErrorT,
+    ...mapT,
     ...toReadonlyArrayT,
   }),
   combineLatestTests,
