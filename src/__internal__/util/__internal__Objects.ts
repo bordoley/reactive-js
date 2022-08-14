@@ -11,38 +11,46 @@ const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
 const Object_prototype = Symbol("Object_prototype");
 
-type OptionalProps<T> = T extends object
+const Object_private_initializedProperties = Symbol(
+  "Object_private_initializedProperties",
+);
+
+type OptionalProperties<T> = T extends object
   ? {
-      [P in keyof T]: T[P] extends object ? Option<T[P]> : T[P];
+      [P in keyof T]: Option<T[P]>;
     }
   : T;
 
-export type PartialMixin<_TReturn> = {
+export type Mutable<Type> = {
+  -readonly [Key in keyof Type]: Type[Key];
+};
+
+export type PartialMixin = {
   [Object_properties]: object;
   [Object_prototype]: object;
 };
 
-export interface MixinAny<TReturn> extends PartialMixin<TReturn> {
+export interface MixinAny<TReturn> extends PartialMixin {
   [Object_init]: (instance: unknown, ...args: readonly any[]) => TReturn;
 }
 
-export interface Mixin<TReturn> extends PartialMixin<TReturn> {
+export interface Mixin<TReturn> extends PartialMixin {
   [Object_init](instance: unknown): TReturn;
 }
 
-export interface Mixin1<TReturn, TA> extends PartialMixin<TReturn> {
+export interface Mixin1<TReturn, TA> extends PartialMixin {
   [Object_init](instance: unknown, a: TA): TReturn;
 }
 
-export interface Mixin2<TReturn, TA, TB> extends PartialMixin<TReturn> {
+export interface Mixin2<TReturn, TA, TB> extends PartialMixin {
   [Object_init](instance: unknown, a: TA, b: TB): TReturn;
 }
 
-export interface Mixin3<TReturn, TA, TB, TC> extends PartialMixin<TReturn> {
+export interface Mixin3<TReturn, TA, TB, TC> extends PartialMixin {
   [Object_init](instance: unknown, a: TA, b: TB, c: TC): TReturn;
 }
 
-export interface Mixin4<TReturn, TA, TB, TC, TD> extends PartialMixin<TReturn> {
+export interface Mixin4<TReturn, TA, TB, TC, TD> extends PartialMixin {
   [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
 }
 
@@ -90,28 +98,10 @@ interface Init {
 }
 export const init: Init = initUnsafe;
 
-interface Extends {
-  <TReturn0>(m0: PartialMixin<TReturn0>): PartialMixin<TReturn0>;
-
-  <TReturn0, TReturn1>(
-    m0: PartialMixin<TReturn0>,
-    m1: PartialMixin<TReturn1>,
-  ): PartialMixin<TReturn0 & TReturn1>;
-
-  <TReturn0, TReturn1, TReturn2>(
-    m0: PartialMixin<TReturn0>,
-    m1: PartialMixin<TReturn1>,
-    m2: PartialMixin<TReturn2>,
-  ): PartialMixin<TReturn0 & TReturn1 & TReturn2>;
-
-  <TReturn0, TReturn1, TReturn2, TReturn3>(
-    m0: PartialMixin<TReturn0>,
-    m1: PartialMixin<TReturn1>,
-    m2: PartialMixin<TReturn2>,
-    m3: PartialMixin<TReturn3>,
-  ): PartialMixin<TReturn0 & TReturn1 & TReturn2 & TReturn3>;
-}
-export const __extends: Extends = (...mixins: readonly PartialMixin<any>[]) => {
+export const __extends: (
+  m0: PartialMixin,
+  ...tail: readonly PartialMixin[]
+) => PartialMixin = (...mixins: readonly PartialMixin[]) => {
   if (mixins.length == 1) {
     return mixins[0];
   } else {
@@ -132,40 +122,44 @@ export const __extends: Extends = (...mixins: readonly PartialMixin<any>[]) => {
 
 interface Clazz {
   <
-    TInit extends (instance: TPrototype, ...args: readonly any[]) => TReturn,
-    TReturn,
-    TProperties extends object,
+    TInit extends (
+      instance: TPrototype & Mutable<TProperties>,
+      ...args: readonly any[]
+    ) => unknown,
+    TProperties extends {
+      [Object_private_initializedProperties]?: true;
+    },
     TPrototype extends object,
   >(
     init: TInit,
-    properties: OptionalProps<TProperties>,
+    properties: TProperties,
     prototype: TPrototype,
-  ): PartialMixin<TReturn> & {
-    [Object_init]: TInit;
+  ): PartialMixin & {
+    [Object_init]: typeof init;
   };
 
   <
-    TParentReturn,
-    TInit extends (instance: TPrototype, ...args: readonly any[]) => TReturn,
-    TReturn,
-    TProperties extends object,
+    TInit extends (
+      instance: TPrototype & Mutable<TProperties>,
+      ...args: readonly any[]
+    ) => unknown,
+    TProperties extends {
+      [Object_private_initializedProperties]?: true;
+    },
     TPrototype extends object,
   >(
-    parent: PartialMixin<TParentReturn>,
+    parent: PartialMixin,
     init: TInit,
-    properties: OptionalProps<TProperties>,
+    properties: TProperties,
     prototype: TPrototype,
-  ): PartialMixin<TReturn> & {
+  ): PartialMixin & {
     [Object_init]: TInit;
   };
 
-  <
-    TParentReturn,
-    TInit extends (instance: unknown, ...args: readonly any[]) => TParentReturn,
-  >(
-    parent: PartialMixin<TParentReturn>,
+  <TInit extends (instance: unknown, ...args: readonly any[]) => unknown>(
+    parent: PartialMixin,
     init: TInit,
-  ): PartialMixin<TParentReturn> & {
+  ): PartialMixin & {
     [Object_init]: TInit;
   };
 }
@@ -239,4 +233,12 @@ export const createInstanceFactory: CreateInstanceFactory = <TReturn>(
     initUnsafe(clazz, instance, ...args);
     return instance;
   };
+};
+
+export const props = <TProperties>(
+  o: OptionalProperties<TProperties>,
+): TProperties & {
+  [Object_private_initializedProperties]?: true;
+} => {
+  return o as unknown as TProperties;
 };

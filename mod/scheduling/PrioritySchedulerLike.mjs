@@ -1,8 +1,8 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
-import { unsafeCast, none, pipe, partial } from '../functions.mjs';
+import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { none, unsafeCast, pipe, partial } from '../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { addIgnoringChildErrors, isDisposed } from '../util/DisposableLike.mjs';
 import { isInContinuation, getCurrentTime, shouldYield, requestYield } from './SchedulerLike.mjs';
@@ -16,14 +16,13 @@ import { isInContinuation, getCurrentTime, shouldYield, requestYield } from './S
 const toScheduler = /*@__PURE__*/ (() => {
     const createSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
         init(disposableMixin, instance);
-        unsafeCast(instance);
         instance.priorityScheduler = scheduler;
         instance.priority = priority;
         return instance;
-    }, {
+    }, props({
         priorityScheduler: none,
         priority: 0,
-    }, {
+    }), {
         get [SchedulerLike_inContinuation]() {
             unsafeCast(this);
             return isInContinuation(this.priorityScheduler);

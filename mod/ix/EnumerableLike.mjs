@@ -5,9 +5,9 @@ import { interactive, createBufferOperator, createDistinctUntilChangedOperator, 
 import { disposableMixin, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';
-import { clazz, createInstanceFactory, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
+import { clazz, props, createInstanceFactory, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, unsafeCast, none, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
+import { pipe, none, unsafeCast, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { InteractiveContainerLike_interact, createEnumerable } from '../ix.mjs';
 import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -21,12 +21,11 @@ const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_del
 const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
     const DelegatingEnumerator_private_delegate = Symbol("DelegatingEnumerator_private_delegate");
     return pipe(clazz(function DelegatingEnumerator(instance, delegate) {
-        unsafeCast(instance);
         instance[DelegatingEnumerator_private_delegate] = delegate;
         return instance;
-    }, {
+    }, props({
         [DelegatingEnumerator_private_delegate]: none,
-    }, {
+    }), {
         get [EnumeratorLike_current]() {
             var _a, _b;
             unsafeCast(this);
@@ -73,15 +72,14 @@ const buffer = /*@__PURE__*/ (() => {
     return pipe(createInstanceFactory(clazz(__extends(disposableMixin, typedEnumerator), function BufferEnumerator(instance, delegate, maxBufferSize) {
         init(disposableMixin, instance);
         init(typedEnumerator, instance);
-        unsafeCast(instance);
         instance.delegate = delegate;
         instance.maxBufferSize = maxBufferSize;
         pipe(instance, add(delegate));
         return instance;
-    }, {
+    }, props({
         delegate: none,
         maxBufferSize: 0,
-    }, {
+    }), {
         [SourceLike_move]() {
             const buffer = [];
             const { delegate, maxBufferSize } = this;
@@ -109,13 +107,12 @@ const concatAll =
         init(disposableMixin, instance);
         init(typedDisposableRefMixin, instance, disposed);
         init(typedEnumerator, instance);
-        unsafeCast(instance);
         instance.delegate = delegate;
         pipe(instance, add(delegate));
         return instance;
-    }, {
+    }, props({
         delegate: none,
-    }, {
+    }), {
         [SourceLike_move]() {
             const { delegate } = this;
             const innerEnumerator = getCurrentRef(this);
@@ -151,10 +148,9 @@ const distinctUntilChanged =
     return pipe(createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), function DistinctUntilChanged(instance, delegate, equality) {
         init(delegatingDisposableMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        unsafeCast(instance);
         instance.equality = equality;
         return instance;
-    }, { equality: none }, {
+    }, props({ equality: none }), {
         [SourceLike_move]() {
             const hadCurrent = hasCurrent(this);
             const prevCurrent = hadCurrent ? getCurrent(this) : none;
@@ -180,10 +176,9 @@ const forEach = /*@__PURE__*/ (() => {
     return pipe(createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), function forEachEnumerator(instance, delegate, effect) {
         init(delegatingDisposableMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        unsafeCast(instance);
         instance.effect = effect;
         return instance;
-    }, { effect: none }, {
+    }, props({ effect: none }), {
         [SourceLike_move]() {
             if (delegatingEnumeratorMove(this)) {
                 try {
@@ -202,10 +197,9 @@ const keep = /*@__PURE__*/ (() => {
     return pipe(createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), function KeepEnumerator(instance, delegate, predicate) {
         init(delegatingDisposableMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        unsafeCast(instance);
         instance.predicate = predicate;
         return instance;
-    }, { predicate: none }, {
+    }, props({ predicate: none }), {
         [SourceLike_move]() {
             const { predicate } = this;
             try {
@@ -226,14 +220,13 @@ const map = /*@__PURE__*/ (() => {
     return pipe(createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedEnumerator), function MapEnumerator(instance, delegate, mapper) {
         init(delegatingDisposableMixin, instance, delegate);
         init(typedEnumerator, instance);
-        unsafeCast(instance);
         instance.delegate = delegate;
         instance.mapper = mapper;
         return instance;
-    }, {
+    }, props({
         mapper: none,
         delegate: none,
-    }, {
+    }), {
         [SourceLike_move]() {
             const { delegate } = this;
             if (move(delegate)) {
@@ -253,10 +246,11 @@ const pairwise = /*@__PURE__*/ (() => {
     return pipe(createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedEnumerator), function PairwiseEnumerator(instance, delegate) {
         init(delegatingDisposableMixin, instance, delegate);
         init(typedEnumerator, instance);
-        unsafeCast(instance);
         instance.delegate = delegate;
         return instance;
-    }, {}, {
+    }, props({
+        delegate: none,
+    }), {
         [SourceLike_move]() {
             const { delegate } = this;
             const prev = hasCurrent(this)
@@ -280,16 +274,15 @@ const pairwiseT = {
 const repeat = /*@__PURE__*/ (() => {
     const createRepeatEnumerator = createInstanceFactory(clazz(__extends(disposableMixin), function RepeatEnumerator(instance, src, shouldRepeat) {
         init(disposableMixin, instance);
-        unsafeCast(instance);
         instance.src = src;
         instance.shouldRepeat = shouldRepeat;
         return instance;
-    }, {
+    }, props({
         count: 0,
         enumerator: none,
         shouldRepeat: none,
         src: none,
-    }, {
+    }), {
         [SourceLike_move]() {
             if (isNone(this.enumerator)) {
                 this.enumerator = pipe(this.src, enumerate(), addTo(this));
@@ -335,7 +328,6 @@ const scan = /*@__PURE__*/ (() => {
     return pipe(createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedEnumerator), function ScanEnumerator(instance, delegate, reducer, initialValue) {
         init(delegatingDisposableMixin, instance, delegate);
         init(typedEnumerator, instance);
-        unsafeCast(instance);
         instance.delegate = delegate;
         instance.reducer = reducer;
         try {
@@ -346,7 +338,7 @@ const scan = /*@__PURE__*/ (() => {
             pipe(instance, dispose({ cause }));
         }
         return instance;
-    }, { reducer: none, delegate: none }, {
+    }, props({ reducer: none, delegate: none }), {
         [SourceLike_move]() {
             const acc = hasCurrent(this) ? getCurrent(this) : none;
             const { delegate, reducer } = this;
@@ -370,14 +362,13 @@ const skipFirst =
     return pipe(createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), function SkipFirstEnumerator(instance, delegate, skipCount) {
         init(delegatingDisposableMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        unsafeCast(instance);
         instance.skipCount = skipCount;
         instance.count = 0;
         return instance;
-    }, {
+    }, props({
         skipCount: 0,
         count: 0,
-    }, {
+    }), {
         [SourceLike_move]() {
             const { skipCount } = this;
             for (let { count } = this; count < skipCount; count++) {
@@ -399,13 +390,12 @@ const takeFirst =
     return pipe(createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), function TakeFirstEnumerator(instance, delegate, maxCount) {
         init(delegatingDisposableMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        unsafeCast(instance);
         instance.maxCount = maxCount;
         return instance;
-    }, {
+    }, props({
         maxCount: 0,
         count: 0,
-    }, {
+    }), {
         [SourceLike_move]() {
             if (this.count < this.maxCount) {
                 this.count++;
@@ -427,15 +417,14 @@ const takeLast = /*@__PURE__*/ (() => {
     return pipe(createInstanceFactory(clazz(__extends(disposableMixin, typedDelegatingEnumeratorMixin), function TakeLastEnumerator(instance, delegate, maxCount) {
         init(disposableMixin, instance);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        unsafeCast(instance);
         instance.maxCount = maxCount;
         instance.isStarted = false;
         pipe(instance, add(delegate));
         return instance;
-    }, {
+    }, props({
         maxCount: 0,
         isStarted: false,
-    }, {
+    }), {
         [SourceLike_move]() {
             if (!isDisposed(this) && !this.isStarted) {
                 this.isStarted = true;
@@ -462,15 +451,14 @@ const takeWhile =
     return pipe(createInstanceFactory(clazz(__extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), function TakeWhileEnumerator(instance, delegate, predicate, inclusive) {
         init(delegatingDisposableMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        unsafeCast(instance);
         instance.predicate = predicate;
         instance.inclusive = inclusive;
         return instance;
-    }, {
+    }, props({
         predicate: none,
         inclusive: false,
         done: false,
-    }, {
+    }), {
         [SourceLike_move]() {
             const { inclusive, predicate } = this;
             if (this.done && !isDisposed(this)) {
@@ -501,7 +489,6 @@ const throwIfEmpty =
     return pipe(createInstanceFactory(clazz(__extends(disposableMixin, typedDelegatingEnumeratorMixin), function TakeWhileEnumerator(instance, delegate, factory) {
         init(disposableMixin, instance);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        unsafeCast(instance);
         instance.isEmpty = true;
         pipe(instance, addIgnoringChildErrors(delegate));
         pipe(delegate, onComplete(() => {
@@ -519,9 +506,9 @@ const throwIfEmpty =
             pipe(instance, dispose(error));
         }));
         return instance;
-    }, {
+    }, props({
         isEmpty: true,
-    }, {
+    }), {
         [SourceLike_move]() {
             if (delegatingEnumeratorMove(this)) {
                 this.isEmpty = false;
@@ -611,12 +598,11 @@ const zip = /*@__PURE__*/ (() => {
     const createZipEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumerator), function ZipEnumerator(instance, enumerators) {
         init(disposableMixin, instance);
         init(typedEnumerator, instance);
-        unsafeCast(instance);
         instance.enumerators = enumerators;
         return instance;
-    }, {
+    }, props({
         enumerators: none,
-    }, {
+    }), {
         [SourceLike_move]() {
             if (!isDisposed(this)) {
                 const { enumerators } = this;

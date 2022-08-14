@@ -2,8 +2,8 @@
 import { getDelay, hasDelay } from './__internal__/__internal__optionParsing.mjs';
 import { dispose, isDisposed, onDisposed, addIgnoringChildErrors, addTo } from './__internal__/util/__internal__DisposableLike.mjs';
 import { disposableMixin } from './__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, clazz, __extends, init } from './__internal__/util/__internal__Objects.mjs';
-import { unsafeCast, none, pipe, newInstance, getLength, max, pipeLazy, ignore } from './functions.mjs';
+import { createInstanceFactory, clazz, props, __extends, init } from './__internal__/util/__internal__Objects.mjs';
+import { none, pipe, newInstance, unsafeCast, getLength, max, pipeLazy, ignore } from './functions.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
 import { schedule, __yield } from './scheduling/SchedulerLike.mjs';
@@ -21,59 +21,60 @@ const MulticastObservableLike_observerCount = Symbol("MulticastObservableLike_ob
 const MulticastObservableLike_replay = Symbol("MulticastObservableLike_replay");
 /** @ignore */
 const SubjectLike_publish = Symbol("SubjectLike_publish");
-const createObservableImpl = /*@__PURE__*/ createInstanceFactory(clazz(function CreateObservable(instance, f, isEnumerable, isRunnable) {
-    unsafeCast(instance);
-    instance.f = f;
-    instance[ObservableLike_isEnumerable] = isEnumerable;
-    instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
-    return instance;
-}, {
-    f: none,
-    [ObservableLike_isRunnable]: false,
-    [ObservableLike_isEnumerable]: false,
-}, {
-    [ReactiveContainerLike_sinkInto](observer) {
-        try {
-            this.f(observer);
-        }
-        catch (cause) {
-            pipe(observer, dispose({ cause }));
-        }
-    },
-}));
+const createObservableImpl = /*@__PURE__*/ (() => {
+    return createInstanceFactory(clazz(function CreateObservable(instance, f, isEnumerable, isRunnable) {
+        instance.f = f;
+        instance[ObservableLike_isEnumerable] = isEnumerable;
+        instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
+        return instance;
+    }, props({
+        f: none,
+        [ObservableLike_isRunnable]: false,
+        [ObservableLike_isEnumerable]: false,
+    }), {
+        [ReactiveContainerLike_sinkInto](observer) {
+            try {
+                this.f(observer);
+            }
+            catch (cause) {
+                pipe(observer, dispose({ cause }));
+            }
+        },
+    }));
+})();
 const createEnumerableObservable = (f) => createObservableImpl(f, true, true);
 const createObservable = (f) => createObservableImpl(f, false, false);
 const createRunnableObservable = (f) => createObservableImpl(f, false, true);
-const createRunnable = /*@__PURE__*/ (() => createInstanceFactory(clazz(function Runnable(instance, run) {
-    unsafeCast(instance);
-    instance.run = run;
-    return instance;
-}, {
-    run: none,
-}, {
-    [ReactiveContainerLike_sinkInto](sink) {
-        try {
-            this.run(sink);
-            pipe(sink, dispose());
-        }
-        catch (cause) {
-            pipe(sink, dispose({ cause }));
-        }
-    },
-})))();
+const createRunnable = /*@__PURE__*/ (() => {
+    return createInstanceFactory(clazz(function Runnable(instance, run) {
+        instance.run = run;
+        return instance;
+    }, props({
+        run: none,
+    }), {
+        [ReactiveContainerLike_sinkInto](sink) {
+            try {
+                this.run(sink);
+                pipe(sink, dispose());
+            }
+            catch (cause) {
+                pipe(sink, dispose({ cause }));
+            }
+        },
+    }));
+})();
 const createSubject = /*@__PURE__*/ (() => {
     const createSubjectInstance = createInstanceFactory(clazz(__extends(disposableMixin), function Subject(instance, replay) {
         init(disposableMixin, instance);
-        unsafeCast(instance);
         instance[MulticastObservableLike_replay] = replay;
         instance.observers = newInstance(Set);
         instance.replayed = [];
         return instance;
-    }, {
+    }, props({
         [MulticastObservableLike_replay]: 0,
         observers: none,
         replayed: none,
-    }, {
+    }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [MulticastObservableLike_observerCount]() {

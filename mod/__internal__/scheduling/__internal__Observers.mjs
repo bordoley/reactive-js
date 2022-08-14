@@ -1,12 +1,12 @@
 /// <reference types="./__internal__Observers.d.ts" />
-import { getLength, pipe, unsafeCast, isEmpty, none, isNone, returns } from '../../functions.mjs';
+import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../../functions.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../scheduling.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../../util.mjs';
 import { addTo, onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
 import { disposableMixin } from '../util/__internal__Disposables.mjs';
-import { createInstanceFactory, clazz, init, __extends } from '../util/__internal__Objects.mjs';
+import { createInstanceFactory, clazz, init, props, __extends } from '../util/__internal__Objects.mjs';
 import { distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../util/__internal__Sinks.mjs';
 
 const createObserverDispatcher = (() => {
@@ -18,7 +18,6 @@ const createObserverDispatcher = (() => {
     };
     return createInstanceFactory(clazz(disposableMixin, function ObserverDispatcher(instance, observer) {
         init(disposableMixin, instance);
-        unsafeCast(instance);
         instance.observer = observer;
         instance.nextQueue = [];
         instance.continuation = () => {
@@ -40,12 +39,12 @@ const createObserverDispatcher = (() => {
             }
         }));
         return instance;
-    }, {
+    }, props({
         continuation: none,
         nextQueue: none,
         observer: none,
         onContinuationDispose: none,
-    }, {
+    }), {
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
             return getScheduler(this.observer);
@@ -60,13 +59,12 @@ const createObserverDispatcher = (() => {
 })();
 const observerMixin = /*@__PURE__*/ (() => {
     return pipe(clazz(function ObserverMixin(instance, scheduler) {
-        unsafeCast(instance);
         instance[ObserverLike_scheduler] = scheduler;
         return instance;
-    }, {
+    }, props({
         [ObserverLike_scheduler]: none,
         dispatcher: none,
-    }, {
+    }), {
         get [ObserverLike_dispatcher]() {
             unsafeCast(this);
             let { dispatcher } = this;
@@ -83,12 +81,11 @@ const createDelegatingObserver = /*@__PURE__*/ (() => {
     return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function DelegatingObserver(instance, observer) {
         init(disposableMixin, instance);
         init(typedObserverMixin, instance, getScheduler(observer));
-        unsafeCast(instance);
         instance.delegate = observer;
         return instance;
-    }, {
+    }, props({
         delegate: none,
-    }, {
+    }), {
         [SinkLike_notify](next) {
             this.delegate[SinkLike_notify](next);
         },

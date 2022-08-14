@@ -1,10 +1,12 @@
 import { getDelay } from "../__internal__/__internal__optionParsing";
 import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import { Function1, none, partial, pipe, unsafeCast } from "../functions";
 import {
@@ -33,8 +35,8 @@ import {
  */
 export const toScheduler = /*@__PURE__*/ (() => {
   type TProperties = {
-    priorityScheduler: PrioritySchedulerLike;
-    priority: number;
+    readonly priorityScheduler: PrioritySchedulerLike;
+    readonly priority: number;
   };
 
   const createSchedulerInstance = createInstanceFactory(
@@ -48,22 +50,22 @@ export const toScheduler = /*@__PURE__*/ (() => {
           | typeof SchedulerLike_shouldYield
           | typeof SchedulerLike_requestYield
           | typeof SchedulerLike_schedule
-        >,
+        > &
+          Mutable<TProperties>,
         scheduler: PrioritySchedulerLike,
         priority: number,
       ): SchedulerLike {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance.priorityScheduler = scheduler;
         instance.priority = priority;
 
         return instance;
       },
-      {
+      props<TProperties>({
         priorityScheduler: none,
         priority: 0,
-      },
+      }),
       {
         get [SchedulerLike_inContinuation]() {
           unsafeCast<TProperties>(this);

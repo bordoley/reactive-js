@@ -8,10 +8,12 @@ import {
 } from "./__internal__/util/__internal__DisposableLike";
 import { disposableMixin } from "./__internal__/util/__internal__Disposables";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "./__internal__/util/__internal__Objects";
 import {
   Container,
@@ -159,47 +161,50 @@ const createObservableImpl: <T>(
   f: SideEffect1<ObserverLike>,
   isEnumerable: boolean,
   isRunnable: boolean,
-) => ObservableLike<T> = /*@__PURE__*/ createInstanceFactory(
-  clazz(
-    function CreateObservable(
-      instance: Pick<ObservableLike, typeof ReactiveContainerLike_sinkInto>,
-      f: SideEffect1<ObserverLike>,
-      isEnumerable: boolean,
-      isRunnable: boolean,
-    ): ObservableLike {
-      unsafeCast<{
-        f: SideEffect1<ObserverLike>;
-        [ObservableLike_isEnumerable]: boolean;
-        [ObservableLike_isRunnable]: boolean;
-      }>(instance);
+) => ObservableLike<T> = /*@__PURE__*/ (() => {
+  type TProperties = {
+    readonly f: SideEffect1<ObserverLike>;
+    readonly [ObservableLike_isEnumerable]: boolean;
+    readonly [ObservableLike_isRunnable]: boolean;
+  };
 
-      instance.f = f;
-      instance[ObservableLike_isEnumerable] = isEnumerable;
-      instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
+  return createInstanceFactory(
+    clazz(
+      function CreateObservable(
+        instance: Pick<ObservableLike, typeof ReactiveContainerLike_sinkInto> &
+          Mutable<TProperties>,
+        f: SideEffect1<ObserverLike>,
+        isEnumerable: boolean,
+        isRunnable: boolean,
+      ): ObservableLike {
+        instance.f = f;
+        instance[ObservableLike_isEnumerable] = isEnumerable;
+        instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
 
-      return instance;
-    },
-    {
-      f: none,
-      [ObservableLike_isRunnable]: false,
-      [ObservableLike_isEnumerable]: false,
-    },
-    {
-      [ReactiveContainerLike_sinkInto](
-        this: {
-          f: SideEffect1<ObserverLike>;
-        },
-        observer: ObserverLike,
-      ) {
-        try {
-          this.f(observer);
-        } catch (cause) {
-          pipe(observer, dispose({ cause }));
-        }
+        return instance;
       },
-    },
-  ),
-);
+      props<TProperties>({
+        f: none,
+        [ObservableLike_isRunnable]: false,
+        [ObservableLike_isEnumerable]: false,
+      }),
+      {
+        [ReactiveContainerLike_sinkInto](
+          this: {
+            f: SideEffect1<ObserverLike>;
+          },
+          observer: ObserverLike,
+        ) {
+          try {
+            this.f(observer);
+          } catch (cause) {
+            pipe(observer, dispose({ cause }));
+          }
+        },
+      },
+    ),
+  );
+})();
 
 export const createEnumerableObservable = <T>(
   f: SideEffect1<ObserverLike<T>>,
@@ -217,23 +222,23 @@ export const createRunnableObservable = <T>(
 
 export const createRunnable: <T>(
   run: SideEffect1<SinkLike<T>>,
-) => RunnableLike<T> = /*@__PURE__*/ (<T>() =>
-  createInstanceFactory(
+) => RunnableLike<T> = /*@__PURE__*/ (<T>() => {
+  type TProperties = {
+    readonly run: SideEffect1<SinkLike<T>>;
+  };
+  return createInstanceFactory(
     clazz(
       function Runnable(
-        instance: Pick<RunnableLike, typeof ReactiveContainerLike_sinkInto>,
+        instance: Pick<RunnableLike, typeof ReactiveContainerLike_sinkInto> &
+          Mutable<TProperties>,
         run: SideEffect1<SinkLike<T>>,
       ): RunnableLike<T> {
-        unsafeCast<{
-          run: SideEffect1<SinkLike<T>>;
-        }>(instance);
-
         instance.run = run;
         return instance;
       },
-      {
+      props<TProperties>({
         run: none,
-      },
+      }),
       {
         [ReactiveContainerLike_sinkInto](
           this: {
@@ -250,15 +255,16 @@ export const createRunnable: <T>(
         },
       },
     ),
-  ))();
+  );
+})();
 
 export const createSubject: <T>(options?: {
   replay?: number;
 }) => SubjectLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [MulticastObservableLike_replay]: number;
-    observers: Set<ObserverLike<T>>;
-    replayed: Array<T>;
+    readonly [MulticastObservableLike_replay]: number;
+    readonly observers: Set<ObserverLike<T>>;
+    readonly replayed: Array<T>;
   };
 
   const createSubjectInstance = createInstanceFactory(
@@ -272,11 +278,11 @@ export const createSubject: <T>(options?: {
           | typeof ObservableLike_isRunnable
           | typeof MulticastObservableLike_observerCount
           | typeof SubjectLike_publish
-        >,
+        > &
+          Mutable<TProperties>,
         replay: number,
       ): SubjectLike<T> {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance[MulticastObservableLike_replay] = replay;
         instance.observers = newInstance<Set<ObserverLike>>(Set);
@@ -284,11 +290,11 @@ export const createSubject: <T>(options?: {
 
         return instance;
       },
-      {
+      props<TProperties>({
         [MulticastObservableLike_replay]: 0,
         observers: none,
         replayed: none,
-      },
+      }),
       {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

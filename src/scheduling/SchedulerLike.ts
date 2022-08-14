@@ -24,10 +24,12 @@ import {
 } from "../__internal__/util/__internal__Enumerators";
 import { MutableRefLike_current } from "../__internal__/util/__internal__MutableRefLike";
 import {
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import {
   Function1,
@@ -101,30 +103,30 @@ const createContinuation: Function2<
   ContinuationLike
 > = /*@__PURE__*/ (() => {
   type TProperties = {
-    scheduler: SchedulerLike;
-    f: SideEffect;
+    readonly scheduler: SchedulerLike;
+    readonly f: SideEffect;
   };
 
   return createInstanceFactory(
     clazz(
       __extends(disposableMixin),
       function Continuation(
-        instance: Pick<ContinuationLike, typeof ContinuationLike_run>,
+        instance: Pick<ContinuationLike, typeof ContinuationLike_run> &
+          Mutable<TProperties>,
         scheduler: SchedulerLike,
         f: SideEffect,
       ): ContinuationLike {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance.scheduler = scheduler;
         instance.f = f;
 
         return instance;
       },
-      {
+      props<TProperties>({
         scheduler: none,
         f: none,
-      },
+      }),
       {
         [ContinuationLike_run](this: TProperties & ContinuationLike) {
           if (!isDisposed(this)) {
@@ -334,12 +336,12 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
 
     type TProperties = {
       [SchedulerLike_inContinuation]: boolean;
-      delayed: QueueLike<QueueTask>;
+      readonly delayed: QueueLike<QueueTask>;
       dueTime: number;
-      host: SchedulerLike;
+      readonly host: SchedulerLike;
       hostContinuation: Option<SideEffect>;
       isPaused: boolean;
-      queue: QueueLike<QueueTask>;
+      readonly queue: QueueLike<QueueTask>;
       taskIDCounter: number;
       yieldRequested: boolean;
     };
@@ -360,13 +362,13 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
             | typeof PauseableLike_pause
             | typeof PauseableLike_resume
             | typeof SchedulerLike_schedule
-          >,
+          > &
+            Mutable<TProperties>,
           host: SchedulerLike,
         ): QueueSchedulerLike {
           init(disposableMixin, instance);
           init(typedEnumeratorMixin, instance);
           init(typedDisposableRefMixin, instance, disposed);
-          unsafeCast<TProperties>(instance);
 
           instance.delayed = createPriorityQueue(delayedComparator);
           instance.queue = createPriorityQueue(taskComparator);
@@ -374,7 +376,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
 
           return instance;
         },
-        {
+        props<TProperties>({
           [SchedulerLike_inContinuation]: false,
           delayed: none,
           dueTime: 0,
@@ -384,7 +386,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           queue: none,
           taskIDCounter: 0,
           yieldRequested: false,
-        },
+        }),
         {
           get [SchedulerLike_now](): number {
             unsafeCast<TProperties>(this);

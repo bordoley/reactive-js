@@ -6,7 +6,7 @@ import {
   SourceLike_move,
 } from "../../util";
 import { DisposableLike, isDisposed } from "./__internal__DisposableLike";
-import { Mixin, clazz } from "./__internal__Objects";
+import { Mixin, clazz, props } from "./__internal__Objects";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
@@ -35,17 +35,17 @@ export const enumeratorMixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           instance: Pick<
             EnumeratorLike<T>,
             typeof EnumeratorLike_current | typeof EnumeratorLike_hasCurrent
-          >,
+          > &
+            TProperties,
         ): TEnumeratorMixinReturn<T> {
-          unsafeCast<TProperties>(instance);
           instance[Enumerator_private_hasCurrent] = false;
 
           return instance;
         },
-        {
+        props<TProperties>({
           [Enumerator_private_current]: none,
           [Enumerator_private_hasCurrent]: false,
-        },
+        }),
         {
           get [EnumeratorLike_current](): T {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);

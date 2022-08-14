@@ -2,10 +2,10 @@
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { interactive, createKeepOperator, createMapOperator, createScanOperator, createTakeWhileOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, clazz, props, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { unsafeCast, pipe, none, getLength, compose, increment, returns, pipeUnsafe, newInstance, partial } from '../functions.mjs';
+import { none, pipe, unsafeCast, getLength, compose, increment, returns, pipeUnsafe, newInstance, partial } from '../functions.mjs';
 import { InteractiveContainerLike_interact } from '../ix.mjs';
 import { createSubject, ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createObservable, createRunnableObservable } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
@@ -25,10 +25,11 @@ import { enumerate } from './EnumerableLike.mjs';
 
 const createAsyncEnumerable = /*@__PURE__*/ (() => {
     return createInstanceFactory(clazz(function AsyncEnumerable(instance, stream) {
-        unsafeCast(instance);
         instance[StreamableLike_stream] = stream;
         return instance;
-    }, {}, {
+    }, props({
+        [StreamableLike_stream]: none,
+    }), {
         [StreamableLike_stream](scheduler, options) {
             return this[StreamableLike_stream](scheduler, options);
         },
@@ -40,7 +41,6 @@ const createAsyncEnumerable = /*@__PURE__*/ (() => {
 const createLiftedAsyncEnumerator = (() => {
     return createInstanceFactory(clazz(__extends(disposableMixin), function LiftedAsyncEnumerator(instance, op, scheduler, replay) {
         init(disposableMixin, instance);
-        unsafeCast(instance);
         instance.op = op;
         instance[DispatcherLike_scheduler] = scheduler;
         const subject = createSubject();
@@ -48,12 +48,12 @@ const createLiftedAsyncEnumerator = (() => {
         instance.subject = subject;
         instance.observable = observable;
         return pipe(instance, add(subject), addTo(observable));
-    }, {
+    }, props({
+        [DispatcherLike_scheduler]: none,
         observable: none,
         op: none,
-        scheduler: none,
         subject: none,
-    }, {
+    }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [MulticastObservableLike_observerCount]() {
@@ -152,12 +152,11 @@ const liftT = {
 };
 const delegatingAsyncEnumerator = /*@__PURE__*/ (() => {
     return pipe(clazz(function DelegatingAsyncEnumerator(instance, delegate) {
-        unsafeCast(instance);
         instance.delegate = delegate;
         return instance;
-    }, {
+    }, props({
         delegate: none,
-    }, {
+    }), {
         [DispatcherLike_dispatch](_) {
             pipe(this.delegate, dispatch(none));
         },
@@ -176,16 +175,15 @@ const keep = /*@__PURE__*/ (() => {
     const createKeepAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function KeepAsyncEnumerator(instance, delegate, predicate) {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
-        unsafeCast(instance);
         instance.obs = pipe(delegate, forEach(x => {
             if (!predicate(x)) {
                 pipe(delegate, dispatch(none));
             }
         }), keep$1(predicate), multicast(getScheduler(delegate)));
         return instance;
-    }, {
+    }, props({
         obs: none,
-    }, {
+    }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return getObserverCount(this.obs);
@@ -207,14 +205,13 @@ const map = /*@__PURE__*/ (() => {
     const createMapAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function MapAsyncEnumerator(instance, delegate, mapper) {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
-        unsafeCast(instance);
         instance.delegate = delegate;
         instance.op = map$1(mapper);
         return instance;
-    }, {
+    }, props({
         op: none,
         delegate: none,
-    }, {
+    }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return getObserverCount(this.delegate);
@@ -236,14 +233,13 @@ const scan = /*@__PURE__*/ (() => {
     const createScanAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function ScanAsyncEnumerator(instance, delegate, reducer, acc) {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
-        unsafeCast(instance);
         instance.delegate = delegate;
         instance.op = scan$1(reducer, acc);
         return instance;
-    }, {
+    }, props({
         op: none,
         delegate: none,
-    }, {
+    }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return getObserverCount(this.delegate);
@@ -265,12 +261,11 @@ const scanAsync = /*@__PURE__*/ (() => {
     const creatScanAsyncAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function ScanAsyncAsyncEnumerator(instance, delegate, reducer, initialValue) {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
-        unsafeCast(instance);
         instance.obs = pipe(delegate, scanAsync$1(reducer, initialValue), multicast(getScheduler(delegate)));
         return instance;
-    }, {
+    }, props({
         obs: none,
-    }, {
+    }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return getObserverCount(this.obs);
@@ -293,12 +288,11 @@ const takeWhile =
     const createTakeWhileAsyncEnumerator = createInstanceFactory(clazz(__extends(delegatingDisposableMixin, delegatingAsyncEnumerator()), function TakeWhileAsyncEnumerator(instance, delegate, predicate, inclusive) {
         init(delegatingDisposableMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
-        unsafeCast(instance);
         instance.obs = pipe(delegate, takeWhile$1(predicate, { inclusive }), multicast(getScheduler(delegate)), add(instance));
         return instance;
-    }, {
+    }, props({
         obs: none,
-    }, {
+    }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return getObserverCount(this.obs);

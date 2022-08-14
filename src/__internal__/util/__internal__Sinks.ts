@@ -12,7 +12,6 @@ import {
   none,
   pipe,
   returns,
-  unsafeCast,
 } from "../../functions";
 import { ReactiveContainerLike } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
@@ -42,10 +41,12 @@ import {
   Mixin1,
   Mixin2,
   Mixin3,
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "./__internal__Objects";
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
@@ -53,10 +54,10 @@ const Sink_private_delegate = Symbol("Sink_private_delegate");
 export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
   T,
 >() => {
-  type TEnumeratorSinkProperties = {
+  type TProperties = {
     [EnumeratorLike_current]: T;
     [EnumeratorLike_hasCurrent]: boolean;
-    buffer: T[];
+    readonly buffer: T[];
   };
 
   return createInstanceFactory(
@@ -66,10 +67,10 @@ export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
         instance: Pick<
           SinkLike<T> & EnumeratorLike<T>,
           typeof SinkLike_notify | typeof SourceLike_move
-        >,
+        > &
+          Mutable<TProperties>,
       ): EnumeratorLike<T> & SinkLike<T> {
         init(disposableMixin, instance);
-        unsafeCast<TEnumeratorSinkProperties>(instance);
 
         instance.buffer = [];
 
@@ -83,22 +84,19 @@ export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
 
         return instance;
       },
-      {
+      props<TProperties>({
         buffer: none,
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
-      },
+      }),
       {
-        [SinkLike_notify](
-          this: DisposableLike & TEnumeratorSinkProperties,
-          next: T,
-        ) {
+        [SinkLike_notify](this: DisposableLike & TProperties, next: T) {
           if (isDisposed(this)) {
             return;
           }
           this.buffer.push(next);
         },
-        [SourceLike_move](this: DisposableLike & TEnumeratorSinkProperties) {
+        [SourceLike_move](this: DisposableLike & TProperties) {
           const { buffer } = this;
 
           if (!isDisposed(this) && getLength(buffer) > 0) {
@@ -150,19 +148,19 @@ export const delegatingSinkMixin: <T>() => Mixin1<
     clazz(
       __extends(disposableMixin),
       function DelegatingSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<T>,
       ): DelegateSinkLike<T> {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance[DelegatingSink_delegate] = delegate;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [DelegatingSink_delegate]: none,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties, v: T) {
           this[DelegatingSink_delegate][SinkLike_notify](v);
@@ -198,20 +196,20 @@ export const bufferSinkMixin: <
   const BufferSink_private_buffer = Symbol("BufferSink_private_buffer");
 
   type TProperties = {
-    [Sink_private_delegate]: TSink;
-    [BufferSink_private_maxBufferSize]: number;
+    readonly [Sink_private_delegate]: TSink;
+    readonly [BufferSink_private_maxBufferSize]: number;
     [BufferSink_private_buffer]: T[];
   };
 
   return clazz(
     __extends(disposableMixin),
     function BufferSink(
-      instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+      instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+        Mutable<TProperties>,
       delegate: TSink,
       maxBufferSize: number,
     ): SinkLike<T> {
       init(disposableMixin, instance);
-      unsafeCast<TProperties>(instance);
 
       instance[Sink_private_delegate] = delegate;
       instance[BufferSink_private_maxBufferSize] = maxBufferSize;
@@ -238,11 +236,11 @@ export const bufferSinkMixin: <
 
       return instance;
     },
-    {
+    props<TProperties>({
       [Sink_private_delegate]: none,
       [BufferSink_private_maxBufferSize]: 0,
       [BufferSink_private_buffer]: none,
-    },
+    }),
     {
       [SinkLike_notify](this: TProperties, next: T) {
         const {
@@ -279,19 +277,19 @@ export const decodeWithCharsetSinkMixin: <
   );
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<string>;
-    [DecodeWithCharsetSink_private_textDecoder]: TextDecoder;
+    readonly [Sink_private_delegate]: SinkLike<string>;
+    readonly [DecodeWithCharsetSink_private_textDecoder]: TextDecoder;
   };
 
   return clazz(
     __extends(disposableMixin),
     function DecodeWithCharsetSink(
-      instance: Pick<SinkLike<ArrayBuffer>, typeof SinkLike_notify>,
+      instance: Pick<SinkLike<ArrayBuffer>, typeof SinkLike_notify> &
+        Mutable<TProperties>,
       delegate: SinkLike<string>,
       charset: string,
     ): SinkLike<ArrayBuffer> {
       init(disposableMixin, instance);
-      unsafeCast<TProperties>(instance);
 
       const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
       instance[DecodeWithCharsetSink_private_textDecoder] = textDecoder;
@@ -313,10 +311,10 @@ export const decodeWithCharsetSinkMixin: <
 
       return instance;
     },
-    {
+    props<TProperties>({
       [Sink_private_delegate]: none,
       [DecodeWithCharsetSink_private_textDecoder]: none,
-    },
+    }),
     {
       [SinkLike_notify](this: TProperties, next: ArrayBuffer) {
         const data = this[DecodeWithCharsetSink_private_textDecoder].decode(
@@ -347,8 +345,8 @@ export const distinctUntilChangedSinkMixin: <T>() => Mixin2<
   );
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<T>;
-    [DistinctUntilChangedSink_private_equality]: Equality<T>;
+    readonly [Sink_private_delegate]: SinkLike<T>;
+    readonly [DistinctUntilChangedSink_private_equality]: Equality<T>;
     [DistinctUntilChangedSink_private_prev]: T;
     [DistinctUntilChangedSink_private_hasValue]: boolean;
   };
@@ -357,24 +355,24 @@ export const distinctUntilChangedSinkMixin: <T>() => Mixin2<
     clazz(
       __extends(delegatingDisposableMixin),
       function DistinctUntilChangedSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<T>,
         equality: Equality<T>,
       ): SinkLike<T> {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
         instance[DistinctUntilChangedSink_private_equality] = equality;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [DistinctUntilChangedSink_private_equality]: none,
         [DistinctUntilChangedSink_private_prev]: none,
         [DistinctUntilChangedSink_private_hasValue]: false,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
           const shouldEmit =
@@ -403,30 +401,30 @@ export const forEachSinkMixin: <T>() => Mixin2<
   const ForEachSink_private_effect = Symbol("ForEachSink_private_effect");
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<T>;
-    [ForEachSink_private_effect]: SideEffect1<T>;
+    readonly [Sink_private_delegate]: SinkLike<T>;
+    readonly [ForEachSink_private_effect]: SideEffect1<T>;
   };
 
   return returns(
     clazz(
       __extends(delegatingDisposableMixin),
       function ForEachSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<T>,
         effect: SideEffect1<T>,
       ): SinkLike<T> {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
         instance[ForEachSink_private_effect] = effect;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [ForEachSink_private_effect]: none,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
           this[ForEachSink_private_effect](next);
@@ -445,30 +443,30 @@ export const keepSinkMixin: <T>() => Mixin2<
   const KeepSink_private_predicate = Symbol("KeepSink_private_predicate");
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<T>;
-    [KeepSink_private_predicate]: Predicate<T>;
+    readonly [Sink_private_delegate]: SinkLike<T>;
+    readonly [KeepSink_private_predicate]: Predicate<T>;
   };
 
   return returns(
     clazz(
       __extends(delegatingDisposableMixin),
       function KeepSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
       ): SinkLike<T> {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
         instance[KeepSink_private_predicate] = predicate;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [KeepSink_private_predicate]: none,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
           if (this[KeepSink_private_predicate](next)) {
@@ -488,30 +486,30 @@ export const mapSinkMixin: <TA, TB>() => Mixin2<
   const MapSink_private_mapper = Symbol("MapSink_private_mapper");
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<TB>;
-    [MapSink_private_mapper]: Function1<TA, TB>;
+    readonly [Sink_private_delegate]: SinkLike<TB>;
+    readonly [MapSink_private_mapper]: Function1<TA, TB>;
   };
 
   return returns(
     clazz(
       __extends(delegatingDisposableMixin),
       function MapSink(
-        instance: Pick<SinkLike<TA>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<TA>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<TB>,
         mapper: Function1<TA, TB>,
       ): SinkLike<TA> {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
         instance[MapSink_private_mapper] = mapper;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [MapSink_private_mapper]: none,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties, next: TA) {
           const mapped = this[MapSink_private_mapper](next);
@@ -530,7 +528,7 @@ export const pairwiseSinkMixin: <T>() => Mixin1<
   const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<readonly [T, T]>;
+    readonly [Sink_private_delegate]: SinkLike<readonly [T, T]>;
     [PairwiseSink_private_prev]: T;
     [PairwiseSink_private_hasPrev]: boolean;
   };
@@ -539,21 +537,21 @@ export const pairwiseSinkMixin: <T>() => Mixin1<
     clazz(
       __extends(delegatingDisposableMixin),
       function PairwiseSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<readonly [T, T]>,
       ): SinkLike<T> {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [PairwiseSink_private_prev]: none,
         [PairwiseSink_private_hasPrev]: false,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
           const prev = this[PairwiseSink_private_prev];
@@ -592,21 +590,21 @@ export const reduceSinkMixin: <
   const ReduceSink_private_acc = Symbol("ReduceSink_private_acc");
 
   type TProperties = {
-    [Sink_private_delegate]: TSink;
-    [ReduceSink_private_reducer]: Reducer<T, TAcc>;
+    readonly [Sink_private_delegate]: TSink;
+    readonly [ReduceSink_private_reducer]: Reducer<T, TAcc>;
     [ReduceSink_private_acc]: TAcc;
   };
 
   return clazz(
     __extends(disposableMixin),
     function ReduceSink(
-      instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+      instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+        Mutable<TProperties>,
       delegate: TSink,
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): SinkLike<T> {
       init(disposableMixin, instance);
-      unsafeCast<TProperties>(instance);
 
       instance[Sink_private_delegate] = delegate;
       instance[ReduceSink_private_reducer] = reducer;
@@ -632,11 +630,11 @@ export const reduceSinkMixin: <
 
       return instance;
     },
-    {
+    props<TProperties>({
       [Sink_private_delegate]: none,
       [ReduceSink_private_reducer]: none,
       [ReduceSink_private_acc]: none,
-    },
+    }),
     {
       [SinkLike_notify](this: TProperties, next: T) {
         const nextAcc = this[ReduceSink_private_reducer](
@@ -659,8 +657,8 @@ export const scanSinkMixin: <T, TAcc>() => Mixin3<
   const ScanSink_private_acc = Symbol("ScanSink_private_acc");
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<TAcc>;
-    [ScanSink_private_reducer]: Reducer<T, TAcc>;
+    readonly [Sink_private_delegate]: SinkLike<TAcc>;
+    readonly [ScanSink_private_reducer]: Reducer<T, TAcc>;
     [ScanSink_private_acc]: TAcc;
   };
 
@@ -668,13 +666,13 @@ export const scanSinkMixin: <T, TAcc>() => Mixin3<
     clazz(
       __extends(delegatingDisposableMixin),
       function ScanSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<TAcc>,
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
       ): SinkLike<T> {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
         instance[ScanSink_private_reducer] = reducer;
@@ -688,11 +686,11 @@ export const scanSinkMixin: <T, TAcc>() => Mixin3<
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [ScanSink_private_reducer]: none,
         [ScanSink_private_acc]: none,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
           const nextAcc = this[ScanSink_private_reducer](
@@ -719,8 +717,8 @@ export const skipFirstSinkMixin: <T>() => Mixin2<
   const SkipFirstSink_private_count = Symbol("SkipFirstSink_private_count");
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<T>;
-    [SkipFirstSink_private_skipCount]: number;
+    readonly [Sink_private_delegate]: SinkLike<T>;
+    readonly [SkipFirstSink_private_skipCount]: number;
     [SkipFirstSink_private_count]: number;
   };
 
@@ -728,23 +726,23 @@ export const skipFirstSinkMixin: <T>() => Mixin2<
     clazz(
       __extends(delegatingDisposableMixin),
       function SkipFirstSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<T>,
         skipCount: number,
       ): SinkLike<T> {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
         instance[SkipFirstSink_private_skipCount] = skipCount;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [SkipFirstSink_private_skipCount]: 0,
         [SkipFirstSink_private_count]: 0,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
           this[SkipFirstSink_private_count]++;
@@ -772,8 +770,8 @@ export const takeFirstSinkMixin: <T>() => Mixin2<
   const TakeFirstSink_private_count = Symbol("TakeFirstSink_private_count");
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<T>;
-    [TakeFirstSink_private_takeCount]: number;
+    readonly [Sink_private_delegate]: SinkLike<T>;
+    readonly [TakeFirstSink_private_takeCount]: number;
     [TakeFirstSink_private_count]: number;
   };
 
@@ -781,12 +779,12 @@ export const takeFirstSinkMixin: <T>() => Mixin2<
     clazz(
       __extends(delegatingDisposableMixin),
       function TakeFirstSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<T>,
         takeCount: number,
       ): SinkLike<T> {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
         instance[TakeFirstSink_private_takeCount] = takeCount;
@@ -797,11 +795,11 @@ export const takeFirstSinkMixin: <T>() => Mixin2<
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [TakeFirstSink_private_takeCount]: 0,
         [TakeFirstSink_private_count]: 0,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
           this[TakeFirstSink_private_count]++;
@@ -838,20 +836,20 @@ export const takeLastSinkMixin: <
   );
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<T>;
-    [TakeLastSink_private_takeLastCount]: number;
-    [TakeLastSink_last]: T[];
+    readonly [Sink_private_delegate]: SinkLike<T>;
+    readonly [TakeLastSink_private_takeLastCount]: number;
+    readonly [TakeLastSink_last]: T[];
   };
 
   return clazz(
     __extends(disposableMixin),
     function TakeLastSink(
-      instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+      instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+        Mutable<TProperties>,
       delegate: TSink,
       takeLastCount: number,
     ): SinkLike<T> {
       init(disposableMixin, instance);
-      unsafeCast<TProperties>(instance);
 
       instance[Sink_private_delegate] = delegate;
       instance[TakeLastSink_private_takeLastCount] = takeLastCount;
@@ -867,11 +865,11 @@ export const takeLastSinkMixin: <
 
       return instance;
     },
-    {
+    props<TProperties>({
       [Sink_private_delegate]: none,
       [TakeLastSink_private_takeLastCount]: 0,
       [TakeLastSink_last]: none,
-    },
+    }),
     {
       [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
         const { [TakeLastSink_last]: last } = this;
@@ -900,22 +898,22 @@ export const takeWhileSinkMixin: <T>() => Mixin3<
   );
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<T>;
-    [TakeWhileSink_private_predicate]: Predicate<T>;
-    [TakeWhileSink_private_inclusive]: boolean;
+    readonly [Sink_private_delegate]: SinkLike<T>;
+    readonly [TakeWhileSink_private_predicate]: Predicate<T>;
+    readonly [TakeWhileSink_private_inclusive]: boolean;
   };
 
   return returns(
     clazz(
       __extends(delegatingDisposableMixin),
       function TakeWhileSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
         inclusive: boolean,
       ): SinkLike<T> {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
         instance[TakeWhileSink_private_predicate] = predicate;
@@ -923,11 +921,11 @@ export const takeWhileSinkMixin: <T>() => Mixin3<
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [TakeWhileSink_private_predicate]: none,
         [TakeWhileSink_private_inclusive]: none,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
           const satisfiesPredicate =
@@ -956,7 +954,7 @@ export const throwIfEmptySinkMixin: <T>() => Mixin2<
   );
 
   type TProperties = {
-    [Sink_private_delegate]: SinkLike<T>;
+    readonly [Sink_private_delegate]: SinkLike<T>;
     [ThrowIfEmptySink_private_isEmpty]: boolean;
   };
 
@@ -964,12 +962,12 @@ export const throwIfEmptySinkMixin: <T>() => Mixin2<
     clazz(
       __extends(disposableMixin),
       function ThrowIfEmptySink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+          Mutable<TProperties>,
         delegate: SinkLike<T>,
         factory: Factory<unknown>,
       ): SinkLike<T> {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance[Sink_private_delegate] = delegate;
 
@@ -996,10 +994,10 @@ export const throwIfEmptySinkMixin: <T>() => Mixin2<
 
         return instance;
       },
-      {
+      props<TProperties>({
         [Sink_private_delegate]: none,
         [ThrowIfEmptySink_private_isEmpty]: true,
-      },
+      }),
       {
         [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
           this[ThrowIfEmptySink_private_isEmpty] = false;

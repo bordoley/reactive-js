@@ -1,6 +1,6 @@
 /// <reference types="./web.d.ts" />
 import { delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
@@ -113,14 +113,13 @@ const windowLocation =
     };
     const createWindowLocationStream = createInstanceFactory(clazz(__extends(delegatingDisposableMixin), function WindowLocationStream(instance, delegate) {
         init(delegatingDisposableMixin, instance, delegate);
-        unsafeCast(instance);
         instance.delegate = delegate;
         instance.historyCounter = -1;
         return instance;
-    }, {
+    }, props({
         delegate: none,
         historyCounter: -1,
-    }, {
+    }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return pipe(this.delegate, getObserverCount);
@@ -139,7 +138,6 @@ const windowLocation =
             pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
         },
         goBack() {
-            unsafeCast(this);
             const canGoBack = this.historyCounter > 0;
             if (canGoBack) {
                 history.back();

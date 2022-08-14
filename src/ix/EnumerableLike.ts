@@ -32,10 +32,12 @@ import {
 } from "../__internal__/util/__internal__MutableRefLike";
 import {
   Mixin1,
+  Mutable,
   __extends,
   clazz,
   createInstanceFactory,
   init,
+  props,
 } from "../__internal__/util/__internal__Objects";
 import {
   Buffer,
@@ -153,7 +155,7 @@ const delegatingEnumeratorMixin: <T>() => Mixin1<
   );
 
   type TProperties = {
-    [DelegatingEnumerator_private_delegate]: EnumeratorLike<T>;
+    readonly [DelegatingEnumerator_private_delegate]: EnumeratorLike<T>;
   };
 
   return pipe(
@@ -164,18 +166,17 @@ const delegatingEnumeratorMixin: <T>() => Mixin1<
           | typeof EnumeratorLike_current
           | typeof EnumeratorLike_hasCurrent
           | typeof DelegatingEnumerator_move_delegate
-        >,
+        > &
+          Mutable<TProperties>,
         delegate: EnumeratorLike<T>,
       ): TDelegatingEnumeratorMixinReturn<T> {
-        unsafeCast<TProperties>(instance);
-
         instance[DelegatingEnumerator_private_delegate] = delegate;
 
         return instance;
       },
-      {
+      props<TProperties>({
         [DelegatingEnumerator_private_delegate]: none,
-      },
+      }),
       {
         get [EnumeratorLike_current](): T {
           unsafeCast<TProperties>(this);
@@ -261,8 +262,8 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   const typedEnumerator = enumeratorMixin<readonly T[]>();
 
   type TProperties = {
-    delegate: EnumeratorLike<T>;
-    maxBufferSize: number;
+    readonly delegate: EnumeratorLike<T>;
+    readonly maxBufferSize: number;
   };
 
   return pipe(
@@ -270,13 +271,13 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
       clazz(
         __extends(disposableMixin, typedEnumerator),
         function BufferEnumerator(
-          instance: Pick<EnumeratorLike<readonly T[]>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<readonly T[]>, typeof SourceLike_move> &
+            Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           maxBufferSize: number,
         ): EnumeratorLike<readonly T[]> {
           init(disposableMixin, instance);
           init(typedEnumerator, instance);
-          unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.maxBufferSize = maxBufferSize;
@@ -285,10 +286,10 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
 
           return instance;
         },
-        {
+        props<TProperties>({
           delegate: none,
           maxBufferSize: 0,
-        },
+        }),
         {
           [SourceLike_move](
             this: TProperties & MutableEnumeratorLike<readonly T[]>,
@@ -324,7 +325,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     const typedDisposableRefMixin = disposableRefMixin<EnumeratorLike<T>>();
 
     type TProperties = {
-      delegate: EnumeratorLike<EnumerableLike<T>>;
+      readonly delegate: EnumeratorLike<EnumerableLike<T>>;
     };
 
     return pipe(
@@ -332,13 +333,13 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
         clazz(
           __extends(disposableMixin, typedDisposableRefMixin, typedEnumerator),
           function ConcatAllEnumerator(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+              Mutable<TProperties>,
             delegate: EnumeratorLike<EnumerableLike<T>>,
           ): EnumeratorLike<T> {
             init(disposableMixin, instance);
             init(typedDisposableRefMixin, instance, disposed);
             init(typedEnumerator, instance);
-            unsafeCast<TProperties>(instance);
 
             instance.delegate = delegate;
 
@@ -346,9 +347,9 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
 
             return instance;
           },
-          {
+          props<TProperties>({
             delegate: none,
-          },
+          }),
           {
             [SourceLike_move](
               this: TProperties &
@@ -398,7 +399,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
     type TProperties = {
-      equality: Equality<T>;
+      readonly equality: Equality<T>;
     };
 
     return pipe(
@@ -406,19 +407,19 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function DistinctUntilChanged(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+              Mutable<TProperties>,
             delegate: EnumeratorLike<T>,
             equality: Equality<T>,
           ): EnumeratorLike<T> {
             init(delegatingDisposableMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
-            unsafeCast<TProperties>(instance);
 
             instance.equality = equality;
 
             return instance;
           },
-          { equality: none },
+          props<TProperties>({ equality: none }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               const hadCurrent = hasCurrent(this);
@@ -455,7 +456,7 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
   type TProperties = {
-    effect: SideEffect1<T>;
+    readonly effect: SideEffect1<T>;
   };
 
   return pipe(
@@ -463,19 +464,19 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
       clazz(
         __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
         function forEachEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+            Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           effect: SideEffect1<T>,
         ): EnumeratorLike<T> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
-          unsafeCast<TProperties>(instance);
 
           instance.effect = effect;
 
           return instance;
         },
-        { effect: none },
+        props<TProperties>({ effect: none }),
         {
           [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
             if (delegatingEnumeratorMove(this)) {
@@ -498,7 +499,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
   type TProperties = {
-    predicate: Predicate<T>;
+    readonly predicate: Predicate<T>;
   };
 
   return pipe(
@@ -506,19 +507,19 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
       clazz(
         __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
         function KeepEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+            Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           predicate: Predicate<T>,
         ): EnumeratorLike<T> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
-          unsafeCast<TProperties>(instance);
 
           instance.predicate = predicate;
 
           return instance;
         },
-        { predicate: none },
+        props<TProperties>({ predicate: none }),
         {
           [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
             const { predicate } = this;
@@ -546,8 +547,8 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const typedEnumerator = enumeratorMixin<TB>();
 
   type TProperties = {
-    mapper: Function1<TA, TB>;
-    delegate: EnumeratorLike<TA>;
+    readonly mapper: Function1<TA, TB>;
+    readonly delegate: EnumeratorLike<TA>;
   };
 
   return pipe(
@@ -555,23 +556,23 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
       clazz(
         __extends(delegatingDisposableMixin, typedEnumerator),
         function MapEnumerator(
-          instance: Pick<EnumeratorLike<TB>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<TB>, typeof SourceLike_move> &
+            Mutable<TProperties>,
           delegate: EnumeratorLike<TA>,
           mapper: Function1<TA, TB>,
         ): EnumeratorLike<TB> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedEnumerator, instance);
-          unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.mapper = mapper;
 
           return instance;
         },
-        {
+        props<TProperties>({
           mapper: none,
           delegate: none,
-        },
+        }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<TB>) {
             const { delegate } = this;
@@ -600,7 +601,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
   const typedEnumerator = enumeratorMixin<[T, T]>();
 
   type TProperties = {
-    delegate: EnumeratorLike<T>;
+    readonly delegate: EnumeratorLike<T>;
   };
 
   return pipe(
@@ -608,18 +609,20 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
       clazz(
         __extends(delegatingDisposableMixin, typedEnumerator),
         function PairwiseEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+            Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
         ): EnumeratorLike<readonly [T, T]> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedEnumerator, instance);
-          unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
 
           return instance;
         },
-        {},
+        props<TProperties>({
+          delegate: none,
+        }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<[T, T]>) {
             const { delegate } = this;
@@ -654,8 +657,8 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   type TProperties = {
     count: number;
     enumerator: Option<EnumeratorLike<T>>;
-    shouldRepeat: Predicate<number>;
-    src: EnumerableLike<T>;
+    readonly shouldRepeat: Predicate<number>;
+    readonly src: EnumerableLike<T>;
   };
 
   const createRepeatEnumerator = createInstanceFactory(
@@ -667,24 +670,24 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
           | typeof SourceLike_move
           | typeof EnumeratorLike_current
           | typeof EnumeratorLike_hasCurrent
-        >,
+        > &
+          Mutable<TProperties>,
         src: EnumerableLike<T>,
         shouldRepeat: Predicate<number>,
       ): EnumeratorLike<T> {
         init(disposableMixin, instance);
-        unsafeCast<TProperties>(instance);
 
         instance.src = src;
         instance.shouldRepeat = shouldRepeat;
 
         return instance;
       },
-      {
+      props<TProperties>({
         count: 0,
         enumerator: none,
         shouldRepeat: none,
         src: none,
-      },
+      }),
       {
         [SourceLike_move](this: TProperties & EnumeratorLike<T>) {
           if (isNone(this.enumerator)) {
@@ -737,8 +740,8 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   const typedEnumerator = enumeratorMixin<TAcc>();
 
   type TProperties = {
-    reducer: Reducer<T, TAcc>;
-    delegate: EnumeratorLike<T>;
+    readonly reducer: Reducer<T, TAcc>;
+    readonly delegate: EnumeratorLike<T>;
   };
 
   return pipe(
@@ -746,14 +749,14 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
       clazz(
         __extends(delegatingDisposableMixin, typedEnumerator),
         function ScanEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+            Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           reducer: Reducer<T, TAcc>,
           initialValue: Factory<TAcc>,
         ): MutableEnumeratorLike<TAcc> {
           init(delegatingDisposableMixin, instance, delegate);
           init(typedEnumerator, instance);
-          unsafeCast<TProperties>(instance);
 
           instance.delegate = delegate;
           instance.reducer = reducer;
@@ -767,7 +770,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
 
           return instance;
         },
-        { reducer: none, delegate: none },
+        props<TProperties>({ reducer: none, delegate: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<TAcc>) {
             const acc = hasCurrent(this) ? getCurrent(this) : none;
@@ -799,7 +802,7 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
     type TProperties = {
-      skipCount: number;
+      readonly skipCount: number;
       count: number;
     };
 
@@ -808,23 +811,23 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function SkipFirstEnumerator(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+              Mutable<TProperties>,
             delegate: EnumeratorLike<T>,
             skipCount: number,
           ): EnumeratorLike<T> {
             init(delegatingDisposableMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
-            unsafeCast<TProperties>(instance);
 
             instance.skipCount = skipCount;
             instance.count = 0;
 
             return instance;
           },
-          {
+          props<TProperties>({
             skipCount: 0,
             count: 0,
-          },
+          }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               const { skipCount } = this;
@@ -853,7 +856,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
     type TProperties = {
-      maxCount: number;
+      readonly maxCount: number;
       count: number;
     };
 
@@ -862,22 +865,22 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function TakeFirstEnumerator(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+              Mutable<TProperties>,
             delegate: EnumeratorLike<T>,
             maxCount: number,
           ): EnumeratorLike<T> {
             init(delegatingDisposableMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
-            unsafeCast<TProperties>(instance);
 
             instance.maxCount = maxCount;
 
             return instance;
           },
-          {
+          props<TProperties>({
             maxCount: 0,
             count: 0,
-          },
+          }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               if (this.count < this.maxCount) {
@@ -905,7 +908,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
   const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
   type TProperties = {
-    maxCount: number;
+    readonly maxCount: number;
     isStarted: boolean;
   };
 
@@ -914,13 +917,13 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
       clazz(
         __extends(disposableMixin, typedDelegatingEnumeratorMixin),
         function TakeLastEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+            Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           maxCount: number,
         ): EnumeratorLike<T> {
           init(disposableMixin, instance);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
-          unsafeCast<TProperties>(instance);
 
           instance.maxCount = maxCount;
           instance.isStarted = false;
@@ -929,10 +932,10 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
 
           return instance;
         },
-        {
+        props<TProperties>({
           maxCount: 0,
           isStarted: false,
-        },
+        }),
         {
           [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
             if (!isDisposed(this) && !this.isStarted) {
@@ -974,8 +977,8 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
 
     type TProperties = {
-      predicate: Predicate<T>;
-      inclusive: boolean;
+      readonly predicate: Predicate<T>;
+      readonly inclusive: boolean;
       done: boolean;
     };
 
@@ -984,25 +987,25 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
         clazz(
           __extends(delegatingDisposableMixin, typedDelegatingEnumeratorMixin),
           function TakeWhileEnumerator(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+              Mutable<TProperties>,
             delegate: EnumeratorLike<T>,
             predicate: Predicate<T>,
             inclusive: boolean,
           ): EnumeratorLike<T> {
             init(delegatingDisposableMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
-            unsafeCast<TProperties>(instance);
 
             instance.predicate = predicate;
             instance.inclusive = inclusive;
 
             return instance;
           },
-          {
+          props<TProperties>({
             predicate: none,
             inclusive: false,
             done: false,
-          },
+          }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               const { inclusive, predicate } = this;
@@ -1046,13 +1049,13 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
         clazz(
           __extends(disposableMixin, typedDelegatingEnumeratorMixin),
           function TakeWhileEnumerator(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+              TProperties,
             delegate: EnumeratorLike,
             factory: Factory<unknown>,
           ): EnumeratorLike<T> {
             init(disposableMixin, instance);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
-            unsafeCast<TProperties>(instance);
 
             instance.isEmpty = true;
 
@@ -1079,9 +1082,9 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
 
             return instance;
           },
-          {
+          props<TProperties>({
             isEmpty: true,
-          },
+          }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               if (delegatingEnumeratorMove(this)) {
@@ -1225,7 +1228,7 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const typedEnumerator = enumeratorMixin<readonly unknown[]>();
 
   type TProperties = {
-    enumerators: readonly EnumeratorLike[];
+    readonly enumerators: readonly EnumeratorLike[];
   };
 
   const createZipEnumerator = createInstanceFactory(
@@ -1235,20 +1238,20 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
         instance: Pick<
           EnumeratorLike<readonly unknown[]>,
           typeof SourceLike_move
-        >,
+        > &
+          Mutable<TProperties>,
         enumerators: readonly EnumeratorLike[],
       ): EnumeratorLike<readonly unknown[]> {
         init(disposableMixin, instance);
         init(typedEnumerator, instance);
-        unsafeCast<TProperties>(instance);
 
         instance.enumerators = enumerators;
 
         return instance;
       },
-      {
+      props<TProperties>({
         enumerators: none,
-      },
+      }),
       {
         [SourceLike_move](
           this: TProperties & MutableEnumeratorLike<readonly unknown[]>,
