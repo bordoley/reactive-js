@@ -33,7 +33,6 @@
 - [FromArray](containers.md#fromarray)
 - [FromArrayOptions](containers.md#fromarrayoptions)
 - [FromIterable](containers.md#fromiterable)
-- [FromIterator](containers.md#fromiterator)
 - [Generate](containers.md#generate)
 - [Keep](containers.md#keep)
 - [Map](containers.md#map)
@@ -282,20 +281,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
-
-___
-
-### FromIterator
-
-Ƭ **FromIterator**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromIterator`: <T, TReturn, TNext\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`Iterator`<`T`, `TReturn`, `TNext`\>\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | extends `Record`<`string`, `unknown`\> = `Record`<`string`, `never`\> |
+| `O` | `never` |
 
 ___
 

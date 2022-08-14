@@ -13,6 +13,7 @@ import {
   concatT,
   decodeWithCharsetT,
   distinctUntilChangedT,
+  everySatisfyT,
   first,
   forEachT,
   keepT,
@@ -23,6 +24,7 @@ import {
   repeatT,
   scanT,
   skipFirstT,
+  someSatisfyT,
   takeFirstT,
   takeLastT,
   takeWhileT,
@@ -36,6 +38,7 @@ import {
   concatTests,
   decodeWithCharsetTests,
   distinctUntilChangedTests,
+  everySatisfyTests,
   forEachTests,
   keepTests,
   mapTests,
@@ -44,6 +47,7 @@ import {
   repeatTests,
   scanTests,
   skipFirstTests,
+  someSatisfyTests,
   takeFirstTests,
   takeLastTests,
   takeWhileTests,
@@ -85,6 +89,11 @@ export default describe(
     ...distinctUntilChangedT,
     ...toReadonlyArrayT,
   }),
+  everySatisfyTests({
+    fromArray: toRunnable,
+    ...everySatisfyT,
+    ...toReadonlyArrayT,
+  }),
   forEachTests({
     fromArray: toRunnable,
     ...forEachT,
@@ -124,6 +133,11 @@ export default describe(
   skipFirstTests({
     fromArray: toRunnable,
     ...skipFirstT,
+    ...toReadonlyArrayT,
+  }),
+  someSatisfyTests({
+    fromArray: toRunnable,
+    ...someSatisfyT,
     ...toReadonlyArrayT,
   }),
   takeFirstTests({

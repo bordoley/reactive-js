@@ -1,5 +1,5 @@
 /// <reference types="./__internal__Sinks.d.ts" />
-import { pipe, none, getLength, returns, isEmpty, isSome, newInstance } from '../../functions.mjs';
+import { pipe, none, getLength, returns, isEmpty, isSome, newInstance, compose, negate } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SinkLike_notify, SourceLike_move } from '../../util.mjs';
 import { onDisposed, isDisposed, addTo, onComplete, dispose, addToIgnoringChildErrors, onError } from '../../util/DisposableLike.mjs';
@@ -186,6 +186,13 @@ const distinctUntilChangedSinkMixin = /*@__PURE__*/ (() => {
         },
     }));
 })();
+const everySatisfySinkMixin = (fromArray) => {
+    const typedSatisfySinkMixin = satisfySinkMixin(fromArray, true);
+    return clazz(__extends(typedSatisfySinkMixin), function EverySatisfySink(instance, delegate, predicate) {
+        init(typedSatisfySinkMixin, instance, delegate, compose(predicate, negate));
+        return instance;
+    });
+};
 const forEachSinkMixin = /*@__PURE__*/ (() => {
     const ForEachSink_private_effect = Symbol("ForEachSink_private_effect");
     return returns(clazz(__extends(delegatingDisposableMixin), function ForEachSink(instance, delegate, effect) {
@@ -289,6 +296,29 @@ const reduceSinkMixin = (fromArray) => {
         },
     });
 };
+const satisfySinkMixin = (fromArray, defaultResult) => {
+    const SatisfySink_private_predicate = Symbol("SatisfySink_private_predicate");
+    return clazz(__extends(disposableMixin), function SatisfySink(instance, delegate, predicate) {
+        init(disposableMixin, instance);
+        instance[Sink_private_delegate] = delegate;
+        instance[SatisfySink_private_predicate] = predicate;
+        pipe(instance, addTo(delegate), onComplete(() => {
+            if (!isDisposed(delegate)) {
+                pipe([defaultResult], fromArray, sinkInto(delegate));
+            }
+        }));
+        return instance;
+    }, props({
+        [Sink_private_delegate]: none,
+        [SatisfySink_private_predicate]: none,
+    }), {
+        [SinkLike_notify](next) {
+            if (this[SatisfySink_private_predicate](next)) {
+                pipe(this[Sink_private_delegate], notify(!defaultResult), dispose());
+            }
+        },
+    });
+};
 const scanSinkMixin = /*@__PURE__*/ (() => {
     const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
     const ScanSink_private_acc = Symbol("ScanSink_private_acc");
@@ -338,6 +368,13 @@ const skipFirstSinkMixin = /*@__PURE__*/ (() => {
         },
     }));
 })();
+const someSatisfySinkMixin = (fromArray) => {
+    const typedSatisfySinkMixin = satisfySinkMixin(fromArray, false);
+    return clazz(__extends(typedSatisfySinkMixin), function EverySatisfySink(instance, delegate, predicate) {
+        init(typedSatisfySinkMixin, instance, delegate, predicate);
+        return instance;
+    });
+};
 const takeFirstSinkMixin = /*@__PURE__*/ (() => {
     const TakeFirstSink_private_takeCount = Symbol("TakeFirstSink_private_takeCount");
     const TakeFirstSink_private_count = Symbol("TakeFirstSink_private_count");
@@ -446,4 +483,4 @@ const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, catchErrorSinkMixin, createDelegatingSink, createEnumeratorSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
+export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, catchErrorSinkMixin, createDelegatingSink, createEnumeratorSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };

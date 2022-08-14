@@ -12,6 +12,7 @@
 - [concatT](rx_ObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_ObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_ObservableLike.md#distinctuntilchangedt)
+- [everySatisfyT](rx_ObservableLike.md#everysatisfyt)
 - [exhaustT](rx_ObservableLike.md#exhaustt)
 - [forEachT](rx_ObservableLike.md#foreacht)
 - [keepT](rx_ObservableLike.md#keept)
@@ -24,6 +25,7 @@
 - [scanAsyncT](rx_ObservableLike.md#scanasynct)
 - [scanT](rx_ObservableLike.md#scant)
 - [skipFirstT](rx_ObservableLike.md#skipfirstt)
+- [someSatisfyT](rx_ObservableLike.md#somesatisfyt)
 - [switchAllT](rx_ObservableLike.md#switchallt)
 - [takeFirstT](rx_ObservableLike.md#takefirstt)
 - [takeLastT](rx_ObservableLike.md#takelastt)
@@ -45,6 +47,7 @@
 - [concatAll](rx_ObservableLike.md#concatall)
 - [decodeWithCharset](rx_ObservableLike.md#decodewithcharset)
 - [distinctUntilChanged](rx_ObservableLike.md#distinctuntilchanged)
+- [everySatisfy](rx_ObservableLike.md#everysatisfy)
 - [exhaust](rx_ObservableLike.md#exhaust)
 - [forEach](rx_ObservableLike.md#foreach)
 - [forkCombineLatest](rx_ObservableLike.md#forkcombinelatest)
@@ -67,6 +70,7 @@
 - [scanAsync](rx_ObservableLike.md#scanasync)
 - [share](rx_ObservableLike.md#share)
 - [skipFirst](rx_ObservableLike.md#skipfirst)
+- [someSatisfy](rx_ObservableLike.md#somesatisfy)
 - [subscribe](rx_ObservableLike.md#subscribe)
 - [subscribeOn](rx_ObservableLike.md#subscribeon)
 - [switchAll](rx_ObservableLike.md#switchall)
@@ -121,6 +125,12 @@ ___
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### everySatisfyT
+
+• `Const` **everySatisfyT**: [`EverySatisfy`](containers.md#everysatisfy)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -193,6 +203,12 @@ ___
 ### skipFirstT
 
 • `Const` **skipFirstT**: [`SkipFirst`](containers.md#skipfirst)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### someSatisfyT
+
+• `Const` **someSatisfyT**: [`SomeSatisfy`](containers.md#somesatisfy)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -639,6 +655,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### everySatisfy
+
+▸ **everySatisfy**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 
@@ -1588,6 +1626,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### someSatisfy
+
+▸ **someSatisfy**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 

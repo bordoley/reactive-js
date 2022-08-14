@@ -21,13 +21,13 @@ declare const encodeUtf8: <C extends ContainerLike>(m: Container<C> & {
 }) => ContainerOperator<C, string, Uint8Array>;
 declare function endWith<C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(m: Concat<C> & FromArray<C, never>, value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 declare const fromOption: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Option<T>, ContainerOf<C, T>>;
-declare const genMap: <C extends ContainerLike, TA, TB, OConcatAll extends Record<string, never> = Record<string, never>, OFromIterator extends Record<string, never> = Record<string, never>, TReturn = any, TNext = unknown>(m: Container<C> & {
+declare const genMap: <C extends ContainerLike, TA, TB, OConcatAll = never, OFromIterable = never>(m: Container<C> & {
     map<TA_1, TB_1>(mapper: Function1<TA_1, TB_1>): ContainerOperator<C, TA_1, TB_1>;
 } & {
     concatAll: <T>(options?: Partial<OConcatAll> | undefined) => ContainerOperator<C, ContainerOf<C, T>, T>;
 } & {
-    fromIterator<T_1, TReturn_1 = any, TNext_1 = unknown>(options?: Partial<OFromIterator> | undefined): Function1<Factory<Iterator<T_1, TReturn_1, TNext_1>>, ContainerOf<C, T_1>>;
-}, mapper: Function1<TA, Generator<TB, TReturn, TNext>>, options?: Partial<OConcatAll & OFromIterator> | undefined) => ContainerOperator<C, TA, TB>;
+    fromIterable<T_1>(options?: Partial<OFromIterable> | undefined): Function1<Iterable<T_1>, ContainerOf<C, T_1>>;
+}, mapper: Function1<TA, Generator<TB, any, any>>, options?: Partial<OConcatAll & OFromIterable> | undefined) => ContainerOperator<C, TA, TB>;
 declare const keepType: <C extends ContainerLike, TA, TB extends TA>({ keep }: Keep<C>, predicate: TypePredicate<TA, TB>) => ContainerOperator<C, TA, TB>;
 declare const ignoreElements: <C extends ContainerLike, T>({ keep, }: Keep<C>) => ContainerOperator<C, unknown, T>;
 declare const mapTo: <C extends ContainerLike, TA, TB>({ map }: Map<C>, value: TB) => ContainerOperator<C, TA, TB>;

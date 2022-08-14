@@ -3,8 +3,8 @@ import { describe as createDescribe, test as createTest, expectEquals } from '..
 import { toRunnable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, none } from '../../functions.mjs';
 import { deferRunnableT } from '../../rx.mjs';
-import { bufferT, toReadonlyArrayT, catchErrorT, mapT, concatT, concatAllT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT, first, last } from '../../rx/RunnableLike.mjs';
-import { bufferTests, catchErrorTests, concatTests, concatAllTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
+import { bufferT, toReadonlyArrayT, catchErrorT, mapT, concatT, concatAllT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, forEachT, keepT, pairwiseT, reduceT, repeatT, takeFirstT, scanT, skipFirstT, someSatisfyT, takeLastT, takeWhileT, throwIfEmptyT, first, last } from '../../rx/RunnableLike.mjs';
+import { bufferTests, catchErrorTests, concatTests, concatAllTests, decodeWithCharsetTests, distinctUntilChangedTests, everySatisfyTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanTests, skipFirstTests, someSatisfyTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
 
 var RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
     fromArray: toRunnable,
@@ -32,6 +32,10 @@ var RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
 }), distinctUntilChangedTests({
     fromArray: toRunnable,
     ...distinctUntilChangedT,
+    ...toReadonlyArrayT,
+}), everySatisfyTests({
+    fromArray: toRunnable,
+    ...everySatisfyT,
     ...toReadonlyArrayT,
 }), forEachTests({
     fromArray: toRunnable,
@@ -65,6 +69,10 @@ var RunnableLikeTests = createDescribe("RunnableLike", bufferTests({
 }), skipFirstTests({
     fromArray: toRunnable,
     ...skipFirstT,
+    ...toReadonlyArrayT,
+}), someSatisfyTests({
+    fromArray: toRunnable,
+    ...someSatisfyT,
     ...toReadonlyArrayT,
 }), takeFirstTests({
     fromArray: toRunnable,

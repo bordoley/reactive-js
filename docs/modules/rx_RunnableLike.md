@@ -12,6 +12,7 @@
 - [concatT](rx_RunnableLike.md#concatt)
 - [decodeWithCharsetT](rx_RunnableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_RunnableLike.md#distinctuntilchangedt)
+- [everySatisfyT](rx_RunnableLike.md#everysatisfyt)
 - [forEachT](rx_RunnableLike.md#foreacht)
 - [keepT](rx_RunnableLike.md#keept)
 - [mapT](rx_RunnableLike.md#mapt)
@@ -20,6 +21,7 @@
 - [repeatT](rx_RunnableLike.md#repeatt)
 - [scanT](rx_RunnableLike.md#scant)
 - [skipFirstT](rx_RunnableLike.md#skipfirstt)
+- [someSatisfyT](rx_RunnableLike.md#somesatisfyt)
 - [takeFirstT](rx_RunnableLike.md#takefirstt)
 - [takeLastT](rx_RunnableLike.md#takelastt)
 - [takeWhileT](rx_RunnableLike.md#takewhilet)
@@ -35,6 +37,7 @@
 - [concatAll](rx_RunnableLike.md#concatall)
 - [decodeWithCharset](rx_RunnableLike.md#decodewithcharset)
 - [distinctUntilChanged](rx_RunnableLike.md#distinctuntilchanged)
+- [everySatisfy](rx_RunnableLike.md#everysatisfy)
 - [first](rx_RunnableLike.md#first)
 - [forEach](rx_RunnableLike.md#foreach)
 - [keep](rx_RunnableLike.md#keep)
@@ -47,6 +50,7 @@
 - [run](rx_RunnableLike.md#run)
 - [scan](rx_RunnableLike.md#scan)
 - [skipFirst](rx_RunnableLike.md#skipfirst)
+- [someSatisfy](rx_RunnableLike.md#somesatisfy)
 - [takeFirst](rx_RunnableLike.md#takefirst)
 - [takeLast](rx_RunnableLike.md#takelast)
 - [takeWhile](rx_RunnableLike.md#takewhile)
@@ -89,6 +93,12 @@ ___
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### everySatisfyT
+
+• `Const` **everySatisfyT**: [`EverySatisfy`](containers.md#everysatisfy)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -137,6 +147,12 @@ ___
 ### skipFirstT
 
 • `Const` **skipFirstT**: [`SkipFirst`](containers.md#skipfirst)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### someSatisfyT
+
+• `Const` **someSatisfyT**: [`SomeSatisfy`](containers.md#somesatisfy)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -303,6 +319,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### everySatisfy
+
+▸ **everySatisfy**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 
@@ -579,6 +617,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### someSatisfy
+
+▸ **someSatisfy**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 

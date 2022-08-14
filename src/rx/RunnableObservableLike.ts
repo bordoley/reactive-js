@@ -16,6 +16,7 @@ import {
   ConcatAll,
   DecodeWithCharset,
   DistinctUntilChanged,
+  EverySatisfy,
   ForEach,
   Keep,
   Map,
@@ -23,6 +24,7 @@ import {
   Reduce,
   Scan,
   SkipFirst,
+  SomeSatisfy,
   TakeFirst,
   TakeLast,
   TakeWhile,
@@ -46,6 +48,7 @@ import {
   concat,
   decodeWithCharset,
   distinctUntilChanged,
+  everySatisfy,
   forEach,
   keep,
   map,
@@ -54,6 +57,7 @@ import {
   reduce,
   scan,
   skipFirst,
+  someSatisfy,
   takeFirst,
   takeLast,
   takeWhile,
@@ -144,6 +148,11 @@ export const distinctUntilChangedT: DistinctUntilChanged<RunnableObservableLike>
       distinctUntilChanged as DistinctUntilChanged<RunnableObservableLike>["distinctUntilChanged"],
   };
 
+export const everySatisfyT: EverySatisfy<RunnableObservableLike> = {
+  everySatisfy:
+    everySatisfy as EverySatisfy<RunnableObservableLike>["everySatisfy"],
+};
+
 export const exhaust: ConcatAll<RunnableObservableLike>["concatAll"] = <T>() =>
   mergeAll<T>({
     maxBufferSize: 1,
@@ -218,6 +227,11 @@ export const scanAsyncT: ScanAsync<
 
 export const skipFirstT: SkipFirst<RunnableObservableLike> = {
   skipFirst: skipFirst as SkipFirst<RunnableObservableLike>["skipFirst"],
+};
+
+export const someSatisfyT: SomeSatisfy<RunnableObservableLike> = {
+  someSatisfy:
+    someSatisfy as SomeSatisfy<RunnableObservableLike>["someSatisfy"],
 };
 
 export const switchAll: ConcatAll<RunnableObservableLike>["concatAll"] =

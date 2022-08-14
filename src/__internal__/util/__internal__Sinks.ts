@@ -6,9 +6,11 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  compose,
   getLength,
   isEmpty,
   isSome,
+  negate,
   newInstance,
   none,
   pipe,
@@ -457,6 +459,39 @@ export const distinctUntilChangedSinkMixin: <T>() => Mixin2<
   );
 })();
 
+export const everySatisfySinkMixin: <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<boolean>,
+  T,
+>(
+  fromArray: (v: readonly boolean[]) => C,
+) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<boolean>,
+  T,
+>(
+  fromArray: (v: readonly boolean[]) => C,
+) => {
+  const typedSatisfySinkMixin = satisfySinkMixin<C, TSink, T>(fromArray, true);
+
+  return clazz(
+    __extends(typedSatisfySinkMixin),
+    function EverySatisfySink(
+      instance: unknown,
+      delegate: TSink,
+      predicate: Predicate<T>,
+    ): SinkLike<T> {
+      init(
+        typedSatisfySinkMixin,
+        instance,
+        delegate,
+        compose(predicate, negate),
+      );
+      return instance;
+    },
+  );
+};
+
 export const forEachSinkMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
@@ -711,6 +746,66 @@ export const reduceSinkMixin: <
   );
 };
 
+const satisfySinkMixin: <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<boolean>,
+  T,
+>(
+  fromArray: (v: readonly boolean[]) => C,
+  defaultResult: boolean,
+) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<boolean>,
+  T,
+>(
+  fromArray: (v: readonly boolean[]) => C,
+  defaultResult: boolean,
+) => {
+  const SatisfySink_private_predicate = Symbol("SatisfySink_private_predicate");
+
+  type TProperties = {
+    readonly [Sink_private_delegate]: SinkLike<boolean>;
+    readonly [SatisfySink_private_predicate]: Predicate<T>;
+  };
+
+  return clazz(
+    __extends(disposableMixin),
+    function SatisfySink(
+      instance: Mutable<TProperties> &
+        Pick<SinkLike<T>, typeof SinkLike_notify>,
+      delegate: TSink,
+      predicate: Predicate<T>,
+    ): SinkLike<T> {
+      init(disposableMixin, instance);
+      instance[Sink_private_delegate] = delegate;
+      instance[SatisfySink_private_predicate] = predicate;
+
+      pipe(
+        instance,
+        addTo(delegate),
+        onComplete(() => {
+          if (!isDisposed(delegate)) {
+            pipe([defaultResult], fromArray, sinkInto(delegate));
+          }
+        }),
+      );
+
+      return instance;
+    },
+    props<TProperties>({
+      [Sink_private_delegate]: none,
+      [SatisfySink_private_predicate]: none,
+    }),
+    {
+      [SinkLike_notify](this: TProperties, next: T) {
+        if (this[SatisfySink_private_predicate](next)) {
+          pipe(this[Sink_private_delegate], notify(!defaultResult), dispose());
+        }
+      },
+    },
+  );
+};
+
 export const scanSinkMixin: <T, TAcc>() => Mixin3<
   SinkLike<T>,
   SinkLike<TAcc>,
@@ -821,6 +916,34 @@ export const skipFirstSinkMixin: <T>() => Mixin2<
     ),
   );
 })();
+
+export const someSatisfySinkMixin: <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<boolean>,
+  T,
+>(
+  fromArray: (v: readonly boolean[]) => C,
+) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<boolean>,
+  T,
+>(
+  fromArray: (v: readonly boolean[]) => C,
+) => {
+  const typedSatisfySinkMixin = satisfySinkMixin<C, TSink, T>(fromArray, false);
+
+  return clazz(
+    __extends(typedSatisfySinkMixin),
+    function EverySatisfySink(
+      instance: unknown,
+      delegate: TSink,
+      predicate: Predicate<T>,
+    ): SinkLike<T> {
+      init(typedSatisfySinkMixin, instance, delegate, predicate);
+      return instance;
+    },
+  );
+};
 
 export const takeFirstSinkMixin: <T>() => Mixin2<
   SinkLike<T>,
