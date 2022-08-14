@@ -202,7 +202,7 @@ ___
 
 ### genMap
 
-▸ **genMap**<`C`, `TA`, `TB`, `OConcatAll`, `OFromIterator`, `TReturn`, `TNext`\>(`m`, `mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>
+▸ **genMap**<`C`, `TA`, `TB`, `OConcatAll`, `OFromIterable`\>(`m`, `mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -211,18 +211,16 @@ ___
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `OConcatAll` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
-| `OFromIterator` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
-| `TReturn` | `any` |
-| `TNext` | `unknown` |
+| `OConcatAll` | `never` |
+| `OFromIterable` | `never` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA_1, TB_1\>(`mapper`: [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA_1`, `TB_1`\>  } & { `concatAll`: <T\>(`options?`: `Partial`<`OConcatAll`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  } & { `fromIterator`: <T_1, TReturn_1, TNext_1\>(`options?`: `Partial`<`OFromIterator`\>) => [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`Iterator`<`T_1`, `TReturn_1`, `TNext_1`\>\>, [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `TReturn`, `TNext`\>\> |
-| `options?` | `Partial`<`OConcatAll` & `OFromIterator`\> |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA_1, TB_1\>(`mapper`: [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA_1`, `TB_1`\>  } & { `concatAll`: <T\>(`options?`: `Partial`<`OConcatAll`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  } & { `fromIterable`: <T_1\>(`options?`: `Partial`<`OFromIterable`\>) => [`Function1`](functions.md#function1)<`Iterable`<`T_1`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `any`, `any`\>\> |
+| `options?` | `Partial`<`OConcatAll` & `OFromIterable`\> |
 
 #### Returns
 

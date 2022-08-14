@@ -8,13 +8,15 @@ import {
   concatMap,
   concatWith,
   endWith,
+  genMap,
   ignoreElements,
   mapTo,
   startWith,
   zipWith,
 } from "../../containers/ContainerLike";
+import { toEnumerable as iterableToEnumerable } from "../../containers/IterableLike";
 import { toEnumerable } from "../../containers/ReadonlyArrayLike";
-import { arrayEquality, pipe, pipeLazy } from "../../functions";
+import { arrayEquality, none, pipe, pipeLazy } from "../../functions";
 import { EnumerableLike } from "../../ix";
 import {
   concatAllT,
@@ -74,6 +76,27 @@ export default describe(
         ),
         toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4]),
+      ),
+    ),
+  ),
+  describe(
+    "genMap",
+
+    test(
+      "maps the incoming value with the inline generator function",
+      pipeLazy(
+        [none, none],
+        toEnumerable(),
+        genMap(
+          { fromIterable: iterableToEnumerable, ...concatAllT, ...mapT },
+          function* (_) {
+            yield 1;
+            yield 2;
+            yield 3;
+          },
+        ),
+        toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
   ),

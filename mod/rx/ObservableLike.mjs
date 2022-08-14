@@ -8,11 +8,11 @@ import { disposableMixin, createDisposableRef, disposableRefMixin, delegatingDis
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
-import { decodeWithCharsetSinkMixin, reduceSinkMixin, takeLastSinkMixin, createEnumeratorSink } from '../__internal__/util/__internal__Sinks.mjs';
+import { decodeWithCharsetSinkMixin, everySatisfySinkMixin, reduceSinkMixin, someSatisfySinkMixin, takeLastSinkMixin, createEnumeratorSink } from '../__internal__/util/__internal__Sinks.mjs';
 import { concatMap, throws, keepType } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/PromiseableLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, isEmpty, none, getLength, max, returns, partial, isNone, isSome, unsafeCast, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
+import { pipe, isEmpty, none, getLength, max, partial, returns, isNone, isSome, unsafeCast, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { createEnumerable, emptyEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$3 } from '../ix/EnumerableLike.mjs';
 import { neverObservable, createEnumerableObservable, createRunnableObservable, createObservable, emptyObservable } from '../rx.mjs';
@@ -169,6 +169,18 @@ const distinctUntilChanged = distinctUntilChanged$1;
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
+const everySatisfy = 
+/*@__PURE__*/ (() => {
+    const typedObserverMixin = observerMixin();
+    const typedEverySatisfySinkMixin = everySatisfySinkMixin(toObservable());
+    const everySatisfyObserverMixin = clazz(__extends(typedEverySatisfySinkMixin, typedObserverMixin), function EverySatisfyObserver(instance, delegate, predicate) {
+        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(typedEverySatisfySinkMixin, instance, delegate, predicate);
+        return instance;
+    });
+    return (predicate) => pipe(createInstanceFactory(everySatisfyObserverMixin), partial(predicate), liftEnumerableObservable);
+})();
+const everySatisfyT = { everySatisfy };
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
  * by dropping inner sources while the previous inner source
@@ -370,6 +382,18 @@ const skipFirst =
 /*@__PURE__*/
 pipe(createSkipFirstObserver, createSkipFirstOperator(liftEnumerableObservableT));
 const skipFirstT = { skipFirst };
+const someSatisfy = 
+/*@__PURE__*/ (() => {
+    const typedObserverMixin = observerMixin();
+    const typedSomeSatisfySinkMixin = someSatisfySinkMixin(toObservable());
+    const someSatisfyObserverMixin = clazz(__extends(typedSomeSatisfySinkMixin, typedObserverMixin), function EverySatisfyObserver(instance, delegate, predicate) {
+        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(typedSomeSatisfySinkMixin, instance, delegate, predicate);
+        return instance;
+    });
+    return (predicate) => pipe(createInstanceFactory(someSatisfyObserverMixin), partial(predicate), liftEnumerableObservable);
+})();
+const someSatisfyT = { someSatisfy };
 const switchAll = switchAll$1;
 const switchAllT = {
     concatAll: switchAll,
@@ -751,4 +775,4 @@ const zipLatestT = {
 };
 const zipWithLatestFrom = zipWithLatestFrom$1;
 
-export { buffer, bufferT, catchError, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { buffer, bufferT, catchError, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };

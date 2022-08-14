@@ -235,23 +235,10 @@ export type FromArray<
   ): Function1<readonly T[], ContainerOf<C, T>>;
 };
 
-export type FromIterable<
-  C extends ContainerLike,
-  O extends Record<string, never> = Record<string, never>,
-> = Container<C> & {
+export type FromIterable<C extends ContainerLike, O = never> = Container<C> & {
   fromIterable<T>(
     options?: Partial<O>,
   ): Function1<Iterable<T>, ContainerOf<C, T>>;
-};
-
-// FIXME: Can we kill this off?
-export type FromIterator<
-  C extends ContainerLike,
-  O extends Record<string, unknown> = Record<string, never>,
-> = Container<C> & {
-  fromIterator<T, TReturn = any, TNext = unknown>(
-    options?: Partial<O>,
-  ): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
 };
 
 export type Generate<C extends ContainerLike, O = never> = Container<C> & {

@@ -11,6 +11,7 @@
 - [concatT](rx_EnumerableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_EnumerableObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_EnumerableObservableLike.md#distinctuntilchangedt)
+- [everySatisfyT](rx_EnumerableObservableLike.md#everysatisfyt)
 - [exhaustT](rx_EnumerableObservableLike.md#exhaustt)
 - [forEachT](rx_EnumerableObservableLike.md#foreacht)
 - [keepT](rx_EnumerableObservableLike.md#keept)
@@ -22,6 +23,7 @@
 - [scanAsyncT](rx_EnumerableObservableLike.md#scanasynct)
 - [scanT](rx_EnumerableObservableLike.md#scant)
 - [skipFirstT](rx_EnumerableObservableLike.md#skipfirstt)
+- [someSatisfyT](rx_EnumerableObservableLike.md#somesatisfyt)
 - [switchAllT](rx_EnumerableObservableLike.md#switchallt)
 - [takeFirstT](rx_EnumerableObservableLike.md#takefirstt)
 - [takeLastT](rx_EnumerableObservableLike.md#takelastt)
@@ -68,6 +70,12 @@ ___
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+
+___
+
+### everySatisfyT
+
+• `Const` **everySatisfyT**: [`EverySatisfy`](containers.md#everysatisfy)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
 
 ___
 
@@ -134,6 +142,12 @@ ___
 ### skipFirstT
 
 • `Const` **skipFirstT**: [`SkipFirst`](containers.md#skipfirst)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+
+___
+
+### someSatisfyT
+
+• `Const` **someSatisfyT**: [`SomeSatisfy`](containers.md#somesatisfy)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
 
 ___
 

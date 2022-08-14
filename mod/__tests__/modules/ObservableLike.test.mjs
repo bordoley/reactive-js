@@ -6,14 +6,14 @@ import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, identity, i
 import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/EnumerableLike.mjs';
 import { generateObservable, emptyObservable, deferRunnableObservableT } from '../../rx.mjs';
 import { combineLatest, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, concat, retry, share, zip, map, forEach, takeUntil, timeout, throttle, toEnumerable, toFlowable, toPromise, withLatestFrom, zipLatest, zipWithLatestFrom } from '../../rx/ObservableLike.mjs';
-import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, catchErrorT, concatT, decodeWithCharsetT, distinctUntilChangedT, forEachT, keepT, pairwiseT, reduceT, scanT, scanAsyncT, skipFirstT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
+import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, catchErrorT, concatT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, forEachT, keepT, pairwiseT, reduceT, scanT, scanAsyncT, skipFirstT, someSatisfyT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
 import { createVirtualTimeScheduler, createHostScheduler } from '../../scheduling.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
 import { schedule, getCurrentTime } from '../../scheduling/SchedulerLike.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import { getException, dispose, isDisposed } from '../../util/DisposableLike.mjs';
-import { zipTests as zipTests$1, bufferTests, catchErrorTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, scanAsyncTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
+import { zipTests as zipTests$1, bufferTests, catchErrorTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, everySatisfyTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, scanAsyncTests, skipFirstTests, someSatisfyTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
 
 const combineLatestTests = createDescribe("combineLatest", createTest("combineLatest", pipeLazy(combineLatest(pipe(generateObservable(incrementBy(2), returns(1), { delay: 2 }), takeFirst({ count: 3 })), pipe(generateObservable(incrementBy(2), returns(0), { delay: 3 }), takeFirst({ count: 2 }))), toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality()))));
 const exhaustTests = createDescribe("exhaust", createTest("when the initial observable never disposes", pipeLazy([
@@ -144,6 +144,10 @@ var ObservableLikeTests = createDescribe("ObservableLike", bufferTests({
     fromArray: toObservable,
     ...distinctUntilChangedT,
     ...toReadonlyArrayT,
+}), everySatisfyTests({
+    fromArray: toObservable,
+    ...everySatisfyT,
+    ...toReadonlyArrayT,
 }), exhaustTests, forEachTests({
     fromArray: toObservable,
     ...forEachT,
@@ -177,6 +181,10 @@ var ObservableLikeTests = createDescribe("ObservableLike", bufferTests({
 }), shareTests, skipFirstTests({
     fromArray: toObservable,
     ...skipFirstT,
+    ...toReadonlyArrayT,
+}), someSatisfyTests({
+    fromArray: toObservable,
+    ...someSatisfyT,
     ...toReadonlyArrayT,
 }), switchAllTests, takeFirstTests({
     fromArray: toObservable,
