@@ -12,10 +12,12 @@ import {
   onError as onErrorInternal,
 } from "../__internal__/util/__internal__DisposableLike";
 import {
+  Function1,
   Option,
   SideEffect,
   SideEffect1,
   Updater,
+  compose,
   newInstance,
   pipe,
 } from "../functions";
@@ -69,10 +71,10 @@ export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   return abortController.signal;
 };
 
-export const toObservable =
-  <T>() =>
-  (disposable: DisposableLike): ObservableLike<T> =>
-    pipe(disposable, addTo, createObservable);
+export const toObservable = <T>(): Function1<
+  DisposableLike,
+  ObservableLike<T>
+> => compose(addTo, createObservable);
 
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.

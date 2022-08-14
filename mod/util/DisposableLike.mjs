@@ -1,6 +1,6 @@
 /// <reference types="./DisposableLike.d.ts" />
 import { add as add$1, addIgnoringChildErrors as addIgnoringChildErrors$1, addTo as addTo$1, addToIgnoringChildErrors as addToIgnoringChildErrors$1, bindTo as bindTo$1, dispose as dispose$1, getException as getException$1, isDisposed as isDisposed$1, onDisposed as onDisposed$1, onComplete as onComplete$1, onError as onError$1 } from '../__internal__/util/__internal__DisposableLike.mjs';
-import { newInstance, pipe } from '../functions.mjs';
+import { newInstance, pipe, compose } from '../functions.mjs';
 import { createObservable } from '../rx.mjs';
 import '../util.mjs';
 
@@ -20,7 +20,7 @@ const toAbortSignal = (disposable) => {
     pipe(disposable, onDisposed(e => abortController.abort(e === null || e === void 0 ? void 0 : e.cause)));
     return abortController.signal;
 };
-const toObservable = () => (disposable) => pipe(disposable, addTo, createObservable);
+const toObservable = () => compose(addTo, createObservable);
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */

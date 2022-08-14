@@ -1,4 +1,4 @@
-import { Updater, Option, SideEffect1, SideEffect } from "../functions.mjs";
+import { Updater, Option, SideEffect1, SideEffect, Function1 } from "../functions.mjs";
 import { ObservableLike } from "../rx.mjs";
 import { DisposableLike, Exception, DisposableLike_exception, DisposableLike_isDisposed } from "../util.mjs";
 declare const add: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
@@ -17,7 +17,7 @@ declare const onDisposed: <T extends DisposableLike>(teardown: SideEffect1<Optio
 declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Updater<T>;
 declare const onError: <T extends DisposableLike>(teardown: SideEffect1<Exception>) => Updater<T>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-declare const toObservable: <T>() => (disposable: DisposableLike) => ObservableLike<T>;
+declare const toObservable: <T>() => Function1<DisposableLike, ObservableLike<T>>;
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
