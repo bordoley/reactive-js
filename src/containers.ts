@@ -21,6 +21,14 @@ export interface ContainerLike {
   readonly [ContainerLike_type]?: unknown;
 }
 
+export interface AsyncIterableLike<T = unknown>
+  extends ContainerLike,
+    AsyncIterable<T> {
+  readonly [ContainerLike_type]?: AsyncIterableLike<
+    this[typeof ContainerLike_T]
+  >;
+}
+
 export interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
   readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
 }
@@ -31,6 +39,12 @@ export interface ReadonlyArrayLike<T = unknown>
   readonly [ContainerLike_type]?: ReadonlyArrayLike<
     this[typeof ContainerLike_T]
   >;
+}
+
+export interface ReadonlySetLike<T = unknown>
+  extends ContainerLike,
+    ReadonlySet<T> {
+  readonly [ContainerLike_type]?: ReadonlySetLike<this[typeof ContainerLike_T]>;
 }
 
 export interface SequenceLike<T = unknown> extends ContainerLike {
