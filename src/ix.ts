@@ -14,9 +14,12 @@ import {
 import {
   Container,
   ContainerLike,
+  ContainerLike_T,
+  ContainerLike_type,
   ContainerOf,
   Empty,
   Generate,
+  StableContainerLike_state,
   StatefulContainerLike,
 } from "./containers";
 import { Factory, Function1, Updater, none, pipe } from "./functions";
@@ -47,14 +50,20 @@ export interface InteractiveContainerLike<
  */
 export interface EnumerableLike<T = unknown>
   extends InteractiveContainerLike<EnumeratorLike<T>> {
-  readonly TContainerOf?: EnumerableLike<this["T"]>;
-  readonly TStatefulContainerState?: EnumeratorLike<this["T"]>;
+  readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
+  readonly [StableContainerLike_state]?: EnumeratorLike<
+    this[typeof ContainerLike_T]
+  >;
 }
 export interface AsyncEnumerableLike<T = unknown>
   extends StreamableLike<void, T, AsyncEnumeratorLike<T>>,
     InteractiveContainerLike<AsyncEnumeratorLike<T>, SchedulerLike> {
-  readonly TContainerOf?: AsyncEnumerableLike<this["T"]>;
-  readonly TStatefulContainerState?: AsyncEnumeratorLike<this["T"]>;
+  readonly [ContainerLike_type]?: AsyncEnumerableLike<
+    this[typeof ContainerLike_T]
+  >;
+  readonly [StableContainerLike_state]?: AsyncEnumeratorLike<
+    this[typeof ContainerLike_T]
+  >;
 }
 
 export type ToAsyncEnumerable<

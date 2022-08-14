@@ -20,24 +20,10 @@
 
 ## Table of contents
 
-### Properties
-
-- [T](streaming.FlowableStreamLike.md#t)
-
 ### Methods
 
 - [[PauseableLike\_pause]](streaming.FlowableStreamLike.md#[pauseablelike_pause])
 - [[PauseableLike\_resume]](streaming.FlowableStreamLike.md#[pauseablelike_resume])
-
-## Properties
-
-### T
-
-• `Optional` `Readonly` **T**: `unknown`
-
-#### Inherited from
-
-StreamLike.T
 
 ## Methods
 

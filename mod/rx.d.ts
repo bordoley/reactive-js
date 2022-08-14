@@ -1,4 +1,4 @@
-import { StatefulContainerLike, ContainerOf, ContainerLike, Container, ContainerOperator, Defer, Empty, Generate, Never } from "./containers.mjs";
+import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StableContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator, Defer, Empty, Generate, Never } from "./containers.mjs";
 import { Function2, Factory, Function1, SideEffect1, Updater } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
 import { DisposableLike, SinkLike } from "./util.mjs";
@@ -8,10 +8,12 @@ interface ReactiveContainerLike<TSink extends DisposableLike> extends StatefulCo
     [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
 interface RunnableLike<T = unknown> extends ReactiveContainerLike<SinkLike<T>> {
-    readonly TContainerOf?: RunnableLike<this["T"]>;
-    readonly TStatefulContainerState?: SinkLike<this["T"]>;
+    readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
+    readonly [StableContainerLike_state]?: SinkLike<this[typeof ContainerLike_T]>;
 }
+/**  @ignore */
 declare const ObservableLike_isEnumerable: unique symbol;
+/**  @ignore */
 declare const ObservableLike_isRunnable: unique symbol;
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
@@ -19,17 +21,17 @@ declare const ObservableLike_isRunnable: unique symbol;
  * @noInheritDoc
  */
 interface ObservableLike<T = unknown> extends ReactiveContainerLike<ObserverLike<T>> {
-    readonly TStatefulContainerState?: ObserverLike<this["T"]>;
-    TContainerOf?: ObservableLike<this["T"]>;
+    readonly [StableContainerLike_state]?: ObserverLike<this[typeof ContainerLike_T]>;
+    readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
 }
 interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
-    TContainerOf?: RunnableObservableLike<this["T"]>;
+    readonly [ContainerLike_type]?: RunnableObservableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isRunnable]: true;
 }
 interface EnumerableObservableLike<T = unknown> extends RunnableObservableLike<T> {
-    TContainerOf?: EnumerableObservableLike<this["T"]>;
+    readonly [ContainerLike_type]?: EnumerableObservableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: true;
 }
 /** @ignore */

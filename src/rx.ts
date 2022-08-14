@@ -18,12 +18,15 @@ import {
 import {
   Container,
   ContainerLike,
+  ContainerLike_T,
+  ContainerLike_type,
   ContainerOf,
   ContainerOperator,
   Defer,
   Empty,
   Generate,
   Never,
+  StableContainerLike_state,
   StatefulContainerLike,
 } from "./containers";
 import {
@@ -58,16 +61,16 @@ export interface ReactiveContainerLike<TSink extends DisposableLike>
 
 export interface RunnableLike<T = unknown>
   extends ReactiveContainerLike<SinkLike<T>> {
-  readonly TContainerOf?: RunnableLike<this["T"]>;
-  readonly TStatefulContainerState?: SinkLike<this["T"]>;
+  readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
+  readonly [StableContainerLike_state]?: SinkLike<this[typeof ContainerLike_T]>;
 }
 
-// @ignore
+/**  @ignore */
 export const ObservableLike_isEnumerable = Symbol(
   "ObservableLike_isEnumerable",
 );
 
-// @ignore
+/**  @ignore */
 export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 
 /**
@@ -77,22 +80,28 @@ export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
  */
 export interface ObservableLike<T = unknown>
   extends ReactiveContainerLike<ObserverLike<T>> {
-  readonly TStatefulContainerState?: ObserverLike<this["T"]>;
-  TContainerOf?: ObservableLike<this["T"]>;
+  readonly [StableContainerLike_state]?: ObserverLike<
+    this[typeof ContainerLike_T]
+  >;
+  readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
 
   readonly [ObservableLike_isEnumerable]: boolean;
   readonly [ObservableLike_isRunnable]: boolean;
 }
 
 export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
-  TContainerOf?: RunnableObservableLike<this["T"]>;
+  readonly [ContainerLike_type]?: RunnableObservableLike<
+    this[typeof ContainerLike_T]
+  >;
 
   readonly [ObservableLike_isRunnable]: true;
 }
 
 export interface EnumerableObservableLike<T = unknown>
   extends RunnableObservableLike<T> {
-  TContainerOf?: EnumerableObservableLike<this["T"]>;
+  readonly [ContainerLike_type]?: EnumerableObservableLike<
+    this[typeof ContainerLike_T]
+  >;
 
   readonly [ObservableLike_isEnumerable]: true;
 }

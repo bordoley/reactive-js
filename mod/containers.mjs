@@ -1,4 +1,10 @@
 /// <reference types="./containers.d.ts" />
+/**  @ignore */
+const ContainerLike_T = Symbol("ContainerLike_T");
+/**  @ignore */
+const ContainerLike_type = Symbol("ContainerLike_type");
+/**  @ignore */
+const StableContainerLike_state = Symbol("StableContainerLike_state");
 const emptyReadonlyArray = 
 /*@__PURE__*/ (() => {
     const _empty = [];
@@ -19,4 +25,4 @@ const generateSequenceT = {
     generate: generateSequence,
 };
 
-export { emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
+export { ContainerLike_T, ContainerLike_type, StableContainerLike_state, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };

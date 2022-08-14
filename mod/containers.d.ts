@@ -1,47 +1,53 @@
 import { Option, Function1, Factory, Equality, Predicate, SideEffect1, Updater, Reducer } from "./functions.mjs";
 import { DisposableLike } from "./util.mjs";
+/**  @ignore */
+declare const ContainerLike_T: unique symbol;
+/**  @ignore */
+declare const ContainerLike_type: unique symbol;
 interface ContainerLike {
-    readonly T?: unknown;
-    readonly TContainerOf?: unknown;
+    readonly [ContainerLike_T]?: unknown;
+    readonly [ContainerLike_type]?: unknown;
 }
 interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
-    readonly TContainerOf?: IterableLike<this["T"]>;
+    readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
 }
 interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
-    readonly TContainerOf?: ReadonlyArrayLike<this["T"]>;
+    readonly [ContainerLike_type]?: ReadonlyArrayLike<this[typeof ContainerLike_T]>;
 }
 interface SequenceLike<T = unknown> extends ContainerLike {
-    readonly TContainerOf?: SequenceLike<this["T"]>;
+    readonly [ContainerLike_type]?: SequenceLike<this[typeof ContainerLike_T]>;
     (): Option<{
         readonly data: T;
         readonly next: SequenceLike<T>;
     }>;
 }
 interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike<T> {
-    readonly TContainerOf?: PromiseableLike<this["T"]>;
+    readonly [ContainerLike_type]?: PromiseableLike<this[typeof ContainerLike_T]>;
 }
+/**  @ignore */
+declare const StableContainerLike_state: unique symbol;
 interface StatefulContainerLike extends ContainerLike {
-    readonly TStatefulContainerState?: DisposableLike;
+    readonly [StableContainerLike_state]?: DisposableLike;
 }
 declare type ContainerOf<C extends ContainerLike, T> = C extends {
-    readonly TContainerOf?: unknown;
+    readonly [ContainerLike_type]?: unknown;
 } ? NonNullable<(C & {
-    readonly T: T;
-})["TContainerOf"]> : {
+    readonly [ContainerLike_T]: T;
+})[typeof ContainerLike_type]> : {
     readonly _C: C;
     readonly _T: () => T;
 };
 declare type StatefulContainerStateOf<C extends StatefulContainerLike, T> = C extends {
-    readonly TStatefulContainerState?: DisposableLike;
+    readonly [StableContainerLike_state]?: DisposableLike;
 } ? NonNullable<(C & {
-    readonly T: T;
-})["TStatefulContainerState"]> : {
+    readonly [ContainerLike_T]: T;
+})[typeof StableContainerLike_state]> : {
     readonly _C: C;
     readonly _T: () => T;
 };
 declare type ContainerOperator<C, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 declare type Container<C extends ContainerLike> = {
-    readonly TContainerOf?: C;
+    readonly ContainerLike_type?: C;
 };
 declare type Buffer<C extends ContainerLike> = Container<C> & {
     buffer: <T>(options?: {
@@ -288,4 +294,4 @@ declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
+export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StableContainerLike_state, StatefulContainerLike, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };

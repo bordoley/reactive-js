@@ -26,15 +26,14 @@
 
 ### Properties
 
-- [T](rx.MulticastObservableLike.md#t)
-- [TContainerOf](rx.MulticastObservableLike.md#tcontainerof)
-- [TStatefulContainerState](rx.MulticastObservableLike.md#tstatefulcontainerstate)
+- [[ContainerLike\_type]](rx.MulticastObservableLike.md#[containerlike_type])
 - [[DisposableLike\_exception]](rx.MulticastObservableLike.md#[disposablelike_exception])
 - [[DisposableLike\_isDisposed]](rx.MulticastObservableLike.md#[disposablelike_isdisposed])
 - [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
 - [[MulticastObservableLike\_replay]](rx.MulticastObservableLike.md#[multicastobservablelike_replay])
 - [[ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[observablelike_isrunnable])
+- [[StableContainerLike\_state]](rx.MulticastObservableLike.md#[stablecontainerlike_state])
 
 ### Methods
 
@@ -43,33 +42,13 @@
 
 ## Properties
 
-### T
+### [ContainerLike\_type]
 
-• `Optional` `Readonly` **T**: `unknown`
-
-#### Inherited from
-
-ObservableLike.T
-
-___
-
-### TContainerOf
-
-• `Optional` **TContainerOf**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[ContainerLike\_type]**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
 
 #### Inherited from
 
-[ObservableLike](rx.ObservableLike.md).[TContainerOf](rx.ObservableLike.md#tcontainerof)
-
-___
-
-### TStatefulContainerState
-
-• `Optional` `Readonly` **TStatefulContainerState**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
-
-#### Inherited from
-
-[ObservableLike](rx.ObservableLike.md).[TStatefulContainerState](rx.ObservableLike.md#tstatefulcontainerstate)
+[ObservableLike](rx.ObservableLike.md).[[ContainerLike_type]](rx.ObservableLike.md#[containerlike_type])
 
 ___
 
@@ -128,6 +107,16 @@ ___
 #### Inherited from
 
 [ObservableLike](rx.ObservableLike.md).[[ObservableLike_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])
+
+___
+
+### [StableContainerLike\_state]
+
+• `Optional` `Readonly` **[StableContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
+
+#### Inherited from
+
+[ObservableLike](rx.ObservableLike.md).[[StableContainerLike_state]](rx.ObservableLike.md#[stablecontainerlike_state])
 
 ## Methods
 

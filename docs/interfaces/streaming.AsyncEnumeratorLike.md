@@ -20,23 +20,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [T](streaming.AsyncEnumeratorLike.md#t)
-
 ### Methods
 
 - [[SourceLike\_move]](streaming.AsyncEnumeratorLike.md#[sourcelike_move])
-
-## Properties
-
-### T
-
-• `Optional` `Readonly` **T**: `unknown`
-
-#### Inherited from
-
-StreamLike.T
 
 ## Methods
 

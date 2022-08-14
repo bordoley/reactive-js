@@ -1,4 +1,4 @@
-import { StatefulContainerLike, ContainerLike, Container, ContainerOf, Empty, Generate } from "./containers.mjs";
+import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StableContainerLike_state, ContainerLike, Container, ContainerOf, Empty, Generate } from "./containers.mjs";
 import { Function1, Factory } from "./functions.mjs";
 import { SchedulerLike } from "./scheduling.mjs";
 import { StreamableLike, AsyncEnumeratorLike } from "./streaming.mjs";
@@ -12,12 +12,12 @@ interface InteractiveContainerLike<TSource extends DisposableLike, TCtx = void> 
  * Interface for iterating a Container of items.
  */
 interface EnumerableLike<T = unknown> extends InteractiveContainerLike<EnumeratorLike<T>> {
-    readonly TContainerOf?: EnumerableLike<this["T"]>;
-    readonly TStatefulContainerState?: EnumeratorLike<this["T"]>;
+    readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
+    readonly [StableContainerLike_state]?: EnumeratorLike<this[typeof ContainerLike_T]>;
 }
 interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T, AsyncEnumeratorLike<T>>, InteractiveContainerLike<AsyncEnumeratorLike<T>, SchedulerLike> {
-    readonly TContainerOf?: AsyncEnumerableLike<this["T"]>;
-    readonly TStatefulContainerState?: AsyncEnumeratorLike<this["T"]>;
+    readonly [ContainerLike_type]?: AsyncEnumerableLike<this[typeof ContainerLike_T]>;
+    readonly [StableContainerLike_state]?: AsyncEnumeratorLike<this[typeof ContainerLike_T]>;
 }
 declare type ToAsyncEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toAsyncEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;

@@ -1,4 +1,4 @@
-import { ContainerLike, Container, ContainerOf, ContainerOperator } from "./containers.mjs";
+import { ContainerLike, ContainerLike_type, ContainerLike_T, Container, ContainerOf, ContainerOperator } from "./containers.mjs";
 import { Updater, Function1, Reducer, Factory, Equality } from "./functions.mjs";
 import { MulticastObservableLike, ObservableLike } from "./rx.mjs";
 import { DispatcherLike, SchedulerLike } from "./scheduling.mjs";
@@ -23,7 +23,7 @@ declare type FlowMode = "resume" | "pause";
 interface FlowableStreamLike<T = unknown> extends StreamLike<FlowMode, T>, PauseableLike {
 }
 interface FlowableLike<T = unknown> extends StreamableLike<FlowMode, T, FlowableStreamLike<T>>, ContainerLike {
-    readonly TContainerOf?: FlowableLike<this["T"]>;
+    readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 declare type ToFlowable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toFlowable<T>(options?: TOptions): Function1<ContainerOf<C, T>, FlowableLike<T>>;
