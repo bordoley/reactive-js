@@ -8,11 +8,15 @@
 
 - **`ContainerLike`**
 
+  ↳ [`AsyncIterableLike`](containers.AsyncIterableLike.md)
+
   ↳ [`IterableLike`](containers.IterableLike.md)
 
   ↳ [`PromiseableLike`](containers.PromiseableLike.md)
 
   ↳ [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)
+
+  ↳ [`ReadonlySetLike`](containers.ReadonlySetLike.md)
 
   ↳ [`SequenceLike`](containers.SequenceLike.md)
 

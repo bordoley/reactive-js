@@ -8,11 +8,17 @@ interface ContainerLike {
     readonly [ContainerLike_T]?: unknown;
     readonly [ContainerLike_type]?: unknown;
 }
+interface AsyncIterableLike<T = unknown> extends ContainerLike, AsyncIterable<T> {
+    readonly [ContainerLike_type]?: AsyncIterableLike<this[typeof ContainerLike_T]>;
+}
 interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
     readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
 }
 interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
     readonly [ContainerLike_type]?: ReadonlyArrayLike<this[typeof ContainerLike_T]>;
+}
+interface ReadonlySetLike<T = unknown> extends ContainerLike, ReadonlySet<T> {
+    readonly [ContainerLike_type]?: ReadonlySetLike<this[typeof ContainerLike_T]>;
 }
 interface SequenceLike<T = unknown> extends ContainerLike {
     readonly [ContainerLike_type]?: SequenceLike<this[typeof ContainerLike_T]>;
@@ -291,4 +297,4 @@ declare const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyReadonlyArrayT: Empty<ReadonlyArrayLike>;
 declare const generateSequence: Generate<SequenceLike>["generate"];
 declare const generateSequenceT: Generate<SequenceLike>;
-export { Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromIterable, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
+export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromIterable, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, ReadonlySetLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Zip, emptyReadonlyArray, emptyReadonlyArrayT, generateSequence, generateSequenceT };
