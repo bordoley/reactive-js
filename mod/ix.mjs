@@ -1,16 +1,16 @@
 /// <reference types="./ix.d.ts" />
 import { disposableMixin } from './__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs';
-import { createInstanceFactory, clazz, props, __extends, init } from './__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, props, include, init } from './__internal__/util/__internal__Objects.mjs';
 import './containers.mjs';
 import { none, pipe } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
-import { f as dispose, i as isDisposed } from './DisposableLike-82e2991c.mjs';
+import { f as dispose, i as isDisposed } from './DisposableLike-f9476215.mjs';
 
 /** @ignore */
 const InteractiveContainerLike_interact = Symbol("InteractiveContainerLike_interact");
 const createEnumerable = /*@__PURE__*/ (() => {
-    return createInstanceFactory(clazz(function CreateEnumerable(instance, enumerate) {
+    return createInstanceFactory(mixin(function CreateEnumerable(instance, enumerate) {
         instance.enumerate = enumerate;
         return instance;
     }, props({
@@ -29,7 +29,7 @@ const createEnumerable = /*@__PURE__*/ (() => {
 })();
 const emptyEnumerable = /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
-    const createEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function EmptyEnumerator(instance) {
+    const createEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedEnumeratorMixin), function EmptyEnumerator(instance) {
         init(disposableMixin, instance);
         init(typedEnumeratorMixin, instance);
         return instance;
@@ -53,7 +53,7 @@ const emptyEnumerableT = {
 const generateEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    const createGenerateEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumerator), function GenerateEnumerator(instance, f, acc) {
+    const createGenerateEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedEnumerator), function GenerateEnumerator(instance, f, acc) {
         init(disposableMixin, instance);
         init(typedEnumerator, instance);
         instance.f = f;

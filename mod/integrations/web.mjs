@@ -1,11 +1,11 @@
 /// <reference types="./web.d.ts" />
 import { delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, newInstance, none, isEmpty, getLength, unsafeCast, isSome, raise, compose } from '../functions.mjs';
-import { e as createObservable, W as getDispatcher, k as onDisposed, B as dispatch, a0 as toAbortSignal, f as dispose, M as MulticastObservableLike_observerCount, H as MulticastObservableLike_replay, D as DispatcherLike_scheduler, I as getScheduler, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, l as DispatcherLike_dispatch, C as dispatchTo, R as ReactiveContainerLike_sinkInto, h as addTo } from '../DisposableLike-82e2991c.mjs';
+import { e as createObservable, W as getDispatcher, k as onDisposed, B as dispatch, a0 as toAbortSignal, f as dispose, M as MulticastObservableLike_observerCount, H as MulticastObservableLike_replay, D as DispatcherLike_scheduler, I as getScheduler, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, l as DispatcherLike_dispatch, C as dispatchTo, R as ReactiveContainerLike_sinkInto, h as addTo } from '../DisposableLike-f9476215.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
 import { map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
@@ -109,7 +109,7 @@ const windowLocation =
         instance.historyCounter++;
         history.pushState({ counter: instance.historyCounter, title }, "", uri);
     };
-    const createWindowLocationStream = createInstanceFactory(clazz(__extends(delegatingDisposableMixin), function WindowLocationStream(instance, delegate) {
+    const createWindowLocationStream = createInstanceFactory(mixin(include(delegatingDisposableMixin), function WindowLocationStream(instance, delegate) {
         init(delegatingDisposableMixin, instance, delegate);
         instance.delegate = delegate;
         instance.historyCounter = -1;

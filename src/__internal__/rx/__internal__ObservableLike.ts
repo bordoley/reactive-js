@@ -89,10 +89,10 @@ import {
 import { MutableRefLike_current } from "../util/__internal__MutableRefLike";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../util/__internal__Objects";
 import { catchErrorSinkMixin } from "../util/__internal__Sinks";
@@ -185,8 +185,8 @@ export const createCatchError = <C extends ObservableLike>(
     const typedObserverMixin = observerMixin<T>();
 
     return createInstanceFactory(
-      clazz(
-        __extends(typedCatchErrorSink, typedObserverMixin),
+      mixin(
+        include(typedCatchErrorSink, typedObserverMixin),
         function CatchErrorObserver(
           instance: unknown,
           delegate: ObserverLike<T>,
@@ -253,8 +253,8 @@ export const createMergeAll = <C extends ObservableLike>(
     };
 
     return createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedObserverMixin),
+      mixin(
+        include(disposableMixin, typedObserverMixin),
         function Observer(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -394,8 +394,8 @@ export const createSwitchAll = <C extends ObservableLike>(
     }
 
     return createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedObserverMixin),
+      mixin(
+        include(disposableMixin, typedObserverMixin),
         function SwitchAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -614,8 +614,8 @@ export const zipWithLatestFrom: <TA, TB, T>(
     };
 
     return createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedObserverMixin),
+      mixin(
+        include(disposableMixin, typedObserverMixin),
         function ZipWithLatestFromObserer(
           instance: Pick<ObserverLike, typeof SinkLike_notify> &
             Mutable<TProperties>,

@@ -43,10 +43,10 @@ import { disposableMixin } from "../util/__internal__Disposables";
 import {
   Mixin1,
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../util/__internal__Objects";
 import {
@@ -83,7 +83,7 @@ const createObserverDispatcher = (<T>() => {
   };
 
   return createInstanceFactory(
-    clazz(
+    mixin(
       disposableMixin,
       function ObserverDispatcher(
         instance: Pick<
@@ -162,7 +162,7 @@ export const observerMixin: <T>() => Mixin1<
   };
 
   return pipe(
-    clazz(
+    mixin(
       function ObserverMixin(
         instance: Pick<ObserverLike, typeof ObserverLike_dispatcher> &
           Mutable<TProperties>,
@@ -205,8 +205,8 @@ export const createDelegatingObserver: <T>(
   };
 
   return createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedObserverMixin),
+    mixin(
+      include(disposableMixin, typedObserverMixin),
       function DelegatingObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -239,8 +239,8 @@ export const createDistinctUntilChangedObserver: <T>(
   const typedObserverMixin = observerMixin<T>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedDistinctUntilChangedSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedDistinctUntilChangedSinkMixin),
       function DistinctUntilChangedObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -263,8 +263,8 @@ export const createForEachObserver: <T>(
   const typedObserverMixin = observerMixin<T>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedForEachSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedForEachSinkMixin),
       function ForEachObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -287,8 +287,8 @@ export const createKeepObserver: <T>(
   const typedObserverMixin = observerMixin<T>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedKeepSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedKeepSinkMixin),
       function KeepObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -311,8 +311,8 @@ export const createMapObserver: <TA, TB>(
   const typedObserverMixin = observerMixin<TA>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedMapSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedMapSinkMixin),
       function MapObserver(
         instance: unknown,
         delegate: ObserverLike<TB>,
@@ -332,8 +332,8 @@ export const createObserver: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
     const typedObserverMixin = observerMixin<T>();
 
     return createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedObserverMixin),
+      mixin(
+        include(disposableMixin, typedObserverMixin),
         function Observer(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
           scheduler: SchedulerLike,
@@ -358,8 +358,8 @@ export const createPairwiseObserver: <T>(
   const typedObserverMixin = observerMixin<T>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedPairwiseSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedPairwiseSinkMixin),
       function PairwiseObserver(
         instance: unknown,
         delegate: ObserverLike<readonly [T, T]>,
@@ -383,8 +383,8 @@ export const createScanObserver: <T, TAcc>(
   const typedObserverMixin = observerMixin<T>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedScanSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedScanSinkMixin),
       function ScanObserver(
         instance: unknown,
         delegate: ObserverLike<TAcc>,
@@ -408,8 +408,8 @@ export const createSkipFirstObserver: <T>(
   const typedObserverMixin = observerMixin<T>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedSkipFirstSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedSkipFirstSinkMixin),
       function SkipFirstObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -432,8 +432,8 @@ export const createTakeFirstObserver: <T>(
   const typedObserverMixin = observerMixin<T>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedTakeFirstSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedTakeFirstSinkMixin),
       function TakeFirstObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -457,8 +457,8 @@ export const createTakeWhileObserver: <T>(
   const typedObserverMixin = observerMixin<T>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedTakeWhileSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedTakeWhileSinkMixin),
       function TakeWhileObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -482,8 +482,8 @@ export const createThrowIfEmptyObserver: <T>(
   const typedObserverMixin = observerMixin<T>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedThrowIfEmptySinkMixin),
+    mixin(
+      include(typedObserverMixin, typedThrowIfEmptySinkMixin),
       function ThrowIfEmptyObserver(
         instance: unknown,
         delegate: ObserverLike<T>,

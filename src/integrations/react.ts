@@ -21,10 +21,10 @@ import {
 import { getDelay } from "../__internal__/__internal__optionParsing";
 import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
 import {
@@ -138,8 +138,8 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
   };
 
   return createInstanceFactory(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function ReactPriorityScheduler(
         instance: Omit<
           PrioritySchedulerLike,

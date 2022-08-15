@@ -1,7 +1,7 @@
 /// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
 import { compose, isTrue, pipeUnsafe, newInstance, pipe, partial, isSome, getLength, none, isEmpty } from '../../functions.mjs';
-import { O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, R as ReactiveContainerLike_sinkInto, g as getScheduler, c as createSubject, b as createEnumerableObservable, d as createRunnableObservable, e as createObservable } from '../../DisposableLike-82e2991c.mjs';
+import { O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, R as ReactiveContainerLike_sinkInto, g as getScheduler, c as createSubject, b as createEnumerableObservable, d as createRunnableObservable, e as createObservable } from '../../DisposableLike-f9476215.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { publishTo, publish } from '../../rx/SubjectLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
@@ -12,7 +12,7 @@ import { observerMixin, createDistinctUntilChangedObserver, createForEachObserve
 import { addTo, onComplete, isDisposed, dispose, bindTo, addToIgnoringChildErrors } from '../util/__internal__DisposableLike.mjs';
 import { disposableMixin, createDisposableRef, disposed } from '../util/__internal__Disposables.mjs';
 import { MutableRefLike_current } from '../util/__internal__MutableRefLike.mjs';
-import { createInstanceFactory, clazz, __extends, init, props } from '../util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../util/__internal__Objects.mjs';
 import { catchErrorSinkMixin } from '../util/__internal__Sinks.mjs';
 import { createOnSink } from './__internal__ReactiveContainerLike.mjs';
 
@@ -56,7 +56,7 @@ const createCatchError = (lift) => {
     const createCatchErrorObserver = (() => {
         const typedCatchErrorSink = catchErrorSinkMixin();
         const typedObserverMixin = observerMixin();
-        return createInstanceFactory(clazz(__extends(typedCatchErrorSink, typedObserverMixin), function CatchErrorObserver(instance, delegate, errorHandler) {
+        return createInstanceFactory(mixin(include(typedCatchErrorSink, typedObserverMixin), function CatchErrorObserver(instance, delegate, errorHandler) {
             init(typedCatchErrorSink, instance, delegate, errorHandler);
             init(typedObserverMixin, instance, getScheduler(delegate));
             return instance;
@@ -79,7 +79,7 @@ const createMergeAll = (lift) => {
                 }
             }
         };
-        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
+        return createInstanceFactory(mixin(include(disposableMixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;
@@ -144,7 +144,7 @@ const createSwitchAll = (lift) => {
                 pipe(this.delegate, dispose());
             }
         }
-        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
+        return createInstanceFactory(mixin(include(disposableMixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;
@@ -236,7 +236,7 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
                 pipe(observer.delegate, notify(result));
             }
         };
-        return createInstanceFactory(clazz(__extends(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
+        return createInstanceFactory(mixin(include(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;

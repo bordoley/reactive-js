@@ -2,10 +2,10 @@
 import { hasDelay, getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
-import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
-import { i as isDisposed, f as dispose, _ as __yield, g as getScheduler, s as schedule, h as addTo, d as createRunnableObservable, b as createEnumerableObservable, j as createRunnable } from '../DisposableLike-82e2991c.mjs';
+import { i as isDisposed, f as dispose, _ as __yield, g as getScheduler, s as schedule, h as addTo, d as createRunnableObservable, b as createEnumerableObservable, j as createRunnable } from '../DisposableLike-f9476215.mjs';
 import { SourceLike_move, EnumeratorLike_current, SinkLike_notify } from '../util.mjs';
 
 const empty = /*@__PURE__*/ (() => {
@@ -62,7 +62,7 @@ const createFromArray = (factory) => (options = {}) => values => {
 };
 const toEnumerable = /*@__PURE__*/ (() => {
     const typedEnumerator = enumeratorMixin();
-    const createReadonlyArrayEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumerator), function ReadonlyArrayEnumerator(instance, array, start, count) {
+    const createReadonlyArrayEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedEnumerator), function ReadonlyArrayEnumerator(instance, array, start, count) {
         init(disposableMixin, instance);
         init(typedEnumerator, instance);
         instance.array = array;

@@ -47,10 +47,10 @@ import {
   Mixin2,
   Mixin3,
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "./__internal__Objects";
 
@@ -66,8 +66,8 @@ export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
   };
 
   return createInstanceFactory(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function EnumeratorSink(
         instance: Pick<
           SinkLike<T> & EnumeratorLike<T>,
@@ -119,8 +119,8 @@ export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
 
 export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function CreateSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
       ): SinkLike<T> {
@@ -150,8 +150,8 @@ export const delegatingSinkMixin: <T>() => Mixin1<
   };
 
   return returns(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function DelegatingSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -206,8 +206,8 @@ export const bufferSinkMixin: <
     [BufferSink_private_buffer]: T[];
   };
 
-  return clazz(
-    __extends(disposableMixin),
+  return mixin(
+    include(disposableMixin),
     function BufferSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
@@ -281,8 +281,8 @@ export const catchErrorSinkMixin: <
     };
 
     return returns(
-      clazz(
-        __extends(disposableMixin),
+      mixin(
+        include(disposableMixin),
         function CatchErrorSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
@@ -347,8 +347,8 @@ export const decodeWithCharsetSinkMixin: <
     readonly [DecodeWithCharsetSink_private_textDecoder]: TextDecoder;
   };
 
-  return clazz(
-    __extends(disposableMixin),
+  return mixin(
+    include(disposableMixin),
     function DecodeWithCharsetSink(
       instance: Pick<SinkLike<ArrayBuffer>, typeof SinkLike_notify> &
         Mutable<TProperties>,
@@ -418,8 +418,8 @@ export const distinctUntilChangedSinkMixin: <T>() => Mixin2<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function DistinctUntilChangedSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -474,8 +474,8 @@ export const everySatisfySinkMixin: <
 ) => {
   const typedSatisfySinkMixin = satisfySinkMixin<C, TSink, T>(fromArray, true);
 
-  return clazz(
-    __extends(typedSatisfySinkMixin),
+  return mixin(
+    include(typedSatisfySinkMixin),
     function EverySatisfySink(
       instance: unknown,
       delegate: TSink,
@@ -505,8 +505,8 @@ export const forEachSinkMixin: <T>() => Mixin2<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function ForEachSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -547,8 +547,8 @@ export const keepSinkMixin: <T>() => Mixin2<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function KeepSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -590,8 +590,8 @@ export const mapSinkMixin: <TA, TB>() => Mixin2<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function MapSink(
         instance: Pick<SinkLike<TA>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -633,8 +633,8 @@ export const pairwiseSinkMixin: <T>() => Mixin1<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function PairwiseSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -694,8 +694,8 @@ export const reduceSinkMixin: <
     [ReduceSink_private_acc]: TAcc;
   };
 
-  return clazz(
-    __extends(disposableMixin),
+  return mixin(
+    include(disposableMixin),
     function ReduceSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
@@ -768,8 +768,8 @@ const satisfySinkMixin: <
     readonly [SatisfySink_private_predicate]: Predicate<T>;
   };
 
-  return clazz(
-    __extends(disposableMixin),
+  return mixin(
+    include(disposableMixin),
     function SatisfySink(
       instance: Mutable<TProperties> &
         Pick<SinkLike<T>, typeof SinkLike_notify>,
@@ -822,8 +822,8 @@ export const scanSinkMixin: <T, TAcc>() => Mixin3<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function ScanSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -882,8 +882,8 @@ export const skipFirstSinkMixin: <T>() => Mixin2<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function SkipFirstSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -932,8 +932,8 @@ export const someSatisfySinkMixin: <
 ) => {
   const typedSatisfySinkMixin = satisfySinkMixin<C, TSink, T>(fromArray, false);
 
-  return clazz(
-    __extends(typedSatisfySinkMixin),
+  return mixin(
+    include(typedSatisfySinkMixin),
     function EverySatisfySink(
       instance: unknown,
       delegate: TSink,
@@ -963,8 +963,8 @@ export const takeFirstSinkMixin: <T>() => Mixin2<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function TakeFirstSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -1028,8 +1028,8 @@ export const takeLastSinkMixin: <
     readonly [TakeLastSink_last]: T[];
   };
 
-  return clazz(
-    __extends(disposableMixin),
+  return mixin(
+    include(disposableMixin),
     function TakeLastSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
@@ -1091,8 +1091,8 @@ export const takeWhileSinkMixin: <T>() => Mixin3<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function TakeWhileSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -1146,8 +1146,8 @@ export const throwIfEmptySinkMixin: <T>() => Mixin2<
   };
 
   return returns(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function ThrowIfEmptySink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,

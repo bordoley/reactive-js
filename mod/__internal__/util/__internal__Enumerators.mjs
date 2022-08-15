@@ -2,13 +2,13 @@
 import { pipe, none, unsafeCast, raise, returns } from '../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../util.mjs';
 import { isDisposed } from './__internal__DisposableLike.mjs';
-import { clazz, props } from './__internal__Objects.mjs';
+import { mixin, props } from './__internal__Objects.mjs';
 
 const enumeratorMixin = 
 /*@__PURE__*/ (() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");
     const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
-    return pipe(clazz(function EnumeratorMixin(instance) {
+    return pipe(mixin(function EnumeratorMixin(instance) {
         instance[Enumerator_private_hasCurrent] = false;
         return instance;
     }, props({

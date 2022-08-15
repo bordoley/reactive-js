@@ -31,10 +31,10 @@ import {
   Mixin,
   Mixin1,
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "./__internal__Objects";
 
@@ -49,7 +49,7 @@ export const delegatingDisposableMixin: Mixin1<DisposableLike, DisposableLike> =
       readonly [DelegatingDisposable_private_delegate]: DisposableLike;
     };
 
-    return clazz(
+    return mixin(
       function DelegatingDisposableMixin(
         instance: Pick<
           DisposableLike,
@@ -126,7 +126,7 @@ export const disposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
     readonly [Disposable_private_disposables]: Set<DisposableOrTeardown>;
   };
 
-  return clazz(
+  return mixin(
     function DisposableMixin(
       instance: Pick<
         DisposableLike,
@@ -221,7 +221,7 @@ export const disposableRefMixin: <
   };
 
   return pipe(
-    clazz(
+    mixin(
       function DisposableRef(
         instance: Pick<
           DisposableRefLike<TDisposable>,
@@ -267,8 +267,8 @@ export const createDisposableRef: <TDisposable extends DisposableLike>(
   const typedDisposableRefMixin = disposableRefMixin<TDisposable>();
 
   return createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedDisposableRefMixin),
+    mixin(
+      include(disposableMixin, typedDisposableRefMixin),
       function DisposableRef(
         instance: unknown,
         initialValue: TDisposable,

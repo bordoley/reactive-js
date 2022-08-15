@@ -15,10 +15,10 @@ import {
 import {
   Mixin1,
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
 import {
@@ -123,7 +123,7 @@ const createAsyncEnumerable: <T>(
   };
 
   return createInstanceFactory(
-    clazz(
+    mixin(
       function AsyncEnumerable(
         instance: Pick<
           AsyncEnumerableLike<T>,
@@ -170,8 +170,8 @@ const createLiftedAsyncEnumerator = (<T>() => {
   };
 
   return createInstanceFactory(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function LiftedAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<T>,
@@ -531,7 +531,7 @@ const delegatingAsyncEnumerator: <T>() => Mixin1<
   >;
 
   return pipe(
-    clazz(
+    mixin(
       function DelegatingAsyncEnumerator(
         instance: Mutable<TProperties> & TReturn,
         delegate: AsyncEnumeratorLike<T>,
@@ -568,8 +568,8 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   };
 
   const createKeepAsyncEnumerator = createInstanceFactory(
-    clazz(
-      __extends(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+    mixin(
+      include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
       function KeepAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<T>,
@@ -638,8 +638,8 @@ export const map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
   };
 
   const createMapAsyncEnumerator = createInstanceFactory(
-    clazz(
-      __extends(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+    mixin(
+      include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
       function MapAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TB>,
@@ -701,8 +701,8 @@ export const scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
   };
 
   const createScanAsyncEnumerator = createInstanceFactory(
-    clazz(
-      __extends(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+    mixin(
+      include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
       function ScanAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TAcc>,
@@ -764,8 +764,8 @@ export const scanAsync: ScanAsync<
   };
 
   const creatScanAsyncAsyncEnumerator = createInstanceFactory(
-    clazz(
-      __extends(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+    mixin(
+      include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
       function ScanAsyncAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TAcc>,
@@ -828,8 +828,8 @@ export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
     };
 
     const createTakeWhileAsyncEnumerator = createInstanceFactory(
-      clazz(
-        __extends(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+      mixin(
+        include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
         function TakeWhileAsyncEnumerator(
           instance: Pick<
             AsyncEnumeratorLike<T>,

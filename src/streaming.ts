@@ -8,10 +8,10 @@ import { delegatingDisposableMixin } from "./__internal__/util/__internal__Dispo
 import {
   Mixin3,
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "./__internal__/util/__internal__Objects";
 import {
@@ -125,8 +125,8 @@ const streamMixin: <TReq, T>() => Mixin3<
   };
 
   return returns(
-    clazz(
-      __extends(delegatingDisposableMixin),
+    mixin(
+      include(delegatingDisposableMixin),
       function Stream(
         instance: Pick<
           StreamLike<TReq, T>,
@@ -222,8 +222,8 @@ export const createAsyncEnumerator = /*@__PURE__*/ (() => {
   ) => AsyncEnumeratorLike<T> = (<T>() => {
     const typedStreamMixin = streamMixin<void, T>();
     return createInstanceFactory(
-      clazz(
-        __extends(typedStreamMixin),
+      mixin(
+        include(typedStreamMixin),
         function AsyncEnumerator(
           instance: Pick<SourceLike, typeof SourceLike_move>,
           op: ContainerOperator<ObservableLike, void, T>,

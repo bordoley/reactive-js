@@ -2,11 +2,11 @@
 import { createRepeatOperator } from '../__internal__/containers/__internal__ContainerLike.mjs';
 import { reactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
 import { createOnSink } from '../__internal__/rx/__internal__ReactiveContainerLike.mjs';
-import { createInstanceFactory, clazz, __extends, init } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init } from '../__internal__/util/__internal__Objects.mjs';
 import { bufferSinkMixin, catchErrorSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/__internal__Sinks.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeUnsafe, newInstance, pipe, partial, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
-import { R as ReactiveContainerLike_sinkInto, K as bindTo, h as addTo, f as dispose, j as createRunnable, i as isDisposed } from '../DisposableLike-82e2991c.mjs';
+import { R as ReactiveContainerLike_sinkInto, K as bindTo, h as addTo, f as dispose, j as createRunnable, i as isDisposed } from '../DisposableLike-f9476215.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../util.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
 
@@ -49,7 +49,7 @@ const concatT = {
 };
 const concatAll = /*@__PURE__*/ (() => {
     const typedDelegatingSinkMixin = delegatingSinkMixin();
-    return pipeLazy(createInstanceFactory(clazz(__extends(typedDelegatingSinkMixin), function RunnableConcatAll(instance, delegate) {
+    return pipeLazy(createInstanceFactory(mixin(include(typedDelegatingSinkMixin), function RunnableConcatAll(instance, delegate) {
         init(typedDelegatingSinkMixin, instance, delegate);
         pipe(instance, bindTo(delegate));
         return instance;

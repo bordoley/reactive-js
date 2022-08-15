@@ -1,13 +1,13 @@
 /// <reference types="./IterableLike.d.ts" />
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
-import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { compose, none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { fromEnumerable } from '../ix/AsyncEnumerableLike.mjs';
 import { toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
-import { i as isDisposed, f as dispose } from '../DisposableLike-82e2991c.mjs';
+import { i as isDisposed, f as dispose } from '../DisposableLike-f9476215.mjs';
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
@@ -21,7 +21,7 @@ const toAsyncEnumerableT = {
 const toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedEnumeratorMixin = enumeratorMixin();
-    const createIterableEnumerator = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function IteratorEnumerator(instance, iterator) {
+    const createIterableEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedEnumeratorMixin), function IteratorEnumerator(instance, iterator) {
         init(disposableMixin, instance);
         init(typedEnumeratorMixin, instance);
         instance.iterator = iterator;

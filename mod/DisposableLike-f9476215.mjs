@@ -2,7 +2,7 @@ import { addTo as addTo$1, onDisposed as onDisposed$1, dispose as dispose$1, add
 import { disposableMixin, disposableRefMixin, createDisposable, disposed as disposed$1 } from './__internal__/util/__internal__Disposables.mjs';
 import { pipe, unsafeCast, none, isSome, isNone, raise, newInstance, max, compose, getLength, pipeLazy, ignore } from './functions.mjs';
 import { getDelay, hasDelay } from './__internal__/__internal__optionParsing.mjs';
-import { createInstanceFactory, clazz, __extends, init, props } from './__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init, props } from './__internal__/util/__internal__Objects.mjs';
 import './containers.mjs';
 import { MAX_SAFE_INTEGER } from './__internal__/__internal__env.mjs';
 import { SchedulerLike_inContinuation as SchedulerLike_inContinuation$1, SchedulerLike_now as SchedulerLike_now$1, getCurrentTime as getCurrentTime$1, isInContinuation as isInContinuation$1 } from './__internal__/__internal__scheduling.mjs';
@@ -61,7 +61,7 @@ const createHostScheduler = /*@__PURE__*/ (() => {
         run(continuation);
         scheduler[SchedulerLike_inContinuation] = false;
     };
-    const createHostSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin), function HostScheduler(instance, yieldInterval) {
+    const createHostSchedulerInstance = createInstanceFactory(mixin(include(disposableMixin), function HostScheduler(instance, yieldInterval) {
         init(disposableMixin, instance);
         instance.yieldInterval = yieldInterval;
         return instance;
@@ -123,7 +123,7 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         return diff;
     };
     const typedEnumeratorMixin = enumeratorMixin();
-    const createVirtualTimeSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+    const createVirtualTimeSchedulerInstance = createInstanceFactory(mixin(include(disposableMixin, typedEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
         init(disposableMixin, instance);
         instance.maxMicroTaskTicks = maxMicroTaskTicks;
         instance.taskQueue = createPriorityQueue(comparator);
@@ -218,7 +218,7 @@ class YieldError {
 }
 let currentScheduler = none;
 const createContinuation = /*@__PURE__*/ (() => {
-    return createInstanceFactory(clazz(__extends(disposableMixin), function Continuation(instance, scheduler, f) {
+    return createInstanceFactory(mixin(include(disposableMixin), function Continuation(instance, scheduler, f) {
         init(disposableMixin, instance);
         instance.scheduler = scheduler;
         instance.f = f;
@@ -353,7 +353,7 @@ const createQueueScheduler =
     };
     const typedDisposableRefMixin = disposableRefMixin();
     const typedEnumeratorMixin = enumeratorMixin();
-    return createInstanceFactory(clazz(__extends(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
+    return createInstanceFactory(mixin(include(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
         init(disposableMixin, instance);
         init(typedEnumeratorMixin, instance);
         init(typedDisposableRefMixin, instance, disposed);
@@ -454,7 +454,7 @@ const MulticastObservableLike_replay = Symbol("MulticastObservableLike_replay");
 /** @ignore */
 const SubjectLike_publish = Symbol("SubjectLike_publish");
 const createObservableImpl = /*@__PURE__*/ (() => {
-    return createInstanceFactory(clazz(function CreateObservable(instance, f, isEnumerable, isRunnable) {
+    return createInstanceFactory(mixin(function CreateObservable(instance, f, isEnumerable, isRunnable) {
         instance.f = f;
         instance[ObservableLike_isEnumerable] = isEnumerable;
         instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
@@ -478,7 +478,7 @@ const createEnumerableObservable = (f) => createObservableImpl(f, true, true);
 const createObservable = (f) => createObservableImpl(f, false, false);
 const createRunnableObservable = (f) => createObservableImpl(f, false, true);
 const createRunnable = /*@__PURE__*/ (() => {
-    return createInstanceFactory(clazz(function Runnable(instance, run) {
+    return createInstanceFactory(mixin(function Runnable(instance, run) {
         instance.run = run;
         return instance;
     }, props({
@@ -496,7 +496,7 @@ const createRunnable = /*@__PURE__*/ (() => {
     }));
 })();
 const createSubject = /*@__PURE__*/ (() => {
-    const createSubjectInstance = createInstanceFactory(clazz(__extends(disposableMixin), function Subject(instance, replay) {
+    const createSubjectInstance = createInstanceFactory(mixin(include(disposableMixin), function Subject(instance, replay) {
         init(disposableMixin, instance);
         instance[MulticastObservableLike_replay] = replay;
         instance.observers = newInstance(Set);

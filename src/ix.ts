@@ -5,10 +5,10 @@ import {
 } from "./__internal__/util/__internal__Enumerators";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "./__internal__/util/__internal__Objects";
 import {
@@ -92,7 +92,7 @@ export const createEnumerable: <T>(
   };
 
   return createInstanceFactory(
-    clazz(
+    mixin(
       function CreateEnumerable(
         instance: Pick<
           EnumerableLike<T>,
@@ -131,8 +131,8 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
 >() => {
   const typedEnumeratorMixin = enumeratorMixin<T>();
   const createEnumerator = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedEnumeratorMixin),
+    mixin(
+      include(disposableMixin, typedEnumeratorMixin),
       function EmptyEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
       ): EnumeratorLike<T> {
@@ -170,8 +170,8 @@ export const generateEnumerable: Generate<EnumerableLike>["generate"] =
     type TProperties = { readonly f: Updater<T> };
 
     const createGenerateEnumerator = createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedEnumerator),
+      mixin(
+        include(disposableMixin, typedEnumerator),
         function GenerateEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,

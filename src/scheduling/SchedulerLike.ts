@@ -25,10 +25,10 @@ import {
 import { MutableRefLike_current } from "../__internal__/util/__internal__MutableRefLike";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
 import {
@@ -108,8 +108,8 @@ const createContinuation: Function2<
   };
 
   return createInstanceFactory(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function Continuation(
         instance: Pick<ContinuationLike, typeof ContinuationLike_run> &
           Mutable<TProperties>,
@@ -347,12 +347,8 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     };
 
     return createInstanceFactory(
-      clazz(
-        __extends(
-          disposableMixin,
-          typedEnumeratorMixin,
-          typedDisposableRefMixin,
-        ),
+      mixin(
+        include(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin),
         function QueueScheduler(
           instance: Pick<
             QueueSchedulerLike,

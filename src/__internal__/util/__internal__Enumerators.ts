@@ -7,7 +7,7 @@ import {
   SourceLike_move,
 } from "../../util";
 import { isDisposed } from "./__internal__DisposableLike";
-import { Mixin, clazz, props } from "./__internal__Objects";
+import { Mixin, mixin, props } from "./__internal__Objects";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
@@ -31,7 +31,7 @@ export const enumeratorMixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
     };
 
     return pipe(
-      clazz(
+      mixin(
         function EnumeratorMixin(
           instance: Pick<
             EnumeratorLike<T>,
