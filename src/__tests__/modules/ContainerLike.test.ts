@@ -4,7 +4,6 @@ import {
   test,
   testModule,
 } from "../../__internal__/__internal__testing";
-import { emptyReadonlyArray } from "../../containers";
 import {
   concatMap,
   concatWith,
@@ -16,7 +15,10 @@ import {
   zipWith,
 } from "../../containers/ContainerLike";
 import { toEnumerable as iterableToEnumerable } from "../../containers/IterableLike";
-import { toEnumerable } from "../../containers/ReadonlyArrayLike";
+import {
+  empty as emptyReadonlyArray,
+  toEnumerable,
+} from "../../containers/ReadonlyArrayLike";
 import { arrayEquality, none, pipe, pipeLazy } from "../../functions";
 import { EnumerableLike } from "../../ix";
 import {

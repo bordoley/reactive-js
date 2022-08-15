@@ -93,7 +93,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`SideEffect`](functions.md#sideeffect) \| [`ContinuationLike`](../interfaces/util.ContinuationLike.md) |
+| `f` | [`ContinuationLike`](../interfaces/util.ContinuationLike.md) \| [`SideEffect`](functions.md#sideeffect) |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 

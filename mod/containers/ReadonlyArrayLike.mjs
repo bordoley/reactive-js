@@ -5,12 +5,16 @@ import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mj
 import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
-import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
-import { getScheduler } from '../scheduling/ObserverLike.mjs';
-import { __yield, schedule } from '../scheduling/SchedulerLike.mjs';
+import { i as isDisposed, f as dispose, _ as __yield, g as getScheduler, s as schedule, h as addTo, d as createRunnableObservable, b as createEnumerableObservable, j as createRunnable } from '../DisposableLike-82e2991c.mjs';
 import { SourceLike_move, EnumeratorLike_current, SinkLike_notify } from '../util.mjs';
-import { isDisposed, dispose, addTo } from '../util/DisposableLike.mjs';
 
+const empty = /*@__PURE__*/ (() => {
+    const _empty = [];
+    return () => _empty;
+})();
+const emptyT = {
+    empty,
+};
 const every = (predicate) => arr => arr.every(predicate);
 const forEach = (effect) => arr => {
     arr.forEach(effect);
@@ -149,4 +153,4 @@ const toSequenceT = {
     toSequence,
 };
 
-export { every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, toSequence, toSequenceT };
+export { empty, emptyT, every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, toSequence, toSequenceT };

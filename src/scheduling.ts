@@ -40,9 +40,9 @@ import {
   PauseableLike,
   SinkLike,
   SourceLike_move,
-  createDisposable,
 } from "./util";
 import { run } from "./util/ContinuationLike";
+import { create as createDisposable } from "./util/DisposableLike";
 import { getCurrent, move } from "./util/EnumeratorLike";
 
 /** @ignore */

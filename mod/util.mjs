@@ -1,17 +1,12 @@
 /// <reference types="./util.d.ts" />
-import { DisposableLike_add as DisposableLike_add$1, DisposableLike_dispose as DisposableLike_dispose$1, DisposableLike_exception as DisposableLike_exception$1, DisposableLike_isDisposed as DisposableLike_isDisposed$1 } from './__internal__/util/__internal__DisposableLike.mjs';
-import { createDisposable as createDisposable$1, disposed as disposed$1 } from './__internal__/util/__internal__Disposables.mjs';
-
 /** @ignore */
-const DisposableLike_add = DisposableLike_add$1;
+const DisposableLike_add = Symbol("DisposableLike_add");
 /** @ignore */
-const DisposableLike_dispose = DisposableLike_dispose$1;
+const DisposableLike_dispose = Symbol("DisposableLike_dispose");
 /** @ignore */
-const DisposableLike_exception = DisposableLike_exception$1;
+const DisposableLike_exception = Symbol("DisposableLike_exception");
 /** @ignore */
-const DisposableLike_isDisposed = DisposableLike_isDisposed$1;
-const createDisposable = () => createDisposable$1();
-const disposed = disposed$1;
+const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 /** @ignore */
 const PauseableLike_pause = Symbol("PausableLike_pause");
 /** @ignore */
@@ -27,4 +22,4 @@ const EnumeratorLike_current = Symbol("EnumeratorLike_current");
 /** @ignore */
 const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
 
-export { ContinuationLike_run, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, PauseableLike_pause, PauseableLike_resume, SinkLike_notify, SourceLike_move, createDisposable, disposed };
+export { ContinuationLike_run, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, PauseableLike_pause, PauseableLike_resume, SinkLike_notify, SourceLike_move };

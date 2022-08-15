@@ -2,13 +2,10 @@
 import { ignoreElements, startWith } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { compose, pipe } from '../functions.mjs';
-import { createObservable } from '../rx.mjs';
+import { e as createObservable, n as ObserverLike_dispatcher, m as ObserverLike_scheduler, C as dispatchTo, h as addTo } from '../DisposableLike-82e2991c.mjs';
 import { forEach, keepT, concatT, onSubscribe } from '../rx/ObservableLike.mjs';
-import { ObserverLike_dispatcher, ObserverLike_scheduler } from '../scheduling.mjs';
-import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { createStream } from '../streaming.mjs';
 import { sourceFrom } from './StreamLike.mjs';
-import { addTo } from '../util/DisposableLike.mjs';
 
 const toObservable = () => src => createObservable(observer => {
     const { [ObserverLike_dispatcher]: dispatcher, [ObserverLike_scheduler]: scheduler, } = observer;

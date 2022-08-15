@@ -2,10 +2,8 @@
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { pipe } from '../functions.mjs';
 import { merge, forEach, keepT, onSubscribe, subscribe } from '../rx/ObservableLike.mjs';
-import { DispatcherLike_scheduler } from '../scheduling.mjs';
-import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
+import { D as DispatcherLike_scheduler, C as dispatchTo, h as addTo, v as add } from '../DisposableLike-82e2991c.mjs';
 import { StreamableLike_stream } from '../streaming.mjs';
-import { addTo, add } from '../util/DisposableLike.mjs';
 
 const stream = (scheduler, options) => streamable => streamable[StreamableLike_stream](scheduler, options);
 const sinkInto = (dest) => (src) => {

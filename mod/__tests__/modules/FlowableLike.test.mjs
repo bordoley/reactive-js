@@ -3,7 +3,7 @@ import { testModule, test as createTest } from '../../__internal__/__internal__t
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
 import { toFlowable, forEach, subscribe } from '../../rx/ObservableLike.mjs';
-import { createVirtualTimeScheduler } from '../../scheduling.mjs';
+import { w as createVirtualTimeScheduler } from '../../DisposableLike-82e2991c.mjs';
 import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 

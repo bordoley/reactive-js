@@ -1,10 +1,7 @@
 /// <reference types="./__internal__DisposableLike.d.ts" />
 import { isSome, isNone } from '../../functions.mjs';
+import { DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableLike_add } from '../../util.mjs';
 
-const DisposableLike_add = Symbol("DisposableLike_add");
-const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-const DisposableLike_exception = Symbol("DisposableLike_exception");
-const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 /**
  * Dispose `disposable` with an optional error.
  */
@@ -59,4 +56,4 @@ const onComplete = (teardown) => disposable => {
     return disposable;
 };
 
-export { DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError };
+export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError };

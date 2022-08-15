@@ -6,9 +6,8 @@ import { createInstanceFactory, clazz, __extends, init } from '../__internal__/u
 import { bufferSinkMixin, catchErrorSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/__internal__Sinks.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeUnsafe, newInstance, pipe, partial, pipeLazy, none, returns, isSome, raise, identity } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
+import { R as ReactiveContainerLike_sinkInto, K as bindTo, h as addTo, f as dispose, j as createRunnable, i as isDisposed } from '../DisposableLike-82e2991c.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../util.mjs';
-import { bindTo, addTo, dispose, isDisposed } from '../util/DisposableLike.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
 
 const lift = /*@__PURE__*/ (() => {

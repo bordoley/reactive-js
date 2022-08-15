@@ -1,4 +1,4 @@
-import { ConcatAll, SequenceLike, Concat, DistinctUntilChanged, Keep, Map, Pairwise, ContainerOperator, TakeFirst, Repeat, Scan, SkipFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip } from "../containers.mjs";
+import { ConcatAll, SequenceLike, Concat, DistinctUntilChanged, Generate, Keep, Map, Pairwise, ContainerOperator, TakeFirst, Repeat, Scan, SkipFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip } from "../containers.mjs";
 import { ToEnumerable } from "../ix.mjs";
 declare const concatAll: ConcatAll<SequenceLike>["concatAll"];
 declare const concatAllT: ConcatAll<SequenceLike>;
@@ -6,6 +6,8 @@ declare function concat<T>(fst: SequenceLike<T>, snd: SequenceLike<T>, ...tail: 
 declare const concatT: Concat<SequenceLike>;
 declare const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"];
 declare const distinctUntilChangedT: DistinctUntilChanged<SequenceLike>;
+declare const generate: Generate<SequenceLike>["generate"];
+declare const generateT: Generate<SequenceLike>;
 declare const keep: Keep<SequenceLike>["keep"];
 declare const keepT: Keep<SequenceLike>;
 declare const map: Map<SequenceLike>["map"];
@@ -31,4 +33,4 @@ declare const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<SequenceLike>;
 declare const zip: Zip<SequenceLike>["zip"];
 declare const zipT: Zip<SequenceLike>;
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, zip, zipT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, zip, zipT };

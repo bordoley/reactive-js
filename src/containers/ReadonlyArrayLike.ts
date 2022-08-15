@@ -13,6 +13,7 @@ import {
   props,
 } from "../__internal__/util/__internal__Objects";
 import {
+  Empty,
   ForEach,
   Keep,
   Map,
@@ -56,6 +57,17 @@ import {
   SourceLike_move,
 } from "../util";
 import { addTo, dispose, isDisposed } from "../util/DisposableLike";
+
+export const empty: Empty<ReadonlyArrayLike>["empty"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const _empty: readonly T[] = [];
+  return (): ReadonlyArrayLike<T> => _empty;
+})();
+
+export const emptyT: Empty<ReadonlyArrayLike> = {
+  empty,
+};
 
 export const every =
   <T>(predicate: Predicate<T>): Function1<readonly T[], boolean> =>

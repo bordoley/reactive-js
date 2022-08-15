@@ -1,6 +1,7 @@
 /// <reference types="./__internal__Disposables.d.ts" />
 import { pipe, none, unsafeCast, isSome, ignore, returns } from '../../functions.mjs';
-import { onDisposed, DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose, dispose, getException, isDisposed, add } from './__internal__DisposableLike.mjs';
+import { DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose } from '../../util.mjs';
+import { onDisposed, dispose, getException, isDisposed, add } from './__internal__DisposableLike.mjs';
 import { MutableRefLike_current } from './__internal__MutableRefLike.mjs';
 import { clazz, props, createInstanceFactory, __extends, init } from './__internal__Objects.mjs';
 

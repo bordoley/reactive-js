@@ -47,7 +47,11 @@ import { sinkInto } from "../../rx/ReactiveContainerLike";
 import { publish, publishTo } from "../../rx/SubjectLike";
 import { ObserverLike, SchedulerLike } from "../../scheduling";
 import { getScheduler } from "../../scheduling/ObserverLike";
-import { DisposableOrTeardown, SinkLike_notify } from "../../util";
+import {
+  DisposableLike,
+  DisposableOrTeardown,
+  SinkLike_notify,
+} from "../../util";
 import { notify, notifySink, sourceFrom } from "../../util/SinkLike";
 import { MAX_SAFE_INTEGER } from "../__internal__env";
 import {
@@ -69,7 +73,6 @@ import {
   observerMixin,
 } from "../scheduling/__internal__Observers";
 import {
-  DisposableLike,
   addTo,
   addToIgnoringChildErrors,
   bindTo,

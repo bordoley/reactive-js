@@ -1,5 +1,5 @@
 /// <reference types="./WindowLocationStreamLike.d.ts" />
-import { DispatcherLike_dispatch } from '../../scheduling.mjs';
+import { l as DispatcherLike_dispatch } from '../../DisposableLike-82e2991c.mjs';
 import { WindowLocationStreamLike_goBack } from '../web.mjs';
 
 const goBack = (stream) => {

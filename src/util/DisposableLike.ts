@@ -12,6 +12,11 @@ import {
   onError as onErrorInternal,
 } from "../__internal__/util/__internal__DisposableLike";
 import {
+  createDisposable as createDisposableInternal,
+  disposed as disposedInternal,
+} from "../__internal__/util/__internal__Disposables";
+import {
+  Factory,
   Function1,
   Option,
   SideEffect,
@@ -44,8 +49,10 @@ export const addToIgnoringChildErrors: <T extends DisposableLike>(
 export const bindTo: <T extends DisposableLike>(
   parent: DisposableLike,
 ) => Updater<T> = bindToInternal;
+export const create: Factory<DisposableLike> = () => createDisposableInternal();
 export const dispose: <T extends DisposableLike>(e?: Exception) => Updater<T> =
   disposeInternal;
+export const disposed: DisposableLike = disposedInternal;
 export const getException: (disposable: {
   [DisposableLike_exception]: Option<Exception>;
 }) => Option<Exception> = getExceptionInternal;

@@ -6,7 +6,7 @@ import { createInstanceFactory, clazz, __extends, init, props } from '../__inter
 import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
-import { isDisposed, dispose } from '../util/DisposableLike.mjs';
+import { i as isDisposed, f as dispose } from '../DisposableLike-82e2991c.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
 
@@ -70,6 +70,17 @@ const distinctUntilChanged =
 })();
 const distinctUntilChangedT = {
     distinctUntilChanged,
+};
+const generate = 
+/*@__PURE__*/ (() => {
+    const _generate = (generator, data) => () => ({ data, next: _generate(generator, generator(data)) });
+    return (generator, initialValue) => () => {
+        const acc = generator(initialValue());
+        return _generate(generator, acc)();
+    };
+})();
+const generateT = {
+    generate,
 };
 const keep = /*@__PURE__*/ (() => {
     const _keep = (predicate, seq) => () => {
@@ -302,4 +313,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, zip, zipT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, zip, zipT };

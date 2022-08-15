@@ -33,8 +33,14 @@ import { getScheduler } from "./scheduling/ObserverLike";
 import { schedule } from "./scheduling/SchedulerLike";
 import { StreamLike, StreamableLike, createStateStore } from "./streaming";
 import { stream } from "./streaming/StreamableLike";
-import { DisposableLike, Exception, disposed } from "./util";
-import { addTo, dispose, isDisposed, onComplete } from "./util/DisposableLike";
+import { DisposableLike, Exception } from "./util";
+import {
+  addTo,
+  dispose,
+  disposed,
+  isDisposed,
+  onComplete,
+} from "./util/DisposableLike";
 import { notify } from "./util/SinkLike";
 
 type EffectsMode = "batched" | "combine-latest";

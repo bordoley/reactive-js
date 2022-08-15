@@ -5,15 +5,11 @@ import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { none, isSome, pipe, pipeLazy, ignore, unsafeCast } from '../functions.mjs';
-import { createSubject } from '../rx.mjs';
+import { q as onError, f as dispose, c as createSubject, N as SchedulerLike_inContinuation, P as SchedulerLike_now, Q as SchedulerLike_shouldYield, Y as isInContinuation, T as SchedulerLike_requestYield, U as SchedulerLike_schedule, t as addIgnoringChildErrors, i as isDisposed, r as create, k as onDisposed, h as addTo } from '../DisposableLike-82e2991c.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { publish } from '../rx/SubjectLike.mjs';
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { toScheduler } from '../scheduling/PrioritySchedulerLike.mjs';
-import { isInContinuation } from '../scheduling/SchedulerLike.mjs';
-import { createDisposable } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
-import { onError, dispose, addIgnoringChildErrors, isDisposed, onDisposed, addTo } from '../util/DisposableLike.mjs';
 
 /**
  * Returns the current value, if defined, of `observable`.
@@ -87,7 +83,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
                 this[SchedulerLike_inContinuation] = false;
             };
             const callbackNode = unstable_scheduleCallback(priority, callback, delay > 0 ? { delay } : none);
-            const callbackNodeDisposable = pipe(createDisposable(), onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), addTo(continuation));
+            const callbackNodeDisposable = pipe(create(), onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), addTo(continuation));
         },
     }));
 })();

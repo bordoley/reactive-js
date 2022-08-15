@@ -5,7 +5,7 @@ import { createInstanceFactory, clazz, props, __extends, init } from './__intern
 import './containers.mjs';
 import { none, pipe } from './functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
-import { dispose, isDisposed } from './util/DisposableLike.mjs';
+import { f as dispose, i as isDisposed } from './DisposableLike-82e2991c.mjs';
 
 /** @ignore */
 const InteractiveContainerLike_interact = Symbol("InteractiveContainerLike_interact");

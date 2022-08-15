@@ -2,12 +2,10 @@
 import { testModule, describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
 import { pipe, returns } from '../../functions.mjs';
 import { forEach, subscribe } from '../../rx/ObservableLike.mjs';
-import { createVirtualTimeScheduler } from '../../scheduling.mjs';
-import { dispatch } from '../../scheduling/DispatcherLike.mjs';
+import { w as createVirtualTimeScheduler, B as dispatch, f as dispose } from '../../DisposableLike-82e2991c.mjs';
 import { createStateStore } from '../../streaming.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
-import { dispose } from '../../util/DisposableLike.mjs';
 
 testModule("StreamableLike", createDescribe("stateStore", createTest("createStateStore", () => {
     const scheduler = createVirtualTimeScheduler();

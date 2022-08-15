@@ -421,30 +421,3 @@ export type Zip<C extends ContainerLike> = Container<C> & {
     i: ContainerOf<C, TI>,
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 };
-
-export const emptyReadonlyArray: Empty<ReadonlyArrayLike>["empty"] =
-  /*@__PURE__*/ (<T>() => {
-    const _empty: readonly T[] = [];
-    return (): ReadonlyArrayLike<T> => _empty;
-  })();
-
-export const emptyReadonlyArrayT: Empty<ReadonlyArrayLike> = {
-  empty: emptyReadonlyArray,
-};
-
-export const generateSequence: Generate<SequenceLike>["generate"] =
-  /*@__PURE__*/ (() => {
-    const _generate =
-      <T>(generator: Updater<T>, data: T): SequenceLike<T> =>
-      () => ({ data, next: _generate(generator, generator(data)) });
-
-    return <T>(generator: Updater<T>, initialValue: Factory<T>) =>
-      () => {
-        const acc = generator(initialValue());
-        return _generate(generator, acc)();
-      };
-  })();
-
-export const generateSequenceT: Generate<SequenceLike> = {
-  generate: generateSequence,
-};

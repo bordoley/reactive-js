@@ -12,12 +12,13 @@ import { Option, none, pipe, pipeLazy, raise } from "../../functions";
 import { subscribe } from "../../rx/ObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling";
 import { getCurrentTime, schedule } from "../../scheduling/SchedulerLike";
-import { Exception, createDisposable } from "../../util";
+import { Exception } from "../../util";
 import { run } from "../../util/ContinuationLike";
 import {
   add,
   addIgnoringChildErrors,
   addTo,
+  create as createDisposable,
   dispose,
   getException,
   isDisposed,

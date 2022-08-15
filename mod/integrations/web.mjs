@@ -5,16 +5,12 @@ import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, newInstance, none, isEmpty, getLength, unsafeCast, isSome, raise, compose } from '../functions.mjs';
-import { createObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import { e as createObservable, W as getDispatcher, k as onDisposed, B as dispatch, a0 as toAbortSignal, f as dispose, M as MulticastObservableLike_observerCount, H as MulticastObservableLike_replay, D as DispatcherLike_scheduler, I as getScheduler, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, l as DispatcherLike_dispatch, C as dispatchTo, R as ReactiveContainerLike_sinkInto, h as addTo } from '../DisposableLike-82e2991c.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
 import { map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
-import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
-import { dispatch, getScheduler, dispatchTo } from '../scheduling/DispatcherLike.mjs';
-import { getDispatcher } from '../scheduling/ObserverLike.mjs';
 import { createStreamble, createActionReducer } from '../streaming.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
-import { onDisposed, toAbortSignal, dispose, addTo } from '../util/DisposableLike.mjs';
 
 /** @ignore */
 const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
