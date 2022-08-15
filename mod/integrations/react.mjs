@@ -3,9 +3,9 @@ import { useState, useEffect, useMemo } from 'react';
 import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_scheduleCallback, unstable_cancelCallback, unstable_IdlePriority, unstable_ImmediatePriority, unstable_NormalPriority, unstable_LowPriority, unstable_UserBlockingPriority } from 'scheduler';
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { none, isSome, pipe, pipeLazy, ignore, unsafeCast } from '../functions.mjs';
-import { q as onError, f as dispose, c as createSubject, N as SchedulerLike_inContinuation, P as SchedulerLike_now, Q as SchedulerLike_shouldYield, Y as isInContinuation, T as SchedulerLike_requestYield, U as SchedulerLike_schedule, t as addIgnoringChildErrors, i as isDisposed, r as create, k as onDisposed, h as addTo } from '../DisposableLike-82e2991c.mjs';
+import { q as onError, f as dispose, c as createSubject, N as SchedulerLike_inContinuation, P as SchedulerLike_now, Q as SchedulerLike_shouldYield, Y as isInContinuation, T as SchedulerLike_requestYield, U as SchedulerLike_schedule, t as addIgnoringChildErrors, i as isDisposed, r as create, k as onDisposed, h as addTo } from '../DisposableLike-f9476215.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { publish } from '../rx/SubjectLike.mjs';
 import { toScheduler } from '../scheduling/PrioritySchedulerLike.mjs';
@@ -53,7 +53,7 @@ const createComponent = (fn, options = {}) => {
     return ObservableComponent;
 };
 const createReactPriorityScheduler = /*@__PURE__*/ (() => {
-    return createInstanceFactory(clazz(__extends(disposableMixin), function ReactPriorityScheduler(instance) {
+    return createInstanceFactory(mixin(include(disposableMixin), function ReactPriorityScheduler(instance) {
         init(disposableMixin, instance);
         return instance;
     }, props({

@@ -24,10 +24,10 @@ import {
 } from "./__internal__/util/__internal__Enumerators";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "./__internal__/util/__internal__Objects";
 import { Option, isSome, none, pipe, unsafeCast } from "./functions";
@@ -219,8 +219,8 @@ export const createHostScheduler = /*@__PURE__*/ (() => {
   };
 
   const createHostSchedulerInstance = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function HostScheduler(
         instance: Pick<
           SchedulerLike,
@@ -335,8 +335,8 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
   };
 
   const createVirtualTimeSchedulerInstance = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedEnumeratorMixin),
+    mixin(
+      include(disposableMixin, typedEnumeratorMixin),
       function VirtualTimeScheduler(
         instance: Pick<
           VirtualTimeSchedulerLike,

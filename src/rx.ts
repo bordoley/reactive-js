@@ -9,10 +9,10 @@ import {
 import { disposableMixin } from "./__internal__/util/__internal__Disposables";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "./__internal__/util/__internal__Objects";
 import {
@@ -180,7 +180,7 @@ const createObservableImpl: <T>(
   };
 
   return createInstanceFactory(
-    clazz(
+    mixin(
       function CreateObservable(
         instance: Pick<ObservableLike, typeof ReactiveContainerLike_sinkInto> &
           Mutable<TProperties>,
@@ -238,7 +238,7 @@ export const createRunnable: <T>(
     readonly run: SideEffect1<SinkLike<T>>;
   };
   return createInstanceFactory(
-    clazz(
+    mixin(
       function Runnable(
         instance: Pick<RunnableLike, typeof ReactiveContainerLike_sinkInto> &
           Mutable<TProperties>,
@@ -279,8 +279,8 @@ export const createSubject: <T>(options?: {
   };
 
   const createSubjectInstance = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function Subject(
         instance: Pick<
           SubjectLike<T>,

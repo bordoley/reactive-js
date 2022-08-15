@@ -6,10 +6,10 @@ import {
 } from "../__internal__/util/__internal__Enumerators";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
 import {
@@ -166,8 +166,8 @@ export const toEnumerable: ToEnumerable<
   };
 
   const createReadonlyArrayEnumerator = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedEnumerator),
+    mixin(
+      include(disposableMixin, typedEnumerator),
       function ReadonlyArrayEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
           Mutable<TProperties>,

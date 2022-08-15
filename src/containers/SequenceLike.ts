@@ -5,10 +5,10 @@ import {
   enumeratorMixin,
 } from "../__internal__/util/__internal__Enumerators";
 import {
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
 import {
@@ -433,8 +433,8 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
     };
 
     const createSequenceEnumerator = createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedEnumeratorMixin),
+      mixin(
+        include(disposableMixin, typedEnumeratorMixin),
         function SequenceEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             TProperties,

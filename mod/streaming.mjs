@@ -1,12 +1,12 @@
 /// <reference types="./streaming.d.ts" />
 import { multicast, scan, mergeT, distinctUntilChanged } from './__internal__/rx/__internal__ObservableLike.mjs';
 import { delegatingDisposableMixin } from './__internal__/util/__internal__Disposables.mjs';
-import { clazz, __extends, init, props, createInstanceFactory } from './__internal__/util/__internal__Objects.mjs';
+import { mixin, include, init, props, createInstanceFactory } from './__internal__/util/__internal__Objects.mjs';
 import './containers.mjs';
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
 import { returns, pipe, none, unsafeCast, newInstance, getLength, composeUnsafe, updateReducer } from './functions.mjs';
-import { c as createSubject, D as DispatcherLike_scheduler, v as add, M as MulticastObservableLike_observerCount, H as MulticastObservableLike_replay, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, l as DispatcherLike_dispatch, R as ReactiveContainerLike_sinkInto, B as dispatch, e as createObservable } from './DisposableLike-82e2991c.mjs';
+import { c as createSubject, D as DispatcherLike_scheduler, v as add, M as MulticastObservableLike_observerCount, H as MulticastObservableLike_replay, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, l as DispatcherLike_dispatch, R as ReactiveContainerLike_sinkInto, B as dispatch, e as createObservable } from './DisposableLike-f9476215.mjs';
 import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
 import { publish } from './rx/SubjectLike.mjs';
@@ -15,7 +15,7 @@ import { SourceLike_move } from './util.mjs';
 /** @ignore */
 const StreamableLike_stream = Symbol("StreamableLike_stream");
 const streamMixin = /*@__PURE__*/ (() => {
-    return returns(clazz(__extends(delegatingDisposableMixin), function Stream(instance, op, scheduler, replay) {
+    return returns(mixin(include(delegatingDisposableMixin), function Stream(instance, op, scheduler, replay) {
         const subject = createSubject({ replay });
         init(delegatingDisposableMixin, instance, subject);
         instance[DispatcherLike_scheduler] = scheduler;
@@ -55,7 +55,7 @@ const createStream = /*@__PURE__*/ (() => {
 const createAsyncEnumerator = /*@__PURE__*/ (() => {
     const createAsyncEnumeratorInternal = (() => {
         const typedStreamMixin = streamMixin();
-        return createInstanceFactory(clazz(__extends(typedStreamMixin), function AsyncEnumerator(instance, op, scheduler, replay) {
+        return createInstanceFactory(mixin(include(typedStreamMixin), function AsyncEnumerator(instance, op, scheduler, replay) {
             init(typedStreamMixin, instance, op, scheduler, replay);
             return instance;
         }, {}, {

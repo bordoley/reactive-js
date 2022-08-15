@@ -5,10 +5,10 @@ import {
 } from "../__internal__/util/__internal__Enumerators";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
 import { IterableLike, ToIterable } from "../containers";
@@ -48,8 +48,8 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
     };
 
     const createIterableEnumerator = createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedEnumeratorMixin),
+      mixin(
+        include(disposableMixin, typedEnumeratorMixin),
         function IteratorEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,

@@ -19,10 +19,10 @@ import {
 } from "../__internal__/containers/__internal__StatefulContainerLike";
 import { createOnSink } from "../__internal__/rx/__internal__ReactiveContainerLike";
 import {
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
 } from "../__internal__/util/__internal__Objects";
 import {
   DelegateSinkLike,
@@ -178,8 +178,8 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
 
   return pipeLazy(
     createInstanceFactory(
-      clazz(
-        __extends(typedDelegatingSinkMixin),
+      mixin(
+        include(typedDelegatingSinkMixin),
         function RunnableConcatAll(
           instance: Pick<SinkLike<RunnableLike<T>>, typeof SinkLike_notify>,
           delegate: SinkLike<T>,

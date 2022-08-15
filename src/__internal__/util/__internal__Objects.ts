@@ -61,35 +61,35 @@ const {
 } = Object;
 
 function initUnsafe<TReturn>(
-  clazz: MixinAny<TReturn>,
+  mixin: MixinAny<TReturn>,
   instance: unknown,
   ...args: readonly unknown[]
 ): asserts instance is TReturn {
-  const f = clazz[Object_init];
+  const f = mixin[Object_init];
   f.call(undefined, instance, ...args);
 }
 
 interface Init {
   <TReturn>(
-    clazz: Mixin<TReturn>,
+    mixin: Mixin<TReturn>,
     instance: unknown,
   ): asserts instance is TReturn;
 
   <TReturn, TA>(
-    clazz: Mixin1<TReturn, TA>,
+    mixin: Mixin1<TReturn, TA>,
     instance: unknown,
     a: TA,
   ): asserts instance is TReturn;
 
   <TReturn, TA, TB>(
-    clazz: Mixin2<TReturn, TA, TB>,
+    mixin: Mixin2<TReturn, TA, TB>,
     instance: unknown,
     a: TA,
     b: TB,
   ): asserts instance is TReturn;
 
   <TReturn, TA, TB, TC>(
-    clazz: Mixin3<TReturn, TA, TB, TC>,
+    mixin: Mixin3<TReturn, TA, TB, TC>,
     instance: unknown,
     a: TA,
     b: TB,
@@ -98,7 +98,7 @@ interface Init {
 }
 export const init: Init = initUnsafe;
 
-export const __extends: (
+export const include: (
   m0: PartialMixin,
   ...tail: readonly PartialMixin[]
 ) => PartialMixin = (...mixins: readonly PartialMixin[]) => {
@@ -106,11 +106,11 @@ export const __extends: (
     return mixins[0];
   } else {
     const properties = mixins
-      .map(clazz => clazz[Object_properties])
+      .map(mixin => mixin[Object_properties])
       .reduce((acc, next) => ({ ...acc, ...next }), {});
 
     const prototypeDescriptions = mixins
-      .map(clazz => getOwnPropertyDescriptors(clazz[Object_prototype]))
+      .map(mixin => getOwnPropertyDescriptors(mixin[Object_prototype]))
       .reduce((acc, next) => ({ ...acc, ...next }), {});
 
     return {
@@ -120,7 +120,7 @@ export const __extends: (
   }
 };
 
-interface Clazz {
+interface CreateMixin {
   <
     TInit extends (
       instance: TPrototype & Mutable<TProperties>,
@@ -163,7 +163,7 @@ interface Clazz {
     [Object_init]: TInit;
   };
 }
-export const clazz: Clazz = ((
+export const mixin: CreateMixin = ((
   initOrParent: any,
   propertiesOrInit: any,
   prototypeOrParent?: any,
@@ -176,7 +176,7 @@ export const clazz: Clazz = ((
       [Object_prototype]: prototypeOrParent ?? {},
     };
   } else {
-    const base = __extends(initOrParent, {
+    const base = include(initOrParent, {
       [Object_properties]: prototypeOrParent ?? {},
       [Object_prototype]: nothingOrPrototype ?? {},
     });
@@ -185,23 +185,23 @@ export const clazz: Clazz = ((
       [Object_init]: propertiesOrInit,
     };
   }
-}) as Clazz;
+}) as CreateMixin;
 
 interface CreateInstanceFactory {
-  <TReturn>(clazz: Mixin<TReturn>): Factory<TReturn>;
+  <TReturn>(mixin: Mixin<TReturn>): Factory<TReturn>;
 
-  <TReturn, TA>(clazz: Mixin1<TReturn, TA>): Function1<TA, TReturn>;
+  <TReturn, TA>(mixin: Mixin1<TReturn, TA>): Function1<TA, TReturn>;
 
-  <TReturn, TA, TB>(clazz: Mixin2<TReturn, TA, TB>): Function2<TA, TB, TReturn>;
+  <TReturn, TA, TB>(mixin: Mixin2<TReturn, TA, TB>): Function2<TA, TB, TReturn>;
 
-  <TReturn, TA, TB, TC>(clazz: Mixin3<TReturn, TA, TB, TC>): Function3<
+  <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>): Function3<
     TA,
     TB,
     TC,
     TReturn
   >;
 
-  <TReturn, TA, TB, TC, TD>(clazz: Mixin4<TReturn, TA, TB, TC, TD>): Function4<
+  <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Function4<
     TA,
     TB,
     TC,
@@ -210,18 +210,18 @@ interface CreateInstanceFactory {
   >;
 }
 export const createInstanceFactory: CreateInstanceFactory = <TReturn>(
-  clazz: MixinAny<TReturn>,
+  mixin: MixinAny<TReturn>,
 ): Factory<TReturn> => {
   const propertyDescription = getOwnPropertyDescriptors(
-    clazz[Object_properties],
+    mixin[Object_properties],
   );
 
   const prototypeDescription = {
-    ...getOwnPropertyDescriptors(clazz[Object_prototype]),
+    ...getOwnPropertyDescriptors(mixin[Object_prototype]),
     constructor: {
       configurable: true,
       enumerable: true,
-      value: clazz[Object_init],
+      value: mixin[Object_init],
       writable: true,
     },
   };
@@ -230,7 +230,7 @@ export const createInstanceFactory: CreateInstanceFactory = <TReturn>(
 
   return (...args: readonly any[]) => {
     const instance: unknown = createObject(prototype, propertyDescription);
-    initUnsafe(clazz, instance, ...args);
+    initUnsafe(mixin, instance, ...args);
     return instance;
   };
 };

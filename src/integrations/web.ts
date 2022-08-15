@@ -1,10 +1,10 @@
 import { delegatingDisposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
 import { ignoreElements } from "../containers/ContainerLike";
@@ -302,8 +302,8 @@ export const windowLocation: WindowLocationStreamableLike =
     };
 
     const createWindowLocationStream = createInstanceFactory(
-      clazz(
-        __extends(delegatingDisposableMixin),
+      mixin(
+        include(delegatingDisposableMixin),
         function WindowLocationStream(
           instance: Pick<
             WindowLocationStreamLike,

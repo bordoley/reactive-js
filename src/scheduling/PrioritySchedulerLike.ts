@@ -2,10 +2,10 @@ import { getDelay } from "../__internal__/__internal__optionParsing";
 import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
 import { Function1, none, partial, pipe, unsafeCast } from "../functions";
@@ -40,8 +40,8 @@ export const toScheduler = /*@__PURE__*/ (() => {
   };
 
   const createSchedulerInstance = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin),
+    mixin(
+      include(disposableMixin),
       function PrioritySchedulerDelegatingScheduler(
         instance: Pick<
           SchedulerLike,

@@ -65,10 +65,10 @@ import {
 } from "../__internal__/util/__internal__MutableRefLike";
 import {
   Mutable,
-  __extends,
-  clazz,
   createInstanceFactory,
+  include,
   init,
+  mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
 import {
@@ -230,8 +230,8 @@ export const buffer: <T>(options?: {
   };
 
   const createBufferObserver = createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, disposableMixin),
+    mixin(
+      include(typedObserverMixin, disposableMixin),
       function BufferObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -433,8 +433,8 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
     const typedObserverMixin = observerMixin<ArrayBuffer>();
 
     const createDecodeWithCharsetObserver = createInstanceFactory(
-      clazz(
-        __extends(typedObserverMixin, typedDecodeWithCharsetMixin),
+      mixin(
+        include(typedObserverMixin, typedDecodeWithCharsetMixin),
         function DecodeWithCharsetObserver(
           instance: unknown,
           delegate: ObserverLike<string>,
@@ -473,8 +473,8 @@ export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
       T
     >(arrayToObservable());
 
-    const everySatisfyObserverMixin = clazz(
-      __extends(typedEverySatisfySinkMixin, typedObserverMixin),
+    const everySatisfyObserverMixin = mixin(
+      include(typedEverySatisfySinkMixin, typedObserverMixin),
       function EverySatisfyObserver(
         instance: unknown,
         delegate: ObserverLike<boolean>,
@@ -614,8 +614,8 @@ const latest = /*@__PURE__*/ (() => {
   };
 
   const createLatestObserver = createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, disposableMixin),
+    mixin(
+      include(typedObserverMixin, disposableMixin),
       function LatestObserver(
         instance: Pick<ObserverLike, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -754,8 +754,8 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   const typedObserverMixin = observerMixin<T>();
 
   const createReduceObserver = createInstanceFactory(
-    clazz(
-      __extends(typedObserverMixin, typedReduceSinkMixin),
+    mixin(
+      include(typedObserverMixin, typedReduceSinkMixin),
       function ReduceObserver(
         instance: unknown,
         delegate: ObserverLike<TAcc>,
@@ -971,8 +971,8 @@ export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
       T
     >(arrayToObservable());
 
-    const someSatisfyObserverMixin = clazz(
-      __extends(typedSomeSatisfySinkMixin, typedObserverMixin),
+    const someSatisfyObserverMixin = mixin(
+      include(typedSomeSatisfySinkMixin, typedObserverMixin),
       function EverySatisfyObserver(
         instance: unknown,
         delegate: ObserverLike<boolean>,
@@ -1027,8 +1027,8 @@ export const takeLast: TakeLast<ObservableLike>["takeLast"] =
     const typedObserverMixin = observerMixin();
 
     const createTakeLastObserver = createInstanceFactory(
-      clazz(
-        __extends(typedObserverMixin, typedTakeLastSinkMixin),
+      mixin(
+        include(typedObserverMixin, typedTakeLastSinkMixin),
         function TakeLastObserver(
           instance: unknown,
           delegate: ObserverLike,
@@ -1137,8 +1137,8 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
     };
 
     return createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedObserverMixin),
+      mixin(
+        include(disposableMixin, typedObserverMixin),
         function ThrottleObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
@@ -1290,8 +1290,8 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
   };
 
   const createTimeoutObserver = createInstanceFactory(
-    clazz(
-      __extends(
+    mixin(
+      include(
         typedObserverMixin,
         delegatingDisposableMixin,
         typedDisposableRefMixin,
@@ -1365,8 +1365,8 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
     type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
 
     const createEnumeratorScheduler = createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedEnumeratorMixin),
+      mixin(
+        include(disposableMixin, typedEnumeratorMixin),
         function EnumeratorScheduler(
           instance: Pick<
             SchedulerLike & SourceLike,
@@ -1434,8 +1434,8 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
     };
 
     const createEnumeratorObserver = createInstanceFactory(
-      clazz(
-        __extends(disposableMixin, typedObserverMixin),
+      mixin(
+        include(disposableMixin, typedObserverMixin),
         function EnumeratorObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
             Mutable<TEnumeratorObserverProperties>,
@@ -1624,8 +1624,8 @@ export const withLatestFrom: <TA, TB, T>(
     };
 
     return createInstanceFactory(
-      clazz(
-        __extends(delegatingDisposableMixin, typedObserverMixin),
+      mixin(
+        include(delegatingDisposableMixin, typedObserverMixin),
         function WithLatestFromObserver(
           instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
             Mutable<TProperties>,
@@ -1711,8 +1711,8 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   };
 
   const createZipObserver = createInstanceFactory(
-    clazz(
-      __extends(disposableMixin, typedObserverMixin),
+    mixin(
+      include(disposableMixin, typedObserverMixin),
       function ZipObserver(
         instance: Pick<ObserverLike, typeof SinkLike_notify> &
           Mutable<TProperties>,

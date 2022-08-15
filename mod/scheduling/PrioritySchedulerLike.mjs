@@ -1,9 +1,9 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, clazz, __extends, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { none, unsafeCast, pipe, partial } from '../functions.mjs';
-import { N as SchedulerLike_inContinuation, Y as isInContinuation, P as SchedulerLike_now, y as getCurrentTime, Q as SchedulerLike_shouldYield, Z as shouldYield, T as SchedulerLike_requestYield, $ as requestYield, U as SchedulerLike_schedule, t as addIgnoringChildErrors, i as isDisposed } from '../DisposableLike-82e2991c.mjs';
+import { N as SchedulerLike_inContinuation, Y as isInContinuation, P as SchedulerLike_now, y as getCurrentTime, Q as SchedulerLike_shouldYield, Z as shouldYield, T as SchedulerLike_requestYield, $ as requestYield, U as SchedulerLike_schedule, t as addIgnoringChildErrors, i as isDisposed } from '../DisposableLike-f9476215.mjs';
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
@@ -12,7 +12,7 @@ import { N as SchedulerLike_inContinuation, Y as isInContinuation, P as Schedule
  * @param priority The priority to schedule work at.
  */
 const toScheduler = /*@__PURE__*/ (() => {
-    const createSchedulerInstance = createInstanceFactory(clazz(__extends(disposableMixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
+    const createSchedulerInstance = createInstanceFactory(mixin(include(disposableMixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
         init(disposableMixin, instance);
         instance.priorityScheduler = scheduler;
         instance.priority = priority;

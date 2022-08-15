@@ -3,12 +3,12 @@ import { pipe, none, unsafeCast, isSome, ignore, returns } from '../../functions
 import { DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose } from '../../util.mjs';
 import { onDisposed, dispose, getException, isDisposed, add } from './__internal__DisposableLike.mjs';
 import { MutableRefLike_current } from './__internal__MutableRefLike.mjs';
-import { clazz, props, createInstanceFactory, __extends, init } from './__internal__Objects.mjs';
+import { mixin, props, createInstanceFactory, include, init } from './__internal__Objects.mjs';
 
 const delegatingDisposableMixin = 
 /*@__PURE__*/ (() => {
     const DelegatingDisposable_private_delegate = Symbol("DelegatingDisposable_private_delegate");
-    return clazz(function DelegatingDisposableMixin(instance, delegate) {
+    return mixin(function DelegatingDisposableMixin(instance, delegate) {
         instance[DelegatingDisposable_private_delegate] = delegate;
         pipe(delegate, onDisposed(_ => {
             instance[DisposableLike_isDisposed] = true;
@@ -50,7 +50,7 @@ const doDispose = (instance, disposable) => {
 };
 const disposableMixin = /*@__PURE__*/ (() => {
     const Disposable_private_disposables = Symbol("Disposable_private_disposables");
-    return clazz(function DisposableMixin(instance) {
+    return mixin(function DisposableMixin(instance) {
         instance[Disposable_private_disposables] = new Set();
         return instance;
     }, props({
@@ -103,7 +103,7 @@ const disposed = {
 };
 const disposableRefMixin = /*@__PURE__*/ (() => {
     const DisposableRef_private_current = Symbol("DisposableRef_private_current");
-    return pipe(clazz(function DisposableRef(instance, defaultValue) {
+    return pipe(mixin(function DisposableRef(instance, defaultValue) {
         unsafeCast(instance);
         instance[DisposableRef_private_current] = defaultValue;
         pipe(instance, add(defaultValue));
@@ -126,7 +126,7 @@ const disposableRefMixin = /*@__PURE__*/ (() => {
 })();
 const createDisposableRef = /*@__PURE__*/ (() => {
     const typedDisposableRefMixin = disposableRefMixin();
-    return createInstanceFactory(clazz(__extends(disposableMixin, typedDisposableRefMixin), function DisposableRef(instance, initialValue) {
+    return createInstanceFactory(mixin(include(disposableMixin, typedDisposableRefMixin), function DisposableRef(instance, initialValue) {
         init(disposableMixin, instance);
         init(typedDisposableRefMixin, instance, initialValue);
         return instance;
