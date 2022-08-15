@@ -7,7 +7,7 @@ import { createEnumerable } from '../ix.mjs';
 import { fromEnumerable } from '../ix/AsyncEnumerableLike.mjs';
 import { toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
-import { isDisposed, dispose } from '../util/DisposableLike.mjs';
+import { i as isDisposed, f as dispose } from '../DisposableLike-82e2991c.mjs';
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.

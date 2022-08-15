@@ -1,9 +1,8 @@
 /// <reference types="./ContainerLike.test.d.ts" />
 import { testModule, describe as createDescribe, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
-import { emptyReadonlyArray } from '../../containers.mjs';
 import { concatMap, concatWith, endWith, genMap, ignoreElements, mapTo, startWith, zipWith } from '../../containers/ContainerLike.mjs';
 import { toEnumerable as toEnumerable$1 } from '../../containers/IterableLike.mjs';
-import { toEnumerable } from '../../containers/ReadonlyArrayLike.mjs';
+import { toEnumerable, empty } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, pipe, none, arrayEquality } from '../../functions.mjs';
 import { concatAllT, mapT, toReadonlyArray, concatT, keepT, zipT } from '../../ix/EnumerableLike.mjs';
 
@@ -11,7 +10,7 @@ testModule("ContainerLike", createDescribe("concatMap", createTest("maps each va
     yield 1;
     yield 2;
     yield 3;
-}), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), createDescribe("ignoreElements", createTest("ignores all elements", pipeLazy([1, 2, 3], toEnumerable(), ignoreElements(keepT), toReadonlyArray(), expectArrayEquals(emptyReadonlyArray())))), createDescribe("mapTo", createTest("maps every value in the source to v", pipeLazy([1, 2, 3], toEnumerable(), mapTo(mapT, 2), toReadonlyArray(), expectArrayEquals([2, 2, 2])))), createDescribe("startWith", createTest("appends the additional values to the start of the container", pipeLazy([0, 1], toEnumerable(), startWith({ ...concatT, fromArray: toEnumerable }, 2, 3, 4), toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))), createDescribe("zipWith", createTest("when inputs are different lengths", pipeLazy([1, 2, 3], toEnumerable(), zipWith(zipT, pipe([1, 2, 3, 4], toEnumerable())), toReadonlyArray(), expectArrayEquals([
+}), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), createDescribe("ignoreElements", createTest("ignores all elements", pipeLazy([1, 2, 3], toEnumerable(), ignoreElements(keepT), toReadonlyArray(), expectArrayEquals(empty())))), createDescribe("mapTo", createTest("maps every value in the source to v", pipeLazy([1, 2, 3], toEnumerable(), mapTo(mapT, 2), toReadonlyArray(), expectArrayEquals([2, 2, 2])))), createDescribe("startWith", createTest("appends the additional values to the start of the container", pipeLazy([0, 1], toEnumerable(), startWith({ ...concatT, fromArray: toEnumerable }, 2, 3, 4), toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))), createDescribe("zipWith", createTest("when inputs are different lengths", pipeLazy([1, 2, 3], toEnumerable(), zipWith(zipT, pipe([1, 2, 3, 4], toEnumerable())), toReadonlyArray(), expectArrayEquals([
     [1, 1],
     [2, 2],
     [3, 3],

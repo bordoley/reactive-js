@@ -1,18 +1,5 @@
-import { SideEffect1, Option, Updater, SideEffect } from "../../functions.mjs";
-declare const DisposableLike_add: unique symbol;
-declare const DisposableLike_dispose: unique symbol;
-declare const DisposableLike_exception: unique symbol;
-declare const DisposableLike_isDisposed: unique symbol;
-declare type Exception = {
-    readonly cause: unknown;
-};
-declare type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Exception>>;
-interface DisposableLike {
-    readonly [DisposableLike_exception]: Option<Exception>;
-    readonly [DisposableLike_isDisposed]: boolean;
-    [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
-    [DisposableLike_dispose](error?: Exception): void;
-}
+import { Updater, Option, SideEffect1, SideEffect } from "../../functions.mjs";
+import { DisposableLike, Exception, DisposableLike_exception, DisposableLike_isDisposed } from "../../util.mjs";
 /**
  * Dispose `disposable` with an optional error.
  */
@@ -31,4 +18,4 @@ declare const addToIgnoringChildErrors: <T extends DisposableLike>(parent: Dispo
 declare const onDisposed: <T extends DisposableLike>(teardown: SideEffect1<Option<Exception>>) => Updater<T>;
 declare const onError: <T extends DisposableLike>(teardown: SideEffect1<Exception>) => Updater<T>;
 declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Updater<T>;
-export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, Exception, add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError };
+export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, dispose, getException, isDisposed, onComplete, onDisposed, onError };

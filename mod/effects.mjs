@@ -1,13 +1,9 @@
 /// <reference types="./effects.d.ts" />
 import { isNone, ignore, none, raise, arrayEquality, pipe, getLength, isSome, newInstance } from './functions.mjs';
-import { emptyObservable, createObservable } from './rx.mjs';
+import { A as emptyObservable, J as disposed, i as isDisposed, f as dispose, g as getScheduler, s as schedule, h as addTo, o as onComplete, e as createObservable } from './DisposableLike-82e2991c.mjs';
 import { forEach, subscribe } from './rx/ObservableLike.mjs';
-import { getScheduler } from './scheduling/ObserverLike.mjs';
-import { schedule } from './scheduling/SchedulerLike.mjs';
 import { createStateStore } from './streaming.mjs';
 import { stream } from './streaming/StreamableLike.mjs';
-import { disposed } from './util.mjs';
-import { isDisposed, dispose, addTo, onComplete } from './util/DisposableLike.mjs';
 import { notify } from './util/SinkLike.mjs';
 
 const validateAsyncEffect = ((ctx, type) => {

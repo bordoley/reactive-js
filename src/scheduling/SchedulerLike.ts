@@ -67,9 +67,9 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   SourceLike_move,
-  disposed,
 } from "../util";
 import { run } from "../util/ContinuationLike";
+import { disposed } from "../util/DisposableLike";
 import { getCurrent, hasCurrent } from "../util/EnumeratorLike";
 import { pause } from "../util/PauseableLike";
 import { move } from "../util/SourceLike";

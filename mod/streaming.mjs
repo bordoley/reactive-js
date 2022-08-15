@@ -6,14 +6,11 @@ import './containers.mjs';
 import { concatWith } from './containers/ContainerLike.mjs';
 import { toObservable } from './containers/ReadonlyArrayLike.mjs';
 import { returns, pipe, none, unsafeCast, newInstance, getLength, composeUnsafe, updateReducer } from './functions.mjs';
-import { createSubject, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createObservable } from './rx.mjs';
+import { c as createSubject, D as DispatcherLike_scheduler, v as add, M as MulticastObservableLike_observerCount, H as MulticastObservableLike_replay, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, l as DispatcherLike_dispatch, R as ReactiveContainerLike_sinkInto, B as dispatch, e as createObservable } from './DisposableLike-82e2991c.mjs';
 import { getObserverCount, getReplay } from './rx/MulticastObservableLike.mjs';
 import { sinkInto } from './rx/ReactiveContainerLike.mjs';
 import { publish } from './rx/SubjectLike.mjs';
-import { DispatcherLike_scheduler, DispatcherLike_dispatch } from './scheduling.mjs';
-import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { SourceLike_move } from './util.mjs';
-import { add } from './util/DisposableLike.mjs';
 
 /** @ignore */
 const StreamableLike_stream = Symbol("StreamableLike_stream");

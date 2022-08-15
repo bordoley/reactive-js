@@ -1,30 +1,15 @@
-import {
-  DisposableLike_add as DisposableLike_add_internal,
-  DisposableLike_dispose as DisposableLike_dispose_internal,
-  DisposableLike_exception as DisposableLike_error_internal,
-  DisposableLike_isDisposed as DisposableLike_isDisposed_internal,
-} from "./__internal__/util/__internal__DisposableLike";
-import {
-  createDisposable as createDisposableInternal,
-  disposed as disposedInternal,
-} from "./__internal__/util/__internal__Disposables";
-import { Factory, Option, SideEffect1 } from "./functions";
+import { Option, SideEffect1 } from "./functions";
+/** @ignore */
+export const DisposableLike_add = Symbol("DisposableLike_add");
 
 /** @ignore */
-export const DisposableLike_add: typeof DisposableLike_add_internal =
-  DisposableLike_add_internal;
+export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
 
 /** @ignore */
-export const DisposableLike_dispose: typeof DisposableLike_dispose_internal =
-  DisposableLike_dispose_internal;
+export const DisposableLike_exception = Symbol("DisposableLike_exception");
 
 /** @ignore */
-export const DisposableLike_exception: typeof DisposableLike_error_internal =
-  DisposableLike_error_internal;
-
-/** @ignore */
-export const DisposableLike_isDisposed: typeof DisposableLike_isDisposed_internal =
-  DisposableLike_isDisposed_internal;
+export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 
 export type Exception = {
   readonly cause: unknown;
@@ -66,10 +51,6 @@ export interface DisposableLike {
    */
   [DisposableLike_dispose](error?: Exception): void;
 }
-
-export const createDisposable: Factory<DisposableLike> = () =>
-  createDisposableInternal();
-export const disposed: DisposableLike = disposedInternal;
 
 /** @ignore */
 export const PauseableLike_pause = Symbol("PausableLike_pause");

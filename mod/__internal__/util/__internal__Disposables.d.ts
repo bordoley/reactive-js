@@ -1,5 +1,5 @@
 import { Factory } from "../../functions.mjs";
-import { DisposableLike } from "./__internal__DisposableLike.mjs";
+import { DisposableLike } from "../../util.mjs";
 import { MutableRefLike } from "./__internal__MutableRefLike.mjs";
 import { Mixin1, Mixin } from "./__internal__Objects.mjs";
 declare const delegatingDisposableMixin: Mixin1<DisposableLike, DisposableLike>;

@@ -1,11 +1,12 @@
 import { none, pipe, raise, returns, unsafeCast } from "../../functions";
 import {
+  DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../../util";
-import { DisposableLike, isDisposed } from "./__internal__DisposableLike";
+import { isDisposed } from "./__internal__DisposableLike";
 import { Mixin, clazz, props } from "./__internal__Objects";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {

@@ -18,14 +18,6 @@
 - [DisposableOrTeardown](util.md#disposableorteardown)
 - [Exception](util.md#exception)
 
-### Variables
-
-- [disposed](util.md#disposed)
-
-### Functions
-
-- [createDisposable](util.md#createdisposable)
-
 ## Type Aliases
 
 ### DisposableOrTeardown
@@ -43,19 +35,3 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `cause` | `unknown` |
-
-## Variables
-
-### disposed
-
-• `Const` **disposed**: [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-## Functions
-
-### createDisposable
-
-▸ **createDisposable**(): [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-#### Returns
-
-[`DisposableLike`](../interfaces/util.DisposableLike.md)

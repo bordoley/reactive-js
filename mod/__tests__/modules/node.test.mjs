@@ -6,11 +6,10 @@ import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { newInstance, pipe, returns } from '../../functions.mjs';
 import { createWritableSink, createReadableSource, gzip, gunzip } from '../../integrations/node.mjs';
 import { toFlowable, concatT, toPromise, keepT, reduce, takeFirst } from '../../rx/ObservableLike.mjs';
-import { createHostScheduler } from '../../scheduling.mjs';
+import { E as createHostScheduler, f as dispose } from '../../DisposableLike-82e2991c.mjs';
 import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs';
 import { sourceFrom } from '../../streaming/StreamLike.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
-import { dispose } from '../../util/DisposableLike.mjs';
 
 testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to writable", async () => {
     const scheduler = createHostScheduler();

@@ -113,7 +113,6 @@ import {
   Exception,
   SinkLike,
   SourceLike_move,
-  disposed,
 } from "../util";
 import {
   add,
@@ -121,6 +120,7 @@ import {
   addTo,
   bindTo,
   dispose,
+  disposed,
   getException,
   isDisposed,
   onComplete,

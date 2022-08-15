@@ -192,7 +192,6 @@ import {
   SinkLike_notify,
   SourceLike,
   SourceLike_move,
-  disposed,
 } from "../util";
 import { run } from "../util/ContinuationLike";
 import {
@@ -202,6 +201,7 @@ import {
   bindTo,
   toObservable as disposableToObservable,
   dispose,
+  disposed,
   getException,
   isDisposed,
   onComplete,

@@ -16,6 +16,7 @@ import {
   ConcatAll,
   ContainerOperator,
   DistinctUntilChanged,
+  Generate,
   Keep,
   Map,
   Pairwise,
@@ -36,6 +37,7 @@ import {
   Option,
   Predicate,
   Reducer,
+  Updater,
   callWith,
   getLength,
   isSome,
@@ -159,6 +161,23 @@ export const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctU
 
 export const distinctUntilChangedT: DistinctUntilChanged<SequenceLike> = {
   distinctUntilChanged,
+};
+
+export const generate: Generate<SequenceLike>["generate"] =
+  /*@__PURE__*/ (() => {
+    const _generate =
+      <T>(generator: Updater<T>, data: T): SequenceLike<T> =>
+      () => ({ data, next: _generate(generator, generator(data)) });
+
+    return <T>(generator: Updater<T>, initialValue: Factory<T>) =>
+      () => {
+        const acc = generator(initialValue());
+        return _generate(generator, acc)();
+      };
+  })();
+
+export const generateT: Generate<SequenceLike> = {
+  generate,
 };
 
 export const keep: Keep<SequenceLike>["keep"] = /*@__PURE__*/ (() => {

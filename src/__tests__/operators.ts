@@ -32,9 +32,9 @@ import {
   ThrowIfEmpty,
   ToReadonlyArray,
   Zip,
-  emptyReadonlyArray,
 } from "../containers";
 import { contains, encodeUtf8, throws } from "../containers/ContainerLike";
+import { empty as emptyReadonlyArray } from "../containers/ReadonlyArrayLike";
 import {
   alwaysFalse,
   alwaysTrue,

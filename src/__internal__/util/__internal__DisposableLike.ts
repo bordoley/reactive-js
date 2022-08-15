@@ -6,30 +6,15 @@ import {
   isNone,
   isSome,
 } from "../../functions";
-
-export const DisposableLike_add = Symbol("DisposableLike_add");
-export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-export const DisposableLike_exception = Symbol("DisposableLike_exception");
-export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
-
-export type Exception = {
-  readonly cause: unknown;
-};
-
-export type DisposableOrTeardown =
-  | DisposableLike
-  | SideEffect1<Option<Exception>>;
-
-export interface DisposableLike {
-  readonly [DisposableLike_exception]: Option<Exception>;
-  readonly [DisposableLike_isDisposed]: boolean;
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
-  [DisposableLike_dispose](error?: Exception): void;
-}
-
+import {
+  DisposableLike,
+  DisposableLike_add,
+  DisposableLike_dispose,
+  DisposableLike_exception,
+  DisposableLike_isDisposed,
+  DisposableOrTeardown,
+  Exception,
+} from "../../util";
 /**
  * Dispose `disposable` with an optional error.
  */

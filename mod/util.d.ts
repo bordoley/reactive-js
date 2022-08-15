@@ -1,13 +1,12 @@
-import { DisposableLike_add as DisposableLike_add$1, DisposableLike_dispose as DisposableLike_dispose$1, DisposableLike_exception as DisposableLike_exception$1, DisposableLike_isDisposed as DisposableLike_isDisposed$1 } from "./__internal__/util/__internal__DisposableLike.mjs";
-import { SideEffect1, Option, Factory } from "./functions.mjs";
+import { SideEffect1, Option } from "./functions.mjs";
 /** @ignore */
-declare const DisposableLike_add: typeof DisposableLike_add$1;
+declare const DisposableLike_add: unique symbol;
 /** @ignore */
-declare const DisposableLike_dispose: typeof DisposableLike_dispose$1;
+declare const DisposableLike_dispose: unique symbol;
 /** @ignore */
-declare const DisposableLike_exception: typeof DisposableLike_exception$1;
+declare const DisposableLike_exception: unique symbol;
 /** @ignore */
-declare const DisposableLike_isDisposed: typeof DisposableLike_isDisposed$1;
+declare const DisposableLike_isDisposed: unique symbol;
 declare type Exception = {
     readonly cause: unknown;
 };
@@ -38,8 +37,6 @@ interface DisposableLike {
      */
     [DisposableLike_dispose](error?: Exception): void;
 }
-declare const createDisposable: Factory<DisposableLike>;
-declare const disposed: DisposableLike;
 /** @ignore */
 declare const PauseableLike_pause: unique symbol;
 /** @ignore */
@@ -84,4 +81,4 @@ interface EnumeratorLike<T = unknown> extends SourceLike {
     readonly [EnumeratorLike_current]: T;
     readonly [EnumeratorLike_hasCurrent]: boolean;
 }
-export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume, SinkLike, SinkLike_notify, SourceLike, SourceLike_move, createDisposable, disposed };
+export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume, SinkLike, SinkLike_notify, SourceLike, SourceLike_move };

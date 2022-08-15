@@ -51,16 +51,12 @@ import {
 } from "../scheduling";
 import { toScheduler } from "../scheduling/PrioritySchedulerLike";
 import { isInContinuation } from "../scheduling/SchedulerLike";
-import {
-  ContinuationLike,
-  DisposableLike,
-  Exception,
-  createDisposable,
-} from "../util";
+import { ContinuationLike, DisposableLike, Exception } from "../util";
 import { run } from "../util/ContinuationLike";
 import {
   addIgnoringChildErrors,
   addTo,
+  create as createDisposable,
   dispose,
   isDisposed,
   onDisposed,
