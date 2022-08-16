@@ -7,6 +7,8 @@
 ### Functions
 
 - [\_\_yield](scheduling_SchedulerLike.md#__yield)
+- [createHostScheduler](scheduling_SchedulerLike.md#createhostscheduler)
+- [createVirtualTimeScheduler](scheduling_SchedulerLike.md#createvirtualtimescheduler)
 - [getCurrentTime](scheduling_SchedulerLike.md#getcurrenttime)
 - [isInContinuation](scheduling_SchedulerLike.md#isincontinuation)
 - [requestYield](scheduling_SchedulerLike.md#requestyield)
@@ -31,6 +33,40 @@
 #### Returns
 
 `void`
+
+___
+
+### createHostScheduler
+
+▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.yieldInterval?` | `number` |
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
+
+### createVirtualTimeScheduler
+
+▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxMicroTaskTicks?` | `number` |
+
+#### Returns
+
+[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
 
 ___
 

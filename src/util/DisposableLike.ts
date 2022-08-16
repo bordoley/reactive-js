@@ -49,7 +49,7 @@ export const addToIgnoringChildErrors: <T extends DisposableLike>(
 export const bindTo: <T extends DisposableLike>(
   parent: DisposableLike,
 ) => Updater<T> = bindToInternal;
-export const create: Factory<DisposableLike> = () => createDisposableInternal();
+export const create: Factory<DisposableLike> = createDisposableInternal;
 export const dispose: <T extends DisposableLike>(e?: Exception) => Updater<T> =
   disposeInternal;
 export const disposed: DisposableLike = disposedInternal;

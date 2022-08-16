@@ -1,5 +1,5 @@
 import { SideEffect, Function1 } from "../functions.mjs";
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike, PauseableSchedulerLike, PrioritySchedulerLike } from "../scheduling.mjs";
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike, PauseableSchedulerLike, PrioritySchedulerLike, VirtualTimeSchedulerLike } from "../scheduling.mjs";
 import { ContinuationLike, DisposableLike } from "../util.mjs";
 declare const isInContinuation: (scheduler: {
     readonly [SchedulerLike_inContinuation]: boolean;
@@ -21,4 +21,10 @@ declare const schedule: (f: SideEffect | ContinuationLike, options?: {
 }) => Function1<SchedulerLike, DisposableLike>;
 declare const toPausableScheduler: Function1<SchedulerLike, PauseableSchedulerLike>;
 declare const toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
-export { __yield, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };
+declare const createHostScheduler: (options?: {
+    readonly yieldInterval?: number;
+}) => SchedulerLike;
+declare const createVirtualTimeScheduler: (options?: {
+    readonly maxMicroTaskTicks?: number;
+}) => VirtualTimeSchedulerLike;
+export { __yield, createHostScheduler, createVirtualTimeScheduler, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };

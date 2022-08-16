@@ -10,8 +10,11 @@ import {
 } from "../../__internal__/__internal__testing";
 import { Option, none, pipe, pipeLazy, raise } from "../../functions";
 import { subscribe } from "../../rx/ObservableLike";
-import { createVirtualTimeScheduler } from "../../scheduling";
-import { getCurrentTime, schedule } from "../../scheduling/SchedulerLike";
+import {
+  createVirtualTimeScheduler,
+  getCurrentTime,
+  schedule,
+} from "../../scheduling/SchedulerLike";
 import { Exception } from "../../util";
 import { run } from "../../util/ContinuationLike";
 import {

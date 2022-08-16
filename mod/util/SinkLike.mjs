@@ -1,5 +1,5 @@
 /// <reference types="./SinkLike.d.ts" />
-import { R as ReactiveContainerLike_sinkInto } from '../DisposableLike-f9476215.mjs';
+import { R as ReactiveContainerLike_sinkInto } from '../DisposableLike-45fa23bf.mjs';
 import { SinkLike_notify } from '../util.mjs';
 
 const notify = (v) => (sink) => {

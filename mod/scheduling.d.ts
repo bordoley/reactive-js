@@ -58,12 +58,6 @@ interface PrioritySchedulerLike extends DisposableLike {
 }
 interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
 }
-declare const createHostScheduler: (options?: {
-    readonly yieldInterval?: number;
-}) => SchedulerLike;
-declare const createVirtualTimeScheduler: (options?: {
-    readonly maxMicroTaskTicks?: number;
-}) => VirtualTimeSchedulerLike;
 /** @ignore */
 declare const ObserverLike_dispatcher: unique symbol;
 /** @ignore */
@@ -72,4 +66,4 @@ interface ObserverLike<T = unknown> extends SinkLike<T> {
     readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
     readonly [ObserverLike_scheduler]: SchedulerLike;
 }
-export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike, createHostScheduler, createVirtualTimeScheduler };
+export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };

@@ -1,2 +1,7 @@
 /// <reference types="./ObserverLike.d.ts" />
-export { W as getDispatcher, g as getScheduler } from '../DisposableLike-f9476215.mjs';
+import { ObserverLike_scheduler, ObserverLike_dispatcher } from '../scheduling.mjs';
+
+const getScheduler = (observer) => observer[ObserverLike_scheduler];
+const getDispatcher = (observer) => observer[ObserverLike_dispatcher];
+
+export { getDispatcher, getScheduler };

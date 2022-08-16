@@ -1,14 +1,23 @@
 /// <reference types="./scheduling.d.ts" />
-import './__internal__/__internal__env.mjs';
-import './__internal__/__internal__optionParsing.mjs';
-import './__internal__/__internal__scheduling.mjs';
-import './__internal__/scheduling/__internal__queue.mjs';
-import './__internal__/util/__internal__DisposableLike.mjs';
-import './__internal__/util/__internal__Disposables.mjs';
-import './__internal__/util/__internal__Enumerators.mjs';
-import './__internal__/util/__internal__Objects.mjs';
-import './functions.mjs';
-import './util.mjs';
-import './util/ContinuationLike.mjs';
-export { l as DispatcherLike_dispatch, D as DispatcherLike_scheduler, n as ObserverLike_dispatcher, m as ObserverLike_scheduler, N as SchedulerLike_inContinuation, P as SchedulerLike_now, T as SchedulerLike_requestYield, U as SchedulerLike_schedule, Q as SchedulerLike_shouldYield, E as createHostScheduler, w as createVirtualTimeScheduler } from './DisposableLike-f9476215.mjs';
-import './util/EnumeratorLike.mjs';
+import { SchedulerLike_inContinuation as SchedulerLike_inContinuation$1, SchedulerLike_now as SchedulerLike_now$1 } from './__internal__/__internal__scheduling.mjs';
+
+/** @ignore */
+const SchedulerLike_inContinuation = SchedulerLike_inContinuation$1;
+/** @ignore */
+const SchedulerLike_now = SchedulerLike_now$1;
+/** @ignore */
+const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
+/** @ignore */
+const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
+/** @ignore */
+const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
+/** @ignore */
+const DispatcherLike_dispatch = Symbol("DispatcherLike_dispatch");
+/** @ignore */
+const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
+/** @ignore */
+const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
+/** @ignore */
+const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
+
+export { DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike_dispatcher, ObserverLike_scheduler, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield };

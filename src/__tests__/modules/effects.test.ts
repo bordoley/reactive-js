@@ -10,7 +10,7 @@ import { __await, __memo, async } from "../../effects";
 import { isSome, pipe } from "../../functions";
 import { ObservableLike } from "../../rx";
 import { forEach, keepT, subscribe, takeLast } from "../../rx/ObservableLike";
-import { createVirtualTimeScheduler } from "../../scheduling";
+import { createVirtualTimeScheduler } from "../../scheduling/SchedulerLike";
 import { run } from "../../util/ContinuationLike";
 
 testModule(
