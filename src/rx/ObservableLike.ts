@@ -175,11 +175,13 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike,
-  createVirtualTimeScheduler,
 } from "../scheduling";
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import { getScheduler } from "../scheduling/ObserverLike";
-import { toPausableScheduler } from "../scheduling/SchedulerLike";
+import {
+  createVirtualTimeScheduler,
+  toPausableScheduler,
+} from "../scheduling/SchedulerLike";
 import { FlowMode, ToFlowable, createLiftedFlowable } from "../streaming";
 import {
   ContinuationLike,

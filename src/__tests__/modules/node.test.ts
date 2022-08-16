@@ -23,7 +23,7 @@ import {
   toFlowable,
   toPromise,
 } from "../../rx/ObservableLike";
-import { createHostScheduler } from "../../scheduling";
+import { createHostScheduler } from "../../scheduling/SchedulerLike";
 import { toObservable as flowableToObservable } from "../../streaming/FlowableLike";
 import { sourceFrom } from "../../streaming/StreamLike";
 import { stream } from "../../streaming/StreamableLike";

@@ -14,7 +14,7 @@ import {
 } from "../../rx/ObservableLike";
 import { forEach, run } from "../../rx/RunnableLike";
 import { publishTo } from "../../rx/SubjectLike";
-import { createVirtualTimeScheduler } from "../../scheduling";
+import { createVirtualTimeScheduler } from "../../scheduling/SchedulerLike";
 import { run as runContinuation } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
 

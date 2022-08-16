@@ -1,2 +1,11 @@
 /// <reference types="./DispatcherLike.d.ts" />
-export { B as dispatch, C as dispatchTo, I as getScheduler } from '../DisposableLike-f9476215.mjs';
+import { DispatcherLike_dispatch, DispatcherLike_scheduler } from '../scheduling.mjs';
+
+const dispatch = (v) => dispatcher => {
+    dispatcher[DispatcherLike_dispatch](v);
+    return dispatcher;
+};
+const dispatchTo = (dispatcher) => v => dispatcher[DispatcherLike_dispatch](v);
+const getScheduler = (dispatcher) => dispatcher[DispatcherLike_scheduler];
+
+export { dispatch, dispatchTo, getScheduler };

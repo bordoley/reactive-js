@@ -6,7 +6,7 @@ import { createInstanceFactory, mixin, include, init, props } from '../__interna
 import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
 import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
-import { i as isDisposed, f as dispose } from '../DisposableLike-f9476215.mjs';
+import { i as isDisposed, f as dispose } from '../DisposableLike-45fa23bf.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
 

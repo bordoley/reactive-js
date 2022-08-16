@@ -18,11 +18,6 @@
 - [PrioritySchedulerOptions](scheduling.md#priorityscheduleroptions)
 - [SchedulerOptions](scheduling.md#scheduleroptions)
 
-### Functions
-
-- [createHostScheduler](scheduling.md#createhostscheduler)
-- [createVirtualTimeScheduler](scheduling.md#createvirtualtimescheduler)
-
 ## Type Aliases
 
 ### PrioritySchedulerOptions
@@ -47,37 +42,3 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `delay?` | `number` |
-
-## Functions
-
-### createHostScheduler
-
-▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.yieldInterval?` | `number` |
-
-#### Returns
-
-[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
-
-___
-
-### createVirtualTimeScheduler
-
-▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.maxMicroTaskTicks?` | `number` |
-
-#### Returns
-
-[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)

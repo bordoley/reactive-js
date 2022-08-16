@@ -6,8 +6,8 @@ import {
 } from "../../__internal__/__internal__testing";
 import { pipe, returns } from "../../functions";
 import { forEach, subscribe } from "../../rx/ObservableLike";
-import { createVirtualTimeScheduler } from "../../scheduling";
 import { dispatch } from "../../scheduling/DispatcherLike";
+import { createVirtualTimeScheduler } from "../../scheduling/SchedulerLike";
 import { createStateStore } from "../../streaming";
 import { stream } from "../../streaming/StreamableLike";
 import { run } from "../../util/ContinuationLike";

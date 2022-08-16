@@ -83,12 +83,13 @@ import {
   toReadonlyArrayT,
   zipT,
 } from "../../rx/RunnableObservableLike";
+import { dispatch, dispatchTo } from "../../scheduling/DispatcherLike";
 import {
   createHostScheduler,
   createVirtualTimeScheduler,
-} from "../../scheduling";
-import { dispatch, dispatchTo } from "../../scheduling/DispatcherLike";
-import { getCurrentTime, schedule } from "../../scheduling/SchedulerLike";
+  getCurrentTime,
+  schedule,
+} from "../../scheduling/SchedulerLike";
 import { stream } from "../../streaming/StreamableLike";
 import { run } from "../../util/ContinuationLike";
 import { dispose, getException, isDisposed } from "../../util/DisposableLike";
