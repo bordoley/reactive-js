@@ -1,8 +1,4 @@
 import {
-  SchedulerLike_inContinuation as SchedulerLike_inContinuation_internal,
-  SchedulerLike_now as SchedulerLike_now_internal,
-} from "./__internal__/__internal__scheduling";
-import {
   ContinuationLike,
   DisposableLike,
   PauseableLike,
@@ -10,12 +6,12 @@ import {
 } from "./util";
 
 /** @ignore */
-export const SchedulerLike_inContinuation: typeof SchedulerLike_inContinuation_internal =
-  SchedulerLike_inContinuation_internal;
+export const SchedulerLike_inContinuation = Symbol(
+  "SchedulerLike_inContinuation",
+);
 
 /** @ignore */
-export const SchedulerLike_now: typeof SchedulerLike_now_internal =
-  SchedulerLike_now_internal;
+export const SchedulerLike_now = Symbol("SchedulerLike_now");
 
 /** @ignore */
 export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");

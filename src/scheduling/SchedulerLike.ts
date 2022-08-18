@@ -1,10 +1,6 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/__internal__env";
 import { getDelay } from "../__internal__/__internal__optionParsing";
 import {
-  getCurrentTime as getCurrentTimeInternal,
-  isInContinuation as isInContinuationInternal,
-} from "../__internal__/__internal__scheduling";
-import {
   QueueLike,
   createPriorityQueue,
 } from "../__internal__/scheduling/__internal__queue";
@@ -77,12 +73,13 @@ import {
 import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
 import { pause } from "../util/PauseableLike";
 
-export const isInContinuation: (scheduler: {
+export const isInContinuation = (scheduler: {
   readonly [SchedulerLike_inContinuation]: boolean;
-}) => boolean = isInContinuationInternal;
-export const getCurrentTime: (scheduler: {
+}): boolean => scheduler[SchedulerLike_inContinuation];
+
+export const getCurrentTime = (scheduler: {
   readonly [SchedulerLike_now]: number;
-}) => number = getCurrentTimeInternal;
+}): number => scheduler[SchedulerLike_now];
 
 export const requestYield = (scheduler: {
   [SchedulerLike_requestYield](): void;

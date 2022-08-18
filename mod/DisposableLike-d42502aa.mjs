@@ -7,18 +7,17 @@ import './containers.mjs';
 import { dispatch } from './scheduling/DispatcherLike.mjs';
 import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
 import { MAX_SAFE_INTEGER } from './__internal__/__internal__env.mjs';
-import { isInContinuation as isInContinuation$1, getCurrentTime as getCurrentTime$1 } from './__internal__/__internal__scheduling.mjs';
 import { createPriorityQueue } from './__internal__/scheduling/__internal__queue.mjs';
 import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current } from './__internal__/util/__internal__MutableRefLike.mjs';
-import { SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_now } from './scheduling.mjs';
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from './scheduling.mjs';
 import { ContinuationLike_run, EnumeratorLike_current, SourceLike_move, PauseableLike_pause, PauseableLike_resume, SinkLike_notify } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
 import { move, hasCurrent, getCurrent } from './util/EnumeratorLike.mjs';
 import { pause } from './util/PauseableLike.mjs';
 
-const isInContinuation = isInContinuation$1;
-const getCurrentTime = getCurrentTime$1;
+const isInContinuation = (scheduler) => scheduler[SchedulerLike_inContinuation];
+const getCurrentTime = (scheduler) => scheduler[SchedulerLike_now];
 const requestYield = (scheduler) => scheduler[SchedulerLike_requestYield]();
 const shouldYield = (scheduler) => scheduler[SchedulerLike_shouldYield];
 const isYieldError = (e) => e instanceof YieldError;
@@ -646,4 +645,4 @@ const toObservable = () => compose(addTo, createObservable);
  */
 const toErrorHandler = (disposable) => cause => pipe(disposable, dispose({ cause }));
 
-export { generateEnumerableObservableT as $, MulticastObservableLike_replay as A, disposed as B, bindTo as C, neverObservable as D, toPausableScheduler as E, toErrorHandler as F, isInContinuation as G, shouldYield as H, requestYield as I, toAbortSignal as J, toPriorityScheduler as K, deferEnumerableObservable as L, MulticastObservableLike_observerCount as M, deferEnumerableObservableT as N, ObservableLike_isEnumerable as O, deferObservable as P, deferObservableT as Q, ReactiveContainerLike_sinkInto as R, SubjectLike_publish as S, deferRunnableObservable as T, deferRunnable as U, emptyEnumerableObservableT as V, emptyObservableT as W, emptyRunnableObservableT as X, emptyRunnable as Y, emptyRunnableT as Z, __yield as _, ObservableLike_isRunnable as a, generateObservableT as a0, generateRunnableObservableT as a1, generateRunnable as a2, generateRunnableT as a3, neverEnumerableObservableT as a4, neverObservableT as a5, neverRunnableObservableT as a6, neverRunnable as a7, neverRunnableT as a8, createEnumerableObservable as b, createSubject as c, createRunnableObservable as d, createObservable as e, dispose as f, addTo as g, createRunnable as h, isDisposed as i, onDisposed as j, addToIgnoringChildErrors as k, onError as l, create as m, addIgnoringChildErrors as n, onComplete as o, getException as p, add as q, createVirtualTimeScheduler as r, schedule as s, toObservable as t, getCurrentTime as u, generateObservable as v, emptyObservable as w, createHostScheduler as x, deferRunnableObservableT as y, deferRunnableT as z };
+export { generateEnumerableObservableT as $, MulticastObservableLike_replay as A, disposed as B, bindTo as C, neverObservable as D, isInContinuation as E, toPausableScheduler as F, toErrorHandler as G, shouldYield as H, requestYield as I, toAbortSignal as J, toPriorityScheduler as K, deferEnumerableObservable as L, MulticastObservableLike_observerCount as M, deferEnumerableObservableT as N, ObservableLike_isEnumerable as O, deferObservable as P, deferObservableT as Q, ReactiveContainerLike_sinkInto as R, SubjectLike_publish as S, deferRunnableObservable as T, deferRunnable as U, emptyEnumerableObservableT as V, emptyObservableT as W, emptyRunnableObservableT as X, emptyRunnable as Y, emptyRunnableT as Z, __yield as _, ObservableLike_isRunnable as a, generateObservableT as a0, generateRunnableObservableT as a1, generateRunnable as a2, generateRunnableT as a3, neverEnumerableObservableT as a4, neverObservableT as a5, neverRunnableObservableT as a6, neverRunnable as a7, neverRunnableT as a8, createEnumerableObservable as b, createSubject as c, createRunnableObservable as d, createObservable as e, dispose as f, addTo as g, createRunnable as h, isDisposed as i, onDisposed as j, addToIgnoringChildErrors as k, onError as l, create as m, addIgnoringChildErrors as n, onComplete as o, getException as p, add as q, createVirtualTimeScheduler as r, schedule as s, toObservable as t, getCurrentTime as u, generateObservable as v, emptyObservable as w, createHostScheduler as x, deferRunnableObservableT as y, deferRunnableT as z };

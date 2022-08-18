@@ -1,10 +1,8 @@
 /// <reference types="./scheduling.d.ts" />
-import { SchedulerLike_inContinuation as SchedulerLike_inContinuation$1, SchedulerLike_now as SchedulerLike_now$1 } from './__internal__/__internal__scheduling.mjs';
-
 /** @ignore */
-const SchedulerLike_inContinuation = SchedulerLike_inContinuation$1;
+const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
 /** @ignore */
-const SchedulerLike_now = SchedulerLike_now$1;
+const SchedulerLike_now = Symbol("SchedulerLike_now");
 /** @ignore */
 const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
 /** @ignore */
