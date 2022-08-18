@@ -3,7 +3,7 @@ import { testModule, describe as createDescribe, test as createTest, expectArray
 import { pipe, returns } from '../../functions.mjs';
 import { forEach, subscribe } from '../../rx/ObservableLike.mjs';
 import { dispatch } from '../../scheduling/DispatcherLike.mjs';
-import { r as createVirtualTimeScheduler, f as dispose } from '../../DisposableLike-45fa23bf.mjs';
+import { r as createVirtualTimeScheduler, f as dispose } from '../../DisposableLike-d42502aa.mjs';
 import { createStateStore } from '../../streaming.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';

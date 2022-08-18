@@ -1,9 +1,8 @@
-import { SchedulerLike_inContinuation as SchedulerLike_inContinuation$1, SchedulerLike_now as SchedulerLike_now$1 } from "./__internal__/__internal__scheduling.mjs";
 import { DisposableLike, ContinuationLike, PauseableLike, SinkLike } from "./util.mjs";
 /** @ignore */
-declare const SchedulerLike_inContinuation: typeof SchedulerLike_inContinuation$1;
+declare const SchedulerLike_inContinuation: unique symbol;
 /** @ignore */
-declare const SchedulerLike_now: typeof SchedulerLike_now$1;
+declare const SchedulerLike_now: unique symbol;
 /** @ignore */
 declare const SchedulerLike_requestYield: unique symbol;
 /** @ignore */

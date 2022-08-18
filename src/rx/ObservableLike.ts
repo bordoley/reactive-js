@@ -1,5 +1,4 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/__internal__env";
-import { isInContinuation } from "../__internal__/__internal__scheduling";
 import {
   TReactive,
   createDecodeWithCharsetOperator,
@@ -180,6 +179,7 @@ import { dispatchTo } from "../scheduling/DispatcherLike";
 import { getScheduler } from "../scheduling/ObserverLike";
 import {
   createVirtualTimeScheduler,
+  isInContinuation,
   toPausableScheduler,
 } from "../scheduling/SchedulerLike";
 import { FlowMode, ToFlowable, createLiftedFlowable } from "../streaming";
