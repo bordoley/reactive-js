@@ -2,16 +2,16 @@
 import { testModule, test as createTest, expectArrayEquals, expectEquals } from '../../__internal__/__internal__testing.mjs';
 import { toRunnable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
-import { t as createVirtualTimeScheduler, c as createSubject, f as dispose } from '../../rx-fdbb13e3.mjs';
 import { getObserverCount } from '../../rx/MulticastObservableLike.mjs';
 import { forEach as forEach$1, subscribe } from '../../rx/ObservableLike.mjs';
 import { forEach, run } from '../../rx/RunnableLike.mjs';
-import { publishTo } from '../../rx/SubjectLike.mjs';
+import { create, publishTo } from '../../rx/SubjectLike.mjs';
+import { r as createVirtualTimeScheduler, e as dispose } from '../../rx-31e22181.mjs';
 import { run as run$1 } from '../../util/ContinuationLike.mjs';
 
 testModule("SubjectLike", createTest("with replay", () => {
     const scheduler = createVirtualTimeScheduler();
-    const subject = createSubject({ replay: 2 });
+    const subject = create({ replay: 2 });
     pipe([1, 2, 3, 4], toRunnable(), forEach(publishTo(subject)), run());
     pipe(subject, dispose());
     const result = [];
@@ -22,7 +22,7 @@ testModule("SubjectLike", createTest("with replay", () => {
     pipe(result, expectArrayEquals([3, 4]));
 }), createTest("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
-    const subject = createSubject();
+    const subject = create();
     pipe(subject, getObserverCount, expectEquals(0));
     const sub1 = pipe(subject, subscribe(scheduler));
     pipe(subject, getObserverCount, expectEquals(1));

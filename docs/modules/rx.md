@@ -46,7 +46,6 @@
 - [createObservable](rx.md#createobservable)
 - [createRunnable](rx.md#createrunnable)
 - [createRunnableObservable](rx.md#createrunnableobservable)
-- [createSubject](rx.md#createsubject)
 - [deferEnumerableObservable](rx.md#deferenumerableobservable)
 - [deferObservable](rx.md#deferobservable)
 - [deferRunnable](rx.md#deferrunnable)
@@ -294,29 +293,6 @@ ___
 #### Returns
 
 [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-___
-
-### createSubject
-
-▸ **createSubject**<`T`\>(`options?`): [`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>
 
 ___
 

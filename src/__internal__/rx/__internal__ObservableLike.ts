@@ -41,10 +41,13 @@ import {
   createEnumerableObservable,
   createObservable,
   createRunnableObservable,
-  createSubject,
 } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
-import { publish, publishTo } from "../../rx/SubjectLike";
+import {
+  create as createSubject,
+  publish,
+  publishTo,
+} from "../../rx/SubjectLike";
 import { ObserverLike, SchedulerLike } from "../../scheduling";
 import { getScheduler } from "../../scheduling/ObserverLike";
 import {

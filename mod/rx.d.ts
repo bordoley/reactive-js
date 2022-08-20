@@ -64,9 +64,6 @@ declare const createEnumerableObservable: <T>(f: SideEffect1<ObserverLike<T>>) =
 declare const createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 declare const createRunnableObservable: <T>(f: SideEffect1<ObserverLike<T>>) => RunnableObservableLike<T>;
 declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
-declare const createSubject: <T>(options?: {
-    replay?: number;
-}) => SubjectLike<T>;
 declare const deferEnumerableObservable: Defer<EnumerableObservableLike>["defer"];
 declare const deferEnumerableObservableT: Defer<EnumerableObservableLike>;
 declare const deferObservable: Defer<ObservableLike>["defer"];
@@ -127,4 +124,4 @@ declare const neverObservableT: Never<ObservableLike>;
 declare const neverRunnableObservableT: Never<RunnableObservableLike>;
 declare const neverRunnable: Never<RunnableLike>["never"];
 declare const neverRunnableT: Never<RunnableLike>;
-export { AsyncReducer, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable, createEnumerableObservable, createObservable, createRunnable, createRunnableObservable, createSubject, deferEnumerableObservable, deferEnumerableObservableT, deferObservable, deferObservableT, deferRunnable, deferRunnableObservable, deferRunnableObservableT, deferRunnableT, emptyEnumerableObservableT, emptyObservable, emptyObservableT, emptyRunnable, emptyRunnableObservableT, emptyRunnableT, generateEnumerableObservableT, generateObservable, generateObservableT, generateRunnable, generateRunnableObservableT, generateRunnableT, neverEnumerableObservableT, neverObservable, neverObservableT, neverRunnable, neverRunnableObservableT, neverRunnableT };
+export { AsyncReducer, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable, createEnumerableObservable, createObservable, createRunnable, createRunnableObservable, deferEnumerableObservable, deferEnumerableObservableT, deferObservable, deferObservableT, deferRunnable, deferRunnableObservable, deferRunnableObservableT, deferRunnableT, emptyEnumerableObservableT, emptyObservable, emptyObservableT, emptyRunnable, emptyRunnableObservableT, emptyRunnableT, generateEnumerableObservableT, generateObservable, generateObservableT, generateRunnable, generateRunnableObservableT, generateRunnableT, neverEnumerableObservableT, neverObservable, neverObservableT, neverRunnable, neverRunnableObservableT, neverRunnableT };
