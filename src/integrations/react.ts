@@ -37,9 +37,9 @@ import {
   pipeLazy,
   unsafeCast,
 } from "../functions";
-import { ObservableLike, SubjectLike, createSubject } from "../rx";
+import { ObservableLike, SubjectLike } from "../rx";
 import { distinctUntilChanged, forEach, subscribe } from "../rx/ObservableLike";
-import { publish } from "../rx/SubjectLike";
+import { create as createSubject, publish } from "../rx/SubjectLike";
 import {
   PrioritySchedulerLike,
   SchedulerLike,

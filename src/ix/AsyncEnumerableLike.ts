@@ -77,7 +77,6 @@ import {
   ToObservable,
   createObservable,
   createRunnableObservable,
-  createSubject,
 } from "../rx";
 import { getObserverCount, getReplay } from "../rx/MulticastObservableLike";
 import {
@@ -95,7 +94,7 @@ import {
   takeWhile as takeWhileObs,
 } from "../rx/ObservableLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
-import { publish } from "../rx/SubjectLike";
+import { create as createSubject, publish } from "../rx/SubjectLike";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,

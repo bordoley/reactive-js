@@ -10,11 +10,11 @@ import { pipe, none, unsafeCast, getLength, compose, increment, returns, pipeUns
 import { SourceLike_move, InteractiveContainerLike_interact } from '../ix.mjs';
 import { hasCurrent, getCurrent } from './EnumeratorLike.mjs';
 import { move } from './SourceLike.mjs';
-import { c as createSubject, r as add, g as addTo, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, M as MulticastObservableLike_observerCount, m as MulticastObservableLike_replay, R as ReactiveContainerLike_sinkInto, e as createObservable, d as createRunnableObservable } from '../rx-fdbb13e3.mjs';
+import { q as add, f as addTo, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, h as MulticastObservableLike_observerCount, M as MulticastObservableLike_replay, R as ReactiveContainerLike_sinkInto, d as createObservable, b as createRunnableObservable } from '../rx-31e22181.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
 import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
-import { publish } from '../rx/SubjectLike.mjs';
+import { create, publish } from '../rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
 import { dispatch, getScheduler } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler as getScheduler$1 } from '../scheduling/ObserverLike.mjs';
@@ -59,7 +59,7 @@ const createLiftedAsyncEnumerator = (() => {
         init(disposableMixin, instance);
         instance.op = op;
         instance[DispatcherLike_scheduler] = scheduler;
-        const subject = createSubject();
+        const subject = create();
         const observable = pipe(subject, op, multicast(scheduler, { replay }));
         instance.subject = subject;
         instance.observable = observable;

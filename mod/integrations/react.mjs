@@ -5,11 +5,11 @@ import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { none, isSome, pipe, pipeLazy, ignore, unsafeCast } from '../functions.mjs';
-import { l as onError, f as dispose, c as createSubject, E as isInContinuation, p as addIgnoringChildErrors, i as isDisposed, n as create, j as onDisposed, g as addTo } from '../rx-fdbb13e3.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
-import { publish } from '../rx/SubjectLike.mjs';
+import { create, publish } from '../rx/SubjectLike.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { toScheduler } from '../scheduling/PrioritySchedulerLike.mjs';
+import { m as onError, e as dispose, D as isInContinuation, j as addIgnoringChildErrors, i as isDisposed, n as create$1, o as onDisposed, f as addTo } from '../rx-31e22181.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 
 /**
@@ -40,7 +40,7 @@ const useObservable = (observable, options = {}) => {
     }
     return state;
 };
-const createReplaySubject = () => createSubject({ replay: 1 });
+const createReplaySubject = () => create({ replay: 1 });
 const createComponent = (fn, options = {}) => {
     const ObservableComponent = (props) => {
         var _a;
@@ -84,7 +84,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
                 this[SchedulerLike_inContinuation] = false;
             };
             const callbackNode = unstable_scheduleCallback(priority, callback, delay > 0 ? { delay } : none);
-            const callbackNodeDisposable = pipe(create(), onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), addTo(continuation));
+            const callbackNodeDisposable = pipe(create$1(), onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), addTo(continuation));
         },
     }));
 })();

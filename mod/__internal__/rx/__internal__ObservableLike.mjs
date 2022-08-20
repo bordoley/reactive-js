@@ -1,9 +1,9 @@
 /// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
 import { compose, isTrue, pipeUnsafe, newInstance, pipe, partial, isSome, getLength, none, isEmpty } from '../../functions.mjs';
-import { O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, R as ReactiveContainerLike_sinkInto, c as createSubject, b as createEnumerableObservable, d as createRunnableObservable, e as createObservable } from '../../rx-fdbb13e3.mjs';
+import { O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, R as ReactiveContainerLike_sinkInto, c as createEnumerableObservable, b as createRunnableObservable, d as createObservable } from '../../rx-31e22181.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
-import { publishTo, publish } from '../../rx/SubjectLike.mjs';
+import { create, publishTo, publish } from '../../rx/SubjectLike.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
 import { sourceFrom, notifySink, notify } from '../../util/SinkLike.mjs';
@@ -129,7 +129,7 @@ const createMergeAll = (lift) => {
 const createScanAsync = (createObservable) => {
     return (scanner, initialValue) => observable => {
         const onSink = (observer) => {
-            const accFeedbackStream = pipe(createSubject(), addTo(observer));
+            const accFeedbackStream = pipe(create(), addTo(observer));
             pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), 
             // switchAll
             switchAll(), forEach(publishTo(accFeedbackStream)), onSubscribe(() => pipe(accFeedbackStream, publish(initialValue()))), sinkInto(observer));
@@ -209,7 +209,7 @@ const mergeT = {
  */
 const multicast = (scheduler, options = {}) => observable => {
     const { replay = 0 } = options;
-    const subject = createSubject({ replay });
+    const subject = create({ replay });
     pipe(observable, forEach(publishTo(subject)), subscribe(scheduler), bindTo(subject));
     return subject;
 };

@@ -1,13 +1,12 @@
 import { getDelay, hasDelay } from './__internal__/__internal__optionParsing.mjs';
 import { add as add$1, addIgnoringChildErrors as addIgnoringChildErrors$1, addTo as addTo$1, addToIgnoringChildErrors as addToIgnoringChildErrors$1, bindTo as bindTo$1, dispose as dispose$1, getException as getException$1, isDisposed as isDisposed$1, onDisposed as onDisposed$1, onComplete as onComplete$1, onError as onError$1 } from './__internal__/util/__internal__DisposableLike.mjs';
-import { createDisposable, disposed as disposed$1, disposableMixin, disposableRefMixin } from './__internal__/util/__internal__Disposables.mjs';
 import { createInstanceFactory, mixin, include, init, props } from './__internal__/util/__internal__Objects.mjs';
 import './containers.mjs';
-import { newInstance, pipe, compose, none, isSome, isNone, raise, max, unsafeCast, getLength, pipeLazy, ignore } from './functions.mjs';
-import { dispatch } from './scheduling/DispatcherLike.mjs';
-import { getDispatcher, getScheduler } from './scheduling/ObserverLike.mjs';
+import { newInstance, pipe, compose, none, isSome, isNone, raise, max, unsafeCast, pipeLazy, ignore } from './functions.mjs';
+import { getScheduler } from './scheduling/ObserverLike.mjs';
 import { MAX_SAFE_INTEGER } from './__internal__/__internal__env.mjs';
 import { createPriorityQueue } from './__internal__/scheduling/__internal__queue.mjs';
+import { createDisposable, disposed as disposed$1, disposableMixin, disposableRefMixin } from './__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current } from './__internal__/util/__internal__MutableRefLike.mjs';
 import { EnumeratorLike_current, SourceLike_move } from './ix.mjs';
@@ -492,63 +491,6 @@ const createRunnable = /*@__PURE__*/ (() => {
         },
     }));
 })();
-const createSubject = /*@__PURE__*/ (() => {
-    const createSubjectInstance = createInstanceFactory(mixin(include(disposableMixin), function Subject(instance, replay) {
-        init(disposableMixin, instance);
-        instance[MulticastObservableLike_replay] = replay;
-        instance.observers = newInstance(Set);
-        instance.replayed = [];
-        return instance;
-    }, props({
-        [MulticastObservableLike_replay]: 0,
-        observers: none,
-        replayed: none,
-    }), {
-        [ObservableLike_isEnumerable]: false,
-        [ObservableLike_isRunnable]: false,
-        get [MulticastObservableLike_observerCount]() {
-            unsafeCast(this);
-            return this.observers.size;
-        },
-        [SubjectLike_publish](next) {
-            if (!isDisposed$1(this)) {
-                const { replayed } = this;
-                const replay = this[MulticastObservableLike_replay];
-                if (replay > 0) {
-                    replayed.push(next);
-                    if (getLength(replayed) > replay) {
-                        replayed.shift();
-                    }
-                }
-                for (const observer of this.observers) {
-                    pipe(observer, getDispatcher, dispatch(next));
-                }
-            }
-        },
-        [ReactiveContainerLike_sinkInto](observer) {
-            if (!isDisposed$1(this)) {
-                const { observers } = this;
-                observers.add(observer);
-                pipe(observer, onDisposed$1(_ => {
-                    observers.delete(observer);
-                }));
-            }
-            const dispatcher = getDispatcher(observer);
-            // The idea here is that an onSubscribe function may
-            // call next from unscheduled sources such as event handlers.
-            // So we marshall those events back to the scheduler.
-            for (const next of this.replayed) {
-                pipe(dispatcher, dispatch(next));
-            }
-            pipe(this, addIgnoringChildErrors$1(dispatcher));
-        },
-    }));
-    return (options) => {
-        const { replay: replayOption = 0 } = options !== null && options !== void 0 ? options : {};
-        const replay = max(replayOption, 0);
-        return createSubjectInstance(replay);
-    };
-})();
 const deferObservableImpl = (factory, isEnumerable, isRunnable) => createObservableImpl(observer => {
     factory()[ReactiveContainerLike_sinkInto](observer);
 }, isEnumerable, isRunnable);
@@ -646,4 +588,4 @@ const neverRunnableT = {
     never: neverRunnable,
 };
 
-export { generateEnumerableObservableT as $, deferRunnableT as A, disposed as B, bindTo as C, neverObservable as D, isInContinuation as E, toPausableScheduler as F, toErrorHandler as G, shouldYield as H, requestYield as I, toAbortSignal as J, toPriorityScheduler as K, deferEnumerableObservable as L, MulticastObservableLike_observerCount as M, deferEnumerableObservableT as N, ObservableLike_isEnumerable as O, deferObservable as P, deferObservableT as Q, ReactiveContainerLike_sinkInto as R, SubjectLike_publish as S, deferRunnableObservable as T, deferRunnable as U, emptyEnumerableObservableT as V, emptyObservableT as W, emptyRunnableObservableT as X, emptyRunnable as Y, emptyRunnableT as Z, __yield as _, ObservableLike_isRunnable as a, generateObservableT as a0, generateRunnableObservableT as a1, generateRunnable as a2, generateRunnableT as a3, neverEnumerableObservableT as a4, neverObservableT as a5, neverRunnableObservableT as a6, neverRunnable as a7, neverRunnableT as a8, createEnumerableObservable as b, createSubject as c, createRunnableObservable as d, createObservable as e, dispose as f, addTo as g, createRunnable as h, isDisposed as i, onDisposed as j, addToIgnoringChildErrors as k, onError as l, MulticastObservableLike_replay as m, create as n, onComplete as o, addIgnoringChildErrors as p, getException as q, add as r, schedule as s, createVirtualTimeScheduler as t, toObservable as u, getCurrentTime as v, generateObservable as w, emptyObservable as x, createHostScheduler as y, deferRunnableObservableT as z };
+export { generateObservableT as $, disposed as A, bindTo as B, neverObservable as C, isInContinuation as D, toPausableScheduler as E, toErrorHandler as F, shouldYield as G, requestYield as H, toAbortSignal as I, toPriorityScheduler as J, deferEnumerableObservable as K, deferEnumerableObservableT as L, MulticastObservableLike_replay as M, deferObservable as N, ObservableLike_isEnumerable as O, deferObservableT as P, deferRunnableObservable as Q, ReactiveContainerLike_sinkInto as R, SubjectLike_publish as S, deferRunnable as T, emptyEnumerableObservableT as U, emptyObservableT as V, emptyRunnableObservableT as W, emptyRunnable as X, emptyRunnableT as Y, generateEnumerableObservableT as Z, __yield as _, ObservableLike_isRunnable as a, generateRunnableObservableT as a0, generateRunnable as a1, generateRunnableT as a2, neverEnumerableObservableT as a3, neverObservableT as a4, neverRunnableObservableT as a5, neverRunnable as a6, neverRunnableT as a7, createRunnableObservable as b, createEnumerableObservable as c, createObservable as d, dispose as e, addTo as f, createRunnable as g, MulticastObservableLike_observerCount as h, isDisposed as i, addIgnoringChildErrors as j, onComplete as k, addToIgnoringChildErrors as l, onError as m, create as n, onDisposed as o, getException as p, add as q, createVirtualTimeScheduler as r, schedule as s, toObservable as t, getCurrentTime as u, generateObservable as v, emptyObservable as w, createHostScheduler as x, deferRunnableObservableT as y, deferRunnableT as z };

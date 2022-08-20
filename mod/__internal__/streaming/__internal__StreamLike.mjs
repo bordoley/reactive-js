@@ -1,9 +1,9 @@
 /// <reference types="./__internal__StreamLike.d.ts" />
 import { returns, pipe, none, unsafeCast } from '../../functions.mjs';
-import { c as createSubject, M as MulticastObservableLike_observerCount, m as MulticastObservableLike_replay, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, R as ReactiveContainerLike_sinkInto } from '../../rx-fdbb13e3.mjs';
+import { h as MulticastObservableLike_observerCount, M as MulticastObservableLike_replay, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, R as ReactiveContainerLike_sinkInto } from '../../rx-31e22181.mjs';
 import { getObserverCount, getReplay } from '../../rx/MulticastObservableLike.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
-import { publish } from '../../rx/SubjectLike.mjs';
+import { create, publish } from '../../rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../scheduling.mjs';
 import { multicast } from '../rx/__internal__ObservableLike.mjs';
 import { add } from '../util/__internal__DisposableLike.mjs';
@@ -12,7 +12,7 @@ import { mixin, include, init, props, createInstanceFactory } from '../util/__in
 
 const streamMixin = /*@__PURE__*/ (() => {
     return returns(mixin(include(delegatingDisposableMixin), function Stream(instance, op, scheduler, replay) {
-        const subject = createSubject({ replay });
+        const subject = create({ replay });
         init(delegatingDisposableMixin, instance, subject);
         instance[DispatcherLike_scheduler] = scheduler;
         instance.subject = subject;

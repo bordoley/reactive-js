@@ -6,14 +6,13 @@ import {
 } from "../../__internal__/__internal__testing";
 import { toRunnable as arrayToRunnable } from "../../containers/ReadonlyArrayLike";
 import { pipe } from "../../functions";
-import { createSubject } from "../../rx";
 import { getObserverCount } from "../../rx/MulticastObservableLike";
 import {
   forEach as forEachObservable,
   subscribe,
 } from "../../rx/ObservableLike";
 import { forEach, run } from "../../rx/RunnableLike";
-import { publishTo } from "../../rx/SubjectLike";
+import { create as createSubject, publishTo } from "../../rx/SubjectLike";
 import { createVirtualTimeScheduler } from "../../scheduling/SchedulerLike";
 import { run as runContinuation } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
