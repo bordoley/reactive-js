@@ -1,4 +1,4 @@
-import { SourceLike, SourceLike_move } from "../util";
+import { SourceLike, SourceLike_move } from "../ix";
 
 export const move = <
   TSource extends {

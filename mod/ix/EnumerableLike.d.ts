@@ -1,8 +1,7 @@
 import { Buffer, ConcatAll, Concat, DistinctUntilChanged, Empty, ForEach, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
 import { Function1 } from "../functions.mjs";
-import { EnumerableLike, ToEnumerable } from "../ix.mjs";
+import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix.mjs";
 import { ToObservable, ToRunnable, EnumerableObservableLike, RunnableObservableLike } from "../rx.mjs";
-import { EnumeratorLike } from "../util.mjs";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
 declare const buffer: Buffer<EnumerableLike>["buffer"];
 declare const bufferT: Buffer<EnumerableLike>;

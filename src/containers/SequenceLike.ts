@@ -47,12 +47,12 @@ import {
   returns,
   strictEquality,
 } from "../functions";
-import { ToEnumerable } from "../ix";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   SourceLike_move,
-} from "../util";
+  ToEnumerable,
+} from "../ix";
 import { dispose, isDisposed } from "../util/DisposableLike";
 import { keepType } from "./ContainerLike";
 import {

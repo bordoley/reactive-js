@@ -1,6 +1,6 @@
 /// <reference types="./__internal__Enumerators.d.ts" />
 import { pipe, none, unsafeCast, raise, returns } from '../../functions.mjs';
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../util.mjs';
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../ix.mjs';
 import { isDisposed } from './__internal__DisposableLike.mjs';
 import { mixin, props } from './__internal__Objects.mjs';
 

@@ -2,7 +2,20 @@ import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulCon
 import { Function1 } from "./functions.mjs";
 import { SchedulerLike } from "./scheduling.mjs";
 import { StreamLike, StreamableLike } from "./streaming.mjs";
-import { DisposableLike, EnumeratorLike, SourceLike } from "./util.mjs";
+import { DisposableLike } from "./util.mjs";
+/** @ignore */
+declare const SourceLike_move: unique symbol;
+interface SourceLike extends DisposableLike {
+    [SourceLike_move](): void;
+}
+/** @ignore */
+declare const EnumeratorLike_current: unique symbol;
+/** @ignore */
+declare const EnumeratorLike_hasCurrent: unique symbol;
+interface EnumeratorLike<T = unknown> extends SourceLike {
+    readonly [EnumeratorLike_current]: T;
+    readonly [EnumeratorLike_hasCurrent]: boolean;
+}
 /** @ignore */
 declare const InteractiveContainerLike_interact: unique symbol;
 interface InteractiveContainerLike<TSource extends DisposableLike, TCtx = void> extends StatefulContainerLike {
@@ -27,4 +40,4 @@ declare type ToAsyncEnumerable<C extends ContainerLike, TOptions = never> = Cont
 declare type ToEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };
-export { AsyncEnumerableLike, AsyncEnumeratorLike, EnumerableLike, InteractiveContainerLike, InteractiveContainerLike_interact, ToAsyncEnumerable, ToEnumerable };
+export { AsyncEnumerableLike, AsyncEnumeratorLike, EnumerableLike, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerLike, InteractiveContainerLike_interact, SourceLike, SourceLike_move, ToAsyncEnumerable, ToEnumerable };

@@ -313,7 +313,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): (`enumerable`: [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>) => [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\>
+▸ **enumerate**<`T`\>(): (`enumerable`: [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>) => [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`\>
 
 #### Type parameters
 
@@ -325,7 +325,7 @@ ___
 
 `fn`
 
-▸ (`enumerable`): [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\>
+▸ (`enumerable`): [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`\>
 
 ##### Parameters
 
@@ -335,7 +335,7 @@ ___
 
 ##### Returns
 
-[`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\>
+[`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`\>
 
 ___
 

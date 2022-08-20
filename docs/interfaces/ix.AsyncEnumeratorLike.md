@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`SourceLike`](util.SourceLike.md)
+- [`SourceLike`](ix.SourceLike.md)
 
 - [`StreamLike`](streaming.StreamLike.md)<`void`, `T`\>
 
@@ -36,4 +36,4 @@
 
 #### Inherited from
 
-[SourceLike](util.SourceLike.md).[[SourceLike_move]](util.SourceLike.md#[sourcelike_move])
+[SourceLike](ix.SourceLike.md).[[SourceLike_move]](ix.SourceLike.md#[sourcelike_move])

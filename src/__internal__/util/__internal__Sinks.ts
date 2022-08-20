@@ -16,17 +16,19 @@ import {
   pipe,
   returns,
 } from "../../functions";
+import {
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  SourceLike_move,
+} from "../../ix";
 import { ReactiveContainerLike } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
 import {
   DisposableLike,
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
   Exception,
   SinkLike,
   SinkLike_notify,
-  SourceLike_move,
 } from "../../util";
 import {
   addTo,

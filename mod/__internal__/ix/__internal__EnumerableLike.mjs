@@ -1,7 +1,6 @@
 /// <reference types="./__internal__EnumerableLike.d.ts" />
 import { none, pipe } from '../../functions.mjs';
-import { InteractiveContainerLike_interact } from '../../ix.mjs';
-import { SourceLike_move } from '../../util.mjs';
+import { InteractiveContainerLike_interact, SourceLike_move } from '../../ix.mjs';
 import { dispose } from '../util/__internal__DisposableLike.mjs';
 import { disposableMixin } from '../util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../util/__internal__Enumerators.mjs';

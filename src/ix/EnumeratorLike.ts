@@ -4,7 +4,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../util";
+} from "../ix";
 import { move as ixMove } from "./SourceLike";
 
 export const getCurrent = <T>(enumerator: { [EnumeratorLike_current]: T }): T =>

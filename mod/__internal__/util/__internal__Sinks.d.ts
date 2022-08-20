@@ -1,6 +1,7 @@
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "../../functions.mjs";
+import { EnumeratorLike } from "../../ix.mjs";
 import { ReactiveContainerLike } from "../../rx.mjs";
-import { EnumeratorLike, SinkLike } from "../../util.mjs";
+import { SinkLike } from "../../util.mjs";
 import { Mixin1, Mixin2, Mixin3 } from "./__internal__Objects.mjs";
 declare const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T>;
 declare const createSink: <T>() => SinkLike<T>;

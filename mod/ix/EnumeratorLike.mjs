@@ -1,5 +1,5 @@
 /// <reference types="./EnumeratorLike.d.ts" />
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../util.mjs';
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../ix.mjs';
 import { move as move$1 } from './SourceLike.mjs';
 
 const getCurrent = (enumerator) => enumerator[EnumeratorLike_current];

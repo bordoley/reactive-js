@@ -10,10 +10,11 @@ import { MAX_SAFE_INTEGER } from './__internal__/__internal__env.mjs';
 import { createPriorityQueue } from './__internal__/scheduling/__internal__queue.mjs';
 import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current } from './__internal__/util/__internal__MutableRefLike.mjs';
+import { EnumeratorLike_current, SourceLike_move } from './ix.mjs';
+import { move, hasCurrent, getCurrent } from './ix/EnumeratorLike.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from './scheduling.mjs';
-import { ContinuationLike_run, EnumeratorLike_current, SourceLike_move, PauseableLike_pause, PauseableLike_resume, SinkLike_notify } from './util.mjs';
+import { ContinuationLike_run, PauseableLike_pause, PauseableLike_resume, SinkLike_notify } from './util.mjs';
 import { run } from './util/ContinuationLike.mjs';
-import { move, hasCurrent, getCurrent } from './util/EnumeratorLike.mjs';
 import { pause } from './util/PauseableLike.mjs';
 
 const add = add$1;

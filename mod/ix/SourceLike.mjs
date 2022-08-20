@@ -1,5 +1,5 @@
 /// <reference types="./SourceLike.d.ts" />
-import { SourceLike_move } from '../util.mjs';
+import { SourceLike_move } from '../ix.mjs';
 
 const move = (source) => {
     source[SourceLike_move]();

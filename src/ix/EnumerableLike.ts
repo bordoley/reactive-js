@@ -94,9 +94,19 @@ import {
 } from "../functions";
 import {
   EnumerableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   InteractiveContainerLike_interact,
+  SourceLike_move,
   ToEnumerable,
 } from "../ix";
+import {
+  forEach as forEachEnumerator,
+  getCurrent,
+  hasCurrent,
+  move,
+} from "../ix/EnumeratorLike";
 import {
   EnumerableObservableLike,
   ObservableLike,
@@ -111,15 +121,7 @@ import {
 import { ObserverLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
 import { __yield, schedule } from "../scheduling/SchedulerLike";
-import {
-  DisposableLike,
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
-  Exception,
-  SinkLike,
-  SourceLike_move,
-} from "../util";
+import { DisposableLike, Exception, SinkLike } from "../util";
 import {
   add,
   addIgnoringChildErrors,
@@ -131,12 +133,6 @@ import {
   isDisposed,
   onComplete,
 } from "../util/DisposableLike";
-import {
-  forEach as forEachEnumerator,
-  getCurrent,
-  hasCurrent,
-  move,
-} from "../util/EnumeratorLike";
 import { notifySink } from "../util/SinkLike";
 
 const DelegatingEnumerator_move_delegate = Symbol(

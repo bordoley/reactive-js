@@ -15,11 +15,5 @@ const PauseableLike_resume = Symbol("PausableLike_resume");
 const ContinuationLike_run = Symbol("ContinuationLike_run");
 /** @ignore */
 const SinkLike_notify = Symbol("SinkLike_notify");
-/** @ignore */
-const SourceLike_move = Symbol("SourceLike_move");
-/** @ignore */
-const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-/** @ignore */
-const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
 
-export { ContinuationLike_run, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, PauseableLike_pause, PauseableLike_resume, SinkLike_notify, SourceLike_move };
+export { ContinuationLike_run, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, SinkLike_notify };

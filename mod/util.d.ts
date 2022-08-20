@@ -68,17 +68,4 @@ interface SinkLike<T = unknown> extends DisposableLike {
      */
     [SinkLike_notify](next: T): void;
 }
-/** @ignore */
-declare const SourceLike_move: unique symbol;
-interface SourceLike extends DisposableLike {
-    [SourceLike_move](): void;
-}
-/** @ignore */
-declare const EnumeratorLike_current: unique symbol;
-/** @ignore */
-declare const EnumeratorLike_hasCurrent: unique symbol;
-interface EnumeratorLike<T = unknown> extends SourceLike {
-    readonly [EnumeratorLike_current]: T;
-    readonly [EnumeratorLike_hasCurrent]: boolean;
-}
-export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume, SinkLike, SinkLike_notify, SourceLike, SourceLike_move };
+export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume, SinkLike, SinkLike_notify };
