@@ -6,8 +6,9 @@ import { getObserverCount } from '../../rx/MulticastObservableLike.mjs';
 import { forEach as forEach$1, subscribe } from '../../rx/ObservableLike.mjs';
 import { forEach, run } from '../../rx/RunnableLike.mjs';
 import { create, publishTo } from '../../rx/SubjectLike.mjs';
-import { r as createVirtualTimeScheduler, e as dispose } from '../../rx-31e22181.mjs';
+import { createVirtualTimeScheduler } from '../../scheduling/SchedulerLike.mjs';
 import { run as run$1 } from '../../util/ContinuationLike.mjs';
+import { dispose } from '../../util/DisposableLike.mjs';
 
 testModule("SubjectLike", createTest("with replay", () => {
     const scheduler = createVirtualTimeScheduler();

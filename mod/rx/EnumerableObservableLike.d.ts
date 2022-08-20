@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.mjs";
+import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, Empty, EverySatisfy, ForEach, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.mjs";
 import { Factory } from "../functions.mjs";
 import { EnumerableObservableLike, ScanAsync } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
@@ -17,10 +17,12 @@ declare const concatAll: ConcatAll<EnumerableObservableLike, {
 }>["concatAll"];
 declare const decodeWithCharsetT: DecodeWithCharset<EnumerableObservableLike>;
 declare const distinctUntilChangedT: DistinctUntilChanged<EnumerableObservableLike>;
+declare const emptyT: Empty<EnumerableObservableLike>;
 declare const everySatisfyT: EverySatisfy<EnumerableObservableLike>;
 declare const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"];
 declare const exhaustT: ConcatAll<EnumerableObservableLike>;
 declare const forEachT: ForEach<EnumerableObservableLike>;
+declare const generateeT: Generate<EnumerableObservableLike>;
 declare const keepT: Keep<EnumerableObservableLike>;
 declare const mapT: Map<EnumerableObservableLike>;
 declare const mergeT: Concat<EnumerableObservableLike>;
@@ -32,6 +34,7 @@ declare const mergeAllT: ConcatAll<EnumerableObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
 }>;
+declare const neverT: Never<EnumerableObservableLike>;
 declare const pairwiseT: Pairwise<EnumerableObservableLike>;
 declare const reduceT: Reduce<EnumerableObservableLike>;
 declare const scanT: Scan<EnumerableObservableLike>;
@@ -49,4 +52,4 @@ declare const toReadonlyArrayT: ToReadonlyArray<EnumerableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
 declare const zipT: Zip<EnumerableObservableLike>;
-export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, generateeT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

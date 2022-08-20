@@ -1,4 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/__internal__env";
+import { getDelay, hasDelay } from "../__internal__/__internal__optionParsing";
 import {
   TReactive,
   createDecodeWithCharsetOperator,
@@ -91,12 +92,15 @@ import {
   ContainerOperator,
   DecodeWithCharset,
   DistinctUntilChanged,
+  Empty,
   EverySatisfy,
   ForEach,
   ForkConcat,
   ForkZip,
+  Generate,
   Keep,
   Map,
+  Never,
   Pairwise,
   ReadonlyArrayLike,
   Reduce,
@@ -130,9 +134,11 @@ import {
   Predicate,
   Reducer,
   SideEffect,
+  Updater,
   compose,
   getLength,
   getOrRaise,
+  ignore,
   isEmpty,
   isNone,
   isSome,
@@ -142,6 +148,7 @@ import {
   none,
   partial,
   pipe,
+  pipeLazy,
   returns,
   unsafeCast,
 } from "../functions";
@@ -168,8 +175,6 @@ import {
   createEnumerableObservable,
   createObservable,
   createRunnableObservable,
-  emptyObservable,
-  neverObservable,
 } from "../rx";
 import {
   ObserverLike,
@@ -186,8 +191,10 @@ import {
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import { getScheduler } from "../scheduling/ObserverLike";
 import {
+  __yield,
   createVirtualTimeScheduler,
   isInContinuation,
+  schedule,
   toPausableScheduler,
 } from "../scheduling/SchedulerLike";
 import { FlowMode, ToFlowable } from "../streaming";
@@ -317,7 +324,7 @@ export const buffer: <T>(options?: {
     const durationOption = options.duration ?? MAX_SAFE_INTEGER;
     const durationFunction =
       durationOption === MAX_SAFE_INTEGER
-        ? neverObservable
+        ? never
         : typeof durationOption === "number"
         ? (_: T) => pipe([none], arrayToObservable())
         : durationOption;
@@ -469,6 +476,29 @@ export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
   distinctUntilChanged,
 };
 
+interface EmptyObservable {
+  <T>(): EnumerableObservableLike<T>;
+  <T>(options: { delay: number }): RunnableObservableLike<T>;
+}
+export const empty: EmptyObservable = (<T>(options?: { delay: number }) => {
+  const delay = getDelay(options);
+  return delay > 0
+    ? createRunnableObservable<T>(sink => {
+        pipe(
+          sink,
+          getScheduler,
+          schedule(pipeLazy(sink, dispose()), { delay }),
+        );
+      })
+    : createEnumerableObservable<T>(sink => {
+        pipe(sink, dispose());
+      });
+}) as EmptyObservable;
+
+export const emptyT: Empty<ObservableLike, { delay: number }> = {
+  empty,
+};
+
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   /*@__PURE__*/ (<T>() => {
     const typedObserverMixin = observerMixin();
@@ -550,6 +580,68 @@ export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
       ),
       LatestMode.Zip,
     )) as ForkZip<ObservableLike>["forkZip"];
+
+interface GenerateObservable {
+  <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): EnumerableObservableLike<T>;
+
+  <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options: {
+      readonly delay: number;
+      readonly delayStart?: boolean;
+    },
+  ): RunnableObservableLike<T>;
+}
+
+/**
+ * Generates an `ObservableLike` sequence from a generator function
+ * that is applied to an accumulator value with a specified `delay`
+ * between emitted items.
+ *
+ * @param generator the generator function.
+ * @param initialValue Factory function used to generate the initial accumulator.
+ * @param delay The requested delay between emitted items by the observable.
+ */
+export const generate: GenerateObservable = (<T>(
+  generator: Updater<T>,
+  initialValue: Factory<T>,
+  options?: { readonly delay?: number; readonly delayStart?: boolean },
+): ObservableLike<T> => {
+  const delay = getDelay(options);
+  const { delayStart = false } = options ?? {};
+
+  const onSink = (observer: ObserverLike<T>) => {
+    let acc = initialValue();
+
+    const continuation = () => {
+      while (!isDisposed(observer)) {
+        acc = generator(acc);
+        observer[SinkLike_notify](acc);
+        __yield(options);
+      }
+    };
+
+    pipe(
+      observer,
+      getScheduler,
+      schedule(continuation, delayStart && hasDelay(options) ? options : none),
+      addTo(observer),
+    );
+  };
+
+  return delay > 0
+    ? createRunnableObservable(onSink)
+    : createEnumerableObservable(onSink);
+}) as GenerateObservable;
+
+export const generateT: Generate<
+  ObservableLike,
+  { readonly delay: number; readonly delayStart: boolean }
+> = { generate };
 
 export const isEnumerable: (
   obs: ObservableLike,
@@ -735,6 +827,10 @@ export const mergeAllT: ConcatAll<
 > = { concatAll: mergeAll };
 
 export const multicast = multicastInternal;
+
+export const never: Never<EnumerableObservableLike>["never"] = () =>
+  createEnumerableObservable(ignore);
+export const neverT: Never<ObservableLike> = { never };
 
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
@@ -1523,7 +1619,7 @@ export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
             );
           }),
         )
-      : createLiftedFlowable(_ => emptyObservable());
+      : createLiftedFlowable(_ => empty());
 export const toFlowableT: ToFlowable<ObservableLike> = { toFlowable };
 
 /**

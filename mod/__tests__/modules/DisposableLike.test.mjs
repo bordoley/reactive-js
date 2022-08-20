@@ -2,8 +2,9 @@
 import { testModule, test as createTest, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectIsNone, expectEquals, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
 import { pipe, pipeLazy, none, raise } from '../../functions.mjs';
 import { subscribe } from '../../rx/ObservableLike.mjs';
-import { n as create, j as addIgnoringChildErrors, e as dispose, i as isDisposed, o as onDisposed, p as getException, f as addTo, q as add, r as createVirtualTimeScheduler, t as toObservable, u as getCurrentTime, s as schedule } from '../../rx-31e22181.mjs';
+import { createVirtualTimeScheduler, getCurrentTime, schedule } from '../../scheduling/SchedulerLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
+import { create, addIgnoringChildErrors, dispose, isDisposed, onDisposed, getException, addTo, add, toObservable } from '../../util/DisposableLike.mjs';
 
 testModule("DisposableLike", createTest("disposes child disposable when disposed", () => {
     const child = create();

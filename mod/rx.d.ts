@@ -1,5 +1,5 @@
-import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator, Defer, Empty, Generate, Never } from "./containers.mjs";
-import { Function2, Factory, Function1, SideEffect1, Updater } from "./functions.mjs";
+import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator, Defer } from "./containers.mjs";
+import { Function2, Factory, Function1, SideEffect1 } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
 import { DisposableLike, SinkLike } from "./util.mjs";
 /** @ignore */
@@ -72,56 +72,4 @@ declare const deferRunnableObservable: Defer<RunnableObservableLike, {
     delay: number;
 }>["defer"];
 declare const deferRunnableObservableT: Defer<RunnableObservableLike>;
-declare const deferRunnable: Defer<RunnableLike>["defer"];
-declare const deferRunnableT: Defer<RunnableLike>;
-interface EmptyObservable {
-    <T>(): EnumerableObservableLike<T>;
-    <T>(options: {
-        delay: number;
-    }): RunnableObservableLike<T>;
-}
-declare const emptyObservable: EmptyObservable;
-declare const emptyEnumerableObservableT: Empty<EnumerableObservableLike>;
-declare const emptyObservableT: Empty<ObservableLike, {
-    delay: number;
-}>;
-declare const emptyRunnableObservableT: Empty<RunnableObservableLike, {
-    delay: number;
-}>;
-declare const emptyRunnable: Empty<RunnableLike>["empty"];
-declare const emptyRunnableT: Empty<RunnableLike>;
-interface GenerateObservable {
-    <T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableObservableLike<T>;
-    <T>(generator: Updater<T>, initialValue: Factory<T>, options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): RunnableObservableLike<T>;
-}
-/**
- * Generates an `ObservableLike` sequence from a generator function
- * that is applied to an accumulator value with a specified `delay`
- * between emitted items.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- * @param delay The requested delay between emitted items by the observable.
- */
-declare const generateObservable: GenerateObservable;
-declare const generateEnumerableObservableT: Generate<EnumerableObservableLike>;
-declare const generateObservableT: Generate<ObservableLike, {
-    readonly delay: number;
-    readonly delayStart: boolean;
-}>;
-declare const generateRunnableObservableT: Generate<RunnableObservableLike, {
-    readonly delay: number;
-    readonly delayStart: boolean;
-}>;
-declare const generateRunnable: Generate<RunnableLike>["generate"];
-declare const generateRunnableT: Generate<RunnableLike>;
-declare const neverObservable: Never<EnumerableObservableLike>["never"];
-declare const neverEnumerableObservableT: Never<EnumerableObservableLike>;
-declare const neverObservableT: Never<ObservableLike>;
-declare const neverRunnableObservableT: Never<RunnableObservableLike>;
-declare const neverRunnable: Never<RunnableLike>["never"];
-declare const neverRunnableT: Never<RunnableLike>;
-export { AsyncReducer, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable, createEnumerableObservable, createObservable, createRunnable, createRunnableObservable, deferEnumerableObservable, deferEnumerableObservableT, deferObservable, deferObservableT, deferRunnable, deferRunnableObservable, deferRunnableObservableT, deferRunnableT, emptyEnumerableObservableT, emptyObservable, emptyObservableT, emptyRunnable, emptyRunnableObservableT, emptyRunnableT, generateEnumerableObservableT, generateObservable, generateObservableT, generateRunnable, generateRunnableObservableT, generateRunnableT, neverEnumerableObservableT, neverObservable, neverObservableT, neverRunnable, neverRunnableObservableT, neverRunnableT };
+export { AsyncReducer, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable, createEnumerableObservable, createObservable, createRunnable, createRunnableObservable, deferEnumerableObservable, deferEnumerableObservableT, deferObservable, deferObservableT, deferRunnableObservable, deferRunnableObservableT };

@@ -1,9 +1,11 @@
 /// <reference types="./effects.d.ts" />
 import { isNone, ignore, none, raise, arrayEquality, pipe, getLength, isSome, newInstance } from './functions.mjs';
-import { w as emptyObservable, A as disposed, i as isDisposed, e as dispose, s as schedule, f as addTo, k as onComplete, d as createObservable } from './rx-31e22181.mjs';
-import { forEach, subscribe } from './rx/ObservableLike.mjs';
+import { createObservable } from './rx.mjs';
+import { empty, forEach, subscribe } from './rx/ObservableLike.mjs';
 import { getScheduler } from './scheduling/ObserverLike.mjs';
+import { schedule } from './scheduling/SchedulerLike.mjs';
 import { stream, createStateStore } from './streaming/StreamableLike.mjs';
+import { disposed, isDisposed, dispose, addTo, onComplete } from './util/DisposableLike.mjs';
 import { notify } from './util/SinkLike.mjs';
 
 const validateAsyncEffect = ((ctx, type) => {
@@ -21,7 +23,7 @@ const validateAsyncEffect = ((ctx, type) => {
             : type === 2 /* AsyncEffectType.Await */ || type === 3 /* AsyncEffectType.Observe */
                 ? {
                     type,
-                    observable: emptyObservable(),
+                    observable: empty(),
                     subscription: disposed,
                     value: none,
                     hasValue: false,
