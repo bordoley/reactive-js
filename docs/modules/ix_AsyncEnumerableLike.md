@@ -17,6 +17,7 @@
 
 ### Functions
 
+- [createAsyncEnumerator](ix_AsyncEnumerableLike.md#createasyncenumerator)
 - [fromArray](ix_AsyncEnumerableLike.md#fromarray)
 - [fromEnumerable](ix_AsyncEnumerableLike.md#fromenumerable)
 - [generate](ix_AsyncEnumerableLike.md#generate)
@@ -77,6 +78,31 @@ ___
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
 
 ## Functions
+
+### createAsyncEnumerator
+
+▸ **createAsyncEnumerator**<`T`\>(`op`, `scheduler`, `options?`): [`AsyncEnumeratorLike`](../interfaces/ix.AsyncEnumeratorLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `void`, `T`\> |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`AsyncEnumeratorLike`](../interfaces/ix.AsyncEnumeratorLike.md)<`T`\>
+
+___
 
 ### fromArray
 

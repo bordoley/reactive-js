@@ -3,7 +3,7 @@ import { testModule, describe as createDescribe, testAsync, expectEquals, expect
 import { toObservable } from '../../containers/PromiseableLike.mjs';
 import { pipe, newInstance } from '../../functions.mjs';
 import { toPromise } from '../../rx/ObservableLike.mjs';
-import { x as createHostScheduler, f as dispose } from '../../DisposableLike-d42502aa.mjs';
+import { y as createHostScheduler, f as dispose } from '../../DisposableLike-c856ff07.mjs';
 
 testModule("PromiseableLike", createDescribe("toObservable", testAsync("when the promise resolves", async () => {
     const scheduler = createHostScheduler();

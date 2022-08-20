@@ -31,8 +31,8 @@ import { forEach, subscribe } from "./rx/ObservableLike";
 import { ObserverLike, SchedulerLike } from "./scheduling";
 import { getScheduler } from "./scheduling/ObserverLike";
 import { schedule } from "./scheduling/SchedulerLike";
-import { StreamLike, StreamableLike, createStateStore } from "./streaming";
-import { stream } from "./streaming/StreamableLike";
+import { StreamLike, StreamableLike } from "./streaming";
+import { createStateStore, stream } from "./streaming/StreamableLike";
 import { DisposableLike, Exception } from "./util";
 import {
   addTo,

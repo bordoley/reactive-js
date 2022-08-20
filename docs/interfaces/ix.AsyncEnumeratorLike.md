@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [streaming](../modules/streaming.md) / AsyncEnumeratorLike
+[Reactive-JS](../README.md) / [ix](../modules/ix.md) / AsyncEnumeratorLike
 
 # Interface: AsyncEnumeratorLike<T\>
 
-[streaming](../modules/streaming.md).AsyncEnumeratorLike
+[ix](../modules/ix.md).AsyncEnumeratorLike
 
 ## Type parameters
 
@@ -22,7 +22,7 @@
 
 ### Methods
 
-- [[SourceLike\_move]](streaming.AsyncEnumeratorLike.md#[sourcelike_move])
+- [[SourceLike\_move]](ix.AsyncEnumeratorLike.md#[sourcelike_move])
 
 ## Methods
 

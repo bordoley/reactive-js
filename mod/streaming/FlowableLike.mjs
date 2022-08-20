@@ -1,12 +1,12 @@
 /// <reference types="./FlowableLike.d.ts" />
+import { createStream } from '../__internal__/streaming/__internal__StreamLike.mjs';
 import { ignoreElements, startWith } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { compose, pipe } from '../functions.mjs';
-import { e as createObservable, g as addTo } from '../DisposableLike-d42502aa.mjs';
+import { e as createObservable, g as addTo } from '../DisposableLike-c856ff07.mjs';
 import { forEach, keepT, concatT, onSubscribe } from '../rx/ObservableLike.mjs';
 import { ObserverLike_dispatcher, ObserverLike_scheduler } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
-import { createStream } from '../streaming.mjs';
 import { sourceFrom } from './StreamLike.mjs';
 
 const toObservable = () => src => createObservable(observer => {

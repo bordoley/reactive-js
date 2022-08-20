@@ -1,13 +1,14 @@
 /// <reference types="./AsyncEnumerableLike.d.ts" />
 import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { interactive, createKeepOperator, createMapOperator, createScanOperator, createTakeWhileOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
+import { streamMixin } from '../__internal__/streaming/__internal__StreamLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, mixin, props, include, init } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { none, pipe, unsafeCast, getLength, compose, increment, returns, pipeUnsafe, newInstance, partial } from '../functions.mjs';
+import { pipe, none, unsafeCast, getLength, compose, increment, returns, pipeUnsafe, newInstance, partial } from '../functions.mjs';
 import { InteractiveContainerLike_interact } from '../ix.mjs';
-import { c as createSubject, q as add, g as addTo, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, M as MulticastObservableLike_observerCount, A as MulticastObservableLike_replay, R as ReactiveContainerLike_sinkInto, e as createObservable, d as createRunnableObservable } from '../DisposableLike-d42502aa.mjs';
+import { c as createSubject, r as add, g as addTo, O as ObservableLike_isEnumerable, a as ObservableLike_isRunnable, M as MulticastObservableLike_observerCount, m as MulticastObservableLike_replay, R as ReactiveContainerLike_sinkInto, e as createObservable, d as createRunnableObservable } from '../DisposableLike-c856ff07.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
 import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
@@ -22,6 +23,23 @@ import { hasCurrent, getCurrent } from '../util/EnumeratorLike.mjs';
 import { move } from '../util/SourceLike.mjs';
 import { enumerate } from './EnumerableLike.mjs';
 
+const createAsyncEnumerator = /*@__PURE__*/ (() => {
+    const createAsyncEnumeratorInternal = (() => {
+        const typedStreamMixin = streamMixin();
+        return createInstanceFactory(mixin(include(typedStreamMixin), function AsyncEnumerator(instance, op, scheduler, replay) {
+            init(typedStreamMixin, instance, op, scheduler, replay);
+            return instance;
+        }, {}, {
+            [SourceLike_move]() {
+                pipe(this, dispatch(none));
+            },
+        }));
+    })();
+    return (op, scheduler, options) => {
+        const { replay = 0 } = options !== null && options !== void 0 ? options : {};
+        return createAsyncEnumeratorInternal(op, scheduler, replay);
+    };
+})();
 const createAsyncEnumerable = /*@__PURE__*/ (() => {
     return createInstanceFactory(mixin(function AsyncEnumerable(instance, stream) {
         instance[StreamableLike_stream] = stream;
@@ -324,4 +342,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { fromArray, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { createAsyncEnumerator, fromArray, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };

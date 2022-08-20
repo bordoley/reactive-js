@@ -1,3 +1,4 @@
+import { createStream } from "../__internal__/streaming/__internal__StreamLike";
 import { ignoreElements, startWith } from "../containers/ContainerLike";
 import { toObservable as arrayToObservable } from "../containers/ReadonlyArrayLike";
 import { compose, pipe } from "../functions";
@@ -5,7 +6,7 @@ import { ToObservable, createObservable } from "../rx";
 import { concatT, forEach, keepT, onSubscribe } from "../rx/ObservableLike";
 import { ObserverLike_dispatcher, ObserverLike_scheduler } from "../scheduling";
 import { dispatchTo } from "../scheduling/DispatcherLike";
-import { FlowableLike, createStream } from "../streaming";
+import { FlowableLike } from "../streaming";
 import { sourceFrom } from "../streaming/StreamLike";
 import { addTo } from "../util/DisposableLike";
 

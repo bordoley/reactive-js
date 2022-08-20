@@ -1,14 +1,14 @@
 /// <reference types="./node.d.ts" />
 import fs from 'fs';
 import { createBrotliDecompress, createGunzip, createInflate, createBrotliCompress, createGzip, createDeflate } from 'zlib';
+import { createLiftedFlowable, createLiftedStreamable } from '../__internal__/streaming/__internal__StreamableLike.mjs';
 import { pipe, ignore, pipeLazy } from '../functions.mjs';
-import { e as createObservable, f as dispose, G as toErrorHandler, l as onError, j as onDisposed, o as onComplete } from '../DisposableLike-d42502aa.mjs';
+import { e as createObservable, f as dispose, G as toErrorHandler, l as onError, j as onDisposed, o as onComplete } from '../DisposableLike-c856ff07.mjs';
 import { forEach, subscribe } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { ObserverLike_dispatcher } from '../scheduling.mjs';
 import { dispatch, dispatchTo, getScheduler as getScheduler$1 } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler, getDispatcher } from '../scheduling/ObserverLike.mjs';
-import { createLiftedFlowable, createLiftedStreamable } from '../streaming.mjs';
 import { sourceFrom } from '../streaming/StreamLike.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
 

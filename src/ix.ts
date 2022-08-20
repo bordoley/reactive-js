@@ -24,11 +24,12 @@ import {
 } from "./containers";
 import { Factory, Function1, Updater, none, pipe } from "./functions";
 import { SchedulerLike } from "./scheduling";
-import { AsyncEnumeratorLike, StreamableLike } from "./streaming";
+import { StreamLike, StreamableLike } from "./streaming";
 import {
   DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
+  SourceLike,
   SourceLike_move,
 } from "./util";
 import { dispose, isDisposed } from "./util/DisposableLike";
@@ -55,6 +56,11 @@ export interface EnumerableLike<T = unknown>
     this[typeof ContainerLike_T]
   >;
 }
+
+export interface AsyncEnumeratorLike<T = unknown>
+  extends SourceLike,
+    StreamLike<void, T> {}
+
 export interface AsyncEnumerableLike<T = unknown>
   extends StreamableLike<void, T, AsyncEnumeratorLike<T>>,
     InteractiveContainerLike<AsyncEnumeratorLike<T>, SchedulerLike> {
