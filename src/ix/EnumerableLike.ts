@@ -45,6 +45,7 @@ import {
   ConcatAll,
   DistinctUntilChanged,
   ForEach,
+  Generate,
   Keep,
   Map,
   Pairwise,
@@ -72,6 +73,7 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  Updater,
   forEach as forEachArray,
   getLength,
   identity,
@@ -494,6 +496,61 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   );
 })();
 export const forEachT: ForEach<EnumerableLike> = { forEach };
+
+/**
+ * Generates an EnumerableLike from a generator function
+ * that is applied to an accumulator value.
+ *
+ * @param generator the generator function.
+ * @param initialValue Factory function used to generate the initial accumulator.
+ */
+export const generate: Generate<EnumerableLike>["generate"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedEnumerator = enumeratorMixin<T>();
+
+  type TProperties = { readonly f: Updater<T> };
+
+  const createGenerateEnumerator = createInstanceFactory(
+    mixin(
+      include(disposableMixin, typedEnumerator),
+      function GenerateEnumerator(
+        instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+          Mutable<TProperties>,
+        f: Updater<T>,
+        acc: T,
+      ): EnumeratorLike<T> {
+        init(disposableMixin, instance);
+        init(typedEnumerator, instance);
+
+        instance.f = f;
+        instance[EnumeratorLike_current] = acc;
+
+        return instance;
+      },
+      props<TProperties>({ f: none }),
+      {
+        [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
+          if (!isDisposed(this)) {
+            try {
+              this[EnumeratorLike_current] = this.f(
+                this[EnumeratorLike_current],
+              );
+            } catch (cause) {
+              pipe(this, dispose({ cause }));
+            }
+          }
+        },
+      },
+    ),
+  );
+
+  return (generator: Updater<T>, initialValue: Factory<T>) =>
+    createEnumerable(() => createGenerateEnumerator(generator, initialValue()));
+})();
+export const generateT: Generate<EnumerableLike> = {
+  generate,
+};
 
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();

@@ -190,6 +190,38 @@ const forEach = /*@__PURE__*/ (() => {
     })), createForEachOperator(liftT));
 })();
 const forEachT = { forEach };
+/**
+ * Generates an EnumerableLike from a generator function
+ * that is applied to an accumulator value.
+ *
+ * @param generator the generator function.
+ * @param initialValue Factory function used to generate the initial accumulator.
+ */
+const generate = /*@__PURE__*/ (() => {
+    const typedEnumerator = enumeratorMixin();
+    const createGenerateEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedEnumerator), function GenerateEnumerator(instance, f, acc) {
+        init(disposableMixin, instance);
+        init(typedEnumerator, instance);
+        instance.f = f;
+        instance[EnumeratorLike_current] = acc;
+        return instance;
+    }, props({ f: none }), {
+        [SourceLike_move]() {
+            if (!isDisposed(this)) {
+                try {
+                    this[EnumeratorLike_current] = this.f(this[EnumeratorLike_current]);
+                }
+                catch (cause) {
+                    pipe(this, dispose({ cause }));
+                }
+            }
+        },
+    }));
+    return (generator, initialValue) => createEnumerable(() => createGenerateEnumerator(generator, initialValue()));
+})();
+const generateT = {
+    generate,
+};
 const keep = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
     return pipe(createInstanceFactory(mixin(include(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), function KeepEnumerator(instance, delegate, predicate) {
@@ -623,4 +655,4 @@ const zip = /*@__PURE__*/ (() => {
 })();
 const zipT = { zip };
 
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, forEach, forEachT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, forEach, forEachT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };
