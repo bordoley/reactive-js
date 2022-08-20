@@ -1,4 +1,4 @@
-import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerLike, Container, ContainerOf, Empty, Generate } from "./containers.mjs";
+import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerLike, Container, ContainerOf, Empty } from "./containers.mjs";
 import { Function1, Factory } from "./functions.mjs";
 import { SchedulerLike } from "./scheduling.mjs";
 import { StreamLike, StreamableLike } from "./streaming.mjs";
@@ -30,13 +30,4 @@ declare type ToEnumerable<C extends ContainerLike, TOptions = never> = Container
 declare const createEnumerable: <T>(f: Factory<EnumeratorLike<T>>) => EnumerableLike<T>;
 declare const emptyEnumerable: Empty<EnumerableLike>["empty"];
 declare const emptyEnumerableT: Empty<EnumerableLike>;
-/**
- * Generates an EnumerableLike from a generator function
- * that is applied to an accumulator value.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- */
-declare const generateEnumerable: Generate<EnumerableLike>["generate"];
-declare const generateEnumerableT: Generate<EnumerableLike>;
-export { AsyncEnumerableLike, AsyncEnumeratorLike, EnumerableLike, InteractiveContainerLike, InteractiveContainerLike_interact, ToAsyncEnumerable, ToEnumerable, createEnumerable, emptyEnumerable, emptyEnumerableT, generateEnumerable, generateEnumerableT };
+export { AsyncEnumerableLike, AsyncEnumeratorLike, EnumerableLike, InteractiveContainerLike, InteractiveContainerLike_interact, ToAsyncEnumerable, ToEnumerable, createEnumerable, emptyEnumerable, emptyEnumerableT };

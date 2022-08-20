@@ -19,13 +19,11 @@
 ### Variables
 
 - [emptyEnumerableT](ix.md#emptyenumerablet)
-- [generateEnumerableT](ix.md#generateenumerablet)
 
 ### Functions
 
 - [createEnumerable](ix.md#createenumerable)
 - [emptyEnumerable](ix.md#emptyenumerable)
-- [generateEnumerable](ix.md#generateenumerable)
 
 ## Type Aliases
 
@@ -58,12 +56,6 @@ ___
 ### emptyEnumerableT
 
 • `Const` **emptyEnumerableT**: [`Empty`](containers.md#empty)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### generateEnumerableT
-
-• `Const` **generateEnumerableT**: [`Generate`](containers.md#generate)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ## Functions
 
@@ -104,33 +96,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `undefined` |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
-
-___
-
-### generateEnumerable
-
-▸ **generateEnumerable**<`T`\>(`generator`, `initialValue`, `options?`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
-
-Generates an EnumerableLike from a generator function
-that is applied to an accumulator value.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
-| `options?` | `undefined` | - |
 
 #### Returns
 

@@ -18,21 +18,19 @@ import {
   ContainerLike_type,
   ContainerOf,
   Empty,
-  Generate,
   StatefulContainerLike,
   StatefulContainerLike_state,
 } from "./containers";
-import { Factory, Function1, Updater, none, pipe } from "./functions";
+import { Factory, Function1, none, pipe } from "./functions";
 import { SchedulerLike } from "./scheduling";
 import { StreamLike, StreamableLike } from "./streaming";
 import {
   DisposableLike,
   EnumeratorLike,
-  EnumeratorLike_current,
   SourceLike,
   SourceLike_move,
 } from "./util";
-import { dispose, isDisposed } from "./util/DisposableLike";
+import { dispose } from "./util/DisposableLike";
 
 /** @ignore */
 export const InteractiveContainerLike_interact = Symbol(
@@ -160,60 +158,4 @@ export const emptyEnumerable: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<
 })();
 export const emptyEnumerableT: Empty<EnumerableLike> = {
   empty: emptyEnumerable,
-};
-
-/**
- * Generates an EnumerableLike from a generator function
- * that is applied to an accumulator value.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- */
-export const generateEnumerable: Generate<EnumerableLike>["generate"] =
-  /*@__PURE__*/ (<T>() => {
-    const typedEnumerator = enumeratorMixin<T>();
-
-    type TProperties = { readonly f: Updater<T> };
-
-    const createGenerateEnumerator = createInstanceFactory(
-      mixin(
-        include(disposableMixin, typedEnumerator),
-        function GenerateEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
-            Mutable<TProperties>,
-          f: Updater<T>,
-          acc: T,
-        ): EnumeratorLike<T> {
-          init(disposableMixin, instance);
-          init(typedEnumerator, instance);
-
-          instance.f = f;
-          instance[EnumeratorLike_current] = acc;
-
-          return instance;
-        },
-        props<TProperties>({ f: none }),
-        {
-          [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
-            if (!isDisposed(this)) {
-              try {
-                this[EnumeratorLike_current] = this.f(
-                  this[EnumeratorLike_current],
-                );
-              } catch (cause) {
-                pipe(this, dispose({ cause }));
-              }
-            }
-          },
-        },
-      ),
-    );
-
-    return (generator: Updater<T>, initialValue: Factory<T>) =>
-      createEnumerable(() =>
-        createGenerateEnumerator(generator, initialValue()),
-      );
-  })();
-export const generateEnumerableT: Generate<EnumerableLike> = {
-  generate: generateEnumerable,
 };

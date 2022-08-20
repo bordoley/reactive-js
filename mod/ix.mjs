@@ -4,8 +4,8 @@ import { enumeratorMixin } from './__internal__/util/__internal__Enumerators.mjs
 import { createInstanceFactory, mixin, props, include, init } from './__internal__/util/__internal__Objects.mjs';
 import './containers.mjs';
 import { none, pipe } from './functions.mjs';
-import { SourceLike_move, EnumeratorLike_current } from './util.mjs';
-import { f as dispose, i as isDisposed } from './DisposableLike-c856ff07.mjs';
+import { SourceLike_move } from './util.mjs';
+import { f as dispose } from './DisposableLike-c856ff07.mjs';
 
 /** @ignore */
 const InteractiveContainerLike_interact = Symbol("InteractiveContainerLike_interact");
@@ -43,38 +43,5 @@ const emptyEnumerable = /*@__PURE__*/ (() => {
 const emptyEnumerableT = {
     empty: emptyEnumerable,
 };
-/**
- * Generates an EnumerableLike from a generator function
- * that is applied to an accumulator value.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- */
-const generateEnumerable = 
-/*@__PURE__*/ (() => {
-    const typedEnumerator = enumeratorMixin();
-    const createGenerateEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedEnumerator), function GenerateEnumerator(instance, f, acc) {
-        init(disposableMixin, instance);
-        init(typedEnumerator, instance);
-        instance.f = f;
-        instance[EnumeratorLike_current] = acc;
-        return instance;
-    }, props({ f: none }), {
-        [SourceLike_move]() {
-            if (!isDisposed(this)) {
-                try {
-                    this[EnumeratorLike_current] = this.f(this[EnumeratorLike_current]);
-                }
-                catch (cause) {
-                    pipe(this, dispose({ cause }));
-                }
-            }
-        },
-    }));
-    return (generator, initialValue) => createEnumerable(() => createGenerateEnumerator(generator, initialValue()));
-})();
-const generateEnumerableT = {
-    generate: generateEnumerable,
-};
 
-export { InteractiveContainerLike_interact, createEnumerable, emptyEnumerable, emptyEnumerableT, generateEnumerable, generateEnumerableT };
+export { InteractiveContainerLike_interact, createEnumerable, emptyEnumerable, emptyEnumerableT };

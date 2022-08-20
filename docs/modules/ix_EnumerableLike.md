@@ -11,6 +11,7 @@
 - [concatT](ix_EnumerableLike.md#concatt)
 - [distinctUntilChangedT](ix_EnumerableLike.md#distinctuntilchangedt)
 - [forEachT](ix_EnumerableLike.md#foreacht)
+- [generateT](ix_EnumerableLike.md#generatet)
 - [keepT](ix_EnumerableLike.md#keept)
 - [mapT](ix_EnumerableLike.md#mapt)
 - [pairwiseT](ix_EnumerableLike.md#pairwiset)
@@ -36,6 +37,7 @@
 - [distinctUntilChanged](ix_EnumerableLike.md#distinctuntilchanged)
 - [enumerate](ix_EnumerableLike.md#enumerate)
 - [forEach](ix_EnumerableLike.md#foreach)
+- [generate](ix_EnumerableLike.md#generate)
 - [keep](ix_EnumerableLike.md#keep)
 - [map](ix_EnumerableLike.md#map)
 - [pairwise](ix_EnumerableLike.md#pairwise)
@@ -82,6 +84,12 @@ ___
 ### forEachT
 
 • `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
+
+___
+
+### generateT
+
+• `Const` **generateT**: [`Generate`](containers.md#generate)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 
@@ -320,6 +328,33 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+Generates an EnumerableLike from a generator function
+that is applied to an accumulator value.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+| `options?` | `undefined` | - |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
 
 ___
 
