@@ -16,10 +16,13 @@ import {
   ConcatAll,
   DecodeWithCharset,
   DistinctUntilChanged,
+  Empty,
   EverySatisfy,
   ForEach,
+  Generate,
   Keep,
   Map,
+  Never,
   Pairwise,
   Reduce,
   Scan,
@@ -48,11 +51,14 @@ import {
   concat,
   decodeWithCharset,
   distinctUntilChanged,
+  empty,
   everySatisfy,
   forEach,
+  generate,
   keep,
   map,
   merge,
+  never,
   pairwise,
   reduce,
   scan,
@@ -151,6 +157,10 @@ export const distinctUntilChangedT: DistinctUntilChanged<EnumerableObservableLik
       distinctUntilChanged as DistinctUntilChanged<EnumerableObservableLike>["distinctUntilChanged"],
   };
 
+export const emptyT: Empty<EnumerableObservableLike> = {
+  empty,
+};
+
 export const everySatisfyT: EverySatisfy<EnumerableObservableLike> = {
   everySatisfy:
     everySatisfy as EverySatisfy<EnumerableObservableLike>["everySatisfy"],
@@ -170,6 +180,8 @@ export const exhaustT: ConcatAll<EnumerableObservableLike> = {
 export const forEachT: ForEach<EnumerableObservableLike> = {
   forEach: forEach as ForEach<EnumerableObservableLike>["forEach"],
 };
+
+export const generateeT: Generate<EnumerableObservableLike> = { generate };
 
 export const keepT: Keep<EnumerableObservableLike> = {
   keep: keep as Keep<EnumerableObservableLike>["keep"],
@@ -205,6 +217,10 @@ export const mergeAllT: ConcatAll<
     readonly maxConcurrency?: number;
   }
 > = { concatAll: mergeAll };
+
+export const neverT: Never<EnumerableObservableLike> = {
+  never,
+};
 
 export const pairwiseT: Pairwise<EnumerableObservableLike> = {
   pairwise: pairwise as Pairwise<EnumerableObservableLike>["pairwise"],

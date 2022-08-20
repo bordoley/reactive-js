@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, ForEach, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.mjs";
+import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, Empty, EverySatisfy, ForEach, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.mjs";
 import { Factory } from "../functions.mjs";
 import { RunnableObservableLike, ScanAsync } from "../rx.mjs";
 import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
@@ -17,10 +17,17 @@ declare const concatAll: ConcatAll<RunnableObservableLike, {
 }>["concatAll"];
 declare const decodeWithCharsetT: DecodeWithCharset<RunnableObservableLike>;
 declare const distinctUntilChangedT: DistinctUntilChanged<RunnableObservableLike>;
+declare const emptyT: Empty<RunnableObservableLike, {
+    delay: number;
+}>;
 declare const everySatisfyT: EverySatisfy<RunnableObservableLike>;
 declare const exhaust: ConcatAll<RunnableObservableLike>["concatAll"];
 declare const exhaustT: ConcatAll<RunnableObservableLike>;
 declare const forEachT: ForEach<RunnableObservableLike>;
+declare const generateT: Generate<RunnableObservableLike, {
+    readonly delay: number;
+    readonly delayStart: boolean;
+}>;
 declare const keepT: Keep<RunnableObservableLike>;
 declare const mapT: Map<RunnableObservableLike>;
 declare const mergeT: Concat<RunnableObservableLike>;
@@ -32,6 +39,7 @@ declare const mergeAllT: ConcatAll<RunnableObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
 }>;
+declare const neverT: Never<RunnableObservableLike>;
 declare const pairwiseT: Pairwise<RunnableObservableLike>;
 declare const reduceT: Reduce<RunnableObservableLike>;
 declare const scanT: Scan<RunnableObservableLike>;
@@ -49,4 +57,4 @@ declare const toReadonlyArrayT: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
 declare const zipT: Zip<RunnableObservableLike>;
-export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, exhaust, exhaustT, forEachT, keepT, mapT, mergeAll, mergeAllT, mergeT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, generateT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

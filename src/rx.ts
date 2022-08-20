@@ -1,9 +1,4 @@
-import { getDelay, hasDelay } from "./__internal__/__internal__optionParsing";
-import {
-  addTo,
-  dispose,
-  isDisposed,
-} from "./__internal__/util/__internal__DisposableLike";
+import { dispose } from "./__internal__/util/__internal__DisposableLike";
 import {
   Mutable,
   createInstanceFactory,
@@ -18,9 +13,6 @@ import {
   ContainerOf,
   ContainerOperator,
   Defer,
-  Empty,
-  Generate,
-  Never,
   StatefulContainerLike,
   StatefulContainerLike_state,
 } from "./containers";
@@ -29,16 +21,12 @@ import {
   Function1,
   Function2,
   SideEffect1,
-  Updater,
-  ignore,
   none,
   pipe,
-  pipeLazy,
 } from "./functions";
 import { ObserverLike } from "./scheduling";
-import { getScheduler } from "./scheduling/ObserverLike";
-import { __yield, schedule } from "./scheduling/SchedulerLike";
-import { DisposableLike, SinkLike, SinkLike_notify } from "./util";
+import { __yield } from "./scheduling/SchedulerLike";
+import { DisposableLike, SinkLike } from "./util";
 
 /** @ignore */
 export const ReactiveContainerLike_sinkInto = Symbol(
@@ -300,150 +288,4 @@ export const deferRunnableObservable: Defer<
   )) as Defer<RunnableObservableLike>["defer"];
 export const deferRunnableObservableT: Defer<RunnableObservableLike> = {
   defer: deferRunnableObservable,
-};
-
-export const deferRunnable: Defer<RunnableLike>["defer"] = f =>
-  createRunnable(sink => {
-    f()[ReactiveContainerLike_sinkInto](sink);
-  });
-export const deferRunnableT: Defer<RunnableLike> = { defer: deferRunnable };
-
-interface EmptyObservable {
-  <T>(): EnumerableObservableLike<T>;
-  <T>(options: { delay: number }): RunnableObservableLike<T>;
-}
-export const emptyObservable: EmptyObservable = (<T>(options?: {
-  delay: number;
-}) => {
-  const delay = getDelay(options);
-  return delay > 0
-    ? createRunnableObservable<T>(sink => {
-        pipe(
-          sink,
-          getScheduler,
-          schedule(pipeLazy(sink, dispose()), { delay }),
-        );
-      })
-    : createEnumerableObservable<T>(sink => {
-        pipe(sink, dispose());
-      });
-}) as EmptyObservable;
-export const emptyEnumerableObservableT: Empty<EnumerableObservableLike> = {
-  empty: emptyObservable,
-};
-export const emptyObservableT: Empty<ObservableLike, { delay: number }> = {
-  empty: emptyObservable,
-};
-export const emptyRunnableObservableT: Empty<
-  RunnableObservableLike,
-  { delay: number }
-> = {
-  empty: emptyObservable,
-};
-
-export const emptyRunnable: Empty<RunnableLike>["empty"] = <T>() =>
-  createRunnable<T>(sink => {
-    pipe(sink, dispose());
-  });
-export const emptyRunnableT: Empty<RunnableLike> = { empty: emptyRunnable };
-
-interface GenerateObservable {
-  <T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-  ): EnumerableObservableLike<T>;
-
-  <T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options: {
-      readonly delay: number;
-      readonly delayStart?: boolean;
-    },
-  ): RunnableObservableLike<T>;
-}
-
-/**
- * Generates an `ObservableLike` sequence from a generator function
- * that is applied to an accumulator value with a specified `delay`
- * between emitted items.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- * @param delay The requested delay between emitted items by the observable.
- */
-export const generateObservable: GenerateObservable = (<T>(
-  generator: Updater<T>,
-  initialValue: Factory<T>,
-  options?: { readonly delay?: number; readonly delayStart?: boolean },
-): ObservableLike<T> => {
-  const delay = getDelay(options);
-  const { delayStart = false } = options ?? {};
-
-  const onSink = (observer: ObserverLike<T>) => {
-    let acc = initialValue();
-
-    const continuation = () => {
-      while (!isDisposed(observer)) {
-        acc = generator(acc);
-        observer[SinkLike_notify](acc);
-        __yield(options);
-      }
-    };
-
-    pipe(
-      observer,
-      getScheduler,
-      schedule(continuation, delayStart && hasDelay(options) ? options : none),
-      addTo(observer),
-    );
-  };
-
-  return delay > 0
-    ? createRunnableObservable(onSink)
-    : createEnumerableObservable(onSink);
-}) as GenerateObservable;
-export const generateEnumerableObservableT: Generate<EnumerableObservableLike> =
-  { generate: generateObservable };
-export const generateObservableT: Generate<
-  ObservableLike,
-  { readonly delay: number; readonly delayStart: boolean }
-> = { generate: generateObservable };
-export const generateRunnableObservableT: Generate<
-  RunnableObservableLike,
-  { readonly delay: number; readonly delayStart: boolean }
-> = { generate: generateObservable };
-
-export const generateRunnable: Generate<RunnableLike>["generate"] = <T>(
-  generator: Updater<T>,
-  initialValue: Factory<T>,
-) =>
-  createRunnable((sink: SinkLike<T>) => {
-    let acc = initialValue();
-    while (!isDisposed(sink)) {
-      acc = generator(acc);
-      sink[SinkLike_notify](acc);
-    }
-  });
-export const generateRunnableT: Generate<RunnableLike> = {
-  generate: generateRunnable,
-};
-
-export const neverObservable: Never<EnumerableObservableLike>["never"] = () =>
-  createEnumerableObservable(ignore);
-
-export const neverEnumerableObservableT: Never<EnumerableObservableLike> = {
-  never: neverObservable,
-};
-export const neverObservableT: Never<ObservableLike> = {
-  never: neverObservable,
-};
-export const neverRunnableObservableT: Never<RunnableObservableLike> = {
-  never: neverObservable,
-};
-
-export const neverRunnable: Never<RunnableLike>["never"] = () =>
-  createRunnable(ignore);
-export const neverRunnableT: Never<RunnableLike> = {
-  never: neverRunnable,
 };

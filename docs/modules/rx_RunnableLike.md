@@ -11,11 +11,15 @@
 - [concatAllT](rx_RunnableLike.md#concatallt)
 - [concatT](rx_RunnableLike.md#concatt)
 - [decodeWithCharsetT](rx_RunnableLike.md#decodewithcharsett)
+- [deferT](rx_RunnableLike.md#defert)
 - [distinctUntilChangedT](rx_RunnableLike.md#distinctuntilchangedt)
+- [emptyT](rx_RunnableLike.md#emptyt)
 - [everySatisfyT](rx_RunnableLike.md#everysatisfyt)
 - [forEachT](rx_RunnableLike.md#foreacht)
+- [generateT](rx_RunnableLike.md#generatet)
 - [keepT](rx_RunnableLike.md#keept)
 - [mapT](rx_RunnableLike.md#mapt)
+- [neverT](rx_RunnableLike.md#nevert)
 - [pairwiseT](rx_RunnableLike.md#pairwiset)
 - [reduceT](rx_RunnableLike.md#reducet)
 - [repeatT](rx_RunnableLike.md#repeatt)
@@ -36,13 +40,17 @@
 - [concat](rx_RunnableLike.md#concat)
 - [concatAll](rx_RunnableLike.md#concatall)
 - [decodeWithCharset](rx_RunnableLike.md#decodewithcharset)
+- [defer](rx_RunnableLike.md#defer)
 - [distinctUntilChanged](rx_RunnableLike.md#distinctuntilchanged)
+- [empty](rx_RunnableLike.md#empty)
 - [everySatisfy](rx_RunnableLike.md#everysatisfy)
 - [first](rx_RunnableLike.md#first)
 - [forEach](rx_RunnableLike.md#foreach)
+- [generate](rx_RunnableLike.md#generate)
 - [keep](rx_RunnableLike.md#keep)
 - [last](rx_RunnableLike.md#last)
 - [map](rx_RunnableLike.md#map)
+- [never](rx_RunnableLike.md#never)
 - [onRun](rx_RunnableLike.md#onrun)
 - [pairwise](rx_RunnableLike.md#pairwise)
 - [reduce](rx_RunnableLike.md#reduce)
@@ -90,9 +98,21 @@ ___
 
 ___
 
+### deferT
+
+• `Const` **deferT**: [`Defer`](containers.md#defer)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### emptyT
+
+• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -108,6 +128,12 @@ ___
 
 ___
 
+### generateT
+
+• `Const` **generateT**: [`Generate`](containers.md#generate)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
 ### keepT
 
 • `Const` **keepT**: [`Keep`](containers.md#keep)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
@@ -117,6 +143,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](containers.md#map)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
+
+___
+
+### neverT
+
+• `Const` **neverT**: [`Never`](containers.md#never)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ___
 
@@ -299,6 +331,29 @@ ___
 
 ___
 
+### defer
+
+▸ **defer**<`T`\>(`factory`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
@@ -319,6 +374,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(`options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 ___
 
@@ -382,6 +459,30 @@ ___
 
 ___
 
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
@@ -440,6 +541,22 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### never
+
+▸ **never**<`T`\>(): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 ___
 

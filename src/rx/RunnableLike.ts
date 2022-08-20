@@ -54,11 +54,15 @@ import {
   Concat,
   ConcatAll,
   DecodeWithCharset,
+  Defer,
   DistinctUntilChanged,
+  Empty,
   EverySatisfy,
   ForEach,
+  Generate,
   Keep,
   Map,
+  Never,
   Pairwise,
   Reduce,
   Repeat,
@@ -77,7 +81,9 @@ import {
   Function1,
   Option,
   Predicate,
+  Updater,
   identity,
+  ignore,
   isSome,
   newInstance,
   none,
@@ -225,6 +231,12 @@ export const decodeWithCharsetT: DecodeWithCharset<RunnableLike> = {
   decodeWithCharset,
 };
 
+export const defer: Defer<RunnableLike>["defer"] = f =>
+  createRunnable(sink => {
+    f()[ReactiveContainerLike_sinkInto](sink);
+  });
+export const deferT: Defer<RunnableLike> = { defer };
+
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
     const typedDistinctUntilChangedSinkMixin =
@@ -238,6 +250,12 @@ export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctU
 export const distinctUntilChangedT: DistinctUntilChanged<RunnableLike> = {
   distinctUntilChanged,
 };
+
+export const empty: Empty<RunnableLike>["empty"] = <T>() =>
+  createRunnable<T>(sink => {
+    pipe(sink, dispose());
+  });
+export const emptyT: Empty<RunnableLike> = { empty };
 
 export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
   /*@__PURE__*/ (<T>() => {
@@ -284,6 +302,21 @@ export const forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
 })();
 export const forEachT: ForEach<RunnableLike> = { forEach };
 
+export const generate: Generate<RunnableLike>["generate"] = <T>(
+  generator: Updater<T>,
+  initialValue: Factory<T>,
+) =>
+  createRunnable((sink: SinkLike<T>) => {
+    let acc = initialValue();
+    while (!isDisposed(sink)) {
+      acc = generator(acc);
+      sink[SinkLike_notify](acc);
+    }
+  });
+export const generateT: Generate<RunnableLike> = {
+  generate,
+};
+
 export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedKeepSinkMixin = keepSinkMixin<T>();
 
@@ -318,6 +351,11 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   );
 })();
 export const mapT: Map<RunnableLike> = { map };
+
+export const never: Never<RunnableLike>["never"] = () => createRunnable(ignore);
+export const neverT: Never<RunnableLike> = {
+  never: never,
+};
 
 export const onRun =
   <T>(f: Factory<DisposableOrTeardown | void>) =>

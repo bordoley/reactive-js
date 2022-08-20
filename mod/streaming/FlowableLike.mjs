@@ -3,11 +3,12 @@ import { createStream } from '../__internal__/streaming/__internal__StreamLike.m
 import { ignoreElements, startWith } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { compose, pipe } from '../functions.mjs';
-import { d as createObservable, f as addTo } from '../rx-31e22181.mjs';
+import { createObservable } from '../rx.mjs';
 import { forEach, keepT, concatT, onSubscribe } from '../rx/ObservableLike.mjs';
 import { ObserverLike_dispatcher, ObserverLike_scheduler } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { sourceFrom } from './StreamLike.mjs';
+import { addTo } from '../util/DisposableLike.mjs';
 
 const toObservable = () => src => createObservable(observer => {
     const { [ObserverLike_dispatcher]: dispatcher, [ObserverLike_scheduler]: scheduler, } = observer;

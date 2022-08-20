@@ -11,13 +11,16 @@
 - [concatT](rx_EnumerableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_EnumerableObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_EnumerableObservableLike.md#distinctuntilchangedt)
+- [emptyT](rx_EnumerableObservableLike.md#emptyt)
 - [everySatisfyT](rx_EnumerableObservableLike.md#everysatisfyt)
 - [exhaustT](rx_EnumerableObservableLike.md#exhaustt)
 - [forEachT](rx_EnumerableObservableLike.md#foreacht)
+- [generateeT](rx_EnumerableObservableLike.md#generateet)
 - [keepT](rx_EnumerableObservableLike.md#keept)
 - [mapT](rx_EnumerableObservableLike.md#mapt)
 - [mergeAllT](rx_EnumerableObservableLike.md#mergeallt)
 - [mergeT](rx_EnumerableObservableLike.md#merget)
+- [neverT](rx_EnumerableObservableLike.md#nevert)
 - [pairwiseT](rx_EnumerableObservableLike.md#pairwiset)
 - [reduceT](rx_EnumerableObservableLike.md#reducet)
 - [scanAsyncT](rx_EnumerableObservableLike.md#scanasynct)
@@ -73,6 +76,12 @@ ___
 
 ___
 
+### emptyT
+
+• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+
+___
+
 ### everySatisfyT
 
 • `Const` **everySatisfyT**: [`EverySatisfy`](containers.md#everysatisfy)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
@@ -88,6 +97,12 @@ ___
 ### forEachT
 
 • `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+
+___
+
+### generateeT
+
+• `Const` **generateeT**: [`Generate`](containers.md#generate)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
 
 ___
 
@@ -112,6 +127,12 @@ ___
 ### mergeT
 
 • `Const` **mergeT**: [`Concat`](containers.md#concat)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+
+___
+
+### neverT
+
+• `Const` **neverT**: [`Never`](containers.md#never)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
 
 ___
 

@@ -3,7 +3,7 @@ import { pipe, none, getLength, returns, isEmpty, isSome, newInstance, compose, 
 import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { SinkLike_notify } from '../../util.mjs';
-import { o as onDisposed, i as isDisposed, f as addTo, k as onComplete, e as dispose, l as addToIgnoringChildErrors, m as onError } from '../../rx-31e22181.mjs';
+import { onDisposed, isDisposed, addTo, onComplete, dispose, addToIgnoringChildErrors, onError } from '../../util/DisposableLike.mjs';
 import { notify } from '../../util/SinkLike.mjs';
 import { disposableMixin, delegatingDisposableMixin } from './__internal__Disposables.mjs';
 import { createInstanceFactory, mixin, include, init, props } from './__internal__Objects.mjs';

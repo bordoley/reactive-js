@@ -16,10 +16,13 @@ import {
   ConcatAll,
   DecodeWithCharset,
   DistinctUntilChanged,
+  Empty,
   EverySatisfy,
   ForEach,
+  Generate,
   Keep,
   Map,
+  Never,
   Pairwise,
   Reduce,
   Scan,
@@ -48,11 +51,14 @@ import {
   concat,
   decodeWithCharset,
   distinctUntilChanged,
+  empty,
   everySatisfy,
   forEach,
+  generate,
   keep,
   map,
   merge,
+  never,
   pairwise,
   reduce,
   scan,
@@ -148,6 +154,10 @@ export const distinctUntilChangedT: DistinctUntilChanged<RunnableObservableLike>
       distinctUntilChanged as DistinctUntilChanged<RunnableObservableLike>["distinctUntilChanged"],
   };
 
+export const emptyT: Empty<RunnableObservableLike, { delay: number }> = {
+  empty,
+};
+
 export const everySatisfyT: EverySatisfy<RunnableObservableLike> = {
   everySatisfy:
     everySatisfy as EverySatisfy<RunnableObservableLike>["everySatisfy"],
@@ -165,6 +175,11 @@ export const exhaustT: ConcatAll<RunnableObservableLike> = {
 export const forEachT: ForEach<RunnableObservableLike> = {
   forEach: forEach as ForEach<RunnableObservableLike>["forEach"],
 };
+
+export const generateT: Generate<
+  RunnableObservableLike,
+  { readonly delay: number; readonly delayStart: boolean }
+> = { generate };
 
 export const keepT: Keep<RunnableObservableLike> = {
   keep: keep as Keep<RunnableObservableLike>["keep"],
@@ -200,6 +215,10 @@ export const mergeAllT: ConcatAll<
     readonly maxConcurrency?: number;
   }
 > = { concatAll: mergeAll };
+
+export const neverT: Never<RunnableObservableLike> = {
+  never,
+};
 
 export const pairwiseT: Pairwise<RunnableObservableLike> = {
   pairwise: pairwise as Pairwise<RunnableObservableLike>["pairwise"],

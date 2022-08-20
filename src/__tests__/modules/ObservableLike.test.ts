@@ -28,16 +28,13 @@ import {
   sum,
 } from "../../functions";
 import { toReadonlyArray as enumerableToReadonlyArray } from "../../ix/EnumerableLike";
-import {
-  RunnableObservableLike,
-  deferRunnableObservableT,
-  emptyObservable,
-  generateObservable,
-} from "../../rx";
+import { RunnableObservableLike, deferRunnableObservableT } from "../../rx";
 import {
   combineLatest,
   concat,
+  empty,
   forEach,
+  generate,
   map,
   merge,
   onSubscribe,
@@ -123,11 +120,11 @@ const combineLatestTests = describe(
     pipeLazy(
       combineLatest(
         pipe(
-          generateObservable(incrementBy(2), returns(1), { delay: 2 }),
+          generate(incrementBy(2), returns(1), { delay: 2 }),
           takeFirst({ count: 3 }),
         ),
         pipe(
-          generateObservable(incrementBy(2), returns(0), { delay: 3 }),
+          generate(incrementBy(2), returns(0), { delay: 3 }),
           takeFirst({ count: 2 }),
         ),
       ),
@@ -271,7 +268,7 @@ const switchAllTests = describe(
   test(
     "with empty source",
     pipeLazy(
-      emptyObservable({ delay: 1 }),
+      empty({ delay: 1 }),
       switchAll(),
       toReadonlyArray(),
       expectArrayEquals([] as unknown[]),
@@ -367,7 +364,7 @@ const throttleTests = describe(
   test(
     "first",
     pipeLazy(
-      generateObservable(increment, returns<number>(-1), {
+      generate(increment, returns<number>(-1), {
         delay: 1,
         delayStart: true,
       }),
@@ -381,7 +378,7 @@ const throttleTests = describe(
   test(
     "last",
     pipeLazy(
-      generateObservable(increment, returns<number>(-1), {
+      generate(increment, returns<number>(-1), {
         delay: 1,
         delayStart: true,
       }),
@@ -395,7 +392,7 @@ const throttleTests = describe(
   test(
     "interval",
     pipeLazy(
-      generateObservable(increment, returns<number>(-1), {
+      generate(increment, returns<number>(-1), {
         delay: 1,
         delayStart: true,
       }),
@@ -442,7 +439,7 @@ const toFlowableTests = describe(
     const scheduler = createVirtualTimeScheduler();
 
     const generateStream = pipe(
-      generateObservable(increment, returns(-1), {
+      generate(increment, returns(-1), {
         delay: 1,
         delayStart: true,
       }),
@@ -496,10 +493,7 @@ const toPromiseTests = describe(
   testAsync("when observable completes without producing a value", async () => {
     const scheduler = createHostScheduler();
     try {
-      await pipe(
-        pipe(emptyObservable(), toPromise(scheduler)),
-        expectPromiseToThrow,
-      );
+      await pipe(pipe(empty(), toPromise(scheduler)), expectPromiseToThrow);
     } finally {
       pipe(scheduler, dispose());
     }
@@ -534,7 +528,7 @@ const withLatestFromTest = describe(
     pipeLazy(
       [0],
       toObservable({ delay: 1 }),
-      withLatestFrom(emptyObservable(), sum),
+      withLatestFrom(empty(), sum),
       toReadonlyArray(),
       expectArrayEquals([] as number[]),
     ),

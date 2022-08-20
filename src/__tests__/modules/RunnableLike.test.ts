@@ -6,13 +6,13 @@ import {
 } from "../../__internal__/__internal__testing";
 import { toRunnable } from "../../containers/ReadonlyArrayLike";
 import { Option, none, pipeLazy } from "../../functions";
-import { deferRunnableT } from "../../rx";
 import {
   bufferT,
   catchErrorT,
   concatAllT,
   concatT,
   decodeWithCharsetT,
+  deferT,
   distinctUntilChangedT,
   everySatisfyT,
   first,
@@ -81,7 +81,7 @@ testModule(
   decodeWithCharsetTests({
     fromArray: toRunnable,
     ...decodeWithCharsetT,
-    ...deferRunnableT,
+    ...deferT,
     ...mapT,
     ...toReadonlyArrayT,
   }),

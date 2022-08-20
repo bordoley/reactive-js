@@ -12,13 +12,16 @@
 - [concatT](rx_ObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_ObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_ObservableLike.md#distinctuntilchangedt)
+- [emptyT](rx_ObservableLike.md#emptyt)
 - [everySatisfyT](rx_ObservableLike.md#everysatisfyt)
 - [exhaustT](rx_ObservableLike.md#exhaustt)
 - [forEachT](rx_ObservableLike.md#foreacht)
+- [generateT](rx_ObservableLike.md#generatet)
 - [keepT](rx_ObservableLike.md#keept)
 - [mapT](rx_ObservableLike.md#mapt)
 - [mergeAllT](rx_ObservableLike.md#mergeallt)
 - [mergeT](rx_ObservableLike.md#merget)
+- [neverT](rx_ObservableLike.md#nevert)
 - [pairwiseT](rx_ObservableLike.md#pairwiset)
 - [reduceT](rx_ObservableLike.md#reducet)
 - [repeatT](rx_ObservableLike.md#repeatt)
@@ -47,12 +50,14 @@
 - [concatAll](rx_ObservableLike.md#concatall)
 - [decodeWithCharset](rx_ObservableLike.md#decodewithcharset)
 - [distinctUntilChanged](rx_ObservableLike.md#distinctuntilchanged)
+- [empty](rx_ObservableLike.md#empty)
 - [everySatisfy](rx_ObservableLike.md#everysatisfy)
 - [exhaust](rx_ObservableLike.md#exhaust)
 - [forEach](rx_ObservableLike.md#foreach)
 - [forkCombineLatest](rx_ObservableLike.md#forkcombinelatest)
 - [forkMerge](rx_ObservableLike.md#forkmerge)
 - [forkZipLatest](rx_ObservableLike.md#forkziplatest)
+- [generate](rx_ObservableLike.md#generate)
 - [isEnumerable](rx_ObservableLike.md#isenumerable)
 - [isRunnable](rx_ObservableLike.md#isrunnable)
 - [keep](rx_ObservableLike.md#keep)
@@ -61,6 +66,7 @@
 - [merge](rx_ObservableLike.md#merge)
 - [mergeAll](rx_ObservableLike.md#mergeall)
 - [multicast](rx_ObservableLike.md#multicast)
+- [never](rx_ObservableLike.md#never)
 - [onSubscribe](rx_ObservableLike.md#onsubscribe)
 - [pairwise](rx_ObservableLike.md#pairwise)
 - [reduce](rx_ObservableLike.md#reduce)
@@ -128,6 +134,12 @@ ___
 
 ___
 
+### emptyT
+
+• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), { `delay`: `number`  }\>
+
+___
+
 ### everySatisfyT
 
 • `Const` **everySatisfyT**: [`EverySatisfy`](containers.md#everysatisfy)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
@@ -143,6 +155,12 @@ ___
 ### forEachT
 
 • `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### generateT
+
+• `Const` **generateT**: [`Generate`](containers.md#generate)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), { `delay`: `number` ; `delayStart`: `boolean`  }\>
 
 ___
 
@@ -167,6 +185,12 @@ ___
 ### mergeT
 
 • `Const` **mergeT**: [`Concat`](containers.md#concat)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### neverT
+
+• `Const` **neverT**: [`Never`](containers.md#never)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -655,6 +679,41 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+▸ **empty**<`T`\>(`options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 ___
 
@@ -1209,6 +1268,59 @@ ___
 
 ___
 
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+Generates an `ObservableLike` sequence from a generator function
+that is applied to an accumulator value with a specified `delay`
+between emitted items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+Generates an `ObservableLike` sequence from a generator function
+that is applied to an accumulator value with a specified `delay`
+between emitted items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+| `options` | `Object` | - |
+| `options.delay` | `number` | - |
+| `options.delayStart?` | `boolean` | - |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+___
+
 ### isEnumerable
 
 ▸ **isEnumerable**(`obs`): obs is EnumerableObservableLike<unknown\>
@@ -1376,6 +1488,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### never
+
+▸ **never**<`T`\>(): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 ___
 

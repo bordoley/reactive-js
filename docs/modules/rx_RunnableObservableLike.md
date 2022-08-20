@@ -11,13 +11,16 @@
 - [concatT](rx_RunnableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_RunnableObservableLike.md#decodewithcharsett)
 - [distinctUntilChangedT](rx_RunnableObservableLike.md#distinctuntilchangedt)
+- [emptyT](rx_RunnableObservableLike.md#emptyt)
 - [everySatisfyT](rx_RunnableObservableLike.md#everysatisfyt)
 - [exhaustT](rx_RunnableObservableLike.md#exhaustt)
 - [forEachT](rx_RunnableObservableLike.md#foreacht)
+- [generateT](rx_RunnableObservableLike.md#generatet)
 - [keepT](rx_RunnableObservableLike.md#keept)
 - [mapT](rx_RunnableObservableLike.md#mapt)
 - [mergeAllT](rx_RunnableObservableLike.md#mergeallt)
 - [mergeT](rx_RunnableObservableLike.md#merget)
+- [neverT](rx_RunnableObservableLike.md#nevert)
 - [pairwiseT](rx_RunnableObservableLike.md#pairwiset)
 - [reduceT](rx_RunnableObservableLike.md#reducet)
 - [scanAsyncT](rx_RunnableObservableLike.md#scanasynct)
@@ -73,6 +76,12 @@ ___
 
 ___
 
+### emptyT
+
+• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), { `delay`: `number`  }\>
+
+___
+
 ### everySatisfyT
 
 • `Const` **everySatisfyT**: [`EverySatisfy`](containers.md#everysatisfy)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
@@ -88,6 +97,12 @@ ___
 ### forEachT
 
 • `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### generateT
+
+• `Const` **generateT**: [`Generate`](containers.md#generate)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), { `delay`: `number` ; `delayStart`: `boolean`  }\>
 
 ___
 
@@ -112,6 +127,12 @@ ___
 ### mergeT
 
 • `Const` **mergeT**: [`Concat`](containers.md#concat)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### neverT
+
+• `Const` **neverT**: [`Never`](containers.md#never)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ___
 
