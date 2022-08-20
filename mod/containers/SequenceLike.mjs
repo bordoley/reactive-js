@@ -1,12 +1,12 @@
 /// <reference types="./SequenceLike.d.ts" />
 import { createRepeatOperator } from '../__internal__/containers/__internal__ContainerLike.mjs';
+import { create } from '../__internal__/ix/__internal__EnumerableLike.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
-import { createEnumerable } from '../ix.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../util.mjs';
-import { i as isDisposed, f as dispose } from '../DisposableLike-c856ff07.mjs';
+import { i as isDisposed, f as dispose } from '../rx-fcdda9a1.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
 
@@ -272,7 +272,7 @@ const toEnumerable =
             }
         },
     }));
-    return () => (seq) => createEnumerable(() => createSequenceEnumerator(seq));
+    return () => (seq) => create(() => createSequenceEnumerator(seq));
 })();
 const toEnumerableT = { toEnumerable };
 const toReadonlyArray = () => (seq) => {

@@ -1,4 +1,4 @@
-import { Buffer, ConcatAll, Concat, DistinctUntilChanged, ForEach, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
+import { Buffer, ConcatAll, Concat, DistinctUntilChanged, Empty, ForEach, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
 import { Function1 } from "../functions.mjs";
 import { EnumerableLike, ToEnumerable } from "../ix.mjs";
 import { ToObservable, ToRunnable, EnumerableObservableLike, RunnableObservableLike } from "../rx.mjs";
@@ -12,6 +12,8 @@ declare const concat: Concat<EnumerableLike>["concat"];
 declare const concatT: Concat<EnumerableLike>;
 declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"];
 declare const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike>;
+declare const empty: Empty<EnumerableLike>["empty"];
+declare const emptyT: Empty<EnumerableLike>;
 declare const forEach: ForEach<EnumerableLike>["forEach"];
 declare const forEachT: ForEach<EnumerableLike>;
 /**
@@ -68,4 +70,4 @@ declare const toRunnable: ToRunnable<EnumerableLike>["toRunnable"];
 declare const toRunnableT: ToRunnable<EnumerableLike>;
 declare const zip: Zip<EnumerableLike>["zip"];
 declare const zipT: Zip<EnumerableLike>;
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, forEach, forEachT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, forEach, forEachT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };

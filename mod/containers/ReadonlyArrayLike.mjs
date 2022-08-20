@@ -1,11 +1,11 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
 import { hasDelay, getDelay } from '../__internal__/__internal__optionParsing.mjs';
+import { create } from '../__internal__/ix/__internal__EnumerableLike.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
-import { createEnumerable } from '../ix.mjs';
-import { i as isDisposed, f as dispose, _ as __yield, s as schedule, g as addTo, d as createRunnableObservable, b as createEnumerableObservable, h as createRunnable } from '../DisposableLike-c856ff07.mjs';
+import { i as isDisposed, f as dispose, _ as __yield, s as schedule, g as addTo, d as createRunnableObservable, b as createEnumerableObservable, h as createRunnable } from '../rx-fcdda9a1.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { SourceLike_move, EnumeratorLike_current, SinkLike_notify } from '../util.mjs';
 
@@ -90,7 +90,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
             }
         },
     }));
-    return createFromArray((array, start, count) => createEnumerable(() => createReadonlyArrayEnumerator(array, start, count)));
+    return createFromArray((array, start, count) => create(() => createReadonlyArrayEnumerator(array, start, count)));
 })();
 const toEnumerableT = { toEnumerable };
 const toObservable = /*@__PURE__*/ (() => {

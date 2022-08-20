@@ -1,4 +1,5 @@
 import { createRepeatOperator } from "../__internal__/containers/__internal__ContainerLike";
+import { create as createEnumerable } from "../__internal__/ix/__internal__EnumerableLike";
 import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   MutableEnumeratorLike,
@@ -46,7 +47,7 @@ import {
   returns,
   strictEquality,
 } from "../functions";
-import { ToEnumerable, createEnumerable } from "../ix";
+import { ToEnumerable } from "../ix";
 import {
   EnumeratorLike,
   EnumeratorLike_current,

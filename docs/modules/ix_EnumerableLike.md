@@ -10,6 +10,7 @@
 - [concatAllT](ix_EnumerableLike.md#concatallt)
 - [concatT](ix_EnumerableLike.md#concatt)
 - [distinctUntilChangedT](ix_EnumerableLike.md#distinctuntilchangedt)
+- [emptyT](ix_EnumerableLike.md#emptyt)
 - [forEachT](ix_EnumerableLike.md#foreacht)
 - [generateT](ix_EnumerableLike.md#generatet)
 - [keepT](ix_EnumerableLike.md#keept)
@@ -35,6 +36,7 @@
 - [concat](ix_EnumerableLike.md#concat)
 - [concatAll](ix_EnumerableLike.md#concatall)
 - [distinctUntilChanged](ix_EnumerableLike.md#distinctuntilchanged)
+- [empty](ix_EnumerableLike.md#empty)
 - [enumerate](ix_EnumerableLike.md#enumerate)
 - [forEach](ix_EnumerableLike.md#foreach)
 - [generate](ix_EnumerableLike.md#generate)
@@ -78,6 +80,12 @@ ___
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
+
+___
+
+### emptyT
+
+• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 
@@ -278,6 +286,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(`options?`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
 
 ___
 

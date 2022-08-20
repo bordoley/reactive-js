@@ -1,6 +1,7 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
 import { createDecodeWithCharsetOperator, createKeepOperator, createMapOperator, createReduceOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
+import { create, empty } from '../__internal__/ix/__internal__EnumerableLike.mjs';
 import { liftEnumerableObservable, liftObservable, createCatchError, allAreEnumerable, allAreRunnable, liftEnumerableObservableT, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, createMergeAll, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, createScanAsync, switchAll as switchAll$1, subscribe as subscribe$1, takeFirst as takeFirst$1, liftRunnableObservable, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/__internal__ObservableLike.mjs';
 import { observerMixin, createDelegatingObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createSkipFirstObserver, createTakeWhileObserver, createThrowIfEmptyObserver } from '../__internal__/scheduling/__internal__Observers.mjs';
 import { createLiftedFlowable } from '../__internal__/streaming/__internal__StreamableLike.mjs';
@@ -13,9 +14,8 @@ import { concatMap, throws, keepType } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/PromiseableLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, isEmpty, none, getLength, max, partial, returns, isNone, isSome, unsafeCast, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
-import { createEnumerable, emptyEnumerable } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$3 } from '../ix/EnumerableLike.mjs';
-import { B as disposed, o as onComplete, f as dispose, i as isDisposed, D as neverObservable, g as addTo, b as createEnumerableObservable, d as createRunnableObservable, e as createObservable, k as addToIgnoringChildErrors, j as onDisposed, C as bindTo, E as isInContinuation, r as add, F as toPausableScheduler, u as toObservable$2, x as emptyObservable, t as createVirtualTimeScheduler, q as getException } from '../DisposableLike-c856ff07.mjs';
+import { B as disposed, o as onComplete, f as dispose, i as isDisposed, D as neverObservable, g as addTo, b as createEnumerableObservable, d as createRunnableObservable, e as createObservable, k as addToIgnoringChildErrors, j as onDisposed, C as bindTo, E as isInContinuation, r as add, F as toPausableScheduler, u as toObservable$2, x as emptyObservable, t as createVirtualTimeScheduler, q as getException } from '../rx-fcdda9a1.mjs';
 import { ObserverLike_scheduler, ObserverLike_dispatcher, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -582,12 +582,12 @@ const toEnumerable =
         },
     }));
     return () => (obs) => isEnumerable(obs)
-        ? createEnumerable(() => {
+        ? create(() => {
             const scheduler = createEnumeratorScheduler();
             pipe(createEnumeratorObserver(scheduler), addTo(scheduler), sourceFrom(obs));
             return scheduler;
         })
-        : emptyEnumerable();
+        : empty();
 })();
 const toEnumerableT = { toEnumerable };
 const toFlowable = () => observable => isRunnable(observable)
