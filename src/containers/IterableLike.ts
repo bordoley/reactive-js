@@ -14,7 +14,13 @@ import {
 } from "../__internal__/util/__internal__Objects";
 import { IterableLike, ToIterable } from "../containers";
 import { Function1, compose, identity, none, pipe } from "../functions";
-import { ToAsyncEnumerable, ToEnumerable } from "../ix";
+import {
+  EnumeratorLike,
+  EnumeratorLike_current,
+  SourceLike_move,
+  ToAsyncEnumerable,
+  ToEnumerable,
+} from "../ix";
 import { fromEnumerable } from "../ix/AsyncEnumerableLike";
 import { toObservable as enumerableToObservable } from "../ix/EnumerableLike";
 import {
@@ -22,11 +28,6 @@ import {
   RunnableObservableLike,
   ToObservable,
 } from "../rx";
-import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  SourceLike_move,
-} from "../util";
 import { dispose, isDisposed } from "../util/DisposableLike";
 
 /**

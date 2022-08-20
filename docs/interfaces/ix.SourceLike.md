@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [util](../modules/util.md) / SourceLike
+[Reactive-JS](../README.md) / [ix](../modules/ix.md) / SourceLike
 
 # Interface: SourceLike
 
-[util](../modules/util.md).SourceLike
+[ix](../modules/ix.md).SourceLike
 
 ## Hierarchy
 
@@ -12,20 +12,20 @@
 
   ↳↳ [`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)
 
-  ↳↳ [`EnumeratorLike`](util.EnumeratorLike.md)
+  ↳↳ [`EnumeratorLike`](ix.EnumeratorLike.md)
 
 ## Table of contents
 
 ### Properties
 
-- [[DisposableLike\_exception]](util.SourceLike.md#[disposablelike_exception])
-- [[DisposableLike\_isDisposed]](util.SourceLike.md#[disposablelike_isdisposed])
+- [[DisposableLike\_exception]](ix.SourceLike.md#[disposablelike_exception])
+- [[DisposableLike\_isDisposed]](ix.SourceLike.md#[disposablelike_isdisposed])
 
 ### Methods
 
-- [[DisposableLike\_add]](util.SourceLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](util.SourceLike.md#[disposablelike_dispose])
-- [[SourceLike\_move]](util.SourceLike.md#[sourcelike_move])
+- [[DisposableLike\_add]](ix.SourceLike.md#[disposablelike_add])
+- [[DisposableLike\_dispose]](ix.SourceLike.md#[disposablelike_dispose])
+- [[SourceLike\_move]](ix.SourceLike.md#[sourcelike_move])
 
 ## Properties
 

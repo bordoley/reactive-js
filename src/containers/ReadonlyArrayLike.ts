@@ -36,7 +36,13 @@ import {
   none,
   pipe,
 } from "../functions";
-import { EnumerableLike, ToEnumerable } from "../ix";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  SourceLike_move,
+  ToEnumerable,
+} from "../ix";
 import {
   EnumerableObservableLike,
   ObservableLike,
@@ -51,12 +57,7 @@ import {
 import { ObserverLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
 import { __yield, schedule } from "../scheduling/SchedulerLike";
-import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  SinkLike_notify,
-  SourceLike_move,
-} from "../util";
+import { SinkLike_notify } from "../util";
 import { addTo, dispose, isDisposed } from "../util/DisposableLike";
 
 export const empty: Empty<ReadonlyArrayLike>["empty"] = /*@__PURE__*/ (<

@@ -37,6 +37,8 @@ import {
   raise,
   unsafeCast,
 } from "../functions";
+import { EnumeratorLike, EnumeratorLike_current, SourceLike_move } from "../ix";
+import { getCurrent, hasCurrent, move } from "../ix/EnumeratorLike";
 import {
   PauseableSchedulerLike,
   PrioritySchedulerLike,
@@ -52,13 +54,10 @@ import {
   ContinuationLike,
   ContinuationLike_run,
   DisposableLike,
-  EnumeratorLike,
-  EnumeratorLike_current,
   Exception,
   PauseableLike,
   PauseableLike_pause,
   PauseableLike_resume,
-  SourceLike_move,
 } from "../util";
 import { run } from "../util/ContinuationLike";
 import {
@@ -70,7 +69,6 @@ import {
   isDisposed,
   onDisposed,
 } from "../util/DisposableLike";
-import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
 import { pause } from "../util/PauseableLike";
 
 export const isInContinuation = (scheduler: {

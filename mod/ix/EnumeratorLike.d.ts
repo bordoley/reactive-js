@@ -1,5 +1,5 @@
 import { SideEffect1, Function1 } from "../functions.mjs";
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, EnumeratorLike } from "../util.mjs";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, EnumeratorLike } from "../ix.mjs";
 declare const getCurrent: <T>(enumerator: {
     [EnumeratorLike_current]: T;
 }) => T;

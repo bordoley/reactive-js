@@ -145,12 +145,20 @@ import {
   returns,
   unsafeCast,
 } from "../functions";
-import { EnumerableLike, ToEnumerable } from "../ix";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  SourceLike,
+  SourceLike_move,
+  ToEnumerable,
+} from "../ix";
 import {
   toObservable as enumerableToObservable,
   zip as enumerableZip,
   enumerate,
 } from "../ix/EnumerableLike";
+import { getCurrent, hasCurrent, move } from "../ix/EnumeratorLike";
 import {
   EnumerableObservableLike,
   MulticastObservableLike,
@@ -187,13 +195,9 @@ import {
   ContinuationLike,
   DisposableLike,
   DisposableOrTeardown,
-  EnumeratorLike,
-  EnumeratorLike_current,
   Exception,
   SinkLike,
   SinkLike_notify,
-  SourceLike,
-  SourceLike_move,
 } from "../util";
 import { run } from "../util/ContinuationLike";
 import {
@@ -209,7 +213,6 @@ import {
   onComplete,
   onDisposed,
 } from "../util/DisposableLike";
-import { getCurrent, hasCurrent, move } from "../util/EnumeratorLike";
 import { pause, resume } from "../util/PauseableLike";
 import { notify, notifySink, sourceFrom } from "../util/SinkLike";
 import { getObserverCount } from "./MulticastObservableLike";

@@ -14,7 +14,7 @@ Interface for iterating a Container of items.
 
 ## Hierarchy
 
-- [`InteractiveContainerLike`](ix.InteractiveContainerLike.md)<[`EnumeratorLike`](util.EnumeratorLike.md)<`T`\>\>
+- [`InteractiveContainerLike`](ix.InteractiveContainerLike.md)<[`EnumeratorLike`](ix.EnumeratorLike.md)<`T`\>\>
 
   ↳ **`EnumerableLike`**
 
@@ -54,7 +54,7 @@ ___
 
 ### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`EnumeratorLike`](util.EnumeratorLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`EnumeratorLike`](ix.EnumeratorLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -64,7 +64,7 @@ ___
 
 ### [InteractiveContainerLike\_interact]
 
-▸ **[InteractiveContainerLike_interact]**(`ctx`): [`EnumeratorLike`](util.EnumeratorLike.md)<`T`\>
+▸ **[InteractiveContainerLike_interact]**(`ctx`): [`EnumeratorLike`](ix.EnumeratorLike.md)<`T`\>
 
 #### Parameters
 
@@ -74,7 +74,7 @@ ___
 
 #### Returns
 
-[`EnumeratorLike`](util.EnumeratorLike.md)<`T`\>
+[`EnumeratorLike`](ix.EnumeratorLike.md)<`T`\>
 
 #### Inherited from
 

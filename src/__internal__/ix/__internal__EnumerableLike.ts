@@ -1,7 +1,11 @@
 import { Empty } from "../../containers";
 import { Factory, none, pipe } from "../../functions";
-import { EnumerableLike, InteractiveContainerLike_interact } from "../../ix";
-import { EnumeratorLike, SourceLike_move } from "../../util";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  InteractiveContainerLike_interact,
+  SourceLike_move,
+} from "../../ix";
 import { dispose } from "../util/__internal__DisposableLike";
 import { disposableMixin } from "../util/__internal__Disposables";
 import {

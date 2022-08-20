@@ -10,6 +10,8 @@ Represents an unmanaged resource that can be disposed.
 
 - **`DisposableLike`**
 
+  ↳ [`SourceLike`](ix.SourceLike.md)
+
   ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
@@ -21,8 +23,6 @@ Represents an unmanaged resource that can be disposed.
   ↳ [`ContinuationLike`](util.ContinuationLike.md)
 
   ↳ [`SinkLike`](util.SinkLike.md)
-
-  ↳ [`SourceLike`](util.SourceLike.md)
 
 ## Table of contents
 

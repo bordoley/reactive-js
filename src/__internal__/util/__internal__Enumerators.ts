@@ -1,11 +1,11 @@
 import { none, pipe, raise, returns, unsafeCast } from "../../functions";
 import {
-  DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../../util";
+} from "../../ix";
+import { DisposableLike } from "../../util";
 import { isDisposed } from "./__internal__DisposableLike";
 import { Mixin, mixin, props } from "./__internal__Objects";
 

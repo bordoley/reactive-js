@@ -55,9 +55,14 @@ import {
   AsyncEnumerableLike,
   AsyncEnumeratorLike,
   EnumerableLike,
+  EnumeratorLike,
   InteractiveContainerLike_interact,
+  SourceLike,
+  SourceLike_move,
   ToAsyncEnumerable,
 } from "../ix";
+import { getCurrent, hasCurrent } from "../ix/EnumeratorLike";
+import { move } from "../ix/SourceLike";
 import {
   AsyncReducer,
   MulticastObservableLike,
@@ -101,10 +106,7 @@ import { dispatch, getScheduler } from "../scheduling/DispatcherLike";
 import { getScheduler as observerGetScheduler } from "../scheduling/ObserverLike";
 import { StreamLike, StreamableLike_stream } from "../streaming";
 import { stream } from "../streaming/StreamableLike";
-import { EnumeratorLike, SourceLike, SourceLike_move } from "../util";
 import { add, addTo } from "../util/DisposableLike";
-import { getCurrent, hasCurrent } from "../util/EnumeratorLike";
-import { move } from "../util/SourceLike";
 import { enumerate } from "./EnumerableLike";
 
 export const createAsyncEnumerator = /*@__PURE__*/ (() => {
