@@ -1,7 +1,11 @@
-import { FromArrayOptions, Generate, Keep, Map, Scan, TakeWhile, ToReadonlyArray } from "../containers.mjs";
+import { ContainerOperator, FromArrayOptions, Generate, Keep, Map, Scan, TakeWhile, ToReadonlyArray } from "../containers.mjs";
 import { Function1 } from "../functions.mjs";
-import { AsyncEnumerableLike, ToAsyncEnumerable, EnumerableLike } from "../ix.mjs";
-import { ScanAsync, ObservableLike, ToObservable } from "../rx.mjs";
+import { AsyncEnumeratorLike, AsyncEnumerableLike, ToAsyncEnumerable, EnumerableLike } from "../ix.mjs";
+import { ObservableLike, ScanAsync, ToObservable } from "../rx.mjs";
+import { SchedulerLike } from "../scheduling.mjs";
+declare const createAsyncEnumerator: <T>(op: ContainerOperator<ObservableLike<unknown>, void, T>, scheduler: SchedulerLike, options?: {
+    readonly replay?: number;
+}) => AsyncEnumeratorLike<T>;
 declare const fromArray: <T>(_?: Partial<FromArrayOptions>) => Function1<readonly T[], AsyncEnumerableLike<T>>;
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
@@ -36,4 +40,4 @@ declare const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"];
 declare const toObservableT: ToObservable<AsyncEnumerableLike>;
 declare const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<AsyncEnumerableLike>;
-export { fromArray, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { createAsyncEnumerator, fromArray, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };

@@ -10,7 +10,7 @@
 
   ↳ **`SourceLike`**
 
-  ↳↳ [`AsyncEnumeratorLike`](streaming.AsyncEnumeratorLike.md)
+  ↳↳ [`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)
 
   ↳↳ [`EnumeratorLike`](util.EnumeratorLike.md)
 

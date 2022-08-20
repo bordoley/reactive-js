@@ -45,6 +45,7 @@ import {
   createThrowIfEmptyObserver,
   observerMixin,
 } from "../__internal__/scheduling/__internal__Observers";
+import { createLiftedFlowable } from "../__internal__/streaming/__internal__StreamableLike";
 import {
   DisposableRefLike,
   createDisposableRef,
@@ -182,7 +183,7 @@ import {
   isInContinuation,
   toPausableScheduler,
 } from "../scheduling/SchedulerLike";
-import { FlowMode, ToFlowable, createLiftedFlowable } from "../streaming";
+import { FlowMode, ToFlowable } from "../streaming";
 import {
   ContinuationLike,
   DisposableLike,

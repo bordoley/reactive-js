@@ -10,6 +10,10 @@ import {
   createGzip,
   createInflate,
 } from "zlib";
+import {
+  createLiftedFlowable,
+  createLiftedStreamable,
+} from "../__internal__/streaming/__internal__StreamableLike";
 import { ContainerOperator } from "../containers";
 import {
   Factory,
@@ -38,13 +42,7 @@ import {
   getScheduler as dispatcherGetScheduler,
 } from "../scheduling/DispatcherLike";
 import { getDispatcher, getScheduler } from "../scheduling/ObserverLike";
-import {
-  FlowMode,
-  FlowableLike,
-  StreamableLike,
-  createLiftedFlowable,
-  createLiftedStreamable,
-} from "../streaming";
+import { FlowMode, FlowableLike, StreamableLike } from "../streaming";
 import { sourceFrom } from "../streaming/StreamLike";
 import { stream } from "../streaming/StreamableLike";
 import { DisposableLike } from "../util";

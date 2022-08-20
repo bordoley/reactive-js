@@ -1,8 +1,8 @@
 import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerLike, Container, ContainerOf, Empty, Generate } from "./containers.mjs";
 import { Function1, Factory } from "./functions.mjs";
 import { SchedulerLike } from "./scheduling.mjs";
-import { StreamableLike, AsyncEnumeratorLike } from "./streaming.mjs";
-import { DisposableLike, EnumeratorLike } from "./util.mjs";
+import { StreamLike, StreamableLike } from "./streaming.mjs";
+import { DisposableLike, EnumeratorLike, SourceLike } from "./util.mjs";
 /** @ignore */
 declare const InteractiveContainerLike_interact: unique symbol;
 interface InteractiveContainerLike<TSource extends DisposableLike, TCtx = void> extends StatefulContainerLike {
@@ -14,6 +14,8 @@ interface InteractiveContainerLike<TSource extends DisposableLike, TCtx = void> 
 interface EnumerableLike<T = unknown> extends InteractiveContainerLike<EnumeratorLike<T>> {
     readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
     readonly [StatefulContainerLike_state]?: EnumeratorLike<this[typeof ContainerLike_T]>;
+}
+interface AsyncEnumeratorLike<T = unknown> extends SourceLike, StreamLike<void, T> {
 }
 interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T, AsyncEnumeratorLike<T>>, InteractiveContainerLike<AsyncEnumeratorLike<T>, SchedulerLike> {
     readonly [ContainerLike_type]?: AsyncEnumerableLike<this[typeof ContainerLike_T]>;
@@ -37,4 +39,4 @@ declare const emptyEnumerableT: Empty<EnumerableLike>;
  */
 declare const generateEnumerable: Generate<EnumerableLike>["generate"];
 declare const generateEnumerableT: Generate<EnumerableLike>;
-export { AsyncEnumerableLike, EnumerableLike, InteractiveContainerLike, InteractiveContainerLike_interact, ToAsyncEnumerable, ToEnumerable, createEnumerable, emptyEnumerable, emptyEnumerableT, generateEnumerable, generateEnumerableT };
+export { AsyncEnumerableLike, AsyncEnumeratorLike, EnumerableLike, InteractiveContainerLike, InteractiveContainerLike_interact, ToAsyncEnumerable, ToEnumerable, createEnumerable, emptyEnumerable, emptyEnumerableT, generateEnumerable, generateEnumerableT };

@@ -7,6 +7,7 @@
 ### Interfaces
 
 - [AsyncEnumerableLike](../interfaces/ix.AsyncEnumerableLike.md)
+- [AsyncEnumeratorLike](../interfaces/ix.AsyncEnumeratorLike.md)
 - [EnumerableLike](../interfaces/ix.EnumerableLike.md)
 - [InteractiveContainerLike](../interfaces/ix.InteractiveContainerLike.md)
 

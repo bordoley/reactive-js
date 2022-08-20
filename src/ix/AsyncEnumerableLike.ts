@@ -8,6 +8,7 @@ import {
   createTakeWhileOperator,
   interactive,
 } from "../__internal__/containers/__internal__StatefulContainerLike";
+import { streamMixin } from "../__internal__/streaming/__internal__StreamLike";
 import {
   delegatingDisposableMixin,
   disposableMixin,
@@ -52,6 +53,7 @@ import {
 } from "../functions";
 import {
   AsyncEnumerableLike,
+  AsyncEnumeratorLike,
   EnumerableLike,
   InteractiveContainerLike_interact,
   ToAsyncEnumerable,
@@ -97,17 +99,57 @@ import {
 } from "../scheduling";
 import { dispatch, getScheduler } from "../scheduling/DispatcherLike";
 import { getScheduler as observerGetScheduler } from "../scheduling/ObserverLike";
-import {
-  AsyncEnumeratorLike,
-  StreamLike,
-  StreamableLike_stream,
-} from "../streaming";
+import { StreamLike, StreamableLike_stream } from "../streaming";
 import { stream } from "../streaming/StreamableLike";
-import { EnumeratorLike, SourceLike_move } from "../util";
+import { EnumeratorLike, SourceLike, SourceLike_move } from "../util";
 import { add, addTo } from "../util/DisposableLike";
 import { getCurrent, hasCurrent } from "../util/EnumeratorLike";
 import { move } from "../util/SourceLike";
 import { enumerate } from "./EnumerableLike";
+
+export const createAsyncEnumerator = /*@__PURE__*/ (() => {
+  const createAsyncEnumeratorInternal: <T>(
+    op: ContainerOperator<ObservableLike, void, T>,
+    scheduler: SchedulerLike,
+    replay: number,
+  ) => AsyncEnumeratorLike<T> = (<T>() => {
+    const typedStreamMixin = streamMixin<void, T>();
+    return createInstanceFactory(
+      mixin(
+        include(typedStreamMixin),
+        function AsyncEnumerator(
+          instance: Pick<SourceLike, typeof SourceLike_move>,
+          op: ContainerOperator<ObservableLike, void, T>,
+          scheduler: SchedulerLike,
+          replay: number,
+        ): AsyncEnumeratorLike<T> {
+          init(typedStreamMixin, instance, op, scheduler, replay);
+
+          return instance;
+        },
+        {},
+        {
+          [SourceLike_move](this: StreamLike<void, T>) {
+            pipe(this, dispatch(none));
+          },
+        },
+      ),
+    );
+  })();
+
+  return <T>(
+    op: ContainerOperator<ObservableLike, void, T>,
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): AsyncEnumeratorLike<T> => {
+    const { replay = 0 } = options ?? {};
+    return createAsyncEnumeratorInternal(
+      op as ContainerOperator<ObservableLike, unknown, unknown>,
+      scheduler,
+      replay,
+    );
+  };
+})();
 
 const createAsyncEnumerable: <T>(
   f: (

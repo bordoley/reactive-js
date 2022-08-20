@@ -1,3 +1,4 @@
+import { createStreamble } from "../__internal__/streaming/__internal__StreamableLike";
 import { delegatingDisposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   Mutable,
@@ -61,10 +62,8 @@ import {
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
-  createActionReducer,
-  createStreamble,
 } from "../streaming";
-import { stream } from "../streaming/StreamableLike";
+import { createActionReducer, stream } from "../streaming/StreamableLike";
 import {
   addTo,
   dispose,

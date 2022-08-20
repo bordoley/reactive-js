@@ -5,7 +5,7 @@ import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { async, __memo, __await } from '../../effects.mjs';
 import { pipe, isSome } from '../../functions.mjs';
 import { takeLast, forEach, subscribe, keepT } from '../../rx/ObservableLike.mjs';
-import { r as createVirtualTimeScheduler } from '../../DisposableLike-d42502aa.mjs';
+import { t as createVirtualTimeScheduler } from '../../DisposableLike-c856ff07.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 
 testModule("effects", createTest("batch mode", () => {
