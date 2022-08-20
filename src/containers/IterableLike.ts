@@ -1,3 +1,4 @@
+import { create as createEnumerable } from "../__internal__/ix/__internal__EnumerableLike";
 import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   MutableEnumeratorLike,
@@ -13,7 +14,7 @@ import {
 } from "../__internal__/util/__internal__Objects";
 import { IterableLike, ToIterable } from "../containers";
 import { Function1, compose, identity, none, pipe } from "../functions";
-import { ToAsyncEnumerable, ToEnumerable, createEnumerable } from "../ix";
+import { ToAsyncEnumerable, ToEnumerable } from "../ix";
 import { fromEnumerable } from "../ix/AsyncEnumerableLike";
 import { toObservable as enumerableToObservable } from "../ix/EnumerableLike";
 import {

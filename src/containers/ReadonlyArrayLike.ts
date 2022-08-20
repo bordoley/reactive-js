@@ -1,4 +1,5 @@
 import { getDelay, hasDelay } from "../__internal__/__internal__optionParsing";
+import { create as createEnumerable } from "../__internal__/ix/__internal__EnumerableLike";
 import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   MutableEnumeratorLike,
@@ -35,7 +36,7 @@ import {
   none,
   pipe,
 } from "../functions";
-import { EnumerableLike, ToEnumerable, createEnumerable } from "../ix";
+import { EnumerableLike, ToEnumerable } from "../ix";
 import {
   EnumerableObservableLike,
   ObservableLike,

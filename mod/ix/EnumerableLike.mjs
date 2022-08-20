@@ -2,14 +2,15 @@
 import { getDelay, hasDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { createRepeatOperator } from '../__internal__/containers/__internal__ContainerLike.mjs';
 import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
+import { empty as empty$1, create } from '../__internal__/ix/__internal__EnumerableLike.mjs';
 import { disposableMixin, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';
 import { mixin, props, createInstanceFactory, include, init } from '../__internal__/util/__internal__Objects.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, unsafeCast, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
-import { InteractiveContainerLike_interact, createEnumerable } from '../ix.mjs';
-import { r as add, f as dispose, B as disposed, i as isDisposed, g as addTo, C as bindTo, p as addIgnoringChildErrors, o as onComplete, s as schedule, _ as __yield, d as createRunnableObservable, b as createEnumerableObservable, q as getException, h as createRunnable } from '../DisposableLike-c856ff07.mjs';
+import { InteractiveContainerLike_interact } from '../ix.mjs';
+import { r as add, f as dispose, B as disposed, i as isDisposed, g as addTo, C as bindTo, p as addIgnoringChildErrors, o as onComplete, s as schedule, _ as __yield, d as createRunnableObservable, b as createEnumerableObservable, q as getException, h as createRunnable } from '../rx-fcdda9a1.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move } from '../util.mjs';
 import { move, getCurrent, hasCurrent, forEach as forEach$1 } from '../util/EnumeratorLike.mjs';
@@ -169,6 +170,10 @@ const distinctUntilChanged =
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
+const empty = empty$1;
+const emptyT = {
+    empty,
+};
 const forEach = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
     return pipe(createInstanceFactory(mixin(include(delegatingDisposableMixin, typedDelegatingEnumeratorMixin), function forEachEnumerator(instance, delegate, effect) {
@@ -217,7 +222,7 @@ const generate = /*@__PURE__*/ (() => {
             }
         },
     }));
-    return (generator, initialValue) => createEnumerable(() => createGenerateEnumerator(generator, initialValue()));
+    return (generator, initialValue) => create(() => createGenerateEnumerator(generator, initialValue()));
 })();
 const generateT = {
     generate,
@@ -348,7 +353,7 @@ const repeat = /*@__PURE__*/ (() => {
             return (_b = (_a = this.enumerator) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_hasCurrent]) !== null && _b !== void 0 ? _b : false;
         },
     }));
-    return createRepeatOperator((delegate, predicate) => createEnumerable(() => createRepeatEnumerator(delegate, predicate)));
+    return createRepeatOperator((delegate, predicate) => create(() => createRepeatEnumerator(delegate, predicate)));
 })();
 const repeatT = {
     repeat,
@@ -651,8 +656,8 @@ const zip = /*@__PURE__*/ (() => {
         pipe(enumerators, forEach$2(addTo(instance)));
         return instance;
     };
-    return (...enumerables) => createEnumerable(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
+    return (...enumerables) => create(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
 })();
 const zipT = { zip };
 
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, enumerate, forEach, forEachT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, forEach, forEachT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };

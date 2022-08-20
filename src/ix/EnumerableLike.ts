@@ -17,6 +17,10 @@ import {
   interactive,
 } from "../__internal__/containers/__internal__StatefulContainerLike";
 import {
+  create,
+  empty as emptyInternal,
+} from "../__internal__/ix/__internal__EnumerableLike";
+import {
   delegatingDisposableMixin,
   disposableMixin,
   disposableRefMixin,
@@ -44,6 +48,7 @@ import {
   Concat,
   ConcatAll,
   DistinctUntilChanged,
+  Empty,
   ForEach,
   Generate,
   Keep,
@@ -91,7 +96,6 @@ import {
   EnumerableLike,
   InteractiveContainerLike_interact,
   ToEnumerable,
-  createEnumerable,
 } from "../ix";
 import {
   EnumerableObservableLike,
@@ -452,6 +456,11 @@ export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
   distinctUntilChanged,
 };
 
+export const empty: Empty<EnumerableLike>["empty"] = emptyInternal;
+export const emptyT: Empty<EnumerableLike> = {
+  empty,
+};
+
 export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   T,
 >() => {
@@ -546,7 +555,7 @@ export const generate: Generate<EnumerableLike>["generate"] = /*@__PURE__*/ (<
   );
 
   return (generator: Updater<T>, initialValue: Factory<T>) =>
-    createEnumerable(() => createGenerateEnumerator(generator, initialValue()));
+    create(() => createGenerateEnumerator(generator, initialValue()));
 })();
 export const generateT: Generate<EnumerableLike> = {
   generate,
@@ -783,7 +792,7 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   );
 
   return createRepeatOperator<EnumerableLike, T>((delegate, predicate) =>
-    createEnumerable(() => createRepeatEnumerator(delegate, predicate)),
+    create(() => createRepeatEnumerator(delegate, predicate)),
   );
 })();
 export const repeatT: Repeat<EnumerableLike> = {
@@ -1340,7 +1349,7 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   };
 
   return (...enumerables: readonly EnumerableLike[]): EnumerableLike<any> =>
-    createEnumerable(() =>
+    create(() =>
       pipe(enumerables, mapReadonlyArray(enumerate()), zipEnumerators),
     );
 })();

@@ -11,6 +11,10 @@ import {
   createThrowIfEmptyOperator,
 } from "../__internal__/containers/__internal__StatefulContainerLike";
 import {
+  create as createEnumerable,
+  empty as emptyEnumerable,
+} from "../__internal__/ix/__internal__EnumerableLike";
+import {
   allAreEnumerable,
   allAreRunnable,
   createCatchError,
@@ -141,12 +145,7 @@ import {
   returns,
   unsafeCast,
 } from "../functions";
-import {
-  EnumerableLike,
-  ToEnumerable,
-  createEnumerable,
-  emptyEnumerable,
-} from "../ix";
+import { EnumerableLike, ToEnumerable } from "../ix";
 import {
   toObservable as enumerableToObservable,
   zip as enumerableZip,
