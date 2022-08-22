@@ -34,7 +34,11 @@
 - [ForkZip](containers.md#forkzip)
 - [FromArray](containers.md#fromarray)
 - [FromArrayOptions](containers.md#fromarrayoptions)
+- [FromAsyncIterable](containers.md#fromasynciterable)
 - [FromIterable](containers.md#fromiterable)
+- [FromPromise](containers.md#frompromise)
+- [FromSequence](containers.md#fromsequence)
+- [FromSet](containers.md#fromset)
 - [Generate](containers.md#generate)
 - [Keep](containers.md#keep)
 - [Map](containers.md#map)
@@ -50,9 +54,11 @@
 - [TakeLast](containers.md#takelast)
 - [TakeWhile](containers.md#takewhile)
 - [ThrowIfEmpty](containers.md#throwifempty)
+- [ToAsyncIterable](containers.md#toasynciterable)
 - [ToIterable](containers.md#toiterable)
-- [ToPromise](containers.md#topromise)
+- [ToPromiseable](containers.md#topromiseable)
 - [ToReadonlyArray](containers.md#toreadonlyarray)
+- [ToReadonlySet](containers.md#toreadonlyset)
 - [ToSequence](containers.md#tosequence)
 - [Zip](containers.md#zip)
 
@@ -276,6 +282,19 @@ ___
 
 ___
 
+### FromAsyncIterable
+
+Ƭ **FromAsyncIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromAsyncIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
+
+___
+
 ### FromIterable
 
 Ƭ **FromIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
@@ -286,6 +305,45 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `O` | `never` |
+
+___
+
+### FromPromise
+
+Ƭ **FromPromise**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
+
+___
+
+### FromSequence
+
+Ƭ **FromSequence**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromSequence`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
+
+___
+
+### FromSet
+
+Ƭ **FromSet**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromSet`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<`ReadonlySet`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
 
 ___
 
@@ -471,9 +529,9 @@ ___
 
 ___
 
-### ToIterable
+### ToAsyncIterable
 
-Ƭ **ToIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>  }
+Ƭ **ToAsyncIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toAsyncIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>\>  }
 
 #### Type parameters
 
@@ -484,9 +542,22 @@ ___
 
 ___
 
-### ToPromise
+### ToIterable
 
-Ƭ **ToPromise**<`C`, `Ctx`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`ctx`: `Ctx`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `PromiseLike`<`T`\>\>  }
+Ƭ **ToIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
+
+___
+
+### ToPromiseable
+
+Ƭ **ToPromiseable**<`C`, `Ctx`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`ctx`: `Ctx`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>  }
 
 #### Type parameters
 
@@ -500,6 +571,19 @@ ___
 ### ToReadonlyArray
 
 Ƭ **ToReadonlyArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlyArray`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
+
+___
+
+### ToReadonlySet
+
+Ƭ **ToReadonlySet**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlySet`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`T`\>\>  }
 
 #### Type parameters
 

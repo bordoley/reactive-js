@@ -289,7 +289,7 @@ ___
 
 ### toPromiseT
 
-• `Const` **toPromiseT**: [`ToPromise`](containers.md#topromise)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\>
+• `Const` **toPromiseT**: [`ToPromiseable`](containers.md#topromiseable)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\>
 
 ___
 
@@ -2155,7 +2155,7 @@ ___
 
 ### toPromise
 
-▸ **toPromise**<`T`\>(`ctx`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `PromiseLike`<`T`\>\>
+▸ **toPromise**<`T`\>(`ctx`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
 
 Returns a Promise that completes with the last value produced by
 the source.
@@ -2174,7 +2174,7 @@ the source.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `PromiseLike`<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
 
 ___
 
