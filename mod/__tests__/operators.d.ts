@@ -1,5 +1,5 @@
 import { ObservableLike, AsyncReducer } from "../rx.mjs";
-import { Describe } from "../__internal__/__internal__testing.mjs";
+import { Describe } from "./testing.mjs";
 import { Function1, Factory, Equality, Predicate, SideEffect1, Reducer } from "../functions.mjs";
 import { ContainerLike, Container, ContainerOperator, FromArrayOptions, ContainerOf, ReadonlyArrayLike, FromArray } from "../containers.mjs";
 declare const bufferTests: <C extends ContainerLike>(m: Container<C> & {

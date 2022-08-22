@@ -1,9 +1,3 @@
-import {
-  describe,
-  expectArrayEquals,
-  test,
-  testModule,
-} from "../../__internal__/__internal__testing";
 import { pipe, returns } from "../../functions";
 import { forEach, subscribe } from "../../rx/ObservableLike";
 import { dispatch } from "../../scheduling/DispatcherLike";
@@ -11,6 +5,7 @@ import { createVirtualTimeScheduler } from "../../scheduling/SchedulerLike";
 import { createStateStore, stream } from "../../streaming/StreamableLike";
 import { run } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
+import { describe, expectArrayEquals, test, testModule } from "../testing";
 
 testModule(
   "StreamableLike",

@@ -1,9 +1,3 @@
-import {
-  expectArrayEquals,
-  expectEquals,
-  test,
-  testModule,
-} from "../../__internal__/__internal__testing";
 import { toRunnable as arrayToRunnable } from "../../containers/ReadonlyArrayLike";
 import { pipe } from "../../functions";
 import { getObserverCount } from "../../rx/MulticastObservableLike";
@@ -16,6 +10,7 @@ import { create as createSubject, publishTo } from "../../rx/SubjectLike";
 import { createVirtualTimeScheduler } from "../../scheduling/SchedulerLike";
 import { run as runContinuation } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
+import { expectArrayEquals, expectEquals, test, testModule } from "../testing";
 
 testModule(
   "SubjectLike",

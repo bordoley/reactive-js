@@ -1,4 +1,3 @@
-import { testModule } from "../../__internal__/__internal__testing";
 import { toEnumerable } from "../../containers/ReadonlyArrayLike";
 import {
   bufferT,
@@ -37,6 +36,7 @@ import {
   throwIfEmptyTests,
   zipTests,
 } from "../operators";
+import { testModule } from "../testing";
 
 testModule(
   "EnumerableLike",

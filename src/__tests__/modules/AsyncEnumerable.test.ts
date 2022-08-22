@@ -1,4 +1,3 @@
-import { testModule } from "../../__internal__/__internal__testing";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { AsyncEnumerableLike } from "../../ix";
 import {
@@ -18,6 +17,7 @@ import {
   scanTests,
   takeWhileTests,
 } from "../operators";
+import { testModule } from "../testing";
 
 testModule(
   "AsyncEnumerableLike",

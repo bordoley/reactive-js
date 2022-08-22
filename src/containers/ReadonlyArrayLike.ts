@@ -3,7 +3,7 @@ import { create as createEnumerable } from "../__internal__/ix/__internal__Enume
 import {
   createEnumerableObservable,
   createRunnableObservable,
-} from "../__internal__/rx/__internal_ObservableLike.create";
+} from "../__internal__/rx/__internal__ObservableLike.create";
 import { create as createRunnable } from "../__internal__/rx/__internal__RunnableLike.create";
 import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {

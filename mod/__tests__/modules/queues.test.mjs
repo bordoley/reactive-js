@@ -1,7 +1,7 @@
 /// <reference types="./queues.test.d.ts" />
-import { testModule, test as createTest, expectArrayEquals } from '../../__internal__/__internal__testing.mjs';
 import { createPriorityQueue } from '../../__internal__/scheduling/__internal__queue.mjs';
 import { newInstance, floor, pipe } from '../../functions.mjs';
+import { testModule, test as createTest, expectArrayEquals } from '../testing.mjs';
 
 const compare = (a, b) => a - b;
 const makeSortedArray = (n) => {

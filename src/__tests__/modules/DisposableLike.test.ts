@@ -1,13 +1,3 @@
-import {
-  expectArrayEquals,
-  expectEquals,
-  expectIsNone,
-  expectToHaveBeenCalledTimes,
-  expectTrue,
-  mockFn,
-  test,
-  testModule,
-} from "../../__internal__/__internal__testing";
 import { Option, none, pipe, pipeLazy, raise } from "../../functions";
 import { subscribe } from "../../rx/ObservableLike";
 import {
@@ -28,6 +18,16 @@ import {
   onDisposed,
   toObservable,
 } from "../../util/DisposableLike";
+import {
+  expectArrayEquals,
+  expectEquals,
+  expectIsNone,
+  expectToHaveBeenCalledTimes,
+  expectTrue,
+  mockFn,
+  test,
+  testModule,
+} from "../testing";
 
 testModule(
   "DisposableLike",

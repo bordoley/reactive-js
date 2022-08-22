@@ -16,11 +16,6 @@ import {
   empty as emptyEnumerable,
 } from "../__internal__/ix/__internal__EnumerableLike";
 import {
-  createEnumerableObservable,
-  createObservable,
-  createRunnableObservable,
-} from "../__internal__/rx/__internal_ObservableLike.create";
-import {
   allAreEnumerable,
   allAreRunnable,
   createCatchError,
@@ -47,22 +42,27 @@ import {
   zipWithLatestFrom as zipWithLatestFromInternal,
 } from "../__internal__/rx/__internal__ObservableLike";
 import {
+  createEnumerableObservable,
+  createObservable,
+  createRunnableObservable,
+} from "../__internal__/rx/__internal__ObservableLike.create";
+import {
   createDelegatingObserver,
-  createKeepObserver,
-  createMapObserver,
-  createPairwiseObserver,
-  createSkipFirstObserver,
-  createTakeWhileObserver,
-  createThrowIfEmptyObserver,
   observerMixin,
 } from "../__internal__/rx/__internal__Observers";
 import {
   createEnumeratorSink,
   decodeWithCharsetSinkMixin,
   everySatisfySinkMixin,
+  keepSinkMixin,
+  mapSinkMixin,
+  pairwiseSinkMixin,
   reduceSinkMixin,
+  skipFirstSinkMixin,
   someSatisfySinkMixin,
   takeLastSinkMixin,
+  takeWhileSinkMixin,
+  throwIfEmptySinkMixin,
 } from "../__internal__/rx/__internal__Sinks";
 import { createLiftedFlowable } from "../__internal__/streaming/__internal__StreamableLike";
 import {
@@ -663,11 +663,36 @@ export const isRunnable: (
   obs: ObservableLike,
 ) => obs is RunnableObservableLike = isRunnableInternal;
 
-export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() =>
-  pipe(
+export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
+  const createKeepObserver: <T>(
+    delegate: ObserverLike<T>,
+    predicate: Predicate<T>,
+  ) => ObserverLike<T> = (<T>() => {
+    const typedKeepSinkMixin = keepSinkMixin<T>();
+    const typedObserverMixin = observerMixin<T>();
+
+    return createInstanceFactory(
+      mixin(
+        include(typedObserverMixin, typedKeepSinkMixin),
+        function KeepObserver(
+          instance: unknown,
+          delegate: ObserverLike<T>,
+          predicate: Predicate<T>,
+        ): ObserverLike<T> {
+          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+          init(typedKeepSinkMixin, instance, delegate, predicate);
+
+          return instance;
+        },
+      ),
+    );
+  })();
+
+  return pipe(
     createKeepObserver,
     createKeepOperator<ObservableLike, T, TReactive>(liftEnumerableObservableT),
-  ))();
+  );
+})();
 export const keepT: Keep<ObservableLike> = { keep };
 
 const enum LatestMode {
@@ -796,13 +821,38 @@ const latest = /*@__PURE__*/ (() => {
   };
 })();
 
-export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() =>
-  pipe(
+export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
+  const createMapObserver: <TA, TB>(
+    delegate: ObserverLike<TB>,
+    predicate: Function1<TA, TB>,
+  ) => ObserverLike<TA> = (<TA, TB>() => {
+    const typedMapSinkMixin = mapSinkMixin<TA, TB>();
+    const typedObserverMixin = observerMixin<TA>();
+
+    return createInstanceFactory(
+      mixin(
+        include(typedObserverMixin, typedMapSinkMixin),
+        function MapObserver(
+          instance: unknown,
+          delegate: ObserverLike<TB>,
+          mapper: Function1<TA, TB>,
+        ): ObserverLike<TA> {
+          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+          init(typedMapSinkMixin, instance, delegate, mapper);
+
+          return instance;
+        },
+      ),
+    );
+  })();
+
+  return pipe(
     createMapObserver,
     createMapOperator<ObservableLike, TA, TB, TReactive>(
       liftEnumerableObservableT,
     ),
-  ))();
+  );
+})();
 export const mapT: Map<ObservableLike> = { map };
 
 export const mapAsync = <TA, TB>(
@@ -849,8 +899,35 @@ export const onSubscribe: <T>(
 ) => ContainerOperator<ObservableLike, T, T> = onSubscribeInternal;
 
 export const pairwise: Pairwise<ObservableLike>["pairwise"] =
-  /*@__PURE__*/ (() =>
-    pipe(liftEnumerableObservable(createPairwiseObserver), returns))();
+  /*@__PURE__*/ (() => {
+    const createPairwiseObserver: <T>(
+      delegate: ObserverLike<readonly [T, T]>,
+    ) => ObserverLike<T> = (<T>() => {
+      const typedPairwiseSinkMixin = pairwiseSinkMixin<T>();
+      const typedObserverMixin = observerMixin<T>();
+
+      return createInstanceFactory(
+        mixin(
+          include(typedObserverMixin, typedPairwiseSinkMixin),
+          function PairwiseObserver(
+            instance: unknown,
+            delegate: ObserverLike<readonly [T, T]>,
+          ): ObserverLike<T> {
+            init(
+              typedObserverMixin,
+              instance,
+              delegate[ObserverLike_scheduler],
+            );
+            init(typedPairwiseSinkMixin, instance, delegate);
+
+            return instance;
+          },
+        ),
+      );
+    })();
+
+    return pipe(liftEnumerableObservable(createPairwiseObserver), returns);
+  })();
 export const pairwiseT: Pairwise<ObservableLike> = { pairwise };
 
 export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
@@ -1068,11 +1145,40 @@ export const share =
   };
 
 export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
-  /*@__PURE__*/
-  pipe(
-    createSkipFirstObserver,
-    createSkipFirstOperator(liftEnumerableObservableT),
-  );
+  /*@__PURE__*/ (() => {
+    const createSkipFirstObserver: <T>(
+      delegate: ObserverLike<T>,
+      count: number,
+    ) => ObserverLike<T> = (<T>() => {
+      const typedSkipFirstSinkMixin = skipFirstSinkMixin<T>();
+      const typedObserverMixin = observerMixin<T>();
+
+      return createInstanceFactory(
+        mixin(
+          include(typedObserverMixin, typedSkipFirstSinkMixin),
+          function SkipFirstObserver(
+            instance: unknown,
+            delegate: ObserverLike<T>,
+            skipCount: number,
+          ): ObserverLike<T> {
+            init(
+              typedObserverMixin,
+              instance,
+              delegate[ObserverLike_scheduler],
+            );
+            init(typedSkipFirstSinkMixin, instance, delegate, skipCount);
+
+            return instance;
+          },
+        ),
+      );
+    })();
+
+    return pipe(
+      createSkipFirstObserver,
+      createSkipFirstOperator(liftEnumerableObservableT),
+    );
+  })();
 export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
 
 export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
@@ -1181,11 +1287,48 @@ export const takeUntil = <T>(
 };
 
 export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
-  /*@__PURE__*/
-  pipe(
-    createTakeWhileObserver,
-    createTakeWhileOperator(liftEnumerableObservableT),
-  );
+  /*@__PURE__*/ (() => {
+    const createTakeWhileObserver: <T>(
+      delegate: ObserverLike<T>,
+      predicate: Predicate<T>,
+      inclusive: boolean,
+    ) => ObserverLike<T> = (<T>() => {
+      const typedTakeWhileSinkMixin = takeWhileSinkMixin<T>();
+      const typedObserverMixin = observerMixin<T>();
+
+      return createInstanceFactory(
+        mixin(
+          include(typedObserverMixin, typedTakeWhileSinkMixin),
+          function TakeWhileObserver(
+            instance: unknown,
+            delegate: ObserverLike<T>,
+            predicate: Predicate<T>,
+            inclusive: boolean,
+          ): ObserverLike<T> {
+            init(
+              typedObserverMixin,
+              instance,
+              delegate[ObserverLike_scheduler],
+            );
+            init(
+              typedTakeWhileSinkMixin,
+              instance,
+              delegate,
+              predicate,
+              inclusive,
+            );
+
+            return instance;
+          },
+        ),
+      );
+    })();
+
+    return pipe(
+      createTakeWhileObserver,
+      createTakeWhileOperator(liftEnumerableObservableT),
+    );
+  })();
 export const takeWhileT: TakeWhile<ObservableLike> = { takeWhile };
 
 interface Throttle {
@@ -1355,10 +1498,37 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
 })();
 
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
-  /*@__PURE__*/ pipe(
-    createThrowIfEmptyObserver,
-    createThrowIfEmptyOperator(liftEnumerableObservableT),
-  );
+  /*@__PURE__*/ (() => {
+    const createThrowIfEmptyObserver = (<T>() => {
+      const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin<T>();
+      const typedObserverMixin = observerMixin<T>();
+
+      return createInstanceFactory(
+        mixin(
+          include(typedObserverMixin, typedThrowIfEmptySinkMixin),
+          function ThrowIfEmptyObserver(
+            instance: unknown,
+            delegate: ObserverLike<T>,
+            factory: Factory<unknown>,
+          ): ObserverLike<T> {
+            init(
+              typedObserverMixin,
+              instance,
+              delegate[ObserverLike_scheduler],
+            );
+            init(typedThrowIfEmptySinkMixin, instance, delegate, factory);
+
+            return instance;
+          },
+        ),
+      );
+    })();
+
+    return pipe(
+      createThrowIfEmptyObserver,
+      createThrowIfEmptyOperator(liftEnumerableObservableT),
+    );
+  })();
 export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {
   throwIfEmpty,
 };

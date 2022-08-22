@@ -1,10 +1,10 @@
-import { test, testModule } from "../../__internal__/__internal__testing";
 import { toObservable as arrayToObservable } from "../../containers/ReadonlyArrayLike";
 import { pipe } from "../../functions";
 import { forEach, subscribe, toFlowable } from "../../rx/ObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling/SchedulerLike";
 import { toObservable } from "../../streaming/FlowableLike";
 import { run } from "../../util/ContinuationLike";
+import { test, testModule } from "../testing";
 
 testModule(
   "FlowableLike",

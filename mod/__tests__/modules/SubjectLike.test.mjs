@@ -1,5 +1,4 @@
 /// <reference types="./SubjectLike.test.d.ts" />
-import { testModule, test as createTest, expectArrayEquals, expectEquals } from '../../__internal__/__internal__testing.mjs';
 import { toRunnable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
 import { getObserverCount } from '../../rx/MulticastObservableLike.mjs';
@@ -9,6 +8,7 @@ import { create, publishTo } from '../../rx/SubjectLike.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling/SchedulerLike.mjs';
 import { run as run$1 } from '../../util/ContinuationLike.mjs';
 import { dispose } from '../../util/DisposableLike.mjs';
+import { testModule, test as createTest, expectArrayEquals, expectEquals } from '../testing.mjs';
 
 testModule("SubjectLike", createTest("with replay", () => {
     const scheduler = createVirtualTimeScheduler();
