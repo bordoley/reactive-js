@@ -4,10 +4,10 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObserverLike,
   ReactiveContainerLike_sinkInto,
   RunnableObservableLike,
 } from "../../rx";
-import { ObserverLike } from "../../scheduling";
 import { dispose } from "../util/__internal__DisposableLike";
 import {
   Mutable,

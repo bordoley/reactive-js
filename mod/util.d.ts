@@ -55,17 +55,4 @@ declare const ContinuationLike_run: unique symbol;
 interface ContinuationLike extends DisposableLike {
     [ContinuationLike_run](): void;
 }
-/** @ignore */
-declare const SinkLike_notify: unique symbol;
-interface SinkLike<T = unknown> extends DisposableLike {
-    /**
-     * Notifies the the sink of the next notification produced by the observable source.
-     *
-     * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-     * scheduled using the sink's `schedule` method.
-     *
-     * @param next The next notification value.
-     */
-    [SinkLike_notify](next: T): void;
-}
-export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume, SinkLike, SinkLike_notify };
+export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume };

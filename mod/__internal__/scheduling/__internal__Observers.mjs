@@ -1,9 +1,10 @@
 /// <reference types="./__internal__Observers.d.ts" />
 import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../../functions.mjs';
-import { DispatcherLike_scheduler, DispatcherLike_dispatch, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../scheduling.mjs';
-import { getScheduler } from '../../scheduling/ObserverLike.mjs';
+import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../rx.mjs';
+import { getScheduler } from '../../rx/ObserverLike.mjs';
+import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../scheduling.mjs';
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
-import { SinkLike_notify, DisposableLike_exception } from '../../util.mjs';
+import { DisposableLike_exception } from '../../util.mjs';
 import { addTo, onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
 import { disposableMixin } from '../util/__internal__Disposables.mjs';
 import { createInstanceFactory, mixin, init, props, include } from '../util/__internal__Objects.mjs';

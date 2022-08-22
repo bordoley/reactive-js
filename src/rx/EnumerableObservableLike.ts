@@ -43,11 +43,12 @@ import {
   EnumerableObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObserverLike,
   ReactiveContainerLike_sinkInto,
   ScanAsync,
 } from "../rx";
-import { ObserverLike, VirtualTimeSchedulerLike } from "../scheduling";
-import { sourceFrom } from "../util/SinkLike";
+import { sourceFrom } from "../rx/SinkLike";
+import { VirtualTimeSchedulerLike } from "../scheduling";
 import {
   buffer,
   concat,

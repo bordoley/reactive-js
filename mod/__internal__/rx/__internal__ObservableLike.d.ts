@@ -1,7 +1,7 @@
 import { ReadonlyArrayLike, ContainerOperator, ContainerOf, DistinctUntilChanged, ForEach, Concat, Scan, ConcatAll, TakeFirst } from "../../containers.mjs";
 import { Factory, Function1, SideEffect1, Function2 } from "../../functions.mjs";
-import { ObservableLike, AsyncReducer, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike } from "../../rx.mjs";
-import { ObserverLike, SchedulerLike } from "../../scheduling.mjs";
+import { ObservableLike, ObserverLike, AsyncReducer, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike } from "../../rx.mjs";
+import { SchedulerLike } from "../../scheduling.mjs";
 import { DisposableOrTeardown, DisposableLike } from "../../util.mjs";
 import { Lift, TReactive } from "../containers/__internal__StatefulContainerLike.mjs";
 declare const deferObservableImpl: <T>(factory: Factory<ObservableLike<T>>, isEnumerable: boolean, isRunnable: boolean) => ObservableLike<T>;

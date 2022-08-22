@@ -7,10 +7,10 @@ import { createInstanceFactory, mixin, include, init } from '../__internal__/uti
 import { bufferSinkMixin, catchErrorSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/__internal__Sinks.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeUnsafe, newInstance, pipe, partial, pipeLazy, none, ignore, returns, isSome, raise, identity } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto } from '../rx.mjs';
-import { SinkLike_notify, DisposableLike_exception } from '../util.mjs';
+import { ReactiveContainerLike_sinkInto, SinkLike_notify } from '../rx.mjs';
+import { sourceFrom } from './SinkLike.mjs';
+import { DisposableLike_exception } from '../util.mjs';
 import { bindTo, addTo, dispose, isDisposed } from '../util/DisposableLike.mjs';
-import { sourceFrom } from '../util/SinkLike.mjs';
 
 const create = create$1;
 const lift = /*@__PURE__*/ (() => {

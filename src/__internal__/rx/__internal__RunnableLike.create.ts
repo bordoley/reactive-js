@@ -1,6 +1,9 @@
 import { SideEffect1, none, pipe } from "../../functions";
-import { ReactiveContainerLike_sinkInto, RunnableLike } from "../../rx";
-import { SinkLike } from "../../util";
+import {
+  ReactiveContainerLike_sinkInto,
+  RunnableLike,
+  SinkLike,
+} from "../../rx";
 import { dispose } from "../util/__internal__DisposableLike";
 import {
   Mutable,

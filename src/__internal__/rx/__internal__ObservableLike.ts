@@ -35,24 +35,22 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObserverLike,
   ReactiveContainerLike_sinkInto,
   RunnableObservableLike,
   ScanAsync,
+  SinkLike_notify,
 } from "../../rx";
+import { getScheduler } from "../../rx/ObserverLike";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
+import { notify, notifySink, sourceFrom } from "../../rx/SinkLike";
 import {
   create as createSubject,
   publish,
   publishTo,
 } from "../../rx/SubjectLike";
-import { ObserverLike, SchedulerLike } from "../../scheduling";
-import { getScheduler } from "../../scheduling/ObserverLike";
-import {
-  DisposableLike,
-  DisposableOrTeardown,
-  SinkLike_notify,
-} from "../../util";
-import { notify, notifySink, sourceFrom } from "../../util/SinkLike";
+import { SchedulerLike } from "../../scheduling";
+import { DisposableLike, DisposableOrTeardown } from "../../util";
 import { MAX_SAFE_INTEGER } from "../__internal__env";
 import {
   Lift,

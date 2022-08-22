@@ -22,13 +22,13 @@ import {
   MulticastObservableLike_replay,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObserverLike,
   ReactiveContainerLike_sinkInto,
   SubjectLike,
   SubjectLike_publish,
 } from "../rx";
-import { ObserverLike } from "../scheduling";
+import { getDispatcher } from "../rx/ObserverLike";
 import { dispatch } from "../scheduling/DispatcherLike";
-import { getDispatcher } from "../scheduling/ObserverLike";
 import {
   addIgnoringChildErrors,
   isDisposed,

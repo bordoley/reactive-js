@@ -114,16 +114,18 @@ import {
 import {
   EnumerableObservableLike,
   ObservableLike,
+  ObserverLike,
   RunnableLike,
   RunnableObservableLike,
+  SinkLike,
   ToObservable,
   ToRunnable,
 } from "../rx";
+import { getScheduler } from "../rx/ObserverLike";
 import { create as createRunnable } from "../rx/RunnableLike";
-import { ObserverLike } from "../scheduling";
-import { getScheduler } from "../scheduling/ObserverLike";
+import { notifySink } from "../rx/SinkLike";
 import { __yield, schedule } from "../scheduling/SchedulerLike";
-import { DisposableLike, Exception, SinkLike } from "../util";
+import { DisposableLike, Exception } from "../util";
 import {
   add,
   addIgnoringChildErrors,
@@ -135,7 +137,6 @@ import {
   isDisposed,
   onComplete,
 } from "../util/DisposableLike";
-import { notifySink } from "../util/SinkLike";
 
 const DelegatingEnumerator_move_delegate = Symbol(
   "DelegatingEnumerator_move_delegate",

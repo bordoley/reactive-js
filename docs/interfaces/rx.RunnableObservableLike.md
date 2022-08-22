@@ -61,7 +61,7 @@ ___
 
 ### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`ObserverLike`](rx.ObserverLike.md)<`unknown`\>
 
 #### Inherited from
 

@@ -74,17 +74,3 @@ export const ContinuationLike_run = Symbol("ContinuationLike_run");
 export interface ContinuationLike extends DisposableLike {
   [ContinuationLike_run](): void;
 }
-
-/** @ignore */
-export const SinkLike_notify = Symbol("SinkLike_notify");
-export interface SinkLike<T = unknown> extends DisposableLike {
-  /**
-   * Notifies the the sink of the next notification produced by the observable source.
-   *
-   * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-   * scheduled using the sink's `schedule` method.
-   *
-   * @param next The next notification value.
-   */
-  [SinkLike_notify](next: T): void;
-}

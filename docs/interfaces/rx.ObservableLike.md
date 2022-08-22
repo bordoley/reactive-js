@@ -14,7 +14,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ## Hierarchy
 
-- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`ObserverLike`](scheduling.ObserverLike.md)<`T`\>\>
+- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`ObserverLike`](rx.ObserverLike.md)<`T`\>\>
 
   ↳ **`ObservableLike`**
 
@@ -57,7 +57,7 @@ ___
 
 ### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`ObserverLike`](scheduling.ObserverLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`ObserverLike`](rx.ObserverLike.md)<`unknown`\>
 
 #### Overrides
 

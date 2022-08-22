@@ -7,7 +7,6 @@
 ### Interfaces
 
 - [DispatcherLike](../interfaces/scheduling.DispatcherLike.md)
-- [ObserverLike](../interfaces/scheduling.ObserverLike.md)
 - [PauseableSchedulerLike](../interfaces/scheduling.PauseableSchedulerLike.md)
 - [PrioritySchedulerLike](../interfaces/scheduling.PrioritySchedulerLike.md)
 - [SchedulerLike](../interfaces/scheduling.SchedulerLike.md)

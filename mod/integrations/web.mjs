@@ -9,10 +9,10 @@ import { pipe, newInstance, none, isEmpty, getLength, unsafeCast, isSome, raise,
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
 import { create, map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
+import { getDispatcher } from '../rx/ObserverLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
 import { dispatch, getScheduler, dispatchTo } from '../scheduling/DispatcherLike.mjs';
-import { getDispatcher } from '../scheduling/ObserverLike.mjs';
 import '../streaming.mjs';
 import { createActionReducer, stream } from '../streaming/StreamableLike.mjs';
 import { onDisposed, toAbortSignal, dispose, addTo } from '../util/DisposableLike.mjs';

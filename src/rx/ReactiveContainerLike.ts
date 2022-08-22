@@ -1,6 +1,9 @@
 import { Function1 } from "../functions";
-import { ReactiveContainerLike, ReactiveContainerLike_sinkInto } from "../rx";
-import { SinkLike } from "../util";
+import {
+  ReactiveContainerLike,
+  ReactiveContainerLike_sinkInto,
+  SinkLike,
+} from "../rx";
 
 export const sinkInto =
   <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(

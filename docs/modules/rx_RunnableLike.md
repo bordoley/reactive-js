@@ -330,7 +330,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`SinkLike`](../interfaces/util.SinkLike.md)<`T`\>\> |
+| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`SinkLike`](../interfaces/rx.SinkLike.md)<`T`\>\> |
 
 #### Returns
 

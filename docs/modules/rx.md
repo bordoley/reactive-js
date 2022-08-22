@@ -9,9 +9,11 @@
 - [EnumerableObservableLike](../interfaces/rx.EnumerableObservableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
+- [ObserverLike](../interfaces/rx.ObserverLike.md)
 - [ReactiveContainerLike](../interfaces/rx.ReactiveContainerLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
 - [RunnableObservableLike](../interfaces/rx.RunnableObservableLike.md)
+- [SinkLike](../interfaces/rx.SinkLike.md)
 - [SubjectLike](../interfaces/rx.SubjectLike.md)
 
 ### Type Aliases

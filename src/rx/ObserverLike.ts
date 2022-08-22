@@ -1,10 +1,9 @@
 import {
-  DispatcherLike,
   ObserverLike,
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
-  SchedulerLike,
-} from "../scheduling";
+} from "../rx";
+import { DispatcherLike, SchedulerLike } from "../scheduling";
 
 export const getScheduler = <T>(observer: ObserverLike<T>): SchedulerLike =>
   observer[ObserverLike_scheduler];
