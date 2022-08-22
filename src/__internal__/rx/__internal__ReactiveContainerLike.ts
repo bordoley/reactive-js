@@ -1,7 +1,7 @@
 import { Factory, identity, isSome, none, pipe } from "../../functions";
-import { ReactiveContainerLike } from "../../rx";
+import { ReactiveContainerLike, SinkLike } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
-import { DisposableOrTeardown, SinkLike } from "../../util";
+import { DisposableOrTeardown } from "../../util";
 import { add, onDisposed } from "../util/__internal__DisposableLike";
 
 export const createOnSink = <

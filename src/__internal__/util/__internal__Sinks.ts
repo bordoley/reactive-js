@@ -22,14 +22,10 @@ import {
   EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../../ix";
-import { ReactiveContainerLike } from "../../rx";
+import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
-import {
-  DisposableLike,
-  Exception,
-  SinkLike,
-  SinkLike_notify,
-} from "../../util";
+import { notify } from "../../rx/SinkLike";
+import { DisposableLike, Exception } from "../../util";
 import {
   addTo,
   addToIgnoringChildErrors,
@@ -39,7 +35,6 @@ import {
   onDisposed,
   onError,
 } from "../../util/DisposableLike";
-import { notify } from "../../util/SinkLike";
 import {
   delegatingDisposableMixin,
   disposableMixin,

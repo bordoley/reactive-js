@@ -51,15 +51,15 @@ import {
 import {
   EnumerableObservableLike,
   ObservableLike,
+  ObserverLike,
   RunnableLike,
   RunnableObservableLike,
+  SinkLike_notify,
   ToObservable,
   ToRunnable,
 } from "../rx";
-import { ObserverLike } from "../scheduling";
-import { getScheduler } from "../scheduling/ObserverLike";
+import { getScheduler } from "../rx/ObserverLike";
 import { __yield, schedule } from "../scheduling/SchedulerLike";
-import { SinkLike_notify } from "../util";
 import { addTo, dispose, isDisposed } from "../util/DisposableLike";
 
 export const empty: Empty<ReadonlyArrayLike>["empty"] = /*@__PURE__*/ (<

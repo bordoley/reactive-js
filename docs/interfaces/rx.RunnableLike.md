@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`SinkLike`](util.SinkLike.md)<`T`\>\>
+- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`SinkLike`](rx.SinkLike.md)<`T`\>\>
 
   ↳ **`RunnableLike`**
 
@@ -52,7 +52,7 @@ ___
 
 ### [StatefulContainerLike\_state]
 
-• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`SinkLike`](util.SinkLike.md)<`unknown`\>
+• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`SinkLike`](rx.SinkLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -68,7 +68,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`SinkLike`](util.SinkLike.md)<`T`\> |
+| `sink` | [`SinkLike`](rx.SinkLike.md)<`T`\> |
 
 #### Returns
 

@@ -1,8 +1,8 @@
 /// <reference types="./PromiseableLike.d.ts" />
 import { createObservable } from '../__internal__/rx/__internal_ObservableLike.create.mjs';
 import { pipe } from '../functions.mjs';
+import { getDispatcher } from '../rx/ObserverLike.mjs';
 import { dispatch } from '../scheduling/DispatcherLike.mjs';
-import { getDispatcher } from '../scheduling/ObserverLike.mjs';
 import { isDisposed, dispose, toErrorHandler } from '../util/DisposableLike.mjs';
 
 const toObservable = () => (promise) => createObservable(observer => {

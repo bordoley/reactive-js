@@ -2,8 +2,8 @@ import { createObservable } from "../__internal__/rx/__internal_ObservableLike.c
 import { PromiseableLike } from "../containers";
 import { pipe } from "../functions";
 import { ObservableLike, ToObservable } from "../rx";
+import { getDispatcher } from "../rx/ObserverLike";
 import { dispatch } from "../scheduling/DispatcherLike";
-import { getDispatcher } from "../scheduling/ObserverLike";
 import { dispose, isDisposed, toErrorHandler } from "../util/DisposableLike";
 
 export const toObservable: ToObservable<PromiseableLike>["toObservable"] =

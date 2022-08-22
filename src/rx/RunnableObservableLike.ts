@@ -42,12 +42,13 @@ import { Factory, Function1, newInstance, pipeUnsafe } from "../functions";
 import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObserverLike,
   ReactiveContainerLike_sinkInto,
   RunnableObservableLike,
   ScanAsync,
 } from "../rx";
-import { ObserverLike, VirtualTimeSchedulerLike } from "../scheduling";
-import { sourceFrom } from "../util/SinkLike";
+import { sourceFrom } from "../rx/SinkLike";
+import { VirtualTimeSchedulerLike } from "../scheduling";
 import {
   buffer,
   concat,

@@ -1,9 +1,4 @@
-import {
-  ContinuationLike,
-  DisposableLike,
-  PauseableLike,
-  SinkLike,
-} from "./util";
+import { ContinuationLike, DisposableLike, PauseableLike } from "./util";
 
 /** @ignore */
 export const SchedulerLike_inContinuation = Symbol(
@@ -87,14 +82,3 @@ export interface PrioritySchedulerLike extends DisposableLike {
 export interface VirtualTimeSchedulerLike
   extends SchedulerLike,
     ContinuationLike {}
-
-/** @ignore */
-export const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
-
-/** @ignore */
-export const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
-
-export interface ObserverLike<T = unknown> extends SinkLike<T> {
-  readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
-  readonly [ObserverLike_scheduler]: SchedulerLike;
-}

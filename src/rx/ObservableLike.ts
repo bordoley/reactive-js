@@ -177,13 +177,17 @@ import {
   EnumerableObservableLike,
   MulticastObservableLike,
   ObservableLike,
-  RunnableObservableLike,
-  ScanAsync,
-} from "../rx";
-import {
   ObserverLike,
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
+  RunnableObservableLike,
+  ScanAsync,
+  SinkLike,
+  SinkLike_notify,
+} from "../rx";
+import { getScheduler } from "../rx/ObserverLike";
+import { notify, notifySink, sourceFrom } from "../rx/SinkLike";
+import {
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -193,7 +197,6 @@ import {
   VirtualTimeSchedulerLike,
 } from "../scheduling";
 import { dispatchTo } from "../scheduling/DispatcherLike";
-import { getScheduler } from "../scheduling/ObserverLike";
 import {
   __yield,
   createVirtualTimeScheduler,
@@ -207,8 +210,6 @@ import {
   DisposableLike,
   DisposableOrTeardown,
   Exception,
-  SinkLike,
-  SinkLike_notify,
 } from "../util";
 import { run } from "../util/ContinuationLike";
 import {
@@ -225,7 +226,6 @@ import {
   onDisposed,
 } from "../util/DisposableLike";
 import { pause, resume } from "../util/PauseableLike";
-import { notify, notifySink, sourceFrom } from "../util/SinkLike";
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
 

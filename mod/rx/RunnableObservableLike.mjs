@@ -4,7 +4,7 @@ import { createRunnableObservable } from '../__internal__/rx/__internal_Observab
 import { deferObservableImpl, createCatchError, createMergeAll, createScanAsync, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
 import { pipeUnsafe, newInstance } from '../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
-import { sourceFrom } from '../util/SinkLike.mjs';
+import { sourceFrom } from './SinkLike.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
 
 const create = createRunnableObservable;

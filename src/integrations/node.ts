@@ -32,20 +32,19 @@ import {
   pipe,
   pipeLazy,
 } from "../functions";
-import { ObservableLike } from "../rx";
+import { ObservableLike, ObserverLike_dispatcher } from "../rx";
 import {
   create as createObservable,
   forEach,
   subscribe,
 } from "../rx/ObservableLike";
+import { getDispatcher, getScheduler } from "../rx/ObserverLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
-import { ObserverLike_dispatcher } from "../scheduling";
 import {
   dispatch,
   dispatchTo,
   getScheduler as dispatcherGetScheduler,
 } from "../scheduling/DispatcherLike";
-import { getDispatcher, getScheduler } from "../scheduling/ObserverLike";
 import { FlowMode, FlowableLike, StreamableLike } from "../streaming";
 import { sourceFrom } from "../streaming/StreamLike";
 import { stream } from "../streaming/StreamableLike";

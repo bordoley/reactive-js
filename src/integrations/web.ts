@@ -31,6 +31,7 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../rx";
 import { getObserverCount, getReplay } from "../rx/MulticastObservableLike";
@@ -45,11 +46,11 @@ import {
   takeWhile,
   throttle,
 } from "../rx/ObservableLike";
+import { getDispatcher } from "../rx/ObserverLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
-  ObserverLike,
   SchedulerLike,
 } from "../scheduling";
 import {
@@ -57,7 +58,6 @@ import {
   dispatchTo,
   getScheduler,
 } from "../scheduling/DispatcherLike";
-import { getDispatcher } from "../scheduling/ObserverLike";
 import {
   StreamLike,
   StreamableLike,

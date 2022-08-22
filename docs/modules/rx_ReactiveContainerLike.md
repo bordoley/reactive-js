@@ -19,7 +19,7 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ReactiveContainerLike`](../interfaces/rx.ReactiveContainerLike.md)<`TSink`, `C`\> |
-| `TSink` | extends [`SinkLike`](../interfaces/util.SinkLike.md)<`T`, `TSink`\> |
+| `TSink` | extends [`SinkLike`](../interfaces/rx.SinkLike.md)<`T`, `TSink`\> |
 | `T` | `T` |
 
 #### Parameters

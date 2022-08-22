@@ -1,6 +1,5 @@
 import { SideEffect1 } from "../../functions.mjs";
-import { ObservableLike, EnumerableObservableLike, RunnableObservableLike } from "../../rx.mjs";
-import { ObserverLike } from "../../scheduling.mjs";
+import { ObserverLike, ObservableLike, EnumerableObservableLike, RunnableObservableLike } from "../../rx.mjs";
 declare const createObservableImpl: <T>(f: SideEffect1<ObserverLike>, isEnumerable: boolean, isRunnable: boolean) => ObservableLike<T>;
 declare const createEnumerableObservable: <T>(f: SideEffect1<ObserverLike<T>>) => EnumerableObservableLike<T>;
 declare const createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;

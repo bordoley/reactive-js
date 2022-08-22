@@ -1,6 +1,10 @@
 import { Function1, SideEffect1 } from "../functions";
-import { ReactiveContainerLike, ReactiveContainerLike_sinkInto } from "../rx";
-import { SinkLike, SinkLike_notify } from "../util";
+import {
+  ReactiveContainerLike,
+  ReactiveContainerLike_sinkInto,
+  SinkLike,
+  SinkLike_notify,
+} from "../rx";
 
 export const notify =
   <TSink extends SinkLike<T>, T>(v: T): Function1<TSink, TSink> =>

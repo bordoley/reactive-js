@@ -16,21 +16,20 @@ import {
   unsafeCast,
 } from "../../functions";
 import {
-  DispatcherLike,
-  DispatcherLike_dispatch,
-  DispatcherLike_scheduler,
   ObserverLike,
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
+  SinkLike_notify,
+} from "../../rx";
+import { getScheduler } from "../../rx/ObserverLike";
+import {
+  DispatcherLike,
+  DispatcherLike_dispatch,
+  DispatcherLike_scheduler,
   SchedulerLike,
 } from "../../scheduling";
-import { getScheduler } from "../../scheduling/ObserverLike";
 import { __yield, schedule } from "../../scheduling/SchedulerLike";
-import {
-  DisposableLike,
-  DisposableLike_exception,
-  SinkLike_notify,
-} from "../../util";
+import { DisposableLike, DisposableLike_exception } from "../../util";
 import {
   addTo,
   addToIgnoringChildErrors,

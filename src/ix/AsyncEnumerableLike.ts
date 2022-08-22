@@ -71,6 +71,7 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObserverLike,
   ReactiveContainerLike_sinkInto,
   ScanAsync,
   SubjectLike,
@@ -92,17 +93,16 @@ import {
   takeFirst as takeFirstObs,
   takeWhile as takeWhileObs,
 } from "../rx/ObservableLike";
+import { getScheduler as observerGetScheduler } from "../rx/ObserverLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
 import { create as createRunnableObservable } from "../rx/RunnableObservableLike";
 import { create as createSubject, publish } from "../rx/SubjectLike";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
-  ObserverLike,
   SchedulerLike,
 } from "../scheduling";
 import { dispatch, getScheduler } from "../scheduling/DispatcherLike";
-import { getScheduler as observerGetScheduler } from "../scheduling/ObserverLike";
 import { StreamLike, StreamableLike_stream } from "../streaming";
 import { stream } from "../streaming/StreamableLike";
 import { add, addTo } from "../util/DisposableLike";

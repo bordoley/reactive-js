@@ -7,6 +7,7 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObserverLike,
   ReactiveContainerLike_sinkInto,
   SubjectLike,
 } from "../../rx";
@@ -16,7 +17,6 @@ import { create as createSubject, publish } from "../../rx/SubjectLike";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
-  ObserverLike,
   SchedulerLike,
 } from "../../scheduling";
 import { StreamLike } from "../../streaming";

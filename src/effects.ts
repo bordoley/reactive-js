@@ -26,15 +26,16 @@ import {
   pipe,
   raise,
 } from "./functions";
-import { ObservableLike } from "./rx";
+import { ObservableLike, ObserverLike } from "./rx";
 import {
   create as createObservable,
   empty,
   forEach,
   subscribe,
 } from "./rx/ObservableLike";
-import { ObserverLike, SchedulerLike } from "./scheduling";
-import { getScheduler } from "./scheduling/ObserverLike";
+import { getScheduler } from "./rx/ObserverLike";
+import { notify } from "./rx/SinkLike";
+import { SchedulerLike } from "./scheduling";
 import { schedule } from "./scheduling/SchedulerLike";
 import { StreamLike, StreamableLike } from "./streaming";
 import { createStateStore, stream } from "./streaming/StreamableLike";
@@ -46,7 +47,6 @@ import {
   isDisposed,
   onComplete,
 } from "./util/DisposableLike";
-import { notify } from "./util/SinkLike";
 
 type EffectsMode = "batched" | "combine-latest";
 

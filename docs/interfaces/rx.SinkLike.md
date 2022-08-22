@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [scheduling](../modules/scheduling.md) / ObserverLike
+[Reactive-JS](../README.md) / [rx](../modules/rx.md) / SinkLike
 
-# Interface: ObserverLike<T\>
+# Interface: SinkLike<T\>
 
-[scheduling](../modules/scheduling.md).ObserverLike
+[rx](../modules/rx.md).SinkLike
 
 ## Type parameters
 
@@ -12,24 +12,24 @@
 
 ## Hierarchy
 
-- [`SinkLike`](util.SinkLike.md)<`T`\>
+- [`DisposableLike`](util.DisposableLike.md)
 
-  ↳ **`ObserverLike`**
+  ↳ **`SinkLike`**
+
+  ↳↳ [`ObserverLike`](rx.ObserverLike.md)
 
 ## Table of contents
 
 ### Properties
 
-- [[DisposableLike\_exception]](scheduling.ObserverLike.md#[disposablelike_exception])
-- [[DisposableLike\_isDisposed]](scheduling.ObserverLike.md#[disposablelike_isdisposed])
-- [[ObserverLike\_dispatcher]](scheduling.ObserverLike.md#[observerlike_dispatcher])
-- [[ObserverLike\_scheduler]](scheduling.ObserverLike.md#[observerlike_scheduler])
+- [[DisposableLike\_exception]](rx.SinkLike.md#[disposablelike_exception])
+- [[DisposableLike\_isDisposed]](rx.SinkLike.md#[disposablelike_isdisposed])
 
 ### Methods
 
-- [[DisposableLike\_add]](scheduling.ObserverLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](scheduling.ObserverLike.md#[disposablelike_dispose])
-- [[SinkLike\_notify]](scheduling.ObserverLike.md#[sinklike_notify])
+- [[DisposableLike\_add]](rx.SinkLike.md#[disposablelike_add])
+- [[DisposableLike\_dispose]](rx.SinkLike.md#[disposablelike_dispose])
+- [[SinkLike\_notify]](rx.SinkLike.md#[sinklike_notify])
 
 ## Properties
 
@@ -41,7 +41,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[SinkLike](util.SinkLike.md).[[DisposableLike_exception]](util.SinkLike.md#[disposablelike_exception])
+[DisposableLike](util.DisposableLike.md).[[DisposableLike_exception]](util.DisposableLike.md#[disposablelike_exception])
 
 ___
 
@@ -53,19 +53,7 @@ ___
 
 #### Inherited from
 
-[SinkLike](util.SinkLike.md).[[DisposableLike_isDisposed]](util.SinkLike.md#[disposablelike_isdisposed])
-
-___
-
-### [ObserverLike\_dispatcher]
-
-• `Readonly` **[ObserverLike\_dispatcher]**: [`DispatcherLike`](scheduling.DispatcherLike.md)<`T`\>
-
-___
-
-### [ObserverLike\_scheduler]
-
-• `Readonly` **[ObserverLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)
+[DisposableLike](util.DisposableLike.md).[[DisposableLike_isDisposed]](util.DisposableLike.md#[disposablelike_isdisposed])
 
 ## Methods
 
@@ -90,7 +78,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[SinkLike](util.SinkLike.md).[[DisposableLike_add]](util.SinkLike.md#[disposablelike_add])
+[DisposableLike](util.DisposableLike.md).[[DisposableLike_add]](util.DisposableLike.md#[disposablelike_add])
 
 ___
 
@@ -112,7 +100,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[SinkLike](util.SinkLike.md).[[DisposableLike_dispose]](util.SinkLike.md#[disposablelike_dispose])
+[DisposableLike](util.DisposableLike.md).[[DisposableLike_dispose]](util.DisposableLike.md#[disposablelike_dispose])
 
 ___
 
@@ -134,7 +122,3 @@ scheduled using the sink's `schedule` method.
 #### Returns
 
 `void`
-
-#### Inherited from
-
-[SinkLike](util.SinkLike.md).[[SinkLike_notify]](util.SinkLike.md#[sinklike_notify])

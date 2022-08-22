@@ -13,9 +13,5 @@ const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 const DispatcherLike_dispatch = Symbol("DispatcherLike_dispatch");
 /** @ignore */
 const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
-/** @ignore */
-const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
-/** @ignore */
-const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
 
-export { DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike_dispatcher, ObserverLike_scheduler, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield };
+export { DispatcherLike_dispatch, DispatcherLike_scheduler, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield };

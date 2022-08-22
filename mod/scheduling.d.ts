@@ -1,4 +1,4 @@
-import { DisposableLike, ContinuationLike, PauseableLike, SinkLike } from "./util.mjs";
+import { DisposableLike, ContinuationLike, PauseableLike } from "./util.mjs";
 /** @ignore */
 declare const SchedulerLike_inContinuation: unique symbol;
 /** @ignore */
@@ -57,12 +57,4 @@ interface PrioritySchedulerLike extends DisposableLike {
 }
 interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
 }
-/** @ignore */
-declare const ObserverLike_dispatcher: unique symbol;
-/** @ignore */
-declare const ObserverLike_scheduler: unique symbol;
-interface ObserverLike<T = unknown> extends SinkLike<T> {
-    readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
-    readonly [ObserverLike_scheduler]: SchedulerLike;
-}
-export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };
+export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };

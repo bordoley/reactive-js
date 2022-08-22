@@ -98,16 +98,13 @@ import {
 import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
-  ToRunnable,
-} from "../rx";
-import {
-  DisposableLike_exception,
-  DisposableOrTeardown,
   SinkLike,
   SinkLike_notify,
-} from "../util";
+  ToRunnable,
+} from "../rx";
+import { sourceFrom } from "../rx/SinkLike";
+import { DisposableLike_exception, DisposableOrTeardown } from "../util";
 import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
-import { sourceFrom } from "../util/SinkLike";
 
 export const create = createRunnable;
 

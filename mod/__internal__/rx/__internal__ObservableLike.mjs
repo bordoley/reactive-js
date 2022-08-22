@@ -1,12 +1,11 @@
 /// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
 import { compose, isTrue, pipeUnsafe, newInstance, pipe, partial, isSome, getLength, none, isEmpty } from '../../functions.mjs';
-import { ReactiveContainerLike_sinkInto, ObservableLike_isEnumerable, ObservableLike_isRunnable } from '../../rx.mjs';
+import { ReactiveContainerLike_sinkInto, ObservableLike_isEnumerable, ObservableLike_isRunnable, SinkLike_notify } from '../../rx.mjs';
+import { getScheduler } from '../../rx/ObserverLike.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
+import { sourceFrom, notifySink, notify } from '../../rx/SinkLike.mjs';
 import { create, publishTo, publish } from '../../rx/SubjectLike.mjs';
-import { getScheduler } from '../../scheduling/ObserverLike.mjs';
-import { SinkLike_notify } from '../../util.mjs';
-import { sourceFrom, notifySink, notify } from '../../util/SinkLike.mjs';
 import { MAX_SAFE_INTEGER } from '../__internal__env.mjs';
 import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createScanOperator, createTakeFirstOperator } from '../containers/__internal__StatefulContainerLike.mjs';
 import { observerMixin, createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, createObserver, createTakeFirstObserver } from '../scheduling/__internal__Observers.mjs';

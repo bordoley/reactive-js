@@ -9,9 +9,34 @@ import {
   StatefulContainerLike_state,
 } from "./containers";
 import { Factory, Function1, Function2 } from "./functions";
-import { ObserverLike } from "./scheduling";
+import { DispatcherLike, SchedulerLike } from "./scheduling";
 import { __yield } from "./scheduling/SchedulerLike";
-import { DisposableLike, SinkLike } from "./util";
+import { DisposableLike } from "./util";
+
+/** @ignore */
+export const SinkLike_notify = Symbol("SinkLike_notify");
+export interface SinkLike<T = unknown> extends DisposableLike {
+  /**
+   * Notifies the the sink of the next notification produced by the observable source.
+   *
+   * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
+   * scheduled using the sink's `schedule` method.
+   *
+   * @param next The next notification value.
+   */
+  [SinkLike_notify](next: T): void;
+}
+
+/** @ignore */
+export const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
+
+/** @ignore */
+export const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
+
+export interface ObserverLike<T = unknown> extends SinkLike<T> {
+  readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
+  readonly [ObserverLike_scheduler]: SchedulerLike;
+}
 
 /** @ignore */
 export const ReactiveContainerLike_sinkInto = Symbol(

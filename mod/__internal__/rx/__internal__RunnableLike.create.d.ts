@@ -1,5 +1,4 @@
 import { SideEffect1 } from "../../functions.mjs";
-import { RunnableLike } from "../../rx.mjs";
-import { SinkLike } from "../../util.mjs";
+import { SinkLike, RunnableLike } from "../../rx.mjs";
 declare const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
 export { create };
