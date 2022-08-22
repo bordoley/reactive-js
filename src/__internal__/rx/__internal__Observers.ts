@@ -38,16 +38,6 @@ import {
   onComplete,
   onDisposed,
 } from "../../util/DisposableLike";
-import { disposableMixin } from "../util/__internal__Disposables";
-import {
-  Mixin1,
-  Mutable,
-  createInstanceFactory,
-  include,
-  init,
-  mixin,
-  props,
-} from "../util/__internal__Objects";
 import {
   distinctUntilChangedSinkMixin,
   forEachSinkMixin,
@@ -59,7 +49,17 @@ import {
   takeFirstSinkMixin,
   takeWhileSinkMixin,
   throwIfEmptySinkMixin,
-} from "../util/__internal__Sinks";
+} from "../rx/__internal__Sinks";
+import { disposableMixin } from "../util/__internal__Disposables";
+import {
+  Mixin1,
+  Mutable,
+  createInstanceFactory,
+  include,
+  init,
+  mixin,
+  props,
+} from "../util/__internal__Objects";
 
 const createObserverDispatcher = (<T>() => {
   const scheduleDrainQueue = (dispatcher: TProperties) => {

@@ -38,7 +38,7 @@ import {
 import {
   delegatingDisposableMixin,
   disposableMixin,
-} from "./__internal__Disposables";
+} from "../util/__internal__Disposables";
 import {
   Mixin1,
   Mixin2,
@@ -49,7 +49,7 @@ import {
   init,
   mixin,
   props,
-} from "./__internal__Objects";
+} from "../util/__internal__Objects";
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 

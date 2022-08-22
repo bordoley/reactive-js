@@ -69,7 +69,7 @@ import {
   createScanObserver,
   createTakeFirstObserver,
   observerMixin,
-} from "../scheduling/__internal__Observers";
+} from "../rx/__internal__Observers";
 import {
   addTo,
   addToIgnoringChildErrors,
@@ -93,7 +93,6 @@ import {
   mixin,
   props,
 } from "../util/__internal__Objects";
-import { catchErrorSinkMixin } from "../util/__internal__Sinks";
 import {
   createEnumerableObservable,
   createObservable,
@@ -101,6 +100,7 @@ import {
   createRunnableObservable,
 } from "./__internal_ObservableLike.create";
 import { createOnSink } from "./__internal__ReactiveContainerLike";
+import { catchErrorSinkMixin } from "./__internal__Sinks";
 
 export const deferObservableImpl = <T>(
   factory: Factory<ObservableLike<T>>,

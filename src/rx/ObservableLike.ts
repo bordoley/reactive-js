@@ -55,7 +55,15 @@ import {
   createTakeWhileObserver,
   createThrowIfEmptyObserver,
   observerMixin,
-} from "../__internal__/scheduling/__internal__Observers";
+} from "../__internal__/rx/__internal__Observers";
+import {
+  createEnumeratorSink,
+  decodeWithCharsetSinkMixin,
+  everySatisfySinkMixin,
+  reduceSinkMixin,
+  someSatisfySinkMixin,
+  takeLastSinkMixin,
+} from "../__internal__/rx/__internal__Sinks";
 import { createLiftedFlowable } from "../__internal__/streaming/__internal__StreamableLike";
 import {
   DisposableRefLike,
@@ -82,14 +90,6 @@ import {
   mixin,
   props,
 } from "../__internal__/util/__internal__Objects";
-import {
-  createEnumeratorSink,
-  decodeWithCharsetSinkMixin,
-  everySatisfySinkMixin,
-  reduceSinkMixin,
-  someSatisfySinkMixin,
-  takeLastSinkMixin,
-} from "../__internal__/util/__internal__Sinks";
 import {
   Buffer,
   CatchError,

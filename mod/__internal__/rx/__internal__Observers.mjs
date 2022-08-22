@@ -6,9 +6,9 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../schedul
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
 import { DisposableLike_exception } from '../../util.mjs';
 import { addTo, onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
+import { distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from './__internal__Sinks.mjs';
 import { disposableMixin } from '../util/__internal__Disposables.mjs';
 import { createInstanceFactory, mixin, init, props, include } from '../util/__internal__Objects.mjs';
-import { distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../util/__internal__Sinks.mjs';
 
 const createObserverDispatcher = (() => {
     const scheduleDrainQueue = (dispatcher) => {
