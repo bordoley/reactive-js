@@ -20,12 +20,6 @@ import {
 import { createOnSink } from "../__internal__/rx/__internal__ReactiveContainerLike";
 import { create as createRunnable } from "../__internal__/rx/__internal__RunnableLike.create";
 import {
-  createInstanceFactory,
-  include,
-  init,
-  mixin,
-} from "../__internal__/util/__internal__Objects";
-import {
   DelegateSinkLike,
   DelegatingSink_delegate,
   bufferSinkMixin,
@@ -48,7 +42,13 @@ import {
   takeLastSinkMixin,
   takeWhileSinkMixin,
   throwIfEmptySinkMixin,
-} from "../__internal__/util/__internal__Sinks";
+} from "../__internal__/rx/__internal__Sinks";
+import {
+  createInstanceFactory,
+  include,
+  init,
+  mixin,
+} from "../__internal__/util/__internal__Objects";
 import {
   Buffer,
   CatchError,

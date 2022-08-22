@@ -8,14 +8,14 @@ import { sourceFrom, notifySink, notify } from '../../rx/SinkLike.mjs';
 import { create, publishTo, publish } from '../../rx/SubjectLike.mjs';
 import { MAX_SAFE_INTEGER } from '../__internal__env.mjs';
 import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createScanOperator, createTakeFirstOperator } from '../containers/__internal__StatefulContainerLike.mjs';
-import { observerMixin, createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, createObserver, createTakeFirstObserver } from '../scheduling/__internal__Observers.mjs';
+import { observerMixin, createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, createObserver, createTakeFirstObserver } from './__internal__Observers.mjs';
 import { addTo, onComplete, isDisposed, dispose, bindTo, addToIgnoringChildErrors } from '../util/__internal__DisposableLike.mjs';
 import { disposableMixin, createDisposableRef, disposed } from '../util/__internal__Disposables.mjs';
 import { MutableRefLike_current } from '../util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../util/__internal__Objects.mjs';
-import { catchErrorSinkMixin } from '../util/__internal__Sinks.mjs';
 import { createObservableImpl, createEnumerableObservable, createRunnableObservable, createObservable } from './__internal_ObservableLike.create.mjs';
 import { createOnSink } from './__internal__ReactiveContainerLike.mjs';
+import { catchErrorSinkMixin } from './__internal__Sinks.mjs';
 
 const deferObservableImpl = (factory, isEnumerable, isRunnable) => createObservableImpl(observer => {
     factory()[ReactiveContainerLike_sinkInto](observer);

@@ -5,8 +5,8 @@ import { SinkLike_notify } from '../../rx.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { notify } from '../../rx/SinkLike.mjs';
 import { onDisposed, isDisposed, addTo, onComplete, dispose, addToIgnoringChildErrors, onError } from '../../util/DisposableLike.mjs';
-import { disposableMixin, delegatingDisposableMixin } from './__internal__Disposables.mjs';
-import { createInstanceFactory, mixin, include, init, props } from './__internal__Objects.mjs';
+import { disposableMixin, delegatingDisposableMixin } from '../util/__internal__Disposables.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../util/__internal__Objects.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 const createEnumeratorSink = (() => {
