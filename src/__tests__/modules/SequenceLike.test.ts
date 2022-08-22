@@ -1,4 +1,3 @@
-import { testModule } from "../../__internal__/__internal__testing";
 import { toSequence } from "../../containers/ReadonlyArrayLike";
 import {
   concatAllT,
@@ -31,6 +30,7 @@ import {
   takeWhileTests,
   zipTests,
 } from "../operators";
+import { testModule } from "../testing";
 
 testModule(
   "SequenceLike",

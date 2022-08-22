@@ -1,11 +1,4 @@
 import { Readable, Writable } from "stream";
-import {
-  describe,
-  expectEquals,
-  expectPromiseToThrow,
-  testAsync,
-  testModule,
-} from "../../__internal__/__internal__testing";
 import { endWith, ignoreElements } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { newInstance, pipe, returns } from "../../functions";
@@ -28,6 +21,13 @@ import { toObservable as flowableToObservable } from "../../streaming/FlowableLi
 import { sourceFrom } from "../../streaming/StreamLike";
 import { stream } from "../../streaming/StreamableLike";
 import { dispose } from "../../util/DisposableLike";
+import {
+  describe,
+  expectEquals,
+  expectPromiseToThrow,
+  testAsync,
+  testModule,
+} from "../testing";
 
 testModule(
   "node",

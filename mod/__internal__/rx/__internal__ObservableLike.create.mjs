@@ -1,4 +1,4 @@
-/// <reference types="./__internal_ObservableLike.create.d.ts" />
+/// <reference types="./__internal__ObservableLike.create.d.ts" />
 import { none, pipe } from '../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../rx.mjs';
 import { dispose } from '../util/__internal__DisposableLike.mjs';

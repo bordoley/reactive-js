@@ -1,10 +1,6 @@
-import {
-  expectArrayEquals,
-  test,
-  testModule,
-} from "../../__internal__/__internal__testing";
 import { createPriorityQueue } from "../../__internal__/scheduling/__internal__queue";
 import { floor, newInstance, pipe } from "../../functions";
+import { expectArrayEquals, test, testModule } from "../testing";
 
 const compare = (a: number, b: number): number => a - b;
 

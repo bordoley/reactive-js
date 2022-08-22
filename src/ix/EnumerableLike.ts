@@ -23,7 +23,7 @@ import {
 import {
   createEnumerableObservable,
   createRunnableObservable,
-} from "../__internal__/rx/__internal_ObservableLike.create";
+} from "../__internal__/rx/__internal__ObservableLike.create";
 import {
   delegatingDisposableMixin,
   disposableMixin,

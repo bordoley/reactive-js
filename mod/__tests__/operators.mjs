@@ -1,8 +1,8 @@
 /// <reference types="./operators.d.ts" />
-import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from '../__internal__/__internal__testing.mjs';
 import { throws, encodeUtf8, contains } from '../containers/ContainerLike.mjs';
 import { empty } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, arrayEquality, pipe, alwaysFalse, alwaysTrue, increment, returns, sum } from '../functions.mjs';
+import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from './testing.mjs';
 
 const bufferTests = (m) => createDescribe("buffer", createTest("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray(), m.buffer({ maxBufferSize: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],

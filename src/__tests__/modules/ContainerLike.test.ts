@@ -1,10 +1,4 @@
 import {
-  describe,
-  expectArrayEquals,
-  test,
-  testModule,
-} from "../../__internal__/__internal__testing";
-import {
   concatMap,
   concatWith,
   endWith,
@@ -29,6 +23,7 @@ import {
   toReadonlyArray,
   zipT,
 } from "../../ix/EnumerableLike";
+import { describe, expectArrayEquals, test, testModule } from "../testing";
 
 testModule(
   "ContainerLike",

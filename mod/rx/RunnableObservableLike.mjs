@@ -1,7 +1,7 @@
 /// <reference types="./RunnableObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
-import { createRunnableObservable } from '../__internal__/rx/__internal_ObservableLike.create.mjs';
 import { deferObservableImpl, createCatchError, createMergeAll, createScanAsync, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
+import { createRunnableObservable } from '../__internal__/rx/__internal__ObservableLike.create.mjs';
 import { pipeUnsafe, newInstance } from '../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { sourceFrom } from './SinkLike.mjs';

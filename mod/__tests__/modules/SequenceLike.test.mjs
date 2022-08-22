@@ -1,8 +1,8 @@
 /// <reference types="./SequenceLike.test.d.ts" />
-import { testModule } from '../../__internal__/__internal__testing.mjs';
 import { toSequence } from '../../containers/ReadonlyArrayLike.mjs';
 import { concatT, toReadonlyArrayT, concatAllT, distinctUntilChangedT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, zipT } from '../../containers/SequenceLike.mjs';
 import { concatTests, concatAllTests, distinctUntilChangedTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests } from '../operators.mjs';
+import { testModule } from '../testing.mjs';
 
 testModule("SequenceLike", concatTests({
     fromArray: toSequence,

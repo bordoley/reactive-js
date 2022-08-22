@@ -1,11 +1,11 @@
 /// <reference types="./FlowableLike.test.d.ts" />
-import { testModule, test as createTest } from '../../__internal__/__internal__testing.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
 import { toFlowable, forEach, subscribe } from '../../rx/ObservableLike.mjs';
 import { createVirtualTimeScheduler } from '../../scheduling/SchedulerLike.mjs';
 import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
+import { testModule, test as createTest } from '../testing.mjs';
 
 testModule("FlowableLike", createTest("toObservable", () => {
     const scheduler = createVirtualTimeScheduler();

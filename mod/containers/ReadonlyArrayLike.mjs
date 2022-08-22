@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
 import { hasDelay, getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { create } from '../__internal__/ix/__internal__EnumerableLike.mjs';
-import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/__internal_ObservableLike.create.mjs';
+import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/__internal__ObservableLike.create.mjs';
 import { create as create$1 } from '../__internal__/rx/__internal__RunnableLike.create.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';

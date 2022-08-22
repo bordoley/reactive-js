@@ -1,9 +1,3 @@
-import {
-  expectArrayEquals,
-  expectEquals,
-  test,
-  testModule,
-} from "../../__internal__/__internal__testing";
 import { keepType } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import { __await, __memo, async } from "../../effects";
@@ -12,6 +6,7 @@ import { ObservableLike } from "../../rx";
 import { forEach, keepT, subscribe, takeLast } from "../../rx/ObservableLike";
 import { createVirtualTimeScheduler } from "../../scheduling/SchedulerLike";
 import { run } from "../../util/ContinuationLike";
+import { expectArrayEquals, expectEquals, test, testModule } from "../testing";
 
 testModule(
   "effects",

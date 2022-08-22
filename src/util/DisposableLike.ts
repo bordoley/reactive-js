@@ -1,4 +1,4 @@
-import { createObservable } from "../__internal__/rx/__internal_ObservableLike.create";
+import { createObservable } from "../__internal__/rx/__internal__ObservableLike.create";
 import {
   addIgnoringChildErrors as addIgnoringChildErrorsInternal,
   add as addInternal,

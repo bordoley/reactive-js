@@ -3,7 +3,6 @@ import {
   Lift,
   TReactive,
 } from "../__internal__/containers/__internal__StatefulContainerLike";
-import { createEnumerableObservable } from "../__internal__/rx/__internal_ObservableLike.create";
 import {
   createCatchError,
   createMergeAll,
@@ -11,6 +10,7 @@ import {
   createSwitchAll,
   deferObservableImpl,
 } from "../__internal__/rx/__internal__ObservableLike";
+import { createEnumerableObservable } from "../__internal__/rx/__internal__ObservableLike.create";
 import {
   Buffer,
   CatchError,

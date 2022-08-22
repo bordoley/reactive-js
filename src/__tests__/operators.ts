@@ -1,11 +1,4 @@
 import {
-  describe,
-  expectArrayEquals,
-  expectEquals,
-  expectToThrowError,
-  test,
-} from "../__internal__/__internal__testing";
-import {
   Buffer,
   CatchError,
   Concat,
@@ -46,6 +39,13 @@ import {
   sum,
 } from "../functions";
 import { ObservableLike, ScanAsync } from "../rx";
+import {
+  describe,
+  expectArrayEquals,
+  expectEquals,
+  expectToThrowError,
+  test,
+} from "./testing";
 
 export const bufferTests = <C extends ContainerLike>(
   m: Buffer<C> & FromArray<C> & ToReadonlyArray<C>,

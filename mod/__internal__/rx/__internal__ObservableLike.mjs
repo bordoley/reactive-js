@@ -1,21 +1,21 @@
 /// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
 import { compose, isTrue, pipeUnsafe, newInstance, pipe, partial, isSome, getLength, none, isEmpty } from '../../functions.mjs';
-import { ReactiveContainerLike_sinkInto, ObservableLike_isEnumerable, ObservableLike_isRunnable, SinkLike_notify } from '../../rx.mjs';
+import { ReactiveContainerLike_sinkInto, ObservableLike_isEnumerable, ObservableLike_isRunnable, SinkLike_notify, ObserverLike_scheduler } from '../../rx.mjs';
 import { getScheduler } from '../../rx/ObserverLike.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { sourceFrom, notifySink, notify } from '../../rx/SinkLike.mjs';
 import { create, publishTo, publish } from '../../rx/SubjectLike.mjs';
 import { MAX_SAFE_INTEGER } from '../__internal__env.mjs';
 import { reactive, createDistinctUntilChangedOperator, createForEachOperator, createScanOperator, createTakeFirstOperator } from '../containers/__internal__StatefulContainerLike.mjs';
-import { observerMixin, createDistinctUntilChangedObserver, createForEachObserver, createDelegatingObserver, createScanObserver, createObserver, createTakeFirstObserver } from './__internal__Observers.mjs';
+import { observerMixin, createDelegatingObserver, createObserver } from './__internal__Observers.mjs';
 import { addTo, onComplete, isDisposed, dispose, bindTo, addToIgnoringChildErrors } from '../util/__internal__DisposableLike.mjs';
 import { disposableMixin, createDisposableRef, disposed } from '../util/__internal__Disposables.mjs';
 import { MutableRefLike_current } from '../util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../util/__internal__Objects.mjs';
-import { createObservableImpl, createEnumerableObservable, createRunnableObservable, createObservable } from './__internal_ObservableLike.create.mjs';
+import { createObservableImpl, createEnumerableObservable, createRunnableObservable, createObservable } from './__internal__ObservableLike.create.mjs';
 import { createOnSink } from './__internal__ReactiveContainerLike.mjs';
-import { catchErrorSinkMixin } from './__internal__Sinks.mjs';
+import { catchErrorSinkMixin, distinctUntilChangedSinkMixin, forEachSinkMixin, scanSinkMixin, takeFirstSinkMixin } from './__internal__Sinks.mjs';
 
 const deferObservableImpl = (factory, isEnumerable, isRunnable) => createObservableImpl(observer => {
     factory()[ReactiveContainerLike_sinkInto](observer);
@@ -171,8 +171,30 @@ const createSwitchAll = (lift) => {
     return () => lift(createSwitchAllObserver);
 };
 const distinctUntilChanged = 
-/*@__PURE__*/ (() => pipe(createDistinctUntilChangedObserver, createDistinctUntilChangedOperator(liftEnumerableObservableT)))();
-const forEach = /*@__PURE__*/ (() => pipe(createForEachObserver, createForEachOperator(liftEnumerableObservableT)))();
+/*@__PURE__*/ (() => {
+    const createDistinctUntilChangedObserver = (() => {
+        const typedDistinctUntilChangedSinkMixin = distinctUntilChangedSinkMixin();
+        const typedObserverMixin = observerMixin();
+        return createInstanceFactory(mixin(include(typedObserverMixin, typedDistinctUntilChangedSinkMixin), function DistinctUntilChangedObserver(instance, delegate, equality) {
+            init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+            init(typedDistinctUntilChangedSinkMixin, instance, delegate, equality);
+            return instance;
+        }));
+    })();
+    return pipe(createDistinctUntilChangedObserver, createDistinctUntilChangedOperator(liftEnumerableObservableT));
+})();
+const forEach = /*@__PURE__*/ (() => {
+    const createForEachObserver = (() => {
+        const typedForEachSinkMixin = forEachSinkMixin();
+        const typedObserverMixin = observerMixin();
+        return createInstanceFactory(mixin(include(typedObserverMixin, typedForEachSinkMixin), function ForEachObserver(instance, delegate, effect) {
+            init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+            init(typedForEachSinkMixin, instance, delegate, effect);
+            return instance;
+        }));
+    })();
+    return pipe(createForEachObserver, createForEachOperator(liftEnumerableObservableT));
+})();
 const isEnumerable = (obs) => obs[ObservableLike_isEnumerable];
 const isRunnable = (obs) => obs[ObservableLike_isRunnable];
 const mergeImpl = /*@__PURE__*/ (() => {
@@ -223,12 +245,34 @@ const onSubscribe = (f) => (obs) => {
             ? createRunnableObservable(onSink)
             : createObservable(onSink), obs, f);
 };
-const scan = /*@__PURE__*/ pipe(createScanObserver, createScanOperator(liftEnumerableObservableT));
+const scan = /*@__PURE__*/ (() => {
+    const createScanObserver = (() => {
+        const typedScanSinkMixin = scanSinkMixin();
+        const typedObserverMixin = observerMixin();
+        return createInstanceFactory(mixin(include(typedObserverMixin, typedScanSinkMixin), function ScanObserver(instance, delegate, reducer, initialValue) {
+            init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+            init(typedScanSinkMixin, instance, delegate, reducer, initialValue);
+            return instance;
+        }));
+    })();
+    return pipe(createScanObserver, createScanOperator(liftEnumerableObservableT));
+})();
 const switchAll = 
 /*@__PURE__*/ createSwitchAll(liftObservable);
 const subscribe = scheduler => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
 const takeFirst = 
-/*@__PURE__*/ pipe(createTakeFirstObserver, createTakeFirstOperator(liftEnumerableObservableT));
+/*@__PURE__*/ (() => {
+    const createTakeFirstObserver = (() => {
+        const typedTakeFirstSinkMixin = takeFirstSinkMixin();
+        const typedObserverMixin = observerMixin();
+        return createInstanceFactory(mixin(include(typedObserverMixin, typedTakeFirstSinkMixin), function TakeFirstObserver(instance, delegate, takeCount) {
+            init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+            init(typedTakeFirstSinkMixin, instance, delegate, takeCount);
+            return instance;
+        }));
+    })();
+    return pipe(createTakeFirstObserver, createTakeFirstOperator(liftEnumerableObservableT));
+})();
 const zipWithLatestFrom = /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
         const typedObserverMixin = observerMixin();

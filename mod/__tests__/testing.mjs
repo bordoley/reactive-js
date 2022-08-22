@@ -1,6 +1,5 @@
-/// <reference types="./__internal__testing.d.ts" />
+/// <reference types="./testing.d.ts" />
 import { ignore, raise, none, strictEquality, arrayEquality, isSome, isNone, getLength } from '../functions.mjs';
-import { __DENO__ } from './__internal__env.mjs';
 
 const DescribeType = 1;
 const TestType = 2;
@@ -112,6 +111,7 @@ const expectPromiseToThrow = async (promise) => {
         raise("expected function to throw");
     }
 };
+const __DENO__ = typeof Deno === "object";
 const createTests = (testGroup, parents) => {
     const path = [...parents, testGroup.name];
     if (testGroup.type === DescribeType) {
@@ -144,4 +144,4 @@ const testModule = (name, ...testGroups) => {
     createTests(createDescribe(name, ...testGroups), []);
 };
 
-export { DescribeType, TestAsyncType, TestType, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, createTest as test, testAsync, testModule };
+export { DescribeType, TestAsyncType, TestType, __DENO__, createDescribe as describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, createTest as test, testAsync, testModule };

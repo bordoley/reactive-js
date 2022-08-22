@@ -1,18 +1,3 @@
-import {
-  describe,
-  expectArrayEquals,
-  expectEquals,
-  expectIsSome,
-  expectPromiseToThrow,
-  expectToHaveBeenCalledTimes,
-  expectToThrow,
-  expectToThrowError,
-  expectTrue,
-  mockFn,
-  test,
-  testAsync,
-  testModule,
-} from "../../__internal__/__internal__testing";
 import { concatMap, throws } from "../../containers/ContainerLike";
 import { toObservable } from "../../containers/ReadonlyArrayLike";
 import {
@@ -113,6 +98,21 @@ import {
   throwIfEmptyTests,
   zipTests as zipOperatorTests,
 } from "../operators";
+import {
+  describe,
+  expectArrayEquals,
+  expectEquals,
+  expectIsSome,
+  expectPromiseToThrow,
+  expectToHaveBeenCalledTimes,
+  expectToThrow,
+  expectToThrowError,
+  expectTrue,
+  mockFn,
+  test,
+  testAsync,
+  testModule,
+} from "../testing";
 
 const combineLatestTests = describe(
   "combineLatest",

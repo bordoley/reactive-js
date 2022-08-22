@@ -1,10 +1,10 @@
 /// <reference types="./PromiseableLike.test.d.ts" />
-import { testModule, describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../../__internal__/__internal__testing.mjs';
 import { toObservable } from '../../containers/PromiseableLike.mjs';
 import { pipe, newInstance } from '../../functions.mjs';
 import { toPromise } from '../../rx/ObservableLike.mjs';
 import { createHostScheduler } from '../../scheduling/SchedulerLike.mjs';
 import { dispose } from '../../util/DisposableLike.mjs';
+import { testModule, describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../testing.mjs';
 
 testModule("PromiseableLike", createDescribe("toObservable", testAsync("when the promise resolves", async () => {
     const scheduler = createHostScheduler();

@@ -1,9 +1,3 @@
-import {
-  describe,
-  expectEquals,
-  test,
-  testModule,
-} from "../../__internal__/__internal__testing";
 import { toRunnable } from "../../containers/ReadonlyArrayLike";
 import { Option, none, pipeLazy } from "../../functions";
 import {
@@ -54,6 +48,7 @@ import {
   takeWhileTests,
   throwIfEmptyTests,
 } from "../operators";
+import { describe, expectEquals, test, testModule } from "../testing";
 
 testModule(
   "RunnableLike",

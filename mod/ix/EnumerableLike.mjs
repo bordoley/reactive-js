@@ -3,7 +3,7 @@ import { getDelay, hasDelay } from '../__internal__/__internal__optionParsing.mj
 import { createRepeatOperator } from '../__internal__/containers/__internal__ContainerLike.mjs';
 import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
 import { empty as empty$1, create } from '../__internal__/ix/__internal__EnumerableLike.mjs';
-import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/__internal_ObservableLike.create.mjs';
+import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/__internal__ObservableLike.create.mjs';
 import { disposableMixin, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';

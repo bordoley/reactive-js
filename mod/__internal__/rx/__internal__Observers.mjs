@@ -6,7 +6,6 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../schedul
 import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
 import { DisposableLike_exception } from '../../util.mjs';
 import { addTo, onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
-import { distinctUntilChangedSinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, scanSinkMixin, skipFirstSinkMixin, takeFirstSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from './__internal__Sinks.mjs';
 import { disposableMixin } from '../util/__internal__Disposables.mjs';
 import { createInstanceFactory, mixin, init, props, include } from '../util/__internal__Objects.mjs';
 
@@ -92,42 +91,6 @@ const createDelegatingObserver = /*@__PURE__*/ (() => {
         },
     }));
 })();
-const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => {
-    const typedDistinctUntilChangedSinkMixin = distinctUntilChangedSinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedDistinctUntilChangedSinkMixin), function DistinctUntilChangedObserver(instance, delegate, equality) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedDistinctUntilChangedSinkMixin, instance, delegate, equality);
-        return instance;
-    }));
-})();
-const createForEachObserver = /*@__PURE__*/ (() => {
-    const typedForEachSinkMixin = forEachSinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedForEachSinkMixin), function ForEachObserver(instance, delegate, effect) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedForEachSinkMixin, instance, delegate, effect);
-        return instance;
-    }));
-})();
-const createKeepObserver = /*@__PURE__*/ (() => {
-    const typedKeepSinkMixin = keepSinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedKeepSinkMixin), function KeepObserver(instance, delegate, predicate) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedKeepSinkMixin, instance, delegate, predicate);
-        return instance;
-    }));
-})();
-const createMapObserver = /*@__PURE__*/ (() => {
-    const typedMapSinkMixin = mapSinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedMapSinkMixin), function MapObserver(instance, delegate, mapper) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedMapSinkMixin, instance, delegate, mapper);
-        return instance;
-    }));
-})();
 const createObserver = 
 /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
@@ -139,59 +102,5 @@ const createObserver =
         [SinkLike_notify](_) { },
     }));
 })();
-const createPairwiseObserver = /*@__PURE__*/ (() => {
-    const typedPairwiseSinkMixin = pairwiseSinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedPairwiseSinkMixin), function PairwiseObserver(instance, delegate) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedPairwiseSinkMixin, instance, delegate);
-        return instance;
-    }));
-})();
-const createScanObserver = /*@__PURE__*/ (() => {
-    const typedScanSinkMixin = scanSinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedScanSinkMixin), function ScanObserver(instance, delegate, reducer, initialValue) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedScanSinkMixin, instance, delegate, reducer, initialValue);
-        return instance;
-    }));
-})();
-const createSkipFirstObserver = /*@__PURE__*/ (() => {
-    const typedSkipFirstSinkMixin = skipFirstSinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedSkipFirstSinkMixin), function SkipFirstObserver(instance, delegate, skipCount) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedSkipFirstSinkMixin, instance, delegate, skipCount);
-        return instance;
-    }));
-})();
-const createTakeFirstObserver = /*@__PURE__*/ (() => {
-    const typedTakeFirstSinkMixin = takeFirstSinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedTakeFirstSinkMixin), function TakeFirstObserver(instance, delegate, takeCount) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedTakeFirstSinkMixin, instance, delegate, takeCount);
-        return instance;
-    }));
-})();
-const createTakeWhileObserver = /*@__PURE__*/ (() => {
-    const typedTakeWhileSinkMixin = takeWhileSinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedTakeWhileSinkMixin), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedTakeWhileSinkMixin, instance, delegate, predicate, inclusive);
-        return instance;
-    }));
-})();
-const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
-    const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin();
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(typedObserverMixin, typedThrowIfEmptySinkMixin), function ThrowIfEmptyObserver(instance, delegate, factory) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedThrowIfEmptySinkMixin, instance, delegate, factory);
-        return instance;
-    }));
-})();
 
-export { createDelegatingObserver, createDistinctUntilChangedObserver, createForEachObserver, createKeepObserver, createMapObserver, createObserver, createPairwiseObserver, createScanObserver, createSkipFirstObserver, createTakeFirstObserver, createTakeWhileObserver, createThrowIfEmptyObserver, observerMixin };
+export { createDelegatingObserver, createObserver, observerMixin };
