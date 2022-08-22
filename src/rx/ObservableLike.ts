@@ -119,7 +119,7 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
-  ToPromise,
+  ToPromiseable,
   ToReadonlyArray,
   Zip,
 } from "../containers";
@@ -1640,7 +1640,10 @@ export const toFlowableT: ToFlowable<ObservableLike> = { toFlowable };
  *
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
-export const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"] =
+export const toPromise: ToPromiseable<
+  ObservableLike,
+  SchedulerLike
+>["toPromise"] =
   <T>(scheduler: SchedulerLike) =>
   (observable: ObservableLike<T>): PromiseLike<T> =>
     newInstance<
@@ -1677,7 +1680,7 @@ export const toPromise: ToPromise<ObservableLike, SchedulerLike>["toPromise"] =
         }),
       );
     });
-export const toPromiseT: ToPromise<ObservableLike, SchedulerLike> = {
+export const toPromiseT: ToPromiseable<ObservableLike, SchedulerLike> = {
   toPromise,
 };
 

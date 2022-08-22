@@ -34,10 +34,16 @@ interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T, Async
     readonly [ContainerLike_type]?: AsyncEnumerableLike<this[typeof ContainerLike_T]>;
     readonly [StatefulContainerLike_state]?: AsyncEnumeratorLike<this[typeof ContainerLike_T]>;
 }
+declare type FromAsyncEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
+    fromAsyncEnumerable<T>(options?: TOptions): Function1<AsyncEnumerableLike<T>, ContainerOf<C, T>>;
+};
+declare type FromEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
+    fromEnumerable<T>(options?: TOptions): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+};
 declare type ToAsyncEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toAsyncEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
 };
 declare type ToEnumerable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toEnumerable<T>(options?: TOptions): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };
-export { AsyncEnumerableLike, AsyncEnumeratorLike, EnumerableLike, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerLike, InteractiveContainerLike_interact, SourceLike, SourceLike_move, ToAsyncEnumerable, ToEnumerable };
+export { AsyncEnumerableLike, AsyncEnumeratorLike, EnumerableLike, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, FromAsyncEnumerable, FromEnumerable, InteractiveContainerLike, InteractiveContainerLike_interact, SourceLike, SourceLike_move, ToAsyncEnumerable, ToEnumerable };

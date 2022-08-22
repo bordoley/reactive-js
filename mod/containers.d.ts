@@ -14,6 +14,9 @@ interface AsyncIterableLike<T = unknown> extends ContainerLike, AsyncIterable<T>
 interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
     readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
 }
+interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike<T> {
+    readonly [ContainerLike_type]?: PromiseableLike<this[typeof ContainerLike_T]>;
+}
 interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
     readonly [ContainerLike_type]?: ReadonlyArrayLike<this[typeof ContainerLike_T]>;
 }
@@ -26,9 +29,6 @@ interface SequenceLike<T = unknown> extends ContainerLike {
         readonly data: T;
         readonly next: SequenceLike<T>;
     }>;
-}
-interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike<T> {
-    readonly [ContainerLike_type]?: PromiseableLike<this[typeof ContainerLike_T]>;
 }
 /**  @ignore */
 declare const StatefulContainerLike_state: unique symbol;
@@ -161,8 +161,20 @@ declare type FromArrayOptions = {
 declare type FromArray<C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions> = Container<C> & {
     fromArray<T>(options?: Partial<O>): Function1<readonly T[], ContainerOf<C, T>>;
 };
+declare type FromAsyncIterable<C extends ContainerLike, O = never> = Container<C> & {
+    fromAsyncIterable<T>(options?: Partial<O>): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
+};
 declare type FromIterable<C extends ContainerLike, O = never> = Container<C> & {
     fromIterable<T>(options?: Partial<O>): Function1<Iterable<T>, ContainerOf<C, T>>;
+};
+declare type FromPromise<C extends ContainerLike, O = never> = Container<C> & {
+    fromIterable<T>(options?: Partial<O>): Function1<PromiseLike<T>, ContainerOf<C, T>>;
+};
+declare type FromSequence<C extends ContainerLike, O = never> = Container<C> & {
+    fromSequence<T>(options?: Partial<O>): Function1<SequenceLike<T>, ContainerOf<C, T>>;
+};
+declare type FromSet<C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions> = Container<C> & {
+    fromSet<T>(options?: Partial<O>): Function1<ReadonlySet<T>, ContainerOf<C, T>>;
 };
 declare type Generate<C extends ContainerLike, O = never> = Container<C> & {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: Partial<O>): ContainerOf<C, T>;
@@ -219,17 +231,23 @@ declare type TakeWhile<C extends ContainerLike> = Container<C> & {
 declare type ThrowIfEmpty<C extends ContainerLike> = Container<C> & {
     throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 };
-declare type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
-    toIterable<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, Iterable<T>>;
+declare type ToAsyncIterable<C extends ContainerLike, O = never> = Container<C> & {
+    toAsyncIterable<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, AsyncIterableLike<T>>;
 };
-declare type ToPromise<C extends ContainerLike, Ctx = void> = Container<C> & {
-    toPromise<T>(ctx: Ctx): Function1<ContainerOf<C, T>, PromiseLike<T>>;
+declare type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
+    toIterable<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, IterableLike<T>>;
+};
+declare type ToPromiseable<C extends ContainerLike, Ctx = void> = Container<C> & {
+    toPromise<T>(ctx: Ctx): Function1<ContainerOf<C, T>, PromiseableLike<T>>;
 };
 declare type ToReadonlyArray<C extends ContainerLike, O = never> = Container<C> & {
     toReadonlyArray<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
 };
 declare type ToSequence<C extends ContainerLike, O = never> = Container<C> & {
     toSequence<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, SequenceLike<T>>;
+};
+declare type ToReadonlySet<C extends ContainerLike, O = never> = Container<C> & {
+    toReadonlySet<T>(options?: Partial<O>): Function1<ContainerOf<C, T>, ReadonlySetLike<T>>;
 };
 declare type Zip<C extends ContainerLike> = Container<C> & {
     zip<TA, TB>(a: ContainerOf<C, TA>, b: ContainerOf<C, TB>): ContainerOf<C, readonly [
@@ -293,4 +311,4 @@ declare type Zip<C extends ContainerLike> = Container<C> & {
         TI
     ]>;
 };
-export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromIterable, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, ReadonlySetLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToPromise, ToReadonlyArray, ToSequence, Zip };
+export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromAsyncIterable, FromIterable, FromPromise, FromSequence, FromSet, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, ReadonlySetLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToAsyncIterable, ToIterable, ToPromiseable, ToReadonlyArray, ToReadonlySet, ToSequence, Zip };
