@@ -4,9 +4,8 @@ import { throws, concatMap } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, identity, increment, sum, newInstance } from '../../functions.mjs';
 import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/EnumerableLike.mjs';
-import { deferRunnableObservableT } from '../../rx.mjs';
 import { combineLatest, generate, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, concat, retry, share, zip, map, forEach, empty, takeUntil, timeout, throttle, toEnumerable, toFlowable, toPromise, withLatestFrom, zipLatest, zipWithLatestFrom } from '../../rx/ObservableLike.mjs';
-import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, catchErrorT, concatT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, forEachT, keepT, pairwiseT, reduceT, scanT, scanAsyncT, skipFirstT, someSatisfyT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
+import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, catchErrorT, concatT, deferT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, forEachT, keepT, pairwiseT, reduceT, scanT, scanAsyncT, skipFirstT, someSatisfyT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
 import { createVirtualTimeScheduler, schedule, getCurrentTime, createHostScheduler } from '../../scheduling/SchedulerLike.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
@@ -135,7 +134,7 @@ testModule("ObservableLike", bufferTests({
     ...toReadonlyArrayT,
 }), decodeWithCharsetTests({
     fromArray: toObservable,
-    ...deferRunnableObservableT,
+    ...deferT,
     ...decodeWithCharsetT,
     ...mapT,
     ...toReadonlyArrayT,

@@ -75,12 +75,11 @@ import {
   ScanAsync,
   SubjectLike,
   ToObservable,
-  createObservable,
-  createRunnableObservable,
 } from "../rx";
 import { getObserverCount, getReplay } from "../rx/MulticastObservableLike";
 import {
   concatAllT as concatAllTObs,
+  create as createObservable,
   forEach as forEachObs,
   keep as keepObs,
   map as mapObs,
@@ -94,6 +93,7 @@ import {
   takeWhile as takeWhileObs,
 } from "../rx/ObservableLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
+import { create as createRunnableObservable } from "../rx/RunnableObservableLike";
 import { create as createSubject, publish } from "../rx/SubjectLike";
 import {
   DispatcherLike_dispatch,

@@ -10,10 +10,11 @@ import { pipe, none, unsafeCast, getLength, compose, increment, returns, pipeUns
 import { SourceLike_move, InteractiveContainerLike_interact } from '../ix.mjs';
 import { hasCurrent, getCurrent } from './EnumeratorLike.mjs';
 import { move } from './SourceLike.mjs';
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, createObservable, createRunnableObservable } from '../rx.mjs';
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
+import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, create as create$1, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
+import { create as create$2 } from '../rx/RunnableObservableLike.mjs';
 import { create, publish } from '../rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
 import { dispatch, getScheduler } from '../scheduling/DispatcherLike.mjs';
@@ -114,7 +115,7 @@ const fromArray = /*@__PURE__*/ (() => {
  * @param iterable
  */
 const fromEnumerable = 
-/*@__PURE__*/ (() => returns((enumerable) => createLiftedAsyncEnumerable(observable => createObservable(observer => {
+/*@__PURE__*/ (() => returns((enumerable) => createLiftedAsyncEnumerable(observable => create$1(observer => {
     const enumerator = pipe(enumerable, enumerate(), addTo(observer));
     pipe(observable, map$1(_ => move(enumerator)), takeWhile$1(hasCurrent), map$1(getCurrent), sinkInto(observer));
 }))))();
@@ -326,7 +327,7 @@ const takeWhile =
 const takeWhileT = {
     takeWhile,
 };
-const toObservable = () => enumerable => createRunnableObservable(observer => {
+const toObservable = () => enumerable => create$2(observer => {
     const enumerator = pipe(enumerable, stream(getScheduler$1(observer)), addTo(observer));
     pipe(enumerator, forEach(_ => {
         pipe(enumerator, dispatch(none));

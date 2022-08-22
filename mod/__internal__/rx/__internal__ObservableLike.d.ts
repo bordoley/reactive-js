@@ -1,9 +1,10 @@
 import { ReadonlyArrayLike, ContainerOperator, ContainerOf, DistinctUntilChanged, ForEach, Concat, Scan, ConcatAll, TakeFirst } from "../../containers.mjs";
-import { Function1, SideEffect1, Factory, Function2 } from "../../functions.mjs";
+import { Factory, Function1, SideEffect1, Function2 } from "../../functions.mjs";
 import { ObservableLike, AsyncReducer, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike } from "../../rx.mjs";
 import { ObserverLike, SchedulerLike } from "../../scheduling.mjs";
 import { DisposableOrTeardown, DisposableLike } from "../../util.mjs";
 import { Lift, TReactive } from "../containers/__internal__StatefulContainerLike.mjs";
+declare const deferObservableImpl: <T>(factory: Factory<ObservableLike<T>>, isEnumerable: boolean, isRunnable: boolean) => ObservableLike<T>;
 declare const allAreEnumerable: Function1<ReadonlyArrayLike<ObservableLike<unknown>>, boolean>;
 declare const allAreRunnable: Function1<ReadonlyArrayLike<ObservableLike<unknown>>, boolean>;
 declare const liftObservable: <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
@@ -38,4 +39,4 @@ declare const switchAll: ConcatAll<ObservableLike>["concatAll"];
 declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, DisposableLike>;
 declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike, TA, T>;
-export { allAreEnumerable, allAreRunnable, createCatchError, createMergeAll, createScanAsync, createSwitchAll, distinctUntilChanged, forEach, isEnumerable, isRunnable, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftObservableT, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, onSubscribe, scan, subscribe, switchAll, takeFirst, zipWithLatestFrom };
+export { allAreEnumerable, allAreRunnable, createCatchError, createMergeAll, createScanAsync, createSwitchAll, deferObservableImpl, distinctUntilChanged, forEach, isEnumerable, isRunnable, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftObservableT, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, onSubscribe, scan, subscribe, switchAll, takeFirst, zipWithLatestFrom };

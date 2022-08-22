@@ -38,9 +38,6 @@ import {
   ReactiveContainerLike_sinkInto,
   RunnableObservableLike,
   ScanAsync,
-  createEnumerableObservable,
-  createObservable,
-  createRunnableObservable,
 } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
 import {
@@ -99,7 +96,26 @@ import {
   props,
 } from "../util/__internal__Objects";
 import { catchErrorSinkMixin } from "../util/__internal__Sinks";
+import {
+  createEnumerableObservable,
+  createObservable,
+  createObservableImpl,
+  createRunnableObservable,
+} from "./__internal_ObservableLike.create";
 import { createOnSink } from "./__internal__ReactiveContainerLike";
+
+export const deferObservableImpl = <T>(
+  factory: Factory<ObservableLike<T>>,
+  isEnumerable: boolean,
+  isRunnable: boolean,
+): ObservableLike<T> =>
+  createObservableImpl(
+    observer => {
+      factory()[ReactiveContainerLike_sinkInto](observer);
+    },
+    isEnumerable,
+    isRunnable,
+  );
 
 export const allAreEnumerable = compose(
   mapArray((obs: ObservableLike) => obs[ObservableLike_isEnumerable]),

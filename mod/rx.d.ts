@@ -1,5 +1,5 @@
-import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator, Defer } from "./containers.mjs";
-import { Function2, Factory, Function1, SideEffect1 } from "./functions.mjs";
+import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator } from "./containers.mjs";
+import { Function2, Factory, Function1 } from "./functions.mjs";
 import { ObserverLike } from "./scheduling.mjs";
 import { DisposableLike, SinkLike } from "./util.mjs";
 /** @ignore */
@@ -60,16 +60,4 @@ declare type ToObservable<C extends ContainerLike, TOptions = never> = Container
 declare type ToRunnable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toRunnable<T>(options?: TOptions): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
-declare const createEnumerableObservable: <T>(f: SideEffect1<ObserverLike<T>>) => EnumerableObservableLike<T>;
-declare const createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
-declare const createRunnableObservable: <T>(f: SideEffect1<ObserverLike<T>>) => RunnableObservableLike<T>;
-declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
-declare const deferEnumerableObservable: Defer<EnumerableObservableLike>["defer"];
-declare const deferEnumerableObservableT: Defer<EnumerableObservableLike>;
-declare const deferObservable: Defer<ObservableLike>["defer"];
-declare const deferObservableT: Defer<ObservableLike>;
-declare const deferRunnableObservable: Defer<RunnableObservableLike, {
-    delay: number;
-}>["defer"];
-declare const deferRunnableObservableT: Defer<RunnableObservableLike>;
-export { AsyncReducer, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable, createEnumerableObservable, createObservable, createRunnable, createRunnableObservable, deferEnumerableObservable, deferEnumerableObservableT, deferObservable, deferObservableT, deferRunnableObservable, deferRunnableObservableT };
+export { AsyncReducer, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SubjectLike, SubjectLike_publish, ToObservable, ToRunnable };

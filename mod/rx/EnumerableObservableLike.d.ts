@@ -1,7 +1,10 @@
-import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, Empty, EverySatisfy, ForEach, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.mjs";
-import { Factory } from "../functions.mjs";
+import { SideEffect1, Factory } from "../functions.mjs";
+import { Defer, Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, Empty, EverySatisfy, ForEach, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.mjs";
 import { EnumerableObservableLike, ScanAsync } from "../rx.mjs";
-import { VirtualTimeSchedulerLike } from "../scheduling.mjs";
+import { ObserverLike, VirtualTimeSchedulerLike } from "../scheduling.mjs";
+declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => EnumerableObservableLike<T>;
+declare const defer: Defer<EnumerableObservableLike>["defer"];
+declare const deferT: Defer<EnumerableObservableLike>;
 declare const bufferT: Buffer<EnumerableObservableLike>;
 declare const catchError: CatchError<EnumerableObservableLike>["catchError"];
 declare const catchErrorT: CatchError<EnumerableObservableLike>;
@@ -52,4 +55,4 @@ declare const toReadonlyArrayT: ToReadonlyArray<EnumerableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
 declare const zipT: Zip<EnumerableObservableLike>;
-export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, generateeT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, catchError, catchErrorT, concatAll, concatT, create, decodeWithCharsetT, defer, deferT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, generateeT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

@@ -1,7 +1,6 @@
 /// <reference types="./effects.d.ts" />
 import { isNone, ignore, none, raise, arrayEquality, pipe, getLength, isSome, newInstance } from './functions.mjs';
-import { createObservable } from './rx.mjs';
-import { empty, forEach, subscribe } from './rx/ObservableLike.mjs';
+import { empty, forEach, subscribe, create } from './rx/ObservableLike.mjs';
 import { getScheduler } from './scheduling/ObserverLike.mjs';
 import { schedule } from './scheduling/SchedulerLike.mjs';
 import { stream, createStateStore } from './streaming/StreamableLike.mjs';
@@ -126,7 +125,7 @@ class AsyncContext {
     }
 }
 let currentCtx = none;
-const async = (computation, { mode = "batched" } = {}) => createObservable((observer) => {
+const async = (computation, { mode = "batched" } = {}) => create((observer) => {
     const runComputation = () => {
         let result = none;
         let error = none;
@@ -199,7 +198,7 @@ const __observe = (observable) => {
     return ctx.awaitOrObserve(observable, false);
 };
 const __do = /*@__PURE__*/ (() => {
-    const deferSideEffect = (f, ...args) => createObservable(observer => {
+    const deferSideEffect = (f, ...args) => create(observer => {
         const callback = () => {
             f(...args);
             pipe(observer, notify(none), dispose());

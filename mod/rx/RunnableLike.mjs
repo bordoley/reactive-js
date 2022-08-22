@@ -2,15 +2,17 @@
 import { createRepeatOperator } from '../__internal__/containers/__internal__ContainerLike.mjs';
 import { reactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
 import { createOnSink } from '../__internal__/rx/__internal__ReactiveContainerLike.mjs';
+import { create as create$1 } from '../__internal__/rx/__internal__RunnableLike.create.mjs';
 import { createInstanceFactory, mixin, include, init } from '../__internal__/util/__internal__Objects.mjs';
 import { bufferSinkMixin, catchErrorSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/util/__internal__Sinks.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipeUnsafe, newInstance, pipe, partial, pipeLazy, none, ignore, returns, isSome, raise, identity } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto, createRunnable } from '../rx.mjs';
+import { ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { SinkLike_notify, DisposableLike_exception } from '../util.mjs';
 import { bindTo, addTo, dispose, isDisposed } from '../util/DisposableLike.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
 
+const create = create$1;
 const lift = /*@__PURE__*/ (() => {
     class LiftedRunnable {
         constructor(src, operators) {
@@ -72,7 +74,7 @@ const decodeWithCharset =
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
-const defer = f => createRunnable(sink => {
+const defer = f => create(sink => {
     f()[ReactiveContainerLike_sinkInto](sink);
 });
 const deferT = { defer };
@@ -84,7 +86,7 @@ const distinctUntilChanged =
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const empty = () => createRunnable(sink => {
+const empty = () => create(sink => {
     pipe(sink, dispose());
 });
 const emptyT = { empty };
@@ -106,7 +108,7 @@ const forEach = /*@__PURE__*/ (() => {
     return pipe(createInstanceFactory(typedForEachSinkMixin), createForEachOperator(liftT));
 })();
 const forEachT = { forEach };
-const generate = (generator, initialValue) => createRunnable((sink) => {
+const generate = (generator, initialValue) => create((sink) => {
     let acc = initialValue();
     while (!isDisposed(sink)) {
         acc = generator(acc);
@@ -133,12 +135,12 @@ const map = /*@__PURE__*/ (() => {
     return pipe(createInstanceFactory(typedMapSinkMixin), createMapOperator(liftT));
 })();
 const mapT = { map };
-const never = () => createRunnable(ignore);
+const never = () => create(ignore);
 const neverT = {
     never: never,
 };
 const onRun = (f) => (runnable) => {
-    return createOnSink(createRunnable, runnable, f);
+    return createOnSink(create, runnable, f);
 };
 const pairwise = /*@__PURE__*/ (() => {
     const typedPairwiseSinkMixin = pairwiseSinkMixin();
@@ -151,7 +153,7 @@ const reduce = /*@__PURE__*/ (() => {
 })();
 const reduceT = { reduce };
 const repeat = /*@__PURE__*/ (() => {
-    return createRepeatOperator((delegate, predicate) => createRunnable(sink => {
+    return createRepeatOperator((delegate, predicate) => create(sink => {
         let count = 0;
         do {
             pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(delegate), dispose());
@@ -221,4 +223,4 @@ const toRunnableT = {
     toRunnable,
 };
 
-export { buffer, bufferT, catchError, catchErrorT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, first, forEach, forEachT, generate, generateT, keep, keepT, last, map, mapT, never, neverT, onRun, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT };
+export { buffer, bufferT, catchError, catchErrorT, concat, concatAll, concatAllT, concatT, create, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, first, forEach, forEachT, generate, generateT, keep, keepT, last, map, mapT, never, neverT, onRun, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT };

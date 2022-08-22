@@ -11,6 +11,7 @@
 - [concatAllT](rx_ObservableLike.md#concatallt)
 - [concatT](rx_ObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_ObservableLike.md#decodewithcharsett)
+- [deferT](rx_ObservableLike.md#defert)
 - [distinctUntilChangedT](rx_ObservableLike.md#distinctuntilchangedt)
 - [emptyT](rx_ObservableLike.md#emptyt)
 - [everySatisfyT](rx_ObservableLike.md#everysatisfyt)
@@ -48,7 +49,9 @@
 - [combineLatest](rx_ObservableLike.md#combinelatest)
 - [concat](rx_ObservableLike.md#concat)
 - [concatAll](rx_ObservableLike.md#concatall)
+- [create](rx_ObservableLike.md#create)
 - [decodeWithCharset](rx_ObservableLike.md#decodewithcharset)
+- [defer](rx_ObservableLike.md#defer)
 - [distinctUntilChanged](rx_ObservableLike.md#distinctuntilchanged)
 - [empty](rx_ObservableLike.md#empty)
 - [everySatisfy](rx_ObservableLike.md#everysatisfy)
@@ -125,6 +128,12 @@ ___
 ### decodeWithCharsetT
 
 • `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](containers.md#decodewithcharset)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### deferT
+
+• `Const` **deferT**: [`Defer`](containers.md#defer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -643,6 +652,28 @@ Converts a higher-order `ObservableLike` into a first-order
 
 ___
 
+### create
+
+▸ **create**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
 ### decodeWithCharset
 
 ▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
@@ -656,6 +687,29 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+___
+
+### defer
+
+▸ **defer**<`T`\>(`factory`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 

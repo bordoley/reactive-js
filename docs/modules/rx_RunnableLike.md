@@ -39,6 +39,7 @@
 - [catchError](rx_RunnableLike.md#catcherror)
 - [concat](rx_RunnableLike.md#concat)
 - [concatAll](rx_RunnableLike.md#concatall)
+- [create](rx_RunnableLike.md#create)
 - [decodeWithCharset](rx_RunnableLike.md#decodewithcharset)
 - [defer](rx_RunnableLike.md#defer)
 - [distinctUntilChanged](rx_RunnableLike.md#distinctuntilchanged)
@@ -312,6 +313,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+
+___
+
+### create
+
+▸ **create**<`T`\>(`run`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`SinkLike`](../interfaces/util.SinkLike.md)<`T`\>\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 ___
 

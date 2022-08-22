@@ -1,7 +1,7 @@
 /// <reference types="./__internal__ObservableLike.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
 import { compose, isTrue, pipeUnsafe, newInstance, pipe, partial, isSome, getLength, none, isEmpty } from '../../functions.mjs';
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createEnumerableObservable, createRunnableObservable, createObservable } from '../../rx.mjs';
+import { ReactiveContainerLike_sinkInto, ObservableLike_isEnumerable, ObservableLike_isRunnable } from '../../rx.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { create, publishTo, publish } from '../../rx/SubjectLike.mjs';
 import { getScheduler } from '../../scheduling/ObserverLike.mjs';
@@ -15,8 +15,12 @@ import { disposableMixin, createDisposableRef, disposed } from '../util/__intern
 import { MutableRefLike_current } from '../util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../util/__internal__Objects.mjs';
 import { catchErrorSinkMixin } from '../util/__internal__Sinks.mjs';
+import { createObservableImpl, createEnumerableObservable, createRunnableObservable, createObservable } from './__internal_ObservableLike.create.mjs';
 import { createOnSink } from './__internal__ReactiveContainerLike.mjs';
 
+const deferObservableImpl = (factory, isEnumerable, isRunnable) => createObservableImpl(observer => {
+    factory()[ReactiveContainerLike_sinkInto](observer);
+}, isEnumerable, isRunnable);
 const allAreEnumerable = compose(map((obs) => obs[ObservableLike_isEnumerable]), every(isTrue));
 const allAreRunnable = compose(map((obs) => obs[ObservableLike_isRunnable]), every(isTrue));
 const createLift = /*@__PURE__*/ (() => {
@@ -281,4 +285,4 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
     };
 })();
 
-export { allAreEnumerable, allAreRunnable, createCatchError, createMergeAll, createScanAsync, createSwitchAll, distinctUntilChanged, forEach, isEnumerable, isRunnable, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftObservableT, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, onSubscribe, scan, subscribe, switchAll, takeFirst, zipWithLatestFrom };
+export { allAreEnumerable, allAreRunnable, createCatchError, createMergeAll, createScanAsync, createSwitchAll, deferObservableImpl, distinctUntilChanged, forEach, isEnumerable, isRunnable, liftEnumerableObservable, liftEnumerableObservableT, liftObservable, liftObservableT, liftRunnableObservable, merge, mergeImpl, mergeT, multicast, onSubscribe, scan, subscribe, switchAll, takeFirst, zipWithLatestFrom };

@@ -3,11 +3,13 @@ import {
   Lift,
   TReactive,
 } from "../__internal__/containers/__internal__StatefulContainerLike";
+import { createEnumerableObservable } from "../__internal__/rx/__internal_ObservableLike.create";
 import {
   createCatchError,
   createMergeAll,
   createScanAsync,
   createSwitchAll,
+  deferObservableImpl,
 } from "../__internal__/rx/__internal__ObservableLike";
 import {
   Buffer,
@@ -15,6 +17,7 @@ import {
   Concat,
   ConcatAll,
   DecodeWithCharset,
+  Defer,
   DistinctUntilChanged,
   Empty,
   EverySatisfy,
@@ -42,7 +45,6 @@ import {
   ObservableLike_isRunnable,
   ReactiveContainerLike_sinkInto,
   ScanAsync,
-  createEnumerableObservable,
 } from "../rx";
 import { ObserverLike, VirtualTimeSchedulerLike } from "../scheduling";
 import { sourceFrom } from "../util/SinkLike";
@@ -71,6 +73,18 @@ import {
   toReadonlyArray,
   zip,
 } from "./ObservableLike";
+
+export const create = createEnumerableObservable;
+
+export const defer: Defer<EnumerableObservableLike>["defer"] = (f =>
+  deferObservableImpl(
+    f,
+    true,
+    true,
+  )) as Defer<EnumerableObservableLike>["defer"];
+export const deferT: Defer<EnumerableObservableLike> = {
+  defer,
+};
 
 const lift: Lift<EnumerableObservableLike, TReactive>["lift"] =
   /*@__PURE__*/ (() => {

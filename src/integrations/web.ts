@@ -32,10 +32,10 @@ import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ReactiveContainerLike_sinkInto,
-  createObservable,
 } from "../rx";
 import { getObserverCount, getReplay } from "../rx/MulticastObservableLike";
 import {
+  create as createObservable,
   forEach as forEachObs,
   forkCombineLatest,
   keep as keepObs,
