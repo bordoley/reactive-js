@@ -1,10 +1,3 @@
-import { dispose } from "./__internal__/util/__internal__DisposableLike";
-import {
-  Mutable,
-  createInstanceFactory,
-  mixin,
-  props,
-} from "./__internal__/util/__internal__Objects";
 import {
   Container,
   ContainerLike,
@@ -12,18 +5,10 @@ import {
   ContainerLike_type,
   ContainerOf,
   ContainerOperator,
-  Defer,
   StatefulContainerLike,
   StatefulContainerLike_state,
 } from "./containers";
-import {
-  Factory,
-  Function1,
-  Function2,
-  SideEffect1,
-  none,
-  pipe,
-} from "./functions";
+import { Factory, Function1, Function2 } from "./functions";
 import { ObserverLike } from "./scheduling";
 import { __yield } from "./scheduling/SchedulerLike";
 import { DisposableLike, SinkLike } from "./util";
@@ -144,148 +129,4 @@ export type ToRunnable<
   toRunnable<T>(
     options?: TOptions,
   ): Function1<ContainerOf<C, T>, RunnableLike<T>>;
-};
-
-const createObservableImpl: <T>(
-  f: SideEffect1<ObserverLike>,
-  isEnumerable: boolean,
-  isRunnable: boolean,
-) => ObservableLike<T> = /*@__PURE__*/ (() => {
-  type TProperties = {
-    readonly f: SideEffect1<ObserverLike>;
-    readonly [ObservableLike_isEnumerable]: boolean;
-    readonly [ObservableLike_isRunnable]: boolean;
-  };
-
-  return createInstanceFactory(
-    mixin(
-      function CreateObservable(
-        instance: Pick<ObservableLike, typeof ReactiveContainerLike_sinkInto> &
-          Mutable<TProperties>,
-        f: SideEffect1<ObserverLike>,
-        isEnumerable: boolean,
-        isRunnable: boolean,
-      ): ObservableLike {
-        instance.f = f;
-        instance[ObservableLike_isEnumerable] = isEnumerable;
-        instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
-
-        return instance;
-      },
-      props<TProperties>({
-        f: none,
-        [ObservableLike_isRunnable]: false,
-        [ObservableLike_isEnumerable]: false,
-      }),
-      {
-        [ReactiveContainerLike_sinkInto](
-          this: {
-            f: SideEffect1<ObserverLike>;
-          },
-          observer: ObserverLike,
-        ) {
-          try {
-            this.f(observer);
-          } catch (cause) {
-            pipe(observer, dispose({ cause }));
-          }
-        },
-      },
-    ),
-  );
-})();
-
-export const createEnumerableObservable = <T>(
-  f: SideEffect1<ObserverLike<T>>,
-): EnumerableObservableLike<T> =>
-  createObservableImpl(f, true, true) as EnumerableObservableLike<T>;
-
-export const createObservable = <T>(
-  f: SideEffect1<ObserverLike<T>>,
-): ObservableLike<T> => createObservableImpl(f, false, false);
-
-export const createRunnableObservable = <T>(
-  f: SideEffect1<ObserverLike<T>>,
-): RunnableObservableLike<T> =>
-  createObservableImpl(f, false, true) as RunnableObservableLike<T>;
-
-export const createRunnable: <T>(
-  run: SideEffect1<SinkLike<T>>,
-) => RunnableLike<T> = /*@__PURE__*/ (<T>() => {
-  type TProperties = {
-    readonly run: SideEffect1<SinkLike<T>>;
-  };
-  return createInstanceFactory(
-    mixin(
-      function Runnable(
-        instance: Pick<RunnableLike, typeof ReactiveContainerLike_sinkInto> &
-          Mutable<TProperties>,
-        run: SideEffect1<SinkLike<T>>,
-      ): RunnableLike<T> {
-        instance.run = run;
-        return instance;
-      },
-      props<TProperties>({
-        run: none,
-      }),
-      {
-        [ReactiveContainerLike_sinkInto](
-          this: {
-            run: SideEffect1<SinkLike<T>>;
-          },
-          sink: SinkLike<T>,
-        ) {
-          try {
-            this.run(sink);
-            pipe(sink, dispose());
-          } catch (cause) {
-            pipe(sink, dispose({ cause }));
-          }
-        },
-      },
-    ),
-  );
-})();
-
-const deferObservableImpl = <T>(
-  factory: Factory<ObservableLike<T>>,
-  isEnumerable: boolean,
-  isRunnable: boolean,
-): ObservableLike<T> =>
-  createObservableImpl(
-    observer => {
-      factory()[ReactiveContainerLike_sinkInto](observer);
-    },
-    isEnumerable,
-    isRunnable,
-  );
-
-export const deferEnumerableObservable: Defer<EnumerableObservableLike>["defer"] =
-  (f =>
-    deferObservableImpl(
-      f,
-      true,
-      true,
-    )) as Defer<EnumerableObservableLike>["defer"];
-export const deferEnumerableObservableT: Defer<EnumerableObservableLike> = {
-  defer: deferEnumerableObservable,
-};
-
-export const deferObservable: Defer<ObservableLike>["defer"] = f =>
-  deferObservableImpl(f, false, false);
-export const deferObservableT: Defer<ObservableLike> = {
-  defer: deferObservable,
-};
-
-export const deferRunnableObservable: Defer<
-  RunnableObservableLike,
-  { delay: number }
->["defer"] = (f =>
-  deferObservableImpl(
-    f,
-    false,
-    true,
-  )) as Defer<RunnableObservableLike>["defer"];
-export const deferRunnableObservableT: Defer<RunnableObservableLike> = {
-  defer: deferRunnableObservable,
 };

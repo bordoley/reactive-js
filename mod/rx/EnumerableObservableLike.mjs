@@ -1,11 +1,17 @@
 /// <reference types="./EnumerableObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
-import { createCatchError, createMergeAll, createScanAsync, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
+import { createEnumerableObservable } from '../__internal__/rx/__internal_ObservableLike.create.mjs';
+import { deferObservableImpl, createCatchError, createMergeAll, createScanAsync, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
 import { pipeUnsafe, newInstance } from '../functions.mjs';
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, createEnumerableObservable } from '../rx.mjs';
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { sourceFrom } from '../util/SinkLike.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
 
+const create = createEnumerableObservable;
+const defer = (f => deferObservableImpl(f, true, true));
+const deferT = {
+    defer,
+};
 const lift = 
 /*@__PURE__*/ (() => {
     var _a, _b;
@@ -123,4 +129,4 @@ const zipT = {
     zip: zip,
 };
 
-export { bufferT, catchError, catchErrorT, concatAll, concatT, decodeWithCharsetT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, generateeT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, catchError, catchErrorT, concatAll, concatT, create, decodeWithCharsetT, defer, deferT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, generateeT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

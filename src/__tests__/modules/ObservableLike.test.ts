@@ -28,7 +28,7 @@ import {
   sum,
 } from "../../functions";
 import { toReadonlyArray as enumerableToReadonlyArray } from "../../ix/EnumerableLike";
-import { RunnableObservableLike, deferRunnableObservableT } from "../../rx";
+import { RunnableObservableLike } from "../../rx";
 import {
   combineLatest,
   concat,
@@ -59,6 +59,7 @@ import {
   catchErrorT,
   concatT,
   decodeWithCharsetT,
+  deferT,
   distinctUntilChangedT,
   everySatisfyT,
   exhaust,
@@ -703,7 +704,7 @@ testModule(
   }),
   decodeWithCharsetTests({
     fromArray: toObservable,
-    ...deferRunnableObservableT,
+    ...deferT,
     ...decodeWithCharsetT,
     ...mapT,
     ...toReadonlyArrayT,

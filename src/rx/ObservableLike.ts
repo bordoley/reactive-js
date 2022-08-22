@@ -16,11 +16,17 @@ import {
   empty as emptyEnumerable,
 } from "../__internal__/ix/__internal__EnumerableLike";
 import {
+  createEnumerableObservable,
+  createObservable,
+  createRunnableObservable,
+} from "../__internal__/rx/__internal_ObservableLike.create";
+import {
   allAreEnumerable,
   allAreRunnable,
   createCatchError,
   createMergeAll,
   createScanAsync,
+  deferObservableImpl,
   distinctUntilChanged as distinctUntilChangedInternal,
   forEach as forEachInternal,
   isEnumerable as isEnumerableInternal,
@@ -91,6 +97,7 @@ import {
   ConcatAll,
   ContainerOperator,
   DecodeWithCharset,
+  Defer,
   DistinctUntilChanged,
   Empty,
   EverySatisfy,
@@ -172,9 +179,6 @@ import {
   ObservableLike,
   RunnableObservableLike,
   ScanAsync,
-  createEnumerableObservable,
-  createObservable,
-  createRunnableObservable,
 } from "../rx";
 import {
   ObserverLike,
@@ -437,6 +441,8 @@ export const concatAllT: ConcatAll<
   concatAll,
 };
 
+export const create = createObservable;
+
 export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
     const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(
@@ -469,6 +475,12 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
   })();
 export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
   decodeWithCharset,
+};
+
+export const defer: Defer<ObservableLike>["defer"] = f =>
+  deferObservableImpl(f, false, false);
+export const deferT: Defer<ObservableLike> = {
+  defer,
 };
 
 export const distinctUntilChanged = distinctUntilChangedInternal;

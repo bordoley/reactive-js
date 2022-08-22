@@ -1,12 +1,13 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
 import { hasDelay, getDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { create } from '../__internal__/ix/__internal__EnumerableLike.mjs';
+import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/__internal_ObservableLike.create.mjs';
+import { create as create$1 } from '../__internal__/rx/__internal__RunnableLike.create.mjs';
 import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
-import { createRunnableObservable, createEnumerableObservable, createRunnable } from '../rx.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
 import { __yield, schedule } from '../scheduling/SchedulerLike.mjs';
 import { SinkLike_notify } from '../util.mjs';
@@ -136,7 +137,7 @@ const toReadonlyArrayT = {
 };
 const toRunnable = 
 /*@__PURE__*/ (() => {
-    return createFromArray((values, startIndex, count) => createRunnable(sink => {
+    return createFromArray((values, startIndex, count) => create$1(sink => {
         for (let index = startIndex, cnt = count; !isDisposed(sink) && cnt !== 0; cnt > 0 ? index++ : index--, cnt > 0 ? cnt-- : cnt++) {
             sink[SinkLike_notify](values[index]);
         }

@@ -3,8 +3,7 @@ import { createLiftedStreamable } from '../__internal__/streaming/__internal__St
 import { ignoreElements, concatWith } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, returns, updateReducer } from '../functions.mjs';
-import { createObservable } from '../rx.mjs';
-import { merge, forEach, keepT, onSubscribe, subscribe, scan, mergeT, distinctUntilChanged } from '../rx/ObservableLike.mjs';
+import { merge, forEach, keepT, onSubscribe, subscribe, create, scan, mergeT, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { sinkInto as sinkInto$1 } from '../rx/ReactiveContainerLike.mjs';
 import { DispatcherLike_scheduler } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
@@ -27,7 +26,7 @@ const sinkInto = (dest) => (src) => {
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  */
-const createActionReducer = (reducer, initialState, options) => createLiftedStreamable(obs => createObservable(observer => {
+const createActionReducer = (reducer, initialState, options) => createLiftedStreamable(obs => create(observer => {
     const acc = initialState();
     pipe(obs, scan(reducer, returns(acc)), concatWith(mergeT, pipe([acc], toObservable())), distinctUntilChanged(options), sinkInto$1(observer));
 }));

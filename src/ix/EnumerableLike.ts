@@ -21,6 +21,10 @@ import {
   empty as emptyInternal,
 } from "../__internal__/ix/__internal__EnumerableLike";
 import {
+  createEnumerableObservable,
+  createRunnableObservable,
+} from "../__internal__/rx/__internal_ObservableLike.create";
+import {
   delegatingDisposableMixin,
   disposableMixin,
   disposableRefMixin,
@@ -114,10 +118,8 @@ import {
   RunnableObservableLike,
   ToObservable,
   ToRunnable,
-  createEnumerableObservable,
-  createRunnable,
-  createRunnableObservable,
 } from "../rx";
+import { create as createRunnable } from "../rx/RunnableLike";
 import { ObserverLike } from "../scheduling";
 import { getScheduler } from "../scheduling/ObserverLike";
 import { __yield, schedule } from "../scheduling/SchedulerLike";

@@ -6,9 +6,9 @@ import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, newInstance, none, isEmpty, getLength, unsafeCast, isSome, raise, compose } from '../functions.mjs';
-import { createObservable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
+import { create, map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
 import { dispatch, getScheduler, dispatchTo } from '../scheduling/DispatcherLike.mjs';
@@ -24,7 +24,7 @@ const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
     const events = pipe(eventsOption, keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
-    return createObservable(observer => {
+    return create(observer => {
         const dispatcher = pipe(observer, getDispatcher, onDisposed(_ => {
             for (const ev of events) {
                 eventSource.removeEventListener(ev, listener);
@@ -48,7 +48,7 @@ const createEventSource = (url, options = {}) => {
 const fetch = 
 /*@__PURE__*/ (() => {
     const globalFetch = self.fetch;
-    return (onResponse) => fetchRequest => createObservable(async (observer) => {
+    return (onResponse) => fetchRequest => create(async (observer) => {
         const signal = toAbortSignal(observer);
         let request = none;
         if (typeof fetchRequest === "string") {
@@ -72,7 +72,7 @@ const fetch =
         }
     });
 })();
-const addEventListener = (eventName, selector) => target => createObservable(observer => {
+const addEventListener = (eventName, selector) => target => create(observer => {
     const dispatcher = pipe(observer, getDispatcher, onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));

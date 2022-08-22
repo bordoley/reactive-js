@@ -26,8 +26,13 @@ import {
   pipe,
   raise,
 } from "./functions";
-import { ObservableLike, createObservable } from "./rx";
-import { empty, forEach, subscribe } from "./rx/ObservableLike";
+import { ObservableLike } from "./rx";
+import {
+  create as createObservable,
+  empty,
+  forEach,
+  subscribe,
+} from "./rx/ObservableLike";
 import { ObserverLike, SchedulerLike } from "./scheduling";
 import { getScheduler } from "./scheduling/ObserverLike";
 import { schedule } from "./scheduling/SchedulerLike";

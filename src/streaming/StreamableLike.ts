@@ -11,8 +11,8 @@ import {
   returns,
   updateReducer,
 } from "../functions";
-import { createObservable } from "../rx";
 import {
+  create as createObservable,
   distinctUntilChanged,
   forEach,
   keepT,

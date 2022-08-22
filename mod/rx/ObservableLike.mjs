@@ -2,8 +2,9 @@
 import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
 import { getDelay, hasDelay } from '../__internal__/__internal__optionParsing.mjs';
 import { createDecodeWithCharsetOperator, createKeepOperator, createMapOperator, createReduceOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
-import { create, empty as empty$1 } from '../__internal__/ix/__internal__EnumerableLike.mjs';
-import { liftEnumerableObservable, liftObservable, createCatchError, allAreEnumerable, allAreRunnable, liftEnumerableObservableT, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, createMergeAll, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, createScanAsync, switchAll as switchAll$1, subscribe as subscribe$1, takeFirst as takeFirst$1, liftRunnableObservable, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/__internal__ObservableLike.mjs';
+import { create as create$1, empty as empty$1 } from '../__internal__/ix/__internal__EnumerableLike.mjs';
+import { createEnumerableObservable, createRunnableObservable, createObservable } from '../__internal__/rx/__internal_ObservableLike.create.mjs';
+import { liftEnumerableObservable, liftObservable, createCatchError, allAreEnumerable, allAreRunnable, liftEnumerableObservableT, deferObservableImpl, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, createMergeAll, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, createScanAsync, switchAll as switchAll$1, subscribe as subscribe$1, takeFirst as takeFirst$1, liftRunnableObservable, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/__internal__ObservableLike.mjs';
 import { observerMixin, createDelegatingObserver, createKeepObserver, createMapObserver, createPairwiseObserver, createSkipFirstObserver, createTakeWhileObserver, createThrowIfEmptyObserver } from '../__internal__/scheduling/__internal__Observers.mjs';
 import { createLiftedFlowable } from '../__internal__/streaming/__internal__StreamableLike.mjs';
 import { disposableMixin, createDisposableRef, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
@@ -18,7 +19,6 @@ import { pipe, isEmpty, none, getLength, max, pipeLazy, partial, ignore, returns
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$3 } from '../ix/EnumerableLike.mjs';
 import { hasCurrent, move, getCurrent } from '../ix/EnumeratorLike.mjs';
-import { createEnumerableObservable, createRunnableObservable, createObservable } from '../rx.mjs';
 import { ObserverLike_scheduler, ObserverLike_dispatcher, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { getScheduler } from '../scheduling/ObserverLike.mjs';
@@ -152,6 +152,7 @@ const concatAll = (options = {}) => {
 const concatAllT = {
     concatAll,
 };
+const create = createObservable;
 const decodeWithCharset = 
 /*@__PURE__*/ (() => {
     const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(toObservable());
@@ -165,6 +166,10 @@ const decodeWithCharset =
 })();
 const decodeWithCharsetT = {
     decodeWithCharset,
+};
+const defer = f => deferObservableImpl(f, false, false);
+const deferT = {
+    defer,
 };
 const distinctUntilChanged = distinctUntilChanged$1;
 const distinctUntilChangedT = {
@@ -629,7 +634,7 @@ const toEnumerable =
         },
     }));
     return () => (obs) => isEnumerable(obs)
-        ? create(() => {
+        ? create$1(() => {
             const scheduler = createEnumeratorScheduler();
             pipe(createEnumeratorObserver(scheduler), addTo(scheduler), sourceFrom(obs));
             return scheduler;
@@ -819,4 +824,4 @@ const zipLatestT = {
 };
 const zipWithLatestFrom = zipWithLatestFrom$1;
 
-export { buffer, bufferT, catchError, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, generate, generateT, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { buffer, bufferT, catchError, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, create, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, generate, generateT, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };

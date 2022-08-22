@@ -10,6 +10,7 @@
 - [catchErrorT](rx_EnumerableObservableLike.md#catcherrort)
 - [concatT](rx_EnumerableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_EnumerableObservableLike.md#decodewithcharsett)
+- [deferT](rx_EnumerableObservableLike.md#defert)
 - [distinctUntilChangedT](rx_EnumerableObservableLike.md#distinctuntilchangedt)
 - [emptyT](rx_EnumerableObservableLike.md#emptyt)
 - [everySatisfyT](rx_EnumerableObservableLike.md#everysatisfyt)
@@ -39,6 +40,8 @@
 
 - [catchError](rx_EnumerableObservableLike.md#catcherror)
 - [concatAll](rx_EnumerableObservableLike.md#concatall)
+- [create](rx_EnumerableObservableLike.md#create)
+- [defer](rx_EnumerableObservableLike.md#defer)
 - [exhaust](rx_EnumerableObservableLike.md#exhaust)
 - [mergeAll](rx_EnumerableObservableLike.md#mergeall)
 - [scanAsync](rx_EnumerableObservableLike.md#scanasync)
@@ -67,6 +70,12 @@ ___
 ### decodeWithCharsetT
 
 • `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](containers.md#decodewithcharset)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+
+___
+
+### deferT
+
+• `Const` **deferT**: [`Defer`](containers.md#defer)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
 
 ___
 
@@ -258,6 +267,51 @@ Converts a higher-order `ObservableLike` into a first-order
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### create
+
+▸ **create**<`T`\>(`f`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+___
+
+### defer
+
+▸ **defer**<`T`\>(`factory`, `options?`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 ___
 

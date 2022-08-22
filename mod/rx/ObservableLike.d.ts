@@ -1,8 +1,8 @@
-import { Function1, Equality, SideEffect1, Factory, Reducer, Function2, Updater, Predicate } from "../functions.mjs";
-import { ContainerOperator, Buffer, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, Generate, Keep, Map, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise, ToReadonlyArray } from "../containers.mjs";
+import { Function1, SideEffect1, Equality, Factory, Reducer, Function2, Updater, Predicate } from "../functions.mjs";
+import { ContainerOperator, Buffer, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, Generate, Keep, Map, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromise, ToReadonlyArray } from "../containers.mjs";
 import { ToEnumerable } from "../ix.mjs";
 import { ObservableLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync } from "../rx.mjs";
-import { SchedulerLike } from "../scheduling.mjs";
+import { ObserverLike, SchedulerLike } from "../scheduling.mjs";
 import { ToFlowable } from "../streaming.mjs";
 import { DisposableOrTeardown, DisposableLike } from "../util.mjs";
 declare const buffer: <T>(options?: {
@@ -34,8 +34,11 @@ declare const concatAll: ConcatAll<ObservableLike, {
 declare const concatAllT: ConcatAll<ObservableLike, {
     readonly maxBufferSize: number;
 }>;
+declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 declare const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"];
 declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike>;
+declare const defer: Defer<ObservableLike>["defer"];
+declare const deferT: Defer<ObservableLike>;
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => ContainerOperator<ObservableLike<unknown>, T, T>;
@@ -249,4 +252,4 @@ declare const zipT: Zip<ObservableLike>;
 declare const zipLatest: Zip<ObservableLike>["zip"];
 declare const zipLatestT: Zip<ObservableLike>;
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike, TA, T>;
-export { buffer, bufferT, catchError, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, generate, generateT, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { buffer, bufferT, catchError, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, create, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, generate, generateT, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };

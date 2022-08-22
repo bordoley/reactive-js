@@ -32,8 +32,12 @@ import {
   pipe,
   pipeLazy,
 } from "../functions";
-import { ObservableLike, createObservable } from "../rx";
-import { forEach, subscribe } from "../rx/ObservableLike";
+import { ObservableLike } from "../rx";
+import {
+  create as createObservable,
+  forEach,
+  subscribe,
+} from "../rx/ObservableLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
 import { ObserverLike_dispatcher } from "../scheduling";
 import {

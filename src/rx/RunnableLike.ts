@@ -18,6 +18,7 @@ import {
   reactive,
 } from "../__internal__/containers/__internal__StatefulContainerLike";
 import { createOnSink } from "../__internal__/rx/__internal__ReactiveContainerLike";
+import { create as createRunnable } from "../__internal__/rx/__internal__RunnableLike.create";
 import {
   createInstanceFactory,
   include,
@@ -98,7 +99,6 @@ import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
   ToRunnable,
-  createRunnable,
 } from "../rx";
 import {
   DisposableLike_exception,
@@ -108,6 +108,8 @@ import {
 } from "../util";
 import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
 import { sourceFrom } from "../util/SinkLike";
+
+export const create = createRunnable;
 
 const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedRunnable<TA, TB> implements RunnableLike<TB> {
@@ -232,7 +234,7 @@ export const decodeWithCharsetT: DecodeWithCharset<RunnableLike> = {
 };
 
 export const defer: Defer<RunnableLike>["defer"] = f =>
-  createRunnable(sink => {
+  create(sink => {
     f()[ReactiveContainerLike_sinkInto](sink);
   });
 export const deferT: Defer<RunnableLike> = { defer };
@@ -252,7 +254,7 @@ export const distinctUntilChangedT: DistinctUntilChanged<RunnableLike> = {
 };
 
 export const empty: Empty<RunnableLike>["empty"] = <T>() =>
-  createRunnable<T>(sink => {
+  create<T>(sink => {
     pipe(sink, dispose());
   });
 export const emptyT: Empty<RunnableLike> = { empty };
@@ -306,7 +308,7 @@ export const generate: Generate<RunnableLike>["generate"] = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
 ) =>
-  createRunnable((sink: SinkLike<T>) => {
+  create((sink: SinkLike<T>) => {
     let acc = initialValue();
     while (!isDisposed(sink)) {
       acc = generator(acc);
@@ -352,7 +354,7 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
 })();
 export const mapT: Map<RunnableLike> = { map };
 
-export const never: Never<RunnableLike>["never"] = () => createRunnable(ignore);
+export const never: Never<RunnableLike>["never"] = () => create(ignore);
 export const neverT: Never<RunnableLike> = {
   never: never,
 };
@@ -360,7 +362,7 @@ export const neverT: Never<RunnableLike> = {
 export const onRun =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
   (runnable: RunnableLike<T>): RunnableLike<T> => {
-    return createOnSink(createRunnable, runnable, f);
+    return createOnSink(create, runnable, f);
   };
 
 export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
@@ -392,7 +394,7 @@ export const reduceT: Reduce<RunnableLike> = { reduce };
 
 export const repeat = /*@__PURE__*/ (<T>() => {
   return createRepeatOperator<RunnableLike, T>((delegate, predicate) =>
-    createRunnable(sink => {
+    create(sink => {
       let count = 0;
       do {
         pipe(

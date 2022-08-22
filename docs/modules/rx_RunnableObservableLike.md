@@ -10,6 +10,7 @@
 - [catchErrorT](rx_RunnableObservableLike.md#catcherrort)
 - [concatT](rx_RunnableObservableLike.md#concatt)
 - [decodeWithCharsetT](rx_RunnableObservableLike.md#decodewithcharsett)
+- [deferT](rx_RunnableObservableLike.md#defert)
 - [distinctUntilChangedT](rx_RunnableObservableLike.md#distinctuntilchangedt)
 - [emptyT](rx_RunnableObservableLike.md#emptyt)
 - [everySatisfyT](rx_RunnableObservableLike.md#everysatisfyt)
@@ -39,6 +40,8 @@
 
 - [catchError](rx_RunnableObservableLike.md#catcherror)
 - [concatAll](rx_RunnableObservableLike.md#concatall)
+- [create](rx_RunnableObservableLike.md#create)
+- [defer](rx_RunnableObservableLike.md#defer)
 - [exhaust](rx_RunnableObservableLike.md#exhaust)
 - [mergeAll](rx_RunnableObservableLike.md#mergeall)
 - [scanAsync](rx_RunnableObservableLike.md#scanasync)
@@ -67,6 +70,12 @@ ___
 ### decodeWithCharsetT
 
 • `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](containers.md#decodewithcharset)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### deferT
+
+• `Const` **deferT**: [`Defer`](containers.md#defer)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ___
 
@@ -258,6 +267,51 @@ Converts a higher-order `ObservableLike` into a first-order
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### create
+
+▸ **create**<`T`\>(`f`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/scheduling.ObserverLike.md)<`T`\>\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+___
+
+### defer
+
+▸ **defer**<`T`\>(`factory`, `options?`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\> |
+| `options?` | `Partial`<{ `delay`: `number`  }\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 ___
 
