@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOMClient from "react-dom/client";
-import { generateObservable } from "@reactive-js/core/rx";
 import {
   async,
   __await,
@@ -10,7 +9,7 @@ import {
   __state,
   __stream,
 } from "@reactive-js/core/effects";
-import { toFlowable } from "@reactive-js/core/rx/ObservableLike";
+import { generate, toFlowable } from "@reactive-js/core/rx/ObservableLike";
 import { FlowMode } from "@reactive-js/core/streaming";
 import {
   createComponent,
@@ -50,7 +49,7 @@ const historyStream = pipe(
 );
 
 const counterFlowable = pipe(
-  generateObservable(increment, returns(0), { delay: 100 }),
+  generate(increment, returns(0), { delay: 100 }),
   toFlowable(),
 );
 

@@ -23,7 +23,10 @@ interface FlowableStreamLike<T = unknown> extends StreamLike<FlowMode, T>, Pause
 interface FlowableLike<T = unknown> extends StreamableLike<FlowMode, T, FlowableStreamLike<T>>, ContainerLike {
     readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
+declare type FromFlowable<C extends ContainerLike, TOptions = never> = Container<C> & {
+    toFlowable<T>(options?: TOptions): Function1<FlowableLike<T>, ContainerOf<C, T>>;
+};
 declare type ToFlowable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toFlowable<T>(options?: TOptions): Function1<ContainerOf<C, T>, FlowableLike<T>>;
 };
-export { FlowMode, FlowableLike, FlowableStreamLike, StreamLike, StreamableLike, StreamableLike_stream, ToFlowable };
+export { FlowMode, FlowableLike, FlowableStreamLike, FromFlowable, StreamLike, StreamableLike, StreamableLike_stream, ToFlowable };

@@ -14,6 +14,7 @@
 ### Type Aliases
 
 - [FlowMode](streaming.md#flowmode)
+- [FromFlowable](streaming.md#fromflowable)
 - [ToFlowable](streaming.md#toflowable)
 
 ## Type Aliases
@@ -21,6 +22,19 @@
 ### FlowMode
 
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
+
+___
+
+### FromFlowable
+
+Ƭ **FromFlowable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toFlowable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
 
 ___
 

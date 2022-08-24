@@ -45,6 +45,15 @@ export interface FlowableLike<T = unknown>
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 
+export type FromFlowable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toFlowable<T>(
+    options?: TOptions,
+  ): Function1<FlowableLike<T>, ContainerOf<C, T>>;
+};
+
 export type ToFlowable<
   C extends ContainerLike,
   TOptions = never,
