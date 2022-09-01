@@ -1,5 +1,14 @@
-import { StatefulContainerLike, StatefulContainerStateOf, Container, ContainerOperator } from "../../containers.mjs";
+import { StatefulContainerLike, Container, ContainerOperator, StatefulContainerLike_state, ContainerLike_T } from "../../containers.mjs";
 import { Function1, Function2, Equality, SideEffect1, Predicate, Function3, Reducer, Factory } from "../../functions.mjs";
+import { DisposableLike } from "../../util.mjs";
+declare type StatefulContainerStateOf<C extends StatefulContainerLike, T> = C extends {
+    readonly [StatefulContainerLike_state]?: DisposableLike;
+} ? NonNullable<(C & {
+    readonly [ContainerLike_T]: T;
+})[typeof StatefulContainerLike_state]> : {
+    readonly _C: C;
+    readonly _T: () => T;
+};
 declare type StatefulContainerOperatorIn<C extends StatefulContainerLike, TA, TB, TVar extends TInteractive | TReactive> = TVar extends TReactive ? StatefulContainerStateOf<C, TB> : StatefulContainerStateOf<C, TA>;
 declare type StatefulContainerOperatorOut<C extends StatefulContainerLike, TA, TB, TVar extends TInteractive | TReactive> = TVar extends TReactive ? StatefulContainerStateOf<C, TA> : StatefulContainerStateOf<C, TB>;
 declare type TInteractive = 0;

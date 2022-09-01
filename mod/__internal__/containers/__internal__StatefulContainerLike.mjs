@@ -1,4 +1,5 @@
 /// <reference types="./__internal__StatefulContainerLike.d.ts" />
+import '../../containers.mjs';
 import { max, pipe, partial, strictEquality } from '../../functions.mjs';
 import { MAX_SAFE_INTEGER } from '../__internal__env.mjs';
 

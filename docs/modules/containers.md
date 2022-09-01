@@ -49,7 +49,6 @@
 - [Scan](containers.md#scan)
 - [SkipFirst](containers.md#skipfirst)
 - [SomeSatisfy](containers.md#somesatisfy)
-- [StatefulContainerStateOf](containers.md#statefulcontainerstateof)
 - [TakeFirst](containers.md#takefirst)
 - [TakeLast](containers.md#takelast)
 - [TakeWhile](containers.md#takewhile)
@@ -465,19 +464,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-
-___
-
-### StatefulContainerStateOf
-
-Ƭ **StatefulContainerStateOf**<`C`, `T`\>: `C` extends { `[StatefulContainerLike_state]?`: [`DisposableLike`](../interfaces/util.DisposableLike.md)  } ? `NonNullable`<`C` & { `[ContainerLike_T]`: `T`  }[typeof `StatefulContainerLike_state`]\> : { `_C`: `C` ; `_T`: () => `T`  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
-| `T` | `T` |
 
 ___
 
