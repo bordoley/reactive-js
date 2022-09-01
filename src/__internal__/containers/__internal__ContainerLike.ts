@@ -1,5 +1,5 @@
 import { ContainerLike, ContainerOf } from "../../containers";
-import { Predicate, alwaysTrue, isNone } from "../../functions";
+import { Predicate, alwaysTrue, isNone, isNumber } from "../../functions";
 
 export const createRepeatOperator =
   <C extends ContainerLike, T>(
@@ -11,7 +11,7 @@ export const createRepeatOperator =
   (predicate?: Predicate<number> | number) => {
     const repeatPredicate: Predicate<number> = isNone(predicate)
       ? alwaysTrue
-      : typeof predicate === "number"
+      : isNumber(predicate)
       ? (count: number) => count < predicate
       : (count: number) => predicate(count);
 

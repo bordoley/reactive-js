@@ -5,7 +5,7 @@ import { createInstanceFactory, mixin, include, init, props } from '../__interna
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, newInstance, none, isEmpty, getLength, unsafeCast, isSome, raise, compose } from '../functions.mjs';
+import { pipe, newInstance, none, isString, isEmpty, getLength, unsafeCast, isSome, raise, isFunction, compose } from '../functions.mjs';
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
 import { create, map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
@@ -51,7 +51,7 @@ const fetch =
     return (onResponse) => fetchRequest => create(async (observer) => {
         const signal = toAbortSignal(observer);
         let request = none;
-        if (typeof fetchRequest === "string") {
+        if (isString(fetchRequest)) {
             request = fetchRequest;
         }
         else {
@@ -157,7 +157,7 @@ const windowLocation =
             raise("Cannot stream more than once");
         }
         const actionReducer = pipe(createActionReducer(({ uri: stateURI }, { replace, stateOrUpdater }) => {
-            const uri = typeof stateOrUpdater === "function"
+            const uri = isFunction(stateOrUpdater)
                 ? stateOrUpdater(stateURI)
                 : stateOrUpdater;
             return { uri, replace };

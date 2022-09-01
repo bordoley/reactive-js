@@ -28,6 +28,7 @@ import {
   Option,
   SideEffect,
   compose,
+  isFunction,
   isNone,
   isSome,
   max,
@@ -177,8 +178,7 @@ export const schedule =
     options?: { readonly delay?: number },
   ): Function1<SchedulerLike, DisposableLike> =>
   scheduler => {
-    const continuation =
-      typeof f === "function" ? createContinuation(scheduler, f) : f;
+    const continuation = isFunction(f) ? createContinuation(scheduler, f) : f;
     scheduler[SchedulerLike_schedule](continuation, options);
     return continuation;
   };
@@ -491,12 +491,12 @@ declare const navigator: {
 };
 export const createHostScheduler = /*@__PURE__*/ (() => {
   const supportsPerformanceNow =
-    typeof performance === "object" && typeof performance.now === "function";
+    typeof performance === "object" && isFunction(performance.now);
 
   const supportsSetImmediate = typeof setImmediate === "function";
 
   const supportsProcessHRTime =
-    typeof process === "object" && typeof process.hrtime === "function";
+    typeof process === "object" && isFunction(process.hrtime);
 
   const supportsIsInputPending =
     typeof navigator === "object" &&

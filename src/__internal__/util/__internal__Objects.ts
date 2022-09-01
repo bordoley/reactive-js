@@ -5,6 +5,7 @@ import {
   Function3,
   Function4,
   Option,
+  isFunction,
 } from "../../functions";
 
 const Object_init = Symbol("Object_init");
@@ -169,7 +170,7 @@ export const mixin: CreateMixin = ((
   prototypeOrParent?: any,
   nothingOrPrototype?: any,
 ) => {
-  if (typeof initOrParent === "function") {
+  if (isFunction(initOrParent)) {
     return {
       [Object_init]: initOrParent,
       [Object_properties]: propertiesOrInit ?? {},

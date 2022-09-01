@@ -79,6 +79,11 @@ const isEmpty = (arr) => getLength(arr) === 0;
  */
 const isEven = (x) => x % 2 === 0;
 const isFalse = (v) => !v;
+// eslint-disable-next-line @typescript-eslint/ban-types
+const isFunction = (f) => typeof f === "function";
+const isNumber = (n) => typeof n === "number";
+const isObject = (o) => typeof o === "object";
+const isString = (s) => typeof s === "string";
 /**
  * Returns `true` if `x` is an odd number, otherwise `false`.
  */
@@ -118,7 +123,7 @@ const pipeLazy = (source, ...operators) => () => pipeUnsafe(source, ...operators
  * Throws a javascript error using the provided message.
  */
 const raise = (message) => {
-    if (message === undefined || typeof message === "string") {
+    if (isNone(message) || isString(message)) {
         throw newInstance(Error, message);
     }
     else {
@@ -152,4 +157,4 @@ function unsafeCast(_v) { }
 const updateReducer = (acc, updater) => updater(acc);
 const { floor, max, min } = Math;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isNone, isOdd, isSome, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast, updateReducer };

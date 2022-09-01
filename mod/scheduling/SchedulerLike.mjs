@@ -6,7 +6,7 @@ import { disposableMixin, disposableRefMixin } from '../__internal__/util/__inte
 import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
 import { MutableRefLike_current } from '../__internal__/util/__internal__MutableRefLike.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
-import { none, isSome, pipe, isNone, raise, newInstance, max, unsafeCast, compose } from '../functions.mjs';
+import { none, isSome, pipe, isNone, raise, newInstance, isFunction, max, unsafeCast, compose } from '../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../ix.mjs';
 import { move, hasCurrent, getCurrent } from '../ix/EnumeratorLike.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
@@ -75,7 +75,7 @@ const __yield = (options) => {
     }
 };
 const schedule = (f, options) => scheduler => {
-    const continuation = typeof f === "function" ? createContinuation(scheduler, f) : f;
+    const continuation = isFunction(f) ? createContinuation(scheduler, f) : f;
     scheduler[SchedulerLike_schedule](continuation, options);
     return continuation;
 };
@@ -250,9 +250,9 @@ const createQueueScheduler =
 const toPausableScheduler = compose(createQueueScheduler, pause);
 const toPriorityScheduler = createQueueScheduler;
 const createHostScheduler = /*@__PURE__*/ (() => {
-    const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
+    const supportsPerformanceNow = typeof performance === "object" && isFunction(performance.now);
     const supportsSetImmediate = typeof setImmediate === "function";
-    const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
+    const supportsProcessHRTime = typeof process === "object" && isFunction(process.hrtime);
     const supportsIsInputPending = typeof navigator === "object" &&
         navigator.scheduling !== undefined &&
         navigator.scheduling.isInputPending !== undefined;

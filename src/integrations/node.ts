@@ -29,6 +29,7 @@ import {
   SideEffect5,
   SideEffect6,
   ignore,
+  isFunction,
   pipe,
   pipeLazy,
 } from "../functions";
@@ -172,14 +173,9 @@ export const createReadableSource = (
     createObservable(observer => {
       const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
-      const readable =
-        typeof factory === "function"
-          ? pipe(
-              factory(),
-              addToDisposable(observer),
-              addDisposable(dispatcher),
-            )
-          : pipe(factory, addDisposable(dispatcher));
+      const readable = isFunction(factory)
+        ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
+        : pipe(factory, addDisposable(dispatcher));
 
       readable.pause();
 
@@ -229,14 +225,13 @@ export const createWritableSink = /*@__PURE__*/ (() => {
       createObservable(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
-        const writable =
-          typeof factory === "function"
-            ? pipe(
-                factory(),
-                addToDisposable(observer),
-                addDisposable(dispatcher),
-              )
-            : pipe(factory, addDisposable(dispatcher));
+        const writable = isFunction(factory)
+          ? pipe(
+              factory(),
+              addToDisposable(observer),
+              addDisposable(dispatcher),
+            )
+          : pipe(factory, addDisposable(dispatcher));
 
         pipe(
           events,

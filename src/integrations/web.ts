@@ -18,7 +18,9 @@ import {
   compose,
   getLength,
   isEmpty,
+  isFunction,
   isSome,
+  isString,
   newInstance,
   none,
   pipe,
@@ -177,7 +179,7 @@ export const fetch: <T>(
           const signal = toAbortSignal(observer);
 
           let request: Option<string | Request> = none;
-          if (typeof fetchRequest === "string") {
+          if (isString(fetchRequest)) {
             request = fetchRequest;
           } else {
             const { uri, ...requestInit } = fetchRequest;
@@ -394,10 +396,9 @@ export const windowLocation: WindowLocationStreamableLike =
       const actionReducer = pipe(
         createActionReducer(
           ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
-            const uri =
-              typeof stateOrUpdater === "function"
-                ? stateOrUpdater(stateURI)
-                : stateOrUpdater;
+            const uri = isFunction(stateOrUpdater)
+              ? stateOrUpdater(stateURI)
+              : stateOrUpdater;
             return { uri, replace };
           },
           () => ({
