@@ -43,14 +43,6 @@ declare type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly _C: C;
     readonly _T: () => T;
 };
-declare type StatefulContainerStateOf<C extends StatefulContainerLike, T> = C extends {
-    readonly [StatefulContainerLike_state]?: DisposableLike;
-} ? NonNullable<(C & {
-    readonly [ContainerLike_T]: T;
-})[typeof StatefulContainerLike_state]> : {
-    readonly _C: C;
-    readonly _T: () => T;
-};
 declare type ContainerOperator<C, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 declare type Container<C extends ContainerLike> = {
     readonly ContainerLike_type?: C;
@@ -311,4 +303,4 @@ declare type Zip<C extends ContainerLike> = Container<C> & {
         TI
     ]>;
 };
-export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromAsyncIterable, FromIterable, FromPromise, FromSequence, FromSet, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, ReadonlySetLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, StatefulContainerStateOf, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToAsyncIterable, ToIterable, ToPromiseable, ToReadonlyArray, ToReadonlySet, ToSequence, Zip };
+export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromArrayOptions, FromAsyncIterable, FromIterable, FromPromise, FromSequence, FromSet, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, ReadonlySetLike, Reduce, Repeat, Scan, SequenceLike, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToAsyncIterable, ToIterable, ToPromiseable, ToReadonlyArray, ToReadonlySet, ToSequence, Zip };

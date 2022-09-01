@@ -1,9 +1,10 @@
 import {
   Container,
+  ContainerLike_T,
   ContainerOperator,
   DecodeWithCharset,
   StatefulContainerLike,
-  StatefulContainerStateOf,
+  StatefulContainerLike_state,
 } from "../../containers";
 import {
   Equality,
@@ -19,7 +20,21 @@ import {
   pipe,
   strictEquality,
 } from "../../functions";
+import { DisposableLike } from "../../util";
 import { MAX_SAFE_INTEGER } from "../__internal__env";
+
+type StatefulContainerStateOf<C extends StatefulContainerLike, T> = C extends {
+  readonly [StatefulContainerLike_state]?: DisposableLike;
+}
+  ? NonNullable<
+      (C & {
+        readonly [ContainerLike_T]: T;
+      })[typeof StatefulContainerLike_state]
+    >
+  : {
+      readonly _C: C;
+      readonly _T: () => T;
+    };
 
 export type StatefulContainerOperatorIn<
   C extends StatefulContainerLike,

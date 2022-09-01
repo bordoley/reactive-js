@@ -84,22 +84,6 @@ export type ContainerOf<C extends ContainerLike, T> = C extends {
       readonly _T: () => T;
     };
 
-export type StatefulContainerStateOf<
-  C extends StatefulContainerLike,
-  T,
-> = C extends {
-  readonly [StatefulContainerLike_state]?: DisposableLike;
-}
-  ? NonNullable<
-      (C & {
-        readonly [ContainerLike_T]: T;
-      })[typeof StatefulContainerLike_state]
-    >
-  : {
-      readonly _C: C;
-      readonly _T: () => T;
-    };
-
 export type ContainerOperator<C, TA, TB> = Function1<
   ContainerOf<C, TA>,
   ContainerOf<C, TB>
