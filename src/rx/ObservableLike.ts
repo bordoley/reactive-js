@@ -148,6 +148,7 @@ import {
   ignore,
   isEmpty,
   isNone,
+  isNumber,
   isSome,
   isTrue,
   max,
@@ -329,7 +330,7 @@ export const buffer: <T>(options?: {
     const durationFunction =
       durationOption === MAX_SAFE_INTEGER
         ? never
-        : typeof durationOption === "number"
+        : isNumber(durationOption)
         ? (_: T) => pipe([none], arrayToObservable())
         : durationOption;
 
@@ -1047,7 +1048,7 @@ export const repeat: RepeatOperator = /*@__PURE__*/ (() => {
   return (predicate?: Predicate<number> | number) => {
     const repeatPredicate = isNone(predicate)
       ? defaultRepeatPredicate
-      : typeof predicate === "number"
+      : isNumber(predicate)
       ? (count: number, e?: Exception) => isNone(e) && count < predicate
       : (count: number, e?: Exception) => isNone(e) && predicate(count);
 
@@ -1481,18 +1482,14 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
     options: { readonly mode?: ThrottleMode } = {},
   ) => {
     const { mode = "interval" } = options;
-    const durationFunction =
-      typeof duration === "number"
-        ? (_: T) =>
-            pipe(
-              [none],
-              arrayToObservable({ delay: duration, delayStart: true }),
-            )
-        : duration;
+    const durationFunction = isNumber(duration)
+      ? (_: T) =>
+          pipe([none], arrayToObservable({ delay: duration, delayStart: true }))
+      : duration;
     return pipe(
       createThrottleObserver,
       partial(durationFunction, mode),
-      typeof duration === "number" ? liftRunnableObservable : liftObservable,
+      isNumber(duration) ? liftRunnableObservable : liftObservable,
     );
   };
 })();
@@ -1615,20 +1612,17 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
   const returnTimeoutError = returns(timeoutError);
 
   return (duration: number | ObservableLike<unknown>) => {
-    const durationObs =
-      typeof duration === "number"
-        ? throws(
-            { fromArray: arrayToObservable, ...mapT },
-            { delay: duration, delayStart: true },
-          )(returnTimeoutError)
-        : concat(
-            duration,
-            throws({ fromArray: arrayToObservable, ...mapT })(
-              returnTimeoutError,
-            ),
-          );
+    const durationObs = isNumber(duration)
+      ? throws(
+          { fromArray: arrayToObservable, ...mapT },
+          { delay: duration, delayStart: true },
+        )(returnTimeoutError)
+      : concat(
+          duration,
+          throws({ fromArray: arrayToObservable, ...mapT })(returnTimeoutError),
+        );
     const lift =
-      typeof duration === "number" || isRunnable(duration)
+      isNumber(duration) || isRunnable(duration)
         ? liftRunnableObservable
         : liftObservable;
     return pipe(createTimeoutObserver, partial(durationObs), lift);

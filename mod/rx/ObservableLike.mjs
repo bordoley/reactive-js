@@ -15,7 +15,7 @@ import { createInstanceFactory, mixin, include, init, props } from '../__interna
 import { concatMap, throws, keepType } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/PromiseableLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, isEmpty, none, getLength, max, pipeLazy, partial, ignore, returns, isNone, isSome, unsafeCast, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
+import { pipe, isEmpty, none, getLength, isNumber, max, pipeLazy, partial, ignore, returns, isNone, isSome, unsafeCast, newInstance, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$3 } from '../ix/EnumerableLike.mjs';
 import { hasCurrent, move, getCurrent } from '../ix/EnumeratorLike.mjs';
@@ -81,7 +81,7 @@ const buffer = /*@__PURE__*/ (() => {
         const durationOption = (_a = options.duration) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER;
         const durationFunction = durationOption === MAX_SAFE_INTEGER
             ? never
-            : typeof durationOption === "number"
+            : isNumber(durationOption)
                 ? (_) => pipe([none], toObservable())
                 : durationOption;
         const maxBufferSize = max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER, 1);
@@ -405,7 +405,7 @@ const repeat = /*@__PURE__*/ (() => {
     return (predicate) => {
         const repeatPredicate = isNone(predicate)
             ? defaultRepeatPredicate
-            : typeof predicate === "number"
+            : isNumber(predicate)
                 ? (count, e) => isNone(e) && count < predicate
                 : (count, e) => isNone(e) && predicate(count);
         return repeatImpl(repeatPredicate);
@@ -586,10 +586,10 @@ const throttle = /*@__PURE__*/ (() => {
     })();
     return (duration, options = {}) => {
         const { mode = "interval" } = options;
-        const durationFunction = typeof duration === "number"
+        const durationFunction = isNumber(duration)
             ? (_) => pipe([none], toObservable({ delay: duration, delayStart: true }))
             : duration;
-        return pipe(createThrottleObserver, partial(durationFunction, mode), typeof duration === "number" ? liftRunnableObservable : liftObservable);
+        return pipe(createThrottleObserver, partial(durationFunction, mode), isNumber(duration) ? liftRunnableObservable : liftObservable);
     };
 })();
 const throwIfEmpty = 
@@ -634,10 +634,10 @@ const timeout = /*@__PURE__*/ (() => {
     }));
     const returnTimeoutError = returns(timeoutError);
     return (duration) => {
-        const durationObs = typeof duration === "number"
+        const durationObs = isNumber(duration)
             ? throws({ fromArray: toObservable, ...mapT }, { delay: duration, delayStart: true })(returnTimeoutError)
             : concat(duration, throws({ fromArray: toObservable, ...mapT })(returnTimeoutError));
-        const lift = typeof duration === "number" || isRunnable(duration)
+        const lift = isNumber(duration) || isRunnable(duration)
             ? liftRunnableObservable
             : liftObservable;
         return pipe(createTimeoutObserver, partial(durationObs), lift);

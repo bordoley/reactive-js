@@ -64,9 +64,13 @@
 - [isEqualTo](functions.md#isequalto)
 - [isEven](functions.md#iseven)
 - [isFalse](functions.md#isfalse)
+- [isFunction](functions.md#isfunction)
 - [isNone](functions.md#isnone)
+- [isNumber](functions.md#isnumber)
+- [isObject](functions.md#isobject)
 - [isOdd](functions.md#isodd)
 - [isSome](functions.md#issome)
+- [isString](functions.md#isstring)
 - [isTrue](functions.md#istrue)
 - [max](functions.md#max)
 - [min](functions.md#min)
@@ -1793,6 +1797,22 @@ v is false
 
 ___
 
+### isFunction
+
+▸ **isFunction**(`f`): f is Function
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | `unknown` |
+
+#### Returns
+
+f is Function
+
+___
+
 ### isNone
 
 ▸ **isNone**<`T`\>(`option`): option is undefined
@@ -1814,6 +1834,38 @@ Returns true if `option` is `none`.
 #### Returns
 
 option is undefined
+
+___
+
+### isNumber
+
+▸ **isNumber**(`n`): n is number
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `n` | `unknown` |
+
+#### Returns
+
+n is number
+
+___
+
+### isObject
+
+▸ **isObject**(`o`): o is object
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `o` | `unknown` |
+
+#### Returns
+
+o is object
 
 ___
 
@@ -1856,6 +1908,22 @@ Returns true if `option` is not `none`.
 #### Returns
 
 option is T
+
+___
+
+### isString
+
+▸ **isString**(`s`): s is string
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `s` | `unknown` |
+
+#### Returns
+
+s is string
 
 ___
 

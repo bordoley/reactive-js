@@ -1,4 +1,6 @@
 /// <reference types="./__internal__Objects.d.ts" />
+import { isFunction } from '../../functions.mjs';
+
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
 const Object_prototype = Symbol("Object_prototype");
@@ -27,7 +29,7 @@ const include = (...mixins) => {
     }
 };
 const mixin = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingOrPrototype) => {
-    if (typeof initOrParent === "function") {
+    if (isFunction(initOrParent)) {
         return {
             [Object_init]: initOrParent,
             [Object_properties]: propertiesOrInit !== null && propertiesOrInit !== void 0 ? propertiesOrInit : {},

@@ -377,6 +377,16 @@ export const isEven = (x: number): boolean => x % 2 === 0;
 
 export const isFalse = (v: boolean): v is false => !v;
 
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const isFunction = (f: unknown): f is Function =>
+  typeof f === "function";
+
+export const isNumber = (n: unknown): n is number => typeof n === "number";
+
+export const isObject = (o: unknown): o is object => typeof o === "object";
+
+export const isString = (s: unknown): s is string => typeof s === "string";
+
 /**
  * Returns `true` if `x` is an odd number, otherwise `false`.
  */
@@ -694,7 +704,7 @@ export const pipeLazy: PipeLazy =
  * Throws a javascript error using the provided message.
  */
 export const raise = <T>(message?: unknown): T => {
-  if (message === undefined || typeof message === "string") {
+  if (isNone(message) || isString(message)) {
     throw newInstance(Error, message);
   } else {
     throw message;

@@ -2,7 +2,7 @@
 import fs from 'fs';
 import { createBrotliDecompress, createGunzip, createInflate, createBrotliCompress, createGzip, createDeflate } from 'zlib';
 import { createLiftedFlowable, createLiftedStreamable } from '../__internal__/streaming/__internal__StreamableLike.mjs';
-import { pipe, ignore, pipeLazy } from '../functions.mjs';
+import { pipe, ignore, pipeLazy, isFunction } from '../functions.mjs';
 import { ObserverLike_dispatcher } from '../rx.mjs';
 import { create, forEach, subscribe } from '../rx/ObservableLike.mjs';
 import { getScheduler, getDispatcher } from '../rx/ObserverLike.mjs';
@@ -53,7 +53,7 @@ const addToDisposable = (disposable) => stream => {
 };
 const createReadableSource = (factory) => createLiftedFlowable(mode => create(observer => {
     const { [ObserverLike_dispatcher]: dispatcher } = observer;
-    const readable = typeof factory === "function"
+    const readable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
         : pipe(factory, addDisposable(dispatcher));
     readable.pause();
@@ -79,7 +79,7 @@ const createWritableSink = /*@__PURE__*/ (() => {
     const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
     return (factory) => createLiftedStreamable(events => create(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
-        const writable = typeof factory === "function"
+        const writable = isFunction(factory)
             ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
             : pipe(factory, addDisposable(dispatcher));
         pipe(events, forEach(ev => {
