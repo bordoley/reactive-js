@@ -186,7 +186,7 @@ import {
   SinkLike,
   SinkLike_notify,
 } from "../rx";
-import { getScheduler } from "../rx/ObserverLike";
+import { getScheduler, schedule } from "../rx/ObserverLike";
 import { notify, notifySink, sourceFrom } from "../rx/SinkLike";
 import {
   SchedulerLike,
@@ -202,7 +202,6 @@ import {
   __yield,
   createVirtualTimeScheduler,
   isInContinuation,
-  schedule,
   toPausableScheduler,
 } from "../scheduling/SchedulerLike";
 import { FlowMode, ToFlowable } from "../streaming";
@@ -496,12 +495,8 @@ interface EmptyObservable {
 export const empty: EmptyObservable = (<T>(options?: { delay: number }) => {
   const delay = getDelay(options);
   return delay > 0
-    ? createRunnableObservable<T>(sink => {
-        pipe(
-          sink,
-          getScheduler,
-          schedule(pipeLazy(sink, dispose()), { delay }),
-        );
+    ? createRunnableObservable<T>(observer => {
+        pipe(observer, schedule(pipeLazy(observer, dispose()), { delay }));
       })
     : createEnumerableObservable<T>(sink => {
         pipe(sink, dispose());
@@ -640,9 +635,7 @@ export const generate: GenerateObservable = (<T>(
 
     pipe(
       observer,
-      getScheduler,
       schedule(continuation, delayStart && hasDelay(options) ? options : none),
-      addTo(observer),
     );
   };
 
@@ -1777,7 +1770,7 @@ export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
               add(
                 pipe(
                   modeObs,
-                  forEach<FlowMode>(mode => {
+                  forEach(mode => {
                     switch (mode) {
                       case "pause":
                         pause(pausableScheduler);

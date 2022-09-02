@@ -33,10 +33,9 @@ import {
   forEach,
   subscribe,
 } from "./rx/ObservableLike";
-import { getScheduler } from "./rx/ObserverLike";
+import { getScheduler, schedule } from "./rx/ObserverLike";
 import { notify } from "./rx/SinkLike";
 import { SchedulerLike } from "./scheduling";
-import { schedule } from "./scheduling/SchedulerLike";
 import { StreamLike, StreamableLike } from "./streaming";
 import { createStateStore, stream } from "./streaming/StreamableLike";
 import { DisposableLike, Exception } from "./util";
@@ -216,7 +215,7 @@ class AsyncContext {
             this.scheduledComputationSubscription = isDisposed(
               scheduledComputationSubscription,
             )
-              ? pipe(scheduler, schedule(runComputation), addTo(observer))
+              ? pipe(observer, schedule(runComputation))
               : scheduledComputationSubscription;
           }
         }),
@@ -336,7 +335,7 @@ export const async = <T>(
 
     const ctx = newInstance(AsyncContext, observer, runComputation, mode);
 
-    pipe(observer, getScheduler, schedule(runComputation), addTo(observer));
+    pipe(observer, schedule(runComputation));
   });
 
 const assertCurrentContext = (): AsyncContext =>
@@ -430,7 +429,7 @@ export const __do: __Do = /*@__PURE__*/ (() => {
         pipe(observer, notify(none), dispose());
       };
 
-      pipe(observer, getScheduler, schedule(callback), addTo(observer));
+      pipe(observer, schedule(callback));
     });
 
   return (f: (...args: any[]) => void, ...args: unknown[]): void => {

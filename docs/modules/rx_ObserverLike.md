@@ -8,6 +8,7 @@
 
 - [getDispatcher](rx_ObserverLike.md#getdispatcher)
 - [getScheduler](rx_ObserverLike.md#getscheduler)
+- [schedule](rx_ObserverLike.md#schedule)
 
 ## Functions
 
@@ -52,3 +53,21 @@ ___
 #### Returns
 
 [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
+
+### schedule
+
+▸ **schedule**(`f`, `options?`): [`Function1`](functions.md#function1)<[`ObserverLike`](../interfaces/rx.ObserverLike.md)<`unknown`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`ContinuationLike`](../interfaces/util.ContinuationLike.md) \| [`SideEffect`](functions.md#sideeffect) |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObserverLike`](../interfaces/rx.ObserverLike.md)<`unknown`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>

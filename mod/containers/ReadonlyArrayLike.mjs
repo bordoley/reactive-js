@@ -9,9 +9,9 @@ import { createInstanceFactory, mixin, include, init, props } from '../__interna
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { SinkLike_notify } from '../rx.mjs';
-import { getScheduler } from '../rx/ObserverLike.mjs';
-import { __yield, schedule } from '../scheduling/SchedulerLike.mjs';
-import { isDisposed, dispose, addTo } from '../util/DisposableLike.mjs';
+import { schedule } from '../rx/ObserverLike.mjs';
+import { __yield } from '../scheduling/SchedulerLike.mjs';
+import { isDisposed, dispose } from '../util/DisposableLike.mjs';
 
 const empty = /*@__PURE__*/ (() => {
     const _empty = [];
@@ -120,7 +120,7 @@ const toObservable = /*@__PURE__*/ (() => {
                 }
                 pipe(observer, dispose());
             };
-            pipe(observer, getScheduler, schedule(continuation, delayStart && hasDelay(options) ? options : none), addTo(observer));
+            pipe(observer, schedule(continuation, delayStart && hasDelay(options) ? options : none));
         };
         return createObservable(onSink);
     });
