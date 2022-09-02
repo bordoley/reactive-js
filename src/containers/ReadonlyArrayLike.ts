@@ -58,9 +58,9 @@ import {
   ToObservable,
   ToRunnable,
 } from "../rx";
-import { getScheduler } from "../rx/ObserverLike";
-import { __yield, schedule } from "../scheduling/SchedulerLike";
-import { addTo, dispose, isDisposed } from "../util/DisposableLike";
+import { schedule } from "../rx/ObserverLike";
+import { __yield } from "../scheduling/SchedulerLike";
+import { dispose, isDisposed } from "../util/DisposableLike";
 
 export const empty: Empty<ReadonlyArrayLike>["empty"] = /*@__PURE__*/ (<
   T,
@@ -279,12 +279,10 @@ export const toObservable: ReadonlyArrayToObservable = /*@__PURE__*/ (() => {
 
           pipe(
             observer,
-            getScheduler,
             schedule(
               continuation,
               delayStart && hasDelay(options) ? options : none,
             ),
-            addTo(observer),
           );
         };
         return createObservable(onSink);

@@ -181,7 +181,7 @@ export const createReadableSource = (
 
       pipe(
         mode,
-        forEach<FlowMode>(ev => {
+        forEach(ev => {
           switch (ev) {
             case "pause":
               readable.pause();
@@ -293,7 +293,7 @@ export const transform =
 
         pipe(
           modeObs,
-          forEach<FlowMode>(dispatchTo(transformReadableStream)),
+          forEach(dispatchTo(transformReadableStream)),
           subscribe(getScheduler(observer)),
           addToNodeStream(transform),
         );

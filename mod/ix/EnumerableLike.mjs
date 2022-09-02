@@ -12,10 +12,10 @@ import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containe
 import { pipe, none, unsafeCast, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerLike_interact, SourceLike_move } from '../ix.mjs';
 import { move, getCurrent, hasCurrent, forEach as forEach$1 } from './EnumeratorLike.mjs';
-import { getScheduler } from '../rx/ObserverLike.mjs';
+import { schedule } from '../rx/ObserverLike.mjs';
 import { create as create$1 } from '../rx/RunnableLike.mjs';
 import { notifySink } from '../rx/SinkLike.mjs';
-import { schedule, __yield } from '../scheduling/SchedulerLike.mjs';
+import { __yield } from '../scheduling/SchedulerLike.mjs';
 import { add, dispose, disposed, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete, getException } from '../util/DisposableLike.mjs';
 
 const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
@@ -565,7 +565,7 @@ const toObservable = ((options) => enumerable => {
     const { delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
         const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
-        pipe(observer, getScheduler, schedule(() => {
+        pipe(observer, schedule(() => {
             while (!isDisposed(observer) && move(enumerator)) {
                 pipe(enumerator, getCurrent, notifySink(observer));
                 __yield(options);

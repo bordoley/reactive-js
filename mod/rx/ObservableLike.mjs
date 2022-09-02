@@ -20,11 +20,11 @@ import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$3 } from '../ix/EnumerableLike.mjs';
 import { hasCurrent, move, getCurrent } from '../ix/EnumeratorLike.mjs';
 import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../rx.mjs';
-import { getScheduler } from './ObserverLike.mjs';
+import { getScheduler, schedule } from './ObserverLike.mjs';
 import { notify, sourceFrom, notifySink } from './SinkLike.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
-import { schedule, __yield, isInContinuation, toPausableScheduler, createVirtualTimeScheduler } from '../scheduling/SchedulerLike.mjs';
+import { __yield, isInContinuation, toPausableScheduler, createVirtualTimeScheduler } from '../scheduling/SchedulerLike.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import { disposed, onComplete, dispose, isDisposed, addTo, addToIgnoringChildErrors, onDisposed, bindTo, add, toObservable as toObservable$2, getException } from '../util/DisposableLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
@@ -178,8 +178,8 @@ const distinctUntilChangedT = {
 const empty = ((options) => {
     const delay = getDelay(options);
     return delay > 0
-        ? createRunnableObservable(sink => {
-            pipe(sink, getScheduler, schedule(pipeLazy(sink, dispose()), { delay }));
+        ? createRunnableObservable(observer => {
+            pipe(observer, schedule(pipeLazy(observer, dispose()), { delay }));
         })
         : createEnumerableObservable(sink => {
             pipe(sink, dispose());
@@ -236,7 +236,7 @@ const generate = ((generator, initialValue, options) => {
                 __yield(options);
             }
         };
-        pipe(observer, getScheduler, schedule(continuation, delayStart && hasDelay(options) ? options : none), addTo(observer));
+        pipe(observer, schedule(continuation, delayStart && hasDelay(options) ? options : none));
     };
     return delay > 0
         ? createRunnableObservable(onSink)

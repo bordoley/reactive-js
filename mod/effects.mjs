@@ -1,9 +1,8 @@
 /// <reference types="./effects.d.ts" />
 import { isNone, ignore, none, raise, arrayEquality, pipe, getLength, isSome, newInstance } from './functions.mjs';
 import { empty, forEach, subscribe, create } from './rx/ObservableLike.mjs';
-import { getScheduler } from './rx/ObserverLike.mjs';
+import { getScheduler, schedule } from './rx/ObserverLike.mjs';
 import { notify } from './rx/SinkLike.mjs';
-import { schedule } from './scheduling/SchedulerLike.mjs';
 import { stream, createStateStore } from './streaming/StreamableLike.mjs';
 import { disposed, isDisposed, dispose, addTo, onComplete } from './util/DisposableLike.mjs';
 
@@ -98,7 +97,7 @@ class AsyncContext {
                 else {
                     let { scheduledComputationSubscription } = this;
                     this.scheduledComputationSubscription = isDisposed(scheduledComputationSubscription)
-                        ? pipe(scheduler, schedule(runComputation), addTo(observer))
+                        ? pipe(observer, schedule(runComputation))
                         : scheduledComputationSubscription;
                 }
             }), subscribe(scheduler), addTo(observer), onComplete(this.cleanup));
@@ -180,7 +179,7 @@ const async = (computation, { mode = "batched" } = {}) => create((observer) => {
         }
     };
     const ctx = newInstance(AsyncContext, observer, runComputation, mode);
-    pipe(observer, getScheduler, schedule(runComputation), addTo(observer));
+    pipe(observer, schedule(runComputation));
 });
 const assertCurrentContext = () => isNone(currentCtx)
     ? raise("effect must be called within a computational expression")
@@ -203,7 +202,7 @@ const __do = /*@__PURE__*/ (() => {
             f(...args);
             pipe(observer, notify(none), dispose());
         };
-        pipe(observer, getScheduler, schedule(callback), addTo(observer));
+        pipe(observer, schedule(callback));
     });
     return (f, ...args) => {
         const ctx = assertCurrentContext();

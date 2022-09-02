@@ -1,11 +1,11 @@
 /// <reference types="./__internal__Observers.d.ts" />
 import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../../functions.mjs';
 import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../rx.mjs';
-import { getScheduler } from '../../rx/ObserverLike.mjs';
+import { schedule, getScheduler } from '../../rx/ObserverLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../scheduling.mjs';
-import { schedule, __yield } from '../../scheduling/SchedulerLike.mjs';
+import { __yield } from '../../scheduling/SchedulerLike.mjs';
 import { DisposableLike_exception } from '../../util.mjs';
-import { addTo, onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
+import { onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
 import { disposableMixin } from '../util/__internal__Disposables.mjs';
 import { createInstanceFactory, mixin, init, props, include } from '../util/__internal__Objects.mjs';
 
@@ -13,7 +13,7 @@ const createObserverDispatcher = (() => {
     const scheduleDrainQueue = (dispatcher) => {
         if (getLength(dispatcher.nextQueue) === 1) {
             const { observer } = dispatcher;
-            pipe(getScheduler(observer), schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
+            pipe(observer, schedule(dispatcher.continuation), onComplete(dispatcher.onContinuationDispose));
         }
     };
     return createInstanceFactory(mixin(disposableMixin, function ObserverDispatcher(instance, observer) {

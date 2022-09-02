@@ -121,10 +121,10 @@ import {
   ToObservable,
   ToRunnable,
 } from "../rx";
-import { getScheduler } from "../rx/ObserverLike";
+import { schedule } from "../rx/ObserverLike";
 import { create as createRunnable } from "../rx/RunnableLike";
 import { notifySink } from "../rx/SinkLike";
-import { __yield, schedule } from "../scheduling/SchedulerLike";
+import { __yield } from "../scheduling/SchedulerLike";
 import { DisposableLike, Exception } from "../util";
 import {
   add,
@@ -1192,7 +1192,6 @@ export const toObservable: EnumerableToObservable = (<T>(options?: {
 
       pipe(
         observer,
-        getScheduler,
         schedule(
           () => {
             while (!isDisposed(observer) && move(enumerator)) {

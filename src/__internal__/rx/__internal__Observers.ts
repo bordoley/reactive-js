@@ -15,17 +15,16 @@ import {
   ObserverLike_scheduler,
   SinkLike_notify,
 } from "../../rx";
-import { getScheduler } from "../../rx/ObserverLike";
+import { getScheduler, schedule } from "../../rx/ObserverLike";
 import {
   DispatcherLike,
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
 } from "../../scheduling";
-import { __yield, schedule } from "../../scheduling/SchedulerLike";
+import { __yield } from "../../scheduling/SchedulerLike";
 import { DisposableLike, DisposableLike_exception } from "../../util";
 import {
-  addTo,
   addToIgnoringChildErrors,
   dispose,
   isDisposed,
@@ -48,9 +47,8 @@ const createObserverDispatcher = (<T>() => {
     if (getLength(dispatcher.nextQueue) === 1) {
       const { observer } = dispatcher;
       pipe(
-        getScheduler(observer),
+        observer,
         schedule(dispatcher.continuation),
-        addTo(observer),
         onComplete(dispatcher.onContinuationDispose),
       );
     }
