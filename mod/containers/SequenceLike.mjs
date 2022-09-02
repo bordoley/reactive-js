@@ -1,9 +1,9 @@
 /// <reference types="./SequenceLike.d.ts" />
-import { createRepeatOperator } from '../__internal__/containers/__internal__ContainerLike.mjs';
-import { create } from '../__internal__/ix/__internal__EnumerableLike.mjs';
-import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { createRepeatOperator } from '../__internal__/containers/ContainerLike.repeat.mjs';
+import { create } from '../__internal__/ix/EnumerableLike.create.mjs';
+import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
+import { disposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { isDisposed, dispose } from '../util/DisposableLike.mjs';
@@ -250,10 +250,10 @@ const takeWhile =
 const takeWhileT = { takeWhile };
 const toEnumerable = 
 /*@__PURE__*/ (() => {
-    const typedEnumeratorMixin = enumeratorMixin();
-    const createSequenceEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedEnumeratorMixin), function SequenceEnumerator(instance, seq) {
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const createSequenceEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function SequenceEnumerator(instance, seq) {
         init(disposableMixin, instance);
-        init(typedEnumeratorMixin, instance);
+        init(typedMutableEnumeratorMixin, instance);
         instance.seq = seq;
         return instance;
     }, props({

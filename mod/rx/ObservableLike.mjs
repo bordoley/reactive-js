@@ -1,17 +1,20 @@
 /// <reference types="./ObservableLike.d.ts" />
-import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
-import { getDelay, hasDelay } from '../__internal__/__internal__optionParsing.mjs';
-import { createDecodeWithCharsetOperator, createKeepOperator, createMapOperator, createReduceOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
-import { create as create$1, empty as empty$1 } from '../__internal__/ix/__internal__EnumerableLike.mjs';
-import { liftEnumerableObservable, liftObservable, createCatchError, allAreEnumerable, allAreRunnable, liftEnumerableObservableT, deferObservableImpl, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, createMergeAll, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, createScanAsync, switchAll as switchAll$1, subscribe as subscribe$1, takeFirst as takeFirst$1, liftRunnableObservable, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/__internal__ObservableLike.mjs';
-import { createEnumerableObservable, createRunnableObservable, createObservable } from '../__internal__/rx/__internal__ObservableLike.create.mjs';
-import { observerMixin, createDelegatingObserver } from '../__internal__/rx/__internal__Observers.mjs';
-import { decodeWithCharsetSinkMixin, everySatisfySinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin, createEnumeratorSink } from '../__internal__/rx/__internal__Sinks.mjs';
-import { createLiftedFlowable } from '../__internal__/streaming/__internal__StreamableLike.mjs';
-import { disposableMixin, createDisposableRef, disposableRefMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
-import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/__internal__MutableRefLike.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
+import { createDecodeWithCharsetOperator, createKeepOperator, createMapOperator, createReduceOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
+import { create as create$1, empty as empty$1 } from '../__internal__/ix/EnumerableLike.create.mjs';
+import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
+import { createEnumerableObservable, createRunnableObservable, createObservable, deferObservable } from '../__internal__/rx/ObservableLike.create.mjs';
+import { catchErrorObservable, mergeAllObservable, scanAsyncObservable, switchAllObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
+import { liftEnumerableObservable, liftObservable, liftEnumerableObservableT, liftRunnableObservable } from '../__internal__/rx/ObservableLike.lift.mjs';
+import { allAreEnumerable, allAreRunnable, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, subscribe as subscribe$1, takeFirst as takeFirst$1, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/ObservableLike.operators.mjs';
+import { observerMixin, createDelegatingObserver } from '../__internal__/rx/ObserverLike.internal.mjs';
+import { decodeWithCharsetSinkMixin, everySatisfySinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin, createEnumeratorSink } from '../__internal__/rx/SinkLike.mixins.mjs';
+import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
+import { createLiftedFlowable } from '../__internal__/streaming/FlowableLike.create.mjs';
+import { disposableMixin, delegatingDisposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
+import { createDisposableRef, disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
+import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
 import { concatMap, throws, keepType } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/PromiseableLike.mjs';
 import { toObservable, map as map$1, every, forEach as forEach$2, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
@@ -96,8 +99,7 @@ const buffer = /*@__PURE__*/ (() => {
 const bufferT = {
     buffer,
 };
-const catchError = 
-/*@__PURE__*/ createCatchError(liftObservable);
+const catchError = catchErrorObservable;
 /**
  * Returns an `ObservableLike` that combines the latest values from
  * multiple sources.
@@ -167,7 +169,7 @@ const decodeWithCharset =
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
-const defer = f => deferObservableImpl(f, false, false);
+const defer = deferObservable;
 const deferT = {
     defer,
 };
@@ -175,16 +177,13 @@ const distinctUntilChanged = distinctUntilChanged$1;
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const empty = ((options) => {
-    const delay = getDelay(options);
-    return delay > 0
-        ? createRunnableObservable(observer => {
-            pipe(observer, schedule(pipeLazy(observer, dispose()), { delay }));
-        })
-        : createEnumerableObservable(sink => {
-            pipe(sink, dispose());
-        });
-});
+const empty = ((options) => hasDelay(options)
+    ? createRunnableObservable(observer => {
+        pipe(observer, schedule(pipeLazy(observer, dispose()), options));
+    })
+    : createEnumerableObservable(sink => {
+        pipe(sink, dispose());
+    }));
 const emptyT = {
     empty,
 };
@@ -225,7 +224,6 @@ const forkZipLatest = ((...ops) => (obs) => latest(pipe(ops, map$1(op => pipe(ob
  * @param delay The requested delay between emitted items by the observable.
  */
 const generate = ((generator, initialValue, options) => {
-    const delay = getDelay(options);
     const { delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
         let acc = initialValue();
@@ -236,9 +234,9 @@ const generate = ((generator, initialValue, options) => {
                 __yield(options);
             }
         };
-        pipe(observer, schedule(continuation, delayStart && hasDelay(options) ? options : none));
+        pipe(observer, schedule(continuation, delayStart ? options : none));
     };
-    return delay > 0
+    return hasDelay(options)
         ? createRunnableObservable(onSink)
         : createEnumerableObservable(onSink);
 });
@@ -342,7 +340,7 @@ const mapT = { map };
 const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => pipe(a, f, toObservable$1()));
 const merge = merge$1;
 const mergeT = mergeT$1;
-const mergeAll = /*@__PURE__*/ createMergeAll(liftObservable);
+const mergeAll = mergeAllObservable;
 const mergeAllT = { concatAll: mergeAll };
 const multicast = multicast$1;
 const never = () => createEnumerableObservable(ignore);
@@ -432,7 +430,7 @@ const scanT = { scan };
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-const scanAsync = createScanAsync(createObservable);
+const scanAsync = scanAsyncObservable;
 const scanAsyncT = {
     scanAsync,
 };
@@ -486,7 +484,7 @@ const someSatisfy =
     return (predicate) => pipe(createInstanceFactory(someSatisfyObserverMixin), partial(predicate), liftEnumerableObservable);
 })();
 const someSatisfyT = { someSatisfy };
-const switchAll = switchAll$1;
+const switchAll = switchAllObservable;
 const switchAllT = {
     concatAll: switchAll,
 };
@@ -645,11 +643,11 @@ const timeout = /*@__PURE__*/ (() => {
 })();
 const toEnumerable = 
 /*@__PURE__*/ (() => {
-    const typedEnumeratorMixin = enumeratorMixin();
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
     const typedObserverMixin = observerMixin();
-    const createEnumeratorScheduler = createInstanceFactory(mixin(include(disposableMixin, typedEnumeratorMixin), function EnumeratorScheduler(instance) {
+    const createEnumeratorScheduler = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function EnumeratorScheduler(instance) {
         init(disposableMixin, instance);
-        init(typedEnumeratorMixin, instance);
+        init(typedMutableEnumeratorMixin, instance);
         instance.continuations = [];
         return instance;
     }, props({

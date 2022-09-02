@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
-import { createStreamble } from '../__internal__/streaming/__internal__StreamableLike.mjs';
-import { delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
+import { createStreamble } from '../__internal__/streaming/StreamableLike.create.mjs';
+import { delegatingDisposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';

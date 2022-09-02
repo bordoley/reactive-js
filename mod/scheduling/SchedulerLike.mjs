@@ -1,11 +1,12 @@
 /// <reference types="./SchedulerLike.d.ts" />
-import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
-import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
-import { createPriorityQueue } from '../__internal__/scheduling/__internal__queue.mjs';
-import { disposableMixin, disposableRefMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
-import { MutableRefLike_current } from '../__internal__/util/__internal__MutableRefLike.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
+import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
+import { createPriorityQueue } from '../__internal__/scheduling/QueueLike.mjs';
+import { getDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
+import { disposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
+import { disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
+import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs';
 import { none, isSome, pipe, isNone, raise, newInstance, isFunction, max, unsafeCast, compose } from '../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../ix.mjs';
 import { move, hasCurrent, getCurrent } from '../ix/EnumeratorLike.mjs';
@@ -161,10 +162,10 @@ const createQueueScheduler =
         instance[MutableRefLike_current] = pipe(instance.host, schedule(continuation, { delay }));
     };
     const typedDisposableRefMixin = disposableRefMixin();
-    const typedEnumeratorMixin = enumeratorMixin();
-    return createInstanceFactory(mixin(include(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    return createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
         init(disposableMixin, instance);
-        init(typedEnumeratorMixin, instance);
+        init(typedMutableEnumeratorMixin, instance);
         init(typedDisposableRefMixin, instance, disposed);
         instance.delayed = createPriorityQueue(delayedComparator);
         instance.queue = createPriorityQueue(taskComparator);
@@ -342,9 +343,10 @@ const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         diff = diff !== 0 ? diff : a.id - b.id;
         return diff;
     };
-    const typedEnumeratorMixin = enumeratorMixin();
-    const createVirtualTimeSchedulerInstance = createInstanceFactory(mixin(include(disposableMixin, typedEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const createVirtualTimeSchedulerInstance = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
         init(disposableMixin, instance);
+        init(typedMutableEnumeratorMixin, instance);
         instance.maxMicroTaskTicks = maxMicroTaskTicks;
         instance.taskQueue = createPriorityQueue(comparator);
         return instance;

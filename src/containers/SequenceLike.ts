@@ -1,17 +1,17 @@
-import { createRepeatOperator } from "../__internal__/containers/__internal__ContainerLike";
-import { create as createEnumerable } from "../__internal__/ix/__internal__EnumerableLike";
-import { disposableMixin } from "../__internal__/util/__internal__Disposables";
+import { createRepeatOperator } from "../__internal__/containers/ContainerLike.repeat";
+import { create as createEnumerable } from "../__internal__/ix/EnumerableLike.create";
 import {
   MutableEnumeratorLike,
-  enumeratorMixin,
-} from "../__internal__/util/__internal__Enumerators";
+  mutableEnumeratorMixin,
+} from "../__internal__/ix/EnumeratorLike.mutable";
 import {
   createInstanceFactory,
   include,
   init,
   mixin,
   props,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/mixins";
+import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import {
   Concat,
   ConcatAll,
@@ -428,21 +428,21 @@ export const takeWhileT: TakeWhile<SequenceLike> = { takeWhile };
 
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
-    const typedEnumeratorMixin = enumeratorMixin<T>();
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
     type TProperties = {
       seq: SequenceLike<T>;
     };
 
     const createSequenceEnumerator = createInstanceFactory(
       mixin(
-        include(disposableMixin, typedEnumeratorMixin),
+        include(disposableMixin, typedMutableEnumeratorMixin),
         function SequenceEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             TProperties,
           seq: SequenceLike<T>,
         ): EnumeratorLike<T> {
           init(disposableMixin, instance);
-          init(typedEnumeratorMixin, instance);
+          init(typedMutableEnumeratorMixin, instance);
 
           instance.seq = seq;
 

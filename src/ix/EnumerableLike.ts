@@ -1,5 +1,4 @@
-import { getDelay, hasDelay } from "../__internal__/__internal__optionParsing";
-import { createRepeatOperator } from "../__internal__/containers/__internal__ContainerLike";
+import { createRepeatOperator } from "../__internal__/containers/ContainerLike.repeat";
 import {
   Lift,
   TInteractive,
@@ -15,29 +14,15 @@ import {
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
   interactive,
-} from "../__internal__/containers/__internal__StatefulContainerLike";
+} from "../__internal__/containers/StatefulContainerLike.internal";
 import {
   create,
   empty as emptyInternal,
-} from "../__internal__/ix/__internal__EnumerableLike";
-import {
-  createEnumerableObservable,
-  createRunnableObservable,
-} from "../__internal__/rx/__internal__ObservableLike.create";
-import {
-  delegatingDisposableMixin,
-  disposableMixin,
-  disposableRefMixin,
-} from "../__internal__/util/__internal__Disposables";
+} from "../__internal__/ix/EnumerableLike.create";
 import {
   MutableEnumeratorLike,
-  enumeratorMixin,
-} from "../__internal__/util/__internal__Enumerators";
-import {
-  MutableRefLike,
-  getCurrentRef,
-  setCurrentRef,
-} from "../__internal__/util/__internal__MutableRefLike";
+  mutableEnumeratorMixin,
+} from "../__internal__/ix/EnumeratorLike.mutable";
 import {
   Mixin1,
   Mutable,
@@ -46,7 +31,22 @@ import {
   init,
   mixin,
   props,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/mixins";
+import {
+  createEnumerableObservable,
+  createRunnableObservable,
+} from "../__internal__/rx/ObservableLike.create";
+import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
+import {
+  delegatingDisposableMixin,
+  disposableMixin,
+} from "../__internal__/util/DisposableLike.mixins";
+import { disposableRefMixin } from "../__internal__/util/DisposableRefLike";
+import {
+  MutableRefLike,
+  getCurrentRef,
+  setCurrentRef,
+} from "../__internal__/util/MutableRefLike";
 import {
   Buffer,
   Concat,
@@ -264,7 +264,7 @@ const liftT: Lift<EnumerableLike, TInteractive> = {
 export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedEnumerator = enumeratorMixin<readonly T[]>();
+  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<readonly T[]>();
 
   type TProperties = {
     readonly delegate: EnumeratorLike<T>;
@@ -274,7 +274,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   return pipe(
     createInstanceFactory(
       mixin(
-        include(disposableMixin, typedEnumerator),
+        include(disposableMixin, typedMutableEnumeratorMixin),
         function BufferEnumerator(
           instance: Pick<EnumeratorLike<readonly T[]>, typeof SourceLike_move> &
             Mutable<TProperties>,
@@ -282,7 +282,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
           maxBufferSize: number,
         ): EnumeratorLike<readonly T[]> {
           init(disposableMixin, instance);
-          init(typedEnumerator, instance);
+          init(typedMutableEnumeratorMixin, instance);
 
           instance.delegate = delegate;
           instance.maxBufferSize = maxBufferSize;
@@ -326,7 +326,7 @@ export const bufferT: Buffer<EnumerableLike> = {
 
 export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
   /*@__PURE__*/ (<T>() => {
-    const typedEnumerator = enumeratorMixin<T>();
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
     const typedDisposableRefMixin = disposableRefMixin<EnumeratorLike<T>>();
 
     type TProperties = {
@@ -336,7 +336,11 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     return pipe(
       createInstanceFactory(
         mixin(
-          include(disposableMixin, typedDisposableRefMixin, typedEnumerator),
+          include(
+            disposableMixin,
+            typedDisposableRefMixin,
+            typedMutableEnumeratorMixin,
+          ),
           function ConcatAllEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               Mutable<TProperties>,
@@ -344,7 +348,7 @@ export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
           ): EnumeratorLike<T> {
             init(disposableMixin, instance);
             init(typedDisposableRefMixin, instance, disposed);
-            init(typedEnumerator, instance);
+            init(typedMutableEnumeratorMixin, instance);
 
             instance.delegate = delegate;
 
@@ -515,13 +519,13 @@ export const forEachT: ForEach<EnumerableLike> = { forEach };
 export const generate: Generate<EnumerableLike>["generate"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedEnumerator = enumeratorMixin<T>();
+  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
 
   type TProperties = { readonly f: Updater<T> };
 
   const createGenerateEnumerator = createInstanceFactory(
     mixin(
-      include(disposableMixin, typedEnumerator),
+      include(disposableMixin, typedMutableEnumeratorMixin),
       function GenerateEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
           Mutable<TProperties>,
@@ -529,7 +533,7 @@ export const generate: Generate<EnumerableLike>["generate"] = /*@__PURE__*/ (<
         acc: T,
       ): EnumeratorLike<T> {
         init(disposableMixin, instance);
-        init(typedEnumerator, instance);
+        init(typedMutableEnumeratorMixin, instance);
 
         instance.f = f;
         instance[EnumeratorLike_current] = acc;
@@ -609,7 +613,7 @@ export const keepT: Keep<EnumerableLike> = {
 };
 
 export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
-  const typedEnumerator = enumeratorMixin<TB>();
+  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<TB>();
 
   type TProperties = {
     readonly mapper: Function1<TA, TB>;
@@ -619,7 +623,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   return pipe(
     createInstanceFactory(
       mixin(
-        include(delegatingDisposableMixin, typedEnumerator),
+        include(delegatingDisposableMixin, typedMutableEnumeratorMixin),
         function MapEnumerator(
           instance: Pick<EnumeratorLike<TB>, typeof SourceLike_move> &
             Mutable<TProperties>,
@@ -627,7 +631,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
           mapper: Function1<TA, TB>,
         ): EnumeratorLike<TB> {
           init(delegatingDisposableMixin, instance, delegate);
-          init(typedEnumerator, instance);
+          init(typedMutableEnumeratorMixin, instance);
 
           instance.delegate = delegate;
           instance.mapper = mapper;
@@ -663,7 +667,7 @@ export const mapT: Map<EnumerableLike> = { map };
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedEnumerator = enumeratorMixin<[T, T]>();
+  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<[T, T]>();
 
   type TProperties = {
     readonly delegate: EnumeratorLike<T>;
@@ -672,14 +676,14 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
   return pipe(
     createInstanceFactory(
       mixin(
-        include(delegatingDisposableMixin, typedEnumerator),
+        include(delegatingDisposableMixin, typedMutableEnumeratorMixin),
         function PairwiseEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
         ): EnumeratorLike<readonly [T, T]> {
           init(delegatingDisposableMixin, instance, delegate);
-          init(typedEnumerator, instance);
+          init(typedMutableEnumeratorMixin, instance);
 
           instance.delegate = delegate;
 
@@ -802,7 +806,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const typedEnumerator = enumeratorMixin<TAcc>();
+  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<TAcc>();
 
   type TProperties = {
     readonly reducer: Reducer<T, TAcc>;
@@ -812,7 +816,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   return pipe(
     createInstanceFactory(
       mixin(
-        include(delegatingDisposableMixin, typedEnumerator),
+        include(delegatingDisposableMixin, typedMutableEnumeratorMixin),
         function ScanEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
@@ -821,7 +825,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
           initialValue: Factory<TAcc>,
         ): MutableEnumeratorLike<TAcc> {
           init(delegatingDisposableMixin, instance, delegate);
-          init(typedEnumerator, instance);
+          init(typedMutableEnumeratorMixin, instance);
 
           instance.delegate = delegate;
           instance.reducer = reducer;
@@ -1184,7 +1188,6 @@ export const toObservable: EnumerableToObservable = (<T>(options?: {
     delayStart?: boolean;
   }): Function1<EnumerableLike<T>, ObservableLike<T>> =>
   enumerable => {
-    const delay = getDelay(options);
     const { delayStart = false } = options ?? {};
 
     const onSink = (observer: ObserverLike<T>) => {
@@ -1199,11 +1202,11 @@ export const toObservable: EnumerableToObservable = (<T>(options?: {
               __yield(options);
             }
           },
-          delayStart && hasDelay(options) ? { delay } : none,
+          delayStart ? options : none,
         ),
       );
     };
-    return delay > 0
+    return hasDelay(options)
       ? createRunnableObservable(onSink)
       : createEnumerableObservable(onSink);
   }) as EnumerableToObservable;
@@ -1289,7 +1292,8 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const allHaveCurrent = (enumerators: readonly EnumeratorLike[]) =>
     pipe(enumerators, every(hasCurrent));
 
-  const typedEnumerator = enumeratorMixin<readonly unknown[]>();
+  const typedMutableEnumeratorMixin =
+    mutableEnumeratorMixin<readonly unknown[]>();
 
   type TProperties = {
     readonly enumerators: readonly EnumeratorLike[];
@@ -1297,7 +1301,7 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
 
   const createZipEnumerator = createInstanceFactory(
     mixin(
-      include(disposableMixin, typedEnumerator),
+      include(disposableMixin, typedMutableEnumeratorMixin),
       function ZipEnumerator(
         instance: Pick<
           EnumeratorLike<readonly unknown[]>,
@@ -1307,7 +1311,7 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
         enumerators: readonly EnumeratorLike[],
       ): EnumeratorLike<readonly unknown[]> {
         init(disposableMixin, instance);
-        init(typedEnumerator, instance);
+        init(typedMutableEnumeratorMixin, instance);
 
         instance.enumerators = enumerators;
 

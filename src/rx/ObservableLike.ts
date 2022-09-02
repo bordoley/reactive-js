@@ -1,5 +1,4 @@
-import { MAX_SAFE_INTEGER } from "../__internal__/__internal__env";
-import { getDelay, hasDelay } from "../__internal__/__internal__optionParsing";
+import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
   TReactive,
   createDecodeWithCharsetOperator,
@@ -10,26 +9,48 @@ import {
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
-} from "../__internal__/containers/__internal__StatefulContainerLike";
+} from "../__internal__/containers/StatefulContainerLike.internal";
 import {
   create as createEnumerable,
   empty as emptyEnumerable,
-} from "../__internal__/ix/__internal__EnumerableLike";
+} from "../__internal__/ix/EnumerableLike.create";
 import {
-  allAreEnumerable,
-  allAreRunnable,
-  createCatchError,
-  createMergeAll,
-  createScanAsync,
-  deferObservableImpl,
-  distinctUntilChanged as distinctUntilChangedInternal,
-  forEach as forEachInternal,
-  isEnumerable as isEnumerableInternal,
-  isRunnable as isRunnableInternal,
+  MutableEnumeratorLike,
+  mutableEnumeratorMixin,
+} from "../__internal__/ix/EnumeratorLike.mutable";
+import {
+  Mutable,
+  createInstanceFactory,
+  include,
+  init,
+  mixin,
+  props,
+} from "../__internal__/mixins";
+import {
+  createEnumerableObservable,
+  createObservable,
+  createRunnableObservable,
+  deferObservable,
+} from "../__internal__/rx/ObservableLike.create";
+import {
+  catchErrorObservable,
+  mergeAllObservable,
+  scanAsyncObservable,
+  switchAllObservable,
+} from "../__internal__/rx/ObservableLike.higher-order";
+import {
   liftEnumerableObservable,
   liftEnumerableObservableT,
   liftObservable,
   liftRunnableObservable,
+} from "../__internal__/rx/ObservableLike.lift";
+import {
+  allAreEnumerable,
+  allAreRunnable,
+  distinctUntilChanged as distinctUntilChangedInternal,
+  forEach as forEachInternal,
+  isEnumerable as isEnumerableInternal,
+  isRunnable as isRunnableInternal,
   mergeImpl,
   merge as mergeInternal,
   mergeT as mergeTInternal,
@@ -37,19 +58,13 @@ import {
   onSubscribe as onSubscribeInternal,
   scan as scanInternal,
   subscribe as subscribeInternal,
-  switchAll as switchAllInternal,
   takeFirst as takeFirstInternal,
   zipWithLatestFrom as zipWithLatestFromInternal,
-} from "../__internal__/rx/__internal__ObservableLike";
-import {
-  createEnumerableObservable,
-  createObservable,
-  createRunnableObservable,
-} from "../__internal__/rx/__internal__ObservableLike.create";
+} from "../__internal__/rx/ObservableLike.operators";
 import {
   createDelegatingObserver,
   observerMixin,
-} from "../__internal__/rx/__internal__Observers";
+} from "../__internal__/rx/ObserverLike.internal";
 import {
   createEnumeratorSink,
   decodeWithCharsetSinkMixin,
@@ -63,33 +78,24 @@ import {
   takeLastSinkMixin,
   takeWhileSinkMixin,
   throwIfEmptySinkMixin,
-} from "../__internal__/rx/__internal__Sinks";
-import { createLiftedFlowable } from "../__internal__/streaming/__internal__StreamableLike";
+} from "../__internal__/rx/SinkLike.mixins";
+import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
+import { createLiftedFlowable } from "../__internal__/streaming/FlowableLike.create";
+import {
+  delegatingDisposableMixin,
+  disposableMixin,
+} from "../__internal__/util/DisposableLike.mixins";
 import {
   DisposableRefLike,
   createDisposableRef,
-  delegatingDisposableMixin,
-  disposableMixin,
   disposableRefMixin,
-} from "../__internal__/util/__internal__Disposables";
-import {
-  MutableEnumeratorLike,
-  enumeratorMixin,
-} from "../__internal__/util/__internal__Enumerators";
+} from "../__internal__/util/DisposableRefLike";
 import {
   MutableRefLike,
   MutableRefLike_current,
   getCurrentRef,
   setCurrentRef,
-} from "../__internal__/util/__internal__MutableRefLike";
-import {
-  Mutable,
-  createInstanceFactory,
-  include,
-  init,
-  mixin,
-  props,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/util/MutableRefLike";
 import {
   Buffer,
   CatchError,
@@ -352,7 +358,7 @@ export const bufferT: Buffer<ObservableLike> = {
 };
 
 export const catchError: CatchError<ObservableLike>["catchError"] =
-  /*@__PURE__*/ createCatchError<ObservableLike>(liftObservable);
+  catchErrorObservable;
 
 /**
  * Returns an `ObservableLike` that combines the latest values from
@@ -477,9 +483,9 @@ export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
   decodeWithCharset,
 };
 
-export const defer: Defer<ObservableLike>["defer"] = f =>
-  deferObservableImpl(f, false, false);
-export const deferT: Defer<ObservableLike> = {
+export const defer: Defer<ObservableLike, { delay: number }>["defer"] =
+  deferObservable;
+export const deferT: Defer<ObservableLike, { delay: number }> = {
   defer,
 };
 
@@ -492,16 +498,14 @@ interface EmptyObservable {
   <T>(): EnumerableObservableLike<T>;
   <T>(options: { delay: number }): RunnableObservableLike<T>;
 }
-export const empty: EmptyObservable = (<T>(options?: { delay: number }) => {
-  const delay = getDelay(options);
-  return delay > 0
+export const empty: EmptyObservable = (<T>(options?: { delay: number }) =>
+  hasDelay(options)
     ? createRunnableObservable<T>(observer => {
-        pipe(observer, schedule(pipeLazy(observer, dispose()), { delay }));
+        pipe(observer, schedule(pipeLazy(observer, dispose()), options));
       })
     : createEnumerableObservable<T>(sink => {
         pipe(sink, dispose());
-      });
-}) as EmptyObservable;
+      })) as EmptyObservable;
 
 export const emptyT: Empty<ObservableLike, { delay: number }> = {
   empty,
@@ -619,7 +623,6 @@ export const generate: GenerateObservable = (<T>(
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
 ): ObservableLike<T> => {
-  const delay = getDelay(options);
   const { delayStart = false } = options ?? {};
 
   const onSink = (observer: ObserverLike<T>) => {
@@ -633,13 +636,10 @@ export const generate: GenerateObservable = (<T>(
       }
     };
 
-    pipe(
-      observer,
-      schedule(continuation, delayStart && hasDelay(options) ? options : none),
-    );
+    pipe(observer, schedule(continuation, delayStart ? options : none));
   };
 
-  return delay > 0
+  return hasDelay(options)
     ? createRunnableObservable(onSink)
     : createEnumerableObservable(onSink);
 }) as GenerateObservable;
@@ -865,15 +865,7 @@ export const mergeAll: ConcatAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = /*@__PURE__*/ createMergeAll<ObservableLike>(
-  liftObservable,
-) as ConcatAll<
-  ObservableLike,
-  {
-    readonly maxBufferSize?: number;
-    readonly maxConcurrency?: number;
-  }
->["concatAll"];
+>["concatAll"] = mergeAllObservable;
 export const mergeAllT: ConcatAll<
   ObservableLike,
   {
@@ -1097,7 +1089,7 @@ export const scanT: Scan<ObservableLike> = { scan };
  * @param initialValue The initial accumulation value.
  */
 export const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"] =
-  createScanAsync<ObservableLike, ObservableLike>(createObservable);
+  scanAsyncObservable;
 export const scanAsyncT: ScanAsync<ObservableLike, ObservableLike> = {
   scanAsync,
 };
@@ -1208,7 +1200,7 @@ export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
 export const someSatisfyT: SomeSatisfy<ObservableLike> = { someSatisfy };
 
 export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
-  switchAllInternal;
+  switchAllObservable;
 export const switchAllT: ConcatAll<ObservableLike> = {
   concatAll: switchAll,
 };
@@ -1624,7 +1616,7 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
 
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
-    const typedEnumeratorMixin = enumeratorMixin<T>();
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
     const typedObserverMixin = observerMixin<T>();
 
     type TEnumeratorSchedulerProperties = {
@@ -1636,7 +1628,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
     const createEnumeratorScheduler = createInstanceFactory(
       mixin(
-        include(disposableMixin, typedEnumeratorMixin),
+        include(disposableMixin, typedMutableEnumeratorMixin),
         function EnumeratorScheduler(
           instance: Pick<
             SchedulerLike & SourceLike,
@@ -1649,7 +1641,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
             Mutable<TEnumeratorSchedulerProperties>,
         ): EnumeratorScheduler {
           init(disposableMixin, instance);
-          init(typedEnumeratorMixin, instance);
+          init(typedMutableEnumeratorMixin, instance);
 
           instance.continuations = [];
 

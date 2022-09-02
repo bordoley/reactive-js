@@ -1,4 +1,8 @@
-import { createObservable } from "../__internal__/rx/__internal__ObservableLike.create";
+import { createObservable } from "../__internal__/rx/ObservableLike.create";
+import {
+  createDisposable as createDisposableInternal,
+  disposed as disposedInternal,
+} from "../__internal__/util/DisposableLike.create";
 import {
   addIgnoringChildErrors as addIgnoringChildErrorsInternal,
   add as addInternal,
@@ -11,11 +15,7 @@ import {
   onComplete as onCompleteInternal,
   onDisposed as onDisposedInternal,
   onError as onErrorInternal,
-} from "../__internal__/util/__internal__DisposableLike";
-import {
-  createDisposable as createDisposableInternal,
-  disposed as disposedInternal,
-} from "../__internal__/util/__internal__Disposables";
+} from "../__internal__/util/DisposableLike.operators";
 import {
   Factory,
   Function1,

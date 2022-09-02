@@ -1,11 +1,11 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
-import { hasDelay, getDelay } from '../__internal__/__internal__optionParsing.mjs';
-import { create } from '../__internal__/ix/__internal__EnumerableLike.mjs';
-import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/__internal__ObservableLike.create.mjs';
-import { create as create$1 } from '../__internal__/rx/__internal__RunnableLike.create.mjs';
-import { disposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { enumeratorMixin } from '../__internal__/util/__internal__Enumerators.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { create } from '../__internal__/ix/EnumerableLike.create.mjs';
+import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
+import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/ObservableLike.create.mjs';
+import { create as create$1 } from '../__internal__/rx/RunnableLike.create.mjs';
+import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
+import { disposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { SinkLike_notify } from '../rx.mjs';
@@ -66,10 +66,10 @@ const createFromArray = (factory) => (options = {}) => values => {
     return factory(values, start, count);
 };
 const toEnumerable = /*@__PURE__*/ (() => {
-    const typedEnumerator = enumeratorMixin();
-    const createReadonlyArrayEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedEnumerator), function ReadonlyArrayEnumerator(instance, array, start, count) {
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const createReadonlyArrayEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function ReadonlyArrayEnumerator(instance, array, start, count) {
         init(disposableMixin, instance);
-        init(typedEnumerator, instance);
+        init(typedMutableEnumeratorMixin, instance);
         instance.array = array;
         instance.index = start - 1;
         instance.count = count;
@@ -120,13 +120,14 @@ const toObservable = /*@__PURE__*/ (() => {
                 }
                 pipe(observer, dispose());
             };
-            pipe(observer, schedule(continuation, delayStart && hasDelay(options) ? options : none));
+            pipe(observer, schedule(continuation, delayStart ? options : none));
         };
         return createObservable(onSink);
     });
     return (options) => {
-        const delay = getDelay(options);
-        const createObservableWithType = (f) => delay > 0 ? createRunnableObservable(f) : createEnumerableObservable(f);
+        const createObservableWithType = (f) => hasDelay(options)
+            ? createRunnableObservable(f)
+            : createEnumerableObservable(f);
         return createArrayObservable(createObservableWithType, options)(options);
     };
 })();

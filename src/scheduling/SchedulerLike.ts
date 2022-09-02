@@ -1,19 +1,8 @@
-import { MAX_SAFE_INTEGER } from "../__internal__/__internal__env";
-import { getDelay } from "../__internal__/__internal__optionParsing";
-import {
-  QueueLike,
-  createPriorityQueue,
-} from "../__internal__/scheduling/__internal__queue";
-import {
-  DisposableRefLike,
-  disposableMixin,
-  disposableRefMixin,
-} from "../__internal__/util/__internal__Disposables";
+import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
   MutableEnumeratorLike,
-  enumeratorMixin,
-} from "../__internal__/util/__internal__Enumerators";
-import { MutableRefLike_current } from "../__internal__/util/__internal__MutableRefLike";
+  mutableEnumeratorMixin,
+} from "../__internal__/ix/EnumeratorLike.mutable";
 import {
   Mutable,
   createInstanceFactory,
@@ -21,7 +10,18 @@ import {
   init,
   mixin,
   props,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/mixins";
+import {
+  QueueLike,
+  createPriorityQueue,
+} from "../__internal__/scheduling/QueueLike";
+import { getDelay } from "../__internal__/scheduling/SchedulerLike.options";
+import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
+import {
+  DisposableRefLike,
+  disposableRefMixin,
+} from "../__internal__/util/DisposableRefLike";
+import { MutableRefLike_current } from "../__internal__/util/MutableRefLike";
 import {
   Function1,
   Function2,
@@ -330,7 +330,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
     };
 
     const typedDisposableRefMixin = disposableRefMixin();
-    const typedEnumeratorMixin = enumeratorMixin<QueueTask>();
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin<QueueTask>();
 
     type TProperties = {
       [SchedulerLike_inContinuation]: boolean;
@@ -346,7 +346,11 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
 
     return createInstanceFactory(
       mixin(
-        include(disposableMixin, typedEnumeratorMixin, typedDisposableRefMixin),
+        include(
+          disposableMixin,
+          typedMutableEnumeratorMixin,
+          typedDisposableRefMixin,
+        ),
         function QueueScheduler(
           instance: Pick<
             QueueSchedulerLike,
@@ -361,7 +365,7 @@ const createQueueScheduler: Function1<SchedulerLike, QueueSchedulerLike> =
           host: SchedulerLike,
         ): QueueSchedulerLike {
           init(disposableMixin, instance);
-          init(typedEnumeratorMixin, instance);
+          init(typedMutableEnumeratorMixin, instance);
           init(typedDisposableRefMixin, instance, disposed);
 
           instance.delayed = createPriorityQueue(delayedComparator);
@@ -678,7 +682,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
     return diff;
   };
 
-  const typedEnumeratorMixin = enumeratorMixin<VirtualTask>();
+  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<VirtualTask>();
 
   type TProperties = {
     [SchedulerLike_inContinuation]: boolean;
@@ -692,7 +696,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
 
   const createVirtualTimeSchedulerInstance = createInstanceFactory(
     mixin(
-      include(disposableMixin, typedEnumeratorMixin),
+      include(disposableMixin, typedMutableEnumeratorMixin),
       function VirtualTimeScheduler(
         instance: Pick<
           VirtualTimeSchedulerLike,
@@ -705,6 +709,7 @@ export const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
         maxMicroTaskTicks: number,
       ): VirtualTimeSchedulerLike {
         init(disposableMixin, instance);
+        init(typedMutableEnumeratorMixin, instance);
 
         instance.maxMicroTaskTicks = maxMicroTaskTicks;
         instance.taskQueue = createPriorityQueue(comparator);

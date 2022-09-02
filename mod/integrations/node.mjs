@@ -1,7 +1,8 @@
 /// <reference types="./node.d.ts" />
 import fs from 'fs';
 import { createBrotliDecompress, createGunzip, createInflate, createBrotliCompress, createGzip, createDeflate } from 'zlib';
-import { createLiftedFlowable, createLiftedStreamable } from '../__internal__/streaming/__internal__StreamableLike.mjs';
+import { createLiftedFlowable } from '../__internal__/streaming/FlowableLike.create.mjs';
+import { createLiftedStreamable } from '../__internal__/streaming/StreamableLike.create.mjs';
 import { pipe, ignore, pipeLazy, isFunction } from '../functions.mjs';
 import { ObserverLike_dispatcher } from '../rx.mjs';
 import { create, forEach, subscribe } from '../rx/ObservableLike.mjs';

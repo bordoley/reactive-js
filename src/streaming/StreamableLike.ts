@@ -1,4 +1,4 @@
-import { createLiftedStreamable } from "../__internal__/streaming/__internal__StreamableLike";
+import { createLiftedStreamable } from "../__internal__/streaming/StreamableLike.create";
 import { concatWith, ignoreElements } from "../containers/ContainerLike";
 import { toObservable } from "../containers/ReadonlyArrayLike";
 import {

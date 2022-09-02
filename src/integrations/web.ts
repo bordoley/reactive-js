@@ -1,5 +1,3 @@
-import { createStreamble } from "../__internal__/streaming/__internal__StreamableLike";
-import { delegatingDisposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   Mutable,
   createInstanceFactory,
@@ -7,7 +5,9 @@ import {
   init,
   mixin,
   props,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/mixins";
+import { createStreamble } from "../__internal__/streaming/StreamableLike.create";
+import { delegatingDisposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import { ignoreElements } from "../containers/ContainerLike";
 import { toObservable } from "../containers/PromiseableLike";
 import { keep } from "../containers/ReadonlyArrayLike";

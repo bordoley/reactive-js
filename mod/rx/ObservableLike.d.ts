@@ -37,8 +37,12 @@ declare const concatAllT: ConcatAll<ObservableLike, {
 declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 declare const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"];
 declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike>;
-declare const defer: Defer<ObservableLike>["defer"];
-declare const deferT: Defer<ObservableLike>;
+declare const defer: Defer<ObservableLike, {
+    delay: number;
+}>["defer"];
+declare const deferT: Defer<ObservableLike, {
+    delay: number;
+}>;
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => ContainerOperator<ObservableLike<unknown>, T, T>;

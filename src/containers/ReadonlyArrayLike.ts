@@ -1,15 +1,8 @@
-import { getDelay, hasDelay } from "../__internal__/__internal__optionParsing";
-import { create as createEnumerable } from "../__internal__/ix/__internal__EnumerableLike";
-import {
-  createEnumerableObservable,
-  createRunnableObservable,
-} from "../__internal__/rx/__internal__ObservableLike.create";
-import { create as createRunnable } from "../__internal__/rx/__internal__RunnableLike.create";
-import { disposableMixin } from "../__internal__/util/__internal__Disposables";
+import { create as createEnumerable } from "../__internal__/ix/EnumerableLike.create";
 import {
   MutableEnumeratorLike,
-  enumeratorMixin,
-} from "../__internal__/util/__internal__Enumerators";
+  mutableEnumeratorMixin,
+} from "../__internal__/ix/EnumeratorLike.mutable";
 import {
   Mutable,
   createInstanceFactory,
@@ -17,7 +10,14 @@ import {
   init,
   mixin,
   props,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/mixins";
+import {
+  createEnumerableObservable,
+  createRunnableObservable,
+} from "../__internal__/rx/ObservableLike.create";
+import { create as createRunnable } from "../__internal__/rx/RunnableLike.create";
+import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
+import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import {
   Empty,
   ForEach,
@@ -161,7 +161,7 @@ export const toEnumerable: ToEnumerable<
     readonly count: number;
   }
 >["toEnumerable"] = /*@__PURE__*/ (<T>() => {
-  const typedEnumerator = enumeratorMixin<T>();
+  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
 
   type TProperties = {
     readonly array: readonly T[];
@@ -171,7 +171,7 @@ export const toEnumerable: ToEnumerable<
 
   const createReadonlyArrayEnumerator = createInstanceFactory(
     mixin(
-      include(disposableMixin, typedEnumerator),
+      include(disposableMixin, typedMutableEnumeratorMixin),
       function ReadonlyArrayEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
           Mutable<TProperties>,
@@ -180,7 +180,7 @@ export const toEnumerable: ToEnumerable<
         count: number,
       ): EnumeratorLike<T> {
         init(disposableMixin, instance);
-        init(typedEnumerator, instance);
+        init(typedMutableEnumeratorMixin, instance);
 
         instance.array = array;
         instance.index = start - 1;
@@ -277,13 +277,7 @@ export const toObservable: ReadonlyArrayToObservable = /*@__PURE__*/ (() => {
             pipe(observer, dispose());
           };
 
-          pipe(
-            observer,
-            schedule(
-              continuation,
-              delayStart && hasDelay(options) ? options : none,
-            ),
-          );
+          pipe(observer, schedule(continuation, delayStart ? options : none));
         };
         return createObservable(onSink);
       },
@@ -295,9 +289,10 @@ export const toObservable: ReadonlyArrayToObservable = /*@__PURE__*/ (() => {
     readonly delayStart?: boolean;
     readonly start?: number;
   }) => {
-    const delay = getDelay(options);
     const createObservableWithType = (f: SideEffect1<ObserverLike<T>>) =>
-      delay > 0 ? createRunnableObservable(f) : createEnumerableObservable(f);
+      hasDelay(options)
+        ? createRunnableObservable(f)
+        : createEnumerableObservable(f);
 
     return createArrayObservable(createObservableWithType, options)(options);
   };
