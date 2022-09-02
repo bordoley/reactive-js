@@ -1,9 +1,9 @@
 /// <reference types="./AsyncEnumerableLike.d.ts" />
-import { getDelay } from '../__internal__/__internal__optionParsing.mjs';
-import { interactive, createKeepOperator, createMapOperator, createScanOperator, createTakeWhileOperator } from '../__internal__/containers/__internal__StatefulContainerLike.mjs';
-import { streamMixin } from '../__internal__/streaming/__internal__StreamLike.mjs';
-import { disposableMixin, delegatingDisposableMixin } from '../__internal__/util/__internal__Disposables.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../__internal__/util/__internal__Objects.mjs';
+import { interactive, createKeepOperator, createMapOperator, createScanOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
+import { getDelay, hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
+import { streamMixin } from '../__internal__/streaming/StreamLike.internal.mjs';
+import { disposableMixin, delegatingDisposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, none, unsafeCast, getLength, compose, increment, returns, pipeUnsafe, newInstance, partial } from '../functions.mjs';
@@ -104,7 +104,9 @@ const createLiftedAsyncEnumerable = (...ops) => {
 const fromArray = /*@__PURE__*/ (() => {
     const fromArrayInternal = (values, start, count, options) => {
         const delay = getDelay(options);
-        const fromArrayWithDelay = delay > 0 ? toObservable$1({ delay }) : toObservable$1();
+        const fromArrayWithDelay = hasDelay(options)
+            ? toObservable$1({ delay })
+            : toObservable$1();
         return createLiftedAsyncEnumerable(scan$1(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
     };
     return (_) => values => fromArrayInternal(values, 0, values.length);

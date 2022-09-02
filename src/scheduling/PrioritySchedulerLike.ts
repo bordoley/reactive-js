@@ -1,5 +1,3 @@
-import { getDelay } from "../__internal__/__internal__optionParsing";
-import { disposableMixin } from "../__internal__/util/__internal__Disposables";
 import {
   Mutable,
   createInstanceFactory,
@@ -7,7 +5,9 @@ import {
   init,
   mixin,
   props,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/mixins";
+import { getDelay } from "../__internal__/scheduling/SchedulerLike.options";
+import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import { Function1, none, partial, pipe, unsafeCast } from "../functions";
 import {
   PrioritySchedulerLike,

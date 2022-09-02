@@ -1,16 +1,14 @@
-import { MAX_SAFE_INTEGER } from "../__internal__/__internal__env";
+import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
-  Lift,
-  TReactive,
-} from "../__internal__/containers/__internal__StatefulContainerLike";
+  createEnumerableObservable,
+  deferEnumerableObservable,
+} from "../__internal__/rx/ObservableLike.create";
 import {
-  createCatchError,
-  createMergeAll,
-  createScanAsync,
-  createSwitchAll,
-  deferObservableImpl,
-} from "../__internal__/rx/__internal__ObservableLike";
-import { createEnumerableObservable } from "../__internal__/rx/__internal__ObservableLike.create";
+  catchErrorEnumerableObservable,
+  mergeAllEnumerableObservable,
+  scanAsyncEnumerableObservable,
+  switchAllEnumerableObservable,
+} from "../__internal__/rx/ObservableLike.higher-order";
 import {
   Buffer,
   CatchError,
@@ -38,16 +36,8 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { Factory, Function1, newInstance, pipeUnsafe } from "../functions";
-import {
-  EnumerableObservableLike,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
-  ObserverLike,
-  ReactiveContainerLike_sinkInto,
-  ScanAsync,
-} from "../rx";
-import { sourceFrom } from "../rx/SinkLike";
+import { Factory } from "../functions";
+import { EnumerableObservableLike, ScanAsync } from "../rx";
 import { VirtualTimeSchedulerLike } from "../scheduling";
 import {
   buffer,
@@ -77,68 +67,18 @@ import {
 
 export const create = createEnumerableObservable;
 
-export const defer: Defer<EnumerableObservableLike>["defer"] = (f =>
-  deferObservableImpl(
-    f,
-    true,
-    true,
-  )) as Defer<EnumerableObservableLike>["defer"];
+export const defer: Defer<EnumerableObservableLike>["defer"] =
+  deferEnumerableObservable;
 export const deferT: Defer<EnumerableObservableLike> = {
   defer,
 };
-
-const lift: Lift<EnumerableObservableLike, TReactive>["lift"] =
-  /*@__PURE__*/ (() => {
-    class LiftedRunnableObservable<TIn, TOut>
-      implements EnumerableObservableLike<TOut>
-    {
-      readonly [ObservableLike_isEnumerable] = true;
-      readonly [ObservableLike_isRunnable] = true;
-
-      constructor(
-        readonly source: EnumerableObservableLike<TIn>,
-        readonly operators: readonly Function1<
-          ObserverLike<any>,
-          ObserverLike<any>
-        >[],
-      ) {}
-
-      [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-        pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
-      }
-    }
-
-    return <TA, TB>(
-        operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-      ): Function1<
-        EnumerableObservableLike<TA>,
-        EnumerableObservableLike<TB>
-      > =>
-      source => {
-        const sourceSource =
-          source instanceof LiftedRunnableObservable ? source.source : source;
-
-        const allFunctions =
-          source instanceof LiftedRunnableObservable
-            ? [operator, ...source.operators]
-            : [operator];
-
-        return newInstance(
-          LiftedRunnableObservable,
-          sourceSource,
-          allFunctions,
-        );
-      };
-  })();
 
 export const bufferT: Buffer<EnumerableObservableLike> = {
   buffer: buffer as Buffer<EnumerableObservableLike>["buffer"],
 };
 
 export const catchError: CatchError<EnumerableObservableLike>["catchError"] =
-  /*@__PURE__*/ createCatchError<EnumerableObservableLike>(
-    lift,
-  ) as CatchError<EnumerableObservableLike>["catchError"];
+  catchErrorEnumerableObservable;
 export const catchErrorT: CatchError<EnumerableObservableLike> = { catchError };
 
 export const concatT: Concat<EnumerableObservableLike> = {
@@ -216,15 +156,7 @@ export const mergeAll: ConcatAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = /*@__PURE__*/ createMergeAll<EnumerableObservableLike>(
-  lift,
-) as ConcatAll<
-  EnumerableObservableLike,
-  {
-    readonly maxBufferSize?: number;
-    readonly maxConcurrency?: number;
-  }
->["concatAll"];
+>["concatAll"] = mergeAllEnumerableObservable;
 export const mergeAllT: ConcatAll<
   EnumerableObservableLike,
   {
@@ -252,10 +184,7 @@ export const scanT: Scan<EnumerableObservableLike> = {
 export const scanAsync: ScanAsync<
   EnumerableObservableLike,
   EnumerableObservableLike
->["scanAsync"] = createScanAsync<
-  EnumerableObservableLike,
-  EnumerableObservableLike
->(createEnumerableObservable);
+>["scanAsync"] = scanAsyncEnumerableObservable;
 export const scanAsyncT: ScanAsync<
   EnumerableObservableLike,
   EnumerableObservableLike
@@ -271,7 +200,7 @@ export const someSatisfyT: SomeSatisfy<EnumerableObservableLike> = {
 };
 
 export const switchAll: ConcatAll<EnumerableObservableLike>["concatAll"] =
-  /*@__PURE__*/ createSwitchAll<EnumerableObservableLike>(lift);
+  switchAllEnumerableObservable;
 export const switchAllT: ConcatAll<EnumerableObservableLike> = {
   concatAll: switchAll,
 };

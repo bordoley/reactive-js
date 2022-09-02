@@ -1,9 +1,8 @@
-import { create as createEnumerable } from "../__internal__/ix/__internal__EnumerableLike";
-import { disposableMixin } from "../__internal__/util/__internal__Disposables";
+import { create as createEnumerable } from "../__internal__/ix/EnumerableLike.create";
 import {
   MutableEnumeratorLike,
-  enumeratorMixin,
-} from "../__internal__/util/__internal__Enumerators";
+  mutableEnumeratorMixin,
+} from "../__internal__/ix/EnumeratorLike.mutable";
 import {
   Mutable,
   createInstanceFactory,
@@ -11,7 +10,8 @@ import {
   init,
   mixin,
   props,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/mixins";
+import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import { IterableLike, ToIterable } from "../containers";
 import { Function1, compose, identity, none, pipe } from "../functions";
 import {
@@ -43,7 +43,7 @@ export const toAsyncEnumerableT: ToAsyncEnumerable<IterableLike> = {
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
-    const typedEnumeratorMixin = enumeratorMixin<T>();
+    const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
 
     type TProperties = {
       readonly iterator: Iterator<T>;
@@ -51,14 +51,14 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
 
     const createIterableEnumerator = createInstanceFactory(
       mixin(
-        include(disposableMixin, typedEnumeratorMixin),
+        include(disposableMixin, typedMutableEnumeratorMixin),
         function IteratorEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
           iterator: Iterator<T>,
         ): EnumeratorLike<T> {
           init(disposableMixin, instance);
-          init(typedEnumeratorMixin, instance);
+          init(typedMutableEnumeratorMixin, instance);
 
           instance.iterator = iterator;
 

@@ -1,4 +1,4 @@
-import { createObservable } from "../__internal__/rx/__internal__ObservableLike.create";
+import { createObservable } from "../__internal__/rx/ObservableLike.create";
 import { PromiseableLike } from "../containers";
 import { pipe } from "../functions";
 import { ObservableLike, ToObservable } from "../rx";

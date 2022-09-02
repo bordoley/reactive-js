@@ -1,4 +1,4 @@
-import { createRepeatOperator } from "../__internal__/containers/__internal__ContainerLike";
+import { createRepeatOperator } from "../__internal__/containers/ContainerLike.repeat";
 import {
   Lift,
   TReactive,
@@ -16,9 +16,15 @@ import {
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
   reactive,
-} from "../__internal__/containers/__internal__StatefulContainerLike";
-import { createOnSink } from "../__internal__/rx/__internal__ReactiveContainerLike";
-import { create as createRunnable } from "../__internal__/rx/__internal__RunnableLike.create";
+} from "../__internal__/containers/StatefulContainerLike.internal";
+import {
+  createInstanceFactory,
+  include,
+  init,
+  mixin,
+} from "../__internal__/mixins";
+import { createOnSink } from "../__internal__/rx/ReactiveContainerLike.createOnSink";
+import { create as createRunnable } from "../__internal__/rx/RunnableLike.create";
 import {
   DelegateSinkLike,
   DelegatingSink_delegate,
@@ -42,13 +48,7 @@ import {
   takeLastSinkMixin,
   takeWhileSinkMixin,
   throwIfEmptySinkMixin,
-} from "../__internal__/rx/__internal__Sinks";
-import {
-  createInstanceFactory,
-  include,
-  init,
-  mixin,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/rx/SinkLike.mixins";
 import {
   Buffer,
   CatchError,

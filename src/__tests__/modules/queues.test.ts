@@ -1,4 +1,4 @@
-import { createPriorityQueue } from "../../__internal__/scheduling/__internal__queue";
+import { createPriorityQueue } from "../../__internal__/scheduling/QueueLike";
 import { floor, newInstance, pipe } from "../../functions";
 import { expectArrayEquals, test, testModule } from "../testing";
 

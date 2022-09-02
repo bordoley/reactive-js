@@ -1,4 +1,4 @@
-import { createStream } from "../__internal__/streaming/__internal__StreamLike";
+import { createStream } from "../__internal__/streaming/StreamLike.internal";
 import { ignoreElements, startWith } from "../containers/ContainerLike";
 import { toObservable as arrayToObservable } from "../containers/ReadonlyArrayLike";
 import { compose, pipe } from "../functions";

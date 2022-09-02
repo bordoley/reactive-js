@@ -10,10 +10,8 @@ import {
   createGzip,
   createInflate,
 } from "zlib";
-import {
-  createLiftedFlowable,
-  createLiftedStreamable,
-} from "../__internal__/streaming/__internal__StreamableLike";
+import { createLiftedFlowable } from "../__internal__/streaming/FlowableLike.create";
+import { createLiftedStreamable } from "../__internal__/streaming/StreamableLike.create";
 import { ContainerOperator } from "../containers";
 import {
   Factory,

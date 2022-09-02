@@ -1,44 +1,18 @@
 /// <reference types="./EnumerableObservableLike.d.ts" />
-import { MAX_SAFE_INTEGER } from '../__internal__/__internal__env.mjs';
-import { deferObservableImpl, createCatchError, createMergeAll, createScanAsync, createSwitchAll } from '../__internal__/rx/__internal__ObservableLike.mjs';
-import { createEnumerableObservable } from '../__internal__/rx/__internal__ObservableLike.create.mjs';
-import { pipeUnsafe, newInstance } from '../functions.mjs';
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
-import { sourceFrom } from './SinkLike.mjs';
+import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
+import { createEnumerableObservable, deferEnumerableObservable } from '../__internal__/rx/ObservableLike.create.mjs';
+import { catchErrorEnumerableObservable, mergeAllEnumerableObservable, scanAsyncEnumerableObservable, switchAllEnumerableObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
 
 const create = createEnumerableObservable;
-const defer = (f => deferObservableImpl(f, true, true));
+const defer = deferEnumerableObservable;
 const deferT = {
     defer,
 };
-const lift = 
-/*@__PURE__*/ (() => {
-    var _a, _b;
-    class LiftedRunnableObservable {
-        constructor(source, operators) {
-            this.source = source;
-            this.operators = operators;
-            this[_a] = true;
-            this[_b] = true;
-        }
-        [(_a = ObservableLike_isEnumerable, _b = ObservableLike_isRunnable, ReactiveContainerLike_sinkInto)](observer) {
-            pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
-        }
-    }
-    return (operator) => source => {
-        const sourceSource = source instanceof LiftedRunnableObservable ? source.source : source;
-        const allFunctions = source instanceof LiftedRunnableObservable
-            ? [operator, ...source.operators]
-            : [operator];
-        return newInstance(LiftedRunnableObservable, sourceSource, allFunctions);
-    };
-})();
 const bufferT = {
     buffer: buffer,
 };
-const catchError = 
-/*@__PURE__*/ createCatchError(lift);
+const catchError = catchErrorEnumerableObservable;
 const catchErrorT = { catchError };
 const concatT = {
     concat: concat,
@@ -85,7 +59,7 @@ const mapT = {
 const mergeT = {
     concat: merge,
 };
-const mergeAll = /*@__PURE__*/ createMergeAll(lift);
+const mergeAll = mergeAllEnumerableObservable;
 const mergeAllT = { concatAll: mergeAll };
 const neverT = {
     never,
@@ -99,7 +73,7 @@ const reduceT = {
 const scanT = {
     scan: scan,
 };
-const scanAsync = createScanAsync(createEnumerableObservable);
+const scanAsync = scanAsyncEnumerableObservable;
 const scanAsyncT = { scanAsync };
 const skipFirstT = {
     skipFirst: skipFirst,
@@ -107,8 +81,7 @@ const skipFirstT = {
 const someSatisfyT = {
     someSatisfy: someSatisfy,
 };
-const switchAll = 
-/*@__PURE__*/ createSwitchAll(lift);
+const switchAll = switchAllEnumerableObservable;
 const switchAllT = {
     concatAll: switchAll,
 };

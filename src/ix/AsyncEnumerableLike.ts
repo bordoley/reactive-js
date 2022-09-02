@@ -1,4 +1,3 @@
-import { getDelay } from "../__internal__/__internal__optionParsing";
 import {
   Lift,
   TInteractive,
@@ -7,12 +6,7 @@ import {
   createScanOperator,
   createTakeWhileOperator,
   interactive,
-} from "../__internal__/containers/__internal__StatefulContainerLike";
-import { streamMixin } from "../__internal__/streaming/__internal__StreamLike";
-import {
-  delegatingDisposableMixin,
-  disposableMixin,
-} from "../__internal__/util/__internal__Disposables";
+} from "../__internal__/containers/StatefulContainerLike.internal";
 import {
   Mixin1,
   Mutable,
@@ -21,7 +15,16 @@ import {
   init,
   mixin,
   props,
-} from "../__internal__/util/__internal__Objects";
+} from "../__internal__/mixins";
+import {
+  getDelay,
+  hasDelay,
+} from "../__internal__/scheduling/SchedulerLike.options";
+import { streamMixin } from "../__internal__/streaming/StreamLike.internal";
+import {
+  delegatingDisposableMixin,
+  disposableMixin,
+} from "../__internal__/util/DisposableLike.mixins";
 import {
   ContainerOperator,
   FromArrayOptions,
@@ -407,8 +410,9 @@ export const fromArray = /*@__PURE__*/ (() => {
   ): AsyncEnumerableLike<T> => {
     const delay = getDelay(options);
 
-    const fromArrayWithDelay =
-      delay > 0 ? arrayToObservable<T>({ delay }) : arrayToObservable<T>();
+    const fromArrayWithDelay = hasDelay(options)
+      ? arrayToObservable<T>({ delay })
+      : arrayToObservable<T>();
 
     return createLiftedAsyncEnumerable(
       scanObs(increment, returns(start - 1)),

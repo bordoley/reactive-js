@@ -1,5 +1,5 @@
 /// <reference types="./StreamableLike.d.ts" />
-import { createLiftedStreamable } from '../__internal__/streaming/__internal__StreamableLike.mjs';
+import { createLiftedStreamable } from '../__internal__/streaming/StreamableLike.create.mjs';
 import { ignoreElements, concatWith } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, returns, updateReducer } from '../functions.mjs';
