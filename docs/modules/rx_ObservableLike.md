@@ -17,6 +17,7 @@
 - [everySatisfyT](rx_ObservableLike.md#everysatisfyt)
 - [exhaustT](rx_ObservableLike.md#exhaustt)
 - [forEachT](rx_ObservableLike.md#foreacht)
+- [fromPromiseT](rx_ObservableLike.md#frompromiset)
 - [generateT](rx_ObservableLike.md#generatet)
 - [keepT](rx_ObservableLike.md#keept)
 - [mapT](rx_ObservableLike.md#mapt)
@@ -60,6 +61,7 @@
 - [forkCombineLatest](rx_ObservableLike.md#forkcombinelatest)
 - [forkMerge](rx_ObservableLike.md#forkmerge)
 - [forkZipLatest](rx_ObservableLike.md#forkziplatest)
+- [fromPromise](rx_ObservableLike.md#frompromise)
 - [generate](rx_ObservableLike.md#generate)
 - [isEnumerable](rx_ObservableLike.md#isenumerable)
 - [isRunnable](rx_ObservableLike.md#isrunnable)
@@ -164,6 +166,12 @@ ___
 ### forEachT
 
 • `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### fromPromiseT
+
+• `Const` **fromPromiseT**: [`FromPromise`](containers.md#frompromise)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -1319,6 +1327,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+### fromPromise
+
+▸ **fromPromise**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
