@@ -309,7 +309,7 @@ ___
 
 ### FromPromise
 
-Ƭ **FromPromise**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromPromise**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromPromise`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 

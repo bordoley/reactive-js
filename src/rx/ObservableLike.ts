@@ -110,6 +110,7 @@ import {
   ForEach,
   ForkConcat,
   ForkZip,
+  FromPromise,
   Generate,
   Keep,
   Map,
@@ -593,6 +594,11 @@ export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
       LatestMode.Zip,
     )) as ForkZip<ObservableLike>["forkZip"];
 
+export const fromPromise: FromPromise<ObservableLike>["fromPromise"] =
+  promiseToObservable;
+
+export const fromPromiseT: FromPromise<ObservableLike> = { fromPromise };
+
 interface GenerateObservable {
   <T>(
     generator: Updater<T>,
@@ -852,9 +858,7 @@ export const mapT: Map<ObservableLike> = { map };
 export const mapAsync = <TA, TB>(
   f: Function1<TA, Promise<TB>>,
 ): ContainerOperator<ObservableLike, TA, TB> =>
-  concatMap({ ...switchAllT, ...mapT }, (a: TA) =>
-    pipe(a, f, promiseToObservable()),
-  );
+  concatMap({ ...switchAllT, ...mapT }, (a: TA) => pipe(a, f, fromPromise()));
 
 export const merge = mergeInternal;
 export const mergeT = mergeTInternal;

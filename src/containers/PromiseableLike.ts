@@ -8,7 +8,7 @@ import { dispose, isDisposed, toErrorHandler } from "../util/DisposableLike";
 
 export const toObservable: ToObservable<PromiseableLike>["toObservable"] =
   <T>() =>
-  (promise: PromiseLike<T>): ObservableLike<T> =>
+  (promise: PromiseableLike<T>): ObservableLike<T> =>
     createObservable(observer => {
       const dispatcher = getDispatcher(observer);
 

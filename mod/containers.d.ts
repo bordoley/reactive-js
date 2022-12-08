@@ -160,7 +160,7 @@ declare type FromIterable<C extends ContainerLike, O = never> = Container<C> & {
     fromIterable<T>(options?: Partial<O>): Function1<Iterable<T>, ContainerOf<C, T>>;
 };
 declare type FromPromise<C extends ContainerLike, O = never> = Container<C> & {
-    fromIterable<T>(options?: Partial<O>): Function1<PromiseLike<T>, ContainerOf<C, T>>;
+    fromPromise<T>(options?: Partial<O>): Function1<PromiseableLike<T>, ContainerOf<C, T>>;
 };
 declare type FromSequence<C extends ContainerLike, O = never> = Container<C> & {
     fromSequence<T>(options?: Partial<O>): Function1<SequenceLike<T>, ContainerOf<C, T>>;
