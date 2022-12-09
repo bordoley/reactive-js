@@ -20,6 +20,7 @@ import {
   SchedulerLike,
 } from "../../scheduling";
 import { StreamLike } from "../../streaming";
+import { add } from "../../util/__internal__/DisposableLike/DisposableLike.add";
 import {
   Mixin3,
   Mutable,
@@ -31,7 +32,6 @@ import {
 } from "../mixins";
 import { multicast } from "../rx/ObservableLike.operators";
 import { delegatingDisposableMixin } from "../util/DisposableLike.mixins";
-import { add } from "../util/DisposableLike.operators";
 
 export const streamMixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T>,

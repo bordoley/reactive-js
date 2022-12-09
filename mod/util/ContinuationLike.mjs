@@ -1,9 +1,6 @@
 /// <reference types="./ContinuationLike.d.ts" />
-import { ContinuationLike_run } from '../util.mjs';
+import { run as run$1 } from './__internal__/ContinuationLike/ContinuationLike.run.mjs';
 
-const run = continuation => {
-    continuation[ContinuationLike_run]();
-    return continuation;
-};
+const run = run$1;
 
 export { run };

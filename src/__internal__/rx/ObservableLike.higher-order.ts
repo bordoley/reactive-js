@@ -33,6 +33,11 @@ import {
   publishTo,
 } from "../../rx/SubjectLike";
 import { DisposableLike } from "../../util";
+import { addTo } from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import { dispose } from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import { disposed } from "../../util/__internal__/DisposableLike/DisposableLike.disposed";
+import { isDisposed } from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
+import { onComplete } from "../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { MAX_SAFE_INTEGER } from "../constants";
 import {
   Mutable,
@@ -42,14 +47,7 @@ import {
   mixin,
   props,
 } from "../mixins";
-import { disposed } from "../util/DisposableLike.create";
 import { disposableMixin } from "../util/DisposableLike.mixins";
-import {
-  addTo,
-  dispose,
-  isDisposed,
-  onComplete,
-} from "../util/DisposableLike.operators";
 import {
   DisposableRefLike,
   createDisposableRef,

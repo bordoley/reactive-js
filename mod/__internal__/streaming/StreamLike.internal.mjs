@@ -5,10 +5,10 @@ import { getObserverCount, getReplay } from '../../rx/MulticastObservableLike.mj
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { create, publish } from '../../rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../scheduling.mjs';
+import { add } from '../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
 import { mixin, include, init, props, createInstanceFactory } from '../mixins.mjs';
 import { multicast } from '../rx/ObservableLike.operators.mjs';
 import { delegatingDisposableMixin } from '../util/DisposableLike.mixins.mjs';
-import { add } from '../util/DisposableLike.operators.mjs';
 
 const streamMixin = /*@__PURE__*/ (() => {
     return returns(mixin(include(delegatingDisposableMixin), function Stream(instance, op, scheduler, replay) {

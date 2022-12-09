@@ -1,7 +1,5 @@
 import { Updater } from "../functions";
-import { ContinuationLike, ContinuationLike_run } from "../util";
+import { ContinuationLike } from "../util";
+import { run as ContinuationLike__run } from "./__internal__/ContinuationLike/ContinuationLike.run";
 
-export const run: Updater<ContinuationLike> = continuation => {
-  continuation[ContinuationLike_run]();
-  return continuation;
-};
+export const run: Updater<ContinuationLike> = ContinuationLike__run;

@@ -4,7 +4,8 @@
   "entryPointStrategy": "expand",
   "exclude": [
     "./packages/core/__internal__/**/**/*",
-    "./packages/core/__tests__/**/**/*"
+    "./packages/core/__tests__/**/**/*",
+    "./packages/core/**/__internal__/**/*"
   ],
   "readme": "none",
   "out": "docs",

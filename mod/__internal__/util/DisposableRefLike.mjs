@@ -1,8 +1,9 @@
 /// <reference types="./DisposableRefLike.d.ts" />
 import { pipe, unsafeCast, none, returns } from '../../functions.mjs';
+import { add } from '../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
+import { dispose } from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import { mixin, props, createInstanceFactory, include, init } from '../mixins.mjs';
 import { disposableMixin } from './DisposableLike.mixins.mjs';
-import { add, dispose } from './DisposableLike.operators.mjs';
 import { MutableRefLike_current } from './MutableRefLike.mjs';
 
 const disposableRefMixin = /*@__PURE__*/ (() => {

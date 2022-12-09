@@ -148,7 +148,7 @@ ___
 
 ### bindTo
 
-▸ **bindTo**<`T`\>(`parent`): [`Updater`](functions.md#updater)<`T`\>
+▸ **bindTo**<`T`\>(`child`): [`Updater`](functions.md#updater)<`T`\>
 
 #### Type parameters
 
@@ -160,7 +160,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `child` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -181,6 +181,8 @@ ___
 ### dispose
 
 ▸ **dispose**<`T`\>(`e?`): [`Updater`](functions.md#updater)<`T`\>
+
+Dispose `disposable` with an optional error.
 
 #### Type parameters
 

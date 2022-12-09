@@ -1,9 +1,9 @@
 /// <reference types="./EnumerableLike.create.d.ts" />
 import { none, pipe } from '../../functions.mjs';
 import { InteractiveContainerLike_interact, SourceLike_move } from '../../ix.mjs';
+import { dispose } from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import { createInstanceFactory, mixin, props, include, init } from '../mixins.mjs';
 import { disposableMixin } from '../util/DisposableLike.mixins.mjs';
-import { dispose } from '../util/DisposableLike.operators.mjs';
 import { mutableEnumeratorMixin } from './EnumeratorLike.mutable.mjs';
 
 const create = 
