@@ -1,10 +1,7 @@
 import { Option, none, pipe, pipeLazy, raise } from "../../functions";
 import { subscribe } from "../../rx/ObservableLike";
-import {
-  createVirtualTimeScheduler,
-  getCurrentTime,
-  schedule,
-} from "../../scheduling/SchedulerLike";
+import { getCurrentTime, schedule } from "../../scheduling/SchedulerLike";
+import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
 import { Exception } from "../../util";
 import { run } from "../../util/ContinuationLike";
 import {

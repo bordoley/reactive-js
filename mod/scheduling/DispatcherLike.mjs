@@ -1,11 +1,11 @@
 /// <reference types="./DispatcherLike.d.ts" />
-import { DispatcherLike_dispatch, DispatcherLike_scheduler } from '../scheduling.mjs';
+import '../scheduling.mjs';
+import { dispatch as dispatch$1 } from './__internal__/DispatcherLike/DispatcherLike.dispatch.mjs';
+import { dispatchTo as dispatchTo$1 } from './__internal__/DispatcherLike/DispatcherLike.dispatchTo.mjs';
+import { getScheduler as getScheduler$1 } from './__internal__/DispatcherLike/DispatcherLike.getScheduler.mjs';
 
-const dispatch = (v) => dispatcher => {
-    dispatcher[DispatcherLike_dispatch](v);
-    return dispatcher;
-};
-const dispatchTo = (dispatcher) => v => dispatcher[DispatcherLike_dispatch](v);
-const getScheduler = (dispatcher) => dispatcher[DispatcherLike_scheduler];
+const dispatch = dispatch$1;
+const dispatchTo = dispatchTo$1;
+const getScheduler = getScheduler$1;
 
 export { dispatch, dispatchTo, getScheduler };

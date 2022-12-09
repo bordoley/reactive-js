@@ -4,12 +4,12 @@ import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { async, __memo, __await } from '../../effects.mjs';
 import { pipe, isSome } from '../../functions.mjs';
 import { takeLast, forEach, subscribe, keepT } from '../../rx/ObservableLike.mjs';
-import { createVirtualTimeScheduler } from '../../scheduling/SchedulerLike.mjs';
+import { create } from '../../scheduling/VirtualTimeScheduler.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import { testModule, test as createTest, expectEquals, expectArrayEquals } from '../testing.mjs';
 
 testModule("effects", createTest("batch mode", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = create();
     const fromValueWithDelay = (delay, value) => pipe([value], toObservable({ delay }));
     let result = -1;
     pipe(async(() => {
@@ -26,7 +26,7 @@ testModule("effects", createTest("batch mode", () => {
     run(scheduler);
     pipe(result, expectEquals(22));
 }), createTest("combined-latest mode", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = create();
     const oneTwoThreeDelayed = pipe([1, 2, 3], toObservable({ delay: 1 }));
     const createOneTwoThree = (_) => pipe([1, 2, 3], toObservable());
     const result = [];

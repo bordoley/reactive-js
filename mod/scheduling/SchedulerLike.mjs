@@ -10,16 +10,22 @@ import { MutableRefLike_current } from '../__internal__/util/MutableRefLike.mjs'
 import { none, isSome, pipe, isNone, raise, newInstance, isFunction, max, unsafeCast, compose } from '../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../ix.mjs';
 import { move, hasCurrent, getCurrent } from '../ix/EnumeratorLike.mjs';
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule } from '../scheduling.mjs';
+import { SchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield } from '../scheduling.mjs';
 import { ContinuationLike_run, PauseableLike_pause, PauseableLike_resume } from '../util.mjs';
 import { run } from '../util/ContinuationLike.mjs';
-import { isDisposed, dispose, disposed, addIgnoringChildErrors, create, addTo, onDisposed } from '../util/DisposableLike.mjs';
+import { isDisposed, dispose, disposed, addIgnoringChildErrors } from '../util/DisposableLike.mjs';
 import { pause } from '../util/PauseableLike.mjs';
+import { createHostScheduler as createHostScheduler$1 } from './__internal__/SchedulerLike/SchedulerLike.createHostScheduler.mjs';
+import { getCurrentTime as getCurrentTime$1 } from './__internal__/SchedulerLike/SchedulerLike.getCurrentTime.mjs';
+import { isInContinuation as isInContinuation$1 } from './__internal__/SchedulerLike/SchedulerLike.isInContinuation.mjs';
+import { requestYield as requestYield$1 } from './__internal__/SchedulerLike/SchedulerLike.requestYield.mjs';
+import { shouldYield as shouldYield$1 } from './__internal__/SchedulerLike/SchedulerLike.shouldYield.mjs';
 
-const isInContinuation = (scheduler) => scheduler[SchedulerLike_inContinuation];
-const getCurrentTime = (scheduler) => scheduler[SchedulerLike_now];
-const requestYield = (scheduler) => scheduler[SchedulerLike_requestYield]();
-const shouldYield = (scheduler) => scheduler[SchedulerLike_shouldYield];
+const createHostScheduler = createHostScheduler$1;
+const getCurrentTime = getCurrentTime$1;
+const isInContinuation = isInContinuation$1;
+const requestYield = requestYield$1;
+const shouldYield = shouldYield$1;
 const isYieldError = (e) => e instanceof YieldError;
 class YieldError {
     constructor(delay) {
@@ -250,168 +256,5 @@ const createQueueScheduler =
 })();
 const toPausableScheduler = compose(createQueueScheduler, pause);
 const toPriorityScheduler = createQueueScheduler;
-const createHostScheduler = /*@__PURE__*/ (() => {
-    const supportsPerformanceNow = typeof performance === "object" && isFunction(performance.now);
-    const supportsSetImmediate = typeof setImmediate === "function";
-    const supportsProcessHRTime = typeof process === "object" && isFunction(process.hrtime);
-    const supportsIsInputPending = typeof navigator === "object" &&
-        navigator.scheduling !== undefined &&
-        navigator.scheduling.isInputPending !== undefined;
-    const isInputPending = () => { var _a, _b; return supportsIsInputPending && ((_b = (_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending()) !== null && _b !== void 0 ? _b : false); };
-    const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
-        const disposable = pipe(create(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
-        const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
-    };
-    const scheduleDelayed = (scheduler, continuation, delay) => {
-        const disposable = pipe(create(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
-        const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
-    };
-    const scheduleImmediate = (scheduler, continuation) => {
-        if (supportsSetImmediate) {
-            scheduleImmediateWithSetImmediate(scheduler, continuation);
-        }
-        else {
-            scheduleDelayed(scheduler, continuation, 0);
-        }
-    };
-    const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
-        // clear the immediateOrTimer disposable
-        pipe(immmediateOrTimerDisposable, dispose());
-        scheduler.startTime = getCurrentTime(scheduler);
-        scheduler[SchedulerLike_inContinuation] = true;
-        run(continuation);
-        scheduler[SchedulerLike_inContinuation] = false;
-    };
-    const createHostSchedulerInstance = createInstanceFactory(mixin(include(disposableMixin), function HostScheduler(instance, yieldInterval) {
-        init(disposableMixin, instance);
-        instance.yieldInterval = yieldInterval;
-        return instance;
-    }, props({
-        [SchedulerLike_inContinuation]: false,
-        startTime: 0,
-        yieldInterval: 0,
-        yieldRequested: false,
-    }), {
-        get [SchedulerLike_now]() {
-            if (supportsPerformanceNow) {
-                return performance.now();
-            }
-            else if (supportsProcessHRTime) {
-                const hr = process.hrtime();
-                return hr[0] * 1000 + hr[1] / 1e6;
-            }
-            else {
-                return Date.now();
-            }
-        },
-        get [SchedulerLike_shouldYield]() {
-            unsafeCast(this);
-            const inContinuation = isInContinuation(this);
-            const { yieldRequested } = this;
-            if (inContinuation) {
-                this.yieldRequested = false;
-            }
-            return (inContinuation &&
-                (yieldRequested ||
-                    getCurrentTime(this) > this.startTime + this.yieldInterval ||
-                    isInputPending()));
-        },
-        [SchedulerLike_requestYield]() {
-            this.yieldRequested = true;
-        },
-        [SchedulerLike_schedule](continuation, options) {
-            const delay = getDelay(options);
-            pipe(this, addIgnoringChildErrors(continuation));
-            const continuationIsDisposed = isDisposed(continuation);
-            if (!continuationIsDisposed && delay > 0) {
-                scheduleDelayed(this, continuation, delay);
-            }
-            else if (!continuationIsDisposed) {
-                scheduleImmediate(this, continuation);
-            }
-        },
-    }));
-    return (options = {}) => {
-        const { yieldInterval = 5 } = options;
-        return createHostSchedulerInstance(yieldInterval);
-    };
-})();
-const createVirtualTimeScheduler = /*@__PURE__*/ (() => {
-    const comparator = (a, b) => {
-        let diff = 0;
-        diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
-        diff = diff !== 0 ? diff : a.id - b.id;
-        return diff;
-    };
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
-    const createVirtualTimeSchedulerInstance = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
-        init(disposableMixin, instance);
-        init(typedMutableEnumeratorMixin, instance);
-        instance.maxMicroTaskTicks = maxMicroTaskTicks;
-        instance.taskQueue = createPriorityQueue(comparator);
-        return instance;
-    }, props({
-        [SchedulerLike_inContinuation]: false,
-        [SchedulerLike_now]: 0,
-        maxMicroTaskTicks: MAX_SAFE_INTEGER,
-        microTaskTicks: 0,
-        taskIDCount: 0,
-        yieldRequested: false,
-        taskQueue: none,
-    }), {
-        get [SchedulerLike_shouldYield]() {
-            unsafeCast(this);
-            const { yieldRequested, [SchedulerLike_inContinuation]: inContinuation, } = this;
-            if (inContinuation) {
-                this.microTaskTicks++;
-                this.yieldRequested = false;
-            }
-            return (inContinuation &&
-                (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks));
-        },
-        [ContinuationLike_run]() {
-            while (move(this)) {
-                const task = getCurrent(this);
-                const { dueTime, continuation } = task;
-                this.microTaskTicks = 0;
-                this[SchedulerLike_now] = dueTime;
-                this[SchedulerLike_inContinuation] = true;
-                run(continuation);
-                this[SchedulerLike_inContinuation] = false;
-            }
-        },
-        [SchedulerLike_requestYield]() {
-            this.yieldRequested = true;
-        },
-        [SchedulerLike_schedule](continuation, options) {
-            const delay = getDelay(options);
-            pipe(this, addIgnoringChildErrors(continuation));
-            if (!isDisposed(continuation)) {
-                this.taskQueue.push({
-                    id: this.taskIDCount++,
-                    dueTime: getCurrentTime(this) + delay,
-                    continuation,
-                });
-            }
-        },
-        [SourceLike_move]() {
-            const taskQueue = this.taskQueue;
-            if (isDisposed(this)) {
-                return;
-            }
-            const task = taskQueue.pop();
-            if (isSome(task)) {
-                this[EnumeratorLike_current] = task;
-            }
-            else {
-                pipe(this, dispose());
-            }
-        },
-    }));
-    return (options = {}) => {
-        const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-        return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
-    };
-})();
 
-export { __yield, createHostScheduler, createVirtualTimeScheduler, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };
+export { __yield, createHostScheduler, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };

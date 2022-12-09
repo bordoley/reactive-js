@@ -207,10 +207,10 @@ import {
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import {
   __yield,
-  createVirtualTimeScheduler,
   isInContinuation,
   toPausableScheduler,
 } from "../scheduling/SchedulerLike";
+import { create as createVirtualTimeScheduler } from "../scheduling/VirtualTimeScheduler";
 import { FlowMode, ToFlowable } from "../streaming";
 import {
   ContinuationLike,
