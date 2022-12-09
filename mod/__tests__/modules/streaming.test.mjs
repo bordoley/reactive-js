@@ -2,7 +2,7 @@
 import { pipe, returns } from '../../functions.mjs';
 import { forEach, subscribe } from '../../rx/ObservableLike.mjs';
 import { dispatch } from '../../scheduling/DispatcherLike.mjs';
-import { create } from '../../scheduling/VirtualTimeScheduler.mjs';
+import { create } from '../../scheduling/VirtualTimeSchedulerLike.mjs';
 import { createStateStore, stream } from '../../streaming/StreamableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import { dispose } from '../../util/DisposableLike.mjs';

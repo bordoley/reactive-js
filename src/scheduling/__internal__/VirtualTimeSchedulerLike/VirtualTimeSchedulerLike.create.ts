@@ -1,8 +1,8 @@
-import { MAX_SAFE_INTEGER } from "../__internal__/constants";
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants";
 import {
   MutableEnumeratorLike,
   mutableEnumeratorMixin,
-} from "../__internal__/ix/EnumeratorLike.mutable";
+} from "../../../__internal__/ix/EnumeratorLike.mutable";
 import {
   Mutable,
   createInstanceFactory,
@@ -10,16 +10,20 @@ import {
   init,
   mixin,
   props,
-} from "../__internal__/mixins";
+} from "../../../__internal__/mixins";
 import {
   QueueLike,
   createPriorityQueue,
-} from "../__internal__/scheduling/QueueLike";
-import { getDelay } from "../__internal__/scheduling/SchedulerLike.options";
-import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
-import { isSome, none, pipe, unsafeCast } from "../functions";
-import { EnumeratorLike, EnumeratorLike_current, SourceLike_move } from "../ix";
-import { getCurrent, move } from "../ix/EnumeratorLike";
+} from "../../../__internal__/scheduling/QueueLike";
+import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
+import { disposableMixin } from "../../../__internal__/util/DisposableLike.mixins";
+import { isSome, none, pipe, unsafeCast } from "../../../functions";
+import {
+  EnumeratorLike,
+  EnumeratorLike_current,
+  SourceLike_move,
+} from "../../../ix";
+import { getCurrent, move } from "../../../ix/EnumeratorLike";
 import {
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -27,19 +31,19 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike,
-} from "../scheduling";
+} from "../../../scheduling";
 import {
   ContinuationLike,
   ContinuationLike_run,
   DisposableLike,
-} from "../util";
-import { run } from "../util/ContinuationLike";
+} from "../../../util";
+import { run } from "../../../util/ContinuationLike";
 import {
   addIgnoringChildErrors,
   dispose,
   isDisposed,
-} from "../util/DisposableLike";
-import { getCurrentTime } from "./__internal__/SchedulerLike/SchedulerLike.getCurrentTime";
+} from "../../../util/DisposableLike";
+import { getCurrentTime } from "../SchedulerLike/SchedulerLike.getCurrentTime";
 
 type VirtualTask = {
   readonly continuation: ContinuationLike;

@@ -1,12 +1,12 @@
-[Reactive-JS](../README.md) / scheduling/VirtualTimeScheduler
+[Reactive-JS](../README.md) / scheduling/VirtualTimeSchedulerLike
 
-# Module: scheduling/VirtualTimeScheduler
+# Module: scheduling/VirtualTimeSchedulerLike
 
 ## Table of contents
 
 ### Functions
 
-- [create](scheduling_VirtualTimeScheduler.md#create)
+- [create](scheduling_VirtualTimeSchedulerLike.md#create)
 
 ## Functions
 

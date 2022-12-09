@@ -210,7 +210,7 @@ import {
   isInContinuation,
   toPausableScheduler,
 } from "../scheduling/SchedulerLike";
-import { create as createVirtualTimeScheduler } from "../scheduling/VirtualTimeScheduler";
+import { create as createVirtualTimeScheduler } from "../scheduling/VirtualTimeSchedulerLike";
 import { FlowMode, ToFlowable } from "../streaming";
 import {
   ContinuationLike,

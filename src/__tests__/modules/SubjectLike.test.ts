@@ -7,7 +7,7 @@ import {
 } from "../../rx/ObservableLike";
 import { forEach, run } from "../../rx/RunnableLike";
 import { create as createSubject, publishTo } from "../../rx/SubjectLike";
-import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
+import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeSchedulerLike";
 import { run as runContinuation } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
 import { expectArrayEquals, expectEquals, test, testModule } from "../testing";

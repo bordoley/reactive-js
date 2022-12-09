@@ -1,18 +1,18 @@
-/// <reference types="./VirtualTimeScheduler.d.ts" />
-import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
-import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
-import { createPriorityQueue } from '../__internal__/scheduling/QueueLike.mjs';
-import { getDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
-import { disposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
-import { none, unsafeCast, pipe, isSome } from '../functions.mjs';
-import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
-import { move, getCurrent } from '../ix/EnumeratorLike.mjs';
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
-import { ContinuationLike_run } from '../util.mjs';
-import { run } from '../util/ContinuationLike.mjs';
-import { addIgnoringChildErrors, isDisposed, dispose } from '../util/DisposableLike.mjs';
-import { getCurrentTime } from './__internal__/SchedulerLike/SchedulerLike.getCurrentTime.mjs';
+/// <reference types="./VirtualTimeSchedulerLike.create.d.ts" />
+import { MAX_SAFE_INTEGER } from '../../../__internal__/constants.mjs';
+import { mutableEnumeratorMixin } from '../../../__internal__/ix/EnumeratorLike.mutable.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createPriorityQueue } from '../../../__internal__/scheduling/QueueLike.mjs';
+import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
+import { disposableMixin } from '../../../__internal__/util/DisposableLike.mixins.mjs';
+import { none, unsafeCast, pipe, isSome } from '../../../functions.mjs';
+import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
+import { move, getCurrent } from '../../../ix/EnumeratorLike.mjs';
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
+import { ContinuationLike_run } from '../../../util.mjs';
+import { run } from '../../../util/ContinuationLike.mjs';
+import { addIgnoringChildErrors, isDisposed, dispose } from '../../../util/DisposableLike.mjs';
+import { getCurrentTime } from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 
 const comparator = (a, b) => {
     let diff = 0;

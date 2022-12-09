@@ -72,7 +72,7 @@ import {
   getCurrentTime,
   schedule,
 } from "../../scheduling/SchedulerLike";
-import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
+import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeSchedulerLike";
 import { stream } from "../../streaming/StreamableLike";
 import { run } from "../../util/ContinuationLike";
 import { dispose, getException, isDisposed } from "../../util/DisposableLike";

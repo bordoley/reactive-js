@@ -7,7 +7,7 @@ import { combineLatest, generate, takeFirst, toReadonlyArray, merge, onSubscribe
 import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, catchErrorT, concatT, deferT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, forEachT, keepT, pairwiseT, reduceT, scanT, scanAsyncT, skipFirstT, someSatisfyT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
 import { schedule, getCurrentTime, createHostScheduler } from '../../scheduling/SchedulerLike.mjs';
-import { create } from '../../scheduling/VirtualTimeScheduler.mjs';
+import { create } from '../../scheduling/VirtualTimeSchedulerLike.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import { getException, dispose, isDisposed } from '../../util/DisposableLike.mjs';
