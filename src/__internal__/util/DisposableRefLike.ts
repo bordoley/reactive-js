@@ -1,5 +1,7 @@
 import { none, pipe, returns, unsafeCast } from "../../functions";
 import { DisposableLike } from "../../util";
+import { add } from "../../util/__internal__/DisposableLike/DisposableLike.add";
+import { dispose } from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import {
   Mixin1,
   Mutable,
@@ -10,7 +12,6 @@ import {
   props,
 } from "../mixins";
 import { disposableMixin } from "./DisposableLike.mixins";
-import { add, dispose } from "./DisposableLike.operators";
 import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike";
 
 export interface DisposableRefLike<

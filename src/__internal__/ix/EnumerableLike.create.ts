@@ -6,6 +6,7 @@ import {
   InteractiveContainerLike_interact,
   SourceLike_move,
 } from "../../ix";
+import { dispose } from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import {
   Mutable,
   createInstanceFactory,
@@ -15,7 +16,6 @@ import {
   props,
 } from "../mixins";
 import { disposableMixin } from "../util/DisposableLike.mixins";
-import { dispose } from "../util/DisposableLike.operators";
 import {
   MutableEnumeratorLike,
   mutableEnumeratorMixin,

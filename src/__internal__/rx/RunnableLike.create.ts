@@ -4,8 +4,8 @@ import {
   RunnableLike,
   SinkLike,
 } from "../../rx";
+import { dispose } from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import { Mutable, createInstanceFactory, mixin, props } from "../mixins";
-import { dispose } from "../util/DisposableLike.operators";
 
 export const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
   /*@__PURE__*/ (<T>() => {

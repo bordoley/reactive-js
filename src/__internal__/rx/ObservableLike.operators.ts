@@ -39,6 +39,12 @@ import { notify, sourceFrom } from "../../rx/SinkLike";
 import { create as createSubject, publishTo } from "../../rx/SubjectLike";
 import { SchedulerLike } from "../../scheduling";
 import { DisposableLike, DisposableOrTeardown } from "../../util";
+import { addTo } from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import { addToIgnoringChildErrors } from "../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
+import { bindTo } from "../../util/__internal__/DisposableLike/DisposableLike.bindTo";
+import { dispose } from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import { isDisposed } from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
+import { onComplete } from "../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import {
   TReactive,
   createDistinctUntilChangedOperator,
@@ -55,14 +61,6 @@ import {
   props,
 } from "../mixins";
 import { disposableMixin } from "../util/DisposableLike.mixins";
-import {
-  addTo,
-  addToIgnoringChildErrors,
-  bindTo,
-  dispose,
-  isDisposed,
-  onComplete,
-} from "../util/DisposableLike.operators";
 import {
   createEnumerableObservable,
   createObservable,

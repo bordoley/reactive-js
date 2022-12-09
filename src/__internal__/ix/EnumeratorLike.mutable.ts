@@ -6,8 +6,8 @@ import {
   SourceLike_move,
 } from "../../ix";
 import { DisposableLike } from "../../util";
+import { isDisposed } from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import { Mixin, mixin, props } from "../mixins";
-import { isDisposed } from "../util/DisposableLike.operators";
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;

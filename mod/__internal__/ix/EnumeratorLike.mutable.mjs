@@ -1,8 +1,8 @@
 /// <reference types="./EnumeratorLike.mutable.d.ts" />
 import { pipe, none, unsafeCast, raise, returns } from '../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../ix.mjs';
+import { isDisposed } from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import { mixin, props } from '../mixins.mjs';
-import { isDisposed } from '../util/DisposableLike.operators.mjs';
 
 const mutableEnumeratorMixin = 
 /*@__PURE__*/ (() => {
