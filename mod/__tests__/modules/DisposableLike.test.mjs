@@ -1,7 +1,8 @@
 /// <reference types="./DisposableLike.test.d.ts" />
 import { pipe, pipeLazy, none, raise } from '../../functions.mjs';
 import { subscribe } from '../../rx/ObservableLike.mjs';
-import { createVirtualTimeScheduler, getCurrentTime, schedule } from '../../scheduling/SchedulerLike.mjs';
+import { getCurrentTime, schedule } from '../../scheduling/SchedulerLike.mjs';
+import { create as create$1 } from '../../scheduling/VirtualTimeScheduler.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import { create, addIgnoringChildErrors, dispose, isDisposed, onDisposed, getException, addTo, add, toObservable } from '../../util/DisposableLike.mjs';
 import { testModule, test as createTest, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectIsNone, expectEquals, expectArrayEquals } from '../testing.mjs';
@@ -42,7 +43,7 @@ testModule("DisposableLike", createTest("disposes child disposable when disposed
     pipe(parent, getException, ({ cause } = { cause: undefined }) => cause, expectEquals(cause));
 }), createTest("toObservable", () => {
     const disposable = create();
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = create$1();
     let disposedTime = 0;
     pipe(disposable, toObservable(), subscribe(scheduler), onDisposed(_ => {
         disposedTime = getCurrentTime(scheduler);

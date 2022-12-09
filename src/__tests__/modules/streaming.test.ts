@@ -1,7 +1,7 @@
 import { pipe, returns } from "../../functions";
 import { forEach, subscribe } from "../../rx/ObservableLike";
 import { dispatch } from "../../scheduling/DispatcherLike";
-import { createVirtualTimeScheduler } from "../../scheduling/SchedulerLike";
+import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
 import { createStateStore, stream } from "../../streaming/StreamableLike";
 import { run } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";

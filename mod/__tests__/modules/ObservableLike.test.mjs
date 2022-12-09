@@ -6,7 +6,8 @@ import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/EnumerableLike.mj
 import { combineLatest, generate, takeFirst, toReadonlyArray, merge, onSubscribe, subscribe, concat, retry, share, zip, map, forEach, empty, takeUntil, timeout, throttle, toEnumerable, toFlowable, toPromise, withLatestFrom, zipLatest, zipWithLatestFrom } from '../../rx/ObservableLike.mjs';
 import { exhaust, mapT, switchAll, switchAllT, zipT, toReadonlyArrayT, bufferT, catchErrorT, concatT, deferT, decodeWithCharsetT, distinctUntilChangedT, everySatisfyT, forEachT, keepT, pairwiseT, reduceT, scanT, scanAsyncT, skipFirstT, someSatisfyT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT } from '../../rx/RunnableObservableLike.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
-import { createVirtualTimeScheduler, schedule, getCurrentTime, createHostScheduler } from '../../scheduling/SchedulerLike.mjs';
+import { schedule, getCurrentTime, createHostScheduler } from '../../scheduling/SchedulerLike.mjs';
+import { create } from '../../scheduling/VirtualTimeScheduler.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
 import { run } from '../../util/ContinuationLike.mjs';
 import { getException, dispose, isDisposed } from '../../util/DisposableLike.mjs';
@@ -21,7 +22,7 @@ const exhaustTests = createDescribe("exhaust", createTest("when the initial obse
 ], toObservable({ delay: 5 }), exhaust(), toReadonlyArray(), expectArrayEquals([1, 2, 3, 7, 8, 9]))));
 const mergeTests = createDescribe("merge", createTest("two arrays", pipeLazy(merge(pipe([0, 2, 3, 5, 6], toObservable({ delay: 1, delayStart: true })), pipe([1, 4, 7], toObservable({ delay: 2, delayStart: true }))), toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), createTest("when one source throws", pipeLazy(pipeLazy(merge(pipe([1, 4, 7], toObservable({ delay: 2 })), throws({ fromArray: toObservable, ...mapT }, { delay: 5 })(raise)), toReadonlyArray()), expectToThrow)));
 const onSubscribeTests = createDescribe("onSubscribe", createTest("when subscribe function returns a teardown function", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = create();
     const disp = mockFn();
     const f = mockFn(disp);
     pipe([1], toObservable(), onSubscribe(f), subscribe(scheduler));
@@ -31,7 +32,7 @@ const onSubscribeTests = createDescribe("onSubscribe", createTest("when subscrib
     pipe(disp, expectToHaveBeenCalledTimes(1));
     pipe(f, expectToHaveBeenCalledTimes(1));
 }), createTest("when callback function throws", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = create();
     const subscription = pipe([1], toObservable(), onSubscribe(raise), subscribe(scheduler));
     pipe(subscription, getException, expectIsSome);
 }));
@@ -40,7 +41,7 @@ const retryTests = createDescribe("retry", createTest("repeats the observable n 
     ...mapT,
 }))), retry(), takeFirst({ count: 6 }), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
 const shareTests = createDescribe("share", createTest("shared observable zipped with itself", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = create();
     const shared = pipe([1, 2, 3], toObservable({ delay: 1 }), share(scheduler, { replay: 1 }));
     let result = [];
     pipe(zip(shared, shared), map(([a, b]) => a + b), forEach(x => {
@@ -67,7 +68,7 @@ const throttleTests = createDescribe("throttle", createTest("first", pipeLazy(ge
 }), takeFirst({ count: 200 }), throttle(75, { mode: "interval" }), toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))));
 const toEnumerableTests = createDescribe("toEnumerable", createTest("with an enumerable observable", pipeLazy([1, 2, 3, 4], toObservable(), toEnumerable(), toReadonlyArray$1(), expectArrayEquals([1, 2, 3, 4]))));
 const toFlowableTests = createDescribe("toFlowable", createTest("flow a generating source", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = create();
     const generateStream = pipe(generate(increment, returns(-1), {
         delay: 1,
         delayStart: true,
