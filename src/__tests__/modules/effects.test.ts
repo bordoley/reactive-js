@@ -4,7 +4,7 @@ import { __await, __memo, async } from "../../effects";
 import { isSome, pipe } from "../../functions";
 import { ObservableLike } from "../../rx";
 import { forEach, keepT, subscribe, takeLast } from "../../rx/ObservableLike";
-import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
+import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeSchedulerLike";
 import { run } from "../../util/ContinuationLike";
 import { expectArrayEquals, expectEquals, test, testModule } from "../testing";
 

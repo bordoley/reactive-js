@@ -28,7 +28,7 @@ import { notify, sourceFrom, notifySink } from './SinkLike.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { __yield, isInContinuation, toPausableScheduler } from '../scheduling/SchedulerLike.mjs';
-import { create as create$2 } from '../scheduling/VirtualTimeScheduler.mjs';
+import { create as create$2 } from '../scheduling/VirtualTimeSchedulerLike.mjs';
 import { run } from '../util/ContinuationLike.mjs';
 import { disposed, onComplete, dispose, isDisposed, addTo, addToIgnoringChildErrors, onDisposed, bindTo, add, toObservable as toObservable$2, getException } from '../util/DisposableLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
