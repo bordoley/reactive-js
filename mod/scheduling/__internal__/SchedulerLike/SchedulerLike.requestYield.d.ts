@@ -2,4 +2,4 @@ import { SchedulerLike_requestYield } from "../../../scheduling.mjs";
 declare const requestYield: (scheduler: {
     [SchedulerLike_requestYield](): void;
 }) => void;
-export { requestYield };
+export { requestYield as default };

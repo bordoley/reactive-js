@@ -6,4 +6,4 @@ const pause = (pausable) => {
     return pausable;
 };
 
-export { pause };
+export { pause as default };

@@ -5,9 +5,9 @@ import {
   SchedulerLike,
 } from "../scheduling";
 
-import { dispatch as DispatcherLike__dispatch } from "./__internal__/DispatcherLike/DispatcherLike.dispatch";
-import { dispatchTo as DispatcherLike__dispatchTo } from "./__internal__/DispatcherLike/DispatcherLike.dispatchTo";
-import { getScheduler as DispatcherLike__getScheduler } from "./__internal__/DispatcherLike/DispatcherLike.getScheduler";
+import DispatcherLike__dispatch from "./__internal__/DispatcherLike/DispatcherLike.dispatch";
+import DispatcherLike__dispatchTo from "./__internal__/DispatcherLike/DispatcherLike.dispatchTo";
+import DispatcherLike__getScheduler from "./__internal__/DispatcherLike/DispatcherLike.getScheduler";
 
 export const dispatch: <
   T,

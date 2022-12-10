@@ -2,7 +2,7 @@
 import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { pipe, newInstance, raise } from '../../../functions.mjs';
 import { get } from '../CurrentScheduler.mjs';
-import { shouldYield } from '../SchedulerLike/SchedulerLike.shouldYield.mjs';
+import shouldYield from '../SchedulerLike/SchedulerLike.shouldYield.mjs';
 import YieldError from '../YieldError.mjs';
 
 const yield_ = (options) => {
@@ -13,4 +13,4 @@ const yield_ = (options) => {
     }
 };
 
-export { yield_ };
+export { yield_ as default };

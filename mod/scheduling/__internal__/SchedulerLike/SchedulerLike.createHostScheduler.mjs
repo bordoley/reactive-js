@@ -6,8 +6,8 @@ import { isFunction, pipe, unsafeCast } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { run } from '../../ContinuationLike.mjs';
 import { create, addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from '../../../util/DisposableLike.mjs';
-import { getCurrentTime } from './SchedulerLike.getCurrentTime.mjs';
-import { isInContinuation } from './SchedulerLike.isInContinuation.mjs';
+import getCurrentTime from './SchedulerLike.getCurrentTime.mjs';
+import isInContinuation from './SchedulerLike.isInContinuation.mjs';
 
 const supportsPerformanceNow = typeof performance === "object" && /*@__PURE__*/ isFunction(performance.now);
 const supportsSetImmediate = typeof setImmediate === "function";
@@ -94,4 +94,4 @@ const createHostScheduler = (options = {}) => {
     return createHostSchedulerInstance(yieldInterval);
 };
 
-export { createHostScheduler };
+export { createHostScheduler as default };

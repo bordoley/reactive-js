@@ -1,7 +1,7 @@
 import { none, pipe, returns, unsafeCast } from "../../functions";
 import { DisposableLike } from "../../util";
-import { add } from "../../util/__internal__/DisposableLike/DisposableLike.add";
-import { dispose } from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import add from "../../util/__internal__/DisposableLike/DisposableLike.add";
+import dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import {
   Mixin1,
   Mutable,

@@ -3,5 +3,7 @@ import { disposableMixin } from "../../../__internal__/util/DisposableLike.mixin
 import { Factory } from "../../../functions";
 import { DisposableLike } from "../../../util";
 
-export const create: Factory<DisposableLike> =
+const create: Factory<DisposableLike> =
   /*@__PURE__*/ createInstanceFactory(disposableMixin);
+
+export default create;

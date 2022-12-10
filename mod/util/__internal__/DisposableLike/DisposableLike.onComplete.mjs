@@ -1,6 +1,6 @@
 /// <reference types="./DisposableLike.onComplete.d.ts" />
 import { isNone } from '../../../functions.mjs';
-import { addDisposableOrTeardown } from './DisposableLike.addDisposableOrTeardown.mjs';
+import addDisposableOrTeardown from './DisposableLike.addDisposableOrTeardown.mjs';
 
 const onComplete = (teardown) => disposable => {
     addDisposableOrTeardown(disposable, e => {
@@ -11,4 +11,4 @@ const onComplete = (teardown) => disposable => {
     return disposable;
 };
 
-export { onComplete };
+export { onComplete as default };

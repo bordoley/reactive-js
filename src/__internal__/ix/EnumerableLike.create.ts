@@ -6,7 +6,7 @@ import {
   InteractiveContainerLike_interact,
   SourceLike_move,
 } from "../../ix";
-import { dispose } from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import {
   Mutable,
   createInstanceFactory,

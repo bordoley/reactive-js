@@ -1,7 +1,7 @@
 /// <reference types="./RunnableLike.create.d.ts" />
 import { none, pipe } from '../../functions.mjs';
 import { ReactiveContainerLike_sinkInto } from '../../rx.mjs';
-import { dispose } from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import { createInstanceFactory, mixin, props } from '../mixins.mjs';
 
 const create = 

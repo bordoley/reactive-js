@@ -1,8 +1,8 @@
 import { Option, SideEffect1, Updater } from "../../../functions";
 import { DisposableLike, Exception } from "../../../util";
-import { addDisposableOrTeardown } from "./DisposableLike.addDisposableOrTeardown";
+import addDisposableOrTeardown from "./DisposableLike.addDisposableOrTeardown";
 
-export const onDisposed =
+const onDisposed =
   <T extends DisposableLike>(
     teardown: SideEffect1<Option<Exception>>,
   ): Updater<T> =>
@@ -10,3 +10,5 @@ export const onDisposed =
     addDisposableOrTeardown(disposable, teardown);
     return disposable;
   };
+
+export default onDisposed;

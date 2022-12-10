@@ -5,4 +5,4 @@ declare const createContinuation: Function2<SchedulerLike, SideEffect, Continuat
 declare const schedule: (f: SideEffect | ContinuationLike, options?: {
     readonly delay?: number;
 }) => Function1<SchedulerLike, DisposableLike>;
-export { createContinuation, schedule };
+export { createContinuation, schedule as default };

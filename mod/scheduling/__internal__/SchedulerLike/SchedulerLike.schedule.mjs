@@ -53,4 +53,4 @@ const schedule = (f, options) => scheduler => {
     return continuation;
 };
 
-export { createContinuation, schedule };
+export { createContinuation, schedule as default };

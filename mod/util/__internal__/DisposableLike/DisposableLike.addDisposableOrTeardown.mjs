@@ -5,4 +5,4 @@ const addDisposableOrTeardown = (parent, child, ignoreChildErrors = false) => {
     parent[DisposableLike_add](child, ignoreChildErrors);
 };
 
-export { addDisposableOrTeardown };
+export { addDisposableOrTeardown as default };

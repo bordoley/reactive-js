@@ -20,7 +20,7 @@ import {
   SchedulerLike,
 } from "../../scheduling";
 import { StreamLike } from "../../streaming";
-import { add } from "../../util/__internal__/DisposableLike/DisposableLike.add";
+import add from "../../util/__internal__/DisposableLike/DisposableLike.add";
 import {
   Mixin3,
   Mutable,

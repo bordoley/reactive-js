@@ -1,5 +1,5 @@
 /// <reference types="./PrioritySchedulerLike.d.ts" />
-import { toScheduler as toScheduler$1 } from './__internal__/PrioritySchedulerLike/PrioritySchedulerLike.toScheduler.mjs';
+import toScheduler$1 from './__internal__/PrioritySchedulerLike/PrioritySchedulerLike.toScheduler.mjs';
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.

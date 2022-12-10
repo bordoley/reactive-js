@@ -3,4 +3,4 @@ import { DisposableLike_isDisposed } from '../../../util.mjs';
 
 const isDisposed = (disposable) => disposable[DisposableLike_isDisposed];
 
-export { isDisposed };
+export { isDisposed as default };

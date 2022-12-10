@@ -3,4 +3,4 @@ import { SchedulerLike_inContinuation } from '../../../scheduling.mjs';
 
 const isInContinuation = (scheduler) => scheduler[SchedulerLike_inContinuation];
 
-export { isInContinuation };
+export { isInContinuation as default };

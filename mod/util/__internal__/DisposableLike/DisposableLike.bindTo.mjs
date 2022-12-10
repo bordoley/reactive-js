@@ -1,5 +1,5 @@
 /// <reference types="./DisposableLike.bindTo.d.ts" />
-import { addDisposableOrTeardown } from './DisposableLike.addDisposableOrTeardown.mjs';
+import addDisposableOrTeardown from './DisposableLike.addDisposableOrTeardown.mjs';
 
 const bindTo = (child) => (parent) => {
     addDisposableOrTeardown(parent, child);
@@ -7,4 +7,4 @@ const bindTo = (child) => (parent) => {
     return parent;
 };
 
-export { bindTo };
+export { bindTo as default };

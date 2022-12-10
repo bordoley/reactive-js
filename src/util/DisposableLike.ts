@@ -6,22 +6,22 @@ import {
   Exception,
 } from "../util";
 
-import { add as DisposableLike__add } from "./__internal__/DisposableLike/DisposableLike.add";
-import { addIgnoringChildErrors as DisposableLike__addIgnoringChildErrors } from "./__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors";
-import { addTo as DisposableLike__addTo } from "./__internal__/DisposableLike/DisposableLike.addTo";
-import { addToIgnoringChildErrors as DisposableLike__addToIgnoringChildErrors } from "./__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
-import { bindTo as DisposableLike__bindTo } from "./__internal__/DisposableLike/DisposableLike.bindTo";
-import { create as DisposableLike__create } from "./__internal__/DisposableLike/DisposableLike.create";
-import { dispose as DisposableLike__dispose } from "./__internal__/DisposableLike/DisposableLike.dispose";
-import { disposed as DisposableLike__disposed } from "./__internal__/DisposableLike/DisposableLike.disposed";
-import { getException as DisposableLike__getException } from "./__internal__/DisposableLike/DisposableLike.getException";
-import { isDisposed as DisposableLike__isDisposed } from "./__internal__/DisposableLike/DisposableLike.isDisposed";
-import { onComplete as DisposableLike__onComplete } from "./__internal__/DisposableLike/DisposableLike.onComplete";
-import { onDisposed as DisposableLike__onDisposed } from "./__internal__/DisposableLike/DisposableLike.onDisposed";
-import { onError as DisposableLike__onError } from "./__internal__/DisposableLike/DisposableLike.onError";
-import { toAbortSignal as DisposableLike__toAbortSignal } from "./__internal__/DisposableLike/DisposableLike.toAbortSignal";
-import { toErrorHandler as DisposableLike__toErrorHandler } from "./__internal__/DisposableLike/DisposableLike.toErrorHandler";
-import { toObservable as DisposableLike__toObservable } from "./__internal__/DisposableLike/DisposableLike.toObservable";
+import DisposableLike__add from "./__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__addIgnoringChildErrors from "./__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors";
+import DisposableLike__addTo from "./__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__addToIgnoringChildErrors from "./__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
+import DisposableLike__bindTo from "./__internal__/DisposableLike/DisposableLike.bindTo";
+import DisposableLike__create from "./__internal__/DisposableLike/DisposableLike.create";
+import DisposableLike__dispose from "./__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__disposed from "./__internal__/DisposableLike/DisposableLike.disposed";
+import DisposableLike__getException from "./__internal__/DisposableLike/DisposableLike.getException";
+import DisposableLike__isDisposed from "./__internal__/DisposableLike/DisposableLike.isDisposed";
+import DisposableLike__onComplete from "./__internal__/DisposableLike/DisposableLike.onComplete";
+import DisposableLike__onDisposed from "./__internal__/DisposableLike/DisposableLike.onDisposed";
+import DisposableLike__onError from "./__internal__/DisposableLike/DisposableLike.onError";
+import DisposableLike__toAbortSignal from "./__internal__/DisposableLike/DisposableLike.toAbortSignal";
+import DisposableLike__toErrorHandler from "./__internal__/DisposableLike/DisposableLike.toErrorHandler";
+import DisposableLike__toObservable from "./__internal__/DisposableLike/DisposableLike.toObservable";
 
 export const add = DisposableLike__add;
 

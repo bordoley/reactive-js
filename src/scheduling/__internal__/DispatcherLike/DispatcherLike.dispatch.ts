@@ -1,7 +1,7 @@
 import { Updater } from "../../../functions";
 import { DispatcherLike_dispatch } from "../../../scheduling";
 
-export const dispatch =
+const dispatch =
   <T, TDispatcher extends { [DispatcherLike_dispatch](v: T): void }>(
     v: T,
   ): Updater<TDispatcher> =>
@@ -9,3 +9,5 @@ export const dispatch =
     dispatcher[DispatcherLike_dispatch](v);
     return dispatcher;
   };
+
+export default dispatch;

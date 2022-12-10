@@ -28,8 +28,8 @@ import {
   isDisposed,
   onDisposed,
 } from "../../../util/DisposableLike";
-import { getCurrentTime } from "./SchedulerLike.getCurrentTime";
-import { isInContinuation } from "./SchedulerLike.isInContinuation";
+import getCurrentTime from "./SchedulerLike.getCurrentTime";
+import isInContinuation from "./SchedulerLike.isInContinuation";
 
 declare const navigator: {
   scheduling: Option<{
@@ -201,7 +201,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   ),
 );
 
-export const createHostScheduler = (
+const createHostScheduler = (
   options: {
     readonly yieldInterval?: number;
   } = {},
@@ -209,3 +209,5 @@ export const createHostScheduler = (
   const { yieldInterval = 5 } = options;
   return createHostSchedulerInstance(yieldInterval);
 };
+
+export default createHostScheduler;
