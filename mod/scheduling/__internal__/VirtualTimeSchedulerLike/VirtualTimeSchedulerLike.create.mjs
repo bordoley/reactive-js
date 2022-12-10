@@ -11,7 +11,7 @@ import { move, getCurrent } from '../../../ix/EnumeratorLike.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, ContinuationLike_run, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { run } from '../../ContinuationLike.mjs';
 import { addIgnoringChildErrors, isDisposed, dispose } from '../../../util/DisposableLike.mjs';
-import { getCurrentTime } from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
+import getCurrentTime from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 
 const comparator = (a, b) => {
     let diff = 0;
@@ -90,4 +90,4 @@ const create = (options = {}) => {
     return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
 };
 
-export { create };
+export { create as default };

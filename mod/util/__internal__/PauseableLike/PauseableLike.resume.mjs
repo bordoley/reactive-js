@@ -6,4 +6,4 @@ const resume = (pausable) => {
     return pausable;
 };
 
-export { resume };
+export { resume as default };

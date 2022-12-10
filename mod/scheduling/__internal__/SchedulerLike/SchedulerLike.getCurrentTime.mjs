@@ -3,4 +3,4 @@ import { SchedulerLike_now } from '../../../scheduling.mjs';
 
 const getCurrentTime = (scheduler) => scheduler[SchedulerLike_now];
 
-export { getCurrentTime };
+export { getCurrentTime as default };

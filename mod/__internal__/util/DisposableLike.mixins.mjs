@@ -1,10 +1,10 @@
 /// <reference types="./DisposableLike.mixins.d.ts" />
 import { pipe, none, unsafeCast, isSome } from '../../functions.mjs';
 import { DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose } from '../../util.mjs';
-import { dispose } from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
-import { getException } from '../../util/__internal__/DisposableLike/DisposableLike.getException.mjs';
-import { isDisposed } from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
-import { onDisposed } from '../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
+import dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import getException from '../../util/__internal__/DisposableLike/DisposableLike.getException.mjs';
+import isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
+import onDisposed from '../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
 import { mixin, props } from '../mixins.mjs';
 
 const delegatingDisposableMixin = 

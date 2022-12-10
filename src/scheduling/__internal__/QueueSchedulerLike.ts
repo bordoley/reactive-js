@@ -61,11 +61,11 @@ import {
   disposed,
   isDisposed,
 } from "../../util/DisposableLike";
-import { yield_ } from "./ContinuationLike/ContinuationLike.yield";
-import { getCurrentTime } from "./SchedulerLike/SchedulerLike.getCurrentTime";
-import { isInContinuation } from "./SchedulerLike/SchedulerLike.isInContinuation";
-import { schedule } from "./SchedulerLike/SchedulerLike.schedule";
-import { shouldYield } from "./SchedulerLike/SchedulerLike.shouldYield";
+import yield_ from "./ContinuationLike/ContinuationLike.yield";
+import getCurrentTime from "./SchedulerLike/SchedulerLike.getCurrentTime";
+import isInContinuation from "./SchedulerLike/SchedulerLike.isInContinuation";
+import schedule from "./SchedulerLike/SchedulerLike.schedule";
+import shouldYield from "./SchedulerLike/SchedulerLike.shouldYield";
 
 export type QueueSchedulerOptions = {
   readonly priority?: number;

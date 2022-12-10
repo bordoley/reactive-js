@@ -1,8 +1,8 @@
 import { newInstance, pipe } from "../../../functions";
 import { DisposableLike } from "../../../util";
-import { onDisposed } from "./DisposableLike.onDisposed";
+import onDisposed from "./DisposableLike.onDisposed";
 
-export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
+const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   const abortController = newInstance(AbortController);
   pipe(
     disposable,
@@ -10,3 +10,5 @@ export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   );
   return abortController.signal;
 };
+
+export default toAbortSignal;

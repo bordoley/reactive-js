@@ -5,4 +5,4 @@ import { disposableMixin } from '../../../__internal__/util/DisposableLike.mixin
 const create = 
 /*@__PURE__*/ createInstanceFactory(disposableMixin);
 
-export { create };
+export { create as default };

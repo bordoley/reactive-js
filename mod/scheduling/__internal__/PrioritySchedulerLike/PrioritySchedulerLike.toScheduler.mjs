@@ -44,4 +44,4 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mixin(includ
 }));
 const toScheduler = (priority) => pipe(createSchedulerInstance, partial(priority));
 
-export { toScheduler };
+export { toScheduler as default };

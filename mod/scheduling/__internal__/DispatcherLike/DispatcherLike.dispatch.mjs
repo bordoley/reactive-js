@@ -6,4 +6,4 @@ const dispatch = (v) => dispatcher => {
     return dispatcher;
 };
 
-export { dispatch };
+export { dispatch as default };

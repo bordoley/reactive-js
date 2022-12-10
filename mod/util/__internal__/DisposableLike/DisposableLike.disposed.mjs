@@ -1,7 +1,7 @@
 /// <reference types="./DisposableLike.disposed.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import { create } from './DisposableLike.create.mjs';
-import { dispose } from './DisposableLike.dispose.mjs';
+import create from './DisposableLike.create.mjs';
+import dispose from './DisposableLike.dispose.mjs';
 
 const disposed = /*@__PURE__*/ (() => {
     const instance = create();
@@ -9,4 +9,4 @@ const disposed = /*@__PURE__*/ (() => {
     return instance;
 })();
 
-export { disposed };
+export { disposed as default };

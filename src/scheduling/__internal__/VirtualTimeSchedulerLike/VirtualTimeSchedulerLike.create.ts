@@ -41,7 +41,7 @@ import {
   dispose,
   isDisposed,
 } from "../../../util/DisposableLike";
-import { getCurrentTime } from "../SchedulerLike/SchedulerLike.getCurrentTime";
+import getCurrentTime from "../SchedulerLike/SchedulerLike.getCurrentTime";
 
 type VirtualTask = {
   readonly continuation: ContinuationLike;
@@ -172,9 +172,11 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   ),
 );
 
-export const create = (
+const create = (
   options: { readonly maxMicroTaskTicks?: number } = {},
 ): VirtualTimeSchedulerLike => {
   const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
   return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
 };
+
+export default create;

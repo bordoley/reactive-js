@@ -1,6 +1,6 @@
 /// <reference types="./DisposableLike.toAbortSignal.d.ts" />
 import { newInstance, pipe } from '../../../functions.mjs';
-import { onDisposed } from './DisposableLike.onDisposed.mjs';
+import onDisposed from './DisposableLike.onDisposed.mjs';
 
 const toAbortSignal = (disposable) => {
     const abortController = newInstance(AbortController);
@@ -8,4 +8,4 @@ const toAbortSignal = (disposable) => {
     return abortController.signal;
 };
 
-export { toAbortSignal };
+export { toAbortSignal as default };

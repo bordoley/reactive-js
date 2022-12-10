@@ -1,8 +1,8 @@
 /// <reference types="./ReactiveContainerLike.createOnSink.d.ts" />
 import { pipe, none, isSome, identity } from '../../functions.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
-import { add } from '../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
-import { onDisposed } from '../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
+import add from '../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
+import onDisposed from '../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
 
 const createOnSink = (createReactiveContainer, src, f) => createReactiveContainer(sink => {
     pipe(src, sinkInto(sink));

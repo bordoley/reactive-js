@@ -99,7 +99,9 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   ),
 );
 
-export const toScheduler = (
+const toScheduler = (
   priority: number,
 ): Function1<PrioritySchedulerLike, SchedulerLike> =>
   pipe(createSchedulerInstance, partial(priority));
+
+export default toScheduler;

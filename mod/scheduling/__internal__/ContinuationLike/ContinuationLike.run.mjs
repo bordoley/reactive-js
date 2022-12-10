@@ -6,4 +6,4 @@ const run = continuation => {
     return continuation;
 };
 
-export { run };
+export { run as default };

@@ -8,10 +8,10 @@ import {
   DisposableOrTeardown,
   Exception,
 } from "../../util";
-import { dispose } from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
-import { getException } from "../../util/__internal__/DisposableLike/DisposableLike.getException";
-import { isDisposed } from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
-import { onDisposed } from "../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
+import dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import getException from "../../util/__internal__/DisposableLike/DisposableLike.getException";
+import isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
+import onDisposed from "../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
 import { Mixin, Mixin1, Mutable, mixin, props } from "../mixins";
 
 export const delegatingDisposableMixin: Mixin1<DisposableLike, DisposableLike> =

@@ -92,7 +92,7 @@ export const createContinuation: Function2<
   );
 })();
 
-export const schedule =
+const schedule =
   (
     f: SideEffect | ContinuationLike,
     options?: { readonly delay?: number },
@@ -102,3 +102,5 @@ export const schedule =
     scheduler[SchedulerLike_schedule](continuation, options);
     return continuation;
   };
+
+export default schedule;

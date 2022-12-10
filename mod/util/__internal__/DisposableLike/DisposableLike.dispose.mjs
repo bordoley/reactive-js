@@ -6,4 +6,4 @@ const dispose = (e) => disposable => {
     return disposable;
 };
 
-export { dispose };
+export { dispose as default };
