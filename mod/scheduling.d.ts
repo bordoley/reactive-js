@@ -1,4 +1,14 @@
-import { DisposableLike, ContinuationLike, PauseableLike } from "./util.mjs";
+import { DisposableLike, PauseableLike } from "./util.mjs";
+/** @ignore */
+declare const ContinuationLike_run: unique symbol;
+/**
+ * A unit of work to be executed by a scheduler.
+ *
+ * @noInheritDoc
+ */
+interface ContinuationLike extends DisposableLike {
+    [ContinuationLike_run](): void;
+}
 /** @ignore */
 declare const SchedulerLike_inContinuation: unique symbol;
 /** @ignore */
@@ -57,4 +67,4 @@ interface PrioritySchedulerLike extends DisposableLike {
 }
 interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
 }
-export { DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };
+export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };

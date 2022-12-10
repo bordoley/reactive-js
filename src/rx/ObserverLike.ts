@@ -4,9 +4,9 @@ import {
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
 } from "../rx";
-import { DispatcherLike, SchedulerLike } from "../scheduling";
+import { ContinuationLike, DispatcherLike, SchedulerLike } from "../scheduling";
 import { schedule as scheduleOnScheduler } from "../scheduling/SchedulerLike";
-import { ContinuationLike, DisposableLike } from "../util";
+import { DisposableLike } from "../util";
 import { addTo } from "../util/DisposableLike";
 
 export const getScheduler = <T>(observer: ObserverLike<T>): SchedulerLike =>

@@ -11,7 +11,5 @@ const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 const PauseableLike_pause = Symbol("PausableLike_pause");
 /** @ignore */
 const PauseableLike_resume = Symbol("PausableLike_resume");
-/** @ignore */
-const ContinuationLike_run = Symbol("ContinuationLike_run");
 
-export { ContinuationLike_run, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume };
+export { DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume };

@@ -4,7 +4,7 @@ import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options
 import { disposableMixin } from '../../../__internal__/util/DisposableLike.mixins.mjs';
 import { isFunction, pipe, unsafeCast } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
-import { run } from '../../../util/ContinuationLike.mjs';
+import { run } from '../../ContinuationLike.mjs';
 import { create, addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from '../../../util/DisposableLike.mjs';
 import { getCurrentTime } from './SchedulerLike.getCurrentTime.mjs';
 import { isInContinuation } from './SchedulerLike.isInContinuation.mjs';

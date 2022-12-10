@@ -1,10 +1,10 @@
 /// <reference types="./streaming.test.d.ts" />
 import { pipe, returns } from '../../functions.mjs';
 import { forEach, subscribe } from '../../rx/ObservableLike.mjs';
+import { run } from '../../scheduling/ContinuationLike.mjs';
 import { dispatch } from '../../scheduling/DispatcherLike.mjs';
 import { create } from '../../scheduling/VirtualTimeSchedulerLike.mjs';
 import { createStateStore, stream } from '../../streaming/StreamableLike.mjs';
-import { run } from '../../util/ContinuationLike.mjs';
 import { dispose } from '../../util/DisposableLike.mjs';
 import { testModule, describe as createDescribe, test as createTest, expectArrayEquals } from '../testing.mjs';
 

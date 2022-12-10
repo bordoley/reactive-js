@@ -1,9 +1,9 @@
 /// <reference types="./DisposableLike.test.d.ts" />
 import { pipe, pipeLazy, none, raise } from '../../functions.mjs';
 import { subscribe } from '../../rx/ObservableLike.mjs';
+import { run } from '../../scheduling/ContinuationLike.mjs';
 import { getCurrentTime, schedule } from '../../scheduling/SchedulerLike.mjs';
 import { create as create$1 } from '../../scheduling/VirtualTimeSchedulerLike.mjs';
-import { run } from '../../util/ContinuationLike.mjs';
 import { create, addIgnoringChildErrors, dispose, isDisposed, onDisposed, getException, addTo, add, toObservable } from '../../util/DisposableLike.mjs';
 import { testModule, test as createTest, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectIsNone, expectEquals, expectArrayEquals } from '../testing.mjs';
 

@@ -10,6 +10,7 @@ import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options
 import { disposableMixin } from "../../../__internal__/util/DisposableLike.mixins";
 import { Option, isFunction, pipe, unsafeCast } from "../../../functions";
 import {
+  ContinuationLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -17,8 +18,8 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling";
-import { ContinuationLike, DisposableLike } from "../../../util";
-import { run } from "../../../util/ContinuationLike";
+import { run } from "../../../scheduling/ContinuationLike";
+import { DisposableLike } from "../../../util";
 import {
   addIgnoringChildErrors,
   addTo,

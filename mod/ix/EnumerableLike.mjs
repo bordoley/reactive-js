@@ -16,7 +16,7 @@ import { move, getCurrent, hasCurrent, forEach as forEach$1 } from './Enumerator
 import { schedule } from '../rx/ObserverLike.mjs';
 import { create as create$1 } from '../rx/RunnableLike.mjs';
 import { notifySink } from '../rx/SinkLike.mjs';
-import { __yield } from '../scheduling/SchedulerLike.mjs';
+import { yield_ } from '../scheduling/ContinuationLike.mjs';
 import { add, dispose, disposed, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete, getException } from '../util/DisposableLike.mjs';
 
 const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
@@ -568,7 +568,7 @@ const toObservable = ((options) => enumerable => {
         pipe(observer, schedule(() => {
             while (!isDisposed(observer) && move(enumerator)) {
                 pipe(enumerator, getCurrent, notifySink(observer));
-                __yield(options);
+                yield_(options);
             }
         }, delayStart ? options : none));
     };

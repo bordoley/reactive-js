@@ -1,4 +1,16 @@
-import { ContinuationLike, DisposableLike, PauseableLike } from "./util";
+import { DisposableLike, PauseableLike } from "./util";
+
+/** @ignore */
+export const ContinuationLike_run = Symbol("ContinuationLike_run");
+
+/**
+ * A unit of work to be executed by a scheduler.
+ *
+ * @noInheritDoc
+ */
+export interface ContinuationLike extends DisposableLike {
+  [ContinuationLike_run](): void;
+}
 
 /** @ignore */
 export const SchedulerLike_inContinuation = Symbol(

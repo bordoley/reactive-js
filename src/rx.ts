@@ -10,7 +10,6 @@ import {
 } from "./containers";
 import { Factory, Function1, Function2 } from "./functions";
 import { DispatcherLike, SchedulerLike } from "./scheduling";
-import { __yield } from "./scheduling/SchedulerLike";
 import { DisposableLike } from "./util";
 
 /** @ignore */

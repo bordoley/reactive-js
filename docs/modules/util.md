@@ -6,7 +6,6 @@
 
 ### Interfaces
 
-- [ContinuationLike](../interfaces/util.ContinuationLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
 - [PauseableLike](../interfaces/util.PauseableLike.md)
 

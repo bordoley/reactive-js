@@ -142,7 +142,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `continuation` | [`ContinuationLike`](util.ContinuationLike.md) |
+| `continuation` | [`ContinuationLike`](scheduling.ContinuationLike.md) |
 | `options?` | [`SchedulerOptions`](../modules/scheduling.md#scheduleroptions) |
 
 #### Returns

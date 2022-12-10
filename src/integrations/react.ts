@@ -41,6 +41,7 @@ import { ObservableLike, SubjectLike } from "../rx";
 import { distinctUntilChanged, forEach, subscribe } from "../rx/ObservableLike";
 import { create as createSubject, publish } from "../rx/SubjectLike";
 import {
+  ContinuationLike,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -49,10 +50,10 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../scheduling";
+import { run } from "../scheduling/ContinuationLike";
 import { toScheduler } from "../scheduling/PrioritySchedulerLike";
 import { isInContinuation } from "../scheduling/SchedulerLike";
-import { ContinuationLike, DisposableLike, Exception } from "../util";
-import { run } from "../util/ContinuationLike";
+import { DisposableLike, Exception } from "../util";
 import {
   addIgnoringChildErrors,
   addTo,

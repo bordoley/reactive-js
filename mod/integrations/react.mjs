@@ -8,9 +8,9 @@ import { none, isSome, pipe, pipeLazy, ignore, unsafeCast } from '../functions.m
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { create, publish } from '../rx/SubjectLike.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
+import { run } from '../scheduling/ContinuationLike.mjs';
 import { toScheduler } from '../scheduling/PrioritySchedulerLike.mjs';
 import { isInContinuation } from '../scheduling/SchedulerLike.mjs';
-import { run } from '../util/ContinuationLike.mjs';
 import { onError, dispose, addIgnoringChildErrors, isDisposed, create as create$1, onDisposed, addTo } from '../util/DisposableLike.mjs';
 
 /**
