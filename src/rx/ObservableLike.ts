@@ -196,6 +196,7 @@ import {
 import { getScheduler, schedule } from "../rx/ObserverLike";
 import { notify, notifySink, sourceFrom } from "../rx/SinkLike";
 import {
+  ContinuationLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -204,21 +205,15 @@ import {
   SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike,
 } from "../scheduling";
+import { run, yield_ } from "../scheduling/ContinuationLike";
 import { dispatchTo } from "../scheduling/DispatcherLike";
 import {
-  __yield,
   isInContinuation,
   toPausableScheduler,
 } from "../scheduling/SchedulerLike";
 import { create as createVirtualTimeScheduler } from "../scheduling/VirtualTimeSchedulerLike";
 import { FlowMode, ToFlowable } from "../streaming";
-import {
-  ContinuationLike,
-  DisposableLike,
-  DisposableOrTeardown,
-  Exception,
-} from "../util";
-import { run } from "../util/ContinuationLike";
+import { DisposableLike, DisposableOrTeardown, Exception } from "../util";
 import {
   add,
   addTo,
@@ -638,7 +633,7 @@ export const generate: GenerateObservable = (<T>(
       while (!isDisposed(observer)) {
         acc = generator(acc);
         observer[SinkLike_notify](acc);
-        __yield(options);
+        yield_(options);
       }
     };
 

@@ -1,9 +1,9 @@
 import { pipe, returns } from "../../functions";
 import { forEach, subscribe } from "../../rx/ObservableLike";
+import { run } from "../../scheduling/ContinuationLike";
 import { dispatch } from "../../scheduling/DispatcherLike";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeSchedulerLike";
 import { createStateStore, stream } from "../../streaming/StreamableLike";
-import { run } from "../../util/ContinuationLike";
 import { dispose } from "../../util/DisposableLike";
 import { describe, expectArrayEquals, test, testModule } from "../testing";
 

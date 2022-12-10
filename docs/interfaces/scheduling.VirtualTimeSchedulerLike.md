@@ -8,7 +8,7 @@
 
 - [`SchedulerLike`](scheduling.SchedulerLike.md)
 
-- [`ContinuationLike`](util.ContinuationLike.md)
+- [`ContinuationLike`](scheduling.ContinuationLike.md)
 
   ↳ **`VirtualTimeSchedulerLike`**
 
@@ -68,7 +68,7 @@ ___
 
 #### Inherited from
 
-[ContinuationLike](util.ContinuationLike.md).[[ContinuationLike_run]](util.ContinuationLike.md#[continuationlike_run])
+[ContinuationLike](scheduling.ContinuationLike.md).[[ContinuationLike_run]](scheduling.ContinuationLike.md#[continuationlike_run])
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `continuation` | [`ContinuationLike`](util.ContinuationLike.md) |
+| `continuation` | [`ContinuationLike`](scheduling.ContinuationLike.md) |
 | `options?` | [`SchedulerOptions`](../modules/scheduling.md#scheduleroptions) |
 
 #### Returns

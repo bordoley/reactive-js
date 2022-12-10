@@ -45,14 +45,4 @@ interface PauseableLike {
     [PauseableLike_pause](): void;
     [PauseableLike_resume](): void;
 }
-/** @ignore */
-declare const ContinuationLike_run: unique symbol;
-/**
- * A unit of work to be executed by a scheduler.
- *
- * @noInheritDoc
- */
-interface ContinuationLike extends DisposableLike {
-    [ContinuationLike_run](): void;
-}
-export { ContinuationLike, ContinuationLike_run, DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume };
+export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume };

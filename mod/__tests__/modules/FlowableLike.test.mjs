@@ -2,9 +2,9 @@
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipe } from '../../functions.mjs';
 import { toFlowable, forEach, subscribe } from '../../rx/ObservableLike.mjs';
+import { run } from '../../scheduling/ContinuationLike.mjs';
 import { create } from '../../scheduling/VirtualTimeSchedulerLike.mjs';
 import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs';
-import { run } from '../../util/ContinuationLike.mjs';
 import { testModule, test as createTest } from '../testing.mjs';
 
 testModule("FlowableLike", createTest("toObservable", () => {

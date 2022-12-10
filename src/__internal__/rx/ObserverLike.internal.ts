@@ -22,7 +22,7 @@ import {
   DispatcherLike_scheduler,
   SchedulerLike,
 } from "../../scheduling";
-import { __yield } from "../../scheduling/SchedulerLike";
+import { yield_ } from "../../scheduling/ContinuationLike";
 import { DisposableLike, DisposableLike_exception } from "../../util";
 import {
   addToIgnoringChildErrors,
@@ -83,7 +83,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           while (getLength(nextQueue) > 0) {
             const next = nextQueue.shift() as T;
             observer[SinkLike_notify](next);
-            __yield();
+            yield_();
           }
         };
 

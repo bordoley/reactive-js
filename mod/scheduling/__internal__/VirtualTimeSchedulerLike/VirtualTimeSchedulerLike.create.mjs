@@ -8,9 +8,8 @@ import { disposableMixin } from '../../../__internal__/util/DisposableLike.mixin
 import { none, unsafeCast, pipe, isSome } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import { move, getCurrent } from '../../../ix/EnumeratorLike.mjs';
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
-import { ContinuationLike_run } from '../../../util.mjs';
-import { run } from '../../../util/ContinuationLike.mjs';
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, ContinuationLike_run, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
+import { run } from '../../ContinuationLike.mjs';
 import { addIgnoringChildErrors, isDisposed, dispose } from '../../../util/DisposableLike.mjs';
 import { getCurrentTime } from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 

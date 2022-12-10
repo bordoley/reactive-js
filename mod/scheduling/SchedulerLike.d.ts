@@ -1,6 +1,6 @@
+import { DisposableLike } from "../util.mjs";
 import { SideEffect, Function1 } from "../functions.mjs";
-import { SchedulerLike, SchedulerLike_now, SchedulerLike_inContinuation, SchedulerLike_requestYield, SchedulerLike_shouldYield, PauseableSchedulerLike, PrioritySchedulerLike } from "../scheduling.mjs";
-import { ContinuationLike, DisposableLike } from "../util.mjs";
+import { SchedulerLike, SchedulerLike_now, SchedulerLike_inContinuation, SchedulerLike_requestYield, SchedulerLike_shouldYield, ContinuationLike, PauseableSchedulerLike, PrioritySchedulerLike } from "../scheduling.mjs";
 declare const createHostScheduler: (options?: {
     readonly yieldInterval?: number | undefined;
 }) => SchedulerLike;
@@ -16,12 +16,9 @@ declare const requestYield: (scheduler: {
 declare const shouldYield: (scheduler: {
     [SchedulerLike_shouldYield]: boolean;
 }) => boolean;
-declare const __yield: (options?: {
-    delay?: number;
-}) => void;
-declare const schedule: (f: SideEffect | ContinuationLike, options?: {
-    readonly delay?: number;
-}) => Function1<SchedulerLike, DisposableLike>;
+declare const schedule: (f: ContinuationLike | SideEffect, options?: {
+    readonly delay?: number | undefined;
+} | undefined) => Function1<SchedulerLike, DisposableLike>;
 declare const toPausableScheduler: Function1<SchedulerLike, PauseableSchedulerLike>;
 declare const toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
-export { __yield, createHostScheduler, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };
+export { createHostScheduler, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };

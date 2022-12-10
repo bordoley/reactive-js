@@ -59,7 +59,7 @@ import {
   ToRunnable,
 } from "../rx";
 import { schedule } from "../rx/ObserverLike";
-import { __yield } from "../scheduling/SchedulerLike";
+import { yield_ } from "../scheduling/ContinuationLike";
 import { dispose, isDisposed } from "../util/DisposableLike";
 
 export const empty: Empty<ReadonlyArrayLike>["empty"] = /*@__PURE__*/ (<
@@ -271,7 +271,7 @@ export const toObservable: ReadonlyArrayToObservable = /*@__PURE__*/ (() => {
               observer[SinkLike_notify](value);
 
               if (cnt !== 0) {
-                __yield(options);
+                yield_(options);
               }
             }
             pipe(observer, dispose());

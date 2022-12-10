@@ -6,7 +6,6 @@
 
 ### Functions
 
-- [\_\_yield](scheduling_SchedulerLike.md#__yield)
 - [createHostScheduler](scheduling_SchedulerLike.md#createhostscheduler)
 - [getCurrentTime](scheduling_SchedulerLike.md#getcurrenttime)
 - [isInContinuation](scheduling_SchedulerLike.md#isincontinuation)
@@ -17,23 +16,6 @@
 - [toPriorityScheduler](scheduling_SchedulerLike.md#topriorityscheduler)
 
 ## Functions
-
-### \_\_yield
-
-▸ **__yield**(`options?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-`void`
-
-___
 
 ### createHostScheduler
 
@@ -111,7 +93,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`ContinuationLike`](../interfaces/util.ContinuationLike.md) \| [`SideEffect`](functions.md#sideeffect) |
+| `f` | [`ContinuationLike`](../interfaces/scheduling.ContinuationLike.md) \| [`SideEffect`](functions.md#sideeffect) |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 

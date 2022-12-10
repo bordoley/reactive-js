@@ -16,13 +16,13 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`SinkLike`](rx.SinkLike.md)
 
+  ↳ [`ContinuationLike`](scheduling.ContinuationLike.md)
+
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
 
   ↳ [`PrioritySchedulerLike`](scheduling.PrioritySchedulerLike.md)
 
   ↳ [`SchedulerLike`](scheduling.SchedulerLike.md)
-
-  ↳ [`ContinuationLike`](util.ContinuationLike.md)
 
 ## Table of contents
 

@@ -25,6 +25,8 @@ import {
 } from "../../../ix";
 import { getCurrent, move } from "../../../ix/EnumeratorLike";
 import {
+  ContinuationLike,
+  ContinuationLike_run,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
   SchedulerLike_requestYield,
@@ -32,12 +34,8 @@ import {
   SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike,
 } from "../../../scheduling";
-import {
-  ContinuationLike,
-  ContinuationLike_run,
-  DisposableLike,
-} from "../../../util";
-import { run } from "../../../util/ContinuationLike";
+import { run } from "../../../scheduling/ContinuationLike";
+import { DisposableLike } from "../../../util";
 import {
   addIgnoringChildErrors,
   dispose,

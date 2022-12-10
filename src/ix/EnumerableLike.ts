@@ -124,7 +124,7 @@ import {
 import { schedule } from "../rx/ObserverLike";
 import { create as createRunnable } from "../rx/RunnableLike";
 import { notifySink } from "../rx/SinkLike";
-import { __yield } from "../scheduling/SchedulerLike";
+import { yield_ } from "../scheduling/ContinuationLike";
 import { DisposableLike, Exception } from "../util";
 import {
   add,
@@ -1199,7 +1199,7 @@ export const toObservable: EnumerableToObservable = (<T>(options?: {
           () => {
             while (!isDisposed(observer) && move(enumerator)) {
               pipe(enumerator, getCurrent, notifySink(observer));
-              __yield(options);
+              yield_(options);
             }
           },
           delayStart ? options : none,

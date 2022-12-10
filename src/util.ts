@@ -62,15 +62,3 @@ export interface PauseableLike {
   [PauseableLike_pause](): void;
   [PauseableLike_resume](): void;
 }
-
-/** @ignore */
-export const ContinuationLike_run = Symbol("ContinuationLike_run");
-
-/**
- * A unit of work to be executed by a scheduler.
- *
- * @noInheritDoc
- */
-export interface ContinuationLike extends DisposableLike {
-  [ContinuationLike_run](): void;
-}

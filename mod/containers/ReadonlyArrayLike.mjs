@@ -10,7 +10,7 @@ import { getLength, isSome, max, min, none, pipe, identity } from '../functions.
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { SinkLike_notify } from '../rx.mjs';
 import { schedule } from '../rx/ObserverLike.mjs';
-import { __yield } from '../scheduling/SchedulerLike.mjs';
+import { yield_ } from '../scheduling/ContinuationLike.mjs';
 import { isDisposed, dispose } from '../util/DisposableLike.mjs';
 
 const empty = /*@__PURE__*/ (() => {
@@ -115,7 +115,7 @@ const toObservable = /*@__PURE__*/ (() => {
                     }
                     observer[SinkLike_notify](value);
                     if (cnt !== 0) {
-                        __yield(options);
+                        yield_(options);
                     }
                 }
                 pipe(observer, dispose());

@@ -3,7 +3,7 @@ import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../
 import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../rx.mjs';
 import { schedule, getScheduler } from '../../rx/ObserverLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../scheduling.mjs';
-import { __yield } from '../../scheduling/SchedulerLike.mjs';
+import { yield_ } from '../../scheduling/ContinuationLike.mjs';
 import { DisposableLike_exception } from '../../util.mjs';
 import { onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
 import { createInstanceFactory, mixin, init, props, include } from '../mixins.mjs';
@@ -25,7 +25,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             while (getLength(nextQueue) > 0) {
                 const next = nextQueue.shift();
                 observer[SinkLike_notify](next);
-                __yield();
+                yield_();
             }
         };
         instance.onContinuationDispose = () => {

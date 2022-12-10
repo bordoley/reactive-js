@@ -1,9 +1,9 @@
 import { toObservable as arrayToObservable } from "../../containers/ReadonlyArrayLike";
 import { pipe } from "../../functions";
 import { forEach, subscribe, toFlowable } from "../../rx/ObservableLike";
+import { run } from "../../scheduling/ContinuationLike";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeSchedulerLike";
 import { toObservable } from "../../streaming/FlowableLike";
-import { run } from "../../util/ContinuationLike";
 import { test, testModule } from "../testing";
 
 testModule(
