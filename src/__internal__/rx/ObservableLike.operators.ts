@@ -42,6 +42,7 @@ import {
 import { getScheduler } from "../../rx/ObserverLike";
 import { notify, sourceFrom } from "../../rx/SinkLike";
 import { create as createSubject, publishTo } from "../../rx/SubjectLike";
+import SinkLike_takeFirstMixin from "../../rx/__internal__/SinkLike/SinkLike.takeFirstMixin";
 import { SchedulerLike } from "../../scheduling";
 import { DisposableLike, DisposableOrTeardown } from "../../util";
 import DisposableLike__addTo from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
@@ -81,7 +82,6 @@ import {
   distinctUntilChangedSinkMixin,
   forEachSinkMixin,
   scanSinkMixin,
-  takeFirstSinkMixin,
 } from "./SinkLike.mixins";
 
 export const allAreEnumerable = compose(
@@ -317,7 +317,7 @@ export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
       delegate: ObserverLike<T>,
       count: number,
     ) => ObserverLike<T> = (<T>() => {
-      const typedTakeFirstSinkMixin = takeFirstSinkMixin<T>();
+      const typedTakeFirstSinkMixin = SinkLike_takeFirstMixin<T>();
       const typedObserverMixin = observerMixin<T>();
 
       return createInstanceFactory(
