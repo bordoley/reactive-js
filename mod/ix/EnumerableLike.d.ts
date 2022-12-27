@@ -1,7 +1,6 @@
-import { Buffer, ConcatAll, Concat, DistinctUntilChanged, Empty, ForEach, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ToIterable, Zip } from "../containers.mjs";
-import { Function1 } from "../functions.mjs";
+import { Buffer, ConcatAll, Concat, DistinctUntilChanged, Empty, ForEach, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip } from "../containers.mjs";
 import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix.mjs";
-import { ToObservable, ToRunnable, EnumerableObservableLike, RunnableObservableLike } from "../rx.mjs";
+import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.mjs";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
 declare const buffer: Buffer<EnumerableLike>["buffer"];
 declare const bufferT: Buffer<EnumerableLike>;
@@ -46,27 +45,33 @@ declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike>;
 declare const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<EnumerableLike>;
-interface EnumerableToObservable {
-    <T>(): Function1<EnumerableLike<T>, EnumerableObservableLike<T>>;
-    <T>(options: {
-        delay: number;
-        delayStart?: boolean;
-    }): Function1<EnumerableLike<T>, RunnableObservableLike<T>>;
-}
-declare const toObservable: EnumerableToObservable;
+declare const toEnumerableObservable: ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"];
+declare const toEnumerableObservableT: ToEnumerableObservable<EnumerableLike>;
+/**
+ * Converts an EnumerableLike into a javascript Iterable.
+ */
+declare const toIterable: ToIterable<EnumerableLike>["toIterable"];
+declare const toIterableT: ToIterable<EnumerableLike>;
+declare const toObservable: ToObservable<EnumerableLike, {
+    delay?: number;
+    delayStart?: boolean;
+}>["toObservable"];
 declare const toObservableT: ToObservable<EnumerableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>;
 declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<EnumerableLike>;
-/**
- * Converts an EnumerableLike into a javascript Iterable.
- */
-declare const toIterable: ToIterable<EnumerableLike>["toIterable"];
-declare const toIterableT: ToIterable<EnumerableLike>;
 declare const toRunnable: ToRunnable<EnumerableLike>["toRunnable"];
 declare const toRunnableT: ToRunnable<EnumerableLike>;
+declare const toRunnableObservable: ToRunnableObservable<EnumerableLike, {
+    delay?: number;
+    delayStart?: boolean;
+}>["toRunnableObservable"];
+declare const toRunnableObservableT: ToRunnableObservable<EnumerableLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+}>;
 declare const zip: Zip<EnumerableLike>["zip"];
 declare const zipT: Zip<EnumerableLike>;
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, forEach, forEachT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, forEach, forEachT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, zip, zipT };

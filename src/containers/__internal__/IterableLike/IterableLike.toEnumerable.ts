@@ -1,8 +1,4 @@
 import {
-  MutableEnumeratorLike,
-  mutableEnumeratorMixin,
-} from "../../../__internal__/ix/EnumeratorLike.mutable";
-import {
   Mutable,
   createInstanceFactory,
   include,
@@ -19,12 +15,14 @@ import {
   ToEnumerable,
 } from "../../../ix";
 import EnumerableLike__create from "../../../ix/__internal__/EnumerableLike/EnumerableLike.create";
+import MutableEnumeratorLike__mixin from "../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
+import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
 import { dispose, isDisposed } from "../../../util/DisposableLike";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 
 const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
+    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
 
     type TProperties = {
       readonly iterator: Iterator<T>;
