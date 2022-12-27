@@ -1,7 +1,7 @@
-import { Empty, ReadonlyArrayLike, ForEach, Keep, Map, ToReadonlyArray, ToSequence } from "../containers.mjs";
 import { Predicate, Function1 } from "../functions.mjs";
+import { Empty, ReadonlyArrayLike, ForEach, Keep, Map, ToReadonlyArray, ToSequence } from "../containers.mjs";
 import { ToEnumerable } from "../ix.mjs";
-import { ToObservable, ToRunnable, EnumerableObservableLike, RunnableObservableLike } from "../rx.mjs";
+import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.mjs";
 declare const empty: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyT: Empty<ReadonlyArrayLike>;
 declare const every: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
@@ -24,19 +24,20 @@ declare const toEnumerableT: ToEnumerable<ReadonlyArrayLike, {
     readonly start: number;
     readonly count: number;
 }>;
-interface ReadonlyArrayToObservable {
-    <T>(options?: {
-        count?: number;
-        start?: number;
-    }): Function1<ReadonlyArrayLike<T>, EnumerableObservableLike<T>>;
-    <T>(options: {
-        delay: number;
-        delayStart?: boolean;
-        count?: number;
-        start?: number;
-    }): Function1<ReadonlyArrayLike<T>, RunnableObservableLike<T>>;
-}
-declare const toObservable: ReadonlyArrayToObservable;
+declare const toEnumerableObservable: ToEnumerableObservable<ReadonlyArrayLike, {
+    readonly count?: number;
+    readonly start?: number;
+}>["toEnumerableObservable"];
+declare const toEnumerableObservableT: ToEnumerableObservable<ReadonlyArrayLike, {
+    readonly count?: number;
+    readonly start?: number;
+}>;
+declare const toObservable: ToObservable<ReadonlyArrayLike, {
+    readonly count?: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+}>["toObservable"];
 declare const toObservableT: ToObservable<ReadonlyArrayLike, {
     readonly count?: number;
     readonly delay?: number;
@@ -53,6 +54,18 @@ declare const toReadonlyArrayT: ToReadonlyArray<ReadonlyArrayLike, {
 }>;
 declare const toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"];
 declare const toRunnableT: ToRunnable<ReadonlyArrayLike>;
+declare const toRunnableObservable: ToRunnableObservable<ReadonlyArrayLike, {
+    readonly count?: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+}>["toRunnableObservable"];
+declare const toRunnableObservableT: ToRunnableObservable<ReadonlyArrayLike, {
+    readonly count?: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+}>;
 declare const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"];
 declare const toSequenceT: ToSequence<ReadonlyArrayLike>;
-export { FromArrayOptions, empty, emptyT, every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, toSequence, toSequenceT };
+export { FromArrayOptions, empty, emptyT, every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, toSequence, toSequenceT };
