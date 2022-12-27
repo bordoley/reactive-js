@@ -1,16 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
-  TReactive,
-  createDecodeWithCharsetOperator,
-  createKeepOperator,
-  createMapOperator,
-  createReduceOperator,
-  createSkipFirstOperator,
-  createTakeLastOperator,
-  createTakeWhileOperator,
-  createThrowIfEmptyOperator,
-} from "../__internal__/containers/StatefulContainerLike.internal";
-import {
   Mutable,
   createInstanceFactory,
   include,
@@ -127,6 +116,15 @@ import {
   map as mapArray,
   some,
 } from "../containers/ReadonlyArrayLike";
+import StatefulContainerLike__decodeWithCharset from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.decodeWithCharset";
+import StatefulContainerLike__keep from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep";
+import StatefulContainerLike__map from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map";
+import StatefulContainerLike__reduce from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.reduce";
+import StatefulContainerLike__skipFirst from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.skipFirst";
+import StatefulContainerLike__takeLast from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeLast";
+import StatefulContainerLike__takeWhile from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile";
+import StatefulContainerLike__throwIfEmpty from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty";
+import { TReactive } from "../containers/__internal__/containers.internal";
 import {
   Factory,
   Function1,
@@ -464,7 +462,7 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
 
     return pipe(
       createDecodeWithCharsetObserver,
-      createDecodeWithCharsetOperator<ObservableLike, TReactive>(
+      StatefulContainerLike__decodeWithCharset<ObservableLike, TReactive>(
         liftEnumerableObservableT,
       ),
     );
@@ -679,7 +677,9 @@ export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
   return pipe(
     createKeepObserver,
-    createKeepOperator<ObservableLike, T, TReactive>(liftEnumerableObservableT),
+    StatefulContainerLike__keep<ObservableLike, T, TReactive>(
+      liftEnumerableObservableT,
+    ),
   );
 })();
 export const keepT: Keep<ObservableLike> = { keep };
@@ -837,7 +837,7 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
 
   return pipe(
     createMapObserver,
-    createMapOperator<ObservableLike, TA, TB, TReactive>(
+    StatefulContainerLike__map<ObservableLike, TA, TB, TReactive>(
       liftEnumerableObservableT,
     ),
   );
@@ -941,7 +941,7 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
 
   return pipe(
     createReduceObserver,
-    createReduceOperator<ObservableLike, T, TAcc, TReactive>(
+    StatefulContainerLike__reduce<ObservableLike, T, TAcc, TReactive>(
       liftEnumerableObservableT,
     ),
   );
@@ -1155,7 +1155,7 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
 
     return pipe(
       createSkipFirstObserver,
-      createSkipFirstOperator(liftEnumerableObservableT),
+      StatefulContainerLike__skipFirst(liftEnumerableObservableT),
     );
   })();
 export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
@@ -1242,7 +1242,7 @@ export const takeLast: TakeLast<ObservableLike>["takeLast"] =
 
     return pipe(
       createTakeLastObserver,
-      createTakeLastOperator(liftEnumerableObservableT),
+      StatefulContainerLike__takeLast(liftEnumerableObservableT),
     );
   })();
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
@@ -1305,7 +1305,7 @@ export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
 
     return pipe(
       createTakeWhileObserver,
-      createTakeWhileOperator(liftEnumerableObservableT),
+      StatefulContainerLike__takeWhile(liftEnumerableObservableT),
     );
   })();
 export const takeWhileT: TakeWhile<ObservableLike> = { takeWhile };
@@ -1501,7 +1501,7 @@ export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
 
     return pipe(
       createThrowIfEmptyObserver,
-      createThrowIfEmptyOperator(liftEnumerableObservableT),
+      StatefulContainerLike__throwIfEmpty(liftEnumerableObservableT),
     );
   })();
 export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {

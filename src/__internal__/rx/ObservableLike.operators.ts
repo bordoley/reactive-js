@@ -7,6 +7,11 @@ import {
   TakeFirst,
 } from "../../containers";
 import { every, map as mapArray } from "../../containers/ReadonlyArrayLike";
+import StatefulContainerLike__distinctUntilChanged from "../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged";
+import StatefulContainerLike__forEach from "../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.forEach";
+import StatefulContainerLike__scan from "../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan";
+import StatefulContainerLike__takeFirst from "../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst";
+import { TReactive } from "../../containers/__internal__/containers.internal";
 import {
   Equality,
   Factory,
@@ -46,13 +51,7 @@ import DisposableLike__dispose from "../../util/__internal__/DisposableLike/Disp
 import DisposableLike__isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import {
-  TReactive,
-  createDistinctUntilChangedOperator,
-  createForEachOperator,
-  createScanOperator,
-  createTakeFirstOperator,
-} from "../containers/StatefulContainerLike.internal";
+
 import {
   Mutable,
   createInstanceFactory,
@@ -133,7 +132,7 @@ export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinc
 
     return pipe(
       createDistinctUntilChangedObserver,
-      createDistinctUntilChangedOperator<ObservableLike, T, TReactive>(
+      StatefulContainerLike__distinctUntilChanged<ObservableLike, T, TReactive>(
         liftEnumerableObservableT,
       ),
     );
@@ -168,7 +167,7 @@ export const forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
 
   return pipe(
     createForEachObserver,
-    createForEachOperator<ObservableLike, T, TReactive>(
+    StatefulContainerLike__forEach<ObservableLike, T, TReactive>(
       liftEnumerableObservableT,
     ),
   );
@@ -298,7 +297,7 @@ export const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (() => {
   })();
   return pipe(
     createScanObserver,
-    createScanOperator(liftEnumerableObservableT),
+    StatefulContainerLike__scan(liftEnumerableObservableT),
   );
 })();
 
@@ -344,7 +343,7 @@ export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
 
     return pipe(
       createTakeFirstObserver,
-      createTakeFirstOperator(liftEnumerableObservableT),
+      StatefulContainerLike__takeFirst(liftEnumerableObservableT),
     );
   })();
 

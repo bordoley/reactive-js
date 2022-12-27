@@ -1,20 +1,4 @@
 import {
-  Lift,
-  TInteractive,
-  createBufferOperator,
-  createDistinctUntilChangedOperator,
-  createForEachOperator,
-  createKeepOperator,
-  createMapOperator,
-  createScanOperator,
-  createSkipFirstOperator,
-  createTakeFirstOperator,
-  createTakeLastOperator,
-  createTakeWhileOperator,
-  createThrowIfEmptyOperator,
-  interactive,
-} from "../__internal__/containers/StatefulContainerLike.internal";
-import {
   Mutable,
   createInstanceFactory,
   include,
@@ -52,6 +36,22 @@ import {
 } from "../containers";
 import { toEnumerable as toEnumerableReadonlyArray } from "../containers/ReadonlyArrayLike";
 import ContainerLike__repeat from "../containers/__internal__/ContainerLike/ContainerLike.repeat";
+import StatefulContainerLike__buffer from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.buffer";
+import StatefulContainerLike__distinctUntilChanged from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged";
+import StatefulContainerLike__forEach from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.forEach";
+import StatefulContainerLike__keep from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep";
+import StatefulContainerLike__map from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map";
+import StatefulContainerLike__scan from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan";
+import StatefulContainerLike__skipFirst from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.skipFirst";
+import StatefulContainerLike__takeFirst from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst";
+import StatefulContainerLike__takeLast from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeLast";
+import StatefulContainerLike__takeWhile from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile";
+import StatefulContainerLike__throwIfEmpty from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty";
+import {
+  Lift,
+  TInteractive,
+  interactive,
+} from "../containers/__internal__/containers.internal";
 import {
   Equality,
   Factory,
@@ -222,7 +222,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    createBufferOperator<EnumerableLike, T, TInteractive>(liftT),
+    StatefulContainerLike__buffer<EnumerableLike, T, TInteractive>(liftT),
   );
 })();
 export const bufferT: Buffer<EnumerableLike> = {
@@ -358,9 +358,11 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
           },
         ),
       ),
-      createDistinctUntilChangedOperator<EnumerableLike, T, TInteractive>(
-        liftT,
-      ),
+      StatefulContainerLike__distinctUntilChanged<
+        EnumerableLike,
+        T,
+        TInteractive
+      >(liftT),
     );
   })();
 export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
@@ -413,7 +415,7 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    createForEachOperator<EnumerableLike, T, TInteractive>(liftT),
+    StatefulContainerLike__forEach<EnumerableLike, T, TInteractive>(liftT),
   );
 })();
 export const forEachT: ForEach<EnumerableLike> = { forEach };
@@ -519,7 +521,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         },
       ),
     ),
-    createKeepOperator<EnumerableLike, T, TInteractive>(liftT),
+    StatefulContainerLike__keep<EnumerableLike, T, TInteractive>(liftT),
   );
 })();
 export const keepT: Keep<EnumerableLike> = {
@@ -573,7 +575,7 @@ export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
         },
       ),
     ),
-    createMapOperator<EnumerableLike, TA, TB, TInteractive>(liftT),
+    StatefulContainerLike__map<EnumerableLike, TA, TB, TInteractive>(liftT),
   );
 })();
 export const mapT: Map<EnumerableLike> = { map };
@@ -773,7 +775,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    createScanOperator<EnumerableLike, T, TAcc, TInteractive>(liftT),
+    StatefulContainerLike__scan<EnumerableLike, T, TAcc, TInteractive>(liftT),
   );
 })();
 export const scanT: Scan<EnumerableLike> = {
@@ -830,7 +832,7 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
           },
         ),
       ),
-      createSkipFirstOperator<EnumerableLike, T, TInteractive>(liftT),
+      StatefulContainerLike__skipFirst<EnumerableLike, T, TInteractive>(liftT),
     );
   })();
 export const skipFirstT: SkipFirst<EnumerableLike> = {
@@ -882,7 +884,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
           },
         ),
       ),
-      createTakeFirstOperator<EnumerableLike, T, TInteractive>({
+      StatefulContainerLike__takeFirst<EnumerableLike, T, TInteractive>({
         ...liftT,
       }),
     );
@@ -954,7 +956,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    createTakeLastOperator<EnumerableLike, T, TInteractive>({
+    StatefulContainerLike__takeLast<EnumerableLike, T, TInteractive>({
       ...liftT,
     }),
   );
@@ -1023,7 +1025,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
           },
         ),
       ),
-      createTakeWhileOperator<EnumerableLike, T, TInteractive>(liftT),
+      StatefulContainerLike__takeWhile<EnumerableLike, T, TInteractive>(liftT),
     );
   })();
 export const takeWhileT: TakeWhile<EnumerableLike> = { takeWhile };
@@ -1086,7 +1088,9 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
           },
         ),
       ),
-      createThrowIfEmptyOperator<EnumerableLike, T, TInteractive>(liftT),
+      StatefulContainerLike__throwIfEmpty<EnumerableLike, T, TInteractive>(
+        liftT,
+      ),
     );
   })();
 export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike> = {

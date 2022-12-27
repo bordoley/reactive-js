@@ -1,5 +1,9 @@
 /// <reference types="./ObservableLike.operators.d.ts" />
 import { map, every } from '../../containers/ReadonlyArrayLike.mjs';
+import distinctUntilChanged$1 from '../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged.mjs';
+import forEach$1 from '../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.forEach.mjs';
+import scan$1 from '../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
+import takeFirst$1 from '../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst.mjs';
 import { compose, isTrue, pipe, getLength, isEmpty, none, partial } from '../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_scheduler, SinkLike_notify } from '../../rx.mjs';
 import { getScheduler } from '../../rx/ObserverLike.mjs';
@@ -12,7 +16,6 @@ import dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispo
 import isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import onComplete from '../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import { createDistinctUntilChangedOperator, createForEachOperator, createScanOperator, createTakeFirstOperator } from '../containers/StatefulContainerLike.internal.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../mixins.mjs';
 import { createEnumerableObservable, createRunnableObservable, createObservable } from './ObservableLike.create.mjs';
 import { liftEnumerableObservableT, liftEnumerableObservable, liftRunnableObservable, liftObservable } from './ObservableLike.lift.mjs';
@@ -33,7 +36,7 @@ const distinctUntilChanged =
             return instance;
         }));
     })();
-    return pipe(createDistinctUntilChangedObserver, createDistinctUntilChangedOperator(liftEnumerableObservableT));
+    return pipe(createDistinctUntilChangedObserver, distinctUntilChanged$1(liftEnumerableObservableT));
 })();
 const forEach = /*@__PURE__*/ (() => {
     const createForEachObserver = (() => {
@@ -45,7 +48,7 @@ const forEach = /*@__PURE__*/ (() => {
             return instance;
         }));
     })();
-    return pipe(createForEachObserver, createForEachOperator(liftEnumerableObservableT));
+    return pipe(createForEachObserver, forEach$1(liftEnumerableObservableT));
 })();
 const isEnumerable = (obs) => obs[ObservableLike_isEnumerable];
 const isRunnable = (obs) => obs[ObservableLike_isRunnable];
@@ -107,7 +110,7 @@ const scan = /*@__PURE__*/ (() => {
             return instance;
         }));
     })();
-    return pipe(createScanObserver, createScanOperator(liftEnumerableObservableT));
+    return pipe(createScanObserver, scan$1(liftEnumerableObservableT));
 })();
 const subscribe = scheduler => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
 const takeFirst = 
@@ -121,7 +124,7 @@ const takeFirst =
             return instance;
         }));
     })();
-    return pipe(createTakeFirstObserver, createTakeFirstOperator(liftEnumerableObservableT));
+    return pipe(createTakeFirstObserver, takeFirst$1(liftEnumerableObservableT));
 })();
 const zipWithLatestFrom = /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {

@@ -1,13 +1,4 @@
 import {
-  Lift,
-  TInteractive,
-  createKeepOperator,
-  createMapOperator,
-  createScanOperator,
-  createTakeWhileOperator,
-  interactive,
-} from "../__internal__/containers/StatefulContainerLike.internal";
-import {
   Mixin1,
   Mutable,
   createInstanceFactory,
@@ -32,6 +23,15 @@ import {
 } from "../containers";
 import { concatMap } from "../containers/ContainerLike";
 import { toObservable as arrayToObservable } from "../containers/ReadonlyArrayLike";
+import StatefulContainerLike__keep from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep";
+import StatefulContainerLike__map from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map";
+import StatefulContainerLike__scan from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan";
+import StatefulContainerLike__takeWhile from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile";
+import {
+  Lift,
+  TInteractive,
+  interactive,
+} from "../containers/__internal__/containers.internal";
 import {
   Factory,
   Function1,
@@ -665,7 +665,7 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
   return pipe(
     createKeepAsyncEnumerator,
-    createKeepOperator<AsyncEnumerableLike, T, TInteractive>(liftT),
+    StatefulContainerLike__keep<AsyncEnumerableLike, T, TInteractive>(liftT),
   );
 })();
 
@@ -728,7 +728,9 @@ export const map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
 
   return pipe(
     createMapAsyncEnumerator,
-    createMapOperator<AsyncEnumerableLike, TA, TB, TInteractive>(liftT),
+    StatefulContainerLike__map<AsyncEnumerableLike, TA, TB, TInteractive>(
+      liftT,
+    ),
   );
 })();
 
@@ -792,7 +794,9 @@ export const scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
 
   return pipe(
     createScanAsyncEnumerator,
-    createScanOperator<AsyncEnumerableLike, T, TAcc, TInteractive>(liftT),
+    StatefulContainerLike__scan<AsyncEnumerableLike, T, TAcc, TInteractive>(
+      liftT,
+    ),
   );
 })();
 
@@ -922,7 +926,9 @@ export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
 
     return pipe(
       createTakeWhileAsyncEnumerator,
-      createTakeWhileOperator<AsyncEnumerableLike, T, TInteractive>(liftT),
+      StatefulContainerLike__takeWhile<AsyncEnumerableLike, T, TInteractive>(
+        liftT,
+      ),
     );
   })();
 

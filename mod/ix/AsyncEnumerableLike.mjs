@@ -1,9 +1,13 @@
 /// <reference types="./AsyncEnumerableLike.d.ts" />
-import { interactive, createKeepOperator, createMapOperator, createScanOperator, createTakeWhileOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
 import { createInstanceFactory, mixin as mixin$1, include, init, props } from '../__internal__/mixins.mjs';
 import { getDelay, hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
+import keep$2 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep.mjs';
+import map$2 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map.mjs';
+import scan$2 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
+import takeWhile$2 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile.mjs';
+import { interactive } from '../containers/__internal__/containers.internal.mjs';
 import { pipe, none, unsafeCast, getLength, compose, increment, returns, pipeUnsafe, newInstance, partial } from '../functions.mjs';
 import { SourceLike_move, InteractiveContainerLike_interact } from '../ix.mjs';
 import { hasCurrent, getCurrent } from './EnumeratorLike.mjs';
@@ -216,7 +220,7 @@ const keep = /*@__PURE__*/ (() => {
             pipe(this.obs, sinkInto(observer));
         },
     }));
-    return pipe(createKeepAsyncEnumerator, createKeepOperator(liftT));
+    return pipe(createKeepAsyncEnumerator, keep$2(liftT));
 })();
 const keepT = {
     keep,
@@ -244,7 +248,7 @@ const map = /*@__PURE__*/ (() => {
             pipe(this.delegate, this.op, sinkInto(observer));
         },
     }));
-    return pipe(createMapAsyncEnumerator, createMapOperator(liftT));
+    return pipe(createMapAsyncEnumerator, map$2(liftT));
 })();
 const mapT = {
     map,
@@ -272,7 +276,7 @@ const scan = /*@__PURE__*/ (() => {
             pipe(this.delegate, this.op, sinkInto(observer));
         },
     }));
-    return pipe(createScanAsyncEnumerator, createScanOperator(liftT));
+    return pipe(createScanAsyncEnumerator, scan$2(liftT));
 })();
 const scanT = {
     scan,
@@ -325,7 +329,7 @@ const takeWhile =
             pipe(this.obs, sinkInto(observer));
         },
     }));
-    return pipe(createTakeWhileAsyncEnumerator, createTakeWhileOperator(liftT));
+    return pipe(createTakeWhileAsyncEnumerator, takeWhile$2(liftT));
 })();
 const takeWhileT = {
     takeWhile,

@@ -1,8 +1,8 @@
 /// <reference types="./ObservableLike.lift.d.ts" />
+import { reactive } from '../../containers/__internal__/containers.internal.mjs';
 import { pipeUnsafe, newInstance } from '../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../rx.mjs';
 import { sourceFrom } from '../../rx/SinkLike.mjs';
-import { reactive } from '../containers/StatefulContainerLike.internal.mjs';
 
 const createLift = /*@__PURE__*/ (() => {
     class LiftedObservable {
