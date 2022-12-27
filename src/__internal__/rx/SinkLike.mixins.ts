@@ -2,37 +2,26 @@ import {
   Equality,
   Factory,
   Function1,
-  Option,
   Predicate,
   Reducer,
   SideEffect1,
-  compose,
   getLength,
   isEmpty,
   isSome,
-  negate,
   newInstance,
   none,
   pipe,
   returns,
 } from "../../functions";
-import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
-  SourceLike_move,
-} from "../../ix";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../rx";
 import { sinkInto } from "../../rx/ReactiveContainerLike";
 import { notify } from "../../rx/SinkLike";
-import { DisposableLike, Exception } from "../../util";
+import { Exception } from "../../util";
 import {
   addTo,
   addToIgnoringChildErrors,
   dispose,
-  isDisposed,
   onComplete,
-  onDisposed,
   onError,
 } from "../../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
@@ -42,7 +31,6 @@ import {
   Mixin2,
   Mixin3,
   Mutable,
-  createInstanceFactory,
   include,
   init,
   mixin,
@@ -50,132 +38,6 @@ import {
 } from "../mixins";
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
-
-export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
-  T,
->() => {
-  type TProperties = {
-    [EnumeratorLike_current]: T;
-    [EnumeratorLike_hasCurrent]: boolean;
-    readonly buffer: T[];
-  };
-
-  return createInstanceFactory(
-    mixin(
-      include(DisposableLike__mixin),
-      function EnumeratorSink(
-        instance: Pick<
-          SinkLike<T> & EnumeratorLike<T>,
-          typeof SinkLike_notify | typeof SourceLike_move
-        > &
-          Mutable<TProperties>,
-      ): EnumeratorLike<T> & SinkLike<T> {
-        init(DisposableLike__mixin, instance);
-
-        instance.buffer = [];
-
-        pipe(
-          instance,
-          onDisposed(() => {
-            instance.buffer.length = 0;
-            instance[EnumeratorLike_hasCurrent] = false;
-          }),
-        );
-
-        return instance;
-      },
-      props<TProperties>({
-        buffer: none,
-        [EnumeratorLike_current]: none,
-        [EnumeratorLike_hasCurrent]: false,
-      }),
-      {
-        [SinkLike_notify](this: DisposableLike & TProperties, next: T) {
-          if (isDisposed(this)) {
-            return;
-          }
-          this.buffer.push(next);
-        },
-        [SourceLike_move](this: DisposableLike & TProperties) {
-          const { buffer } = this;
-
-          if (!isDisposed(this) && getLength(buffer) > 0) {
-            const next = buffer.shift() as T;
-            this[EnumeratorLike_current] = next;
-            this[EnumeratorLike_hasCurrent] = true;
-          } else {
-            this[EnumeratorLike_hasCurrent] = false;
-          }
-        },
-      },
-    ),
-  );
-})();
-
-export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
-  createInstanceFactory(
-    mixin(
-      include(DisposableLike__mixin),
-      function CreateSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
-      ): SinkLike<T> {
-        init(DisposableLike__mixin, instance);
-
-        return instance;
-      },
-      {},
-      {
-        [SinkLike_notify](_: T) {},
-      },
-    ),
-  ))();
-
-export const DelegatingSink_delegate = Symbol("DelegatingSink_delegate");
-
-export interface DelegateSinkLike<T> extends SinkLike<T> {
-  [DelegatingSink_delegate]: SinkLike<T>;
-}
-
-export const delegatingSinkMixin: <T>() => Mixin1<
-  DelegateSinkLike<T>,
-  SinkLike<T>
-> = /*@__PURE__*/ (<T>() => {
-  type TProperties = {
-    [DelegatingSink_delegate]: SinkLike<T>;
-  };
-
-  return returns(
-    mixin(
-      include(DisposableLike__mixin),
-      function DelegatingSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        delegate: SinkLike<T>,
-      ): DelegateSinkLike<T> {
-        init(DisposableLike__mixin, instance);
-
-        instance[DelegatingSink_delegate] = delegate;
-
-        return instance;
-      },
-      props<TProperties>({
-        [DelegatingSink_delegate]: none,
-      }),
-      {
-        [SinkLike_notify](this: TProperties, v: T) {
-          this[DelegatingSink_delegate][SinkLike_notify](v);
-        },
-      },
-    ),
-  );
-})();
-
-export const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T> =
-  /*@__PURE__*/ (<T>() => {
-    const typeDelegatingSinkMixin = delegatingSinkMixin<T>();
-
-    return createInstanceFactory(typeDelegatingSinkMixin);
-  })();
 
 export const bufferSinkMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -454,38 +316,6 @@ export const distinctUntilChangedSinkMixin: <T>() => Mixin2<
   );
 })();
 
-export const everySatisfySinkMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
-  fromArray: (v: readonly boolean[]) => C,
-) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
-  fromArray: (v: readonly boolean[]) => C,
-) => {
-  const typedSatisfySinkMixin = satisfySinkMixin<C, TSink, T>(fromArray, true);
-
-  return mixin(
-    include(typedSatisfySinkMixin),
-    function EverySatisfySink(
-      instance: unknown,
-      delegate: TSink,
-      predicate: Predicate<T>,
-    ): SinkLike<T> {
-      init(
-        typedSatisfySinkMixin,
-        instance,
-        delegate,
-        compose(predicate, negate),
-      );
-      return instance;
-    },
-  );
-};
 
 export const forEachSinkMixin: <T>() => Mixin2<
   SinkLike<T>,
@@ -741,66 +571,6 @@ export const reduceSinkMixin: <
   );
 };
 
-const satisfySinkMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
-  fromArray: (v: readonly boolean[]) => C,
-  defaultResult: boolean,
-) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
-  fromArray: (v: readonly boolean[]) => C,
-  defaultResult: boolean,
-) => {
-  const SatisfySink_private_predicate = Symbol("SatisfySink_private_predicate");
-
-  type TProperties = {
-    readonly [Sink_private_delegate]: SinkLike<boolean>;
-    readonly [SatisfySink_private_predicate]: Predicate<T>;
-  };
-
-  return mixin(
-    include(DisposableLike__mixin),
-    function SatisfySink(
-      instance: Mutable<TProperties> &
-        Pick<SinkLike<T>, typeof SinkLike_notify>,
-      delegate: TSink,
-      predicate: Predicate<T>,
-    ): SinkLike<T> {
-      init(DisposableLike__mixin, instance);
-      instance[Sink_private_delegate] = delegate;
-      instance[SatisfySink_private_predicate] = predicate;
-
-      pipe(
-        instance,
-        addTo(delegate),
-        onComplete(() => {
-          if (!isDisposed(delegate)) {
-            pipe([defaultResult], fromArray, sinkInto(delegate));
-          }
-        }),
-      );
-
-      return instance;
-    },
-    props<TProperties>({
-      [Sink_private_delegate]: none,
-      [SatisfySink_private_predicate]: none,
-    }),
-    {
-      [SinkLike_notify](this: TProperties, next: T) {
-        if (this[SatisfySink_private_predicate](next)) {
-          pipe(this[Sink_private_delegate], notify(!defaultResult), dispose());
-        }
-      },
-    },
-  );
-};
-
 export const scanSinkMixin: <T, TAcc>() => Mixin3<
   SinkLike<T>,
   SinkLike<TAcc>,
@@ -906,284 +676,6 @@ export const skipFirstSinkMixin: <T>() => Mixin2<
           ) {
             pipe(this[Sink_private_delegate], notify(next));
           }
-        },
-      },
-    ),
-  );
-})();
-
-export const someSatisfySinkMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
-  fromArray: (v: readonly boolean[]) => C,
-) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
-  fromArray: (v: readonly boolean[]) => C,
-) => {
-  const typedSatisfySinkMixin = satisfySinkMixin<C, TSink, T>(fromArray, false);
-
-  return mixin(
-    include(typedSatisfySinkMixin),
-    function EverySatisfySink(
-      instance: unknown,
-      delegate: TSink,
-      predicate: Predicate<T>,
-    ): SinkLike<T> {
-      init(typedSatisfySinkMixin, instance, delegate, predicate);
-      return instance;
-    },
-  );
-};
-
-export const takeFirstSinkMixin: <T>() => Mixin2<
-  SinkLike<T>,
-  SinkLike<T>,
-  number
-> = /*@__PURE__*/ (<T>() => {
-  const TakeFirstSink_private_takeCount = Symbol(
-    "TakeFirstSink_private_takeCount",
-  );
-
-  const TakeFirstSink_private_count = Symbol("TakeFirstSink_private_count");
-
-  type TProperties = {
-    readonly [Sink_private_delegate]: SinkLike<T>;
-    readonly [TakeFirstSink_private_takeCount]: number;
-    [TakeFirstSink_private_count]: number;
-  };
-
-  return returns(
-    mixin(
-      include(DisposableLike__delegatingMixin),
-      function TakeFirstSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        delegate: SinkLike<T>,
-        takeCount: number,
-      ): SinkLike<T> {
-        init(DisposableLike__delegatingMixin, instance, delegate);
-
-        instance[Sink_private_delegate] = delegate;
-        instance[TakeFirstSink_private_takeCount] = takeCount;
-
-        if (takeCount === 0) {
-          pipe(instance, dispose());
-        }
-
-        return instance;
-      },
-      props<TProperties>({
-        [Sink_private_delegate]: none,
-        [TakeFirstSink_private_takeCount]: 0,
-        [TakeFirstSink_private_count]: 0,
-      }),
-      {
-        [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-          this[TakeFirstSink_private_count]++;
-          pipe(this[Sink_private_delegate], notify(next));
-          if (
-            this[TakeFirstSink_private_count] >=
-            this[TakeFirstSink_private_takeCount]
-          ) {
-            pipe(this, dispose());
-          }
-        },
-      },
-    ),
-  );
-})();
-
-export const TakeLastSink_last = Symbol("TakeLastSink_last");
-
-export const takeLastSinkMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->(
-  fromArray: (v: readonly T[]) => C,
-) => Mixin2<SinkLike<T>, TSink, number> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->(
-  fromArray: (v: readonly T[]) => C,
-) => {
-  const TakeLastSink_private_takeLastCount = Symbol(
-    "TakeLastSink_private_takeLastCount",
-  );
-
-  type TProperties = {
-    readonly [Sink_private_delegate]: SinkLike<T>;
-    readonly [TakeLastSink_private_takeLastCount]: number;
-    readonly [TakeLastSink_last]: T[];
-  };
-
-  return mixin(
-    include(DisposableLike__mixin),
-    function TakeLastSink(
-      instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
-        Mutable<TProperties>,
-      delegate: TSink,
-      takeLastCount: number,
-    ): SinkLike<T> {
-      init(DisposableLike__mixin, instance);
-
-      instance[Sink_private_delegate] = delegate;
-      instance[TakeLastSink_private_takeLastCount] = takeLastCount;
-      instance[TakeLastSink_last] = [];
-
-      pipe(
-        instance,
-        addTo(delegate),
-        onComplete(() => {
-          pipe(instance[TakeLastSink_last], fromArray, sinkInto(delegate));
-        }),
-      );
-
-      return instance;
-    },
-    props<TProperties>({
-      [Sink_private_delegate]: none,
-      [TakeLastSink_private_takeLastCount]: 0,
-      [TakeLastSink_last]: none,
-    }),
-    {
-      [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-        const { [TakeLastSink_last]: last } = this;
-
-        last.push(next);
-
-        if (getLength(last) > this[TakeLastSink_private_takeLastCount]) {
-          last.shift();
-        }
-      },
-    },
-  );
-};
-
-export const takeWhileSinkMixin: <T>() => Mixin3<
-  SinkLike<T>,
-  SinkLike<T>,
-  Predicate<T>,
-  boolean
-> = /*@__PURE__*/ (<T>() => {
-  const TakeWhileSink_private_predicate = Symbol(
-    "TakeWhileSink_private_predicate",
-  );
-  const TakeWhileSink_private_inclusive = Symbol(
-    "TakeWhileSink_private_inclusive",
-  );
-
-  type TProperties = {
-    readonly [Sink_private_delegate]: SinkLike<T>;
-    readonly [TakeWhileSink_private_predicate]: Predicate<T>;
-    readonly [TakeWhileSink_private_inclusive]: boolean;
-  };
-
-  return returns(
-    mixin(
-      include(DisposableLike__delegatingMixin),
-      function TakeWhileSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        delegate: SinkLike<T>,
-        predicate: Predicate<T>,
-        inclusive: boolean,
-      ): SinkLike<T> {
-        init(DisposableLike__delegatingMixin, instance, delegate);
-
-        instance[Sink_private_delegate] = delegate;
-        instance[TakeWhileSink_private_predicate] = predicate;
-        instance[TakeWhileSink_private_inclusive] = inclusive;
-
-        return instance;
-      },
-      props<TProperties>({
-        [Sink_private_delegate]: none,
-        [TakeWhileSink_private_predicate]: none,
-        [TakeWhileSink_private_inclusive]: none,
-      }),
-      {
-        [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-          const satisfiesPredicate =
-            this[TakeWhileSink_private_predicate](next);
-
-          if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
-            pipe(this[Sink_private_delegate], notify(next));
-          }
-
-          if (!satisfiesPredicate) {
-            pipe(this, dispose());
-          }
-        },
-      },
-    ),
-  );
-})();
-
-export const throwIfEmptySinkMixin: <T>() => Mixin2<
-  SinkLike<T>,
-  SinkLike<T>,
-  Factory<unknown>
-> = /*@__PURE__*/ (<T>() => {
-  const ThrowIfEmptySink_private_isEmpty = Symbol(
-    "ThrowIfEmptySink_private_isEmpty",
-  );
-
-  type TProperties = {
-    readonly [Sink_private_delegate]: SinkLike<T>;
-    [ThrowIfEmptySink_private_isEmpty]: boolean;
-  };
-
-  return returns(
-    mixin(
-      include(DisposableLike__mixin),
-      function ThrowIfEmptySink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        delegate: SinkLike<T>,
-        factory: Factory<unknown>,
-      ): SinkLike<T> {
-        init(DisposableLike__mixin, instance);
-
-        instance[Sink_private_delegate] = delegate;
-
-        pipe(
-          instance,
-          addTo(delegate),
-          onComplete(() => {
-            let error: Option<Exception> = none;
-
-            if (instance[ThrowIfEmptySink_private_isEmpty]) {
-              let cause: unknown = none;
-              try {
-                cause = factory();
-              } catch (e) {
-                cause = e;
-              }
-
-              error = { cause };
-            }
-
-            pipe(delegate, dispose(error));
-          }),
-        );
-
-        return instance;
-      },
-      props<TProperties>({
-        [Sink_private_delegate]: none,
-        [ThrowIfEmptySink_private_isEmpty]: true,
-      }),
-      {
-        [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-          this[ThrowIfEmptySink_private_isEmpty] = false;
-          pipe(this[Sink_private_delegate], notify(next));
         },
       },
     ),

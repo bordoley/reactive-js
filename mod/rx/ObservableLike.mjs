@@ -6,7 +6,7 @@ import { catchErrorObservable, mergeAllObservable, scanAsyncObservable, switchAl
 import { liftEnumerableObservable, liftObservable, liftEnumerableObservableT, liftRunnableObservable } from '../__internal__/rx/ObservableLike.lift.mjs';
 import { allAreEnumerable, allAreRunnable, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, subscribe as subscribe$1, takeFirst as takeFirst$1, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/ObservableLike.operators.mjs';
 import { observerMixin, createDelegatingObserver } from '../__internal__/rx/ObserverLike.internal.mjs';
-import { decodeWithCharsetSinkMixin, everySatisfySinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin, createEnumeratorSink } from '../__internal__/rx/SinkLike.mixins.mjs';
+import { decodeWithCharsetSinkMixin, everySatisfySinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin } from '../__internal__/rx/SinkLike.mixins.mjs';
 import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { createDisposableRef, disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
 import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
@@ -43,6 +43,10 @@ import delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.
 import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
 import { sinkInto } from './ReactiveContainerLike.mjs';
+import create$3 from './__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create.mjs';
+import takeLastMixin from './__internal__/SinkLike/SinkLike.takeLastMixin.mjs';
+import takeWhileMixin from './__internal__/SinkLike/SinkLike.takeWhileMixin.mjs';
+import throwIfEmptyMixin from './__internal__/SinkLike/SinkLike.throwIfEmptyMixin.mjs';
 
 const buffer = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
@@ -508,7 +512,7 @@ const takeFirst = takeFirst$1;
 const takeFirstT = { takeFirst };
 const takeLast = 
 /*@__PURE__*/ (() => {
-    const typedTakeLastSinkMixin = takeLastSinkMixin(toObservable());
+    const typedTakeLastSinkMixin = takeLastMixin(toObservable());
     const typedObserverMixin = observerMixin();
     const createTakeLastObserver = createInstanceFactory(mixin(include(typedObserverMixin, typedTakeLastSinkMixin), function TakeLastObserver(instance, delegate, takeCount) {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -530,7 +534,7 @@ const takeUntil = (notifier) => {
 const takeWhile = 
 /*@__PURE__*/ (() => {
     const createTakeWhileObserver = (() => {
-        const typedTakeWhileSinkMixin = takeWhileSinkMixin();
+        const typedTakeWhileSinkMixin = takeWhileMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedTakeWhileSinkMixin), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -605,7 +609,7 @@ const throttle = /*@__PURE__*/ (() => {
 const throwIfEmpty = 
 /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (() => {
-        const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin();
+        const typedThrowIfEmptySinkMixin = throwIfEmptyMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedThrowIfEmptySinkMixin), function ThrowIfEmptyObserver(instance, delegate, factory) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -869,7 +873,7 @@ const zip = /*@__PURE__*/ (() => {
                 enumerators.push(enumerator);
             }
             else {
-                const enumerator = pipe(createEnumeratorSink(), addTo(observer));
+                const enumerator = pipe(create$3(), addTo(observer));
                 enumerators.push(enumerator);
                 pipe(createZipObserver(observer, enumerators, enumerator), addTo(observer), sourceFrom(next));
             }

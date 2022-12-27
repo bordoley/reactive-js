@@ -47,18 +47,12 @@ import {
   observerMixin,
 } from "../__internal__/rx/ObserverLike.internal";
 import {
-  createEnumeratorSink,
   decodeWithCharsetSinkMixin,
-  everySatisfySinkMixin,
   keepSinkMixin,
   mapSinkMixin,
   pairwiseSinkMixin,
   reduceSinkMixin,
   skipFirstSinkMixin,
-  someSatisfySinkMixin,
-  takeLastSinkMixin,
-  takeWhileSinkMixin,
-  throwIfEmptySinkMixin,
 } from "../__internal__/rx/SinkLike.mixins";
 import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import {
@@ -222,6 +216,12 @@ import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike
 import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
+import EnumeratorSinkLike__create from "./__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create";
+import SinkLike__everySatisfyMixin from "./__internal__/SinkLike/SinkLike.everySatisfyMixin";
+import SinkLike__someSatisfyMixin from "./__internal__/SinkLike/SinkLike.someSatisfyMixin";
+import SinkLike__takeLastMixin from "./__internal__/SinkLike/SinkLike.takeLastMixin";
+import SinkLike__takeWhileMixin from "./__internal__/SinkLike/SinkLike.takeWhileMixin";
+import SinkLike__throwIfEmptyMixin from "./__internal__/SinkLike/SinkLike.throwIfEmptyMixin";
 
 export const buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableLike>;
@@ -502,7 +502,7 @@ export const emptyT: Empty<ObservableLike, { delay: number }> = {
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   /*@__PURE__*/ (<T>() => {
     const typedObserverMixin = observerMixin();
-    const typedEverySatisfySinkMixin = everySatisfySinkMixin<
+    const typedEverySatisfySinkMixin = SinkLike__everySatisfyMixin<
       ObservableLike<boolean>,
       SinkLike<boolean>,
       T
@@ -1163,7 +1163,7 @@ export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
 export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
   /*@__PURE__*/ (<T>() => {
     const typedObserverMixin = observerMixin();
-    const typedSomeSatisfySinkMixin = someSatisfySinkMixin<
+    const typedSomeSatisfySinkMixin = SinkLike__someSatisfyMixin<
       ObservableLike<boolean>,
       SinkLike<boolean>,
       T
@@ -1221,7 +1221,7 @@ export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
 
 export const takeLast: TakeLast<ObservableLike>["takeLast"] =
   /*@__PURE__*/ (() => {
-    const typedTakeLastSinkMixin = takeLastSinkMixin(arrayToObservable());
+    const typedTakeLastSinkMixin = SinkLike__takeLastMixin(arrayToObservable());
     const typedObserverMixin = observerMixin();
 
     const createTakeLastObserver = createInstanceFactory(
@@ -1272,7 +1272,7 @@ export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
       predicate: Predicate<T>,
       inclusive: boolean,
     ) => ObserverLike<T> = (<T>() => {
-      const typedTakeWhileSinkMixin = takeWhileSinkMixin<T>();
+      const typedTakeWhileSinkMixin = SinkLike__takeWhileMixin<T>();
       const typedObserverMixin = observerMixin<T>();
 
       return createInstanceFactory(
@@ -1475,7 +1475,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (<T>() => {
-      const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin<T>();
+      const typedThrowIfEmptySinkMixin = SinkLike__throwIfEmptyMixin<T>();
       const typedObserverMixin = observerMixin<T>();
 
       return createInstanceFactory(
@@ -2045,7 +2045,10 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
           move(enumerator);
           enumerators.push(enumerator);
         } else {
-          const enumerator = pipe(createEnumeratorSink(), addTo(observer));
+          const enumerator = pipe(
+            EnumeratorSinkLike__create(),
+            addTo(observer),
+          );
           enumerators.push(enumerator);
 
           pipe(

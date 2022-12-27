@@ -6,16 +6,10 @@ import {
 } from "../__internal__/mixins";
 import { createOnSink } from "../__internal__/rx/ReactiveContainerLike.createOnSink";
 import {
-  DelegateSinkLike,
-  DelegatingSink_delegate,
   bufferSinkMixin,
   catchErrorSinkMixin,
-  createDelegatingSink,
-  createSink,
   decodeWithCharsetSinkMixin,
-  delegatingSinkMixin,
   distinctUntilChangedSinkMixin,
-  everySatisfySinkMixin,
   forEachSinkMixin,
   keepSinkMixin,
   mapSinkMixin,
@@ -23,11 +17,6 @@ import {
   reduceSinkMixin,
   scanSinkMixin,
   skipFirstSinkMixin,
-  someSatisfySinkMixin,
-  takeFirstSinkMixin,
-  takeLastSinkMixin,
-  takeWhileSinkMixin,
-  throwIfEmptySinkMixin,
 } from "../__internal__/rx/SinkLike.mixins";
 import {
   Buffer,
@@ -104,7 +93,20 @@ import {
 import { sourceFrom } from "../rx/SinkLike";
 import { DisposableLike_exception, DisposableOrTeardown } from "../util";
 import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
+import DelegateSinkLike__create from "./__internal__/DelegatingSinkLike/DelegatingSinkLike.create";
+import DelegateSinkLike__mixin from "./__internal__/DelegatingSinkLike/DelegatingSinkLike.mixin";
 import RunnableLike__create from "./__internal__/RunnableLike/RunnableLike.create";
+import SinkLike__create from "./__internal__/SinkLike/SinkLike.create";
+import SinkLike__everySatisfyMixin from "./__internal__/SinkLike/SinkLike.everySatisfyMixin";
+import SinkLike__someSatisfyMixin from "./__internal__/SinkLike/SinkLike.someSatisfyMixin";
+import SinkLike_takeFirstMixin from "./__internal__/SinkLike/SinkLike.takeFirstMixin";
+import SinkLike__takeLastMixin from "./__internal__/SinkLike/SinkLike.takeLastMixin";
+import SinkLike__takeWhileMixin from "./__internal__/SinkLike/SinkLike.takeWhileMixin";
+import SinkLike__throwIfEmptyMixin from "./__internal__/SinkLike/SinkLike.throwIfEmptyMixin";
+import {
+  DelegateSinkLike,
+  DelegatingSinkLike_delegate,
+} from "./__internal__/rx.internal";
 
 export const create = RunnableLike__create;
 
@@ -179,7 +181,7 @@ export const concatT: Concat<RunnableLike> = {
 export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedDelegatingSinkMixin = delegatingSinkMixin<T>();
+  const typedDelegatingSinkMixin = DelegateSinkLike__mixin<T>();
 
   return pipeLazy(
     createInstanceFactory(
@@ -197,9 +199,9 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
         {},
         {
           [SinkLike_notify](this: DelegateSinkLike<T>, next: RunnableLike<T>) {
-            const { [DelegatingSink_delegate]: delegate } = this;
+            const { [DelegatingSinkLike_delegate]: delegate } = this;
             pipe(
-              createDelegatingSink(delegate),
+              DelegateSinkLike__create(delegate),
               addTo<SinkLike<T>>(this),
               sourceFrom(next),
               dispose(),
@@ -260,7 +262,7 @@ export const emptyT: Empty<RunnableLike> = { empty };
 
 export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
   /*@__PURE__*/ (<T>() => {
-    const typedEverySatisfySinkMixin = everySatisfySinkMixin<
+    const typedEverySatisfySinkMixin = SinkLike__everySatisfyMixin<
       RunnableLike<boolean>,
       SinkLike<boolean>,
       T
@@ -397,7 +399,7 @@ export const repeat = /*@__PURE__*/ (<T>() => {
       let count = 0;
       do {
         pipe(
-          createDelegatingSink(sink),
+          DelegateSinkLike__create(sink),
           addTo(sink),
           sourceFrom(delegate),
           dispose(),
@@ -413,7 +415,7 @@ export const run =
   <T>() =>
   (runnable: RunnableLike<T>): void =>
     pipe(
-      createSink(),
+      SinkLike__create(),
       sourceFrom(runnable),
       dispose(),
       ({ [DisposableLike_exception]: error }) => {
@@ -447,7 +449,7 @@ export const skipFirstT: SkipFirst<RunnableLike> = { skipFirst };
 
 export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
   /*@__PURE__*/ (<T>() => {
-    const typedSomeSatisfySinkMixin = someSatisfySinkMixin<
+    const typedSomeSatisfySinkMixin = SinkLike__someSatisfyMixin<
       RunnableLike<boolean>,
       SinkLike<boolean>,
       T
@@ -465,7 +467,7 @@ export const someSatisfyT: SomeSatisfy<RunnableLike> = { someSatisfy };
 export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedTakeFirstSinkMixin = takeFirstSinkMixin<T>();
+  const typedTakeFirstSinkMixin = SinkLike_takeFirstMixin<T>();
 
   return pipe(
     createInstanceFactory(typedTakeFirstSinkMixin),
@@ -479,7 +481,7 @@ export const takeFirstT: TakeFirst<RunnableLike> = { takeFirst };
 export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedTakeLastSinkMixin = takeLastSinkMixin<
+  const typedTakeLastSinkMixin = SinkLike__takeLastMixin<
     RunnableLike<T>,
     SinkLike<T>,
     T
@@ -497,7 +499,7 @@ export const takeLastT: TakeLast<RunnableLike> = { takeLast };
 export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedTakeWhileSinkMixin = takeWhileSinkMixin<T>();
+  const typedTakeWhileSinkMixin = SinkLike__takeWhileMixin<T>();
 
   return pipe(
     createInstanceFactory(typedTakeWhileSinkMixin),
@@ -508,7 +510,7 @@ export const takeWhileT: TakeWhile<RunnableLike> = { takeWhile };
 
 export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {
-    const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin<T>();
+    const typedThrowIfEmptySinkMixin = SinkLike__throwIfEmptyMixin<T>();
     return pipe(
       createInstanceFactory(typedThrowIfEmptySinkMixin),
       StatefulContainerLike__throwIfEmpty<RunnableLike, T, TReactive>(liftT),

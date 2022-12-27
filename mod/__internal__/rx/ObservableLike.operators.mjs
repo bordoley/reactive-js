@@ -9,6 +9,7 @@ import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_sc
 import { getScheduler } from '../../rx/ObserverLike.mjs';
 import { sourceFrom, notify } from '../../rx/SinkLike.mjs';
 import { create, publishTo } from '../../rx/SubjectLike.mjs';
+import takeFirstMixin from '../../rx/__internal__/SinkLike/SinkLike.takeFirstMixin.mjs';
 import addTo from '../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import addToIgnoringChildErrors from '../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
 import bindTo from '../../util/__internal__/DisposableLike/DisposableLike.bindTo.mjs';
@@ -21,7 +22,7 @@ import { createEnumerableObservable, createRunnableObservable, createObservable 
 import { liftEnumerableObservableT, liftEnumerableObservable, liftRunnableObservable, liftObservable } from './ObservableLike.lift.mjs';
 import { observerMixin, createDelegatingObserver, createObserver } from './ObserverLike.internal.mjs';
 import { createOnSink } from './ReactiveContainerLike.createOnSink.mjs';
-import { distinctUntilChangedSinkMixin, forEachSinkMixin, scanSinkMixin, takeFirstSinkMixin } from './SinkLike.mixins.mjs';
+import { distinctUntilChangedSinkMixin, forEachSinkMixin, scanSinkMixin } from './SinkLike.mixins.mjs';
 
 const allAreEnumerable = compose(map((obs) => obs[ObservableLike_isEnumerable]), every(isTrue));
 const allAreRunnable = compose(map((obs) => obs[ObservableLike_isRunnable]), every(isTrue));
@@ -116,7 +117,7 @@ const subscribe = scheduler => observable => pipe(scheduler, createObserver, add
 const takeFirst = 
 /*@__PURE__*/ (() => {
     const createTakeFirstObserver = (() => {
-        const typedTakeFirstSinkMixin = takeFirstSinkMixin();
+        const typedTakeFirstSinkMixin = takeFirstMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedTakeFirstSinkMixin), function TakeFirstObserver(instance, delegate, takeCount) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);

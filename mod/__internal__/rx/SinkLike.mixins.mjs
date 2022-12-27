@@ -1,73 +1,14 @@
 /// <reference types="./SinkLike.mixins.d.ts" />
-import { pipe, none, getLength, returns, isEmpty, isSome, newInstance, compose, negate } from '../../functions.mjs';
-import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
+import { pipe, isEmpty, none, getLength, returns, isSome, newInstance, compose, negate } from '../../functions.mjs';
 import { SinkLike_notify } from '../../rx.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { notify } from '../../rx/SinkLike.mjs';
-import { onDisposed, isDisposed, addTo, onComplete, dispose, addToIgnoringChildErrors, onError } from '../../util/DisposableLike.mjs';
+import { addTo, onComplete, dispose, addToIgnoringChildErrors, onError, isDisposed } from '../../util/DisposableLike.mjs';
 import delegatingMixin from '../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../mixins.mjs';
+import { mixin, include, init, props } from '../mixins.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
-const createEnumeratorSink = (() => {
-    return createInstanceFactory(mixin(include(disposableMixin), function EnumeratorSink(instance) {
-        init(disposableMixin, instance);
-        instance.buffer = [];
-        pipe(instance, onDisposed(() => {
-            instance.buffer.length = 0;
-            instance[EnumeratorLike_hasCurrent] = false;
-        }));
-        return instance;
-    }, props({
-        buffer: none,
-        [EnumeratorLike_current]: none,
-        [EnumeratorLike_hasCurrent]: false,
-    }), {
-        [SinkLike_notify](next) {
-            if (isDisposed(this)) {
-                return;
-            }
-            this.buffer.push(next);
-        },
-        [SourceLike_move]() {
-            const { buffer } = this;
-            if (!isDisposed(this) && getLength(buffer) > 0) {
-                const next = buffer.shift();
-                this[EnumeratorLike_current] = next;
-                this[EnumeratorLike_hasCurrent] = true;
-            }
-            else {
-                this[EnumeratorLike_hasCurrent] = false;
-            }
-        },
-    }));
-})();
-const createSink = /*@__PURE__*/ (() => createInstanceFactory(mixin(include(disposableMixin), function CreateSink(instance) {
-    init(disposableMixin, instance);
-    return instance;
-}, {}, {
-    [SinkLike_notify](_) { },
-})))();
-const DelegatingSink_delegate = Symbol("DelegatingSink_delegate");
-const delegatingSinkMixin = /*@__PURE__*/ (() => {
-    return returns(mixin(include(disposableMixin), function DelegatingSink(instance, delegate) {
-        init(disposableMixin, instance);
-        instance[DelegatingSink_delegate] = delegate;
-        return instance;
-    }, props({
-        [DelegatingSink_delegate]: none,
-    }), {
-        [SinkLike_notify](v) {
-            this[DelegatingSink_delegate][SinkLike_notify](v);
-        },
-    }));
-})();
-const createDelegatingSink = 
-/*@__PURE__*/ (() => {
-    const typeDelegatingSinkMixin = delegatingSinkMixin();
-    return createInstanceFactory(typeDelegatingSinkMixin);
-})();
 const bufferSinkMixin = (fromArray) => {
     const BufferSink_private_maxBufferSize = Symbol("BufferSink_private_maxBufferSize");
     const BufferSink_private_buffer = Symbol("BufferSink_private_buffer");
@@ -377,112 +318,5 @@ const someSatisfySinkMixin = (fromArray) => {
         return instance;
     });
 };
-const takeFirstSinkMixin = /*@__PURE__*/ (() => {
-    const TakeFirstSink_private_takeCount = Symbol("TakeFirstSink_private_takeCount");
-    const TakeFirstSink_private_count = Symbol("TakeFirstSink_private_count");
-    return returns(mixin(include(delegatingMixin), function TakeFirstSink(instance, delegate, takeCount) {
-        init(delegatingMixin, instance, delegate);
-        instance[Sink_private_delegate] = delegate;
-        instance[TakeFirstSink_private_takeCount] = takeCount;
-        if (takeCount === 0) {
-            pipe(instance, dispose());
-        }
-        return instance;
-    }, props({
-        [Sink_private_delegate]: none,
-        [TakeFirstSink_private_takeCount]: 0,
-        [TakeFirstSink_private_count]: 0,
-    }), {
-        [SinkLike_notify](next) {
-            this[TakeFirstSink_private_count]++;
-            pipe(this[Sink_private_delegate], notify(next));
-            if (this[TakeFirstSink_private_count] >=
-                this[TakeFirstSink_private_takeCount]) {
-                pipe(this, dispose());
-            }
-        },
-    }));
-})();
-const TakeLastSink_last = Symbol("TakeLastSink_last");
-const takeLastSinkMixin = (fromArray) => {
-    const TakeLastSink_private_takeLastCount = Symbol("TakeLastSink_private_takeLastCount");
-    return mixin(include(disposableMixin), function TakeLastSink(instance, delegate, takeLastCount) {
-        init(disposableMixin, instance);
-        instance[Sink_private_delegate] = delegate;
-        instance[TakeLastSink_private_takeLastCount] = takeLastCount;
-        instance[TakeLastSink_last] = [];
-        pipe(instance, addTo(delegate), onComplete(() => {
-            pipe(instance[TakeLastSink_last], fromArray, sinkInto(delegate));
-        }));
-        return instance;
-    }, props({
-        [Sink_private_delegate]: none,
-        [TakeLastSink_private_takeLastCount]: 0,
-        [TakeLastSink_last]: none,
-    }), {
-        [SinkLike_notify](next) {
-            const { [TakeLastSink_last]: last } = this;
-            last.push(next);
-            if (getLength(last) > this[TakeLastSink_private_takeLastCount]) {
-                last.shift();
-            }
-        },
-    });
-};
-const takeWhileSinkMixin = /*@__PURE__*/ (() => {
-    const TakeWhileSink_private_predicate = Symbol("TakeWhileSink_private_predicate");
-    const TakeWhileSink_private_inclusive = Symbol("TakeWhileSink_private_inclusive");
-    return returns(mixin(include(delegatingMixin), function TakeWhileSink(instance, delegate, predicate, inclusive) {
-        init(delegatingMixin, instance, delegate);
-        instance[Sink_private_delegate] = delegate;
-        instance[TakeWhileSink_private_predicate] = predicate;
-        instance[TakeWhileSink_private_inclusive] = inclusive;
-        return instance;
-    }, props({
-        [Sink_private_delegate]: none,
-        [TakeWhileSink_private_predicate]: none,
-        [TakeWhileSink_private_inclusive]: none,
-    }), {
-        [SinkLike_notify](next) {
-            const satisfiesPredicate = this[TakeWhileSink_private_predicate](next);
-            if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
-                pipe(this[Sink_private_delegate], notify(next));
-            }
-            if (!satisfiesPredicate) {
-                pipe(this, dispose());
-            }
-        },
-    }));
-})();
-const throwIfEmptySinkMixin = /*@__PURE__*/ (() => {
-    const ThrowIfEmptySink_private_isEmpty = Symbol("ThrowIfEmptySink_private_isEmpty");
-    return returns(mixin(include(disposableMixin), function ThrowIfEmptySink(instance, delegate, factory) {
-        init(disposableMixin, instance);
-        instance[Sink_private_delegate] = delegate;
-        pipe(instance, addTo(delegate), onComplete(() => {
-            let error = none;
-            if (instance[ThrowIfEmptySink_private_isEmpty]) {
-                let cause = none;
-                try {
-                    cause = factory();
-                }
-                catch (e) {
-                    cause = e;
-                }
-                error = { cause };
-            }
-            pipe(delegate, dispose(error));
-        }));
-        return instance;
-    }, props({
-        [Sink_private_delegate]: none,
-        [ThrowIfEmptySink_private_isEmpty]: true,
-    }), {
-        [SinkLike_notify](next) {
-            this[ThrowIfEmptySink_private_isEmpty] = false;
-            pipe(this[Sink_private_delegate], notify(next));
-        },
-    }));
-})();
 
-export { DelegatingSink_delegate, TakeLastSink_last, bufferSinkMixin, catchErrorSinkMixin, createDelegatingSink, createEnumeratorSink, createSink, decodeWithCharsetSinkMixin, delegatingSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin };
+export { bufferSinkMixin, catchErrorSinkMixin, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin };
