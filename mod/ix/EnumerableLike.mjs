@@ -1,10 +1,21 @@
 /// <reference types="./EnumerableLike.d.ts" />
-import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
 import { disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
 import { toEnumerable as toEnumerable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import repeat$1 from '../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
+import buffer$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.buffer.mjs';
+import distinctUntilChanged$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged.mjs';
+import forEach$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.forEach.mjs';
+import keep$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep.mjs';
+import map$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map.mjs';
+import scan$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
+import skipFirst$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.skipFirst.mjs';
+import takeFirst$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst.mjs';
+import takeLast$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeLast.mjs';
+import takeWhile$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile.mjs';
+import throwIfEmpty$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty.mjs';
+import { interactive } from '../containers/__internal__/containers.internal.mjs';
 import { pipeUnsafe, newInstance, pipe, none, getLength, returns, isSome, isNone, unsafeCast, raise, identity } from '../functions.mjs';
 import { InteractiveContainerLike_interact, SourceLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../ix.mjs';
 import { move, getCurrent, hasCurrent } from './EnumeratorLike.mjs';
@@ -75,7 +86,7 @@ const buffer = /*@__PURE__*/ (() => {
                 pipe(this, dispose());
             }
         },
-    })), createBufferOperator(liftT));
+    })), buffer$1(liftT));
 })();
 const bufferT = {
     buffer,
@@ -147,7 +158,7 @@ const distinctUntilChanged =
                 pipe(this, dispose({ cause }));
             }
         },
-    })), createDistinctUntilChangedOperator(liftT));
+    })), distinctUntilChanged$1(liftT));
 })();
 const distinctUntilChangedT = {
     distinctUntilChanged,
@@ -172,7 +183,7 @@ const forEach = /*@__PURE__*/ (() => {
                 }
             }
         },
-    })), createForEachOperator(liftT));
+    })), forEach$1(liftT));
 })();
 const forEachT = { forEach };
 /**
@@ -225,7 +236,7 @@ const keep = /*@__PURE__*/ (() => {
                 pipe(this, dispose({ cause }));
             }
         },
-    })), createKeepOperator(liftT));
+    })), keep$1(liftT));
 })();
 const keepT = {
     keep,
@@ -253,7 +264,7 @@ const map = /*@__PURE__*/ (() => {
                 }
             }
         },
-    })), createMapOperator(liftT));
+    })), map$1(liftT));
 })();
 const mapT = { map };
 const pairwise = /*@__PURE__*/ (() => {
@@ -366,7 +377,7 @@ const scan = /*@__PURE__*/ (() => {
                 }
             }
         },
-    })), createScanOperator(liftT));
+    })), scan$1(liftT));
 })();
 const scanT = {
     scan,
@@ -394,7 +405,7 @@ const skipFirst =
             this.count = skipCount;
             move$1(this);
         },
-    })), createSkipFirstOperator(liftT));
+    })), skipFirst$1(liftT));
 })();
 const skipFirstT = {
     skipFirst,
@@ -420,7 +431,7 @@ const takeFirst =
                 pipe(this, dispose());
             }
         },
-    })), createTakeFirstOperator({
+    })), takeFirst$1({
         ...liftT,
     }));
 })();
@@ -455,7 +466,7 @@ const takeLast = /*@__PURE__*/ (() => {
             }
             move$1(this);
         },
-    })), createTakeLastOperator({
+    })), takeLast$1({
         ...liftT,
     }));
 })();
@@ -495,7 +506,7 @@ const takeWhile =
                 }
             }
         },
-    })), createTakeWhileOperator(liftT));
+    })), takeWhile$1(liftT));
 })();
 const takeWhileT = { takeWhile };
 const throwIfEmpty = 
@@ -529,7 +540,7 @@ const throwIfEmpty =
                 this.isEmpty = false;
             }
         },
-    })), createThrowIfEmptyOperator(liftT));
+    })), throwIfEmpty$1(liftT));
 })();
 const throwIfEmptyT = {
     throwIfEmpty,

@@ -1,22 +1,4 @@
 import {
-  Lift,
-  TReactive,
-  createBufferOperator,
-  createDecodeWithCharsetOperator,
-  createDistinctUntilChangedOperator,
-  createForEachOperator,
-  createKeepOperator,
-  createMapOperator,
-  createReduceOperator,
-  createScanOperator,
-  createSkipFirstOperator,
-  createTakeFirstOperator,
-  createTakeLastOperator,
-  createTakeWhileOperator,
-  createThrowIfEmptyOperator,
-  reactive,
-} from "../__internal__/containers/StatefulContainerLike.internal";
-import {
   createInstanceFactory,
   include,
   init,
@@ -76,6 +58,24 @@ import {
 } from "../containers";
 import { toRunnable as arrayToRunnable } from "../containers/ReadonlyArrayLike";
 import ContainerLike__repeat from "../containers/__internal__/ContainerLike/ContainerLike.repeat";
+import StatefulContainerLike__buffer from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.buffer";
+import StatefulContainerLike__decodeWithCharset from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.decodeWithCharset";
+import StatefulContainerLike__distinctUntilChanged from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged";
+import StatefulContainerLike__forEach from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.forEach";
+import StatefulContainerLike__keep from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep";
+import StatefulContainerLike__map from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map";
+import StatefulContainerLike__reduce from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.reduce";
+import StatefulContainerLike__scan from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan";
+import StatefulContainerLike__skipFirst from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.skipFirst";
+import StatefulContainerLike__takeFirst from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst";
+import StatefulContainerLike__takeLast from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeLast";
+import StatefulContainerLike__takeWhile from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile";
+import StatefulContainerLike__throwIfEmpty from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty";
+import {
+  Lift,
+  TReactive,
+  reactive,
+} from "../containers/__internal__/containers.internal";
 import {
   Factory,
   Function1,
@@ -147,7 +147,7 @@ export const buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<T>() => {
 
   return pipe(
     createInstanceFactory(typedBufferSinkMixin),
-    createBufferOperator<RunnableLike, T, TReactive>(liftT),
+    StatefulContainerLike__buffer<RunnableLike, T, TReactive>(liftT),
   );
 })();
 export const bufferT: Buffer<RunnableLike> = { buffer };
@@ -223,7 +223,7 @@ export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithChars
 
     return pipe(
       createInstanceFactory(typedDecodeWithCharsetMixin),
-      createDecodeWithCharsetOperator(liftT),
+      StatefulContainerLike__decodeWithCharset(liftT),
     );
   })();
 export const decodeWithCharsetT: DecodeWithCharset<RunnableLike> = {
@@ -243,7 +243,9 @@ export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctU
 
     return pipe(
       createInstanceFactory(typedDistinctUntilChangedSinkMixin),
-      createDistinctUntilChangedOperator<RunnableLike, T, TReactive>(liftT),
+      StatefulContainerLike__distinctUntilChanged<RunnableLike, T, TReactive>(
+        liftT,
+      ),
     );
   })();
 export const distinctUntilChangedT: DistinctUntilChanged<RunnableLike> = {
@@ -296,7 +298,7 @@ export const forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedForEachSinkMixin),
-    createForEachOperator<RunnableLike, T, TReactive>(liftT),
+    StatefulContainerLike__forEach<RunnableLike, T, TReactive>(liftT),
   );
 })();
 export const forEachT: ForEach<RunnableLike> = { forEach };
@@ -321,7 +323,7 @@ export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
   return pipe(
     createInstanceFactory(typedKeepSinkMixin),
-    createKeepOperator<RunnableLike, T, TReactive>(liftT),
+    StatefulContainerLike__keep<RunnableLike, T, TReactive>(liftT),
   );
 })();
 export const keepT: Keep<RunnableLike> = { keep };
@@ -346,7 +348,7 @@ export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
 
   return pipe(
     createInstanceFactory(typedMapSinkMixin),
-    createMapOperator<RunnableLike, TA, TB, TReactive>(liftT),
+    StatefulContainerLike__map<RunnableLike, TA, TB, TReactive>(liftT),
   );
 })();
 export const mapT: Map<RunnableLike> = { map };
@@ -384,7 +386,7 @@ export const reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedReduceSinkMixin),
-    createReduceOperator<RunnableLike, T, TAcc, TReactive>(liftT),
+    StatefulContainerLike__reduce<RunnableLike, T, TAcc, TReactive>(liftT),
   );
 })();
 export const reduceT: Reduce<RunnableLike> = { reduce };
@@ -426,7 +428,7 @@ export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
 
   return pipe(
     createInstanceFactory(typedScanSinkMixin),
-    createScanOperator<RunnableLike, T, TAcc, TReactive>(liftT),
+    StatefulContainerLike__scan<RunnableLike, T, TAcc, TReactive>(liftT),
   );
 })();
 export const scanT: Scan<RunnableLike> = { scan };
@@ -438,7 +440,7 @@ export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedSkipFirstSinkMixin),
-    createSkipFirstOperator<RunnableLike, T, TReactive>(liftT),
+    StatefulContainerLike__skipFirst<RunnableLike, T, TReactive>(liftT),
   );
 })();
 export const skipFirstT: SkipFirst<RunnableLike> = { skipFirst };
@@ -467,7 +469,7 @@ export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedTakeFirstSinkMixin),
-    createTakeFirstOperator<RunnableLike, T, TReactive>({
+    StatefulContainerLike__takeFirst<RunnableLike, T, TReactive>({
       ...liftT,
     }),
   );
@@ -485,7 +487,7 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedTakeLastSinkMixin),
-    createTakeLastOperator<RunnableLike, T, TReactive>({
+    StatefulContainerLike__takeLast<RunnableLike, T, TReactive>({
       ...liftT,
     }),
   );
@@ -499,7 +501,7 @@ export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedTakeWhileSinkMixin),
-    createTakeWhileOperator<RunnableLike, T, TReactive>(liftT),
+    StatefulContainerLike__takeWhile<RunnableLike, T, TReactive>(liftT),
   );
 })();
 export const takeWhileT: TakeWhile<RunnableLike> = { takeWhile };
@@ -509,7 +511,7 @@ export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
     const typedThrowIfEmptySinkMixin = throwIfEmptySinkMixin<T>();
     return pipe(
       createInstanceFactory(typedThrowIfEmptySinkMixin),
-      createThrowIfEmptyOperator<RunnableLike, T, TReactive>(liftT),
+      StatefulContainerLike__throwIfEmpty<RunnableLike, T, TReactive>(liftT),
     );
   })();
 export const throwIfEmptyT: ThrowIfEmpty<RunnableLike> = {

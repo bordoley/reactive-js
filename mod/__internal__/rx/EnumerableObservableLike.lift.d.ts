@@ -1,4 +1,4 @@
+import { Lift, TReactive } from "../../containers/__internal__/containers.internal.mjs";
 import { EnumerableObservableLike } from "../../rx.mjs";
-import { Lift, TReactive } from "../containers/StatefulContainerLike.internal.mjs";
 declare const lift: Lift<EnumerableObservableLike, TReactive>["lift"];
 export { lift };

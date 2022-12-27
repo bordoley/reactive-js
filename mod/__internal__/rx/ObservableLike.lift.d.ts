@@ -1,7 +1,7 @@
 import { ContainerOperator } from "../../containers.mjs";
+import { Lift, TReactive } from "../../containers/__internal__/containers.internal.mjs";
 import { Function1 } from "../../functions.mjs";
 import { ObserverLike, ObservableLike } from "../../rx.mjs";
-import { Lift, TReactive } from "../containers/StatefulContainerLike.internal.mjs";
 declare const liftObservable: <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
 declare const liftObservableT: Lift<ObservableLike, TReactive>;
 declare const liftRunnableObservable: <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;

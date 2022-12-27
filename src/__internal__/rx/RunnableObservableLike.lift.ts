@@ -1,3 +1,7 @@
+import {
+  Lift,
+  TReactive,
+} from "../../containers/__internal__/containers.internal";
 import { Function1, newInstance, pipeUnsafe } from "../../functions";
 import {
   ObservableLike_isEnumerable,
@@ -7,7 +11,6 @@ import {
   RunnableObservableLike,
 } from "../../rx";
 import { sourceFrom } from "../../rx/SinkLike";
-import { Lift, TReactive } from "../containers/StatefulContainerLike.internal";
 
 export const lift: Lift<RunnableObservableLike, TReactive>["lift"] =
   /*@__PURE__*/ (() => {
