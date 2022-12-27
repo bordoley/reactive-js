@@ -1,7 +1,6 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
 import { createDecodeWithCharsetOperator, createKeepOperator, createMapOperator, createReduceOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
-import { create as create$1, empty as empty$1 } from '../__internal__/ix/EnumerableLike.create.mjs';
 import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
 import { createEnumerableObservable, createRunnableObservable, createObservable, deferObservable } from '../__internal__/rx/ObservableLike.create.mjs';
@@ -20,6 +19,8 @@ import { pipe, isEmpty, none, getLength, isNumber, max, pipeLazy, partial, ignor
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$3 } from '../ix/EnumerableLike.mjs';
 import { hasCurrent, move, getCurrent } from '../ix/EnumeratorLike.mjs';
+import create$1 from '../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
+import empty$1 from '../ix/__internal__/EnumerableLike/EnumerableLike.empty.mjs';
 import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../rx.mjs';
 import { getScheduler, schedule } from './ObserverLike.mjs';
 import { notify, sourceFrom, notifySink } from './SinkLike.mjs';

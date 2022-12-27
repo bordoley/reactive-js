@@ -1,6 +1,5 @@
 /// <reference types="./EnumerableLike.d.ts" />
 import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
-import { empty as empty$1, create } from '../__internal__/ix/EnumerableLike.create.mjs';
 import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { mixin, props, createInstanceFactory, include, init } from '../__internal__/mixins.mjs';
 import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/ObservableLike.create.mjs';
@@ -19,6 +18,8 @@ import { yield_ } from '../scheduling/ContinuationLike.mjs';
 import { add, dispose, disposed, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete, getException } from '../util/DisposableLike.mjs';
 import delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import create from './__internal__/EnumerableLike/EnumerableLike.create.mjs';
+import empty$1 from './__internal__/EnumerableLike/EnumerableLike.empty.mjs';
 
 const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
 const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
@@ -175,9 +176,7 @@ const distinctUntilChangedT = {
     distinctUntilChanged,
 };
 const empty = empty$1;
-const emptyT = {
-    empty,
-};
+const emptyT = { empty };
 const forEach = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedDelegatingEnumeratorMixin), function forEachEnumerator(instance, delegate, effect) {

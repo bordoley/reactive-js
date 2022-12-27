@@ -1,6 +1,6 @@
-import { create as RunnableLike__create } from "../../../__internal__/rx/RunnableLike.create";
 import { ReadonlyArrayLike } from "../../../containers";
 import { RunnableLike, SinkLike_notify, ToRunnable } from "../../../rx";
+import RunnableLike__create from "../../../rx/__internal__/RunnableLike/RunnableLike.create";
 import { isDisposed } from "../../../util/DisposableLike";
 import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";
 

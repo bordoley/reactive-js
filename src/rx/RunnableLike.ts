@@ -23,7 +23,6 @@ import {
   mixin,
 } from "../__internal__/mixins";
 import { createOnSink } from "../__internal__/rx/ReactiveContainerLike.createOnSink";
-import { create as createRunnable } from "../__internal__/rx/RunnableLike.create";
 import {
   DelegateSinkLike,
   DelegatingSink_delegate,
@@ -105,8 +104,9 @@ import {
 import { sourceFrom } from "../rx/SinkLike";
 import { DisposableLike_exception, DisposableOrTeardown } from "../util";
 import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
+import RunnableLike__create from "./__internal__/RunnableLike/RunnableLike.create";
 
-export const create = createRunnable;
+export const create = RunnableLike__create;
 
 const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedRunnable<TA, TB> implements RunnableLike<TB> {

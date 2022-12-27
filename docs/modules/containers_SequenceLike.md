@@ -21,6 +21,7 @@
 - [takeWhileT](containers_SequenceLike.md#takewhilet)
 - [toEnumerableT](containers_SequenceLike.md#toenumerablet)
 - [toReadonlyArrayT](containers_SequenceLike.md#toreadonlyarrayt)
+- [toRunnableT](containers_SequenceLike.md#torunnablet)
 - [zipT](containers_SequenceLike.md#zipt)
 
 ### Functions
@@ -41,6 +42,7 @@
 - [takeWhile](containers_SequenceLike.md#takewhile)
 - [toEnumerable](containers_SequenceLike.md#toenumerable)
 - [toReadonlyArray](containers_SequenceLike.md#toreadonlyarray)
+- [toRunnable](containers_SequenceLike.md#torunnable)
 - [zip](containers_SequenceLike.md#zip)
 
 ## Variables
@@ -132,6 +134,12 @@ ___
 ### toReadonlyArrayT
 
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
+
+___
+
+### toRunnableT
+
+• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
@@ -527,6 +535,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 

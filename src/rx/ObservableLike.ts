@@ -11,10 +11,6 @@ import {
   createThrowIfEmptyOperator,
 } from "../__internal__/containers/StatefulContainerLike.internal";
 import {
-  create as createEnumerable,
-  empty as emptyEnumerable,
-} from "../__internal__/ix/EnumerableLike.create";
-import {
   MutableEnumeratorLike,
   mutableEnumeratorMixin,
 } from "../__internal__/ix/EnumeratorLike.mutable";
@@ -176,6 +172,8 @@ import {
   enumerate,
 } from "../ix/EnumerableLike";
 import { getCurrent, hasCurrent, move } from "../ix/EnumeratorLike";
+import EnumerableLike__create from "../ix/__internal__/EnumerableLike/EnumerableLike.create";
+import EnumerableLike__empty from "../ix/__internal__/EnumerableLike/EnumerableLike.empty";
 import {
   EnumerableObservableLike,
   MulticastObservableLike,
@@ -1721,7 +1719,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
     return () =>
       (obs: ObservableLike<T>): EnumerableLike<T> =>
         isEnumerable(obs)
-          ? createEnumerable(() => {
+          ? EnumerableLike__create(() => {
               const scheduler = createEnumeratorScheduler();
 
               pipe(
@@ -1732,7 +1730,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
               return scheduler;
             })
-          : emptyEnumerable();
+          : EnumerableLike__empty();
   })();
 export const toEnumerableT: ToEnumerable<ObservableLike> = { toEnumerable };
 
