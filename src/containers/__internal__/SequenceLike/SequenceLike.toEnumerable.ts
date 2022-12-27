@@ -1,4 +1,3 @@
-import { create as createEnumerable } from "../../../__internal__/ix/EnumerableLike.create";
 import {
   MutableEnumeratorLike,
   mutableEnumeratorMixin,
@@ -22,6 +21,7 @@ import {
   SourceLike_move,
   ToEnumerable,
 } from "../../../ix";
+import EnumerableLike__create from "../../../ix/__internal__/EnumerableLike/EnumerableLike.create";
 import { dispose, isDisposed } from "../../../util/DisposableLike";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 
@@ -67,7 +67,7 @@ const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
     );
 
     return () => (seq: SequenceLike<T>) =>
-      createEnumerable(() => createSequenceEnumerator(seq));
+      EnumerableLike__create(() => createSequenceEnumerator(seq));
   })();
 
 export default toEnumerable;

@@ -1,9 +1,9 @@
 /// <reference types="./ReadonlyArrayLike.toEnumerable.d.ts" />
-import { create } from '../../../__internal__/ix/EnumerableLike.create.mjs';
 import { mutableEnumeratorMixin } from '../../../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
+import create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
 import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import toContainer from './ReadonlyArrayLike.toContainer.mjs';

@@ -2,7 +2,6 @@
 import { reactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
 import { createInstanceFactory, mixin, include, init } from '../__internal__/mixins.mjs';
 import { createOnSink } from '../__internal__/rx/ReactiveContainerLike.createOnSink.mjs';
-import { create as create$1 } from '../__internal__/rx/RunnableLike.create.mjs';
 import { bufferSinkMixin, catchErrorSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/rx/SinkLike.mixins.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import repeat$1 from '../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
@@ -11,6 +10,7 @@ import { ReactiveContainerLike_sinkInto, SinkLike_notify } from '../rx.mjs';
 import { sourceFrom } from './SinkLike.mjs';
 import { DisposableLike_exception } from '../util.mjs';
 import { bindTo, addTo, dispose, isDisposed } from '../util/DisposableLike.mjs';
+import create$1 from './__internal__/RunnableLike/RunnableLike.create.mjs';
 
 const create = create$1;
 const lift = /*@__PURE__*/ (() => {

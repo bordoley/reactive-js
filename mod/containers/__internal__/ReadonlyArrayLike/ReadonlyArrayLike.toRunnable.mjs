@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyArrayLike.toRunnable.d.ts" />
-import { create } from '../../../__internal__/rx/RunnableLike.create.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
+import create from '../../../rx/__internal__/RunnableLike/RunnableLike.create.mjs';
 import { isDisposed } from '../../../util/DisposableLike.mjs';
 import toContainer from './ReadonlyArrayLike.toContainer.mjs';
 

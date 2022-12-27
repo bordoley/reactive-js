@@ -1,13 +1,18 @@
-import { SideEffect1, none, pipe } from "../../functions";
+import {
+  Mutable,
+  createInstanceFactory,
+  mixin,
+  props,
+} from "../../../__internal__/mixins";
+import { SideEffect1, none, pipe } from "../../../functions";
 import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
   SinkLike,
-} from "../../rx";
-import DisposableLike__dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
-import { Mutable, createInstanceFactory, mixin, props } from "../mixins";
+} from "../../../rx";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 
-export const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
+const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
       readonly run: SideEffect1<SinkLike<T>>;
@@ -43,3 +48,5 @@ export const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
       ),
     );
   })();
+
+export default create;

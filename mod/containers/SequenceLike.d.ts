@@ -1,5 +1,6 @@
 import { SequenceLike, Concat, ConcatAll, DistinctUntilChanged, Generate, Keep, Map, Pairwise, Repeat, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip } from "../containers.mjs";
 import { ToEnumerable } from "../ix.mjs";
+import { ToRunnable } from "../rx.mjs";
 declare const concat: <T>(fst: SequenceLike<T>, snd: SequenceLike<T>, ...tail: readonly SequenceLike<T>[]) => SequenceLike<T>;
 declare const concatT: Concat<SequenceLike>;
 declare const concatAll: ConcatAll<SequenceLike>["concatAll"];
@@ -31,6 +32,8 @@ declare const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<SequenceLike>;
 declare const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"];
 declare const toReadonlyArrayT: ToReadonlyArray<SequenceLike>;
+declare const toRunnable: ToRunnable<SequenceLike>["toRunnable"];
+declare const toRunnableT: ToRunnable<SequenceLike>;
 declare const zip: Zip<SequenceLike>["zip"];
 declare const zipT: Zip<SequenceLike>;
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, zip, zipT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };

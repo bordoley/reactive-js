@@ -15,6 +15,7 @@ import takeLast$1 from './__internal__/SequenceLike/SequenceLike.takeLast.mjs';
 import takeWhile$1 from './__internal__/SequenceLike/SequenceLike.takeWhile.mjs';
 import toEnumerable$1 from './__internal__/SequenceLike/SequenceLike.toEnumerable.mjs';
 import toReadonlyArray$1 from './__internal__/SequenceLike/SequenceLike.toReadonlyArray.mjs';
+import toRunnable$1 from './__internal__/SequenceLike/SequenceLike.toRunnable.mjs';
 import zip$1 from './__internal__/SequenceLike/SequenceLike.zip.mjs';
 
 const concat = concat$1;
@@ -52,22 +53,9 @@ const toReadonlyArray = toReadonlyArray$1;
 const toReadonlyArrayT = {
     toReadonlyArray,
 };
-/*
-export const toRunnable =
-  <T>(): Function1<SequenceLike<T>, RunnableLike<T>> =>
-  (seq: SequenceLike<T>) =>
-    createRunnable(sink => {
-      let result = seq();
-      while (isSome(result)) {
-        sink.notify(result[SequenceLike_data]);
-        result = result[SequenceLike_next]();
-      }
-    });
-
-export const toRunnableT: ToRunnable<SequenceLike> = {
-  toRunnable,
-};*/
+const toRunnable = toRunnable$1;
+const toRunnableT = { toRunnable };
 const zip = zip$1;
 const zipT = { zip };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, zip, zipT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };

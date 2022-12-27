@@ -17,6 +17,7 @@ import {
   Zip,
 } from "../containers";
 import { ToEnumerable } from "../ix";
+import { ToRunnable } from "../rx";
 import SequenceLike__concat from "./__internal__/SequenceLike/SequenceLike.concat";
 import SequenceLike__concatAll from "./__internal__/SequenceLike/SequenceLike.concatAll";
 import SequenceLike__distinctUntilChanged from "./__internal__/SequenceLike/SequenceLike.distinctUntilChanged";
@@ -33,6 +34,7 @@ import SequenceLike__takeLast from "./__internal__/SequenceLike/SequenceLike.tak
 import SequenceLike__takeWhile from "./__internal__/SequenceLike/SequenceLike.takeWhile";
 import SequenceLike__toEnumerable from "./__internal__/SequenceLike/SequenceLike.toEnumerable";
 import SequenceLike__toReadonlyArray from "./__internal__/SequenceLike/SequenceLike.toReadonlyArray";
+import SequenceLike__toRunnable from "./__internal__/SequenceLike/SequenceLike.toRunnable";
 import SequenceLike__zip from "./__internal__/SequenceLike/SequenceLike.zip";
 
 export const concat: <T>(
@@ -100,21 +102,9 @@ export const toReadonlyArrayT: ToReadonlyArray<SequenceLike> = {
   toReadonlyArray,
 };
 
-/*
-export const toRunnable =
-  <T>(): Function1<SequenceLike<T>, RunnableLike<T>> =>
-  (seq: SequenceLike<T>) =>
-    createRunnable(sink => {
-      let result = seq();
-      while (isSome(result)) {
-        sink.notify(result[SequenceLike_data]);
-        result = result[SequenceLike_next]();
-      }
-    });
-
-export const toRunnableT: ToRunnable<SequenceLike> = {
-  toRunnable,
-};*/
+export const toRunnable: ToRunnable<SequenceLike>["toRunnable"] =
+  SequenceLike__toRunnable;
+export const toRunnableT: ToRunnable<SequenceLike> = { toRunnable };
 
 export const zip: Zip<SequenceLike>["zip"] = SequenceLike__zip;
 export const zipT: Zip<SequenceLike> = { zip };

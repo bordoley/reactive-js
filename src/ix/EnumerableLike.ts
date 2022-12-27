@@ -15,10 +15,6 @@ import {
   interactive,
 } from "../__internal__/containers/StatefulContainerLike.internal";
 import {
-  create,
-  empty as emptyInternal,
-} from "../__internal__/ix/EnumerableLike.create";
-import {
   MutableEnumeratorLike,
   mutableEnumeratorMixin,
 } from "../__internal__/ix/EnumeratorLike.mutable";
@@ -135,6 +131,8 @@ import {
 } from "../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
+import EnumerableLike__create from "./__internal__/EnumerableLike/EnumerableLike.create";
+import EnumerableLike__empty from "./__internal__/EnumerableLike/EnumerableLike.empty";
 
 const DelegatingEnumerator_move_delegate = Symbol(
   "DelegatingEnumerator_move_delegate",
@@ -460,10 +458,8 @@ export const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike> = {
   distinctUntilChanged,
 };
 
-export const empty: Empty<EnumerableLike>["empty"] = emptyInternal;
-export const emptyT: Empty<EnumerableLike> = {
-  empty,
-};
+export const empty: Empty<EnumerableLike>["empty"] = EnumerableLike__empty;
+export const emptyT: Empty<EnumerableLike> = { empty };
 
 export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   T,
@@ -562,7 +558,9 @@ export const generate: Generate<EnumerableLike>["generate"] = /*@__PURE__*/ (<
   );
 
   return (generator: Updater<T>, initialValue: Factory<T>) =>
-    create(() => createGenerateEnumerator(generator, initialValue()));
+    EnumerableLike__create(() =>
+      createGenerateEnumerator(generator, initialValue()),
+    );
 })();
 export const generateT: Generate<EnumerableLike> = {
   generate,
@@ -802,7 +800,7 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   );
 
   return ContainerLike__repeat<EnumerableLike, T>((delegate, predicate) =>
-    create(() => createRepeatEnumerator(delegate, predicate)),
+    EnumerableLike__create(() => createRepeatEnumerator(delegate, predicate)),
   );
 })();
 export const repeatT: Repeat<EnumerableLike> = {
@@ -1367,7 +1365,7 @@ export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   };
 
   return (...enumerables: readonly EnumerableLike[]): EnumerableLike<any> =>
-    create(() =>
+    EnumerableLike__create(() =>
       pipe(enumerables, mapReadonlyArray(enumerate()), zipEnumerators),
     );
 })();
