@@ -11,10 +11,6 @@ import {
   createThrowIfEmptyOperator,
 } from "../__internal__/containers/StatefulContainerLike.internal";
 import {
-  MutableEnumeratorLike,
-  mutableEnumeratorMixin,
-} from "../__internal__/ix/EnumeratorLike.mutable";
-import {
   Mutable,
   createInstanceFactory,
   include,
@@ -174,6 +170,8 @@ import {
 import { getCurrent, hasCurrent, move } from "../ix/EnumeratorLike";
 import EnumerableLike__create from "../ix/__internal__/EnumerableLike/EnumerableLike.create";
 import EnumerableLike__empty from "../ix/__internal__/EnumerableLike/EnumerableLike.empty";
+import MutableEnumeratorLike__mixin from "../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
+import { MutableEnumeratorLike } from "../ix/__internal__/ix.internal";
 import {
   EnumerableObservableLike,
   MulticastObservableLike,
@@ -1611,7 +1609,7 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
 
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
+    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
     const typedObserverMixin = observerMixin<T>();
 
     type TEnumeratorSchedulerProperties = {

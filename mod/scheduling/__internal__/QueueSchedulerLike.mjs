@@ -1,6 +1,5 @@
 /// <reference types="./QueueSchedulerLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../../__internal__/constants.mjs';
-import { mutableEnumeratorMixin } from '../../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../../__internal__/mixins.mjs';
 import { createPriorityQueue } from '../../__internal__/scheduling/QueueLike.mjs';
 import { getDelay } from '../../__internal__/scheduling/SchedulerLike.options.mjs';
@@ -10,6 +9,7 @@ import { isNone, none, isSome, max, pipe, unsafeCast } from '../../functions.mjs
 import { EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
 import { hasCurrent, getCurrent } from '../../ix/EnumeratorLike.mjs';
 import { move } from '../../ix/SourceLike.mjs';
+import mutableMixin from '../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../scheduling.mjs';
 import { run } from '../ContinuationLike.mjs';
 import { PauseableLike_pause, PauseableLike_resume } from '../../util.mjs';
@@ -103,7 +103,7 @@ const create =
         instance[MutableRefLike_current] = pipe(instance.host, schedule(continuation, { delay }));
     };
     const typedDisposableRefMixin = disposableRefMixin();
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const typedMutableEnumeratorMixin = mutableMixin();
     return createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
         init(disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);

@@ -1,6 +1,6 @@
 import { IterableLike } from "../../../containers";
 import { compose } from "../../../functions";
-import { toObservable as EnumerableLike__toObservable } from "../../../ix/EnumerableLike";
+import { toRunnableObservable as EnumerableLike__toRunnableObservable } from "../../../ix/EnumerableLike";
 import { ToRunnableObservable } from "../../../rx";
 
 import IterableLike__toEnumerable from "./IterableLike.toEnumerable";
@@ -14,8 +14,7 @@ const toRunnableObservable: ToRunnableObservable<
 >["toRunnableObservable"] = options =>
   compose(
     IterableLike__toEnumerable(),
-    // FIXME: any use
-    EnumerableLike__toObservable(options as any),
+    EnumerableLike__toRunnableObservable(options),
   );
 
 export default toRunnableObservable;

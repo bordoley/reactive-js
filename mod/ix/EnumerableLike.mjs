@@ -1,52 +1,29 @@
 /// <reference types="./EnumerableLike.d.ts" />
 import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
-import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
-import { mixin, props, createInstanceFactory, include, init } from '../__internal__/mixins.mjs';
-import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/ObservableLike.create.mjs';
-import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
+import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
 import { disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
-import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
+import { toEnumerable as toEnumerable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import repeat$1 from '../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
-import { pipe, none, unsafeCast, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerLike_interact, SourceLike_move } from '../ix.mjs';
-import { move, getCurrent, hasCurrent, forEach as forEach$1 } from './EnumeratorLike.mjs';
-import { schedule } from '../rx/ObserverLike.mjs';
-import { create as create$1 } from '../rx/RunnableLike.mjs';
-import { notifySink } from '../rx/SinkLike.mjs';
-import { yield_ } from '../scheduling/ContinuationLike.mjs';
-import { add, dispose, disposed, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete, getException } from '../util/DisposableLike.mjs';
+import { pipeUnsafe, newInstance, pipe, none, getLength, returns, isSome, isNone, unsafeCast, raise, identity } from '../functions.mjs';
+import { InteractiveContainerLike_interact, SourceLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../ix.mjs';
+import { move, getCurrent, hasCurrent } from './EnumeratorLike.mjs';
+import { add, dispose, disposed, isDisposed, addTo, bindTo, addIgnoringChildErrors, onComplete } from '../util/DisposableLike.mjs';
 import delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import mixin$1 from './__internal__/DelegatingEnumeratorLike/DelegatingEnumeratorLike.mixin.mjs';
+import move$1 from './__internal__/DelegatingEnumeratorLike/DelegatingEnumeratorLike.move.mjs';
 import create from './__internal__/EnumerableLike/EnumerableLike.create.mjs';
 import empty$1 from './__internal__/EnumerableLike/EnumerableLike.empty.mjs';
+import enumerate$1 from './__internal__/EnumerableLike/EnumerableLike.enumerate.mjs';
+import toIterable$1 from './__internal__/EnumerableLike/EnumerableLike.toIterable.mjs';
+import toReadonlyArray$1 from './__internal__/EnumerableLike/EnumerableLike.toReadonlyArray.mjs';
+import toRunnable$1 from './__internal__/EnumerableLike/EnumerableLike.toRunnable.mjs';
+import toRunnableObservable$1 from './__internal__/EnumerableLike/EnumerableLike.toRunnableObservable.mjs';
+import zip$1 from './__internal__/EnumerableLike/EnumerableLike.zip.mjs';
+import mutableMixin from './__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 
-const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
-const delegatingEnumeratorMixin = /*@__PURE__*/ (() => {
-    const DelegatingEnumerator_private_delegate = Symbol("DelegatingEnumerator_private_delegate");
-    return pipe(mixin(function DelegatingEnumerator(instance, delegate) {
-        instance[DelegatingEnumerator_private_delegate] = delegate;
-        return instance;
-    }, props({
-        [DelegatingEnumerator_private_delegate]: none,
-    }), {
-        get [EnumeratorLike_current]() {
-            var _a, _b;
-            unsafeCast(this);
-            return ((_b = (_a = this[DelegatingEnumerator_private_delegate]) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_current]) !== null && _b !== void 0 ? _b : raise());
-        },
-        get [EnumeratorLike_hasCurrent]() {
-            unsafeCast(this);
-            return this[DelegatingEnumerator_private_delegate][EnumeratorLike_hasCurrent];
-        },
-        [DelegatingEnumerator_move_delegate]() {
-            const delegate = this[DelegatingEnumerator_private_delegate];
-            return move(delegate);
-        },
-    }), returns);
-})();
-const delegatingEnumeratorMove = (enumerator) => enumerator[DelegatingEnumerator_move_delegate]();
-const enumerate = () => (enumerable) => enumerable[InteractiveContainerLike_interact](none);
+const enumerate = enumerate$1;
 const lift = /*@__PURE__*/ (() => {
     class LiftedEnumerable {
         constructor(src, operators) {
@@ -72,7 +49,7 @@ const liftT = {
     variance: interactive,
 };
 const buffer = /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const typedMutableEnumeratorMixin = mutableMixin();
     return pipe(createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function BufferEnumerator(instance, delegate, maxBufferSize) {
         init(disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
@@ -105,7 +82,7 @@ const bufferT = {
 };
 const concatAll = 
 /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const typedMutableEnumeratorMixin = mutableMixin();
     const typedDisposableRefMixin = disposableRefMixin();
     return pipe(createInstanceFactory(mixin(include(disposableMixin, typedDisposableRefMixin, typedMutableEnumeratorMixin), function ConcatAllEnumerator(instance, delegate) {
         init(disposableMixin, instance);
@@ -148,7 +125,7 @@ const concatT = {
 };
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
+    const typedDelegatingEnumeratorMixin = mixin$1();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedDelegatingEnumeratorMixin), function DistinctUntilChanged(instance, delegate, equality) {
         init(delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
@@ -159,7 +136,7 @@ const distinctUntilChanged =
             const hadCurrent = hasCurrent(this);
             const prevCurrent = hadCurrent ? getCurrent(this) : none;
             try {
-                while (delegatingEnumeratorMove(this)) {
+                while (move$1(this)) {
                     if (!hadCurrent ||
                         !this.equality(prevCurrent, getCurrent(this))) {
                         break;
@@ -178,7 +155,7 @@ const distinctUntilChangedT = {
 const empty = empty$1;
 const emptyT = { empty };
 const forEach = /*@__PURE__*/ (() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
+    const typedDelegatingEnumeratorMixin = mixin$1();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedDelegatingEnumeratorMixin), function forEachEnumerator(instance, delegate, effect) {
         init(delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
@@ -186,7 +163,7 @@ const forEach = /*@__PURE__*/ (() => {
         return instance;
     }, props({ effect: none }), {
         [SourceLike_move]() {
-            if (delegatingEnumeratorMove(this)) {
+            if (move$1(this)) {
                 try {
                     this.effect(getCurrent(this));
                 }
@@ -206,7 +183,7 @@ const forEachT = { forEach };
  * @param initialValue Factory function used to generate the initial accumulator.
  */
 const generate = /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const typedMutableEnumeratorMixin = mutableMixin();
     const createGenerateEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function GenerateEnumerator(instance, f, acc) {
         init(disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
@@ -231,7 +208,7 @@ const generateT = {
     generate,
 };
 const keep = /*@__PURE__*/ (() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
+    const typedDelegatingEnumeratorMixin = mixin$1();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedDelegatingEnumeratorMixin), function KeepEnumerator(instance, delegate, predicate) {
         init(delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
@@ -241,7 +218,7 @@ const keep = /*@__PURE__*/ (() => {
         [SourceLike_move]() {
             const { predicate } = this;
             try {
-                while (delegatingEnumeratorMove(this) &&
+                while (move$1(this) &&
                     !predicate(getCurrent(this))) { }
             }
             catch (cause) {
@@ -254,7 +231,7 @@ const keepT = {
     keep,
 };
 const map = /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const typedMutableEnumeratorMixin = mutableMixin();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedMutableEnumeratorMixin), function MapEnumerator(instance, delegate, mapper) {
         init(delegatingMixin, instance, delegate);
         init(typedMutableEnumeratorMixin, instance);
@@ -280,7 +257,7 @@ const map = /*@__PURE__*/ (() => {
 })();
 const mapT = { map };
 const pairwise = /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const typedMutableEnumeratorMixin = mutableMixin();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedMutableEnumeratorMixin), function PairwiseEnumerator(instance, delegate) {
         init(delegatingMixin, instance, delegate);
         init(typedMutableEnumeratorMixin, instance);
@@ -362,7 +339,7 @@ const repeatT = {
     repeat,
 };
 const scan = /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const typedMutableEnumeratorMixin = mutableMixin();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedMutableEnumeratorMixin), function ScanEnumerator(instance, delegate, reducer, initialValue) {
         init(delegatingMixin, instance, delegate);
         init(typedMutableEnumeratorMixin, instance);
@@ -396,7 +373,7 @@ const scanT = {
 };
 const skipFirst = 
 /*@__PURE__*/ (() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
+    const typedDelegatingEnumeratorMixin = mixin$1();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedDelegatingEnumeratorMixin), function SkipFirstEnumerator(instance, delegate, skipCount) {
         init(delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
@@ -410,12 +387,12 @@ const skipFirst =
         [SourceLike_move]() {
             const { skipCount } = this;
             for (let { count } = this; count < skipCount; count++) {
-                if (!delegatingEnumeratorMove(this)) {
+                if (!move$1(this)) {
                     break;
                 }
             }
             this.count = skipCount;
-            delegatingEnumeratorMove(this);
+            move$1(this);
         },
     })), createSkipFirstOperator(liftT));
 })();
@@ -424,7 +401,7 @@ const skipFirstT = {
 };
 const takeFirst = 
 /*@__PURE__*/ (() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
+    const typedDelegatingEnumeratorMixin = mixin$1();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedDelegatingEnumeratorMixin), function TakeFirstEnumerator(instance, delegate, maxCount) {
         init(delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
@@ -437,7 +414,7 @@ const takeFirst =
         [SourceLike_move]() {
             if (this.count < this.maxCount) {
                 this.count++;
-                delegatingEnumeratorMove(this);
+                move$1(this);
             }
             else {
                 pipe(this, dispose());
@@ -451,7 +428,7 @@ const takeFirstT = {
     takeFirst,
 };
 const takeLast = /*@__PURE__*/ (() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
+    const typedDelegatingEnumeratorMixin = mixin$1();
     return pipe(createInstanceFactory(mixin(include(disposableMixin, typedDelegatingEnumeratorMixin), function TakeLastEnumerator(instance, delegate, maxCount) {
         init(disposableMixin, instance);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
@@ -467,7 +444,7 @@ const takeLast = /*@__PURE__*/ (() => {
             if (!isDisposed(this) && !this.isStarted) {
                 this.isStarted = true;
                 const last = [];
-                while (delegatingEnumeratorMove(this)) {
+                while (move$1(this)) {
                     last.push(getCurrent(this));
                     if (getLength(last) > this.maxCount) {
                         last.shift();
@@ -476,7 +453,7 @@ const takeLast = /*@__PURE__*/ (() => {
                 const enumerator = pipe(last, toEnumerable$1(), enumerate(), bindTo(this));
                 init(typedDelegatingEnumeratorMixin, this, enumerator);
             }
-            delegatingEnumeratorMove(this);
+            move$1(this);
         },
     })), createTakeLastOperator({
         ...liftT,
@@ -485,7 +462,7 @@ const takeLast = /*@__PURE__*/ (() => {
 const takeLastT = { takeLast };
 const takeWhile = 
 /*@__PURE__*/ (() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
+    const typedDelegatingEnumeratorMixin = mixin$1();
     return pipe(createInstanceFactory(mixin(include(delegatingMixin, typedDelegatingEnumeratorMixin), function TakeWhileEnumerator(instance, delegate, predicate, inclusive) {
         init(delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
@@ -502,7 +479,7 @@ const takeWhile =
             if (this.done && !isDisposed(this)) {
                 pipe(this, dispose());
             }
-            else if (delegatingEnumeratorMove(this)) {
+            else if (move$1(this)) {
                 const current = getCurrent(this);
                 try {
                     const satisfiesPredicate = predicate(current);
@@ -523,7 +500,7 @@ const takeWhile =
 const takeWhileT = { takeWhile };
 const throwIfEmpty = 
 /*@__PURE__*/ (() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin();
+    const typedDelegatingEnumeratorMixin = mixin$1();
     return pipe(createInstanceFactory(mixin(include(disposableMixin, typedDelegatingEnumeratorMixin), function TakeWhileEnumerator(instance, delegate, factory) {
         init(disposableMixin, instance);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
@@ -548,7 +525,7 @@ const throwIfEmpty =
         isEmpty: true,
     }), {
         [SourceLike_move]() {
-            if (delegatingEnumeratorMove(this)) {
+            if (move$1(this)) {
                 this.isEmpty = false;
             }
         },
@@ -561,105 +538,26 @@ const toEnumerable = () => identity;
 const toEnumerableT = {
     toEnumerable,
 };
-const toObservable = ((options) => enumerable => {
-    const { delayStart = false } = options !== null && options !== void 0 ? options : {};
-    const onSink = (observer) => {
-        const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
-        pipe(observer, schedule(() => {
-            while (!isDisposed(observer) && move(enumerator)) {
-                pipe(enumerator, getCurrent, notifySink(observer));
-                yield_(options);
-            }
-        }, delayStart ? options : none));
-    };
-    return hasDelay(options)
-        ? createRunnableObservable(onSink)
-        : createEnumerableObservable(onSink);
-});
-const toObservableT = { toObservable };
-const toReadonlyArray = () => (enumerable) => {
-    const enumerator = pipe(enumerable, enumerate());
-    const result = [];
-    while (move(enumerator)) {
-        result.push(getCurrent(enumerator));
-    }
-    const error = getException(enumerator);
-    if (isSome(error)) {
-        throw error.cause;
-    }
-    return result;
-};
-const toReadonlyArrayT = {
-    toReadonlyArray,
+const toEnumerableObservable = toRunnableObservable$1;
+const toEnumerableObservableT = {
+    toEnumerableObservable,
 };
 /**
  * Converts an EnumerableLike into a javascript Iterable.
  */
-const toIterable = 
-/*@__PURE__*/ (() => {
-    class EnumerableIterable {
-        constructor(enumerable) {
-            this.enumerable = enumerable;
-        }
-        *[Symbol.iterator]() {
-            const enumerator = pipe(this.enumerable, enumerate());
-            while (move(enumerator)) {
-                yield getCurrent(enumerator);
-            }
-        }
-    }
-    return () => enumerable => newInstance(EnumerableIterable, enumerable);
-})();
+const toIterable = toIterable$1;
 const toIterableT = { toIterable };
-const toRunnable = 
-/*@__PURE__*/ (() => {
-    const enumeratorToRunnable = (f) => {
-        const run = (sink) => {
-            pipe(f(), add(sink), forEach$1(notifySink(sink)), dispose());
-        };
-        return create$1(run);
-    };
-    return () => (enumerable) => enumeratorToRunnable(() => enumerable[InteractiveContainerLike_interact]());
-})();
-const toRunnableT = {
-    toRunnable,
+const toObservable = toRunnableObservable$1;
+const toObservableT = { toObservable };
+const toReadonlyArray = toReadonlyArray$1;
+const toReadonlyArrayT = {
+    toReadonlyArray,
 };
-const zip = /*@__PURE__*/ (() => {
-    const moveAll = (enumerators) => {
-        for (const enumerator of enumerators) {
-            move(enumerator);
-        }
-    };
-    const allHaveCurrent = (enumerators) => pipe(enumerators, every(hasCurrent));
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
-    const createZipEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function ZipEnumerator(instance, enumerators) {
-        init(disposableMixin, instance);
-        init(typedMutableEnumeratorMixin, instance);
-        instance.enumerators = enumerators;
-        return instance;
-    }, props({
-        enumerators: none,
-    }), {
-        [SourceLike_move]() {
-            if (!isDisposed(this)) {
-                const { enumerators } = this;
-                moveAll(enumerators);
-                if (allHaveCurrent(enumerators)) {
-                    this[EnumeratorLike_current] = pipe(enumerators, map$1(getCurrent));
-                }
-                else {
-                    pipe(this, dispose());
-                }
-            }
-        },
-    }));
-    const zipEnumerators = (enumerators) => {
-        const instance = createZipEnumerator(enumerators);
-        pipe(enumerators, forEach$2(addTo(instance)));
-        return instance;
-    };
-    return (...enumerables) => create(() => pipe(enumerables, map$1(enumerate()), zipEnumerators));
-})();
+const toRunnable = toRunnable$1;
+const toRunnableT = { toRunnable };
+const toRunnableObservable = toRunnableObservable$1;
+const toRunnableObservableT = { toRunnableObservable };
+const zip = zip$1;
 const zipT = { zip };
 
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, forEach, forEachT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };
+export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, forEach, forEachT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, zip, zipT };

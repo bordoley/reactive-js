@@ -1,7 +1,6 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
 import { createDecodeWithCharsetOperator, createKeepOperator, createMapOperator, createReduceOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
-import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
 import { createEnumerableObservable, createRunnableObservable, createObservable, deferObservable } from '../__internal__/rx/ObservableLike.create.mjs';
 import { catchErrorObservable, mergeAllObservable, scanAsyncObservable, switchAllObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
@@ -21,6 +20,7 @@ import { enumerate, zip as zip$1, toObservable as toObservable$3 } from '../ix/E
 import { hasCurrent, move, getCurrent } from '../ix/EnumeratorLike.mjs';
 import create$1 from '../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
 import empty$1 from '../ix/__internal__/EnumerableLike/EnumerableLike.empty.mjs';
+import mutableMixin from '../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../rx.mjs';
 import { getScheduler, schedule } from './ObserverLike.mjs';
 import { notify, sourceFrom, notifySink } from './SinkLike.mjs';
@@ -648,7 +648,7 @@ const timeout = /*@__PURE__*/ (() => {
 })();
 const toEnumerable = 
 /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin();
+    const typedMutableEnumeratorMixin = mutableMixin();
     const typedObserverMixin = observerMixin();
     const createEnumeratorScheduler = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function EnumeratorScheduler(instance) {
         init(disposableMixin, instance);

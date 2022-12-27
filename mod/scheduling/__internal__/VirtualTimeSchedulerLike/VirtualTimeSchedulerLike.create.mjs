@@ -1,12 +1,12 @@
 /// <reference types="./VirtualTimeSchedulerLike.create.d.ts" />
 import { MAX_SAFE_INTEGER } from '../../../__internal__/constants.mjs';
-import { mutableEnumeratorMixin } from '../../../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
 import { createPriorityQueue } from '../../../__internal__/scheduling/QueueLike.mjs';
 import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { none, unsafeCast, pipe, isSome } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import { move, getCurrent } from '../../../ix/EnumeratorLike.mjs';
+import mutableMixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, ContinuationLike_run, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { run } from '../../ContinuationLike.mjs';
 import { addIgnoringChildErrors, isDisposed, dispose } from '../../../util/DisposableLike.mjs';
@@ -20,7 +20,7 @@ const comparator = (a, b) => {
     return diff;
 };
 const typedMutableEnumeratorMixin = 
-/*@__PURE__*/ mutableEnumeratorMixin();
+/*@__PURE__*/ mutableMixin();
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(disposableMixin, instance);
     init(typedMutableEnumeratorMixin, instance);

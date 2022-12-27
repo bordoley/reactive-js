@@ -1,11 +1,10 @@
-/// <reference types="./EnumeratorLike.mutable.d.ts" />
-import { pipe, none, unsafeCast, raise, returns } from '../../functions.mjs';
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../ix.mjs';
-import isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
-import { mixin, props } from '../mixins.mjs';
+/// <reference types="./MutableEnumeratorLike.mixin.d.ts" />
+import { mixin, props } from '../../../__internal__/mixins.mjs';
+import { pipe, none, unsafeCast, raise, returns } from '../../../functions.mjs';
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
+import isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 
-const mutableEnumeratorMixin = 
-/*@__PURE__*/ (() => {
+const mutableMixin = /*@__PURE__*/ (() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");
     const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
     return pipe(mixin(function EnumeratorMixin(instance) {
@@ -36,4 +35,4 @@ const mutableEnumeratorMixin =
     }), returns);
 })();
 
-export { mutableEnumeratorMixin };
+export { mutableMixin as default };

@@ -15,11 +15,6 @@ import {
   interactive,
 } from "../__internal__/containers/StatefulContainerLike.internal";
 import {
-  MutableEnumeratorLike,
-  mutableEnumeratorMixin,
-} from "../__internal__/ix/EnumeratorLike.mutable";
-import {
-  Mixin1,
   Mutable,
   createInstanceFactory,
   include,
@@ -27,11 +22,6 @@ import {
   mixin,
   props,
 } from "../__internal__/mixins";
-import {
-  createEnumerableObservable,
-  createRunnableObservable,
-} from "../__internal__/rx/ObservableLike.create";
-import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import { disposableRefMixin } from "../__internal__/util/DisposableRefLike";
 import {
   MutableRefLike,
@@ -60,11 +50,7 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import {
-  every,
-  map as mapReadonlyArray,
-  toEnumerable as toEnumerableReadonlyArray,
-} from "../containers/ReadonlyArrayLike";
+import { toEnumerable as toEnumerableReadonlyArray } from "../containers/ReadonlyArrayLike";
 import ContainerLike__repeat from "../containers/__internal__/ContainerLike/ContainerLike.repeat";
 import {
   Equality,
@@ -75,7 +61,6 @@ import {
   Reducer,
   SideEffect1,
   Updater,
-  forEach as forEachArray,
   getLength,
   identity,
   isNone,
@@ -97,27 +82,14 @@ import {
   SourceLike_move,
   ToEnumerable,
 } from "../ix";
+import { getCurrent, hasCurrent, move } from "../ix/EnumeratorLike";
 import {
-  forEach as forEachEnumerator,
-  getCurrent,
-  hasCurrent,
-  move,
-} from "../ix/EnumeratorLike";
-import {
-  EnumerableObservableLike,
-  ObservableLike,
-  ObserverLike,
-  RunnableLike,
-  RunnableObservableLike,
-  SinkLike,
+  ToEnumerableObservable,
   ToObservable,
   ToRunnable,
+  ToRunnableObservable,
 } from "../rx";
-import { schedule } from "../rx/ObserverLike";
-import { create as createRunnable } from "../rx/RunnableLike";
-import { notifySink } from "../rx/SinkLike";
-import { yield_ } from "../scheduling/ContinuationLike";
-import { DisposableLike, Exception } from "../util";
+import { Exception } from "../util";
 import {
   add,
   addIgnoringChildErrors,
@@ -125,92 +97,28 @@ import {
   bindTo,
   dispose,
   disposed,
-  getException,
   isDisposed,
   onComplete,
 } from "../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DelegatingEnumeratorLike__mixin from "./__internal__/DelegatingEnumeratorLike/DelegatingEnumeratorLike.mixin";
+import DelegatingEnumeratorLike__move from "./__internal__/DelegatingEnumeratorLike/DelegatingEnumeratorLike.move";
 import EnumerableLike__create from "./__internal__/EnumerableLike/EnumerableLike.create";
 import EnumerableLike__empty from "./__internal__/EnumerableLike/EnumerableLike.empty";
+import EnumerableLike__enumerate from "./__internal__/EnumerableLike/EnumerableLike.enumerate";
+import EnumerableLike__toIterable from "./__internal__/EnumerableLike/EnumerableLike.toIterable";
+import EnumerableLike__toReadonlyArray from "./__internal__/EnumerableLike/EnumerableLike.toReadonlyArray";
+import EnumerableLike__toRunnable from "./__internal__/EnumerableLike/EnumerableLike.toRunnable";
+import EnumerableLike__toRunnableObservable from "./__internal__/EnumerableLike/EnumerableLike.toRunnableObservable";
+import EnumerableLike__zip from "./__internal__/EnumerableLike/EnumerableLike.zip";
+import MutableEnumeratorLike__mixin from "./__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
+import {
+  DelegatingEnumeratorLike,
+  MutableEnumeratorLike,
+} from "./__internal__/ix.internal";
 
-const DelegatingEnumerator_move_delegate = Symbol(
-  "DelegatingEnumerator_move_delegate",
-);
-
-interface DelegatingEnumeratorLike<T> extends EnumeratorLike<T> {
-  [DelegatingEnumerator_move_delegate](): boolean;
-}
-
-type TDelegatingEnumeratorMixinReturn<T> = Omit<
-  EnumeratorLike<T>,
-  keyof DisposableLike | typeof SourceLike_move
->;
-
-const delegatingEnumeratorMixin: <T>() => Mixin1<
-  TDelegatingEnumeratorMixinReturn<T>,
-  EnumeratorLike<T>
-> = /*@__PURE__*/ (<T>() => {
-  const DelegatingEnumerator_private_delegate = Symbol(
-    "DelegatingEnumerator_private_delegate",
-  );
-
-  type TProperties = {
-    readonly [DelegatingEnumerator_private_delegate]: EnumeratorLike<T>;
-  };
-
-  return pipe(
-    mixin(
-      function DelegatingEnumerator(
-        instance: Pick<
-          DelegatingEnumeratorLike<T>,
-          | typeof EnumeratorLike_current
-          | typeof EnumeratorLike_hasCurrent
-          | typeof DelegatingEnumerator_move_delegate
-        > &
-          Mutable<TProperties>,
-        delegate: EnumeratorLike<T>,
-      ): TDelegatingEnumeratorMixinReturn<T> {
-        instance[DelegatingEnumerator_private_delegate] = delegate;
-
-        return instance;
-      },
-      props<TProperties>({
-        [DelegatingEnumerator_private_delegate]: none,
-      }),
-      {
-        get [EnumeratorLike_current](): T {
-          unsafeCast<TProperties>(this);
-          return (
-            this[DelegatingEnumerator_private_delegate]?.[
-              EnumeratorLike_current
-            ] ?? raise()
-          );
-        },
-        get [EnumeratorLike_hasCurrent](): boolean {
-          unsafeCast<TProperties>(this);
-          return this[DelegatingEnumerator_private_delegate][
-            EnumeratorLike_hasCurrent
-          ];
-        },
-        [DelegatingEnumerator_move_delegate](this: TProperties): boolean {
-          const delegate = this[DelegatingEnumerator_private_delegate];
-          return move(delegate);
-        },
-      },
-    ),
-    returns,
-  );
-})();
-
-const delegatingEnumeratorMove = (enumerator: {
-  [DelegatingEnumerator_move_delegate](): boolean;
-}): boolean => enumerator[DelegatingEnumerator_move_delegate]();
-
-export const enumerate =
-  <T>() =>
-  (enumerable: EnumerableLike<T>): EnumeratorLike<T> =>
-    enumerable[InteractiveContainerLike_interact](none);
+export const enumerate = EnumerableLike__enumerate;
 
 const lift: Lift<EnumerableLike, TInteractive>["lift"] = /*@__PURE__*/ (() => {
   class LiftedEnumerable<TA, TB> implements EnumerableLike<TB> {
@@ -260,7 +168,8 @@ const liftT: Lift<EnumerableLike, TInteractive> = {
 export const buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<readonly T[]>();
+  const typedMutableEnumeratorMixin =
+    MutableEnumeratorLike__mixin<readonly T[]>();
 
   type TProperties = {
     readonly delegate: EnumeratorLike<T>;
@@ -322,7 +231,7 @@ export const bufferT: Buffer<EnumerableLike> = {
 
 export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
   /*@__PURE__*/ (<T>() => {
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
+    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
     const typedDisposableRefMixin = disposableRefMixin<EnumeratorLike<T>>();
 
     type TProperties = {
@@ -401,7 +310,7 @@ export const concatT: Concat<EnumerableLike> = {
 
 export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
+    const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
 
     type TProperties = {
       readonly equality: Equality<T>;
@@ -434,7 +343,7 @@ export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinc
               const prevCurrent = hadCurrent ? getCurrent(this) : none;
 
               try {
-                while (delegatingEnumeratorMove(this)) {
+                while (DelegatingEnumeratorLike__move(this)) {
                   if (
                     !hadCurrent ||
                     !this.equality(prevCurrent as T, getCurrent(this))
@@ -464,7 +373,7 @@ export const emptyT: Empty<EnumerableLike> = { empty };
 export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
+  const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
 
   type TProperties = {
     readonly effect: SideEffect1<T>;
@@ -493,7 +402,7 @@ export const forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
         props<TProperties>({ effect: none }),
         {
           [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-            if (delegatingEnumeratorMove(this)) {
+            if (DelegatingEnumeratorLike__move(this)) {
               try {
                 this.effect(getCurrent(this));
               } catch (cause) {
@@ -519,7 +428,7 @@ export const forEachT: ForEach<EnumerableLike> = { forEach };
 export const generate: Generate<EnumerableLike>["generate"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
+  const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
 
   type TProperties = { readonly f: Updater<T> };
 
@@ -567,7 +476,7 @@ export const generateT: Generate<EnumerableLike> = {
 };
 
 export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
-  const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
+  const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
 
   type TProperties = {
     readonly predicate: Predicate<T>;
@@ -600,7 +509,7 @@ export const keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
             try {
               while (
-                delegatingEnumeratorMove(this) &&
+                DelegatingEnumeratorLike__move(this) &&
                 !predicate(getCurrent(this))
               ) {}
             } catch (cause) {
@@ -618,7 +527,7 @@ export const keepT: Keep<EnumerableLike> = {
 };
 
 export const map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
-  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<TB>();
+  const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<TB>();
 
   type TProperties = {
     readonly mapper: Function1<TA, TB>;
@@ -672,7 +581,7 @@ export const mapT: Map<EnumerableLike> = { map };
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<[T, T]>();
+  const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<[T, T]>();
 
   type TProperties = {
     readonly delegate: EnumeratorLike<T>;
@@ -811,7 +720,7 @@ export const scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const typedMutableEnumeratorMixin = mutableEnumeratorMixin<TAcc>();
+  const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<TAcc>();
 
   type TProperties = {
     readonly reducer: Reducer<T, TAcc>;
@@ -873,7 +782,7 @@ export const scanT: Scan<EnumerableLike> = {
 
 export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
+    const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
 
     type TProperties = {
       readonly skipCount: number;
@@ -910,13 +819,13 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
               const { skipCount } = this;
 
               for (let { count } = this; count < skipCount; count++) {
-                if (!delegatingEnumeratorMove(this)) {
+                if (!DelegatingEnumeratorLike__move(this)) {
                   break;
                 }
               }
 
               this.count = skipCount;
-              delegatingEnumeratorMove(this);
+              DelegatingEnumeratorLike__move(this);
             },
           },
         ),
@@ -930,7 +839,7 @@ export const skipFirstT: SkipFirst<EnumerableLike> = {
 
 export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
+    const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
 
     type TProperties = {
       readonly maxCount: number;
@@ -965,7 +874,7 @@ export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               if (this.count < this.maxCount) {
                 this.count++;
-                delegatingEnumeratorMove(this);
+                DelegatingEnumeratorLike__move(this);
               } else {
                 pipe(this, dispose());
               }
@@ -985,7 +894,7 @@ export const takeFirstT: TakeFirst<EnumerableLike> = {
 export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
+  const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
 
   type TProperties = {
     readonly maxCount: number;
@@ -1023,7 +932,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
 
               const last: unknown[] = [];
 
-              while (delegatingEnumeratorMove(this)) {
+              while (DelegatingEnumeratorLike__move(this)) {
                 last.push(getCurrent(this));
 
                 if (getLength(last) > this.maxCount) {
@@ -1040,7 +949,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
               init(typedDelegatingEnumeratorMixin, this, enumerator);
             }
 
-            delegatingEnumeratorMove(this);
+            DelegatingEnumeratorLike__move(this);
           },
         },
       ),
@@ -1054,7 +963,7 @@ export const takeLastT: TakeLast<EnumerableLike> = { takeLast };
 
 export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
+    const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
 
     type TProperties = {
       readonly predicate: Predicate<T>;
@@ -1095,7 +1004,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
 
               if (this.done && !isDisposed(this)) {
                 pipe(this, dispose());
-              } else if (delegatingEnumeratorMove(this)) {
+              } else if (DelegatingEnumeratorLike__move(this)) {
                 const current = getCurrent(this);
 
                 try {
@@ -1121,7 +1030,7 @@ export const takeWhileT: TakeWhile<EnumerableLike> = { takeWhile };
 
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorMixin = delegatingEnumeratorMixin<T>();
+    const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
 
     type TProperties = {
       isEmpty: boolean;
@@ -1170,7 +1079,7 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
           }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              if (delegatingEnumeratorMove(this)) {
+              if (DelegatingEnumeratorLike__move(this)) {
                 this.isEmpty = false;
               }
             },
@@ -1190,40 +1099,26 @@ export const toEnumerableT: ToEnumerable<EnumerableLike> = {
   toEnumerable,
 };
 
-interface EnumerableToObservable {
-  <T>(): Function1<EnumerableLike<T>, EnumerableObservableLike<T>>;
-  <T>(options: { delay: number; delayStart?: boolean }): Function1<
-    EnumerableLike<T>,
-    RunnableObservableLike<T>
-  >;
-}
-export const toObservable: EnumerableToObservable = (<T>(options?: {
+export const toEnumerableObservable: ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"] =
+  EnumerableLike__toRunnableObservable as ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"];
+export const toEnumerableObservableT: ToEnumerableObservable<EnumerableLike> = {
+  toEnumerableObservable,
+};
+
+/**
+ * Converts an EnumerableLike into a javascript Iterable.
+ */
+export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
+  EnumerableLike__toIterable;
+export const toIterableT: ToIterable<EnumerableLike> = { toIterable };
+
+export const toObservable: ToObservable<
+  EnumerableLike,
+  {
     delay?: number;
     delayStart?: boolean;
-  }): Function1<EnumerableLike<T>, ObservableLike<T>> =>
-  enumerable => {
-    const { delayStart = false } = options ?? {};
-
-    const onSink = (observer: ObserverLike<T>) => {
-      const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
-
-      pipe(
-        observer,
-        schedule(
-          () => {
-            while (!isDisposed(observer) && move(enumerator)) {
-              pipe(enumerator, getCurrent, notifySink(observer));
-              yield_(options);
-            }
-          },
-          delayStart ? options : none,
-        ),
-      );
-    };
-    return hasDelay(options)
-      ? createRunnableObservable(onSink)
-      : createEnumerableObservable(onSink);
-  }) as EnumerableToObservable;
+  }
+>["toObservable"] = EnumerableLike__toRunnableObservable;
 export const toObservableT: ToObservable<
   EnumerableLike,
   {
@@ -1233,140 +1128,29 @@ export const toObservableT: ToObservable<
 > = { toObservable };
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
-
-    <T>() =>
-    (enumerable: EnumerableLike<T>) => {
-      const enumerator = pipe(enumerable, enumerate());
-      const result: T[] = [];
-
-      while (move(enumerator)) {
-        result.push(getCurrent(enumerator));
-      }
-
-      const error = getException(enumerator);
-
-      if (isSome(error)) {
-        throw error.cause;
-      }
-
-      return result;
-    };
+  EnumerableLike__toReadonlyArray;
 export const toReadonlyArrayT: ToReadonlyArray<EnumerableLike> = {
   toReadonlyArray,
 };
 
-/**
- * Converts an EnumerableLike into a javascript Iterable.
- */
-export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
-  /*@__PURE__*/ (() => {
-    class EnumerableIterable<T = unknown> implements Iterable<T> {
-      constructor(private readonly enumerable: EnumerableLike<T>) {}
-
-      *[Symbol.iterator]() {
-        const enumerator = pipe(this.enumerable, enumerate());
-        while (move(enumerator)) {
-          yield getCurrent(enumerator);
-        }
-      }
-    }
-
-    return () => enumerable => newInstance(EnumerableIterable, enumerable);
-  })();
-export const toIterableT: ToIterable<EnumerableLike> = { toIterable };
-
 export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
-  /*@__PURE__*/ (() => {
-    const enumeratorToRunnable = <T>(
-      f: Factory<EnumeratorLike<T>>,
-    ): RunnableLike<T> => {
-      const run = (sink: SinkLike<T>) => {
-        pipe(f(), add(sink), forEachEnumerator(notifySink(sink)), dispose());
-      };
-      return createRunnable(run);
-    };
+  EnumerableLike__toRunnable;
+export const toRunnableT: ToRunnable<EnumerableLike> = { toRunnable };
 
-    return <T>() =>
-      (enumerable: EnumerableLike<T>): RunnableLike<T> =>
-        enumeratorToRunnable(() =>
-          enumerable[InteractiveContainerLike_interact](),
-        );
-  })();
-export const toRunnableT: ToRunnable<EnumerableLike> = {
-  toRunnable,
-};
+export const toRunnableObservable: ToRunnableObservable<
+  EnumerableLike,
+  {
+    delay?: number;
+    delayStart?: boolean;
+  }
+>["toRunnableObservable"] = EnumerableLike__toRunnableObservable;
+export const toRunnableObservableT: ToRunnableObservable<
+  EnumerableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+> = { toRunnableObservable };
 
-export const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
-  const moveAll = (enumerators: readonly EnumeratorLike[]) => {
-    for (const enumerator of enumerators) {
-      move(enumerator);
-    }
-  };
-
-  const allHaveCurrent = (enumerators: readonly EnumeratorLike[]) =>
-    pipe(enumerators, every(hasCurrent));
-
-  const typedMutableEnumeratorMixin =
-    mutableEnumeratorMixin<readonly unknown[]>();
-
-  type TProperties = {
-    readonly enumerators: readonly EnumeratorLike[];
-  };
-
-  const createZipEnumerator = createInstanceFactory(
-    mixin(
-      include(DisposableLike__mixin, typedMutableEnumeratorMixin),
-      function ZipEnumerator(
-        instance: Pick<
-          EnumeratorLike<readonly unknown[]>,
-          typeof SourceLike_move
-        > &
-          Mutable<TProperties>,
-        enumerators: readonly EnumeratorLike[],
-      ): EnumeratorLike<readonly unknown[]> {
-        init(DisposableLike__mixin, instance);
-        init(typedMutableEnumeratorMixin, instance);
-
-        instance.enumerators = enumerators;
-
-        return instance;
-      },
-      props<TProperties>({
-        enumerators: none,
-      }),
-      {
-        [SourceLike_move](
-          this: TProperties & MutableEnumeratorLike<readonly unknown[]>,
-        ) {
-          if (!isDisposed(this)) {
-            const { enumerators } = this;
-            moveAll(enumerators);
-
-            if (allHaveCurrent(enumerators)) {
-              this[EnumeratorLike_current] = pipe(
-                enumerators,
-                mapReadonlyArray(getCurrent),
-              );
-            } else {
-              pipe(this, dispose());
-            }
-          }
-        },
-      },
-    ),
-  );
-
-  const zipEnumerators = (
-    enumerators: readonly EnumeratorLike[],
-  ): EnumeratorLike<readonly unknown[]> => {
-    const instance = createZipEnumerator(enumerators);
-    pipe(enumerators, forEachArray(addTo(instance)));
-    return instance;
-  };
-
-  return (...enumerables: readonly EnumerableLike[]): EnumerableLike<any> =>
-    EnumerableLike__create(() =>
-      pipe(enumerables, mapReadonlyArray(enumerate()), zipEnumerators),
-    );
-})();
+export const zip: Zip<EnumerableLike>["zip"] = EnumerableLike__zip;
 export const zipT: Zip<EnumerableLike> = { zip };

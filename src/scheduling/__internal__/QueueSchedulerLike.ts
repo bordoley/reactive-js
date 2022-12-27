@@ -1,9 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants";
 import {
-  MutableEnumeratorLike,
-  mutableEnumeratorMixin,
-} from "../../__internal__/ix/EnumeratorLike.mutable";
-import {
   Mutable,
   createInstanceFactory,
   include,
@@ -39,6 +35,8 @@ import {
 } from "../../ix";
 import { getCurrent, hasCurrent } from "../../ix/EnumeratorLike";
 import { move } from "../../ix/SourceLike";
+import MutableEnumeratorLike__mixin from "../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
+import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal";
 import {
   ContinuationLike,
   SchedulerLike,
@@ -211,7 +209,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
     };
 
     const typedDisposableRefMixin = disposableRefMixin();
-    const typedMutableEnumeratorMixin = mutableEnumeratorMixin<QueueTask>();
+    const typedMutableEnumeratorMixin =
+      MutableEnumeratorLike__mixin<QueueTask>();
 
     type TProperties = {
       [SchedulerLike_inContinuation]: boolean;
