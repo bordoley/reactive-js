@@ -146,6 +146,24 @@ export type ToObservable<
   ) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 };
 
+export type ToRunnableObservable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toRunnableObservable: <T>(
+    options?: TOptions,
+  ) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
+};
+
+export type ToEnumerableObservable<
+  C extends ContainerLike,
+  TOptions = never,
+> = Container<C> & {
+  toEnumerableObservable: <T>(
+    options?: TOptions,
+  ) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
+};
+
 export type ToRunnable<
   C extends ContainerLike,
   TOptions = never,

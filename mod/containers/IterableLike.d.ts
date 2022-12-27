@@ -1,7 +1,6 @@
 import { IterableLike, ToIterable } from "../containers.mjs";
-import { Function1 } from "../functions.mjs";
 import { ToAsyncEnumerable, ToEnumerable } from "../ix.mjs";
-import { ToObservable, EnumerableObservableLike, RunnableObservableLike } from "../rx.mjs";
+import { ToEnumerableObservable, ToObservable, ToRunnableObservable } from "../rx.mjs";
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
@@ -13,16 +12,22 @@ declare const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<IterableLike>;
 declare const toIterable: ToIterable<IterableLike>["toIterable"];
 declare const toIterableT: ToIterable<IterableLike>;
-interface IterableToObservable {
-    <T>(): Function1<IterableLike<T>, EnumerableObservableLike<T>>;
-    <T>(options: {
-        delay: number;
-        delayStart?: boolean;
-    }): Function1<IterableLike<T>, RunnableObservableLike<T>>;
-}
-declare const toObservable: IterableToObservable;
+declare const toEnumerableObservable: ToEnumerableObservable<IterableLike>["toEnumerableObservable"];
+declare const toEnumerableObservableT: ToEnumerableObservable<IterableLike>;
+declare const toObservable: ToObservable<IterableLike, {
+    delay: number;
+    delayStart?: boolean;
+}>["toObservable"];
 declare const toObservableT: ToObservable<IterableLike, {
     readonly delay: number;
     readonly delayStart: boolean;
 }>;
-export { toAsyncEnumerable, toAsyncEnumerableT, toEnumerable, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT };
+declare const toRunnableObservable: ToRunnableObservable<IterableLike, {
+    delay: number;
+    delayStart?: boolean;
+}>["toRunnableObservable"];
+declare const toRunnableObservableT: ToRunnableObservable<IterableLike, {
+    readonly delay: number;
+    readonly delayStart: boolean;
+}>;
+export { toAsyncEnumerable, toAsyncEnumerableT, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toRunnableObservable, toRunnableObservableT };
