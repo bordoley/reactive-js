@@ -5,31 +5,28 @@ import {
   EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../ix";
-import { move as ixMove } from "./SourceLike";
 
-export const getCurrent = <T>(enumerator: { [EnumeratorLike_current]: T }): T =>
-  enumerator[EnumeratorLike_current];
+import EnumeratorLike__forEach from "./__internal__/EnumeratorLike/EnumeratorLike.forEach";
+import EnumeratorLike__getCurrent from "./__internal__/EnumeratorLike/EnumeratorLike.getCurrent";
+import EnumeratorLike__hasCurrent from "./__internal__/EnumeratorLike/EnumeratorLike.hasCurrent";
+import EnumeratorLike__move from "./__internal__/EnumeratorLike/EnumeratorLike.move";
 
-export const hasCurrent = (enumerator: {
+export const forEach: <
+  T,
+  TEnumerator extends EnumeratorLike<T> = EnumeratorLike<T>,
+>(
+  f: SideEffect1<T>,
+) => Function1<TEnumerator, TEnumerator> = EnumeratorLike__forEach;
+
+export const getCurrent: <T>(enumerator: { [EnumeratorLike_current]: T }) => T =
+  EnumeratorLike__getCurrent;
+
+export const hasCurrent: (enumerator: {
   [EnumeratorLike_hasCurrent]: boolean;
-}): boolean => enumerator[EnumeratorLike_hasCurrent];
+}) => boolean = EnumeratorLike__hasCurrent;
 
-export const move = <T>(enumerator: {
+export const move: <T>(enumerator: {
   [EnumeratorLike_current]: T;
   [EnumeratorLike_hasCurrent]: boolean;
   [SourceLike_move]: () => void;
-}): boolean => {
-  ixMove(enumerator);
-  return hasCurrent(enumerator);
-};
-
-export const forEach =
-  <T, TEnumerator extends EnumeratorLike<T> = EnumeratorLike<T>>(
-    f: SideEffect1<T>,
-  ): Function1<TEnumerator, TEnumerator> =>
-  enumerator => {
-    while (move(enumerator)) {
-      f(getCurrent(enumerator));
-    }
-    return enumerator;
-  };
+}) => boolean = EnumeratorLike__move;

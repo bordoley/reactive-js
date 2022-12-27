@@ -4,7 +4,6 @@ import { mutableEnumeratorMixin } from '../../__internal__/ix/EnumeratorLike.mut
 import { createInstanceFactory, mixin, include, init, props } from '../../__internal__/mixins.mjs';
 import { createPriorityQueue } from '../../__internal__/scheduling/QueueLike.mjs';
 import { getDelay } from '../../__internal__/scheduling/SchedulerLike.options.mjs';
-import { disposableMixin } from '../../__internal__/util/DisposableLike.mixins.mjs';
 import { disposableRefMixin } from '../../__internal__/util/DisposableRefLike.mjs';
 import { MutableRefLike_current } from '../../__internal__/util/MutableRefLike.mjs';
 import { isNone, none, isSome, max, pipe, unsafeCast } from '../../functions.mjs';
@@ -15,6 +14,7 @@ import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYi
 import { run } from '../ContinuationLike.mjs';
 import { PauseableLike_pause, PauseableLike_resume } from '../../util.mjs';
 import { isDisposed, disposed, addIgnoringChildErrors } from '../../util/DisposableLike.mjs';
+import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import yield_ from './ContinuationLike/ContinuationLike.yield.mjs';
 import getCurrentTime from './SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 import isInContinuation from './SchedulerLike/SchedulerLike.isInContinuation.mjs';

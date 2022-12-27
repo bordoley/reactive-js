@@ -31,6 +31,7 @@ import {
   onComplete,
   onDisposed,
 } from "../../util/DisposableLike";
+import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import {
   Mixin1,
   Mutable,
@@ -40,7 +41,6 @@ import {
   mixin,
   props,
 } from "../mixins";
-import { disposableMixin } from "../util/DisposableLike.mixins";
 
 const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
   const scheduleDrainQueue = (dispatcher: TProperties) => {
@@ -63,7 +63,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
 
   return createInstanceFactory(
     mixin(
-      disposableMixin,
+      DisposableLike__mixin,
       function ObserverDispatcher(
         instance: Pick<
           DispatcherLike,
@@ -72,7 +72,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           Mutable<TProperties>,
         observer: ObserverLike<T>,
       ): DispatcherLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
 
         instance.observer = observer;
         instance.nextQueue = [];
@@ -185,13 +185,13 @@ export const createDelegatingObserver: <T>(
 
   return createInstanceFactory(
     mixin(
-      include(disposableMixin, typedObserverMixin),
+      include(DisposableLike__mixin, typedObserverMixin),
       function DelegatingObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         observer: ObserverLike<T>,
       ): ObserverLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
         init(typedObserverMixin, instance, getScheduler(observer));
 
         instance.delegate = observer;
@@ -216,12 +216,12 @@ export const createObserver: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
 
     return createInstanceFactory(
       mixin(
-        include(disposableMixin, typedObserverMixin),
+        include(DisposableLike__mixin, typedObserverMixin),
         function Observer(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
           scheduler: SchedulerLike,
         ): ObserverLike<T> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedObserverMixin, instance, scheduler);
 
           return instance;

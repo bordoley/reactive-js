@@ -11,8 +11,6 @@ import { allAreEnumerable, allAreRunnable, distinctUntilChanged as distinctUntil
 import { observerMixin, createDelegatingObserver } from '../__internal__/rx/ObserverLike.internal.mjs';
 import { decodeWithCharsetSinkMixin, everySatisfySinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin, createEnumeratorSink } from '../__internal__/rx/SinkLike.mixins.mjs';
 import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
-import { createLiftedFlowable } from '../__internal__/streaming/FlowableLike.create.mjs';
-import { disposableMixin, delegatingDisposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { createDisposableRef, disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
 import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
 import { concatMap, throws, keepType } from '../containers/ContainerLike.mjs';
@@ -30,8 +28,11 @@ import { yield_, run } from '../scheduling/ContinuationLike.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { isInContinuation, toPausableScheduler } from '../scheduling/SchedulerLike.mjs';
 import { create as create$2 } from '../scheduling/VirtualTimeSchedulerLike.mjs';
+import createLifted from '../streaming/__internal__/FlowableLike/FlowableLike.createLifted.mjs';
 import { disposed, onComplete, dispose, isDisposed, addTo, addToIgnoringChildErrors, onDisposed, bindTo, add, toObservable as toObservable$2, getException } from '../util/DisposableLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
+import delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
 import { sinkInto } from './ReactiveContainerLike.mjs';
 
@@ -616,9 +617,9 @@ const timeout = /*@__PURE__*/ (() => {
     const setupDurationSubscription = (observer) => {
         observer[MutableRefLike_current] = pipe(observer.duration, subscribe(getScheduler(observer.delegate)));
     };
-    const createTimeoutObserver = createInstanceFactory(mixin(include(typedObserverMixin, delegatingDisposableMixin, typedDisposableRefMixin), function TimeoutObserver(instance, delegate, duration) {
+    const createTimeoutObserver = createInstanceFactory(mixin(include(typedObserverMixin, delegatingMixin, typedDisposableRefMixin), function TimeoutObserver(instance, delegate, duration) {
         init(typedObserverMixin, instance, getScheduler(delegate));
-        init(delegatingDisposableMixin, instance, delegate);
+        init(delegatingMixin, instance, delegate);
         init(typedDisposableRefMixin, instance, disposed);
         instance.delegate = delegate;
         instance.duration = duration;
@@ -708,7 +709,7 @@ const toEnumerable =
 })();
 const toEnumerableT = { toEnumerable };
 const toFlowable = () => observable => isRunnable(observable)
-    ? createLiftedFlowable((modeObs) => createObservable(observer => {
+    ? createLifted((modeObs) => createObservable(observer => {
         const pausableScheduler = pipe(observer, getScheduler, toPausableScheduler);
         pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), takeUntil(pipe(pausableScheduler, toObservable$2())))), add(pipe(modeObs, forEach(mode => {
             switch (mode) {
@@ -721,7 +722,7 @@ const toFlowable = () => observable => isRunnable(observable)
             }
         }), subscribe(getScheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
     }))
-    : createLiftedFlowable(_ => empty());
+    : createLifted(_ => empty());
 const toFlowableT = { toFlowable };
 /**
  * Returns a Promise that completes with the last value produced by
@@ -776,8 +777,8 @@ const toReadonlyArrayT = {
 const withLatestFrom = /*@__PURE__*/ (() => {
     const createWithLatestObserver = (() => {
         const typedObserverMixin = observerMixin();
-        return createInstanceFactory(mixin(include(delegatingDisposableMixin, typedObserverMixin), function WithLatestFromObserver(instance, delegate, other, selector) {
-            init(delegatingDisposableMixin, instance, delegate);
+        return createInstanceFactory(mixin(include(delegatingMixin, typedObserverMixin), function WithLatestFromObserver(instance, delegate, other, selector) {
+            init(delegatingMixin, instance, delegate);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;
             instance.selector = selector;

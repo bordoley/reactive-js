@@ -6,7 +6,8 @@ import {
   InteractiveContainerLike_interact,
   SourceLike_move,
 } from "../../ix";
-import dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import {
   Mutable,
   createInstanceFactory,
@@ -15,7 +16,6 @@ import {
   mixin,
   props,
 } from "../mixins";
-import { disposableMixin } from "../util/DisposableLike.mixins";
 import {
   MutableEnumeratorLike,
   mutableEnumeratorMixin,
@@ -53,7 +53,7 @@ export const create: <T>(f: Factory<EnumeratorLike<T>>) => EnumerableLike<T> =
               const emptyEnumerable = empty<T>();
               return pipe(
                 emptyEnumerable[InteractiveContainerLike_interact](),
-                dispose({ cause }),
+                DisposableLike__dispose({ cause }),
               );
             }
           },
@@ -66,11 +66,11 @@ export const empty: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<T>() => {
   const typedMutableEnumeratorMixin = mutableEnumeratorMixin<T>();
   const createEnumerator = createInstanceFactory(
     mixin(
-      include(disposableMixin, typedMutableEnumeratorMixin),
+      include(DisposableLike__mixin, typedMutableEnumeratorMixin),
       function EmptyEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
       ): EnumeratorLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
 
         return instance;
@@ -78,7 +78,7 @@ export const empty: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (<T>() => {
       {},
       {
         [SourceLike_move](this: MutableEnumeratorLike) {
-          pipe(this, dispose());
+          pipe(this, DisposableLike__dispose());
         },
       },
     ),

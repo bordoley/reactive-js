@@ -1,7 +1,5 @@
 /// <reference types="./web.d.ts" />
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
-import { createStreamble } from '../__internal__/streaming/StreamableLike.create.mjs';
-import { delegatingDisposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
@@ -15,7 +13,9 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling
 import { dispatch, getScheduler, dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import '../streaming.mjs';
 import { createActionReducer, stream } from '../streaming/StreamableLike.mjs';
+import create$1 from '../streaming/__internal__/StreamableLike/StreamableLike.create.mjs';
 import { onDisposed, toAbortSignal, dispose, addTo } from '../util/DisposableLike.mjs';
+import delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 
 /** @ignore */
 const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
@@ -114,8 +114,8 @@ const windowLocation =
         instance.historyCounter++;
         history.pushState({ counter: instance.historyCounter, title }, "", uri);
     };
-    const createWindowLocationStream = createInstanceFactory(mixin(include(delegatingDisposableMixin), function WindowLocationStream(instance, delegate) {
-        init(delegatingDisposableMixin, instance, delegate);
+    const createWindowLocationStream = createInstanceFactory(mixin(include(delegatingMixin), function WindowLocationStream(instance, delegate) {
+        init(delegatingMixin, instance, delegate);
         instance.delegate = delegate;
         instance.historyCounter = -1;
         return instance;
@@ -152,7 +152,7 @@ const windowLocation =
         },
     }));
     let currentWindowLocationStream = none;
-    return createStreamble((scheduler, options) => {
+    return create$1((scheduler, options) => {
         if (isSome(currentWindowLocationStream)) {
             raise("Cannot stream more than once");
         }

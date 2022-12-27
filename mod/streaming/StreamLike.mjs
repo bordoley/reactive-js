@@ -1,10 +1,6 @@
 /// <reference types="./StreamLike.d.ts" />
-import { pipe } from '../functions.mjs';
-import { sinkInto } from './StreamableLike.mjs';
+import sourceFrom$1 from './__internal__/StreamLike/StreamLike.sourceFrom.mjs';
 
-const sourceFrom = (streamable) => dest => {
-    pipe(streamable, sinkInto(dest));
-    return dest;
-};
+const sourceFrom = sourceFrom$1;
 
 export { sourceFrom };

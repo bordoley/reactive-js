@@ -9,7 +9,7 @@ import {
   ReactiveContainerLike_sinkInto,
   RunnableObservableLike,
 } from "../../rx";
-import dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import { Mutable, createInstanceFactory, mixin, props } from "../mixins";
 
 const createImpl: <T>(
@@ -53,7 +53,7 @@ const createImpl: <T>(
           try {
             this.f(observer);
           } catch (cause) {
-            pipe(observer, dispose({ cause }));
+            pipe(observer, DisposableLike__isDisposed({ cause }));
           }
         },
       },

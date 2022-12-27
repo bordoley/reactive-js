@@ -3,10 +3,10 @@ import { createRepeatOperator } from '../__internal__/containers/ContainerLike.r
 import { create } from '../__internal__/ix/EnumerableLike.create.mjs';
 import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
-import { disposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { isDisposed, dispose } from '../util/DisposableLike.mjs';
+import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
 

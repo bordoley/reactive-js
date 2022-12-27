@@ -35,6 +35,8 @@ import {
   onDisposed,
   onError,
 } from "../../util/DisposableLike";
+import DisposableLike__delegatingMixin from "../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
+import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import {
   Mixin1,
   Mixin2,
@@ -46,10 +48,6 @@ import {
   mixin,
   props,
 } from "../mixins";
-import {
-  delegatingDisposableMixin,
-  disposableMixin,
-} from "../util/DisposableLike.mixins";
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 
@@ -64,7 +62,7 @@ export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
 
   return createInstanceFactory(
     mixin(
-      include(disposableMixin),
+      include(DisposableLike__mixin),
       function EnumeratorSink(
         instance: Pick<
           SinkLike<T> & EnumeratorLike<T>,
@@ -72,7 +70,7 @@ export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
         > &
           Mutable<TProperties>,
       ): EnumeratorLike<T> & SinkLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
 
         instance.buffer = [];
 
@@ -117,11 +115,11 @@ export const createEnumeratorSink: <T>() => EnumeratorLike<T> & SinkLike<T> = (<
 export const createSink: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mixin(
-      include(disposableMixin),
+      include(DisposableLike__mixin),
       function CreateSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
       ): SinkLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
 
         return instance;
       },
@@ -148,13 +146,13 @@ export const delegatingSinkMixin: <T>() => Mixin1<
 
   return returns(
     mixin(
-      include(disposableMixin),
+      include(DisposableLike__mixin),
       function DelegatingSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
       ): DelegateSinkLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
 
         instance[DelegatingSink_delegate] = delegate;
 
@@ -204,14 +202,14 @@ export const bufferSinkMixin: <
   };
 
   return mixin(
-    include(disposableMixin),
+    include(DisposableLike__mixin),
     function BufferSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
       delegate: TSink,
       maxBufferSize: number,
     ): SinkLike<T> {
-      init(disposableMixin, instance);
+      init(DisposableLike__mixin, instance);
 
       instance[Sink_private_delegate] = delegate;
       instance[BufferSink_private_maxBufferSize] = maxBufferSize;
@@ -279,14 +277,14 @@ export const catchErrorSinkMixin: <
 
     return returns(
       mixin(
-        include(disposableMixin),
+        include(DisposableLike__mixin),
         function CatchErrorSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: SinkLike<T>,
           errorHandler: Function1<unknown, C | void>,
         ): SinkLike<T> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
 
           instance[Sink_private_delegate] = delegate;
 
@@ -345,14 +343,14 @@ export const decodeWithCharsetSinkMixin: <
   };
 
   return mixin(
-    include(disposableMixin),
+    include(DisposableLike__mixin),
     function DecodeWithCharsetSink(
       instance: Pick<SinkLike<ArrayBuffer>, typeof SinkLike_notify> &
         Mutable<TProperties>,
       delegate: SinkLike<string>,
       charset: string,
     ): SinkLike<ArrayBuffer> {
-      init(disposableMixin, instance);
+      init(DisposableLike__mixin, instance);
 
       const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
       instance[DecodeWithCharsetSink_private_textDecoder] = textDecoder;
@@ -416,14 +414,14 @@ export const distinctUntilChangedSinkMixin: <T>() => Mixin2<
 
   return returns(
     mixin(
-      include(delegatingDisposableMixin),
+      include(DisposableLike__delegatingMixin),
       function DistinctUntilChangedSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         equality: Equality<T>,
       ): SinkLike<T> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
 
         instance[Sink_private_delegate] = delegate;
         instance[DistinctUntilChangedSink_private_equality] = equality;
@@ -503,14 +501,14 @@ export const forEachSinkMixin: <T>() => Mixin2<
 
   return returns(
     mixin(
-      include(delegatingDisposableMixin),
+      include(DisposableLike__delegatingMixin),
       function ForEachSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         effect: SideEffect1<T>,
       ): SinkLike<T> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
 
         instance[Sink_private_delegate] = delegate;
         instance[ForEachSink_private_effect] = effect;
@@ -545,14 +543,14 @@ export const keepSinkMixin: <T>() => Mixin2<
 
   return returns(
     mixin(
-      include(delegatingDisposableMixin),
+      include(DisposableLike__delegatingMixin),
       function KeepSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
       ): SinkLike<T> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
 
         instance[Sink_private_delegate] = delegate;
         instance[KeepSink_private_predicate] = predicate;
@@ -588,14 +586,14 @@ export const mapSinkMixin: <TA, TB>() => Mixin2<
 
   return returns(
     mixin(
-      include(delegatingDisposableMixin),
+      include(DisposableLike__delegatingMixin),
       function MapSink(
         instance: Pick<SinkLike<TA>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<TB>,
         mapper: Function1<TA, TB>,
       ): SinkLike<TA> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
 
         instance[Sink_private_delegate] = delegate;
         instance[MapSink_private_mapper] = mapper;
@@ -631,13 +629,13 @@ export const pairwiseSinkMixin: <T>() => Mixin1<
 
   return returns(
     mixin(
-      include(delegatingDisposableMixin),
+      include(DisposableLike__delegatingMixin),
       function PairwiseSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<readonly [T, T]>,
       ): SinkLike<T> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
 
         instance[Sink_private_delegate] = delegate;
 
@@ -692,7 +690,7 @@ export const reduceSinkMixin: <
   };
 
   return mixin(
-    include(disposableMixin),
+    include(DisposableLike__mixin),
     function ReduceSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
@@ -700,7 +698,7 @@ export const reduceSinkMixin: <
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): SinkLike<T> {
-      init(disposableMixin, instance);
+      init(DisposableLike__mixin, instance);
 
       instance[Sink_private_delegate] = delegate;
       instance[ReduceSink_private_reducer] = reducer;
@@ -766,14 +764,14 @@ const satisfySinkMixin: <
   };
 
   return mixin(
-    include(disposableMixin),
+    include(DisposableLike__mixin),
     function SatisfySink(
       instance: Mutable<TProperties> &
         Pick<SinkLike<T>, typeof SinkLike_notify>,
       delegate: TSink,
       predicate: Predicate<T>,
     ): SinkLike<T> {
-      init(disposableMixin, instance);
+      init(DisposableLike__mixin, instance);
       instance[Sink_private_delegate] = delegate;
       instance[SatisfySink_private_predicate] = predicate;
 
@@ -820,7 +818,7 @@ export const scanSinkMixin: <T, TAcc>() => Mixin3<
 
   return returns(
     mixin(
-      include(delegatingDisposableMixin),
+      include(DisposableLike__delegatingMixin),
       function ScanSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -828,7 +826,7 @@ export const scanSinkMixin: <T, TAcc>() => Mixin3<
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
       ): SinkLike<T> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
 
         instance[Sink_private_delegate] = delegate;
         instance[ScanSink_private_reducer] = reducer;
@@ -880,14 +878,14 @@ export const skipFirstSinkMixin: <T>() => Mixin2<
 
   return returns(
     mixin(
-      include(delegatingDisposableMixin),
+      include(DisposableLike__delegatingMixin),
       function SkipFirstSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         skipCount: number,
       ): SinkLike<T> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
 
         instance[Sink_private_delegate] = delegate;
         instance[SkipFirstSink_private_skipCount] = skipCount;
@@ -961,14 +959,14 @@ export const takeFirstSinkMixin: <T>() => Mixin2<
 
   return returns(
     mixin(
-      include(delegatingDisposableMixin),
+      include(DisposableLike__delegatingMixin),
       function TakeFirstSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         takeCount: number,
       ): SinkLike<T> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
 
         instance[Sink_private_delegate] = delegate;
         instance[TakeFirstSink_private_takeCount] = takeCount;
@@ -1026,14 +1024,14 @@ export const takeLastSinkMixin: <
   };
 
   return mixin(
-    include(disposableMixin),
+    include(DisposableLike__mixin),
     function TakeLastSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
       delegate: TSink,
       takeLastCount: number,
     ): SinkLike<T> {
-      init(disposableMixin, instance);
+      init(DisposableLike__mixin, instance);
 
       instance[Sink_private_delegate] = delegate;
       instance[TakeLastSink_private_takeLastCount] = takeLastCount;
@@ -1089,7 +1087,7 @@ export const takeWhileSinkMixin: <T>() => Mixin3<
 
   return returns(
     mixin(
-      include(delegatingDisposableMixin),
+      include(DisposableLike__delegatingMixin),
       function TakeWhileSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -1097,7 +1095,7 @@ export const takeWhileSinkMixin: <T>() => Mixin3<
         predicate: Predicate<T>,
         inclusive: boolean,
       ): SinkLike<T> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
 
         instance[Sink_private_delegate] = delegate;
         instance[TakeWhileSink_private_predicate] = predicate;
@@ -1144,14 +1142,14 @@ export const throwIfEmptySinkMixin: <T>() => Mixin2<
 
   return returns(
     mixin(
-      include(disposableMixin),
+      include(DisposableLike__mixin),
       function ThrowIfEmptySink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         factory: Factory<unknown>,
       ): SinkLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
 
         instance[Sink_private_delegate] = delegate;
 

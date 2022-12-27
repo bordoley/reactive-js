@@ -6,8 +6,8 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../schedul
 import { yield_ } from '../../scheduling/ContinuationLike.mjs';
 import { DisposableLike_exception } from '../../util.mjs';
 import { onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
+import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { createInstanceFactory, mixin, init, props, include } from '../mixins.mjs';
-import { disposableMixin } from '../util/DisposableLike.mixins.mjs';
 
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {

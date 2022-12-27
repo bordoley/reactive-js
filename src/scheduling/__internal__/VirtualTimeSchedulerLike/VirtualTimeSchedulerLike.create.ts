@@ -16,7 +16,6 @@ import {
   createPriorityQueue,
 } from "../../../__internal__/scheduling/QueueLike";
 import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
-import { disposableMixin } from "../../../__internal__/util/DisposableLike.mixins";
 import { isSome, none, pipe, unsafeCast } from "../../../functions";
 import {
   EnumeratorLike,
@@ -41,6 +40,7 @@ import {
   dispose,
   isDisposed,
 } from "../../../util/DisposableLike";
+import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import getCurrentTime from "../SchedulerLike/SchedulerLike.getCurrentTime";
 
 type VirtualTask = {
@@ -71,7 +71,7 @@ type TProperties = {
 
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   mixin(
-    include(disposableMixin, typedMutableEnumeratorMixin),
+    include(DisposableLike__mixin, typedMutableEnumeratorMixin),
     function VirtualTimeScheduler(
       instance: Pick<
         VirtualTimeSchedulerLike,
@@ -83,7 +83,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         Mutable<TProperties>,
       maxMicroTaskTicks: number,
     ): VirtualTimeSchedulerLike {
-      init(disposableMixin, instance);
+      init(DisposableLike__mixin, instance);
       init(typedMutableEnumeratorMixin, instance);
 
       instance.maxMicroTaskTicks = maxMicroTaskTicks;

@@ -7,7 +7,6 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
-import { disposableMixin } from "../../../__internal__/util/DisposableLike.mixins";
 import { Option, isFunction, pipe, unsafeCast } from "../../../functions";
 import {
   ContinuationLike,
@@ -28,6 +27,7 @@ import {
   isDisposed,
   onDisposed,
 } from "../../../util/DisposableLike";
+import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import getCurrentTime from "./SchedulerLike.getCurrentTime";
 import isInContinuation from "./SchedulerLike.isInContinuation";
 
@@ -123,7 +123,7 @@ type TProperties = {
 
 const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   mixin(
-    include(disposableMixin),
+    include(DisposableLike__mixin),
     function HostScheduler(
       instance: Pick<
         SchedulerLike,
@@ -135,7 +135,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         Mutable<TProperties>,
       yieldInterval: number,
     ): SchedulerLike {
-      init(disposableMixin, instance);
+      init(DisposableLike__mixin, instance);
 
       instance.yieldInterval = yieldInterval;
 

@@ -1,69 +1,11 @@
-import { createLiftedStreamable } from "../__internal__/streaming/StreamableLike.create";
-import { concatWith, ignoreElements } from "../containers/ContainerLike";
-import { toObservable } from "../containers/ReadonlyArrayLike";
-import {
-  Equality,
-  Factory,
-  Function1,
-  Reducer,
-  Updater,
-  pipe,
-  returns,
-  updateReducer,
-} from "../functions";
-import {
-  create as createObservable,
-  distinctUntilChanged,
-  forEach,
-  keepT,
-  merge,
-  mergeT,
-  onSubscribe,
-  scan,
-  subscribe,
-} from "../rx/ObservableLike";
-import { sinkInto as sinkIntoRx } from "../rx/ReactiveContainerLike";
-import { DispatcherLike_scheduler, SchedulerLike } from "../scheduling";
-import { dispatchTo } from "../scheduling/DispatcherLike";
-import {
-  StreamLike,
-  StreamableLike,
-  StreamableLike_stream,
-} from "../streaming";
-import { add, addTo } from "../util/DisposableLike";
+import { Equality, Factory, Function1, Reducer, Updater } from "../functions";
+import { SchedulerLike } from "../scheduling";
+import { StreamLike, StreamableLike } from "../streaming";
 
-export const stream =
-  <TReq, T, TStream extends StreamLike<TReq, T>>(
-    scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
-  ): Function1<StreamableLike<TReq, T, TStream>, TStream> =>
-  streamable =>
-    streamable[StreamableLike_stream](scheduler, options);
-
-export const sinkInto =
-  <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) =>
-  (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
-    const { [DispatcherLike_scheduler]: scheduler } = dest;
-    const srcStream = pipe(src, stream(scheduler));
-
-    pipe(
-      merge(
-        pipe(
-          srcStream,
-          forEach(dispatchTo(dest)),
-          ignoreElements(keepT),
-          onSubscribe(() => dest),
-        ),
-        pipe(dest, forEach<TReq>(dispatchTo(srcStream)), ignoreElements(keepT)),
-      ),
-      ignoreElements(keepT),
-      subscribe(scheduler),
-      addTo(dest),
-      add(srcStream),
-    );
-
-    return src;
-  };
+import StreamableLike__createActionReducer from "./__internal__/StreamableLike/StreamableLike.createActionReducer";
+import StreamableLike__createStateStore from "./__internal__/StreamableLike/StreamableLike.createStateStore";
+import StreamableLike__sinkInto from "./__internal__/StreamableLike/StreamableLike.sinkInto";
+import StreamableLike__stream from "./__internal__/StreamableLike/StreamableLike.stream";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -74,23 +16,11 @@ export const sinkInto =
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  */
-export const createActionReducer = <TAction, T>(
+export const createActionReducer: <TAction, T>(
   reducer: Reducer<TAction, T>,
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-): StreamableLike<TAction, T> =>
-  createLiftedStreamable(obs =>
-    createObservable(observer => {
-      const acc = initialState();
-      pipe(
-        obs,
-        scan<TAction, T>(reducer, returns(acc)),
-        concatWith(mergeT, pipe([acc], toObservable())),
-        distinctUntilChanged<T>(options),
-        sinkIntoRx(observer),
-      );
-    }),
-  );
+) => StreamableLike<TAction, T> = StreamableLike__createActionReducer;
 
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
@@ -101,8 +31,18 @@ export const createActionReducer = <TAction, T>(
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  */
-export const createStateStore = <T>(
+export const createStateStore: <T>(
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-): StreamableLike<Updater<T>, T> =>
-  createActionReducer(updateReducer, initialState, options);
+) => StreamableLike<Updater<T>, T> = StreamableLike__createStateStore;
+
+export const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(
+  dest: TSinkStream,
+) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T> =
+  StreamableLike__sinkInto;
+
+export const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(
+  scheduler: SchedulerLike,
+  options?: { readonly replay?: number },
+) => Function1<StreamableLike<TReq, T, TStream>, TStream> =
+  StreamableLike__stream;

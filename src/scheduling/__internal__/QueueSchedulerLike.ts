@@ -16,7 +16,6 @@ import {
   createPriorityQueue,
 } from "../../__internal__/scheduling/QueueLike";
 import { getDelay } from "../../__internal__/scheduling/SchedulerLike.options";
-import { disposableMixin } from "../../__internal__/util/DisposableLike.mixins";
 import {
   DisposableRefLike,
   disposableRefMixin,
@@ -61,6 +60,7 @@ import {
   disposed,
   isDisposed,
 } from "../../util/DisposableLike";
+import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import yield_ from "./ContinuationLike/ContinuationLike.yield";
 import getCurrentTime from "./SchedulerLike/SchedulerLike.getCurrentTime";
 import isInContinuation from "./SchedulerLike/SchedulerLike.isInContinuation";
@@ -228,7 +228,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
     return createInstanceFactory(
       mixin(
         include(
-          disposableMixin,
+          DisposableLike__mixin,
           typedMutableEnumeratorMixin,
           typedDisposableRefMixin,
         ),
@@ -245,7 +245,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             Mutable<TProperties>,
           host: SchedulerLike,
         ): QueueSchedulerLike {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
           init(typedDisposableRefMixin, instance, disposed);
 

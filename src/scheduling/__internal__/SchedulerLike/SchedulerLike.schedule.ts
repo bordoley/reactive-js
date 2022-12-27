@@ -6,7 +6,6 @@ import {
   mixin,
   props,
 } from "../../../__internal__/mixins";
-import { disposableMixin } from "../../../__internal__/util/DisposableLike.mixins";
 import {
   Function1,
   Function2,
@@ -25,6 +24,7 @@ import {
 } from "../../../scheduling";
 import { DisposableLike, Exception } from "../../../util";
 import { dispose, isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import * as CurrentScheduler from "../CurrentScheduler";
 import YieldError from "../YieldError";
 
@@ -42,14 +42,14 @@ export const createContinuation: Function2<
 
   return createInstanceFactory(
     mixin(
-      include(disposableMixin),
+      include(DisposableLike__mixin),
       function Continuation(
         instance: Pick<ContinuationLike, typeof ContinuationLike_run> &
           Mutable<TProperties>,
         scheduler: SchedulerLike,
         f: SideEffect,
       ): ContinuationLike {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
 
         instance.scheduler = scheduler;
         instance.f = f;

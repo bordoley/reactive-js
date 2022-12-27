@@ -30,7 +30,8 @@ const mutableEnumeratorMixin =
         },
         get [EnumeratorLike_hasCurrent]() {
             unsafeCast(this);
-            return !isDisposed(this) && this[Enumerator_private_hasCurrent];
+            return (!isDisposed(this) &&
+                this[Enumerator_private_hasCurrent]);
         },
     }), returns);
 })();

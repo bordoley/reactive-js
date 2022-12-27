@@ -2,12 +2,12 @@
 import { create } from '../__internal__/ix/EnumerableLike.create.mjs';
 import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
-import { disposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { compose, none, pipe, identity } from '../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { fromEnumerable } from '../ix/AsyncEnumerableLike.mjs';
 import { toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';
 import { isDisposed, dispose } from '../util/DisposableLike.mjs';
+import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.

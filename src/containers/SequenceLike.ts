@@ -11,7 +11,6 @@ import {
   mixin,
   props,
 } from "../__internal__/mixins";
-import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import {
   Concat,
   ConcatAll,
@@ -54,6 +53,7 @@ import {
   ToEnumerable,
 } from "../ix";
 import { dispose, isDisposed } from "../util/DisposableLike";
+import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { keepType } from "./ContainerLike";
 import {
   keepT as keepTArray,
@@ -435,13 +435,13 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
 
     const createSequenceEnumerator = createInstanceFactory(
       mixin(
-        include(disposableMixin, typedMutableEnumeratorMixin),
+        include(DisposableLike__mixin, typedMutableEnumeratorMixin),
         function SequenceEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             TProperties,
           seq: SequenceLike<T>,
         ): EnumeratorLike<T> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
           instance.seq = seq;

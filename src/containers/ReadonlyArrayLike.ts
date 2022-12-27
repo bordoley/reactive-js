@@ -17,7 +17,6 @@ import {
 } from "../__internal__/rx/ObservableLike.create";
 import { create as createRunnable } from "../__internal__/rx/RunnableLike.create";
 import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
-import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import {
   Empty,
   ForEach,
@@ -61,6 +60,7 @@ import {
 import { schedule } from "../rx/ObserverLike";
 import { yield_ } from "../scheduling/ContinuationLike";
 import { dispose, isDisposed } from "../util/DisposableLike";
+import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 
 export const empty: Empty<ReadonlyArrayLike>["empty"] = /*@__PURE__*/ (<
   T,
@@ -171,7 +171,7 @@ export const toEnumerable: ToEnumerable<
 
   const createReadonlyArrayEnumerator = createInstanceFactory(
     mixin(
-      include(disposableMixin, typedMutableEnumeratorMixin),
+      include(DisposableLike__mixin, typedMutableEnumeratorMixin),
       function ReadonlyArrayEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
           Mutable<TProperties>,
@@ -179,7 +179,7 @@ export const toEnumerable: ToEnumerable<
         start: number,
         count: number,
       ): EnumeratorLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
 
         instance.array = array;

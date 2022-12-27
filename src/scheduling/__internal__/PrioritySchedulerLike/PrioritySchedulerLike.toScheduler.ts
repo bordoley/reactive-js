@@ -7,7 +7,6 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
-import { disposableMixin } from "../../../__internal__/util/DisposableLike.mixins";
 import { Function1, none, partial, pipe, unsafeCast } from "../../../functions";
 import {
   ContinuationLike,
@@ -24,6 +23,7 @@ import {
   addIgnoringChildErrors,
   isDisposed,
 } from "../../../util/DisposableLike";
+import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import {
   getCurrentTime,
   isInContinuation,
@@ -38,7 +38,7 @@ type TProperties = {
 
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   mixin(
-    include(disposableMixin),
+    include(DisposableLike__mixin),
     function PrioritySchedulerDelegatingScheduler(
       instance: Pick<
         SchedulerLike,
@@ -52,7 +52,7 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       scheduler: PrioritySchedulerLike,
       priority: number,
     ): SchedulerLike {
-      init(disposableMixin, instance);
+      init(DisposableLike__mixin, instance);
 
       instance.priorityScheduler = scheduler;
       instance.priority = priority;
