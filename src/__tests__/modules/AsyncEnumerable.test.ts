@@ -1,4 +1,4 @@
-import { toObservable } from "../../containers/ReadonlyArrayLike";
+import { toRunnableObservable } from "../../containers/ReadonlyArrayLike";
 import { AsyncEnumerableLike } from "../../ix";
 import {
   fromArray,
@@ -43,7 +43,7 @@ testModule(
       ...toReadonlyArrayT,
     },
     {
-      fromArray: toObservable,
+      fromArray: toRunnableObservable,
     },
   ),
   takeWhileTests({
