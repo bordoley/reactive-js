@@ -1,6 +1,6 @@
 /// <reference types="./InteractiveContainerLike.d.ts" />
-import { InteractiveContainerLike_interact } from '../ix.mjs';
+import interact$1 from './__internal__/InteractiveContainerLike/InteractiveContainerLike.interact.mjs';
 
-const interact = (ctx) => (enumerable) => enumerable[InteractiveContainerLike_interact](ctx);
+const interact = interact$1;
 
 export { interact };

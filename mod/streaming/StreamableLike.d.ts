@@ -1,10 +1,6 @@
-import { Function1, Reducer, Factory, Equality, Updater } from "../functions.mjs";
+import { Reducer, Factory, Equality, Updater, Function1 } from "../functions.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
-import { StreamLike, StreamableLike } from "../streaming.mjs";
-declare const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(scheduler: SchedulerLike, options?: {
-    readonly replay?: number;
-}) => Function1<StreamableLike<TReq, T, TStream>, TStream>;
-declare const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) => (src: StreamableLike<TReq, T, StreamLike<TReq, T>>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
+import { StreamableLike, StreamLike } from "../streaming.mjs";
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.
@@ -15,8 +11,8 @@ declare const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest:
  * if a state value is distinct from the previous one.
  */
 declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
-    readonly equality?: Equality<T> | undefined;
-} | undefined) => StreamableLike<TAction, T, StreamLike<TAction, T>>;
+    readonly equality?: Equality<T>;
+}) => StreamableLike<TAction, T>;
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
  * be updated by notifying the instance with a `StateUpdater` that computes a
@@ -27,6 +23,10 @@ declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, in
  * if a state value is distinct from the previous one.
  */
 declare const createStateStore: <T>(initialState: Factory<T>, options?: {
-    readonly equality?: Equality<T> | undefined;
-} | undefined) => StreamableLike<Updater<T>, T, StreamLike<Updater<T>, T>>;
+    readonly equality?: Equality<T>;
+}) => StreamableLike<Updater<T>, T>;
+declare const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T>;
+declare const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(scheduler: SchedulerLike, options?: {
+    readonly replay?: number;
+}) => Function1<StreamableLike<TReq, T, TStream>, TStream>;
 export { createActionReducer, createStateStore, sinkInto, stream };

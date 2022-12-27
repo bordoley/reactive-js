@@ -11,7 +11,6 @@ import {
   mixin,
   props,
 } from "../__internal__/mixins";
-import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import { IterableLike, ToIterable } from "../containers";
 import { Function1, compose, identity, none, pipe } from "../functions";
 import {
@@ -29,6 +28,7 @@ import {
   ToObservable,
 } from "../rx";
 import { dispose, isDisposed } from "../util/DisposableLike";
+import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
@@ -51,13 +51,13 @@ export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
 
     const createIterableEnumerator = createInstanceFactory(
       mixin(
-        include(disposableMixin, typedMutableEnumeratorMixin),
+        include(DisposableLike__mixin, typedMutableEnumeratorMixin),
         function IteratorEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
           iterator: Iterator<T>,
         ): EnumeratorLike<T> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
           instance.iterator = iterator;

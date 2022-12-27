@@ -1,12 +1,11 @@
 import { SourceLike, SourceLike_move } from "../ix";
 
-export const move = <
+import SourceLike__move from "./__internal__/SourceLike/SourceLike.move";
+
+export const move: <
   TSource extends {
     [SourceLike_move](): void;
   } = SourceLike,
 >(
   source: TSource,
-): TSource => {
-  source[SourceLike_move]();
-  return source;
-};
+) => TSource = SourceLike__move;

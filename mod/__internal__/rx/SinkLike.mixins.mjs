@@ -5,8 +5,9 @@ import { SinkLike_notify } from '../../rx.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { notify } from '../../rx/SinkLike.mjs';
 import { onDisposed, isDisposed, addTo, onComplete, dispose, addToIgnoringChildErrors, onError } from '../../util/DisposableLike.mjs';
+import delegatingMixin from '../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../mixins.mjs';
-import { disposableMixin, delegatingDisposableMixin } from '../util/DisposableLike.mixins.mjs';
 
 const Sink_private_delegate = Symbol("Sink_private_delegate");
 const createEnumeratorSink = (() => {
@@ -165,8 +166,8 @@ const distinctUntilChangedSinkMixin = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
     const DistinctUntilChangedSink_private_prev = Symbol("DistinctUntilChangedSink_private_prev");
     const DistinctUntilChangedSink_private_hasValue = Symbol("DistinctUntilChangedSink_private_hasValue");
-    return returns(mixin(include(delegatingDisposableMixin), function DistinctUntilChangedSink(instance, delegate, equality) {
-        init(delegatingDisposableMixin, instance, delegate);
+    return returns(mixin(include(delegatingMixin), function DistinctUntilChangedSink(instance, delegate, equality) {
+        init(delegatingMixin, instance, delegate);
         instance[Sink_private_delegate] = delegate;
         instance[DistinctUntilChangedSink_private_equality] = equality;
         return instance;
@@ -196,8 +197,8 @@ const everySatisfySinkMixin = (fromArray) => {
 };
 const forEachSinkMixin = /*@__PURE__*/ (() => {
     const ForEachSink_private_effect = Symbol("ForEachSink_private_effect");
-    return returns(mixin(include(delegatingDisposableMixin), function ForEachSink(instance, delegate, effect) {
-        init(delegatingDisposableMixin, instance, delegate);
+    return returns(mixin(include(delegatingMixin), function ForEachSink(instance, delegate, effect) {
+        init(delegatingMixin, instance, delegate);
         instance[Sink_private_delegate] = delegate;
         instance[ForEachSink_private_effect] = effect;
         return instance;
@@ -213,8 +214,8 @@ const forEachSinkMixin = /*@__PURE__*/ (() => {
 })();
 const keepSinkMixin = /*@__PURE__*/ (() => {
     const KeepSink_private_predicate = Symbol("KeepSink_private_predicate");
-    return returns(mixin(include(delegatingDisposableMixin), function KeepSink(instance, delegate, predicate) {
-        init(delegatingDisposableMixin, instance, delegate);
+    return returns(mixin(include(delegatingMixin), function KeepSink(instance, delegate, predicate) {
+        init(delegatingMixin, instance, delegate);
         instance[Sink_private_delegate] = delegate;
         instance[KeepSink_private_predicate] = predicate;
         return instance;
@@ -231,8 +232,8 @@ const keepSinkMixin = /*@__PURE__*/ (() => {
 })();
 const mapSinkMixin = /*@__PURE__*/ (() => {
     const MapSink_private_mapper = Symbol("MapSink_private_mapper");
-    return returns(mixin(include(delegatingDisposableMixin), function MapSink(instance, delegate, mapper) {
-        init(delegatingDisposableMixin, instance, delegate);
+    return returns(mixin(include(delegatingMixin), function MapSink(instance, delegate, mapper) {
+        init(delegatingMixin, instance, delegate);
         instance[Sink_private_delegate] = delegate;
         instance[MapSink_private_mapper] = mapper;
         return instance;
@@ -249,8 +250,8 @@ const mapSinkMixin = /*@__PURE__*/ (() => {
 const pairwiseSinkMixin = /*@__PURE__*/ (() => {
     const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
     const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
-    return returns(mixin(include(delegatingDisposableMixin), function PairwiseSink(instance, delegate) {
-        init(delegatingDisposableMixin, instance, delegate);
+    return returns(mixin(include(delegatingMixin), function PairwiseSink(instance, delegate) {
+        init(delegatingMixin, instance, delegate);
         instance[Sink_private_delegate] = delegate;
         return instance;
     }, props({
@@ -323,8 +324,8 @@ const satisfySinkMixin = (fromArray, defaultResult) => {
 const scanSinkMixin = /*@__PURE__*/ (() => {
     const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
     const ScanSink_private_acc = Symbol("ScanSink_private_acc");
-    return returns(mixin(include(delegatingDisposableMixin), function ScanSink(instance, delegate, reducer, initialValue) {
-        init(delegatingDisposableMixin, instance, delegate);
+    return returns(mixin(include(delegatingMixin), function ScanSink(instance, delegate, reducer, initialValue) {
+        init(delegatingMixin, instance, delegate);
         instance[Sink_private_delegate] = delegate;
         instance[ScanSink_private_reducer] = reducer;
         try {
@@ -350,8 +351,8 @@ const scanSinkMixin = /*@__PURE__*/ (() => {
 const skipFirstSinkMixin = /*@__PURE__*/ (() => {
     const SkipFirstSink_private_skipCount = Symbol("SkipFirstSink_private_skipCount");
     const SkipFirstSink_private_count = Symbol("SkipFirstSink_private_count");
-    return returns(mixin(include(delegatingDisposableMixin), function SkipFirstSink(instance, delegate, skipCount) {
-        init(delegatingDisposableMixin, instance, delegate);
+    return returns(mixin(include(delegatingMixin), function SkipFirstSink(instance, delegate, skipCount) {
+        init(delegatingMixin, instance, delegate);
         instance[Sink_private_delegate] = delegate;
         instance[SkipFirstSink_private_skipCount] = skipCount;
         return instance;
@@ -379,8 +380,8 @@ const someSatisfySinkMixin = (fromArray) => {
 const takeFirstSinkMixin = /*@__PURE__*/ (() => {
     const TakeFirstSink_private_takeCount = Symbol("TakeFirstSink_private_takeCount");
     const TakeFirstSink_private_count = Symbol("TakeFirstSink_private_count");
-    return returns(mixin(include(delegatingDisposableMixin), function TakeFirstSink(instance, delegate, takeCount) {
-        init(delegatingDisposableMixin, instance, delegate);
+    return returns(mixin(include(delegatingMixin), function TakeFirstSink(instance, delegate, takeCount) {
+        init(delegatingMixin, instance, delegate);
         instance[Sink_private_delegate] = delegate;
         instance[TakeFirstSink_private_takeCount] = takeCount;
         if (takeCount === 0) {
@@ -431,8 +432,8 @@ const takeLastSinkMixin = (fromArray) => {
 const takeWhileSinkMixin = /*@__PURE__*/ (() => {
     const TakeWhileSink_private_predicate = Symbol("TakeWhileSink_private_predicate");
     const TakeWhileSink_private_inclusive = Symbol("TakeWhileSink_private_inclusive");
-    return returns(mixin(include(delegatingDisposableMixin), function TakeWhileSink(instance, delegate, predicate, inclusive) {
-        init(delegatingDisposableMixin, instance, delegate);
+    return returns(mixin(include(delegatingMixin), function TakeWhileSink(instance, delegate, predicate, inclusive) {
+        init(delegatingMixin, instance, delegate);
         instance[Sink_private_delegate] = delegate;
         instance[TakeWhileSink_private_predicate] = predicate;
         instance[TakeWhileSink_private_inclusive] = inclusive;

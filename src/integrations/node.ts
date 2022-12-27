@@ -10,8 +10,6 @@ import {
   createGzip,
   createInflate,
 } from "zlib";
-import { createLiftedFlowable } from "../__internal__/streaming/FlowableLike.create";
-import { createLiftedStreamable } from "../__internal__/streaming/StreamableLike.create";
 import { ContainerOperator } from "../containers";
 import {
   Factory,
@@ -47,6 +45,8 @@ import {
 import { FlowMode, FlowableLike, StreamableLike } from "../streaming";
 import { sourceFrom } from "../streaming/StreamLike";
 import { stream } from "../streaming/StreamableLike";
+import FlowableLike__createLifted from "../streaming/__internal__/FlowableLike/FlowableLike.createLifted";
+import StreamableLike__createLifted from "../streaming/__internal__/StreamableLike/StreamableLike.createLifted";
 import { DisposableLike } from "../util";
 import {
   dispose,
@@ -167,7 +167,7 @@ const addToDisposable =
 export const createReadableSource = (
   factory: Factory<Readable> | Readable,
 ): FlowableLike<Uint8Array> =>
-  createLiftedFlowable(mode =>
+  FlowableLike__createLifted(mode =>
     createObservable(observer => {
       const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
@@ -219,7 +219,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
   return (
     factory: Factory<Writable> | Writable,
   ): StreamableLike<Uint8Array, FlowMode> =>
-    createLiftedStreamable(events =>
+    StreamableLike__createLifted(events =>
       createObservable(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
@@ -267,7 +267,7 @@ export const transform =
     factory: Factory<Transform>,
   ): ContainerOperator<FlowableLike, Uint8Array, Uint8Array> =>
   src =>
-    createLiftedFlowable(modeObs =>
+    FlowableLike__createLifted(modeObs =>
       createObservable(observer => {
         const transform = pipe(
           factory(),

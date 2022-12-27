@@ -6,8 +6,6 @@ import {
   mixin,
   props,
 } from "../__internal__/mixins";
-import { createStreamble } from "../__internal__/streaming/StreamableLike.create";
-import { delegatingDisposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import { ignoreElements } from "../containers/ContainerLike";
 import { toObservable } from "../containers/PromiseableLike";
 import { keep } from "../containers/ReadonlyArrayLike";
@@ -66,12 +64,14 @@ import {
   StreamableLike_stream,
 } from "../streaming";
 import { createActionReducer, stream } from "../streaming/StreamableLike";
+import StreamableLike__create from "../streaming/__internal__/StreamableLike/StreamableLike.create";
 import {
   addTo,
   dispose,
   onDisposed,
   toAbortSignal,
 } from "../util/DisposableLike";
+import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 
 export type WindowLocationURI = {
   title: string;
@@ -304,7 +304,7 @@ export const windowLocation: WindowLocationStreamableLike =
 
     const createWindowLocationStream = createInstanceFactory(
       mixin(
-        include(delegatingDisposableMixin),
+        include(DisposableLike__delegatingMixin),
         function WindowLocationStream(
           instance: Pick<
             WindowLocationStreamLike,
@@ -320,7 +320,7 @@ export const windowLocation: WindowLocationStreamableLike =
             Mutable<TProperties>,
           delegate: StreamLike<TAction, TState>,
         ): WindowLocationStreamLike & TProperties {
-          init(delegatingDisposableMixin, instance, delegate);
+          init(DisposableLike__delegatingMixin, instance, delegate);
 
           instance.delegate = delegate;
           instance.historyCounter = -1;
@@ -384,7 +384,7 @@ export const windowLocation: WindowLocationStreamableLike =
 
     let currentWindowLocationStream: Option<WindowLocationStreamLike> = none;
 
-    return createStreamble<
+    return StreamableLike__create<
       Updater<WindowLocationURI> | WindowLocationURI,
       WindowLocationURI,
       WindowLocationStreamLike

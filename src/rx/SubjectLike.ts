@@ -6,7 +6,6 @@ import {
   mixin,
   props,
 } from "../__internal__/mixins";
-import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import {
   Function1,
   SideEffect1,
@@ -34,6 +33,7 @@ import {
   isDisposed,
   onDisposed,
 } from "../util/DisposableLike";
+import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 
 export const create: <T>(options?: { replay?: number }) => SubjectLike<T> =
   /*@__PURE__*/ (<T>() => {
@@ -45,7 +45,7 @@ export const create: <T>(options?: { replay?: number }) => SubjectLike<T> =
 
     const createSubjectInstance = createInstanceFactory(
       mixin(
-        include(disposableMixin),
+        include(DisposableLike__mixin),
         function Subject(
           instance: Pick<
             SubjectLike<T>,
@@ -58,7 +58,7 @@ export const create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             Mutable<TProperties>,
           replay: number,
         ): SubjectLike<T> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
 
           instance[MulticastObservableLike_replay] = replay;
           instance.observers = newInstance<Set<ObserverLike>>(Set);

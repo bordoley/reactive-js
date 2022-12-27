@@ -1,10 +1,10 @@
 /// <reference types="./PrioritySchedulerLike.toScheduler.d.ts" />
 import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
 import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
-import { disposableMixin } from '../../../__internal__/util/DisposableLike.mixins.mjs';
 import { none, unsafeCast, pipe, partial } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { addIgnoringChildErrors, isDisposed } from '../../../util/DisposableLike.mjs';
+import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { isInContinuation, getCurrentTime, shouldYield, requestYield } from '../../SchedulerLike.mjs';
 
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mixin(include(disposableMixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {

@@ -80,11 +80,6 @@ import {
   throwIfEmptySinkMixin,
 } from "../__internal__/rx/SinkLike.mixins";
 import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
-import { createLiftedFlowable } from "../__internal__/streaming/FlowableLike.create";
-import {
-  delegatingDisposableMixin,
-  disposableMixin,
-} from "../__internal__/util/DisposableLike.mixins";
 import {
   DisposableRefLike,
   createDisposableRef,
@@ -213,6 +208,7 @@ import {
 } from "../scheduling/SchedulerLike";
 import { create as createVirtualTimeScheduler } from "../scheduling/VirtualTimeSchedulerLike";
 import { FlowMode, ToFlowable } from "../streaming";
+import FlowableLike__createLifted from "../streaming/__internal__/FlowableLike/FlowableLike.createLifted";
 import { DisposableLike, DisposableOrTeardown, Exception } from "../util";
 import {
   add,
@@ -228,6 +224,8 @@ import {
   onDisposed,
 } from "../util/DisposableLike";
 import { pause, resume } from "../util/PauseableLike";
+import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
+import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
 
@@ -249,7 +247,7 @@ export const buffer: <T>(options?: {
 
   const createBufferObserver = createInstanceFactory(
     mixin(
-      include(typedObserverMixin, disposableMixin),
+      include(typedObserverMixin, DisposableLike__mixin),
       function BufferObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -257,7 +255,7 @@ export const buffer: <T>(options?: {
         durationFunction: Function1<T, ObservableLike>,
         maxBufferSize: number,
       ): ObserverLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
         init(typedObserverMixin, instance, getScheduler(delegate));
 
         instance.buffer = [];
@@ -744,14 +742,14 @@ const latest = /*@__PURE__*/ (() => {
 
   const createLatestObserver = createInstanceFactory(
     mixin(
-      include(typedObserverMixin, disposableMixin),
+      include(typedObserverMixin, DisposableLike__mixin),
       function LatestObserver(
         instance: Pick<ObserverLike, typeof SinkLike_notify> &
           Mutable<TProperties>,
         scheduler: SchedulerLike,
         ctx: LatestCtx,
       ): ObserverLike & TProperties {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
         init(typedObserverMixin, instance, scheduler);
 
         instance.ctx = ctx;
@@ -1379,7 +1377,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
 
     return createInstanceFactory(
       mixin(
-        include(disposableMixin, typedObserverMixin),
+        include(DisposableLike__mixin, typedObserverMixin),
         function ThrottleObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
@@ -1387,7 +1385,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
           durationFunction: Function1<T, ObservableLike>,
           mode: ThrottleMode,
         ): ObserverLike<T> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
 
           instance.delegate = delegate;
@@ -1557,7 +1555,7 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
     mixin(
       include(
         typedObserverMixin,
-        delegatingDisposableMixin,
+        DisposableLike__delegatingMixin,
         typedDisposableRefMixin,
       ),
       function TimeoutObserver(
@@ -1567,7 +1565,7 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
         duration: ObservableLike<unknown>,
       ): ObserverLike<T> {
         init(typedObserverMixin, instance, getScheduler(delegate));
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
         init(typedDisposableRefMixin, instance, disposed);
 
         instance.delegate = delegate;
@@ -1627,7 +1625,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
     const createEnumeratorScheduler = createInstanceFactory(
       mixin(
-        include(disposableMixin, typedMutableEnumeratorMixin),
+        include(DisposableLike__mixin, typedMutableEnumeratorMixin),
         function EnumeratorScheduler(
           instance: Pick<
             SchedulerLike & SourceLike,
@@ -1639,7 +1637,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
           > &
             Mutable<TEnumeratorSchedulerProperties>,
         ): EnumeratorScheduler {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
           instance.continuations = [];
@@ -1696,13 +1694,13 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
     const createEnumeratorObserver = createInstanceFactory(
       mixin(
-        include(disposableMixin, typedObserverMixin),
+        include(DisposableLike__mixin, typedObserverMixin),
         function EnumeratorObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
             Mutable<TEnumeratorObserverProperties>,
           enumerator: EnumeratorScheduler,
         ): ObserverLike<T> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedObserverMixin, instance, enumerator);
 
           instance.enumerator = enumerator;
@@ -1741,7 +1739,7 @@ export const toEnumerableT: ToEnumerable<ObservableLike> = { toEnumerable };
 export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
   () => observable =>
     isRunnable(observable)
-      ? createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
+      ? FlowableLike__createLifted((modeObs: ObservableLike<FlowMode>) =>
           createObservable(observer => {
             const pausableScheduler = pipe(
               observer,
@@ -1779,7 +1777,7 @@ export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
             );
           }),
         )
-      : createLiftedFlowable(_ => empty());
+      : FlowableLike__createLifted(_ => empty());
 export const toFlowableT: ToFlowable<ObservableLike> = { toFlowable };
 
 /**
@@ -1889,7 +1887,7 @@ export const withLatestFrom: <TA, TB, T>(
 
     return createInstanceFactory(
       mixin(
-        include(delegatingDisposableMixin, typedObserverMixin),
+        include(DisposableLike__delegatingMixin, typedObserverMixin),
         function WithLatestFromObserver(
           instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
             Mutable<TProperties>,
@@ -1897,7 +1895,7 @@ export const withLatestFrom: <TA, TB, T>(
           other: ObservableLike<TB>,
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
-          init(delegatingDisposableMixin, instance, delegate);
+          init(DisposableLike__delegatingMixin, instance, delegate);
           init(typedObserverMixin, instance, getScheduler(delegate));
 
           instance.delegate = delegate;
@@ -1976,7 +1974,7 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
 
   const createZipObserver = createInstanceFactory(
     mixin(
-      include(disposableMixin, typedObserverMixin),
+      include(DisposableLike__mixin, typedObserverMixin),
       function ZipObserver(
         instance: Pick<ObserverLike, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -1984,7 +1982,7 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
         enumerators: readonly EnumeratorLike<any>[],
         sinkEnumerator: EnumeratorLike & SinkLike,
       ): ObserverLike {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
         init(typedObserverMixin, instance, getScheduler(delegate));
 
         instance.delegate = delegate;

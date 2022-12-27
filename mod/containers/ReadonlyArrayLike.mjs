@@ -5,13 +5,13 @@ import { createInstanceFactory, mixin, include, init, props } from '../__interna
 import { createRunnableObservable, createEnumerableObservable } from '../__internal__/rx/ObservableLike.create.mjs';
 import { create as create$1 } from '../__internal__/rx/RunnableLike.create.mjs';
 import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
-import { disposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { getLength, isSome, max, min, none, pipe, identity } from '../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { SinkLike_notify } from '../rx.mjs';
 import { schedule } from '../rx/ObserverLike.mjs';
 import { yield_ } from '../scheduling/ContinuationLike.mjs';
 import { isDisposed, dispose } from '../util/DisposableLike.mjs';
+import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
 const empty = /*@__PURE__*/ (() => {
     const _empty = [];

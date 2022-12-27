@@ -4,7 +4,7 @@ import {
   RunnableLike,
   SinkLike,
 } from "../../rx";
-import dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import { Mutable, createInstanceFactory, mixin, props } from "../mixins";
 
 export const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
@@ -34,9 +34,9 @@ export const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
           ) {
             try {
               this.run(sink);
-              pipe(sink, dispose());
+              pipe(sink, DisposableLike__dispose());
             } catch (cause) {
-              pipe(sink, dispose({ cause }));
+              pipe(sink, DisposableLike__dispose({ cause }));
             }
           },
         },

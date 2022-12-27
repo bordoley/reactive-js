@@ -33,11 +33,12 @@ import {
   publishTo,
 } from "../../rx/SubjectLike";
 import { DisposableLike } from "../../util";
-import addTo from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
-import dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
-import disposed from "../../util/__internal__/DisposableLike/DisposableLike.disposed";
-import isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
-import onComplete from "../../util/__internal__/DisposableLike/DisposableLike.onComplete";
+import DisposableLike__addTo from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__disposed from "../../util/__internal__/DisposableLike/DisposableLike.disposed";
+import DisposableLike__isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
+import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { MAX_SAFE_INTEGER } from "../constants";
 import {
   Mutable,
@@ -47,7 +48,6 @@ import {
   mixin,
   props,
 } from "../mixins";
-import { disposableMixin } from "../util/DisposableLike.mixins";
 import {
   DisposableRefLike,
   createDisposableRef,
@@ -154,18 +154,18 @@ const createMergeAll = <C extends ObservableLike>(
             nextObs,
             forEach(notifySink(observer.delegate)),
             subscribe(getScheduler(observer)),
-            addTo(observer.delegate),
-            onComplete(observer.onDispose),
+            DisposableLike__addTo(observer.delegate),
+            DisposableLike__onComplete(observer.onDispose),
           );
-        } else if (isDisposed(observer)) {
-          pipe(observer.delegate, dispose());
+        } else if (DisposableLike__isDisposed(observer)) {
+          pipe(observer.delegate, DisposableLike__dispose());
         }
       }
     };
 
     return createInstanceFactory(
       mixin(
-        include(disposableMixin, typedObserverMixin),
+        include(DisposableLike__mixin, typedObserverMixin),
         function Observer(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -176,7 +176,7 @@ const createMergeAll = <C extends ObservableLike>(
           maxBufferSize: number,
           maxConcurrency: number,
         ): ObserverLike<ContainerOf<C, T>> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
 
           instance.delegate = delegate;
@@ -192,15 +192,15 @@ const createMergeAll = <C extends ObservableLike>(
 
           pipe(
             instance,
-            addTo(delegate),
-            onComplete(() => {
-              if (isDisposed(delegate)) {
+            DisposableLike__addTo(delegate),
+            DisposableLike__onComplete(() => {
+              if (DisposableLike__isDisposed(delegate)) {
                 instance.queue.length = 0;
               } else if (
                 getLength(instance.queue) + instance.activeCount ===
                 0
               ) {
-                pipe(instance.delegate, dispose());
+                pipe(instance.delegate, DisposableLike__dispose());
               }
             }),
           );
@@ -312,7 +312,10 @@ const createScanAsync = <
     ): ContainerOperator<C, T, TAcc> =>
     observable => {
       const onSink = (observer: ObserverLike<TAcc>) => {
-        const accFeedbackStream = pipe(createSubject(), addTo(observer));
+        const accFeedbackStream = pipe(
+          createSubject(),
+          DisposableLike__addTo(observer),
+        );
 
         pipe(
           observable,
@@ -369,14 +372,14 @@ const createSwitchAll = <C extends ObservableLike>(
     };
 
     function onDispose(this: TProperties & DisposableLike) {
-      if (isDisposed(this.currentRef[MutableRefLike_current])) {
-        pipe(this.delegate, dispose());
+      if (DisposableLike__isDisposed(this.currentRef[MutableRefLike_current])) {
+        pipe(this.delegate, DisposableLike__dispose());
       }
     }
 
     return createInstanceFactory(
       mixin(
-        include(disposableMixin, typedObserverMixin),
+        include(DisposableLike__mixin, typedObserverMixin),
         function SwitchAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -385,16 +388,20 @@ const createSwitchAll = <C extends ObservableLike>(
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
         ): ObserverLike<ContainerOf<C, T>> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
 
           instance.delegate = delegate;
           instance.currentRef = pipe(
-            createDisposableRef(disposed),
-            addTo(delegate),
+            createDisposableRef(DisposableLike__disposed),
+            DisposableLike__addTo(delegate),
           );
 
-          pipe(instance, addTo(delegate), onComplete(onDispose));
+          pipe(
+            instance,
+            DisposableLike__addTo(delegate),
+            DisposableLike__onComplete(onDispose),
+          );
 
           return instance;
         },
@@ -413,9 +420,9 @@ const createSwitchAll = <C extends ObservableLike>(
               next,
               forEach(notifySink(this.delegate)),
               subscribe(getScheduler(this)),
-              onComplete(() => {
-                if (isDisposed(this)) {
-                  pipe(this.delegate, dispose());
+              DisposableLike__onComplete(() => {
+                if (DisposableLike__isDisposed(this)) {
+                  pipe(this.delegate, DisposableLike__dispose());
                 }
               }),
             );

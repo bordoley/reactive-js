@@ -1,9 +1,9 @@
 /// <reference types="./SchedulerLike.schedule.d.ts" />
 import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
-import { disposableMixin } from '../../../__internal__/util/DisposableLike.mixins.mjs';
 import { none, isSome, pipe, isFunction } from '../../../functions.mjs';
 import { ContinuationLike_run, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
+import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { getOrNone, set } from '../CurrentScheduler.mjs';
 import YieldError from '../YieldError.mjs';
 

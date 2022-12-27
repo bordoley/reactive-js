@@ -20,11 +20,6 @@ import {
   getDelay,
   hasDelay,
 } from "../__internal__/scheduling/SchedulerLike.options";
-import { streamMixin } from "../__internal__/streaming/StreamLike.internal";
-import {
-  delegatingDisposableMixin,
-  disposableMixin,
-} from "../__internal__/util/DisposableLike.mixins";
 import {
   ContainerOperator,
   FromArrayOptions,
@@ -108,7 +103,10 @@ import {
 import { dispatch, getScheduler } from "../scheduling/DispatcherLike";
 import { StreamLike, StreamableLike_stream } from "../streaming";
 import { stream } from "../streaming/StreamableLike";
+import StreamLike__mixin from "../streaming/__internal__/StreamLike/StreamLike.mixin";
 import { add, addTo } from "../util/DisposableLike";
+import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
+import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { enumerate } from "./EnumerableLike";
 
 export const createAsyncEnumerator = /*@__PURE__*/ (() => {
@@ -117,7 +115,7 @@ export const createAsyncEnumerator = /*@__PURE__*/ (() => {
     scheduler: SchedulerLike,
     replay: number,
   ) => AsyncEnumeratorLike<T> = (<T>() => {
-    const typedStreamMixin = streamMixin<void, T>();
+    const typedStreamMixin = StreamLike__mixin<void, T>();
     return createInstanceFactory(
       mixin(
         include(typedStreamMixin),
@@ -217,7 +215,7 @@ const createLiftedAsyncEnumerator = (<T>() => {
 
   return createInstanceFactory(
     mixin(
-      include(disposableMixin),
+      include(DisposableLike__mixin),
       function LiftedAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<T>,
@@ -234,7 +232,7 @@ const createLiftedAsyncEnumerator = (<T>() => {
         scheduler: SchedulerLike,
         replay: number,
       ): AsyncEnumeratorLike<T> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
 
         instance.op = op;
         instance[DispatcherLike_scheduler] = scheduler;
@@ -616,7 +614,7 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
   const createKeepAsyncEnumerator = createInstanceFactory(
     mixin(
-      include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+      include(DisposableLike__delegatingMixin, delegatingAsyncEnumerator()),
       function KeepAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<T>,
@@ -628,7 +626,7 @@ export const keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         delegate: AsyncEnumeratorLike<T>,
         predicate: Predicate<T>,
       ): AsyncEnumeratorLike<T> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
 
         instance.obs = pipe(
@@ -686,7 +684,7 @@ export const map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
 
   const createMapAsyncEnumerator = createInstanceFactory(
     mixin(
-      include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+      include(DisposableLike__delegatingMixin, delegatingAsyncEnumerator()),
       function MapAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TB>,
@@ -698,7 +696,7 @@ export const map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
         delegate: AsyncEnumeratorLike<TA>,
         mapper: Function1<TA, TB>,
       ): AsyncEnumeratorLike<TB> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
 
         instance.delegate = delegate;
@@ -749,7 +747,7 @@ export const scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
 
   const createScanAsyncEnumerator = createInstanceFactory(
     mixin(
-      include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+      include(DisposableLike__delegatingMixin, delegatingAsyncEnumerator()),
       function ScanAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TAcc>,
@@ -762,7 +760,7 @@ export const scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
         reducer: Reducer<T, TAcc>,
         acc: Factory<TAcc>,
       ): AsyncEnumeratorLike<TAcc> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
 
         instance.delegate = delegate;
@@ -812,7 +810,7 @@ export const scanAsync: ScanAsync<
 
   const creatScanAsyncAsyncEnumerator = createInstanceFactory(
     mixin(
-      include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+      include(DisposableLike__delegatingMixin, delegatingAsyncEnumerator()),
       function ScanAsyncAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TAcc>,
@@ -825,7 +823,7 @@ export const scanAsync: ScanAsync<
         reducer: AsyncReducer<ObservableLike, T, TAcc>,
         initialValue: Factory<TAcc>,
       ): AsyncEnumeratorLike<TAcc> {
-        init(delegatingDisposableMixin, instance, delegate);
+        init(DisposableLike__delegatingMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
 
         instance.obs = pipe(
@@ -876,7 +874,7 @@ export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
 
     const createTakeWhileAsyncEnumerator = createInstanceFactory(
       mixin(
-        include(delegatingDisposableMixin, delegatingAsyncEnumerator()),
+        include(DisposableLike__delegatingMixin, delegatingAsyncEnumerator()),
         function TakeWhileAsyncEnumerator(
           instance: Pick<
             AsyncEnumeratorLike<T>,
@@ -889,7 +887,7 @@ export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
           predicate: Predicate<T>,
           inclusive: boolean,
         ): AsyncEnumeratorLike<T> {
-          init(delegatingDisposableMixin, instance, delegate);
+          init(DisposableLike__delegatingMixin, instance, delegate);
           init(delegatingAsyncEnumerator(), instance, delegate);
 
           instance.obs = pipe(

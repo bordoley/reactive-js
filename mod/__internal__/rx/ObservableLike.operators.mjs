@@ -10,10 +10,10 @@ import addToIgnoringChildErrors from '../../util/__internal__/DisposableLike/Dis
 import bindTo from '../../util/__internal__/DisposableLike/DisposableLike.bindTo.mjs';
 import dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
+import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import onComplete from '../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { createDistinctUntilChangedOperator, createForEachOperator, createScanOperator, createTakeFirstOperator } from '../containers/StatefulContainerLike.internal.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../mixins.mjs';
-import { disposableMixin } from '../util/DisposableLike.mixins.mjs';
 import { createEnumerableObservable, createRunnableObservable, createObservable } from './ObservableLike.create.mjs';
 import { liftEnumerableObservableT, liftEnumerableObservable, liftRunnableObservable, liftObservable } from './ObservableLike.lift.mjs';
 import { observerMixin, createDelegatingObserver, createObserver } from './ObserverLike.internal.mjs';
@@ -141,7 +141,8 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
             instance.queue = [];
             instance.selector = selector;
             const disposeDelegate = () => {
-                if (isDisposed(instance) && isDisposed(otherSubscription)) {
+                if (isDisposed(instance) &&
+                    isDisposed(otherSubscription)) {
                     pipe(delegate, dispose());
                 }
             };
@@ -149,7 +150,8 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
                 instance.hasLatest = true;
                 instance.otherLatest = otherLatest;
                 notifyDelegate(instance);
-                if (isDisposed(instance) && isEmpty(instance.queue)) {
+                if (isDisposed(instance) &&
+                    isEmpty(instance.queue)) {
                     pipe(instance.delegate, dispose());
                 }
             }), subscribe(getScheduler(delegate)), onComplete(disposeDelegate), addTo(delegate));

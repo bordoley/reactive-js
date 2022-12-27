@@ -39,12 +39,13 @@ import { notify, sourceFrom } from "../../rx/SinkLike";
 import { create as createSubject, publishTo } from "../../rx/SubjectLike";
 import { SchedulerLike } from "../../scheduling";
 import { DisposableLike, DisposableOrTeardown } from "../../util";
-import addTo from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
-import addToIgnoringChildErrors from "../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
-import bindTo from "../../util/__internal__/DisposableLike/DisposableLike.bindTo";
-import dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
-import isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
-import onComplete from "../../util/__internal__/DisposableLike/DisposableLike.onComplete";
+import DisposableLike__addTo from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__addToIgnoringChildErrors from "../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
+import DisposableLike__bindTo from "../../util/__internal__/DisposableLike/DisposableLike.bindTo";
+import DisposableLike__dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
+import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import {
   TReactive,
   createDistinctUntilChangedOperator,
@@ -60,7 +61,6 @@ import {
   mixin,
   props,
 } from "../mixins";
-import { disposableMixin } from "../util/DisposableLike.mixins";
 import {
   createEnumerableObservable,
   createObservable,
@@ -192,11 +192,11 @@ export const mergeImpl = /*@__PURE__*/ (() => {
   ) =>
     pipe(
       createDelegatingObserver(delegate),
-      addTo(delegate),
-      onComplete(() => {
+      DisposableLike__addTo(delegate),
+      DisposableLike__onComplete(() => {
         ctx.completedCount++;
         if (ctx.completedCount >= count) {
-          pipe(delegate, dispose());
+          pipe(delegate, DisposableLike__dispose());
         }
       }),
     );
@@ -248,7 +248,7 @@ export const multicast =
       observable,
       forEach<T>(publishTo(subject)),
       subscribe(scheduler),
-      bindTo(subject),
+      DisposableLike__bindTo(subject),
     );
 
     return subject;
@@ -308,7 +308,7 @@ export const subscribe: <T>(
   pipe(
     scheduler,
     createObserver,
-    addToIgnoringChildErrors(scheduler),
+    DisposableLike__addToIgnoringChildErrors(scheduler),
     sourceFrom(observable),
   );
 
@@ -378,7 +378,7 @@ export const zipWithLatestFrom: <TA, TB, T>(
 
     return createInstanceFactory(
       mixin(
-        include(disposableMixin, typedObserverMixin),
+        include(DisposableLike__mixin, typedObserverMixin),
         function ZipWithLatestFromObserer(
           instance: Pick<ObserverLike, typeof SinkLike_notify> &
             Mutable<TProperties>,
@@ -386,7 +386,7 @@ export const zipWithLatestFrom: <TA, TB, T>(
           other: ObservableLike<TB>,
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
-          init(disposableMixin, instance);
+          init(DisposableLike__mixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
 
           instance.delegate = delegate;
@@ -394,8 +394,11 @@ export const zipWithLatestFrom: <TA, TB, T>(
           instance.selector = selector;
 
           const disposeDelegate = () => {
-            if (isDisposed(instance) && isDisposed(otherSubscription)) {
-              pipe(delegate, dispose());
+            if (
+              DisposableLike__isDisposed(instance) &&
+              DisposableLike__isDisposed(otherSubscription)
+            ) {
+              pipe(delegate, DisposableLike__dispose());
             }
           };
 
@@ -406,16 +409,23 @@ export const zipWithLatestFrom: <TA, TB, T>(
               instance.otherLatest = otherLatest;
               notifyDelegate(instance);
 
-              if (isDisposed(instance) && isEmpty(instance.queue)) {
-                pipe(instance.delegate, dispose());
+              if (
+                DisposableLike__isDisposed(instance) &&
+                isEmpty(instance.queue)
+              ) {
+                pipe(instance.delegate, DisposableLike__dispose());
               }
             }),
             subscribe(getScheduler(delegate)),
-            onComplete(disposeDelegate),
-            addTo(delegate),
+            DisposableLike__onComplete(disposeDelegate),
+            DisposableLike__addTo(delegate),
           );
 
-          pipe(instance, addTo(delegate), onComplete(disposeDelegate));
+          pipe(
+            instance,
+            DisposableLike__addTo(delegate),
+            DisposableLike__onComplete(disposeDelegate),
+          );
 
           return instance;
         },

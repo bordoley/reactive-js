@@ -3,7 +3,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_scheduleCallback, unstable_cancelCallback, unstable_IdlePriority, unstable_ImmediatePriority, unstable_NormalPriority, unstable_LowPriority, unstable_UserBlockingPriority } from 'scheduler';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
 import { getDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
-import { disposableMixin } from '../__internal__/util/DisposableLike.mixins.mjs';
 import { none, isSome, pipe, pipeLazy, ignore, unsafeCast } from '../functions.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { create, publish } from '../rx/SubjectLike.mjs';
@@ -12,6 +11,7 @@ import { run } from '../scheduling/ContinuationLike.mjs';
 import { toScheduler } from '../scheduling/PrioritySchedulerLike.mjs';
 import { isInContinuation } from '../scheduling/SchedulerLike.mjs';
 import { onError, dispose, addIgnoringChildErrors, isDisposed, create as create$1, onDisposed, addTo } from '../util/DisposableLike.mjs';
+import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
 /**
  * Returns the current value, if defined, of `observable`.

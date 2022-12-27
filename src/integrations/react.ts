@@ -26,7 +26,6 @@ import {
   props,
 } from "../__internal__/mixins";
 import { getDelay } from "../__internal__/scheduling/SchedulerLike.options";
-import { disposableMixin } from "../__internal__/util/DisposableLike.mixins";
 import {
   Factory,
   Option,
@@ -63,6 +62,7 @@ import {
   onDisposed,
   onError,
 } from "../util/DisposableLike";
+import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 /**
  * Returns the current value, if defined, of `observable`.
  *
@@ -140,7 +140,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mixin(
-      include(disposableMixin),
+      include(DisposableLike__mixin),
       function ReactPriorityScheduler(
         instance: Omit<
           PrioritySchedulerLike,
@@ -148,7 +148,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
         > &
           TProperties,
       ): PrioritySchedulerLike {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
         return instance;
       },
       props<TProperties>({

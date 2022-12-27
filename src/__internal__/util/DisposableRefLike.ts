@@ -1,7 +1,8 @@
 import { none, pipe, returns, unsafeCast } from "../../functions";
 import { DisposableLike } from "../../util";
-import add from "../../util/__internal__/DisposableLike/DisposableLike.add";
-import dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__add from "../../util/__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import {
   Mixin1,
   Mutable,
@@ -11,7 +12,6 @@ import {
   mixin,
   props,
 } from "../mixins";
-import { disposableMixin } from "./DisposableLike.mixins";
 import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike";
 
 export interface DisposableRefLike<
@@ -43,7 +43,7 @@ export const disposableRefMixin: <
         unsafeCast<DisposableLike>(instance);
 
         instance[DisposableRef_private_current] = defaultValue;
-        pipe(instance, add(defaultValue));
+        pipe(instance, DisposableLike__add(defaultValue));
 
         return instance;
       },
@@ -58,10 +58,10 @@ export const disposableRefMixin: <
         set [MutableRefLike_current](v: TDisposable) {
           unsafeCast<TProperties & DisposableLike>(this);
           const oldValue = this[DisposableRef_private_current];
-          pipe(oldValue, dispose());
+          pipe(oldValue, DisposableLike__dispose());
 
           this[DisposableRef_private_current] = v;
-          pipe(this, add(v));
+          pipe(this, DisposableLike__add(v));
         },
       },
     ),
@@ -78,12 +78,12 @@ export const createDisposableRef: <TDisposable extends DisposableLike>(
 
   return createInstanceFactory(
     mixin(
-      include(disposableMixin, typedDisposableRefMixin),
+      include(DisposableLike__mixin, typedDisposableRefMixin),
       function DisposableRef(
         instance: unknown,
         initialValue: TDisposable,
       ): DisposableRefLike<TDisposable> {
-        init(disposableMixin, instance);
+        init(DisposableLike__mixin, instance);
         init(typedDisposableRefMixin, instance, initialValue);
         return instance;
       },

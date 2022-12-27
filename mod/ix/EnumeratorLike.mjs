@@ -1,18 +1,13 @@
 /// <reference types="./EnumeratorLike.d.ts" />
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../ix.mjs';
-import { move as move$1 } from './SourceLike.mjs';
+import '../ix.mjs';
+import forEach$1 from './__internal__/EnumeratorLike/EnumeratorLike.forEach.mjs';
+import getCurrent$1 from './__internal__/EnumeratorLike/EnumeratorLike.getCurrent.mjs';
+import hasCurrent$1 from './__internal__/EnumeratorLike/EnumeratorLike.hasCurrent.mjs';
+import move$1 from './__internal__/EnumeratorLike/EnumeratorLike.move.mjs';
 
-const getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
-const hasCurrent = (enumerator) => enumerator[EnumeratorLike_hasCurrent];
-const move = (enumerator) => {
-    move$1(enumerator);
-    return hasCurrent(enumerator);
-};
-const forEach = (f) => enumerator => {
-    while (move(enumerator)) {
-        f(getCurrent(enumerator));
-    }
-    return enumerator;
-};
+const forEach = forEach$1;
+const getCurrent = getCurrent$1;
+const hasCurrent = hasCurrent$1;
+const move = move$1;
 
 export { forEach, getCurrent, hasCurrent, move };

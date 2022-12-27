@@ -9,10 +9,10 @@ import addTo from '../../util/__internal__/DisposableLike/DisposableLike.addTo.m
 import dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import disposed from '../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
 import isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
+import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import onComplete from '../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../mixins.mjs';
-import { disposableMixin } from '../util/DisposableLike.mixins.mjs';
 import { createDisposableRef } from '../util/DisposableRefLike.mjs';
 import { MutableRefLike_current } from '../util/MutableRefLike.mjs';
 import { lift } from './EnumerableObservableLike.lift.mjs';
