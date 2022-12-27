@@ -1,23 +1,23 @@
-import { Predicate, pipe, none } from "../../../functions";
+import {
+  Mixin2,
+  Mutable,
+  include,
+  init,
+  mixin,
+  props,
+} from "../../../__internal__/mixins";
+import { Predicate, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
 import {
   addTo,
-  onComplete,
-  isDisposed,
   dispose,
+  isDisposed,
+  onComplete,
 } from "../../../util/DisposableLike";
-import {
-  Mixin2,
-  mixin,
-  include,
-  Mutable,
-  init,
-  props,
-} from "../../../__internal__/mixins";
+import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { sinkInto } from "../../ReactiveContainerLike";
 import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 
 const satisfyMixin: <
   C extends ReactiveContainerLike<TSink>,

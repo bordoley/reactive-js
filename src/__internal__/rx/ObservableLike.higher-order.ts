@@ -32,6 +32,7 @@ import {
   publish,
   publishTo,
 } from "../../rx/SubjectLike";
+import SinkLike__catchErrorMixin from "../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin";
 import { DisposableLike } from "../../util";
 import DisposableLike__addTo from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import DisposableLike__dispose from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
@@ -69,7 +70,6 @@ import {
 } from "./ObservableLike.operators";
 import { observerMixin } from "./ObserverLike.internal";
 import { lift as liftRunnableObservable } from "./RunnableObservableLike.lift";
-import { catchErrorSinkMixin } from "./SinkLike.mixins";
 
 const createCatchError = <C extends ObservableLike>(
   lift: <T>(
@@ -77,7 +77,11 @@ const createCatchError = <C extends ObservableLike>(
   ) => ContainerOperator<C, T, T>,
 ): CatchError<C>["catchError"] => {
   const createCatchErrorObserver = (<T>() => {
-    const typedCatchErrorSink = catchErrorSinkMixin<C, ObserverLike<T>, T>();
+    const typedCatchErrorSink = SinkLike__catchErrorMixin<
+      C,
+      ObserverLike<T>,
+      T
+    >();
     const typedObserverMixin = observerMixin<T>();
 
     return createInstanceFactory(

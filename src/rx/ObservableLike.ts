@@ -46,14 +46,6 @@ import {
   createDelegatingObserver,
   observerMixin,
 } from "../__internal__/rx/ObserverLike.internal";
-import {
-  decodeWithCharsetSinkMixin,
-  keepSinkMixin,
-  mapSinkMixin,
-  pairwiseSinkMixin,
-  reduceSinkMixin,
-  skipFirstSinkMixin,
-} from "../__internal__/rx/SinkLike.mixins";
 import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import {
   DisposableRefLike,
@@ -217,7 +209,13 @@ import DisposableLike__mixin from "../util/__internal__/DisposableLike/Disposabl
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
 import EnumeratorSinkLike__create from "./__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create";
+import SinkLike__decodeWithCharsetMixin from "./__internal__/SinkLike/SinkLike.decodeWithCharsetMixin";
 import SinkLike__everySatisfyMixin from "./__internal__/SinkLike/SinkLike.everySatisfyMixin";
+import SinkLike__keepMixin from "./__internal__/SinkLike/SinkLike.keepMixin";
+import SinkLike__mapMixin from "./__internal__/SinkLike/SinkLike.mapMixin";
+import SinkLike__pairwiseMixin from "./__internal__/SinkLike/SinkLike.pairwiseMixin";
+import SinkLike__reduceMixin from "./__internal__/SinkLike/SinkLike.reduceMixin";
+import SinkLike__skipFirstMixin from "./__internal__/SinkLike/SinkLike.skipFirstMixin";
 import SinkLike__someSatisfyMixin from "./__internal__/SinkLike/SinkLike.someSatisfyMixin";
 import SinkLike__takeLastMixin from "./__internal__/SinkLike/SinkLike.takeLastMixin";
 import SinkLike__takeWhileMixin from "./__internal__/SinkLike/SinkLike.takeWhileMixin";
@@ -439,7 +437,7 @@ export const create = createObservable;
 
 export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(
+    const typedDecodeWithCharsetMixin = SinkLike__decodeWithCharsetMixin(
       arrayToObservable(),
     );
     const typedObserverMixin = observerMixin<ArrayBuffer>();
@@ -655,7 +653,7 @@ export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     delegate: ObserverLike<T>,
     predicate: Predicate<T>,
   ) => ObserverLike<T> = (<T>() => {
-    const typedKeepSinkMixin = keepSinkMixin<T>();
+    const typedKeepSinkMixin = SinkLike__keepMixin<T>();
     const typedObserverMixin = observerMixin<T>();
 
     return createInstanceFactory(
@@ -815,7 +813,7 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     delegate: ObserverLike<TB>,
     predicate: Function1<TA, TB>,
   ) => ObserverLike<TA> = (<TA, TB>() => {
-    const typedMapSinkMixin = mapSinkMixin<TA, TB>();
+    const typedMapSinkMixin = SinkLike__mapMixin<TA, TB>();
     const typedObserverMixin = observerMixin<TA>();
 
     return createInstanceFactory(
@@ -882,7 +880,7 @@ export const pairwise: Pairwise<ObservableLike>["pairwise"] =
     const createPairwiseObserver: <T>(
       delegate: ObserverLike<readonly [T, T]>,
     ) => ObserverLike<T> = (<T>() => {
-      const typedPairwiseSinkMixin = pairwiseSinkMixin<T>();
+      const typedPairwiseSinkMixin = SinkLike__pairwiseMixin<T>();
       const typedObserverMixin = observerMixin<T>();
 
       return createInstanceFactory(
@@ -913,7 +911,7 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const typedReduceSinkMixin = reduceSinkMixin<
+  const typedReduceSinkMixin = SinkLike__reduceMixin<
     ObservableLike<TAcc>,
     ObserverLike<TAcc>,
     T,
@@ -1129,7 +1127,7 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
       delegate: ObserverLike<T>,
       count: number,
     ) => ObserverLike<T> = (<T>() => {
-      const typedSkipFirstSinkMixin = skipFirstSinkMixin<T>();
+      const typedSkipFirstSinkMixin = SinkLike__skipFirstMixin<T>();
       const typedObserverMixin = observerMixin<T>();
 
       return createInstanceFactory(

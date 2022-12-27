@@ -1,7 +1,6 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { createInstanceFactory, mixin as mixin$1, include, init } from '../__internal__/mixins.mjs';
 import { createOnSink } from '../__internal__/rx/ReactiveContainerLike.createOnSink.mjs';
-import { bufferSinkMixin, catchErrorSinkMixin, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin } from '../__internal__/rx/SinkLike.mixins.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import repeat$1 from '../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
 import buffer$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.buffer.mjs';
@@ -26,7 +25,20 @@ import { bindTo, addTo, dispose, isDisposed } from '../util/DisposableLike.mjs';
 import create$2 from './__internal__/DelegatingSinkLike/DelegatingSinkLike.create.mjs';
 import mixin from './__internal__/DelegatingSinkLike/DelegatingSinkLike.mixin.mjs';
 import create$1 from './__internal__/RunnableLike/RunnableLike.create.mjs';
+import bufferMixin from './__internal__/SinkLike/SinkLike.bufferMixin.mjs';
+import catchErrorMixin from './__internal__/SinkLike/SinkLike.catchErrorMixin.mjs';
 import create$3 from './__internal__/SinkLike/SinkLike.create.mjs';
+import decodeWithCharsetMixin from './__internal__/SinkLike/SinkLike.decodeWithCharsetMixin.mjs';
+import distinctUntilChangedMixin from './__internal__/SinkLike/SinkLike.distinctUntilChangedMixin.mjs';
+import everySatisfyMixin from './__internal__/SinkLike/SinkLike.everySatisfyMixin.mjs';
+import { forEachMixin } from './__internal__/SinkLike/SinkLike.forEachMixin.mjs';
+import keepMixin from './__internal__/SinkLike/SinkLike.keepMixin.mjs';
+import { mapMixin } from './__internal__/SinkLike/SinkLike.mapMixin.mjs';
+import pairwiseMixin from './__internal__/SinkLike/SinkLike.pairwiseMixin.mjs';
+import reduceMixin from './__internal__/SinkLike/SinkLike.reduceMixin.mjs';
+import scanMixin from './__internal__/SinkLike/SinkLike.scanMixin.mjs';
+import skipFirstMixin from './__internal__/SinkLike/SinkLike.skipFirstMixin.mjs';
+import someSatisfyMixin from './__internal__/SinkLike/SinkLike.someSatisfyMixin.mjs';
 import takeFirstMixin from './__internal__/SinkLike/SinkLike.takeFirstMixin.mjs';
 import takeLastMixin from './__internal__/SinkLike/SinkLike.takeLastMixin.mjs';
 import takeWhileMixin from './__internal__/SinkLike/SinkLike.takeWhileMixin.mjs';
@@ -57,13 +69,13 @@ const liftT = {
     variance: reactive,
 };
 const buffer = /*@__PURE__*/ (() => {
-    const typedBufferSinkMixin = bufferSinkMixin(toRunnable$1());
+    const typedBufferSinkMixin = bufferMixin(toRunnable$1());
     return pipe(createInstanceFactory(typedBufferSinkMixin), buffer$1(liftT));
 })();
 const bufferT = { buffer };
 const catchError = 
 /*@__PURE__*/ (() => {
-    const createCatchErrorObserver = (() => createInstanceFactory(catchErrorSinkMixin()))();
+    const createCatchErrorObserver = (() => createInstanceFactory(catchErrorMixin()))();
     return (errorHandler => pipe(createCatchErrorObserver, partial(errorHandler), lift));
 })();
 const catchErrorT = { catchError };
@@ -89,7 +101,7 @@ const concatAllT = {
 };
 const decodeWithCharset = 
 /*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(toRunnable$1());
+    const typedDecodeWithCharsetMixin = decodeWithCharsetMixin(toRunnable$1());
     return pipe(createInstanceFactory(typedDecodeWithCharsetMixin), decodeWithCharset$1(liftT));
 })();
 const decodeWithCharsetT = {
@@ -101,7 +113,7 @@ const defer = f => create(sink => {
 const deferT = { defer };
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
-    const typedDistinctUntilChangedSinkMixin = distinctUntilChangedSinkMixin();
+    const typedDistinctUntilChangedSinkMixin = distinctUntilChangedMixin();
     return pipe(createInstanceFactory(typedDistinctUntilChangedSinkMixin), distinctUntilChanged$1(liftT));
 })();
 const distinctUntilChangedT = {
@@ -113,7 +125,7 @@ const empty = () => create(sink => {
 const emptyT = { empty };
 const everySatisfy = 
 /*@__PURE__*/ (() => {
-    const typedEverySatisfySinkMixin = everySatisfySinkMixin(toRunnable$1());
+    const typedEverySatisfySinkMixin = everySatisfyMixin(toRunnable$1());
     return (predicate) => pipe(createInstanceFactory(typedEverySatisfySinkMixin), partial(predicate), lift);
 })();
 const everySatisfyT = { everySatisfy };
@@ -125,7 +137,7 @@ const first = () => src => {
     return result;
 };
 const forEach = /*@__PURE__*/ (() => {
-    const typedForEachSinkMixin = forEachSinkMixin();
+    const typedForEachSinkMixin = forEachMixin();
     return pipe(createInstanceFactory(typedForEachSinkMixin), forEach$1(liftT));
 })();
 const forEachT = { forEach };
@@ -140,7 +152,7 @@ const generateT = {
     generate,
 };
 const keep = /*@__PURE__*/ (() => {
-    const typedKeepSinkMixin = keepSinkMixin();
+    const typedKeepSinkMixin = keepMixin();
     return pipe(createInstanceFactory(typedKeepSinkMixin), keep$1(liftT));
 })();
 const keepT = { keep };
@@ -152,7 +164,7 @@ const last = () => src => {
     return result;
 };
 const map = /*@__PURE__*/ (() => {
-    const typedMapSinkMixin = mapSinkMixin();
+    const typedMapSinkMixin = mapMixin();
     return pipe(createInstanceFactory(typedMapSinkMixin), map$1(liftT));
 })();
 const mapT = { map };
@@ -164,12 +176,12 @@ const onRun = (f) => (runnable) => {
     return createOnSink(create, runnable, f);
 };
 const pairwise = /*@__PURE__*/ (() => {
-    const typedPairwiseSinkMixin = pairwiseSinkMixin();
+    const typedPairwiseSinkMixin = pairwiseMixin();
     return pipe(createInstanceFactory(typedPairwiseSinkMixin), lift, returns);
 })();
 const pairwiseT = { pairwise };
 const reduce = /*@__PURE__*/ (() => {
-    const typedReduceSinkMixin = reduceSinkMixin(toRunnable$1());
+    const typedReduceSinkMixin = reduceMixin(toRunnable$1());
     return pipe(createInstanceFactory(typedReduceSinkMixin), reduce$1(liftT));
 })();
 const reduceT = { reduce };
@@ -189,18 +201,18 @@ const run = () => (runnable) => pipe(create$3(), sourceFrom(runnable), dispose()
     }
 });
 const scan = /*@__PURE__*/ (() => {
-    const typedScanSinkMixin = scanSinkMixin();
+    const typedScanSinkMixin = scanMixin();
     return pipe(createInstanceFactory(typedScanSinkMixin), scan$1(liftT));
 })();
 const scanT = { scan };
 const skipFirst = /*@__PURE__*/ (() => {
-    const typedSkipFirstSinkMixin = skipFirstSinkMixin();
+    const typedSkipFirstSinkMixin = skipFirstMixin();
     return pipe(createInstanceFactory(typedSkipFirstSinkMixin), skipFirst$1(liftT));
 })();
 const skipFirstT = { skipFirst };
 const someSatisfy = 
 /*@__PURE__*/ (() => {
-    const typedSomeSatisfySinkMixin = someSatisfySinkMixin(toRunnable$1());
+    const typedSomeSatisfySinkMixin = someSatisfyMixin(toRunnable$1());
     return (predicate) => pipe(createInstanceFactory(typedSomeSatisfySinkMixin), partial(predicate), lift);
 })();
 const someSatisfyT = { someSatisfy };

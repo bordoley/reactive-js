@@ -6,19 +6,6 @@ import {
 } from "../__internal__/mixins";
 import { createOnSink } from "../__internal__/rx/ReactiveContainerLike.createOnSink";
 import {
-  bufferSinkMixin,
-  catchErrorSinkMixin,
-  decodeWithCharsetSinkMixin,
-  distinctUntilChangedSinkMixin,
-  forEachSinkMixin,
-  keepSinkMixin,
-  mapSinkMixin,
-  pairwiseSinkMixin,
-  reduceSinkMixin,
-  scanSinkMixin,
-  skipFirstSinkMixin,
-} from "../__internal__/rx/SinkLike.mixins";
-import {
   Buffer,
   CatchError,
   Concat,
@@ -96,8 +83,19 @@ import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
 import DelegateSinkLike__create from "./__internal__/DelegatingSinkLike/DelegatingSinkLike.create";
 import DelegateSinkLike__mixin from "./__internal__/DelegatingSinkLike/DelegatingSinkLike.mixin";
 import RunnableLike__create from "./__internal__/RunnableLike/RunnableLike.create";
+import SinkLike__bufferMixin from "./__internal__/SinkLike/SinkLike.bufferMixin";
+import SinkLike__catchErrorMixin from "./__internal__/SinkLike/SinkLike.catchErrorMixin";
 import SinkLike__create from "./__internal__/SinkLike/SinkLike.create";
+import SinkLike__decodeWithCharsetMixin from "./__internal__/SinkLike/SinkLike.decodeWithCharsetMixin";
+import SinkLike__distinctUntilChangedMixin from "./__internal__/SinkLike/SinkLike.distinctUntilChangedMixin";
 import SinkLike__everySatisfyMixin from "./__internal__/SinkLike/SinkLike.everySatisfyMixin";
+import SinkLike__forEachMixin from "./__internal__/SinkLike/SinkLike.forEachMixin";
+import SinkLike__keepMixin from "./__internal__/SinkLike/SinkLike.keepMixin";
+import SinkLike__mapMixin from "./__internal__/SinkLike/SinkLike.mapMixin";
+import SinkLike__pairwiseMixin from "./__internal__/SinkLike/SinkLike.pairwiseMixin";
+import SinkLike__reduceMixin from "./__internal__/SinkLike/SinkLike.reduceMixin";
+import SinkLike__scanMixin from "./__internal__/SinkLike/SinkLike.scanMixin";
+import SinkLike__skipFirstMixin from "./__internal__/SinkLike/SinkLike.skipFirstMixin";
 import SinkLike__someSatisfyMixin from "./__internal__/SinkLike/SinkLike.someSatisfyMixin";
 import SinkLike_takeFirstMixin from "./__internal__/SinkLike/SinkLike.takeFirstMixin";
 import SinkLike__takeLastMixin from "./__internal__/SinkLike/SinkLike.takeLastMixin";
@@ -141,7 +139,7 @@ const liftT: Lift<RunnableLike, TReactive> = {
 };
 
 export const buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<T>() => {
-  const typedBufferSinkMixin = bufferSinkMixin<
+  const typedBufferSinkMixin = SinkLike__bufferMixin<
     RunnableLike,
     SinkLike<readonly T[]>,
     T
@@ -158,7 +156,7 @@ export const catchError: CatchError<RunnableLike>["catchError"] =
   /*@__PURE__*/ (() => {
     const createCatchErrorObserver = (<T>() =>
       createInstanceFactory(
-        catchErrorSinkMixin<RunnableLike, SinkLike<T>, T>(),
+        SinkLike__catchErrorMixin<RunnableLike, SinkLike<T>, T>(),
       ))();
 
     return (errorHandler =>
@@ -219,7 +217,7 @@ export const concatAllT: ConcatAll<RunnableLike> = {
 
 export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(
+    const typedDecodeWithCharsetMixin = SinkLike__decodeWithCharsetMixin(
       arrayToRunnable(),
     );
 
@@ -241,7 +239,7 @@ export const deferT: Defer<RunnableLike> = { defer };
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
     const typedDistinctUntilChangedSinkMixin =
-      distinctUntilChangedSinkMixin<T>();
+      SinkLike__distinctUntilChangedMixin<T>();
 
     return pipe(
       createInstanceFactory(typedDistinctUntilChangedSinkMixin),
@@ -296,7 +294,7 @@ export const first =
 export const forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedForEachSinkMixin = forEachSinkMixin<T>();
+  const typedForEachSinkMixin = SinkLike__forEachMixin<T>();
 
   return pipe(
     createInstanceFactory(typedForEachSinkMixin),
@@ -321,7 +319,7 @@ export const generateT: Generate<RunnableLike> = {
 };
 
 export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
-  const typedKeepSinkMixin = keepSinkMixin<T>();
+  const typedKeepSinkMixin = SinkLike__keepMixin<T>();
 
   return pipe(
     createInstanceFactory(typedKeepSinkMixin),
@@ -346,7 +344,7 @@ export const last =
   };
 
 export const map: Map<RunnableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
-  const typedMapSinkMixin = mapSinkMixin<TA, TB>();
+  const typedMapSinkMixin = SinkLike__mapMixin<TA, TB>();
 
   return pipe(
     createInstanceFactory(typedMapSinkMixin),
@@ -369,7 +367,7 @@ export const onRun =
 export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedPairwiseSinkMixin = pairwiseSinkMixin<T>();
+  const typedPairwiseSinkMixin = SinkLike__pairwiseMixin<T>();
 
   return pipe(createInstanceFactory(typedPairwiseSinkMixin), lift, returns);
 })();
@@ -379,7 +377,7 @@ export const reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const typedReduceSinkMixin = reduceSinkMixin<
+  const typedReduceSinkMixin = SinkLike__reduceMixin<
     RunnableLike,
     SinkLike<TAcc>,
     T,
@@ -426,7 +424,7 @@ export const run =
     );
 
 export const scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<T, TAcc>() => {
-  const typedScanSinkMixin = scanSinkMixin<T, TAcc>();
+  const typedScanSinkMixin = SinkLike__scanMixin<T, TAcc>();
 
   return pipe(
     createInstanceFactory(typedScanSinkMixin),
@@ -438,7 +436,7 @@ export const scanT: Scan<RunnableLike> = { scan };
 export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedSkipFirstSinkMixin = skipFirstSinkMixin<T>();
+  const typedSkipFirstSinkMixin = SinkLike__skipFirstMixin<T>();
 
   return pipe(
     createInstanceFactory(typedSkipFirstSinkMixin),
