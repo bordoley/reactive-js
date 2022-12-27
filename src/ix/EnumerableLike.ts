@@ -1,4 +1,3 @@
-import { createRepeatOperator } from "../__internal__/containers/ContainerLike.repeat";
 import {
   Lift,
   TInteractive,
@@ -70,6 +69,7 @@ import {
   map as mapReadonlyArray,
   toEnumerable as toEnumerableReadonlyArray,
 } from "../containers/ReadonlyArrayLike";
+import ContainerLike__repeat from "../containers/__internal__/ContainerLike/ContainerLike.repeat";
 import {
   Equality,
   Factory,
@@ -801,7 +801,7 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
     ),
   );
 
-  return createRepeatOperator<EnumerableLike, T>((delegate, predicate) =>
+  return ContainerLike__repeat<EnumerableLike, T>((delegate, predicate) =>
     create(() => createRepeatEnumerator(delegate, predicate)),
   );
 })();

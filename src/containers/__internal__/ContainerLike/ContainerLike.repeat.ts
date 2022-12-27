@@ -1,19 +1,21 @@
-import { ContainerLike, ContainerOf } from "../../containers";
-import { Predicate, alwaysTrue, isNone, isNumber } from "../../functions";
+import { ContainerLike, ContainerOf } from "../../../containers";
+import { Predicate, alwaysTrue, isNone, isNumber } from "../../../functions";
 
-export const createRepeatOperator =
+const repeat =
   <C extends ContainerLike, T>(
-    f: (
+    repeat: (
       c: ContainerOf<C, T>,
       predicate: Predicate<number>,
     ) => ContainerOf<C, T>,
   ) =>
   (predicate?: Predicate<number> | number) => {
-    const repeatPredicate: Predicate<number> = isNone(predicate)
+    const shouldRepeat: Predicate<number> = isNone(predicate)
       ? alwaysTrue
       : isNumber(predicate)
       ? (count: number) => count < predicate
       : (count: number) => predicate(count);
 
-    return (c: ContainerOf<C, T>) => f(c, repeatPredicate);
+    return (c: ContainerOf<C, T>) => repeat(c, shouldRepeat);
   };
+
+export default repeat;
