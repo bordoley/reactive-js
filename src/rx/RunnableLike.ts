@@ -1,4 +1,3 @@
-import { createRepeatOperator } from "../__internal__/containers/ContainerLike.repeat";
 import {
   Lift,
   TReactive,
@@ -77,6 +76,7 @@ import {
   ToReadonlyArray,
 } from "../containers";
 import { toRunnable as arrayToRunnable } from "../containers/ReadonlyArrayLike";
+import ContainerLike__repeat from "../containers/__internal__/ContainerLike/ContainerLike.repeat";
 import {
   Factory,
   Function1,
@@ -390,7 +390,7 @@ export const reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
 export const reduceT: Reduce<RunnableLike> = { reduce };
 
 export const repeat = /*@__PURE__*/ (<T>() => {
-  return createRepeatOperator<RunnableLike, T>((delegate, predicate) =>
+  return ContainerLike__repeat<RunnableLike, T>((delegate, predicate) =>
     create(sink => {
       let count = 0;
       do {

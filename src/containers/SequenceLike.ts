@@ -1,4 +1,3 @@
-import { createRepeatOperator } from "../__internal__/containers/ContainerLike.repeat";
 import { create as createEnumerable } from "../__internal__/ix/EnumerableLike.create";
 import {
   MutableEnumeratorLike,
@@ -60,6 +59,7 @@ import {
   map as mapArray,
   toSequence as toSequenceReadonlyArray,
 } from "./ReadonlyArrayLike";
+import ContainerLike__repeat from "./__internal__/ContainerLike/ContainerLike.repeat";
 
 type SequenceResult<T> = {
   readonly data: T;
@@ -321,7 +321,7 @@ export const repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (<T>() => {
         return none;
       }
     };
-  return createRepeatOperator<SequenceLike, T>((seq, predicate) =>
+  return ContainerLike__repeat<SequenceLike, T>((seq, predicate) =>
     _repeat(seq, predicate, 1, seq),
   );
 })();

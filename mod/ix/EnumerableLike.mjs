@@ -1,5 +1,4 @@
 /// <reference types="./EnumerableLike.d.ts" />
-import { createRepeatOperator } from '../__internal__/containers/ContainerLike.repeat.mjs';
 import { interactive, createBufferOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
 import { empty as empty$1, create } from '../__internal__/ix/EnumerableLike.create.mjs';
 import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
@@ -9,6 +8,7 @@ import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
 import { getCurrentRef, setCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
 import { toEnumerable as toEnumerable$1, every, map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
+import repeat$1 from '../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
 import { pipe, none, unsafeCast, raise, returns, pipeUnsafe, newInstance, getLength, isSome, isNone, identity, forEach as forEach$2 } from '../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerLike_interact, SourceLike_move } from '../ix.mjs';
 import { move, getCurrent, hasCurrent, forEach as forEach$1 } from './EnumeratorLike.mjs';
@@ -357,7 +357,7 @@ const repeat = /*@__PURE__*/ (() => {
             return (_b = (_a = this.enumerator) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_hasCurrent]) !== null && _b !== void 0 ? _b : false;
         },
     }));
-    return createRepeatOperator((delegate, predicate) => create(() => createRepeatEnumerator(delegate, predicate)));
+    return repeat$1((delegate, predicate) => create(() => createRepeatEnumerator(delegate, predicate)));
 })();
 const repeatT = {
     repeat,

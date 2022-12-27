@@ -1,11 +1,11 @@
 /// <reference types="./RunnableLike.d.ts" />
-import { createRepeatOperator } from '../__internal__/containers/ContainerLike.repeat.mjs';
 import { reactive, createBufferOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createForEachOperator, createKeepOperator, createMapOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from '../__internal__/containers/StatefulContainerLike.internal.mjs';
 import { createInstanceFactory, mixin, include, init } from '../__internal__/mixins.mjs';
 import { createOnSink } from '../__internal__/rx/ReactiveContainerLike.createOnSink.mjs';
 import { create as create$1 } from '../__internal__/rx/RunnableLike.create.mjs';
 import { bufferSinkMixin, catchErrorSinkMixin, delegatingSinkMixin, DelegatingSink_delegate, createDelegatingSink, decodeWithCharsetSinkMixin, distinctUntilChangedSinkMixin, everySatisfySinkMixin, forEachSinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, createSink, scanSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin, takeFirstSinkMixin, takeLastSinkMixin, takeWhileSinkMixin, throwIfEmptySinkMixin } from '../__internal__/rx/SinkLike.mixins.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
+import repeat$1 from '../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
 import { pipeUnsafe, newInstance, pipe, partial, pipeLazy, none, ignore, returns, isSome, raise, identity } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto, SinkLike_notify } from '../rx.mjs';
 import { sourceFrom } from './SinkLike.mjs';
@@ -153,7 +153,7 @@ const reduce = /*@__PURE__*/ (() => {
 })();
 const reduceT = { reduce };
 const repeat = /*@__PURE__*/ (() => {
-    return createRepeatOperator((delegate, predicate) => create(sink => {
+    return repeat$1((delegate, predicate) => create(sink => {
         let count = 0;
         do {
             pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(delegate), dispose());

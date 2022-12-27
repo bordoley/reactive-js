@@ -151,7 +151,7 @@ ___
 
 ### endWith
 
-▸ **endWith**<`C`, `T`, `O`\>(`m`, `value`, ...`values`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **endWith**<`C`, `T`\>(`m`, `value`, ...`values`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -159,7 +159,6 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
 
 #### Parameters
 
@@ -327,7 +326,7 @@ ___
 
 ### startWith
 
-▸ **startWith**<`C`, `T`, `O`\>(`m`, `value`, ...`values`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **startWith**<`C`, `T`\>(`m`, `value`, ...`values`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -335,13 +334,12 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `concat`: <T\>(`fst`: [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `snd`: [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, ...`tail`: readonly [`ContainerOf`](containers.md#containerof)<`C`, `T`\>[]) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  } & { `fromArray`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  } |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `concat`: <T\>(`fst`: [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `snd`: [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, ...`tail`: readonly [`ContainerOf`](containers.md#containerof)<`C`, `T`\>[]) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  } & { `fromArray`: <T\>(`options?`: `undefined`) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  } |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
 

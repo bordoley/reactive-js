@@ -1,5 +1,4 @@
 /// <reference types="./SequenceLike.d.ts" />
-import { createRepeatOperator } from '../__internal__/containers/ContainerLike.repeat.mjs';
 import { create } from '../__internal__/ix/EnumerableLike.create.mjs';
 import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
@@ -9,6 +8,7 @@ import { isDisposed, dispose } from '../util/DisposableLike.mjs';
 import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { keepType } from './ContainerLike.mjs';
 import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.mjs';
+import repeat$1 from './__internal__/ContainerLike/ContainerLike.repeat.mjs';
 
 const createNext = (data, next) => ({
     data,
@@ -185,7 +185,7 @@ const repeat = /*@__PURE__*/ (() => {
             return none;
         }
     };
-    return createRepeatOperator((seq, predicate) => _repeat(seq, predicate, 1, seq));
+    return repeat$1((seq, predicate) => _repeat(seq, predicate, 1, seq));
 })();
 const repeatT = { repeat };
 const scan = /*@__PURE__*/ (() => {
