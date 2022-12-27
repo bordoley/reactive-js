@@ -20,11 +20,11 @@
 
 ### SequenceLike
 
-▸ **SequenceLike**(): [`Option`](../modules/functions.md#option)<{ `data`: `T` ; `next`: [`SequenceLike`](containers.SequenceLike.md)<`T`\>  }\>
+▸ **SequenceLike**(): [`Option`](../modules/functions.md#option)<{ `[SequenceLike_data]`: `T` ; `[SequenceLike_next]`: [`SequenceLike`](containers.SequenceLike.md)<`T`\>  }\>
 
 #### Returns
 
-[`Option`](../modules/functions.md#option)<{ `data`: `T` ; `next`: [`SequenceLike`](containers.SequenceLike.md)<`T`\>  }\>
+[`Option`](../modules/functions.md#option)<{ `[SequenceLike_data]`: `T` ; `[SequenceLike_next]`: [`SequenceLike`](containers.SequenceLike.md)<`T`\>  }\>
 
 ## Table of contents
 
