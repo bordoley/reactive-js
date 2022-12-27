@@ -6,7 +6,6 @@ import { catchErrorObservable, mergeAllObservable, scanAsyncObservable, switchAl
 import { liftEnumerableObservable, liftObservable, liftEnumerableObservableT, liftRunnableObservable } from '../__internal__/rx/ObservableLike.lift.mjs';
 import { allAreEnumerable, allAreRunnable, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, subscribe as subscribe$1, takeFirst as takeFirst$1, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/ObservableLike.operators.mjs';
 import { observerMixin, createDelegatingObserver } from '../__internal__/rx/ObserverLike.internal.mjs';
-import { decodeWithCharsetSinkMixin, everySatisfySinkMixin, keepSinkMixin, mapSinkMixin, pairwiseSinkMixin, reduceSinkMixin, skipFirstSinkMixin, someSatisfySinkMixin } from '../__internal__/rx/SinkLike.mixins.mjs';
 import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { createDisposableRef, disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
 import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
@@ -44,6 +43,14 @@ import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.
 import { getObserverCount } from './MulticastObservableLike.mjs';
 import { sinkInto } from './ReactiveContainerLike.mjs';
 import create$3 from './__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create.mjs';
+import decodeWithCharsetMixin from './__internal__/SinkLike/SinkLike.decodeWithCharsetMixin.mjs';
+import everySatisfyMixin from './__internal__/SinkLike/SinkLike.everySatisfyMixin.mjs';
+import keepMixin from './__internal__/SinkLike/SinkLike.keepMixin.mjs';
+import { mapMixin } from './__internal__/SinkLike/SinkLike.mapMixin.mjs';
+import pairwiseMixin from './__internal__/SinkLike/SinkLike.pairwiseMixin.mjs';
+import reduceMixin from './__internal__/SinkLike/SinkLike.reduceMixin.mjs';
+import skipFirstMixin from './__internal__/SinkLike/SinkLike.skipFirstMixin.mjs';
+import someSatisfyMixin from './__internal__/SinkLike/SinkLike.someSatisfyMixin.mjs';
 import takeLastMixin from './__internal__/SinkLike/SinkLike.takeLastMixin.mjs';
 import takeWhileMixin from './__internal__/SinkLike/SinkLike.takeWhileMixin.mjs';
 import throwIfEmptyMixin from './__internal__/SinkLike/SinkLike.throwIfEmptyMixin.mjs';
@@ -171,7 +178,7 @@ const concatAllT = {
 const create = createObservable;
 const decodeWithCharset = 
 /*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = decodeWithCharsetSinkMixin(toObservable());
+    const typedDecodeWithCharsetMixin = decodeWithCharsetMixin(toObservable());
     const typedObserverMixin = observerMixin();
     const createDecodeWithCharsetObserver = createInstanceFactory(mixin(include(typedObserverMixin, typedDecodeWithCharsetMixin), function DecodeWithCharsetObserver(instance, delegate, charset) {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -204,7 +211,7 @@ const emptyT = {
 const everySatisfy = 
 /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
-    const typedEverySatisfySinkMixin = everySatisfySinkMixin(toObservable());
+    const typedEverySatisfySinkMixin = everySatisfyMixin(toObservable());
     const everySatisfyObserverMixin = mixin(include(typedEverySatisfySinkMixin, typedObserverMixin), function EverySatisfyObserver(instance, delegate, predicate) {
         init(typedObserverMixin, instance, getScheduler(delegate));
         init(typedEverySatisfySinkMixin, instance, delegate, predicate);
@@ -261,7 +268,7 @@ const isEnumerable = isEnumerable$1;
 const isRunnable = isRunnable$1;
 const keep = /*@__PURE__*/ (() => {
     const createKeepObserver = (() => {
-        const typedKeepSinkMixin = keepSinkMixin();
+        const typedKeepSinkMixin = keepMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedKeepSinkMixin), function KeepObserver(instance, delegate, predicate) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -342,7 +349,7 @@ const latest = /*@__PURE__*/ (() => {
 })();
 const map = /*@__PURE__*/ (() => {
     const createMapObserver = (() => {
-        const typedMapSinkMixin = mapSinkMixin();
+        const typedMapSinkMixin = mapMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedMapSinkMixin), function MapObserver(instance, delegate, mapper) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -365,7 +372,7 @@ const onSubscribe = onSubscribe$1;
 const pairwise = 
 /*@__PURE__*/ (() => {
     const createPairwiseObserver = (() => {
-        const typedPairwiseSinkMixin = pairwiseSinkMixin();
+        const typedPairwiseSinkMixin = pairwiseMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedPairwiseSinkMixin), function PairwiseObserver(instance, delegate) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -377,7 +384,7 @@ const pairwise =
 })();
 const pairwiseT = { pairwise };
 const reduce = /*@__PURE__*/ (() => {
-    const typedReduceSinkMixin = reduceSinkMixin(toObservable());
+    const typedReduceSinkMixin = reduceMixin(toObservable());
     const typedObserverMixin = observerMixin();
     const createReduceObserver = createInstanceFactory(mixin(include(typedObserverMixin, typedReduceSinkMixin), function ReduceObserver(instance, delegate, reducer, initialValue) {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -477,7 +484,7 @@ const share = (scheduler, options) => (source) => {
 const skipFirst = 
 /*@__PURE__*/ (() => {
     const createSkipFirstObserver = (() => {
-        const typedSkipFirstSinkMixin = skipFirstSinkMixin();
+        const typedSkipFirstSinkMixin = skipFirstMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedSkipFirstSinkMixin), function SkipFirstObserver(instance, delegate, skipCount) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -491,7 +498,7 @@ const skipFirstT = { skipFirst };
 const someSatisfy = 
 /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();
-    const typedSomeSatisfySinkMixin = someSatisfySinkMixin(toObservable());
+    const typedSomeSatisfySinkMixin = someSatisfyMixin(toObservable());
     const someSatisfyObserverMixin = mixin(include(typedSomeSatisfySinkMixin, typedObserverMixin), function EverySatisfyObserver(instance, delegate, predicate) {
         init(typedObserverMixin, instance, getScheduler(delegate));
         init(typedSomeSatisfySinkMixin, instance, delegate, predicate);

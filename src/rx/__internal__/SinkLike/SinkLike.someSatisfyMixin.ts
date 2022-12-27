@@ -1,6 +1,6 @@
+import { Mixin2, include, init, mixin } from "../../../__internal__/mixins";
 import { Predicate } from "../../../functions";
 import { ReactiveContainerLike, SinkLike } from "../../../rx";
-import { Mixin2, mixin, include, init } from "../../../__internal__/mixins";
 
 import SinkLike__satisfyMixin from "./SinkLike.satisfyMixin";
 

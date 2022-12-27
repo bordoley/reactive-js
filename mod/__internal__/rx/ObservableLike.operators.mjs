@@ -9,6 +9,9 @@ import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_sc
 import { getScheduler } from '../../rx/ObserverLike.mjs';
 import { sourceFrom, notify } from '../../rx/SinkLike.mjs';
 import { create, publishTo } from '../../rx/SubjectLike.mjs';
+import distinctUntilChangedMixin from '../../rx/__internal__/SinkLike/SinkLike.distinctUntilChangedMixin.mjs';
+import { forEachMixin } from '../../rx/__internal__/SinkLike/SinkLike.forEachMixin.mjs';
+import scanMixin from '../../rx/__internal__/SinkLike/SinkLike.scanMixin.mjs';
 import takeFirstMixin from '../../rx/__internal__/SinkLike/SinkLike.takeFirstMixin.mjs';
 import addTo from '../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import addToIgnoringChildErrors from '../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
@@ -22,14 +25,13 @@ import { createEnumerableObservable, createRunnableObservable, createObservable 
 import { liftEnumerableObservableT, liftEnumerableObservable, liftRunnableObservable, liftObservable } from './ObservableLike.lift.mjs';
 import { observerMixin, createDelegatingObserver, createObserver } from './ObserverLike.internal.mjs';
 import { createOnSink } from './ReactiveContainerLike.createOnSink.mjs';
-import { distinctUntilChangedSinkMixin, forEachSinkMixin, scanSinkMixin } from './SinkLike.mixins.mjs';
 
 const allAreEnumerable = compose(map((obs) => obs[ObservableLike_isEnumerable]), every(isTrue));
 const allAreRunnable = compose(map((obs) => obs[ObservableLike_isRunnable]), every(isTrue));
 const distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const createDistinctUntilChangedObserver = (() => {
-        const typedDistinctUntilChangedSinkMixin = distinctUntilChangedSinkMixin();
+        const typedDistinctUntilChangedSinkMixin = distinctUntilChangedMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedDistinctUntilChangedSinkMixin), function DistinctUntilChangedObserver(instance, delegate, equality) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -41,7 +43,7 @@ const distinctUntilChanged =
 })();
 const forEach = /*@__PURE__*/ (() => {
     const createForEachObserver = (() => {
-        const typedForEachSinkMixin = forEachSinkMixin();
+        const typedForEachSinkMixin = forEachMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedForEachSinkMixin), function ForEachObserver(instance, delegate, effect) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
@@ -103,7 +105,7 @@ const onSubscribe = (f) => (obs) => {
 };
 const scan = /*@__PURE__*/ (() => {
     const createScanObserver = (() => {
-        const typedScanSinkMixin = scanSinkMixin();
+        const typedScanSinkMixin = scanMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedObserverMixin, typedScanSinkMixin), function ScanObserver(instance, delegate, reducer, initialValue) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);

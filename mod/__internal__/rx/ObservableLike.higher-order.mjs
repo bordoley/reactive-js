@@ -5,6 +5,7 @@ import { getScheduler } from '../../rx/ObserverLike.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { notifySink } from '../../rx/SinkLike.mjs';
 import { create, publishTo, publish } from '../../rx/SubjectLike.mjs';
+import catchErrorMixin from '../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin.mjs';
 import addTo from '../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import disposed from '../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
@@ -21,11 +22,10 @@ import { liftObservable } from './ObservableLike.lift.mjs';
 import { forEach, subscribe, zipWithLatestFrom, takeFirst, onSubscribe } from './ObservableLike.operators.mjs';
 import { observerMixin } from './ObserverLike.internal.mjs';
 import { lift as lift$1 } from './RunnableObservableLike.lift.mjs';
-import { catchErrorSinkMixin } from './SinkLike.mixins.mjs';
 
 const createCatchError = (lift) => {
     const createCatchErrorObserver = (() => {
-        const typedCatchErrorSink = catchErrorSinkMixin();
+        const typedCatchErrorSink = catchErrorMixin();
         const typedObserverMixin = observerMixin();
         return createInstanceFactory(mixin(include(typedCatchErrorSink, typedObserverMixin), function CatchErrorObserver(instance, delegate, errorHandler) {
             init(typedCatchErrorSink, instance, delegate, errorHandler);
