@@ -20,8 +20,10 @@
 
 - [AsyncReducer](rx.md#asyncreducer)
 - [ScanAsync](rx.md#scanasync)
+- [ToEnumerableObservable](rx.md#toenumerableobservable)
 - [ToObservable](rx.md#toobservable)
 - [ToRunnable](rx.md#torunnable)
+- [ToRunnableObservable](rx.md#torunnableobservable)
 
 ## Type Aliases
 
@@ -52,6 +54,19 @@ ___
 
 ___
 
+### ToEnumerableObservable
+
+Ƭ **ToEnumerableObservable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toEnumerableObservable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
+
+___
+
 ### ToObservable
 
 Ƭ **ToObservable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toObservable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>  }
@@ -68,6 +83,19 @@ ___
 ### ToRunnable
 
 Ƭ **ToRunnable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toRunnable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TOptions` | `never` |
+
+___
+
+### ToRunnableObservable
+
+Ƭ **ToRunnableObservable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toRunnableObservable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\>  }
 
 #### Type parameters
 
