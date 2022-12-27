@@ -53,12 +53,18 @@ export interface ReadonlySetLike<T = unknown>
   readonly [ContainerLike_type]?: ReadonlySetLike<this[typeof ContainerLike_T]>;
 }
 
+/**  @ignore */
+export const SequenceLike_data = Symbol("SequenceLike_data");
+
+/**  @ignore */
+export const SequenceLike_next = Symbol("SequenceLike_next");
+
 export interface SequenceLike<T = unknown> extends ContainerLike {
   readonly [ContainerLike_type]?: SequenceLike<this[typeof ContainerLike_T]>;
 
   (): Option<{
-    readonly data: T;
-    readonly next: SequenceLike<T>;
+    readonly [SequenceLike_data]: T;
+    readonly [SequenceLike_next]: SequenceLike<T>;
   }>;
 }
 

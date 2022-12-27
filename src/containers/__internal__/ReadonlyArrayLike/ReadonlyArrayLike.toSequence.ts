@@ -1,6 +1,8 @@
 import {
   ReadonlyArrayLike,
   SequenceLike,
+  SequenceLike_data,
+  SequenceLike_next,
   ToSequence,
 } from "../../../containers";
 import { Option, none } from "../../../functions";
@@ -15,13 +17,13 @@ const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] = /*@__PURE__*/ (<
     index: number,
     count: number,
   ): Option<{
-    readonly data: T;
-    readonly next: SequenceLike<T>;
+    readonly [SequenceLike_data]: T;
+    readonly [SequenceLike_next]: SequenceLike<T>;
   }> =>
     count !== 0 && index >= 0
       ? {
-          data: arr[index],
-          next: () =>
+          [SequenceLike_data]: arr[index],
+          [SequenceLike_next]: () =>
             _arraySequence(
               arr,
               count > 0 ? index + 1 : index - 1,

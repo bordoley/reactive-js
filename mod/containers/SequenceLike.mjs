@@ -2,6 +2,7 @@
 import { create } from '../__internal__/ix/EnumerableLike.create.mjs';
 import { mutableEnumeratorMixin } from '../__internal__/ix/EnumeratorLike.mutable.mjs';
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
+import { SequenceLike_data, SequenceLike_next } from '../containers.mjs';
 import { isSome, none, pipe, strictEquality, getLength, callWith, returns } from '../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../ix.mjs';
 import { isDisposed, dispose } from '../util/DisposableLike.mjs';
@@ -11,13 +12,13 @@ import { toSequence, map as map$1, keepT as keepT$1 } from './ReadonlyArrayLike.
 import repeat$1 from './__internal__/ContainerLike/ContainerLike.repeat.mjs';
 
 const createNext = (data, next) => ({
-    data,
-    next,
+    [SequenceLike_data]: data,
+    [SequenceLike_next]: next,
 });
 const concatAll = () => (seq) => {
     const continueWith = (result, continuation) => {
         if (isSome(result)) {
-            return createNext(result.data, () => continueWith(result.next(), continuation));
+            return createNext(result[SequenceLike_data], () => continueWith(result[SequenceLike_next](), continuation));
         }
         else {
             return flattenIter(continuation());
@@ -25,7 +26,7 @@ const concatAll = () => (seq) => {
     };
     const flattenIter = (result) => {
         if (isSome(result)) {
-            return continueWith(result.data(), result.next);
+            return continueWith(result[SequenceLike_data](), result[SequenceLike_next]);
         }
         else {
             return none;
@@ -48,11 +49,11 @@ const distinctUntilChanged =
         let retval = next();
         while (true) {
             if (isSome(retval)) {
-                if (!equality(prevValue, retval.data)) {
-                    return createNext(retval.data, _distinctUntilChanged(equality, retval.data, retval.next));
+                if (!equality(prevValue, retval[SequenceLike_data])) {
+                    return createNext(retval[SequenceLike_data], _distinctUntilChanged(equality, retval[SequenceLike_data], retval[SequenceLike_next]));
                 }
                 else {
-                    retval = retval.next();
+                    retval = retval[SequenceLike_next]();
                 }
             }
             else {
@@ -64,7 +65,7 @@ const distinctUntilChanged =
         const { equality = strictEquality } = options;
         const result = seq();
         return isSome(result)
-            ? createNext(result.data, _distinctUntilChanged(equality, result.data, result.next))
+            ? createNext(result[SequenceLike_data], _distinctUntilChanged(equality, result[SequenceLike_data], result[SequenceLike_next]))
             : none;
     };
 })();
@@ -73,7 +74,10 @@ const distinctUntilChangedT = {
 };
 const generate = 
 /*@__PURE__*/ (() => {
-    const _generate = (generator, data) => () => ({ data, next: _generate(generator, generator(data)) });
+    const _generate = (generator, data) => () => ({
+        [SequenceLike_data]: data,
+        [SequenceLike_next]: _generate(generator, generator(data)),
+    });
     return (generator, initialValue) => () => {
         const acc = generator(initialValue());
         return _generate(generator, acc)();
@@ -87,11 +91,11 @@ const keep = /*@__PURE__*/ (() => {
         let result = seq();
         while (true) {
             if (isSome(result)) {
-                if (predicate(result.data)) {
-                    return createNext(result.data, _keep(predicate, result.next));
+                if (predicate(result[SequenceLike_data])) {
+                    return createNext(result[SequenceLike_data], _keep(predicate, result[SequenceLike_next]));
                 }
                 else {
-                    result = result.next();
+                    result = result[SequenceLike_next]();
                 }
             }
             else {
@@ -106,7 +110,7 @@ const map = /*@__PURE__*/ (() => {
     const _map = (mapper, seq) => () => {
         const result = seq();
         return isSome(result)
-            ? createNext(mapper(result.data), _map(mapper, result.next))
+            ? createNext(mapper(result[SequenceLike_data]), _map(mapper, result[SequenceLike_next]))
             : none;
     };
     return (mapper) => (seq) => _map(mapper, seq);
@@ -117,7 +121,7 @@ const pairwise =
     const _pairwise = (prev, seq) => () => {
         const result = seq();
         if (isSome(result)) {
-            const { data, next } = result;
+            const { [SequenceLike_data]: data, [SequenceLike_next]: next } = result;
             const v = [prev, data];
             return createNext(v, _pairwise(data, next));
         }
@@ -128,7 +132,7 @@ const pairwise =
     return () => (seq) => {
         const first = seq();
         if (isSome(first)) {
-            return _pairwise(first.data, first.next);
+            return _pairwise(first[SequenceLike_data], first[SequenceLike_next]);
         }
         else {
             return () => none;
@@ -145,7 +149,7 @@ const seek = (count) => (seq) => {
         for (let i = 0; i < count; i++) {
             const result = retval();
             if (isSome(result)) {
-                retval = result.next;
+                retval = result[SequenceLike_next];
             }
         }
         return retval;
@@ -157,7 +161,7 @@ const takeFirst =
         if (count > 0) {
             const result = seq();
             return isSome(result)
-                ? createNext(result.data, _takeFirst(count - 1, result.next))
+                ? createNext(result[SequenceLike_data], _takeFirst(count - 1, result[SequenceLike_next]))
                 : none;
         }
         else {
@@ -176,7 +180,7 @@ const repeat = /*@__PURE__*/ (() => {
     const _repeat = (src, predicate, count, seq) => () => {
         const result = seq();
         if (isSome(result)) {
-            return createNext(result.data, _repeat(src, predicate, count, result.next));
+            return createNext(result[SequenceLike_data], _repeat(src, predicate, count, result[SequenceLike_next]));
         }
         else if (predicate(count)) {
             return _repeat(src, predicate, count + 1, src)();
@@ -192,8 +196,8 @@ const scan = /*@__PURE__*/ (() => {
     const _scan = (reducer, acc, seq) => () => {
         const result = seq();
         if (isSome(result)) {
-            const nextAcc = reducer(acc, result.data);
-            return createNext(nextAcc, _scan(reducer, nextAcc, result.next));
+            const nextAcc = reducer(acc, result[SequenceLike_data]);
+            return createNext(nextAcc, _scan(reducer, nextAcc, result[SequenceLike_next]));
         }
         else {
             return none;
@@ -214,11 +218,11 @@ const takeLast =
         let result = seq();
         while (true) {
             if (isSome(result)) {
-                last.push(result.data);
+                last.push(result[SequenceLike_data]);
                 if (getLength(last) > maxCount) {
                     last.shift();
                 }
-                result = result.next();
+                result = result[SequenceLike_next]();
             }
             else {
                 break;
@@ -236,10 +240,10 @@ const takeWhile =
 /*@__PURE__*/ (() => {
     const _takeWhile = (predicate, inclusive, seq) => () => {
         const result = seq();
-        return isSome(result) && predicate(result.data)
-            ? createNext(result.data, _takeWhile(predicate, inclusive, result.next))
+        return isSome(result) && predicate(result[SequenceLike_data])
+            ? createNext(result[SequenceLike_data], _takeWhile(predicate, inclusive, result[SequenceLike_next]))
             : isSome(result) && inclusive
-                ? createNext(result.data, returns(none))
+                ? createNext(result[SequenceLike_data], returns(none))
                 : none;
     };
     return (predicate, options = {}) => (seq) => {
@@ -263,8 +267,8 @@ const toEnumerable =
             if (!isDisposed(this)) {
                 const next = this.seq();
                 if (isSome(next)) {
-                    this[EnumeratorLike_current] = next.data;
-                    this.seq = next.next;
+                    this[EnumeratorLike_current] = next[SequenceLike_data];
+                    this.seq = next[SequenceLike_next];
                 }
                 else {
                     pipe(this, dispose());
@@ -279,8 +283,8 @@ const toReadonlyArray = () => (seq) => {
     const result = [];
     let next = seq();
     while (isSome(next)) {
-        result.push(next.data);
-        next = next.next();
+        result.push(next[SequenceLike_data]);
+        next = next[SequenceLike_next]();
     }
     return result;
 };
@@ -294,8 +298,8 @@ export const toRunnable =
     createRunnable(sink => {
       let result = seq();
       while (isSome(result)) {
-        sink.notify(result.data);
-        result = result.next();
+        sink.notify(result[SequenceLike_data]);
+        result = result[SequenceLike_next]();
       }
     });
 
@@ -306,7 +310,7 @@ const zip = /*@__PURE__*/ (() => {
     const zip = (...sequences) => () => {
         const nextResults = pipe(sequences, map$1(callWith()), keepType(keepT$1, isSome));
         return getLength(nextResults) === getLength(sequences)
-            ? createNext(pipe(nextResults, map$1(x => x.data)), zip(...pipe(nextResults, map$1(x => x.next))))
+            ? createNext(pipe(nextResults, map$1(x => x[SequenceLike_data])), zip(...pipe(nextResults, map$1(x => x[SequenceLike_next]))))
             : none;
     };
     return zip;
