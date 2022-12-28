@@ -1,11 +1,11 @@
-import { Factory, identity, isSome, none, pipe } from "../../functions";
-import { ReactiveContainerLike, SinkLike } from "../../rx";
-import { sinkInto } from "../../rx/ReactiveContainerLike";
-import { DisposableOrTeardown } from "../../util";
-import DisposableLike__add from "../../util/__internal__/DisposableLike/DisposableLike.add";
-import DisposableLike__onDisposed from "../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
+import { Factory, identity, isSome, none, pipe } from "../../../functions";
+import { ReactiveContainerLike, SinkLike } from "../../../rx";
+import { DisposableOrTeardown } from "../../../util";
+import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
+import { sinkInto } from "../../ReactiveContainerLike";
 
-export const createOnSink = <
+const onSink = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
   T,
@@ -27,3 +27,5 @@ export const createOnSink = <
         : identity,
     );
   });
+
+export default onSink;

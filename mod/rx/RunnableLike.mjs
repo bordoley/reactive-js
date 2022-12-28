@@ -1,6 +1,5 @@
 /// <reference types="./RunnableLike.d.ts" />
 import { createInstanceFactory, mixin as mixin$1, include, init } from '../__internal__/mixins.mjs';
-import { createOnSink } from '../__internal__/rx/ReactiveContainerLike.createOnSink.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import repeat$1 from '../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
 import buffer$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.buffer.mjs';
@@ -24,6 +23,7 @@ import { DisposableLike_exception } from '../util.mjs';
 import { bindTo, addTo, dispose, isDisposed } from '../util/DisposableLike.mjs';
 import create$2 from './__internal__/DelegatingSinkLike/DelegatingSinkLike.create.mjs';
 import mixin from './__internal__/DelegatingSinkLike/DelegatingSinkLike.mixin.mjs';
+import onSink from './__internal__/ReactiveContainerLike/ReactiveContainerLike.onSink.mjs';
 import create$1 from './__internal__/RunnableLike/RunnableLike.create.mjs';
 import bufferMixin from './__internal__/SinkLike/SinkLike.bufferMixin.mjs';
 import catchErrorMixin from './__internal__/SinkLike/SinkLike.catchErrorMixin.mjs';
@@ -172,9 +172,7 @@ const never = () => create(ignore);
 const neverT = {
     never: never,
 };
-const onRun = (f) => (runnable) => {
-    return createOnSink(create, runnable, f);
-};
+const onRun = (f) => (runnable) => onSink(create, runnable, f);
 const pairwise = /*@__PURE__*/ (() => {
     const typedPairwiseSinkMixin = pairwiseMixin();
     return pipe(createInstanceFactory(typedPairwiseSinkMixin), lift, returns);

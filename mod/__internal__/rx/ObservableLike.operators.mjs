@@ -9,6 +9,7 @@ import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_sc
 import { getScheduler } from '../../rx/ObserverLike.mjs';
 import { sourceFrom, notify } from '../../rx/SinkLike.mjs';
 import { create, publishTo } from '../../rx/SubjectLike.mjs';
+import onSink from '../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.onSink.mjs';
 import distinctUntilChangedMixin from '../../rx/__internal__/SinkLike/SinkLike.distinctUntilChangedMixin.mjs';
 import { forEachMixin } from '../../rx/__internal__/SinkLike/SinkLike.forEachMixin.mjs';
 import scanMixin from '../../rx/__internal__/SinkLike/SinkLike.scanMixin.mjs';
@@ -24,7 +25,6 @@ import { createInstanceFactory, mixin, include, init, props } from '../mixins.mj
 import { createEnumerableObservable, createRunnableObservable, createObservable } from './ObservableLike.create.mjs';
 import { liftEnumerableObservableT, liftEnumerableObservable, liftRunnableObservable, liftObservable } from './ObservableLike.lift.mjs';
 import { observerMixin, createDelegatingObserver, createObserver } from './ObserverLike.internal.mjs';
-import { createOnSink } from './ReactiveContainerLike.createOnSink.mjs';
 
 const allAreEnumerable = compose(map((obs) => obs[ObservableLike_isEnumerable]), every(isTrue));
 const allAreRunnable = compose(map((obs) => obs[ObservableLike_isRunnable]), every(isTrue));
@@ -97,7 +97,7 @@ const multicast = (scheduler, options = {}) => observable => {
     return subject;
 };
 const onSubscribe = (f) => (obs) => {
-    return createOnSink(onSink => isEnumerable(obs)
+    return onSink(onSink => isEnumerable(obs)
         ? createEnumerableObservable(onSink)
         : isRunnable(obs)
             ? createRunnableObservable(onSink)

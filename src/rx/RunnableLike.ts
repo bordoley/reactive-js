@@ -4,7 +4,6 @@ import {
   init,
   mixin,
 } from "../__internal__/mixins";
-import { createOnSink } from "../__internal__/rx/ReactiveContainerLike.createOnSink";
 import {
   Buffer,
   CatchError,
@@ -82,6 +81,7 @@ import { DisposableLike_exception, DisposableOrTeardown } from "../util";
 import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
 import DelegateSinkLike__create from "./__internal__/DelegatingSinkLike/DelegatingSinkLike.create";
 import DelegateSinkLike__mixin from "./__internal__/DelegatingSinkLike/DelegatingSinkLike.mixin";
+import ReactiveContainerLike__onSink from "./__internal__/ReactiveContainerLike/ReactiveContainerLike.onSink";
 import RunnableLike__create from "./__internal__/RunnableLike/RunnableLike.create";
 import SinkLike__bufferMixin from "./__internal__/SinkLike/SinkLike.bufferMixin";
 import SinkLike__catchErrorMixin from "./__internal__/SinkLike/SinkLike.catchErrorMixin";
@@ -360,9 +360,8 @@ export const neverT: Never<RunnableLike> = {
 
 export const onRun =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
-  (runnable: RunnableLike<T>): RunnableLike<T> => {
-    return createOnSink(create, runnable, f);
-  };
+  (runnable: RunnableLike<T>): RunnableLike<T> =>
+    ReactiveContainerLike__onSink(create, runnable, f);
 
 export const pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
   T,

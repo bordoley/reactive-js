@@ -33,6 +33,7 @@ import {
   publishTo,
 } from "../../rx/SubjectLike";
 import EnumerableObservableLike__lift from "../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift";
+import RunnableObservableLike__lift from "../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift";
 import SinkLike__catchErrorMixin from "../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin";
 import { DisposableLike } from "../../util";
 import DisposableLike__addTo from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
@@ -69,7 +70,6 @@ import {
   zipWithLatestFrom,
 } from "./ObservableLike.operators";
 import { observerMixin } from "./ObserverLike.internal";
-import { lift as liftRunnableObservable } from "./RunnableObservableLike.lift";
 
 const createCatchError = <C extends ObservableLike>(
   lift: <T>(
@@ -121,7 +121,7 @@ export const catchErrorObservable: CatchError<ObservableLike>["catchError"] =
 
 export const catchErrorRunnableObservable: CatchError<RunnableObservableLike>["catchError"] =
   /*@__PURE__*/ createCatchError<RunnableObservableLike>(
-    liftRunnableObservable,
+    RunnableObservableLike__lift,
   ) as CatchError<RunnableObservableLike>["catchError"];
 
 const createMergeAll = <C extends ObservableLike>(
@@ -295,7 +295,7 @@ export const mergeAllRunnableObservable: ConcatAll<
     readonly maxConcurrency?: number;
   }
 >["concatAll"] = /*@__PURE__*/ createMergeAll<RunnableObservableLike>(
-  liftRunnableObservable,
+  RunnableObservableLike__lift,
 ) as ConcatAll<
   RunnableObservableLike,
   {
@@ -448,4 +448,6 @@ export const switchAllObservable: ConcatAll<ObservableLike>["concatAll"] =
   /*@__PURE__*/ createSwitchAll<ObservableLike>(liftObservable);
 
 export const switchAllRunnableObservable: ConcatAll<RunnableObservableLike>["concatAll"] =
-  /*@__PURE__*/ createSwitchAll<RunnableObservableLike>(liftRunnableObservable);
+  /*@__PURE__*/ createSwitchAll<RunnableObservableLike>(
+    RunnableObservableLike__lift,
+  );

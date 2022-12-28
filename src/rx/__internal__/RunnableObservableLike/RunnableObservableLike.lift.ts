@@ -1,18 +1,18 @@
 import {
   Lift,
   TReactive,
-} from "../../containers/__internal__/containers.internal";
-import { Function1, newInstance, pipeUnsafe } from "../../functions";
+} from "../../../containers/__internal__/containers.internal";
+import { Function1, newInstance, pipeUnsafe } from "../../../functions";
 import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   ReactiveContainerLike_sinkInto,
   RunnableObservableLike,
-} from "../../rx";
-import { sourceFrom } from "../../rx/SinkLike";
+} from "../../../rx";
+import { sourceFrom } from "../../../rx/SinkLike";
 
-export const lift: Lift<RunnableObservableLike, TReactive>["lift"] =
+const lift: Lift<RunnableObservableLike, TReactive>["lift"] =
   /*@__PURE__*/ (() => {
     class LiftedRunnableObservable<TIn, TOut>
       implements RunnableObservableLike<TOut>
@@ -52,3 +52,5 @@ export const lift: Lift<RunnableObservableLike, TReactive>["lift"] =
         );
       };
   })();
+
+export default lift;
