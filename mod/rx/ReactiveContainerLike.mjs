@@ -1,9 +1,6 @@
 /// <reference types="./ReactiveContainerLike.d.ts" />
-import { ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import sinkInto$1 from './__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto.mjs';
 
-const sinkInto = (sink) => source => {
-    source[ReactiveContainerLike_sinkInto](sink);
-    return source;
-};
+const sinkInto = sinkInto$1;
 
 export { sinkInto };

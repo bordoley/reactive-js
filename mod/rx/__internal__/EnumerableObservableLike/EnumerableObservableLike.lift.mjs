@@ -1,7 +1,7 @@
 /// <reference types="./EnumerableObservableLike.lift.d.ts" />
-import { pipeUnsafe, newInstance } from '../../functions.mjs';
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../rx.mjs';
-import { sourceFrom } from '../../rx/SinkLike.mjs';
+import { pipeUnsafe, newInstance } from '../../../functions.mjs';
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
+import { sourceFrom } from '../../SinkLike.mjs';
 
 const lift = 
 /*@__PURE__*/ (() => {
@@ -26,4 +26,4 @@ const lift =
     };
 })();
 
-export { lift };
+export { lift as default };
