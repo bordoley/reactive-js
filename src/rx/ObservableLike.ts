@@ -42,10 +42,6 @@ import {
   takeFirst as takeFirstInternal,
   zipWithLatestFrom as zipWithLatestFromInternal,
 } from "../__internal__/rx/ObservableLike.operators";
-import {
-  createDelegatingObserver,
-  observerMixin,
-} from "../__internal__/rx/ObserverLike.internal";
 import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import {
   DisposableRefLike,
@@ -209,6 +205,8 @@ import DisposableLike__mixin from "../util/__internal__/DisposableLike/Disposabl
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
 import EnumeratorSinkLike__create from "./__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create";
+import ObserverLike__createWithDelegate from "./__internal__/ObserverLike/ObserverLike.createWithDelegate";
+import ObserverLike__mixin from "./__internal__/ObserverLike/ObserverLike.mixin";
 import SinkLike__decodeWithCharsetMixin from "./__internal__/SinkLike/SinkLike.decodeWithCharsetMixin";
 import SinkLike__everySatisfyMixin from "./__internal__/SinkLike/SinkLike.everySatisfyMixin";
 import SinkLike__keepMixin from "./__internal__/SinkLike/SinkLike.keepMixin";
@@ -227,7 +225,7 @@ export const buffer: <T>(options?: {
 }) => ContainerOperator<ObservableLike, T, readonly T[]> = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedObserverMixin = observerMixin<T>();
+  const typedObserverMixin = ObserverLike__mixin<T>();
 
   type TProperties = {
     buffer: T[];
@@ -370,7 +368,7 @@ export const concat: Concat<ObservableLike>["concat"] = /*@__PURE__*/ (<
     next: number,
   ) =>
     pipe(
-      createDelegatingObserver(delegate),
+      ObserverLike__createWithDelegate(delegate),
       addTo(delegate),
       onComplete(() => {
         if (next < getLength(observables)) {
@@ -440,7 +438,7 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
     const typedDecodeWithCharsetMixin = SinkLike__decodeWithCharsetMixin(
       arrayToObservable(),
     );
-    const typedObserverMixin = observerMixin<ArrayBuffer>();
+    const typedObserverMixin = ObserverLike__mixin<ArrayBuffer>();
 
     const createDecodeWithCharsetObserver = createInstanceFactory(
       mixin(
@@ -499,7 +497,7 @@ export const emptyT: Empty<ObservableLike, { delay: number }> = {
 
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   /*@__PURE__*/ (<T>() => {
-    const typedObserverMixin = observerMixin();
+    const typedObserverMixin = ObserverLike__mixin();
     const typedEverySatisfySinkMixin = SinkLike__everySatisfyMixin<
       ObservableLike<boolean>,
       SinkLike<boolean>,
@@ -654,7 +652,7 @@ export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     predicate: Predicate<T>,
   ) => ObserverLike<T> = (<T>() => {
     const typedKeepSinkMixin = SinkLike__keepMixin<T>();
-    const typedObserverMixin = observerMixin<T>();
+    const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
       mixin(
@@ -687,7 +685,7 @@ const enum LatestMode {
   Zip = 2,
 }
 const latest = /*@__PURE__*/ (() => {
-  const typedObserverMixin = observerMixin();
+  const typedObserverMixin = ObserverLike__mixin();
   type LatestCtx = {
     delegate: ObserverLike<readonly unknown[]>;
     mode: LatestMode;
@@ -814,7 +812,7 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     predicate: Function1<TA, TB>,
   ) => ObserverLike<TA> = (<TA, TB>() => {
     const typedMapSinkMixin = SinkLike__mapMixin<TA, TB>();
-    const typedObserverMixin = observerMixin<TA>();
+    const typedObserverMixin = ObserverLike__mixin<TA>();
 
     return createInstanceFactory(
       mixin(
@@ -881,7 +879,7 @@ export const pairwise: Pairwise<ObservableLike>["pairwise"] =
       delegate: ObserverLike<readonly [T, T]>,
     ) => ObserverLike<T> = (<T>() => {
       const typedPairwiseSinkMixin = SinkLike__pairwiseMixin<T>();
-      const typedObserverMixin = observerMixin<T>();
+      const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
         mixin(
@@ -918,7 +916,7 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
     TAcc
   >(arrayToObservable());
 
-  const typedObserverMixin = observerMixin<T>();
+  const typedObserverMixin = ObserverLike__mixin<T>();
 
   const createReduceObserver = createInstanceFactory(
     mixin(
@@ -981,7 +979,7 @@ const repeatImpl: <T>(
     };
 
     return pipe(
-      createDelegatingObserver(delegate),
+      ObserverLike__createWithDelegate(delegate),
       addToIgnoringChildErrors(delegate),
       onDisposed(doOnDispose),
     );
@@ -1128,7 +1126,7 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
       count: number,
     ) => ObserverLike<T> = (<T>() => {
       const typedSkipFirstSinkMixin = SinkLike__skipFirstMixin<T>();
-      const typedObserverMixin = observerMixin<T>();
+      const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
         mixin(
@@ -1160,7 +1158,7 @@ export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
 
 export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
   /*@__PURE__*/ (<T>() => {
-    const typedObserverMixin = observerMixin();
+    const typedObserverMixin = ObserverLike__mixin();
     const typedSomeSatisfySinkMixin = SinkLike__someSatisfyMixin<
       ObservableLike<boolean>,
       SinkLike<boolean>,
@@ -1220,7 +1218,7 @@ export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
 export const takeLast: TakeLast<ObservableLike>["takeLast"] =
   /*@__PURE__*/ (() => {
     const typedTakeLastSinkMixin = SinkLike__takeLastMixin(arrayToObservable());
-    const typedObserverMixin = observerMixin();
+    const typedObserverMixin = ObserverLike__mixin();
 
     const createTakeLastObserver = createInstanceFactory(
       mixin(
@@ -1256,7 +1254,7 @@ export const takeUntil = <T>(
 
   const operator = (delegate: ObserverLike<T>) =>
     pipe(
-      createDelegatingObserver(delegate),
+      ObserverLike__createWithDelegate(delegate),
       bindTo(delegate),
       bindTo(pipe(notifier, takeFirst<T>(), subscribe(getScheduler(delegate)))),
     );
@@ -1271,7 +1269,7 @@ export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
       inclusive: boolean,
     ) => ObserverLike<T> = (<T>() => {
       const typedTakeWhileSinkMixin = SinkLike__takeWhileMixin<T>();
-      const typedObserverMixin = observerMixin<T>();
+      const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
         mixin(
@@ -1341,7 +1339,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
     durationFunction: Function1<T, ObservableLike>,
     mode: ThrottleMode,
   ) => ObserverLike<T> = (<T>() => {
-    const typedObserverMixin = observerMixin<T>();
+    const typedObserverMixin = ObserverLike__mixin<T>();
 
     type TProperties = {
       readonly delegate: ObserverLike<T>;
@@ -1474,7 +1472,7 @@ export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (<T>() => {
       const typedThrowIfEmptySinkMixin = SinkLike__throwIfEmptyMixin<T>();
-      const typedObserverMixin = observerMixin<T>();
+      const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
         mixin(
@@ -1529,7 +1527,7 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
   const timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 
   const typedDisposableRefMixin = disposableRefMixin();
-  const typedObserverMixin = observerMixin();
+  const typedObserverMixin = ObserverLike__mixin();
 
   type TProperties = {
     readonly delegate: ObserverLike<T>;
@@ -1608,7 +1606,7 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
     const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
-    const typedObserverMixin = observerMixin<T>();
+    const typedObserverMixin = ObserverLike__mixin<T>();
 
     type TEnumeratorSchedulerProperties = {
       [SchedulerLike_inContinuation]: boolean;
@@ -1870,7 +1868,7 @@ export const withLatestFrom: <TA, TB, T>(
     other: ObservableLike<TB>,
     selector: Function2<TA, TB, T>,
   ) => ObserverLike<TA> = (<TA, TB, T>() => {
-    const typedObserverMixin = observerMixin<TA>();
+    const typedObserverMixin = ObserverLike__mixin<TA>();
 
     type TProperties = {
       readonly delegate: ObserverLike<T>;
@@ -1948,7 +1946,7 @@ export const withLatestFrom: <TA, TB, T>(
 })();
 
 export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
-  const typedObserverMixin = observerMixin();
+  const typedObserverMixin = ObserverLike__mixin();
 
   const shouldEmit = compose(
     mapArray((x: EnumeratorLike) => hasCurrent(x) || move(x)),

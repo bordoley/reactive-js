@@ -5,7 +5,6 @@ import { createEnumerableObservable, createRunnableObservable, createObservable,
 import { catchErrorObservable, mergeAllObservable, scanAsyncObservable, switchAllObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
 import { liftEnumerableObservable, liftObservable, liftEnumerableObservableT, liftRunnableObservable } from '../__internal__/rx/ObservableLike.lift.mjs';
 import { allAreEnumerable, allAreRunnable, distinctUntilChanged as distinctUntilChanged$1, forEach as forEach$1, mergeImpl, isEnumerable as isEnumerable$1, isRunnable as isRunnable$1, merge as merge$1, mergeT as mergeT$1, multicast as multicast$1, onSubscribe as onSubscribe$1, scan as scan$1, subscribe as subscribe$1, takeFirst as takeFirst$1, zipWithLatestFrom as zipWithLatestFrom$1 } from '../__internal__/rx/ObservableLike.operators.mjs';
-import { observerMixin, createDelegatingObserver } from '../__internal__/rx/ObserverLike.internal.mjs';
 import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { createDisposableRef, disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
 import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
@@ -43,6 +42,8 @@ import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.
 import { getObserverCount } from './MulticastObservableLike.mjs';
 import { sinkInto } from './ReactiveContainerLike.mjs';
 import create$3 from './__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create.mjs';
+import createWithDelegate from './__internal__/ObserverLike/ObserverLike.createWithDelegate.mjs';
+import observerMixin from './__internal__/ObserverLike/ObserverLike.mixin.mjs';
 import decodeWithCharsetMixin from './__internal__/SinkLike/SinkLike.decodeWithCharsetMixin.mjs';
 import everySatisfyMixin from './__internal__/SinkLike/SinkLike.everySatisfyMixin.mjs';
 import keepMixin from './__internal__/SinkLike/SinkLike.keepMixin.mjs';
@@ -133,7 +134,7 @@ const combineLatestT = {
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  */
 const concat = /*@__PURE__*/ (() => {
-    const createConcatObserver = (delegate, observables, next) => pipe(createDelegatingObserver(delegate), addTo(delegate), onComplete(() => {
+    const createConcatObserver = (delegate, observables, next) => pipe(createWithDelegate(delegate), addTo(delegate), onComplete(() => {
         if (next < getLength(observables)) {
             pipe(createConcatObserver(delegate, observables, next + 1), sourceFrom(observables[next]));
         }
@@ -414,7 +415,7 @@ const repeatImpl = /*@__PURE__*/ (() => {
                 pipe(observable, forEach(notifySink(delegate)), subscribe(getScheduler(delegate)), addToIgnoringChildErrors(delegate), onDisposed(doOnDispose));
             }
         };
-        return pipe(createDelegatingObserver(delegate), addToIgnoringChildErrors(delegate), onDisposed(doOnDispose));
+        return pipe(createWithDelegate(delegate), addToIgnoringChildErrors(delegate), onDisposed(doOnDispose));
     };
     return (shouldRepeat) => (observable) => {
         const operator = pipe(createRepeatObserver, partial(observable, shouldRepeat));
@@ -535,7 +536,7 @@ const takeUntil = (notifier) => {
         : isRunnable(notifier)
             ? liftRunnableObservable
             : liftObservable;
-    const operator = (delegate) => pipe(createDelegatingObserver(delegate), bindTo(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))));
+    const operator = (delegate) => pipe(createWithDelegate(delegate), bindTo(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))));
     return lift(operator);
 };
 const takeWhile = 

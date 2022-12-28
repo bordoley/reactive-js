@@ -33,6 +33,7 @@ import {
   publishTo,
 } from "../../rx/SubjectLike";
 import EnumerableObservableLike__lift from "../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift";
+import ObserverLike__mixin from "../../rx/__internal__/ObserverLike/ObserverLike.mixin";
 import RunnableObservableLike__lift from "../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift";
 import SinkLike__catchErrorMixin from "../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin";
 import { DisposableLike } from "../../util";
@@ -69,7 +70,6 @@ import {
   takeFirst,
   zipWithLatestFrom,
 } from "./ObservableLike.operators";
-import { observerMixin } from "./ObserverLike.internal";
 
 const createCatchError = <C extends ObservableLike>(
   lift: <T>(
@@ -82,7 +82,7 @@ const createCatchError = <C extends ObservableLike>(
       ObserverLike<T>,
       T
     >();
-    const typedObserverMixin = observerMixin<T>();
+    const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
       mixin(
@@ -134,7 +134,7 @@ const createMergeAll = <C extends ObservableLike>(
     maxBufferSize: number,
     maxConcurrency: number,
   ) => ObserverLike<ContainerOf<C, T>> = (<T>() => {
-    const typedObserverMixin = observerMixin<ContainerOf<C, T>>();
+    const typedObserverMixin = ObserverLike__mixin<ContainerOf<C, T>>();
 
     type TProperties = {
       activeCount: number;
@@ -368,7 +368,7 @@ const createSwitchAll = <C extends ObservableLike>(
   const createSwitchAllObserver: <T>(
     o: ObserverLike<T>,
   ) => ObserverLike<ContainerOf<C, T>> = (<T>() => {
-    const typedObserverMixin = observerMixin<ContainerOf<C, T>>();
+    const typedObserverMixin = ObserverLike__mixin<ContainerOf<C, T>>();
 
     type TProperties = {
       readonly currentRef: DisposableRefLike;
