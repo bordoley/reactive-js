@@ -42,6 +42,9 @@ import {
 import { getScheduler } from "../../rx/ObserverLike";
 import { notify, sourceFrom } from "../../rx/SinkLike";
 import { create as createSubject, publishTo } from "../../rx/SubjectLike";
+import ObserverLike__create from "../../rx/__internal__/ObserverLike/ObserverLike.create";
+import ObserverLike__createWithDelegate from "../../rx/__internal__/ObserverLike/ObserverLike.createWithDelegate";
+import ObserverLike__mixin from "../../rx/__internal__/ObserverLike/ObserverLike.mixin";
 import ReactiveContainerLike__onSink from "../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.onSink";
 import SinkLike__distinctUntilChangedMixin from "../../rx/__internal__/SinkLike/SinkLike.distinctUntilChangedMixin";
 import SinkLike__forEachMixin from "../../rx/__internal__/SinkLike/SinkLike.forEachMixin";
@@ -75,11 +78,6 @@ import {
   liftObservable,
   liftRunnableObservable,
 } from "./ObservableLike.lift";
-import {
-  createDelegatingObserver,
-  createObserver,
-  observerMixin,
-} from "./ObserverLike.internal";
 
 export const allAreEnumerable = compose(
   mapArray((obs: ObservableLike) => obs[ObservableLike_isEnumerable]),
@@ -99,7 +97,7 @@ export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinc
     ) => ObserverLike<T> = (<T>() => {
       const typedDistinctUntilChangedSinkMixin =
         SinkLike__distinctUntilChangedMixin<T>();
-      const typedObserverMixin = observerMixin<T>();
+      const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
         mixin(
@@ -143,7 +141,7 @@ export const forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
     effect: SideEffect1<T>,
   ) => ObserverLike<T> = (<T>() => {
     const typedForEachSinkMixin = SinkLike__forEachMixin<T>();
-    const typedObserverMixin = observerMixin<T>();
+    const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
       mixin(
@@ -187,7 +185,7 @@ export const mergeImpl = /*@__PURE__*/ (() => {
     },
   ) =>
     pipe(
-      createDelegatingObserver(delegate),
+      ObserverLike__createWithDelegate(delegate),
       DisposableLike__addTo(delegate),
       DisposableLike__onComplete(() => {
         ctx.completedCount++;
@@ -273,7 +271,7 @@ export const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (() => {
   ) => ObserverLike<T> = (<T, TAcc>() => {
     const typedScanSinkMixin = SinkLike__scanMixin<T, TAcc>();
 
-    const typedObserverMixin = observerMixin<T>();
+    const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
       mixin(
@@ -303,7 +301,7 @@ export const subscribe: <T>(
 ) => Function1<ObservableLike<T>, DisposableLike> = scheduler => observable =>
   pipe(
     scheduler,
-    createObserver,
+    ObserverLike__create,
     DisposableLike__addToIgnoringChildErrors(scheduler),
     sourceFrom(observable),
   );
@@ -315,7 +313,7 @@ export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
       count: number,
     ) => ObserverLike<T> = (<T>() => {
       const typedTakeFirstSinkMixin = SinkLike_takeFirstMixin<T>();
-      const typedObserverMixin = observerMixin<T>();
+      const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
         mixin(
@@ -353,7 +351,7 @@ export const zipWithLatestFrom: <TA, TB, T>(
     other: ObservableLike<TB>,
     selector: Function2<TA, TB, T>,
   ) => ObserverLike<TA> = (<TA, TB, T>() => {
-    const typedObserverMixin = observerMixin<TA>();
+    const typedObserverMixin = ObserverLike__mixin<TA>();
 
     type TProperties = {
       readonly delegate: ObserverLike<T>;

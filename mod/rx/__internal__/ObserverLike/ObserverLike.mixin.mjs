@@ -1,13 +1,14 @@
-/// <reference types="./ObserverLike.internal.d.ts" />
-import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../../functions.mjs';
-import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../rx.mjs';
-import { schedule, getScheduler } from '../../rx/ObserverLike.mjs';
-import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../scheduling.mjs';
-import { yield_ } from '../../scheduling/ContinuationLike.mjs';
-import { DisposableLike_exception } from '../../util.mjs';
-import { onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../util/DisposableLike.mjs';
-import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import { createInstanceFactory, mixin, init, props, include } from '../mixins.mjs';
+/// <reference types="./ObserverLike.mixin.d.ts" />
+import { createInstanceFactory, mixin, init, props } from '../../../__internal__/mixins.mjs';
+import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../../../functions.mjs';
+import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../../rx.mjs';
+import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../../scheduling.mjs';
+import { yield_ } from '../../../scheduling/ContinuationLike.mjs';
+import { DisposableLike_exception } from '../../../util.mjs';
+import { onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../../util/DisposableLike.mjs';
+import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import getScheduler from './ObserverLike.getScheduler.mjs';
+import schedule from './ObserverLike.schedule.mjs';
 
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {
@@ -57,7 +58,8 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         },
     }));
 })();
-const observerMixin = /*@__PURE__*/ (() => {
+const observerMixin = 
+/*@__PURE__*/ (() => {
     return pipe(mixin(function ObserverMixin(instance, scheduler) {
         instance[ObserverLike_scheduler] = scheduler;
         return instance;
@@ -76,31 +78,5 @@ const observerMixin = /*@__PURE__*/ (() => {
         },
     }), returns);
 })();
-const createDelegatingObserver = /*@__PURE__*/ (() => {
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(disposableMixin, typedObserverMixin), function DelegatingObserver(instance, observer) {
-        init(disposableMixin, instance);
-        init(typedObserverMixin, instance, getScheduler(observer));
-        instance.delegate = observer;
-        return instance;
-    }, props({
-        delegate: none,
-    }), {
-        [SinkLike_notify](next) {
-            this.delegate[SinkLike_notify](next);
-        },
-    }));
-})();
-const createObserver = 
-/*@__PURE__*/ (() => {
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mixin(include(disposableMixin, typedObserverMixin), function Observer(instance, scheduler) {
-        init(disposableMixin, instance);
-        init(typedObserverMixin, instance, scheduler);
-        return instance;
-    }, {}, {
-        [SinkLike_notify](_) { },
-    }));
-})();
 
-export { createDelegatingObserver, createObserver, observerMixin };
+export { observerMixin as default };

@@ -6,6 +6,7 @@ import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { notifySink } from '../../rx/SinkLike.mjs';
 import { create, publishTo, publish } from '../../rx/SubjectLike.mjs';
 import lift from '../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift.mjs';
+import observerMixin from '../../rx/__internal__/ObserverLike/ObserverLike.mixin.mjs';
 import lift$1 from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift.mjs';
 import catchErrorMixin from '../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin.mjs';
 import addTo from '../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
@@ -21,7 +22,6 @@ import { MutableRefLike_current } from '../util/MutableRefLike.mjs';
 import { createEnumerableObservable, createObservable, createRunnableObservable } from './ObservableLike.create.mjs';
 import { liftObservable } from './ObservableLike.lift.mjs';
 import { forEach, subscribe, zipWithLatestFrom, takeFirst, onSubscribe } from './ObservableLike.operators.mjs';
-import { observerMixin } from './ObserverLike.internal.mjs';
 
 const createCatchError = (lift) => {
     const createCatchErrorObserver = (() => {

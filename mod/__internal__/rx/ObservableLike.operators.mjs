@@ -9,6 +9,9 @@ import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_sc
 import { getScheduler } from '../../rx/ObserverLike.mjs';
 import { sourceFrom, notify } from '../../rx/SinkLike.mjs';
 import { create, publishTo } from '../../rx/SubjectLike.mjs';
+import create$1 from '../../rx/__internal__/ObserverLike/ObserverLike.create.mjs';
+import createWithDelegate from '../../rx/__internal__/ObserverLike/ObserverLike.createWithDelegate.mjs';
+import observerMixin from '../../rx/__internal__/ObserverLike/ObserverLike.mixin.mjs';
 import onSink from '../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.onSink.mjs';
 import distinctUntilChangedMixin from '../../rx/__internal__/SinkLike/SinkLike.distinctUntilChangedMixin.mjs';
 import { forEachMixin } from '../../rx/__internal__/SinkLike/SinkLike.forEachMixin.mjs';
@@ -24,7 +27,6 @@ import onComplete from '../../util/__internal__/DisposableLike/DisposableLike.on
 import { createInstanceFactory, mixin, include, init, props } from '../mixins.mjs';
 import { createEnumerableObservable, createRunnableObservable, createObservable } from './ObservableLike.create.mjs';
 import { liftEnumerableObservableT, liftEnumerableObservable, liftRunnableObservable, liftObservable } from './ObservableLike.lift.mjs';
-import { observerMixin, createDelegatingObserver, createObserver } from './ObserverLike.internal.mjs';
 
 const allAreEnumerable = compose(map((obs) => obs[ObservableLike_isEnumerable]), every(isTrue));
 const allAreRunnable = compose(map((obs) => obs[ObservableLike_isRunnable]), every(isTrue));
@@ -56,7 +58,7 @@ const forEach = /*@__PURE__*/ (() => {
 const isEnumerable = (obs) => obs[ObservableLike_isEnumerable];
 const isRunnable = (obs) => obs[ObservableLike_isRunnable];
 const mergeImpl = /*@__PURE__*/ (() => {
-    const createMergeObserver = (delegate, count, ctx) => pipe(createDelegatingObserver(delegate), addTo(delegate), onComplete(() => {
+    const createMergeObserver = (delegate, count, ctx) => pipe(createWithDelegate(delegate), addTo(delegate), onComplete(() => {
         ctx.completedCount++;
         if (ctx.completedCount >= count) {
             pipe(delegate, dispose());
@@ -115,7 +117,7 @@ const scan = /*@__PURE__*/ (() => {
     })();
     return pipe(createScanObserver, scan$1(liftEnumerableObservableT));
 })();
-const subscribe = scheduler => observable => pipe(scheduler, createObserver, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
+const subscribe = scheduler => observable => pipe(scheduler, create$1, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
 const takeFirst = 
 /*@__PURE__*/ (() => {
     const createTakeFirstObserver = (() => {
