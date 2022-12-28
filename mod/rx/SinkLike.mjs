@@ -1,14 +1,10 @@
 /// <reference types="./SinkLike.d.ts" />
-import { SinkLike_notify, ReactiveContainerLike_sinkInto } from '../rx.mjs';
+import notify$1 from './__internal__/SinkLike/SinkLike.notify.mjs';
+import notifySink$1 from './__internal__/SinkLike/SinkLike.notifySink.mjs';
+import sourceFrom$1 from './__internal__/SinkLike/SinkLike.sourceFrom.mjs';
 
-const notify = (v) => (sink) => {
-    sink[SinkLike_notify](v);
-    return sink;
-};
-const notifySink = (sink) => (next) => sink[SinkLike_notify](next);
-const sourceFrom = (source) => sink => {
-    source[ReactiveContainerLike_sinkInto](sink);
-    return sink;
-};
+const notify = notify$1;
+const notifySink = notifySink$1;
+const sourceFrom = sourceFrom$1;
 
 export { notify, notifySink, sourceFrom };

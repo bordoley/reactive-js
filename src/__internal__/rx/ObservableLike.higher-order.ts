@@ -32,6 +32,7 @@ import {
   publish,
   publishTo,
 } from "../../rx/SubjectLike";
+import EnumerableObservableLike__lift from "../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift";
 import SinkLike__catchErrorMixin from "../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin";
 import { DisposableLike } from "../../util";
 import DisposableLike__addTo from "../../util/__internal__/DisposableLike/DisposableLike.addTo";
@@ -54,7 +55,6 @@ import {
   createDisposableRef,
 } from "../util/DisposableRefLike";
 import { MutableRefLike_current } from "../util/MutableRefLike";
-import { lift as liftEnumerableObservable } from "./EnumerableObservableLike.lift";
 import {
   createEnumerableObservable,
   createObservable,
@@ -111,7 +111,7 @@ const createCatchError = <C extends ObservableLike>(
 
 export const catchErrorEnumerableObservable: CatchError<EnumerableObservableLike>["catchError"] =
   /*@__PURE__*/ createCatchError<EnumerableObservableLike>(
-    liftEnumerableObservable,
+    EnumerableObservableLike__lift,
   ) as CatchError<EnumerableObservableLike>["catchError"];
 
 export const catchErrorObservable: CatchError<ObservableLike>["catchError"] =
@@ -263,7 +263,7 @@ export const mergeAllEnumerableObservable: ConcatAll<
     readonly maxConcurrency?: number;
   }
 >["concatAll"] = /*@__PURE__*/ createMergeAll<EnumerableObservableLike>(
-  liftEnumerableObservable,
+  EnumerableObservableLike__lift,
 ) as ConcatAll<
   EnumerableObservableLike,
   {
@@ -441,7 +441,7 @@ const createSwitchAll = <C extends ObservableLike>(
 
 export const switchAllEnumerableObservable: ConcatAll<EnumerableObservableLike>["concatAll"] =
   /*@__PURE__*/ createSwitchAll<EnumerableObservableLike>(
-    liftEnumerableObservable,
+    EnumerableObservableLike__lift,
   );
 
 export const switchAllObservable: ConcatAll<ObservableLike>["concatAll"] =

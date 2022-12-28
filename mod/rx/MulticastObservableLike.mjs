@@ -1,7 +1,9 @@
 /// <reference types="./MulticastObservableLike.d.ts" />
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay } from '../rx.mjs';
+import '../rx.mjs';
+import getObserverCount$1 from './__internal__/MulticastObservableLike/MulticastObservableLike.getObserverCount.mjs';
+import getReplay$1 from './__internal__/MulticastObservableLike/MulticastObservableLike.getReplay.mjs';
 
-const getObserverCount = (obs) => obs[MulticastObservableLike_observerCount];
-const getReplay = (obs) => obs[MulticastObservableLike_replay];
+const getObserverCount = getObserverCount$1;
+const getReplay = getReplay$1;
 
 export { getObserverCount, getReplay };

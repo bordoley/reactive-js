@@ -1,30 +1,7 @@
-import { Function1, SideEffect, pipe } from "../functions";
-import {
-  ObserverLike,
-  ObserverLike_dispatcher,
-  ObserverLike_scheduler,
-} from "../rx";
-import { ContinuationLike, DispatcherLike, SchedulerLike } from "../scheduling";
-import { schedule as scheduleOnScheduler } from "../scheduling/SchedulerLike";
-import { DisposableLike } from "../util";
-import { addTo } from "../util/DisposableLike";
+import ObserverLike__getDispatcher from "./__internal__/ObserverLike/ObserverLike.getDispatcher";
+import ObserverLike__getScheduler from "./__internal__/ObserverLike/ObserverLike.getScheduler";
+import ObserverLike__schedule from "./__internal__/ObserverLike/ObserverLike.schedule";
 
-export const getScheduler = <T>(observer: ObserverLike<T>): SchedulerLike =>
-  observer[ObserverLike_scheduler];
-
-export const getDispatcher = <T>(
-  observer: ObserverLike<T>,
-): DispatcherLike<T> => observer[ObserverLike_dispatcher];
-
-export const schedule =
-  (
-    f: SideEffect | ContinuationLike,
-    options?: { readonly delay?: number },
-  ): Function1<ObserverLike<unknown>, DisposableLike> =>
-  observer =>
-    pipe(
-      observer,
-      getScheduler,
-      scheduleOnScheduler(f, options),
-      addTo(observer),
-    );
+export const getDispatcher = ObserverLike__getDispatcher;
+export const getScheduler = ObserverLike__getScheduler;
+export const schedule = ObserverLike__schedule;
