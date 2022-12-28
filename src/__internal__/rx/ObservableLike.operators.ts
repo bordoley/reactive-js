@@ -42,6 +42,7 @@ import {
 import { getScheduler } from "../../rx/ObserverLike";
 import { notify, sourceFrom } from "../../rx/SinkLike";
 import { create as createSubject, publishTo } from "../../rx/SubjectLike";
+import ReactiveContainerLike__onSink from "../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.onSink";
 import SinkLike__distinctUntilChangedMixin from "../../rx/__internal__/SinkLike/SinkLike.distinctUntilChangedMixin";
 import SinkLike__forEachMixin from "../../rx/__internal__/SinkLike/SinkLike.forEachMixin";
 import SinkLike__scanMixin from "../../rx/__internal__/SinkLike/SinkLike.scanMixin";
@@ -79,7 +80,6 @@ import {
   createObserver,
   observerMixin,
 } from "./ObserverLike.internal";
-import { createOnSink } from "./ReactiveContainerLike.createOnSink";
 
 export const allAreEnumerable = compose(
   mapArray((obs: ObservableLike) => obs[ObservableLike_isEnumerable]),
@@ -253,7 +253,7 @@ export const multicast =
 export const onSubscribe =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
   (obs: ObservableLike<T>): ObservableLike<T> => {
-    return createOnSink(
+    return ReactiveContainerLike__onSink(
       onSink =>
         isEnumerable(obs)
           ? createEnumerableObservable(onSink)
