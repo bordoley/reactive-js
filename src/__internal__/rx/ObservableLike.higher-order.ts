@@ -33,6 +33,11 @@ import {
   publishTo,
 } from "../../rx/SubjectLike";
 import EnumerableObservableLike__lift from "../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift";
+import ObservableLike__forEach from "../../rx/__internal__/ObservableLike/ObservableLike.forEach";
+import ObservableLike__onSubscribe from "../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe";
+import ObservableLike__subscribe from "../../rx/__internal__/ObservableLike/ObservableLike.subscribe";
+import ObservableLike__takeFirst from "../../rx/__internal__/ObservableLike/ObservableLike.takeFirst";
+import ObservableLike__zipWithLatestFrom from "../../rx/__internal__/ObservableLike/ObservableLike.zipWithLatestFrom";
 import ObserverLike__mixin from "../../rx/__internal__/ObserverLike/ObserverLike.mixin";
 import RunnableObservableLike__lift from "../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift";
 import SinkLike__catchErrorMixin from "../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin";
@@ -63,13 +68,6 @@ import {
   createRunnableObservable,
 } from "./ObservableLike.create";
 import { liftObservable } from "./ObservableLike.lift";
-import {
-  forEach,
-  onSubscribe,
-  subscribe,
-  takeFirst,
-  zipWithLatestFrom,
-} from "./ObservableLike.operators";
 
 const createCatchError = <C extends ObservableLike>(
   lift: <T>(
@@ -156,8 +154,8 @@ const createMergeAll = <C extends ObservableLike>(
 
           pipe(
             nextObs,
-            forEach(notifySink(observer.delegate)),
-            subscribe(getScheduler(observer)),
+            ObservableLike__forEach(notifySink(observer.delegate)),
+            ObservableLike__subscribe(getScheduler(observer)),
             DisposableLike__addTo(observer.delegate),
             DisposableLike__onComplete(observer.onDispose),
           );
@@ -323,12 +321,16 @@ const createScanAsync = <
 
         pipe(
           observable,
-          zipWithLatestFrom(accFeedbackStream, (next, acc: TAcc) =>
-            pipe(scanner(acc, next), takeFirst()),
+          ObservableLike__zipWithLatestFrom(
+            accFeedbackStream,
+            (next, acc: TAcc) =>
+              pipe(scanner(acc, next), ObservableLike__takeFirst()),
           ),
           switchAllObservable(),
-          forEach(publishTo(accFeedbackStream)),
-          onSubscribe(() => pipe(accFeedbackStream, publish(initialValue()))),
+          ObservableLike__forEach(publishTo(accFeedbackStream)),
+          ObservableLike__onSubscribe(() =>
+            pipe(accFeedbackStream, publish(initialValue())),
+          ),
           sinkInto(observer),
         );
       };
@@ -422,8 +424,8 @@ const createSwitchAll = <C extends ObservableLike>(
           ) {
             this.currentRef[MutableRefLike_current] = pipe(
               next,
-              forEach(notifySink(this.delegate)),
-              subscribe(getScheduler(this)),
+              ObservableLike__forEach(notifySink(this.delegate)),
+              ObservableLike__subscribe(getScheduler(this)),
               DisposableLike__onComplete(() => {
                 if (DisposableLike__isDisposed(this)) {
                   pipe(this.delegate, DisposableLike__dispose());

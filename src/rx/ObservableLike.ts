@@ -28,19 +28,9 @@ import {
 import {
   allAreEnumerable,
   allAreRunnable,
-  distinctUntilChanged as distinctUntilChangedInternal,
-  forEach as forEachInternal,
-  isEnumerable as isEnumerableInternal,
-  isRunnable as isRunnableInternal,
   mergeImpl,
   merge as mergeInternal,
   mergeT as mergeTInternal,
-  multicast as multicastInternal,
-  onSubscribe as onSubscribeInternal,
-  scan as scanInternal,
-  subscribe as subscribeInternal,
-  takeFirst as takeFirstInternal,
-  zipWithLatestFrom as zipWithLatestFromInternal,
 } from "../__internal__/rx/ObservableLike.operators";
 import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import {
@@ -205,6 +195,16 @@ import DisposableLike__mixin from "../util/__internal__/DisposableLike/Disposabl
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
 import EnumeratorSinkLike__create from "./__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create";
+import ObservableLike__distinctUntilChanged from "./__internal__/ObservableLike/ObservableLike.distinctUntilChanged";
+import ObservableLike__forEach from "./__internal__/ObservableLike/ObservableLike.forEach";
+import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
+import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
+import ObservableLike__multicast from "./__internal__/ObservableLike/ObservableLike.multicast";
+import ObservableLike__onSubscribe from "./__internal__/ObservableLike/ObservableLike.onSubscribe";
+import ObservableLike__scan from "./__internal__/ObservableLike/ObservableLike.scan";
+import ObservableLike__subscribe from "./__internal__/ObservableLike/ObservableLike.subscribe";
+import ObservableLike__takeFirst from "./__internal__/ObservableLike/ObservableLike.takeFirst";
+import ObservableLike__zipWithLatestFrom from "./__internal__/ObservableLike/ObservableLike.zipWithLatestFrom";
 import ObserverLike__createWithDelegate from "./__internal__/ObserverLike/ObserverLike.createWithDelegate";
 import ObserverLike__mixin from "./__internal__/ObserverLike/ObserverLike.mixin";
 import SinkLike__decodeWithCharsetMixin from "./__internal__/SinkLike/SinkLike.decodeWithCharsetMixin";
@@ -473,7 +473,7 @@ export const deferT: Defer<ObservableLike, { delay: number }> = {
   defer,
 };
 
-export const distinctUntilChanged = distinctUntilChangedInternal;
+export const distinctUntilChanged = ObservableLike__distinctUntilChanged;
 export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
   distinctUntilChanged,
 };
@@ -539,7 +539,7 @@ export const exhaust: ConcatAll<ObservableLike>["concatAll"] = <T>() =>
   });
 export const exhaustT: ConcatAll<ObservableLike> = { concatAll: exhaust };
 
-export const forEach = forEachInternal;
+export const forEach = ObservableLike__forEach;
 export const forEachT: ForEach<ObservableLike> = { forEach };
 
 export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
@@ -640,11 +640,11 @@ export const generateT: Generate<
 
 export const isEnumerable: (
   obs: ObservableLike,
-) => obs is EnumerableObservableLike = isEnumerableInternal;
+) => obs is EnumerableObservableLike = ObservableLike__isEnumerable;
 
 export const isRunnable: (
   obs: ObservableLike,
-) => obs is RunnableObservableLike = isRunnableInternal;
+) => obs is RunnableObservableLike = ObservableLike__isRunnable;
 
 export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const createKeepObserver: <T>(
@@ -863,7 +863,14 @@ export const mergeAllT: ConcatAll<
   }
 > = { concatAll: mergeAll };
 
-export const multicast = multicastInternal;
+/**
+ * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replay The number of events that should be replayed when the `MulticastObservableLike`
+ * is subscribed to.
+ */
+export const multicast = ObservableLike__multicast;
 
 export const never: Never<EnumerableObservableLike>["never"] = () =>
   createEnumerableObservable(ignore);
@@ -871,7 +878,7 @@ export const neverT: Never<ObservableLike> = { never };
 
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
-) => ContainerOperator<ObservableLike, T, T> = onSubscribeInternal;
+) => ContainerOperator<ObservableLike, T, T> = ObservableLike__onSubscribe;
 
 export const pairwise: Pairwise<ObservableLike>["pairwise"] =
   /*@__PURE__*/ (() => {
@@ -1067,7 +1074,7 @@ export const retry: Retry = /*@__PURE__*/ (() => {
   };
 })();
 
-export const scan = scanInternal;
+export const scan = ObservableLike__scan;
 export const scanT: Scan<ObservableLike> = { scan };
 
 /**
@@ -1196,7 +1203,7 @@ export const switchAllT: ConcatAll<ObservableLike> = {
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
-) => Function1<ObservableLike<T>, DisposableLike> = subscribeInternal;
+) => Function1<ObservableLike<T>, DisposableLike> = ObservableLike__subscribe;
 
 export const subscribeOn =
   <T>(scheduler: SchedulerLike) =>
@@ -1212,7 +1219,7 @@ export const subscribeOn =
     );
 
 export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
-  takeFirstInternal;
+  ObservableLike__takeFirst;
 export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
 
 export const takeLast: TakeLast<ObservableLike>["takeLast"] =
@@ -2096,4 +2103,5 @@ export const zipLatestT: Zip<ObservableLike> = {
 export const zipWithLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
-) => ContainerOperator<ObservableLike, TA, T> = zipWithLatestFromInternal;
+) => ContainerOperator<ObservableLike, TA, T> =
+  ObservableLike__zipWithLatestFrom;

@@ -1,6 +1,6 @@
 /// <reference types="./DisposableLike.test.d.ts" />
 import { pipe, pipeLazy, none, raise } from '../../functions.mjs';
-import { subscribe } from '../../rx/ObservableLike.mjs';
+import { s as subscribe } from '../../ObservableLike-0a1b87fb.mjs';
 import { run } from '../../scheduling/ContinuationLike.mjs';
 import { getCurrentTime, schedule } from '../../scheduling/SchedulerLike.mjs';
 import { create as create$1 } from '../../scheduling/VirtualTimeSchedulerLike.mjs';
