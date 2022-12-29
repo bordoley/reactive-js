@@ -1555,6 +1555,8 @@ ___
 
 ▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
 
+Returns a `MulticastObservableLike` backed by a single subscription to the source.
+
 #### Type parameters
 
 | Name |
@@ -1563,11 +1565,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
+| `options?` | `Object` | - |
+| `options.replay?` | `number` | - |
 
 #### Returns
 

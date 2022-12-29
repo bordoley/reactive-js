@@ -111,6 +111,13 @@ declare const mergeAllT: ConcatAll<ObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
 }>;
+/**
+ * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replay The number of events that should be replayed when the `MulticastObservableLike`
+ * is subscribed to.
+ */
 declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;

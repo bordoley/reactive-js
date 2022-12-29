@@ -6,7 +6,6 @@ import {
   mixin as mix,
   props,
 } from "../../../__internal__/mixins";
-import { multicast } from "../../../__internal__/rx/ObservableLike.operators";
 import { ContainerOperator } from "../../../containers";
 import { none, pipe, returns, unsafeCast } from "../../../functions";
 import {
@@ -26,6 +25,7 @@ import {
 } from "../../../rx/MulticastObservableLike";
 import { sinkInto } from "../../../rx/ReactiveContainerLike";
 import { create as createSubject, publish } from "../../../rx/SubjectLike";
+import ObservableLike__multicast from "../../../rx/__internal__/ObservableLike/ObservableLike.multicast";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
@@ -75,7 +75,7 @@ const mixin: <TReq, T>() => Mixin3<
         instance.observable = pipe(
           subject,
           op,
-          multicast<T>(scheduler, { replay }),
+          ObservableLike__multicast<T>(scheduler, { replay }),
           add(instance),
         );
 
