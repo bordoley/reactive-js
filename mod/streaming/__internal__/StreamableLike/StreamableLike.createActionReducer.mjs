@@ -2,7 +2,7 @@
 import { concatWith } from '../../../containers/ContainerLike.mjs';
 import { toObservable } from '../../../containers/ReadonlyArrayLike.mjs';
 import { pipe, returns } from '../../../functions.mjs';
-import { E as create, B as scan, U as mergeT, K as distinctUntilChanged } from '../../../ObservableLike-ca8b1474.mjs';
+import { create, scan, mergeT, distinctUntilChanged } from '../../../rx/ObservableLike.mjs';
 import { sinkInto } from '../../../rx/ReactiveContainerLike.mjs';
 import createLifted from './StreamableLike.createLifted.mjs';
 

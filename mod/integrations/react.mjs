@@ -4,7 +4,7 @@ import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_sch
 import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
 import { getDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { none, isSome, pipe, pipeLazy, ignore, unsafeCast } from '../functions.mjs';
-import { f as forEach, s as subscribe, K as distinctUntilChanged } from '../ObservableLike-ca8b1474.mjs';
+import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { create, publish } from '../rx/SubjectLike.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
 import { run } from '../scheduling/ContinuationLike.mjs';

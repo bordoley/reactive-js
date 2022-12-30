@@ -14,7 +14,7 @@ import { hasCurrent, getCurrent } from './EnumeratorLike.mjs';
 import { move } from './SourceLike.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { y as mixin, A as multicast, B as scan$1, C as mapT$1, D as concatAllT, b as takeFirst, E as create$1, h as map$1, F as takeWhile$1, G as scanAsync$1, f as forEach, H as keep$1, o as onSubscribe, a as toReadonlyArray$1 } from '../ObservableLike-ca8b1474.mjs';
+import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, create as create$1, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
 import { getScheduler as getScheduler$1 } from '../rx/ObserverLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { create as create$2 } from '../rx/RunnableObservableLike.mjs';
@@ -23,6 +23,7 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling
 import { dispatch, getScheduler } from '../scheduling/DispatcherLike.mjs';
 import { StreamableLike_stream } from '../streaming.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
+import mixin from '../streaming/__internal__/StreamLike/StreamLike.mixin.mjs';
 import { add, addTo } from '../util/DisposableLike.mjs';
 import delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
