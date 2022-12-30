@@ -1,4 +1,4 @@
-import { Mixin2, include, init, mixin } from "../../../__internal__/mixins";
+import { Mixin2, include, init, mix } from "../../../__internal__/mixins";
 import { Predicate } from "../../../functions";
 import { ReactiveContainerLike, SinkLike } from "../../../rx";
 
@@ -22,7 +22,7 @@ const someSatisfyMixin: <
     false,
   );
 
-  return mixin(
+  return mix(
     include(typedSatisfySinkMixin),
     function EverySatisfySink(
       instance: unknown,

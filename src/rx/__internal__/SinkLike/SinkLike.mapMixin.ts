@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Function1, none, pipe, returns } from "../../../functions";
@@ -25,7 +25,7 @@ export const mapMixin: <TA, TB>() => Mixin2<
   };
 
   return returns(
-    mixin(
+    mix(
       include(DisposableLike__delegatingMixin),
       function MapSink(
         instance: Pick<SinkLike<TA>, typeof SinkLike_notify> &

@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Predicate, none, pipe } from "../../../functions";
@@ -41,7 +41,7 @@ const satisfyMixin: <
     readonly [SatisfySink_private_predicate]: Predicate<T>;
   };
 
-  return mixin(
+  return mix(
     include(DisposableLike__mixin),
     function SatisfySink(
       instance: Mutable<TProperties> &

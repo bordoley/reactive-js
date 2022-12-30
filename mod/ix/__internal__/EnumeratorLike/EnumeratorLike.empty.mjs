@@ -1,5 +1,5 @@
 /// <reference types="./EnumeratorLike.empty.d.ts" />
-import { createInstanceFactory, mixin, include, init } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
 import { pipe } from '../../../functions.mjs';
 import { SourceLike_move } from '../../../ix.mjs';
 import mutableMixin from '../MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
@@ -8,7 +8,7 @@ import disposableMixin from '../../../util/__internal__/DisposableLike/Disposabl
 
 const empty = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = mutableMixin();
-    return createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function EmptyEnumerator(instance) {
+    return createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function EmptyEnumerator(instance) {
         init(disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         return instance;

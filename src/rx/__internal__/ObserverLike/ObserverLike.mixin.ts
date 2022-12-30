@@ -3,7 +3,7 @@ import {
   Mutable,
   createInstanceFactory,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import {
@@ -62,7 +62,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
   };
 
   return createInstanceFactory(
-    mixin(
+    mix(
       DisposableLike__mixin,
       function ObserverDispatcher(
         instance: Pick<
@@ -139,7 +139,7 @@ const observerMixin: <T>() => Mixin1<TObserverMixinReturn<T>, SchedulerLike> =
     };
 
     return pipe(
-      mixin(
+      mix(
         function ObserverMixin(
           instance: Pick<ObserverLike, typeof ObserverLike_dispatcher> &
             Mutable<TProperties>,

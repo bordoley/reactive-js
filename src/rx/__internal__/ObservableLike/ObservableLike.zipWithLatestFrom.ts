@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import {
@@ -64,7 +64,7 @@ const zipWithLatestFrom: <TA, TB, T>(
     };
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin, typedObserverMixin),
         function ZipWithLatestFromObserer(
           instance: Pick<ObserverLike, typeof SinkLike_notify> &

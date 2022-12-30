@@ -1,4 +1,4 @@
-import { Mixin1, Mutable, mixin, props } from "../../../__internal__/mixins";
+import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins";
 import { Option, none, pipe, unsafeCast } from "../../../functions";
 import {
   DisposableLike,
@@ -23,7 +23,7 @@ const delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
       readonly [DelegatingDisposable_private_delegate]: DisposableLike;
     };
 
-    return mixin(
+    return mix(
       function DelegatingDisposableMixin(
         instance: Pick<
           DisposableLike,

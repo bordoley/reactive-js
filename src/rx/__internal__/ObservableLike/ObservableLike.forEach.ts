@@ -2,7 +2,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
 } from "../../../__internal__/mixins";
 import { liftEnumerableObservableT } from "../../../__internal__/rx/ObservableLike.lift";
 import { ForEach } from "../../../containers";
@@ -26,7 +26,7 @@ const forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<T>() => {
     const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(typedObserverMixin, typedForEachSinkMixin),
         function ForEachObserver(
           instance: unknown,

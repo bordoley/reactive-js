@@ -1,5 +1,5 @@
 /// <reference types="./ObservableLike.distinctUntilChanged.d.ts" />
-import { createInstanceFactory, mixin, include, init } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
 import { liftEnumerableObservableT } from '../../../__internal__/rx/ObservableLike.lift.mjs';
 import distinctUntilChanged$1 from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged.mjs';
 import { pipe } from '../../../functions.mjs';
@@ -12,7 +12,7 @@ const distinctUntilChanged =
     const createDistinctUntilChangedObserver = (() => {
         const typedDistinctUntilChangedSinkMixin = distinctUntilChangedMixin();
         const typedObserverMixin = observerMixin();
-        return createInstanceFactory(mixin(include(typedObserverMixin, typedDistinctUntilChangedSinkMixin), function DistinctUntilChangedObserver(instance, delegate, equality) {
+        return createInstanceFactory(mix(include(typedObserverMixin, typedDistinctUntilChangedSinkMixin), function DistinctUntilChangedObserver(instance, delegate, equality) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
             init(typedDistinctUntilChangedSinkMixin, instance, delegate, equality);
             return instance;

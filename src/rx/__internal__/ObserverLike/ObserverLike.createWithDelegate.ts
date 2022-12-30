@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { none } from "../../../functions";
@@ -21,7 +21,7 @@ const createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
     };
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin, typedObserverMixin),
         function DelegatingObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &

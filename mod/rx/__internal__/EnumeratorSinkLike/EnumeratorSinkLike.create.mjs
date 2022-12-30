@@ -1,5 +1,5 @@
 /// <reference types="./EnumeratorSinkLike.create.d.ts" />
-import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, getLength } from '../../../functions.mjs';
 import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SourceLike_move } from '../../../ix.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
@@ -7,7 +7,7 @@ import { onDisposed, isDisposed } from '../../../util/DisposableLike.mjs';
 import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
 const create = (() => {
-    return createInstanceFactory(mixin(include(disposableMixin), function EnumeratorSink(instance) {
+    return createInstanceFactory(mix(include(disposableMixin), function EnumeratorSink(instance) {
         init(disposableMixin, instance);
         instance.buffer = [];
         pipe(instance, onDisposed(() => {

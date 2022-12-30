@@ -1,5 +1,5 @@
 /// <reference types="./SubjectLike.create.d.ts" />
-import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { newInstance, none, unsafeCast, getLength, pipe, max } from '../../../functions.mjs';
 import { MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, SubjectLike_publish, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
 import { dispatch } from '../../../scheduling/DispatcherLike.mjs';
@@ -9,7 +9,7 @@ import { getDispatcher } from '../../ObserverLike.mjs';
 
 const create = 
 /*@__PURE__*/ (() => {
-    const createSubjectInstance = createInstanceFactory(mixin(include(disposableMixin), function Subject(instance, replay) {
+    const createSubjectInstance = createInstanceFactory(mix(include(disposableMixin), function Subject(instance, replay) {
         init(disposableMixin, instance);
         instance[MulticastObservableLike_replay] = replay;
         instance.observers = newInstance(Set);

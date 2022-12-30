@@ -1,5 +1,5 @@
 /// <reference types="./ObserverLike.mixin.d.ts" />
-import { createInstanceFactory, mixin, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, init, props } from '../../../__internal__/mixins.mjs';
 import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../../../functions.mjs';
 import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../../rx.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../../scheduling.mjs';
@@ -17,7 +17,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             pipe(observer, schedule(dispatcher.continuation), onComplete(dispatcher.onContinuationDispose));
         }
     };
-    return createInstanceFactory(mixin(disposableMixin, function ObserverDispatcher(instance, observer) {
+    return createInstanceFactory(mix(disposableMixin, function ObserverDispatcher(instance, observer) {
         init(disposableMixin, instance);
         instance.observer = observer;
         instance.nextQueue = [];
@@ -60,7 +60,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
 })();
 const observerMixin = 
 /*@__PURE__*/ (() => {
-    return pipe(mixin(function ObserverMixin(instance, scheduler) {
+    return pipe(mix(function ObserverMixin(instance, scheduler) {
         instance[ObserverLike_scheduler] = scheduler;
         return instance;
     }, props({

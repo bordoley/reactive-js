@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Predicate, none, pipe, returns } from "../../../functions";
@@ -34,7 +34,7 @@ const takeWhileMixin: <T>() => Mixin3<
   };
 
   return returns(
-    mixin(
+    mix(
       include(DisposableLike__delegatingMixin),
       function TakeWhileSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

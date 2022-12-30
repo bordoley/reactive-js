@@ -22,7 +22,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../__internal__/mixins";
 import { getDelay } from "../__internal__/scheduling/SchedulerLike.options";
@@ -139,7 +139,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
   };
 
   return createInstanceFactory(
-    mixin(
+    mix(
       include(DisposableLike__mixin),
       function ReactPriorityScheduler(
         instance: Omit<

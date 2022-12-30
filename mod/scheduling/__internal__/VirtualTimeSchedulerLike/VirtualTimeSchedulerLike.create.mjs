@@ -1,6 +1,6 @@
 /// <reference types="./VirtualTimeSchedulerLike.create.d.ts" />
 import { MAX_SAFE_INTEGER } from '../../../__internal__/constants.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { createPriorityQueue } from '../../../__internal__/scheduling/QueueLike.mjs';
 import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { none, unsafeCast, pipe, isSome } from '../../../functions.mjs';
@@ -21,7 +21,7 @@ const comparator = (a, b) => {
 };
 const typedMutableEnumeratorMixin = 
 /*@__PURE__*/ mutableMixin();
-const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(disposableMixin, instance);
     init(typedMutableEnumeratorMixin, instance);
     instance.maxMicroTaskTicks = maxMicroTaskTicks;

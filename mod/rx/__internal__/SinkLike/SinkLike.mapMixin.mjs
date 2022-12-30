@@ -1,5 +1,5 @@
 /// <reference types="./SinkLike.mapMixin.d.ts" />
-import { mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
@@ -8,7 +8,7 @@ import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const mapMixin = /*@__PURE__*/ (() => {
     const MapSink_private_mapper = Symbol("MapSink_private_mapper");
-    return returns(mixin(include(delegatingMixin), function MapSink(instance, delegate, mapper) {
+    return returns(mix(include(delegatingMixin), function MapSink(instance, delegate, mapper) {
         init(delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[MapSink_private_mapper] = mapper;

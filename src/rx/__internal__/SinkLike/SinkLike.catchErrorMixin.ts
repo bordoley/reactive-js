@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Function1, isSome, none, pipe, returns } from "../../../functions";
@@ -34,7 +34,7 @@ const catchErrorMixin: <
     };
 
     return returns(
-      mixin(
+      mix(
         include(DisposableLike__mixin),
         function CatchErrorSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

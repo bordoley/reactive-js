@@ -54,7 +54,7 @@ interface CreateMixin {
         [Object_init]: TInit;
     };
 }
-declare const mixin: CreateMixin;
+declare const mix: CreateMixin;
 interface CreateInstanceFactory {
     <TReturn>(mixin: Mixin<TReturn>): Factory<TReturn>;
     <TReturn, TA>(mixin: Mixin1<TReturn, TA>): Function1<TA, TReturn>;
@@ -66,4 +66,4 @@ declare const createInstanceFactory: CreateInstanceFactory;
 declare const props: <TProperties>(o: OptionalProperties<TProperties>) => TProperties & {
     [Object_private_initializedProperties]?: true | undefined;
 };
-export { Mixin, Mixin1, Mixin2, Mixin3, Mixin4, MixinAny, Mutable, PartialMixin, createInstanceFactory, include, init, mixin, props };
+export { Mixin, Mixin1, Mixin2, Mixin3, Mixin4, MixinAny, Mutable, PartialMixin, createInstanceFactory, include, init, mix, props };

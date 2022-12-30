@@ -1,5 +1,5 @@
 /// <reference types="./EnumerableLike.zip.d.ts" />
-import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import every from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every.mjs';
 import forEach from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach.mjs';
 import map from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
@@ -22,7 +22,7 @@ const zip = /*@__PURE__*/ (() => {
     };
     const allHaveCurrent = (enumerators) => pipe(enumerators, every(hasCurrent));
     const typedMutableEnumeratorMixin = mutableMixin();
-    const createZipEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function ZipEnumerator(instance, enumerators) {
+    const createZipEnumerator = createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function ZipEnumerator(instance, enumerators) {
         init(disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.enumerators = enumerators;

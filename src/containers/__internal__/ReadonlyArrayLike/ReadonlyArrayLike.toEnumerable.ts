@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { ReadonlyArrayLike } from "../../../containers";
@@ -38,7 +38,7 @@ const toEnumerable: ToEnumerable<
   };
 
   const createReadonlyArrayEnumerator = createInstanceFactory(
-    mixin(
+    mix(
       include(DisposableLike__mixin, typedMutableEnumeratorMixin),
       function ReadonlyArrayEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &

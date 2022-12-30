@@ -1,5 +1,5 @@
 /// <reference types="./SinkLike.catchErrorMixin.d.ts" />
-import { mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none, isSome } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { addToIgnoringChildErrors, onComplete, dispose, onError } from '../../../util/DisposableLike.mjs';
@@ -9,7 +9,7 @@ import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const catchErrorMixin = 
 /*@__PURE__*/ (() => {
-    return returns(mixin(include(disposableMixin), function CatchErrorSink(instance, delegate, errorHandler) {
+    return returns(mix(include(disposableMixin), function CatchErrorSink(instance, delegate, errorHandler) {
         init(disposableMixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         pipe(instance, addToIgnoringChildErrors(delegate), onComplete(() => {

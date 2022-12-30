@@ -1,7 +1,7 @@
 /// <reference types="./react.d.ts" />
 import { useState, useEffect, useMemo } from 'react';
 import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_scheduleCallback, unstable_cancelCallback, unstable_IdlePriority, unstable_ImmediatePriority, unstable_NormalPriority, unstable_LowPriority, unstable_UserBlockingPriority } from 'scheduler';
-import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
 import { getDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { none, isSome, pipe, pipeLazy, ignore, unsafeCast } from '../functions.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
@@ -55,7 +55,7 @@ const createComponent = (fn, options = {}) => {
     return ObservableComponent;
 };
 const createReactPriorityScheduler = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mixin(include(disposableMixin), function ReactPriorityScheduler(instance) {
+    return createInstanceFactory(mix(include(disposableMixin), function ReactPriorityScheduler(instance) {
         init(disposableMixin, instance);
         return instance;
     }, props({

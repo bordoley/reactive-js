@@ -1,5 +1,5 @@
 /// <reference types="./SinkLike.satisfyMixin.d.ts" />
-import { mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { addTo, onComplete, isDisposed, dispose } from '../../../util/DisposableLike.mjs';
@@ -10,7 +10,7 @@ import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const satisfyMixin = (fromArray, defaultResult) => {
     const SatisfySink_private_predicate = Symbol("SatisfySink_private_predicate");
-    return mixin(include(disposableMixin), function SatisfySink(instance, delegate, predicate) {
+    return mix(include(disposableMixin), function SatisfySink(instance, delegate, predicate) {
         init(disposableMixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[SatisfySink_private_predicate] = predicate;

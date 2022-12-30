@@ -1,7 +1,7 @@
 import {
   Mutable,
   createInstanceFactory,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { SideEffect1, none, pipe } from "../../../functions";
@@ -18,7 +18,7 @@ const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
       readonly run: SideEffect1<SinkLike<T>>;
     };
     return createInstanceFactory(
-      mixin(
+      mix(
         function Runnable(
           instance: Pick<RunnableLike, typeof ReactiveContainerLike_sinkInto> &
             Mutable<TProperties>,

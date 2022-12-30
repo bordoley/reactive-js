@@ -4,7 +4,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../__internal__/mixins";
 import {
@@ -225,7 +225,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
     };
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(
           DisposableLike__mixin,
           typedMutableEnumeratorMixin,

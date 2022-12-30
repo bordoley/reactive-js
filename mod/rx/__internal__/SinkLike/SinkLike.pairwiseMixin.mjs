@@ -1,5 +1,5 @@
 /// <reference types="./SinkLike.pairwiseMixin.d.ts" />
-import { mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
@@ -10,7 +10,7 @@ const pairwiseMixin =
 /*@__PURE__*/ (() => {
     const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
     const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
-    return returns(mixin(include(delegatingMixin), function PairwiseSink(instance, delegate) {
+    return returns(mix(include(delegatingMixin), function PairwiseSink(instance, delegate) {
         init(delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         return instance;

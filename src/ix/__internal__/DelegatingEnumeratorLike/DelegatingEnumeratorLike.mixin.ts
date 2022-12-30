@@ -1,9 +1,4 @@
-import {
-  Mixin1,
-  Mutable,
-  mixin as mix,
-  props,
-} from "../../../__internal__/mixins";
+import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins";
 import { none, pipe, raise, returns, unsafeCast } from "../../../functions";
 import {
   EnumeratorLike,

@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Zip } from "../../../containers";
@@ -45,7 +45,7 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   };
 
   const createZipEnumerator = createInstanceFactory(
-    mixin(
+    mix(
       include(DisposableLike__mixin, typedMutableEnumeratorMixin),
       function ZipEnumerator(
         instance: Pick<

@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Factory, Reducer, none, pipe } from "../../../functions";
@@ -37,7 +37,7 @@ const reduceMixin: <
     [ReduceSink_private_acc]: TAcc;
   };
 
-  return mixin(
+  return mix(
     include(DisposableLike__mixin),
     function ReduceSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Equality, none, pipe, returns } from "../../../functions";
@@ -35,7 +35,7 @@ const distinctUntilChangedMixin: <T>() => Mixin2<
   };
 
   return returns(
-    mixin(
+    mix(
       include(DisposableLike__delegatingMixin),
       function DistinctUntilChangedSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

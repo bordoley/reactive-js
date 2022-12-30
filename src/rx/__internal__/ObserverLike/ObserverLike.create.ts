@@ -2,7 +2,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
 } from "../../../__internal__/mixins";
 import { ObserverLike, SinkLike_notify } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
@@ -14,7 +14,7 @@ const create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
     const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin, typedObserverMixin),
         function Observer(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,

@@ -1,5 +1,5 @@
 /// <reference types="./RunnableLike.d.ts" />
-import { createInstanceFactory, mixin as mixin$1, include, init } from '../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init } from '../__internal__/mixins.mjs';
 import { toRunnable as toRunnable$1 } from '../containers/ReadonlyArrayLike.mjs';
 import repeat$1 from '../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
 import buffer$1 from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.buffer.mjs';
@@ -85,7 +85,7 @@ const concatT = {
 };
 const concatAll = /*@__PURE__*/ (() => {
     const typedDelegatingSinkMixin = mixin();
-    return pipeLazy(createInstanceFactory(mixin$1(include(typedDelegatingSinkMixin), function RunnableConcatAll(instance, delegate) {
+    return pipeLazy(createInstanceFactory(mix(include(typedDelegatingSinkMixin), function RunnableConcatAll(instance, delegate) {
         init(typedDelegatingSinkMixin, instance, delegate);
         pipe(instance, bindTo(delegate));
         return instance;

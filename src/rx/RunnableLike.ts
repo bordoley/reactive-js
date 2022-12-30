@@ -2,7 +2,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
 } from "../__internal__/mixins";
 import {
   Buffer,
@@ -183,7 +183,7 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
 
   return pipeLazy(
     createInstanceFactory(
-      mixin(
+      mix(
         include(typedDelegatingSinkMixin),
         function RunnableConcatAll(
           instance: Pick<SinkLike<RunnableLike<T>>, typeof SinkLike_notify>,

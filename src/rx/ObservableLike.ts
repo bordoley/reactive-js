@@ -4,7 +4,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../__internal__/mixins";
 import {
@@ -233,7 +233,7 @@ export const buffer: <T>(options?: {
   };
 
   const createBufferObserver = createInstanceFactory(
-    mixin(
+    mix(
       include(typedObserverMixin, DisposableLike__mixin),
       function BufferObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
@@ -438,7 +438,7 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
     const typedObserverMixin = ObserverLike__mixin<ArrayBuffer>();
 
     const createDecodeWithCharsetObserver = createInstanceFactory(
-      mixin(
+      mix(
         include(typedObserverMixin, typedDecodeWithCharsetMixin),
         function DecodeWithCharsetObserver(
           instance: unknown,
@@ -501,7 +501,7 @@ export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
       T
     >(arrayToObservable());
 
-    const everySatisfyObserverMixin = mixin(
+    const everySatisfyObserverMixin = mix(
       include(typedEverySatisfySinkMixin, typedObserverMixin),
       function EverySatisfyObserver(
         instance: unknown,
@@ -652,7 +652,7 @@ export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(typedObserverMixin, typedKeepSinkMixin),
         function KeepObserver(
           instance: unknown,
@@ -730,7 +730,7 @@ const latest = /*@__PURE__*/ (() => {
   };
 
   const createLatestObserver = createInstanceFactory(
-    mixin(
+    mix(
       include(typedObserverMixin, DisposableLike__mixin),
       function LatestObserver(
         instance: Pick<ObserverLike, typeof SinkLike_notify> &
@@ -812,7 +812,7 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
     const typedObserverMixin = ObserverLike__mixin<TA>();
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(typedObserverMixin, typedMapSinkMixin),
         function MapObserver(
           instance: unknown,
@@ -886,7 +886,7 @@ export const pairwise: Pairwise<ObservableLike>["pairwise"] =
       const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
-        mixin(
+        mix(
           include(typedObserverMixin, typedPairwiseSinkMixin),
           function PairwiseObserver(
             instance: unknown,
@@ -923,7 +923,7 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   const typedObserverMixin = ObserverLike__mixin<T>();
 
   const createReduceObserver = createInstanceFactory(
-    mixin(
+    mix(
       include(typedObserverMixin, typedReduceSinkMixin),
       function ReduceObserver(
         instance: unknown,
@@ -1133,7 +1133,7 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
       const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
-        mixin(
+        mix(
           include(typedObserverMixin, typedSkipFirstSinkMixin),
           function SkipFirstObserver(
             instance: unknown,
@@ -1169,7 +1169,7 @@ export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
       T
     >(arrayToObservable());
 
-    const someSatisfyObserverMixin = mixin(
+    const someSatisfyObserverMixin = mix(
       include(typedSomeSatisfySinkMixin, typedObserverMixin),
       function EverySatisfyObserver(
         instance: unknown,
@@ -1225,7 +1225,7 @@ export const takeLast: TakeLast<ObservableLike>["takeLast"] =
     const typedObserverMixin = ObserverLike__mixin();
 
     const createTakeLastObserver = createInstanceFactory(
-      mixin(
+      mix(
         include(typedObserverMixin, typedTakeLastSinkMixin),
         function TakeLastObserver(
           instance: unknown,
@@ -1276,7 +1276,7 @@ export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
       const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
-        mixin(
+        mix(
           include(typedObserverMixin, typedTakeWhileSinkMixin),
           function TakeWhileObserver(
             instance: unknown,
@@ -1372,7 +1372,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
     };
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin, typedObserverMixin),
         function ThrottleObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
@@ -1479,7 +1479,7 @@ export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
       const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
-        mixin(
+        mix(
           include(typedObserverMixin, typedThrowIfEmptySinkMixin),
           function ThrowIfEmptyObserver(
             instance: unknown,
@@ -1548,7 +1548,7 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
   };
 
   const createTimeoutObserver = createInstanceFactory(
-    mixin(
+    mix(
       include(
         typedObserverMixin,
         DisposableLike__delegatingMixin,
@@ -1620,7 +1620,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
     type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
 
     const createEnumeratorScheduler = createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin, typedMutableEnumeratorMixin),
         function EnumeratorScheduler(
           instance: Pick<
@@ -1689,7 +1689,7 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
     };
 
     const createEnumeratorObserver = createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin, typedObserverMixin),
         function EnumeratorObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
@@ -1882,7 +1882,7 @@ export const withLatestFrom: <TA, TB, T>(
     };
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__delegatingMixin, typedObserverMixin),
         function WithLatestFromObserver(
           instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
@@ -1969,7 +1969,7 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   };
 
   const createZipObserver = createInstanceFactory(
-    mixin(
+    mix(
       include(DisposableLike__mixin, typedObserverMixin),
       function ZipObserver(
         instance: Pick<ObserverLike, typeof SinkLike_notify> &

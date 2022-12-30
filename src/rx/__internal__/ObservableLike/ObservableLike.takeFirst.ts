@@ -2,7 +2,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
 } from "../../../__internal__/mixins";
 import { liftEnumerableObservableT } from "../../../__internal__/rx/ObservableLike.lift";
 import { TakeFirst } from "../../../containers";
@@ -25,7 +25,7 @@ const takeFirst: TakeFirst<ObservableLike>["takeFirst"] = /*@__PURE__*/ (() => {
     const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(typedObserverMixin, typedTakeFirstSinkMixin),
         function TakeFirstObserver(
           instance: unknown,

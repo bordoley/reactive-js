@@ -1,5 +1,5 @@
 /// <reference types="./SchedulerLike.schedule.d.ts" />
-import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, isSome, pipe, isFunction } from '../../../functions.mjs';
 import { ContinuationLike_run, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
@@ -9,7 +9,7 @@ import YieldError from '../YieldError.mjs';
 
 const isYieldError = (e) => e instanceof YieldError;
 const createContinuation = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mixin(include(disposableMixin), function Continuation(instance, scheduler, f) {
+    return createInstanceFactory(mix(include(disposableMixin), function Continuation(instance, scheduler, f) {
         init(disposableMixin, instance);
         instance.scheduler = scheduler;
         instance.f = f;

@@ -3,12 +3,12 @@ import { pipe, unsafeCast, none, returns } from '../../functions.mjs';
 import add from '../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
 import dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import { mixin, props, createInstanceFactory, include, init } from '../mixins.mjs';
+import { mix, props, createInstanceFactory, include, init } from '../mixins.mjs';
 import { MutableRefLike_current } from './MutableRefLike.mjs';
 
 const disposableRefMixin = /*@__PURE__*/ (() => {
     const DisposableRef_private_current = Symbol("DisposableRef_private_current");
-    return pipe(mixin(function DisposableRef(instance, defaultValue) {
+    return pipe(mix(function DisposableRef(instance, defaultValue) {
         unsafeCast(instance);
         instance[DisposableRef_private_current] = defaultValue;
         pipe(instance, add(defaultValue));
@@ -31,7 +31,7 @@ const disposableRefMixin = /*@__PURE__*/ (() => {
 })();
 const createDisposableRef = /*@__PURE__*/ (() => {
     const typedDisposableRefMixin = disposableRefMixin();
-    return createInstanceFactory(mixin(include(disposableMixin, typedDisposableRefMixin), function DisposableRef(instance, initialValue) {
+    return createInstanceFactory(mix(include(disposableMixin, typedDisposableRefMixin), function DisposableRef(instance, initialValue) {
         init(disposableMixin, instance);
         init(typedDisposableRefMixin, instance, initialValue);
         return instance;

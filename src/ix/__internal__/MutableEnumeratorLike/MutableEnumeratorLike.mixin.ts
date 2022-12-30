@@ -1,4 +1,4 @@
-import { Mixin, mixin, props } from "../../../__internal__/mixins";
+import { Mixin, mix, props } from "../../../__internal__/mixins";
 import { none, pipe, raise, returns, unsafeCast } from "../../../functions";
 import {
   EnumeratorLike,
@@ -27,7 +27,7 @@ const mutableMixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> = /*@__PURE__*/ (<
   };
 
   return pipe(
-    mixin(
+    mix(
       function EnumeratorMixin(
         instance: Pick<
           EnumeratorLike<T>,

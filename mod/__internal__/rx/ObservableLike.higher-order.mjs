@@ -21,7 +21,7 @@ import isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.is
 import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import onComplete from '../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../mixins.mjs';
 import { createDisposableRef } from '../util/DisposableRefLike.mjs';
 import { MutableRefLike_current } from '../util/MutableRefLike.mjs';
 import { createEnumerableObservable, createObservable, createRunnableObservable } from './ObservableLike.create.mjs';
@@ -31,7 +31,7 @@ const createCatchError = (lift) => {
     const createCatchErrorObserver = (() => {
         const typedCatchErrorSink = catchErrorMixin();
         const typedObserverMixin = observerMixin();
-        return createInstanceFactory(mixin(include(typedCatchErrorSink, typedObserverMixin), function CatchErrorObserver(instance, delegate, errorHandler) {
+        return createInstanceFactory(mix(include(typedCatchErrorSink, typedObserverMixin), function CatchErrorObserver(instance, delegate, errorHandler) {
             init(typedCatchErrorSink, instance, delegate, errorHandler);
             init(typedObserverMixin, instance, getScheduler(delegate));
             return instance;
@@ -60,7 +60,7 @@ const createMergeAll = (lift) => {
                 }
             }
         };
-        return createInstanceFactory(mixin(include(disposableMixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
+        return createInstanceFactory(mix(include(disposableMixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;
@@ -129,7 +129,7 @@ const createSwitchAll = (lift) => {
                 pipe(this.delegate, dispose());
             }
         }
-        return createInstanceFactory(mixin(include(disposableMixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
+        return createInstanceFactory(mix(include(disposableMixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;

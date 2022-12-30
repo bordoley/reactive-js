@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { none, pipe, returns } from "../../../functions";
@@ -24,7 +24,7 @@ const pairwiseMixin: <T>() => Mixin1<SinkLike<T>, SinkLike<readonly [T, T]>> =
     };
 
     return returns(
-      mixin(
+      mix(
         include(DisposableLike__delegatingMixin),
         function PairwiseSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
