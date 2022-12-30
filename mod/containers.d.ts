@@ -68,8 +68,8 @@ declare type ConcatAll<C extends ContainerLike, O = never> = Container<C> & {
 declare type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
     decodeWithCharset(charset?: string): ContainerOperator<C, ArrayBuffer, string>;
 };
-declare type Defer<C extends ContainerLike, O = never> = Container<C> & {
-    defer<T>(factory: Factory<ContainerOf<C, T>>, options?: Partial<O>): ContainerOf<C, T>;
+declare type Defer<C extends ContainerLike> = Container<C> & {
+    defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 };
 declare type DistinctUntilChanged<C extends ContainerLike> = Container<C> & {
     distinctUntilChanged<T>(options?: {

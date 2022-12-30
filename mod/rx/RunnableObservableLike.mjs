@@ -1,11 +1,12 @@
 /// <reference types="./RunnableObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
-import { createRunnableObservable, deferRunnableObservable } from '../__internal__/rx/ObservableLike.create.mjs';
 import { catchErrorRunnableObservable, mergeAllRunnableObservable, scanAsyncRunnableObservable, switchAllRunnableObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
+import create$1 from './__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
+import defer$1 from './__internal__/RunnableObservableLike/RunnableObservableLike.defer.mjs';
 
-const create = createRunnableObservable;
-const defer = deferRunnableObservable;
+const create = create$1;
+const defer = defer$1;
 const deferT = {
     defer,
 };

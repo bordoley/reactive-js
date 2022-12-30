@@ -1,14 +1,12 @@
-import {
-  createEnumerableObservable,
-  createObservable,
-  createRunnableObservable,
-} from "../../../__internal__/rx/ObservableLike.create";
 import { Factory } from "../../../functions";
 import { ObservableLike } from "../../../rx";
+import ObservableLike__create from "../../../rx/__internal__/ObservableLike/ObservableLike.create";
 import { DisposableOrTeardown } from "../../../util";
+import EnumerableObservableLike__create from "../EnumerableObservableLike/EnumerableObservableLike.create";
 import ObservableLike__isEnumerable from "../ObservableLike/ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "../ObservableLike/ObservableLike.isRunnable";
 import ReactiveContainerLike__onSink from "../ReactiveContainerLike/ReactiveContainerLike.onSink";
+import RunnableObservableLike__create from "../RunnableObservableLike/RunnableObservableLike.create";
 
 const onSubscribe =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
@@ -16,10 +14,10 @@ const onSubscribe =
     return ReactiveContainerLike__onSink(
       onSink =>
         ObservableLike__isEnumerable(obs)
-          ? createEnumerableObservable(onSink)
+          ? EnumerableObservableLike__create(onSink)
           : ObservableLike__isRunnable(obs)
-          ? createRunnableObservable(onSink)
-          : createObservable(onSink),
+          ? RunnableObservableLike__create(onSink)
+          : ObservableLike__create(onSink),
       obs,
       f,
     );

@@ -1,9 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
-  createRunnableObservable,
-  deferRunnableObservable,
-} from "../__internal__/rx/ObservableLike.create";
-import {
   catchErrorRunnableObservable,
   mergeAllRunnableObservable,
   scanAsyncRunnableObservable,
@@ -64,11 +60,13 @@ import {
   toReadonlyArray,
   zip,
 } from "./ObservableLike";
+import RunnableObservableLike__create from "./__internal__/RunnableObservableLike/RunnableObservableLike.create";
+import RunnableObservableLike__defer from "./__internal__/RunnableObservableLike/RunnableObservableLike.defer";
 
-export const create = createRunnableObservable;
+export const create = RunnableObservableLike__create;
 
-export const defer: Defer<RunnableObservableLike, { delay: number }>["defer"] =
-  deferRunnableObservable;
+export const defer: Defer<RunnableObservableLike>["defer"] =
+  RunnableObservableLike__defer;
 export const deferT: Defer<RunnableObservableLike> = {
   defer,
 };

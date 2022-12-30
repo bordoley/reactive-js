@@ -32,13 +32,16 @@ import {
   publish,
   publishTo,
 } from "../../rx/SubjectLike";
+import EnumerableObservableLike__create from "../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
 import EnumerableObservableLike__lift from "../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift";
+import ObservableLike__create from "../../rx/__internal__/ObservableLike/ObservableLike.create";
 import ObservableLike__forEach from "../../rx/__internal__/ObservableLike/ObservableLike.forEach";
 import ObservableLike__onSubscribe from "../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe";
 import ObservableLike__subscribe from "../../rx/__internal__/ObservableLike/ObservableLike.subscribe";
 import ObservableLike__takeFirst from "../../rx/__internal__/ObservableLike/ObservableLike.takeFirst";
 import ObservableLike__zipWithLatestFrom from "../../rx/__internal__/ObservableLike/ObservableLike.zipWithLatestFrom";
 import ObserverLike__mixin from "../../rx/__internal__/ObserverLike/ObserverLike.mixin";
+import RunnableObservableLike__create from "../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create";
 import RunnableObservableLike__lift from "../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift";
 import SinkLike__catchErrorMixin from "../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin";
 import { DisposableLike } from "../../util";
@@ -62,11 +65,6 @@ import {
   createDisposableRef,
 } from "../util/DisposableRefLike";
 import { MutableRefLike_current } from "../util/MutableRefLike";
-import {
-  createEnumerableObservable,
-  createObservable,
-  createRunnableObservable,
-} from "./ObservableLike.create";
 import { liftObservable } from "./ObservableLike.lift";
 
 const createCatchError = <C extends ObservableLike>(
@@ -345,13 +343,13 @@ export const scanAsyncEnumerableObservable: ScanAsync<
 >["scanAsync"] = createScanAsync<
   EnumerableObservableLike,
   EnumerableObservableLike
->(createEnumerableObservable);
+>(EnumerableObservableLike__create);
 
 export const scanAsyncObservable: ScanAsync<
   ObservableLike,
   ObservableLike
 >["scanAsync"] = createScanAsync<ObservableLike, ObservableLike>(
-  createObservable,
+  ObservableLike__create,
 );
 
 export const scanAsyncRunnableObservable: ScanAsync<
@@ -360,7 +358,7 @@ export const scanAsyncRunnableObservable: ScanAsync<
 >["scanAsync"] = createScanAsync<
   RunnableObservableLike,
   RunnableObservableLike
->(createRunnableObservable);
+>(RunnableObservableLike__create);
 
 const createSwitchAll = <C extends ObservableLike>(
   lift: <T>(

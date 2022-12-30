@@ -1,15 +1,13 @@
-import {
-  createEnumerableObservable,
-  createObservable,
-  createRunnableObservable,
-} from "../../../__internal__/rx/ObservableLike.create";
 import { getLength, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
+import ObservableLike__create from "../../../rx/__internal__/ObservableLike/ObservableLike.create";
 import SinkLike__sourceFrom from "../../../rx/__internal__/SinkLike/SinkLike.sourceFrom";
 import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
+import EnumerableObservableLike__create from "../EnumerableObservableLike/EnumerableObservableLike.create";
 import ObserverLike__createWithDelegate from "../ObserverLike/ObserverLike.createWithDelegate";
+import RunnableObservableLike__create from "../RunnableObservableLike/RunnableObservableLike.create";
 import ObservableLike__allAreEnumerable from "./ObservableLike.allAreEnumerable";
 import ObservableLike__allAreRunnable from "./ObservableLike.allAreRunnable";
 
@@ -49,10 +47,10 @@ const mergeAll = /*@__PURE__*/ (() => {
     const isRunnable = ObservableLike__allAreRunnable(observables);
 
     return isEnumerable
-      ? createEnumerableObservable(onSink)
+      ? EnumerableObservableLike__create(onSink)
       : isRunnable
-      ? createRunnableObservable(onSink)
-      : createObservable(onSink);
+      ? RunnableObservableLike__create(onSink)
+      : ObservableLike__create(onSink);
   };
 })();
 

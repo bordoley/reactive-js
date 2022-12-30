@@ -294,7 +294,7 @@ ___
 
 ### defer
 
-▸ **defer**<`T`\>(`factory`, `options?`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+▸ **defer**<`T`\>(`factory`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -307,7 +307,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\> |
-| `options?` | `Partial`<{ `delay`: `number`  }\> |
 
 #### Returns
 

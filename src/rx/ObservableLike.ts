@@ -8,12 +8,6 @@ import {
   props,
 } from "../__internal__/mixins";
 import {
-  createEnumerableObservable,
-  createObservable,
-  createRunnableObservable,
-  deferObservable,
-} from "../__internal__/rx/ObservableLike.create";
-import {
   catchErrorObservable,
   mergeAllObservable,
   scanAsyncObservable,
@@ -98,6 +92,7 @@ import {
   Predicate,
   Reducer,
   SideEffect,
+  SideEffect1,
   Updater,
   compose,
   getLength,
@@ -187,9 +182,12 @@ import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike
 import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
+import EnumerableObservableLike__create from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
 import EnumeratorSinkLike__create from "./__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create";
 import ObservableLike__allAreEnumerable from "./__internal__/ObservableLike/ObservableLike.allAreEnumerable";
 import ObservableLike__allAreRunnable from "./__internal__/ObservableLike/ObservableLike.allAreRunnable";
+import ObservableLike__create from "./__internal__/ObservableLike/ObservableLike.create";
+import ObservableLike__defer from "./__internal__/ObservableLike/ObservableLike.defer";
 import ObservableLike__distinctUntilChanged from "./__internal__/ObservableLike/ObservableLike.distinctUntilChanged";
 import ObservableLike__forEach from "./__internal__/ObservableLike/ObservableLike.forEach";
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
@@ -204,6 +202,7 @@ import ObservableLike__takeFirst from "./__internal__/ObservableLike/ObservableL
 import ObservableLike__zipWithLatestFrom from "./__internal__/ObservableLike/ObservableLike.zipWithLatestFrom";
 import ObserverLike__createWithDelegate from "./__internal__/ObserverLike/ObserverLike.createWithDelegate";
 import ObserverLike__mixin from "./__internal__/ObserverLike/ObserverLike.mixin";
+import RunnableObservableLike__create from "./__internal__/RunnableObservableLike/RunnableObservableLike.create";
 import SinkLike__decodeWithCharsetMixin from "./__internal__/SinkLike/SinkLike.decodeWithCharsetMixin";
 import SinkLike__everySatisfyMixin from "./__internal__/SinkLike/SinkLike.everySatisfyMixin";
 import SinkLike__keepMixin from "./__internal__/SinkLike/SinkLike.keepMixin";
@@ -395,10 +394,10 @@ export const concat: Concat<ObservableLike>["concat"] = /*@__PURE__*/ (<
     const isRunnable = ObservableLike__allAreRunnable(observables);
 
     return isEnumerable
-      ? createEnumerableObservable(onSink)
+      ? EnumerableObservableLike__create(onSink)
       : isRunnable
-      ? createRunnableObservable(onSink)
-      : createObservable(onSink);
+      ? RunnableObservableLike__create(onSink)
+      : ObservableLike__create(onSink);
   };
 })();
 export const concatT: Concat<ObservableLike> = {
@@ -428,7 +427,8 @@ export const concatAllT: ConcatAll<
   concatAll,
 };
 
-export const create = createObservable;
+export const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T> =
+  ObservableLike__create;
 
 export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
@@ -464,9 +464,8 @@ export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
   decodeWithCharset,
 };
 
-export const defer: Defer<ObservableLike, { delay: number }>["defer"] =
-  deferObservable;
-export const deferT: Defer<ObservableLike, { delay: number }> = {
+export const defer: Defer<ObservableLike>["defer"] = ObservableLike__defer;
+export const deferT: Defer<ObservableLike> = {
   defer,
 };
 
@@ -481,10 +480,10 @@ interface EmptyObservable {
 }
 export const empty: EmptyObservable = (<T>(options?: { delay: number }) =>
   hasDelay(options)
-    ? createRunnableObservable<T>(observer => {
+    ? RunnableObservableLike__create<T>(observer => {
         pipe(observer, schedule(pipeLazy(observer, dispose()), options));
       })
-    : createEnumerableObservable<T>(sink => {
+    : EnumerableObservableLike__create<T>(sink => {
         pipe(sink, dispose());
       })) as EmptyObservable;
 
@@ -626,8 +625,8 @@ export const generate: GenerateObservable = (<T>(
   };
 
   return hasDelay(options)
-    ? createRunnableObservable(onSink)
-    : createEnumerableObservable(onSink);
+    ? RunnableObservableLike__create(onSink)
+    : EnumerableObservableLike__create(onSink);
 }) as GenerateObservable;
 
 export const generateT: Generate<
@@ -796,10 +795,10 @@ const latest = /*@__PURE__*/ (() => {
     const isRunnable = ObservableLike__allAreRunnable(observables);
 
     return isEnumerable
-      ? createEnumerableObservable(onSink)
+      ? EnumerableObservableLike__create(onSink)
       : isRunnable
-      ? createRunnableObservable(onSink)
-      : createObservable(onSink);
+      ? RunnableObservableLike__create(onSink)
+      : ObservableLike__create(onSink);
   };
 })();
 
@@ -870,7 +869,7 @@ export const mergeAllT: ConcatAll<
 export const multicast = ObservableLike__multicast;
 
 export const never: Never<EnumerableObservableLike>["never"] = () =>
-  createEnumerableObservable(ignore);
+  EnumerableObservableLike__create(ignore);
 export const neverT: Never<ObservableLike> = { never };
 
 export const onSubscribe: <T>(
@@ -1105,7 +1104,7 @@ export const share =
     let multicasted: Optional<MulticastObservableLike<T>> = none;
 
     // FIXME: Type test scheduler for VTS
-    return createObservable<T>(observer => {
+    return ObservableLike__create<T>(observer => {
       if (isNone(multicasted)) {
         multicasted = pipe(source, multicast(scheduler, options));
       }
@@ -1206,7 +1205,7 @@ export const subscribeOn =
   <T>(scheduler: SchedulerLike) =>
   (observable: ObservableLike<T>): ObservableLike<T> =>
     // FIXME: type test for VTS
-    createObservable<T>(({ [ObserverLike_dispatcher]: dispatcher }) =>
+    ObservableLike__create<T>(({ [ObserverLike_dispatcher]: dispatcher }) =>
       pipe(
         observable,
         forEach<T>(dispatchTo(dispatcher)),
@@ -1736,7 +1735,7 @@ export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
   () => observable =>
     isRunnable(observable)
       ? FlowableLike__createLifted((modeObs: ObservableLike<FlowMode>) =>
-          createObservable(observer => {
+          ObservableLike__create(observer => {
             const pausableScheduler = pipe(
               observer,
               getScheduler,
@@ -2078,8 +2077,8 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
           enumerableToObservable(),
         )
       : isRunnable
-      ? createRunnableObservable(onSink(observables))
-      : createObservable(onSink(observables));
+      ? RunnableObservableLike__create(onSink(observables))
+      : ObservableLike__create(onSink(observables));
   };
 })();
 export const zipT: Zip<ObservableLike> = {

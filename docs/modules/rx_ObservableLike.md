@@ -135,7 +135,7 @@ ___
 
 ### deferT
 
-• `Const` **deferT**: [`Defer`](containers.md#defer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), { `delay`: `number`  }\>
+• `Const` **deferT**: [`Defer`](containers.md#defer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ___
 
@@ -700,7 +700,7 @@ ___
 
 ### defer
 
-▸ **defer**<`T`\>(`factory`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **defer**<`T`\>(`factory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -713,7 +713,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
-| `options?` | `Partial`<{ `delay`: `number`  }\> |
 
 #### Returns
 

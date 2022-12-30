@@ -131,11 +131,8 @@ export type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
   ): ContainerOperator<C, ArrayBuffer, string>;
 };
 
-export type Defer<C extends ContainerLike, O = never> = Container<C> & {
-  defer<T>(
-    factory: Factory<ContainerOf<C, T>>,
-    options?: Partial<O>,
-  ): ContainerOf<C, T>;
+export type Defer<C extends ContainerLike> = Container<C> & {
+  defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 };
 
 export type DistinctUntilChanged<C extends ContainerLike> = Container<C> & {

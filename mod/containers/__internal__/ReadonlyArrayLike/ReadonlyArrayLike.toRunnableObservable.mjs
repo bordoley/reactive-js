@@ -1,9 +1,10 @@
 /// <reference types="./ReadonlyArrayLike.toRunnableObservable.d.ts" />
-import { createRunnableObservable, createEnumerableObservable } from '../../../__internal__/rx/ObservableLike.create.mjs';
 import { hasDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { schedule } from '../../../rx/ObserverLike.mjs';
+import create$1 from '../../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
+import create from '../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
 import { yield_ } from '../../../scheduling/ContinuationLike.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
 import toContainer from './ReadonlyArrayLike.toContainer.mjs';
@@ -37,8 +38,8 @@ const toRunnableObservable = /*@__PURE__*/ (() => {
     });
     return (options) => {
         const createObservableWithType = (f) => hasDelay(options)
-            ? createRunnableObservable(f)
-            : createEnumerableObservable(f);
+            ? create(f)
+            : create$1(f);
         return createArrayObservable(createObservableWithType, options)(options);
     };
 })();
