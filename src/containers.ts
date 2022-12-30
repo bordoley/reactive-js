@@ -2,7 +2,7 @@ import {
   Equality,
   Factory,
   Function1,
-  Option,
+  Optional,
   Predicate,
   Reducer,
   SideEffect1,
@@ -62,7 +62,7 @@ export const SequenceLike_next = Symbol("SequenceLike_next");
 export interface SequenceLike<T = unknown> extends ContainerLike {
   readonly [ContainerLike_type]?: SequenceLike<this[typeof ContainerLike_T]>;
 
-  (): Option<{
+  (): Optional<{
     readonly [SequenceLike_data]: T;
     readonly [SequenceLike_next]: SequenceLike<T>;
   }>;
@@ -228,8 +228,8 @@ export type ForkZip<C extends ContainerLike> = Container<C> & {
 };
 
 export type FromArrayOptions = {
-  readonly start: Option<number>;
-  readonly count: Option<number>;
+  readonly start: Optional<number>;
+  readonly count: Optional<number>;
 };
 
 export type FromArray<

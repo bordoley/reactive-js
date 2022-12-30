@@ -92,7 +92,7 @@ ___
 
 ### useObservable
 
-▸ **useObservable**<`T`\>(`observable`, `options?`): [`Option`](functions.md#option)<`T`\>
+▸ **useObservable**<`T`\>(`observable`, `options?`): [`Optional`](functions.md#optional)<`T`\>
 
 Returns the current value, if defined, of `observable`.
 
@@ -112,4 +112,4 @@ Returns the current value, if defined, of `observable`.
 
 #### Returns
 
-[`Option`](functions.md#option)<`T`\>
+[`Optional`](functions.md#optional)<`T`\>

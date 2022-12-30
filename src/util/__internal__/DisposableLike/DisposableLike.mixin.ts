@@ -1,5 +1,5 @@
 import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins";
-import { Option, isSome, none, pipe } from "../../../functions";
+import { Optional, isSome, none, pipe } from "../../../functions";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -37,7 +37,7 @@ const disposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
   );
 
   type TProperties = {
-    [DisposableLike_exception]: Option<Exception>;
+    [DisposableLike_exception]: Optional<Exception>;
     [DisposableLike_isDisposed]: boolean;
     readonly [Disposable_private_disposables]: Set<DisposableOrTeardown>;
   };

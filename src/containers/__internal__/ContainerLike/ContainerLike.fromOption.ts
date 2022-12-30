@@ -4,13 +4,13 @@ import {
   FromArray,
   FromArrayOptions,
 } from "../../../containers";
-import { Function1, Option, isSome, pipe } from "../../../functions";
+import { Function1, Optional, isSome, pipe } from "../../../functions";
 
 const fromOption =
   <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
     { fromArray }: FromArray<C, O>,
     options?: Omit<Partial<O>, keyof FromArrayOptions>,
-  ): Function1<Option<T>, ContainerOf<C, T>> =>
+  ): Function1<Optional<T>, ContainerOf<C, T>> =>
   option =>
     pipe(isSome(option) ? [option] : [], fromArray<T>({ ...options }));
 

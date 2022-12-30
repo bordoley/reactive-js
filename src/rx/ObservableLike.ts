@@ -94,7 +94,7 @@ import {
   Factory,
   Function1,
   Function2,
-  Option,
+  Optional,
   Predicate,
   Reducer,
   SideEffect,
@@ -1102,7 +1102,7 @@ export const share =
     options?: { readonly replay?: number },
   ): Function1<ObservableLike<T>, ObservableLike<T>> =>
   (source: ObservableLike<T>) => {
-    let multicasted: Option<MulticastObservableLike<T>> = none;
+    let multicasted: Optional<MulticastObservableLike<T>> = none;
 
     // FIXME: Type test scheduler for VTS
     return createObservable<T>(observer => {
@@ -1347,7 +1347,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
 
     type TProperties = {
       readonly delegate: ObserverLike<T>;
-      value: Option<T>;
+      value: Optional<T>;
       hasValue: boolean;
       readonly durationSubscription: DisposableRefLike;
       readonly durationFunction: Function1<T, ObservableLike>;
@@ -1795,7 +1795,7 @@ export const toPromise: ToPromiseable<
         reject: (ex: unknown) => void,
       ) => void
     >(Promise, (resolve, reject) => {
-      let result: Option<T> = none;
+      let result: Optional<T> = none;
       let hasResult = false;
 
       pipe(
@@ -1877,7 +1877,7 @@ export const withLatestFrom: <TA, TB, T>(
     type TProperties = {
       readonly delegate: ObserverLike<T>;
       hasLatest: boolean;
-      otherLatest: Option<TB>;
+      otherLatest: Optional<TB>;
       readonly selector: Function2<TA, TB, T>;
     };
 

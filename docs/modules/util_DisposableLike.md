@@ -204,18 +204,18 @@ ___
 
 ### getException
 
-▸ **getException**(`disposable`): [`Option`](functions.md#option)<[`Exception`](util.md#exception)\>
+▸ **getException**(`disposable`): [`Optional`](functions.md#optional)<[`Exception`](util.md#exception)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `disposable` | `Object` |
-| `disposable.[DisposableLike_exception]` | [`Option`](functions.md#option)<[`Exception`](util.md#exception)\> |
+| `disposable.[DisposableLike_exception]` | [`Optional`](functions.md#optional)<[`Exception`](util.md#exception)\> |
 
 #### Returns
 
-[`Option`](functions.md#option)<[`Exception`](util.md#exception)\>
+[`Optional`](functions.md#optional)<[`Exception`](util.md#exception)\>
 
 ___
 
@@ -272,7 +272,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](functions.md#option)<[`Exception`](util.md#exception)\>\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<[`Exception`](util.md#exception)\>\> |
 
 #### Returns
 

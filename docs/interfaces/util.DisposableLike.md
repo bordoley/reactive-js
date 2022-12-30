@@ -40,7 +40,7 @@ Represents an unmanaged resource that can be disposed.
 
 ### [DisposableLike\_exception]
 
-• `Readonly` **[DisposableLike\_exception]**: [`Option`](../modules/functions.md#option)<[`Exception`](../modules/util.md#exception)\>
+• `Readonly` **[DisposableLike\_exception]**: [`Optional`](../modules/functions.md#optional)<[`Exception`](../modules/util.md#exception)\>
 
 The error the `Disposable` was disposed with if disposed.
 

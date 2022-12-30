@@ -1,5 +1,5 @@
 import { ReactElement, ComponentType } from 'react';
-import { Factory, Option } from "../functions.mjs";
+import { Factory, Optional } from "../functions.mjs";
 import { ObservableLike } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
 /**
@@ -11,7 +11,7 @@ import { SchedulerLike } from "../scheduling.mjs";
  */
 declare const useObservable: <T>(observable: ObservableLike<T>, options?: {
     readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
-}) => Option<T>;
+}) => Optional<T>;
 declare const createComponent: <TProps>(fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>, options?: {
     readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
 }) => ComponentType<TProps>;

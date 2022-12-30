@@ -14,7 +14,7 @@ import {
 import { ContainerOperator } from "../../../containers";
 import {
   Function2,
-  Option,
+  Optional,
   getLength,
   isEmpty,
   none,
@@ -49,7 +49,7 @@ const zipWithLatestFrom: <TA, TB, T>(
     type TProperties = {
       readonly delegate: ObserverLike<T>;
       hasLatest: boolean;
-      otherLatest: Option<TB>;
+      otherLatest: Optional<TB>;
       readonly queue: TA[];
       readonly selector: Function2<TA, TB, T>;
     };

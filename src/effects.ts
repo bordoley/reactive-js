@@ -7,7 +7,7 @@ import {
   Function4,
   Function5,
   Function6,
-  Option,
+  Optional,
   SideEffect,
   SideEffect1,
   SideEffect2,
@@ -67,7 +67,7 @@ type AwaitEffect = {
   readonly type: AsyncEffectType.Await;
   observable: ObservableLike;
   subscription: DisposableLike;
-  value: Option;
+  value: Optional;
   hasValue: boolean;
 };
 
@@ -75,7 +75,7 @@ type ObserveEffect = {
   readonly type: AsyncEffectType.Observe;
   observable: ObservableLike;
   subscription: DisposableLike;
-  value: Option;
+  value: Optional;
   hasValue: boolean;
 };
 
@@ -188,7 +188,7 @@ class AsyncContext {
   awaitOrObserve<T>(
     observable: ObservableLike<T>,
     shouldAwait: boolean,
-  ): Option<T> {
+  ): Optional<T> {
     const effect = shouldAwait
       ? validateAsyncEffect(this, AsyncEffectType.Await)
       : validateAsyncEffect(this, AsyncEffectType.Observe);
@@ -255,7 +255,7 @@ class AsyncContext {
   }
 }
 
-let currentCtx: Option<AsyncContext> = none;
+let currentCtx: Optional<AsyncContext> = none;
 
 export const async = <T>(
   computation: Factory<T>,
@@ -263,8 +263,8 @@ export const async = <T>(
 ): ObservableLike<T> =>
   createObservable((observer: ObserverLike<T>) => {
     const runComputation = () => {
-      let result: Option<T> = none;
-      let error: Option<Exception> = none;
+      let result: Optional<T> = none;
+      let error: Optional<Exception> = none;
       let isAwaiting = false;
 
       currentCtx = ctx;
@@ -386,7 +386,7 @@ export const __await = <T>(observable: ObservableLike<T>): T => {
   return ctx.awaitOrObserve(observable, true) as T;
 };
 
-export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
+export const __observe = <T>(observable: ObservableLike<T>): Optional<T> => {
   const ctx = assertCurrentContext();
   return ctx.awaitOrObserve(observable, false);
 };
@@ -519,13 +519,13 @@ export const __stream = /*@__PURE__*/ (() => {
 })();
 
 export const __state = /*@__PURE__*/ (() => {
-  const createStateOptions = <T>(equality: Option<Equality<T>>) =>
+  const createStateOptions = <T>(equality: Optional<Equality<T>>) =>
     isSome(equality) ? { equality } : none;
 
   return <T>(
     initialState: () => T,
     options: {
-      readonly equality?: Option<Equality<T>>;
+      readonly equality?: Optional<Equality<T>>;
     } = {},
   ): StreamLike<Updater<T>, T> => {
     const { equality } = options;

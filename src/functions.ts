@@ -80,7 +80,7 @@ export type Equality<T> = Function2<T, T, boolean>;
 /**
  * Represents an unboxed value of type T or undefined.
  */
-export type Option<T = unknown> = T | undefined;
+export type Optional<T = unknown> = T | undefined;
 
 /**
  * A one argument predicate function.
@@ -310,12 +310,12 @@ export const getLength = (arr: readonly unknown[] | string): number =>
 
 export const getOrDefault =
   <T>(defaultValue: T) =>
-  (v: Option<T>): T =>
+  (v: Optional<T>): T =>
     isSome(v) ? v : defaultValue;
 
 export const getOrRaise =
   <T>() =>
-  (v: Option<T>): T =>
+  (v: Optional<T>): T =>
     isSome(v) ? v : raise();
 
 /**
@@ -395,13 +395,13 @@ export const isOdd = (x: number): boolean => x % 2 !== 0;
 /**
  * Returns true if `option` is `none`.
  */
-export const isNone = <T>(option: Option<T>): option is undefined =>
+export const isNone = <T>(option: Optional<T>): option is undefined =>
   option === none;
 
 /**
  * Returns true if `option` is not `none`.
  */
-export const isSome = <T>(option: Option<T>): option is T => option !== none;
+export const isSome = <T>(option: Optional<T>): option is T => option !== none;
 
 export const isTrue = (v: boolean): v is true => v;
 

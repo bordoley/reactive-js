@@ -9,7 +9,7 @@ import {
 import {
   Function1,
   Function2,
-  Option,
+  Optional,
   SideEffect,
   isFunction,
   isSome,
@@ -63,8 +63,8 @@ export const createContinuation: Function2<
       {
         [ContinuationLike_run](this: TProperties & ContinuationLike) {
           if (!isDisposed(this)) {
-            let error: Option<Exception> = none;
-            let yieldError: Option<YieldError> = none;
+            let error: Optional<Exception> = none;
+            let yieldError: Optional<YieldError> = none;
 
             const { scheduler } = this;
             const oldCurrentScheduler = CurrentScheduler.getOrNone();

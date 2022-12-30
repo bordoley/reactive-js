@@ -1,4 +1,4 @@
-import { Option, SideEffect1 } from "./functions";
+import { Optional, SideEffect1 } from "./functions";
 /** @ignore */
 export const DisposableLike_add = Symbol("DisposableLike_add");
 
@@ -17,7 +17,7 @@ export type Exception = {
 
 export type DisposableOrTeardown =
   | DisposableLike
-  | SideEffect1<Option<Exception>>;
+  | SideEffect1<Optional<Exception>>;
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -26,7 +26,7 @@ export interface DisposableLike {
   /**
    * The error the `Disposable` was disposed with if disposed.
    */
-  readonly [DisposableLike_exception]: Option<Exception>;
+  readonly [DisposableLike_exception]: Optional<Exception>;
 
   /**
    * `true` if this resource has been disposed, otherwise false

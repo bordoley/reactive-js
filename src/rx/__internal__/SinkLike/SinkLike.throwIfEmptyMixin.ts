@@ -7,7 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { Option, none, pipe, returns } from "../../../functions";
+import { Optional, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike, Exception } from "../../../util";
 import { addTo, dispose, onComplete } from "../../../util/DisposableLike";
@@ -46,7 +46,7 @@ const throwIfEmptyMixin: <T>() => Mixin2<
           instance,
           addTo(delegate),
           onComplete(() => {
-            let error: Option<Exception> = none;
+            let error: Optional<Exception> = none;
 
             if (instance[ThrowIfEmptySink_private_isEmpty]) {
               let cause: unknown = none;

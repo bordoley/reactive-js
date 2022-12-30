@@ -28,7 +28,7 @@ import {
 import { getDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import {
   Factory,
-  Option,
+  Optional,
   ignore,
   isSome,
   none,
@@ -73,9 +73,9 @@ import DisposableLike__mixin from "../util/__internal__/DisposableLike/Disposabl
 export const useObservable = <T>(
   observable: ObservableLike<T>,
   options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
-): Option<T> => {
-  const [state, updateState] = useState<Option<T>>(none);
-  const [error, updateError] = useState<Option<Exception>>(none);
+): Optional<T> => {
+  const [state, updateState] = useState<Optional<T>>(none);
+  const [error, updateError] = useState<Optional<Exception>>(none);
 
   useEffect(() => {
     const { scheduler: schedulerOption } = options;

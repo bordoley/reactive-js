@@ -276,8 +276,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `count` | [`Option`](functions.md#option)<`number`\> |
-| `start` | [`Option`](functions.md#option)<`number`\> |
+| `count` | [`Optional`](functions.md#optional)<`number`\> |
+| `start` | [`Optional`](functions.md#optional)<`number`\> |
 
 ___
 

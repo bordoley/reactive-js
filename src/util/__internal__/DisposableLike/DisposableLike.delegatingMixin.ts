@@ -1,5 +1,5 @@
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins";
-import { Option, none, pipe, unsafeCast } from "../../../functions";
+import { Optional, none, pipe, unsafeCast } from "../../../functions";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -50,7 +50,7 @@ const delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
         [DisposableLike_isDisposed]: false,
       }),
       {
-        get [DisposableLike_exception](): Option<Exception> {
+        get [DisposableLike_exception](): Optional<Exception> {
           unsafeCast<TProperties>(this);
 
           const delegate = this[DelegatingDisposable_private_delegate];

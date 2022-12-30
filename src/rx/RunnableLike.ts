@@ -54,7 +54,7 @@ import {
 import {
   Factory,
   Function1,
-  Option,
+  Optional,
   Predicate,
   Updater,
   identity,
@@ -276,9 +276,9 @@ export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
 export const everySatisfyT: EverySatisfy<RunnableLike> = { everySatisfy };
 
 export const first =
-  <T>(): Function1<RunnableLike<T>, Option<T>> =>
+  <T>(): Function1<RunnableLike<T>, Optional<T>> =>
   src => {
-    let result: Option<T> = none;
+    let result: Optional<T> = none;
 
     pipe(
       src,
@@ -329,9 +329,9 @@ export const keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 export const keepT: Keep<RunnableLike> = { keep };
 
 export const last =
-  <T>(): Function1<RunnableLike<T>, Option<T>> =>
+  <T>(): Function1<RunnableLike<T>, Optional<T>> =>
   src => {
-    let result: Option<T> = none;
+    let result: Optional<T> = none;
 
     pipe(
       src,

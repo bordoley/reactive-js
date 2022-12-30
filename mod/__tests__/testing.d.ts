@@ -1,4 +1,4 @@
-import { Function1, SideEffect, Factory, Equality, Option } from "../functions.mjs";
+import { Function1, SideEffect, Factory, Equality, Optional } from "../functions.mjs";
 declare const DescribeType = 1;
 declare const TestType = 2;
 declare const TestAsyncType = 3;
@@ -27,8 +27,8 @@ declare const expectEquals: <T>(b: T, valueEquality?: <T_1>(a: T_1, b: T_1) => b
 declare const expectArrayEquals: <T>(b: readonly T[], valueEquality?: Equality<T>) => (a: readonly T[]) => void;
 declare const expectTrue: (v: boolean) => void;
 declare const expectFalse: (v: boolean) => void;
-declare const expectIsNone: (v: Option) => void;
-declare const expectIsSome: (v: Option) => void;
+declare const expectIsNone: (v: Optional) => void;
+declare const expectIsSome: (v: Optional) => void;
 declare type MockFunction = {
     (...v: readonly unknown[]): any;
     readonly calls: readonly ReadonlyArray<any>[];

@@ -2,7 +2,7 @@ import {
   Equality,
   Factory,
   Function1,
-  Option,
+  Optional,
   SideEffect,
   arrayEquality,
   getLength,
@@ -84,7 +84,7 @@ export const expectToThrow = (f: SideEffect) => {
 
 export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
   let didThrow = false;
-  let errorThrown: Option = none;
+  let errorThrown: Optional = none;
   try {
     f();
   } catch (e) {
@@ -132,13 +132,13 @@ export const expectFalse = (v: boolean) => {
   }
 };
 
-export const expectIsNone = (v: Option) => {
+export const expectIsNone = (v: Optional) => {
   if (isSome(v)) {
     raise(`expected none but recieved ${v}`);
   }
 };
 
-export const expectIsSome = (v: Option) => {
+export const expectIsSome = (v: Optional) => {
   if (isNone(v)) {
     raise(`expected Some(?) but recieved None`);
   }
