@@ -1,4 +1,4 @@
-import { Function1, Factory, Equality, Option, TypePredicate, Predicate } from "../functions.mjs";
+import { Function1, Factory, Equality, Optional, TypePredicate, Predicate } from "../functions.mjs";
 import { ContainerLike, FromArrayOptions, Container, ContainerOperator, ContainerOf, Concat, SomeSatisfy, FromArray, Keep, Map, EverySatisfy, Zip } from "../containers.mjs";
 declare const compute: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(m: Container<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
@@ -20,7 +20,7 @@ declare const encodeUtf8: <C extends ContainerLike>(m: Container<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 }) => ContainerOperator<C, string, Uint8Array>;
 declare const endWith: <C extends ContainerLike, T>(m: Concat<C> & FromArray<C, never>, value: T, ...values: readonly T[]) => ContainerOperator<C, T, T>;
-declare const fromOption: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Option<T>, ContainerOf<C, T>>;
+declare const fromOption: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Optional<T>, ContainerOf<C, T>>;
 declare const genMap: <C extends ContainerLike, TA, TB, OConcatAll = never, OFromIterable = never>(m: Container<C> & {
     map<TA_1, TB_1>(mapper: Function1<TA_1, TB_1>): ContainerOperator<C, TA_1, TB_1>;
 } & {

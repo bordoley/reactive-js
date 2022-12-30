@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
-import { Option, isFunction, pipe, unsafeCast } from "../../../functions";
+import { Optional, isFunction, pipe, unsafeCast } from "../../../functions";
 import {
   ContinuationLike,
   SchedulerLike,
@@ -32,7 +32,7 @@ import getCurrentTime from "./SchedulerLike.getCurrentTime";
 import isInContinuation from "./SchedulerLike.isInContinuation";
 
 declare const navigator: {
-  scheduling: Option<{
+  scheduling: Optional<{
     isInputPending(): boolean;
   }>;
 };

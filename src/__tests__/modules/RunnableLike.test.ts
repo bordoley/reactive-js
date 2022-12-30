@@ -1,5 +1,5 @@
 import { toRunnable } from "../../containers/ReadonlyArrayLike";
-import { Option, none, pipeLazy } from "../../functions";
+import { Optional, none, pipeLazy } from "../../functions";
 import {
   bufferT,
   catchErrorT,
@@ -164,12 +164,12 @@ testModule(
         [0, 1, 2],
         toRunnable(),
         first(),
-        expectEquals<Option<number>>(0),
+        expectEquals<Optional<number>>(0),
       ),
     ),
     test(
       "when the source is empty",
-      pipeLazy([], toRunnable(), first(), expectEquals<Option<number>>(none)),
+      pipeLazy([], toRunnable(), first(), expectEquals<Optional<number>>(none)),
     ),
   ),
   describe(
@@ -180,12 +180,12 @@ testModule(
         [0, 1, 2],
         toRunnable(),
         last(),
-        expectEquals<Option<number>>(2),
+        expectEquals<Optional<number>>(2),
       ),
     ),
     test(
       "when the source is empty",
-      pipeLazy([], toRunnable(), last(), expectEquals<Option<number>>(none)),
+      pipeLazy([], toRunnable(), last(), expectEquals<Optional<number>>(none)),
     ),
   ),
 );

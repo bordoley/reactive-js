@@ -56,7 +56,7 @@ import {
   Equality,
   Factory,
   Function1,
-  Option,
+  Optional,
   Predicate,
   Reducer,
   SideEffect1,
@@ -641,7 +641,7 @@ export const repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
 >() => {
   type TProperties = {
     count: number;
-    enumerator: Option<EnumeratorLike<T>>;
+    enumerator: Optional<EnumeratorLike<T>>;
     readonly shouldRepeat: Predicate<number>;
     readonly src: EnumerableLike<T>;
   };
@@ -1057,7 +1057,7 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
             pipe(
               delegate,
               onComplete(() => {
-                let error: Option<Exception> = none;
+                let error: Optional<Exception> = none;
 
                 if (instance.isEmpty) {
                   let cause: unknown = none;

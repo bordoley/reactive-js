@@ -5,7 +5,7 @@ import {
   SequenceLike_next,
   ToSequence,
 } from "../../../containers";
-import { Option, none } from "../../../functions";
+import { Optional, none } from "../../../functions";
 
 import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";
 
@@ -16,7 +16,7 @@ const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] = /*@__PURE__*/ (<
     arr: readonly T[],
     index: number,
     count: number,
-  ): Option<{
+  ): Optional<{
     readonly [SequenceLike_data]: T;
     readonly [SequenceLike_next]: SequenceLike<T>;
   }> =>

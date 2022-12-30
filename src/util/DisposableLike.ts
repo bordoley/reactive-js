@@ -1,4 +1,4 @@
-import { Option } from "../functions";
+import { Optional } from "../functions";
 import {
   DisposableLike,
   DisposableLike_exception,
@@ -44,8 +44,8 @@ export const dispose = DisposableLike__dispose;
 export const disposed: DisposableLike = DisposableLike__disposed;
 
 export const getException: (disposable: {
-  [DisposableLike_exception]: Option<Exception>;
-}) => Option<Exception> = DisposableLike__getException;
+  [DisposableLike_exception]: Optional<Exception>;
+}) => Optional<Exception> = DisposableLike__getException;
 
 export const isDisposed: (disposable: {
   [DisposableLike_isDisposed]: boolean;

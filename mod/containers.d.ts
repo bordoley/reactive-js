@@ -1,4 +1,4 @@
-import { Option, Function1, Factory, Equality, Predicate, SideEffect1, Updater, Reducer } from "./functions.mjs";
+import { Optional, Function1, Factory, Equality, Predicate, SideEffect1, Updater, Reducer } from "./functions.mjs";
 import { DisposableLike } from "./util.mjs";
 /**  @ignore */
 declare const ContainerLike_T: unique symbol;
@@ -29,7 +29,7 @@ declare const SequenceLike_data: unique symbol;
 declare const SequenceLike_next: unique symbol;
 interface SequenceLike<T = unknown> extends ContainerLike {
     readonly [ContainerLike_type]?: SequenceLike<this[typeof ContainerLike_T]>;
-    (): Option<{
+    (): Optional<{
         readonly [SequenceLike_data]: T;
         readonly [SequenceLike_next]: SequenceLike<T>;
     }>;
@@ -151,8 +151,8 @@ declare type ForkZip<C extends ContainerLike> = Container<C> & {
     ]>;
 };
 declare type FromArrayOptions = {
-    readonly start: Option<number>;
-    readonly count: Option<number>;
+    readonly start: Optional<number>;
+    readonly count: Optional<number>;
 };
 declare type FromArray<C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions> = Container<C> & {
     fromArray<T>(options?: Partial<O>): Function1<readonly T[], ContainerOf<C, T>>;

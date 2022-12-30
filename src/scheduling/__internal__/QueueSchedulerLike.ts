@@ -19,7 +19,7 @@ import {
 import { MutableRefLike_current } from "../../__internal__/util/MutableRefLike";
 import {
   Function1,
-  Option,
+  Optional,
   SideEffect,
   isNone,
   isSome,
@@ -106,7 +106,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       return diff;
     };
 
-    const peek = (instance: TProperties): Option<QueueTask> => {
+    const peek = (instance: TProperties): Optional<QueueTask> => {
       const { delayed, queue } = instance;
       const now = getCurrentTime(instance.host);
 
@@ -129,7 +129,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         }
       }
 
-      let task: Option<QueueTask> = none;
+      let task: Optional<QueueTask> = none;
       while (true) {
         task = queue.peek();
 
@@ -217,7 +217,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       readonly delayed: QueueLike<QueueTask>;
       dueTime: number;
       readonly host: SchedulerLike;
-      hostContinuation: Option<SideEffect>;
+      hostContinuation: Optional<SideEffect>;
       isPaused: boolean;
       readonly queue: QueueLike<QueueTask>;
       taskIDCounter: number;

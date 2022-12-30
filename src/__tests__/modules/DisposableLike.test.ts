@@ -1,4 +1,4 @@
-import { Option, none, pipe, pipeLazy, raise } from "../../functions";
+import { Optional, none, pipe, pipeLazy, raise } from "../../functions";
 import { subscribe } from "../../rx/ObservableLike";
 import { run } from "../../scheduling/ContinuationLike";
 import { getCurrentTime, schedule } from "../../scheduling/SchedulerLike";
@@ -59,14 +59,14 @@ testModule(
     pipe(disposable, getException, expectIsNone);
   }),
   test("propogates errors when disposed with an Exception", () => {
-    const error: Option<Exception> = { cause: null };
+    const error: Optional<Exception> = { cause: null };
 
     const childTeardown = mockFn();
     const disposable = pipe(createDisposable(), onDisposed(childTeardown));
 
     pipe(disposable, dispose(error));
 
-    pipe(disposable, getException, expectEquals<Option<Exception>>(error));
+    pipe(disposable, getException, expectEquals<Optional<Exception>>(error));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([error]));
   }),

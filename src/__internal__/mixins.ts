@@ -4,7 +4,7 @@ import {
   Function2,
   Function3,
   Function4,
-  Option,
+  Optional,
   isFunction,
 } from "../functions";
 
@@ -18,7 +18,7 @@ const Object_private_initializedProperties = Symbol(
 
 type OptionalProperties<T> = T extends object
   ? {
-      [P in keyof T]: Option<T[P]>;
+      [P in keyof T]: Optional<T[P]>;
     }
   : T;
 

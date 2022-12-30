@@ -1,6 +1,6 @@
 import {
   Comparator,
-  Option,
+  Optional,
   floor,
   getLength,
   isSome,
@@ -62,8 +62,8 @@ export interface QueueLike<T> {
   readonly count: number;
 
   clear(): void;
-  peek(): Option<T>;
-  pop(): Option<T>;
+  peek(): Optional<T>;
+  pop(): Optional<T>;
   push(item: T): void;
 }
 

@@ -31,7 +31,7 @@ declare type Equality<T> = Function2<T, T, boolean>;
 /**
  * Represents an unboxed value of type T or undefined.
  */
-declare type Option<T = unknown> = T | undefined;
+declare type Optional<T = unknown> = T | undefined;
 /**
  * A one argument predicate function.
  */
@@ -115,8 +115,8 @@ declare const decrement: (x: number) => number;
 declare const decrementBy: (decr: number) => Updater<number>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<readonly T[], readonly T[]>;
 declare const getLength: (arr: readonly unknown[] | string) => number;
-declare const getOrDefault: <T>(defaultValue: T) => (v: Option<T>) => T;
-declare const getOrRaise: <T>() => (v: Option<T>) => T;
+declare const getOrDefault: <T>(defaultValue: T) => (v: Optional<T>) => T;
+declare const getOrRaise: <T>() => (v: Optional<T>) => T;
 /**
  * The identity function.
  *
@@ -159,11 +159,11 @@ declare const isOdd: (x: number) => boolean;
 /**
  * Returns true if `option` is `none`.
  */
-declare const isNone: <T>(option: Option<T>) => option is undefined;
+declare const isNone: <T>(option: Optional<T>) => option is undefined;
 /**
  * Returns true if `option` is not `none`.
  */
-declare const isSome: <T>(option: Option<T>) => option is T;
+declare const isSome: <T>(option: Optional<T>) => option is T;
 declare const isTrue: (v: boolean) => v is true;
 /**
  * Applies logical negation to the value `v`.
@@ -253,4 +253,4 @@ declare const updateReducer: <T>(acc: T, updater: Updater<T>) => T;
 declare const floor: (x: number) => number;
 declare const max: (...values: number[]) => number;
 declare const min: (...values: number[]) => number;
-export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Option, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast, updateReducer };
+export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Optional, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast, updateReducer };

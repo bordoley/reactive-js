@@ -4,18 +4,18 @@ import {
   SequenceLike_data,
   SequenceLike_next,
 } from "../../../containers";
-import { Option, isSome, none } from "../../../functions";
+import { Optional, isSome, none } from "../../../functions";
 
 const concatAll: ConcatAll<SequenceLike>["concatAll"] =
   <T>() =>
   (seq: SequenceLike<SequenceLike<T>>) => {
     const continueWith = (
-      result: Option<{
+      result: Optional<{
         readonly [SequenceLike_data]: T;
         readonly [SequenceLike_next]: SequenceLike<T>;
       }>,
       continuation: SequenceLike<SequenceLike<T>>,
-    ): Option<{
+    ): Optional<{
       readonly [SequenceLike_data]: T;
       readonly [SequenceLike_next]: SequenceLike<T>;
     }> => {
@@ -31,11 +31,11 @@ const concatAll: ConcatAll<SequenceLike>["concatAll"] =
     };
 
     const flattenIter = (
-      result: Option<{
+      result: Optional<{
         readonly [SequenceLike_data]: SequenceLike<T>;
         readonly [SequenceLike_next]: SequenceLike<SequenceLike<T>>;
       }>,
-    ): Option<{
+    ): Optional<{
       readonly [SequenceLike_data]: T;
       readonly [SequenceLike_next]: SequenceLike<T>;
     }> => {

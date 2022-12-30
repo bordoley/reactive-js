@@ -11,7 +11,7 @@ import { toObservable } from "../containers/PromiseableLike";
 import { keep } from "../containers/ReadonlyArrayLike";
 import {
   Function1,
-  Option,
+  Optional,
   Updater,
   compose,
   getLength,
@@ -178,7 +178,7 @@ export const fetch: <T>(
         createObservable(async observer => {
           const signal = toAbortSignal(observer);
 
-          let request: Option<string | Request> = none;
+          let request: Optional<string | Request> = none;
           if (isString(fetchRequest)) {
             request = fetchRequest;
           } else {
@@ -382,7 +382,7 @@ export const windowLocation: WindowLocationStreamableLike =
       ),
     );
 
-    let currentWindowLocationStream: Option<WindowLocationStreamLike> = none;
+    let currentWindowLocationStream: Optional<WindowLocationStreamLike> = none;
 
     return StreamableLike__create<
       Updater<WindowLocationURI> | WindowLocationURI,

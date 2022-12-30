@@ -384,7 +384,7 @@ ___
 
 ### \_\_observe
 
-▸ **__observe**<`T`\>(`observable`): [`Option`](functions.md#option)<`T`\>
+▸ **__observe**<`T`\>(`observable`): [`Optional`](functions.md#optional)<`T`\>
 
 #### Type parameters
 
@@ -400,7 +400,7 @@ ___
 
 #### Returns
 
-[`Option`](functions.md#option)<`T`\>
+[`Optional`](functions.md#optional)<`T`\>
 
 ___
 
@@ -420,7 +420,7 @@ ___
 | :------ | :------ |
 | `initialState` | () => `T` |
 | `options?` | `Object` |
-| `options.equality?` | [`Option`](functions.md#option)<[`Equality`](functions.md#equality)<`T`\>\> |
+| `options.equality?` | [`Optional`](functions.md#optional)<[`Equality`](functions.md#equality)<`T`\>\> |
 
 #### Returns
 

@@ -1,4 +1,4 @@
-import { SideEffect1, Option } from "./functions.mjs";
+import { SideEffect1, Optional } from "./functions.mjs";
 /** @ignore */
 declare const DisposableLike_add: unique symbol;
 /** @ignore */
@@ -10,7 +10,7 @@ declare const DisposableLike_isDisposed: unique symbol;
 declare type Exception = {
     readonly cause: unknown;
 };
-declare type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Exception>>;
+declare type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Exception>>;
 /**
  * Represents an unmanaged resource that can be disposed.
  */
@@ -18,7 +18,7 @@ interface DisposableLike {
     /**
      * The error the `Disposable` was disposed with if disposed.
      */
-    readonly [DisposableLike_exception]: Option<Exception>;
+    readonly [DisposableLike_exception]: Optional<Exception>;
     /**
      * `true` if this resource has been disposed, otherwise false
      */

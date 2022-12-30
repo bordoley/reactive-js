@@ -1,6 +1,6 @@
-import { Option } from "../../functions.mjs";
+import { Optional } from "../../functions.mjs";
 import { SchedulerLike } from "../../scheduling.mjs";
 declare const get: () => SchedulerLike;
-declare const getOrNone: () => Option<SchedulerLike>;
-declare const set: (scheduler: Option<SchedulerLike>) => void;
+declare const getOrNone: () => Optional<SchedulerLike>;
+declare const set: (scheduler: Optional<SchedulerLike>) => void;
 export { get, getOrNone, set };

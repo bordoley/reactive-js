@@ -1,4 +1,4 @@
-import { Factory, Option, Equality, Updater, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "./functions.mjs";
+import { Factory, Optional, Equality, Updater, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "./functions.mjs";
 import { ObservableLike } from "./rx.mjs";
 import { SchedulerLike } from "./scheduling.mjs";
 import { StreamLike, StreamableLike } from "./streaming.mjs";
@@ -17,7 +17,7 @@ interface __Memo {
 }
 declare const __memo: __Memo;
 declare const __await: <T>(observable: ObservableLike<T>) => T;
-declare const __observe: <T>(observable: ObservableLike<T>) => Option<T>;
+declare const __observe: <T>(observable: ObservableLike<T>) => Optional<T>;
 interface __Do {
     (fn: SideEffect): void;
     <TA>(fn: SideEffect1<TA>, a: TA): void;
@@ -44,6 +44,6 @@ declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamabl
     readonly scheduler?: SchedulerLike | undefined;
 }) => TStream;
 declare const __state: <T>(initialState: () => T, options?: {
-    readonly equality?: Option<Equality<T>>;
+    readonly equality?: Optional<Equality<T>>;
 }) => StreamLike<Updater<T>, T>;
 export { __await, __currentScheduler, __do, __memo, __observe, __state, __stream, __using, async };

@@ -23,7 +23,7 @@
 - [Function7](functions.md#function7)
 - [Function8](functions.md#function8)
 - [Function9](functions.md#function9)
-- [Option](functions.md#option)
+- [Optional](functions.md#optional)
 - [Predicate](functions.md#predicate)
 - [Reducer](functions.md#reducer)
 - [SideEffect](functions.md#sideeffect)
@@ -579,9 +579,9 @@ ___
 
 ___
 
-### Option
+### Optional
 
-Ƭ **Option**<`T`\>: `T` \| `undefined`
+Ƭ **Optional**<`T`\>: `T` \| `undefined`
 
 Represents an unboxed value of type T or undefined.
 
@@ -1580,7 +1580,7 @@ ___
 
 ### getOrDefault
 
-▸ **getOrDefault**<`T`\>(`defaultValue`): (`v`: [`Option`](functions.md#option)<`T`\>) => `T`
+▸ **getOrDefault**<`T`\>(`defaultValue`): (`v`: [`Optional`](functions.md#optional)<`T`\>) => `T`
 
 #### Type parameters
 
@@ -1604,7 +1604,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `v` | [`Option`](functions.md#option)<`T`\> |
+| `v` | [`Optional`](functions.md#optional)<`T`\> |
 
 ##### Returns
 
@@ -1614,7 +1614,7 @@ ___
 
 ### getOrRaise
 
-▸ **getOrRaise**<`T`\>(): (`v`: [`Option`](functions.md#option)<`T`\>) => `T`
+▸ **getOrRaise**<`T`\>(): (`v`: [`Optional`](functions.md#optional)<`T`\>) => `T`
 
 #### Type parameters
 
@@ -1632,7 +1632,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `v` | [`Option`](functions.md#option)<`T`\> |
+| `v` | [`Optional`](functions.md#optional)<`T`\> |
 
 ##### Returns
 
@@ -1829,7 +1829,7 @@ Returns true if `option` is `none`.
 
 | Name | Type |
 | :------ | :------ |
-| `option` | [`Option`](functions.md#option)<`T`\> |
+| `option` | [`Optional`](functions.md#optional)<`T`\> |
 
 #### Returns
 
@@ -1903,7 +1903,7 @@ Returns true if `option` is not `none`.
 
 | Name | Type |
 | :------ | :------ |
-| `option` | [`Option`](functions.md#option)<`T`\> |
+| `option` | [`Optional`](functions.md#optional)<`T`\> |
 
 #### Returns
 

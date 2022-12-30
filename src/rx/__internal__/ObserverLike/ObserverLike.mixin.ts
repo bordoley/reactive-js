@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import {
-  Option,
+  Optional,
   SideEffect,
   getLength,
   isEmpty,
@@ -135,7 +135,7 @@ const observerMixin: <T>() => Mixin1<TObserverMixinReturn<T>, SchedulerLike> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
       readonly [ObserverLike_scheduler]: SchedulerLike;
-      dispatcher: Option<DispatcherLike<T>>;
+      dispatcher: Optional<DispatcherLike<T>>;
     };
 
     return pipe(
