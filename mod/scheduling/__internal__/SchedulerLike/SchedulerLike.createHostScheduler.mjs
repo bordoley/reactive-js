@@ -1,5 +1,5 @@
 /// <reference types="./SchedulerLike.createHostScheduler.d.ts" />
-import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { isFunction, pipe, unsafeCast } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
@@ -40,7 +40,7 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
     run(continuation);
     scheduler[SchedulerLike_inContinuation] = false;
 };
-const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mixin(include(disposableMixin), function HostScheduler(instance, yieldInterval) {
+const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(disposableMixin), function HostScheduler(instance, yieldInterval) {
     init(disposableMixin, instance);
     instance.yieldInterval = yieldInterval;
     return instance;

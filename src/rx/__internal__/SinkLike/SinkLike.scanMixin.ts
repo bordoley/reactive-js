@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Factory, Reducer, none, pipe, returns } from "../../../functions";
@@ -29,7 +29,7 @@ const scanMixin: <T, TAcc>() => Mixin3<
   };
 
   return returns(
-    mixin(
+    mix(
       include(DisposableLike__delegatingMixin),
       function ScanSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

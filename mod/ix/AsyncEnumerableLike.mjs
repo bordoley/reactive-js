@@ -1,5 +1,5 @@
 /// <reference types="./AsyncEnumerableLike.d.ts" />
-import { createInstanceFactory, mixin as mixin$1, include, init, props } from '../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
 import { getDelay, hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
@@ -32,7 +32,7 @@ import { enumerate } from './EnumerableLike.mjs';
 const createAsyncEnumerator = /*@__PURE__*/ (() => {
     const createAsyncEnumeratorInternal = (() => {
         const typedStreamMixin = mixin();
-        return createInstanceFactory(mixin$1(include(typedStreamMixin), function AsyncEnumerator(instance, op, scheduler, replay) {
+        return createInstanceFactory(mix(include(typedStreamMixin), function AsyncEnumerator(instance, op, scheduler, replay) {
             init(typedStreamMixin, instance, op, scheduler, replay);
             return instance;
         }, {}, {
@@ -47,7 +47,7 @@ const createAsyncEnumerator = /*@__PURE__*/ (() => {
     };
 })();
 const createAsyncEnumerable = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mixin$1(function AsyncEnumerable(instance, stream) {
+    return createInstanceFactory(mix(function AsyncEnumerable(instance, stream) {
         instance[StreamableLike_stream] = stream;
         return instance;
     }, props({
@@ -62,7 +62,7 @@ const createAsyncEnumerable = /*@__PURE__*/ (() => {
     }));
 })();
 const createLiftedAsyncEnumerator = (() => {
-    return createInstanceFactory(mixin$1(include(disposableMixin), function LiftedAsyncEnumerator(instance, op, scheduler, replay) {
+    return createInstanceFactory(mix(include(disposableMixin), function LiftedAsyncEnumerator(instance, op, scheduler, replay) {
         init(disposableMixin, instance);
         instance.op = op;
         instance[DispatcherLike_scheduler] = scheduler;
@@ -175,7 +175,7 @@ const liftT = {
     variance: interactive,
 };
 const delegatingAsyncEnumerator = /*@__PURE__*/ (() => {
-    return pipe(mixin$1(function DelegatingAsyncEnumerator(instance, delegate) {
+    return pipe(mix(function DelegatingAsyncEnumerator(instance, delegate) {
         instance.delegate = delegate;
         return instance;
     }, props({
@@ -196,7 +196,7 @@ const delegatingAsyncEnumerator = /*@__PURE__*/ (() => {
     }), returns);
 })();
 const keep = /*@__PURE__*/ (() => {
-    const createKeepAsyncEnumerator = createInstanceFactory(mixin$1(include(delegatingMixin, delegatingAsyncEnumerator()), function KeepAsyncEnumerator(instance, delegate, predicate) {
+    const createKeepAsyncEnumerator = createInstanceFactory(mix(include(delegatingMixin, delegatingAsyncEnumerator()), function KeepAsyncEnumerator(instance, delegate, predicate) {
         init(delegatingMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
         instance.obs = pipe(delegate, forEach(x => {
@@ -226,7 +226,7 @@ const keepT = {
     keep,
 };
 const map = /*@__PURE__*/ (() => {
-    const createMapAsyncEnumerator = createInstanceFactory(mixin$1(include(delegatingMixin, delegatingAsyncEnumerator()), function MapAsyncEnumerator(instance, delegate, mapper) {
+    const createMapAsyncEnumerator = createInstanceFactory(mix(include(delegatingMixin, delegatingAsyncEnumerator()), function MapAsyncEnumerator(instance, delegate, mapper) {
         init(delegatingMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
         instance.delegate = delegate;
@@ -254,7 +254,7 @@ const mapT = {
     map,
 };
 const scan = /*@__PURE__*/ (() => {
-    const createScanAsyncEnumerator = createInstanceFactory(mixin$1(include(delegatingMixin, delegatingAsyncEnumerator()), function ScanAsyncEnumerator(instance, delegate, reducer, acc) {
+    const createScanAsyncEnumerator = createInstanceFactory(mix(include(delegatingMixin, delegatingAsyncEnumerator()), function ScanAsyncEnumerator(instance, delegate, reducer, acc) {
         init(delegatingMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
         instance.delegate = delegate;
@@ -282,7 +282,7 @@ const scanT = {
     scan,
 };
 const scanAsync = /*@__PURE__*/ (() => {
-    const creatScanAsyncAsyncEnumerator = createInstanceFactory(mixin$1(include(delegatingMixin, delegatingAsyncEnumerator()), function ScanAsyncAsyncEnumerator(instance, delegate, reducer, initialValue) {
+    const creatScanAsyncAsyncEnumerator = createInstanceFactory(mix(include(delegatingMixin, delegatingAsyncEnumerator()), function ScanAsyncAsyncEnumerator(instance, delegate, reducer, initialValue) {
         init(delegatingMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
         instance.obs = pipe(delegate, scanAsync$1(reducer, initialValue), multicast(getScheduler(delegate)));
@@ -309,7 +309,7 @@ const scanAsyncT = {
 };
 const takeWhile = 
 /*@__PURE__*/ (() => {
-    const createTakeWhileAsyncEnumerator = createInstanceFactory(mixin$1(include(delegatingMixin, delegatingAsyncEnumerator()), function TakeWhileAsyncEnumerator(instance, delegate, predicate, inclusive) {
+    const createTakeWhileAsyncEnumerator = createInstanceFactory(mix(include(delegatingMixin, delegatingAsyncEnumerator()), function TakeWhileAsyncEnumerator(instance, delegate, predicate, inclusive) {
         init(delegatingMixin, instance, delegate);
         init(delegatingAsyncEnumerator(), instance, delegate);
         instance.obs = pipe(delegate, takeWhile$1(predicate, { inclusive }), multicast(getScheduler(delegate)), add(instance));

@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { SideEffect1, none, pipe, returns } from "../../../functions";
@@ -25,7 +25,7 @@ export const forEachMixin: <T>() => Mixin2<
   };
 
   return returns(
-    mixin(
+    mix(
       include(DisposableLike__delegatingMixin),
       function ForEachSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

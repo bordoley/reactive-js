@@ -1,5 +1,5 @@
 /// <reference types="./DelegatingEnumeratorLike.mixin.d.ts" />
-import { mixin as mixin$1, props } from '../../../__internal__/mixins.mjs';
+import { mix, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, unsafeCast, raise, returns } from '../../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
 import move from '../EnumeratorLike/EnumeratorLike.move.mjs';
@@ -7,7 +7,7 @@ import { DelegatingEnumerator_move_delegate } from '../ix.internal.mjs';
 
 const mixin = /*@__PURE__*/ (() => {
     const DelegatingEnumerator_private_delegate = Symbol("DelegatingEnumerator_private_delegate");
-    return pipe(mixin$1(function DelegatingEnumerator(instance, delegate) {
+    return pipe(mix(function DelegatingEnumerator(instance, delegate) {
         instance[DelegatingEnumerator_private_delegate] = delegate;
         return instance;
     }, props({

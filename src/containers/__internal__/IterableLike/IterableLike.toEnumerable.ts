@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { IterableLike } from "../../../containers";
@@ -29,7 +29,7 @@ const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
     };
 
     const createIterableEnumerator = createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin, typedMutableEnumeratorMixin),
         function IteratorEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &

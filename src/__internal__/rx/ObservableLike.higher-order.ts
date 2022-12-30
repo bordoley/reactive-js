@@ -54,7 +54,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../mixins";
 import {
@@ -83,7 +83,7 @@ const createCatchError = <C extends ObservableLike>(
     const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(typedCatchErrorSink, typedObserverMixin),
         function CatchErrorObserver(
           instance: unknown,
@@ -166,7 +166,7 @@ const createMergeAll = <C extends ObservableLike>(
     };
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin, typedObserverMixin),
         function Observer(
           instance: Pick<
@@ -384,7 +384,7 @@ const createSwitchAll = <C extends ObservableLike>(
     }
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin, typedObserverMixin),
         function SwitchAllObserver(
           instance: Pick<

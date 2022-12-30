@@ -1,5 +1,5 @@
 /// <reference types="./SinkLike.bufferMixin.d.ts" />
-import { mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, isEmpty, none, getLength } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { addTo, onComplete, dispose } from '../../../util/DisposableLike.mjs';
@@ -11,7 +11,7 @@ import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 const bufferMixin = (fromArray) => {
     const BufferSink_private_maxBufferSize = Symbol("BufferSink_private_maxBufferSize");
     const BufferSink_private_buffer = Symbol("BufferSink_private_buffer");
-    return mixin(include(disposableMixin), function BufferSink(instance, delegate, maxBufferSize) {
+    return mix(include(disposableMixin), function BufferSink(instance, delegate, maxBufferSize) {
         init(disposableMixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[BufferSink_private_maxBufferSize] = maxBufferSize;

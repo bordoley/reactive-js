@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
@@ -37,7 +37,7 @@ type TProperties = {
 };
 
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
-  mixin(
+  mix(
     include(DisposableLike__mixin),
     function PrioritySchedulerDelegatingScheduler(
       instance: Pick<

@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { none, pipe, returns } from "../../../functions";
@@ -29,7 +29,7 @@ const takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
     };
 
     return returns(
-      mixin(
+      mix(
         include(DisposableLike__delegatingMixin),
         function TakeFirstSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

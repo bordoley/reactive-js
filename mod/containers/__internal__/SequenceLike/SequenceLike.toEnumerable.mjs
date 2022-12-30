@@ -1,5 +1,5 @@
 /// <reference types="./SequenceLike.toEnumerable.d.ts" />
-import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { none, isSome, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
@@ -11,7 +11,7 @@ import disposableMixin from '../../../util/__internal__/DisposableLike/Disposabl
 const toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = mutableMixin();
-    const createSequenceEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function SequenceEnumerator(instance, seq) {
+    const createSequenceEnumerator = createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function SequenceEnumerator(instance, seq) {
         init(disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.seq = seq;

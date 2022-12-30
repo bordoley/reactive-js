@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { isEmpty, newInstance, none, pipe } from "../../../functions";
@@ -34,7 +34,7 @@ const decodeWithCharsetMixin: <
     readonly [DecodeWithCharsetSink_private_textDecoder]: TextDecoder;
   };
 
-  return mixin(
+  return mix(
     include(DisposableLike__mixin),
     function DecodeWithCharsetSink(
       instance: Pick<SinkLike<ArrayBuffer>, typeof SinkLike_notify> &

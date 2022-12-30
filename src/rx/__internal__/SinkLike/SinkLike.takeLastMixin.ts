@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { getLength, none, pipe } from "../../../functions";
@@ -39,7 +39,7 @@ const takeLastMixin: <
     readonly [TakeLastSink_last]: T[];
   };
 
-  return mixin(
+  return mix(
     include(DisposableLike__mixin),
     function TakeLastSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

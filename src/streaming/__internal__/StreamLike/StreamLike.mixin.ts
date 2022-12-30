@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin as mix,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { ContainerOperator } from "../../../containers";

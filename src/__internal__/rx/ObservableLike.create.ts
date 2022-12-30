@@ -10,7 +10,7 @@ import {
   RunnableObservableLike,
 } from "../../rx";
 import DisposableLike__isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.dispose";
-import { Mutable, createInstanceFactory, mixin, props } from "../mixins";
+import { Mutable, createInstanceFactory, mix, props } from "../mixins";
 
 const createImpl: <T>(
   f: SideEffect1<ObserverLike>,
@@ -24,7 +24,7 @@ const createImpl: <T>(
   };
 
   return createInstanceFactory(
-    mixin(
+    mix(
       function CreateObservable(
         instance: Pick<ObservableLike, typeof ReactiveContainerLike_sinkInto> &
           Mutable<TProperties>,

@@ -1,5 +1,5 @@
 /// <reference types="./ObservableLike.zipWithLatestFrom.d.ts" />
-import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { liftEnumerableObservable, liftRunnableObservable, liftObservable } from '../../../__internal__/rx/ObservableLike.lift.mjs';
 import { getLength, pipe, isEmpty, none, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
@@ -27,7 +27,7 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
                 pipe(observer.delegate, notify(result));
             }
         };
-        return createInstanceFactory(mixin(include(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
+        return createInstanceFactory(mix(include(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
             init(disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;

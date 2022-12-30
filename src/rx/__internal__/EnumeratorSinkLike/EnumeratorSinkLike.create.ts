@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { getLength, none, pipe } from "../../../functions";
@@ -27,7 +27,7 @@ const create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
   };
 
   return createInstanceFactory(
-    mixin(
+    mix(
       include(DisposableLike__mixin),
       function EnumeratorSink(
         instance: Pick<

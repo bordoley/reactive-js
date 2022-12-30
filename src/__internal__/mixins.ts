@@ -164,7 +164,7 @@ interface CreateMixin {
     [Object_init]: TInit;
   };
 }
-export const mixin: CreateMixin = ((
+export const mix: CreateMixin = ((
   initOrParent: any,
   propertiesOrInit: any,
   prototypeOrParent?: any,

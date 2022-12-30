@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Predicate, none, pipe, returns } from "../../../functions";
@@ -22,7 +22,7 @@ const keepMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, Predicate<T>> =
     };
 
     return returns(
-      mixin(
+      mix(
         include(DisposableLike__delegatingMixin),
         function KeepSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

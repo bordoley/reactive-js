@@ -2,7 +2,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
 } from "../../../__internal__/mixins";
 import { liftEnumerableObservableT } from "../../../__internal__/rx/ObservableLike.lift";
 import { DistinctUntilChanged } from "../../../containers";
@@ -28,7 +28,7 @@ const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilC
       const typedObserverMixin = ObserverLike__mixin<T>();
 
       return createInstanceFactory(
-        mixin(
+        mix(
           include(typedObserverMixin, typedDistinctUntilChangedSinkMixin),
           function DistinctUntilChangedObserver(
             instance: unknown,

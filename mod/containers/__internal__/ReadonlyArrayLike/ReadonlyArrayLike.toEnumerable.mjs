@@ -1,5 +1,5 @@
 /// <reference types="./ReadonlyArrayLike.toEnumerable.d.ts" />
-import { createInstanceFactory, mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
@@ -10,7 +10,7 @@ import toContainer from './ReadonlyArrayLike.toContainer.mjs';
 
 const toEnumerable = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = mutableMixin();
-    const createReadonlyArrayEnumerator = createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin), function ReadonlyArrayEnumerator(instance, array, start, count) {
+    const createReadonlyArrayEnumerator = createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function ReadonlyArrayEnumerator(instance, array, start, count) {
         init(disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.array = array;

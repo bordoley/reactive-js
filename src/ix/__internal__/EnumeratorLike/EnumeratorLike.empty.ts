@@ -2,7 +2,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
 } from "../../../__internal__/mixins";
 import { pipe } from "../../../functions";
 import { EnumeratorLike, SourceLike_move } from "../../../ix";
@@ -14,7 +14,7 @@ import { MutableEnumeratorLike } from "../ix.internal";
 const empty: <T>() => EnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
   const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
   return createInstanceFactory(
-    mixin(
+    mix(
       include(DisposableLike__mixin, typedMutableEnumeratorMixin),
       function EmptyEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,

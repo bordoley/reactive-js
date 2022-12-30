@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import {
@@ -42,7 +42,7 @@ const create: <T>(options?: { replay?: number }) => SubjectLike<T> =
     };
 
     const createSubjectInstance = createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__mixin),
         function Subject(
           instance: Pick<

@@ -1,5 +1,5 @@
 /// <reference types="./DisposableLike.mixin.d.ts" />
-import { mixin, props } from '../../../__internal__/mixins.mjs';
+import { mix, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, isSome } from '../../../functions.mjs';
 import { DisposableLike_exception, DisposableLike_isDisposed, DisposableLike_dispose, DisposableLike_add } from '../../../util.mjs';
 import dispose from './DisposableLike.dispose.mjs';
@@ -24,7 +24,7 @@ const disposableMixin = /*@__PURE__*/ (() => {
         }
     };
     const Disposable_private_disposables = Symbol("Disposable_private_disposables");
-    return mixin(function DisposableMixin(instance) {
+    return mix(function DisposableMixin(instance) {
         instance[Disposable_private_disposables] = new Set();
         return instance;
     }, props({

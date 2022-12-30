@@ -4,7 +4,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import {
@@ -68,7 +68,7 @@ type TProperties = {
 };
 
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
-  mixin(
+  mix(
     include(DisposableLike__mixin, typedMutableEnumeratorMixin),
     function VirtualTimeScheduler(
       instance: Pick<

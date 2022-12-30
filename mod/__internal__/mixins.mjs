@@ -28,7 +28,7 @@ const include = (...mixins) => {
         };
     }
 };
-const mixin = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingOrPrototype) => {
+const mix = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingOrPrototype) => {
     if (isFunction(initOrParent)) {
         return {
             [Object_init]: initOrParent,
@@ -69,4 +69,4 @@ const props = (o) => {
     return o;
 };
 
-export { createInstanceFactory, include, init, mixin, props };
+export { createInstanceFactory, include, init, mix, props };

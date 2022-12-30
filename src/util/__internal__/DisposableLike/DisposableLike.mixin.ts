@@ -1,4 +1,4 @@
-import { Mixin, Mutable, mixin, props } from "../../../__internal__/mixins";
+import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins";
 import { Option, isSome, none, pipe } from "../../../functions";
 import {
   DisposableLike,
@@ -42,7 +42,7 @@ const disposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
     readonly [Disposable_private_disposables]: Set<DisposableOrTeardown>;
   };
 
-  return mixin(
+  return mix(
     function DisposableMixin(
       instance: Pick<
         DisposableLike,

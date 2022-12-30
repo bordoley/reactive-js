@@ -9,7 +9,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../mixins";
 import { MutableRefLike, MutableRefLike_current } from "./MutableRefLike";
@@ -31,7 +31,7 @@ export const disposableRefMixin: <
   };
 
   return pipe(
-    mixin(
+    mix(
       function DisposableRef(
         instance: Pick<
           DisposableRefLike<TDisposable>,
@@ -77,7 +77,7 @@ export const createDisposableRef: <TDisposable extends DisposableLike>(
   const typedDisposableRefMixin = disposableRefMixin<TDisposable>();
 
   return createInstanceFactory(
-    mixin(
+    mix(
       include(DisposableLike__mixin, typedDisposableRefMixin),
       function DisposableRef(
         instance: unknown,

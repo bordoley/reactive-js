@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../__internal__/mixins";
 import { ignoreElements } from "../containers/ContainerLike";
@@ -303,7 +303,7 @@ export const windowLocation: WindowLocationStreamableLike =
     };
 
     const createWindowLocationStream = createInstanceFactory(
-      mixin(
+      mix(
         include(DisposableLike__delegatingMixin),
         function WindowLocationStream(
           instance: Pick<

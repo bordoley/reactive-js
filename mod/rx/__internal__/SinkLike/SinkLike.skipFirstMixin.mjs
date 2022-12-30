@@ -1,5 +1,5 @@
 /// <reference types="./SinkLike.skipFirstMixin.d.ts" />
-import { mixin, include, init, props } from '../../../__internal__/mixins.mjs';
+import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
@@ -10,7 +10,7 @@ const skipFirstMixin =
 /*@__PURE__*/ (() => {
     const SkipFirstSink_private_skipCount = Symbol("SkipFirstSink_private_skipCount");
     const SkipFirstSink_private_count = Symbol("SkipFirstSink_private_count");
-    return returns(mixin(include(delegatingMixin), function SkipFirstSink(instance, delegate, skipCount) {
+    return returns(mix(include(delegatingMixin), function SkipFirstSink(instance, delegate, skipCount) {
         init(delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[SkipFirstSink_private_skipCount] = skipCount;

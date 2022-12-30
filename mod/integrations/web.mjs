@@ -1,5 +1,5 @@
 /// <reference types="./web.d.ts" />
-import { createInstanceFactory, mixin, include, init, props } from '../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
@@ -114,7 +114,7 @@ const windowLocation =
         instance.historyCounter++;
         history.pushState({ counter: instance.historyCounter, title }, "", uri);
     };
-    const createWindowLocationStream = createInstanceFactory(mixin(include(delegatingMixin), function WindowLocationStream(instance, delegate) {
+    const createWindowLocationStream = createInstanceFactory(mix(include(delegatingMixin), function WindowLocationStream(instance, delegate) {
         init(delegatingMixin, instance, delegate);
         instance.delegate = delegate;
         instance.historyCounter = -1;

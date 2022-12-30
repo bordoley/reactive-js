@@ -3,7 +3,7 @@ import {
   Mutable,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { getLength, isEmpty, none, pipe } from "../../../functions";
@@ -39,7 +39,7 @@ const bufferMixin: <
     [BufferSink_private_buffer]: T[];
   };
 
-  return mixin(
+  return mix(
     include(DisposableLike__mixin),
     function BufferSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &

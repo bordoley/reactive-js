@@ -1,7 +1,7 @@
 import {
   Mutable,
   createInstanceFactory,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import { Factory, none, pipe } from "../../../functions";
@@ -21,7 +21,7 @@ const create: <T>(f: Factory<EnumeratorLike<T>>) => EnumerableLike<T> =
     };
 
     return createInstanceFactory(
-      mixin(
+      mix(
         function CreateEnumerable(
           instance: Pick<
             EnumerableLike<T>,

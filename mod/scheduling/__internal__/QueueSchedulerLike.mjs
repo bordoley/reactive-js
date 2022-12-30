@@ -1,6 +1,6 @@
 /// <reference types="./QueueSchedulerLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../../__internal__/constants.mjs';
-import { createInstanceFactory, mixin, include, init, props } from '../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props } from '../../__internal__/mixins.mjs';
 import { createPriorityQueue } from '../../__internal__/scheduling/QueueLike.mjs';
 import { getDelay } from '../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { disposableRefMixin } from '../../__internal__/util/DisposableRefLike.mjs';
@@ -104,7 +104,7 @@ const create =
     };
     const typedDisposableRefMixin = disposableRefMixin();
     const typedMutableEnumeratorMixin = mutableMixin();
-    return createInstanceFactory(mixin(include(disposableMixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
+    return createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
         init(disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(typedDisposableRefMixin, instance, disposed);

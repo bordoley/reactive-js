@@ -3,7 +3,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
   props,
 } from "../../../__internal__/mixins";
 import {
@@ -41,7 +41,7 @@ export const createContinuation: Function2<
   };
 
   return createInstanceFactory(
-    mixin(
+    mix(
       include(DisposableLike__mixin),
       function Continuation(
         instance: Pick<ContinuationLike, typeof ContinuationLike_run> &

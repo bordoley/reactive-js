@@ -2,7 +2,7 @@ import {
   createInstanceFactory,
   include,
   init,
-  mixin,
+  mix,
 } from "../../../__internal__/mixins";
 import { liftEnumerableObservableT } from "../../../__internal__/rx/ObservableLike.lift";
 import { Scan } from "../../../containers";
@@ -28,7 +28,7 @@ const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (() => {
     const typedObserverMixin = ObserverLike__mixin<T>();
 
     return createInstanceFactory(
-      mixin(
+      mix(
         include(typedObserverMixin, typedScanSinkMixin),
         function ScanObserver(
           instance: unknown,
