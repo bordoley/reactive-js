@@ -101,8 +101,8 @@ declare const keepT: Keep<ObservableLike>;
 declare const map: Map<ObservableLike>["map"];
 declare const mapT: Map<ObservableLike>;
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
-declare const merge: <T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]) => ObservableLike<T>;
-declare const mergeT: Concat<ObservableLike<unknown>>;
+declare const merge: Concat<ObservableLike>["concat"];
+declare const mergeT: Concat<ObservableLike>;
 declare const mergeAll: ConcatAll<ObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;

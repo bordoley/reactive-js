@@ -25,13 +25,6 @@ import {
   liftObservable,
   liftRunnableObservable,
 } from "../__internal__/rx/ObservableLike.lift";
-import {
-  allAreEnumerable,
-  allAreRunnable,
-  mergeImpl,
-  merge as mergeInternal,
-  mergeT as mergeTInternal,
-} from "../__internal__/rx/ObservableLike.operators";
 import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import {
   DisposableRefLike,
@@ -195,10 +188,14 @@ import DisposableLike__mixin from "../util/__internal__/DisposableLike/Disposabl
 import { getObserverCount } from "./MulticastObservableLike";
 import { sinkInto } from "./ReactiveContainerLike";
 import EnumeratorSinkLike__create from "./__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create";
+import ObservableLike__allAreEnumerable from "./__internal__/ObservableLike/ObservableLike.allAreEnumerable";
+import ObservableLike__allAreRunnable from "./__internal__/ObservableLike/ObservableLike.allAreRunnable";
 import ObservableLike__distinctUntilChanged from "./__internal__/ObservableLike/ObservableLike.distinctUntilChanged";
 import ObservableLike__forEach from "./__internal__/ObservableLike/ObservableLike.forEach";
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
+import ObservableLike__merge from "./__internal__/ObservableLike/ObservableLike.merge";
+import ObservableLike__mergeObservables from "./__internal__/ObservableLike/ObservableLike.mergeObservables";
 import ObservableLike__multicast from "./__internal__/ObservableLike/ObservableLike.multicast";
 import ObservableLike__onSubscribe from "./__internal__/ObservableLike/ObservableLike.onSubscribe";
 import ObservableLike__scan from "./__internal__/ObservableLike/ObservableLike.scan";
@@ -394,8 +391,8 @@ export const concat: Concat<ObservableLike>["concat"] = /*@__PURE__*/ (<
       }
     };
 
-    const isEnumerable = allAreEnumerable(observables);
-    const isRunnable = allAreRunnable(observables);
+    const isEnumerable = ObservableLike__allAreEnumerable(observables);
+    const isRunnable = ObservableLike__allAreRunnable(observables);
 
     return isEnumerable
       ? createEnumerableObservable(onSink)
@@ -562,7 +559,7 @@ export const forkMerge: ForkConcat<ObservableLike>["forkConcat"] =
     pipe(
       ops,
       mapArray(op => op(obs)),
-      mergeImpl,
+      ObservableLike__mergeObservables,
     );
 
 export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
@@ -795,8 +792,8 @@ const latest = /*@__PURE__*/ (() => {
       }
     };
 
-    const isEnumerable = allAreEnumerable(observables);
-    const isRunnable = allAreRunnable(observables);
+    const isEnumerable = ObservableLike__allAreEnumerable(observables);
+    const isRunnable = ObservableLike__allAreRunnable(observables);
 
     return isEnumerable
       ? createEnumerableObservable(onSink)
@@ -845,8 +842,8 @@ export const mapAsync = <TA, TB>(
 ): ContainerOperator<ObservableLike, TA, TB> =>
   concatMap({ ...switchAllT, ...mapT }, (a: TA) => pipe(a, f, fromPromise()));
 
-export const merge = mergeInternal;
-export const mergeT = mergeTInternal;
+export const merge: Concat<ObservableLike>["concat"] = ObservableLike__merge;
+export const mergeT: Concat<ObservableLike> = { concat: merge };
 
 export const mergeAll: ConcatAll<
   ObservableLike,
@@ -2066,8 +2063,8 @@ export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   return (
     ...observables: readonly ObservableLike<any>[]
   ): ObservableLike<readonly any[]> => {
-    const isEnumerable = allAreEnumerable(observables);
-    const isRunnable = allAreRunnable(observables);
+    const isEnumerable = ObservableLike__allAreEnumerable(observables);
+    const isRunnable = ObservableLike__allAreRunnable(observables);
 
     return isEnumerable
       ? pipe(
