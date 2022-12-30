@@ -356,7 +356,7 @@ ___
 
 ### defer
 
-▸ **defer**<`T`\>(`factory`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+▸ **defer**<`T`\>(`factory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -369,7 +369,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
-| `options?` | `undefined` |
 
 #### Returns
 

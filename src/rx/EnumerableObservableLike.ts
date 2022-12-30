@@ -1,9 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
-  createEnumerableObservable,
-  deferEnumerableObservable,
-} from "../__internal__/rx/ObservableLike.create";
-import {
   catchErrorEnumerableObservable,
   mergeAllEnumerableObservable,
   scanAsyncEnumerableObservable,
@@ -64,11 +60,13 @@ import {
   toReadonlyArray,
   zip,
 } from "./ObservableLike";
+import EnumerableObservableLike__create from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
+import EnumerableObservableLike__defer from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.defer";
 
-export const create = createEnumerableObservable;
+export const create = EnumerableObservableLike__create;
 
 export const defer: Defer<EnumerableObservableLike>["defer"] =
-  deferEnumerableObservable;
+  EnumerableObservableLike__defer;
 export const deferT: Defer<EnumerableObservableLike> = {
   defer,
 };

@@ -37,7 +37,7 @@ declare const concatAllTests: <C extends ContainerLike>(m: Container<C> & {
 declare const decodeWithCharsetTests: <C extends ContainerLike>(m: Container<C> & {
     decodeWithCharset(charset?: string | undefined): ContainerOperator<C, ArrayBuffer, string>;
 } & {
-    defer<T>(factory: Factory<ContainerOf<C, T>>, options?: undefined): ContainerOf<C, T>;
+    defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 } & {
     fromArray<T_1>(options?: Partial<FromArrayOptions> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 } & {

@@ -1,7 +1,3 @@
-import {
-  createEnumerableObservable,
-  createRunnableObservable,
-} from "../../../__internal__/rx/ObservableLike.create";
 import { hasDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { ReadonlyArrayLike } from "../../../containers";
 import { SideEffect1, none, pipe } from "../../../functions";
@@ -12,6 +8,8 @@ import {
   ToRunnableObservable,
 } from "../../../rx";
 import { schedule } from "../../../rx/ObserverLike";
+import EnumerableObservableLike__create from "../../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
+import RunnableObservableLike__create from "../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create";
 import { yield_ } from "../../../scheduling/ContinuationLike";
 import { dispose, isDisposed } from "../../../util/DisposableLike";
 import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";
@@ -76,8 +74,8 @@ const toRunnableObservable: ToRunnableObservable<
   }) => {
     const createObservableWithType = (f: SideEffect1<ObserverLike<T>>) =>
       hasDelay(options)
-        ? createRunnableObservable(f)
-        : createEnumerableObservable(f);
+        ? RunnableObservableLike__create(f)
+        : EnumerableObservableLike__create(f);
 
     return createArrayObservable(createObservableWithType, options)(options);
   };

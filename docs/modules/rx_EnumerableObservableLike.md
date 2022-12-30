@@ -294,7 +294,7 @@ ___
 
 ### defer
 
-▸ **defer**<`T`\>(`factory`, `options?`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+▸ **defer**<`T`\>(`factory`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -307,7 +307,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\> |
-| `options?` | `undefined` |
 
 #### Returns
 
