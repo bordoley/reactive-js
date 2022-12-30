@@ -1,7 +1,7 @@
 /// <reference types="./PromiseableLike.test.d.ts" />
 import { toObservable } from '../../containers/PromiseableLike.mjs';
 import { pipe, newInstance } from '../../functions.mjs';
-import { p as toPromise } from '../../ObservableLike-ca8b1474.mjs';
+import { toPromise } from '../../rx/ObservableLike.mjs';
 import { createHostScheduler } from '../../scheduling/SchedulerLike.mjs';
 import { dispose } from '../../util/DisposableLike.mjs';
 import { testModule, describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../testing.mjs';
