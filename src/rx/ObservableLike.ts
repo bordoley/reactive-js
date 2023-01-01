@@ -45,7 +45,6 @@ import {
   Map,
   Never,
   Pairwise,
-  ReadonlyArrayLike,
   Reduce,
   Repeat,
   Scan,
@@ -146,7 +145,6 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  VirtualTimeSchedulerLike,
 } from "../scheduling";
 import { run, yield_ } from "../scheduling/ContinuationLike";
 import { dispatchTo } from "../scheduling/DispatcherLike";
@@ -154,7 +152,6 @@ import {
   isInContinuation,
   toPausableScheduler,
 } from "../scheduling/SchedulerLike";
-import { create as createVirtualTimeScheduler } from "../scheduling/VirtualTimeSchedulerLike";
 import { FlowMode, ToFlowable } from "../streaming";
 import FlowableLike__createLifted from "../streaming/__internal__/FlowableLike/FlowableLike.createLifted";
 import { DisposableLike, DisposableOrTeardown, Exception } from "../util";
@@ -166,7 +163,6 @@ import {
   toObservable as disposableToObservable,
   dispose,
   disposed,
-  getException,
   isDisposed,
   onComplete,
   onDisposed,
@@ -195,6 +191,7 @@ import ObservableLike__onSubscribe from "./__internal__/ObservableLike/Observabl
 import ObservableLike__scan from "./__internal__/ObservableLike/ObservableLike.scan";
 import ObservableLike__subscribe from "./__internal__/ObservableLike/ObservableLike.subscribe";
 import ObservableLike__takeFirst from "./__internal__/ObservableLike/ObservableLike.takeFirst";
+import ObservableLike__toReadonlyArray from "./__internal__/ObservableLike/ObservableLike.toReadonlyArray";
 import ObservableLike__zipWithLatestFrom from "./__internal__/ObservableLike/ObservableLike.zipWithLatestFrom";
 import ObserverLike__createWithDelegate from "./__internal__/ObserverLike/ObserverLike.createWithDelegate";
 import ObserverLike__mixin from "./__internal__/ObserverLike/ObserverLike.mixin";
@@ -1823,38 +1820,7 @@ export const toPromiseT: ToPromiseable<ObservableLike, SchedulerLike> = {
 };
 
 export const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"] =
-
-    <T>(
-      options: {
-        readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
-      } = {},
-    ): Function1<ObservableLike<T>, ReadonlyArrayLike<T>> =>
-    observable => {
-      if (isRunnable(observable)) {
-        const { schedulerFactory = createVirtualTimeScheduler } = options;
-        const scheduler = schedulerFactory();
-        const result: T[] = [];
-
-        const subscription = pipe(
-          observable,
-          forEach<T>(next => {
-            result.push(next);
-          }),
-          subscribe(scheduler),
-        );
-
-        run(scheduler);
-        const exception = getException(subscription);
-
-        if (isSome(exception)) {
-          throw exception.cause;
-        }
-
-        return result;
-      } else {
-        return [];
-      }
-    };
+  ObservableLike__toReadonlyArray;
 export const toReadonlyArrayT: ToReadonlyArray<ObservableLike> = {
   toReadonlyArray,
 };

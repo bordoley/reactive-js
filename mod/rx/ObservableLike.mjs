@@ -30,9 +30,8 @@ import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYi
 import { yield_, run } from '../scheduling/ContinuationLike.mjs';
 import { dispatchTo } from '../scheduling/DispatcherLike.mjs';
 import { isInContinuation, toPausableScheduler } from '../scheduling/SchedulerLike.mjs';
-import { create as create$1 } from '../scheduling/VirtualTimeSchedulerLike.mjs';
 import FlowableLike__createLifted from '../streaming/__internal__/FlowableLike/FlowableLike.createLifted.mjs';
-import { disposed, onComplete, dispose, isDisposed, addTo, addToIgnoringChildErrors, onDisposed, bindTo, add, toObservable as toObservable$2, getException } from '../util/DisposableLike.mjs';
+import { disposed, onComplete, dispose, isDisposed, addTo, addToIgnoringChildErrors, onDisposed, bindTo, add, toObservable as toObservable$2 } from '../util/DisposableLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
 import DisposableLike__delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
@@ -57,6 +56,7 @@ import ObservableLike__onSubscribe from './__internal__/ObservableLike/Observabl
 import ObservableLike__scan from './__internal__/ObservableLike/ObservableLike.scan.mjs';
 import ObservableLike__subscribe from './__internal__/ObservableLike/ObservableLike.subscribe.mjs';
 import ObservableLike__takeFirst from './__internal__/ObservableLike/ObservableLike.takeFirst.mjs';
+import ObservableLike__toReadonlyArray from './__internal__/ObservableLike/ObservableLike.toReadonlyArray.mjs';
 import ObservableLike__zipWithLatestFrom from './__internal__/ObservableLike/ObservableLike.zipWithLatestFrom.mjs';
 import ObserverLike__createWithDelegate from './__internal__/ObserverLike/ObserverLike.createWithDelegate.mjs';
 import ObserverLike__observerMixin from './__internal__/ObserverLike/ObserverLike.mixin.mjs';
@@ -786,25 +786,7 @@ const toPromise = (scheduler) => (observable) => newInstance(Promise, (resolve, 
 const toPromiseT = {
     toPromise,
 };
-const toReadonlyArray = (options = {}) => observable => {
-    if (isRunnable(observable)) {
-        const { schedulerFactory = create$1 } = options;
-        const scheduler = schedulerFactory();
-        const result = [];
-        const subscription = pipe(observable, forEach(next => {
-            result.push(next);
-        }), subscribe(scheduler));
-        run(scheduler);
-        const exception = getException(subscription);
-        if (isSome(exception)) {
-            throw exception.cause;
-        }
-        return result;
-    }
-    else {
-        return [];
-    }
-};
+const toReadonlyArray = ObservableLike__toReadonlyArray;
 const toReadonlyArrayT = {
     toReadonlyArray,
 };

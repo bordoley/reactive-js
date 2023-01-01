@@ -14,10 +14,8 @@ import { hasCurrent, getCurrent } from './EnumeratorLike.mjs';
 import { move } from './SourceLike.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, create as create$1, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1, onSubscribe, toReadonlyArray as toReadonlyArray$1 } from '../rx/ObservableLike.mjs';
-import { getScheduler as getScheduler$1 } from '../rx/ObserverLike.mjs';
+import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, create as create$1, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1 } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
-import { create as create$2 } from '../rx/RunnableObservableLike.mjs';
 import { create, publish } from '../rx/SubjectLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
 import { dispatch, getScheduler } from '../scheduling/DispatcherLike.mjs';
@@ -28,6 +26,8 @@ import { add, addTo } from '../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { enumerate } from './EnumerableLike.mjs';
+import AsyncEnumerable__toObservable from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable.mjs';
+import AsyncEnumerableLike__toReadonlyArray from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toReadonlyArray.mjs';
 
 const createAsyncEnumerator = /*@__PURE__*/ (() => {
     const createAsyncEnumeratorInternal = (() => {
@@ -334,18 +334,11 @@ const takeWhile =
 const takeWhileT = {
     takeWhile,
 };
-const toObservable = () => enumerable => create$2(observer => {
-    const enumerator = pipe(enumerable, stream(getScheduler$1(observer)), addTo(observer));
-    pipe(enumerator, forEach(_ => {
-        pipe(enumerator, dispatch(none));
-    }), onSubscribe(() => {
-        pipe(enumerator, dispatch(none));
-    }), sinkInto(observer));
-});
+const toObservable = AsyncEnumerable__toObservable;
 const toObservableT = {
     toObservable,
 };
-const toReadonlyArray = () => (asyncEnumerable) => pipe(asyncEnumerable, toObservable(), toReadonlyArray$1());
+const toReadonlyArray = AsyncEnumerableLike__toReadonlyArray;
 const toReadonlyArrayT = {
     toReadonlyArray,
 };
