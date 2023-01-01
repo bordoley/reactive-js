@@ -2,7 +2,6 @@
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
 import { catchErrorObservable, mergeAllObservable, scanAsyncObservable, switchAllObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
-import { liftEnumerableObservable, liftObservable, liftEnumerableObservableT, liftRunnableObservable } from '../__internal__/rx/ObservableLike.lift.mjs';
 import { hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { createDisposableRef, disposableRefMixin } from '../__internal__/util/DisposableRefLike.mjs';
 import { MutableRefLike_current, setCurrentRef, getCurrentRef } from '../__internal__/util/MutableRefLike.mjs';
@@ -49,6 +48,8 @@ import distinctUntilChanged$1 from './__internal__/ObservableLike/ObservableLike
 import forEach$1 from './__internal__/ObservableLike/ObservableLike.forEach.mjs';
 import isEnumerable$1 from './__internal__/ObservableLike/ObservableLike.isEnumerable.mjs';
 import isRunnable$1 from './__internal__/ObservableLike/ObservableLike.isRunnable.mjs';
+import lift from './__internal__/ObservableLike/ObservableLike.lift.mjs';
+import liftEnumerableOperatorT from './__internal__/ObservableLike/ObservableLike.liftEnumerableOperatorT.mjs';
 import merge$1 from './__internal__/ObservableLike/ObservableLike.merge.mjs';
 import mergeAll$1 from './__internal__/ObservableLike/ObservableLike.mergeObservables.mjs';
 import multicast$1 from './__internal__/ObservableLike/ObservableLike.multicast.mjs';
@@ -129,9 +130,7 @@ const buffer = /*@__PURE__*/ (() => {
         const operator = (delegate) => {
             return pipe(createBufferObserver(delegate, durationFunction, maxBufferSize), addTo(delegate));
         };
-        return durationOption === MAX_SAFE_INTEGER
-            ? liftEnumerableObservable(operator)
-            : liftObservable(operator);
+        return pipe(operator, lift(durationOption === MAX_SAFE_INTEGER));
     };
 })();
 const bufferT = {
@@ -202,7 +201,7 @@ const decodeWithCharset =
         init(typedDecodeWithCharsetMixin, instance, delegate, charset);
         return instance;
     }));
-    return pipe(createDecodeWithCharsetObserver, decodeWithCharset$1(liftEnumerableObservableT));
+    return pipe(createDecodeWithCharsetObserver, decodeWithCharset$1(liftEnumerableOperatorT));
 })();
 const decodeWithCharsetT = {
     decodeWithCharset,
@@ -234,7 +233,7 @@ const everySatisfy =
         init(typedEverySatisfySinkMixin, instance, delegate, predicate);
         return instance;
     });
-    return (predicate) => pipe(createInstanceFactory(everySatisfyObserverMixin), partial(predicate), liftEnumerableObservable);
+    return (predicate) => pipe(createInstanceFactory(everySatisfyObserverMixin), partial(predicate), lift(true, true));
 })();
 const everySatisfyT = { everySatisfy };
 /**
@@ -293,7 +292,7 @@ const keep = /*@__PURE__*/ (() => {
             return instance;
         }));
     })();
-    return pipe(createKeepObserver, keep$1(liftEnumerableObservableT));
+    return pipe(createKeepObserver, keep$1(liftEnumerableOperatorT));
 })();
 const keepT = { keep };
 const latest = /*@__PURE__*/ (() => {
@@ -374,7 +373,7 @@ const map = /*@__PURE__*/ (() => {
             return instance;
         }));
     })();
-    return pipe(createMapObserver, map$2(liftEnumerableObservableT));
+    return pipe(createMapObserver, map$2(liftEnumerableOperatorT));
 })();
 const mapT = { map };
 const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => pipe(a, f, fromPromise()));
@@ -404,7 +403,7 @@ const pairwise =
             return instance;
         }));
     })();
-    return pipe(liftEnumerableObservable(createPairwiseObserver), returns);
+    return pipe(createPairwiseObserver, lift(true), returns);
 })();
 const pairwiseT = { pairwise };
 const reduce = /*@__PURE__*/ (() => {
@@ -415,7 +414,7 @@ const reduce = /*@__PURE__*/ (() => {
         init(typedReduceSinkMixin, instance, delegate, reducer, initialValue);
         return instance;
     }));
-    return pipe(createReduceObserver, reduce$1(liftEnumerableObservableT));
+    return pipe(createReduceObserver, reduce$1(liftEnumerableOperatorT));
 })();
 const reduceT = { reduce };
 const repeatImpl = /*@__PURE__*/ (() => {
@@ -442,7 +441,7 @@ const repeatImpl = /*@__PURE__*/ (() => {
     };
     return (shouldRepeat) => (observable) => {
         const operator = pipe(createRepeatObserver, partial(observable, shouldRepeat));
-        return pipe(observable, liftEnumerableObservable(operator));
+        return pipe(observable, lift(true, true)(operator));
     };
 })();
 const repeat = /*@__PURE__*/ (() => {
@@ -516,7 +515,7 @@ const skipFirst =
             return instance;
         }));
     })();
-    return pipe(createSkipFirstObserver, skipFirst$1(liftEnumerableObservableT));
+    return pipe(createSkipFirstObserver, skipFirst$1(liftEnumerableOperatorT));
 })();
 const skipFirstT = { skipFirst };
 const someSatisfy = 
@@ -528,7 +527,7 @@ const someSatisfy =
         init(typedSomeSatisfySinkMixin, instance, delegate, predicate);
         return instance;
     });
-    return (predicate) => pipe(createInstanceFactory(someSatisfyObserverMixin), partial(predicate), liftEnumerableObservable);
+    return (predicate) => pipe(createInstanceFactory(someSatisfyObserverMixin), partial(predicate), lift(true, true));
 })();
 const someSatisfyT = { someSatisfy };
 const switchAll = switchAllObservable;
@@ -550,17 +549,12 @@ const takeLast =
         init(typedTakeLastSinkMixin, instance, delegate, takeCount);
         return instance;
     }));
-    return pipe(createTakeLastObserver, takeLast$1(liftEnumerableObservableT));
+    return pipe(createTakeLastObserver, takeLast$1(liftEnumerableOperatorT));
 })();
 const takeLastT = { takeLast };
 const takeUntil = (notifier) => {
-    const lift = isEnumerable(notifier)
-        ? liftEnumerableObservable
-        : isRunnable(notifier)
-            ? liftRunnableObservable
-            : liftObservable;
     const operator = (delegate) => pipe(createWithDelegate(delegate), bindTo(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))));
-    return lift(operator);
+    return pipe(operator, lift(isEnumerable(notifier), isRunnable(notifier)));
 };
 const takeWhile = 
 /*@__PURE__*/ (() => {
@@ -573,7 +567,7 @@ const takeWhile =
             return instance;
         }));
     })();
-    return pipe(createTakeWhileObserver, takeWhile$1(liftEnumerableObservableT));
+    return pipe(createTakeWhileObserver, takeWhile$1(liftEnumerableOperatorT));
 })();
 const takeWhileT = { takeWhile };
 const throttle = /*@__PURE__*/ (() => {
@@ -634,7 +628,7 @@ const throttle = /*@__PURE__*/ (() => {
         const durationFunction = isNumber(duration)
             ? (_) => pipe([none], toObservable({ delay: duration, delayStart: true }))
             : duration;
-        return pipe(createThrottleObserver, partial(durationFunction, mode), isNumber(duration) ? liftRunnableObservable : liftObservable);
+        return pipe(createThrottleObserver, partial(durationFunction, mode), lift(false, isNumber(duration)));
     };
 })();
 const throwIfEmpty = 
@@ -648,7 +642,7 @@ const throwIfEmpty =
             return instance;
         }));
     })();
-    return pipe(createThrowIfEmptyObserver, throwIfEmpty$1(liftEnumerableObservableT));
+    return pipe(createThrowIfEmptyObserver, throwIfEmpty$1(liftEnumerableOperatorT));
 })();
 const throwIfEmptyT = {
     throwIfEmpty,
@@ -682,10 +676,7 @@ const timeout = /*@__PURE__*/ (() => {
         const durationObs = isNumber(duration)
             ? throws({ fromArray: toObservable, ...mapT }, { delay: duration, delayStart: true })(returnTimeoutError)
             : concat(duration, throws({ fromArray: toObservable, ...mapT })(returnTimeoutError));
-        const lift = isNumber(duration) || isRunnable(duration)
-            ? liftRunnableObservable
-            : liftObservable;
-        return pipe(createTimeoutObserver, partial(durationObs), lift);
+        return pipe(createTimeoutObserver, partial(durationObs), lift(false, isNumber(duration) || isRunnable(duration)));
     };
 })();
 const toEnumerable = 
@@ -848,14 +839,7 @@ const withLatestFrom = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return (other, selector) => {
-        const lift = isEnumerable(other)
-            ? liftEnumerableObservable
-            : isRunnable(other)
-                ? liftRunnableObservable
-                : liftObservable;
-        return pipe(createWithLatestObserver, partial(other, selector), lift);
-    };
+    return (other, selector) => pipe(createWithLatestObserver, partial(other, selector), lift(isEnumerable(other), isRunnable(other)));
 })();
 const zip = /*@__PURE__*/ (() => {
     const typedObserverMixin = observerMixin();

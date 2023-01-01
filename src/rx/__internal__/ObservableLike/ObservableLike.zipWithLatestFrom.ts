@@ -6,11 +6,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import {
-  liftEnumerableObservable,
-  liftObservable,
-  liftRunnableObservable,
-} from "../../../__internal__/rx/ObservableLike.lift";
 import { ContainerOperator } from "../../../containers";
 import {
   Function2,
@@ -33,6 +28,7 @@ import notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__isEnumerable from "./ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
+import ObservableLike__lift from "./ObservableLike.lift";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
 
 const zipWithLatestFrom: <TA, TB, T>(
@@ -136,18 +132,15 @@ const zipWithLatestFrom: <TA, TB, T>(
   return <TA, TB, T>(
     other: ObservableLike<TB>,
     selector: Function2<TA, TB, T>,
-  ) => {
-    const lift = ObservableLike__isEnumerable(other)
-      ? liftEnumerableObservable
-      : ObservableLike__isRunnable(other)
-      ? liftRunnableObservable
-      : liftObservable;
-    return pipe(
+  ) =>
+    pipe(
       createZipWithLatestFromObserver,
       partial(other, selector),
-      lift,
+      ObservableLike__lift(
+        ObservableLike__isEnumerable(other),
+        ObservableLike__isRunnable(other),
+      ),
     ) as ContainerOperator<ObservableLike, TA, T>;
-  };
 })();
 
 export default zipWithLatestFrom;

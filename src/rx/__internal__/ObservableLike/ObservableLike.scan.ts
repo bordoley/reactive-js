@@ -4,7 +4,6 @@ import {
   init,
   mix,
 } from "../../../__internal__/mixins";
-import { liftEnumerableObservableT } from "../../../__internal__/rx/ObservableLike.lift";
 import { Scan } from "../../../containers";
 import StatefulContainerLike__scan from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan";
 import { Factory, Reducer, pipe } from "../../../functions";
@@ -16,6 +15,7 @@ import {
 
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__scanMixin from "../SinkLike/SinkLike.scanMixin";
+import ObservableLike__liftEnumerableOperatorT from "./ObservableLike.liftEnumerableOperatorT";
 
 const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (() => {
   const createScanObserver: <T, TAcc>(
@@ -46,7 +46,7 @@ const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (() => {
   })();
   return pipe(
     createScanObserver,
-    StatefulContainerLike__scan(liftEnumerableObservableT),
+    StatefulContainerLike__scan(ObservableLike__liftEnumerableOperatorT),
   );
 })();
 

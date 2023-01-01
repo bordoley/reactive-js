@@ -6,7 +6,7 @@ import { sourceFrom } from '../../SinkLike.mjs';
 const lift = 
 /*@__PURE__*/ (() => {
     var _a, _b;
-    class LiftedRunnableObservable {
+    class LiftedEnumerableObservable {
         constructor(source, operators) {
             this.source = source;
             this.operators = operators;
@@ -18,11 +18,11 @@ const lift =
         }
     }
     return (operator) => source => {
-        const sourceSource = source instanceof LiftedRunnableObservable ? source.source : source;
-        const allFunctions = source instanceof LiftedRunnableObservable
+        const sourceSource = source instanceof LiftedEnumerableObservable ? source.source : source;
+        const allFunctions = source instanceof LiftedEnumerableObservable
             ? [operator, ...source.operators]
             : [operator];
-        return newInstance(LiftedRunnableObservable, sourceSource, allFunctions);
+        return newInstance(LiftedEnumerableObservable, sourceSource, allFunctions);
     };
 })();
 

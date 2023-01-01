@@ -4,7 +4,6 @@ import {
   init,
   mix,
 } from "../../../__internal__/mixins";
-import { liftEnumerableObservableT } from "../../../__internal__/rx/ObservableLike.lift";
 import { DistinctUntilChanged } from "../../../containers";
 import StatefulContainerLike__distinctUntilChanged from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged";
 import { TReactive } from "../../../containers/__internal__/containers.internal";
@@ -16,6 +15,7 @@ import {
 } from "../../../rx";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__distinctUntilChangedMixin from "../SinkLike/SinkLike.distinctUntilChangedMixin";
+import ObservableLike__liftEnumerableOperatorT from "./ObservableLike.liftEnumerableOperatorT";
 
 const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
@@ -56,7 +56,7 @@ const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilC
     return pipe(
       createDistinctUntilChangedObserver,
       StatefulContainerLike__distinctUntilChanged<ObservableLike, T, TReactive>(
-        liftEnumerableObservableT,
+        ObservableLike__liftEnumerableOperatorT,
       ),
     );
   })();

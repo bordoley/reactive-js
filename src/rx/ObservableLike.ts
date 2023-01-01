@@ -13,12 +13,6 @@ import {
   scanAsyncObservable,
   switchAllObservable,
 } from "../__internal__/rx/ObservableLike.higher-order";
-import {
-  liftEnumerableObservable,
-  liftEnumerableObservableT,
-  liftObservable,
-  liftRunnableObservable,
-} from "../__internal__/rx/ObservableLike.lift";
 import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import {
   DisposableRefLike,
@@ -192,6 +186,8 @@ import ObservableLike__distinctUntilChanged from "./__internal__/ObservableLike/
 import ObservableLike__forEach from "./__internal__/ObservableLike/ObservableLike.forEach";
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
+import ObservableLike__lift from "./__internal__/ObservableLike/ObservableLike.lift";
+import ObservableLike__liftEnumerableOperatorT from "./__internal__/ObservableLike/ObservableLike.liftEnumerableOperatorT";
 import ObservableLike__merge from "./__internal__/ObservableLike/ObservableLike.merge";
 import ObservableLike__mergeObservables from "./__internal__/ObservableLike/ObservableLike.mergeObservables";
 import ObservableLike__multicast from "./__internal__/ObservableLike/ObservableLike.multicast";
@@ -328,9 +324,10 @@ export const buffer: <T>(options?: {
       );
     };
 
-    return durationOption === MAX_SAFE_INTEGER
-      ? liftEnumerableObservable(operator)
-      : liftObservable(operator);
+    return pipe(
+      operator,
+      ObservableLike__lift(durationOption === MAX_SAFE_INTEGER),
+    );
   };
 })();
 export const bufferT: Buffer<ObservableLike> = {
@@ -456,7 +453,7 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
     return pipe(
       createDecodeWithCharsetObserver,
       StatefulContainerLike__decodeWithCharset<ObservableLike, TReactive>(
-        liftEnumerableObservableT,
+        ObservableLike__liftEnumerableOperatorT,
       ),
     );
   })();
@@ -518,7 +515,7 @@ export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
       pipe(
         createInstanceFactory(everySatisfyObserverMixin),
         partial(predicate),
-        liftEnumerableObservable,
+        ObservableLike__lift(true, true),
       );
   })();
 export const everySatisfyT: EverySatisfy<ObservableLike> = { everySatisfy };
@@ -670,7 +667,7 @@ export const keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   return pipe(
     createKeepObserver,
     StatefulContainerLike__keep<ObservableLike, T, TReactive>(
-      liftEnumerableObservableT,
+      ObservableLike__liftEnumerableOperatorT,
     ),
   );
 })();
@@ -830,7 +827,7 @@ export const map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<TA, TB>() => {
   return pipe(
     createMapObserver,
     StatefulContainerLike__map<ObservableLike, TA, TB, TReactive>(
-      liftEnumerableObservableT,
+      ObservableLike__liftEnumerableOperatorT,
     ),
   );
 })();
@@ -904,7 +901,7 @@ export const pairwise: Pairwise<ObservableLike>["pairwise"] =
       );
     })();
 
-    return pipe(liftEnumerableObservable(createPairwiseObserver), returns);
+    return pipe(createPairwiseObserver, ObservableLike__lift(true), returns);
   })();
 export const pairwiseT: Pairwise<ObservableLike> = { pairwise };
 
@@ -941,7 +938,7 @@ export const reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   return pipe(
     createReduceObserver,
     StatefulContainerLike__reduce<ObservableLike, T, TAcc, TReactive>(
-      liftEnumerableObservableT,
+      ObservableLike__liftEnumerableOperatorT,
     ),
   );
 })();
@@ -994,7 +991,7 @@ const repeatImpl: <T>(
         createRepeatObserver,
         partial(observable, shouldRepeat),
       );
-      return pipe(observable, liftEnumerableObservable(operator));
+      return pipe(observable, ObservableLike__lift(true, true)(operator));
     };
 })();
 
@@ -1154,7 +1151,7 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
 
     return pipe(
       createSkipFirstObserver,
-      StatefulContainerLike__skipFirst(liftEnumerableObservableT),
+      StatefulContainerLike__skipFirst(ObservableLike__liftEnumerableOperatorT),
     );
   })();
 export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
@@ -1186,7 +1183,7 @@ export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
       pipe(
         createInstanceFactory(someSatisfyObserverMixin),
         partial(predicate),
-        liftEnumerableObservable,
+        ObservableLike__lift(true, true),
       );
   })();
 export const someSatisfyT: SomeSatisfy<ObservableLike> = { someSatisfy };
@@ -1241,7 +1238,7 @@ export const takeLast: TakeLast<ObservableLike>["takeLast"] =
 
     return pipe(
       createTakeLastObserver,
-      StatefulContainerLike__takeLast(liftEnumerableObservableT),
+      StatefulContainerLike__takeLast(ObservableLike__liftEnumerableOperatorT),
     );
   })();
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
@@ -1249,19 +1246,16 @@ export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 export const takeUntil = <T>(
   notifier: ObservableLike,
 ): Function1<ObservableLike<T>, ObservableLike<T>> => {
-  const lift = isEnumerable(notifier)
-    ? liftEnumerableObservable
-    : isRunnable(notifier)
-    ? liftRunnableObservable
-    : liftObservable;
-
   const operator = (delegate: ObserverLike<T>) =>
     pipe(
       ObserverLike__createWithDelegate(delegate),
       bindTo(delegate),
       bindTo(pipe(notifier, takeFirst<T>(), subscribe(getScheduler(delegate)))),
     );
-  return lift(operator);
+  return pipe(
+    operator,
+    ObservableLike__lift(isEnumerable(notifier), isRunnable(notifier)),
+  );
 };
 
 export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
@@ -1304,7 +1298,7 @@ export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
 
     return pipe(
       createTakeWhileObserver,
-      StatefulContainerLike__takeWhile(liftEnumerableObservableT),
+      StatefulContainerLike__takeWhile(ObservableLike__liftEnumerableOperatorT),
     );
   })();
 export const takeWhileT: TakeWhile<ObservableLike> = { takeWhile };
@@ -1466,7 +1460,7 @@ export const throttle: Throttle = /*@__PURE__*/ (() => {
     return pipe(
       createThrottleObserver,
       partial(durationFunction, mode),
-      isNumber(duration) ? liftRunnableObservable : liftObservable,
+      ObservableLike__lift(false, isNumber(duration)),
     );
   };
 })();
@@ -1500,7 +1494,9 @@ export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
 
     return pipe(
       createThrowIfEmptyObserver,
-      StatefulContainerLike__throwIfEmpty(liftEnumerableObservableT),
+      StatefulContainerLike__throwIfEmpty(
+        ObservableLike__liftEnumerableOperatorT,
+      ),
     );
   })();
 export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {
@@ -1598,11 +1594,12 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
           duration,
           throws({ fromArray: arrayToObservable, ...mapT })(returnTimeoutError),
         );
-    const lift =
-      isNumber(duration) || isRunnable(duration)
-        ? liftRunnableObservable
-        : liftObservable;
-    return pipe(createTimeoutObserver, partial(durationObs), lift);
+
+    return pipe(
+      createTimeoutObserver,
+      partial(durationObs),
+      ObservableLike__lift(false, isNumber(duration) || isRunnable(duration)),
+    );
   };
 })();
 
@@ -1934,18 +1931,12 @@ export const withLatestFrom: <TA, TB, T>(
   return <TA, TB, T>(
     other: ObservableLike<TB>,
     selector: Function2<TA, TB, T>,
-  ) => {
-    const lift = isEnumerable(other)
-      ? liftEnumerableObservable
-      : isRunnable(other)
-      ? liftRunnableObservable
-      : liftObservable;
-    return pipe(
+  ) =>
+    pipe(
       createWithLatestObserver,
       partial(other, selector),
-      lift,
+      ObservableLike__lift(isEnumerable(other), isRunnable(other)),
     ) as ContainerOperator<ObservableLike, TA, T>;
-  };
 })();
 
 export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {

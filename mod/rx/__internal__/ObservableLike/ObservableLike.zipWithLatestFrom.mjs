@@ -1,6 +1,5 @@
 /// <reference types="./ObservableLike.zipWithLatestFrom.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { liftEnumerableObservable, liftRunnableObservable, liftObservable } from '../../../__internal__/rx/ObservableLike.lift.mjs';
 import { getLength, pipe, isEmpty, none, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
@@ -14,6 +13,7 @@ import notify from '../SinkLike/SinkLike.notify.mjs';
 import forEach from './ObservableLike.forEach.mjs';
 import isEnumerable from './ObservableLike.isEnumerable.mjs';
 import isRunnable from './ObservableLike.isRunnable.mjs';
+import lift from './ObservableLike.lift.mjs';
 import subscribe from './ObservableLike.subscribe.mjs';
 
 const zipWithLatestFrom = /*@__PURE__*/ (() => {
@@ -63,14 +63,7 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return (other, selector) => {
-        const lift = isEnumerable(other)
-            ? liftEnumerableObservable
-            : isRunnable(other)
-                ? liftRunnableObservable
-                : liftObservable;
-        return pipe(createZipWithLatestFromObserver, partial(other, selector), lift);
-    };
+    return (other, selector) => pipe(createZipWithLatestFromObserver, partial(other, selector), lift(isEnumerable(other), isRunnable(other)));
 })();
 
 export { zipWithLatestFrom as default };

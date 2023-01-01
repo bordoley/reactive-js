@@ -14,7 +14,7 @@ import { sourceFrom } from "../../SinkLike";
 
 const lift: Lift<EnumerableObservableLike, TReactive>["lift"] =
   /*@__PURE__*/ (() => {
-    class LiftedRunnableObservable<TIn, TOut>
+    class LiftedEnumerableObservable<TIn, TOut>
       implements EnumerableObservableLike<TOut>
     {
       readonly [ObservableLike_isEnumerable] = true;
@@ -41,15 +41,15 @@ const lift: Lift<EnumerableObservableLike, TReactive>["lift"] =
       > =>
       source => {
         const sourceSource =
-          source instanceof LiftedRunnableObservable ? source.source : source;
+          source instanceof LiftedEnumerableObservable ? source.source : source;
 
         const allFunctions =
-          source instanceof LiftedRunnableObservable
+          source instanceof LiftedEnumerableObservable
             ? [operator, ...source.operators]
             : [operator];
 
         return newInstance(
-          LiftedRunnableObservable,
+          LiftedEnumerableObservable,
           sourceSource,
           allFunctions,
         );
