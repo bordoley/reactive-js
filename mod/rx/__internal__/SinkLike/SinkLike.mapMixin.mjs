@@ -2,14 +2,14 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const mapMixin = /*@__PURE__*/ (() => {
+const SinkLike__mapMixin = /*@__PURE__*/ (() => {
     const MapSink_private_mapper = Symbol("MapSink_private_mapper");
-    return returns(mix(include(delegatingMixin), function MapSink(instance, delegate, mapper) {
-        init(delegatingMixin, instance, delegate);
+    return returns(mix(include(DisposableLike__delegatingMixin), function MapSink(instance, delegate, mapper) {
+        init(DisposableLike__delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[MapSink_private_mapper] = mapper;
         return instance;
@@ -24,4 +24,4 @@ const mapMixin = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { mapMixin as default, mapMixin };
+export { SinkLike__mapMixin, SinkLike__mapMixin as default };

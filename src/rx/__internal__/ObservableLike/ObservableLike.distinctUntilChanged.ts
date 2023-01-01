@@ -17,7 +17,7 @@ import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__distinctUntilChangedMixin from "../SinkLike/SinkLike.distinctUntilChangedMixin";
 import ObservableLike__liftEnumerableOperatorT from "./ObservableLike.liftEnumerableOperatorT";
 
-const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
+const ObservableLike__distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
     const createDistinctUntilChangedObserver: <T>(
       delegate: ObserverLike<T>,
@@ -61,4 +61,4 @@ const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilC
     );
   })();
 
-export default distinctUntilChanged;
+export default ObservableLike__distinctUntilChanged;

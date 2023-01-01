@@ -9,7 +9,7 @@ import {
 } from "../containers.internal";
 import StatefulContainerLike__lift from "./StatefulContainerLike.lift";
 
-const forEach =
+const StatefulContainerLike__forEach =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -23,4 +23,4 @@ const forEach =
   (effect: SideEffect1<T>) =>
     pipe(operator, partial(effect), StatefulContainerLike__lift(m));
 
-export default forEach;
+export default StatefulContainerLike__forEach;

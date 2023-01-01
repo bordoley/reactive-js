@@ -1,10 +1,10 @@
 /// <reference types="./SubjectLike.d.ts" />
-import create$1 from './__internal__/SubjectLike/SubjectLike.create.mjs';
-import publish$1 from './__internal__/SubjectLike/SubjectLike.publish.mjs';
-import publishTo$1 from './__internal__/SubjectLike/SubjectLike.publishTo.mjs';
+import SubjectLike__create from './__internal__/SubjectLike/SubjectLike.create.mjs';
+import SubjectLike__publish from './__internal__/SubjectLike/SubjectLike.publish.mjs';
+import SubjectLike__publishTo from './__internal__/SubjectLike/SubjectLike.publishTo.mjs';
 
-const create = create$1;
-const publish = publish$1;
-const publishTo = publishTo$1;
+const create = SubjectLike__create;
+const publish = SubjectLike__publish;
+const publishTo = SubjectLike__publishTo;
 
 export { create, publish, publishTo };

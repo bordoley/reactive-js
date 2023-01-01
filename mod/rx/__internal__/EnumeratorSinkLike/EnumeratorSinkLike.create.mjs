@@ -4,11 +4,11 @@ import { pipe, none, getLength } from '../../../functions.mjs';
 import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SourceLike_move } from '../../../ix.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { onDisposed, isDisposed } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
-const create = (() => {
-    return createInstanceFactory(mix(include(disposableMixin), function EnumeratorSink(instance) {
-        init(disposableMixin, instance);
+const EnumeratorSinkLike__create = (() => {
+    return createInstanceFactory(mix(include(DisposableLike__disposableMixin), function EnumeratorSink(instance) {
+        init(DisposableLike__disposableMixin, instance);
         instance.buffer = [];
         pipe(instance, onDisposed(() => {
             instance.buffer.length = 0;
@@ -40,4 +40,4 @@ const create = (() => {
     }));
 })();
 
-export { create as default };
+export { EnumeratorSinkLike__create as default };

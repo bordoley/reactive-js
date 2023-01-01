@@ -1,4 +1,4 @@
 import { SideEffect, Updater } from "../../../functions.mjs";
 import { DisposableLike } from "../../../util.mjs";
-declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Updater<T>;
-export { onComplete as default };
+declare const DisposableLike__onComplete: <T extends DisposableLike>(teardown: SideEffect) => Updater<T>;
+export { DisposableLike__onComplete as default };

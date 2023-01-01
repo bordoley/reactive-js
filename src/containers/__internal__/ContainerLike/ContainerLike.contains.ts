@@ -6,10 +6,10 @@ import {
 
 import { Equality, isEqualTo } from "../../../functions";
 
-const contains = <C extends ContainerLike, T>(
+const ContainerLike__contains = <C extends ContainerLike, T>(
   { someSatisfy }: SomeSatisfy<C>,
   value: T,
   options: { readonly equality?: Equality<T> } = {},
 ): ContainerOperator<C, T, boolean> => someSatisfy(isEqualTo(value, options));
 
-export default contains;
+export default ContainerLike__contains;

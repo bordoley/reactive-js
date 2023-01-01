@@ -3,8 +3,7 @@ import { pipeUnsafe, newInstance } from '../../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
 import { sourceFrom } from '../../SinkLike.mjs';
 
-const lift = 
-/*@__PURE__*/ (() => {
+const EnumerableObservableLike__lift = /*@__PURE__*/ (() => {
     var _a, _b;
     class LiftedEnumerableObservable {
         constructor(source, operators) {
@@ -26,4 +25,4 @@ const lift =
     };
 })();
 
-export { lift as default };
+export { EnumerableObservableLike__lift as default };

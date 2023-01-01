@@ -1,7 +1,7 @@
 import { SchedulerLike_requestYield } from "../../../scheduling";
 
-const requestYield = (scheduler: {
+const SchedulerLike__requestYield = (scheduler: {
   [SchedulerLike_requestYield](): void;
 }): void => scheduler[SchedulerLike_requestYield]();
 
-export default requestYield;
+export default SchedulerLike__requestYield;

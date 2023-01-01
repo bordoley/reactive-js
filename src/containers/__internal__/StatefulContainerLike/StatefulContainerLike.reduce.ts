@@ -9,7 +9,7 @@ import {
 import { Factory, Function3, Reducer, partial, pipe } from "../../../functions";
 import StatefulContainer__lift from "./StatefulContainerLike.lift";
 
-const reduce =
+const StatefulContainerLike__reduce =
   <
     C extends StatefulContainerLike,
     T,
@@ -29,4 +29,4 @@ const reduce =
   (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
     pipe(operator, partial(reducer, initialValue), StatefulContainer__lift(m));
 
-export default reduce;
+export default StatefulContainerLike__reduce;

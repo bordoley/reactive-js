@@ -1,3 +1,3 @@
 import { DisposableLike } from "../../../util.mjs";
-declare const disposed: DisposableLike;
-export { disposed as default };
+declare const DisposableLike__disposed: DisposableLike;
+export { DisposableLike__disposed as default };

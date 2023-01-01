@@ -1,6 +1,6 @@
 /// <reference types="./DispatcherLike.getScheduler.d.ts" />
 import { DispatcherLike_scheduler } from '../../../scheduling.mjs';
 
-const getScheduler = (dispatcher) => dispatcher[DispatcherLike_scheduler];
+const DispatcherLike__getScheduler = (dispatcher) => dispatcher[DispatcherLike_scheduler];
 
-export { getScheduler as default };
+export { DispatcherLike__getScheduler as default };

@@ -5,9 +5,9 @@ import {
   InteractiveContainerLike_interact,
 } from "../../../ix";
 
-const enumerate =
+const EnumerableLike__enumerate =
   <T>() =>
   (enumerable: EnumerableLike<T>): EnumeratorLike<T> =>
     enumerable[InteractiveContainerLike_interact](none);
 
-export default enumerate;
+export default EnumerableLike__enumerate;

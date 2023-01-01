@@ -2,7 +2,7 @@ import { Updater } from "../../../functions";
 import { DisposableLike } from "../../../util";
 import addDisposableOrTeardown from "./DisposableLike.addDisposableOrTeardown";
 
-const bindTo =
+const DisposableLike__bindTo =
   <T extends DisposableLike>(child: DisposableLike): Updater<T> =>
   (parent: T): T => {
     addDisposableOrTeardown(parent, child);
@@ -10,4 +10,4 @@ const bindTo =
     return parent;
   };
 
-export default bindTo;
+export default DisposableLike__bindTo;

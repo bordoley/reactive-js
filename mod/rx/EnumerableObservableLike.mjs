@@ -2,11 +2,11 @@
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
 import { catchErrorEnumerableObservable, mergeAllEnumerableObservable, scanAsyncEnumerableObservable, switchAllEnumerableObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
-import create$1 from './__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
-import defer$1 from './__internal__/EnumerableObservableLike/EnumerableObservableLike.defer.mjs';
+import EnumerableObservableLike__create from './__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
+import EnumerableObservableLike__defer from './__internal__/EnumerableObservableLike/EnumerableObservableLike.defer.mjs';
 
-const create = create$1;
-const defer = defer$1;
+const create = EnumerableObservableLike__create;
+const defer = EnumerableObservableLike__defer;
 const deferT = {
     defer,
 };

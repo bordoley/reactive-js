@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArrayLike.keep.d.ts" />
-const keep = (predicate) => (arr) => {
+const ReadonlyArrayLike__keep = (predicate) => (arr) => {
     const result = arr.filter(predicate);
     return result;
 };
 
-export { keep as default };
+export { ReadonlyArrayLike__keep as default };

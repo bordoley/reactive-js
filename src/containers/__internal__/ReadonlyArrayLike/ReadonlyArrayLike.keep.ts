@@ -1,7 +1,7 @@
 import { Keep, ReadonlyArrayLike } from "../../../containers";
 import { Predicate } from "../../../functions";
 
-const keep: Keep<ReadonlyArrayLike>["keep"] =
+const ReadonlyArrayLike__keep: Keep<ReadonlyArrayLike>["keep"] =
   <T>(predicate: Predicate<T>) =>
   (arr: readonly T[]): readonly T[] => {
     const result: ReadonlyArray<T> = arr.filter(
@@ -10,4 +10,4 @@ const keep: Keep<ReadonlyArrayLike>["keep"] =
     return result;
   };
 
-export default keep;
+export default ReadonlyArrayLike__keep;

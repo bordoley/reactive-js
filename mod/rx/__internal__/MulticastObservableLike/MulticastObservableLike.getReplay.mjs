@@ -1,6 +1,6 @@
 /// <reference types="./MulticastObservableLike.getReplay.d.ts" />
 import { MulticastObservableLike_replay } from '../../../rx.mjs';
 
-const getReplay = (obs) => obs[MulticastObservableLike_replay];
+const MulticastObservableLike__getReplay = (obs) => obs[MulticastObservableLike_replay];
 
-export { getReplay as default };
+export { MulticastObservableLike__getReplay as default };

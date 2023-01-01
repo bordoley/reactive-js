@@ -9,7 +9,7 @@ import { SchedulerLike } from "../../../scheduling";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import ObserverLike__mixin from "./ObserverLike.mixin";
 
-const create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
+const ObserverLike__create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
   /*@__PURE__*/ (<T>() => {
     const typedObserverMixin = ObserverLike__mixin<T>();
 
@@ -33,4 +33,4 @@ const create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
     );
   })();
 
-export default create;
+export default ObserverLike__create;

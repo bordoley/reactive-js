@@ -131,45 +131,47 @@ type TObserverMixinReturn<T> = Omit<
   keyof DisposableLike | typeof SinkLike_notify
 >;
 
-const observerMixin: <T>() => Mixin1<TObserverMixinReturn<T>, SchedulerLike> =
-  /*@__PURE__*/ (<T>() => {
-    type TProperties = {
-      readonly [ObserverLike_scheduler]: SchedulerLike;
-      dispatcher: Optional<DispatcherLike<T>>;
-    };
+const ObserverLike__observerMixin: <T>() => Mixin1<
+  TObserverMixinReturn<T>,
+  SchedulerLike
+> = /*@__PURE__*/ (<T>() => {
+  type TProperties = {
+    readonly [ObserverLike_scheduler]: SchedulerLike;
+    dispatcher: Optional<DispatcherLike<T>>;
+  };
 
-    return pipe(
-      mix(
-        function ObserverMixin(
-          instance: Pick<ObserverLike, typeof ObserverLike_dispatcher> &
-            Mutable<TProperties>,
-          scheduler: SchedulerLike,
-        ): TObserverMixinReturn<T> {
-          instance[ObserverLike_scheduler] = scheduler;
+  return pipe(
+    mix(
+      function ObserverMixin(
+        instance: Pick<ObserverLike, typeof ObserverLike_dispatcher> &
+          Mutable<TProperties>,
+        scheduler: SchedulerLike,
+      ): TObserverMixinReturn<T> {
+        instance[ObserverLike_scheduler] = scheduler;
 
-          return instance;
+        return instance;
+      },
+      props<TProperties>({
+        [ObserverLike_scheduler]: none,
+        dispatcher: none,
+      }),
+      {
+        get [ObserverLike_dispatcher](): DispatcherLike<T> {
+          unsafeCast<ObserverLike<T> & TProperties>(this);
+          let { dispatcher } = this;
+          if (isNone(dispatcher)) {
+            dispatcher = pipe(
+              createObserverDispatcher(this),
+              addToIgnoringChildErrors<DispatcherLike<T>>(this),
+            );
+            this.dispatcher = dispatcher;
+          }
+          return dispatcher;
         },
-        props<TProperties>({
-          [ObserverLike_scheduler]: none,
-          dispatcher: none,
-        }),
-        {
-          get [ObserverLike_dispatcher](): DispatcherLike<T> {
-            unsafeCast<ObserverLike<T> & TProperties>(this);
-            let { dispatcher } = this;
-            if (isNone(dispatcher)) {
-              dispatcher = pipe(
-                createObserverDispatcher(this),
-                addToIgnoringChildErrors<DispatcherLike<T>>(this),
-              );
-              this.dispatcher = dispatcher;
-            }
-            return dispatcher;
-          },
-        },
-      ),
-      returns,
-    );
-  })();
+      },
+    ),
+    returns,
+  );
+})();
 
-export default observerMixin;
+export default ObserverLike__observerMixin;

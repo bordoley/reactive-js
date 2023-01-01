@@ -14,7 +14,7 @@ import { add, addTo } from "../../../util/DisposableLike";
 
 import StreamableLike__stream from "./StreamableLike.stream";
 
-const sinkInto =
+const StreamableLike__sinkInto =
   <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) =>
   (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
     const { [DispatcherLike_scheduler]: scheduler } = dest;
@@ -39,4 +39,4 @@ const sinkInto =
     return src;
   };
 
-export default sinkInto;
+export default StreamableLike__sinkInto;

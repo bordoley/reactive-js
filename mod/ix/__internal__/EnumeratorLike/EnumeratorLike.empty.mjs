@@ -2,21 +2,21 @@
 import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
 import { pipe } from '../../../functions.mjs';
 import { SourceLike_move } from '../../../ix.mjs';
-import mutableMixin from '../MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
-import dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import MutableEnumeratorLike__mixin from '../MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
-const empty = /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableMixin();
-    return createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function EmptyEnumerator(instance) {
-        init(disposableMixin, instance);
+const EnumeratorLike__empty = /*@__PURE__*/ (() => {
+    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
+    return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin), function EmptyEnumerator(instance) {
+        init(DisposableLike__disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         return instance;
     }, {}, {
         [SourceLike_move]() {
-            pipe(this, dispose());
+            pipe(this, DisposableLike__dispose());
         },
     }));
 })();
 
-export { empty as default };
+export { EnumeratorLike__empty as default };

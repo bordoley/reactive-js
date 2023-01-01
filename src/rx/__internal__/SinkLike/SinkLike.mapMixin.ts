@@ -12,7 +12,7 @@ import DisposableLike__delegatingMixin from "../../../util/__internal__/Disposab
 import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-export const mapMixin: <TA, TB>() => Mixin2<
+export const SinkLike__mapMixin: <TA, TB>() => Mixin2<
   SinkLike<TA>,
   SinkLike<TB>,
   Function1<TA, TB>
@@ -54,4 +54,4 @@ export const mapMixin: <TA, TB>() => Mixin2<
   );
 })();
 
-export default mapMixin;
+export default SinkLike__mapMixin;

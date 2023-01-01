@@ -1,7 +1,7 @@
 import { DispatcherLike_scheduler, SchedulerLike } from "../../../scheduling";
 
-const getScheduler = (dispatcher: {
+const DispatcherLike__getScheduler = (dispatcher: {
   [DispatcherLike_scheduler]: SchedulerLike;
 }): SchedulerLike => dispatcher[DispatcherLike_scheduler];
 
-export default getScheduler;
+export default DispatcherLike__getScheduler;

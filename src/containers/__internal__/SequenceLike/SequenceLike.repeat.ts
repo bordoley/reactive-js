@@ -7,7 +7,9 @@ import {
 import { Predicate, isSome, none } from "../../../functions";
 import ContainerLike__repeat from "../ContainerLike/ContainerLike.repeat";
 
-const repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (<T>() => {
+const SequenceLike__repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (<
+  T,
+>() => {
   const _repeat =
     (
       src: SequenceLike<T>,
@@ -38,4 +40,4 @@ const repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (<T>() => {
   );
 })();
 
-export default repeat;
+export default SequenceLike__repeat;

@@ -1,5 +1,5 @@
 import { DispatcherLike_scheduler, SchedulerLike } from "../../../scheduling.mjs";
-declare const getScheduler: (dispatcher: {
+declare const DispatcherLike__getScheduler: (dispatcher: {
     [DispatcherLike_scheduler]: SchedulerLike;
 }) => SchedulerLike;
-export { getScheduler as default };
+export { DispatcherLike__getScheduler as default };

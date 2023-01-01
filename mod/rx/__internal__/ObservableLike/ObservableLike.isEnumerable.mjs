@@ -1,6 +1,6 @@
 /// <reference types="./ObservableLike.isEnumerable.d.ts" />
 import { ObservableLike_isEnumerable } from '../../../rx.mjs';
 
-const isEnumerable = (obs) => obs[ObservableLike_isEnumerable];
+const ObservableLike__isEnumerable = (obs) => obs[ObservableLike_isEnumerable];
 
-export { isEnumerable as default };
+export { ObservableLike__isEnumerable as default };

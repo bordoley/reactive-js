@@ -1,7 +1,7 @@
 import { IterableLike } from "../../../containers.mjs";
 import { ToRunnableObservable } from "../../../rx.mjs";
-declare const toRunnableObservable: ToRunnableObservable<IterableLike, {
+declare const IterableLike__toRunnableObservable: ToRunnableObservable<IterableLike, {
     delay: number;
     delayStart?: boolean;
 }>["toRunnableObservable"];
-export { toRunnableObservable as default };
+export { IterableLike__toRunnableObservable as default };

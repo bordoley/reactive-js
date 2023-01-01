@@ -2,53 +2,53 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { getLength, pipe, isEmpty, none, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
-import dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
-import isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
-import observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
-import notify from '../SinkLike/SinkLike.notify.mjs';
-import forEach from './ObservableLike.forEach.mjs';
-import isEnumerable from './ObservableLike.isEnumerable.mjs';
-import isRunnable from './ObservableLike.isRunnable.mjs';
-import lift from './ObservableLike.lift.mjs';
-import subscribe from './ObservableLike.subscribe.mjs';
+import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
+import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
+import ObserverLike__observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
+import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
+import ObservableLike__forEach from './ObservableLike.forEach.mjs';
+import ObservableLike__isEnumerable from './ObservableLike.isEnumerable.mjs';
+import ObservableLike__isRunnable from './ObservableLike.isRunnable.mjs';
+import ObservableLike__lift from './ObservableLike.lift.mjs';
+import ObservableLike__subscribe from './ObservableLike.subscribe.mjs';
 
-const zipWithLatestFrom = /*@__PURE__*/ (() => {
+const ObservableLike__zipWithLatestFrom = /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
-        const typedObserverMixin = observerMixin();
+        const typedObserverMixin = ObserverLike__observerMixin();
         const notifyDelegate = (observer) => {
             if (getLength(observer.queue) > 0 && observer.hasLatest) {
                 observer.hasLatest = false;
                 const next = observer.queue.shift();
                 const result = observer.selector(next, observer.otherLatest);
-                pipe(observer.delegate, notify(result));
+                pipe(observer.delegate, SinkLike__notify(result));
             }
         };
-        return createInstanceFactory(mix(include(disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
-            init(disposableMixin, instance);
-            init(typedObserverMixin, instance, getScheduler(delegate));
+        return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
+            init(DisposableLike__disposableMixin, instance);
+            init(typedObserverMixin, instance, ObserverLike__getScheduler(delegate));
             instance.delegate = delegate;
             instance.queue = [];
             instance.selector = selector;
             const disposeDelegate = () => {
-                if (isDisposed(instance) &&
-                    isDisposed(otherSubscription)) {
-                    pipe(delegate, dispose());
+                if (DisposableLike__isDisposed(instance) &&
+                    DisposableLike__isDisposed(otherSubscription)) {
+                    pipe(delegate, DisposableLike__dispose());
                 }
             };
-            const otherSubscription = pipe(other, forEach(otherLatest => {
+            const otherSubscription = pipe(other, ObservableLike__forEach(otherLatest => {
                 instance.hasLatest = true;
                 instance.otherLatest = otherLatest;
                 notifyDelegate(instance);
-                if (isDisposed(instance) &&
+                if (DisposableLike__isDisposed(instance) &&
                     isEmpty(instance.queue)) {
-                    pipe(instance.delegate, dispose());
+                    pipe(instance.delegate, DisposableLike__dispose());
                 }
-            }), subscribe(getScheduler(delegate)), onComplete(disposeDelegate), addTo(delegate));
-            pipe(instance, addTo(delegate), onComplete(disposeDelegate));
+            }), ObservableLike__subscribe(ObserverLike__getScheduler(delegate)), DisposableLike__onComplete(disposeDelegate), DisposableLike__addTo(delegate));
+            pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(disposeDelegate));
             return instance;
         }, props({
             delegate: none,
@@ -63,7 +63,7 @@ const zipWithLatestFrom = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return (other, selector) => pipe(createZipWithLatestFromObserver, partial(other, selector), lift(isEnumerable(other), isRunnable(other)));
+    return (other, selector) => pipe(createZipWithLatestFromObserver, partial(other, selector), ObservableLike__lift(ObservableLike__isEnumerable(other), ObservableLike__isRunnable(other)));
 })();
 
-export { zipWithLatestFrom as default };
+export { ObservableLike__zipWithLatestFrom as default };

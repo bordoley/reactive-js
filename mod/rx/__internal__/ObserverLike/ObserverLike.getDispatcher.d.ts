@@ -1,4 +1,4 @@
 import { ObserverLike } from "../../../rx.mjs";
 import { DispatcherLike } from "../../../scheduling.mjs";
-declare const getDispatcher: <T>(observer: ObserverLike<T>) => DispatcherLike<T>;
-export { getDispatcher as default };
+declare const ObserverLike__getDispatcher: <T>(observer: ObserverLike<T>) => DispatcherLike<T>;
+export { ObserverLike__getDispatcher as default };

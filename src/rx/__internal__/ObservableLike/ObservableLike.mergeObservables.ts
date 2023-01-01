@@ -11,7 +11,7 @@ import RunnableObservableLike__create from "../RunnableObservableLike/RunnableOb
 import ObservableLike__allAreEnumerable from "./ObservableLike.allAreEnumerable";
 import ObservableLike__allAreRunnable from "./ObservableLike.allAreRunnable";
 
-const mergeAll = /*@__PURE__*/ (() => {
+const ObservableLike__mergeObservables = /*@__PURE__*/ (() => {
   const createMergeObserver = <T>(
     delegate: ObserverLike<T>,
     count: number,
@@ -54,4 +54,4 @@ const mergeAll = /*@__PURE__*/ (() => {
   };
 })();
 
-export default mergeAll;
+export default ObservableLike__mergeObservables;

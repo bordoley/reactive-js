@@ -9,8 +9,8 @@ import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { dispatch, dispatchTo, getScheduler as getScheduler$1 } from '../scheduling/DispatcherLike.mjs';
 import { sourceFrom } from '../streaming/StreamLike.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
-import createLifted from '../streaming/__internal__/FlowableLike/FlowableLike.createLifted.mjs';
-import createLifted$1 from '../streaming/__internal__/StreamableLike/StreamableLike.createLifted.mjs';
+import FlowableLike__createLifted from '../streaming/__internal__/FlowableLike/FlowableLike.createLifted.mjs';
+import StreamableLike__createLifted from '../streaming/__internal__/StreamableLike/StreamableLike.createLifted.mjs';
 import { dispose, toErrorHandler, onError, onDisposed, onComplete } from '../util/DisposableLike.mjs';
 
 const bindNodeCallback = (callback) => function (...args) {
@@ -52,7 +52,7 @@ const addToDisposable = (disposable) => stream => {
     stream.on("error", toErrorHandler(disposable));
     return stream;
 };
-const createReadableSource = (factory) => createLifted(mode => create(observer => {
+const createReadableSource = (factory) => FlowableLike__createLifted(mode => create(observer => {
     const { [ObserverLike_dispatcher]: dispatcher } = observer;
     const readable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
@@ -78,7 +78,7 @@ const createReadableSource = (factory) => createLifted(mode => create(observer =
 const readFile = (path, options) => createReadableSource(() => fs.createReadStream(path, options));
 const createWritableSink = /*@__PURE__*/ (() => {
     const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
-    return (factory) => createLifted$1(events => create(observer => {
+    return (factory) => StreamableLike__createLifted(events => create(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
         const writable = isFunction(factory)
             ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
@@ -103,7 +103,7 @@ const createWritableSink = /*@__PURE__*/ (() => {
         pipe(dispatcher, dispatch("resume"));
     }));
 })();
-const transform = (factory) => src => createLifted(modeObs => create(observer => {
+const transform = (factory) => src => FlowableLike__createLifted(modeObs => create(observer => {
     const transform = pipe(factory(), addToDisposable(observer), addDisposable(getDispatcher(observer)));
     pipe(createWritableSink(transform), stream(getScheduler(observer)), sourceFrom(src), addToNodeStream(transform));
     const transformReadableStream = pipe(createReadableSource(transform), stream(getScheduler(observer)), addToNodeStream(transform), sinkInto(observer));

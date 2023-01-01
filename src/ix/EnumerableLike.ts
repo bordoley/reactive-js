@@ -45,8 +45,6 @@ import StatefulContainerLike__scan from "../containers/__internal__/StatefulCont
 import StatefulContainerLike__skipFirst from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.skipFirst";
 import StatefulContainerLike__takeFirst from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst";
 import StatefulContainerLike__takeLast from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeLast";
-import StatefulContainerLike__takeWhile from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile";
-import StatefulContainerLike__throwIfEmpty from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty";
 import {
   Lift,
   TInteractive,
@@ -89,16 +87,13 @@ import {
   ToRunnable,
   ToRunnableObservable,
 } from "../rx";
-import { Exception } from "../util";
 import {
   add,
-  addIgnoringChildErrors,
   addTo,
   bindTo,
   dispose,
   disposed,
   isDisposed,
-  onComplete,
 } from "../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
@@ -107,6 +102,8 @@ import DelegatingEnumeratorLike__move from "./__internal__/DelegatingEnumeratorL
 import EnumerableLike__create from "./__internal__/EnumerableLike/EnumerableLike.create";
 import EnumerableLike__empty from "./__internal__/EnumerableLike/EnumerableLike.empty";
 import EnumerableLike__enumerate from "./__internal__/EnumerableLike/EnumerableLike.enumerate";
+import EnumerableLike__takeWhile from "./__internal__/EnumerableLike/EnumerableLike.takeWhile";
+import EnumerableLike__throwIfEmpty from "./__internal__/EnumerableLike/EnumerableLike.throwIfEmpty";
 import EnumerableLike__toIterable from "./__internal__/EnumerableLike/EnumerableLike.toIterable";
 import EnumerableLike__toReadonlyArray from "./__internal__/EnumerableLike/EnumerableLike.toReadonlyArray";
 import EnumerableLike__toRunnable from "./__internal__/EnumerableLike/EnumerableLike.toRunnable";
@@ -964,135 +961,11 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] = /*@__PURE__*/ (<
 export const takeLastT: TakeLast<EnumerableLike> = { takeLast };
 
 export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
-  /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
-
-    type TProperties = {
-      readonly predicate: Predicate<T>;
-      readonly inclusive: boolean;
-      done: boolean;
-    };
-
-    return pipe(
-      createInstanceFactory(
-        mix(
-          include(
-            DisposableLike__delegatingMixin,
-            typedDelegatingEnumeratorMixin,
-          ),
-          function TakeWhileEnumerator(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
-              Mutable<TProperties>,
-            delegate: EnumeratorLike<T>,
-            predicate: Predicate<T>,
-            inclusive: boolean,
-          ): EnumeratorLike<T> {
-            init(DisposableLike__delegatingMixin, instance, delegate);
-            init(typedDelegatingEnumeratorMixin, instance, delegate);
-
-            instance.predicate = predicate;
-            instance.inclusive = inclusive;
-
-            return instance;
-          },
-          props<TProperties>({
-            predicate: none,
-            inclusive: false,
-            done: false,
-          }),
-          {
-            [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              const { inclusive, predicate } = this;
-
-              if (this.done && !isDisposed(this)) {
-                pipe(this, dispose());
-              } else if (DelegatingEnumeratorLike__move(this)) {
-                const current = getCurrent(this);
-
-                try {
-                  const satisfiesPredicate = predicate(current);
-
-                  if (!satisfiesPredicate && inclusive) {
-                    this.done = true;
-                  } else if (!satisfiesPredicate) {
-                    pipe(this, dispose());
-                  }
-                } catch (cause) {
-                  pipe(this, dispose({ cause }));
-                }
-              }
-            },
-          },
-        ),
-      ),
-      StatefulContainerLike__takeWhile<EnumerableLike, T, TInteractive>(liftT),
-    );
-  })();
+  EnumerableLike__takeWhile;
 export const takeWhileT: TakeWhile<EnumerableLike> = { takeWhile };
 
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
-  /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorMixin = DelegatingEnumeratorLike__mixin<T>();
-
-    type TProperties = {
-      isEmpty: boolean;
-    };
-
-    return pipe(
-      createInstanceFactory(
-        mix(
-          include(DisposableLike__mixin, typedDelegatingEnumeratorMixin),
-          function TakeWhileEnumerator(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
-              TProperties,
-            delegate: EnumeratorLike,
-            factory: Factory<unknown>,
-          ): EnumeratorLike<T> {
-            init(DisposableLike__mixin, instance);
-            init(typedDelegatingEnumeratorMixin, instance, delegate);
-
-            instance.isEmpty = true;
-
-            pipe(instance, addIgnoringChildErrors(delegate));
-            pipe(
-              delegate,
-              onComplete(() => {
-                let error: Optional<Exception> = none;
-
-                if (instance.isEmpty) {
-                  let cause: unknown = none;
-                  try {
-                    cause = factory();
-                  } catch (e) {
-                    cause = e;
-                  }
-
-                  error = { cause };
-                }
-
-                pipe(instance, dispose(error));
-              }),
-            );
-
-            return instance;
-          },
-          props<TProperties>({
-            isEmpty: true,
-          }),
-          {
-            [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              if (DelegatingEnumeratorLike__move(this)) {
-                this.isEmpty = false;
-              }
-            },
-          },
-        ),
-      ),
-      StatefulContainerLike__throwIfEmpty<EnumerableLike, T, TInteractive>(
-        liftT,
-      ),
-    );
-  })();
+  EnumerableLike__throwIfEmpty;
 export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike> = {
   throwIfEmpty,
 };

@@ -1,23 +1,24 @@
 /// <reference types="./ObservableLike.scan.d.ts" />
 import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
-import scan$1 from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
+import StatefulContainerLike__scan from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
 import { pipe } from '../../../functions.mjs';
 import { ObserverLike_scheduler } from '../../../rx.mjs';
-import observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
-import scanMixin from '../SinkLike/SinkLike.scanMixin.mjs';
-import liftEnumerableOperatorT from './ObservableLike.liftEnumerableOperatorT.mjs';
+import ObserverLike__observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
+import SinkLike__scanMixin from '../SinkLike/SinkLike.scanMixin.mjs';
+import ObservableLike__liftEnumerableOperatorT from './ObservableLike.liftEnumerableOperatorT.mjs';
 
-const scan = /*@__PURE__*/ (() => {
+const ObservableLike__scan = 
+/*@__PURE__*/ (() => {
     const createScanObserver = (() => {
-        const typedScanSinkMixin = scanMixin();
-        const typedObserverMixin = observerMixin();
+        const typedScanSinkMixin = SinkLike__scanMixin();
+        const typedObserverMixin = ObserverLike__observerMixin();
         return createInstanceFactory(mix(include(typedObserverMixin, typedScanSinkMixin), function ScanObserver(instance, delegate, reducer, initialValue) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
             init(typedScanSinkMixin, instance, delegate, reducer, initialValue);
             return instance;
         }));
     })();
-    return pipe(createScanObserver, scan$1(liftEnumerableOperatorT));
+    return pipe(createScanObserver, StatefulContainerLike__scan(ObservableLike__liftEnumerableOperatorT));
 })();
 
-export { scan as default };
+export { ObservableLike__scan as default };

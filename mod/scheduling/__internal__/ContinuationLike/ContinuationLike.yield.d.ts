@@ -1,4 +1,4 @@
-declare const yield_: (options?: {
+declare const ContinuationLike__yield_: (options?: {
     delay?: number;
 }) => void;
-export { yield_ as default };
+export { ContinuationLike__yield_ as default };

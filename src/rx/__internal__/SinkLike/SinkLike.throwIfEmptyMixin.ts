@@ -15,7 +15,7 @@ import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/Dis
 import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const throwIfEmptyMixin: <T>() => Mixin2<
+const SinkLike__throwIfEmptyMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
   Factory<unknown>
@@ -79,4 +79,4 @@ const throwIfEmptyMixin: <T>() => Mixin2<
   );
 })();
 
-export default throwIfEmptyMixin;
+export default SinkLike__throwIfEmptyMixin;

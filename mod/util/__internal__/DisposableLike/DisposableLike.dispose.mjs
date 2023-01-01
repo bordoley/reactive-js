@@ -1,9 +1,9 @@
 /// <reference types="./DisposableLike.dispose.d.ts" />
 import { DisposableLike_dispose } from '../../../util.mjs';
 
-const dispose = (e) => disposable => {
+const DisposableLike__dispose = (e) => disposable => {
     disposable[DisposableLike_dispose](e);
     return disposable;
 };
 
-export { dispose as default };
+export { DisposableLike__dispose as default };

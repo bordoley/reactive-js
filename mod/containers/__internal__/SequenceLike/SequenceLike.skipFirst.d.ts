@@ -1,3 +1,3 @@
 import { SkipFirst, SequenceLike } from "../../../containers.mjs";
-declare const skipFirst: SkipFirst<SequenceLike>["skipFirst"];
-export { skipFirst as default };
+declare const SequenceLike__skipFirst: SkipFirst<SequenceLike>["skipFirst"];
+export { SequenceLike__skipFirst as default };

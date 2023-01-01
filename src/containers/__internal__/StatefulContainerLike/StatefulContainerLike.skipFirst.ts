@@ -9,7 +9,7 @@ import {
 import { Function2, partial, pipe } from "../../../functions";
 import StatefulContainerLike__lift from "./StatefulContainerLike.lift";
 
-const skipFirst =
+const StatefulContainerLike__skipFirst =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -30,4 +30,4 @@ const skipFirst =
     return container => (count > 0 ? pipe(container, lifted) : container);
   };
 
-export default skipFirst;
+export default StatefulContainerLike__skipFirst;

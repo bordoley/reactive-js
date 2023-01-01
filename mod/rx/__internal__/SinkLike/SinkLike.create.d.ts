@@ -1,3 +1,3 @@
 import { SinkLike } from "../../../rx.mjs";
-declare const create: <T>() => SinkLike<T>;
-export { create as default };
+declare const SinkLike__create: <T>() => SinkLike<T>;
+export { SinkLike__create as default };

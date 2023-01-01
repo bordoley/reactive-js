@@ -9,7 +9,7 @@ import {
 } from "../containers.internal";
 import StatefulContainer__lift from "./StatefulContainerLike.lift";
 
-const scan =
+const StatefulContainerLike__scan =
   <
     C extends StatefulContainerLike,
     T,
@@ -29,4 +29,4 @@ const scan =
   (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
     pipe(operator, partial(reducer, initialValue), StatefulContainer__lift(m));
 
-export default scan;
+export default StatefulContainerLike__scan;

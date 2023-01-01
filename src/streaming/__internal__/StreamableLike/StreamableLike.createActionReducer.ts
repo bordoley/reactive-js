@@ -12,7 +12,7 @@ import { StreamableLike } from "../../../streaming";
 
 import StreamableLike__createLifted from "./StreamableLike.createLifted";
 
-const createActionReducer = <TAction, T>(
+const StreamableLike__createActionReducer = <TAction, T>(
   reducer: Reducer<TAction, T>,
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
@@ -30,4 +30,4 @@ const createActionReducer = <TAction, T>(
     }),
   );
 
-export default createActionReducer;
+export default StreamableLike__createActionReducer;

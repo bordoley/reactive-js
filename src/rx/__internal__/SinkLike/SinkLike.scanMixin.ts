@@ -13,7 +13,7 @@ import DisposableLike__delegatingMixin from "../../../util/__internal__/Disposab
 import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const scanMixin: <T, TAcc>() => Mixin3<
+const SinkLike__scanMixin: <T, TAcc>() => Mixin3<
   SinkLike<T>,
   SinkLike<TAcc>,
   Reducer<T, TAcc>,
@@ -71,4 +71,4 @@ const scanMixin: <T, TAcc>() => Mixin3<
   );
 })();
 
-export default scanMixin;
+export default SinkLike__scanMixin;

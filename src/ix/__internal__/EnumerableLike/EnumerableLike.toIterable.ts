@@ -5,7 +5,7 @@ import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurr
 import EnumerableLike__move from "../SourceLike/SourceLike.move";
 import EnumerableLike__enumerate from "./EnumerableLike.enumerate";
 
-const toIterable: ToIterable<EnumerableLike>["toIterable"] =
+const EnumerableLike__toIterable: ToIterable<EnumerableLike>["toIterable"] =
   /*@__PURE__*/ (() => {
     class EnumerableIterable<T = unknown> implements Iterable<T> {
       constructor(private readonly enumerable: EnumerableLike<T>) {}
@@ -21,4 +21,4 @@ const toIterable: ToIterable<EnumerableLike>["toIterable"] =
     return () => enumerable => newInstance(EnumerableIterable, enumerable);
   })();
 
-export default toIterable;
+export default EnumerableLike__toIterable;

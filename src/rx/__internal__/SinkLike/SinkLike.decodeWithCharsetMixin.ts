@@ -14,7 +14,7 @@ import { sinkInto } from "../../ReactiveContainerLike";
 import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const decodeWithCharsetMixin: <
+const SinkLike__decodeWithCharsetMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<string>,
 >(
@@ -82,4 +82,4 @@ const decodeWithCharsetMixin: <
   );
 };
 
-export default decodeWithCharsetMixin;
+export default SinkLike__decodeWithCharsetMixin;

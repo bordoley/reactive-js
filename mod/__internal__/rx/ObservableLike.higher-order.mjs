@@ -5,25 +5,25 @@ import { getScheduler } from '../../rx/ObserverLike.mjs';
 import { sinkInto } from '../../rx/ReactiveContainerLike.mjs';
 import { notifySink } from '../../rx/SinkLike.mjs';
 import { create, publishTo, publish } from '../../rx/SubjectLike.mjs';
-import create$1 from '../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
-import lift from '../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift.mjs';
-import create$2 from '../../rx/__internal__/ObservableLike/ObservableLike.create.mjs';
-import forEach from '../../rx/__internal__/ObservableLike/ObservableLike.forEach.mjs';
-import lift$1 from '../../rx/__internal__/ObservableLike/ObservableLike.lift.mjs';
-import onSubscribe from '../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe.mjs';
-import subscribe from '../../rx/__internal__/ObservableLike/ObservableLike.subscribe.mjs';
-import takeFirst from '../../rx/__internal__/ObservableLike/ObservableLike.takeFirst.mjs';
-import zipWithLatestFrom from '../../rx/__internal__/ObservableLike/ObservableLike.zipWithLatestFrom.mjs';
-import observerMixin from '../../rx/__internal__/ObserverLike/ObserverLike.mixin.mjs';
-import create$3 from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
-import lift$2 from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift.mjs';
-import catchErrorMixin from '../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin.mjs';
-import addTo from '../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
-import dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
-import disposed from '../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
-import isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
-import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import onComplete from '../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
+import EnumerableObservableLike__create from '../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
+import EnumerableObservableLike__lift from '../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift.mjs';
+import ObservableLike__create from '../../rx/__internal__/ObservableLike/ObservableLike.create.mjs';
+import ObservableLike__forEach from '../../rx/__internal__/ObservableLike/ObservableLike.forEach.mjs';
+import ObservableLike__lift from '../../rx/__internal__/ObservableLike/ObservableLike.lift.mjs';
+import ObservableLike__onSubscribe from '../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe.mjs';
+import ObservableLike__subscribe from '../../rx/__internal__/ObservableLike/ObservableLike.subscribe.mjs';
+import ObservableLike__takeFirst from '../../rx/__internal__/ObservableLike/ObservableLike.takeFirst.mjs';
+import ObservableLike__zipWithLatestFrom from '../../rx/__internal__/ObservableLike/ObservableLike.zipWithLatestFrom.mjs';
+import ObserverLike__observerMixin from '../../rx/__internal__/ObserverLike/ObserverLike.mixin.mjs';
+import RunnableObservableLike__create from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
+import RunnableObservableLike__lift from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift.mjs';
+import SinkLike__catchErrorMixin from '../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin.mjs';
+import DisposableLike__addTo from '../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
+import DisposableLike__dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__disposed from '../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
+import DisposableLike__isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
+import DisposableLike__disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__onComplete from '../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../mixins.mjs';
 import { createDisposableRef } from '../util/DisposableRefLike.mjs';
@@ -31,8 +31,8 @@ import { MutableRefLike_current } from '../util/MutableRefLike.mjs';
 
 const createCatchError = (lift) => {
     const createCatchErrorObserver = (() => {
-        const typedCatchErrorSink = catchErrorMixin();
-        const typedObserverMixin = observerMixin();
+        const typedCatchErrorSink = SinkLike__catchErrorMixin();
+        const typedObserverMixin = ObserverLike__observerMixin();
         return createInstanceFactory(mix(include(typedCatchErrorSink, typedObserverMixin), function CatchErrorObserver(instance, delegate, errorHandler) {
             init(typedCatchErrorSink, instance, delegate, errorHandler);
             init(typedObserverMixin, instance, getScheduler(delegate));
@@ -42,28 +42,28 @@ const createCatchError = (lift) => {
     return ((errorHandler) => pipe(createCatchErrorObserver, partial(errorHandler), lift));
 };
 const catchErrorEnumerableObservable = 
-/*@__PURE__*/ createCatchError(lift);
+/*@__PURE__*/ createCatchError(EnumerableObservableLike__lift);
 const catchErrorObservable = 
-/*@__PURE__*/ createCatchError(lift$1());
+/*@__PURE__*/ createCatchError(ObservableLike__lift());
 const catchErrorRunnableObservable = 
-/*@__PURE__*/ createCatchError(lift$2);
+/*@__PURE__*/ createCatchError(RunnableObservableLike__lift);
 const createMergeAll = (lift) => {
     const createMergeAllObserver = (() => {
-        const typedObserverMixin = observerMixin();
+        const typedObserverMixin = ObserverLike__observerMixin();
         const subscribeNext = (observer) => {
             if (observer.activeCount < observer.maxConcurrency) {
                 const nextObs = observer.queue.shift();
                 if (isSome(nextObs)) {
                     observer.activeCount++;
-                    pipe(nextObs, forEach(notifySink(observer.delegate)), subscribe(getScheduler(observer)), addTo(observer.delegate), onComplete(observer.onDispose));
+                    pipe(nextObs, ObservableLike__forEach(notifySink(observer.delegate)), ObservableLike__subscribe(getScheduler(observer)), DisposableLike__addTo(observer.delegate), DisposableLike__onComplete(observer.onDispose));
                 }
-                else if (isDisposed(observer)) {
-                    pipe(observer.delegate, dispose());
+                else if (DisposableLike__isDisposed(observer)) {
+                    pipe(observer.delegate, DisposableLike__dispose());
                 }
             }
         };
-        return createInstanceFactory(mix(include(disposableMixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
-            init(disposableMixin, instance);
+        return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
+            init(DisposableLike__disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;
             instance.maxBufferSize = maxBufferSize;
@@ -74,13 +74,13 @@ const createMergeAll = (lift) => {
                 subscribeNext(instance);
             };
             instance.queue = [];
-            pipe(instance, addTo(delegate), onComplete(() => {
-                if (isDisposed(delegate)) {
+            pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(() => {
+                if (DisposableLike__isDisposed(delegate)) {
                     instance.queue.length = 0;
                 }
                 else if (getLength(instance.queue) + instance.activeCount ===
                     0) {
-                    pipe(instance.delegate, dispose());
+                    pipe(instance.delegate, DisposableLike__dispose());
                 }
             }));
             return instance;
@@ -108,44 +108,44 @@ const createMergeAll = (lift) => {
         return lift(pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency)));
     };
 };
-const mergeAllEnumerableObservable = /*@__PURE__*/ createMergeAll(lift);
-const mergeAllObservable = /*@__PURE__*/ createMergeAll(lift$1());
-const mergeAllRunnableObservable = /*@__PURE__*/ createMergeAll(lift$2);
+const mergeAllEnumerableObservable = /*@__PURE__*/ createMergeAll(EnumerableObservableLike__lift);
+const mergeAllObservable = /*@__PURE__*/ createMergeAll(ObservableLike__lift());
+const mergeAllRunnableObservable = /*@__PURE__*/ createMergeAll(RunnableObservableLike__lift);
 const createScanAsync = (createObservable) => {
     return (scanner, initialValue) => observable => {
         const onSink = (observer) => {
-            const accFeedbackStream = pipe(create(), addTo(observer));
-            pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAllObservable(), forEach(publishTo(accFeedbackStream)), onSubscribe(() => pipe(accFeedbackStream, publish(initialValue()))), sinkInto(observer));
+            const accFeedbackStream = pipe(create(), DisposableLike__addTo(observer));
+            pipe(observable, ObservableLike__zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), ObservableLike__takeFirst())), switchAllObservable(), ObservableLike__forEach(publishTo(accFeedbackStream)), ObservableLike__onSubscribe(() => pipe(accFeedbackStream, publish(initialValue()))), sinkInto(observer));
         };
         return createObservable(onSink);
     };
 };
-const scanAsyncEnumerableObservable = createScanAsync(create$1);
-const scanAsyncObservable = createScanAsync(create$2);
-const scanAsyncRunnableObservable = createScanAsync(create$3);
+const scanAsyncEnumerableObservable = createScanAsync(EnumerableObservableLike__create);
+const scanAsyncObservable = createScanAsync(ObservableLike__create);
+const scanAsyncRunnableObservable = createScanAsync(RunnableObservableLike__create);
 const createSwitchAll = (lift) => {
     const createSwitchAllObserver = (() => {
-        const typedObserverMixin = observerMixin();
+        const typedObserverMixin = ObserverLike__observerMixin();
         function onDispose() {
-            if (isDisposed(this.currentRef[MutableRefLike_current])) {
-                pipe(this.delegate, dispose());
+            if (DisposableLike__isDisposed(this.currentRef[MutableRefLike_current])) {
+                pipe(this.delegate, DisposableLike__dispose());
             }
         }
-        return createInstanceFactory(mix(include(disposableMixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
-            init(disposableMixin, instance);
+        return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
+            init(DisposableLike__disposableMixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;
-            instance.currentRef = pipe(createDisposableRef(disposed), addTo(delegate));
-            pipe(instance, addTo(delegate), onComplete(onDispose));
+            instance.currentRef = pipe(createDisposableRef(DisposableLike__disposed), DisposableLike__addTo(delegate));
+            pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(onDispose));
             return instance;
         }, props({
             currentRef: none,
             delegate: none,
         }), {
             [SinkLike_notify](next) {
-                this.currentRef[MutableRefLike_current] = pipe(next, forEach(notifySink(this.delegate)), subscribe(getScheduler(this)), onComplete(() => {
-                    if (isDisposed(this)) {
-                        pipe(this.delegate, dispose());
+                this.currentRef[MutableRefLike_current] = pipe(next, ObservableLike__forEach(notifySink(this.delegate)), ObservableLike__subscribe(getScheduler(this)), DisposableLike__onComplete(() => {
+                    if (DisposableLike__isDisposed(this)) {
+                        pipe(this.delegate, DisposableLike__dispose());
                     }
                 }));
             },
@@ -154,10 +154,10 @@ const createSwitchAll = (lift) => {
     return () => lift(createSwitchAllObserver);
 };
 const switchAllEnumerableObservable = 
-/*@__PURE__*/ createSwitchAll(lift);
+/*@__PURE__*/ createSwitchAll(EnumerableObservableLike__lift);
 const switchAllObservable = 
-/*@__PURE__*/ createSwitchAll(lift$1());
+/*@__PURE__*/ createSwitchAll(ObservableLike__lift());
 const switchAllRunnableObservable = 
-/*@__PURE__*/ createSwitchAll(lift$2);
+/*@__PURE__*/ createSwitchAll(RunnableObservableLike__lift);
 
 export { catchErrorEnumerableObservable, catchErrorObservable, catchErrorRunnableObservable, mergeAllEnumerableObservable, mergeAllObservable, mergeAllRunnableObservable, scanAsyncEnumerableObservable, scanAsyncObservable, scanAsyncRunnableObservable, switchAllEnumerableObservable, switchAllObservable, switchAllRunnableObservable };

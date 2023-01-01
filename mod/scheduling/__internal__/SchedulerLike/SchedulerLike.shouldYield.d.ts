@@ -1,5 +1,5 @@
 import { SchedulerLike_shouldYield } from "../../../scheduling.mjs";
-declare const shouldYield: (scheduler: {
+declare const SchedulerLike__shouldYield: (scheduler: {
     [SchedulerLike_shouldYield]: boolean;
 }) => boolean;
-export { shouldYield as default };
+export { SchedulerLike__shouldYield as default };

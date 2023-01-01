@@ -1,7 +1,8 @@
 import { ObserverLike, ObserverLike_scheduler } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
 
-const getScheduler = <T>(observer: ObserverLike<T>): SchedulerLike =>
-  observer[ObserverLike_scheduler];
+const ObserverLike__getScheduler = <T>(
+  observer: ObserverLike<T>,
+): SchedulerLike => observer[ObserverLike_scheduler];
 
-export default getScheduler;
+export default ObserverLike__getScheduler;

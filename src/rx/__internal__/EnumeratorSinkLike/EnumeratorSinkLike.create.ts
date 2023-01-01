@@ -19,7 +19,7 @@ import { isDisposed, onDisposed } from "../../../util/DisposableLike";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { EnumeratorSinkLike } from "../rx.internal";
 
-const create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
+const EnumeratorSinkLike__create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
   type TProperties = {
     [EnumeratorLike_current]: T;
     [EnumeratorLike_hasCurrent]: boolean;
@@ -78,4 +78,4 @@ const create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
   );
 })();
 
-export default create;
+export default EnumeratorSinkLike__create;

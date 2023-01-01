@@ -4,7 +4,8 @@ import {
   ObservableLike_isEnumerable,
 } from "../../../rx";
 
-const isEnumerable = (obs: ObservableLike): obs is EnumerableObservableLike =>
-  obs[ObservableLike_isEnumerable];
+const ObservableLike__isEnumerable = (
+  obs: ObservableLike,
+): obs is EnumerableObservableLike => obs[ObservableLike_isEnumerable];
 
-export default isEnumerable;
+export default ObservableLike__isEnumerable;

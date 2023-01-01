@@ -16,7 +16,7 @@ import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const TakeLastSink_last = Symbol("TakeLastSink_last");
 
-const takeLastMixin: <
+const SinkLike__takeLastMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
   T,
@@ -82,4 +82,4 @@ const takeLastMixin: <
   );
 };
 
-export default takeLastMixin;
+export default SinkLike__takeLastMixin;

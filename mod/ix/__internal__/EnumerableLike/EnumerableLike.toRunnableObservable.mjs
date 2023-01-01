@@ -3,28 +3,28 @@ import { hasDelay } from '../../../__internal__/scheduling/SchedulerLike.options
 import { pipe, none } from '../../../functions.mjs';
 import { schedule } from '../../../rx/ObserverLike.mjs';
 import { notifySink } from '../../../rx/SinkLike.mjs';
-import create$1 from '../../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
-import create from '../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
+import EnumerableObservableLike__create from '../../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
+import RunnableObservableLike__create from '../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
 import { yield_ } from '../../../scheduling/ContinuationLike.mjs';
 import { bindTo, isDisposed } from '../../../util/DisposableLike.mjs';
-import getCurrent from '../EnumeratorLike/EnumeratorLike.getCurrent.mjs';
-import move from '../SourceLike/SourceLike.move.mjs';
-import enumerate from './EnumerableLike.enumerate.mjs';
+import EnumeratorLike__getCurrent from '../EnumeratorLike/EnumeratorLike.getCurrent.mjs';
+import SourceLike__move from '../SourceLike/SourceLike.move.mjs';
+import EnumerableLike__enumerate from './EnumerableLike.enumerate.mjs';
 
-const toRunnableObservable = (options) => enumerable => {
+const EnumerableLike__toRunnableObservable = (options) => enumerable => {
     const { delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
-        const enumerator = pipe(enumerable, enumerate(), bindTo(observer));
+        const enumerator = pipe(enumerable, EnumerableLike__enumerate(), bindTo(observer));
         pipe(observer, schedule(() => {
-            while (!isDisposed(observer) && move(enumerator)) {
-                pipe(enumerator, getCurrent, notifySink(observer));
+            while (!isDisposed(observer) && SourceLike__move(enumerator)) {
+                pipe(enumerator, EnumeratorLike__getCurrent, notifySink(observer));
                 yield_(options);
             }
         }, delayStart ? options : none));
     };
     return hasDelay(options)
-        ? create(onSink)
-        : create$1(onSink);
+        ? RunnableObservableLike__create(onSink)
+        : EnumerableObservableLike__create(onSink);
 };
 
-export { toRunnableObservable as default };
+export { EnumerableLike__toRunnableObservable as default };

@@ -1,5 +1,5 @@
 import { DisposableLike_isDisposed } from "../../../util.mjs";
-declare const isDisposed: (disposable: {
+declare const DisposableLike__isDisposed: (disposable: {
     [DisposableLike_isDisposed]: boolean;
 }) => boolean;
-export { isDisposed as default };
+export { DisposableLike__isDisposed as default };

@@ -1,9 +1,10 @@
 /// <reference types="./SequenceLike.takeLast.d.ts" />
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome, getLength, pipe, callWith } from '../../../functions.mjs';
-import toSequence from '../ReadonlyArrayLike/ReadonlyArrayLike.toSequence.mjs';
+import ReadonlyArrayLike__toSequence from '../ReadonlyArrayLike/ReadonlyArrayLike.toSequence.mjs';
 
-const takeLast = /*@__PURE__*/ (() => {
+const SequenceLike__takeLast = 
+/*@__PURE__*/ (() => {
     const _takeLast = (maxCount, seq) => () => {
         const last = [];
         let result = seq();
@@ -19,7 +20,7 @@ const takeLast = /*@__PURE__*/ (() => {
                 break;
             }
         }
-        return pipe(last, toSequence(), callWith());
+        return pipe(last, ReadonlyArrayLike__toSequence(), callWith());
     };
     return (options = {}) => (seq) => {
         const { count = 1 } = options;
@@ -27,4 +28,4 @@ const takeLast = /*@__PURE__*/ (() => {
     };
 })();
 
-export { takeLast as default };
+export { SequenceLike__takeLast as default };

@@ -19,7 +19,7 @@ import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/Dis
 import { sinkInto } from "../../ReactiveContainerLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const catchErrorMixin: <
+const SinkLike__catchErrorMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
   T,
@@ -80,4 +80,4 @@ const catchErrorMixin: <
     );
   })();
 
-export default catchErrorMixin;
+export default SinkLike__catchErrorMixin;

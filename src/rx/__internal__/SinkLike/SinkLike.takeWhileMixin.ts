@@ -14,7 +14,7 @@ import DisposableLike__delegatingMixin from "../../../util/__internal__/Disposab
 import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const takeWhileMixin: <T>() => Mixin3<
+const SinkLike__takeWhileMixin: <T>() => Mixin3<
   SinkLike<T>,
   SinkLike<T>,
   Predicate<T>,
@@ -74,4 +74,4 @@ const takeWhileMixin: <T>() => Mixin3<
   );
 })();
 
-export default takeWhileMixin;
+export default SinkLike__takeWhileMixin;

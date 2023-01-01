@@ -4,7 +4,7 @@ import {
 } from "../../../ix";
 import { DisposableLike } from "../../../util";
 
-const interact =
+const InteractiveContainerLike__interact =
   <
     C extends InteractiveContainerLike<TSource, TCtx>,
     TSource extends DisposableLike,
@@ -15,4 +15,4 @@ const interact =
   (enumerable: C): TSource =>
     enumerable[InteractiveContainerLike_interact](ctx);
 
-export default interact;
+export default InteractiveContainerLike__interact;

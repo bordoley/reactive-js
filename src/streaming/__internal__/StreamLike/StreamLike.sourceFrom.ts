@@ -2,7 +2,7 @@ import { Function1, pipe } from "../../../functions";
 import { StreamLike, StreamableLike } from "../../../streaming";
 import { sinkInto } from "../../StreamableLike";
 
-const sourceFrom =
+const StreamLike__sourceFrom =
   <TReq, T, TSinkStream extends StreamLike<T, TReq>>(
     streamable: StreamableLike<TReq, T>,
   ): Function1<TSinkStream, TSinkStream> =>
@@ -11,4 +11,4 @@ const sourceFrom =
     return dest;
   };
 
-export default sourceFrom;
+export default StreamLike__sourceFrom;

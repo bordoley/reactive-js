@@ -9,7 +9,7 @@ import {
 } from "../containers.internal";
 import StatefulContainerLike__lift from "./StatefulContainerLike.lift";
 
-const takeLast =
+const StatefulContainerLike__takeLast =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -30,4 +30,4 @@ const takeLast =
     return container => pipe(container, containerOperator);
   };
 
-export default takeLast;
+export default StatefulContainerLike__takeLast;

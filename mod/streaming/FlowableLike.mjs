@@ -1,7 +1,7 @@
 /// <reference types="./FlowableLike.d.ts" />
-import toObservable$1 from './__internal__/FlowableLike/FlowableLike.toObservable.mjs';
+import FlowableLike__toObservable from './__internal__/FlowableLike/FlowableLike.toObservable.mjs';
 
-const toObservable = toObservable$1;
+const toObservable = FlowableLike__toObservable;
 const toObservableT = {
     toObservable,
 };

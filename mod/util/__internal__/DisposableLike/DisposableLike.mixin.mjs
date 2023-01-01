@@ -2,13 +2,14 @@
 import { mix, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, isSome } from '../../../functions.mjs';
 import { DisposableLike_exception, DisposableLike_isDisposed, DisposableLike_dispose, DisposableLike_add } from '../../../util.mjs';
-import dispose from './DisposableLike.dispose.mjs';
-import getException from './DisposableLike.getException.mjs';
-import isDisposed from './DisposableLike.isDisposed.mjs';
+import DisposableLike__dispose from './DisposableLike.dispose.mjs';
+import DisposableLike__getException from './DisposableLike.getException.mjs';
+import DisposableLike__isDisposed from './DisposableLike.isDisposed.mjs';
 
-const disposableMixin = /*@__PURE__*/ (() => {
+const DisposableLike__disposableMixin = 
+/*@__PURE__*/ (() => {
     const doDispose = (instance, disposable) => {
-        const error = getException(instance);
+        const error = DisposableLike__getException(instance);
         if (disposable instanceof Function) {
             try {
                 disposable.call(instance, error);
@@ -20,7 +21,7 @@ const disposableMixin = /*@__PURE__*/ (() => {
             }
         }
         else {
-            pipe(disposable, dispose(error));
+            pipe(disposable, DisposableLike__dispose(error));
         }
     };
     const Disposable_private_disposables = Symbol("Disposable_private_disposables");
@@ -33,7 +34,7 @@ const disposableMixin = /*@__PURE__*/ (() => {
         [Disposable_private_disposables]: none,
     }), {
         [DisposableLike_dispose](error) {
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
                 this[DisposableLike_exception] = error;
                 this[DisposableLike_isDisposed] = true;
                 const disposables = this[Disposable_private_disposables];
@@ -48,7 +49,7 @@ const disposableMixin = /*@__PURE__*/ (() => {
             if (this === disposable) {
                 return;
             }
-            else if (isDisposed(this)) {
+            else if (DisposableLike__isDisposed(this)) {
                 doDispose(this, disposable);
             }
             else if (!disposables.has(disposable)) {
@@ -66,4 +67,4 @@ const disposableMixin = /*@__PURE__*/ (() => {
     });
 })();
 
-export { disposableMixin as default };
+export { DisposableLike__disposableMixin as default };

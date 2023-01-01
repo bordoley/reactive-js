@@ -1,9 +1,9 @@
 import { Updater } from "../../../functions";
 import { ContinuationLike, ContinuationLike_run } from "../../../scheduling";
 
-const run: Updater<ContinuationLike> = continuation => {
+const ContinuationLike__run: Updater<ContinuationLike> = continuation => {
   continuation[ContinuationLike_run]();
   return continuation;
 };
 
-export default run;
+export default ContinuationLike__run;

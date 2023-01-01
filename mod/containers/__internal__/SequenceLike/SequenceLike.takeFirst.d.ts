@@ -1,3 +1,3 @@
 import { TakeFirst, SequenceLike } from "../../../containers.mjs";
-declare const takeFirst: TakeFirst<SequenceLike>["takeFirst"];
-export { takeFirst as default };
+declare const SequenceLike__takeFirst: TakeFirst<SequenceLike>["takeFirst"];
+export { SequenceLike__takeFirst as default };

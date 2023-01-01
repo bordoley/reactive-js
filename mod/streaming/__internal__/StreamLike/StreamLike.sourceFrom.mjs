@@ -2,9 +2,9 @@
 import { pipe } from '../../../functions.mjs';
 import { sinkInto } from '../../StreamableLike.mjs';
 
-const sourceFrom = (streamable) => dest => {
+const StreamLike__sourceFrom = (streamable) => dest => {
     pipe(streamable, sinkInto(dest));
     return dest;
 };
 
-export { sourceFrom as default };
+export { StreamLike__sourceFrom as default };

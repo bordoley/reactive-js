@@ -3,16 +3,16 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { none, isSome, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
-import create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
-import mutableMixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
+import EnumerableLike__create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
+import MutableEnumeratorLike__mixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
-const toEnumerable = 
+const SequenceLike__toEnumerable = 
 /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableMixin();
-    const createSequenceEnumerator = createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function SequenceEnumerator(instance, seq) {
-        init(disposableMixin, instance);
+    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
+    const createSequenceEnumerator = createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin), function SequenceEnumerator(instance, seq) {
+        init(DisposableLike__disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.seq = seq;
         return instance;
@@ -32,7 +32,7 @@ const toEnumerable =
             }
         },
     }));
-    return () => (seq) => create(() => createSequenceEnumerator(seq));
+    return () => (seq) => EnumerableLike__create(() => createSequenceEnumerator(seq));
 })();
 
-export { toEnumerable as default };
+export { SequenceLike__toEnumerable as default };

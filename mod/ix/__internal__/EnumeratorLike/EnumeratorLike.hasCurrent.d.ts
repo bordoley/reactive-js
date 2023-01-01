@@ -1,5 +1,5 @@
 import { EnumeratorLike_hasCurrent } from "../../../ix.mjs";
-declare const hasCurrent: (enumerator: {
+declare const EnumeratorLike__hasCurrent: (enumerator: {
     [EnumeratorLike_hasCurrent]: boolean;
 }) => boolean;
-export { hasCurrent as default };
+export { EnumeratorLike__hasCurrent as default };

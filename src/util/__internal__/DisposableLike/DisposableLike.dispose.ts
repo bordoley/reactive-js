@@ -5,11 +5,11 @@ import {
   Exception,
 } from "../../../util";
 
-const dispose =
+const DisposableLike__dispose =
   <T extends DisposableLike>(e?: Exception): Updater<T> =>
   disposable => {
     disposable[DisposableLike_dispose](e);
     return disposable;
   };
 
-export default dispose;
+export default DisposableLike__dispose;

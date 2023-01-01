@@ -2,16 +2,16 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
-import create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
-import mutableMixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
+import EnumerableLike__create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
+import MutableEnumeratorLike__mixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
-const toEnumerable = 
+const IterableLike__toEnumerable = 
 /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableMixin();
-    const createIterableEnumerator = createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function IteratorEnumerator(instance, iterator) {
-        init(disposableMixin, instance);
+    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
+    const createIterableEnumerator = createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin), function IteratorEnumerator(instance, iterator) {
+        init(DisposableLike__disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.iterator = iterator;
         return instance;
@@ -28,7 +28,7 @@ const toEnumerable =
             }
         },
     }));
-    return () => (iterable) => create(() => createIterableEnumerator(iterable[Symbol.iterator]()));
+    return () => (iterable) => EnumerableLike__create(() => createIterableEnumerator(iterable[Symbol.iterator]()));
 })();
 
-export { toEnumerable as default };
+export { IterableLike__toEnumerable as default };

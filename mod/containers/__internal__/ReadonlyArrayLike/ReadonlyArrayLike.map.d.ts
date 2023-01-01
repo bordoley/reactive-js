@@ -1,3 +1,3 @@
 import { Map, ReadonlyArrayLike } from "../../../containers.mjs";
-declare const map: Map<ReadonlyArrayLike>["map"];
-export { map as default };
+declare const ReadonlyArrayLike__map: Map<ReadonlyArrayLike>["map"];
+export { ReadonlyArrayLike__map as default };

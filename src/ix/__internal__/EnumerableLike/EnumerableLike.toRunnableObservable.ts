@@ -16,7 +16,7 @@ import getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
 import move from "../SourceLike/SourceLike.move";
 import enumerate from "./EnumerableLike.enumerate";
 
-const toRunnableObservable: ToRunnableObservable<
+const EnumerableLike__toRunnableObservable: ToRunnableObservable<
   EnumerableLike,
   {
     delay?: number;
@@ -51,4 +51,4 @@ const toRunnableObservable: ToRunnableObservable<
       : EnumerableObservableLike__create(onSink);
   };
 
-export default toRunnableObservable;
+export default EnumerableLike__toRunnableObservable;

@@ -10,17 +10,18 @@ import {
   toErrorHandler,
 } from "../../../util/DisposableLike";
 
-const toObservable: ToObservable<PromiseableLike>["toObservable"] =
-  <T>() =>
-  (promise: PromiseableLike<T>): ObservableLike<T> =>
-    ObservableLike__create(observer => {
-      const dispatcher = getDispatcher(observer);
+const IterableLike__toObservable: ToObservable<PromiseableLike>["toObservable"] =
 
-      promise.then(next => {
-        if (!isDisposed(dispatcher)) {
-          pipe(dispatcher, dispatch(next), dispose());
-        }
-      }, toErrorHandler(dispatcher));
-    });
+    <T>() =>
+    (promise: PromiseableLike<T>): ObservableLike<T> =>
+      ObservableLike__create(observer => {
+        const dispatcher = getDispatcher(observer);
 
-export default toObservable;
+        promise.then(next => {
+          if (!isDisposed(dispatcher)) {
+            pipe(dispatcher, dispatch(next), dispose());
+          }
+        }, toErrorHandler(dispatcher));
+      });
+
+export default IterableLike__toObservable;

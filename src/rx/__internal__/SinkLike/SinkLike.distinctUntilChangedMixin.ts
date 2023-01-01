@@ -12,7 +12,7 @@ import DisposableLike__delegatingMixin from "../../../util/__internal__/Disposab
 import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const distinctUntilChangedMixin: <T>() => Mixin2<
+const SinkLike__distinctUntilChangedMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
   Equality<T>
@@ -76,4 +76,4 @@ const distinctUntilChangedMixin: <T>() => Mixin2<
   );
 })();
 
-export default distinctUntilChangedMixin;
+export default SinkLike__distinctUntilChangedMixin;

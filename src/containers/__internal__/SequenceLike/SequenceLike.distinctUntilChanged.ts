@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { Equality, isSome, none, strictEquality } from "../../../functions";
 
-const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"] =
+const SequenceLike__distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (() => {
     const _distinctUntilChanged =
       <T>(
@@ -54,4 +54,4 @@ const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilCha
       };
   })();
 
-export default distinctUntilChanged;
+export default SequenceLike__distinctUntilChanged;

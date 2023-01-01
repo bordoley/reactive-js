@@ -1,10 +1,10 @@
 /// <reference types="./DisposableLike.bindTo.d.ts" />
-import addDisposableOrTeardown from './DisposableLike.addDisposableOrTeardown.mjs';
+import DisposableLike__addDisposableOrTeardown from './DisposableLike.addDisposableOrTeardown.mjs';
 
-const bindTo = (child) => (parent) => {
-    addDisposableOrTeardown(parent, child);
-    addDisposableOrTeardown(child, parent);
+const DisposableLike__bindTo = (child) => (parent) => {
+    DisposableLike__addDisposableOrTeardown(parent, child);
+    DisposableLike__addDisposableOrTeardown(child, parent);
     return parent;
 };
 
-export { bindTo as default };
+export { DisposableLike__bindTo as default };

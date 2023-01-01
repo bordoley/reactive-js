@@ -1,43 +1,43 @@
 /// <reference types="./ReadonlyArrayLike.d.ts" />
 import { identity } from '../functions.mjs';
-import empty$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.empty.mjs';
-import every$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every.mjs';
-import forEach$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach.mjs';
-import keep$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keep.mjs';
-import map$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
-import some$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.some.mjs';
-import toEnumerable$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toEnumerable.mjs';
-import toRunnable$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnable.mjs';
-import toRunnableObservable$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
-import toSequence$1 from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toSequence.mjs';
+import ReadonlyArrayLike__empty from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.empty.mjs';
+import ReadonlyArrayLike__every from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every.mjs';
+import ReadonlyArrayLike__forEach from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach.mjs';
+import ReadonlyArrayLike__keep from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keep.mjs';
+import ReadonlyArrayLike__map from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
+import ReadonlyArrayLike__some from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.some.mjs';
+import ReadonlyArrayLike__toEnumerable from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toEnumerable.mjs';
+import ReadonlyArrayLike__toRunnable from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnable.mjs';
+import ReadonlyArrayLike__toRunnableObservable from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
+import ReadonlyArrayLike__toSequence from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toSequence.mjs';
 
-const empty = empty$1;
+const empty = ReadonlyArrayLike__empty;
 const emptyT = {
     empty,
 };
-const every = every$1;
-const forEach = forEach$1;
+const every = ReadonlyArrayLike__every;
+const forEach = ReadonlyArrayLike__forEach;
 const forEachT = { forEach };
-const keep = keep$1;
+const keep = ReadonlyArrayLike__keep;
 const keepT = { keep };
-const map = map$1;
+const map = ReadonlyArrayLike__map;
 const mapT = { map };
-const some = some$1;
-const toEnumerable = toEnumerable$1;
+const some = ReadonlyArrayLike__some;
+const toEnumerable = ReadonlyArrayLike__toEnumerable;
 const toEnumerableT = { toEnumerable };
-const toEnumerableObservable = toRunnableObservable$1;
+const toEnumerableObservable = ReadonlyArrayLike__toRunnableObservable;
 const toEnumerableObservableT = { toEnumerableObservable };
-const toObservable = toRunnableObservable$1;
+const toObservable = ReadonlyArrayLike__toRunnableObservable;
 const toObservableT = { toObservable };
 const toReadonlyArray = () => identity;
 const toReadonlyArrayT = {
     toReadonlyArray,
 };
-const toRunnable = toRunnable$1;
+const toRunnable = ReadonlyArrayLike__toRunnable;
 const toRunnableT = { toRunnable };
-const toRunnableObservable = toRunnableObservable$1;
+const toRunnableObservable = ReadonlyArrayLike__toRunnableObservable;
 const toRunnableObservableT = { toRunnableObservable };
-const toSequence = toSequence$1;
+const toSequence = ReadonlyArrayLike__toSequence;
 const toSequenceT = {
     toSequence,
 };

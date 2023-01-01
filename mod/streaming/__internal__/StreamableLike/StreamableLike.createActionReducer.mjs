@@ -4,11 +4,11 @@ import { toObservable } from '../../../containers/ReadonlyArrayLike.mjs';
 import { pipe, returns } from '../../../functions.mjs';
 import { create, scan, mergeT, distinctUntilChanged } from '../../../rx/ObservableLike.mjs';
 import { sinkInto } from '../../../rx/ReactiveContainerLike.mjs';
-import createLifted from './StreamableLike.createLifted.mjs';
+import StreamableLike__createLifted from './StreamableLike.createLifted.mjs';
 
-const createActionReducer = (reducer, initialState, options) => createLifted(obs => create(observer => {
+const StreamableLike__createActionReducer = (reducer, initialState, options) => StreamableLike__createLifted(obs => create(observer => {
     const acc = initialState();
     pipe(obs, scan(reducer, returns(acc)), concatWith(mergeT, pipe([acc], toObservable())), distinctUntilChanged(options), sinkInto(observer));
 }));
 
-export { createActionReducer as default };
+export { StreamableLike__createActionReducer as default };

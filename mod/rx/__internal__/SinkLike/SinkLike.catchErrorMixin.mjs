@@ -3,14 +3,14 @@ import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none, isSome } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { addToIgnoringChildErrors, onComplete, dispose, onError } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { sinkInto } from '../../ReactiveContainerLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const catchErrorMixin = 
+const SinkLike__catchErrorMixin = 
 /*@__PURE__*/ (() => {
-    return returns(mix(include(disposableMixin), function CatchErrorSink(instance, delegate, errorHandler) {
-        init(disposableMixin, instance);
+    return returns(mix(include(DisposableLike__disposableMixin), function CatchErrorSink(instance, delegate, errorHandler) {
+        init(DisposableLike__disposableMixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         pipe(instance, addToIgnoringChildErrors(delegate), onComplete(() => {
             pipe(delegate, dispose());
@@ -38,4 +38,4 @@ const catchErrorMixin =
     }));
 })();
 
-export { catchErrorMixin as default };
+export { SinkLike__catchErrorMixin as default };

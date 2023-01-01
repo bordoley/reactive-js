@@ -1,4 +1,4 @@
 /// <reference types="./ReadonlyArrayLike.every.d.ts" />
-const every = (predicate) => arr => arr.every(predicate);
+const ReadonlyArrayLike__every = (predicate) => arr => arr.every(predicate);
 
-export { every as default };
+export { ReadonlyArrayLike__every as default };

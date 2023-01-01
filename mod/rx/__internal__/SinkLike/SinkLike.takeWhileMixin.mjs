@@ -3,15 +3,15 @@ import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { dispose } from '../../../util/DisposableLike.mjs';
-import delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const takeWhileMixin = /*@__PURE__*/ (() => {
+const SinkLike__takeWhileMixin = /*@__PURE__*/ (() => {
     const TakeWhileSink_private_predicate = Symbol("TakeWhileSink_private_predicate");
     const TakeWhileSink_private_inclusive = Symbol("TakeWhileSink_private_inclusive");
-    return returns(mix(include(delegatingMixin), function TakeWhileSink(instance, delegate, predicate, inclusive) {
-        init(delegatingMixin, instance, delegate);
+    return returns(mix(include(DisposableLike__delegatingMixin), function TakeWhileSink(instance, delegate, predicate, inclusive) {
+        init(DisposableLike__delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[TakeWhileSink_private_predicate] = predicate;
         instance[TakeWhileSink_private_inclusive] = inclusive;
@@ -33,4 +33,4 @@ const takeWhileMixin = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { takeWhileMixin as default };
+export { SinkLike__takeWhileMixin as default };

@@ -6,23 +6,24 @@ import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurr
 import EnumeratorLike__move from "../EnumeratorLike/EnumeratorLike.move";
 import EnumerableLike__enumerate from "./EnumerableLike.enumerate";
 
-const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
-  <T>() =>
-  (enumerable: EnumerableLike<T>) => {
-    const enumerator = pipe(enumerable, EnumerableLike__enumerate());
-    const result: T[] = [];
+const EnumerableLike__toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
 
-    while (EnumeratorLike__move(enumerator)) {
-      result.push(EnumeratorLike__getCurrent(enumerator));
-    }
+    <T>() =>
+    (enumerable: EnumerableLike<T>) => {
+      const enumerator = pipe(enumerable, EnumerableLike__enumerate());
+      const result: T[] = [];
 
-    const error = getException(enumerator);
+      while (EnumeratorLike__move(enumerator)) {
+        result.push(EnumeratorLike__getCurrent(enumerator));
+      }
 
-    if (isSome(error)) {
-      throw error.cause;
-    }
+      const error = getException(enumerator);
 
-    return result;
-  };
+      if (isSome(error)) {
+        throw error.cause;
+      }
 
-export default toReadonlyArray;
+      return result;
+    };
+
+export default EnumerableLike__toReadonlyArray;

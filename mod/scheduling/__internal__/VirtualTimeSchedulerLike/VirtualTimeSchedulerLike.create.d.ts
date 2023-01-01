@@ -1,5 +1,5 @@
 import { VirtualTimeSchedulerLike } from "../../../scheduling.mjs";
-declare const create: (options?: {
+declare const VirtualTimeSchedulerLike__create: (options?: {
     readonly maxMicroTaskTicks?: number;
 }) => VirtualTimeSchedulerLike;
-export { create as default };
+export { VirtualTimeSchedulerLike__create as default };

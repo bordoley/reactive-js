@@ -1,3 +1,3 @@
 import { EnumeratorSinkLike } from "../rx.internal.mjs";
-declare const create: <T>() => EnumeratorSinkLike<T>;
-export { create as default };
+declare const EnumeratorSinkLike__create: <T>() => EnumeratorSinkLike<T>;
+export { EnumeratorSinkLike__create as default };

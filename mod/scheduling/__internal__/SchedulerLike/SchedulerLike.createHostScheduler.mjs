@@ -5,9 +5,9 @@ import { isFunction, pipe, unsafeCast } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { run } from '../../ContinuationLike.mjs';
 import { create, addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import getCurrentTime from './SchedulerLike.getCurrentTime.mjs';
-import isInContinuation from './SchedulerLike.isInContinuation.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import SchedulerLike__getCurrentTime from './SchedulerLike.getCurrentTime.mjs';
+import SchedulerLike__isInContinuation from './SchedulerLike.isInContinuation.mjs';
 
 const supportsPerformanceNow = typeof performance === "object" && /*@__PURE__*/ isFunction(performance.now);
 const supportsSetImmediate = typeof setImmediate === "function";
@@ -35,13 +35,13 @@ const scheduleImmediate = (scheduler, continuation) => {
 const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     pipe(immmediateOrTimerDisposable, dispose());
-    scheduler.startTime = getCurrentTime(scheduler);
+    scheduler.startTime = SchedulerLike__getCurrentTime(scheduler);
     scheduler[SchedulerLike_inContinuation] = true;
     run(continuation);
     scheduler[SchedulerLike_inContinuation] = false;
 };
-const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(disposableMixin), function HostScheduler(instance, yieldInterval) {
-    init(disposableMixin, instance);
+const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__disposableMixin), function HostScheduler(instance, yieldInterval) {
+    init(DisposableLike__disposableMixin, instance);
     instance.yieldInterval = yieldInterval;
     return instance;
 }, props({
@@ -64,14 +64,14 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(incl
     },
     get [SchedulerLike_shouldYield]() {
         unsafeCast(this);
-        const inContinuation = isInContinuation(this);
+        const inContinuation = SchedulerLike__isInContinuation(this);
         const { yieldRequested } = this;
         if (inContinuation) {
             this.yieldRequested = false;
         }
         return (inContinuation &&
             (yieldRequested ||
-                getCurrentTime(this) > this.startTime + this.yieldInterval ||
+                SchedulerLike__getCurrentTime(this) > this.startTime + this.yieldInterval ||
                 isInputPending()));
     },
     [SchedulerLike_requestYield]() {
@@ -89,9 +89,9 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(incl
         }
     },
 }));
-const createHostScheduler = (options = {}) => {
+const SchedulerLike__createHostScheduler = (options = {}) => {
     const { yieldInterval = 5 } = options;
     return createHostSchedulerInstance(yieldInterval);
 };
 
-export { createHostScheduler as default };
+export { SchedulerLike__createHostScheduler as default };

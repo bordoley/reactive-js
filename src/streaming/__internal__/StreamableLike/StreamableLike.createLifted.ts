@@ -108,7 +108,7 @@ interface CreateLiftedStreamable {
     op12: ContainerOperator<ObservableLike, K, L>,
   ): StreamableLike<T, L>;
 }
-const createLifted: CreateLiftedStreamable = (
+const StreamableLike__createLifted: CreateLiftedStreamable = (
   ...ops: readonly ContainerOperator<ObservableLike<any>, any, any>[]
 ) => {
   const op =
@@ -124,4 +124,4 @@ const createLifted: CreateLiftedStreamable = (
   );
 };
 
-export default createLifted;
+export default StreamableLike__createLifted;

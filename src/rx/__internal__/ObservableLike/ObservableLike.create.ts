@@ -14,7 +14,7 @@ import {
 } from "../../../rx";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 
-const create: <T>(
+const ObservableLike__create: <T>(
   f: SideEffect1<ObserverLike>,
   isEnumerable?: boolean,
   isRunnable?: boolean,
@@ -63,4 +63,4 @@ const create: <T>(
   );
 })();
 
-export default create;
+export default ObservableLike__create;

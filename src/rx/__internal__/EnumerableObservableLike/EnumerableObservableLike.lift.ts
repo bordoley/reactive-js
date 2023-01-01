@@ -12,48 +12,47 @@ import {
 } from "../../../rx";
 import { sourceFrom } from "../../SinkLike";
 
-const lift: Lift<EnumerableObservableLike, TReactive>["lift"] =
-  /*@__PURE__*/ (() => {
-    class LiftedEnumerableObservable<TIn, TOut>
-      implements EnumerableObservableLike<TOut>
-    {
-      readonly [ObservableLike_isEnumerable] = true;
-      readonly [ObservableLike_isRunnable] = true;
+const EnumerableObservableLike__lift: Lift<
+  EnumerableObservableLike,
+  TReactive
+>["lift"] = /*@__PURE__*/ (() => {
+  class LiftedEnumerableObservable<TIn, TOut>
+    implements EnumerableObservableLike<TOut>
+  {
+    readonly [ObservableLike_isEnumerable] = true;
+    readonly [ObservableLike_isRunnable] = true;
 
-      constructor(
-        readonly source: EnumerableObservableLike<TIn>,
-        readonly operators: readonly Function1<
-          ObserverLike<any>,
-          ObserverLike<any>
-        >[],
-      ) {}
+    constructor(
+      readonly source: EnumerableObservableLike<TIn>,
+      readonly operators: readonly Function1<
+        ObserverLike<any>,
+        ObserverLike<any>
+      >[],
+    ) {}
 
-      [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-        pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
-      }
+    [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
+      pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
     }
+  }
 
-    return <TA, TB>(
-        operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-      ): Function1<
-        EnumerableObservableLike<TA>,
-        EnumerableObservableLike<TB>
-      > =>
-      source => {
-        const sourceSource =
-          source instanceof LiftedEnumerableObservable ? source.source : source;
+  return <TA, TB>(
+      operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+    ): Function1<EnumerableObservableLike<TA>, EnumerableObservableLike<TB>> =>
+    source => {
+      const sourceSource =
+        source instanceof LiftedEnumerableObservable ? source.source : source;
 
-        const allFunctions =
-          source instanceof LiftedEnumerableObservable
-            ? [operator, ...source.operators]
-            : [operator];
+      const allFunctions =
+        source instanceof LiftedEnumerableObservable
+          ? [operator, ...source.operators]
+          : [operator];
 
-        return newInstance(
-          LiftedEnumerableObservable,
-          sourceSource,
-          allFunctions,
-        );
-      };
-  })();
+      return newInstance(
+        LiftedEnumerableObservable,
+        sourceSource,
+        allFunctions,
+      );
+    };
+})();
 
-export default lift;
+export default EnumerableObservableLike__lift;

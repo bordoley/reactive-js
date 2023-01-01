@@ -4,7 +4,7 @@ import * as CurrentScheduler from "../CurrentScheduler";
 import shouldYield from "../SchedulerLike/SchedulerLike.shouldYield";
 import YieldError from "../YieldError";
 
-const yield_ = (options?: { delay?: number }) => {
+const ContinuationLike__yield_ = (options?: { delay?: number }) => {
   const delay = getDelay(options);
   const scheduler = CurrentScheduler.get();
 
@@ -13,4 +13,4 @@ const yield_ = (options?: { delay?: number }) => {
   }
 };
 
-export default yield_;
+export default ContinuationLike__yield_;

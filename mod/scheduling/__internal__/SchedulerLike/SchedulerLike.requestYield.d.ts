@@ -1,5 +1,5 @@
 import { SchedulerLike_requestYield } from "../../../scheduling.mjs";
-declare const requestYield: (scheduler: {
+declare const SchedulerLike__requestYield: (scheduler: {
     [SchedulerLike_requestYield](): void;
 }) => void;
-export { requestYield as default };
+export { SchedulerLike__requestYield as default };

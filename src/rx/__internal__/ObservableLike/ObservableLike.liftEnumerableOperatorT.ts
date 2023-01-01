@@ -6,9 +6,10 @@ import {
 import { ObservableLike } from "../../../rx";
 import ObservableLike__lift from "./ObservableLike.lift";
 
-const liftEnumerableOperatorT: Lift<ObservableLike, TReactive> = {
-  lift: ObservableLike__lift(true, true),
-  variance: reactive,
-};
+const ObservableLike__liftEnumerableOperatorT: Lift<ObservableLike, TReactive> =
+  {
+    lift: ObservableLike__lift(true, true),
+    variance: reactive,
+  };
 
-export default liftEnumerableOperatorT;
+export default ObservableLike__liftEnumerableOperatorT;

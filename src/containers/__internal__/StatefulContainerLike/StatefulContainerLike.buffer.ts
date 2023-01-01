@@ -10,7 +10,7 @@ import {
 } from "../containers.internal";
 import StatefulContainer__lift from "./StatefulContainerLike.lift";
 
-const buffer =
+const StatefulContainerLike__buffer =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -31,4 +31,4 @@ const buffer =
     return pipe(operator, partial(maxBufferSize), StatefulContainer__lift(m));
   };
 
-export default buffer;
+export default StatefulContainerLike__buffer;

@@ -109,7 +109,7 @@ interface CreateLiftedFlowable {
     op12: ContainerOperator<ObservableLike, K, L>,
   ): FlowableLike<L>;
 }
-const createLifted: CreateLiftedFlowable = <T>(
+const FlowableLike__createLifted: CreateLiftedFlowable = <T>(
   ...ops: readonly ContainerOperator<ObservableLike, any, any>[]
 ) => {
   const op =
@@ -130,4 +130,4 @@ const createLifted: CreateLiftedFlowable = <T>(
   }) as FlowableLike<T>;
 };
 
-export default createLifted;
+export default FlowableLike__createLifted;

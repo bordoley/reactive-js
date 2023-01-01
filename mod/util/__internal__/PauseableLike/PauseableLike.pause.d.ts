@@ -1,5 +1,5 @@
 import { PauseableLike_pause } from "../../../util.mjs";
-declare const pause: <TPauseable extends {
+declare const PauseableLike__pause: <TPauseable extends {
     [PauseableLike_pause](): void;
 }>(pausable: TPauseable) => TPauseable;
-export { pause as default };
+export { PauseableLike__pause as default };

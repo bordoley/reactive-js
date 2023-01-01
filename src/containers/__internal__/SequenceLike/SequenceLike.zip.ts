@@ -8,7 +8,7 @@ import { callWith, getLength, isSome, none, pipe } from "../../../functions";
 import { keepType } from "../../ContainerLike";
 import { keepT, map } from "../../ReadonlyArrayLike";
 
-const zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
+const SequenceLike__zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
   const zip =
     (...sequences: readonly SequenceLike[]): SequenceLike<readonly any[]> =>
     () => {
@@ -37,4 +37,4 @@ const zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
   return zip as Zip<SequenceLike>["zip"];
 })();
 
-export default zip;
+export default SequenceLike__zip;

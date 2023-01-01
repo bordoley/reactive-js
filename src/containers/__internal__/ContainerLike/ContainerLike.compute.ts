@@ -7,7 +7,7 @@ import {
 } from "../../../containers";
 import { Factory, Function1, callWith, compose } from "../../../functions";
 
-const compute = <
+const ContainerLike__compute = <
   C extends ContainerLike,
   T,
   O extends FromArrayOptions = FromArrayOptions,
@@ -23,4 +23,4 @@ const compute = <
     m.map(callWith()),
   );
 
-export default compute;
+export default ContainerLike__compute;

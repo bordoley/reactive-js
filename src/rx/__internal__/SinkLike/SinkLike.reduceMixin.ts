@@ -13,7 +13,7 @@ import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/Dis
 import { sinkInto } from "../../ReactiveContainerLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const reduceMixin: <
+const SinkLike__reduceMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<TAcc>,
   T,
@@ -89,4 +89,4 @@ const reduceMixin: <
   );
 };
 
-export default reduceMixin;
+export default SinkLike__reduceMixin;

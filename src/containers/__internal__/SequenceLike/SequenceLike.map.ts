@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { Function1, isSome, none } from "../../../functions";
 
-const map: Map<SequenceLike>["map"] = /*@__PURE__*/ (() => {
+const SequenceLike__map: Map<SequenceLike>["map"] = /*@__PURE__*/ (() => {
   const _map =
     <TA, TB>(
       mapper: Function1<TA, TB>,
@@ -28,4 +28,4 @@ const map: Map<SequenceLike>["map"] = /*@__PURE__*/ (() => {
       _map(mapper, seq);
 })();
 
-export default map;
+export default SequenceLike__map;

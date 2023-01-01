@@ -1,3 +1,3 @@
 import { DistinctUntilChanged, SequenceLike } from "../../../containers.mjs";
-declare const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"];
-export { distinctUntilChanged as default };
+declare const SequenceLike__distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"];
+export { SequenceLike__distinctUntilChanged as default };
