@@ -9,13 +9,14 @@ import create$1 from '../../rx/__internal__/EnumerableObservableLike/EnumerableO
 import lift from '../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift.mjs';
 import create$2 from '../../rx/__internal__/ObservableLike/ObservableLike.create.mjs';
 import forEach from '../../rx/__internal__/ObservableLike/ObservableLike.forEach.mjs';
+import lift$1 from '../../rx/__internal__/ObservableLike/ObservableLike.lift.mjs';
 import onSubscribe from '../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe.mjs';
 import subscribe from '../../rx/__internal__/ObservableLike/ObservableLike.subscribe.mjs';
 import takeFirst from '../../rx/__internal__/ObservableLike/ObservableLike.takeFirst.mjs';
 import zipWithLatestFrom from '../../rx/__internal__/ObservableLike/ObservableLike.zipWithLatestFrom.mjs';
 import observerMixin from '../../rx/__internal__/ObserverLike/ObserverLike.mixin.mjs';
 import create$3 from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
-import lift$1 from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift.mjs';
+import lift$2 from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift.mjs';
 import catchErrorMixin from '../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin.mjs';
 import addTo from '../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -27,7 +28,6 @@ import { MAX_SAFE_INTEGER } from '../constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../mixins.mjs';
 import { createDisposableRef } from '../util/DisposableRefLike.mjs';
 import { MutableRefLike_current } from '../util/MutableRefLike.mjs';
-import { liftObservable } from './ObservableLike.lift.mjs';
 
 const createCatchError = (lift) => {
     const createCatchErrorObserver = (() => {
@@ -44,9 +44,9 @@ const createCatchError = (lift) => {
 const catchErrorEnumerableObservable = 
 /*@__PURE__*/ createCatchError(lift);
 const catchErrorObservable = 
-/*@__PURE__*/ createCatchError(liftObservable);
+/*@__PURE__*/ createCatchError(lift$1());
 const catchErrorRunnableObservable = 
-/*@__PURE__*/ createCatchError(lift$1);
+/*@__PURE__*/ createCatchError(lift$2);
 const createMergeAll = (lift) => {
     const createMergeAllObserver = (() => {
         const typedObserverMixin = observerMixin();
@@ -109,8 +109,8 @@ const createMergeAll = (lift) => {
     };
 };
 const mergeAllEnumerableObservable = /*@__PURE__*/ createMergeAll(lift);
-const mergeAllObservable = /*@__PURE__*/ createMergeAll(liftObservable);
-const mergeAllRunnableObservable = /*@__PURE__*/ createMergeAll(lift$1);
+const mergeAllObservable = /*@__PURE__*/ createMergeAll(lift$1());
+const mergeAllRunnableObservable = /*@__PURE__*/ createMergeAll(lift$2);
 const createScanAsync = (createObservable) => {
     return (scanner, initialValue) => observable => {
         const onSink = (observer) => {
@@ -156,8 +156,8 @@ const createSwitchAll = (lift) => {
 const switchAllEnumerableObservable = 
 /*@__PURE__*/ createSwitchAll(lift);
 const switchAllObservable = 
-/*@__PURE__*/ createSwitchAll(liftObservable);
+/*@__PURE__*/ createSwitchAll(lift$1());
 const switchAllRunnableObservable = 
-/*@__PURE__*/ createSwitchAll(lift$1);
+/*@__PURE__*/ createSwitchAll(lift$2);
 
 export { catchErrorEnumerableObservable, catchErrorObservable, catchErrorRunnableObservable, mergeAllEnumerableObservable, mergeAllObservable, mergeAllRunnableObservable, scanAsyncEnumerableObservable, scanAsyncObservable, scanAsyncRunnableObservable, switchAllEnumerableObservable, switchAllObservable, switchAllRunnableObservable };

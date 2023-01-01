@@ -36,6 +36,7 @@ import EnumerableObservableLike__create from "../../rx/__internal__/EnumerableOb
 import EnumerableObservableLike__lift from "../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.lift";
 import ObservableLike__create from "../../rx/__internal__/ObservableLike/ObservableLike.create";
 import ObservableLike__forEach from "../../rx/__internal__/ObservableLike/ObservableLike.forEach";
+import ObservableLike__lift from "../../rx/__internal__/ObservableLike/ObservableLike.lift";
 import ObservableLike__onSubscribe from "../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe";
 import ObservableLike__subscribe from "../../rx/__internal__/ObservableLike/ObservableLike.subscribe";
 import ObservableLike__takeFirst from "../../rx/__internal__/ObservableLike/ObservableLike.takeFirst";
@@ -65,7 +66,6 @@ import {
   createDisposableRef,
 } from "../util/DisposableRefLike";
 import { MutableRefLike_current } from "../util/MutableRefLike";
-import { liftObservable } from "./ObservableLike.lift";
 
 const createCatchError = <C extends ObservableLike>(
   lift: <T>(
@@ -112,7 +112,7 @@ export const catchErrorEnumerableObservable: CatchError<EnumerableObservableLike
 
 export const catchErrorObservable: CatchError<ObservableLike>["catchError"] =
   /*@__PURE__*/ createCatchError<ObservableLike>(
-    liftObservable,
+    ObservableLike__lift(),
   ) as CatchError<ObservableLike>["catchError"];
 
 export const catchErrorRunnableObservable: CatchError<RunnableObservableLike>["catchError"] =
@@ -275,7 +275,7 @@ export const mergeAllObservable: ConcatAll<
     readonly maxConcurrency?: number;
   }
 >["concatAll"] = /*@__PURE__*/ createMergeAll<ObservableLike>(
-  liftObservable,
+  ObservableLike__lift(),
 ) as ConcatAll<
   ObservableLike,
   {
@@ -445,7 +445,7 @@ export const switchAllEnumerableObservable: ConcatAll<EnumerableObservableLike>[
   );
 
 export const switchAllObservable: ConcatAll<ObservableLike>["concatAll"] =
-  /*@__PURE__*/ createSwitchAll<ObservableLike>(liftObservable);
+  /*@__PURE__*/ createSwitchAll<ObservableLike>(ObservableLike__lift());
 
 export const switchAllRunnableObservable: ConcatAll<RunnableObservableLike>["concatAll"] =
   /*@__PURE__*/ createSwitchAll<RunnableObservableLike>(

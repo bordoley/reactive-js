@@ -4,7 +4,6 @@ import {
   init,
   mix,
 } from "../../../__internal__/mixins";
-import { liftEnumerableObservableT } from "../../../__internal__/rx/ObservableLike.lift";
 import { TakeFirst } from "../../../containers";
 import StatefulContainerLike__takeFirst from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst";
 import { pipe } from "../../../functions";
@@ -15,6 +14,7 @@ import {
 } from "../../../rx";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike_takeFirstMixin from "../SinkLike/SinkLike.takeFirstMixin";
+import ObservableLike__liftEnumerableOperatorT from "./ObservableLike.liftEnumerableOperatorT";
 
 const takeFirst: TakeFirst<ObservableLike>["takeFirst"] = /*@__PURE__*/ (() => {
   const createTakeFirstObserver: <T>(
@@ -43,7 +43,7 @@ const takeFirst: TakeFirst<ObservableLike>["takeFirst"] = /*@__PURE__*/ (() => {
 
   return pipe(
     createTakeFirstObserver,
-    StatefulContainerLike__takeFirst(liftEnumerableObservableT),
+    StatefulContainerLike__takeFirst(ObservableLike__liftEnumerableOperatorT),
   );
 })();
 

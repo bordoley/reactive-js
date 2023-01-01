@@ -1,11 +1,11 @@
 /// <reference types="./ObservableLike.forEach.d.ts" />
 import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
-import { liftEnumerableObservableT } from '../../../__internal__/rx/ObservableLike.lift.mjs';
 import forEach$1 from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.forEach.mjs';
 import { pipe } from '../../../functions.mjs';
 import { ObserverLike_scheduler } from '../../../rx.mjs';
 import observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import { forEachMixin } from '../SinkLike/SinkLike.forEachMixin.mjs';
+import liftEnumerableOperatorT from './ObservableLike.liftEnumerableOperatorT.mjs';
 
 const forEach = /*@__PURE__*/ (() => {
     const createForEachObserver = (() => {
@@ -17,7 +17,7 @@ const forEach = /*@__PURE__*/ (() => {
             return instance;
         }));
     })();
-    return pipe(createForEachObserver, forEach$1(liftEnumerableObservableT));
+    return pipe(createForEachObserver, forEach$1(liftEnumerableOperatorT));
 })();
 
 export { forEach as default };

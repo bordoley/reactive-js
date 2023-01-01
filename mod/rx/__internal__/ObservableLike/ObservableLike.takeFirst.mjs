@@ -1,11 +1,11 @@
 /// <reference types="./ObservableLike.takeFirst.d.ts" />
 import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
-import { liftEnumerableObservableT } from '../../../__internal__/rx/ObservableLike.lift.mjs';
 import takeFirst$1 from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst.mjs';
 import { pipe } from '../../../functions.mjs';
 import { ObserverLike_scheduler } from '../../../rx.mjs';
 import observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import takeFirstMixin from '../SinkLike/SinkLike.takeFirstMixin.mjs';
+import liftEnumerableOperatorT from './ObservableLike.liftEnumerableOperatorT.mjs';
 
 const takeFirst = /*@__PURE__*/ (() => {
     const createTakeFirstObserver = (() => {
@@ -17,7 +17,7 @@ const takeFirst = /*@__PURE__*/ (() => {
             return instance;
         }));
     })();
-    return pipe(createTakeFirstObserver, takeFirst$1(liftEnumerableObservableT));
+    return pipe(createTakeFirstObserver, takeFirst$1(liftEnumerableOperatorT));
 })();
 
 export { takeFirst as default };
