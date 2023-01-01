@@ -35,7 +35,7 @@ import FlowableLike__createLifted from '../streaming/__internal__/FlowableLike/F
 import { disposed, onComplete, dispose, isDisposed, addTo, addToIgnoringChildErrors, onDisposed, bindTo, add, toObservable as toObservable$2, getException } from '../util/DisposableLike.mjs';
 import { resume, pause } from '../util/PauseableLike.mjs';
 import DisposableLike__delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
-import DisposableLike__disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
 import { sinkInto } from './ReactiveContainerLike.mjs';
 import EnumerableObservableLike__create from './__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
@@ -75,8 +75,8 @@ import SinkLike__throwIfEmptyMixin from './__internal__/SinkLike/SinkLike.throwI
 
 const buffer = /*@__PURE__*/ (() => {
     const typedObserverMixin = ObserverLike__observerMixin();
-    const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, DisposableLike__disposableMixin), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
-        init(DisposableLike__disposableMixin, instance);
+    const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, DisposableLike__mixin), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
+        init(DisposableLike__mixin, instance);
         init(typedObserverMixin, instance, getScheduler(delegate));
         instance.buffer = [];
         instance.delegate = delegate;
@@ -320,8 +320,8 @@ const latest = /*@__PURE__*/ (() => {
             pipe(instance.delegate, dispose());
         }
     };
-    const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, DisposableLike__disposableMixin), function LatestObserver(instance, scheduler, ctx) {
-        init(DisposableLike__disposableMixin, instance);
+    const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, DisposableLike__mixin), function LatestObserver(instance, scheduler, ctx) {
+        init(DisposableLike__mixin, instance);
         init(typedObserverMixin, instance, scheduler);
         instance.ctx = ctx;
         return instance;
@@ -576,8 +576,8 @@ const throttle = /*@__PURE__*/ (() => {
         const setupDurationSubscription = (observer, next) => {
             pipe(observer.durationSubscription, setCurrentRef(pipe(observer.durationFunction(next), forEach(observer.onNotify), subscribe(getScheduler(observer)))));
         };
-        return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function ThrottleObserver(instance, delegate, durationFunction, mode) {
-            init(DisposableLike__disposableMixin, instance);
+        return createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function ThrottleObserver(instance, delegate, durationFunction, mode) {
+            init(DisposableLike__mixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;
             instance.durationFunction = durationFunction;
@@ -683,8 +683,8 @@ const toEnumerable =
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
     const typedObserverMixin = ObserverLike__observerMixin();
-    const createEnumeratorScheduler = createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin), function EnumeratorScheduler(instance) {
-        init(DisposableLike__disposableMixin, instance);
+    const createEnumeratorScheduler = createInstanceFactory(mix(include(DisposableLike__mixin, typedMutableEnumeratorMixin), function EnumeratorScheduler(instance) {
+        init(DisposableLike__mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.continuations = [];
         return instance;
@@ -721,8 +721,8 @@ const toEnumerable =
             }
         },
     }));
-    const createEnumeratorObserver = createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function EnumeratorObserver(instance, enumerator) {
-        init(DisposableLike__disposableMixin, instance);
+    const createEnumeratorObserver = createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function EnumeratorObserver(instance, enumerator) {
+        init(DisposableLike__mixin, instance);
         init(typedObserverMixin, instance, enumerator);
         instance.enumerator = enumerator;
         return instance;
@@ -845,8 +845,8 @@ const zip = /*@__PURE__*/ (() => {
     const typedObserverMixin = ObserverLike__observerMixin();
     const shouldEmit = compose(map$1((x) => hasCurrent(x) || move(x)), every(isTrue));
     const shouldComplete = compose(forEach$1(move), some(isDisposed));
-    const createZipObserver = createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function ZipObserver(instance, delegate, enumerators, sinkEnumerator) {
-        init(DisposableLike__disposableMixin, instance);
+    const createZipObserver = createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function ZipObserver(instance, delegate, enumerators, sinkEnumerator) {
+        init(DisposableLike__mixin, instance);
         init(typedObserverMixin, instance, getScheduler(delegate));
         instance.delegate = delegate;
         instance.sinkEnumerator = sinkEnumerator;

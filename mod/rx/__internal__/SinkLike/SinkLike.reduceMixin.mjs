@@ -3,15 +3,15 @@ import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { dispose, addTo, onComplete } from '../../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { sinkInto } from '../../ReactiveContainerLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const SinkLike__reduceMixin = (fromArray) => {
     const ReduceSink_private_reducer = Symbol("ReduceSink_private_reducer");
     const ReduceSink_private_acc = Symbol("ReduceSink_private_acc");
-    return mix(include(DisposableLike__disposableMixin), function ReduceSink(instance, delegate, reducer, initialValue) {
-        init(DisposableLike__disposableMixin, instance);
+    return mix(include(DisposableLike__mixin), function ReduceSink(instance, delegate, reducer, initialValue) {
+        init(DisposableLike__mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[ReduceSink_private_reducer] = reducer;
         try {

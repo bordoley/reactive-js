@@ -5,7 +5,7 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
@@ -27,8 +27,8 @@ const ObservableLike__zipWithLatestFrom = /*@__PURE__*/ (() => {
                 pipe(observer.delegate, SinkLike__notify(result));
             }
         };
-        return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
-            init(DisposableLike__disposableMixin, instance);
+        return createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
+            init(DisposableLike__mixin, instance);
             init(typedObserverMixin, instance, ObserverLike__getScheduler(delegate));
             instance.delegate = delegate;
             instance.queue = [];

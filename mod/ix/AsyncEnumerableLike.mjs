@@ -26,7 +26,7 @@ import { stream } from '../streaming/StreamableLike.mjs';
 import StreamLike__mixin from '../streaming/__internal__/StreamLike/StreamLike.mixin.mjs';
 import { add, addTo } from '../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
-import DisposableLike__disposableMixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { enumerate } from './EnumerableLike.mjs';
 
 const createAsyncEnumerator = /*@__PURE__*/ (() => {
@@ -62,8 +62,8 @@ const createAsyncEnumerable = /*@__PURE__*/ (() => {
     }));
 })();
 const createLiftedAsyncEnumerator = (() => {
-    return createInstanceFactory(mix(include(DisposableLike__disposableMixin), function LiftedAsyncEnumerator(instance, op, scheduler, replay) {
-        init(DisposableLike__disposableMixin, instance);
+    return createInstanceFactory(mix(include(DisposableLike__mixin), function LiftedAsyncEnumerator(instance, op, scheduler, replay) {
+        init(DisposableLike__mixin, instance);
         instance.op = op;
         instance[DispatcherLike_scheduler] = scheduler;
         const subject = create();

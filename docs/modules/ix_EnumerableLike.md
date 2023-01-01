@@ -381,9 +381,6 @@ ___
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
 
-Generates an EnumerableLike from a generator function
-that is applied to an accumulator value.
-
 #### Type parameters
 
 | Name |
@@ -392,11 +389,11 @@ that is applied to an accumulator value.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
-| `options?` | `undefined` | - |
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `undefined` |
 
 #### Returns
 
@@ -703,8 +700,6 @@ ___
 ### toIterable
 
 ▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
-
-Converts an EnumerableLike into a javascript Iterable.
 
 #### Type parameters
 

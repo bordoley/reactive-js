@@ -3,14 +3,14 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import { none, isSome, pipe, isFunction } from '../../../functions.mjs';
 import { ContinuationLike_run, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { getOrNone, set } from '../CurrentScheduler.mjs';
 import YieldError from '../YieldError.mjs';
 
 const isYieldError = (e) => e instanceof YieldError;
 const createContinuation = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(DisposableLike__disposableMixin), function Continuation(instance, scheduler, f) {
-        init(DisposableLike__disposableMixin, instance);
+    return createInstanceFactory(mix(include(DisposableLike__mixin), function Continuation(instance, scheduler, f) {
+        init(DisposableLike__mixin, instance);
         instance.scheduler = scheduler;
         instance.f = f;
         return instance;

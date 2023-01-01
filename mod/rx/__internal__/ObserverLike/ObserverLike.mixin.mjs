@@ -6,7 +6,7 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../../sche
 import { yield_ } from '../../../scheduling/ContinuationLike.mjs';
 import { DisposableLike_exception } from '../../../util.mjs';
 import { onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import ObserverLike__getScheduler from './ObserverLike.getScheduler.mjs';
 import ObserverLike__schedule from './ObserverLike.schedule.mjs';
 
@@ -17,8 +17,8 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             pipe(observer, ObserverLike__schedule(dispatcher.continuation), onComplete(dispatcher.onContinuationDispose));
         }
     };
-    return createInstanceFactory(mix(DisposableLike__disposableMixin, function ObserverDispatcher(instance, observer) {
-        init(DisposableLike__disposableMixin, instance);
+    return createInstanceFactory(mix(DisposableLike__mixin, function ObserverDispatcher(instance, observer) {
+        init(DisposableLike__mixin, instance);
         instance.observer = observer;
         instance.nextQueue = [];
         instance.continuation = () => {

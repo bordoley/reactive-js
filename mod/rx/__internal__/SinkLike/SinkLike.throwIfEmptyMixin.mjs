@@ -3,14 +3,14 @@ import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { addTo, onComplete, dispose } from '../../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const SinkLike__throwIfEmptyMixin = /*@__PURE__*/ (() => {
     const ThrowIfEmptySink_private_isEmpty = Symbol("ThrowIfEmptySink_private_isEmpty");
-    return returns(mix(include(DisposableLike__disposableMixin), function ThrowIfEmptySink(instance, delegate, factory) {
-        init(DisposableLike__disposableMixin, instance);
+    return returns(mix(include(DisposableLike__mixin), function ThrowIfEmptySink(instance, delegate, factory) {
+        init(DisposableLike__mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         pipe(instance, addTo(delegate), onComplete(() => {
             let error = none;

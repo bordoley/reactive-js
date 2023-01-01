@@ -2,7 +2,7 @@
 import { pipe, unsafeCast, none, returns } from '../../functions.mjs';
 import DisposableLike__add from '../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
 import DisposableLike__dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
-import DisposableLike__disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { mix, props, createInstanceFactory, include, init } from '../mixins.mjs';
 import { MutableRefLike_current } from './MutableRefLike.mjs';
 
@@ -31,8 +31,8 @@ const disposableRefMixin = /*@__PURE__*/ (() => {
 })();
 const createDisposableRef = /*@__PURE__*/ (() => {
     const typedDisposableRefMixin = disposableRefMixin();
-    return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedDisposableRefMixin), function DisposableRef(instance, initialValue) {
-        init(DisposableLike__disposableMixin, instance);
+    return createInstanceFactory(mix(include(DisposableLike__mixin, typedDisposableRefMixin), function DisposableRef(instance, initialValue) {
+        init(DisposableLike__mixin, instance);
         init(typedDisposableRefMixin, instance, initialValue);
         return instance;
     }));
