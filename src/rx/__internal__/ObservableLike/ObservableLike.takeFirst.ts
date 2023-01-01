@@ -16,35 +16,40 @@ import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike_takeFirstMixin from "../SinkLike/SinkLike.takeFirstMixin";
 import ObservableLike__liftEnumerableOperatorT from "./ObservableLike.liftEnumerableOperatorT";
 
-const takeFirst: TakeFirst<ObservableLike>["takeFirst"] = /*@__PURE__*/ (() => {
-  const createTakeFirstObserver: <T>(
-    delegate: ObserverLike<T>,
-    count: number,
-  ) => ObserverLike<T> = (<T>() => {
-    const typedTakeFirstSinkMixin = SinkLike_takeFirstMixin<T>();
-    const typedObserverMixin = ObserverLike__mixin<T>();
+const ObservableLike__takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
+  /*@__PURE__*/ (() => {
+    const createTakeFirstObserver: <T>(
+      delegate: ObserverLike<T>,
+      count: number,
+    ) => ObserverLike<T> = (<T>() => {
+      const typedTakeFirstSinkMixin = SinkLike_takeFirstMixin<T>();
+      const typedObserverMixin = ObserverLike__mixin<T>();
 
-    return createInstanceFactory(
-      mix(
-        include(typedObserverMixin, typedTakeFirstSinkMixin),
-        function TakeFirstObserver(
-          instance: unknown,
-          delegate: ObserverLike<T>,
-          takeCount: number,
-        ): ObserverLike<T> {
-          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-          init(typedTakeFirstSinkMixin, instance, delegate, takeCount);
+      return createInstanceFactory(
+        mix(
+          include(typedObserverMixin, typedTakeFirstSinkMixin),
+          function TakeFirstObserver(
+            instance: unknown,
+            delegate: ObserverLike<T>,
+            takeCount: number,
+          ): ObserverLike<T> {
+            init(
+              typedObserverMixin,
+              instance,
+              delegate[ObserverLike_scheduler],
+            );
+            init(typedTakeFirstSinkMixin, instance, delegate, takeCount);
 
-          return instance;
-        },
-      ),
+            return instance;
+          },
+        ),
+      );
+    })();
+
+    return pipe(
+      createTakeFirstObserver,
+      StatefulContainerLike__takeFirst(ObservableLike__liftEnumerableOperatorT),
     );
   })();
 
-  return pipe(
-    createTakeFirstObserver,
-    StatefulContainerLike__takeFirst(ObservableLike__liftEnumerableOperatorT),
-  );
-})();
-
-export default takeFirst;
+export default ObservableLike__takeFirst;

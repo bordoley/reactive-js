@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArrayLike.forEach.d.ts" />
-const forEach = (effect) => arr => {
+const ReadonlyArrayLike__forEach = (effect) => arr => {
     arr.forEach(effect);
     return arr;
 };
 
-export { forEach as default };
+export { ReadonlyArrayLike__forEach as default };

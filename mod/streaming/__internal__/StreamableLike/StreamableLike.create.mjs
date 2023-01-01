@@ -2,7 +2,7 @@
 import { newInstance } from '../../../functions.mjs';
 import { StreamableLike_stream } from '../../../streaming.mjs';
 
-const create = /*@__PURE__*/ (() => {
+const StreamableLike__create = /*@__PURE__*/ (() => {
     class CreateStreamable {
         constructor(stream) {
             this.stream = stream;
@@ -14,4 +14,4 @@ const create = /*@__PURE__*/ (() => {
     return (stream) => newInstance(CreateStreamable, stream);
 })();
 
-export { create as default };
+export { StreamableLike__create as default };

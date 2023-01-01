@@ -18,7 +18,7 @@ type TDelegatingEnumeratorMixinReturn<T> = Omit<
   keyof DisposableLike | typeof SourceLike_move
 >;
 
-const mixin: <T>() => Mixin1<
+const DelegatingEnumeratorLike__mixin: <T>() => Mixin1<
   TDelegatingEnumeratorMixinReturn<T>,
   EnumeratorLike<T>
 > = /*@__PURE__*/ (<T>() => {
@@ -74,4 +74,4 @@ const mixin: <T>() => Mixin1<
   );
 })();
 
-export default mixin;
+export default DelegatingEnumeratorLike__mixin;

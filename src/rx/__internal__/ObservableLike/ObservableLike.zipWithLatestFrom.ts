@@ -31,7 +31,7 @@ import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
 import ObservableLike__lift from "./ObservableLike.lift";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
 
-const zipWithLatestFrom: <TA, TB, T>(
+const ObservableLike__zipWithLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
 ) => ContainerOperator<ObservableLike, TA, T> = /*@__PURE__*/ (() => {
@@ -143,4 +143,4 @@ const zipWithLatestFrom: <TA, TB, T>(
     ) as ContainerOperator<ObservableLike, TA, T>;
 })();
 
-export default zipWithLatestFrom;
+export default ObservableLike__zipWithLatestFrom;

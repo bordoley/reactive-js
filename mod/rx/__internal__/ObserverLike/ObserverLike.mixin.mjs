@@ -6,19 +6,19 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../../sche
 import { yield_ } from '../../../scheduling/ContinuationLike.mjs';
 import { DisposableLike_exception } from '../../../util.mjs';
 import { onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import getScheduler from './ObserverLike.getScheduler.mjs';
-import schedule from './ObserverLike.schedule.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import ObserverLike__getScheduler from './ObserverLike.getScheduler.mjs';
+import ObserverLike__schedule from './ObserverLike.schedule.mjs';
 
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {
         if (getLength(dispatcher.nextQueue) === 1) {
             const { observer } = dispatcher;
-            pipe(observer, schedule(dispatcher.continuation), onComplete(dispatcher.onContinuationDispose));
+            pipe(observer, ObserverLike__schedule(dispatcher.continuation), onComplete(dispatcher.onContinuationDispose));
         }
     };
-    return createInstanceFactory(mix(disposableMixin, function ObserverDispatcher(instance, observer) {
-        init(disposableMixin, instance);
+    return createInstanceFactory(mix(DisposableLike__disposableMixin, function ObserverDispatcher(instance, observer) {
+        init(DisposableLike__disposableMixin, instance);
         instance.observer = observer;
         instance.nextQueue = [];
         instance.continuation = () => {
@@ -48,7 +48,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
     }), {
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            return getScheduler(this.observer);
+            return ObserverLike__getScheduler(this.observer);
         },
         [DispatcherLike_dispatch](next) {
             if (!isDisposed(this)) {
@@ -58,8 +58,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         },
     }));
 })();
-const observerMixin = 
-/*@__PURE__*/ (() => {
+const ObserverLike__observerMixin = /*@__PURE__*/ (() => {
     return pipe(mix(function ObserverMixin(instance, scheduler) {
         instance[ObserverLike_scheduler] = scheduler;
         return instance;
@@ -79,4 +78,4 @@ const observerMixin =
     }), returns);
 })();
 
-export { observerMixin as default };
+export { ObserverLike__observerMixin as default };

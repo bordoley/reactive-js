@@ -9,7 +9,7 @@ import {
 import { Function1, Function2, partial, pipe } from "../../../functions";
 import StatefulContainer__lift from "./StatefulContainerLike.lift";
 
-const map =
+const StatefulContainerLike__map =
   <
     C extends StatefulContainerLike,
     TA,
@@ -28,4 +28,4 @@ const map =
   (mapper: Function1<TA, TB>) =>
     pipe(operator, partial(mapper), StatefulContainer__lift(m));
 
-export default map;
+export default StatefulContainerLike__map;

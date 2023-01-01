@@ -30,7 +30,7 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   }
 }
 
-const lift =
+const ObservableLike__lift =
   (isEnumerable = false, isRunnable = false) =>
   <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
@@ -58,4 +58,4 @@ const lift =
     );
   };
 
-export default lift;
+export default ObservableLike__lift;

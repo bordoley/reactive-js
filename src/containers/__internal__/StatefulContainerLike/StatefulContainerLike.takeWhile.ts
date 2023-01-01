@@ -9,7 +9,7 @@ import {
 } from "../containers.internal";
 import StatefulContainerLike__lift from "./StatefulContainerLike.lift";
 
-const takeWhile =
+const StatefulContainerLike__takeWhile =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -33,4 +33,4 @@ const takeWhile =
     );
   };
 
-export default takeWhile;
+export default StatefulContainerLike__takeWhile;

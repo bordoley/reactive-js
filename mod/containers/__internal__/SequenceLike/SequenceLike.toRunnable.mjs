@@ -2,9 +2,9 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import create from '../../../rx/__internal__/RunnableLike/RunnableLike.create.mjs';
+import RunnableLike__create from '../../../rx/__internal__/RunnableLike/RunnableLike.create.mjs';
 
-const toRunnable = () => (seq) => create(sink => {
+const SequenceLike__toRunnable = () => (seq) => RunnableLike__create(sink => {
     let result = seq();
     while (isSome(result)) {
         sink[SinkLike_notify](result[SequenceLike_data]);
@@ -12,4 +12,4 @@ const toRunnable = () => (seq) => create(sink => {
     }
 });
 
-export { toRunnable as default };
+export { SequenceLike__toRunnable as default };

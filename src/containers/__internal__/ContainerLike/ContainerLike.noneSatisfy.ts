@@ -5,9 +5,9 @@ import {
 } from "../../../containers";
 import { Predicate, compose, negate } from "../../../functions";
 
-const noneSatisfy = <C extends ContainerLike, T>(
+const ContainerLike__noneSatisfy = <C extends ContainerLike, T>(
   { everySatisfy }: EverySatisfy<C>,
   predicate: Predicate<T>,
 ): ContainerOperator<C, T, boolean> => everySatisfy(compose(predicate, negate));
 
-export default noneSatisfy;
+export default ContainerLike__noneSatisfy;

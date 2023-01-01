@@ -2,16 +2,16 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const distinctUntilChangedMixin = /*@__PURE__*/ (() => {
+const SinkLike__distinctUntilChangedMixin = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
     const DistinctUntilChangedSink_private_prev = Symbol("DistinctUntilChangedSink_private_prev");
     const DistinctUntilChangedSink_private_hasValue = Symbol("DistinctUntilChangedSink_private_hasValue");
-    return returns(mix(include(delegatingMixin), function DistinctUntilChangedSink(instance, delegate, equality) {
-        init(delegatingMixin, instance, delegate);
+    return returns(mix(include(DisposableLike__delegatingMixin), function DistinctUntilChangedSink(instance, delegate, equality) {
+        init(DisposableLike__delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[DistinctUntilChangedSink_private_equality] = equality;
         return instance;
@@ -33,4 +33,4 @@ const distinctUntilChangedMixin = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { distinctUntilChangedMixin as default };
+export { SinkLike__distinctUntilChangedMixin as default };

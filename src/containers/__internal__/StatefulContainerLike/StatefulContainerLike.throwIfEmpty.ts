@@ -10,7 +10,7 @@ import {
 } from "../containers.internal";
 import StatefulContainerLike__lift from "./StatefulContainerLike.lift";
 
-const throwIfEmpty =
+const StatefulContainerLike__throwIfEmpty =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -24,4 +24,4 @@ const throwIfEmpty =
   (factory: Factory<unknown>) =>
     pipe(operator, partial(factory), StatefulContainerLike__lift(m));
 
-export default throwIfEmpty;
+export default StatefulContainerLike__throwIfEmpty;

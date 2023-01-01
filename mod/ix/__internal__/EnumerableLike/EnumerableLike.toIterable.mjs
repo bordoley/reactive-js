@@ -1,23 +1,23 @@
 /// <reference types="./EnumerableLike.toIterable.d.ts" />
 import { pipe, newInstance } from '../../../functions.mjs';
-import getCurrent from '../EnumeratorLike/EnumeratorLike.getCurrent.mjs';
-import move from '../SourceLike/SourceLike.move.mjs';
-import enumerate from './EnumerableLike.enumerate.mjs';
+import EnumeratorLike__getCurrent from '../EnumeratorLike/EnumeratorLike.getCurrent.mjs';
+import SourceLike__move from '../SourceLike/SourceLike.move.mjs';
+import EnumerableLike__enumerate from './EnumerableLike.enumerate.mjs';
 
-const toIterable = 
+const EnumerableLike__toIterable = 
 /*@__PURE__*/ (() => {
     class EnumerableIterable {
         constructor(enumerable) {
             this.enumerable = enumerable;
         }
         *[Symbol.iterator]() {
-            const enumerator = pipe(this.enumerable, enumerate());
-            while (move(enumerator)) {
-                yield getCurrent(enumerator);
+            const enumerator = pipe(this.enumerable, EnumerableLike__enumerate());
+            while (SourceLike__move(enumerator)) {
+                yield EnumeratorLike__getCurrent(enumerator);
             }
         }
     }
     return () => enumerable => newInstance(EnumerableIterable, enumerable);
 })();
 
-export { toIterable as default };
+export { EnumerableLike__toIterable as default };

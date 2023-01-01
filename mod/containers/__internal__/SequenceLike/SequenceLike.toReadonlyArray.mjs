@@ -2,7 +2,7 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome } from '../../../functions.mjs';
 
-const toReadonlyArray = () => (seq) => {
+const SequenceLike__toReadonlyArray = () => (seq) => {
     const result = [];
     let next = seq();
     while (isSome(next)) {
@@ -12,4 +12,4 @@ const toReadonlyArray = () => (seq) => {
     return result;
 };
 
-export { toReadonlyArray as default };
+export { SequenceLike__toReadonlyArray as default };

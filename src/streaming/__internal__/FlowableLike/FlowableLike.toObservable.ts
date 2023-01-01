@@ -19,28 +19,29 @@ import { sourceFrom } from "../../../streaming/StreamLike";
 import { addTo } from "../../../util/DisposableLike";
 import StreamLike__create from "../StreamLike/StreamLike.create";
 
-const toObservable: ToObservable<FlowableLike>["toObservable"] = () => src =>
-  createObservable(observer => {
-    const {
-      [ObserverLike_dispatcher]: dispatcher,
-      [ObserverLike_scheduler]: scheduler,
-    } = observer;
+const FlowableLike__toObservable: ToObservable<FlowableLike>["toObservable"] =
+  () => src =>
+    createObservable(observer => {
+      const {
+        [ObserverLike_dispatcher]: dispatcher,
+        [ObserverLike_scheduler]: scheduler,
+      } = observer;
 
-    const op = compose(
-      forEach(dispatchTo(dispatcher)),
-      ignoreElements(keepT),
-      startWith(
-        {
-          fromArray: arrayToObservable,
-          ...concatT,
-        },
-        "pause",
-        "resume",
-      ),
-      onSubscribe(() => dispatcher),
-    );
+      const op = compose(
+        forEach(dispatchTo(dispatcher)),
+        ignoreElements(keepT),
+        startWith(
+          {
+            fromArray: arrayToObservable,
+            ...concatT,
+          },
+          "pause",
+          "resume",
+        ),
+        onSubscribe(() => dispatcher),
+      );
 
-    pipe(StreamLike__create(op, scheduler), sourceFrom(src), addTo(observer));
-  });
+      pipe(StreamLike__create(op, scheduler), sourceFrom(src), addTo(observer));
+    });
 
-export default toObservable;
+export default FlowableLike__toObservable;

@@ -81,7 +81,7 @@ export const createContinuation: Function2<
             CurrentScheduler.set(oldCurrentScheduler);
 
             if (isSome(yieldError)) {
-              pipe(scheduler, schedule(this, yieldError));
+              pipe(scheduler, SchedulerLike__schedule(this, yieldError));
             } else {
               pipe(this, dispose(error));
             }
@@ -92,7 +92,7 @@ export const createContinuation: Function2<
   );
 })();
 
-const schedule =
+const SchedulerLike__schedule =
   (
     f: SideEffect | ContinuationLike,
     options?: { readonly delay?: number },
@@ -103,4 +103,4 @@ const schedule =
     return continuation;
   };
 
-export default schedule;
+export default SchedulerLike__schedule;

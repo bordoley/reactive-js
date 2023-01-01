@@ -3,9 +3,9 @@ import ReadonlyArrayLike__map from "../../../containers/__internal__/ReadonlyArr
 import { compose, isTrue } from "../../../functions";
 import ObservableLike__isEnumerable from "./ObservableLike.isEnumerable";
 
-const allAreEnumerable = compose(
+const ObservableLike__allAreEnumerable = compose(
   ReadonlyArrayLike__map(ObservableLike__isEnumerable),
   ReadonlyArrayLike__every(isTrue),
 );
 
-export default allAreEnumerable;
+export default ObservableLike__allAreEnumerable;

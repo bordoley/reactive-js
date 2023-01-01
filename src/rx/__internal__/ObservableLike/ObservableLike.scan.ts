@@ -17,37 +17,42 @@ import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__scanMixin from "../SinkLike/SinkLike.scanMixin";
 import ObservableLike__liftEnumerableOperatorT from "./ObservableLike.liftEnumerableOperatorT";
 
-const scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (() => {
-  const createScanObserver: <T, TAcc>(
-    delegat: ObserverLike<TAcc>,
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ) => ObserverLike<T> = (<T, TAcc>() => {
-    const typedScanSinkMixin = SinkLike__scanMixin<T, TAcc>();
+const ObservableLike__scan: Scan<ObservableLike>["scan"] =
+  /*@__PURE__*/ (() => {
+    const createScanObserver: <T, TAcc>(
+      delegat: ObserverLike<TAcc>,
+      reducer: Reducer<T, TAcc>,
+      initialValue: Factory<TAcc>,
+    ) => ObserverLike<T> = (<T, TAcc>() => {
+      const typedScanSinkMixin = SinkLike__scanMixin<T, TAcc>();
 
-    const typedObserverMixin = ObserverLike__mixin<T>();
+      const typedObserverMixin = ObserverLike__mixin<T>();
 
-    return createInstanceFactory(
-      mix(
-        include(typedObserverMixin, typedScanSinkMixin),
-        function ScanObserver(
-          instance: unknown,
-          delegate: ObserverLike<TAcc>,
-          reducer: Reducer<T, TAcc>,
-          initialValue: Factory<TAcc>,
-        ): ObserverLike<T> {
-          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-          init(typedScanSinkMixin, instance, delegate, reducer, initialValue);
+      return createInstanceFactory(
+        mix(
+          include(typedObserverMixin, typedScanSinkMixin),
+          function ScanObserver(
+            instance: unknown,
+            delegate: ObserverLike<TAcc>,
+            reducer: Reducer<T, TAcc>,
+            initialValue: Factory<TAcc>,
+          ): ObserverLike<T> {
+            init(
+              typedObserverMixin,
+              instance,
+              delegate[ObserverLike_scheduler],
+            );
+            init(typedScanSinkMixin, instance, delegate, reducer, initialValue);
 
-          return instance;
-        },
-      ),
+            return instance;
+          },
+        ),
+      );
+    })();
+    return pipe(
+      createScanObserver,
+      StatefulContainerLike__scan(ObservableLike__liftEnumerableOperatorT),
     );
   })();
-  return pipe(
-    createScanObserver,
-    StatefulContainerLike__scan(ObservableLike__liftEnumerableOperatorT),
-  );
-})();
 
-export default scan;
+export default ObservableLike__scan;

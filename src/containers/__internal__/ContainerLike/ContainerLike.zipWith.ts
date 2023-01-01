@@ -5,7 +5,7 @@ import {
   Zip,
 } from "../../../containers";
 
-const zipWith =
+const ContainerLike__zipWith =
   <C extends ContainerLike>(
     { zip }: Zip<C>,
     snd: ContainerOf<C, any>,
@@ -14,4 +14,4 @@ const zipWith =
   fst =>
     (zip as any)(fst, snd, ...tail);
 
-export default zipWith;
+export default ContainerLike__zipWith;

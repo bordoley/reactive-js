@@ -1,8 +1,8 @@
 /// <reference types="./IterableLike.toRunnableObservable.d.ts" />
 import { compose } from '../../../functions.mjs';
-import { toRunnableObservable as toRunnableObservable$1 } from '../../../ix/EnumerableLike.mjs';
-import toEnumerable from './IterableLike.toEnumerable.mjs';
+import { toRunnableObservable } from '../../../ix/EnumerableLike.mjs';
+import IterableLike__toEnumerable from './IterableLike.toEnumerable.mjs';
 
-const toRunnableObservable = options => compose(toEnumerable(), toRunnableObservable$1(options));
+const IterableLike__toRunnableObservable = options => compose(IterableLike__toEnumerable(), toRunnableObservable(options));
 
-export { toRunnableObservable as default };
+export { IterableLike__toRunnableObservable as default };

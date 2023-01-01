@@ -1,10 +1,10 @@
 /// <reference types="./ObserverLike.d.ts" />
-import getDispatcher$1 from './__internal__/ObserverLike/ObserverLike.getDispatcher.mjs';
-import getScheduler$1 from './__internal__/ObserverLike/ObserverLike.getScheduler.mjs';
-import schedule$1 from './__internal__/ObserverLike/ObserverLike.schedule.mjs';
+import ObserverLike__getDispatcher from './__internal__/ObserverLike/ObserverLike.getDispatcher.mjs';
+import ObserverLike__getScheduler from './__internal__/ObserverLike/ObserverLike.getScheduler.mjs';
+import ObserverLike__schedule from './__internal__/ObserverLike/ObserverLike.schedule.mjs';
 
-const getDispatcher = getDispatcher$1;
-const getScheduler = getScheduler$1;
-const schedule = schedule$1;
+const getDispatcher = ObserverLike__getDispatcher;
+const getScheduler = ObserverLike__getScheduler;
+const schedule = ObserverLike__schedule;
 
 export { getDispatcher, getScheduler, schedule };

@@ -27,7 +27,7 @@ import { MutableEnumeratorLike } from "../ix.internal";
 import EnumerableLike__create from "./EnumerableLike.create";
 import EnumerableLike__enumerate from "./EnumerableLike.enumerate";
 
-const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
+const EnumerableLike__zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const moveAll = (enumerators: readonly EnumeratorLike[]) => {
     for (const enumerator of enumerators) {
       SourceLike__move(enumerator);
@@ -105,4 +105,4 @@ const zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
     );
 })();
 
-export default zip;
+export default EnumerableLike__zip;

@@ -11,7 +11,9 @@ import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/D
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
 
-const empty: <T>() => EnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
+const EnumeratorLike__empty: <T>() => EnumeratorLike<T> = /*@__PURE__*/ (<
+  T,
+>() => {
   const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
   return createInstanceFactory(
     mix(
@@ -34,4 +36,4 @@ const empty: <T>() => EnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
   );
 })();
 
-export default empty;
+export default EnumeratorLike__empty;

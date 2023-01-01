@@ -3,9 +3,9 @@ import ReadonlyArrayLike__map from "../../../containers/__internal__/ReadonlyArr
 import { compose, isTrue } from "../../../functions";
 import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
 
-const allAreRunnable = compose(
+const ObservableLike__allAreRunnable = compose(
   ReadonlyArrayLike__map(ObservableLike__isRunnable),
   ReadonlyArrayLike__every(isTrue),
 );
 
-export default allAreRunnable;
+export default ObservableLike__allAreRunnable;

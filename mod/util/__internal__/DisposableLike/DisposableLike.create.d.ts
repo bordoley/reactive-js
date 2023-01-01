@@ -1,4 +1,4 @@
 import { Factory } from "../../../functions.mjs";
 import { DisposableLike } from "../../../util.mjs";
-declare const create: Factory<DisposableLike>;
-export { create as default };
+declare const DisposableLike__create: Factory<DisposableLike>;
+export { DisposableLike__create as default };

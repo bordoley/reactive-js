@@ -1,7 +1,7 @@
 import { SchedulerLike_shouldYield } from "../../../scheduling";
 
-const shouldYield = (scheduler: {
+const SchedulerLike__shouldYield = (scheduler: {
   [SchedulerLike_shouldYield]: boolean;
 }): boolean => scheduler[SchedulerLike_shouldYield];
 
-export default shouldYield;
+export default SchedulerLike__shouldYield;

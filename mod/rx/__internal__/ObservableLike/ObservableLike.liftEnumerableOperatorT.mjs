@@ -1,10 +1,10 @@
 /// <reference types="./ObservableLike.liftEnumerableOperatorT.d.ts" />
 import { reactive } from '../../../containers/__internal__/containers.internal.mjs';
-import lift from './ObservableLike.lift.mjs';
+import ObservableLike__lift from './ObservableLike.lift.mjs';
 
-const liftEnumerableOperatorT = {
-    lift: lift(true, true),
+const ObservableLike__liftEnumerableOperatorT = {
+    lift: ObservableLike__lift(true, true),
     variance: reactive,
 };
 
-export { liftEnumerableOperatorT as default };
+export { ObservableLike__liftEnumerableOperatorT as default };

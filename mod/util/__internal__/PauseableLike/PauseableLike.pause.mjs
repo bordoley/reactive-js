@@ -1,9 +1,9 @@
 /// <reference types="./PauseableLike.pause.d.ts" />
 import { PauseableLike_pause } from '../../../util.mjs';
 
-const pause = (pausable) => {
+const PauseableLike__pause = (pausable) => {
     pausable[PauseableLike_pause]();
     return pausable;
 };
 
-export { pause as default };
+export { PauseableLike__pause as default };

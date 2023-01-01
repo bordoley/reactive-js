@@ -1,12 +1,12 @@
 /// <reference types="./EnumeratorLike.forEach.d.ts" />
-import getCurrent from './EnumeratorLike.getCurrent.mjs';
-import move from './EnumeratorLike.move.mjs';
+import EnumeratorLike__getCurrent from './EnumeratorLike.getCurrent.mjs';
+import EnumeratorLike__move from './EnumeratorLike.move.mjs';
 
-const forEach = (f) => enumerator => {
-    while (move(enumerator)) {
-        f(getCurrent(enumerator));
+const EnumeratorLike__forEach = (f) => enumerator => {
+    while (EnumeratorLike__move(enumerator)) {
+        f(EnumeratorLike__getCurrent(enumerator));
     }
     return enumerator;
 };
 
-export { forEach as default };
+export { EnumeratorLike__forEach as default };

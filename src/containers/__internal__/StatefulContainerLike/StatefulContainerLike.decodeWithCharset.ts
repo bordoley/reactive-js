@@ -10,7 +10,7 @@ import { Function2, partial, pipe } from "../../../functions";
 
 import StatefulContainer__lift from "./StatefulContainerLike.lift";
 
-const decodeWithCharset =
+const StatefulContainerLike__decodeWithCharset =
   <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -24,4 +24,4 @@ const decodeWithCharset =
   (charset = "utf-8") =>
     pipe(operator, partial(charset), StatefulContainer__lift(m));
 
-export default decodeWithCharset;
+export default StatefulContainerLike__decodeWithCharset;

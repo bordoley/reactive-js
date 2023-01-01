@@ -15,7 +15,7 @@ import {
 } from "../containers.internal";
 import StatefulContainerLike__lift from "./StatefulContainerLike.lift";
 
-const distinctUntilChanged =
+const StatefulContainerLike__distinctUntilChanged =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -31,4 +31,4 @@ const distinctUntilChanged =
     return pipe(operator, partial(equality), StatefulContainerLike__lift(m));
   };
 
-export default distinctUntilChanged;
+export default StatefulContainerLike__distinctUntilChanged;

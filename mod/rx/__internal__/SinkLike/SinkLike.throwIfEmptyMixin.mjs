@@ -3,14 +3,14 @@ import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { addTo, onComplete, dispose } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const throwIfEmptyMixin = /*@__PURE__*/ (() => {
+const SinkLike__throwIfEmptyMixin = /*@__PURE__*/ (() => {
     const ThrowIfEmptySink_private_isEmpty = Symbol("ThrowIfEmptySink_private_isEmpty");
-    return returns(mix(include(disposableMixin), function ThrowIfEmptySink(instance, delegate, factory) {
-        init(disposableMixin, instance);
+    return returns(mix(include(DisposableLike__disposableMixin), function ThrowIfEmptySink(instance, delegate, factory) {
+        init(DisposableLike__disposableMixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         pipe(instance, addTo(delegate), onComplete(() => {
             let error = none;
@@ -38,4 +38,4 @@ const throwIfEmptyMixin = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { throwIfEmptyMixin as default };
+export { SinkLike__throwIfEmptyMixin as default };

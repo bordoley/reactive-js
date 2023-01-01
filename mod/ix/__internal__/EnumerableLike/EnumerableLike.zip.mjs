@@ -1,29 +1,29 @@
 /// <reference types="./EnumerableLike.zip.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import every from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every.mjs';
-import forEach from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach.mjs';
-import map from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
+import ReadonlyArrayLike__every from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every.mjs';
+import ReadonlyArrayLike__forEach from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach.mjs';
+import ReadonlyArrayLike__map from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import { isDisposed, dispose, addTo } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import getCurrent from '../EnumeratorLike/EnumeratorLike.getCurrent.mjs';
-import hasCurrent from '../EnumeratorLike/EnumeratorLike.hasCurrent.mjs';
-import mutableMixin from '../MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
-import move from '../SourceLike/SourceLike.move.mjs';
-import create from './EnumerableLike.create.mjs';
-import enumerate from './EnumerableLike.enumerate.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import EnumeratorLike__getCurrent from '../EnumeratorLike/EnumeratorLike.getCurrent.mjs';
+import EnumeratorLike__hasCurrent from '../EnumeratorLike/EnumeratorLike.hasCurrent.mjs';
+import MutableEnumeratorLike__mixin from '../MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
+import SourceLike__move from '../SourceLike/SourceLike.move.mjs';
+import EnumerableLike__create from './EnumerableLike.create.mjs';
+import EnumerableLike__enumerate from './EnumerableLike.enumerate.mjs';
 
-const zip = /*@__PURE__*/ (() => {
+const EnumerableLike__zip = /*@__PURE__*/ (() => {
     const moveAll = (enumerators) => {
         for (const enumerator of enumerators) {
-            move(enumerator);
+            SourceLike__move(enumerator);
         }
     };
-    const allHaveCurrent = (enumerators) => pipe(enumerators, every(hasCurrent));
-    const typedMutableEnumeratorMixin = mutableMixin();
-    const createZipEnumerator = createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function ZipEnumerator(instance, enumerators) {
-        init(disposableMixin, instance);
+    const allHaveCurrent = (enumerators) => pipe(enumerators, ReadonlyArrayLike__every(EnumeratorLike__hasCurrent));
+    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
+    const createZipEnumerator = createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin), function ZipEnumerator(instance, enumerators) {
+        init(DisposableLike__disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.enumerators = enumerators;
         return instance;
@@ -35,7 +35,7 @@ const zip = /*@__PURE__*/ (() => {
                 const { enumerators } = this;
                 moveAll(enumerators);
                 if (allHaveCurrent(enumerators)) {
-                    this[EnumeratorLike_current] = pipe(enumerators, map(getCurrent));
+                    this[EnumeratorLike_current] = pipe(enumerators, ReadonlyArrayLike__map(EnumeratorLike__getCurrent));
                 }
                 else {
                     pipe(this, dispose());
@@ -45,10 +45,10 @@ const zip = /*@__PURE__*/ (() => {
     }));
     const zipEnumerators = (enumerators) => {
         const instance = createZipEnumerator(enumerators);
-        pipe(enumerators, forEach(addTo(instance)));
+        pipe(enumerators, ReadonlyArrayLike__forEach(addTo(instance)));
         return instance;
     };
-    return (...enumerables) => create(() => pipe(enumerables, map(enumerate()), zipEnumerators));
+    return (...enumerables) => EnumerableLike__create(() => pipe(enumerables, ReadonlyArrayLike__map(EnumerableLike__enumerate()), zipEnumerators));
 })();
 
-export { zip as default };
+export { EnumerableLike__zip as default };

@@ -1,3 +1,3 @@
 import { Generate, SequenceLike } from "../../../containers.mjs";
-declare const generate: Generate<SequenceLike>["generate"];
-export { generate as default };
+declare const SequenceLike__generate: Generate<SequenceLike>["generate"];
+export { SequenceLike__generate as default };

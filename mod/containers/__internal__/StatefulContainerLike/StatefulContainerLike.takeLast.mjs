@@ -1,11 +1,11 @@
 /// <reference types="./StatefulContainerLike.takeLast.d.ts" />
 import { pipe, partial } from '../../../functions.mjs';
-import lift from './StatefulContainerLike.lift.mjs';
+import StatefulContainerLike__lift from './StatefulContainerLike.lift.mjs';
 
-const takeLast = (m) => (operator) => (options = {}) => {
+const StatefulContainerLike__takeLast = (m) => (operator) => (options = {}) => {
     const { count = 1 } = options;
-    const containerOperator = pipe(operator, partial(count), lift(m));
+    const containerOperator = pipe(operator, partial(count), StatefulContainerLike__lift(m));
     return container => pipe(container, containerOperator);
 };
 
-export { takeLast as default };
+export { StatefulContainerLike__takeLast as default };

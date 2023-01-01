@@ -170,11 +170,11 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   ),
 );
 
-const create = (
+const VirtualTimeSchedulerLike__create = (
   options: { readonly maxMicroTaskTicks?: number } = {},
 ): VirtualTimeSchedulerLike => {
   const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
   return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
 };
 
-export default create;
+export default VirtualTimeSchedulerLike__create;

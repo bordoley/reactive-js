@@ -1,7 +1,7 @@
 import { DisposableLike_isDisposed } from "../../../util";
 
-const isDisposed = (disposable: {
+const DisposableLike__isDisposed = (disposable: {
   [DisposableLike_isDisposed]: boolean;
 }): boolean => disposable[DisposableLike_isDisposed];
 
-export default isDisposed;
+export default DisposableLike__isDisposed;

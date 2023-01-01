@@ -12,7 +12,7 @@ import DisposableLike__delegatingMixin from "../../../util/__internal__/Disposab
 import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-export const forEachMixin: <T>() => Mixin2<
+export const SinkLike__forEachMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
   SideEffect1<T>
@@ -54,4 +54,4 @@ export const forEachMixin: <T>() => Mixin2<
   );
 })();
 
-export default forEachMixin;
+export default SinkLike__forEachMixin;

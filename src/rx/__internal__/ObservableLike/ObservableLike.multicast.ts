@@ -7,7 +7,7 @@ import SubjectLike__publishTo from "../SubjectLike/SubjectLike.publishTo";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
 
-const multicast =
+const ObservableLike__multicast =
   <T>(
     scheduler: SchedulerLike,
     options: { readonly replay?: number } = {},
@@ -25,4 +25,4 @@ const multicast =
     return subject;
   };
 
-export default multicast;
+export default ObservableLike__multicast;

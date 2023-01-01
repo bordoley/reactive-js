@@ -22,7 +22,7 @@ import { dispose, isDisposed } from "../../../util/DisposableLike";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";
 
-const toEnumerable: ToEnumerable<
+const ReadonlyArrayLike__toEnumerable: ToEnumerable<
   ReadonlyArrayLike,
   {
     readonly start: number;
@@ -89,4 +89,4 @@ const toEnumerable: ToEnumerable<
   );
 })();
 
-export default toEnumerable;
+export default ReadonlyArrayLike__toEnumerable;

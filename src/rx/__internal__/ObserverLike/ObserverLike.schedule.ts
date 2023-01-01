@@ -6,7 +6,7 @@ import { DisposableLike } from "../../../util";
 import { addTo } from "../../../util/DisposableLike";
 import getScheduler from "./ObserverLike.getScheduler";
 
-const schedule =
+const ObserverLike__schedule =
   (
     f: SideEffect | ContinuationLike,
     options?: { readonly delay?: number },
@@ -19,4 +19,4 @@ const schedule =
       addTo(observer),
     );
 
-export default schedule;
+export default ObserverLike__schedule;

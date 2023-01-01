@@ -2,15 +2,14 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const keepMixin = 
-/*@__PURE__*/ (() => {
+const SinkLike__keepMixin = /*@__PURE__*/ (() => {
     const KeepSink_private_predicate = Symbol("KeepSink_private_predicate");
-    return returns(mix(include(delegatingMixin), function KeepSink(instance, delegate, predicate) {
-        init(delegatingMixin, instance, delegate);
+    return returns(mix(include(DisposableLike__delegatingMixin), function KeepSink(instance, delegate, predicate) {
+        init(DisposableLike__delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[KeepSink_private_predicate] = predicate;
         return instance;
@@ -26,4 +25,4 @@ const keepMixin =
     }));
 })();
 
-export { keepMixin as default };
+export { SinkLike__keepMixin as default };

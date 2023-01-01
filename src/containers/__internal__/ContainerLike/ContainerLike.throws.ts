@@ -9,7 +9,7 @@ import { Factory, Function1, pipe } from "../../../functions";
 
 import ContainerLike__compute from "./ContainerLike.compute";
 
-const throws =
+const ContainerLike__throws =
   <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
     m: Map<C> & FromArray<C, O>,
     options?: Omit<Partial<O>, keyof FromArrayOptions>,
@@ -20,4 +20,4 @@ const throws =
       throw cause;
     }, ContainerLike__compute(m, options));
 
-export default throws;
+export default ContainerLike__throws;

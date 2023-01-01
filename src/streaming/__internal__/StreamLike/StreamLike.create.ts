@@ -6,7 +6,7 @@ import { StreamLike } from "../../../streaming";
 
 import StreamLike__mixin from "./StreamLike.mixin";
 
-const create = /*@__PURE__*/ (() => {
+const StreamLike__create = /*@__PURE__*/ (() => {
   const createStreamInternal: <TReq, T>(
     op: ContainerOperator<ObservableLike, TReq, T>,
     scheduler: SchedulerLike,
@@ -27,4 +27,4 @@ const create = /*@__PURE__*/ (() => {
   };
 })();
 
-export default create;
+export default StreamLike__create;

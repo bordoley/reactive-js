@@ -1,6 +1,6 @@
 /// <reference types="./VirtualTimeSchedulerLike.d.ts" />
-import create$1 from './__internal__/VirtualTimeSchedulerLike/VirtualTimeSchedulerLike.create.mjs';
+import VirtualTimeSchedulerLike__create from './__internal__/VirtualTimeSchedulerLike/VirtualTimeSchedulerLike.create.mjs';
 
-const create = create$1;
+const create = VirtualTimeSchedulerLike__create;
 
 export { create };

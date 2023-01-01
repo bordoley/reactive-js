@@ -1,9 +1,9 @@
 /// <reference types="./ObservableLike.allAreEnumerable.d.ts" />
-import every from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every.mjs';
-import map from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
+import ReadonlyArrayLike__every from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every.mjs';
+import ReadonlyArrayLike__map from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
 import { compose, isTrue } from '../../../functions.mjs';
-import isEnumerable from './ObservableLike.isEnumerable.mjs';
+import ObservableLike__isEnumerable from './ObservableLike.isEnumerable.mjs';
 
-const allAreEnumerable = compose(map(isEnumerable), every(isTrue));
+const ObservableLike__allAreEnumerable = compose(ReadonlyArrayLike__map(ObservableLike__isEnumerable), ReadonlyArrayLike__every(isTrue));
 
-export { allAreEnumerable as default };
+export { ObservableLike__allAreEnumerable as default };

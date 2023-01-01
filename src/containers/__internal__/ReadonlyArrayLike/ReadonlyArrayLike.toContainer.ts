@@ -6,7 +6,7 @@ export type ToContainerOptions = {
   readonly count: number;
 };
 
-const toContainer =
+const ReadonlyArrayLike__toContainer =
   <C, T>(factory: (values: readonly T[], start: number, count: number) => C) =>
   (
     options: Partial<ToContainerOptions> = {},
@@ -48,4 +48,4 @@ const toContainer =
     return factory(values, start, count);
   };
 
-export default toContainer;
+export default ReadonlyArrayLike__toContainer;

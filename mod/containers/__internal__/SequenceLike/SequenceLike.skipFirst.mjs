@@ -1,9 +1,9 @@
 /// <reference types="./SequenceLike.skipFirst.d.ts" />
-import seek from './SequenceLike.seek.mjs';
+import SequenceLike__seek from './SequenceLike.seek.mjs';
 
-const skipFirst = (options = {}) => (seq) => () => {
+const SequenceLike__skipFirst = (options = {}) => (seq) => () => {
     const { count = 1 } = options;
-    return seek(count)(seq)();
+    return SequenceLike__seek(count)(seq)();
 };
 
-export { skipFirst as default };
+export { SequenceLike__skipFirst as default };

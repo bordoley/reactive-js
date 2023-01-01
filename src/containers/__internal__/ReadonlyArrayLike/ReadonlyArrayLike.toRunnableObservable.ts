@@ -14,7 +14,7 @@ import { yield_ } from "../../../scheduling/ContinuationLike";
 import { dispose, isDisposed } from "../../../util/DisposableLike";
 import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";
 
-const toRunnableObservable: ToRunnableObservable<
+const ReadonlyArrayLike__toRunnableObservable: ToRunnableObservable<
   ReadonlyArrayLike,
   {
     delay?: number;
@@ -81,4 +81,4 @@ const toRunnableObservable: ToRunnableObservable<
   };
 })();
 
-export default toRunnableObservable;
+export default ReadonlyArrayLike__toRunnableObservable;

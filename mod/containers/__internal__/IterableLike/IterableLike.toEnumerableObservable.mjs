@@ -1,8 +1,8 @@
 /// <reference types="./IterableLike.toEnumerableObservable.d.ts" />
 import { compose } from '../../../functions.mjs';
-import { toEnumerableObservable as toEnumerableObservable$1 } from '../../../ix/EnumerableLike.mjs';
-import toEnumerable from './IterableLike.toEnumerable.mjs';
+import { toEnumerableObservable } from '../../../ix/EnumerableLike.mjs';
+import IterableLike__toEnumerable from './IterableLike.toEnumerable.mjs';
 
-const toEnumerableObservable = _ => compose(toEnumerable(), toEnumerableObservable$1());
+const IterableLike__toEnumerableObservable = _ => compose(IterableLike__toEnumerable(), toEnumerableObservable());
 
-export { toEnumerableObservable as default };
+export { IterableLike__toEnumerableObservable as default };

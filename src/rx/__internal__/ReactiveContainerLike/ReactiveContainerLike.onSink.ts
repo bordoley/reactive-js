@@ -5,7 +5,7 @@ import DisposableLike__add from "../../../util/__internal__/DisposableLike/Dispo
 import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
 import { sinkInto } from "../../ReactiveContainerLike";
 
-const onSink = <
+const ReactiveContainerLike__onSink = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
   T,
@@ -28,4 +28,4 @@ const onSink = <
     );
   });
 
-export default onSink;
+export default ReactiveContainerLike__onSink;

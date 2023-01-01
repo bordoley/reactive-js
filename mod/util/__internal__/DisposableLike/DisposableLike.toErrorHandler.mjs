@@ -1,7 +1,7 @@
 /// <reference types="./DisposableLike.toErrorHandler.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import dispose from './DisposableLike.dispose.mjs';
+import DisposableLike__dispose from './DisposableLike.dispose.mjs';
 
-const toErrorHandler = (disposable) => cause => pipe(disposable, dispose({ cause }));
+const DisposableLike__toErrorHandler = (disposable) => cause => pipe(disposable, DisposableLike__dispose({ cause }));
 
-export { toErrorHandler as default };
+export { DisposableLike__toErrorHandler as default };

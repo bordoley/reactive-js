@@ -1,6 +1,6 @@
 /// <reference types="./RunnableObservableLike.create.d.ts" />
-import create$1 from '../ObservableLike/ObservableLike.create.mjs';
+import ObservableLike__create from '../ObservableLike/ObservableLike.create.mjs';
 
-const create = (f) => create$1(f, false, true);
+const RunnableObservableLike__create = (f) => ObservableLike__create(f, false, true);
 
-export { create as default };
+export { RunnableObservableLike__create as default };

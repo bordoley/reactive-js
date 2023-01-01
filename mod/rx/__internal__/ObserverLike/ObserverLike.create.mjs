@@ -1,14 +1,14 @@
 /// <reference types="./ObserverLike.create.d.ts" />
 import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import observerMixin from './ObserverLike.mixin.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import ObserverLike__observerMixin from './ObserverLike.mixin.mjs';
 
-const create = 
+const ObserverLike__create = 
 /*@__PURE__*/ (() => {
-    const typedObserverMixin = observerMixin();
-    return createInstanceFactory(mix(include(disposableMixin, typedObserverMixin), function Observer(instance, scheduler) {
-        init(disposableMixin, instance);
+    const typedObserverMixin = ObserverLike__observerMixin();
+    return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function Observer(instance, scheduler) {
+        init(DisposableLike__disposableMixin, instance);
         init(typedObserverMixin, instance, scheduler);
         return instance;
     }, {}, {
@@ -16,4 +16,4 @@ const create =
     }));
 })();
 
-export { create as default };
+export { ObserverLike__create as default };

@@ -2,7 +2,7 @@ import { SideEffect1, Updater, isSome } from "../../../functions";
 import { DisposableLike, Exception } from "../../../util";
 import addDisposableOrTeardown from "./DisposableLike.addDisposableOrTeardown";
 
-const onError =
+const DisposableLike__onError =
   <T extends DisposableLike>(teardown: SideEffect1<Exception>): Updater<T> =>
   disposable => {
     addDisposableOrTeardown(disposable, e => {
@@ -13,4 +13,4 @@ const onError =
     return disposable;
   };
 
-export default onError;
+export default DisposableLike__onError;

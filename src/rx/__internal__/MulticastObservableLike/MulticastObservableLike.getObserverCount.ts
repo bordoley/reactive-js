@@ -1,7 +1,7 @@
 import { MulticastObservableLike_observerCount } from "../../../rx";
 
-const getObserverCount = (obs: {
+const MulticastObservableLike__getObserverCount = (obs: {
   [MulticastObservableLike_observerCount]: number;
 }) => obs[MulticastObservableLike_observerCount];
 
-export default getObserverCount;
+export default MulticastObservableLike__getObserverCount;

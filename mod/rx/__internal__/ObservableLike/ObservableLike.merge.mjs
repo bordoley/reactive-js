@@ -1,6 +1,6 @@
 /// <reference types="./ObservableLike.merge.d.ts" />
-import mergeAll from './ObservableLike.mergeObservables.mjs';
+import ObservableLike__mergeObservables from './ObservableLike.mergeObservables.mjs';
 
-const merge = (...observables) => mergeAll(observables);
+const ObservableLike__merge = (...observables) => ObservableLike__mergeObservables(observables);
 
-export { merge as default };
+export { ObservableLike__merge as default };

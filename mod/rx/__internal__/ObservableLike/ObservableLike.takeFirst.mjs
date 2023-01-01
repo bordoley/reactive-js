@@ -1,23 +1,24 @@
 /// <reference types="./ObservableLike.takeFirst.d.ts" />
 import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
-import takeFirst$1 from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst.mjs';
+import StatefulContainerLike__takeFirst from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst.mjs';
 import { pipe } from '../../../functions.mjs';
 import { ObserverLike_scheduler } from '../../../rx.mjs';
-import observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
-import takeFirstMixin from '../SinkLike/SinkLike.takeFirstMixin.mjs';
-import liftEnumerableOperatorT from './ObservableLike.liftEnumerableOperatorT.mjs';
+import ObserverLike__observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
+import SinkLike__takeFirstMixin from '../SinkLike/SinkLike.takeFirstMixin.mjs';
+import ObservableLike__liftEnumerableOperatorT from './ObservableLike.liftEnumerableOperatorT.mjs';
 
-const takeFirst = /*@__PURE__*/ (() => {
+const ObservableLike__takeFirst = 
+/*@__PURE__*/ (() => {
     const createTakeFirstObserver = (() => {
-        const typedTakeFirstSinkMixin = takeFirstMixin();
-        const typedObserverMixin = observerMixin();
+        const typedTakeFirstSinkMixin = SinkLike__takeFirstMixin();
+        const typedObserverMixin = ObserverLike__observerMixin();
         return createInstanceFactory(mix(include(typedObserverMixin, typedTakeFirstSinkMixin), function TakeFirstObserver(instance, delegate, takeCount) {
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
             init(typedTakeFirstSinkMixin, instance, delegate, takeCount);
             return instance;
         }));
     })();
-    return pipe(createTakeFirstObserver, takeFirst$1(liftEnumerableOperatorT));
+    return pipe(createTakeFirstObserver, StatefulContainerLike__takeFirst(ObservableLike__liftEnumerableOperatorT));
 })();
 
-export { takeFirst as default };
+export { ObservableLike__takeFirst as default };

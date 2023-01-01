@@ -8,7 +8,7 @@ import ObservableLike__isRunnable from "../ObservableLike/ObservableLike.isRunna
 import ReactiveContainerLike__onSink from "../ReactiveContainerLike/ReactiveContainerLike.onSink";
 import RunnableObservableLike__create from "../RunnableObservableLike/RunnableObservableLike.create";
 
-const onSubscribe =
+const ObservableLike__onSubscribe =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
   (obs: ObservableLike<T>): ObservableLike<T> => {
     return ReactiveContainerLike__onSink(
@@ -23,4 +23,4 @@ const onSubscribe =
     );
   };
 
-export default onSubscribe;
+export default ObservableLike__onSubscribe;

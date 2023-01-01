@@ -2,7 +2,7 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome, strictEquality, none } from '../../../functions.mjs';
 
-const distinctUntilChanged = 
+const SequenceLike__distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const _distinctUntilChanged = (equality, prevValue, next) => () => {
         let retval = next();
@@ -35,4 +35,4 @@ const distinctUntilChanged =
     };
 })();
 
-export { distinctUntilChanged as default };
+export { SequenceLike__distinctUntilChanged as default };

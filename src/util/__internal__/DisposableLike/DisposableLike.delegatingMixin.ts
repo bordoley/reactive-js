@@ -12,7 +12,7 @@ import {
 import DisposableLike__dispose from "./DisposableLike.dispose";
 import DisposableLike__onDisposed from "./DisposableLike.onDisposed";
 
-const delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
+const DisposableLike__delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
   /*@__PURE__*/ (() => {
     const DelegatingDisposable_private_delegate = Symbol(
       "DelegatingDisposable_private_delegate",
@@ -74,4 +74,4 @@ const delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
     );
   })();
 
-export default delegatingMixin;
+export default DisposableLike__delegatingMixin;

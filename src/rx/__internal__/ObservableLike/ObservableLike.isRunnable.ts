@@ -4,7 +4,8 @@ import {
   RunnableObservableLike,
 } from "../../../rx";
 
-const isRunnable = (obs: ObservableLike): obs is RunnableObservableLike =>
-  obs[ObservableLike_isRunnable];
+const ObservableLike__isRunnable = (
+  obs: ObservableLike,
+): obs is RunnableObservableLike => obs[ObservableLike_isRunnable];
 
-export default isRunnable;
+export default ObservableLike__isRunnable;

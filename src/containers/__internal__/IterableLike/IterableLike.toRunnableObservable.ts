@@ -5,7 +5,7 @@ import { ToRunnableObservable } from "../../../rx";
 
 import IterableLike__toEnumerable from "./IterableLike.toEnumerable";
 
-const toRunnableObservable: ToRunnableObservable<
+const IterableLike__toRunnableObservable: ToRunnableObservable<
   IterableLike,
   {
     delay: number;
@@ -17,4 +17,4 @@ const toRunnableObservable: ToRunnableObservable<
     EnumerableLike__toRunnableObservable(options),
   );
 
-export default toRunnableObservable;
+export default IterableLike__toRunnableObservable;

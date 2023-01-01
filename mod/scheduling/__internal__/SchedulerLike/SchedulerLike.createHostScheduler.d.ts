@@ -1,5 +1,5 @@
 import { SchedulerLike } from "../../../scheduling.mjs";
-declare const createHostScheduler: (options?: {
+declare const SchedulerLike__createHostScheduler: (options?: {
     readonly yieldInterval?: number;
 }) => SchedulerLike;
-export { createHostScheduler as default };
+export { SchedulerLike__createHostScheduler as default };

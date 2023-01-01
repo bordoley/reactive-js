@@ -1,9 +1,9 @@
 /// <reference types="./ObservableLike.subscribe.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import addToIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
-import create from '../ObserverLike/ObserverLike.create.mjs';
-import sourceFrom from '../SinkLike/SinkLike.sourceFrom.mjs';
+import DisposableLike__addToIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
+import ObserverLike__create from '../ObserverLike/ObserverLike.create.mjs';
+import SinkLike__sourceFrom from '../SinkLike/SinkLike.sourceFrom.mjs';
 
-const subscribe = scheduler => observable => pipe(scheduler, create, addToIgnoringChildErrors(scheduler), sourceFrom(observable));
+const ObservableLike__subscribe = scheduler => observable => pipe(scheduler, ObserverLike__create, DisposableLike__addToIgnoringChildErrors(scheduler), SinkLike__sourceFrom(observable));
 
-export { subscribe as default };
+export { ObservableLike__subscribe as default };

@@ -6,7 +6,7 @@ import DisposableLike__addToIgnoringChildErrors from "../../../util/__internal__
 import ObserverLike__create from "../ObserverLike/ObserverLike.create";
 import sourceFrom from "../SinkLike/SinkLike.sourceFrom";
 
-const subscribe: <T>(
+const ObservableLike__subscribe: <T>(
   scheduler: SchedulerLike,
 ) => Function1<ObservableLike<T>, DisposableLike> = scheduler => observable =>
   pipe(
@@ -16,4 +16,4 @@ const subscribe: <T>(
     sourceFrom(observable),
   );
 
-export default subscribe;
+export default ObservableLike__subscribe;

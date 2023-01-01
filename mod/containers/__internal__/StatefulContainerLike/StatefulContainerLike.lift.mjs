@@ -1,4 +1,4 @@
 /// <reference types="./StatefulContainerLike.lift.d.ts" />
-const lift = ({ lift, }) => lift;
+const StatefulContainerLike__lift = ({ lift, }) => lift;
 
-export { lift as default };
+export { StatefulContainerLike__lift as default };

@@ -6,18 +6,19 @@ import {
 } from "../../../containers";
 import { isSome } from "../../../functions";
 
-const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
-  <T>() =>
-  (seq: SequenceLike<T>) => {
-    const result: T[] = [];
+const SequenceLike__toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
 
-    let next = seq();
-    while (isSome(next)) {
-      result.push(next[SequenceLike_data]);
-      next = next[SequenceLike_next]();
-    }
+    <T>() =>
+    (seq: SequenceLike<T>) => {
+      const result: T[] = [];
 
-    return result;
-  };
+      let next = seq();
+      while (isSome(next)) {
+        result.push(next[SequenceLike_data]);
+        next = next[SequenceLike_next]();
+      }
 
-export default toReadonlyArray;
+      return result;
+    };
+
+export default SequenceLike__toReadonlyArray;

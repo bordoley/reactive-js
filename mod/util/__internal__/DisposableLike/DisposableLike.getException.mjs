@@ -1,6 +1,6 @@
 /// <reference types="./DisposableLike.getException.d.ts" />
 import { DisposableLike_exception } from '../../../util.mjs';
 
-const getException = (disposable) => disposable[DisposableLike_exception];
+const DisposableLike__getException = (disposable) => disposable[DisposableLike_exception];
 
-export { getException as default };
+export { DisposableLike__getException as default };

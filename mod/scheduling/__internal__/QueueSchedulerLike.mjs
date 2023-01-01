@@ -9,17 +9,17 @@ import { isNone, none, isSome, max, pipe, unsafeCast } from '../../functions.mjs
 import { EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
 import { hasCurrent, getCurrent } from '../../ix/EnumeratorLike.mjs';
 import { move } from '../../ix/SourceLike.mjs';
-import mutableMixin from '../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
+import MutableEnumeratorLike__mixin from '../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../scheduling.mjs';
 import { run } from '../ContinuationLike.mjs';
 import { PauseableLike_pause, PauseableLike_resume } from '../../util.mjs';
 import { isDisposed, disposed, addIgnoringChildErrors } from '../../util/DisposableLike.mjs';
-import disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import yield_ from './ContinuationLike/ContinuationLike.yield.mjs';
-import getCurrentTime from './SchedulerLike/SchedulerLike.getCurrentTime.mjs';
-import isInContinuation from './SchedulerLike/SchedulerLike.isInContinuation.mjs';
-import schedule from './SchedulerLike/SchedulerLike.schedule.mjs';
-import shouldYield from './SchedulerLike/SchedulerLike.shouldYield.mjs';
+import DisposableLike__disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import ContinuationLike__yield_ from './ContinuationLike/ContinuationLike.yield.mjs';
+import SchedulerLike__getCurrentTime from './SchedulerLike/SchedulerLike.getCurrentTime.mjs';
+import SchedulerLike__isInContinuation from './SchedulerLike/SchedulerLike.isInContinuation.mjs';
+import SchedulerLike__schedule from './SchedulerLike/SchedulerLike.schedule.mjs';
+import SchedulerLike__shouldYield from './SchedulerLike/SchedulerLike.shouldYield.mjs';
 
 const create = 
 /*@__PURE__*/ (() => {
@@ -37,7 +37,7 @@ const create =
     };
     const peek = (instance) => {
         const { delayed, queue } = instance;
-        const now = getCurrentTime(instance.host);
+        const now = SchedulerLike__getCurrentTime(instance.host);
         while (true) {
             const task = delayed.peek();
             if (isNone(task)) {
@@ -68,7 +68,7 @@ const create =
     const priorityShouldYield = (instance, next) => {
         const { [EnumeratorLike_current]: current } = instance;
         return (current !== next &&
-            next.dueTime <= getCurrentTime(instance.host) &&
+            next.dueTime <= SchedulerLike__getCurrentTime(instance.host) &&
             next.priority > current.priority);
     };
     const scheduleOnHost = (instance) => {
@@ -81,12 +81,12 @@ const create =
             return;
         }
         const dueTime = task.dueTime;
-        const delay = max(dueTime - getCurrentTime(instance.host), 0);
+        const delay = max(dueTime - SchedulerLike__getCurrentTime(instance.host), 0);
         instance.dueTime = dueTime;
         const continuation = (_a = instance.hostContinuation) !== null && _a !== void 0 ? _a : (() => {
             for (let task = peek(instance); isSome(task) && !isDisposed(instance); task = peek(instance)) {
                 const { continuation, dueTime } = task;
-                const delay = max(dueTime - getCurrentTime(instance.host), 0);
+                const delay = max(dueTime - SchedulerLike__getCurrentTime(instance.host), 0);
                 if (delay === 0) {
                     move(instance);
                     instance[SchedulerLike_inContinuation] = true;
@@ -94,18 +94,18 @@ const create =
                     instance[SchedulerLike_inContinuation] = false;
                 }
                 else {
-                    instance.dueTime = getCurrentTime(instance.host) + delay;
+                    instance.dueTime = SchedulerLike__getCurrentTime(instance.host) + delay;
                 }
-                yield_({ delay });
+                ContinuationLike__yield_({ delay });
             }
         });
         instance.hostContinuation = continuation;
-        instance[MutableRefLike_current] = pipe(instance.host, schedule(continuation, { delay }));
+        instance[MutableRefLike_current] = pipe(instance.host, SchedulerLike__schedule(continuation, { delay }));
     };
     const typedDisposableRefMixin = disposableRefMixin();
-    const typedMutableEnumeratorMixin = mutableMixin();
-    return createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
-        init(disposableMixin, instance);
+    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
+    return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
+        init(DisposableLike__disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(typedDisposableRefMixin, instance, disposed);
         instance.delayed = createPriorityQueue(delayedComparator);
@@ -125,7 +125,7 @@ const create =
     }), {
         get [SchedulerLike_now]() {
             unsafeCast(this);
-            return getCurrentTime(this.host);
+            return SchedulerLike__getCurrentTime(this.host);
         },
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
@@ -140,7 +140,7 @@ const create =
                     !hasCurrent(this) ||
                     this.isPaused ||
                     (isSome(next) ? priorityShouldYield(this, next) : false) ||
-                    shouldYield(this.host)));
+                    SchedulerLike__shouldYield(this.host)));
         },
         [SourceLike_move]() {
             // First fast forward through disposed tasks.
@@ -166,9 +166,9 @@ const create =
             const { priority } = options !== null && options !== void 0 ? options : {};
             pipe(this, addIgnoringChildErrors(continuation));
             if (!isDisposed(continuation)) {
-                const now = getCurrentTime(this.host);
+                const now = SchedulerLike__getCurrentTime(this.host);
                 const dueTime = max(now + delay, now);
-                const task = isInContinuation(this) &&
+                const task = SchedulerLike__isInContinuation(this) &&
                     hasCurrent(this) &&
                     getCurrent(this).continuation === continuation &&
                     delay <= 0

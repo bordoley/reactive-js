@@ -1,7 +1,7 @@
 /// <reference types="./PromiseableLike.d.ts" />
-import toObservable$1 from './__internal__/PromiseableLike/PromiseableLike.toObservable.mjs';
+import IterableLike__toObservable from './__internal__/PromiseableLike/PromiseableLike.toObservable.mjs';
 
-const toObservable = toObservable$1;
+const toObservable = IterableLike__toObservable;
 const toObservableT = { toObservable };
 
 export { toObservable, toObservableT };

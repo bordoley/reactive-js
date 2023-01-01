@@ -1,7 +1,7 @@
 /// <reference types="./StatefulContainerLike.throwIfEmpty.d.ts" />
 import { pipe, partial } from '../../../functions.mjs';
-import lift from './StatefulContainerLike.lift.mjs';
+import StatefulContainerLike__lift from './StatefulContainerLike.lift.mjs';
 
-const throwIfEmpty = (m) => (operator) => (factory) => pipe(operator, partial(factory), lift(m));
+const StatefulContainerLike__throwIfEmpty = (m) => (operator) => (factory) => pipe(operator, partial(factory), StatefulContainerLike__lift(m));
 
-export { throwIfEmpty as default };
+export { StatefulContainerLike__throwIfEmpty as default };

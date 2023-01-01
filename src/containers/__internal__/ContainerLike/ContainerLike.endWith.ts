@@ -8,7 +8,7 @@ import {
 
 import Container__concatWith from "./ContainerLike.concatWith";
 
-const endWith = <
+const ContainerLike__endWith = <
   C extends ContainerLike,
   T,
   O extends FromArrayOptions = FromArrayOptions,
@@ -18,4 +18,4 @@ const endWith = <
 ): ContainerOperator<C, T, T> =>
   Container__concatWith(m, m.fromArray<T>()(values));
 
-export default endWith;
+export default ContainerLike__endWith;

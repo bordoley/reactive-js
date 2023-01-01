@@ -1,7 +1,7 @@
 import { Mixin1 } from "../../../__internal__/mixins.mjs";
 import { SinkLike } from "../../../rx.mjs";
-declare const pairwiseMixin: <T>() => Mixin1<SinkLike<T>, SinkLike<readonly [
+declare const SinkLike__pairwiseMixin: <T>() => Mixin1<SinkLike<T>, SinkLike<readonly [
     T,
     T
 ]>>;
-export { pairwiseMixin as default };
+export { SinkLike__pairwiseMixin as default };

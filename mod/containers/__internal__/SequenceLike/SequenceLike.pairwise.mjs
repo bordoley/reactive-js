@@ -2,7 +2,8 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome, none } from '../../../functions.mjs';
 
-const pairwise = /*@__PURE__*/ (() => {
+const SequenceLike__pairwise = 
+/*@__PURE__*/ (() => {
     const _pairwise = (prev, seq) => () => {
         const result = seq();
         if (isSome(result)) {
@@ -28,4 +29,4 @@ const pairwise = /*@__PURE__*/ (() => {
     };
 })();
 
-export { pairwise as default };
+export { SequenceLike__pairwise as default };

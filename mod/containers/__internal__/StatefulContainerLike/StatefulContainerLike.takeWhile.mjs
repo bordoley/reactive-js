@@ -1,10 +1,10 @@
 /// <reference types="./StatefulContainerLike.takeWhile.d.ts" />
 import { pipe, partial } from '../../../functions.mjs';
-import lift from './StatefulContainerLike.lift.mjs';
+import StatefulContainerLike__lift from './StatefulContainerLike.lift.mjs';
 
-const takeWhile = (m) => (operator) => (predicate, options = {}) => {
+const StatefulContainerLike__takeWhile = (m) => (operator) => (predicate, options = {}) => {
     const { inclusive = false } = options;
-    return pipe(operator, partial(predicate, inclusive), lift(m));
+    return pipe(operator, partial(predicate, inclusive), StatefulContainerLike__lift(m));
 };
 
-export { takeWhile as default };
+export { StatefulContainerLike__takeWhile as default };

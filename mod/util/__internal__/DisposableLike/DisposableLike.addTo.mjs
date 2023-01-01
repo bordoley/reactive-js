@@ -1,9 +1,9 @@
 /// <reference types="./DisposableLike.addTo.d.ts" />
-import addDisposableOrTeardown from './DisposableLike.addDisposableOrTeardown.mjs';
+import DisposableLike__addDisposableOrTeardown from './DisposableLike.addDisposableOrTeardown.mjs';
 
-const addTo = (parent) => (child) => {
-    addDisposableOrTeardown(parent, child);
+const DisposableLike__addTo = (parent) => (child) => {
+    DisposableLike__addDisposableOrTeardown(parent, child);
     return child;
 };
 
-export { addTo as default };
+export { DisposableLike__addTo as default };

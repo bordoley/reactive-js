@@ -1,9 +1,9 @@
 /// <reference types="./ObserverLike.schedule.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import { schedule as schedule$1 } from '../../../scheduling/SchedulerLike.mjs';
+import { schedule } from '../../../scheduling/SchedulerLike.mjs';
 import { addTo } from '../../../util/DisposableLike.mjs';
-import getScheduler from './ObserverLike.getScheduler.mjs';
+import ObserverLike__getScheduler from './ObserverLike.getScheduler.mjs';
 
-const schedule = (f, options) => observer => pipe(observer, getScheduler, schedule$1(f, options), addTo(observer));
+const ObserverLike__schedule = (f, options) => observer => pipe(observer, ObserverLike__getScheduler, schedule(f, options), addTo(observer));
 
-export { schedule as default };
+export { ObserverLike__schedule as default };

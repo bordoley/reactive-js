@@ -1,8 +1,8 @@
 /// <reference types="./DisposableLike.toObservable.d.ts" />
 import { compose } from '../../../functions.mjs';
-import create from '../../../rx/__internal__/ObservableLike/ObservableLike.create.mjs';
-import addTo from './DisposableLike.addTo.mjs';
+import ObservableLike__create from '../../../rx/__internal__/ObservableLike/ObservableLike.create.mjs';
+import DisposableLike__addTo from './DisposableLike.addTo.mjs';
 
-const toObservable = () => compose(addTo, create);
+const DisposableLike__toObservable = () => compose(DisposableLike__addTo, ObservableLike__create);
 
-export { toObservable as default };
+export { DisposableLike__toObservable as default };

@@ -4,7 +4,7 @@ import { pipe, callWith, isSome, getLength, none } from '../../../functions.mjs'
 import { keepType } from '../../ContainerLike.mjs';
 import { map, keepT } from '../../ReadonlyArrayLike.mjs';
 
-const zip = /*@__PURE__*/ (() => {
+const SequenceLike__zip = /*@__PURE__*/ (() => {
     const zip = (...sequences) => () => {
         const nextResults = pipe(sequences, map(callWith()), keepType(keepT, isSome));
         return getLength(nextResults) === getLength(sequences)
@@ -17,4 +17,4 @@ const zip = /*@__PURE__*/ (() => {
     return zip;
 })();
 
-export { zip as default };
+export { SequenceLike__zip as default };

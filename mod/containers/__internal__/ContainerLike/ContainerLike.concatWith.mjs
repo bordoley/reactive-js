@@ -1,4 +1,4 @@
 /// <reference types="./ContainerLike.concatWith.d.ts" />
-const concatWith = ({ concat }, snd, ...tail) => first => concat(first, snd, ...tail);
+const ContainerLike__concatWith = ({ concat }, snd, ...tail) => first => concat(first, snd, ...tail);
 
-export { concatWith as default };
+export { ContainerLike__concatWith as default };

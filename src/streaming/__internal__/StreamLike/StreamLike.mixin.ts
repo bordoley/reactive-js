@@ -35,7 +35,7 @@ import { StreamLike } from "../../../streaming";
 import add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 
-const mixin: <TReq, T>() => Mixin3<
+const StreamLike__mixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T>,
   ContainerOperator<ObservableLike, TReq, T>,
   SchedulerLike,
@@ -116,4 +116,4 @@ const mixin: <TReq, T>() => Mixin3<
   );
 })();
 
-export default mixin;
+export default StreamLike__mixin;

@@ -8,7 +8,7 @@ import { SinkLike, SinkLike_notify } from "../../../rx";
 
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 
-const create: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
+const SinkLike__create: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
       include(DisposableLike__mixin),
@@ -26,4 +26,4 @@ const create: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
     ),
   ))();
 
-export default create;
+export default SinkLike__create;

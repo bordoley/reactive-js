@@ -6,12 +6,12 @@ import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options
 import { none, unsafeCast, pipe, isSome } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import { move, getCurrent } from '../../../ix/EnumeratorLike.mjs';
-import mutableMixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
+import MutableEnumeratorLike__mixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, ContinuationLike_run, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { run } from '../../ContinuationLike.mjs';
 import { addIgnoringChildErrors, isDisposed, dispose } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import getCurrentTime from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import SchedulerLike__getCurrentTime from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 
 const comparator = (a, b) => {
     let diff = 0;
@@ -20,9 +20,9 @@ const comparator = (a, b) => {
     return diff;
 };
 const typedMutableEnumeratorMixin = 
-/*@__PURE__*/ mutableMixin();
-const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
-    init(disposableMixin, instance);
+/*@__PURE__*/ MutableEnumeratorLike__mixin();
+const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+    init(DisposableLike__disposableMixin, instance);
     init(typedMutableEnumeratorMixin, instance);
     instance.maxMicroTaskTicks = maxMicroTaskTicks;
     instance.taskQueue = createPriorityQueue(comparator);
@@ -66,7 +66,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         if (!isDisposed(continuation)) {
             this.taskQueue.push({
                 id: this.taskIDCount++,
-                dueTime: getCurrentTime(this) + delay,
+                dueTime: SchedulerLike__getCurrentTime(this) + delay,
                 continuation,
             });
         }
@@ -85,9 +85,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         }
     },
 }));
-const create = (options = {}) => {
+const VirtualTimeSchedulerLike__create = (options = {}) => {
     const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
     return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
 };
 
-export { create as default };
+export { VirtualTimeSchedulerLike__create as default };

@@ -5,18 +5,18 @@ import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, 
 import { getObserverCount, getReplay } from '../../../rx/MulticastObservableLike.mjs';
 import { sinkInto } from '../../../rx/ReactiveContainerLike.mjs';
 import { create, publish } from '../../../rx/SubjectLike.mjs';
-import multicast from '../../../rx/__internal__/ObservableLike/ObservableLike.multicast.mjs';
+import ObservableLike__multicast from '../../../rx/__internal__/ObservableLike/ObservableLike.multicast.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../../scheduling.mjs';
-import add from '../../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
-import delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import DisposableLike__add from '../../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
+import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 
-const mixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(delegatingMixin), function Stream(instance, op, scheduler, replay) {
+const StreamLike__mixin = /*@__PURE__*/ (() => {
+    return returns(mix(include(DisposableLike__delegatingMixin), function Stream(instance, op, scheduler, replay) {
         const subject = create({ replay });
-        init(delegatingMixin, instance, subject);
+        init(DisposableLike__delegatingMixin, instance, subject);
         instance[DispatcherLike_scheduler] = scheduler;
         instance.subject = subject;
-        instance.observable = pipe(subject, op, multicast(scheduler, { replay }), add(instance));
+        instance.observable = pipe(subject, op, ObservableLike__multicast(scheduler, { replay }), DisposableLike__add(instance));
         return instance;
     }, props({
         subject: none,
@@ -42,4 +42,4 @@ const mixin = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { mixin as default };
+export { StreamLike__mixin as default };

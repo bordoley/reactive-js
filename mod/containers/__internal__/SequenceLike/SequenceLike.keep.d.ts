@@ -1,3 +1,3 @@
 import { Keep, SequenceLike } from "../../../containers.mjs";
-declare const keep: Keep<SequenceLike>["keep"];
-export { keep as default };
+declare const SequenceLike__keep: Keep<SequenceLike>["keep"];
+export { SequenceLike__keep as default };

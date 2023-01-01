@@ -4,13 +4,12 @@ import { newInstance, none, unsafeCast, getLength, pipe, max } from '../../../fu
 import { MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, SubjectLike_publish, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
 import { dispatch } from '../../../scheduling/DispatcherLike.mjs';
 import { isDisposed, onDisposed, addIgnoringChildErrors } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { getDispatcher } from '../../ObserverLike.mjs';
 
-const create = 
-/*@__PURE__*/ (() => {
-    const createSubjectInstance = createInstanceFactory(mix(include(disposableMixin), function Subject(instance, replay) {
-        init(disposableMixin, instance);
+const SubjectLike__create = /*@__PURE__*/ (() => {
+    const createSubjectInstance = createInstanceFactory(mix(include(DisposableLike__disposableMixin), function Subject(instance, replay) {
+        init(DisposableLike__disposableMixin, instance);
         instance[MulticastObservableLike_replay] = replay;
         instance.observers = newInstance(Set);
         instance.replayed = [];
@@ -66,4 +65,4 @@ const create =
     };
 })();
 
-export { create as default };
+export { SubjectLike__create as default };

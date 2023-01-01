@@ -15,59 +15,60 @@ type TEnumeratorMixinReturn<T> = Omit<
   keyof DisposableLike | typeof SourceLike_move
 >;
 
-const mutableMixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> = /*@__PURE__*/ (<
-  T,
->() => {
-  const Enumerator_private_current = Symbol("Enumerator_private_current");
-  const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
+const MutableEnumeratorLike__mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
+  /*@__PURE__*/ (<T>() => {
+    const Enumerator_private_current = Symbol("Enumerator_private_current");
+    const Enumerator_private_hasCurrent = Symbol(
+      "Enumerator_private_hasCurrent",
+    );
 
-  type TProperties = {
-    [Enumerator_private_current]: T;
-    [Enumerator_private_hasCurrent]: boolean;
-  };
+    type TProperties = {
+      [Enumerator_private_current]: T;
+      [Enumerator_private_hasCurrent]: boolean;
+    };
 
-  return pipe(
-    mix(
-      function EnumeratorMixin(
-        instance: Pick<
-          EnumeratorLike<T>,
-          typeof EnumeratorLike_current | typeof EnumeratorLike_hasCurrent
-        > &
-          TProperties,
-      ): TEnumeratorMixinReturn<T> {
-        instance[Enumerator_private_hasCurrent] = false;
+    return pipe(
+      mix(
+        function EnumeratorMixin(
+          instance: Pick<
+            EnumeratorLike<T>,
+            typeof EnumeratorLike_current | typeof EnumeratorLike_hasCurrent
+          > &
+            TProperties,
+        ): TEnumeratorMixinReturn<T> {
+          instance[Enumerator_private_hasCurrent] = false;
 
-        return instance;
-      },
-      props<TProperties>({
-        [Enumerator_private_current]: none,
-        [Enumerator_private_hasCurrent]: false,
-      }),
-      {
-        get [EnumeratorLike_current](): T {
-          unsafeCast<TProperties & EnumeratorLike<T>>(this);
-          return this[EnumeratorLike_hasCurrent]
-            ? this[Enumerator_private_current]
-            : raise();
+          return instance;
         },
-        set [EnumeratorLike_current](v: T) {
-          unsafeCast<TProperties & EnumeratorLike<T>>(this);
-          if (!DisposableLike__isDisposed(this)) {
-            this[Enumerator_private_current] = v;
-            this[Enumerator_private_hasCurrent] = true;
-          }
+        props<TProperties>({
+          [Enumerator_private_current]: none,
+          [Enumerator_private_hasCurrent]: false,
+        }),
+        {
+          get [EnumeratorLike_current](): T {
+            unsafeCast<TProperties & EnumeratorLike<T>>(this);
+            return this[EnumeratorLike_hasCurrent]
+              ? this[Enumerator_private_current]
+              : raise();
+          },
+          set [EnumeratorLike_current](v: T) {
+            unsafeCast<TProperties & EnumeratorLike<T>>(this);
+            if (!DisposableLike__isDisposed(this)) {
+              this[Enumerator_private_current] = v;
+              this[Enumerator_private_hasCurrent] = true;
+            }
+          },
+          get [EnumeratorLike_hasCurrent](): boolean {
+            unsafeCast<TProperties & EnumeratorLike<T>>(this);
+            return (
+              !DisposableLike__isDisposed(this) &&
+              this[Enumerator_private_hasCurrent]
+            );
+          },
         },
-        get [EnumeratorLike_hasCurrent](): boolean {
-          unsafeCast<TProperties & EnumeratorLike<T>>(this);
-          return (
-            !DisposableLike__isDisposed(this) &&
-            this[Enumerator_private_hasCurrent]
-          );
-        },
-      },
-    ),
-    returns,
-  );
-})();
+      ),
+      returns,
+    );
+  })();
 
-export default mutableMixin;
+export default MutableEnumeratorLike__mixin;

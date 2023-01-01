@@ -1,3 +1,3 @@
 import { Repeat, SequenceLike } from "../../../containers.mjs";
-declare const repeat: Repeat<SequenceLike>["repeat"];
-export { repeat as default };
+declare const SequenceLike__repeat: Repeat<SequenceLike>["repeat"];
+export { SequenceLike__repeat as default };

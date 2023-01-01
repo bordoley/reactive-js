@@ -19,7 +19,7 @@ import { sinkInto } from "../../ReactiveContainerLike";
 import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const satisfyMixin: <
+const SinkLike__satisfyMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<boolean>,
   T,
@@ -83,4 +83,4 @@ const satisfyMixin: <
   );
 };
 
-export default satisfyMixin;
+export default SinkLike__satisfyMixin;

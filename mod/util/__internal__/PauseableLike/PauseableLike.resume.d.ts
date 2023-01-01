@@ -1,5 +1,5 @@
 import { PauseableLike_resume } from "../../../util.mjs";
-declare const resume: <TPauseable extends {
+declare const auseableLike__resume: <TPauseable extends {
     [PauseableLike_resume](): void;
 }>(pausable: TPauseable) => TPauseable;
-export { resume as default };
+export { auseableLike__resume as default };

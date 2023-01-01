@@ -3,16 +3,15 @@ import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { dispose } from '../../../util/DisposableLike.mjs';
-import delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const takeFirstMixin = 
-/*@__PURE__*/ (() => {
+const SinkLike__takeFirstMixin = /*@__PURE__*/ (() => {
     const TakeFirstSink_private_takeCount = Symbol("TakeFirstSink_private_takeCount");
     const TakeFirstSink_private_count = Symbol("TakeFirstSink_private_count");
-    return returns(mix(include(delegatingMixin), function TakeFirstSink(instance, delegate, takeCount) {
-        init(delegatingMixin, instance, delegate);
+    return returns(mix(include(DisposableLike__delegatingMixin), function TakeFirstSink(instance, delegate, takeCount) {
+        init(DisposableLike__delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[TakeFirstSink_private_takeCount] = takeCount;
         if (takeCount === 0) {
@@ -35,4 +34,4 @@ const takeFirstMixin =
     }));
 })();
 
-export { takeFirstMixin as default };
+export { SinkLike__takeFirstMixin as default };

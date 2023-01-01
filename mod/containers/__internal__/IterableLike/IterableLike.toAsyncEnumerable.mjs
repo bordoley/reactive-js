@@ -1,8 +1,8 @@
 /// <reference types="./IterableLike.toAsyncEnumerable.d.ts" />
 import { compose } from '../../../functions.mjs';
 import { fromEnumerable } from '../../../ix/AsyncEnumerableLike.mjs';
-import toEnumerable from './IterableLike.toEnumerable.mjs';
+import IterableLike__toEnumerable from './IterableLike.toEnumerable.mjs';
 
-const toAsyncEnumerable = () => compose(toEnumerable(), fromEnumerable());
+const IterableLike__toAsyncEnumerable = () => compose(IterableLike__toEnumerable(), fromEnumerable());
 
-export { toAsyncEnumerable as default };
+export { IterableLike__toAsyncEnumerable as default };

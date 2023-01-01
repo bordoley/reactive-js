@@ -9,7 +9,7 @@ import {
 import { Function2, Predicate, partial, pipe } from "../../../functions";
 import StatefulContainer__lift from "./StatefulContainerLike.lift";
 
-const keep =
+const StatefulContainerLike__keep =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -23,4 +23,4 @@ const keep =
   (predicate: Predicate<T>) =>
     pipe(operator, partial(predicate), StatefulContainer__lift(m));
 
-export default keep;
+export default StatefulContainerLike__keep;

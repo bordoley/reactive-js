@@ -2,16 +2,16 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
-import create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
-import mutableMixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
+import EnumerableLike__create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
+import MutableEnumeratorLike__mixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
-import disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import toContainer from './ReadonlyArrayLike.toContainer.mjs';
+import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import ReadonlyArrayLike__toContainer from './ReadonlyArrayLike.toContainer.mjs';
 
-const toEnumerable = /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = mutableMixin();
-    const createReadonlyArrayEnumerator = createInstanceFactory(mix(include(disposableMixin, typedMutableEnumeratorMixin), function ReadonlyArrayEnumerator(instance, array, start, count) {
-        init(disposableMixin, instance);
+const ReadonlyArrayLike__toEnumerable = /*@__PURE__*/ (() => {
+    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
+    const createReadonlyArrayEnumerator = createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin), function ReadonlyArrayEnumerator(instance, array, start, count) {
+        init(DisposableLike__disposableMixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.array = array;
         instance.index = start - 1;
@@ -37,7 +37,7 @@ const toEnumerable = /*@__PURE__*/ (() => {
             }
         },
     }));
-    return toContainer((array, start, count) => create(() => createReadonlyArrayEnumerator(array, start, count)));
+    return ReadonlyArrayLike__toContainer((array, start, count) => EnumerableLike__create(() => createReadonlyArrayEnumerator(array, start, count)));
 })();
 
-export { toEnumerable as default };
+export { ReadonlyArrayLike__toEnumerable as default };

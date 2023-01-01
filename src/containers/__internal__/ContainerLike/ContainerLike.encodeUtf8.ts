@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { newInstance, pipe } from "../../../functions";
 
-const encodeUtf8 =
+const ContainerLike__encodeUtf8 =
   <C extends ContainerLike>(
     m: Defer<C> & Map<C>,
   ): ContainerOperator<C, string, Uint8Array> =>
@@ -19,4 +19,4 @@ const encodeUtf8 =
       );
     });
 
-export default encodeUtf8;
+export default ContainerLike__encodeUtf8;

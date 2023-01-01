@@ -1,3 +1,3 @@
 import { Zip, SequenceLike } from "../../../containers.mjs";
-declare const zip: Zip<SequenceLike>["zip"];
-export { zip as default };
+declare const SequenceLike__zip: Zip<SequenceLike>["zip"];
+export { SequenceLike__zip as default };

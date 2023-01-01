@@ -4,7 +4,7 @@ import { ReactiveContainerLike, SinkLike } from "../../../rx";
 
 import SinkLike__satisfyMixin from "./SinkLike.satisfyMixin";
 
-const someSatisfyMixin: <
+const SinkLike__someSatisfyMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<boolean>,
   T,
@@ -35,4 +35,4 @@ const someSatisfyMixin: <
   );
 };
 
-export default someSatisfyMixin;
+export default SinkLike__someSatisfyMixin;

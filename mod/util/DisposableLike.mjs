@@ -1,43 +1,43 @@
 /// <reference types="./DisposableLike.d.ts" />
 import '../util.mjs';
-import add$1 from './__internal__/DisposableLike/DisposableLike.add.mjs';
-import addIgnoringChildErrors$1 from './__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors.mjs';
-import addTo$1 from './__internal__/DisposableLike/DisposableLike.addTo.mjs';
-import addToIgnoringChildErrors$1 from './__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
-import bindTo$1 from './__internal__/DisposableLike/DisposableLike.bindTo.mjs';
-import create$1 from './__internal__/DisposableLike/DisposableLike.create.mjs';
-import dispose$1 from './__internal__/DisposableLike/DisposableLike.dispose.mjs';
-import disposed$1 from './__internal__/DisposableLike/DisposableLike.disposed.mjs';
-import getException$1 from './__internal__/DisposableLike/DisposableLike.getException.mjs';
-import isDisposed$1 from './__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
-import onComplete$1 from './__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import onDisposed$1 from './__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
-import onError$1 from './__internal__/DisposableLike/DisposableLike.onError.mjs';
-import toAbortSignal$1 from './__internal__/DisposableLike/DisposableLike.toAbortSignal.mjs';
-import toErrorHandler$1 from './__internal__/DisposableLike/DisposableLike.toErrorHandler.mjs';
-import toObservable$1 from './__internal__/DisposableLike/DisposableLike.toObservable.mjs';
+import DisposableLike__add from './__internal__/DisposableLike/DisposableLike.add.mjs';
+import DisposableLike__addIgnoringChildErrors from './__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors.mjs';
+import DisposableLike__addTo from './__internal__/DisposableLike/DisposableLike.addTo.mjs';
+import DisposableLike__addToIgnoringChildErrors from './__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
+import DisposableLike__bindTo from './__internal__/DisposableLike/DisposableLike.bindTo.mjs';
+import DisposableLike__create from './__internal__/DisposableLike/DisposableLike.create.mjs';
+import DisposableLike__dispose from './__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__disposed from './__internal__/DisposableLike/DisposableLike.disposed.mjs';
+import DisposableLike__getException from './__internal__/DisposableLike/DisposableLike.getException.mjs';
+import DisposableLike__isDisposed from './__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
+import DisposableLike__onComplete from './__internal__/DisposableLike/DisposableLike.onComplete.mjs';
+import DisposableLike__onDisposed from './__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
+import DisposableLike__onError from './__internal__/DisposableLike/DisposableLike.onError.mjs';
+import DisposableLike__toAbortSignal from './__internal__/DisposableLike/DisposableLike.toAbortSignal.mjs';
+import DisposableLike__toErrorHandler from './__internal__/DisposableLike/DisposableLike.toErrorHandler.mjs';
+import DisposableLike__toObservable from './__internal__/DisposableLike/DisposableLike.toObservable.mjs';
 
-const add = add$1;
-const addIgnoringChildErrors = addIgnoringChildErrors$1;
-const addTo = addTo$1;
-const addToIgnoringChildErrors = addToIgnoringChildErrors$1;
-const bindTo = bindTo$1;
-const create = create$1;
+const add = DisposableLike__add;
+const addIgnoringChildErrors = DisposableLike__addIgnoringChildErrors;
+const addTo = DisposableLike__addTo;
+const addToIgnoringChildErrors = DisposableLike__addToIgnoringChildErrors;
+const bindTo = DisposableLike__bindTo;
+const create = DisposableLike__create;
 /**
  * Dispose `disposable` with an optional error.
  */
-const dispose = dispose$1;
-const disposed = disposed$1;
-const getException = getException$1;
-const isDisposed = isDisposed$1;
-const onComplete = onComplete$1;
-const onDisposed = onDisposed$1;
-const onError = onError$1;
-const toAbortSignal = toAbortSignal$1;
+const dispose = DisposableLike__dispose;
+const disposed = DisposableLike__disposed;
+const getException = DisposableLike__getException;
+const isDisposed = DisposableLike__isDisposed;
+const onComplete = DisposableLike__onComplete;
+const onDisposed = DisposableLike__onDisposed;
+const onError = DisposableLike__onError;
+const toAbortSignal = DisposableLike__toAbortSignal;
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
-const toErrorHandler = toErrorHandler$1;
-const toObservable = toObservable$1;
+const toErrorHandler = DisposableLike__toErrorHandler;
+const toObservable = DisposableLike__toObservable;
 
 export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, create, dispose, disposed, getException, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler, toObservable };

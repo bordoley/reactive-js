@@ -3,7 +3,9 @@ import { PauseableSchedulerLike, SchedulerLike } from "../../../scheduling";
 import { pause } from "../../../util/PauseableLike";
 import { create as createQueueScheduler } from "../QueueSchedulerLike";
 
-const toPausableScheduler: Function1<SchedulerLike, PauseableSchedulerLike> =
-  /*@__PURE__*/ compose(createQueueScheduler, pause);
+const SchedulerLike__toPausableScheduler: Function1<
+  SchedulerLike,
+  PauseableSchedulerLike
+> = /*@__PURE__*/ compose(createQueueScheduler, pause);
 
-export default toPausableScheduler;
+export default SchedulerLike__toPausableScheduler;

@@ -1,6 +1,6 @@
 /// <reference types="./SchedulerLike.isInContinuation.d.ts" />
 import { SchedulerLike_inContinuation } from '../../../scheduling.mjs';
 
-const isInContinuation = (scheduler) => scheduler[SchedulerLike_inContinuation];
+const SchedulerLike__isInContinuation = (scheduler) => scheduler[SchedulerLike_inContinuation];
 
-export { isInContinuation as default };
+export { SchedulerLike__isInContinuation as default };

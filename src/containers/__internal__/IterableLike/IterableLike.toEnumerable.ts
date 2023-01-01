@@ -20,7 +20,7 @@ import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
 import { dispose, isDisposed } from "../../../util/DisposableLike";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 
-const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
+const IterableLike__toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
     const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
 
@@ -66,4 +66,4 @@ const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
       );
   })();
 
-export default toEnumerable;
+export default IterableLike__toEnumerable;

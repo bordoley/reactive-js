@@ -10,7 +10,7 @@ import RunnableLike__create from "../../../rx/__internal__/RunnableLike/Runnable
 import { add, dispose } from "../../../util/DisposableLike";
 import EnumeratorLike__forEach from "../EnumeratorLike/EnumeratorLike.forEach";
 
-const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
+const EnumerableLike__toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
   /*@__PURE__*/ (() => {
     const enumeratorToRunnable = <T>(
       f: Factory<EnumeratorLike<T>>,
@@ -33,4 +33,4 @@ const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
         );
   })();
 
-export default toRunnable;
+export default EnumerableLike__toRunnable;

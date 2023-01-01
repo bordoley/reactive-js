@@ -4,7 +4,7 @@ import { EnumeratorLike } from "../../../ix";
 import EnumeratorLike__getCurrent from "./EnumeratorLike.getCurrent";
 import EnumeratorLike__move from "./EnumeratorLike.move";
 
-const forEach =
+const EnumeratorLike__forEach =
   <T, TEnumerator extends EnumeratorLike<T> = EnumeratorLike<T>>(
     f: SideEffect1<T>,
   ): Function1<TEnumerator, TEnumerator> =>
@@ -15,4 +15,4 @@ const forEach =
     return enumerator;
   };
 
-export default forEach;
+export default EnumeratorLike__forEach;

@@ -1,3 +1,3 @@
 import { EnumeratorLike } from "../../../ix.mjs";
-declare const empty: <T>() => EnumeratorLike<T>;
-export { empty as default };
+declare const EnumeratorLike__empty: <T>() => EnumeratorLike<T>;
+export { EnumeratorLike__empty as default };

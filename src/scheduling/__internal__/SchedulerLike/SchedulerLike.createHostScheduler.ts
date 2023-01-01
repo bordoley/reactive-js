@@ -201,7 +201,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   ),
 );
 
-const createHostScheduler = (
+const SchedulerLike__createHostScheduler = (
   options: {
     readonly yieldInterval?: number;
   } = {},
@@ -210,4 +210,4 @@ const createHostScheduler = (
   return createHostSchedulerInstance(yieldInterval);
 };
 
-export default createHostScheduler;
+export default SchedulerLike__createHostScheduler;

@@ -6,7 +6,7 @@ import {
 import SourceLike__move from "../SourceLike/SourceLike.move";
 import EnumeratorLike__hasCurrent from "./EnumeratorLike.hasCurrent";
 
-const move = <T>(enumerator: {
+const EnumeratorLike__move = <T>(enumerator: {
   [EnumeratorLike_current]: T;
   [EnumeratorLike_hasCurrent]: boolean;
   [SourceLike_move]: () => void;
@@ -15,4 +15,4 @@ const move = <T>(enumerator: {
   return EnumeratorLike__hasCurrent(enumerator);
 };
 
-export default move;
+export default EnumeratorLike__move;

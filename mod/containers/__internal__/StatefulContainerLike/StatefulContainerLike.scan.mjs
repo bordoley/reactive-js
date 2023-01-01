@@ -1,7 +1,7 @@
 /// <reference types="./StatefulContainerLike.scan.d.ts" />
 import { pipe, partial } from '../../../functions.mjs';
-import lift from './StatefulContainerLike.lift.mjs';
+import StatefulContainerLike__lift from './StatefulContainerLike.lift.mjs';
 
-const scan = (m) => (operator) => (reducer, initialValue) => pipe(operator, partial(reducer, initialValue), lift(m));
+const StatefulContainerLike__scan = (m) => (operator) => (reducer, initialValue) => pipe(operator, partial(reducer, initialValue), StatefulContainerLike__lift(m));
 
-export { scan as default };
+export { StatefulContainerLike__scan as default };

@@ -15,7 +15,7 @@ import { notify } from "../../SinkLike";
 
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const bufferMixin: <
+const SinkLike__bufferMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<readonly T[]>,
   T,
@@ -101,4 +101,4 @@ const bufferMixin: <
   );
 };
 
-export default bufferMixin;
+export default SinkLike__bufferMixin;

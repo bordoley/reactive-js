@@ -1,10 +1,10 @@
 /// <reference types="./SinkLike.d.ts" />
-import notify$1 from './__internal__/SinkLike/SinkLike.notify.mjs';
-import notifySink$1 from './__internal__/SinkLike/SinkLike.notifySink.mjs';
-import sourceFrom$1 from './__internal__/SinkLike/SinkLike.sourceFrom.mjs';
+import SinkLike__notify from './__internal__/SinkLike/SinkLike.notify.mjs';
+import SinkLike__notifySink from './__internal__/SinkLike/SinkLike.notifySink.mjs';
+import SinkLike__sourceFrom from './__internal__/SinkLike/SinkLike.sourceFrom.mjs';
 
-const notify = notify$1;
-const notifySink = notifySink$1;
-const sourceFrom = sourceFrom$1;
+const notify = SinkLike__notify;
+const notifySink = SinkLike__notifySink;
+const sourceFrom = SinkLike__sourceFrom;
 
 export { notify, notifySink, sourceFrom };

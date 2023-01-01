@@ -1,7 +1,7 @@
 /// <reference types="./EnumerableLike.empty.d.ts" />
-import empty$1 from '../EnumeratorLike/EnumeratorLike.empty.mjs';
-import create from './EnumerableLike.create.mjs';
+import EnumeratorLike__empty from '../EnumeratorLike/EnumeratorLike.empty.mjs';
+import EnumerableLike__create from './EnumerableLike.create.mjs';
 
-const empty = /*@__PURE__*/ (() => () => create(empty$1))();
+const EnumerableLike__empty = /*@__PURE__*/ (() => () => EnumerableLike__create(EnumeratorLike__empty))();
 
-export { empty as default };
+export { EnumerableLike__empty as default };
