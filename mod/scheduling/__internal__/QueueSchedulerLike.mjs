@@ -14,7 +14,7 @@ import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYi
 import { run } from '../ContinuationLike.mjs';
 import { PauseableLike_pause, PauseableLike_resume } from '../../util.mjs';
 import { isDisposed, disposed, addIgnoringChildErrors } from '../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import ContinuationLike__yield_ from './ContinuationLike/ContinuationLike.yield.mjs';
 import SchedulerLike__getCurrentTime from './SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 import SchedulerLike__isInContinuation from './SchedulerLike/SchedulerLike.isInContinuation.mjs';
@@ -104,8 +104,8 @@ const create =
     };
     const typedDisposableRefMixin = disposableRefMixin();
     const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
-    return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
-        init(DisposableLike__disposableMixin, instance);
+    return createInstanceFactory(mix(include(DisposableLike__mixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
+        init(DisposableLike__mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(typedDisposableRefMixin, instance, disposed);
         instance.delayed = createPriorityQueue(delayedComparator);

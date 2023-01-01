@@ -3,15 +3,15 @@ import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { newInstance, pipe, isEmpty, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { addTo, onComplete, dispose } from '../../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { sinkInto } from '../../ReactiveContainerLike.mjs';
 import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const SinkLike__decodeWithCharsetMixin = (fromArray) => {
     const DecodeWithCharsetSink_private_textDecoder = Symbol("DecodeWithCharsetSink_private_textDecoder");
-    return mix(include(DisposableLike__disposableMixin), function DecodeWithCharsetSink(instance, delegate, charset) {
-        init(DisposableLike__disposableMixin, instance);
+    return mix(include(DisposableLike__mixin), function DecodeWithCharsetSink(instance, delegate, charset) {
+        init(DisposableLike__mixin, instance);
         const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
         instance[DecodeWithCharsetSink_private_textDecoder] = textDecoder;
         instance[DelegatingSinkLike_delegate] = delegate;

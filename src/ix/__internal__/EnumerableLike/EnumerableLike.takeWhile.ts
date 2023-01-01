@@ -17,7 +17,7 @@ import DelegatingEnumeratorLike__mixin from "../DelegatingEnumeratorLike/Delegat
 import DelegatingEnumeratorLike__move from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.move";
 import getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
 import { DelegatingEnumeratorLike } from "../ix.internal";
-import liftT from "./EnumerableLike.liftT";
+import EnumerableLike__liftT from "./EnumerableLike.liftT";
 
 const EnumerableLike__takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
@@ -81,7 +81,9 @@ const EnumerableLike__takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
           },
         ),
       ),
-      StatefulContainerLike__takeWhile<EnumerableLike, T, TInteractive>(liftT),
+      StatefulContainerLike__takeWhile<EnumerableLike, T, TInteractive>(
+        EnumerableLike__liftT,
+      ),
     );
   })();
 

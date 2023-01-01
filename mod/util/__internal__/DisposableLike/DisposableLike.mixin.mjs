@@ -6,8 +6,7 @@ import DisposableLike__dispose from './DisposableLike.dispose.mjs';
 import DisposableLike__getException from './DisposableLike.getException.mjs';
 import DisposableLike__isDisposed from './DisposableLike.isDisposed.mjs';
 
-const DisposableLike__disposableMixin = 
-/*@__PURE__*/ (() => {
+const DisposableLike__mixin = /*@__PURE__*/ (() => {
     const doDispose = (instance, disposable) => {
         const error = DisposableLike__getException(instance);
         if (disposable instanceof Function) {
@@ -67,4 +66,4 @@ const DisposableLike__disposableMixin =
     });
 })();
 
-export { DisposableLike__disposableMixin as default };
+export { DisposableLike__mixin as default };

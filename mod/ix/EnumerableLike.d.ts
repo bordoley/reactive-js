@@ -1,26 +1,19 @@
-import { Buffer, ConcatAll, Concat, DistinctUntilChanged, Empty, ForEach, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip } from "../containers.mjs";
 import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix.mjs";
+import { Buffer, Concat, ConcatAll, DistinctUntilChanged, Empty, ForEach, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip } from "../containers.mjs";
 import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.mjs";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
 declare const buffer: Buffer<EnumerableLike>["buffer"];
 declare const bufferT: Buffer<EnumerableLike>;
-declare const concatAll: ConcatAll<EnumerableLike>["concatAll"];
-declare const concatAllT: ConcatAll<EnumerableLike>;
 declare const concat: Concat<EnumerableLike>["concat"];
 declare const concatT: Concat<EnumerableLike>;
+declare const concatAll: ConcatAll<EnumerableLike>["concatAll"];
+declare const concatAllT: ConcatAll<EnumerableLike>;
 declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"];
 declare const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike>;
 declare const empty: Empty<EnumerableLike>["empty"];
 declare const emptyT: Empty<EnumerableLike>;
 declare const forEach: ForEach<EnumerableLike>["forEach"];
 declare const forEachT: ForEach<EnumerableLike>;
-/**
- * Generates an EnumerableLike from a generator function
- * that is applied to an accumulator value.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- */
 declare const generate: Generate<EnumerableLike>["generate"];
 declare const generateT: Generate<EnumerableLike>;
 declare const keep: Keep<EnumerableLike>["keep"];
@@ -47,9 +40,6 @@ declare const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<EnumerableLike>;
 declare const toEnumerableObservable: ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"];
 declare const toEnumerableObservableT: ToEnumerableObservable<EnumerableLike>;
-/**
- * Converts an EnumerableLike into a javascript Iterable.
- */
 declare const toIterable: ToIterable<EnumerableLike>["toIterable"];
 declare const toIterableT: ToIterable<EnumerableLike>;
 declare const toObservable: ToObservable<EnumerableLike, {

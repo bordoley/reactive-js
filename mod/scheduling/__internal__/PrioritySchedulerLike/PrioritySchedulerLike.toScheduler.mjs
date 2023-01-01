@@ -4,11 +4,11 @@ import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options
 import { none, unsafeCast, pipe, partial } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { addIgnoringChildErrors, isDisposed } from '../../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { isInContinuation, getCurrentTime, shouldYield, requestYield } from '../../SchedulerLike.mjs';
 
-const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__disposableMixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
-    init(DisposableLike__disposableMixin, instance);
+const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__mixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
+    init(DisposableLike__mixin, instance);
     instance.priorityScheduler = scheduler;
     instance.priority = priority;
     return instance;

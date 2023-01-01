@@ -6,13 +6,13 @@ import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import EnumerableLike__create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
 import MutableEnumeratorLike__mixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
 const SequenceLike__toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
-    const createSequenceEnumerator = createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin), function SequenceEnumerator(instance, seq) {
-        init(DisposableLike__disposableMixin, instance);
+    const createSequenceEnumerator = createInstanceFactory(mix(include(DisposableLike__mixin, typedMutableEnumeratorMixin), function SequenceEnumerator(instance, seq) {
+        init(DisposableLike__mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.seq = seq;
         return instance;

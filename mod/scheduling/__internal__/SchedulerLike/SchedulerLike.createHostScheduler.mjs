@@ -5,7 +5,7 @@ import { isFunction, pipe, unsafeCast } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { run } from '../../ContinuationLike.mjs';
 import { create, addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from '../../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import SchedulerLike__getCurrentTime from './SchedulerLike.getCurrentTime.mjs';
 import SchedulerLike__isInContinuation from './SchedulerLike.isInContinuation.mjs';
 
@@ -40,8 +40,8 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
     run(continuation);
     scheduler[SchedulerLike_inContinuation] = false;
 };
-const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__disposableMixin), function HostScheduler(instance, yieldInterval) {
-    init(DisposableLike__disposableMixin, instance);
+const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__mixin), function HostScheduler(instance, yieldInterval) {
+    init(DisposableLike__mixin, instance);
     instance.yieldInterval = yieldInterval;
     return instance;
 }, props({

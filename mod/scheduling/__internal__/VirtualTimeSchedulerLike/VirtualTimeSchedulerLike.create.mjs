@@ -10,7 +10,7 @@ import MutableEnumeratorLike__mixin from '../../../ix/__internal__/MutableEnumer
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, ContinuationLike_run, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import { run } from '../../ContinuationLike.mjs';
 import { addIgnoringChildErrors, isDisposed, dispose } from '../../../util/DisposableLike.mjs';
-import DisposableLike__disposableMixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import SchedulerLike__getCurrentTime from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 
 const comparator = (a, b) => {
@@ -21,8 +21,8 @@ const comparator = (a, b) => {
 };
 const typedMutableEnumeratorMixin = 
 /*@__PURE__*/ MutableEnumeratorLike__mixin();
-const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
-    init(DisposableLike__disposableMixin, instance);
+const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__mixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+    init(DisposableLike__mixin, instance);
     init(typedMutableEnumeratorMixin, instance);
     instance.maxMicroTaskTicks = maxMicroTaskTicks;
     instance.taskQueue = createPriorityQueue(comparator);

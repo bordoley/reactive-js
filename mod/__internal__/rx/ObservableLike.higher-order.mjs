@@ -22,7 +22,7 @@ import DisposableLike__addTo from '../../util/__internal__/DisposableLike/Dispos
 import DisposableLike__dispose from '../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__disposed from '../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
 import DisposableLike__isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
-import DisposableLike__disposableMixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__mixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../mixins.mjs';
@@ -62,8 +62,8 @@ const createMergeAll = (lift) => {
                 }
             }
         };
-        return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
-            init(DisposableLike__disposableMixin, instance);
+        return createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
+            init(DisposableLike__mixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;
             instance.maxBufferSize = maxBufferSize;
@@ -131,8 +131,8 @@ const createSwitchAll = (lift) => {
                 pipe(this.delegate, DisposableLike__dispose());
             }
         }
-        return createInstanceFactory(mix(include(DisposableLike__disposableMixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
-            init(DisposableLike__disposableMixin, instance);
+        return createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
+            init(DisposableLike__mixin, instance);
             init(typedObserverMixin, instance, getScheduler(delegate));
             instance.delegate = delegate;
             instance.currentRef = pipe(createDisposableRef(DisposableLike__disposed), DisposableLike__addTo(delegate));
