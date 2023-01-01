@@ -84,16 +84,12 @@ import {
   map as mapObs,
   mapT as mapTObs,
   multicast,
-  toReadonlyArray as obsToReadonlyArray,
-  onSubscribe,
   scanAsync as scanAsyncObs,
   scan as scanObs,
   takeFirst as takeFirstObs,
   takeWhile as takeWhileObs,
 } from "../rx/ObservableLike";
-import { getScheduler as observerGetScheduler } from "../rx/ObserverLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
-import { create as createRunnableObservable } from "../rx/RunnableObservableLike";
 import { create as createSubject, publish } from "../rx/SubjectLike";
 import {
   DispatcherLike_dispatch,
@@ -108,6 +104,8 @@ import { add, addTo } from "../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { enumerate } from "./EnumerableLike";
+import AsyncEnumerable__toObservable from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable";
+import AsyncEnumerableLike__toReadonlyArray from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.toReadonlyArray";
 
 export const createAsyncEnumerator = /*@__PURE__*/ (() => {
   const createAsyncEnumeratorInternal: <T>(
@@ -937,35 +935,14 @@ export const takeWhileT: TakeWhile<AsyncEnumerableLike> = {
 };
 
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
-  () => enumerable =>
-    createRunnableObservable(observer => {
-      const enumerator = pipe(
-        enumerable,
-        stream(observerGetScheduler(observer)),
-        addTo(observer),
-      );
-
-      pipe(
-        enumerator,
-        forEachObs(_ => {
-          pipe(enumerator, dispatch(none));
-        }),
-        onSubscribe(() => {
-          pipe(enumerator, dispatch(none));
-        }),
-        sinkInto(observer),
-      );
-    });
+  AsyncEnumerable__toObservable;
 
 export const toObservableT: ToObservable<AsyncEnumerableLike> = {
   toObservable,
 };
 
 export const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"] =
-
-    <T>() =>
-    (asyncEnumerable: AsyncEnumerableLike<T>) =>
-      pipe(asyncEnumerable, toObservable(), obsToReadonlyArray());
+  AsyncEnumerableLike__toReadonlyArray;
 
 export const toReadonlyArrayT: ToReadonlyArray<AsyncEnumerableLike> = {
   toReadonlyArray,
