@@ -1,5 +1,5 @@
 /// <reference types="./AsyncEnumerableLike.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
+import { mix, props, createInstanceFactory, include, init } from '../__internal__/mixins.mjs';
 import { getDelay, hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
@@ -8,70 +8,32 @@ import StatefulContainerLike__map from '../containers/__internal__/StatefulConta
 import StatefulContainerLike__scan from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
 import StatefulContainerLike__takeWhile from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile.mjs';
 import { interactive } from '../containers/__internal__/containers.internal.mjs';
-import { pipe, none, unsafeCast, getLength, compose, increment, returns, pipeUnsafe, newInstance, partial } from '../functions.mjs';
-import { SourceLike_move, InteractiveContainerLike_interact } from '../ix.mjs';
+import { getLength, compose, increment, returns, pipe, pipeUnsafe, newInstance, none, unsafeCast, partial } from '../functions.mjs';
+import { InteractiveContainerLike_interact, SourceLike_move } from '../ix.mjs';
 import { hasCurrent, getCurrent } from './EnumeratorLike.mjs';
 import { move } from './SourceLike.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { multicast, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, create as create$1, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1 } from '../rx/ObservableLike.mjs';
+import { scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, create, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1, multicast } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
-import { create, publish } from '../rx/SubjectLike.mjs';
-import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
+import { DispatcherLike_dispatch, DispatcherLike_scheduler } from '../scheduling.mjs';
 import { dispatch, getScheduler } from '../scheduling/DispatcherLike.mjs';
 import { StreamableLike_stream } from '../streaming.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
-import { add, addTo } from '../util/DisposableLike.mjs';
+import { addTo, add } from '../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
-import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { enumerate } from './EnumerableLike.mjs';
 import AsyncEnumerable__create from './__internal__/AsyncEnumerableLike/AsyncEnumerable.create.mjs';
 import AsyncEnumerable__toObservable from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable.mjs';
 import AsyncEnumerableLike__toReadonlyArray from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toReadonlyArray.mjs';
+import AsyncEnumerator__create from './__internal__/AsyncEnumeratorLike/AsyncEnumerator.create.mjs';
 
-const createLiftedAsyncEnumerator = (() => {
-    return createInstanceFactory(mix(include(DisposableLike__mixin), function LiftedAsyncEnumerator(instance, op, scheduler, replay) {
-        init(DisposableLike__mixin, instance);
-        instance.op = op;
-        instance[DispatcherLike_scheduler] = scheduler;
-        const subject = create();
-        const observable = pipe(subject, op, multicast(scheduler, { replay }));
-        instance.subject = subject;
-        instance.observable = observable;
-        return pipe(instance, add(subject), addTo(observable));
-    }, props({
-        [DispatcherLike_scheduler]: none,
-        observable: none,
-        op: none,
-        subject: none,
-    }), {
-        [ObservableLike_isEnumerable]: false,
-        [ObservableLike_isRunnable]: false,
-        get [MulticastObservableLike_observerCount]() {
-            unsafeCast(this);
-            return getObserverCount(this.observable);
-        },
-        get [MulticastObservableLike_replay]() {
-            unsafeCast(this);
-            return getReplay(this.observable);
-        },
-        [DispatcherLike_dispatch](req) {
-            pipe(this.subject, publish(req));
-        },
-        [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this.observable, sinkInto(observer));
-        },
-        [SourceLike_move]() {
-            pipe(this, dispatch(none));
-        },
-    }));
-})();
 const createLiftedAsyncEnumerable = (...ops) => {
     const op = getLength(ops) > 1 ? compose(...ops) : ops[0];
     return AsyncEnumerable__create((scheduler, options) => {
         var _a;
         const replay = (_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 0;
-        return createLiftedAsyncEnumerator(op, scheduler, replay);
+        return AsyncEnumerator__create(op, scheduler, { replay });
     });
 };
 const fromArray = /*@__PURE__*/ (() => {
@@ -90,7 +52,7 @@ const fromArray = /*@__PURE__*/ (() => {
  * @param iterable
  */
 const fromEnumerable = 
-/*@__PURE__*/ (() => returns((enumerable) => createLiftedAsyncEnumerable(observable => create$1(observer => {
+/*@__PURE__*/ (() => returns((enumerable) => createLiftedAsyncEnumerable(observable => create(observer => {
     const enumerator = pipe(enumerable, enumerate(), addTo(observer));
     pipe(observable, map$1(_ => move(enumerator)), takeWhile$1(hasCurrent), map$1(getCurrent), sinkInto(observer));
 }))))();
