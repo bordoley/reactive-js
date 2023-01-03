@@ -71,7 +71,6 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
   ScanAsync,
-  SubjectLike,
   ToObservable,
 } from "../rx";
 import { getObserverCount, getReplay } from "../rx/MulticastObservableLike";
@@ -89,7 +88,6 @@ import {
   takeWhile as takeWhileObs,
 } from "../rx/ObservableLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
-import { create as createSubject, publish } from "../rx/SubjectLike";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
@@ -100,90 +98,11 @@ import { StreamLike, StreamableLike_stream } from "../streaming";
 import { stream } from "../streaming/StreamableLike";
 import { add, addTo } from "../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
-import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { enumerate } from "./EnumerableLike";
 import AsyncEnumerable__create from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.create";
 import AsyncEnumerable__toObservable from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable";
 import AsyncEnumerableLike__toReadonlyArray from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.toReadonlyArray";
-
-const createLiftedAsyncEnumerator = (<T>() => {
-  type TProperties = {
-    readonly observable: MulticastObservableLike<T>;
-    readonly op: ContainerOperator<ObservableLike, void, T>;
-    readonly [DispatcherLike_scheduler]: SchedulerLike;
-    readonly subject: SubjectLike<void>;
-  };
-
-  return createInstanceFactory(
-    mix(
-      include(DisposableLike__mixin),
-      function LiftedAsyncEnumerator(
-        instance: Pick<
-          AsyncEnumeratorLike<T>,
-          | typeof MulticastObservableLike_observerCount
-          | typeof MulticastObservableLike_replay
-          | typeof DispatcherLike_dispatch
-          | typeof ReactiveContainerLike_sinkInto
-          | typeof SourceLike_move
-          | typeof ObservableLike_isEnumerable
-          | typeof ObservableLike_isRunnable
-        > &
-          Mutable<TProperties>,
-        op: ContainerOperator<ObservableLike, void, T>,
-        scheduler: SchedulerLike,
-        replay: number,
-      ): AsyncEnumeratorLike<T> {
-        init(DisposableLike__mixin, instance);
-
-        instance.op = op;
-        instance[DispatcherLike_scheduler] = scheduler;
-
-        const subject = createSubject();
-        const observable = pipe(subject, op, multicast(scheduler, { replay }));
-
-        instance.subject = subject;
-        instance.observable = observable;
-
-        return pipe(instance, add(subject), addTo(observable));
-      },
-      props<TProperties>({
-        [DispatcherLike_scheduler]: none,
-        observable: none,
-        op: none,
-        subject: none,
-      }),
-      {
-        [ObservableLike_isEnumerable]: false,
-        [ObservableLike_isRunnable]: false,
-
-        get [MulticastObservableLike_observerCount](): number {
-          unsafeCast<TProperties>(this);
-          return getObserverCount(this.observable);
-        },
-
-        get [MulticastObservableLike_replay](): number {
-          unsafeCast<TProperties>(this);
-          return getReplay(this.observable);
-        },
-
-        [DispatcherLike_dispatch](this: TProperties, req: void) {
-          pipe(this.subject, publish(req));
-        },
-
-        [ReactiveContainerLike_sinkInto](
-          this: TProperties,
-          observer: ObserverLike<T>,
-        ) {
-          pipe(this.observable, sinkInto(observer));
-        },
-
-        [SourceLike_move](this: StreamLike<void, T>) {
-          pipe(this, dispatch(none));
-        },
-      },
-    ),
-  );
-})();
+import AsyncEnumerator__create from "./__internal__/AsyncEnumeratorLike/AsyncEnumerator.create";
 
 interface CreateLiftedAsyncEnumerable {
   <A>(op1: ContainerOperator<ObservableLike, void, A>): AsyncEnumerableLike<A>;
@@ -294,7 +213,7 @@ const createLiftedAsyncEnumerable: CreateLiftedAsyncEnumerable = (
 
   return AsyncEnumerable__create((scheduler, options) => {
     const replay = options?.replay ?? 0;
-    return createLiftedAsyncEnumerator(op, scheduler, replay);
+    return AsyncEnumerator__create(op, scheduler, { replay });
   });
 };
 
