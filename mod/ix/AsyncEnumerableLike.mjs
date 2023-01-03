@@ -21,46 +21,14 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling
 import { dispatch, getScheduler } from '../scheduling/DispatcherLike.mjs';
 import { StreamableLike_stream } from '../streaming.mjs';
 import { stream } from '../streaming/StreamableLike.mjs';
-import StreamLike__mixin from '../streaming/__internal__/StreamLike/StreamLike.mixin.mjs';
 import { add, addTo } from '../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { enumerate } from './EnumerableLike.mjs';
+import AsyncEnumerable__create from './__internal__/AsyncEnumerableLike/AsyncEnumerable.create.mjs';
 import AsyncEnumerable__toObservable from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable.mjs';
 import AsyncEnumerableLike__toReadonlyArray from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toReadonlyArray.mjs';
 
-const createAsyncEnumerator = /*@__PURE__*/ (() => {
-    const createAsyncEnumeratorInternal = (() => {
-        const typedStreamMixin = StreamLike__mixin();
-        return createInstanceFactory(mix(include(typedStreamMixin), function AsyncEnumerator(instance, op, scheduler, replay) {
-            init(typedStreamMixin, instance, op, scheduler, replay);
-            return instance;
-        }, {}, {
-            [SourceLike_move]() {
-                pipe(this, dispatch(none));
-            },
-        }));
-    })();
-    return (op, scheduler, options) => {
-        const { replay = 0 } = options !== null && options !== void 0 ? options : {};
-        return createAsyncEnumeratorInternal(op, scheduler, replay);
-    };
-})();
-const createAsyncEnumerable = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(function AsyncEnumerable(instance, stream) {
-        instance[StreamableLike_stream] = stream;
-        return instance;
-    }, props({
-        [StreamableLike_stream]: none,
-    }), {
-        [StreamableLike_stream](scheduler, options) {
-            return this[StreamableLike_stream](scheduler, options);
-        },
-        [InteractiveContainerLike_interact](ctx) {
-            return pipe(this, stream(ctx));
-        },
-    }));
-})();
 const createLiftedAsyncEnumerator = (() => {
     return createInstanceFactory(mix(include(DisposableLike__mixin), function LiftedAsyncEnumerator(instance, op, scheduler, replay) {
         init(DisposableLike__mixin, instance);
@@ -100,7 +68,7 @@ const createLiftedAsyncEnumerator = (() => {
 })();
 const createLiftedAsyncEnumerable = (...ops) => {
     const op = getLength(ops) > 1 ? compose(...ops) : ops[0];
-    return createAsyncEnumerable((scheduler, options) => {
+    return AsyncEnumerable__create((scheduler, options) => {
         var _a;
         const replay = (_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 0;
         return createLiftedAsyncEnumerator(op, scheduler, replay);
@@ -343,4 +311,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { createAsyncEnumerator, fromArray, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { fromArray, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
