@@ -23,9 +23,9 @@ import { stream } from '../streaming/StreamableLike.mjs';
 import { addTo, add } from '../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import { enumerate } from './EnumerableLike.mjs';
-import AsyncEnumerable__create from './__internal__/AsyncEnumerableLike/AsyncEnumerable.create.mjs';
 import AsyncEnumerable__toObservable from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable.mjs';
-import AsyncEnumerableLike__toReadonlyArray from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toReadonlyArray.mjs';
+import AsyncEnumerableLike__create from './__internal__/AsyncEnumerableLike/AsyncEnumerableLike.create.mjs';
+import AsyncEnumerableLike__toReadonlyArray from './__internal__/AsyncEnumerableLike/AsyncEnumerableLike.toReadonlyArray.mjs';
 
 const fromArray = /*@__PURE__*/ (() => {
     const fromArrayInternal = (values, start, count, options) => {
@@ -33,7 +33,7 @@ const fromArray = /*@__PURE__*/ (() => {
         const fromArrayWithDelay = hasDelay(options)
             ? toObservable$1({ delay })
             : toObservable$1();
-        return AsyncEnumerable__create(scan$1(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
+        return AsyncEnumerableLike__create(scan$1(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
     };
     return (_) => values => fromArrayInternal(values, 0, values.length);
 })();
@@ -43,7 +43,7 @@ const fromArray = /*@__PURE__*/ (() => {
  * @param iterable
  */
 const fromEnumerable = 
-/*@__PURE__*/ (() => returns((enumerable) => AsyncEnumerable__create(observable => create(observer => {
+/*@__PURE__*/ (() => returns((enumerable) => AsyncEnumerableLike__create(observable => create(observer => {
     const enumerator = pipe(enumerable, enumerate(), addTo(observer));
     pipe(observable, map$1(_ => move(enumerator)), takeWhile$1(hasCurrent), map$1(getCurrent), sinkInto(observer));
 }))))();
@@ -76,7 +76,7 @@ const generate = /*@__PURE__*/ (() => {
     };
     return (generator, initialValue, options) => {
         const delay = getDelay(options);
-        return AsyncEnumerable__create(delay > 0
+        return AsyncEnumerableLike__create(delay > 0
             ? scanAsync$1(asyncGeneratorScanner(generator, options), initialValue)
             : scan$1(generateScanner(generator), initialValue));
     };

@@ -97,9 +97,9 @@ import { stream } from "../streaming/StreamableLike";
 import { add, addTo } from "../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import { enumerate } from "./EnumerableLike";
-import AsyncEnumerable__create from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.create";
-import AsyncEnumerable__toObservable from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable";
-import AsyncEnumerableLike__toReadonlyArray from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.toReadonlyArray";
+import AsyncEnumerableLike__toObservable from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable";
+import AsyncEnumerableLike__create from "./__internal__/AsyncEnumerableLike/AsyncEnumerableLike.create";
+import AsyncEnumerableLike__toReadonlyArray from "./__internal__/AsyncEnumerableLike/AsyncEnumerableLike.toReadonlyArray";
 
 export const fromArray = /*@__PURE__*/ (() => {
   const fromArrayInternal = <T>(
@@ -116,7 +116,7 @@ export const fromArray = /*@__PURE__*/ (() => {
       ? arrayToObservable<T>({ delay })
       : arrayToObservable<T>();
 
-    return AsyncEnumerable__create(
+    return AsyncEnumerableLike__create(
       scanObs(increment, returns(start - 1)),
       concatMap<ObservableLike, number, T>(
         { ...mapTObs, ...concatAllTObs },
@@ -142,7 +142,7 @@ export const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerabl
   /*@__PURE__*/ (<T>() =>
     returns(
       (enumerable: EnumerableLike<T>): AsyncEnumerableLike<T> =>
-        AsyncEnumerable__create(observable =>
+        AsyncEnumerableLike__create(observable =>
           createObservable(observer => {
             const enumerator = pipe(enumerable, enumerate(), addTo(observer));
 
@@ -215,7 +215,7 @@ export const generate: Generate<
   ): AsyncEnumerableLike<T> => {
     const delay = getDelay(options);
 
-    return AsyncEnumerable__create(
+    return AsyncEnumerableLike__create(
       delay > 0
         ? scanAsyncObs<void, T>(
             asyncGeneratorScanner(generator, options),
@@ -641,7 +641,7 @@ export const takeWhileT: TakeWhile<AsyncEnumerableLike> = {
 };
 
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
-  AsyncEnumerable__toObservable;
+  AsyncEnumerableLike__toObservable;
 
 export const toObservableT: ToObservable<AsyncEnumerableLike> = {
   toObservable,

@@ -8,7 +8,7 @@ import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLik
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
-import ObserverLike__observerMixin from '../ObserverLike/ObserverLike.mixin.mjs';
+import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
 import ObservableLike__forEach from './ObservableLike.forEach.mjs';
 import ObservableLike__isEnumerable from './ObservableLike.isEnumerable.mjs';
@@ -18,7 +18,7 @@ import ObservableLike__subscribe from './ObservableLike.subscribe.mjs';
 
 const ObservableLike__zipWithLatestFrom = /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
-        const typedObserverMixin = ObserverLike__observerMixin();
+        const typedObserverMixin = ObserverLike__mixin();
         const notifyDelegate = (observer) => {
             if (getLength(observer.queue) > 0 && observer.hasLatest) {
                 observer.hasLatest = false;

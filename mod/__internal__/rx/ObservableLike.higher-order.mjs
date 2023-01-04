@@ -14,7 +14,7 @@ import ObservableLike__onSubscribe from '../../rx/__internal__/ObservableLike/Ob
 import ObservableLike__subscribe from '../../rx/__internal__/ObservableLike/ObservableLike.subscribe.mjs';
 import ObservableLike__takeFirst from '../../rx/__internal__/ObservableLike/ObservableLike.takeFirst.mjs';
 import ObservableLike__zipWithLatestFrom from '../../rx/__internal__/ObservableLike/ObservableLike.zipWithLatestFrom.mjs';
-import ObserverLike__observerMixin from '../../rx/__internal__/ObserverLike/ObserverLike.mixin.mjs';
+import ObserverLike__mixin from '../../rx/__internal__/ObserverLike/ObserverLike.mixin.mjs';
 import RunnableObservableLike__create from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
 import RunnableObservableLike__lift from '../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.lift.mjs';
 import SinkLike__catchErrorMixin from '../../rx/__internal__/SinkLike/SinkLike.catchErrorMixin.mjs';
@@ -32,7 +32,7 @@ import { MutableRefLike_current } from '../util/MutableRefLike.mjs';
 const createCatchError = (lift) => {
     const createCatchErrorObserver = (() => {
         const typedCatchErrorSink = SinkLike__catchErrorMixin();
-        const typedObserverMixin = ObserverLike__observerMixin();
+        const typedObserverMixin = ObserverLike__mixin();
         return createInstanceFactory(mix(include(typedCatchErrorSink, typedObserverMixin), function CatchErrorObserver(instance, delegate, errorHandler) {
             init(typedCatchErrorSink, instance, delegate, errorHandler);
             init(typedObserverMixin, instance, getScheduler(delegate));
@@ -49,7 +49,7 @@ const catchErrorRunnableObservable =
 /*@__PURE__*/ createCatchError(RunnableObservableLike__lift);
 const createMergeAll = (lift) => {
     const createMergeAllObserver = (() => {
-        const typedObserverMixin = ObserverLike__observerMixin();
+        const typedObserverMixin = ObserverLike__mixin();
         const subscribeNext = (observer) => {
             if (observer.activeCount < observer.maxConcurrency) {
                 const nextObs = observer.queue.shift();
@@ -125,7 +125,7 @@ const scanAsyncObservable = createScanAsync(ObservableLike__create);
 const scanAsyncRunnableObservable = createScanAsync(RunnableObservableLike__create);
 const createSwitchAll = (lift) => {
     const createSwitchAllObserver = (() => {
-        const typedObserverMixin = ObserverLike__observerMixin();
+        const typedObserverMixin = ObserverLike__mixin();
         function onDispose() {
             if (DisposableLike__isDisposed(this.currentRef[MutableRefLike_current])) {
                 pipe(this.delegate, DisposableLike__dispose());
