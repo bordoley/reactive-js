@@ -84,38 +84,23 @@ import {
   isNumber,
   isSome,
   isTrue,
-  newInstance,
   none,
   partial,
   pipe,
-  pipeLazy,
   returns,
-  unsafeCast,
 } from "../functions";
-import {
-  EnumerableLike,
-  EnumeratorLike,
-  EnumeratorLike_current,
-  SourceLike,
-  SourceLike_move,
-  ToEnumerable,
-} from "../ix";
+import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix";
 import {
   toObservable as enumerableToObservable,
   zip as enumerableZip,
   enumerate,
 } from "../ix/EnumerableLike";
 import { getCurrent, hasCurrent, move } from "../ix/EnumeratorLike";
-import EnumerableLike__create from "../ix/__internal__/EnumerableLike/EnumerableLike.create";
-import EnumerableLike__empty from "../ix/__internal__/EnumerableLike/EnumerableLike.empty";
-import MutableEnumeratorLike__mixin from "../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
-import { MutableEnumeratorLike } from "../ix/__internal__/ix.internal";
 import {
   EnumerableObservableLike,
   MulticastObservableLike,
   ObservableLike,
   ObserverLike,
-  ObserverLike_dispatcher,
   RunnableObservableLike,
   ScanAsync,
   SinkLike,
@@ -123,37 +108,19 @@ import {
 } from "../rx";
 import { getScheduler, schedule } from "../rx/ObserverLike";
 import { notify, notifySink, sourceFrom } from "../rx/SinkLike";
-import {
-  ContinuationLike,
-  SchedulerLike,
-  SchedulerLike_inContinuation,
-  SchedulerLike_now,
-  SchedulerLike_requestYield,
-  SchedulerLike_schedule,
-  SchedulerLike_shouldYield,
-} from "../scheduling";
-import { run, yield_ } from "../scheduling/ContinuationLike";
-import { dispatchTo } from "../scheduling/DispatcherLike";
-import {
-  isInContinuation,
-  toPausableScheduler,
-} from "../scheduling/SchedulerLike";
-import { FlowMode, ToFlowable } from "../streaming";
-import FlowableLike__createLifted from "../streaming/__internal__/FlowableLike/FlowableLike.createLifted";
+import { SchedulerLike } from "../scheduling";
+import { yield_ } from "../scheduling/ContinuationLike";
+import { ToFlowable } from "../streaming";
 import { DisposableLike, DisposableOrTeardown, Exception } from "../util";
 import {
-  add,
   addTo,
   addToIgnoringChildErrors,
-  bindTo,
-  toObservable as disposableToObservable,
   dispose,
   disposed,
   isDisposed,
   onComplete,
   onDisposed,
 } from "../util/DisposableLike";
-import { pause, resume } from "../util/PauseableLike";
 import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
 import { getObserverCount } from "./MulticastObservableLike";
@@ -169,6 +136,7 @@ import ObservableLike__create from "./__internal__/ObservableLike/ObservableLike
 import ObservableLike__decodeWithCharset from "./__internal__/ObservableLike/ObservableLike.decodeWithCharset";
 import ObservableLike__defer from "./__internal__/ObservableLike/ObservableLike.defer";
 import ObservableLike__distinctUntilChanged from "./__internal__/ObservableLike/ObservableLike.distinctUntilChanged";
+import ObservableLike__empty from "./__internal__/ObservableLike/ObservableLike.empty";
 import ObservableLike__everySatisfy from "./__internal__/ObservableLike/ObservableLike.everySatisfy";
 import ObservableLike__forEach from "./__internal__/ObservableLike/ObservableLike.forEach";
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
@@ -186,11 +154,17 @@ import ObservableLike__scan from "./__internal__/ObservableLike/ObservableLike.s
 import ObservableLike__skipFirst from "./__internal__/ObservableLike/ObservableLike.skipFirst";
 import ObservableLike__someSatisfy from "./__internal__/ObservableLike/ObservableLike.someSatisfy";
 import ObservableLike__subscribe from "./__internal__/ObservableLike/ObservableLike.subscribe";
+import ObservableLike__subscribeOn from "./__internal__/ObservableLike/ObservableLike.subscribeOn";
 import ObservableLike__takeFirst from "./__internal__/ObservableLike/ObservableLike.takeFirst";
 import ObservableLike__takeLast from "./__internal__/ObservableLike/ObservableLike.takeLast";
+import ObservableLike__takeUntil from "./__internal__/ObservableLike/ObservableLike.takeUntil";
 import ObservableLike__takeWhile from "./__internal__/ObservableLike/ObservableLike.takeWhile";
 import ObservableLike__throwIfEmpty from "./__internal__/ObservableLike/ObservableLike.throwIfEmpty";
+import ObservableLike__toEnumerable from "./__internal__/ObservableLike/ObservableLike.toEnumerable";
+import ObservableLike__toFlowable from "./__internal__/ObservableLike/ObservableLike.toFlowable";
+import ObservableLike__toPromise from "./__internal__/ObservableLike/ObservableLike.toPromise";
 import ObservableLike__toReadonlyArray from "./__internal__/ObservableLike/ObservableLike.toReadonlyArray";
+import ObservableLike__withLatestFrom from "./__internal__/ObservableLike/ObservableLike.withLatestFrom";
 import ObservableLike__zipWithLatestFrom from "./__internal__/ObservableLike/ObservableLike.zipWithLatestFrom";
 import ObserverLike__createWithDelegate from "./__internal__/ObserverLike/ObserverLike.createWithDelegate";
 import ObserverLike__mixin from "./__internal__/ObserverLike/ObserverLike.mixin";
@@ -274,15 +248,7 @@ interface EmptyObservable {
   <T>(): EnumerableObservableLike<T>;
   <T>(options: { delay: number }): RunnableObservableLike<T>;
 }
-export const empty: EmptyObservable = (<T>(options?: { delay: number }) =>
-  hasDelay(options)
-    ? RunnableObservableLike__create<T>(observer => {
-        pipe(observer, schedule(pipeLazy(observer, dispose()), options));
-      })
-    : EnumerableObservableLike__create<T>(sink => {
-        pipe(sink, dispose());
-      })) as EmptyObservable;
-
+export const empty: EmptyObservable = ObservableLike__empty as EmptyObservable;
 export const emptyT: Empty<ObservableLike, { delay: number }> = {
   empty,
 };
@@ -781,18 +747,7 @@ export const subscribe: <T>(
   scheduler: SchedulerLike,
 ) => Function1<ObservableLike<T>, DisposableLike> = ObservableLike__subscribe;
 
-export const subscribeOn =
-  <T>(scheduler: SchedulerLike) =>
-  (observable: ObservableLike<T>): ObservableLike<T> =>
-    // FIXME: type test for VTS
-    ObservableLike__create<T>(({ [ObserverLike_dispatcher]: dispatcher }) =>
-      pipe(
-        observable,
-        forEach<T>(dispatchTo(dispatcher)),
-        subscribe(scheduler),
-        bindTo(dispatcher),
-      ),
-    );
+export const subscribeOn = ObservableLike__subscribeOn;
 
 export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
   ObservableLike__takeFirst;
@@ -802,20 +757,7 @@ export const takeLast: TakeLast<ObservableLike>["takeLast"] =
   ObservableLike__takeLast;
 export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 
-export const takeUntil = <T>(
-  notifier: ObservableLike,
-): Function1<ObservableLike<T>, ObservableLike<T>> => {
-  const operator = (delegate: ObserverLike<T>) =>
-    pipe(
-      ObserverLike__createWithDelegate(delegate),
-      bindTo(delegate),
-      bindTo(pipe(notifier, takeFirst<T>(), subscribe(getScheduler(delegate)))),
-    );
-  return pipe(
-    operator,
-    ObservableLike__lift(isEnumerable(notifier), isRunnable(notifier)),
-  );
-};
+export const takeUntil = ObservableLike__takeUntil;
 
 export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
   ObservableLike__takeWhile;
@@ -1090,172 +1032,11 @@ export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
 })();
 
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
-  /*@__PURE__*/ (<T>() => {
-    const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
-    const typedObserverMixin = ObserverLike__mixin<T>();
-
-    type TEnumeratorSchedulerProperties = {
-      [SchedulerLike_inContinuation]: boolean;
-      readonly continuations: ContinuationLike[];
-    };
-
-    type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
-
-    const createEnumeratorScheduler = createInstanceFactory(
-      mix(
-        include(DisposableLike__mixin, typedMutableEnumeratorMixin),
-        function EnumeratorScheduler(
-          instance: Pick<
-            SchedulerLike & SourceLike,
-            | typeof SchedulerLike_now
-            | typeof SchedulerLike_requestYield
-            | typeof SchedulerLike_schedule
-            | typeof SchedulerLike_shouldYield
-            | typeof SourceLike_move
-          > &
-            Mutable<TEnumeratorSchedulerProperties>,
-        ): EnumeratorScheduler {
-          init(DisposableLike__mixin, instance);
-          init(typedMutableEnumeratorMixin, instance);
-
-          instance.continuations = [];
-
-          return instance;
-        },
-        props<TEnumeratorSchedulerProperties>({
-          [SchedulerLike_inContinuation]: false,
-          continuations: none,
-        }),
-        {
-          [SchedulerLike_now]: 0,
-          get [SchedulerLike_shouldYield](): boolean {
-            unsafeCast<TEnumeratorSchedulerProperties>(this);
-            return isInContinuation(this);
-          },
-          [SchedulerLike_requestYield](): void {
-            // No-Op: We yield whenever the continuation is running.
-          },
-          [SourceLike_move](
-            this: TEnumeratorSchedulerProperties & MutableEnumeratorLike<T>,
-          ) {
-            if (!isDisposed(this)) {
-              const { continuations } = this;
-
-              const continuation = continuations.shift();
-              if (isSome(continuation)) {
-                this[SchedulerLike_inContinuation] = true;
-                run(continuation);
-                this[SchedulerLike_inContinuation] = false;
-              } else {
-                pipe(this, dispose());
-              }
-            }
-          },
-          [SchedulerLike_schedule](
-            this: TEnumeratorSchedulerProperties & DisposableLike,
-            continuation: ContinuationLike,
-            _?: { readonly delay?: number },
-          ): void {
-            pipe(this, add(continuation));
-
-            if (!isDisposed(continuation)) {
-              this.continuations.push(continuation);
-            }
-          },
-        },
-      ),
-    );
-
-    type TEnumeratorObserverProperties = {
-      readonly enumerator: EnumeratorScheduler;
-    };
-
-    const createEnumeratorObserver = createInstanceFactory(
-      mix(
-        include(DisposableLike__mixin, typedObserverMixin),
-        function EnumeratorObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
-            Mutable<TEnumeratorObserverProperties>,
-          enumerator: EnumeratorScheduler,
-        ): ObserverLike<T> {
-          init(DisposableLike__mixin, instance);
-          init(typedObserverMixin, instance, enumerator);
-
-          instance.enumerator = enumerator;
-
-          return instance;
-        },
-        props<TEnumeratorObserverProperties>({
-          enumerator: none,
-        }),
-        {
-          [SinkLike_notify](this: TEnumeratorObserverProperties, next: T) {
-            this.enumerator[EnumeratorLike_current] = next;
-          },
-        },
-      ),
-    );
-
-    return () =>
-      (obs: ObservableLike<T>): EnumerableLike<T> =>
-        isEnumerable(obs)
-          ? EnumerableLike__create(() => {
-              const scheduler = createEnumeratorScheduler();
-
-              pipe(
-                createEnumeratorObserver(scheduler),
-                addTo(scheduler),
-                sourceFrom(obs),
-              );
-
-              return scheduler;
-            })
-          : EnumerableLike__empty();
-  })();
+  ObservableLike__toEnumerable;
 export const toEnumerableT: ToEnumerable<ObservableLike> = { toEnumerable };
 
 export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
-  () => observable =>
-    isRunnable(observable)
-      ? FlowableLike__createLifted((modeObs: ObservableLike<FlowMode>) =>
-          ObservableLike__create(observer => {
-            const pausableScheduler = pipe(
-              observer,
-              getScheduler,
-              toPausableScheduler,
-            );
-
-            pipe(
-              observer,
-              sourceFrom(
-                pipe(
-                  observable,
-                  subscribeOn(pausableScheduler),
-                  takeUntil(pipe(pausableScheduler, disposableToObservable())),
-                ),
-              ),
-              add(
-                pipe(
-                  modeObs,
-                  forEach(mode => {
-                    switch (mode) {
-                      case "pause":
-                        pause(pausableScheduler);
-                        break;
-                      case "resume":
-                        resume(pausableScheduler);
-                        break;
-                    }
-                  }),
-                  subscribe(getScheduler(observer)),
-                  bindTo(pausableScheduler),
-                ),
-              ),
-              add(pausableScheduler),
-            );
-          }),
-        )
-      : FlowableLike__createLifted(_ => empty());
+  ObservableLike__toFlowable;
 export const toFlowableT: ToFlowable<ObservableLike> = { toFlowable };
 
 /**
@@ -1267,43 +1048,7 @@ export const toFlowableT: ToFlowable<ObservableLike> = { toFlowable };
 export const toPromise: ToPromiseable<
   ObservableLike,
   SchedulerLike
->["toPromise"] =
-  <T>(scheduler: SchedulerLike) =>
-  (observable: ObservableLike<T>): PromiseLike<T> =>
-    newInstance<
-      Promise<T>,
-      (
-        resolve: (value: T | PromiseLike<T>) => void,
-        reject: (ex: unknown) => void,
-      ) => void
-    >(Promise, (resolve, reject) => {
-      let result: Optional<T> = none;
-      let hasResult = false;
-
-      pipe(
-        observable,
-        forEach<T>(next => {
-          hasResult = true;
-          result = next;
-        }),
-        subscribe(scheduler),
-        onDisposed(err => {
-          if (isSome(err)) {
-            const { cause } = err;
-            reject(cause);
-          } else if (!hasResult) {
-            reject(
-              newInstance(
-                Error,
-                "Observable completed without producing a value",
-              ),
-            );
-          } else {
-            resolve(result as T);
-          }
-        }),
-      );
-    });
+>["toPromise"] = ObservableLike__toPromise;
 export const toPromiseT: ToPromiseable<ObservableLike, SchedulerLike> = {
   toPromise,
 };
@@ -1317,82 +1062,7 @@ export const toReadonlyArrayT: ToReadonlyArray<ObservableLike> = {
 export const withLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
-) => ContainerOperator<ObservableLike, TA, T> = /*@__PURE__*/ (() => {
-  const createWithLatestObserver: <TA, TB, T>(
-    delegate: ObserverLike<T>,
-    other: ObservableLike<TB>,
-    selector: Function2<TA, TB, T>,
-  ) => ObserverLike<TA> = (<TA, TB, T>() => {
-    const typedObserverMixin = ObserverLike__mixin<TA>();
-
-    type TProperties = {
-      readonly delegate: ObserverLike<T>;
-      hasLatest: boolean;
-      otherLatest: Optional<TB>;
-      readonly selector: Function2<TA, TB, T>;
-    };
-
-    return createInstanceFactory(
-      mix(
-        include(DisposableLike__delegatingMixin, typedObserverMixin),
-        function WithLatestFromObserver(
-          instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
-            Mutable<TProperties>,
-          delegate: ObserverLike<T>,
-          other: ObservableLike<TB>,
-          selector: Function2<TA, TB, T>,
-        ): ObserverLike<TA> {
-          init(DisposableLike__delegatingMixin, instance, delegate);
-          init(typedObserverMixin, instance, getScheduler(delegate));
-
-          instance.delegate = delegate;
-          instance.selector = selector;
-
-          pipe(
-            other,
-            forEach(next => {
-              instance.hasLatest = true;
-              instance.otherLatest = next;
-            }),
-            subscribe(getScheduler(delegate)),
-            addTo(instance),
-            onComplete(() => {
-              if (!instance.hasLatest) {
-                pipe(instance, dispose());
-              }
-            }),
-          );
-
-          return instance;
-        },
-        props<TProperties>({
-          delegate: none,
-          hasLatest: false,
-          otherLatest: none,
-          selector: none,
-        }),
-        {
-          [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
-            if (!isDisposed(this) && this.hasLatest) {
-              const result = this.selector(next, this.otherLatest as TB);
-              pipe(this.delegate, notify(result));
-            }
-          },
-        },
-      ),
-    );
-  })();
-
-  return <TA, TB, T>(
-    other: ObservableLike<TB>,
-    selector: Function2<TA, TB, T>,
-  ) =>
-    pipe(
-      createWithLatestObserver,
-      partial(other, selector),
-      ObservableLike__lift(isEnumerable(other), isRunnable(other)),
-    ) as ContainerOperator<ObservableLike, TA, T>;
-})();
+) => ContainerOperator<ObservableLike, TA, T> = ObservableLike__withLatestFrom;
 
 export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   const typedObserverMixin = ObserverLike__mixin();
