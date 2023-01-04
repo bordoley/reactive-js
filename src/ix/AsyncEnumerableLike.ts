@@ -38,8 +38,6 @@ import {
   Predicate,
   Reducer,
   Updater,
-  compose,
-  getLength,
   increment,
   newInstance,
   none,
@@ -102,120 +100,6 @@ import { enumerate } from "./EnumerableLike";
 import AsyncEnumerable__create from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.create";
 import AsyncEnumerable__toObservable from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable";
 import AsyncEnumerableLike__toReadonlyArray from "./__internal__/AsyncEnumerableLike/AsyncEnumerable.toReadonlyArray";
-import AsyncEnumerator__create from "./__internal__/AsyncEnumeratorLike/AsyncEnumerator.create";
-
-interface CreateLiftedAsyncEnumerable {
-  <A>(op1: ContainerOperator<ObservableLike, void, A>): AsyncEnumerableLike<A>;
-  <A, B>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-  ): AsyncEnumerableLike<B>;
-  <A, B, C>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-  ): AsyncEnumerableLike<C>;
-  <A, B, C, D>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-  ): AsyncEnumerableLike<D>;
-  <A, B, C, D, E>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-  ): AsyncEnumerableLike<E>;
-  <A, B, C, D, E, F>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-  ): AsyncEnumerableLike<F>;
-  <A, B, C, D, E, F, G>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-  ): AsyncEnumerableLike<G>;
-  <A, B, C, D, E, F, G, H>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-  ): AsyncEnumerableLike<H>;
-  <A, B, C, D, E, F, G, H, I>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-  ): AsyncEnumerableLike<I>;
-  <A, B, C, D, E, F, G, H, I, J>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-    op10: ContainerOperator<ObservableLike, I, J>,
-  ): AsyncEnumerableLike<J>;
-  <A, B, C, D, E, F, G, H, I, J, K>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-    op10: ContainerOperator<ObservableLike, I, J>,
-    op11: ContainerOperator<ObservableLike, J, K>,
-  ): AsyncEnumerableLike<K>;
-  <A, B, C, D, E, F, G, H, I, J, K, L>(
-    op1: ContainerOperator<ObservableLike, void, A>,
-    op2: ContainerOperator<ObservableLike, A, B>,
-    op3: ContainerOperator<ObservableLike, B, C>,
-    op4: ContainerOperator<ObservableLike, C, D>,
-    op5: ContainerOperator<ObservableLike, D, E>,
-    op6: ContainerOperator<ObservableLike, E, F>,
-    op7: ContainerOperator<ObservableLike, F, G>,
-    op8: ContainerOperator<ObservableLike, G, H>,
-    op9: ContainerOperator<ObservableLike, H, I>,
-    op10: ContainerOperator<ObservableLike, I, J>,
-    op11: ContainerOperator<ObservableLike, J, K>,
-    op12: ContainerOperator<ObservableLike, K, L>,
-  ): AsyncEnumerableLike<L>;
-}
-const createLiftedAsyncEnumerable: CreateLiftedAsyncEnumerable = (
-  ...ops: readonly ContainerOperator<ObservableLike, unknown, unknown>[]
-): AsyncEnumerableLike => {
-  const op = getLength(ops) > 1 ? (compose as any)(...ops) : ops[0];
-
-  return AsyncEnumerable__create((scheduler, options) => {
-    const replay = options?.replay ?? 0;
-    return AsyncEnumerator__create(op, scheduler, { replay });
-  });
-};
 
 export const fromArray = /*@__PURE__*/ (() => {
   const fromArrayInternal = <T>(
@@ -232,7 +116,7 @@ export const fromArray = /*@__PURE__*/ (() => {
       ? arrayToObservable<T>({ delay })
       : arrayToObservable<T>();
 
-    return createLiftedAsyncEnumerable(
+    return AsyncEnumerable__create(
       scanObs(increment, returns(start - 1)),
       concatMap<ObservableLike, number, T>(
         { ...mapTObs, ...concatAllTObs },
@@ -258,7 +142,7 @@ export const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerabl
   /*@__PURE__*/ (<T>() =>
     returns(
       (enumerable: EnumerableLike<T>): AsyncEnumerableLike<T> =>
-        createLiftedAsyncEnumerable(observable =>
+        AsyncEnumerable__create(observable =>
           createObservable(observer => {
             const enumerator = pipe(enumerable, enumerate(), addTo(observer));
 
@@ -331,7 +215,7 @@ export const generate: Generate<
   ): AsyncEnumerableLike<T> => {
     const delay = getDelay(options);
 
-    return createLiftedAsyncEnumerable(
+    return AsyncEnumerable__create(
       delay > 0
         ? scanAsyncObs<void, T>(
             asyncGeneratorScanner(generator, options),
