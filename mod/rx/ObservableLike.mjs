@@ -1,21 +1,12 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
-import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
 import { catchErrorObservable, mergeAllObservable, scanAsyncObservable, switchAllObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
-import { map as map$1 } from '../containers/ReadonlyArrayLike.mjs';
 import IterableLike__toObservable from '../containers/__internal__/PromiseableLike/PromiseableLike.toObservable.mjs';
-import { pipe, none, getLength } from '../functions.mjs';
-import { SinkLike_notify } from '../rx.mjs';
-import { getScheduler } from './ObserverLike.mjs';
-import { notify, sourceFrom } from './SinkLike.mjs';
-import { dispose, addTo, onComplete } from '../util/DisposableLike.mjs';
-import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import EnumerableObservableLike__create from './__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
+import { pipe } from '../functions.mjs';
 import EnumerableObservableLike__never from './__internal__/EnumerableObservableLike/EnumerableObservableLike.never.mjs';
-import ObservableLike__allAreEnumerable from './__internal__/ObservableLike/ObservableLike.allAreEnumerable.mjs';
-import ObservableLike__allAreRunnable from './__internal__/ObservableLike/ObservableLike.allAreRunnable.mjs';
 import ObservableLike__buffer from './__internal__/ObservableLike/ObservableLike.buffer.mjs';
+import ObservableLike__combineLatest from './__internal__/ObservableLike/ObservableLike.combineLatest.mjs';
 import ObservableLike__concat from './__internal__/ObservableLike/ObservableLike.concat.mjs';
 import ObservableLike__create from './__internal__/ObservableLike/ObservableLike.create.mjs';
 import ObservableLike__decodeWithCharset from './__internal__/ObservableLike/ObservableLike.decodeWithCharset.mjs';
@@ -24,7 +15,9 @@ import ObservableLike__distinctUntilChanged from './__internal__/ObservableLike/
 import ObservableLike__empty from './__internal__/ObservableLike/ObservableLike.empty.mjs';
 import ObservableLike__everySatisfy from './__internal__/ObservableLike/ObservableLike.everySatisfy.mjs';
 import ObservableLike__forEach from './__internal__/ObservableLike/ObservableLike.forEach.mjs';
+import ObservableLike__forkCombineLatest from './__internal__/ObservableLike/ObservableLike.forkCombineLatest.mjs';
 import ObservableLike__forkMerge from './__internal__/ObservableLike/ObservableLike.forkMerge.mjs';
+import ObservableLike__forkZipLatest from './__internal__/ObservableLike/ObservableLike.forkZipLatest.mjs';
 import ObservableLike__generate from './__internal__/ObservableLike/ObservableLike.generate.mjs';
 import ObservableLike__isEnumerable from './__internal__/ObservableLike/ObservableLike.isEnumerable.mjs';
 import ObservableLike__isRunnable from './__internal__/ObservableLike/ObservableLike.isRunnable.mjs';
@@ -57,9 +50,8 @@ import ObservableLike__toPromise from './__internal__/ObservableLike/ObservableL
 import ObservableLike__toReadonlyArray from './__internal__/ObservableLike/ObservableLike.toReadonlyArray.mjs';
 import ObservableLike__withLatestFrom from './__internal__/ObservableLike/ObservableLike.withLatestFrom.mjs';
 import ObservableLike__zip from './__internal__/ObservableLike/ObservableLike.zip.mjs';
+import ObservableLike__zipLatest from './__internal__/ObservableLike/ObservableLike.zipLatest.mjs';
 import ObservableLike__zipWithLatestFrom from './__internal__/ObservableLike/ObservableLike.zipWithLatestFrom.mjs';
-import ObserverLike__mixin from './__internal__/ObserverLike/ObserverLike.mixin.mjs';
-import RunnableObservableLike__create from './__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
 
 const buffer = ObservableLike__buffer;
 const bufferT = {
@@ -70,7 +62,7 @@ const catchError = catchErrorObservable;
  * Returns an `ObservableLike` that combines the latest values from
  * multiple sources.
  */
-const combineLatest = (...observables) => latest(observables, 1 /* LatestMode.Combine */);
+const combineLatest = ObservableLike__combineLatest;
 const combineLatestT = {
     zip: combineLatest,
 };
@@ -125,9 +117,9 @@ const exhaust = () => mergeAll({
 const exhaustT = { concatAll: exhaust };
 const forEach = ObservableLike__forEach;
 const forEachT = { forEach };
-const forkCombineLatest = ((...ops) => (obs) => latest(pipe(ops, map$1(op => pipe(obs, op))), 1 /* LatestMode.Combine */));
+const forkCombineLatest = ObservableLike__forkCombineLatest;
 const forkMerge = ObservableLike__forkMerge;
-const forkZipLatest = ((...ops) => (obs) => latest(pipe(ops, map$1(op => pipe(obs, op))), 2 /* LatestMode.Zip */));
+const forkZipLatest = ObservableLike__forkZipLatest;
 const fromPromise = IterableLike__toObservable;
 const fromPromiseT = { fromPromise };
 const generate = ObservableLike__generate;
@@ -136,74 +128,6 @@ const isEnumerable = ObservableLike__isEnumerable;
 const isRunnable = ObservableLike__isRunnable;
 const keep = ObservableLike__keep;
 const keepT = { keep };
-const latest = /*@__PURE__*/ (() => {
-    const typedObserverMixin = ObserverLike__mixin();
-    const add = (instance, observer) => {
-        instance.observers.push(observer);
-    };
-    const onNotify = (instance) => {
-        const { mode, observers } = instance;
-        const isReady = observers.every(x => x.ready);
-        if (isReady) {
-            const result = pipe(observers, map$1(observer => observer.latest));
-            pipe(instance.delegate, notify(result));
-            if (mode === 2 /* LatestMode.Zip */) {
-                for (const sub of observers) {
-                    sub.ready = false;
-                    sub.latest = none;
-                }
-            }
-        }
-    };
-    const onCompleted = (instance) => {
-        instance.completedCount++;
-        if (instance.completedCount === getLength(instance.observers)) {
-            pipe(instance.delegate, dispose());
-        }
-    };
-    const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, DisposableLike__mixin), function LatestObserver(instance, scheduler, ctx) {
-        init(DisposableLike__mixin, instance);
-        init(typedObserverMixin, instance, scheduler);
-        instance.ctx = ctx;
-        return instance;
-    }, props({
-        ready: false,
-        latest: none,
-        ctx: none,
-    }), {
-        [SinkLike_notify](next) {
-            const { ctx } = this;
-            this.latest = next;
-            this.ready = true;
-            onNotify(ctx);
-        },
-    }));
-    return (observables, mode) => {
-        const onSink = (delegate) => {
-            const ctx = {
-                completedCount: 0,
-                observers: [],
-                delegate,
-                mode,
-            };
-            const onCompleteCb = () => {
-                onCompleted(ctx);
-            };
-            const scheduler = getScheduler(delegate);
-            for (const observable of observables) {
-                const innerObserver = pipe(createLatestObserver(scheduler, ctx), addTo(delegate), onComplete(onCompleteCb), sourceFrom(observable));
-                add(ctx, innerObserver);
-            }
-        };
-        const isEnumerable = ObservableLike__allAreEnumerable(observables);
-        const isRunnable = ObservableLike__allAreRunnable(observables);
-        return isEnumerable
-            ? EnumerableObservableLike__create(onSink)
-            : isRunnable
-                ? RunnableObservableLike__create(onSink)
-                : ObservableLike__create(onSink);
-    };
-})();
 const map = ObservableLike__map;
 const mapT = ObservableLike__mapT;
 const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => pipe(a, f, fromPromise()));
@@ -298,7 +222,7 @@ const zipT = {
  * Returns an `ObservableLike` that zips the latest values from
  * multiple sources.
  */
-const zipLatest = (...observables) => latest(observables, 2 /* LatestMode.Zip */);
+const zipLatest = ObservableLike__zipLatest;
 const zipLatestT = {
     zip: zipLatest,
 };

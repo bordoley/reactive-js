@@ -1,13 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
-  Mutable,
-  createInstanceFactory,
-  include,
-  init,
-  mix,
-  props,
-} from "../__internal__/mixins";
-import {
   catchErrorObservable,
   mergeAllObservable,
   scanAsyncObservable,
@@ -47,7 +39,6 @@ import {
   Zip,
 } from "../containers";
 import { concatMap } from "../containers/ContainerLike";
-import { map as mapArray } from "../containers/ReadonlyArrayLike";
 import PromiseableLike__toObservable from "../containers/__internal__/PromiseableLike/PromiseableLike.toObservable";
 import {
   Factory,
@@ -56,8 +47,6 @@ import {
   Predicate,
   SideEffect1,
   Updater,
-  getLength,
-  none,
   pipe,
 } from "../functions";
 import { ToEnumerable } from "../ix";
@@ -67,20 +56,13 @@ import {
   ObserverLike,
   RunnableObservableLike,
   ScanAsync,
-  SinkLike_notify,
 } from "../rx";
-import { getScheduler } from "../rx/ObserverLike";
-import { notify, sourceFrom } from "../rx/SinkLike";
 import { SchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import { DisposableLike, DisposableOrTeardown } from "../util";
-import { addTo, dispose, onComplete } from "../util/DisposableLike";
-import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
-import EnumerableObservableLike__create from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
 import EnumerableObservableLike__never from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.never";
-import ObservableLike__allAreEnumerable from "./__internal__/ObservableLike/ObservableLike.allAreEnumerable";
-import ObservableLike__allAreRunnable from "./__internal__/ObservableLike/ObservableLike.allAreRunnable";
 import ObservableLike__buffer from "./__internal__/ObservableLike/ObservableLike.buffer";
+import ObservableLike__combineLatest from "./__internal__/ObservableLike/ObservableLike.combineLatest";
 import ObservableLike__concat from "./__internal__/ObservableLike/ObservableLike.concat";
 import ObservableLike__create from "./__internal__/ObservableLike/ObservableLike.create";
 import ObservableLike__decodeWithCharset from "./__internal__/ObservableLike/ObservableLike.decodeWithCharset";
@@ -89,7 +71,9 @@ import ObservableLike__distinctUntilChanged from "./__internal__/ObservableLike/
 import ObservableLike__empty from "./__internal__/ObservableLike/ObservableLike.empty";
 import ObservableLike__everySatisfy from "./__internal__/ObservableLike/ObservableLike.everySatisfy";
 import ObservableLike__forEach from "./__internal__/ObservableLike/ObservableLike.forEach";
+import ObservableLike__forkCombineLatest from "./__internal__/ObservableLike/ObservableLike.forkCombineLatest";
 import ObservableLike__forkMerge from "./__internal__/ObservableLike/ObservableLike.forkMerge";
+import ObservableLike__forkZipLatest from "./__internal__/ObservableLike/ObservableLike.forkZipLatest";
 import ObservableLike__generate from "./__internal__/ObservableLike/ObservableLike.generate";
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
@@ -122,9 +106,8 @@ import ObservableLike__toPromise from "./__internal__/ObservableLike/ObservableL
 import ObservableLike__toReadonlyArray from "./__internal__/ObservableLike/ObservableLike.toReadonlyArray";
 import ObservableLike__withLatestFrom from "./__internal__/ObservableLike/ObservableLike.withLatestFrom";
 import ObservableLike__zip from "./__internal__/ObservableLike/ObservableLike.zip";
+import ObservableLike__zipLatest from "./__internal__/ObservableLike/ObservableLike.zipLatest";
 import ObservableLike__zipWithLatestFrom from "./__internal__/ObservableLike/ObservableLike.zipWithLatestFrom";
-import ObserverLike__mixin from "./__internal__/ObserverLike/ObserverLike.mixin";
-import RunnableObservableLike__create from "./__internal__/RunnableObservableLike/RunnableObservableLike.create";
 
 export const buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableLike>;
@@ -142,10 +125,8 @@ export const catchError: CatchError<ObservableLike>["catchError"] =
  * Returns an `ObservableLike` that combines the latest values from
  * multiple sources.
  */
-export const combineLatest: Zip<ObservableLike>["zip"] = (
-  ...observables: readonly ObservableLike<any>[]
-): ObservableLike<readonly unknown[]> =>
-  latest(observables, LatestMode.Combine);
+export const combineLatest: Zip<ObservableLike>["zip"] =
+  ObservableLike__combineLatest;
 export const combineLatestT: Zip<ObservableLike> = {
   zip: combineLatest,
 };
@@ -228,33 +209,14 @@ export const exhaustT: ConcatAll<ObservableLike> = { concatAll: exhaust };
 export const forEach = ObservableLike__forEach;
 export const forEachT: ForEach<ObservableLike> = { forEach };
 
-export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
-    ...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]
-  ): ContainerOperator<ObservableLike, T, readonly unknown[]> =>
-  (obs: ObservableLike<T>) =>
-    latest(
-      pipe(
-        ops,
-        mapArray(op => pipe(obs, op)),
-      ),
-      LatestMode.Combine,
-    )) as ForkZip<ObservableLike>["forkZip"];
+export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] =
+  ObservableLike__forkCombineLatest;
 
 export const forkMerge: ForkConcat<ObservableLike>["forkConcat"] =
   ObservableLike__forkMerge;
 
-export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
-    ...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]
-  ): ContainerOperator<ObservableLike, T, readonly any[]> =>
-  (obs: ObservableLike<T>) =>
-    latest(
-      pipe(
-        ops,
-        mapArray(op => pipe(obs, op)),
-      ),
-      LatestMode.Zip,
-    )) as ForkZip<ObservableLike>["forkZip"];
-
+export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] =
+  ObservableLike__forkZipLatest;
 export const fromPromise: FromPromise<ObservableLike>["fromPromise"] =
   PromiseableLike__toObservable;
 export const fromPromiseT: FromPromise<ObservableLike> = { fromPromise };
@@ -292,132 +254,6 @@ export const isRunnable: (
 
 export const keep: Keep<ObservableLike>["keep"] = ObservableLike__keep;
 export const keepT: Keep<ObservableLike> = { keep };
-
-const enum LatestMode {
-  Combine = 1,
-  Zip = 2,
-}
-const latest = /*@__PURE__*/ (() => {
-  const typedObserverMixin = ObserverLike__mixin();
-  type LatestCtx = {
-    delegate: ObserverLike<readonly unknown[]>;
-    mode: LatestMode;
-    completedCount: number;
-    observers: TProperties[];
-  };
-
-  const add = (instance: LatestCtx, observer: TProperties): void => {
-    instance.observers.push(observer);
-  };
-
-  const onNotify = (instance: LatestCtx) => {
-    const { mode, observers } = instance;
-
-    const isReady = observers.every(x => x.ready);
-
-    if (isReady) {
-      const result = pipe(
-        observers,
-        mapArray(observer => observer.latest),
-      );
-      pipe(instance.delegate, notify(result));
-
-      if (mode === LatestMode.Zip) {
-        for (const sub of observers) {
-          sub.ready = false;
-          sub.latest = none as any;
-        }
-      }
-    }
-  };
-
-  const onCompleted = (instance: LatestCtx) => {
-    instance.completedCount++;
-
-    if (instance.completedCount === getLength(instance.observers)) {
-      pipe(instance.delegate, dispose());
-    }
-  };
-
-  type TProperties = {
-    ready: boolean;
-    latest: unknown;
-    readonly ctx: LatestCtx;
-  };
-
-  const createLatestObserver = createInstanceFactory(
-    mix(
-      include(typedObserverMixin, DisposableLike__mixin),
-      function LatestObserver(
-        instance: Pick<ObserverLike, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        scheduler: SchedulerLike,
-        ctx: LatestCtx,
-      ): ObserverLike & TProperties {
-        init(DisposableLike__mixin, instance);
-        init(typedObserverMixin, instance, scheduler);
-
-        instance.ctx = ctx;
-
-        return instance;
-      },
-      props<TProperties>({
-        ready: false,
-        latest: none,
-        ctx: none,
-      }),
-      {
-        [SinkLike_notify](this: TProperties, next: unknown) {
-          const { ctx } = this;
-          this.latest = next;
-          this.ready = true;
-
-          onNotify(ctx);
-        },
-      },
-    ),
-  );
-
-  return (
-    observables: readonly ObservableLike<any>[],
-    mode: LatestMode,
-  ): ObservableLike<readonly unknown[]> => {
-    const onSink = (delegate: ObserverLike<readonly unknown[]>) => {
-      const ctx: LatestCtx = {
-        completedCount: 0,
-        observers: [],
-        delegate,
-        mode,
-      };
-
-      const onCompleteCb = () => {
-        onCompleted(ctx);
-      };
-
-      const scheduler = getScheduler(delegate);
-
-      for (const observable of observables) {
-        const innerObserver = pipe(
-          createLatestObserver(scheduler, ctx),
-          addTo(delegate),
-          onComplete(onCompleteCb),
-          sourceFrom(observable),
-        );
-
-        add(ctx, innerObserver);
-      }
-    };
-
-    const isEnumerable = ObservableLike__allAreEnumerable(observables);
-    const isRunnable = ObservableLike__allAreRunnable(observables);
-
-    return isEnumerable
-      ? EnumerableObservableLike__create(onSink)
-      : isRunnable
-      ? RunnableObservableLike__create(onSink)
-      : ObservableLike__create(onSink);
-  };
-})();
 
 export const map: Map<ObservableLike>["map"] = ObservableLike__map;
 export const mapT: Map<ObservableLike> = ObservableLike__mapT;
@@ -666,9 +502,7 @@ export const zipT: Zip<ObservableLike> = {
  * Returns an `ObservableLike` that zips the latest values from
  * multiple sources.
  */
-export const zipLatest: Zip<ObservableLike>["zip"] = (
-  ...observables: readonly ObservableLike<any>[]
-): ObservableLike<readonly unknown[]> => latest(observables, LatestMode.Zip);
+export const zipLatest: Zip<ObservableLike>["zip"] = ObservableLike__zipLatest;
 export const zipLatestT: Zip<ObservableLike> = {
   zip: zipLatest,
 };
