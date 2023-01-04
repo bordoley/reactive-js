@@ -194,7 +194,7 @@ declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];
 declare const takeFirstT: TakeFirst<ObservableLike>;
 declare const takeLast: TakeLast<ObservableLike>["takeLast"];
 declare const takeLastT: TakeLast<ObservableLike>;
-declare const takeUntil: <T>(notifier: ObservableLike) => Function1<ObservableLike<T>, ObservableLike<T>>;
+declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => Function1<ObservableLike<T>, ObservableLike<T>>;
 declare const takeWhile: TakeWhile<ObservableLike>["takeWhile"];
 declare const takeWhileT: TakeWhile<ObservableLike>;
 interface Throttle {
