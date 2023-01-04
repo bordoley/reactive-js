@@ -24,6 +24,7 @@ import ObservableLike__distinctUntilChanged from './__internal__/ObservableLike/
 import ObservableLike__empty from './__internal__/ObservableLike/ObservableLike.empty.mjs';
 import ObservableLike__everySatisfy from './__internal__/ObservableLike/ObservableLike.everySatisfy.mjs';
 import ObservableLike__forEach from './__internal__/ObservableLike/ObservableLike.forEach.mjs';
+import ObservableLike__forkMerge from './__internal__/ObservableLike/ObservableLike.forkMerge.mjs';
 import ObservableLike__generate from './__internal__/ObservableLike/ObservableLike.generate.mjs';
 import ObservableLike__isEnumerable from './__internal__/ObservableLike/ObservableLike.isEnumerable.mjs';
 import ObservableLike__isRunnable from './__internal__/ObservableLike/ObservableLike.isRunnable.mjs';
@@ -31,7 +32,6 @@ import ObservableLike__keep from './__internal__/ObservableLike/ObservableLike.k
 import ObservableLike__map from './__internal__/ObservableLike/ObservableLike.map.mjs';
 import ObservableLike__mapT from './__internal__/ObservableLike/ObservableLike.mapT.mjs';
 import ObservableLike__merge from './__internal__/ObservableLike/ObservableLike.merge.mjs';
-import ObservableLike__mergeObservables from './__internal__/ObservableLike/ObservableLike.mergeObservables.mjs';
 import ObservableLike__multicast from './__internal__/ObservableLike/ObservableLike.multicast.mjs';
 import ObservableLike__onSubscribe from './__internal__/ObservableLike/ObservableLike.onSubscribe.mjs';
 import ObservableLike__pairwise from './__internal__/ObservableLike/ObservableLike.pairwise.mjs';
@@ -126,7 +126,7 @@ const exhaustT = { concatAll: exhaust };
 const forEach = ObservableLike__forEach;
 const forEachT = { forEach };
 const forkCombineLatest = ((...ops) => (obs) => latest(pipe(ops, map$1(op => pipe(obs, op))), 1 /* LatestMode.Combine */));
-const forkMerge = (...ops) => (obs) => pipe(ops, map$1(op => op(obs)), ObservableLike__mergeObservables);
+const forkMerge = ObservableLike__forkMerge;
 const forkZipLatest = ((...ops) => (obs) => latest(pipe(ops, map$1(op => pipe(obs, op))), 2 /* LatestMode.Zip */));
 const fromPromise = IterableLike__toObservable;
 const fromPromiseT = { fromPromise };
@@ -281,12 +281,6 @@ const toEnumerable = ObservableLike__toEnumerable;
 const toEnumerableT = { toEnumerable };
 const toFlowable = ObservableLike__toFlowable;
 const toFlowableT = { toFlowable };
-/**
- * Returns a Promise that completes with the last value produced by
- * the source.
- *
- * @param scheduler The scheduler upon which to subscribe to the source.
- */
 const toPromise = ObservableLike__toPromise;
 const toPromiseT = {
     toPromise,
