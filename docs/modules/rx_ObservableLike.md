@@ -2180,9 +2180,6 @@ ___
 
 ▸ **toPromise**<`T`\>(`ctx`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
 
-Returns a Promise that completes with the last value produced by
-the source.
-
 #### Type parameters
 
 | Name |

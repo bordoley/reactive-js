@@ -89,6 +89,7 @@ import ObservableLike__distinctUntilChanged from "./__internal__/ObservableLike/
 import ObservableLike__empty from "./__internal__/ObservableLike/ObservableLike.empty";
 import ObservableLike__everySatisfy from "./__internal__/ObservableLike/ObservableLike.everySatisfy";
 import ObservableLike__forEach from "./__internal__/ObservableLike/ObservableLike.forEach";
+import ObservableLike__forkMerge from "./__internal__/ObservableLike/ObservableLike.forkMerge";
 import ObservableLike__generate from "./__internal__/ObservableLike/ObservableLike.generate";
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
@@ -96,7 +97,6 @@ import ObservableLike__keep from "./__internal__/ObservableLike/ObservableLike.k
 import ObservableLike__map from "./__internal__/ObservableLike/ObservableLike.map";
 import ObservableLike__mapT from "./__internal__/ObservableLike/ObservableLike.mapT";
 import ObservableLike__merge from "./__internal__/ObservableLike/ObservableLike.merge";
-import ObservableLike__mergeObservables from "./__internal__/ObservableLike/ObservableLike.mergeObservables";
 import ObservableLike__multicast from "./__internal__/ObservableLike/ObservableLike.multicast";
 import ObservableLike__onSubscribe from "./__internal__/ObservableLike/ObservableLike.onSubscribe";
 import ObservableLike__pairwise from "./__internal__/ObservableLike/ObservableLike.pairwise";
@@ -241,15 +241,7 @@ export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
     )) as ForkZip<ObservableLike>["forkZip"];
 
 export const forkMerge: ForkConcat<ObservableLike>["forkConcat"] =
-  <TIn, TOut>(
-    ...ops: readonly ContainerOperator<ObservableLike, TIn, TOut>[]
-  ) =>
-  (obs: ObservableLike<TIn>) =>
-    pipe(
-      ops,
-      mapArray(op => op(obs)),
-      ObservableLike__mergeObservables,
-    );
+  ObservableLike__forkMerge;
 
 export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
     ...ops: readonly ContainerOperator<ObservableLike, T, unknown>[]

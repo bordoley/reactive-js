@@ -232,12 +232,6 @@ declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
 declare const toEnumerableT: ToEnumerable<ObservableLike>;
 declare const toFlowable: ToFlowable<ObservableLike>["toFlowable"];
 declare const toFlowableT: ToFlowable<ObservableLike>;
-/**
- * Returns a Promise that completes with the last value produced by
- * the source.
- *
- * @param scheduler The scheduler upon which to subscribe to the source.
- */
 declare const toPromise: ToPromiseable<ObservableLike, SchedulerLike>["toPromise"];
 declare const toPromiseT: ToPromiseable<ObservableLike, SchedulerLike>;
 declare const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"];
