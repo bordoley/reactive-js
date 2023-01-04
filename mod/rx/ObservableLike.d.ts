@@ -1,7 +1,7 @@
+import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync } from "../rx.mjs";
 import { Function1, SideEffect1, Equality, Factory, Reducer, Function2, Updater, Predicate } from "../functions.mjs";
 import { ContainerOperator, Buffer, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, FromPromise, Generate, Keep, Map, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromiseable, ToReadonlyArray } from "../containers.mjs";
 import { ToEnumerable } from "../ix.mjs";
-import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync } from "../rx.mjs";
 import { SchedulerLike } from "../scheduling.mjs";
 import { ToFlowable } from "../streaming.mjs";
 import { DisposableOrTeardown, DisposableLike } from "../util.mjs";
@@ -76,15 +76,6 @@ interface GenerateObservable {
         readonly delayStart?: boolean;
     }): RunnableObservableLike<T>;
 }
-/**
- * Generates an `ObservableLike` sequence from a generator function
- * that is applied to an accumulator value with a specified `delay`
- * between emitted items.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- * @param delay The requested delay between emitted items by the observable.
- */
 declare const generate: GenerateObservable;
 declare const generateT: Generate<ObservableLike, {
     readonly delay: number;
@@ -180,8 +171,8 @@ declare const scanAsyncT: ScanAsync<ObservableLike, ObservableLike>;
  * is subscribed to.
  */
 declare const share: <T>(scheduler: SchedulerLike, options?: {
-    readonly replay?: number;
-}) => Function1<ObservableLike<T>, ObservableLike<T>>;
+    readonly replay?: number | undefined;
+} | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
 declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
 declare const skipFirstT: SkipFirst<ObservableLike>;
 declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
