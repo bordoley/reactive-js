@@ -8,7 +8,7 @@ import StatefulContainerLike__map from '../containers/__internal__/StatefulConta
 import StatefulContainerLike__scan from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
 import StatefulContainerLike__takeWhile from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile.mjs';
 import { interactive } from '../containers/__internal__/containers.internal.mjs';
-import { getLength, compose, increment, returns, pipe, pipeUnsafe, newInstance, none, unsafeCast, partial } from '../functions.mjs';
+import { increment, returns, pipe, pipeUnsafe, newInstance, none, unsafeCast, partial } from '../functions.mjs';
 import { InteractiveContainerLike_interact, SourceLike_move } from '../ix.mjs';
 import { hasCurrent, getCurrent } from './EnumeratorLike.mjs';
 import { move } from './SourceLike.mjs';
@@ -26,23 +26,14 @@ import { enumerate } from './EnumerableLike.mjs';
 import AsyncEnumerable__create from './__internal__/AsyncEnumerableLike/AsyncEnumerable.create.mjs';
 import AsyncEnumerable__toObservable from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toObservable.mjs';
 import AsyncEnumerableLike__toReadonlyArray from './__internal__/AsyncEnumerableLike/AsyncEnumerable.toReadonlyArray.mjs';
-import AsyncEnumerator__create from './__internal__/AsyncEnumeratorLike/AsyncEnumerator.create.mjs';
 
-const createLiftedAsyncEnumerable = (...ops) => {
-    const op = getLength(ops) > 1 ? compose(...ops) : ops[0];
-    return AsyncEnumerable__create((scheduler, options) => {
-        var _a;
-        const replay = (_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 0;
-        return AsyncEnumerator__create(op, scheduler, { replay });
-    });
-};
 const fromArray = /*@__PURE__*/ (() => {
     const fromArrayInternal = (values, start, count, options) => {
         const delay = getDelay(options);
         const fromArrayWithDelay = hasDelay(options)
             ? toObservable$1({ delay })
             : toObservable$1();
-        return createLiftedAsyncEnumerable(scan$1(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
+        return AsyncEnumerable__create(scan$1(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
     };
     return (_) => values => fromArrayInternal(values, 0, values.length);
 })();
@@ -52,7 +43,7 @@ const fromArray = /*@__PURE__*/ (() => {
  * @param iterable
  */
 const fromEnumerable = 
-/*@__PURE__*/ (() => returns((enumerable) => createLiftedAsyncEnumerable(observable => create(observer => {
+/*@__PURE__*/ (() => returns((enumerable) => AsyncEnumerable__create(observable => create(observer => {
     const enumerator = pipe(enumerable, enumerate(), addTo(observer));
     pipe(observable, map$1(_ => move(enumerator)), takeWhile$1(hasCurrent), map$1(getCurrent), sinkInto(observer));
 }))))();
@@ -85,7 +76,7 @@ const generate = /*@__PURE__*/ (() => {
     };
     return (generator, initialValue, options) => {
         const delay = getDelay(options);
-        return createLiftedAsyncEnumerable(delay > 0
+        return AsyncEnumerable__create(delay > 0
             ? scanAsync$1(asyncGeneratorScanner(generator, options), initialValue)
             : scan$1(generateScanner(generator), initialValue));
     };
