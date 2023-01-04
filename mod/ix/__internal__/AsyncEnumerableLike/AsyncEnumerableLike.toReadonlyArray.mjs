@@ -1,4 +1,4 @@
-/// <reference types="./AsyncEnumerable.toReadonlyArray.d.ts" />
+/// <reference types="./AsyncEnumerableLike.toReadonlyArray.d.ts" />
 import { pipe } from '../../../functions.mjs';
 import ObservableLike__toReadonlyArray from '../../../rx/__internal__/ObservableLike/ObservableLike.toReadonlyArray.mjs';
 import AsyncEnumerable__toObservable from './AsyncEnumerable.toObservable.mjs';

@@ -119,7 +119,9 @@ interface CreateAsyncEnumerable {
     op12: ContainerOperator<ObservableLike, K, L>,
   ): AsyncEnumerableLike<L>;
 }
-const AsyncEnumerable__create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
+const AsyncEnumerableLike__create: CreateAsyncEnumerable = /*@__PURE__*/ (<
+  T,
+>() => {
   const AsyncEnumerable_op = Symbol("AsyncEnumerable_ops");
 
   type TProperties = {
@@ -177,4 +179,4 @@ const AsyncEnumerable__create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
   };
 })();
 
-export default AsyncEnumerable__create;
+export default AsyncEnumerableLike__create;

@@ -58,7 +58,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         },
     }));
 })();
-const ObserverLike__observerMixin = /*@__PURE__*/ (() => {
+const ObserverLike__mixin = /*@__PURE__*/ (() => {
     return pipe(mix(function ObserverMixin(instance, scheduler) {
         instance[ObserverLike_scheduler] = scheduler;
         return instance;
@@ -78,4 +78,4 @@ const ObserverLike__observerMixin = /*@__PURE__*/ (() => {
     }), returns);
 })();
 
-export { ObserverLike__observerMixin as default };
+export { ObserverLike__mixin as default };

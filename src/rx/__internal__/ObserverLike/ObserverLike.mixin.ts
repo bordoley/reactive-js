@@ -131,7 +131,7 @@ type TObserverMixinReturn<T> = Omit<
   keyof DisposableLike | typeof SinkLike_notify
 >;
 
-const ObserverLike__observerMixin: <T>() => Mixin1<
+const ObserverLike__mixin: <T>() => Mixin1<
   TObserverMixinReturn<T>,
   SchedulerLike
 > = /*@__PURE__*/ (<T>() => {
@@ -174,4 +174,4 @@ const ObserverLike__observerMixin: <T>() => Mixin1<
   );
 })();
 
-export default ObserverLike__observerMixin;
+export default ObserverLike__mixin;
