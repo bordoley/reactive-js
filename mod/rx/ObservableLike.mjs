@@ -8,14 +8,14 @@ import { setCurrentRef, getCurrentRef, MutableRefLike_current } from '../__inter
 import { concatMap, throws, keepType } from '../containers/ContainerLike.mjs';
 import { map as map$1, toObservable, every, forEach as forEach$1, some, keepT as keepT$1 } from '../containers/ReadonlyArrayLike.mjs';
 import IterableLike__toObservable from '../containers/__internal__/PromiseableLike/PromiseableLike.toObservable.mjs';
-import { pipe, none, getLength, partial, isNone, isNumber, isSome, returns, compose, isTrue, getOrRaise } from '../functions.mjs';
+import { pipe, none, getLength, isNone, isSome, isNumber, partial, returns, compose, isTrue, getOrRaise } from '../functions.mjs';
 import { enumerate, zip as zip$1, toObservable as toObservable$1 } from '../ix/EnumerableLike.mjs';
 import { hasCurrent, move, getCurrent } from '../ix/EnumeratorLike.mjs';
 import { SinkLike_notify } from '../rx.mjs';
 import { schedule, getScheduler } from './ObserverLike.mjs';
-import { notify, sourceFrom, notifySink } from './SinkLike.mjs';
+import { notify, sourceFrom } from './SinkLike.mjs';
 import { yield_ } from '../scheduling/ContinuationLike.mjs';
-import { isDisposed, dispose, addTo, onComplete, addToIgnoringChildErrors, onDisposed, disposed } from '../util/DisposableLike.mjs';
+import { isDisposed, dispose, addTo, onComplete, onDisposed, disposed } from '../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { getObserverCount } from './MulticastObservableLike.mjs';
@@ -45,6 +45,8 @@ import ObservableLike__multicast from './__internal__/ObservableLike/ObservableL
 import ObservableLike__onSubscribe from './__internal__/ObservableLike/ObservableLike.onSubscribe.mjs';
 import ObservableLike__pairwise from './__internal__/ObservableLike/ObservableLike.pairwise.mjs';
 import ObservableLike__reduce from './__internal__/ObservableLike/ObservableLike.reduce.mjs';
+import ObservableLike__repeat from './__internal__/ObservableLike/ObservableLike.repeat.mjs';
+import ObservableLike__retry from './__internal__/ObservableLike/ObservableLike.retry.mjs';
 import ObservableLike__scan from './__internal__/ObservableLike/ObservableLike.scan.mjs';
 import ObservableLike__skipFirst from './__internal__/ObservableLike/ObservableLike.skipFirst.mjs';
 import ObservableLike__someSatisfy from './__internal__/ObservableLike/ObservableLike.someSatisfy.mjs';
@@ -61,7 +63,6 @@ import ObservableLike__toPromise from './__internal__/ObservableLike/ObservableL
 import ObservableLike__toReadonlyArray from './__internal__/ObservableLike/ObservableLike.toReadonlyArray.mjs';
 import ObservableLike__withLatestFrom from './__internal__/ObservableLike/ObservableLike.withLatestFrom.mjs';
 import ObservableLike__zipWithLatestFrom from './__internal__/ObservableLike/ObservableLike.zipWithLatestFrom.mjs';
-import ObserverLike__createWithDelegate from './__internal__/ObserverLike/ObserverLike.createWithDelegate.mjs';
 import ObserverLike__mixin from './__internal__/ObserverLike/ObserverLike.mixin.mjs';
 import RunnableObservableLike__create from './__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
 
@@ -255,56 +256,11 @@ const pairwise = ObservableLike__pairwise;
 const pairwiseT = { pairwise };
 const reduce = ObservableLike__reduce;
 const reduceT = { reduce };
-const repeatImpl = /*@__PURE__*/ (() => {
-    const createRepeatObserver = (delegate, observable, shouldRepeat) => {
-        let count = 1;
-        const doOnDispose = (e) => {
-            let shouldComplete = false;
-            try {
-                shouldComplete = !shouldRepeat(count, e);
-            }
-            catch (cause) {
-                shouldComplete = true;
-                e = { cause, parent: e };
-            }
-            if (shouldComplete) {
-                pipe(delegate, dispose(e));
-            }
-            else {
-                count++;
-                pipe(observable, forEach(notifySink(delegate)), subscribe(getScheduler(delegate)), addToIgnoringChildErrors(delegate), onDisposed(doOnDispose));
-            }
-        };
-        return pipe(ObserverLike__createWithDelegate(delegate), addToIgnoringChildErrors(delegate), onDisposed(doOnDispose));
-    };
-    return (shouldRepeat) => (observable) => {
-        const operator = pipe(createRepeatObserver, partial(observable, shouldRepeat));
-        return pipe(observable, ObservableLike__lift(true, true)(operator));
-    };
-})();
-const repeat = /*@__PURE__*/ (() => {
-    const defaultRepeatPredicate = (_, e) => isNone(e);
-    return (predicate) => {
-        const repeatPredicate = isNone(predicate)
-            ? defaultRepeatPredicate
-            : isNumber(predicate)
-                ? (count, e) => isNone(e) && count < predicate
-                : (count, e) => isNone(e) && predicate(count);
-        return repeatImpl(repeatPredicate);
-    };
-})();
+const repeat = ObservableLike__repeat;
 const repeatT = {
     repeat,
 };
-const retry = /*@__PURE__*/ (() => {
-    const defaultRetryPredicate = (_, error) => isSome(error);
-    return (predicate) => {
-        const retryPredicate = isNone(predicate)
-            ? defaultRetryPredicate
-            : (count, error) => isSome(error) && predicate(count, error.cause);
-        return repeatImpl(retryPredicate);
-    };
-})();
+const retry = ObservableLike__retry;
 const scan = ObservableLike__scan;
 const scanT = { scan };
 /**

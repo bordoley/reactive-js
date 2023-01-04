@@ -107,14 +107,13 @@ import {
   SinkLike_notify,
 } from "../rx";
 import { getScheduler, schedule } from "../rx/ObserverLike";
-import { notify, notifySink, sourceFrom } from "../rx/SinkLike";
+import { notify, sourceFrom } from "../rx/SinkLike";
 import { SchedulerLike } from "../scheduling";
 import { yield_ } from "../scheduling/ContinuationLike";
 import { ToFlowable } from "../streaming";
-import { DisposableLike, DisposableOrTeardown, Exception } from "../util";
+import { DisposableLike, DisposableOrTeardown } from "../util";
 import {
   addTo,
-  addToIgnoringChildErrors,
   dispose,
   disposed,
   isDisposed,
@@ -150,6 +149,8 @@ import ObservableLike__multicast from "./__internal__/ObservableLike/ObservableL
 import ObservableLike__onSubscribe from "./__internal__/ObservableLike/ObservableLike.onSubscribe";
 import ObservableLike__pairwise from "./__internal__/ObservableLike/ObservableLike.pairwise";
 import ObservableLike__reduce from "./__internal__/ObservableLike/ObservableLike.reduce";
+import ObservableLike__repeat from "./__internal__/ObservableLike/ObservableLike.repeat";
+import ObservableLike__retry from "./__internal__/ObservableLike/ObservableLike.retry";
 import ObservableLike__scan from "./__internal__/ObservableLike/ObservableLike.scan";
 import ObservableLike__skipFirst from "./__internal__/ObservableLike/ObservableLike.skipFirst";
 import ObservableLike__someSatisfy from "./__internal__/ObservableLike/ObservableLike.someSatisfy";
@@ -166,7 +167,6 @@ import ObservableLike__toPromise from "./__internal__/ObservableLike/ObservableL
 import ObservableLike__toReadonlyArray from "./__internal__/ObservableLike/ObservableLike.toReadonlyArray";
 import ObservableLike__withLatestFrom from "./__internal__/ObservableLike/ObservableLike.withLatestFrom";
 import ObservableLike__zipWithLatestFrom from "./__internal__/ObservableLike/ObservableLike.zipWithLatestFrom";
-import ObserverLike__createWithDelegate from "./__internal__/ObserverLike/ObserverLike.createWithDelegate";
 import ObserverLike__mixin from "./__internal__/ObserverLike/ObserverLike.mixin";
 import RunnableObservableLike__create from "./__internal__/RunnableObservableLike/RunnableObservableLike.create";
 
@@ -554,57 +554,6 @@ export const pairwiseT: Pairwise<ObservableLike> = { pairwise };
 export const reduce: Reduce<ObservableLike>["reduce"] = ObservableLike__reduce;
 export const reduceT: Reduce<ObservableLike> = { reduce };
 
-const repeatImpl: <T>(
-  shouldRepeat: (count: number, error?: Exception) => boolean,
-) => ContainerOperator<ObservableLike, T, T> = /*@__PURE__*/ (() => {
-  const createRepeatObserver = <T>(
-    delegate: ObserverLike<T>,
-    observable: ObservableLike<T>,
-    shouldRepeat: (count: number, error?: Exception) => boolean,
-  ) => {
-    let count = 1;
-
-    const doOnDispose = (e?: Exception) => {
-      let shouldComplete = false;
-      try {
-        shouldComplete = !shouldRepeat(count, e);
-      } catch (cause) {
-        shouldComplete = true;
-        e = { cause, parent: e } as Exception;
-      }
-
-      if (shouldComplete) {
-        pipe(delegate, dispose(e));
-      } else {
-        count++;
-
-        pipe(
-          observable,
-          forEach(notifySink(delegate)),
-          subscribe(getScheduler(delegate)),
-          addToIgnoringChildErrors(delegate),
-          onDisposed(doOnDispose),
-        );
-      }
-    };
-
-    return pipe(
-      ObserverLike__createWithDelegate(delegate),
-      addToIgnoringChildErrors(delegate),
-      onDisposed(doOnDispose),
-    );
-  };
-
-  return <T>(shouldRepeat: (count: number, error?: Exception) => boolean) =>
-    (observable: ObservableLike<T>) => {
-      const operator = pipe(
-        createRepeatObserver,
-        partial(observable, shouldRepeat),
-      );
-      return pipe(observable, ObservableLike__lift(true, true)(operator));
-    };
-})();
-
 interface RepeatOperator {
   /**
    * Returns an `ObservableLike` that applies the predicate function each time the source
@@ -625,20 +574,7 @@ interface RepeatOperator {
    */
   <T>(): ContainerOperator<ObservableLike, T, T>;
 }
-export const repeat: RepeatOperator = /*@__PURE__*/ (() => {
-  const defaultRepeatPredicate = (_: number, e?: Exception): boolean =>
-    isNone(e);
-
-  return (predicate?: Predicate<number> | number) => {
-    const repeatPredicate = isNone(predicate)
-      ? defaultRepeatPredicate
-      : isNumber(predicate)
-      ? (count: number, e?: Exception) => isNone(e) && count < predicate
-      : (count: number, e?: Exception) => isNone(e) && predicate(count);
-
-    return repeatImpl(repeatPredicate);
-  };
-})();
+export const repeat: RepeatOperator = ObservableLike__repeat;
 export const repeatT: Repeat<ObservableLike> = {
   repeat,
 };
@@ -662,20 +598,7 @@ interface Retry {
     T
   >;
 }
-
-export const retry: Retry = /*@__PURE__*/ (() => {
-  const defaultRetryPredicate = (_: number, error?: Exception): boolean =>
-    isSome(error);
-
-  return (predicate?: (count: number, error: unknown) => boolean) => {
-    const retryPredicate = isNone(predicate)
-      ? defaultRetryPredicate
-      : (count: number, error?: Exception) =>
-          isSome(error) && predicate(count, error.cause);
-
-    return repeatImpl(retryPredicate);
-  };
-})();
+export const retry: Retry = ObservableLike__retry;
 
 export const scan = ObservableLike__scan;
 export const scanT: Scan<ObservableLike> = { scan };
