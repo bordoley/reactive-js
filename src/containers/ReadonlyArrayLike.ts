@@ -20,6 +20,7 @@ import ReadonlyArrayLike__empty from "./__internal__/ReadonlyArrayLike/ReadonlyA
 import ReadonlyArrayLike__every from "./__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every";
 import ReadonlyArrayLike__forEach from "./__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach";
 import ReadonlyArrayLike__keep from "./__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keep";
+import ReadonlyArrayLike__keepT from "./__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keepT";
 import ReadonlyArrayLike__map from "./__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map";
 import ReadonlyArrayLike__some from "./__internal__/ReadonlyArrayLike/ReadonlyArrayLike.some";
 import ReadonlyArrayLike__toEnumerable from "./__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toEnumerable";
@@ -40,7 +41,7 @@ export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
 export const forEachT: ForEach<ReadonlyArrayLike> = { forEach };
 
 export const keep: Keep<ReadonlyArrayLike>["keep"] = ReadonlyArrayLike__keep;
-export const keepT: Keep<ReadonlyArrayLike> = { keep };
+export const keepT: Keep<ReadonlyArrayLike> = ReadonlyArrayLike__keepT;
 
 export const map: Map<ReadonlyArrayLike>["map"] = ReadonlyArrayLike__map;
 export const mapT: Map<ReadonlyArrayLike> = { map };

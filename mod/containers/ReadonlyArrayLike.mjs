@@ -4,6 +4,7 @@ import ReadonlyArrayLike__empty from './__internal__/ReadonlyArrayLike/ReadonlyA
 import ReadonlyArrayLike__every from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every.mjs';
 import ReadonlyArrayLike__forEach from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach.mjs';
 import ReadonlyArrayLike__keep from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keep.mjs';
+import ReadonlyArrayLike__keepT from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keepT.mjs';
 import ReadonlyArrayLike__map from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
 import ReadonlyArrayLike__some from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.some.mjs';
 import ReadonlyArrayLike__toEnumerable from './__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toEnumerable.mjs';
@@ -19,7 +20,7 @@ const every = ReadonlyArrayLike__every;
 const forEach = ReadonlyArrayLike__forEach;
 const forEachT = { forEach };
 const keep = ReadonlyArrayLike__keep;
-const keepT = { keep };
+const keepT = ReadonlyArrayLike__keepT;
 const map = ReadonlyArrayLike__map;
 const mapT = { map };
 const some = ReadonlyArrayLike__some;

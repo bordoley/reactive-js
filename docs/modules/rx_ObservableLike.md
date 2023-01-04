@@ -1355,10 +1355,6 @@ ___
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
-Generates an `ObservableLike` sequence from a generator function
-that is applied to an accumulator value with a specified `delay`
-between emitted items.
-
 #### Type parameters
 
 | Name |
@@ -1367,10 +1363,10 @@ between emitted items.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
 
 #### Returns
 
@@ -1378,10 +1374,6 @@ between emitted items.
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`, `options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
-Generates an `ObservableLike` sequence from a generator function
-that is applied to an accumulator value with a specified `delay`
-between emitted items.
-
 #### Type parameters
 
 | Name |
@@ -1390,13 +1382,13 @@ between emitted items.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
-| `options` | `Object` | - |
-| `options.delay` | `number` | - |
-| `options.delayStart?` | `boolean` | - |
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 

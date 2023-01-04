@@ -13,18 +13,6 @@ import {
   scanAsyncObservable,
   switchAllObservable,
 } from "../__internal__/rx/ObservableLike.higher-order";
-import { hasDelay } from "../__internal__/scheduling/SchedulerLike.options";
-import {
-  DisposableRefLike,
-  createDisposableRef,
-  disposableRefMixin,
-} from "../__internal__/util/DisposableRefLike";
-import {
-  MutableRefLike,
-  MutableRefLike_current,
-  getCurrentRef,
-  setCurrentRef,
-} from "../__internal__/util/MutableRefLike";
 import {
   Buffer,
   CatchError,
@@ -58,75 +46,38 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { concatMap, keepType, throws } from "../containers/ContainerLike";
-import {
-  toObservable as arrayToObservable,
-  every,
-  forEach as forEachArray,
-  keepT as keepArrayT,
-  map as mapArray,
-  some,
-} from "../containers/ReadonlyArrayLike";
+import { concatMap } from "../containers/ContainerLike";
+import { map as mapArray } from "../containers/ReadonlyArrayLike";
 import PromiseableLike__toObservable from "../containers/__internal__/PromiseableLike/PromiseableLike.toObservable";
 import {
   Factory,
   Function1,
   Function2,
-  Optional,
   Predicate,
-  SideEffect,
   SideEffect1,
   Updater,
-  compose,
   getLength,
-  getOrRaise,
-  isNone,
-  isNumber,
-  isSome,
-  isTrue,
   none,
-  partial,
   pipe,
-  returns,
 } from "../functions";
-import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix";
-import {
-  toObservable as enumerableToObservable,
-  zip as enumerableZip,
-  enumerate,
-} from "../ix/EnumerableLike";
-import { getCurrent, hasCurrent, move } from "../ix/EnumeratorLike";
+import { ToEnumerable } from "../ix";
 import {
   EnumerableObservableLike,
-  MulticastObservableLike,
   ObservableLike,
   ObserverLike,
   RunnableObservableLike,
   ScanAsync,
-  SinkLike,
   SinkLike_notify,
 } from "../rx";
-import { getScheduler, schedule } from "../rx/ObserverLike";
+import { getScheduler } from "../rx/ObserverLike";
 import { notify, sourceFrom } from "../rx/SinkLike";
 import { SchedulerLike } from "../scheduling";
-import { yield_ } from "../scheduling/ContinuationLike";
 import { ToFlowable } from "../streaming";
 import { DisposableLike, DisposableOrTeardown } from "../util";
-import {
-  addTo,
-  dispose,
-  disposed,
-  isDisposed,
-  onComplete,
-  onDisposed,
-} from "../util/DisposableLike";
-import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
+import { addTo, dispose, onComplete } from "../util/DisposableLike";
 import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
-import { getObserverCount } from "./MulticastObservableLike";
-import { sinkInto } from "./ReactiveContainerLike";
 import EnumerableObservableLike__create from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
 import EnumerableObservableLike__never from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.never";
-import EnumeratorSinkLike__create from "./__internal__/EnumeratorSinkLike/EnumeratorSinkLike.create";
 import ObservableLike__allAreEnumerable from "./__internal__/ObservableLike/ObservableLike.allAreEnumerable";
 import ObservableLike__allAreRunnable from "./__internal__/ObservableLike/ObservableLike.allAreRunnable";
 import ObservableLike__buffer from "./__internal__/ObservableLike/ObservableLike.buffer";
@@ -138,11 +89,12 @@ import ObservableLike__distinctUntilChanged from "./__internal__/ObservableLike/
 import ObservableLike__empty from "./__internal__/ObservableLike/ObservableLike.empty";
 import ObservableLike__everySatisfy from "./__internal__/ObservableLike/ObservableLike.everySatisfy";
 import ObservableLike__forEach from "./__internal__/ObservableLike/ObservableLike.forEach";
+import ObservableLike__generate from "./__internal__/ObservableLike/ObservableLike.generate";
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
 import ObservableLike__keep from "./__internal__/ObservableLike/ObservableLike.keep";
-import ObservableLike__lift from "./__internal__/ObservableLike/ObservableLike.lift";
 import ObservableLike__map from "./__internal__/ObservableLike/ObservableLike.map";
+import ObservableLike__mapT from "./__internal__/ObservableLike/ObservableLike.mapT";
 import ObservableLike__merge from "./__internal__/ObservableLike/ObservableLike.merge";
 import ObservableLike__mergeObservables from "./__internal__/ObservableLike/ObservableLike.mergeObservables";
 import ObservableLike__multicast from "./__internal__/ObservableLike/ObservableLike.multicast";
@@ -152,6 +104,7 @@ import ObservableLike__reduce from "./__internal__/ObservableLike/ObservableLike
 import ObservableLike__repeat from "./__internal__/ObservableLike/ObservableLike.repeat";
 import ObservableLike__retry from "./__internal__/ObservableLike/ObservableLike.retry";
 import ObservableLike__scan from "./__internal__/ObservableLike/ObservableLike.scan";
+import ObservableLike__share from "./__internal__/ObservableLike/ObservableLike.share";
 import ObservableLike__skipFirst from "./__internal__/ObservableLike/ObservableLike.skipFirst";
 import ObservableLike__someSatisfy from "./__internal__/ObservableLike/ObservableLike.someSatisfy";
 import ObservableLike__subscribe from "./__internal__/ObservableLike/ObservableLike.subscribe";
@@ -160,12 +113,15 @@ import ObservableLike__takeFirst from "./__internal__/ObservableLike/ObservableL
 import ObservableLike__takeLast from "./__internal__/ObservableLike/ObservableLike.takeLast";
 import ObservableLike__takeUntil from "./__internal__/ObservableLike/ObservableLike.takeUntil";
 import ObservableLike__takeWhile from "./__internal__/ObservableLike/ObservableLike.takeWhile";
+import ObservableLike__throttle from "./__internal__/ObservableLike/ObservableLike.throttle";
 import ObservableLike__throwIfEmpty from "./__internal__/ObservableLike/ObservableLike.throwIfEmpty";
+import ObservableLike__timeout from "./__internal__/ObservableLike/ObservableLike.timeout";
 import ObservableLike__toEnumerable from "./__internal__/ObservableLike/ObservableLike.toEnumerable";
 import ObservableLike__toFlowable from "./__internal__/ObservableLike/ObservableLike.toFlowable";
 import ObservableLike__toPromise from "./__internal__/ObservableLike/ObservableLike.toPromise";
 import ObservableLike__toReadonlyArray from "./__internal__/ObservableLike/ObservableLike.toReadonlyArray";
 import ObservableLike__withLatestFrom from "./__internal__/ObservableLike/ObservableLike.withLatestFrom";
+import ObservableLike__zip from "./__internal__/ObservableLike/ObservableLike.zip";
 import ObservableLike__zipWithLatestFrom from "./__internal__/ObservableLike/ObservableLike.zipWithLatestFrom";
 import ObserverLike__mixin from "./__internal__/ObserverLike/ObserverLike.mixin";
 import RunnableObservableLike__create from "./__internal__/RunnableObservableLike/RunnableObservableLike.create";
@@ -326,41 +282,8 @@ interface GenerateObservable {
     },
   ): RunnableObservableLike<T>;
 }
-
-/**
- * Generates an `ObservableLike` sequence from a generator function
- * that is applied to an accumulator value with a specified `delay`
- * between emitted items.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- * @param delay The requested delay between emitted items by the observable.
- */
-export const generate: GenerateObservable = (<T>(
-  generator: Updater<T>,
-  initialValue: Factory<T>,
-  options?: { readonly delay?: number; readonly delayStart?: boolean },
-): ObservableLike<T> => {
-  const { delayStart = false } = options ?? {};
-
-  const onSink = (observer: ObserverLike<T>) => {
-    let acc = initialValue();
-
-    const continuation = () => {
-      while (!isDisposed(observer)) {
-        acc = generator(acc);
-        observer[SinkLike_notify](acc);
-        yield_(options);
-      }
-    };
-
-    pipe(observer, schedule(continuation, delayStart ? options : none));
-  };
-
-  return hasDelay(options)
-    ? RunnableObservableLike__create(onSink)
-    : EnumerableObservableLike__create(onSink);
-}) as GenerateObservable;
+export const generate: GenerateObservable =
+  ObservableLike__generate as GenerateObservable;
 
 export const generateT: Generate<
   ObservableLike,
@@ -505,7 +428,7 @@ const latest = /*@__PURE__*/ (() => {
 })();
 
 export const map: Map<ObservableLike>["map"] = ObservableLike__map;
-export const mapT: Map<ObservableLike> = { map };
+export const mapT: Map<ObservableLike> = ObservableLike__mapT;
 
 export const mapAsync = <TA, TB>(
   f: Function1<TA, Promise<TB>>,
@@ -625,32 +548,7 @@ export const scanAsyncT: ScanAsync<ObservableLike, ObservableLike> = {
  * @param replay The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
  */
-export const share =
-  <T>(
-    scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
-  ): Function1<ObservableLike<T>, ObservableLike<T>> =>
-  (source: ObservableLike<T>) => {
-    let multicasted: Optional<MulticastObservableLike<T>> = none;
-
-    // FIXME: Type test scheduler for VTS
-    return ObservableLike__create<T>(observer => {
-      if (isNone(multicasted)) {
-        multicasted = pipe(source, multicast(scheduler, options));
-      }
-
-      pipe(
-        observer,
-        sourceFrom(multicasted),
-        onDisposed(() => {
-          if (isSome(multicasted) && getObserverCount(multicasted) === 0) {
-            pipe(multicasted, dispose());
-            multicasted = none;
-          }
-        }),
-      );
-    });
-  };
+export const share = ObservableLike__share;
 
 export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
   ObservableLike__skipFirst;
@@ -711,142 +609,7 @@ interface Throttle {
     options?: { readonly mode?: "first" | "last" | "interval" },
   ): ContainerOperator<ObservableLike, T, T>;
 }
-export const throttle: Throttle = /*@__PURE__*/ (() => {
-  type ThrottleMode = "first" | "last" | "interval";
-
-  const createThrottleObserver: <T>(
-    delegate: ObserverLike<T>,
-    durationFunction: Function1<T, ObservableLike>,
-    mode: ThrottleMode,
-  ) => ObserverLike<T> = (<T>() => {
-    const typedObserverMixin = ObserverLike__mixin<T>();
-
-    type TProperties = {
-      readonly delegate: ObserverLike<T>;
-      value: Optional<T>;
-      hasValue: boolean;
-      readonly durationSubscription: DisposableRefLike;
-      readonly durationFunction: Function1<T, ObservableLike>;
-      readonly mode: ThrottleMode;
-      readonly onNotify: SideEffect;
-    };
-
-    const setupDurationSubscription = (
-      observer: ObserverLike<T> & TProperties,
-      next: T,
-    ) => {
-      pipe(
-        observer.durationSubscription,
-        setCurrentRef(
-          pipe(
-            observer.durationFunction(next),
-            forEach(observer.onNotify),
-            subscribe(getScheduler(observer)),
-          ),
-        ),
-      );
-    };
-
-    return createInstanceFactory(
-      mix(
-        include(DisposableLike__mixin, typedObserverMixin),
-        function ThrottleObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
-            Mutable<TProperties>,
-          delegate: ObserverLike<T>,
-          durationFunction: Function1<T, ObservableLike>,
-          mode: ThrottleMode,
-        ): ObserverLike<T> {
-          init(DisposableLike__mixin, instance);
-          init(typedObserverMixin, instance, getScheduler(delegate));
-
-          instance.delegate = delegate;
-          instance.durationFunction = durationFunction;
-          instance.mode = mode;
-
-          instance.durationSubscription = pipe(
-            createDisposableRef(disposed),
-            addTo(delegate),
-          );
-
-          instance.onNotify = (_?: unknown) => {
-            if (instance.hasValue) {
-              const value = instance.value as T;
-              instance.value = none;
-              instance.hasValue = false;
-
-              pipe(instance.delegate, notify(value));
-
-              setupDurationSubscription(instance, value);
-            }
-          };
-
-          pipe(
-            instance,
-            addTo(delegate),
-            onComplete(() => {
-              if (
-                instance.mode !== "first" &&
-                instance.hasValue &&
-                !isDisposed(delegate)
-              ) {
-                pipe([instance.value], arrayToObservable(), sinkInto(delegate));
-              }
-            }),
-          );
-
-          return instance;
-        },
-        props<TProperties>({
-          delegate: none,
-          value: none,
-          hasValue: false,
-          durationSubscription: none,
-          durationFunction: none,
-          mode: "interval",
-          onNotify: none,
-        }),
-        {
-          [SinkLike_notify](this: ObserverLike<T> & TProperties, next: T) {
-            this.value = next;
-            this.hasValue = true;
-
-            const durationSubscriptionDisposableIsDisposed = pipe(
-              this.durationSubscription,
-              getCurrentRef,
-              isDisposed,
-            );
-
-            if (
-              durationSubscriptionDisposableIsDisposed &&
-              this.mode !== "last"
-            ) {
-              this.onNotify();
-            } else if (durationSubscriptionDisposableIsDisposed) {
-              setupDurationSubscription(this, next);
-            }
-          },
-        },
-      ),
-    );
-  })();
-
-  return <T>(
-    duration: Function1<T, ObservableLike> | number,
-    options: { readonly mode?: ThrottleMode } = {},
-  ) => {
-    const { mode = "interval" } = options;
-    const durationFunction = isNumber(duration)
-      ? (_: T) =>
-          pipe([none], arrayToObservable({ delay: duration, delayStart: true }))
-      : duration;
-    return pipe(
-      createThrottleObserver,
-      partial(durationFunction, mode),
-      ObservableLike__lift(false, isNumber(duration)),
-    );
-  };
-})();
+export const throttle: Throttle = ObservableLike__throttle;
 
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   ObservableLike__throwIfEmpty;
@@ -873,86 +636,7 @@ interface Timeout {
     T
   >;
 }
-export const timeout: Timeout = /*@__PURE__*/ (<T>() => {
-  const timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
-
-  const typedDisposableRefMixin = disposableRefMixin();
-  const typedObserverMixin = ObserverLike__mixin();
-
-  type TProperties = {
-    readonly delegate: ObserverLike<T>;
-    readonly duration: ObservableLike<unknown>;
-  };
-
-  const setupDurationSubscription = (
-    observer: MutableRefLike<DisposableLike> & TProperties,
-  ) => {
-    observer[MutableRefLike_current] = pipe(
-      observer.duration,
-      subscribe(getScheduler(observer.delegate)),
-    );
-  };
-
-  const createTimeoutObserver = createInstanceFactory(
-    mix(
-      include(
-        typedObserverMixin,
-        DisposableLike__delegatingMixin,
-        typedDisposableRefMixin,
-      ),
-      function TimeoutObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        delegate: ObserverLike<T>,
-        duration: ObservableLike<unknown>,
-      ): ObserverLike<T> {
-        init(typedObserverMixin, instance, getScheduler(delegate));
-        init(DisposableLike__delegatingMixin, instance, delegate);
-        init(typedDisposableRefMixin, instance, disposed);
-
-        instance.delegate = delegate;
-        instance.duration = duration;
-
-        setupDurationSubscription(instance);
-
-        return instance;
-      },
-      props<TProperties>({
-        delegate: none,
-        duration: none,
-      }),
-      {
-        [SinkLike_notify](
-          this: TProperties & MutableRefLike<DisposableLike>,
-          next: T,
-        ) {
-          pipe(this, getCurrentRef, dispose());
-          pipe(this.delegate, notify(next));
-        },
-      },
-    ),
-  );
-
-  const returnTimeoutError = returns(timeoutError);
-
-  return (duration: number | ObservableLike<unknown>) => {
-    const durationObs = isNumber(duration)
-      ? throws(
-          { fromArray: arrayToObservable, ...mapT },
-          { delay: duration, delayStart: true },
-        )(returnTimeoutError)
-      : concat(
-          duration,
-          throws({ fromArray: arrayToObservable, ...mapT })(returnTimeoutError),
-        );
-
-    return pipe(
-      createTimeoutObserver,
-      partial(durationObs),
-      ObservableLike__lift(false, isNumber(duration) || isRunnable(duration)),
-    );
-  };
-})();
+export const timeout: Timeout = ObservableLike__timeout;
 
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   ObservableLike__toEnumerable;
@@ -962,12 +646,6 @@ export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
   ObservableLike__toFlowable;
 export const toFlowableT: ToFlowable<ObservableLike> = { toFlowable };
 
-/**
- * Returns a Promise that completes with the last value produced by
- * the source.
- *
- * @param scheduler The scheduler upon which to subscribe to the source.
- */
 export const toPromise: ToPromiseable<
   ObservableLike,
   SchedulerLike
@@ -987,139 +665,7 @@ export const withLatestFrom: <TA, TB, T>(
   selector: Function2<TA, TB, T>,
 ) => ContainerOperator<ObservableLike, TA, T> = ObservableLike__withLatestFrom;
 
-export const zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
-  const typedObserverMixin = ObserverLike__mixin();
-
-  const shouldEmit = compose(
-    mapArray((x: EnumeratorLike) => hasCurrent(x) || move(x)),
-    every(isTrue),
-  );
-
-  const shouldComplete = compose(
-    forEachArray<EnumeratorLike>(move),
-    some(isDisposed),
-  );
-
-  type TProperties = {
-    readonly delegate: ObserverLike<readonly unknown[]>;
-    readonly enumerators: readonly EnumeratorLike<any>[];
-    readonly sinkEnumerator: EnumeratorLike & SinkLike;
-  };
-
-  const createZipObserver = createInstanceFactory(
-    mix(
-      include(DisposableLike__mixin, typedObserverMixin),
-      function ZipObserver(
-        instance: Pick<ObserverLike, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        delegate: ObserverLike<readonly unknown[]>,
-        enumerators: readonly EnumeratorLike<any>[],
-        sinkEnumerator: EnumeratorLike & SinkLike,
-      ): ObserverLike {
-        init(DisposableLike__mixin, instance);
-        init(typedObserverMixin, instance, getScheduler(delegate));
-
-        instance.delegate = delegate;
-        instance.sinkEnumerator = sinkEnumerator;
-        instance.enumerators = enumerators;
-
-        pipe(
-          instance,
-          onComplete(() => {
-            if (
-              isDisposed(sinkEnumerator) ||
-              (!hasCurrent(sinkEnumerator) && !move(sinkEnumerator))
-            ) {
-              pipe(delegate, dispose());
-            }
-          }),
-        );
-
-        return instance;
-      },
-      props<TProperties>({
-        delegate: none,
-        enumerators: none,
-        sinkEnumerator: none,
-      }),
-      {
-        [SinkLike_notify](this: ObserverLike & TProperties, next: unknown) {
-          const { sinkEnumerator, enumerators } = this;
-          if (isDisposed(this)) {
-            return;
-          }
-
-          pipe(sinkEnumerator, notify(next));
-
-          if (!shouldEmit(enumerators)) {
-            return;
-          }
-
-          const zippedNext = pipe(enumerators, mapArray(getCurrent));
-          pipe(this.delegate, notify(zippedNext));
-
-          if (shouldComplete(enumerators)) {
-            pipe(this, dispose());
-          }
-        },
-      },
-    ),
-  );
-
-  const onSink =
-    (observables: readonly ObservableLike[]) => (observer: ObserverLike) => {
-      const enumerators: EnumeratorLike[] = [];
-
-      for (const next of observables) {
-        if (isEnumerable(next)) {
-          const enumerator = pipe(
-            next,
-            toEnumerable(),
-            getOrRaise(),
-            enumerate(),
-            addTo(observer),
-          );
-
-          move(enumerator);
-          enumerators.push(enumerator);
-        } else {
-          const enumerator = pipe(
-            EnumeratorSinkLike__create(),
-            addTo(observer),
-          );
-          enumerators.push(enumerator);
-
-          pipe(
-            createZipObserver(observer, enumerators, enumerator),
-            addTo(observer),
-            sourceFrom(next),
-          );
-        }
-      }
-    };
-
-  return (
-    ...observables: readonly ObservableLike<any>[]
-  ): ObservableLike<readonly any[]> => {
-    const isEnumerable = ObservableLike__allAreEnumerable(observables);
-    const isRunnable = ObservableLike__allAreRunnable(observables);
-
-    return isEnumerable
-      ? pipe(
-          observables,
-          mapArray(toEnumerable()),
-          keepType(keepArrayT, isSome),
-          enumerables =>
-            (
-              enumerableZip as unknown as (...v: any[]) => EnumerableLike<any[]>
-            )(...enumerables),
-          enumerableToObservable(),
-        )
-      : isRunnable
-      ? RunnableObservableLike__create(onSink(observables))
-      : ObservableLike__create(onSink(observables));
-  };
-})();
+export const zip: Zip<ObservableLike>["zip"] = ObservableLike__zip;
 export const zipT: Zip<ObservableLike> = {
   zip: zip,
 };
