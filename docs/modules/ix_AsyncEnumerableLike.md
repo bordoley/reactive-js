@@ -6,6 +6,7 @@
 
 ### Variables
 
+- [fromArrayT](ix_AsyncEnumerableLike.md#fromarrayt)
 - [generateT](ix_AsyncEnumerableLike.md#generatet)
 - [keepT](ix_AsyncEnumerableLike.md#keept)
 - [mapT](ix_AsyncEnumerableLike.md#mapt)
@@ -29,6 +30,12 @@
 - [toReadonlyArray](ix_AsyncEnumerableLike.md#toreadonlyarray)
 
 ## Variables
+
+### fromArrayT
+
+• `Const` **fromArrayT**: [`FromArray`](containers.md#fromarray)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
+
+___
 
 ### generateT
 
@@ -80,7 +87,7 @@ ___
 
 ### fromArray
 
-▸ **fromArray**<`T`\>(`_?`): [`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -92,7 +99,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `_?` | `Partial`<[`FromArrayOptions`](containers.md#fromarrayoptions)\> |
+| `options?` | `Partial`<[`FromArrayOptions`](containers.md#fromarrayoptions)\> |
 
 #### Returns
 

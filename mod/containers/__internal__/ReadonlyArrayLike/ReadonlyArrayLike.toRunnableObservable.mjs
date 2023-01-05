@@ -9,39 +9,33 @@ import { yield_ } from '../../../scheduling/ContinuationLike.mjs';
 import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
 import ReadonlyArrayLike__toContainer from './ReadonlyArrayLike.toContainer.mjs';
 
-const ReadonlyArrayLike__toRunnableObservable = /*@__PURE__*/ (() => {
-    const createArrayObservable = (createObservable, options) => ReadonlyArrayLike__toContainer((values, startIndex, count) => {
-        const { delayStart = false } = options !== null && options !== void 0 ? options : {};
-        const onSink = (observer) => {
-            let index = startIndex, cnt = count;
-            const continuation = () => {
-                while (!isDisposed(observer) && cnt !== 0) {
-                    const value = values[index];
-                    if (cnt > 0) {
-                        index++;
-                        cnt--;
-                    }
-                    else {
-                        index--;
-                        cnt++;
-                    }
-                    observer[SinkLike_notify](value);
-                    if (cnt !== 0) {
-                        yield_(options);
-                    }
+const ReadonlyArrayLike__toRunnableObservable = /*@__PURE__*/ (() => ReadonlyArrayLike__toContainer((values, startIndex, count, options) => {
+    const { delayStart = false } = options !== null && options !== void 0 ? options : {};
+    const onSink = (observer) => {
+        let index = startIndex, cnt = count;
+        const continuation = () => {
+            while (!isDisposed(observer) && cnt !== 0) {
+                const value = values[index];
+                if (cnt > 0) {
+                    index++;
+                    cnt--;
                 }
-                pipe(observer, dispose());
-            };
-            pipe(observer, schedule(continuation, delayStart ? options : none));
+                else {
+                    index--;
+                    cnt++;
+                }
+                observer[SinkLike_notify](value);
+                if (cnt !== 0) {
+                    yield_(options);
+                }
+            }
+            pipe(observer, dispose());
         };
-        return createObservable(onSink);
-    });
-    return (options) => {
-        const createObservableWithType = (f) => hasDelay(options)
-            ? RunnableObservableLike__create(f)
-            : EnumerableObservableLike__create(f);
-        return createArrayObservable(createObservableWithType, options)(options);
+        pipe(observer, schedule(continuation, delayStart ? options : none));
     };
-})();
+    return hasDelay(options)
+        ? RunnableObservableLike__create(onSink)
+        : EnumerableObservableLike__create(onSink);
+}))();
 
 export { ReadonlyArrayLike__toRunnableObservable as default };

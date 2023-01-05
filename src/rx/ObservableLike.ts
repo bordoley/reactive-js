@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
   Buffer,
   CatchError,
@@ -32,7 +31,6 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { concatMap } from "../containers/ContainerLike";
 import PromiseableLike__toObservable from "../containers/__internal__/PromiseableLike/PromiseableLike.toObservable";
 import {
   Factory,
@@ -41,7 +39,6 @@ import {
   Predicate,
   SideEffect1,
   Updater,
-  pipe,
 } from "../functions";
 import { ToEnumerable } from "../ix";
 import {
@@ -59,6 +56,7 @@ import ObservableLike__buffer from "./__internal__/ObservableLike/ObservableLike
 import ObservableLike__catchError from "./__internal__/ObservableLike/ObservableLike.catchError";
 import ObservableLike__combineLatest from "./__internal__/ObservableLike/ObservableLike.combineLatest";
 import ObservableLike__concat from "./__internal__/ObservableLike/ObservableLike.concat";
+import ObservableLike__concatAll from "./__internal__/ObservableLike/ObservableLike.concatAll";
 import ObservableLike__create from "./__internal__/ObservableLike/ObservableLike.create";
 import ObservableLike__decodeWithCharset from "./__internal__/ObservableLike/ObservableLike.decodeWithCharset";
 import ObservableLike__defer from "./__internal__/ObservableLike/ObservableLike.defer";
@@ -74,6 +72,7 @@ import ObservableLike__isEnumerable from "./__internal__/ObservableLike/Observab
 import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
 import ObservableLike__keep from "./__internal__/ObservableLike/ObservableLike.keep";
 import ObservableLike__map from "./__internal__/ObservableLike/ObservableLike.map";
+import ObservableLike__mapAsync from "./__internal__/ObservableLike/ObservableLike.mapAsync";
 import ObservableLike__mapT from "./__internal__/ObservableLike/ObservableLike.mapT";
 import ObservableLike__merge from "./__internal__/ObservableLike/ObservableLike.merge";
 import ObservableLike__mergeAll from "./__internal__/ObservableLike/ObservableLike.mergeAll";
@@ -91,6 +90,7 @@ import ObservableLike__someSatisfy from "./__internal__/ObservableLike/Observabl
 import ObservableLike__subscribe from "./__internal__/ObservableLike/ObservableLike.subscribe";
 import ObservableLike__subscribeOn from "./__internal__/ObservableLike/ObservableLike.subscribeOn";
 import ObservableLike__switchAll from "./__internal__/ObservableLike/ObservableLike.switchAll";
+import ObservableLike__switchAllT from "./__internal__/ObservableLike/ObservableLike.switchAllT";
 import ObservableLike__takeFirst from "./__internal__/ObservableLike/ObservableLike.takeFirst";
 import ObservableLike__takeLast from "./__internal__/ObservableLike/ObservableLike.takeLast";
 import ObservableLike__takeUntil from "./__internal__/ObservableLike/ObservableLike.takeUntil";
@@ -148,10 +148,7 @@ export const concatAll: ConcatAll<
   {
     maxBufferSize?: number;
   }
->["concatAll"] = (options: { readonly maxBufferSize?: number } = {}) => {
-  const { maxBufferSize = MAX_SAFE_INTEGER } = options;
-  return mergeAll({ maxBufferSize, maxConcurrency: 1 });
-};
+>["concatAll"] = ObservableLike__concatAll;
 
 export const concatAllT: ConcatAll<
   ObservableLike,
@@ -256,10 +253,7 @@ export const keepT: Keep<ObservableLike> = { keep };
 export const map: Map<ObservableLike>["map"] = ObservableLike__map;
 export const mapT: Map<ObservableLike> = ObservableLike__mapT;
 
-export const mapAsync = <TA, TB>(
-  f: Function1<TA, Promise<TB>>,
-): ContainerOperator<ObservableLike, TA, TB> =>
-  concatMap({ ...switchAllT, ...mapT }, (a: TA) => pipe(a, f, fromPromise()));
+export const mapAsync = ObservableLike__mapAsync;
 
 export const merge: Concat<ObservableLike>["concat"] = ObservableLike__merge;
 export const mergeT: Concat<ObservableLike> = { concat: merge };
@@ -386,9 +380,7 @@ export const someSatisfyT: SomeSatisfy<ObservableLike> = { someSatisfy };
 
 export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
   ObservableLike__switchAll;
-export const switchAllT: ConcatAll<ObservableLike> = {
-  concatAll: switchAll,
-};
+export const switchAllT: ConcatAll<ObservableLike> = ObservableLike__switchAllT;
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,

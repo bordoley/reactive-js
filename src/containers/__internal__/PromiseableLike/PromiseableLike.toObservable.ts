@@ -10,7 +10,7 @@ import {
   toErrorHandler,
 } from "../../../util/DisposableLike";
 
-const IterableLike__toObservable: ToObservable<PromiseableLike>["toObservable"] =
+const PromiseableLike__toObservable: ToObservable<PromiseableLike>["toObservable"] =
 
     <T>() =>
     (promise: PromiseableLike<T>): ObservableLike<T> =>
@@ -24,4 +24,4 @@ const IterableLike__toObservable: ToObservable<PromiseableLike>["toObservable"] 
         }, toErrorHandler(dispatcher));
       });
 
-export default IterableLike__toObservable;
+export default PromiseableLike__toObservable;
