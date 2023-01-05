@@ -9,7 +9,7 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__disposed from '../../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
-import { getScheduler } from '../../ObserverLike.mjs';
+import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
 import ObservableLike__concat from './ObservableLike.concat.mjs';
@@ -23,10 +23,10 @@ const ObservableLike__timeout = /*@__PURE__*/ (() => {
     const typedDisposableRefMixin = disposableRefMixin();
     const typedObserverMixin = ObserverLike__mixin();
     const setupDurationSubscription = (observer) => {
-        observer[MutableRefLike_current] = pipe(observer.duration, ObservableLike__subscribe(getScheduler(observer.delegate)));
+        observer[MutableRefLike_current] = pipe(observer.duration, ObservableLike__subscribe(ObserverLike__getScheduler(observer.delegate)));
     };
     const createTimeoutObserver = createInstanceFactory(mix(include(typedObserverMixin, DisposableLike__delegatingMixin, typedDisposableRefMixin), function TimeoutObserver(instance, delegate, duration) {
-        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(typedObserverMixin, instance, ObserverLike__getScheduler(delegate));
         init(DisposableLike__delegatingMixin, instance, delegate);
         init(typedDisposableRefMixin, instance, DisposableLike__disposed);
         instance.delegate = delegate;

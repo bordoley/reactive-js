@@ -18,10 +18,10 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import { sinkInto } from "../../../rx/ReactiveContainerLike";
 import MulticastObservableLike__getObserverCount from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getObserverCount";
 import MulticastObservableLike__getReplay from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay";
 import ObservableLike__scan from "../../../rx/__internal__/ObservableLike/ObservableLike.scan";
+import ReactiveContainerLike__sinkInto from "../../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DelegatingAsyncEnumerator__mixin from "../DelegatingAsyncEnumeratorLike/DelegatingAsyncEnumeratorLike.mixin";
 import AsyncEnumerableLike__liftT from "./AsyncEnumerableLike.liftT";
@@ -75,7 +75,11 @@ const AsyncEnumerableLike__scan: Scan<AsyncEnumerableLike>["scan"] =
             this: TProperties,
             observer: ObserverLike<TAcc>,
           ): void {
-            pipe(this.delegate, this.op, sinkInto(observer));
+            pipe(
+              this.delegate,
+              this.op,
+              ReactiveContainerLike__sinkInto(observer),
+            );
           },
         },
       ),

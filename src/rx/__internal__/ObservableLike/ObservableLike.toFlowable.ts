@@ -7,7 +7,7 @@ import { pause, resume } from "../../../util/PauseableLike";
 import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
 import DisposableLike__bindTo from "../../../util/__internal__/DisposableLike/DisposableLike.bindTo";
 import DisposableLike__toObservable from "../../../util/__internal__/DisposableLike/DisposableLike.toObservable";
-import { getScheduler } from "../../ObserverLike";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import SinkLike__sourceFrom from "../SinkLike/SinkLike.sourceFrom";
 import ObservableLike__create from "./ObservableLike.create";
 import ObservableLike__empty from "./ObservableLike.empty";
@@ -24,7 +24,7 @@ const ObservableLike__toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
           ObservableLike__create(observer => {
             const pausableScheduler = pipe(
               observer,
-              getScheduler,
+              ObserverLike__getScheduler,
               SchedulerLike__toPausableScheduler,
             );
 
@@ -52,7 +52,9 @@ const ObservableLike__toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
                         break;
                     }
                   }),
-                  ObservableLike__subscribe(getScheduler(observer)),
+                  ObservableLike__subscribe(
+                    ObserverLike__getScheduler(observer),
+                  ),
                   DisposableLike__bindTo(pausableScheduler),
                 ),
               ),

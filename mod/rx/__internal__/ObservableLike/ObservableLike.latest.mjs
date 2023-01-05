@@ -7,7 +7,7 @@ import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/Dis
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import { getScheduler } from '../../ObserverLike.mjs';
+import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
 import SinkLike__sourceFrom from '../SinkLike/SinkLike.sourceFrom.mjs';
@@ -69,7 +69,7 @@ const ObservableLike__latest = /*@__PURE__*/ (() => {
             const onCompleteCb = () => {
                 onCompleted(ctx);
             };
-            const scheduler = getScheduler(delegate);
+            const scheduler = ObserverLike__getScheduler(delegate);
             for (const observable of observables) {
                 const innerObserver = pipe(createLatestObserver(scheduler, ctx), DisposableLike__addTo(delegate), DisposableLike__onComplete(onCompleteCb), SinkLike__sourceFrom(observable));
                 add(ctx, innerObserver);

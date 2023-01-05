@@ -3,11 +3,11 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import StatefulContainerLike__takeWhile from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile.mjs';
 import { pipe, none, unsafeCast } from '../../../functions.mjs';
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
-import { sinkInto } from '../../../rx/ReactiveContainerLike.mjs';
 import MulticastObservableLike__getObserverCount from '../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getObserverCount.mjs';
 import MulticastObservableLike__getReplay from '../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay.mjs';
 import ObservableLike__multicast from '../../../rx/__internal__/ObservableLike/ObservableLike.multicast.mjs';
 import ObservableLike__takeWhile from '../../../rx/__internal__/ObservableLike/ObservableLike.takeWhile.mjs';
+import ReactiveContainerLike__sinkInto from '../../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto.mjs';
 import DispatcherLike__getScheduler from '../../../scheduling/__internal__/DispatcherLike/DispatcherLike.getScheduler.mjs';
 import DisposableLike__add from '../../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
@@ -33,7 +33,7 @@ const AsyncEnumerableLike__takeWhile =
             return MulticastObservableLike__getReplay(this.obs);
         },
         [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this.obs, sinkInto(observer));
+            pipe(this.obs, ReactiveContainerLike__sinkInto(observer));
         },
     }));
     return pipe(createTakeWhileAsyncEnumerator, StatefulContainerLike__takeWhile(AsyncEnumerableLike__liftT));

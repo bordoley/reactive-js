@@ -3,10 +3,10 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import StatefulContainerLike__map from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map.mjs';
 import { none, unsafeCast, pipe } from '../../../functions.mjs';
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
-import { sinkInto } from '../../../rx/ReactiveContainerLike.mjs';
 import MulticastObservableLike__getObserverCount from '../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getObserverCount.mjs';
 import MulticastObservableLike__getReplay from '../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay.mjs';
 import ObservableLike__map from '../../../rx/__internal__/ObservableLike/ObservableLike.map.mjs';
+import ReactiveContainerLike__sinkInto from '../../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DelegatingAsyncEnumerator__mixin from '../DelegatingAsyncEnumeratorLike/DelegatingAsyncEnumeratorLike.mixin.mjs';
 import AsyncEnumerableLike__liftT from './AsyncEnumerableLike.liftT.mjs';
@@ -32,7 +32,7 @@ const AsyncEnumerableLike__map =
             return MulticastObservableLike__getReplay(this.delegate);
         },
         [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this.delegate, this.op, sinkInto(observer));
+            pipe(this.delegate, this.op, ReactiveContainerLike__sinkInto(observer));
         },
     }));
     return pipe(createMapAsyncEnumerator, StatefulContainerLike__map(AsyncEnumerableLike__liftT));

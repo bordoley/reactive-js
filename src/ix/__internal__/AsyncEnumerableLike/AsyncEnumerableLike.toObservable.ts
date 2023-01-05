@@ -1,10 +1,10 @@
 import { none, pipe } from "../../../functions";
 import { AsyncEnumerableLike } from "../../../ix";
 import { ToObservable } from "../../../rx";
-import { sinkInto } from "../../../rx/ReactiveContainerLike";
 import ObservableLike__forEach from "../../../rx/__internal__/ObservableLike/ObservableLike.forEach";
 import ObservableLike__onSubscribe from "../../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe";
 import ObserverLike__getScheduler from "../../../rx/__internal__/ObserverLike/ObserverLike.getScheduler";
+import ReactiveContainerLike__sinkInto from "../../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import RunnableObservableLike__create from "../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create";
 import DispatcherLike__dispatch from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch";
 import { stream } from "../../../streaming/StreamableLike";
@@ -27,7 +27,7 @@ const AsyncEnumerable__toObservable: ToObservable<AsyncEnumerableLike>["toObserv
         ObservableLike__onSubscribe(() => {
           pipe(enumerator, DispatcherLike__dispatch(none));
         }),
-        sinkInto(observer),
+        ReactiveContainerLike__sinkInto(observer),
       );
     });
 

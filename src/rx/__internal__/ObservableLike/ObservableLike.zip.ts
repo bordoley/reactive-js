@@ -39,8 +39,8 @@ import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/D
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import { getScheduler } from "../../ObserverLike";
 import EnumeratorSinkLike__create from "../EnumeratorSinkLike/EnumeratorSinkLike.create";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import RunnableObservableLike__create from "../RunnableObservableLike/RunnableObservableLike.create";
 import SinkLike__notify from "../SinkLike/SinkLike.notify";
@@ -84,7 +84,11 @@ const ObservableLike__zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
         sinkEnumerator: EnumeratorLike & SinkLike,
       ): ObserverLike {
         init(DisposableLike__mixin, instance);
-        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(
+          typedObserverMixin,
+          instance,
+          ObserverLike__getScheduler(delegate),
+        );
 
         instance.delegate = delegate;
         instance.sinkEnumerator = sinkEnumerator;

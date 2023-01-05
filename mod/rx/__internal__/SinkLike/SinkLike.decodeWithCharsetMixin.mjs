@@ -6,7 +6,7 @@ import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/Dis
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import { sinkInto } from '../../ReactiveContainerLike.mjs';
+import ReactiveContainerLike__sinkInto from '../ReactiveContainerLike/ReactiveContainerLike.sinkInto.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 import SinkLike__notify from './SinkLike.notify.mjs';
 
@@ -20,7 +20,7 @@ const SinkLike__decodeWithCharsetMixin = (fromArray) => {
         pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(() => {
             const data = textDecoder.decode();
             if (!isEmpty(data)) {
-                pipe([data], fromArray, sinkInto(delegate));
+                pipe([data], fromArray, ReactiveContainerLike__sinkInto(delegate));
             }
             else {
                 pipe(delegate, DisposableLike__dispose());

@@ -7,13 +7,13 @@ import {
   ScanAsync,
 } from "../../../rx";
 import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
-import { sinkInto } from "../../ReactiveContainerLike";
 import { publish, publishTo } from "../../SubjectLike";
 import ObservableLike__forEach from "../ObservableLike/ObservableLike.forEach";
 import ObservableLike__onSubscribe from "../ObservableLike/ObservableLike.onSubscribe";
 import ObservableLike__switchAll from "../ObservableLike/ObservableLike.switchAll";
 import ObservableLike__takeFirst from "../ObservableLike/ObservableLike.takeFirst";
 import ObservableLike__zipWithLatestFrom from "../ObservableLike/ObservableLike.zipWithLatestFrom";
+import ReactiveContainerLike__sinkInto from "../ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import SubjectLike__create from "../SubjectLike/SubjectLike.create";
 
 const HigherOrderObservableLike__scanAsync = <
@@ -45,7 +45,7 @@ const HigherOrderObservableLike__scanAsync = <
           ObservableLike__onSubscribe(() =>
             pipe(accFeedbackStream, publish(initialValue())),
           ),
-          sinkInto(observer),
+          ReactiveContainerLike__sinkInto(observer),
         );
       };
 

@@ -8,7 +8,7 @@ import { EverySatisfy } from "../../../containers";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import { Predicate, partial, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike } from "../../../rx";
-import { getScheduler } from "../../ObserverLike";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__everySatisfyMixin from "../SinkLike/SinkLike.everySatisfyMixin";
 import ObservableLike__lift from "./ObservableLike.lift";
@@ -29,7 +29,11 @@ const ObservableLike__everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"]
         delegate: ObserverLike<boolean>,
         predicate: Predicate<T>,
       ): ObserverLike<T> {
-        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(
+          typedObserverMixin,
+          instance,
+          ObserverLike__getScheduler(delegate),
+        );
         init(typedEverySatisfySinkMixin, instance, delegate, predicate);
 
         return instance;

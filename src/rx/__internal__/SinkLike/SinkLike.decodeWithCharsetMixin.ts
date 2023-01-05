@@ -12,7 +12,7 @@ import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/Dis
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import { sinkInto } from "../../ReactiveContainerLike";
+import ReactiveContainerLike__sinkInto from "../ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 import SinkLike__notify from "./SinkLike.notify";
 
@@ -57,7 +57,7 @@ const SinkLike__decodeWithCharsetMixin: <
           const data = textDecoder.decode();
 
           if (!isEmpty(data)) {
-            pipe([data], fromArray, sinkInto(delegate));
+            pipe([data], fromArray, ReactiveContainerLike__sinkInto(delegate));
           } else {
             pipe(delegate, DisposableLike__dispose());
           }

@@ -6,7 +6,7 @@ import { resume, pause } from '../../../util/PauseableLike.mjs';
 import DisposableLike__add from '../../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
 import DisposableLike__bindTo from '../../../util/__internal__/DisposableLike/DisposableLike.bindTo.mjs';
 import DisposableLike__toObservable from '../../../util/__internal__/DisposableLike/DisposableLike.toObservable.mjs';
-import { getScheduler } from '../../ObserverLike.mjs';
+import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import SinkLike__sourceFrom from '../SinkLike/SinkLike.sourceFrom.mjs';
 import ObservableLike__create from './ObservableLike.create.mjs';
 import ObservableLike__empty from './ObservableLike.empty.mjs';
@@ -18,7 +18,7 @@ import ObservableLike__takeUntil from './ObservableLike.takeUntil.mjs';
 
 const ObservableLike__toFlowable = () => observable => ObservableLike__isRunnable(observable)
     ? FlowableLike__createLifted((modeObs) => ObservableLike__create(observer => {
-        const pausableScheduler = pipe(observer, getScheduler, SchedulerLike__toPausableScheduler);
+        const pausableScheduler = pipe(observer, ObserverLike__getScheduler, SchedulerLike__toPausableScheduler);
         pipe(observer, SinkLike__sourceFrom(pipe(observable, ObservableLike__subscribeOn(pausableScheduler), ObservableLike__takeUntil(pipe(pausableScheduler, DisposableLike__toObservable())))), DisposableLike__add(pipe(modeObs, ObservableLike__forEach(mode => {
             switch (mode) {
                 case "pause":
@@ -28,7 +28,7 @@ const ObservableLike__toFlowable = () => observable => ObservableLike__isRunnabl
                     resume(pausableScheduler);
                     break;
             }
-        }), ObservableLike__subscribe(getScheduler(observer)), DisposableLike__bindTo(pausableScheduler))), DisposableLike__add(pausableScheduler));
+        }), ObservableLike__subscribe(ObserverLike__getScheduler(observer)), DisposableLike__bindTo(pausableScheduler))), DisposableLike__add(pausableScheduler));
     }))
     : FlowableLike__createLifted(_ => ObservableLike__empty());
 

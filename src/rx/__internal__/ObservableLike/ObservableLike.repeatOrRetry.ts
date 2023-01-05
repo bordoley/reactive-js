@@ -5,8 +5,8 @@ import { Exception } from "../../../util";
 import DisposableLike__addToIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
-import { getScheduler } from "../../ObserverLike";
 import ObserverLike__createWithDelegate from "../ObserverLike/ObserverLike.createWithDelegate";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import SinkLike__notifySink from "../SinkLike/SinkLike.notifySink";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__lift from "./ObservableLike.lift";
@@ -39,7 +39,7 @@ const ObservableLike__repeatOrRetry: <T>(
         pipe(
           observable,
           ObservableLike__forEach(SinkLike__notifySink(delegate)),
-          ObservableLike__subscribe(getScheduler(delegate)),
+          ObservableLike__subscribe(ObserverLike__getScheduler(delegate)),
           DisposableLike__addToIgnoringChildErrors(delegate),
           DisposableLike__onDisposed(doOnDispose),
         );

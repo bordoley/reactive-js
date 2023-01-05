@@ -1,8 +1,8 @@
 import { PromiseableLike } from "../../../containers";
 import { pipe } from "../../../functions";
 import { ObservableLike, ToObservable } from "../../../rx";
-import { getDispatcher } from "../../../rx/ObserverLike";
 import ObservableLike__create from "../../../rx/__internal__/ObservableLike/ObservableLike.create";
+import ObserverLike__getDispatcher from "../../../rx/__internal__/ObserverLike/ObserverLike.getDispatcher";
 import DispatcherLike__dispatch from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
@@ -13,7 +13,7 @@ const PromiseableLike__toObservable: ToObservable<PromiseableLike>["toObservable
     <T>() =>
     (promise: PromiseableLike<T>): ObservableLike<T> =>
       ObservableLike__create(observer => {
-        const dispatcher = getDispatcher(observer);
+        const dispatcher = ObserverLike__getDispatcher(observer);
 
         promise.then(next => {
           if (!DisposableLike__isDisposed(dispatcher)) {

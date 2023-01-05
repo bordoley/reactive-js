@@ -20,7 +20,7 @@ import { DisposableLike } from "../../../util";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/DisposableLike.disposed";
-import { getScheduler } from "../../ObserverLike";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__concat from "./ObservableLike.concat";
@@ -45,7 +45,7 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
   ) => {
     observer[MutableRefLike_current] = pipe(
       observer.duration,
-      ObservableLike__subscribe(getScheduler(observer.delegate)),
+      ObservableLike__subscribe(ObserverLike__getScheduler(observer.delegate)),
     );
   };
 
@@ -62,7 +62,11 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
         delegate: ObserverLike<T>,
         duration: ObservableLike<unknown>,
       ): ObserverLike<T> {
-        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(
+          typedObserverMixin,
+          instance,
+          ObserverLike__getScheduler(delegate),
+        );
         init(DisposableLike__delegatingMixin, instance, delegate);
         init(typedDisposableRefMixin, instance, DisposableLike__disposed);
 

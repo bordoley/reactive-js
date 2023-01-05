@@ -2,8 +2,8 @@
 import { hasDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { schedule } from '../../../rx/ObserverLike.mjs';
 import EnumerableObservableLike__create from '../../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
+import ObserverLike__schedule from '../../../rx/__internal__/ObserverLike/ObserverLike.schedule.mjs';
 import RunnableObservableLike__create from '../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
 import ContinuationLike__yield_ from '../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -32,7 +32,7 @@ const ReadonlyArrayLike__toRunnableObservable = /*@__PURE__*/ (() => ReadonlyArr
             }
             pipe(observer, DisposableLike__dispose());
         };
-        pipe(observer, schedule(continuation, delayStart ? options : none));
+        pipe(observer, ObserverLike__schedule(continuation, delayStart ? options : none));
     };
     return hasDelay(options)
         ? RunnableObservableLike__create(onSink)

@@ -3,8 +3,8 @@ import { pipe, partial } from '../../../functions.mjs';
 import DisposableLike__addToIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__onDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
-import { getScheduler } from '../../ObserverLike.mjs';
 import ObserverLike__createWithDelegate from '../ObserverLike/ObserverLike.createWithDelegate.mjs';
+import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import SinkLike__notifySink from '../SinkLike/SinkLike.notifySink.mjs';
 import ObservableLike__forEach from './ObservableLike.forEach.mjs';
 import ObservableLike__lift from './ObservableLike.lift.mjs';
@@ -27,7 +27,7 @@ const ObservableLike__repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, ObservableLike__forEach(SinkLike__notifySink(delegate)), ObservableLike__subscribe(getScheduler(delegate)), DisposableLike__addToIgnoringChildErrors(delegate), DisposableLike__onDisposed(doOnDispose));
+                pipe(observable, ObservableLike__forEach(SinkLike__notifySink(delegate)), ObservableLike__subscribe(ObserverLike__getScheduler(delegate)), DisposableLike__addToIgnoringChildErrors(delegate), DisposableLike__onDisposed(doOnDispose));
             }
         };
         return pipe(ObserverLike__createWithDelegate(delegate), DisposableLike__addToIgnoringChildErrors(delegate), DisposableLike__onDisposed(doOnDispose));

@@ -6,8 +6,8 @@ import {
   RunnableObservableLike,
   ToRunnableObservable,
 } from "../../../rx";
-import { schedule } from "../../../rx/ObserverLike";
 import EnumerableObservableLike__create from "../../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
+import ObserverLike__schedule from "../../../rx/__internal__/ObserverLike/ObserverLike.schedule";
 import RunnableObservableLike__create from "../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create";
 import SinkLike__notifySink from "../../../rx/__internal__/SinkLike/SinkLike.notifySink";
 import ContinuationLike__yield_ from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield";
@@ -40,7 +40,7 @@ const EnumerableLike__toRunnableObservable: ToRunnableObservable<
 
       pipe(
         observer,
-        schedule(
+        ObserverLike__schedule(
           () => {
             while (!DisposableLike__isDisposed(observer) && move(enumerator)) {
               pipe(enumerator, getCurrent, SinkLike__notifySink(observer));

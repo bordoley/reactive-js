@@ -3,8 +3,8 @@ import { Factory, Updater, none, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
 import ContinuationLike__yield_ from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
-import { schedule } from "../../ObserverLike";
 import EnumerableObservableLike__create from "../EnumerableObservableLike/EnumerableObservableLike.create";
+import ObserverLike__schedule from "../ObserverLike/ObserverLike.schedule";
 import RunnableObservableLike__create from "../RunnableObservableLike/RunnableObservableLike.create";
 
 const ObservableLike__generate = <T>(
@@ -25,7 +25,10 @@ const ObservableLike__generate = <T>(
       }
     };
 
-    pipe(observer, schedule(continuation, delayStart ? options : none));
+    pipe(
+      observer,
+      ObserverLike__schedule(continuation, delayStart ? options : none),
+    );
   };
 
   return hasDelay(options)

@@ -5,10 +5,10 @@ import {
   EnumeratorLike,
   ToAsyncEnumerable,
 } from "../../../ix";
-import { sinkInto } from "../../../rx/ReactiveContainerLike";
 import ObservableLike__create from "../../../rx/__internal__/ObservableLike/ObservableLike.create";
 import ObservableLike__map from "../../../rx/__internal__/ObservableLike/ObservableLike.map";
 import ObservableLike__takeWhile from "../../../rx/__internal__/ObservableLike/ObservableLike.takeWhile";
+import ReactiveContainerLike__sinkInto from "../../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import { move } from "../../SourceLike";
 import AsyncEnumerableLike__create from "../AsyncEnumerableLike/AsyncEnumerableLike.create";
@@ -35,7 +35,7 @@ const EnumerableLike__toAsyncEnumerable: ToAsyncEnumerable<EnumerableLike>["toAs
                 EnumeratorLike__hasCurrent,
               ),
               ObservableLike__map(EnumeratorLike__getCurrent),
-              sinkInto(observer),
+              ReactiveContainerLike__sinkInto(observer),
             );
           }),
         ),
