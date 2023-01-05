@@ -2,7 +2,7 @@ import { ToReadonlyArray } from "../../../containers";
 import { pipe } from "../../../functions";
 import { AsyncEnumerableLike } from "../../../ix";
 import ObservableLike__toReadonlyArray from "../../../rx/__internal__/ObservableLike/ObservableLike.toReadonlyArray";
-import AsyncEnumerable__toObservable from "./AsyncEnumerable.toObservable";
+import AsyncEnumerable__toObservable from "./AsyncEnumerableLike.toObservable";
 
 const AsyncEnumerableLike__toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"] =
 

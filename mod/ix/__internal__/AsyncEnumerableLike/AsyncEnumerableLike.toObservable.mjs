@@ -1,4 +1,4 @@
-/// <reference types="./AsyncEnumerable.toObservable.d.ts" />
+/// <reference types="./AsyncEnumerableLike.toObservable.d.ts" />
 import { pipe, none } from '../../../functions.mjs';
 import { sinkInto } from '../../../rx/ReactiveContainerLike.mjs';
 import ObservableLike__forEach from '../../../rx/__internal__/ObservableLike/ObservableLike.forEach.mjs';
