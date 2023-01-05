@@ -18,11 +18,9 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import {
-  getObserverCount,
-  getReplay,
-} from "../../../rx/MulticastObservableLike";
 import { sinkInto } from "../../../rx/ReactiveContainerLike";
+import MulticastObservableLike__getObserverCount from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getObserverCount";
+import MulticastObservableLike__getReplay from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay";
 import ObservableLike__multicast from "../../../rx/__internal__/ObservableLike/ObservableLike.multicast";
 import ObservableLike__takeWhile from "../../../rx/__internal__/ObservableLike/ObservableLike.takeWhile";
 import { getScheduler } from "../../../scheduling/DispatcherLike";
@@ -72,11 +70,11 @@ const AsyncEnumerableLike__takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"
         {
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);
-            return getObserverCount(this.obs);
+            return MulticastObservableLike__getObserverCount(this.obs);
           },
           get [MulticastObservableLike_replay]() {
             unsafeCast<TProperties>(this);
-            return getReplay(this.obs);
+            return MulticastObservableLike__getReplay(this.obs);
           },
           [ReactiveContainerLike_sinkInto](
             this: TProperties,

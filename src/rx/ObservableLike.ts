@@ -57,6 +57,7 @@ import ObservableLike__catchError from "./__internal__/ObservableLike/Observable
 import ObservableLike__combineLatest from "./__internal__/ObservableLike/ObservableLike.combineLatest";
 import ObservableLike__concat from "./__internal__/ObservableLike/ObservableLike.concat";
 import ObservableLike__concatAll from "./__internal__/ObservableLike/ObservableLike.concatAll";
+import ObservableLike__concatT from "./__internal__/ObservableLike/ObservableLike.concatT";
 import ObservableLike__create from "./__internal__/ObservableLike/ObservableLike.create";
 import ObservableLike__decodeWithCharset from "./__internal__/ObservableLike/ObservableLike.decodeWithCharset";
 import ObservableLike__defer from "./__internal__/ObservableLike/ObservableLike.defer";
@@ -71,6 +72,7 @@ import ObservableLike__generate from "./__internal__/ObservableLike/ObservableLi
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
 import ObservableLike__keep from "./__internal__/ObservableLike/ObservableLike.keep";
+import ObservableLike__keepT from "./__internal__/ObservableLike/ObservableLike.keepT";
 import ObservableLike__map from "./__internal__/ObservableLike/ObservableLike.map";
 import ObservableLike__mapAsync from "./__internal__/ObservableLike/ObservableLike.mapAsync";
 import ObservableLike__mapT from "./__internal__/ObservableLike/ObservableLike.mapT";
@@ -133,9 +135,7 @@ export const combineLatestT: Zip<ObservableLike> = {
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  */
 export const concat: Concat<ObservableLike>["concat"] = ObservableLike__concat;
-export const concatT: Concat<ObservableLike> = {
-  concat,
-};
+export const concatT: Concat<ObservableLike> = ObservableLike__concatT;
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order
@@ -248,7 +248,7 @@ export const isRunnable: (
 ) => obs is RunnableObservableLike = ObservableLike__isRunnable;
 
 export const keep: Keep<ObservableLike>["keep"] = ObservableLike__keep;
-export const keepT: Keep<ObservableLike> = { keep };
+export const keepT: Keep<ObservableLike> = ObservableLike__keepT;
 
 export const map: Map<ObservableLike>["map"] = ObservableLike__map;
 export const mapT: Map<ObservableLike> = ObservableLike__mapT;

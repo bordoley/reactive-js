@@ -1,7 +1,7 @@
 /// <reference types="./ObservableLike.share.d.ts" />
 import { none, isNone, pipe, isSome } from '../../../functions.mjs';
+import MulticastObservableLike__getObserverCount from '../MulticastObservableLike/MulticastObservableLike.getObserverCount.mjs';
 import { onDisposed, dispose } from '../../../util/DisposableLike.mjs';
-import { getObserverCount } from '../../MulticastObservableLike.mjs';
 import { sourceFrom } from '../../SinkLike.mjs';
 import ObservableLike__create from './ObservableLike.create.mjs';
 import ObservableLike__multicast from './ObservableLike.multicast.mjs';
@@ -14,7 +14,8 @@ const ObservableLike__share = (scheduler, options) => (source) => {
             multicasted = pipe(source, ObservableLike__multicast(scheduler, options));
         }
         pipe(observer, sourceFrom(multicasted), onDisposed(() => {
-            if (isSome(multicasted) && getObserverCount(multicasted) === 0) {
+            if (isSome(multicasted) &&
+                MulticastObservableLike__getObserverCount(multicasted) === 0) {
                 pipe(multicasted, dispose());
                 multicasted = none;
             }

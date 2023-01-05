@@ -3,8 +3,9 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import StatefulContainerLike__scan from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
 import { none, unsafeCast, pipe } from '../../../functions.mjs';
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
-import { getObserverCount, getReplay } from '../../../rx/MulticastObservableLike.mjs';
 import { sinkInto } from '../../../rx/ReactiveContainerLike.mjs';
+import MulticastObservableLike__getObserverCount from '../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getObserverCount.mjs';
+import MulticastObservableLike__getReplay from '../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay.mjs';
 import ObservableLike__scan from '../../../rx/__internal__/ObservableLike/ObservableLike.scan.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DelegatingAsyncEnumerator__mixin from '../DelegatingAsyncEnumeratorLike/DelegatingAsyncEnumeratorLike.mixin.mjs';
@@ -24,11 +25,11 @@ const AsyncEnumerableLike__scan =
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return getObserverCount(this.delegate);
+            return MulticastObservableLike__getObserverCount(this.delegate);
         },
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
-            return getReplay(this.delegate);
+            return MulticastObservableLike__getReplay(this.delegate);
         },
         [ReactiveContainerLike_sinkInto](observer) {
             pipe(this.delegate, this.op, sinkInto(observer));

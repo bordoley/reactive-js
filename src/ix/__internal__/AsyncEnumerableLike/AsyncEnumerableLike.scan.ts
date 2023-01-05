@@ -18,11 +18,9 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import {
-  getObserverCount,
-  getReplay,
-} from "../../../rx/MulticastObservableLike";
 import { sinkInto } from "../../../rx/ReactiveContainerLike";
+import MulticastObservableLike__getObserverCount from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getObserverCount";
+import MulticastObservableLike__getReplay from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay";
 import ObservableLike__scan from "../../../rx/__internal__/ObservableLike/ObservableLike.scan";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DelegatingAsyncEnumerator__mixin from "../DelegatingAsyncEnumeratorLike/DelegatingAsyncEnumeratorLike.mixin";
@@ -67,11 +65,11 @@ const AsyncEnumerableLike__scan: Scan<AsyncEnumerableLike>["scan"] =
         {
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);
-            return getObserverCount(this.delegate);
+            return MulticastObservableLike__getObserverCount(this.delegate);
           },
           get [MulticastObservableLike_replay]() {
             unsafeCast<TProperties>(this);
-            return getReplay(this.delegate);
+            return MulticastObservableLike__getReplay(this.delegate);
           },
           [ReactiveContainerLike_sinkInto](
             this: TProperties,

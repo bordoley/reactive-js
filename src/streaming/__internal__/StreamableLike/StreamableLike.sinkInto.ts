@@ -1,16 +1,15 @@
-import { ignoreElements } from "../../../containers/ContainerLike";
+import ContainerLike__ignoreElements from "../../../containers/__internal__/ContainerLike/ContainerLike.ignoreElements";
 import { pipe } from "../../../functions";
-import {
-  forEach,
-  keepT,
-  merge,
-  onSubscribe,
-  subscribe,
-} from "../../../rx/ObservableLike";
+import ObservableLike__forEach from "../../../rx/__internal__/ObservableLike/ObservableLike.forEach";
+import ObservableLike__keepT from "../../../rx/__internal__/ObservableLike/ObservableLike.keepT";
+import ObservableLike__merge from "../../../rx/__internal__/ObservableLike/ObservableLike.merge";
+import ObservableLike__onSubscribe from "../../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe";
+import ObservableLike__subscribe from "../../../rx/__internal__/ObservableLike/ObservableLike.subscribe";
 import { DispatcherLike_scheduler } from "../../../scheduling";
-import { dispatchTo } from "../../../scheduling/DispatcherLike";
+import DispatcherLike__dispatchTo from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatchTo";
 import { StreamLike, StreamableLike } from "../../../streaming";
-import { add, addTo } from "../../../util/DisposableLike";
+import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 
 import StreamableLike__stream from "./StreamableLike.stream";
 
@@ -21,19 +20,23 @@ const StreamableLike__sinkInto =
     const srcStream = pipe(src, StreamableLike__stream(scheduler));
 
     pipe(
-      merge(
+      ObservableLike__merge(
         pipe(
           srcStream,
-          forEach(dispatchTo(dest)),
-          ignoreElements(keepT),
-          onSubscribe(() => dest),
+          ObservableLike__forEach(DispatcherLike__dispatchTo(dest)),
+          ContainerLike__ignoreElements(ObservableLike__keepT),
+          ObservableLike__onSubscribe(() => dest),
         ),
-        pipe(dest, forEach<TReq>(dispatchTo(srcStream)), ignoreElements(keepT)),
+        pipe(
+          dest,
+          ObservableLike__forEach<TReq>(DispatcherLike__dispatchTo(srcStream)),
+          ContainerLike__ignoreElements(ObservableLike__keepT),
+        ),
       ),
-      ignoreElements(keepT),
-      subscribe(scheduler),
-      addTo(dest),
-      add(srcStream),
+      ContainerLike__ignoreElements(ObservableLike__keepT),
+      ObservableLike__subscribe(scheduler),
+      DisposableLike__addTo(dest),
+      DisposableLike__add(srcStream),
     );
 
     return src;
