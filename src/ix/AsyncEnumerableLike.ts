@@ -7,13 +7,10 @@ import {
   mix,
   props,
 } from "../__internal__/mixins";
-import {
-  getDelay,
-  hasDelay,
-} from "../__internal__/scheduling/SchedulerLike.options";
+import { getDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import {
   ContainerOperator,
-  FromArrayOptions,
+  FromArray,
   Generate,
   Keep,
   Map,
@@ -21,8 +18,8 @@ import {
   TakeWhile,
   ToReadonlyArray,
 } from "../containers";
-import { concatMap } from "../containers/ContainerLike";
 import { toObservable as arrayToObservable } from "../containers/ReadonlyArrayLike";
+import ReadonlyArrayLike__toAsyncEnumerable from "../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toAsyncEnumerable";
 import StatefulContainerLike__keep from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep";
 import StatefulContainerLike__map from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map";
 import StatefulContainerLike__scan from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan";
@@ -38,7 +35,6 @@ import {
   Predicate,
   Reducer,
   Updater,
-  increment,
   newInstance,
   none,
   partial,
@@ -73,16 +69,13 @@ import {
 } from "../rx";
 import { getObserverCount, getReplay } from "../rx/MulticastObservableLike";
 import {
-  concatAllT as concatAllTObs,
   create as createObservable,
   forEach as forEachObs,
   keep as keepObs,
   map as mapObs,
-  mapT as mapTObs,
   multicast,
   scanAsync as scanAsyncObs,
   scan as scanObs,
-  takeFirst as takeFirstObs,
   takeWhile as takeWhileObs,
 } from "../rx/ObservableLike";
 import { sinkInto } from "../rx/ReactiveContainerLike";
@@ -101,37 +94,9 @@ import AsyncEnumerableLike__toObservable from "./__internal__/AsyncEnumerableLik
 import AsyncEnumerableLike__create from "./__internal__/AsyncEnumerableLike/AsyncEnumerableLike.create";
 import AsyncEnumerableLike__toReadonlyArray from "./__internal__/AsyncEnumerableLike/AsyncEnumerableLike.toReadonlyArray";
 
-export const fromArray = /*@__PURE__*/ (() => {
-  const fromArrayInternal = <T>(
-    values: readonly T[],
-    start: number,
-    count: number,
-    options?: {
-      readonly delay?: number;
-    },
-  ): AsyncEnumerableLike<T> => {
-    const delay = getDelay(options);
-
-    const fromArrayWithDelay = hasDelay(options)
-      ? arrayToObservable<T>({ delay })
-      : arrayToObservable<T>();
-
-    return AsyncEnumerableLike__create(
-      scanObs(increment, returns(start - 1)),
-      concatMap<ObservableLike, number, T>(
-        { ...mapTObs, ...concatAllTObs },
-        (i: number) => pipe([values[i]], fromArrayWithDelay),
-      ),
-      takeFirstObs({ count }),
-    );
-  };
-
-  return <T>(
-      _?: Partial<FromArrayOptions>,
-    ): Function1<readonly T[], AsyncEnumerableLike<T>> =>
-    values =>
-      fromArrayInternal(values, 0, values.length);
-})();
+export const fromArray: FromArray<AsyncEnumerableLike>["fromArray"] =
+  ReadonlyArrayLike__toAsyncEnumerable;
+export const fromArrayT: FromArray<AsyncEnumerableLike> = { fromArray };
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
@@ -642,14 +607,12 @@ export const takeWhileT: TakeWhile<AsyncEnumerableLike> = {
 
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
   AsyncEnumerableLike__toObservable;
-
 export const toObservableT: ToObservable<AsyncEnumerableLike> = {
   toObservable,
 };
 
 export const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"] =
   AsyncEnumerableLike__toReadonlyArray;
-
 export const toReadonlyArrayT: ToReadonlyArray<AsyncEnumerableLike> = {
   toReadonlyArray,
 };

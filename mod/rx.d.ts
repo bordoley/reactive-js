@@ -79,7 +79,7 @@ declare type ToObservable<C extends ContainerLike, TOptions = never> = Container
     toObservable: <T>(options?: TOptions) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 };
 declare type ToRunnableObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toRunnableObservable: <T>(options?: TOptions) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
+    toRunnableObservable: <T>(options?: Partial<TOptions>) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
 };
 declare type ToEnumerableObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toEnumerableObservable: <T>(options?: TOptions) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;

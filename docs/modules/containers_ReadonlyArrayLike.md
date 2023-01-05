@@ -384,11 +384,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
-| `options.start?` | `number` |
+| `options?` | `Partial`<{ `count?`: `number` ; `delay?`: `number` ; `delayStart?`: `boolean` ; `start?`: `number`  }\> |
 
 #### Returns
 

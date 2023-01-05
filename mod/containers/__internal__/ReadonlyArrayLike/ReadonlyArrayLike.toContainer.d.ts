@@ -1,8 +1,10 @@
 import { ReadonlyArrayLike } from "../../../containers.mjs";
 import { Function1 } from "../../../functions.mjs";
-declare type ToContainerOptions = {
+declare const ReadonlyArrayLike__toContainer: <C, T, O extends {
     readonly start: number;
     readonly count: number;
-};
-declare const ReadonlyArrayLike__toContainer: <C, T>(factory: (values: readonly T[], start: number, count: number) => C) => (options?: Partial<ToContainerOptions>) => Function1<ReadonlyArrayLike<T>, C>;
-export { ToContainerOptions, ReadonlyArrayLike__toContainer as default };
+} = {
+    readonly start: number;
+    readonly count: number;
+}>(factory: (values: readonly T[], start: number, count: number, options?: Partial<O> | undefined) => C) => (options?: Partial<O>) => Function1<ReadonlyArrayLike<T>, C>;
+export { ReadonlyArrayLike__toContainer as default };

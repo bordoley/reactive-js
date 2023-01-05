@@ -30,7 +30,7 @@ const ReadonlyArrayLike__toContainer = (factory) => (options = {}) => values => 
             return { start, count };
         }
     })();
-    return factory(values, start, count);
+    return factory(values, start, count, options);
 };
 
 export { ReadonlyArrayLike__toContainer as default };

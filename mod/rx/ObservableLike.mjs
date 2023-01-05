@@ -1,13 +1,11 @@
 /// <reference types="./ObservableLike.d.ts" />
-import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
-import { concatMap } from '../containers/ContainerLike.mjs';
-import IterableLike__toObservable from '../containers/__internal__/PromiseableLike/PromiseableLike.toObservable.mjs';
-import { pipe } from '../functions.mjs';
+import PromiseableLike__toObservable from '../containers/__internal__/PromiseableLike/PromiseableLike.toObservable.mjs';
 import EnumerableObservableLike__never from './__internal__/EnumerableObservableLike/EnumerableObservableLike.never.mjs';
 import ObservableLike__buffer from './__internal__/ObservableLike/ObservableLike.buffer.mjs';
 import ObservableLike__catchError from './__internal__/ObservableLike/ObservableLike.catchError.mjs';
 import ObservableLike__combineLatest from './__internal__/ObservableLike/ObservableLike.combineLatest.mjs';
 import ObservableLike__concat from './__internal__/ObservableLike/ObservableLike.concat.mjs';
+import ObservableLike__concatAll from './__internal__/ObservableLike/ObservableLike.concatAll.mjs';
 import ObservableLike__create from './__internal__/ObservableLike/ObservableLike.create.mjs';
 import ObservableLike__decodeWithCharset from './__internal__/ObservableLike/ObservableLike.decodeWithCharset.mjs';
 import ObservableLike__defer from './__internal__/ObservableLike/ObservableLike.defer.mjs';
@@ -23,6 +21,7 @@ import ObservableLike__isEnumerable from './__internal__/ObservableLike/Observab
 import ObservableLike__isRunnable from './__internal__/ObservableLike/ObservableLike.isRunnable.mjs';
 import ObservableLike__keep from './__internal__/ObservableLike/ObservableLike.keep.mjs';
 import ObservableLike__map from './__internal__/ObservableLike/ObservableLike.map.mjs';
+import ObservableLike__mapAsync from './__internal__/ObservableLike/ObservableLike.mapAsync.mjs';
 import ObservableLike__mapT from './__internal__/ObservableLike/ObservableLike.mapT.mjs';
 import ObservableLike__merge from './__internal__/ObservableLike/ObservableLike.merge.mjs';
 import ObservableLike__mergeAll from './__internal__/ObservableLike/ObservableLike.mergeAll.mjs';
@@ -40,6 +39,7 @@ import ObservableLike__someSatisfy from './__internal__/ObservableLike/Observabl
 import ObservableLike__subscribe from './__internal__/ObservableLike/ObservableLike.subscribe.mjs';
 import ObservableLike__subscribeOn from './__internal__/ObservableLike/ObservableLike.subscribeOn.mjs';
 import ObservableLike__switchAll from './__internal__/ObservableLike/ObservableLike.switchAll.mjs';
+import ObservableLike__switchAllT from './__internal__/ObservableLike/ObservableLike.switchAllT.mjs';
 import ObservableLike__takeFirst from './__internal__/ObservableLike/ObservableLike.takeFirst.mjs';
 import ObservableLike__takeLast from './__internal__/ObservableLike/ObservableLike.takeLast.mjs';
 import ObservableLike__takeUntil from './__internal__/ObservableLike/ObservableLike.takeUntil.mjs';
@@ -82,10 +82,7 @@ const concatT = {
  *
  * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
  */
-const concatAll = (options = {}) => {
-    const { maxBufferSize = MAX_SAFE_INTEGER } = options;
-    return mergeAll({ maxBufferSize, maxConcurrency: 1 });
-};
+const concatAll = ObservableLike__concatAll;
 const concatAllT = {
     concatAll,
 };
@@ -123,7 +120,7 @@ const forEachT = { forEach };
 const forkCombineLatest = ObservableLike__forkCombineLatest;
 const forkMerge = ObservableLike__forkMerge;
 const forkZipLatest = ObservableLike__forkZipLatest;
-const fromPromise = IterableLike__toObservable;
+const fromPromise = PromiseableLike__toObservable;
 const fromPromiseT = { fromPromise };
 const generate = ObservableLike__generate;
 const generateT = { generate };
@@ -133,7 +130,7 @@ const keep = ObservableLike__keep;
 const keepT = { keep };
 const map = ObservableLike__map;
 const mapT = ObservableLike__mapT;
-const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => pipe(a, f, fromPromise()));
+const mapAsync = ObservableLike__mapAsync;
 const merge = ObservableLike__merge;
 const mergeT = { concat: merge };
 const mergeAll = ObservableLike__mergeAll;
@@ -186,9 +183,7 @@ const skipFirstT = { skipFirst };
 const someSatisfy = ObservableLike__someSatisfy;
 const someSatisfyT = { someSatisfy };
 const switchAll = ObservableLike__switchAll;
-const switchAllT = {
-    concatAll: switchAll,
-};
+const switchAllT = ObservableLike__switchAllT;
 const subscribe = ObservableLike__subscribe;
 const subscribeOn = ObservableLike__subscribeOn;
 const takeFirst = ObservableLike__takeFirst;

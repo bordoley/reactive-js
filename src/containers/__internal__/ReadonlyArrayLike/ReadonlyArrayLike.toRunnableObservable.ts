@@ -1,9 +1,8 @@
 import { hasDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { ReadonlyArrayLike } from "../../../containers";
-import { SideEffect1, none, pipe } from "../../../functions";
+import { none, pipe } from "../../../functions";
 import {
   ObserverLike,
-  RunnableObservableLike,
   SinkLike_notify,
   ToRunnableObservable,
 } from "../../../rx";
@@ -17,68 +16,47 @@ import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";
 const ReadonlyArrayLike__toRunnableObservable: ToRunnableObservable<
   ReadonlyArrayLike,
   {
-    delay?: number;
-    delayStart?: boolean;
-    count?: number;
-    start?: number;
+    readonly delay: number;
+    readonly delayStart: boolean;
+    readonly start: number;
+    readonly count: number;
   }
->["toRunnableObservable"] = /*@__PURE__*/ (() => {
-  const createArrayObservable = <T>(
-    createObservable: (
-      f: SideEffect1<ObserverLike<T>>,
-    ) => RunnableObservableLike<T>,
-    options?: {
-      readonly delay?: number;
-      readonly delayStart?: boolean;
-    },
-  ) =>
-    ReadonlyArrayLike__toContainer<RunnableObservableLike<T>, T>(
-      (values: readonly T[], startIndex: number, count: number) => {
-        const { delayStart = false } = options ?? {};
+>["toRunnableObservable"] = /*@__PURE__*/ (<T>() =>
+  ReadonlyArrayLike__toContainer(
+    (values: readonly T[], startIndex: number, count: number, options) => {
+      const { delayStart = false } = options ?? {};
 
-        const onSink = (observer: ObserverLike<T>) => {
-          let index = startIndex,
-            cnt = count;
+      const onSink = (observer: ObserverLike<T>) => {
+        let index = startIndex,
+          cnt = count;
 
-          const continuation = () => {
-            while (!isDisposed(observer) && cnt !== 0) {
-              const value = values[index];
-              if (cnt > 0) {
-                index++;
-                cnt--;
-              } else {
-                index--;
-                cnt++;
-              }
-
-              observer[SinkLike_notify](value);
-
-              if (cnt !== 0) {
-                yield_(options);
-              }
+        const continuation = () => {
+          while (!isDisposed(observer) && cnt !== 0) {
+            const value = values[index];
+            if (cnt > 0) {
+              index++;
+              cnt--;
+            } else {
+              index--;
+              cnt++;
             }
-            pipe(observer, dispose());
-          };
 
-          pipe(observer, schedule(continuation, delayStart ? options : none));
+            observer[SinkLike_notify](value);
+
+            if (cnt !== 0) {
+              yield_(options);
+            }
+          }
+          pipe(observer, dispose());
         };
-        return createObservable(onSink);
-      },
-    );
 
-  return <T>(options?: {
-    readonly count?: number;
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-    readonly start?: number;
-  }) => {
-    const createObservableWithType = (f: SideEffect1<ObserverLike<T>>) =>
-      hasDelay(options)
-        ? RunnableObservableLike__create(f)
-        : EnumerableObservableLike__create(f);
+        pipe(observer, schedule(continuation, delayStart ? options : none));
+      };
 
-    return createArrayObservable(createObservableWithType, options)(options);
-  };
-})();
+      return hasDelay(options)
+        ? RunnableObservableLike__create(onSink)
+        : EnumerableObservableLike__create(onSink);
+    },
+  ))();
 
 export default ReadonlyArrayLike__toRunnableObservable;

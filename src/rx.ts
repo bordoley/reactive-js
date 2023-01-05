@@ -151,7 +151,7 @@ export type ToRunnableObservable<
   TOptions = never,
 > = Container<C> & {
   toRunnableObservable: <T>(
-    options?: TOptions,
+    options?: Partial<TOptions>,
   ) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
 };
 

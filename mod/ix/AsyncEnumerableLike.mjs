@@ -1,20 +1,20 @@
 /// <reference types="./AsyncEnumerableLike.d.ts" />
 import { mix, props, createInstanceFactory, include, init } from '../__internal__/mixins.mjs';
-import { getDelay, hasDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
-import { concatMap } from '../containers/ContainerLike.mjs';
+import { getDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { toObservable as toObservable$1 } from '../containers/ReadonlyArrayLike.mjs';
+import ReadonlyArrayLike__toAsyncEnumerable from '../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toAsyncEnumerable.mjs';
 import StatefulContainerLike__keep from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep.mjs';
 import StatefulContainerLike__map from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map.mjs';
 import StatefulContainerLike__scan from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
 import StatefulContainerLike__takeWhile from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile.mjs';
 import { interactive } from '../containers/__internal__/containers.internal.mjs';
-import { increment, returns, pipe, pipeUnsafe, newInstance, none, unsafeCast, partial } from '../functions.mjs';
+import { returns, pipe, pipeUnsafe, newInstance, none, unsafeCast, partial } from '../functions.mjs';
 import { InteractiveContainerLike_interact, SourceLike_move } from '../ix.mjs';
 import { hasCurrent, getCurrent } from './EnumeratorLike.mjs';
 import { move } from './SourceLike.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, create, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, forEach, keep as keep$1, multicast } from '../rx/ObservableLike.mjs';
+import { create, map as map$1, takeWhile as takeWhile$1, scanAsync as scanAsync$1, scan as scan$1, forEach, keep as keep$1, multicast } from '../rx/ObservableLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { DispatcherLike_dispatch, DispatcherLike_scheduler } from '../scheduling.mjs';
 import { dispatch, getScheduler } from '../scheduling/DispatcherLike.mjs';
@@ -27,16 +27,8 @@ import AsyncEnumerable__toObservable from './__internal__/AsyncEnumerableLike/As
 import AsyncEnumerableLike__create from './__internal__/AsyncEnumerableLike/AsyncEnumerableLike.create.mjs';
 import AsyncEnumerableLike__toReadonlyArray from './__internal__/AsyncEnumerableLike/AsyncEnumerableLike.toReadonlyArray.mjs';
 
-const fromArray = /*@__PURE__*/ (() => {
-    const fromArrayInternal = (values, start, count, options) => {
-        const delay = getDelay(options);
-        const fromArrayWithDelay = hasDelay(options)
-            ? toObservable$1({ delay })
-            : toObservable$1();
-        return AsyncEnumerableLike__create(scan$1(increment, returns(start - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => pipe([values[i]], fromArrayWithDelay)), takeFirst({ count }));
-    };
-    return (_) => values => fromArrayInternal(values, 0, values.length);
-})();
+const fromArray = ReadonlyArrayLike__toAsyncEnumerable;
+const fromArrayT = { fromArray };
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
@@ -264,4 +256,4 @@ const toReadonlyArrayT = {
     toReadonlyArray,
 };
 
-export { fromArray, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
+export { fromArray, fromArrayT, fromEnumerable, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT };
