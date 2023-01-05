@@ -1,11 +1,11 @@
 /// <reference types="./ObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
-import { catchErrorObservable, mergeAllObservable, scanAsyncObservable, switchAllObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
 import { concatMap } from '../containers/ContainerLike.mjs';
 import IterableLike__toObservable from '../containers/__internal__/PromiseableLike/PromiseableLike.toObservable.mjs';
 import { pipe } from '../functions.mjs';
 import EnumerableObservableLike__never from './__internal__/EnumerableObservableLike/EnumerableObservableLike.never.mjs';
 import ObservableLike__buffer from './__internal__/ObservableLike/ObservableLike.buffer.mjs';
+import ObservableLike__catchError from './__internal__/ObservableLike/ObservableLike.catchError.mjs';
 import ObservableLike__combineLatest from './__internal__/ObservableLike/ObservableLike.combineLatest.mjs';
 import ObservableLike__concat from './__internal__/ObservableLike/ObservableLike.concat.mjs';
 import ObservableLike__create from './__internal__/ObservableLike/ObservableLike.create.mjs';
@@ -25,6 +25,7 @@ import ObservableLike__keep from './__internal__/ObservableLike/ObservableLike.k
 import ObservableLike__map from './__internal__/ObservableLike/ObservableLike.map.mjs';
 import ObservableLike__mapT from './__internal__/ObservableLike/ObservableLike.mapT.mjs';
 import ObservableLike__merge from './__internal__/ObservableLike/ObservableLike.merge.mjs';
+import ObservableLike__mergeAll from './__internal__/ObservableLike/ObservableLike.mergeAll.mjs';
 import ObservableLike__multicast from './__internal__/ObservableLike/ObservableLike.multicast.mjs';
 import ObservableLike__onSubscribe from './__internal__/ObservableLike/ObservableLike.onSubscribe.mjs';
 import ObservableLike__pairwise from './__internal__/ObservableLike/ObservableLike.pairwise.mjs';
@@ -32,11 +33,13 @@ import ObservableLike__reduce from './__internal__/ObservableLike/ObservableLike
 import ObservableLike__repeat from './__internal__/ObservableLike/ObservableLike.repeat.mjs';
 import ObservableLike__retry from './__internal__/ObservableLike/ObservableLike.retry.mjs';
 import ObservableLike__scan from './__internal__/ObservableLike/ObservableLike.scan.mjs';
+import ObservableLike__scanAsync from './__internal__/ObservableLike/ObservableLike.scanAsync.mjs';
 import ObservableLike__share from './__internal__/ObservableLike/ObservableLike.share.mjs';
 import ObservableLike__skipFirst from './__internal__/ObservableLike/ObservableLike.skipFirst.mjs';
 import ObservableLike__someSatisfy from './__internal__/ObservableLike/ObservableLike.someSatisfy.mjs';
 import ObservableLike__subscribe from './__internal__/ObservableLike/ObservableLike.subscribe.mjs';
 import ObservableLike__subscribeOn from './__internal__/ObservableLike/ObservableLike.subscribeOn.mjs';
+import ObservableLike__switchAll from './__internal__/ObservableLike/ObservableLike.switchAll.mjs';
 import ObservableLike__takeFirst from './__internal__/ObservableLike/ObservableLike.takeFirst.mjs';
 import ObservableLike__takeLast from './__internal__/ObservableLike/ObservableLike.takeLast.mjs';
 import ObservableLike__takeUntil from './__internal__/ObservableLike/ObservableLike.takeUntil.mjs';
@@ -57,7 +60,7 @@ const buffer = ObservableLike__buffer;
 const bufferT = {
     buffer,
 };
-const catchError = catchErrorObservable;
+const catchError = ObservableLike__catchError;
 /**
  * Returns an `ObservableLike` that combines the latest values from
  * multiple sources.
@@ -133,7 +136,7 @@ const mapT = ObservableLike__mapT;
 const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => pipe(a, f, fromPromise()));
 const merge = ObservableLike__merge;
 const mergeT = { concat: merge };
-const mergeAll = mergeAllObservable;
+const mergeAll = ObservableLike__mergeAll;
 const mergeAllT = { concatAll: mergeAll };
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -164,7 +167,7 @@ const scanT = { scan };
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-const scanAsync = scanAsyncObservable;
+const scanAsync = ObservableLike__scanAsync;
 const scanAsyncT = {
     scanAsync,
 };
@@ -182,7 +185,7 @@ const skipFirst = ObservableLike__skipFirst;
 const skipFirstT = { skipFirst };
 const someSatisfy = ObservableLike__someSatisfy;
 const someSatisfyT = { someSatisfy };
-const switchAll = switchAllObservable;
+const switchAll = ObservableLike__switchAll;
 const switchAllT = {
     concatAll: switchAll,
 };

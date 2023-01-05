@@ -1,9 +1,12 @@
 /// <reference types="./RunnableObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
-import { catchErrorRunnableObservable, mergeAllRunnableObservable, scanAsyncRunnableObservable, switchAllRunnableObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
+import RunnableObservableLike__catchError from './__internal__/RunnableObservableLike/RunnableObservableLike.catchError.mjs';
 import RunnableObservableLike__create from './__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
 import RunnableObservableLike__defer from './__internal__/RunnableObservableLike/RunnableObservableLike.defer.mjs';
+import RunnableObservableLike__mergeAll from './__internal__/RunnableObservableLike/RunnableObservableLike.mergeAll.mjs';
+import RunnableObservableLike__scanAsync from './__internal__/RunnableObservableLike/RunnableObservableLike.scanAsync.mjs';
+import RunnableObservableLike__switchAll from './__internal__/RunnableObservableLike/RunnableObservableLike.switchAll.mjs';
 
 const create = RunnableObservableLike__create;
 const defer = RunnableObservableLike__defer;
@@ -13,7 +16,7 @@ const deferT = {
 const bufferT = {
     buffer: buffer,
 };
-const catchError = catchErrorRunnableObservable;
+const catchError = RunnableObservableLike__catchError;
 const catchErrorT = { catchError };
 const concatT = {
     concat: concat,
@@ -60,7 +63,7 @@ const mapT = {
 const mergeT = {
     concat: merge,
 };
-const mergeAll = mergeAllRunnableObservable;
+const mergeAll = RunnableObservableLike__mergeAll;
 const mergeAllT = { concatAll: mergeAll };
 const neverT = {
     never,
@@ -74,7 +77,7 @@ const reduceT = {
 const scanT = {
     scan: scan,
 };
-const scanAsync = scanAsyncRunnableObservable;
+const scanAsync = RunnableObservableLike__scanAsync;
 const scanAsyncT = { scanAsync };
 const skipFirstT = {
     skipFirst: skipFirst,
@@ -82,7 +85,7 @@ const skipFirstT = {
 const someSatisfyT = {
     someSatisfy: someSatisfy,
 };
-const switchAll = switchAllRunnableObservable;
+const switchAll = RunnableObservableLike__switchAll;
 const switchAllT = {
     concatAll: switchAll,
 };

@@ -1,9 +1,12 @@
 /// <reference types="./EnumerableObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
-import { catchErrorEnumerableObservable, mergeAllEnumerableObservable, scanAsyncEnumerableObservable, switchAllEnumerableObservable } from '../__internal__/rx/ObservableLike.higher-order.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
+import EnumerableObservableLike__catchError from './__internal__/EnumerableObservableLike/EnumerableObservableLike.catchError.mjs';
 import EnumerableObservableLike__create from './__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
 import EnumerableObservableLike__defer from './__internal__/EnumerableObservableLike/EnumerableObservableLike.defer.mjs';
+import EnumerableObservableLike__mergeAll from './__internal__/EnumerableObservableLike/EnumerableObservableLike.mergeAll.mjs';
+import EnumerableObservableLike__scanAsync from './__internal__/EnumerableObservableLike/EnumerableObservableLike.scanAsync.mjs';
+import EnumerableObservableLike__switchAll from './__internal__/EnumerableObservableLike/EnumerableObservableLike.switchAll.mjs';
 
 const create = EnumerableObservableLike__create;
 const defer = EnumerableObservableLike__defer;
@@ -13,7 +16,7 @@ const deferT = {
 const bufferT = {
     buffer: buffer,
 };
-const catchError = catchErrorEnumerableObservable;
+const catchError = EnumerableObservableLike__catchError;
 const catchErrorT = { catchError };
 const concatT = {
     concat: concat,
@@ -60,7 +63,7 @@ const mapT = {
 const mergeT = {
     concat: merge,
 };
-const mergeAll = mergeAllEnumerableObservable;
+const mergeAll = EnumerableObservableLike__mergeAll;
 const mergeAllT = { concatAll: mergeAll };
 const neverT = {
     never,
@@ -74,7 +77,7 @@ const reduceT = {
 const scanT = {
     scan: scan,
 };
-const scanAsync = scanAsyncEnumerableObservable;
+const scanAsync = EnumerableObservableLike__scanAsync;
 const scanAsyncT = { scanAsync };
 const skipFirstT = {
     skipFirst: skipFirst,
@@ -82,7 +85,7 @@ const skipFirstT = {
 const someSatisfyT = {
     someSatisfy: someSatisfy,
 };
-const switchAll = switchAllEnumerableObservable;
+const switchAll = EnumerableObservableLike__switchAll;
 const switchAllT = {
     concatAll: switchAll,
 };
