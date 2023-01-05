@@ -8,8 +8,10 @@ import {
 } from "../../../__internal__/mixins";
 import { Factory, Reducer, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import { addTo, dispose, onComplete } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { sinkInto } from "../../ReactiveContainerLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
@@ -55,13 +57,13 @@ const SinkLike__reduceMixin: <
         const acc = initialValue();
         instance[ReduceSink_private_acc] = acc;
       } catch (cause) {
-        pipe(instance, dispose({ cause }));
+        pipe(instance, DisposableLike__dispose({ cause }));
       }
 
       pipe(
         instance,
-        addTo(delegate),
-        onComplete(() => {
+        DisposableLike__addTo(delegate),
+        DisposableLike__onComplete(() => {
           pipe(
             [instance[ReduceSink_private_acc]],
             fromArray,

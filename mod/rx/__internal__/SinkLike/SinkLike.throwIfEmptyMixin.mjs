@@ -2,17 +2,19 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { addTo, onComplete, dispose } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import { notify } from '../../SinkLike.mjs';
+import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
+import SinkLike__notify from './SinkLike.notify.mjs';
 
 const SinkLike__throwIfEmptyMixin = /*@__PURE__*/ (() => {
     const ThrowIfEmptySink_private_isEmpty = Symbol("ThrowIfEmptySink_private_isEmpty");
     return returns(mix(include(DisposableLike__mixin), function ThrowIfEmptySink(instance, delegate, factory) {
         init(DisposableLike__mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
-        pipe(instance, addTo(delegate), onComplete(() => {
+        pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(() => {
             let error = none;
             if (instance[ThrowIfEmptySink_private_isEmpty]) {
                 let cause = none;
@@ -24,7 +26,7 @@ const SinkLike__throwIfEmptyMixin = /*@__PURE__*/ (() => {
                 }
                 error = { cause };
             }
-            pipe(delegate, dispose(error));
+            pipe(delegate, DisposableLike__dispose(error));
         }));
         return instance;
     }, props({
@@ -33,7 +35,7 @@ const SinkLike__throwIfEmptyMixin = /*@__PURE__*/ (() => {
     }), {
         [SinkLike_notify](next) {
             this[ThrowIfEmptySink_private_isEmpty] = false;
-            pipe(this[DelegatingSinkLike_delegate], notify(next));
+            pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(next));
         },
     }));
 })();

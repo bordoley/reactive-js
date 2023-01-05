@@ -28,13 +28,16 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling";
-import { run } from "../../../scheduling/ContinuationLike";
-import { isInContinuation } from "../../../scheduling/SchedulerLike";
+import ContinuationLike__run from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.run";
+import SchedulerLike__isInContinuation from "../../../scheduling/__internal__/SchedulerLike/SchedulerLike.isInContinuation";
 import { DisposableLike } from "../../../util";
-import { add, addTo, dispose, isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
-import { sourceFrom } from "../../SinkLike";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
+import SinkLike__sourceFrom from "../SinkLike/SinkLike.sourceFrom";
 import ObservableLike__isEnumerable from "./ObservableLike.isEnumerable";
 
 const ObservableLike__toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
@@ -78,7 +81,7 @@ const ObservableLike__toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"]
           [SchedulerLike_now]: 0,
           get [SchedulerLike_shouldYield](): boolean {
             unsafeCast<TEnumeratorSchedulerProperties>(this);
-            return isInContinuation(this);
+            return SchedulerLike__isInContinuation(this);
           },
           [SchedulerLike_requestYield](): void {
             // No-Op: We yield whenever the continuation is running.
@@ -86,16 +89,16 @@ const ObservableLike__toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"]
           [SourceLike_move](
             this: TEnumeratorSchedulerProperties & MutableEnumeratorLike<T>,
           ) {
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
               const { continuations } = this;
 
               const continuation = continuations.shift();
               if (isSome(continuation)) {
                 this[SchedulerLike_inContinuation] = true;
-                run(continuation);
+                ContinuationLike__run(continuation);
                 this[SchedulerLike_inContinuation] = false;
               } else {
-                pipe(this, dispose());
+                pipe(this, DisposableLike__dispose());
               }
             }
           },
@@ -104,9 +107,9 @@ const ObservableLike__toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"]
             continuation: ContinuationLike,
             _?: { readonly delay?: number },
           ): void {
-            pipe(this, add(continuation));
+            pipe(this, DisposableLike__add(continuation));
 
-            if (!isDisposed(continuation)) {
+            if (!DisposableLike__isDisposed(continuation)) {
               this.continuations.push(continuation);
             }
           },
@@ -152,8 +155,8 @@ const ObservableLike__toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"]
 
               pipe(
                 createEnumeratorObserver(scheduler),
-                addTo(scheduler),
-                sourceFrom(obs),
+                DisposableLike__addTo(scheduler),
+                SinkLike__sourceFrom(obs),
               );
 
               return scheduler;

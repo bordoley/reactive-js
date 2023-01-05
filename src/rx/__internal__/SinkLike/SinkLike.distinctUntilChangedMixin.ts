@@ -9,8 +9,8 @@ import {
 import { Equality, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
-import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
+import SinkLike__notify from "./SinkLike.notify";
 
 const SinkLike__distinctUntilChangedMixin: <T>() => Mixin2<
   SinkLike<T>,
@@ -68,7 +68,7 @@ const SinkLike__distinctUntilChangedMixin: <T>() => Mixin2<
           if (shouldEmit) {
             this[DistinctUntilChangedSink_private_prev] = next;
             this[DistinctUntilChangedSink_private_hasValue] = true;
-            pipe(this[DelegatingSinkLike_delegate], notify(next));
+            pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(next));
           }
         },
       },

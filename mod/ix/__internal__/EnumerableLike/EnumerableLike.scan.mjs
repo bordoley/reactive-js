@@ -3,9 +3,11 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import StatefulContainerLike__scan from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
 import { pipe, none, isSome } from '../../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../../ix.mjs';
-import { dispose } from '../../../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
-import { hasCurrent, getCurrent, move } from '../../EnumeratorLike.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import EnumeratorLike__getCurrent from '../EnumeratorLike/EnumeratorLike.getCurrent.mjs';
+import EnumeratorLike__hasCurrent from '../EnumeratorLike/EnumeratorLike.hasCurrent.mjs';
+import EnumeratorLike__move from '../EnumeratorLike/EnumeratorLike.move.mjs';
 import MutableEnumeratorLike__mixin from '../MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import EnumerableLike__liftT from './EnumerableLike.liftT.mjs';
 
@@ -21,19 +23,21 @@ const EnumerableLike__scan = /*@__PURE__*/ (() => {
             instance[EnumeratorLike_current] = acc;
         }
         catch (cause) {
-            pipe(instance, dispose({ cause }));
+            pipe(instance, DisposableLike__dispose({ cause }));
         }
         return instance;
     }, props({ reducer: none, delegate: none }), {
         [SourceLike_move]() {
-            const acc = hasCurrent(this) ? getCurrent(this) : none;
+            const acc = EnumeratorLike__hasCurrent(this)
+                ? EnumeratorLike__getCurrent(this)
+                : none;
             const { delegate, reducer } = this;
-            if (isSome(acc) && move(delegate)) {
+            if (isSome(acc) && EnumeratorLike__move(delegate)) {
                 try {
-                    this[EnumeratorLike_current] = reducer(acc, getCurrent(delegate));
+                    this[EnumeratorLike_current] = reducer(acc, EnumeratorLike__getCurrent(delegate));
                 }
                 catch (cause) {
-                    pipe(this, dispose({ cause }));
+                    pipe(this, DisposableLike__dispose({ cause }));
                 }
             }
         },

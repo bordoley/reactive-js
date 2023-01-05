@@ -10,11 +10,14 @@ import ReadonlyArrayLike__map from "../../../containers/__internal__/ReadonlyArr
 import { getLength, none, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
-import { addTo, dispose, onComplete } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { getScheduler } from "../../ObserverLike";
-import { notify, sourceFrom } from "../../SinkLike";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
+import SinkLike__notify from "../SinkLike/SinkLike.notify";
+import SinkLike__sourceFrom from "../SinkLike/SinkLike.sourceFrom";
 import ObservableLike__allAreEnumerable from "./ObservableLike.allAreEnumerable";
 import ObservableLike__allAreRunnable from "./ObservableLike.allAreRunnable";
 import ObservableLike__create from "./ObservableLike.create";
@@ -45,7 +48,7 @@ const ObservableLike__latest = /*@__PURE__*/ (() => {
         observers,
         ReadonlyArrayLike__map(observer => observer.latest),
       );
-      pipe(instance.delegate, notify(result));
+      pipe(instance.delegate, SinkLike__notify(result));
 
       if (mode === zipMode) {
         for (const sub of observers) {
@@ -60,7 +63,7 @@ const ObservableLike__latest = /*@__PURE__*/ (() => {
     instance.completedCount++;
 
     if (instance.completedCount === getLength(instance.observers)) {
-      pipe(instance.delegate, dispose());
+      pipe(instance.delegate, DisposableLike__dispose());
     }
   };
 
@@ -124,9 +127,9 @@ const ObservableLike__latest = /*@__PURE__*/ (() => {
       for (const observable of observables) {
         const innerObserver = pipe(
           createLatestObserver(scheduler, ctx),
-          addTo(delegate),
-          onComplete(onCompleteCb),
-          sourceFrom(observable),
+          DisposableLike__addTo(delegate),
+          DisposableLike__onComplete(onCompleteCb),
+          SinkLike__sourceFrom(observable),
         );
 
         add(ctx, innerObserver);

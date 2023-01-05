@@ -2,7 +2,8 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, isSome, pipe, isFunction } from '../../../functions.mjs';
 import { ContinuationLike_run, SchedulerLike_schedule } from '../../../scheduling.mjs';
-import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import { getOrNone, set } from '../CurrentScheduler.mjs';
 import YieldError from '../YieldError.mjs';
@@ -19,7 +20,7 @@ const createContinuation = /*@__PURE__*/ (() => {
         f: none,
     }), {
         [ContinuationLike_run]() {
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
                 let error = none;
                 let yieldError = none;
                 const { scheduler } = this;
@@ -41,7 +42,7 @@ const createContinuation = /*@__PURE__*/ (() => {
                     pipe(scheduler, SchedulerLike__schedule(this, yieldError));
                 }
                 else {
-                    pipe(this, dispose(error));
+                    pipe(this, DisposableLike__dispose(error));
                 }
             }
         },

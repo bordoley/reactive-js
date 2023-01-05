@@ -1,16 +1,17 @@
 /// <reference types="./SequenceLike.zip.d.ts" />
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { pipe, callWith, isSome, getLength, none } from '../../../functions.mjs';
-import { keepType } from '../../ContainerLike.mjs';
-import { map, keepT } from '../../ReadonlyArrayLike.mjs';
+import ContainerLike__keepType from '../ContainerLike/ContainerLike.keepType.mjs';
+import ReadonlyArrayLike__keepT from '../ReadonlyArrayLike/ReadonlyArrayLike.keepT.mjs';
+import ReadonlyArrayLike__map from '../ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
 
 const SequenceLike__zip = /*@__PURE__*/ (() => {
     const zip = (...sequences) => () => {
-        const nextResults = pipe(sequences, map(callWith()), keepType(keepT, isSome));
+        const nextResults = pipe(sequences, ReadonlyArrayLike__map(callWith()), ContainerLike__keepType(ReadonlyArrayLike__keepT, isSome));
         return getLength(nextResults) === getLength(sequences)
             ? {
-                [SequenceLike_data]: pipe(nextResults, map(x => x[SequenceLike_data])),
-                [SequenceLike_next]: zip(...pipe(nextResults, map(x => x[SequenceLike_next]))),
+                [SequenceLike_data]: pipe(nextResults, ReadonlyArrayLike__map(x => x[SequenceLike_data])),
+                [SequenceLike_next]: zip(...pipe(nextResults, ReadonlyArrayLike__map(x => x[SequenceLike_next]))),
             }
             : none;
     };

@@ -9,10 +9,10 @@ import {
 import { Predicate, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import { dispose } from "../../../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
-import { notify } from "../../SinkLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
+import SinkLike__notify from "./SinkLike.notify";
 
 const SinkLike__takeWhileMixin: <T>() => Mixin3<
   SinkLike<T>,
@@ -62,11 +62,11 @@ const SinkLike__takeWhileMixin: <T>() => Mixin3<
             this[TakeWhileSink_private_predicate](next);
 
           if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
-            pipe(this[DelegatingSinkLike_delegate], notify(next));
+            pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(next));
           }
 
           if (!satisfiesPredicate) {
-            pipe(this, dispose());
+            pipe(this, DisposableLike__dispose());
           }
         },
       },

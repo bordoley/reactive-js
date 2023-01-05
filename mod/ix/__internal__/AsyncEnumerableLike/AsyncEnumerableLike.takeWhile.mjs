@@ -8,8 +8,8 @@ import MulticastObservableLike__getObserverCount from '../../../rx/__internal__/
 import MulticastObservableLike__getReplay from '../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay.mjs';
 import ObservableLike__multicast from '../../../rx/__internal__/ObservableLike/ObservableLike.multicast.mjs';
 import ObservableLike__takeWhile from '../../../rx/__internal__/ObservableLike/ObservableLike.takeWhile.mjs';
-import { getScheduler } from '../../../scheduling/DispatcherLike.mjs';
-import { add } from '../../../util/DisposableLike.mjs';
+import DispatcherLike__getScheduler from '../../../scheduling/__internal__/DispatcherLike/DispatcherLike.getScheduler.mjs';
+import DisposableLike__add from '../../../util/__internal__/DisposableLike/DisposableLike.add.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DelegatingAsyncEnumerator__mixin from '../DelegatingAsyncEnumeratorLike/DelegatingAsyncEnumeratorLike.mixin.mjs';
 import AsyncEnumerableLike__liftT from './AsyncEnumerableLike.liftT.mjs';
@@ -19,7 +19,7 @@ const AsyncEnumerableLike__takeWhile =
     const createTakeWhileAsyncEnumerator = createInstanceFactory(mix(include(DisposableLike__delegatingMixin, DelegatingAsyncEnumerator__mixin()), function TakeWhileAsyncEnumerator(instance, delegate, predicate, inclusive) {
         init(DisposableLike__delegatingMixin, instance, delegate);
         init(DelegatingAsyncEnumerator__mixin(), instance, delegate);
-        instance.obs = pipe(delegate, ObservableLike__takeWhile(predicate, { inclusive }), ObservableLike__multicast(getScheduler(delegate)), add(instance));
+        instance.obs = pipe(delegate, ObservableLike__takeWhile(predicate, { inclusive }), ObservableLike__multicast(DispatcherLike__getScheduler(delegate)), DisposableLike__add(instance));
         return instance;
     }, props({
         obs: none,

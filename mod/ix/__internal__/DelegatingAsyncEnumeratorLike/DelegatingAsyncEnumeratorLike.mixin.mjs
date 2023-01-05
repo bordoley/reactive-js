@@ -4,7 +4,8 @@ import { pipe, none, unsafeCast, returns } from '../../../functions.mjs';
 import { SourceLike_move } from '../../../ix.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable } from '../../../rx.mjs';
 import { DispatcherLike_dispatch, DispatcherLike_scheduler } from '../../../scheduling.mjs';
-import { dispatch, getScheduler } from '../../../scheduling/DispatcherLike.mjs';
+import DispatcherLike__dispatch from '../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch.mjs';
+import DispatcherLike__getScheduler from '../../../scheduling/__internal__/DispatcherLike/DispatcherLike.getScheduler.mjs';
 
 const DelegatingAsyncEnumerator__mixin = /*@__PURE__*/ (() => {
     return pipe(mix(function DelegatingAsyncEnumerator(instance, delegate) {
@@ -14,16 +15,16 @@ const DelegatingAsyncEnumerator__mixin = /*@__PURE__*/ (() => {
         delegate: none,
     }), {
         [DispatcherLike_dispatch](_) {
-            pipe(this.delegate, dispatch(none));
+            pipe(this.delegate, DispatcherLike__dispatch(none));
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            return getScheduler(this.delegate);
+            return DispatcherLike__getScheduler(this.delegate);
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [SourceLike_move]() {
-            pipe(this, dispatch(none));
+            pipe(this, DispatcherLike__dispatch(none));
         },
     }), returns);
 })();

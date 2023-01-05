@@ -20,7 +20,8 @@ import {
 import EnumerableLike__create from "../../../ix/__internal__/EnumerableLike/EnumerableLike.create";
 import MutableEnumeratorLike__mixin from "../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
 import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
-import { dispose, isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 
 const SequenceLike__toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
@@ -50,13 +51,13 @@ const SequenceLike__toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
         }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
               const next = this.seq();
               if (isSome(next)) {
                 this[EnumeratorLike_current] = next[SequenceLike_data];
                 this.seq = next[SequenceLike_next];
               } else {
-                pipe(this, dispose());
+                pipe(this, DisposableLike__dispose());
               }
             }
           },

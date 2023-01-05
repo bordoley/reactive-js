@@ -16,9 +16,11 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import { add, dispose } from "../../../util/DisposableLike";
+import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
-import { getCurrent, move } from "../../EnumeratorLike";
+import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
+import EnumeratorLike__move from "../EnumeratorLike/EnumeratorLike.move";
 import MutableEnumeratorLike__mixin from "../MutableEnumeratorLike/MutableEnumeratorLike.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
 import EnumerableLike__liftT from "./EnumerableLike.liftT";
@@ -52,7 +54,7 @@ const EnumerableLike__buffer: Buffer<EnumerableLike>["buffer"] =
             instance.delegate = delegate;
             instance.maxBufferSize = maxBufferSize;
 
-            pipe(instance, add(delegate));
+            pipe(instance, DisposableLike__add(delegate));
 
             return instance;
           },
@@ -68,15 +70,18 @@ const EnumerableLike__buffer: Buffer<EnumerableLike>["buffer"] =
 
               const { delegate, maxBufferSize } = this;
 
-              while (getLength(buffer) < maxBufferSize && move(delegate)) {
-                buffer.push(getCurrent(delegate));
+              while (
+                getLength(buffer) < maxBufferSize &&
+                EnumeratorLike__move(delegate)
+              ) {
+                buffer.push(EnumeratorLike__getCurrent(delegate));
               }
 
               const bufferLength = getLength(buffer);
               if (bufferLength > 0) {
                 this[EnumeratorLike_current] = buffer;
               } else if (bufferLength === 0) {
-                pipe(this, dispose());
+                pipe(this, DisposableLike__dispose());
               }
             },
           },

@@ -9,8 +9,9 @@ import {
 import { getLength, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import { addTo, onComplete } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { sinkInto } from "../../ReactiveContainerLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
@@ -55,8 +56,8 @@ const SinkLike__takeLastMixin: <
 
       pipe(
         instance,
-        addTo(delegate),
-        onComplete(() => {
+        DisposableLike__addTo(delegate),
+        DisposableLike__onComplete(() => {
           pipe(instance[TakeLastSink_last], fromArray, sinkInto(delegate));
         }),
       );

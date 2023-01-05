@@ -2,7 +2,7 @@ import { ToPromiseable } from "../../../containers";
 import { Optional, isSome, newInstance, none, pipe } from "../../../functions";
 import { ObservableLike } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
-import { onDisposed } from "../../../util/DisposableLike";
+import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
 
@@ -29,7 +29,7 @@ const ObservableLike__toPromise: ToPromiseable<
           result = next;
         }),
         ObservableLike__subscribe(scheduler),
-        onDisposed(err => {
+        DisposableLike__onDisposed(err => {
           if (isSome(err)) {
             const { cause } = err;
             reject(cause);

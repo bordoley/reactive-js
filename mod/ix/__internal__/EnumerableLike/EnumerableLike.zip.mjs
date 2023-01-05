@@ -5,7 +5,9 @@ import ReadonlyArrayLike__forEach from '../../../containers/__internal__/Readonl
 import ReadonlyArrayLike__map from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
-import { isDisposed, dispose, addTo } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import EnumeratorLike__getCurrent from '../EnumeratorLike/EnumeratorLike.getCurrent.mjs';
 import EnumeratorLike__hasCurrent from '../EnumeratorLike/EnumeratorLike.hasCurrent.mjs';
@@ -31,21 +33,21 @@ const EnumerableLike__zip = /*@__PURE__*/ (() => {
         enumerators: none,
     }), {
         [SourceLike_move]() {
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
                 const { enumerators } = this;
                 moveAll(enumerators);
                 if (allHaveCurrent(enumerators)) {
                     this[EnumeratorLike_current] = pipe(enumerators, ReadonlyArrayLike__map(EnumeratorLike__getCurrent));
                 }
                 else {
-                    pipe(this, dispose());
+                    pipe(this, DisposableLike__dispose());
                 }
             }
         },
     }));
     const zipEnumerators = (enumerators) => {
         const instance = createZipEnumerator(enumerators);
-        pipe(enumerators, ReadonlyArrayLike__forEach(addTo(instance)));
+        pipe(enumerators, ReadonlyArrayLike__forEach(DisposableLike__addTo(instance)));
         return instance;
     };
     return (...enumerables) => EnumerableLike__create(() => pipe(enumerables, ReadonlyArrayLike__map(EnumerableLike__enumerate()), zipEnumerators));

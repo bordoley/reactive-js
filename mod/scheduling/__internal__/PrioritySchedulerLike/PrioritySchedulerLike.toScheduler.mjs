@@ -3,9 +3,13 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { none, unsafeCast, pipe, partial } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
-import { addIgnoringChildErrors, isDisposed } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import { isInContinuation, getCurrentTime, shouldYield, requestYield } from '../../SchedulerLike.mjs';
+import SchedulerLike__getCurrentTime from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
+import SchedulerLike__isInContinuation from '../SchedulerLike/SchedulerLike.isInContinuation.mjs';
+import SchedulerLike__requestYield from '../SchedulerLike/SchedulerLike.requestYield.mjs';
+import SchedulerLike__shouldYield from '../SchedulerLike/SchedulerLike.shouldYield.mjs';
 
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__mixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
     init(DisposableLike__mixin, instance);
@@ -18,23 +22,23 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(
 }), {
     get [SchedulerLike_inContinuation]() {
         unsafeCast(this);
-        return isInContinuation(this.priorityScheduler);
+        return SchedulerLike__isInContinuation(this.priorityScheduler);
     },
     get [SchedulerLike_now]() {
         unsafeCast(this);
-        return getCurrentTime(this.priorityScheduler);
+        return SchedulerLike__getCurrentTime(this.priorityScheduler);
     },
     get [SchedulerLike_shouldYield]() {
         unsafeCast(this);
-        return shouldYield(this.priorityScheduler);
+        return SchedulerLike__shouldYield(this.priorityScheduler);
     },
     [SchedulerLike_requestYield]() {
-        requestYield(this.priorityScheduler);
+        SchedulerLike__requestYield(this.priorityScheduler);
     },
     [SchedulerLike_schedule](continuation, options) {
         const delay = getDelay(options);
-        pipe(this, addIgnoringChildErrors(continuation));
-        if (!isDisposed(continuation)) {
+        pipe(this, DisposableLike__addIgnoringChildErrors(continuation));
+        if (!DisposableLike__isDisposed(continuation)) {
             this.priorityScheduler[SchedulerLike_schedule](continuation, {
                 priority: this.priority,
                 delay,

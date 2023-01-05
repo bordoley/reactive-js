@@ -3,8 +3,8 @@ import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
-import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
+import SinkLike__notify from './SinkLike.notify.mjs';
 
 const SinkLike__distinctUntilChangedMixin = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
@@ -27,7 +27,7 @@ const SinkLike__distinctUntilChangedMixin = /*@__PURE__*/ (() => {
             if (shouldEmit) {
                 this[DistinctUntilChangedSink_private_prev] = next;
                 this[DistinctUntilChangedSink_private_hasValue] = true;
-                pipe(this[DelegatingSinkLike_delegate], notify(next));
+                pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(next));
             }
         },
     }));

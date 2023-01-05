@@ -9,8 +9,8 @@ import {
 import { none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
-import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
+import SinkLike__notify from "./SinkLike.notify";
 
 const SinkLike__pairwiseMixin: <T>() => Mixin1<
   SinkLike<T>,
@@ -51,7 +51,10 @@ const SinkLike__pairwiseMixin: <T>() => Mixin1<
           if (this[PairwiseSink_private_hasPrev]) {
             pipe(
               this[DelegatingSinkLike_delegate],
-              notify<SinkLike<readonly [T, T]>, readonly [T, T]>([prev, next]),
+              SinkLike__notify<SinkLike<readonly [T, T]>, readonly [T, T]>([
+                prev,
+                next,
+              ]),
             );
           }
 

@@ -24,19 +24,17 @@ import {
   pipe,
 } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import {
-  addTo,
-  dispose,
-  disposed,
-  isDisposed,
-  onComplete,
-} from "../../../util/DisposableLike";
+import { addTo, disposed } from "../../../util/DisposableLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/DisposableLike.disposed";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { getScheduler } from "../../ObserverLike";
 import { sinkInto } from "../../ReactiveContainerLike";
-import { notify } from "../../SinkLike";
 import EnumerableObservableLike__never from "../EnumerableObservableLike/EnumerableObservableLike.never";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
+import SinkLike__notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__lift from "./ObservableLike.lift";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
@@ -73,17 +71,19 @@ const ObservableLike__buffer: <T>(options?: {
         instance.buffer = [];
         instance.delegate = delegate;
         instance.durationFunction = durationFunction;
-        instance.durationSubscription = createDisposableRef(disposed);
+        instance.durationSubscription = createDisposableRef(
+          DisposableLike__disposed,
+        );
         instance.maxBufferSize = maxBufferSize;
 
         pipe(
           instance,
-          onComplete(() => {
+          DisposableLike__onComplete(() => {
             const { buffer } = instance;
             instance.buffer = [];
 
             if (isEmpty(buffer)) {
-              pipe(delegate, dispose());
+              pipe(delegate, DisposableLike__dispose());
             } else {
               pipe(
                 [buffer],
@@ -115,13 +115,15 @@ const ObservableLike__buffer: <T>(options?: {
             const buffer = this.buffer;
             this.buffer = [];
 
-            pipe(this.delegate, notify(buffer));
+            pipe(this.delegate, SinkLike__notify(buffer));
           };
 
           if (getLength(buffer) === maxBufferSize) {
             doOnNotify();
           } else if (
-            isDisposed(this.durationSubscription[MutableRefLike_current])
+            DisposableLike__isDisposed(
+              this.durationSubscription[MutableRefLike_current],
+            )
           ) {
             this.durationSubscription[MutableRefLike_current] = pipe(
               next,

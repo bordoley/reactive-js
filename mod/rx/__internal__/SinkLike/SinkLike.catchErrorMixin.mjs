@@ -2,8 +2,11 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none, isSome } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { addToIgnoringChildErrors, onComplete, dispose, onError } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addToIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
+import DisposableLike__onError from '../../../util/__internal__/DisposableLike/DisposableLike.onError.mjs';
 import { sinkInto } from '../../ReactiveContainerLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
@@ -12,20 +15,22 @@ const SinkLike__catchErrorMixin =
     return returns(mix(include(DisposableLike__mixin), function CatchErrorSink(instance, delegate, errorHandler) {
         init(DisposableLike__mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
-        pipe(instance, addToIgnoringChildErrors(delegate), onComplete(() => {
-            pipe(delegate, dispose());
-        }), onError((e) => {
+        pipe(instance, DisposableLike__addToIgnoringChildErrors(delegate), DisposableLike__onComplete(() => {
+            pipe(delegate, DisposableLike__dispose());
+        }), DisposableLike__onError((e) => {
             try {
                 const result = errorHandler(e.cause) || none;
                 if (isSome(result)) {
                     pipe(result, sinkInto(delegate));
                 }
                 else {
-                    pipe(delegate, dispose());
+                    pipe(delegate, DisposableLike__dispose());
                 }
             }
             catch (cause) {
-                pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
+                pipe(delegate, DisposableLike__dispose({
+                    cause: { parent: e.cause, cause },
+                }));
             }
         }));
         return instance;

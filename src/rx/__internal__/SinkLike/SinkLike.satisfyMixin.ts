@@ -8,16 +8,14 @@ import {
 } from "../../../__internal__/mixins";
 import { Predicate, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import {
-  addTo,
-  dispose,
-  isDisposed,
-  onComplete,
-} from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { sinkInto } from "../../ReactiveContainerLike";
-import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
+import SinkLike__notify from "./SinkLike.notify";
 
 const SinkLike__satisfyMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -55,9 +53,9 @@ const SinkLike__satisfyMixin: <
 
       pipe(
         instance,
-        addTo(delegate),
-        onComplete(() => {
-          if (!isDisposed(delegate)) {
+        DisposableLike__addTo(delegate),
+        DisposableLike__onComplete(() => {
+          if (!DisposableLike__isDisposed(delegate)) {
             pipe([defaultResult], fromArray, sinkInto(delegate));
           }
         }),
@@ -74,8 +72,8 @@ const SinkLike__satisfyMixin: <
         if (this[SatisfySink_private_predicate](next)) {
           pipe(
             this[DelegatingSinkLike_delegate],
-            notify(!defaultResult),
-            dispose(),
+            SinkLike__notify(!defaultResult),
+            DisposableLike__dispose(),
           );
         }
       },

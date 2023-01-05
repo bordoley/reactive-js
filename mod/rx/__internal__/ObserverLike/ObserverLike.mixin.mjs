@@ -3,10 +3,14 @@ import { createInstanceFactory, mix, init, props } from '../../../__internal__/m
 import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../../../functions.mjs';
 import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../../rx.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../../scheduling.mjs';
-import { yield_ } from '../../../scheduling/ContinuationLike.mjs';
+import ContinuationLike__yield_ from '../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield.mjs';
 import { DisposableLike_exception } from '../../../util.mjs';
-import { onComplete, isDisposed, dispose, onDisposed, addToIgnoringChildErrors } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addToIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
+import DisposableLike__onDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
 import ObserverLike__getScheduler from './ObserverLike.getScheduler.mjs';
 import ObserverLike__schedule from './ObserverLike.schedule.mjs';
 
@@ -14,7 +18,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {
         if (getLength(dispatcher.nextQueue) === 1) {
             const { observer } = dispatcher;
-            pipe(observer, ObserverLike__schedule(dispatcher.continuation), onComplete(dispatcher.onContinuationDispose));
+            pipe(observer, ObserverLike__schedule(dispatcher.continuation), DisposableLike__onComplete(dispatcher.onContinuationDispose));
         }
     };
     return createInstanceFactory(mix(DisposableLike__mixin, function ObserverDispatcher(instance, observer) {
@@ -26,17 +30,17 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             while (getLength(nextQueue) > 0) {
                 const next = nextQueue.shift();
                 observer[SinkLike_notify](next);
-                yield_();
+                ContinuationLike__yield_();
             }
         };
         instance.onContinuationDispose = () => {
-            if (isDisposed(instance)) {
-                pipe(observer, dispose(instance[DisposableLike_exception]));
+            if (DisposableLike__isDisposed(instance)) {
+                pipe(observer, DisposableLike__dispose(instance[DisposableLike_exception]));
             }
         };
-        pipe(instance, onDisposed(e => {
+        pipe(instance, DisposableLike__onDisposed(e => {
             if (isEmpty(instance.nextQueue)) {
-                pipe(observer, dispose(e));
+                pipe(observer, DisposableLike__dispose(e));
             }
         }));
         return instance;
@@ -51,7 +55,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             return ObserverLike__getScheduler(this.observer);
         },
         [DispatcherLike_dispatch](next) {
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
                 this.nextQueue.push(next);
                 scheduleDrainQueue(this);
             }
@@ -70,7 +74,7 @@ const ObserverLike__mixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             let { dispatcher } = this;
             if (isNone(dispatcher)) {
-                dispatcher = pipe(createObserverDispatcher(this), addToIgnoringChildErrors(this));
+                dispatcher = pipe(createObserverDispatcher(this), DisposableLike__addToIgnoringChildErrors(this));
                 this.dispatcher = dispatcher;
             }
             return dispatcher;

@@ -5,12 +5,15 @@ import { createPriorityQueue } from '../../../__internal__/scheduling/QueueLike.
 import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { none, unsafeCast, pipe, isSome } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
-import { move, getCurrent } from '../../../ix/EnumeratorLike.mjs';
+import EnumeratorLike__getCurrent from '../../../ix/__internal__/EnumeratorLike/EnumeratorLike.getCurrent.mjs';
+import EnumeratorLike__move from '../../../ix/__internal__/EnumeratorLike/EnumeratorLike.move.mjs';
 import MutableEnumeratorLike__mixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, ContinuationLike_run, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
-import { run } from '../../ContinuationLike.mjs';
-import { addIgnoringChildErrors, isDisposed, dispose } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import ContinuationLike__run from '../ContinuationLike/ContinuationLike.run.mjs';
 import SchedulerLike__getCurrentTime from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 
 const comparator = (a, b) => {
@@ -47,13 +50,13 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
             (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks));
     },
     [ContinuationLike_run]() {
-        while (move(this)) {
-            const task = getCurrent(this);
+        while (EnumeratorLike__move(this)) {
+            const task = EnumeratorLike__getCurrent(this);
             const { dueTime, continuation } = task;
             this.microTaskTicks = 0;
             this[SchedulerLike_now] = dueTime;
             this[SchedulerLike_inContinuation] = true;
-            run(continuation);
+            ContinuationLike__run(continuation);
             this[SchedulerLike_inContinuation] = false;
         }
     },
@@ -62,8 +65,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
     },
     [SchedulerLike_schedule](continuation, options) {
         const delay = getDelay(options);
-        pipe(this, addIgnoringChildErrors(continuation));
-        if (!isDisposed(continuation)) {
+        pipe(this, DisposableLike__addIgnoringChildErrors(continuation));
+        if (!DisposableLike__isDisposed(continuation)) {
             this.taskQueue.push({
                 id: this.taskIDCount++,
                 dueTime: SchedulerLike__getCurrentTime(this) + delay,
@@ -73,7 +76,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
     },
     [SourceLike_move]() {
         const taskQueue = this.taskQueue;
-        if (isDisposed(this)) {
+        if (DisposableLike__isDisposed(this)) {
             return;
         }
         const task = taskQueue.pop();
@@ -81,7 +84,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
             this[EnumeratorLike_current] = task;
         }
         else {
-            pipe(this, dispose());
+            pipe(this, DisposableLike__dispose());
         }
     },
 }));

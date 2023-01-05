@@ -16,9 +16,10 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import { dispose } from "../../../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
-import { getCurrent, move } from "../../EnumeratorLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
+import EnumeratorLike__move from "../EnumeratorLike/EnumeratorLike.move";
 import MutableEnumeratorLike__mixin from "../MutableEnumeratorLike/MutableEnumeratorLike.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
 import EnumerableLike__liftT from "./EnumerableLike.liftT";
@@ -60,13 +61,13 @@ const EnumerableLike__map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<TB>) {
             const { delegate } = this;
 
-            if (move(delegate)) {
+            if (EnumeratorLike__move(delegate)) {
               try {
                 this[EnumeratorLike_current] = this.mapper(
-                  getCurrent(delegate),
+                  EnumeratorLike__getCurrent(delegate),
                 );
               } catch (cause) {
-                pipe(this, dispose({ cause }));
+                pipe(this, DisposableLike__dispose({ cause }));
               }
             }
           },

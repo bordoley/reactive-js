@@ -3,8 +3,8 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import StatefulContainerLike__takeFirst from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst.mjs';
 import { pipe } from '../../../functions.mjs';
 import { SourceLike_move } from '../../../ix.mjs';
-import { dispose } from '../../../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DelegatingEnumeratorLike__mixin from '../DelegatingEnumeratorLike/DelegatingEnumeratorLike.mixin.mjs';
 import DelegatingEnumeratorLike__move from '../DelegatingEnumeratorLike/DelegatingEnumeratorLike.move.mjs';
 import EnumerableLike__liftT from './EnumerableLike.liftT.mjs';
@@ -27,7 +27,7 @@ const EnumerableLike__takeFirst =
                 DelegatingEnumeratorLike__move(this);
             }
             else {
-                pipe(this, dispose());
+                pipe(this, DisposableLike__dispose());
             }
         },
     })), StatefulContainerLike__takeFirst(EnumerableLike__liftT));

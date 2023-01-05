@@ -11,8 +11,8 @@ import StatefulContainerLike__takeFirst from "../../../containers/__internal__/S
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import { dispose } from "../../../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DelegatingEnumeratorLike__mixin from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.mixin";
 import DelegatingEnumeratorLike__move from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.move";
 import { DelegatingEnumeratorLike } from "../ix.internal";
@@ -57,7 +57,7 @@ const EnumerableLike__takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
                 this.count++;
                 DelegatingEnumeratorLike__move(this);
               } else {
-                pipe(this, dispose());
+                pipe(this, DisposableLike__dispose());
               }
             },
           },

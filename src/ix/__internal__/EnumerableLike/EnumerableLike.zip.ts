@@ -17,7 +17,9 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import { addTo, dispose, isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
 import EnumeratorLike__hasCurrent from "../EnumeratorLike/EnumeratorLike.hasCurrent";
@@ -69,7 +71,7 @@ const EnumerableLike__zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
         [SourceLike_move](
           this: TProperties & MutableEnumeratorLike<readonly unknown[]>,
         ) {
-          if (!isDisposed(this)) {
+          if (!DisposableLike__isDisposed(this)) {
             const { enumerators } = this;
             moveAll(enumerators);
 
@@ -79,7 +81,7 @@ const EnumerableLike__zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
                 ReadonlyArrayLike__map(EnumeratorLike__getCurrent),
               );
             } else {
-              pipe(this, dispose());
+              pipe(this, DisposableLike__dispose());
             }
           }
         },
@@ -91,7 +93,10 @@ const EnumerableLike__zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
     enumerators: readonly EnumeratorLike[],
   ): EnumeratorLike<readonly unknown[]> => {
     const instance = createZipEnumerator(enumerators);
-    pipe(enumerators, ReadonlyArrayLike__forEach(addTo(instance)));
+    pipe(
+      enumerators,
+      ReadonlyArrayLike__forEach(DisposableLike__addTo(instance)),
+    );
     return instance;
   };
 

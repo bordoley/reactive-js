@@ -1,13 +1,14 @@
 import { pipe } from "../../../functions";
 import { ObservableLike } from "../../../rx";
-import { toPausableScheduler } from "../../../scheduling/SchedulerLike";
+import SchedulerLike__toPausableScheduler from "../../../scheduling/__internal__/SchedulerLike/SchedulerLike.toPausableScheduler";
 import { FlowMode, ToFlowable } from "../../../streaming";
 import FlowableLike__createLifted from "../../../streaming/__internal__/FlowableLike/FlowableLike.createLifted";
-import { add, bindTo } from "../../../util/DisposableLike";
 import { pause, resume } from "../../../util/PauseableLike";
+import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__bindTo from "../../../util/__internal__/DisposableLike/DisposableLike.bindTo";
 import DisposableLike__toObservable from "../../../util/__internal__/DisposableLike/DisposableLike.toObservable";
 import { getScheduler } from "../../ObserverLike";
-import { sourceFrom } from "../../SinkLike";
+import SinkLike__sourceFrom from "../SinkLike/SinkLike.sourceFrom";
 import ObservableLike__create from "./ObservableLike.create";
 import ObservableLike__empty from "./ObservableLike.empty";
 import ObservableLike__forEach from "./ObservableLike.forEach";
@@ -24,12 +25,12 @@ const ObservableLike__toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
             const pausableScheduler = pipe(
               observer,
               getScheduler,
-              toPausableScheduler,
+              SchedulerLike__toPausableScheduler,
             );
 
             pipe(
               observer,
-              sourceFrom(
+              SinkLike__sourceFrom(
                 pipe(
                   observable,
                   ObservableLike__subscribeOn(pausableScheduler),
@@ -38,7 +39,7 @@ const ObservableLike__toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
                   ),
                 ),
               ),
-              add(
+              DisposableLike__add(
                 pipe(
                   modeObs,
                   ObservableLike__forEach(mode => {
@@ -52,10 +53,10 @@ const ObservableLike__toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
                     }
                   }),
                   ObservableLike__subscribe(getScheduler(observer)),
-                  bindTo(pausableScheduler),
+                  DisposableLike__bindTo(pausableScheduler),
                 ),
               ),
-              add(pausableScheduler),
+              DisposableLike__add(pausableScheduler),
             );
           }),
         )

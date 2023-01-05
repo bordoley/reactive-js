@@ -2,11 +2,13 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, isEmpty, none, getLength } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { addTo, onComplete, dispose } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { sinkInto } from '../../ReactiveContainerLike.mjs';
-import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
+import SinkLike__notify from './SinkLike.notify.mjs';
 
 const SinkLike__bufferMixin = (fromArray) => {
     const BufferSink_private_maxBufferSize = Symbol("BufferSink_private_maxBufferSize");
@@ -16,11 +18,11 @@ const SinkLike__bufferMixin = (fromArray) => {
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[BufferSink_private_maxBufferSize] = maxBufferSize;
         instance[BufferSink_private_buffer] = [];
-        pipe(instance, addTo(delegate), onComplete(() => {
+        pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(() => {
             const { [BufferSink_private_buffer]: buffer } = instance;
             instance[BufferSink_private_buffer] = [];
             if (isEmpty(buffer)) {
-                pipe(instance[DelegatingSinkLike_delegate], dispose());
+                pipe(instance[DelegatingSinkLike_delegate], DisposableLike__dispose());
             }
             else {
                 pipe([buffer], fromArray, sinkInto(instance[DelegatingSinkLike_delegate]));
@@ -38,7 +40,7 @@ const SinkLike__bufferMixin = (fromArray) => {
             if (getLength(buffer) === maxBufferSize) {
                 const buffer = this[BufferSink_private_buffer];
                 this[BufferSink_private_buffer] = [];
-                pipe(this[DelegatingSinkLike_delegate], notify(buffer));
+                pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(buffer));
             }
         },
     });

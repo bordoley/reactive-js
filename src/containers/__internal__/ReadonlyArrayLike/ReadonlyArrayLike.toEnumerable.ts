@@ -18,7 +18,8 @@ import {
 import EnumerableLike__create from "../../../ix/__internal__/EnumerableLike/EnumerableLike.create";
 import MutableEnumeratorLike__mixin from "../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
 import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
-import { dispose, isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";
 
@@ -64,7 +65,7 @@ const ReadonlyArrayLike__toEnumerable: ToEnumerable<
       {
         [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
           const { array } = this;
-          if (!isDisposed(this)) {
+          if (!DisposableLike__isDisposed(this)) {
             this.index++;
             const { index, count } = this;
 
@@ -73,7 +74,7 @@ const ReadonlyArrayLike__toEnumerable: ToEnumerable<
 
               this.count = count > 0 ? this.count - 1 : this.count + 1;
             } else {
-              pipe(this, dispose());
+              pipe(this, DisposableLike__dispose());
             }
           }
         },

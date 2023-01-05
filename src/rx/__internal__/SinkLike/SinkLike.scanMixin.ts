@@ -8,10 +8,10 @@ import {
 } from "../../../__internal__/mixins";
 import { Factory, Reducer, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import { dispose } from "../../../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
-import { notify } from "../../SinkLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
+import SinkLike__notify from "./SinkLike.notify";
 
 const SinkLike__scanMixin: <T, TAcc>() => Mixin3<
   SinkLike<T>,
@@ -47,7 +47,7 @@ const SinkLike__scanMixin: <T, TAcc>() => Mixin3<
           const acc = initialValue();
           instance[ScanSink_private_acc] = acc;
         } catch (cause) {
-          pipe(instance, dispose({ cause }));
+          pipe(instance, DisposableLike__dispose({ cause }));
         }
 
         return instance;
@@ -64,7 +64,7 @@ const SinkLike__scanMixin: <T, TAcc>() => Mixin3<
             next,
           );
           this[ScanSink_private_acc] = nextAcc;
-          pipe(this[DelegatingSinkLike_delegate], notify(nextAcc));
+          pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(nextAcc));
         },
       },
     ),

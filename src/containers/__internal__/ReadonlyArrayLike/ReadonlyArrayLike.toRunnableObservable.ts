@@ -9,8 +9,9 @@ import {
 import { schedule } from "../../../rx/ObserverLike";
 import EnumerableObservableLike__create from "../../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
 import RunnableObservableLike__create from "../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create";
-import { yield_ } from "../../../scheduling/ContinuationLike";
-import { dispose, isDisposed } from "../../../util/DisposableLike";
+import ContinuationLike__yield_ from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";
 
 const ReadonlyArrayLike__toRunnableObservable: ToRunnableObservable<
@@ -31,7 +32,7 @@ const ReadonlyArrayLike__toRunnableObservable: ToRunnableObservable<
           cnt = count;
 
         const continuation = () => {
-          while (!isDisposed(observer) && cnt !== 0) {
+          while (!DisposableLike__isDisposed(observer) && cnt !== 0) {
             const value = values[index];
             if (cnt > 0) {
               index++;
@@ -44,10 +45,10 @@ const ReadonlyArrayLike__toRunnableObservable: ToRunnableObservable<
             observer[SinkLike_notify](value);
 
             if (cnt !== 0) {
-              yield_(options);
+              ContinuationLike__yield_(options);
             }
           }
-          pipe(observer, dispose());
+          pipe(observer, DisposableLike__dispose());
         };
 
         pipe(observer, schedule(continuation, delayStart ? options : none));

@@ -5,9 +5,10 @@ import {
   InteractiveContainerLike_interact,
 } from "../../../ix";
 import { RunnableLike, SinkLike, ToRunnable } from "../../../rx";
-import { notifySink } from "../../../rx/SinkLike";
 import RunnableLike__create from "../../../rx/__internal__/RunnableLike/RunnableLike.create";
-import { add, dispose } from "../../../util/DisposableLike";
+import SinkLike__notifySink from "../../../rx/__internal__/SinkLike/SinkLike.notifySink";
+import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import EnumeratorLike__forEach from "../EnumeratorLike/EnumeratorLike.forEach";
 
 const EnumerableLike__toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
@@ -18,9 +19,9 @@ const EnumerableLike__toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
       const run = (sink: SinkLike<T>) => {
         pipe(
           f(),
-          add(sink),
-          EnumeratorLike__forEach(notifySink(sink)),
-          dispose(),
+          DisposableLike__add(sink),
+          EnumeratorLike__forEach(SinkLike__notifySink(sink)),
+          DisposableLike__dispose(),
         );
       };
       return RunnableLike__create(run);

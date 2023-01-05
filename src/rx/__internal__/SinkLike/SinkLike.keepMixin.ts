@@ -9,8 +9,8 @@ import {
 import { Predicate, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
-import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
+import SinkLike__notify from "./SinkLike.notify";
 
 const SinkLike__keepMixin: <T>() => Mixin2<
   SinkLike<T>,
@@ -47,7 +47,7 @@ const SinkLike__keepMixin: <T>() => Mixin2<
       {
         [SinkLike_notify](this: TProperties, next: T) {
           if (this[KeepSink_private_predicate](next)) {
-            pipe(this[DelegatingSinkLike_delegate], notify(next));
+            pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(next));
           }
         },
       },

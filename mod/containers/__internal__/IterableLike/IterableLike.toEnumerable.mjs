@@ -4,7 +4,8 @@ import { none, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import EnumerableLike__create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
 import MutableEnumeratorLike__mixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
-import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 
 const IterableLike__toEnumerable = 
@@ -17,13 +18,13 @@ const IterableLike__toEnumerable =
         return instance;
     }, props({ iterator: none }), {
         [SourceLike_move]() {
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
                 const next = this.iterator.next();
                 if (!next.done) {
                     this[EnumeratorLike_current] = next.value;
                 }
                 else {
-                    pipe(this, dispose());
+                    pipe(this, DisposableLike__dispose());
                 }
             }
         },

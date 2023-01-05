@@ -8,12 +8,13 @@ import {
 } from "../../../__internal__/mixins";
 import { getLength, isEmpty, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import { addTo, dispose, onComplete } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { sinkInto } from "../../ReactiveContainerLike";
-import { notify } from "../../SinkLike";
-
 import { DelegatingSinkLike_delegate } from "../rx.internal";
+import SinkLike__notify from "./SinkLike.notify";
 
 const SinkLike__bufferMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -55,13 +56,16 @@ const SinkLike__bufferMixin: <
 
       pipe(
         instance,
-        addTo(delegate),
-        onComplete(() => {
+        DisposableLike__addTo(delegate),
+        DisposableLike__onComplete(() => {
           const { [BufferSink_private_buffer]: buffer } = instance;
           instance[BufferSink_private_buffer] = [];
 
           if (isEmpty(buffer)) {
-            pipe(instance[DelegatingSinkLike_delegate], dispose());
+            pipe(
+              instance[DelegatingSinkLike_delegate],
+              DisposableLike__dispose(),
+            );
           } else {
             pipe(
               [buffer],
@@ -94,7 +98,7 @@ const SinkLike__bufferMixin: <
           const buffer = this[BufferSink_private_buffer];
           this[BufferSink_private_buffer] = [];
 
-          pipe(this[DelegatingSinkLike_delegate], notify(buffer));
+          pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(buffer));
         }
       },
     },

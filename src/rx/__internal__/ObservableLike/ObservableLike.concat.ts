@@ -1,9 +1,11 @@
 import { Concat } from "../../../containers";
 import { getLength, isEmpty, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
-import { addTo, dispose, onComplete } from "../../../util/DisposableLike";
-import { sourceFrom } from "../../SinkLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import ObserverLike__createWithDelegate from "../ObserverLike/ObserverLike.createWithDelegate";
+import SinkLike__sourceFrom from "../SinkLike/SinkLike.sourceFrom";
 import ObservableLike__allAreEnumerable from "./ObservableLike.allAreEnumerable";
 import ObservableLike__allAreRunnable from "./ObservableLike.allAreRunnable";
 import ObservableLike__create from "./ObservableLike.create";
@@ -17,15 +19,15 @@ const ObservableLike__concat: Concat<ObservableLike>["concat"] =
     ) =>
       pipe(
         ObserverLike__createWithDelegate(delegate),
-        addTo(delegate),
-        onComplete(() => {
+        DisposableLike__addTo(delegate),
+        DisposableLike__onComplete(() => {
           if (next < getLength(observables)) {
             pipe(
               createConcatObserver(delegate, observables, next + 1),
-              sourceFrom(observables[next]),
+              SinkLike__sourceFrom(observables[next]),
             );
           } else {
-            pipe(delegate, dispose());
+            pipe(delegate, DisposableLike__dispose());
           }
         }),
       );
@@ -37,10 +39,10 @@ const ObservableLike__concat: Concat<ObservableLike>["concat"] =
         if (!isEmpty(observables)) {
           pipe(
             createConcatObserver(observer, observables, 1),
-            sourceFrom(observables[0]),
+            SinkLike__sourceFrom(observables[0]),
           );
         } else {
-          pipe(observer, dispose());
+          pipe(observer, DisposableLike__dispose());
         }
       };
 

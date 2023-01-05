@@ -25,17 +25,15 @@ import {
   pipe,
 } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import {
-  addTo,
-  disposed,
-  isDisposed,
-  onComplete,
-} from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/DisposableLike.disposed";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { getScheduler } from "../../ObserverLike";
 import { sinkInto } from "../../ReactiveContainerLike";
-import { notify } from "../../SinkLike";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
+import SinkLike__notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__lift from "./ObservableLike.lift";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
@@ -94,8 +92,8 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
           instance.mode = mode;
 
           instance.durationSubscription = pipe(
-            createDisposableRef(disposed),
-            addTo(delegate),
+            createDisposableRef(DisposableLike__disposed),
+            DisposableLike__addTo(delegate),
           );
 
           instance.onNotify = (_?: unknown) => {
@@ -104,7 +102,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
               instance.value = none;
               instance.hasValue = false;
 
-              pipe(instance.delegate, notify(value));
+              pipe(instance.delegate, SinkLike__notify(value));
 
               setupDurationSubscription(instance, value);
             }
@@ -112,12 +110,12 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
 
           pipe(
             instance,
-            addTo(delegate),
-            onComplete(() => {
+            DisposableLike__addTo(delegate),
+            DisposableLike__onComplete(() => {
               if (
                 instance.mode !== "first" &&
                 instance.hasValue &&
-                !isDisposed(delegate)
+                !DisposableLike__isDisposed(delegate)
               ) {
                 pipe(
                   [instance.value],
@@ -147,7 +145,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
             const durationSubscriptionDisposableIsDisposed = pipe(
               this.durationSubscription,
               getCurrentRef,
-              isDisposed,
+              DisposableLike__isDisposed,
             );
 
             if (

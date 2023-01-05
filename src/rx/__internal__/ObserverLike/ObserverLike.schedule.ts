@@ -1,9 +1,9 @@
 import { Function1, SideEffect, pipe } from "../../../functions";
 import { ObserverLike } from "../../../rx";
 import { ContinuationLike } from "../../../scheduling";
-import { schedule as SchedulerLike__schedule } from "../../../scheduling/SchedulerLike";
+import SchedulerLike__schedule from "../../../scheduling/__internal__/SchedulerLike/SchedulerLike.schedule";
 import { DisposableLike } from "../../../util";
-import { addTo } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import getScheduler from "./ObserverLike.getScheduler";
 
 const ObserverLike__schedule =
@@ -16,7 +16,7 @@ const ObserverLike__schedule =
       observer,
       getScheduler,
       SchedulerLike__schedule(f, options),
-      addTo(observer),
+      DisposableLike__addTo(observer),
     );
 
 export default ObserverLike__schedule;

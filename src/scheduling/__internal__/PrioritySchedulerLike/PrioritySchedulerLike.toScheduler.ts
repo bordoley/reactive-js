@@ -19,17 +19,13 @@ import {
   SchedulerLike_shouldYield,
 } from "../../../scheduling";
 import { DisposableLike } from "../../../util";
-import {
-  addIgnoringChildErrors,
-  isDisposed,
-} from "../../../util/DisposableLike";
+import DisposableLike__addIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
-import {
-  getCurrentTime,
-  isInContinuation,
-  requestYield,
-  shouldYield,
-} from "../../SchedulerLike";
+import SchedulerLike__getCurrentTime from "../SchedulerLike/SchedulerLike.getCurrentTime";
+import SchedulerLike__isInContinuation from "../SchedulerLike/SchedulerLike.isInContinuation";
+import SchedulerLike__requestYield from "../SchedulerLike/SchedulerLike.requestYield";
+import SchedulerLike__shouldYield from "../SchedulerLike/SchedulerLike.shouldYield";
 
 type TProperties = {
   readonly priorityScheduler: PrioritySchedulerLike;
@@ -66,18 +62,18 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     {
       get [SchedulerLike_inContinuation]() {
         unsafeCast<TProperties>(this);
-        return isInContinuation(this.priorityScheduler);
+        return SchedulerLike__isInContinuation(this.priorityScheduler);
       },
       get [SchedulerLike_now]() {
         unsafeCast<TProperties>(this);
-        return getCurrentTime(this.priorityScheduler);
+        return SchedulerLike__getCurrentTime(this.priorityScheduler);
       },
       get [SchedulerLike_shouldYield]() {
         unsafeCast<TProperties>(this);
-        return shouldYield(this.priorityScheduler);
+        return SchedulerLike__shouldYield(this.priorityScheduler);
       },
       [SchedulerLike_requestYield](this: TProperties): void {
-        requestYield(this.priorityScheduler);
+        SchedulerLike__requestYield(this.priorityScheduler);
       },
       [SchedulerLike_schedule](
         this: TProperties & DisposableLike,
@@ -86,9 +82,9 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       ) {
         const delay = getDelay(options);
 
-        pipe(this, addIgnoringChildErrors(continuation));
+        pipe(this, DisposableLike__addIgnoringChildErrors(continuation));
 
-        if (!isDisposed(continuation)) {
+        if (!DisposableLike__isDisposed(continuation)) {
           this.priorityScheduler[SchedulerLike_schedule](continuation, {
             priority: this.priority,
             delay,

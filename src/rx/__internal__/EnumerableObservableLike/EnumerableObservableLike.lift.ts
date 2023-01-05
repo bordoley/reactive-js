@@ -10,7 +10,7 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import { sourceFrom } from "../../SinkLike";
+import SinkLike__sourceFrom from "../SinkLike/SinkLike.sourceFrom";
 
 const EnumerableObservableLike__lift: Lift<
   EnumerableObservableLike,
@@ -31,7 +31,11 @@ const EnumerableObservableLike__lift: Lift<
     ) {}
 
     [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-      pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
+      pipeUnsafe(
+        observer,
+        ...this.operators,
+        SinkLike__sourceFrom(this.source),
+      );
     }
   }
 

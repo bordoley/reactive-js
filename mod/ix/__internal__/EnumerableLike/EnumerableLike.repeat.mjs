@@ -3,9 +3,11 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import ContainerLike__repeat from '../../../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
 import { none, isNone, pipe, unsafeCast, raise } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
-import { addTo, dispose } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
-import { move, hasCurrent } from '../../EnumeratorLike.mjs';
+import EnumeratorLike__hasCurrent from '../EnumeratorLike/EnumeratorLike.hasCurrent.mjs';
+import EnumeratorLike__move from '../EnumeratorLike/EnumeratorLike.move.mjs';
 import EnumerableLike__create from './EnumerableLike.create.mjs';
 import EnumerableLike__enumerate from './EnumerableLike.enumerate.mjs';
 
@@ -24,14 +26,14 @@ const EnumerableLike__repeat =
     }), {
         [SourceLike_move]() {
             if (isNone(this.enumerator)) {
-                this.enumerator = pipe(this.src, EnumerableLike__enumerate(), addTo(this));
+                this.enumerator = pipe(this.src, EnumerableLike__enumerate(), DisposableLike__addTo(this));
             }
             let { enumerator } = this;
-            while (!move(enumerator)) {
+            while (!EnumeratorLike__move(enumerator)) {
                 this.count++;
                 try {
                     if (this.shouldRepeat(this.count)) {
-                        enumerator = pipe(this.src, EnumerableLike__enumerate(), addTo(this));
+                        enumerator = pipe(this.src, EnumerableLike__enumerate(), DisposableLike__addTo(this));
                         this.enumerator = enumerator;
                     }
                     else {
@@ -39,7 +41,7 @@ const EnumerableLike__repeat =
                     }
                 }
                 catch (cause) {
-                    pipe(this, dispose({ cause }));
+                    pipe(this, DisposableLike__dispose({ cause }));
                     break;
                 }
             }
@@ -47,7 +49,7 @@ const EnumerableLike__repeat =
         get [EnumeratorLike_current]() {
             var _a, _b;
             unsafeCast(this);
-            return hasCurrent(this)
+            return EnumeratorLike__hasCurrent(this)
                 ? (_b = (_a = this.enumerator) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_current]) !== null && _b !== void 0 ? _b : raise()
                 : raise();
         },

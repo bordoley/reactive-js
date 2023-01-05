@@ -1,8 +1,8 @@
 import { hasDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { Factory, Updater, none, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import { yield_ } from "../../../scheduling/ContinuationLike";
-import { isDisposed } from "../../../util/DisposableLike";
+import ContinuationLike__yield_ from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import { schedule } from "../../ObserverLike";
 import EnumerableObservableLike__create from "../EnumerableObservableLike/EnumerableObservableLike.create";
 import RunnableObservableLike__create from "../RunnableObservableLike/RunnableObservableLike.create";
@@ -18,10 +18,10 @@ const ObservableLike__generate = <T>(
     let acc = initialValue();
 
     const continuation = () => {
-      while (!isDisposed(observer)) {
+      while (!DisposableLike__isDisposed(observer)) {
         acc = generator(acc);
         observer[SinkLike_notify](acc);
-        yield_(options);
+        ContinuationLike__yield_(options);
       }
     };
 

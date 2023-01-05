@@ -9,7 +9,8 @@ import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
 } from "../../../scheduling";
-import { dispatch, getScheduler } from "../../../scheduling/DispatcherLike";
+import DispatcherLike__dispatch from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch";
+import DispatcherLike__getScheduler from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.getScheduler";
 import { StreamLike } from "../../../streaming";
 
 const DelegatingAsyncEnumerator__mixin: <T>() => Mixin1<
@@ -51,16 +52,16 @@ const DelegatingAsyncEnumerator__mixin: <T>() => Mixin1<
       }),
       {
         [DispatcherLike_dispatch](this: TProperties, _: void) {
-          pipe(this.delegate, dispatch(none));
+          pipe(this.delegate, DispatcherLike__dispatch(none));
         },
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
-          return getScheduler(this.delegate);
+          return DispatcherLike__getScheduler(this.delegate);
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [SourceLike_move](this: StreamLike<void, T>) {
-          pipe(this, dispatch(none));
+          pipe(this, DispatcherLike__dispatch(none));
         },
       },
     ),

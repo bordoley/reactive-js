@@ -5,8 +5,9 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import { schedule } from '../../../rx/ObserverLike.mjs';
 import EnumerableObservableLike__create from '../../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
 import RunnableObservableLike__create from '../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
-import { yield_ } from '../../../scheduling/ContinuationLike.mjs';
-import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
+import ContinuationLike__yield_ from '../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import ReadonlyArrayLike__toContainer from './ReadonlyArrayLike.toContainer.mjs';
 
 const ReadonlyArrayLike__toRunnableObservable = /*@__PURE__*/ (() => ReadonlyArrayLike__toContainer((values, startIndex, count, options) => {
@@ -14,7 +15,7 @@ const ReadonlyArrayLike__toRunnableObservable = /*@__PURE__*/ (() => ReadonlyArr
     const onSink = (observer) => {
         let index = startIndex, cnt = count;
         const continuation = () => {
-            while (!isDisposed(observer) && cnt !== 0) {
+            while (!DisposableLike__isDisposed(observer) && cnt !== 0) {
                 const value = values[index];
                 if (cnt > 0) {
                     index++;
@@ -26,10 +27,10 @@ const ReadonlyArrayLike__toRunnableObservable = /*@__PURE__*/ (() => ReadonlyArr
                 }
                 observer[SinkLike_notify](value);
                 if (cnt !== 0) {
-                    yield_(options);
+                    ContinuationLike__yield_(options);
                 }
             }
-            pipe(observer, dispose());
+            pipe(observer, DisposableLike__dispose());
         };
         pipe(observer, schedule(continuation, delayStart ? options : none));
     };

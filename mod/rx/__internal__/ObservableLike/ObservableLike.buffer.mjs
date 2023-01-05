@@ -6,13 +6,17 @@ import { MutableRefLike_current } from '../../../__internal__/util/MutableRefLik
 import ReadonlyArrayLike__toRunnableObservable from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { pipe, isEmpty, none, getLength, isNumber, max } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { disposed, onComplete, dispose, isDisposed, addTo } from '../../../util/DisposableLike.mjs';
+import { disposed, addTo } from '../../../util/DisposableLike.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__disposed from '../../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { getScheduler } from '../../ObserverLike.mjs';
 import { sinkInto } from '../../ReactiveContainerLike.mjs';
-import { notify } from '../../SinkLike.mjs';
 import EnumerableObservableLike__never from '../EnumerableObservableLike/EnumerableObservableLike.never.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
+import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
 import ObservableLike__forEach from './ObservableLike.forEach.mjs';
 import ObservableLike__lift from './ObservableLike.lift.mjs';
 import ObservableLike__subscribe from './ObservableLike.subscribe.mjs';
@@ -25,13 +29,13 @@ const ObservableLike__buffer = /*@__PURE__*/ (() => {
         instance.buffer = [];
         instance.delegate = delegate;
         instance.durationFunction = durationFunction;
-        instance.durationSubscription = createDisposableRef(disposed);
+        instance.durationSubscription = createDisposableRef(DisposableLike__disposed);
         instance.maxBufferSize = maxBufferSize;
-        pipe(instance, onComplete(() => {
+        pipe(instance, DisposableLike__onComplete(() => {
             const { buffer } = instance;
             instance.buffer = [];
             if (isEmpty(buffer)) {
-                pipe(delegate, dispose());
+                pipe(delegate, DisposableLike__dispose());
             }
             else {
                 pipe([buffer], ReadonlyArrayLike__toRunnableObservable(), sinkInto(delegate));
@@ -52,12 +56,12 @@ const ObservableLike__buffer = /*@__PURE__*/ (() => {
                 this.durationSubscription[MutableRefLike_current] = disposed;
                 const buffer = this.buffer;
                 this.buffer = [];
-                pipe(this.delegate, notify(buffer));
+                pipe(this.delegate, SinkLike__notify(buffer));
             };
             if (getLength(buffer) === maxBufferSize) {
                 doOnNotify();
             }
-            else if (isDisposed(this.durationSubscription[MutableRefLike_current])) {
+            else if (DisposableLike__isDisposed(this.durationSubscription[MutableRefLike_current])) {
                 this.durationSubscription[MutableRefLike_current] = pipe(next, this.durationFunction, ObservableLike__forEach(doOnNotify), ObservableLike__subscribe(getScheduler(this)));
             }
         },

@@ -9,7 +9,7 @@ import { none, pipe } from "../../../functions";
 import { AsyncEnumeratorLike, SourceLike, SourceLike_move } from "../../../ix";
 import { ObservableLike } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
-import { dispatch } from "../../../scheduling/DispatcherLike";
+import DispatcherLike__dispatch from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch";
 import { StreamLike } from "../../../streaming";
 import StreamLike__mixin from "../../../streaming/__internal__/StreamLike/StreamLike.mixin";
 
@@ -36,7 +36,7 @@ const AsyncEnumerator__create = /*@__PURE__*/ (() => {
         {},
         {
           [SourceLike_move](this: StreamLike<void, T>) {
-            pipe(this, dispatch(none));
+            pipe(this, DispatcherLike__dispatch(none));
           },
         },
       ),

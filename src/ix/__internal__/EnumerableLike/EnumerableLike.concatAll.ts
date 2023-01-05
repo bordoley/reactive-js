@@ -20,14 +20,13 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import {
-  add,
-  dispose,
-  disposed,
-  isDisposed,
-} from "../../../util/DisposableLike";
+import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/DisposableLike.disposed";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
-import { getCurrent, move } from "../../EnumeratorLike";
+import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
+import EnumeratorLike__move from "../EnumeratorLike/EnumeratorLike.move";
 import MutableEnumeratorLike__mixin from "../MutableEnumeratorLike/MutableEnumeratorLike.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
 import EnumerableLike__enumerate from "./EnumerableLike.enumerate";
@@ -56,12 +55,12 @@ const EnumerableLike__concatAll: ConcatAll<EnumerableLike>["concatAll"] =
             delegate: EnumeratorLike<EnumerableLike<T>>,
           ): EnumeratorLike<T> {
             init(DisposableLike__mixin, instance);
-            init(typedDisposableRefMixin, instance, disposed);
+            init(typedDisposableRefMixin, instance, DisposableLike__disposed);
             init(typedMutableEnumeratorMixin, instance);
 
             instance.delegate = delegate;
 
-            pipe(instance, add(delegate));
+            pipe(instance, DisposableLike__add(delegate));
 
             return instance;
           },
@@ -77,29 +76,33 @@ const EnumerableLike__concatAll: ConcatAll<EnumerableLike>["concatAll"] =
               const { delegate } = this;
               const innerEnumerator = getCurrentRef(this);
 
-              if (isDisposed(innerEnumerator) && move(delegate)) {
+              if (
+                DisposableLike__isDisposed(innerEnumerator) &&
+                EnumeratorLike__move(delegate)
+              ) {
                 const next = pipe(
                   delegate,
-                  getCurrent,
+                  EnumeratorLike__getCurrent,
                   EnumerableLike__enumerate(),
                 );
                 pipe(this, setCurrentRef(next));
               }
 
-              while (!pipe(this, getCurrentRef, isDisposed)) {
+              while (!pipe(this, getCurrentRef, DisposableLike__isDisposed)) {
                 const innerEnumerator = getCurrentRef(this);
-                if (move(innerEnumerator)) {
-                  this[EnumeratorLike_current] = getCurrent(innerEnumerator);
+                if (EnumeratorLike__move(innerEnumerator)) {
+                  this[EnumeratorLike_current] =
+                    EnumeratorLike__getCurrent(innerEnumerator);
                   break;
-                } else if (move(delegate)) {
+                } else if (EnumeratorLike__move(delegate)) {
                   const next = pipe(
                     delegate,
-                    getCurrent,
+                    EnumeratorLike__getCurrent,
                     EnumerableLike__enumerate(),
                   );
                   pipe(this, setCurrentRef(next));
                 } else {
-                  pipe(this, dispose());
+                  pipe(this, DisposableLike__dispose());
                 }
               }
             },

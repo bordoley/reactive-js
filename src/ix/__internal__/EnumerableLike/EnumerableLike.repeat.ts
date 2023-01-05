@@ -24,9 +24,11 @@ import {
   EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../../../ix";
-import { addTo, dispose } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
-import { hasCurrent, move } from "../../EnumeratorLike";
+import EnumeratorLike__hasCurrent from "../EnumeratorLike/EnumeratorLike.hasCurrent";
+import EnumeratorLike__move from "../EnumeratorLike/EnumeratorLike.move";
 import EnumerableLike__create from "./EnumerableLike.create";
 import EnumerableLike__enumerate from "./EnumerableLike.enumerate";
 
@@ -72,12 +74,12 @@ const EnumerableLike__repeat: Repeat<EnumerableLike>["repeat"] =
               this.enumerator = pipe(
                 this.src,
                 EnumerableLike__enumerate(),
-                addTo(this),
+                DisposableLike__addTo(this),
               );
             }
 
             let { enumerator } = this;
-            while (!move(enumerator)) {
+            while (!EnumeratorLike__move(enumerator)) {
               this.count++;
 
               try {
@@ -85,21 +87,21 @@ const EnumerableLike__repeat: Repeat<EnumerableLike>["repeat"] =
                   enumerator = pipe(
                     this.src,
                     EnumerableLike__enumerate(),
-                    addTo(this),
+                    DisposableLike__addTo(this),
                   );
                   this.enumerator = enumerator;
                 } else {
                   break;
                 }
               } catch (cause) {
-                pipe(this, dispose({ cause }));
+                pipe(this, DisposableLike__dispose({ cause }));
                 break;
               }
             }
           },
           get [EnumeratorLike_current](): T {
             unsafeCast<TProperties>(this);
-            return hasCurrent(this)
+            return EnumeratorLike__hasCurrent(this)
               ? this.enumerator?.[EnumeratorLike_current] ?? raise()
               : raise();
           },

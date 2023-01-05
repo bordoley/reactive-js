@@ -8,11 +8,13 @@ import {
 } from "../../../__internal__/mixins";
 import { isEmpty, newInstance, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import { addTo, dispose, onComplete } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { sinkInto } from "../../ReactiveContainerLike";
-import { notify } from "../../SinkLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
+import SinkLike__notify from "./SinkLike.notify";
 
 const SinkLike__decodeWithCharsetMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -50,14 +52,14 @@ const SinkLike__decodeWithCharsetMixin: <
 
       pipe(
         instance,
-        addTo(delegate),
-        onComplete(() => {
+        DisposableLike__addTo(delegate),
+        DisposableLike__onComplete(() => {
           const data = textDecoder.decode();
 
           if (!isEmpty(data)) {
             pipe([data], fromArray, sinkInto(delegate));
           } else {
-            pipe(delegate, dispose());
+            pipe(delegate, DisposableLike__dispose());
           }
         }),
       );
@@ -75,7 +77,7 @@ const SinkLike__decodeWithCharsetMixin: <
           { stream: true },
         );
         if (!isEmpty(data)) {
-          pipe(this[DelegatingSinkLike_delegate], notify(data));
+          pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(data));
         }
       },
     },

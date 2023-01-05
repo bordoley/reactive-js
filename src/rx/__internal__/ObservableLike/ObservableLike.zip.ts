@@ -7,11 +7,12 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { Zip } from "../../../containers";
-import { keepType } from "../../../containers/ContainerLike";
-import { every, some } from "../../../containers/ReadonlyArrayLike";
+import ContainerLike__keepType from "../../../containers/__internal__/ContainerLike/ContainerLike.keepType";
+import ReadonlyArrayLike__every from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every";
 import ReadonlyArrayLike__forEach from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach";
 import ReadonlyArrayLike__keepT from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keepT";
 import ReadonlyArrayLike__map from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map";
+import ReadonlyArrayLike__some from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.some";
 import {
   compose,
   getOrRaise,
@@ -22,27 +23,28 @@ import {
 } from "../../../functions";
 import { EnumerableLike, EnumeratorLike } from "../../../ix";
 import { enumerate } from "../../../ix/EnumerableLike";
-import { getCurrent, hasCurrent, move } from "../../../ix/EnumeratorLike";
 import EnumerableLike__toRunnableObservable from "../../../ix/__internal__/EnumerableLike/EnumerableLike.toRunnableObservable";
 import EnumerableLike__zip from "../../../ix/__internal__/EnumerableLike/EnumerableLike.zip";
+import EnumeratorLike__getCurrent from "../../../ix/__internal__/EnumeratorLike/EnumeratorLike.getCurrent";
+import EnumeratorLike__hasCurrent from "../../../ix/__internal__/EnumeratorLike/EnumeratorLike.hasCurrent";
+import EnumeratorLike__move from "../../../ix/__internal__/EnumeratorLike/EnumeratorLike.move";
 import {
   ObservableLike,
   ObserverLike,
   SinkLike,
   SinkLike_notify,
 } from "../../../rx";
-import {
-  addTo,
-  dispose,
-  isDisposed,
-  onComplete,
-} from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { getScheduler } from "../../ObserverLike";
-import { notify, sourceFrom } from "../../SinkLike";
 import EnumeratorSinkLike__create from "../EnumeratorSinkLike/EnumeratorSinkLike.create";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import RunnableObservableLike__create from "../RunnableObservableLike/RunnableObservableLike.create";
+import SinkLike__notify from "../SinkLike/SinkLike.notify";
+import SinkLike__sourceFrom from "../SinkLike/SinkLike.sourceFrom";
 import ObservableLike__allAreEnumerable from "./ObservableLike.allAreEnumerable";
 import ObservableLike__allAreRunnable from "./ObservableLike.allAreRunnable";
 import ObservableLike__create from "./ObservableLike.create";
@@ -53,13 +55,16 @@ const ObservableLike__zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   const typedObserverMixin = ObserverLike__mixin();
 
   const shouldEmit = compose(
-    ReadonlyArrayLike__map((x: EnumeratorLike) => hasCurrent(x) || move(x)),
-    every(isTrue),
+    ReadonlyArrayLike__map(
+      (x: EnumeratorLike) =>
+        EnumeratorLike__hasCurrent(x) || EnumeratorLike__move(x),
+    ),
+    ReadonlyArrayLike__every(isTrue),
   );
 
   const shouldComplete = compose(
-    ReadonlyArrayLike__forEach<EnumeratorLike>(move),
-    some(isDisposed),
+    ReadonlyArrayLike__forEach<EnumeratorLike>(EnumeratorLike__move),
+    ReadonlyArrayLike__some(DisposableLike__isDisposed),
   );
 
   type TProperties = {
@@ -87,12 +92,13 @@ const ObservableLike__zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
 
         pipe(
           instance,
-          onComplete(() => {
+          DisposableLike__onComplete(() => {
             if (
-              isDisposed(sinkEnumerator) ||
-              (!hasCurrent(sinkEnumerator) && !move(sinkEnumerator))
+              DisposableLike__isDisposed(sinkEnumerator) ||
+              (!EnumeratorLike__hasCurrent(sinkEnumerator) &&
+                !EnumeratorLike__move(sinkEnumerator))
             ) {
-              pipe(delegate, dispose());
+              pipe(delegate, DisposableLike__dispose());
             }
           }),
         );
@@ -107,11 +113,11 @@ const ObservableLike__zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
       {
         [SinkLike_notify](this: ObserverLike & TProperties, next: unknown) {
           const { sinkEnumerator, enumerators } = this;
-          if (isDisposed(this)) {
+          if (DisposableLike__isDisposed(this)) {
             return;
           }
 
-          pipe(sinkEnumerator, notify(next));
+          pipe(sinkEnumerator, SinkLike__notify(next));
 
           if (!shouldEmit(enumerators)) {
             return;
@@ -119,12 +125,12 @@ const ObservableLike__zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
 
           const zippedNext = pipe(
             enumerators,
-            ReadonlyArrayLike__map(getCurrent),
+            ReadonlyArrayLike__map(EnumeratorLike__getCurrent),
           );
-          pipe(this.delegate, notify(zippedNext));
+          pipe(this.delegate, SinkLike__notify(zippedNext));
 
           if (shouldComplete(enumerators)) {
-            pipe(this, dispose());
+            pipe(this, DisposableLike__dispose());
           }
         },
       },
@@ -142,22 +148,22 @@ const ObservableLike__zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
             ObservableLike__toEnumerable(),
             getOrRaise(),
             enumerate(),
-            addTo(observer),
+            DisposableLike__addTo(observer),
           );
 
-          move(enumerator);
+          EnumeratorLike__move(enumerator);
           enumerators.push(enumerator);
         } else {
           const enumerator = pipe(
             EnumeratorSinkLike__create(),
-            addTo(observer),
+            DisposableLike__addTo(observer),
           );
           enumerators.push(enumerator);
 
           pipe(
             createZipObserver(observer, enumerators, enumerator),
-            addTo(observer),
-            sourceFrom(next),
+            DisposableLike__addTo(observer),
+            SinkLike__sourceFrom(next),
           );
         }
       }
@@ -173,7 +179,7 @@ const ObservableLike__zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
       ? pipe(
           observables,
           ReadonlyArrayLike__map(ObservableLike__toEnumerable()),
-          keepType(ReadonlyArrayLike__keepT, isSome),
+          ContainerLike__keepType(ReadonlyArrayLike__keepT, isSome),
           enumerables =>
             (
               EnumerableLike__zip as unknown as (
