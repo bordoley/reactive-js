@@ -14,7 +14,7 @@ import {
 import { ObservableLike } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
 import { StreamableLike_stream } from "../../../streaming";
-import { stream } from "../../../streaming/StreamableLike";
+import StreamableLike__stream from "../../../streaming/__internal__/StreamableLike/StreamableLike.stream";
 import AsyncEnumerator__create from "../AsyncEnumeratorLike/AsyncEnumerator.create";
 
 interface CreateAsyncEnumerable {
@@ -165,7 +165,7 @@ const AsyncEnumerableLike__create: CreateAsyncEnumerable = /*@__PURE__*/ (<
         [InteractiveContainerLike_interact](
           ctx: SchedulerLike,
         ): AsyncEnumeratorLike<T> {
-          return pipe(this, stream(ctx));
+          return pipe(this, StreamableLike__stream(ctx));
         },
       },
     ),

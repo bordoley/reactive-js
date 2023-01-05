@@ -6,7 +6,7 @@ import { MutableRefLike_current } from '../../../__internal__/util/MutableRefLik
 import ReadonlyArrayLike__toRunnableObservable from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { pipe, isEmpty, none, getLength, isNumber, max } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { disposed, addTo } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__disposed from '../../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
@@ -53,7 +53,8 @@ const ObservableLike__buffer = /*@__PURE__*/ (() => {
             const { buffer, maxBufferSize } = this;
             buffer.push(next);
             const doOnNotify = () => {
-                this.durationSubscription[MutableRefLike_current] = disposed;
+                this.durationSubscription[MutableRefLike_current] =
+                    DisposableLike__disposed;
                 const buffer = this.buffer;
                 this.buffer = [];
                 pipe(this.delegate, SinkLike__notify(buffer));
@@ -76,7 +77,7 @@ const ObservableLike__buffer = /*@__PURE__*/ (() => {
                 : durationOption;
         const maxBufferSize = max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER, 1);
         const operator = (delegate) => {
-            return pipe(createBufferObserver(delegate, durationFunction, maxBufferSize), addTo(delegate));
+            return pipe(createBufferObserver(delegate, durationFunction, maxBufferSize), DisposableLike__addTo(delegate));
         };
         return pipe(operator, ObservableLike__lift(durationOption === MAX_SAFE_INTEGER));
     };

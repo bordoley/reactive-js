@@ -1,9 +1,9 @@
 /// <reference types="./PauseableLike.resume.d.ts" />
 import { PauseableLike_resume } from '../../../util.mjs';
 
-const auseableLike__resume = (pausable) => {
+const PauseableLike__resume = (pausable) => {
     pausable[PauseableLike_resume]();
     return pausable;
 };
 
-export { auseableLike__resume as default };
+export { PauseableLike__resume as default };

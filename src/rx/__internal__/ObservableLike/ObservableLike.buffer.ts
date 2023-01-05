@@ -24,7 +24,7 @@ import {
   pipe,
 } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import { addTo, disposed } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/DisposableLike.disposed";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
@@ -114,7 +114,8 @@ const ObservableLike__buffer: <T>(options?: {
           buffer.push(next);
 
           const doOnNotify = () => {
-            this.durationSubscription[MutableRefLike_current] = disposed;
+            this.durationSubscription[MutableRefLike_current] =
+              DisposableLike__disposed;
 
             const buffer = this.buffer;
             this.buffer = [];
@@ -160,7 +161,7 @@ const ObservableLike__buffer: <T>(options?: {
     const operator = (delegate: ObserverLike<readonly T[]>) => {
       return pipe(
         createBufferObserver(delegate, durationFunction, maxBufferSize),
-        addTo(delegate),
+        DisposableLike__addTo(delegate),
       );
     };
 

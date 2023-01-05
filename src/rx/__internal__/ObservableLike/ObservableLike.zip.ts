@@ -22,7 +22,7 @@ import {
   pipe,
 } from "../../../functions";
 import { EnumerableLike, EnumeratorLike } from "../../../ix";
-import { enumerate } from "../../../ix/EnumerableLike";
+import EnumerableLike__enumerate from "../../../ix/__internal__/EnumerableLike/EnumerableLike.enumerate";
 import EnumerableLike__toRunnableObservable from "../../../ix/__internal__/EnumerableLike/EnumerableLike.toRunnableObservable";
 import EnumerableLike__zip from "../../../ix/__internal__/EnumerableLike/EnumerableLike.zip";
 import EnumeratorLike__getCurrent from "../../../ix/__internal__/EnumeratorLike/EnumeratorLike.getCurrent";
@@ -151,7 +151,7 @@ const ObservableLike__zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
             next,
             ObservableLike__toEnumerable(),
             getOrRaise(),
-            enumerate(),
+            EnumerableLike__enumerate(),
             DisposableLike__addTo(observer),
           );
 

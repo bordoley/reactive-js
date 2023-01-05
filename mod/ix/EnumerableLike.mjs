@@ -18,6 +18,7 @@ import EnumerableLike__takeFirst from './__internal__/EnumerableLike/EnumerableL
 import EnumerableLike__takeLast from './__internal__/EnumerableLike/EnumerableLike.takeLast.mjs';
 import EnumerableLike__takeWhile from './__internal__/EnumerableLike/EnumerableLike.takeWhile.mjs';
 import EnumerableLike__throwIfEmpty from './__internal__/EnumerableLike/EnumerableLike.throwIfEmpty.mjs';
+import EnumerableLike__toEnumerableObservable from './__internal__/EnumerableLike/EnumerableLike.toEnumerableObservable.mjs';
 import EnumerableLike__toIterable from './__internal__/EnumerableLike/EnumerableLike.toIterable.mjs';
 import EnumerableLike__toReadonlyArray from './__internal__/EnumerableLike/EnumerableLike.toReadonlyArray.mjs';
 import EnumerableLike__toRunnable from './__internal__/EnumerableLike/EnumerableLike.toRunnable.mjs';
@@ -85,7 +86,7 @@ const toEnumerable = () => identity;
 const toEnumerableT = {
     toEnumerable,
 };
-const toEnumerableObservable = EnumerableLike__toRunnableObservable;
+const toEnumerableObservable = EnumerableLike__toEnumerableObservable;
 const toEnumerableObservableT = {
     toEnumerableObservable,
 };

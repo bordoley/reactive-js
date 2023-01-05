@@ -1,6 +1,6 @@
 import { PauseableLike_resume } from "../../../util";
 
-const auseableLike__resume = <
+const PauseableLike__resume = <
   TPauseable extends { [PauseableLike_resume](): void },
 >(
   pausable: TPauseable,
@@ -9,4 +9,4 @@ const auseableLike__resume = <
   return pausable;
 };
 
-export default auseableLike__resume;
+export default PauseableLike__resume;

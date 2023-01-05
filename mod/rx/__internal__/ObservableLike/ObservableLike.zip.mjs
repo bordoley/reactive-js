@@ -7,7 +7,7 @@ import ReadonlyArrayLike__keepT from '../../../containers/__internal__/ReadonlyA
 import ReadonlyArrayLike__map from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
 import ReadonlyArrayLike__some from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.some.mjs';
 import { compose, isTrue, pipe, none, getOrRaise, isSome } from '../../../functions.mjs';
-import { enumerate } from '../../../ix/EnumerableLike.mjs';
+import EnumerableLike__enumerate from '../../../ix/__internal__/EnumerableLike/EnumerableLike.enumerate.mjs';
 import EnumerableLike__toRunnableObservable from '../../../ix/__internal__/EnumerableLike/EnumerableLike.toRunnableObservable.mjs';
 import EnumerableLike__zip from '../../../ix/__internal__/EnumerableLike/EnumerableLike.zip.mjs';
 import EnumeratorLike__getCurrent from '../../../ix/__internal__/EnumeratorLike/EnumeratorLike.getCurrent.mjs';
@@ -74,7 +74,7 @@ const ObservableLike__zip = /*@__PURE__*/ (() => {
         const enumerators = [];
         for (const next of observables) {
             if (ObservableLike__isEnumerable(next)) {
-                const enumerator = pipe(next, ObservableLike__toEnumerable(), getOrRaise(), enumerate(), DisposableLike__addTo(observer));
+                const enumerator = pipe(next, ObservableLike__toEnumerable(), getOrRaise(), EnumerableLike__enumerate(), DisposableLike__addTo(observer));
                 EnumeratorLike__move(enumerator);
                 enumerators.push(enumerator);
             }

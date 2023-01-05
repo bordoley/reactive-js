@@ -46,6 +46,7 @@ import EnumerableLike__takeFirst from "./__internal__/EnumerableLike/EnumerableL
 import EnumerableLike__takeLast from "./__internal__/EnumerableLike/EnumerableLike.takeLast";
 import EnumerableLike__takeWhile from "./__internal__/EnumerableLike/EnumerableLike.takeWhile";
 import EnumerableLike__throwIfEmpty from "./__internal__/EnumerableLike/EnumerableLike.throwIfEmpty";
+import EnumerableLike__toEnumerableObservable from "./__internal__/EnumerableLike/EnumerableLike.toEnumerableObservable";
 import EnumerableLike__toIterable from "./__internal__/EnumerableLike/EnumerableLike.toIterable";
 import EnumerableLike__toReadonlyArray from "./__internal__/EnumerableLike/EnumerableLike.toReadonlyArray";
 import EnumerableLike__toRunnable from "./__internal__/EnumerableLike/EnumerableLike.toRunnable";
@@ -144,7 +145,7 @@ export const toEnumerableT: ToEnumerable<EnumerableLike> = {
 };
 
 export const toEnumerableObservable: ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"] =
-  EnumerableLike__toRunnableObservable as ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"];
+  EnumerableLike__toEnumerableObservable;
 export const toEnumerableObservableT: ToEnumerableObservable<EnumerableLike> = {
   toEnumerableObservable,
 };

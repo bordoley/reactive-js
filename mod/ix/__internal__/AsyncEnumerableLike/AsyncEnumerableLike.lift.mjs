@@ -2,7 +2,7 @@
 import { pipe, pipeUnsafe, newInstance } from '../../../functions.mjs';
 import { InteractiveContainerLike_interact } from '../../../ix.mjs';
 import { StreamableLike_stream } from '../../../streaming.mjs';
-import { stream } from '../../../streaming/StreamableLike.mjs';
+import StreamableLike__stream from '../../../streaming/__internal__/StreamableLike/StreamableLike.stream.mjs';
 
 class LiftedAsyncEnumerable {
     constructor(src, operators) {
@@ -10,10 +10,10 @@ class LiftedAsyncEnumerable {
         this.operators = operators;
     }
     [InteractiveContainerLike_interact](scheduler) {
-        return pipe(this, stream(scheduler));
+        return pipe(this, StreamableLike__stream(scheduler));
     }
     [StreamableLike_stream](scheduler, options) {
-        const src = pipe(this.src, stream(scheduler, options));
+        const src = pipe(this.src, StreamableLike__stream(scheduler, options));
         return pipeUnsafe(src, ...this.operators);
     }
 }

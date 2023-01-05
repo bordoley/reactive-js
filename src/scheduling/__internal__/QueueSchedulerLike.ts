@@ -33,10 +33,10 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../ix";
-import { move } from "../../ix/SourceLike";
 import EnumeratorLike__getCurrent from "../../ix/__internal__/EnumeratorLike/EnumeratorLike.getCurrent";
 import EnumeratorLike__hasCurrent from "../../ix/__internal__/EnumeratorLike/EnumeratorLike.hasCurrent";
 import MutableEnumeratorLike__mixin from "../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
+import SourceLike__move from "../../ix/__internal__/SourceLike/SourceLike.move";
 import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal";
 import {
   ContinuationLike,
@@ -189,7 +189,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             const delay = max(dueTime - getCurrentTime(instance.host), 0);
 
             if (delay === 0) {
-              move(instance);
+              SourceLike__move(instance);
               instance[SchedulerLike_inContinuation] = true;
               ContinuationLike__run(continuation);
               instance[SchedulerLike_inContinuation] = false;
