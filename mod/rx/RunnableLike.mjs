@@ -19,7 +19,6 @@ import { reactive } from '../containers/__internal__/containers.internal.mjs';
 import { pipeUnsafe, newInstance, pipe, partial, pipeLazy, none, ignore, returns, isSome, raise, identity } from '../functions.mjs';
 import { ReactiveContainerLike_sinkInto, SinkLike_notify } from '../rx.mjs';
 import { DisposableLike_exception } from '../util.mjs';
-import { dispose } from '../util/DisposableLike.mjs';
 import DisposableLike__addTo from '../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import DisposableLike__bindTo from '../util/__internal__/DisposableLike/DisposableLike.bindTo.mjs';
 import DisposableLike__dispose from '../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -197,7 +196,7 @@ const repeat = /*@__PURE__*/ (() => {
     }));
 })();
 const repeatT = { repeat };
-const run = () => (runnable) => pipe(SinkLike__create(), SinkLike__sourceFrom(runnable), dispose(), ({ [DisposableLike_exception]: error }) => {
+const run = () => (runnable) => pipe(SinkLike__create(), SinkLike__sourceFrom(runnable), DisposableLike__dispose(), ({ [DisposableLike_exception]: error }) => {
     if (isSome(error)) {
         raise(error.cause);
     }

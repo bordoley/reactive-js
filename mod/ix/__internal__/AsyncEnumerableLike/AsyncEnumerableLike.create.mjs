@@ -3,7 +3,7 @@ import { createInstanceFactory, mix, props } from '../../../__internal__/mixins.
 import { none, pipe, getLength, compose } from '../../../functions.mjs';
 import { InteractiveContainerLike_interact } from '../../../ix.mjs';
 import { StreamableLike_stream } from '../../../streaming.mjs';
-import { stream } from '../../../streaming/StreamableLike.mjs';
+import StreamableLike__stream from '../../../streaming/__internal__/StreamableLike/StreamableLike.stream.mjs';
 import AsyncEnumerator__create from '../AsyncEnumeratorLike/AsyncEnumerator.create.mjs';
 
 const AsyncEnumerableLike__create = /*@__PURE__*/ (() => {
@@ -18,7 +18,7 @@ const AsyncEnumerableLike__create = /*@__PURE__*/ (() => {
             return AsyncEnumerator__create(this[AsyncEnumerable_op], scheduler, options);
         },
         [InteractiveContainerLike_interact](ctx) {
-            return pipe(this, stream(ctx));
+            return pipe(this, StreamableLike__stream(ctx));
         },
     }));
     return (...ops) => {

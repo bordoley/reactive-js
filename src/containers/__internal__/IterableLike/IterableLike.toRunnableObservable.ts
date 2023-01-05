@@ -1,8 +1,7 @@
 import { IterableLike } from "../../../containers";
 import { compose } from "../../../functions";
-import { toRunnableObservable as EnumerableLike__toRunnableObservable } from "../../../ix/EnumerableLike";
+import EnumerableLike__toRunnableObservable from "../../../ix/__internal__/EnumerableLike/EnumerableLike.toRunnableObservable";
 import { ToRunnableObservable } from "../../../rx";
-
 import IterableLike__toEnumerable from "./IterableLike.toEnumerable";
 
 const IterableLike__toRunnableObservable: ToRunnableObservable<

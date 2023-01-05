@@ -77,7 +77,6 @@ import {
   ToRunnable,
 } from "../rx";
 import { DisposableLike_exception, DisposableOrTeardown } from "../util";
-import { dispose } from "../util/DisposableLike";
 import DisposableLike__addTo from "../util/__internal__/DisposableLike/DisposableLike.addTo";
 import DisposableLike__bindTo from "../util/__internal__/DisposableLike/DisposableLike.bindTo";
 import DisposableLike__dispose from "../util/__internal__/DisposableLike/DisposableLike.dispose";
@@ -418,7 +417,7 @@ export const run =
     pipe(
       SinkLike__create(),
       SinkLike__sourceFrom(runnable),
-      dispose(),
+      DisposableLike__dispose(),
       ({ [DisposableLike_exception]: error }) => {
         if (isSome(error)) {
           raise(error.cause);

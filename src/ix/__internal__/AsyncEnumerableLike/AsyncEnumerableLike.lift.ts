@@ -7,7 +7,7 @@ import {
 } from "../../../ix";
 import { SchedulerLike } from "../../../scheduling";
 import { StreamableLike_stream } from "../../../streaming";
-import { stream } from "../../../streaming/StreamableLike";
+import StreamableLike__stream from "../../../streaming/__internal__/StreamableLike/StreamableLike.stream";
 
 class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
   constructor(
@@ -19,14 +19,14 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
   ) {}
 
   [InteractiveContainerLike_interact](scheduler: SchedulerLike) {
-    return pipe(this, stream(scheduler));
+    return pipe(this, StreamableLike__stream(scheduler));
   }
 
   [StreamableLike_stream](
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): AsyncEnumeratorLike<T> {
-    const src = pipe(this.src, stream(scheduler, options));
+    const src = pipe(this.src, StreamableLike__stream(scheduler, options));
     return pipeUnsafe(src, ...this.operators) as AsyncEnumeratorLike<T>;
   }
 }

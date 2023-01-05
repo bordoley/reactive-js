@@ -6,11 +6,11 @@ import ObserverLike__getScheduler from '../../../rx/__internal__/ObserverLike/Ob
 import ReactiveContainerLike__sinkInto from '../../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto.mjs';
 import RunnableObservableLike__create from '../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
 import DispatcherLike__dispatch from '../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch.mjs';
-import { stream } from '../../../streaming/StreamableLike.mjs';
+import StreamableLike__stream from '../../../streaming/__internal__/StreamableLike/StreamableLike.stream.mjs';
 import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 
 const AsyncEnumerable__toObservable = () => enumerable => RunnableObservableLike__create(observer => {
-    const enumerator = pipe(enumerable, stream(ObserverLike__getScheduler(observer)), DisposableLike__addTo(observer));
+    const enumerator = pipe(enumerable, StreamableLike__stream(ObserverLike__getScheduler(observer)), DisposableLike__addTo(observer));
     pipe(enumerator, ObservableLike__forEach(_ => {
         pipe(enumerator, DispatcherLike__dispatch(none));
     }), ObservableLike__onSubscribe(() => {

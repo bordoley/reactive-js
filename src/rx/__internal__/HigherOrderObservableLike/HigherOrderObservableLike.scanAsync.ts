@@ -7,7 +7,6 @@ import {
   ScanAsync,
 } from "../../../rx";
 import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
-import { publish, publishTo } from "../../SubjectLike";
 import ObservableLike__forEach from "../ObservableLike/ObservableLike.forEach";
 import ObservableLike__onSubscribe from "../ObservableLike/ObservableLike.onSubscribe";
 import ObservableLike__switchAll from "../ObservableLike/ObservableLike.switchAll";
@@ -15,6 +14,8 @@ import ObservableLike__takeFirst from "../ObservableLike/ObservableLike.takeFirs
 import ObservableLike__zipWithLatestFrom from "../ObservableLike/ObservableLike.zipWithLatestFrom";
 import ReactiveContainerLike__sinkInto from "../ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import SubjectLike__create from "../SubjectLike/SubjectLike.create";
+import SubjectLike__publish from "../SubjectLike/SubjectLike.publish";
+import SubjectLike__publishTo from "../SubjectLike/SubjectLike.publishTo";
 
 const HigherOrderObservableLike__scanAsync = <
   C extends ObservableLike,
@@ -41,9 +42,9 @@ const HigherOrderObservableLike__scanAsync = <
               pipe(scanner(acc, next), ObservableLike__takeFirst()),
           ),
           ObservableLike__switchAll(),
-          ObservableLike__forEach(publishTo(accFeedbackStream)),
+          ObservableLike__forEach(SubjectLike__publishTo(accFeedbackStream)),
           ObservableLike__onSubscribe(() =>
-            pipe(accFeedbackStream, publish(initialValue())),
+            pipe(accFeedbackStream, SubjectLike__publish(initialValue())),
           ),
           ReactiveContainerLike__sinkInto(observer),
         );

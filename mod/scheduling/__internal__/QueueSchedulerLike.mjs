@@ -7,10 +7,10 @@ import { disposableRefMixin } from '../../__internal__/util/DisposableRefLike.mj
 import { MutableRefLike_current } from '../../__internal__/util/MutableRefLike.mjs';
 import { isNone, none, isSome, max, pipe, unsafeCast } from '../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
-import { move } from '../../ix/SourceLike.mjs';
 import EnumeratorLike__getCurrent from '../../ix/__internal__/EnumeratorLike/EnumeratorLike.getCurrent.mjs';
 import EnumeratorLike__hasCurrent from '../../ix/__internal__/EnumeratorLike/EnumeratorLike.hasCurrent.mjs';
 import MutableEnumeratorLike__mixin from '../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
+import SourceLike__move from '../../ix/__internal__/SourceLike/SourceLike.move.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../scheduling.mjs';
 import { PauseableLike_pause, PauseableLike_resume } from '../../util.mjs';
 import DisposableLike__addIgnoringChildErrors from '../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors.mjs';
@@ -91,7 +91,7 @@ const create =
                 const { continuation, dueTime } = task;
                 const delay = max(dueTime - SchedulerLike__getCurrentTime(instance.host), 0);
                 if (delay === 0) {
-                    move(instance);
+                    SourceLike__move(instance);
                     instance[SchedulerLike_inContinuation] = true;
                     ContinuationLike__run(continuation);
                     instance[SchedulerLike_inContinuation] = false;

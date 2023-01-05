@@ -1,8 +1,7 @@
 import { IterableLike } from "../../../containers";
 import { compose } from "../../../functions";
-import { toEnumerableObservable as EnumerableLike__toEnumerableObservable } from "../../../ix/EnumerableLike";
+import EnumerableLike__toEnumerableObservable from "../../../ix/__internal__/EnumerableLike/EnumerableLike.toEnumerableObservable";
 import { ToEnumerableObservable } from "../../../rx";
-
 import IterableLike__toEnumerable from "./IterableLike.toEnumerable";
 
 const IterableLike__toEnumerableObservable: ToEnumerableObservable<IterableLike>["toEnumerableObservable"] =
