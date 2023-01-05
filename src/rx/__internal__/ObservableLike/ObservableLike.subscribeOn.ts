@@ -1,8 +1,8 @@
 import { pipe } from "../../../functions";
 import { ObservableLike, ObserverLike_dispatcher } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
-import { dispatchTo } from "../../../scheduling/DispatcherLike";
-import { bindTo } from "../../../util/DisposableLike";
+import DispatcherLike__dispatchTo from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatchTo";
+import DisposableLike__bindTo from "../../../util/__internal__/DisposableLike/DisposableLike.bindTo";
 import ObservableLike__create from "./ObservableLike.create";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
@@ -14,9 +14,9 @@ const ObservableLike__subscribeOn =
     ObservableLike__create<T>(({ [ObserverLike_dispatcher]: dispatcher }) =>
       pipe(
         observable,
-        ObservableLike__forEach<T>(dispatchTo(dispatcher)),
+        ObservableLike__forEach<T>(DispatcherLike__dispatchTo(dispatcher)),
         ObservableLike__subscribe(scheduler),
-        bindTo(dispatcher),
+        DisposableLike__bindTo(dispatcher),
       ),
     );
 

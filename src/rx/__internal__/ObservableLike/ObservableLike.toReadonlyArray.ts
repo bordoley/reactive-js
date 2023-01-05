@@ -4,7 +4,7 @@ import { ObservableLike } from "../../../rx";
 import { VirtualTimeSchedulerLike } from "../../../scheduling";
 import ContinuationLike__run from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.run";
 import VirtualTimeSchedulerLike__create from "../../../scheduling/__internal__/VirtualTimeSchedulerLike/VirtualTimeSchedulerLike.create";
-import { getException } from "../../../util/DisposableLike";
+import DisposableLike__getException from "../../../util/__internal__/DisposableLike/DisposableLike.getException";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
@@ -31,7 +31,7 @@ const ObservableLike__toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadon
         );
 
         ContinuationLike__run(scheduler);
-        const exception = getException(subscription);
+        const exception = DisposableLike__getException(subscription);
 
         if (isSome(exception)) {
           throw exception.cause;

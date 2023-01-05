@@ -9,13 +9,11 @@ import {
 import { Function1, isSome, none, pipe, returns } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
 import { Exception } from "../../../util";
-import {
-  addToIgnoringChildErrors,
-  dispose,
-  onComplete,
-  onError,
-} from "../../../util/DisposableLike";
+import DisposableLike__addToIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
+import DisposableLike__onError from "../../../util/__internal__/DisposableLike/DisposableLike.onError";
 import { sinkInto } from "../../ReactiveContainerLike";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
@@ -48,20 +46,25 @@ const SinkLike__catchErrorMixin: <
 
           pipe(
             instance,
-            addToIgnoringChildErrors(delegate),
-            onComplete(() => {
-              pipe(delegate, dispose());
+            DisposableLike__addToIgnoringChildErrors(delegate),
+            DisposableLike__onComplete(() => {
+              pipe(delegate, DisposableLike__dispose());
             }),
-            onError((e: Exception) => {
+            DisposableLike__onError((e: Exception) => {
               try {
                 const result = errorHandler(e.cause) || none;
                 if (isSome(result)) {
                   pipe(result, sinkInto(delegate));
                 } else {
-                  pipe(delegate, dispose());
+                  pipe(delegate, DisposableLike__dispose());
                 }
               } catch (cause) {
-                pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
+                pipe(
+                  delegate,
+                  DisposableLike__dispose({
+                    cause: { parent: e.cause, cause },
+                  }),
+                );
               }
             }),
           );

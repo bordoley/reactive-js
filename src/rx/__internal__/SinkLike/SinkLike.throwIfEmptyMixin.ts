@@ -10,10 +10,12 @@ import {
 import { Optional, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike, Exception } from "../../../util";
-import { addTo, dispose, onComplete } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
-import { notify } from "../../SinkLike";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
+import SinkLike__notify from "./SinkLike.notify";
 
 const SinkLike__throwIfEmptyMixin: <T>() => Mixin2<
   SinkLike<T>,
@@ -44,8 +46,8 @@ const SinkLike__throwIfEmptyMixin: <T>() => Mixin2<
 
         pipe(
           instance,
-          addTo(delegate),
-          onComplete(() => {
+          DisposableLike__addTo(delegate),
+          DisposableLike__onComplete(() => {
             let error: Optional<Exception> = none;
 
             if (instance[ThrowIfEmptySink_private_isEmpty]) {
@@ -59,7 +61,7 @@ const SinkLike__throwIfEmptyMixin: <T>() => Mixin2<
               error = { cause };
             }
 
-            pipe(delegate, dispose(error));
+            pipe(delegate, DisposableLike__dispose(error));
           }),
         );
 
@@ -72,7 +74,7 @@ const SinkLike__throwIfEmptyMixin: <T>() => Mixin2<
       {
         [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
           this[ThrowIfEmptySink_private_isEmpty] = false;
-          pipe(this[DelegatingSinkLike_delegate], notify(next));
+          pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(next));
         },
       },
     ),

@@ -11,10 +11,10 @@ import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLik
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { getScheduler } from '../../ObserverLike.mjs';
-import { notifySink } from '../../SinkLike.mjs';
 import ObservableLike__forEach from '../ObservableLike/ObservableLike.forEach.mjs';
 import ObservableLike__subscribe from '../ObservableLike/ObservableLike.subscribe.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
+import SinkLike__notifySink from '../SinkLike/SinkLike.notifySink.mjs';
 
 const HigherOrderObservableLike__switchAll = (lift) => {
     const createSwitchAllObserver = (() => {
@@ -36,7 +36,7 @@ const HigherOrderObservableLike__switchAll = (lift) => {
             delegate: none,
         }), {
             [SinkLike_notify](next) {
-                this.currentRef[MutableRefLike_current] = pipe(next, ObservableLike__forEach(notifySink(this.delegate)), ObservableLike__subscribe(getScheduler(this)), DisposableLike__onComplete(() => {
+                this.currentRef[MutableRefLike_current] = pipe(next, ObservableLike__forEach(SinkLike__notifySink(this.delegate)), ObservableLike__subscribe(getScheduler(this)), DisposableLike__onComplete(() => {
                     if (DisposableLike__isDisposed(this)) {
                         pipe(this.delegate, DisposableLike__dispose());
                     }

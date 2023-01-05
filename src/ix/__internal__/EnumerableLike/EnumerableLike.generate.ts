@@ -14,7 +14,8 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import { dispose, isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import MutableEnumeratorLike__mixin from "../MutableEnumeratorLike/MutableEnumeratorLike.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
@@ -46,13 +47,13 @@ const EnumerableLike__generate: Generate<EnumerableLike>["generate"] =
         props<TProperties>({ f: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
               try {
                 this[EnumeratorLike_current] = this.f(
                   this[EnumeratorLike_current],
                 );
               } catch (cause) {
-                pipe(this, dispose({ cause }));
+                pipe(this, DisposableLike__dispose({ cause }));
               }
             }
           },

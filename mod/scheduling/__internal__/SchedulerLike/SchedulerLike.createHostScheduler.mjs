@@ -3,9 +3,14 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { isFunction, pipe, unsafeCast } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
-import { run } from '../../ContinuationLike.mjs';
-import { create, addTo, onDisposed, dispose, addIgnoringChildErrors, isDisposed } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors.mjs';
+import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
+import DisposableLike__create from '../../../util/__internal__/DisposableLike/DisposableLike.create.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__onDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
+import ContinuationLike__run from '../ContinuationLike/ContinuationLike.run.mjs';
 import SchedulerLike__getCurrentTime from './SchedulerLike.getCurrentTime.mjs';
 import SchedulerLike__isInContinuation from './SchedulerLike.isInContinuation.mjs';
 
@@ -17,11 +22,11 @@ const supportsIsInputPending = typeof navigator === "object" &&
     navigator.scheduling.isInputPending !== undefined;
 const isInputPending = () => { var _a, _b; return supportsIsInputPending && ((_b = (_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending()) !== null && _b !== void 0 ? _b : false); };
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
-    const disposable = pipe(create(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
+    const disposable = pipe(DisposableLike__create(), DisposableLike__addTo(continuation), DisposableLike__onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
 };
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    const disposable = pipe(create(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
+    const disposable = pipe(DisposableLike__create(), DisposableLike__addTo(continuation), DisposableLike__onDisposed(_ => clearTimeout(timeout)));
     const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
 };
 const scheduleImmediate = (scheduler, continuation) => {
@@ -34,10 +39,10 @@ const scheduleImmediate = (scheduler, continuation) => {
 };
 const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
-    pipe(immmediateOrTimerDisposable, dispose());
+    pipe(immmediateOrTimerDisposable, DisposableLike__dispose());
     scheduler.startTime = SchedulerLike__getCurrentTime(scheduler);
     scheduler[SchedulerLike_inContinuation] = true;
-    run(continuation);
+    ContinuationLike__run(continuation);
     scheduler[SchedulerLike_inContinuation] = false;
 };
 const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(DisposableLike__mixin), function HostScheduler(instance, yieldInterval) {
@@ -79,8 +84,8 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(incl
     },
     [SchedulerLike_schedule](continuation, options) {
         const delay = getDelay(options);
-        pipe(this, addIgnoringChildErrors(continuation));
-        const continuationIsDisposed = isDisposed(continuation);
+        pipe(this, DisposableLike__addIgnoringChildErrors(continuation));
+        const continuationIsDisposed = DisposableLike__isDisposed(continuation);
         if (!continuationIsDisposed && delay > 0) {
             scheduleDelayed(this, continuation, delay);
         }

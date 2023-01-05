@@ -9,16 +9,14 @@ import {
 import { ContainerOperator } from "../../../containers";
 import { Function2, Optional, none, partial, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import {
-  addTo,
-  dispose,
-  isDisposed,
-  onComplete,
-} from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { getScheduler } from "../../ObserverLike";
-import { notify } from "../../SinkLike";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
+import SinkLike__notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__isEnumerable from "./ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
@@ -66,10 +64,10 @@ const ObservableLike__withLatestFrom: <TA, TB, T>(
               instance.otherLatest = next;
             }),
             ObservableLike__subscribe(getScheduler(delegate)),
-            addTo(instance),
-            onComplete(() => {
+            DisposableLike__addTo(instance),
+            DisposableLike__onComplete(() => {
               if (!instance.hasLatest) {
-                pipe(instance, dispose());
+                pipe(instance, DisposableLike__dispose());
               }
             }),
           );
@@ -84,9 +82,9 @@ const ObservableLike__withLatestFrom: <TA, TB, T>(
         }),
         {
           [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
-            if (!isDisposed(this) && this.hasLatest) {
+            if (!DisposableLike__isDisposed(this) && this.hasLatest) {
               const result = this.selector(next, this.otherLatest as TB);
-              pipe(this.delegate, notify(result));
+              pipe(this.delegate, SinkLike__notify(result));
             }
           },
         },

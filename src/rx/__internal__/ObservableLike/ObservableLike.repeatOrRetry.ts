@@ -2,14 +2,12 @@ import { ContainerOperator } from "../../../containers";
 import { partial, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
 import { Exception } from "../../../util";
-import {
-  addToIgnoringChildErrors,
-  dispose,
-  onDisposed,
-} from "../../../util/DisposableLike";
+import DisposableLike__addToIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
 import { getScheduler } from "../../ObserverLike";
-import { notifySink } from "../../SinkLike";
 import ObserverLike__createWithDelegate from "../ObserverLike/ObserverLike.createWithDelegate";
+import SinkLike__notifySink from "../SinkLike/SinkLike.notifySink";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__lift from "./ObservableLike.lift";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
@@ -34,24 +32,24 @@ const ObservableLike__repeatOrRetry: <T>(
       }
 
       if (shouldComplete) {
-        pipe(delegate, dispose(e));
+        pipe(delegate, DisposableLike__dispose(e));
       } else {
         count++;
 
         pipe(
           observable,
-          ObservableLike__forEach(notifySink(delegate)),
+          ObservableLike__forEach(SinkLike__notifySink(delegate)),
           ObservableLike__subscribe(getScheduler(delegate)),
-          addToIgnoringChildErrors(delegate),
-          onDisposed(doOnDispose),
+          DisposableLike__addToIgnoringChildErrors(delegate),
+          DisposableLike__onDisposed(doOnDispose),
         );
       }
     };
 
     return pipe(
       ObserverLike__createWithDelegate(delegate),
-      addToIgnoringChildErrors(delegate),
-      onDisposed(doOnDispose),
+      DisposableLike__addToIgnoringChildErrors(delegate),
+      DisposableLike__onDisposed(doOnDispose),
     );
   };
 

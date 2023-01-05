@@ -31,8 +31,8 @@ import {
   ThrowIfEmpty,
   ToReadonlyArray,
 } from "../containers";
-import { toRunnable as arrayToRunnable } from "../containers/ReadonlyArrayLike";
 import ContainerLike__repeat from "../containers/__internal__/ContainerLike/ContainerLike.repeat";
+import ReadonlyArrayLike__toRunnable from "../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnable";
 import StatefulContainerLike__buffer from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.buffer";
 import StatefulContainerLike__decodeWithCharset from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.decodeWithCharset";
 import StatefulContainerLike__distinctUntilChanged from "../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged";
@@ -76,9 +76,12 @@ import {
   SinkLike_notify,
   ToRunnable,
 } from "../rx";
-import { sourceFrom } from "../rx/SinkLike";
 import { DisposableLike_exception, DisposableOrTeardown } from "../util";
-import { addTo, bindTo, dispose, isDisposed } from "../util/DisposableLike";
+import { dispose } from "../util/DisposableLike";
+import DisposableLike__addTo from "../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__bindTo from "../util/__internal__/DisposableLike/DisposableLike.bindTo";
+import DisposableLike__dispose from "../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DelegateSinkLike__create from "./__internal__/DelegatingSinkLike/DelegatingSinkLike.create";
 import DelegateSinkLike__mixin from "./__internal__/DelegatingSinkLike/DelegatingSinkLike.mixin";
 import ReactiveContainerLike__onSink from "./__internal__/ReactiveContainerLike/ReactiveContainerLike.onSink";
@@ -97,6 +100,7 @@ import SinkLike__reduceMixin from "./__internal__/SinkLike/SinkLike.reduceMixin"
 import SinkLike__scanMixin from "./__internal__/SinkLike/SinkLike.scanMixin";
 import SinkLike__skipFirstMixin from "./__internal__/SinkLike/SinkLike.skipFirstMixin";
 import SinkLike__someSatisfyMixin from "./__internal__/SinkLike/SinkLike.someSatisfyMixin";
+import SinkLike__sourceFrom from "./__internal__/SinkLike/SinkLike.sourceFrom";
 import SinkLike_takeFirstMixin from "./__internal__/SinkLike/SinkLike.takeFirstMixin";
 import SinkLike__takeLastMixin from "./__internal__/SinkLike/SinkLike.takeLastMixin";
 import SinkLike__takeWhileMixin from "./__internal__/SinkLike/SinkLike.takeWhileMixin";
@@ -116,7 +120,7 @@ const lift: Lift<RunnableLike, TReactive>["lift"] = /*@__PURE__*/ (() => {
     ) {}
 
     [ReactiveContainerLike_sinkInto](sink: SinkLike<TB>) {
-      pipeUnsafe(sink, ...this.operators, sourceFrom(this.src));
+      pipeUnsafe(sink, ...this.operators, SinkLike__sourceFrom(this.src));
     }
   }
 
@@ -143,7 +147,7 @@ export const buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<T>() => {
     RunnableLike,
     SinkLike<readonly T[]>,
     T
-  >(arrayToRunnable());
+  >(ReadonlyArrayLike__toRunnable());
 
   return pipe(
     createInstanceFactory(typedBufferSinkMixin),
@@ -171,7 +175,7 @@ export const catchErrorT: CatchError<RunnableLike> = { catchError };
 
 export const concat: Concat<RunnableLike>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]
-) => pipe(runnables, arrayToRunnable(), concatAll());
+) => pipe(runnables, ReadonlyArrayLike__toRunnable(), concatAll());
 export const concatT: Concat<RunnableLike> = {
   concat,
 };
@@ -190,7 +194,7 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
           delegate: SinkLike<T>,
         ): SinkLike<RunnableLike<T>> {
           init(typedDelegatingSinkMixin, instance, delegate);
-          pipe(instance, bindTo(delegate));
+          pipe(instance, DisposableLike__bindTo(delegate));
 
           return instance;
         },
@@ -200,9 +204,9 @@ export const concatAll: ConcatAll<RunnableLike>["concatAll"] = /*@__PURE__*/ (<
             const { [DelegatingSinkLike_delegate]: delegate } = this;
             pipe(
               DelegateSinkLike__create(delegate),
-              addTo<SinkLike<T>>(this),
-              sourceFrom(next),
-              dispose(),
+              DisposableLike__addTo<SinkLike<T>>(this),
+              SinkLike__sourceFrom(next),
+              DisposableLike__dispose(),
             );
           },
         },
@@ -218,7 +222,7 @@ export const concatAllT: ConcatAll<RunnableLike> = {
 export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
     const typedDecodeWithCharsetMixin = SinkLike__decodeWithCharsetMixin(
-      arrayToRunnable(),
+      ReadonlyArrayLike__toRunnable(),
     );
 
     return pipe(
@@ -254,7 +258,7 @@ export const distinctUntilChangedT: DistinctUntilChanged<RunnableLike> = {
 
 export const empty: Empty<RunnableLike>["empty"] = <T>() =>
   create<T>(sink => {
-    pipe(sink, dispose());
+    pipe(sink, DisposableLike__dispose());
   });
 export const emptyT: Empty<RunnableLike> = { empty };
 
@@ -264,7 +268,7 @@ export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
       RunnableLike<boolean>,
       SinkLike<boolean>,
       T
-    >(arrayToRunnable());
+    >(ReadonlyArrayLike__toRunnable());
 
     return (predicate: Predicate<T>) =>
       pipe(
@@ -309,7 +313,7 @@ export const generate: Generate<RunnableLike>["generate"] = <T>(
 ) =>
   create((sink: SinkLike<T>) => {
     let acc = initialValue();
-    while (!isDisposed(sink)) {
+    while (!DisposableLike__isDisposed(sink)) {
       acc = generator(acc);
       sink[SinkLike_notify](acc);
     }
@@ -381,7 +385,7 @@ export const reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
     SinkLike<TAcc>,
     T,
     TAcc
-  >(arrayToRunnable());
+  >(ReadonlyArrayLike__toRunnable());
 
   return pipe(
     createInstanceFactory(typedReduceSinkMixin),
@@ -397,12 +401,12 @@ export const repeat = /*@__PURE__*/ (<T>() => {
       do {
         pipe(
           DelegateSinkLike__create(sink),
-          addTo(sink),
-          sourceFrom(delegate),
-          dispose(),
+          DisposableLike__addTo(sink),
+          SinkLike__sourceFrom(delegate),
+          DisposableLike__dispose(),
         );
         count++;
-      } while (!isDisposed(sink) && predicate(count));
+      } while (!DisposableLike__isDisposed(sink) && predicate(count));
     }),
   );
 })();
@@ -413,7 +417,7 @@ export const run =
   (runnable: RunnableLike<T>): void =>
     pipe(
       SinkLike__create(),
-      sourceFrom(runnable),
+      SinkLike__sourceFrom(runnable),
       dispose(),
       ({ [DisposableLike_exception]: error }) => {
         if (isSome(error)) {
@@ -450,7 +454,7 @@ export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
       RunnableLike<boolean>,
       SinkLike<boolean>,
       T
-    >(arrayToRunnable());
+    >(ReadonlyArrayLike__toRunnable());
 
     return (predicate: Predicate<T>) =>
       pipe(
@@ -482,7 +486,7 @@ export const takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
     RunnableLike<T>,
     SinkLike<T>,
     T
-  >(arrayToRunnable());
+  >(ReadonlyArrayLike__toRunnable());
 
   return pipe(
     createInstanceFactory(typedTakeLastSinkMixin),

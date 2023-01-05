@@ -29,16 +29,14 @@ import {
   DispatcherLike_scheduler,
   SchedulerLike,
 } from "../../../scheduling";
-import { yield_ } from "../../../scheduling/ContinuationLike";
+import ContinuationLike__yield_ from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield";
 import { DisposableLike, DisposableLike_exception } from "../../../util";
-import {
-  addToIgnoringChildErrors,
-  dispose,
-  isDisposed,
-  onComplete,
-  onDisposed,
-} from "../../../util/DisposableLike";
+import DisposableLike__addToIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
+import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
 import ObserverLike__getsScheduler from "./ObserverLike.getScheduler";
 import ObserverLike__schedule from "./ObserverLike.schedule";
 
@@ -49,7 +47,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
       pipe(
         observer,
         ObserverLike__schedule(dispatcher.continuation),
-        onComplete(dispatcher.onContinuationDispose),
+        DisposableLike__onComplete(dispatcher.onContinuationDispose),
       );
     }
   };
@@ -83,21 +81,24 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           while (getLength(nextQueue) > 0) {
             const next = nextQueue.shift() as T;
             observer[SinkLike_notify](next);
-            yield_();
+            ContinuationLike__yield_();
           }
         };
 
         instance.onContinuationDispose = () => {
-          if (isDisposed(instance)) {
-            pipe(observer, dispose(instance[DisposableLike_exception]));
+          if (DisposableLike__isDisposed(instance)) {
+            pipe(
+              observer,
+              DisposableLike__dispose(instance[DisposableLike_exception]),
+            );
           }
         };
 
         pipe(
           instance,
-          onDisposed(e => {
+          DisposableLike__onDisposed(e => {
             if (isEmpty(instance.nextQueue)) {
-              pipe(observer, dispose(e));
+              pipe(observer, DisposableLike__dispose(e));
             }
           }),
         );
@@ -116,7 +117,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           return ObserverLike__getsScheduler(this.observer);
         },
         [DispatcherLike_dispatch](this: TProperties & DisposableLike, next: T) {
-          if (!isDisposed(this)) {
+          if (!DisposableLike__isDisposed(this)) {
             this.nextQueue.push(next);
             scheduleDrainQueue(this);
           }
@@ -162,7 +163,7 @@ const ObserverLike__mixin: <T>() => Mixin1<
           if (isNone(dispatcher)) {
             dispatcher = pipe(
               createObserverDispatcher(this),
-              addToIgnoringChildErrors<DispatcherLike<T>>(this),
+              DisposableLike__addToIgnoringChildErrors<DispatcherLike<T>>(this),
             );
             this.dispatcher = dispatcher;
           }

@@ -9,7 +9,8 @@ import MulticastObservableLike__getReplay from '../../../rx/__internal__/Multica
 import ObservableLike__forEach from '../../../rx/__internal__/ObservableLike/ObservableLike.forEach.mjs';
 import ObservableLike__keep from '../../../rx/__internal__/ObservableLike/ObservableLike.keep.mjs';
 import ObservableLike__multicast from '../../../rx/__internal__/ObservableLike/ObservableLike.multicast.mjs';
-import { dispatch, getScheduler } from '../../../scheduling/DispatcherLike.mjs';
+import DispatcherLike__dispatch from '../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch.mjs';
+import DispatcherLike__getScheduler from '../../../scheduling/__internal__/DispatcherLike/DispatcherLike.getScheduler.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DelegatingAsyncEnumerator__mixin from '../DelegatingAsyncEnumeratorLike/DelegatingAsyncEnumeratorLike.mixin.mjs';
 import AsyncEnumerableLike__liftT from './AsyncEnumerableLike.liftT.mjs';
@@ -21,9 +22,9 @@ const AsyncEnumerableLike__keep =
         init(DelegatingAsyncEnumerator__mixin(), instance, delegate);
         instance.obs = pipe(delegate, ObservableLike__forEach(x => {
             if (!predicate(x)) {
-                pipe(delegate, dispatch(none));
+                pipe(delegate, DispatcherLike__dispatch(none));
             }
-        }), ObservableLike__keep(predicate), ObservableLike__multicast(getScheduler(delegate)));
+        }), ObservableLike__keep(predicate), ObservableLike__multicast(DispatcherLike__getScheduler(delegate)));
         return instance;
     }, props({
         obs: none,

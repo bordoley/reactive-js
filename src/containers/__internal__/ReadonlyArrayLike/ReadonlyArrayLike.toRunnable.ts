@@ -1,7 +1,7 @@
 import { ReadonlyArrayLike } from "../../../containers";
 import { RunnableLike, SinkLike_notify, ToRunnable } from "../../../rx";
 import RunnableLike__create from "../../../rx/__internal__/RunnableLike/RunnableLike.create";
-import { isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";
 
 const ReadonlyArrayLike__toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
@@ -11,7 +11,7 @@ const ReadonlyArrayLike__toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"]
         RunnableLike__create<T>(sink => {
           for (
             let index = startIndex, cnt = count;
-            !isDisposed(sink) && cnt !== 0;
+            !DisposableLike__isDisposed(sink) && cnt !== 0;
             cnt > 0 ? index++ : index--, cnt > 0 ? cnt-- : cnt++
           ) {
             sink[SinkLike_notify](values[index]);

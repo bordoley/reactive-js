@@ -2,8 +2,9 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, getLength } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { addTo, onComplete } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { sinkInto } from '../../ReactiveContainerLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
@@ -15,7 +16,7 @@ const SinkLike__takeLastMixin = (fromArray) => {
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[TakeLastSink_private_takeLastCount] = takeLastCount;
         instance[TakeLastSink_last] = [];
-        pipe(instance, addTo(delegate), onComplete(() => {
+        pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(() => {
             pipe(instance[TakeLastSink_last], fromArray, sinkInto(delegate));
         }));
         return instance;

@@ -33,8 +33,9 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../ix";
-import { getCurrent, hasCurrent } from "../../ix/EnumeratorLike";
 import { move } from "../../ix/SourceLike";
+import EnumeratorLike__getCurrent from "../../ix/__internal__/EnumeratorLike/EnumeratorLike.getCurrent";
+import EnumeratorLike__hasCurrent from "../../ix/__internal__/EnumeratorLike/EnumeratorLike.hasCurrent";
 import MutableEnumeratorLike__mixin from "../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
 import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal";
 import {
@@ -46,19 +47,17 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../scheduling";
-import { run } from "../../scheduling/ContinuationLike";
 import {
   DisposableLike,
   PauseableLike,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../../util";
-import {
-  addIgnoringChildErrors,
-  disposed,
-  isDisposed,
-} from "../../util/DisposableLike";
+import DisposableLike__addIgnoringChildErrors from "../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors";
+import DisposableLike__disposed from "../../util/__internal__/DisposableLike/DisposableLike.disposed";
+import DisposableLike__isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import ContinuationLike__run from "./ContinuationLike/ContinuationLike.run";
 import yield_ from "./ContinuationLike/ContinuationLike.yield";
 import getCurrentTime from "./SchedulerLike/SchedulerLike.getCurrentTime";
 import isInContinuation from "./SchedulerLike/SchedulerLike.isInContinuation";
@@ -117,7 +116,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           break;
         }
 
-        const taskIsDispose = isDisposed(task.continuation);
+        const taskIsDispose = DisposableLike__isDisposed(task.continuation);
         if (task.dueTime > now && !taskIsDispose) {
           break;
         }
@@ -137,7 +136,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           break;
         }
 
-        if (!isDisposed(task.continuation)) {
+        if (!DisposableLike__isDisposed(task.continuation)) {
           break;
         }
 
@@ -166,7 +165,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       const task = peek(instance);
 
       const continuationActive =
-        !isDisposed(instance[MutableRefLike_current]) &&
+        !DisposableLike__isDisposed(instance[MutableRefLike_current]) &&
         isSome(task) &&
         instance.dueTime <= task.dueTime;
 
@@ -183,7 +182,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         (() => {
           for (
             let task = peek(instance);
-            isSome(task) && !isDisposed(instance);
+            isSome(task) && !DisposableLike__isDisposed(instance);
             task = peek(instance)
           ) {
             const { continuation, dueTime } = task;
@@ -192,7 +191,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             if (delay === 0) {
               move(instance);
               instance[SchedulerLike_inContinuation] = true;
-              run(continuation);
+              ContinuationLike__run(continuation);
               instance[SchedulerLike_inContinuation] = false;
             } else {
               instance.dueTime = getCurrentTime(instance.host) + delay;
@@ -246,7 +245,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         ): QueueSchedulerLike {
           init(DisposableLike__mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
-          init(typedDisposableRefMixin, instance, disposed);
+          init(typedDisposableRefMixin, instance, DisposableLike__disposed);
 
           instance.delayed = createPriorityQueue(delayedComparator);
           instance.queue = createPriorityQueue(taskComparator);
@@ -287,8 +286,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             return (
               inContinuation &&
               (yieldRequested ||
-                isDisposed(this) ||
-                !hasCurrent(this) ||
+                DisposableLike__isDisposed(this) ||
+                !EnumeratorLike__hasCurrent(this) ||
                 this.isPaused ||
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
                 shouldYield(this.host))
@@ -310,7 +309,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           },
           [PauseableLike_pause](this: TProperties & DisposableRefLike) {
             this.isPaused = true;
-            this[MutableRefLike_current] = disposed;
+            this[MutableRefLike_current] = DisposableLike__disposed;
           },
           [PauseableLike_resume](
             this: TProperties & DisposableRefLike & EnumeratorLike,
@@ -325,18 +324,19 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           ) {
             const delay = getDelay(options);
             const { priority } = options ?? {};
-            pipe(this, addIgnoringChildErrors(continuation));
+            pipe(this, DisposableLike__addIgnoringChildErrors(continuation));
 
-            if (!isDisposed(continuation)) {
+            if (!DisposableLike__isDisposed(continuation)) {
               const now = getCurrentTime(this.host);
               const dueTime = max(now + delay, now);
 
               const task =
                 isInContinuation(this) &&
-                hasCurrent(this) &&
-                getCurrent(this).continuation === continuation &&
+                EnumeratorLike__hasCurrent(this) &&
+                EnumeratorLike__getCurrent(this).continuation ===
+                  continuation &&
                 delay <= 0
-                  ? getCurrent(this)
+                  ? EnumeratorLike__getCurrent(this)
                   : {
                       taskID: this.taskIDCounter++,
                       continuation,

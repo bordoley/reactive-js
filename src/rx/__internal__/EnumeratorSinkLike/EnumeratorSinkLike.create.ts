@@ -15,8 +15,9 @@ import {
 } from "../../../ix";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import { isDisposed, onDisposed } from "../../../util/DisposableLike";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
 import { EnumeratorSinkLike } from "../rx.internal";
 
 const EnumeratorSinkLike__create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
@@ -42,7 +43,7 @@ const EnumeratorSinkLike__create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
 
         pipe(
           instance,
-          onDisposed(() => {
+          DisposableLike__onDisposed(() => {
             instance.buffer.length = 0;
             instance[EnumeratorLike_hasCurrent] = false;
           }),
@@ -57,7 +58,7 @@ const EnumeratorSinkLike__create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
       }),
       {
         [SinkLike_notify](this: DisposableLike & TProperties, next: T) {
-          if (isDisposed(this)) {
+          if (DisposableLike__isDisposed(this)) {
             return;
           }
           this.buffer.push(next);
@@ -65,7 +66,7 @@ const EnumeratorSinkLike__create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
         [SourceLike_move](this: DisposableLike & TProperties) {
           const { buffer } = this;
 
-          if (!isDisposed(this) && getLength(buffer) > 0) {
+          if (!DisposableLike__isDisposed(this) && getLength(buffer) > 0) {
             const next = buffer.shift() as T;
             this[EnumeratorLike_current] = next;
             this[EnumeratorLike_hasCurrent] = true;

@@ -3,8 +3,8 @@ import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
-import { notify } from '../../SinkLike.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
+import SinkLike__notify from './SinkLike.notify.mjs';
 
 const SinkLike__mapMixin = /*@__PURE__*/ (() => {
     const MapSink_private_mapper = Symbol("MapSink_private_mapper");
@@ -19,7 +19,7 @@ const SinkLike__mapMixin = /*@__PURE__*/ (() => {
     }), {
         [SinkLike_notify](next) {
             const mapped = this[MapSink_private_mapper](next);
-            pipe(this[DelegatingSinkLike_delegate], notify(mapped));
+            pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(mapped));
         },
     }));
 })();

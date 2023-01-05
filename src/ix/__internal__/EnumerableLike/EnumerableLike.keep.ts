@@ -11,11 +11,11 @@ import StatefulContainerLike__keep from "../../../containers/__internal__/Statef
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { Predicate, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import { dispose } from "../../../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
-import { getCurrent } from "../../EnumeratorLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DelegatingEnumeratorLike__mixin from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.mixin";
 import DelegatingEnumeratorLike__move from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.move";
+import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
 import { DelegatingEnumeratorLike } from "../ix.internal";
 import EnumerableLike__liftT from "./EnumerableLike.liftT";
 
@@ -56,10 +56,10 @@ const EnumerableLike__keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<
             try {
               while (
                 DelegatingEnumeratorLike__move(this) &&
-                !predicate(getCurrent(this))
+                !predicate(EnumeratorLike__getCurrent(this))
               ) {}
             } catch (cause) {
-              pipe(this, dispose({ cause }));
+              pipe(this, DisposableLike__dispose({ cause }));
             }
           },
         },

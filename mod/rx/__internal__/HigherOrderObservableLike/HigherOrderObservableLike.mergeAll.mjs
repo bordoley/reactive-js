@@ -9,10 +9,10 @@ import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLik
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { getScheduler } from '../../ObserverLike.mjs';
-import { notifySink } from '../../SinkLike.mjs';
 import ObservableLike__forEach from '../ObservableLike/ObservableLike.forEach.mjs';
 import ObservableLike__subscribe from '../ObservableLike/ObservableLike.subscribe.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
+import SinkLike__notifySink from '../SinkLike/SinkLike.notifySink.mjs';
 
 const HigherOrderObservableLike__mergeAll = (lift) => {
     const createMergeAllObserver = (() => {
@@ -22,7 +22,7 @@ const HigherOrderObservableLike__mergeAll = (lift) => {
                 const nextObs = observer.queue.shift();
                 if (isSome(nextObs)) {
                     observer.activeCount++;
-                    pipe(nextObs, ObservableLike__forEach(notifySink(observer.delegate)), ObservableLike__subscribe(getScheduler(observer)), DisposableLike__addTo(observer.delegate), DisposableLike__onComplete(observer.onDispose));
+                    pipe(nextObs, ObservableLike__forEach(SinkLike__notifySink(observer.delegate)), ObservableLike__subscribe(getScheduler(observer)), DisposableLike__addTo(observer.delegate), DisposableLike__onComplete(observer.onDispose));
                 }
                 else if (DisposableLike__isDisposed(observer)) {
                     pipe(observer.delegate, DisposableLike__dispose());

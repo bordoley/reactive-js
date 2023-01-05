@@ -12,11 +12,13 @@ import StatefulContainerLike__takeLast from "../../../containers/__internal__/St
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { getLength, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import { add, bindTo, isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
+import DisposableLike__bindTo from "../../../util/__internal__/DisposableLike/DisposableLike.bindTo";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
-import { getCurrent } from "../../EnumeratorLike";
 import DelegatingEnumeratorLike__mixin from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.mixin";
 import DelegatingEnumeratorLike__move from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.move";
+import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
 import { DelegatingEnumeratorLike } from "../ix.internal";
 import EnumerableLike__enumerate from "./EnumerableLike.enumerate";
 import EnumerableLike__liftT from "./EnumerableLike.liftT";
@@ -46,7 +48,7 @@ const EnumerableLike__takeLast: TakeLast<EnumerableLike>["takeLast"] =
             instance.maxCount = maxCount;
             instance.isStarted = false;
 
-            pipe(instance, add(delegate));
+            pipe(instance, DisposableLike__add(delegate));
 
             return instance;
           },
@@ -56,13 +58,13 @@ const EnumerableLike__takeLast: TakeLast<EnumerableLike>["takeLast"] =
           }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              if (!isDisposed(this) && !this.isStarted) {
+              if (!DisposableLike__isDisposed(this) && !this.isStarted) {
                 this.isStarted = true;
 
                 const last: unknown[] = [];
 
                 while (DelegatingEnumeratorLike__move(this)) {
-                  last.push(getCurrent(this));
+                  last.push(EnumeratorLike__getCurrent(this));
 
                   if (getLength(last) > this.maxCount) {
                     last.shift();
@@ -73,7 +75,7 @@ const EnumerableLike__takeLast: TakeLast<EnumerableLike>["takeLast"] =
                   last,
                   ReadonlyArrayLike__toEnumerable(),
                   EnumerableLike__enumerate(),
-                  bindTo(this),
+                  DisposableLike__bindTo(this),
                 );
                 init(typedDelegatingEnumeratorMixin, this, enumerator);
               }

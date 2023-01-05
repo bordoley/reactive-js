@@ -2,7 +2,7 @@
 import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SourceLike_move } from '../../../ix.mjs';
-import { dispatch } from '../../../scheduling/DispatcherLike.mjs';
+import DispatcherLike__dispatch from '../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch.mjs';
 import StreamLike__mixin from '../../../streaming/__internal__/StreamLike/StreamLike.mixin.mjs';
 
 const AsyncEnumerator__create = /*@__PURE__*/ (() => {
@@ -13,7 +13,7 @@ const AsyncEnumerator__create = /*@__PURE__*/ (() => {
             return instance;
         }, {}, {
             [SourceLike_move]() {
-                pipe(this, dispatch(none));
+                pipe(this, DispatcherLike__dispatch(none));
             },
         }));
     })();

@@ -4,7 +4,8 @@ import { none, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import EnumerableLike__create from '../../../ix/__internal__/EnumerableLike/EnumerableLike.create.mjs';
 import MutableEnumeratorLike__mixin from '../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
-import { isDisposed, dispose } from '../../../util/DisposableLike.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import ReadonlyArrayLike__toContainer from './ReadonlyArrayLike.toContainer.mjs';
 
@@ -24,7 +25,7 @@ const ReadonlyArrayLike__toEnumerable = /*@__PURE__*/ (() => {
     }), {
         [SourceLike_move]() {
             const { array } = this;
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
                 this.index++;
                 const { index, count } = this;
                 if (count !== 0) {
@@ -32,7 +33,7 @@ const ReadonlyArrayLike__toEnumerable = /*@__PURE__*/ (() => {
                     this.count = count > 0 ? this.count - 1 : this.count + 1;
                 }
                 else {
-                    pipe(this, dispose());
+                    pipe(this, DisposableLike__dispose());
                 }
             }
         },

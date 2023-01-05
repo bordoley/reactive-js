@@ -22,10 +22,10 @@ import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLik
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import { getScheduler } from "../../ObserverLike";
-import { notifySink } from "../../SinkLike";
 import ObservableLike__forEach from "../ObservableLike/ObservableLike.forEach";
 import ObservableLike__subscribe from "../ObservableLike/ObservableLike.subscribe";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
+import SinkLike__notifySink from "../SinkLike/SinkLike.notifySink";
 
 const HigherOrderObservableLike__switchAll = <C extends ObservableLike>(
   lift: <T>(
@@ -89,7 +89,7 @@ const HigherOrderObservableLike__switchAll = <C extends ObservableLike>(
           ) {
             this.currentRef[MutableRefLike_current] = pipe(
               next,
-              ObservableLike__forEach(notifySink(this.delegate)),
+              ObservableLike__forEach(SinkLike__notifySink(this.delegate)),
               ObservableLike__subscribe(getScheduler(this)),
               DisposableLike__onComplete(() => {
                 if (DisposableLike__isDisposed(this)) {

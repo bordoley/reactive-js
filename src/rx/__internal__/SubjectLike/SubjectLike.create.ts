@@ -24,13 +24,11 @@ import {
   SubjectLike,
   SubjectLike_publish,
 } from "../../../rx";
-import { dispatch } from "../../../scheduling/DispatcherLike";
-import {
-  addIgnoringChildErrors,
-  isDisposed,
-  onDisposed,
-} from "../../../util/DisposableLike";
+import DispatcherLike__dispatch from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch";
+import DisposableLike__addIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
 import { getDispatcher } from "../../ObserverLike";
 
 const SubjectLike__create: <T>(options?: {
@@ -80,7 +78,7 @@ const SubjectLike__create: <T>(options?: {
         },
 
         [SubjectLike_publish](this: TProperties & SubjectLike<T>, next: T) {
-          if (!isDisposed(this)) {
+          if (!DisposableLike__isDisposed(this)) {
             const { replayed } = this;
 
             const replay = this[MulticastObservableLike_replay];
@@ -93,7 +91,7 @@ const SubjectLike__create: <T>(options?: {
             }
 
             for (const observer of this.observers) {
-              pipe(observer, getDispatcher, dispatch(next));
+              pipe(observer, getDispatcher, DispatcherLike__dispatch(next));
             }
           }
         },
@@ -102,13 +100,13 @@ const SubjectLike__create: <T>(options?: {
           this: TProperties & SubjectLike,
           observer: ObserverLike<T>,
         ) {
-          if (!isDisposed(this)) {
+          if (!DisposableLike__isDisposed(this)) {
             const { observers } = this;
             observers.add(observer);
 
             pipe(
               observer,
-              onDisposed(_ => {
+              DisposableLike__onDisposed(_ => {
                 observers.delete(observer);
               }),
             );
@@ -120,10 +118,10 @@ const SubjectLike__create: <T>(options?: {
           // call next from unscheduled sources such as event handlers.
           // So we marshall those events back to the scheduler.
           for (const next of this.replayed) {
-            pipe(dispatcher, dispatch(next));
+            pipe(dispatcher, DispatcherLike__dispatch(next));
           }
 
-          pipe(this, addIgnoringChildErrors(dispatcher));
+          pipe(this, DisposableLike__addIgnoringChildErrors(dispatcher));
         },
       },
     ),

@@ -5,8 +5,9 @@ import {
   Zip,
 } from "../../../containers";
 import { callWith, getLength, isSome, none, pipe } from "../../../functions";
-import { keepType } from "../../ContainerLike";
-import { keepT, map } from "../../ReadonlyArrayLike";
+import ContainerLike__keepType from "../ContainerLike/ContainerLike.keepType";
+import ReadonlyArrayLike__keepT from "../ReadonlyArrayLike/ReadonlyArrayLike.keepT";
+import ReadonlyArrayLike__map from "../ReadonlyArrayLike/ReadonlyArrayLike.map";
 
 const SequenceLike__zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
   const zip =
@@ -14,20 +15,20 @@ const SequenceLike__zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
     () => {
       const nextResults = pipe(
         sequences,
-        map(callWith()),
-        keepType(keepT, isSome),
+        ReadonlyArrayLike__map(callWith()),
+        ContainerLike__keepType(ReadonlyArrayLike__keepT, isSome),
       );
 
       return getLength(nextResults) === getLength(sequences)
         ? {
             [SequenceLike_data]: pipe(
               nextResults,
-              map(x => x[SequenceLike_data]),
+              ReadonlyArrayLike__map(x => x[SequenceLike_data]),
             ),
             [SequenceLike_next]: zip(
               ...pipe(
                 nextResults,
-                map(x => x[SequenceLike_next]),
+                ReadonlyArrayLike__map(x => x[SequenceLike_next]),
               ),
             ),
           }

@@ -11,8 +11,9 @@ import StatefulContainerLike__takeWhile from "../../../containers/__internal__/S
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { Predicate, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import { dispose, isDisposed } from "../../../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DelegatingEnumeratorLike__mixin from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.mixin";
 import DelegatingEnumeratorLike__move from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.move";
 import getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
@@ -60,8 +61,8 @@ const EnumerableLike__takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               const { inclusive, predicate } = this;
 
-              if (this.done && !isDisposed(this)) {
-                pipe(this, dispose());
+              if (this.done && !DisposableLike__isDisposed(this)) {
+                pipe(this, DisposableLike__dispose());
               } else if (DelegatingEnumeratorLike__move(this)) {
                 const current = getCurrent(this);
 
@@ -71,10 +72,10 @@ const EnumerableLike__takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
                   if (!satisfiesPredicate && inclusive) {
                     this.done = true;
                   } else if (!satisfiesPredicate) {
-                    pipe(this, dispose());
+                    pipe(this, DisposableLike__dispose());
                   }
                 } catch (cause) {
-                  pipe(this, dispose({ cause }));
+                  pipe(this, DisposableLike__dispose({ cause }));
                 }
               }
             },

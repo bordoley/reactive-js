@@ -2,10 +2,10 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { dispose } from '../../../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
-import { notify } from '../../SinkLike.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
+import SinkLike__notify from './SinkLike.notify.mjs';
 
 const SinkLike__scanMixin = /*@__PURE__*/ (() => {
     const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
@@ -19,7 +19,7 @@ const SinkLike__scanMixin = /*@__PURE__*/ (() => {
             instance[ScanSink_private_acc] = acc;
         }
         catch (cause) {
-            pipe(instance, dispose({ cause }));
+            pipe(instance, DisposableLike__dispose({ cause }));
         }
         return instance;
     }, props({
@@ -30,7 +30,7 @@ const SinkLike__scanMixin = /*@__PURE__*/ (() => {
         [SinkLike_notify](next) {
             const nextAcc = this[ScanSink_private_reducer](this[ScanSink_private_acc], next);
             this[ScanSink_private_acc] = nextAcc;
-            pipe(this[DelegatingSinkLike_delegate], notify(nextAcc));
+            pipe(this[DelegatingSinkLike_delegate], SinkLike__notify(nextAcc));
         },
     }));
 })();

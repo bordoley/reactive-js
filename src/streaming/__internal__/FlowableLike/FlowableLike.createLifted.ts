@@ -1,7 +1,7 @@
 import { ContainerOperator } from "../../../containers";
 import { composeUnsafe, getLength, pipe } from "../../../functions";
 import { ObservableLike } from "../../../rx";
-import { dispatch } from "../../../scheduling/DispatcherLike";
+import DispatcherLike__dispatch from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch";
 import { FlowMode, FlowableLike, FlowableStreamLike } from "../../../streaming";
 
 import StreamLike__create from "../StreamLike/StreamLike.create";
@@ -126,7 +126,7 @@ const FlowableLike__createLifted: CreateLiftedFlowable = <T>(
       scheduler,
       options,
     ) as FlowableStreamLike;
-    return pipe(stream, dispatch("pause"));
+    return pipe(stream, DispatcherLike__dispatch("pause"));
   }) as FlowableLike<T>;
 };
 

@@ -12,16 +12,17 @@ import {
   MutableRefLike_current,
   getCurrentRef,
 } from "../../../__internal__/util/MutableRefLike";
-import { throws } from "../../../containers/ContainerLike";
+import ContainerLike__throws from "../../../containers/__internal__/ContainerLike/ContainerLike.throws";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import { isNumber, none, partial, pipe, returns } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import { dispose, disposed } from "../../../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/DisposableLike.disposed";
 import { getScheduler } from "../../ObserverLike";
-import { notify } from "../../SinkLike";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
+import SinkLike__notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__concat from "./ObservableLike.concat";
 import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
 import ObservableLike__lift from "./ObservableLike.lift";
@@ -63,7 +64,7 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
       ): ObserverLike<T> {
         init(typedObserverMixin, instance, getScheduler(delegate));
         init(DisposableLike__delegatingMixin, instance, delegate);
-        init(typedDisposableRefMixin, instance, disposed);
+        init(typedDisposableRefMixin, instance, DisposableLike__disposed);
 
         instance.delegate = delegate;
         instance.duration = duration;
@@ -81,8 +82,8 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
           this: TProperties & MutableRefLike<DisposableLike>,
           next: T,
         ) {
-          pipe(this, getCurrentRef, dispose());
-          pipe(this.delegate, notify(next));
+          pipe(this, getCurrentRef, DisposableLike__dispose());
+          pipe(this.delegate, SinkLike__notify(next));
         },
       },
     ),
@@ -92,7 +93,7 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
 
   return (duration: number | ObservableLike<unknown>) => {
     const durationObs = isNumber(duration)
-      ? throws(
+      ? ContainerLike__throws(
           {
             fromArray: ReadonlyArrayLike__toRunnableObservable,
             ...ObservableLike__mapT,
@@ -101,7 +102,7 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
         )(returnTimeoutError)
       : ObservableLike__concat(
           duration,
-          throws({
+          ContainerLike__throws({
             fromArray: ReadonlyArrayLike__toRunnableObservable,
             ...ObservableLike__mapT,
           })(returnTimeoutError),

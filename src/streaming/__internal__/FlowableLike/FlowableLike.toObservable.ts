@@ -1,4 +1,5 @@
-import { ignoreElements, startWith } from "../../../containers/ContainerLike";
+import ContainerLike__ignoreElements from "../../../containers/__internal__/ContainerLike/ContainerLike.ignoreElements";
+import ContainerLike__startWith from "../../../containers/__internal__/ContainerLike/ContainerLike.startWith";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import { compose, pipe } from "../../../functions";
 import {
@@ -11,11 +12,11 @@ import ObservableLike__create from "../../../rx/__internal__/ObservableLike/Obse
 import ObservableLike__forEach from "../../../rx/__internal__/ObservableLike/ObservableLike.forEach";
 import ObservableLike__keepT from "../../../rx/__internal__/ObservableLike/ObservableLike.keepT";
 import ObservableLike__onSubscribe from "../../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe";
-import { dispatchTo } from "../../../scheduling/DispatcherLike";
+import DispatcherLike__dispatchTo from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatchTo";
 import { FlowableLike } from "../../../streaming";
-import { sourceFrom } from "../../../streaming/StreamLike";
-import { addTo } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import StreamLike__create from "../StreamLike/StreamLike.create";
+import StreamLike__sourceFrom from "../StreamLike/StreamLike.sourceFrom";
 
 const FlowableLike__toObservable: ToObservable<FlowableLike>["toObservable"] =
   () => src =>
@@ -26,9 +27,9 @@ const FlowableLike__toObservable: ToObservable<FlowableLike>["toObservable"] =
       } = observer;
 
       const op = compose(
-        ObservableLike__forEach(dispatchTo(dispatcher)),
-        ignoreElements(ObservableLike__keepT),
-        startWith(
+        ObservableLike__forEach(DispatcherLike__dispatchTo(dispatcher)),
+        ContainerLike__ignoreElements(ObservableLike__keepT),
+        ContainerLike__startWith(
           {
             fromArray: ReadonlyArrayLike__toRunnableObservable,
             ...ObservableLike__concatT,
@@ -39,7 +40,11 @@ const FlowableLike__toObservable: ToObservable<FlowableLike>["toObservable"] =
         ObservableLike__onSubscribe(() => dispatcher),
       );
 
-      pipe(StreamLike__create(op, scheduler), sourceFrom(src), addTo(observer));
+      pipe(
+        StreamLike__create(op, scheduler),
+        StreamLike__sourceFrom(src),
+        DisposableLike__addTo(observer),
+      );
     });
 
 export default FlowableLike__toObservable;

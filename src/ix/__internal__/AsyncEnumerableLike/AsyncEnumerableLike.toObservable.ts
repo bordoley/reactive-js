@@ -6,9 +6,9 @@ import ObservableLike__forEach from "../../../rx/__internal__/ObservableLike/Obs
 import ObservableLike__onSubscribe from "../../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe";
 import ObserverLike__getScheduler from "../../../rx/__internal__/ObserverLike/ObserverLike.getScheduler";
 import RunnableObservableLike__create from "../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create";
-import { dispatch } from "../../../scheduling/DispatcherLike";
+import DispatcherLike__dispatch from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch";
 import { stream } from "../../../streaming/StreamableLike";
-import { addTo } from "../../../util/DisposableLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 
 const AsyncEnumerable__toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
   () => enumerable =>
@@ -16,16 +16,16 @@ const AsyncEnumerable__toObservable: ToObservable<AsyncEnumerableLike>["toObserv
       const enumerator = pipe(
         enumerable,
         stream(ObserverLike__getScheduler(observer)),
-        addTo(observer),
+        DisposableLike__addTo(observer),
       );
 
       pipe(
         enumerator,
         ObservableLike__forEach(_ => {
-          pipe(enumerator, dispatch(none));
+          pipe(enumerator, DispatcherLike__dispatch(none));
         }),
         ObservableLike__onSubscribe(() => {
-          pipe(enumerator, dispatch(none));
+          pipe(enumerator, DispatcherLike__dispatch(none));
         }),
         sinkInto(observer),
       );

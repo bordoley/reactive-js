@@ -2,9 +2,11 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, isSome, returns } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
-import { dispose } from '../../../util/DisposableLike.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
-import { hasCurrent, getCurrent, move } from '../../EnumeratorLike.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
+import EnumeratorLike__getCurrent from '../EnumeratorLike/EnumeratorLike.getCurrent.mjs';
+import EnumeratorLike__hasCurrent from '../EnumeratorLike/EnumeratorLike.hasCurrent.mjs';
+import EnumeratorLike__move from '../EnumeratorLike/EnumeratorLike.move.mjs';
 import MutableEnumeratorLike__mixin from '../MutableEnumeratorLike/MutableEnumeratorLike.mixin.mjs';
 import EnumerableLike__lift from './EnumerableLike.lift.mjs';
 
@@ -21,17 +23,17 @@ const EnumerableLike__pairwise =
     }), {
         [SourceLike_move]() {
             const { delegate } = this;
-            const prev = hasCurrent(this)
-                ? getCurrent(this)[1]
-                : move(delegate)
-                    ? getCurrent(delegate)
+            const prev = EnumeratorLike__hasCurrent(this)
+                ? EnumeratorLike__getCurrent(this)[1]
+                : EnumeratorLike__move(delegate)
+                    ? EnumeratorLike__getCurrent(delegate)
                     : none;
-            if (isSome(prev) && move(delegate)) {
-                const current = getCurrent(delegate);
+            if (isSome(prev) && EnumeratorLike__move(delegate)) {
+                const current = EnumeratorLike__getCurrent(delegate);
                 this[EnumeratorLike_current] = [prev, current];
             }
             else {
-                pipe(this, dispose());
+                pipe(this, DisposableLike__dispose());
             }
         },
     })), EnumerableLike__lift, returns);

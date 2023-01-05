@@ -23,7 +23,8 @@ import {
   SchedulerLike_schedule,
 } from "../../../scheduling";
 import { DisposableLike, Exception } from "../../../util";
-import { dispose, isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import * as CurrentScheduler from "../CurrentScheduler";
 import YieldError from "../YieldError";
@@ -62,7 +63,7 @@ export const createContinuation: Function2<
       }),
       {
         [ContinuationLike_run](this: TProperties & ContinuationLike) {
-          if (!isDisposed(this)) {
+          if (!DisposableLike__isDisposed(this)) {
             let error: Optional<Exception> = none;
             let yieldError: Optional<YieldError> = none;
 
@@ -83,7 +84,7 @@ export const createContinuation: Function2<
             if (isSome(yieldError)) {
               pipe(scheduler, SchedulerLike__schedule(this, yieldError));
             } else {
-              pipe(this, dispose(error));
+              pipe(this, DisposableLike__dispose(error));
             }
           }
         },

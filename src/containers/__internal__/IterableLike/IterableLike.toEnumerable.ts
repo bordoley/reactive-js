@@ -17,7 +17,8 @@ import {
 import EnumerableLike__create from "../../../ix/__internal__/EnumerableLike/EnumerableLike.create";
 import MutableEnumeratorLike__mixin from "../../../ix/__internal__/MutableEnumeratorLike/MutableEnumeratorLike.mixin";
 import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
-import { dispose, isDisposed } from "../../../util/DisposableLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 
 const IterableLike__toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
@@ -46,13 +47,13 @@ const IterableLike__toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
         props<TProperties>({ iterator: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
-            if (!isDisposed(this)) {
+            if (!DisposableLike__isDisposed(this)) {
               const next = this.iterator.next();
 
               if (!next.done) {
                 this[EnumeratorLike_current] = next.value;
               } else {
-                pipe(this, dispose());
+                pipe(this, DisposableLike__dispose());
               }
             }
           },

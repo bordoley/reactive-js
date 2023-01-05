@@ -11,11 +11,12 @@ import StatefulContainerLike__distinctUntilChanged from "../../../containers/__i
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { Equality, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import { dispose } from "../../../util/DisposableLike";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
-import { getCurrent, hasCurrent } from "../../EnumeratorLike";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DelegatingEnumeratorLike__mixin from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.mixin";
 import DelegatingEnumeratorLike__move from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.move";
+import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
+import EnumeratorLike__hasCurrent from "../EnumeratorLike/EnumeratorLike.hasCurrent";
 import { DelegatingEnumeratorLike } from "../ix.internal";
 import EnumerableLike__liftT from "./EnumerableLike.liftT";
 
@@ -50,20 +51,25 @@ const EnumerableLike__distinctUntilChanged: DistinctUntilChanged<EnumerableLike>
           props<TProperties>({ equality: none }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              const hadCurrent = hasCurrent(this);
-              const prevCurrent = hadCurrent ? getCurrent(this) : none;
+              const hadCurrent = EnumeratorLike__hasCurrent(this);
+              const prevCurrent = hadCurrent
+                ? EnumeratorLike__getCurrent(this)
+                : none;
 
               try {
                 while (DelegatingEnumeratorLike__move(this)) {
                   if (
                     !hadCurrent ||
-                    !this.equality(prevCurrent as T, getCurrent(this))
+                    !this.equality(
+                      prevCurrent as T,
+                      EnumeratorLike__getCurrent(this),
+                    )
                   ) {
                     break;
                   }
                 }
               } catch (cause) {
-                pipe(this, dispose({ cause }));
+                pipe(this, DisposableLike__dispose({ cause }));
               }
             },
           },

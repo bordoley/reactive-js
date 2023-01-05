@@ -12,12 +12,10 @@ import { TInteractive } from "../../../containers/__internal__/containers.intern
 import { Optional, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
 import { Exception } from "../../../util";
-import {
-  addIgnoringChildErrors,
-  dispose,
-  onComplete,
-} from "../../../util/DisposableLike";
+import DisposableLike__addIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
 import DelegatingEnumeratorLike__mixin from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.mixin";
 import DelegatingEnumeratorLike__move from "../DelegatingEnumeratorLike/DelegatingEnumeratorLike.move";
 import { DelegatingEnumeratorLike } from "../ix.internal";
@@ -46,10 +44,10 @@ const EnumerableLike__throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"]
 
             instance.isEmpty = true;
 
-            pipe(instance, addIgnoringChildErrors(delegate));
+            pipe(instance, DisposableLike__addIgnoringChildErrors(delegate));
             pipe(
               delegate,
-              onComplete(() => {
+              DisposableLike__onComplete(() => {
                 let error: Optional<Exception> = none;
 
                 if (instance.isEmpty) {
@@ -63,7 +61,7 @@ const EnumerableLike__throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"]
                   error = { cause };
                 }
 
-                pipe(instance, dispose(error));
+                pipe(instance, DisposableLike__dispose(error));
               }),
             );
 

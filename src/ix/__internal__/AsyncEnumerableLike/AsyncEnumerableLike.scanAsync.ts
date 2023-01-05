@@ -24,7 +24,7 @@ import MulticastObservableLike__getObserverCount from "../../../rx/__internal__/
 import MulticastObservableLike__getReplay from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay";
 import ObservableLike__multicast from "../../../rx/__internal__/ObservableLike/ObservableLike.multicast";
 import ObservableLike__scanAsync from "../../../rx/__internal__/ObservableLike/ObservableLike.scanAsync";
-import { getScheduler } from "../../../scheduling/DispatcherLike";
+import DispatcherLike__getScheduler from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.getScheduler";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DelegatingAsyncEnumerator__mixin from "../DelegatingAsyncEnumeratorLike/DelegatingAsyncEnumeratorLike.mixin";
 import AsyncEnumerableLike__lift from "./AsyncEnumerableLike.lift";
@@ -61,7 +61,7 @@ const AsyncEnumerableLike__scanAsync: ScanAsync<
         instance.obs = pipe(
           delegate,
           ObservableLike__scanAsync(reducer, initialValue),
-          ObservableLike__multicast(getScheduler(delegate)),
+          ObservableLike__multicast(DispatcherLike__getScheduler(delegate)),
         );
         return instance;
       },

@@ -3,11 +3,14 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import ReadonlyArrayLike__map from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
 import { pipe, none, getLength } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { dispose, addTo, onComplete } from '../../../util/DisposableLike.mjs';
+import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
+import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import { getScheduler } from '../../ObserverLike.mjs';
-import { notify, sourceFrom } from '../../SinkLike.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
+import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
+import SinkLike__sourceFrom from '../SinkLike/SinkLike.sourceFrom.mjs';
 import ObservableLike__allAreEnumerable from './ObservableLike.allAreEnumerable.mjs';
 import ObservableLike__allAreRunnable from './ObservableLike.allAreRunnable.mjs';
 import ObservableLike__create from './ObservableLike.create.mjs';
@@ -23,7 +26,7 @@ const ObservableLike__latest = /*@__PURE__*/ (() => {
         const isReady = observers.every(x => x.ready);
         if (isReady) {
             const result = pipe(observers, ReadonlyArrayLike__map(observer => observer.latest));
-            pipe(instance.delegate, notify(result));
+            pipe(instance.delegate, SinkLike__notify(result));
             if (mode === zipMode) {
                 for (const sub of observers) {
                     sub.ready = false;
@@ -35,7 +38,7 @@ const ObservableLike__latest = /*@__PURE__*/ (() => {
     const onCompleted = (instance) => {
         instance.completedCount++;
         if (instance.completedCount === getLength(instance.observers)) {
-            pipe(instance.delegate, dispose());
+            pipe(instance.delegate, DisposableLike__dispose());
         }
     };
     const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, DisposableLike__mixin), function LatestObserver(instance, scheduler, ctx) {
@@ -68,7 +71,7 @@ const ObservableLike__latest = /*@__PURE__*/ (() => {
             };
             const scheduler = getScheduler(delegate);
             for (const observable of observables) {
-                const innerObserver = pipe(createLatestObserver(scheduler, ctx), addTo(delegate), onComplete(onCompleteCb), sourceFrom(observable));
+                const innerObserver = pipe(createLatestObserver(scheduler, ctx), DisposableLike__addTo(delegate), DisposableLike__onComplete(onCompleteCb), SinkLike__sourceFrom(observable));
                 add(ctx, innerObserver);
             }
         };

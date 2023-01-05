@@ -23,8 +23,8 @@ import MulticastObservableLike__getObserverCount from "../../../rx/__internal__/
 import MulticastObservableLike__getReplay from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay";
 import ObservableLike__multicast from "../../../rx/__internal__/ObservableLike/ObservableLike.multicast";
 import ObservableLike__takeWhile from "../../../rx/__internal__/ObservableLike/ObservableLike.takeWhile";
-import { getScheduler } from "../../../scheduling/DispatcherLike";
-import { add } from "../../../util/DisposableLike";
+import DispatcherLike__getScheduler from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.getScheduler";
+import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DelegatingAsyncEnumerator__mixin from "../DelegatingAsyncEnumeratorLike/DelegatingAsyncEnumeratorLike.mixin";
 import AsyncEnumerableLike__liftT from "./AsyncEnumerableLike.liftT";
@@ -59,8 +59,8 @@ const AsyncEnumerableLike__takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"
           instance.obs = pipe(
             delegate,
             ObservableLike__takeWhile(predicate, { inclusive }),
-            ObservableLike__multicast(getScheduler(delegate)),
-            add(instance),
+            ObservableLike__multicast(DispatcherLike__getScheduler(delegate)),
+            DisposableLike__add(instance),
           );
           return instance;
         },

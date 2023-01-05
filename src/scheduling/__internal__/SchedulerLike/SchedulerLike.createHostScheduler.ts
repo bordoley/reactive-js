@@ -17,17 +17,15 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling";
-import { run } from "../../../scheduling/ContinuationLike";
 import { DisposableLike } from "../../../util";
-import {
-  addIgnoringChildErrors,
-  addTo,
-  create as createDisposable,
-  dispose,
-  isDisposed,
-  onDisposed,
-} from "../../../util/DisposableLike";
+import DisposableLike__addIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
+import DisposableLike__create from "../../../util/__internal__/DisposableLike/DisposableLike.create";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
+import ContinuationLike__run from "../ContinuationLike/ContinuationLike.run";
 import getCurrentTime from "./SchedulerLike.getCurrentTime";
 import isInContinuation from "./SchedulerLike.isInContinuation";
 
@@ -58,9 +56,9 @@ const scheduleImmediateWithSetImmediate = (
   continuation: ContinuationLike,
 ) => {
   const disposable = pipe(
-    createDisposable(),
-    addTo(continuation),
-    onDisposed(() => clearImmediate(immmediate)),
+    DisposableLike__create(),
+    DisposableLike__addTo(continuation),
+    DisposableLike__onDisposed(() => clearImmediate(immmediate)),
   );
   const immmediate: ReturnType<typeof setImmediate> = setImmediate(
     runContinuation,
@@ -76,9 +74,9 @@ const scheduleDelayed = (
   delay: number,
 ) => {
   const disposable = pipe(
-    createDisposable(),
-    addTo(continuation),
-    onDisposed(_ => clearTimeout(timeout)),
+    DisposableLike__create(),
+    DisposableLike__addTo(continuation),
+    DisposableLike__onDisposed(_ => clearTimeout(timeout)),
   );
 
   const timeout: ReturnType<typeof setTimeout> = setTimeout(
@@ -107,10 +105,10 @@ const runContinuation = (
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
   // clear the immediateOrTimer disposable
-  pipe(immmediateOrTimerDisposable, dispose());
+  pipe(immmediateOrTimerDisposable, DisposableLike__dispose());
   scheduler.startTime = getCurrentTime(scheduler);
   scheduler[SchedulerLike_inContinuation] = true;
-  run(continuation);
+  ContinuationLike__run(continuation);
   scheduler[SchedulerLike_inContinuation] = false;
 };
 
@@ -188,9 +186,9 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       ) {
         const delay = getDelay(options);
 
-        pipe(this, addIgnoringChildErrors(continuation));
+        pipe(this, DisposableLike__addIgnoringChildErrors(continuation));
 
-        const continuationIsDisposed = isDisposed(continuation);
+        const continuationIsDisposed = DisposableLike__isDisposed(continuation);
         if (!continuationIsDisposed && delay > 0) {
           scheduleDelayed(this, continuation, delay);
         } else if (!continuationIsDisposed) {

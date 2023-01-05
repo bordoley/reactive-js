@@ -1,7 +1,7 @@
 /// <reference types="./RunnableObservableLike.lift.d.ts" />
 import { pipeUnsafe, newInstance } from '../../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
-import { sourceFrom } from '../../SinkLike.mjs';
+import SinkLike__sourceFrom from '../SinkLike/SinkLike.sourceFrom.mjs';
 
 const RunnableObservableLike__lift = /*@__PURE__*/ (() => {
     var _a, _b;
@@ -13,7 +13,7 @@ const RunnableObservableLike__lift = /*@__PURE__*/ (() => {
             this[_b] = true;
         }
         [(_a = ObservableLike_isEnumerable, _b = ObservableLike_isRunnable, ReactiveContainerLike_sinkInto)](observer) {
-            pipeUnsafe(observer, ...this.operators, sourceFrom(this.source));
+            pipeUnsafe(observer, ...this.operators, SinkLike__sourceFrom(this.source));
         }
     }
     return (operator) => source => {

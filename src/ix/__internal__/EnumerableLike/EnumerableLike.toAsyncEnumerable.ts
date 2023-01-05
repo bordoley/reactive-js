@@ -9,10 +9,11 @@ import { sinkInto } from "../../../rx/ReactiveContainerLike";
 import ObservableLike__create from "../../../rx/__internal__/ObservableLike/ObservableLike.create";
 import ObservableLike__map from "../../../rx/__internal__/ObservableLike/ObservableLike.map";
 import ObservableLike__takeWhile from "../../../rx/__internal__/ObservableLike/ObservableLike.takeWhile";
-import { addTo } from "../../../util/DisposableLike";
-import { getCurrent, hasCurrent } from "../../EnumeratorLike";
+import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import { move } from "../../SourceLike";
 import AsyncEnumerableLike__create from "../AsyncEnumerableLike/AsyncEnumerableLike.create";
+import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
+import EnumeratorLike__hasCurrent from "../EnumeratorLike/EnumeratorLike.hasCurrent";
 import EnumerableLike__enumerate from "./EnumerableLike.enumerate";
 
 const EnumerableLike__toAsyncEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"] =
@@ -24,14 +25,16 @@ const EnumerableLike__toAsyncEnumerable: ToAsyncEnumerable<EnumerableLike>["toAs
             const enumerator = pipe(
               enumerable,
               EnumerableLike__enumerate(),
-              addTo(observer),
+              DisposableLike__addTo(observer),
             );
 
             pipe(
               observable,
               ObservableLike__map(_ => move(enumerator)),
-              ObservableLike__takeWhile<EnumeratorLike<T>>(hasCurrent),
-              ObservableLike__map(getCurrent),
+              ObservableLike__takeWhile<EnumeratorLike<T>>(
+                EnumeratorLike__hasCurrent,
+              ),
+              ObservableLike__map(EnumeratorLike__getCurrent),
               sinkInto(observer),
             );
           }),
