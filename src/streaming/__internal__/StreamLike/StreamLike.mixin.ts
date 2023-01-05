@@ -19,13 +19,12 @@ import {
   ReactiveContainerLike_sinkInto,
   SubjectLike,
 } from "../../../rx";
-import {
-  getObserverCount,
-  getReplay,
-} from "../../../rx/MulticastObservableLike";
-import { sinkInto } from "../../../rx/ReactiveContainerLike";
-import { create as createSubject, publish } from "../../../rx/SubjectLike";
+import MulticastObservableLike__getObserverCount from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getObserverCount";
+import MulticastObservableLike__getReplay from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay";
 import ObservableLike__multicast from "../../../rx/__internal__/ObservableLike/ObservableLike.multicast";
+import ReactiveContainerLike__sinkInto from "../../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto";
+import SubjectLike__create from "../../../rx/__internal__/SubjectLike/SubjectLike.create";
+import SubjectLike__publish from "../../../rx/__internal__/SubjectLike/SubjectLike.publish";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
@@ -65,7 +64,7 @@ const StreamLike__mixin: <TReq, T>() => Mixin3<
         scheduler: SchedulerLike,
         replay: number,
       ): StreamLike<TReq, T> {
-        const subject = createSubject({ replay });
+        const subject = SubjectLike__create({ replay });
 
         init(DisposableLike__delegatingMixin, instance, subject);
 
@@ -89,12 +88,12 @@ const StreamLike__mixin: <TReq, T>() => Mixin3<
       {
         get [MulticastObservableLike_observerCount](): number {
           unsafeCast<TProperties>(this);
-          return getObserverCount(this.observable);
+          return MulticastObservableLike__getObserverCount(this.observable);
         },
 
         get [MulticastObservableLike_replay](): number {
           unsafeCast<TProperties>(this);
-          return getReplay(this.observable);
+          return MulticastObservableLike__getReplay(this.observable);
         },
 
         [ObservableLike_isEnumerable]: false,
@@ -102,14 +101,14 @@ const StreamLike__mixin: <TReq, T>() => Mixin3<
         [ObservableLike_isRunnable]: false,
 
         [DispatcherLike_dispatch](this: TProperties, req: TReq) {
-          pipe(this.subject, publish(req));
+          pipe(this.subject, SubjectLike__publish(req));
         },
 
         [ReactiveContainerLike_sinkInto](
           this: TProperties,
           observer: ObserverLike<T>,
         ) {
-          pipe(this.observable, sinkInto(observer));
+          pipe(this.observable, ReactiveContainerLike__sinkInto(observer));
         },
       },
     ),

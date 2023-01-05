@@ -6,6 +6,7 @@ import ObservableLike__catchError from './__internal__/ObservableLike/Observable
 import ObservableLike__combineLatest from './__internal__/ObservableLike/ObservableLike.combineLatest.mjs';
 import ObservableLike__concat from './__internal__/ObservableLike/ObservableLike.concat.mjs';
 import ObservableLike__concatAll from './__internal__/ObservableLike/ObservableLike.concatAll.mjs';
+import ObservableLike__concatT from './__internal__/ObservableLike/ObservableLike.concatT.mjs';
 import ObservableLike__create from './__internal__/ObservableLike/ObservableLike.create.mjs';
 import ObservableLike__decodeWithCharset from './__internal__/ObservableLike/ObservableLike.decodeWithCharset.mjs';
 import ObservableLike__defer from './__internal__/ObservableLike/ObservableLike.defer.mjs';
@@ -20,6 +21,7 @@ import ObservableLike__generate from './__internal__/ObservableLike/ObservableLi
 import ObservableLike__isEnumerable from './__internal__/ObservableLike/ObservableLike.isEnumerable.mjs';
 import ObservableLike__isRunnable from './__internal__/ObservableLike/ObservableLike.isRunnable.mjs';
 import ObservableLike__keep from './__internal__/ObservableLike/ObservableLike.keep.mjs';
+import ObservableLike__keepT from './__internal__/ObservableLike/ObservableLike.keepT.mjs';
 import ObservableLike__map from './__internal__/ObservableLike/ObservableLike.map.mjs';
 import ObservableLike__mapAsync from './__internal__/ObservableLike/ObservableLike.mapAsync.mjs';
 import ObservableLike__mapT from './__internal__/ObservableLike/ObservableLike.mapT.mjs';
@@ -73,9 +75,7 @@ const combineLatestT = {
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  */
 const concat = ObservableLike__concat;
-const concatT = {
-    concat,
-};
+const concatT = ObservableLike__concatT;
 /**
  * Converts a higher-order `ObservableLike` into a first-order
  * `ObservableLike` by concatenating the inner sources in order.
@@ -127,7 +127,7 @@ const generateT = { generate };
 const isEnumerable = ObservableLike__isEnumerable;
 const isRunnable = ObservableLike__isRunnable;
 const keep = ObservableLike__keep;
-const keepT = { keep };
+const keepT = ObservableLike__keepT;
 const map = ObservableLike__map;
 const mapT = ObservableLike__mapT;
 const mapAsync = ObservableLike__mapAsync;
