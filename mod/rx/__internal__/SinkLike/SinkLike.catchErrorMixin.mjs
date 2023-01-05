@@ -7,7 +7,7 @@ import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/D
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import DisposableLike__onError from '../../../util/__internal__/DisposableLike/DisposableLike.onError.mjs';
-import { sinkInto } from '../../ReactiveContainerLike.mjs';
+import ReactiveContainerLike__sinkInto from '../ReactiveContainerLike/ReactiveContainerLike.sinkInto.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const SinkLike__catchErrorMixin = 
@@ -21,7 +21,7 @@ const SinkLike__catchErrorMixin =
             try {
                 const result = errorHandler(e.cause) || none;
                 if (isSome(result)) {
-                    pipe(result, sinkInto(delegate));
+                    pipe(result, ReactiveContainerLike__sinkInto(delegate));
                 }
                 else {
                     pipe(delegate, DisposableLike__dispose());

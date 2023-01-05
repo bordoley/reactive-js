@@ -7,7 +7,7 @@ import {
 import { CatchError, ContainerOperator } from "../../../containers";
 import { Function1, partial, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
-import { getScheduler } from "../../ObserverLike";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__catchErrorMixin from "../SinkLike/SinkLike.catchErrorMixin";
 
@@ -33,7 +33,11 @@ const HigherOrderObservableLike__catchError = <C extends ObservableLike>(
           errorHandler: Function1<unknown, ObservableLike<T> | void>,
         ): ObserverLike<T> {
           init(typedCatchErrorSink, instance, delegate, errorHandler);
-          init(typedObserverMixin, instance, getScheduler(delegate));
+          init(
+            typedObserverMixin,
+            instance,
+            ObserverLike__getScheduler(delegate),
+          );
 
           return instance;
         },

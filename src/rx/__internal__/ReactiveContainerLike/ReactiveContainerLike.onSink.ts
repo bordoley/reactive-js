@@ -3,7 +3,7 @@ import { ReactiveContainerLike, SinkLike } from "../../../rx";
 import { DisposableOrTeardown } from "../../../util";
 import DisposableLike__add from "../../../util/__internal__/DisposableLike/DisposableLike.add";
 import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
-import { sinkInto } from "../../ReactiveContainerLike";
+import ReactiveContainerLike__sinkInto from "./ReactiveContainerLike.sinkInto";
 
 const ReactiveContainerLike__onSink = <
   C extends ReactiveContainerLike<TSink>,
@@ -15,7 +15,7 @@ const ReactiveContainerLike__onSink = <
   f: Factory<DisposableOrTeardown | void>,
 ): C =>
   createReactiveContainer(sink => {
-    pipe(src, sinkInto(sink));
+    pipe(src, ReactiveContainerLike__sinkInto(sink));
 
     const disposable = f() || none;
     pipe(

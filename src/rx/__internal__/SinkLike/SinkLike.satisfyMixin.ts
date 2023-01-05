@@ -13,7 +13,7 @@ import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/D
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import { sinkInto } from "../../ReactiveContainerLike";
+import ReactiveContainerLike__sinkInto from "../ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 import SinkLike__notify from "./SinkLike.notify";
 
@@ -56,7 +56,11 @@ const SinkLike__satisfyMixin: <
         DisposableLike__addTo(delegate),
         DisposableLike__onComplete(() => {
           if (!DisposableLike__isDisposed(delegate)) {
-            pipe([defaultResult], fromArray, sinkInto(delegate));
+            pipe(
+              [defaultResult],
+              fromArray,
+              ReactiveContainerLike__sinkInto(delegate),
+            );
           }
         }),
       );

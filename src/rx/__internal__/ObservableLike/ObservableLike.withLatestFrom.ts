@@ -14,7 +14,7 @@ import DisposableLike__delegatingMixin from "../../../util/__internal__/Disposab
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import { getScheduler } from "../../ObserverLike";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__forEach from "./ObservableLike.forEach";
@@ -52,7 +52,11 @@ const ObservableLike__withLatestFrom: <TA, TB, T>(
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
           init(DisposableLike__delegatingMixin, instance, delegate);
-          init(typedObserverMixin, instance, getScheduler(delegate));
+          init(
+            typedObserverMixin,
+            instance,
+            ObserverLike__getScheduler(delegate),
+          );
 
           instance.delegate = delegate;
           instance.selector = selector;
@@ -63,7 +67,7 @@ const ObservableLike__withLatestFrom: <TA, TB, T>(
               instance.hasLatest = true;
               instance.otherLatest = next;
             }),
-            ObservableLike__subscribe(getScheduler(delegate)),
+            ObservableLike__subscribe(ObserverLike__getScheduler(delegate)),
             DisposableLike__addTo(instance),
             DisposableLike__onComplete(() => {
               if (!instance.hasLatest) {

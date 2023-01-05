@@ -21,9 +21,9 @@ import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import { getScheduler } from "../../ObserverLike";
 import ObservableLike__forEach from "../ObservableLike/ObservableLike.forEach";
 import ObservableLike__subscribe from "../ObservableLike/ObservableLike.subscribe";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__notifySink from "../SinkLike/SinkLike.notifySink";
 
@@ -60,7 +60,11 @@ const HigherOrderObservableLike__switchAll = <C extends ObservableLike>(
           delegate: ObserverLike<T>,
         ): ObserverLike<ContainerOf<C, T>> {
           init(DisposableLike__mixin, instance);
-          init(typedObserverMixin, instance, getScheduler(delegate));
+          init(
+            typedObserverMixin,
+            instance,
+            ObserverLike__getScheduler(delegate),
+          );
 
           instance.delegate = delegate;
           instance.currentRef = pipe(
@@ -90,7 +94,7 @@ const HigherOrderObservableLike__switchAll = <C extends ObservableLike>(
             this.currentRef[MutableRefLike_current] = pipe(
               next,
               ObservableLike__forEach(SinkLike__notifySink(this.delegate)),
-              ObservableLike__subscribe(getScheduler(this)),
+              ObservableLike__subscribe(ObserverLike__getScheduler(this)),
               DisposableLike__onComplete(() => {
                 if (DisposableLike__isDisposed(this)) {
                   pipe(this.delegate, DisposableLike__dispose());

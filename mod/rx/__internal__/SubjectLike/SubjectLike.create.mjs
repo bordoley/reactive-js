@@ -7,7 +7,7 @@ import DisposableLike__addIgnoringChildErrors from '../../../util/__internal__/D
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
-import { getDispatcher } from '../../ObserverLike.mjs';
+import ObserverLike__getDispatcher from '../ObserverLike/ObserverLike.getDispatcher.mjs';
 
 const SubjectLike__create = /*@__PURE__*/ (() => {
     const createSubjectInstance = createInstanceFactory(mix(include(DisposableLike__mixin), function Subject(instance, replay) {
@@ -38,7 +38,7 @@ const SubjectLike__create = /*@__PURE__*/ (() => {
                     }
                 }
                 for (const observer of this.observers) {
-                    pipe(observer, getDispatcher, DispatcherLike__dispatch(next));
+                    pipe(observer, ObserverLike__getDispatcher, DispatcherLike__dispatch(next));
                 }
             }
         },
@@ -50,7 +50,7 @@ const SubjectLike__create = /*@__PURE__*/ (() => {
                     observers.delete(observer);
                 }));
             }
-            const dispatcher = getDispatcher(observer);
+            const dispatcher = ObserverLike__getDispatcher(observer);
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.

@@ -10,9 +10,9 @@ import DisposableLike__disposed from '../../../util/__internal__/DisposableLike/
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import { getScheduler } from '../../ObserverLike.mjs';
-import { sinkInto } from '../../ReactiveContainerLike.mjs';
+import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
+import ReactiveContainerLike__sinkInto from '../ReactiveContainerLike/ReactiveContainerLike.sinkInto.mjs';
 import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
 import ObservableLike__forEach from './ObservableLike.forEach.mjs';
 import ObservableLike__lift from './ObservableLike.lift.mjs';
@@ -22,11 +22,11 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
     const createThrottleObserver = (() => {
         const typedObserverMixin = ObserverLike__mixin();
         const setupDurationSubscription = (observer, next) => {
-            pipe(observer.durationSubscription, setCurrentRef(pipe(observer.durationFunction(next), ObservableLike__forEach(observer.onNotify), ObservableLike__subscribe(getScheduler(observer)))));
+            pipe(observer.durationSubscription, setCurrentRef(pipe(observer.durationFunction(next), ObservableLike__forEach(observer.onNotify), ObservableLike__subscribe(ObserverLike__getScheduler(observer)))));
         };
         return createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function ThrottleObserver(instance, delegate, durationFunction, mode) {
             init(DisposableLike__mixin, instance);
-            init(typedObserverMixin, instance, getScheduler(delegate));
+            init(typedObserverMixin, instance, ObserverLike__getScheduler(delegate));
             instance.delegate = delegate;
             instance.durationFunction = durationFunction;
             instance.mode = mode;
@@ -44,7 +44,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
                 if (instance.mode !== "first" &&
                     instance.hasValue &&
                     !DisposableLike__isDisposed(delegate)) {
-                    pipe([instance.value], ReadonlyArrayLike__toRunnableObservable(), sinkInto(delegate));
+                    pipe([instance.value], ReadonlyArrayLike__toRunnableObservable(), ReactiveContainerLike__sinkInto(delegate));
                 }
             }));
             return instance;

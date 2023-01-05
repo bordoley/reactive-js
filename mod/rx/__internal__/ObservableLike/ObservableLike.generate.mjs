@@ -4,8 +4,8 @@ import { pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import ContinuationLike__yield_ from '../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield.mjs';
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
-import { schedule } from '../../ObserverLike.mjs';
 import EnumerableObservableLike__create from '../EnumerableObservableLike/EnumerableObservableLike.create.mjs';
+import ObserverLike__schedule from '../ObserverLike/ObserverLike.schedule.mjs';
 import RunnableObservableLike__create from '../RunnableObservableLike/RunnableObservableLike.create.mjs';
 
 const ObservableLike__generate = (generator, initialValue, options) => {
@@ -19,7 +19,7 @@ const ObservableLike__generate = (generator, initialValue, options) => {
                 ContinuationLike__yield_(options);
             }
         };
-        pipe(observer, schedule(continuation, delayStart ? options : none));
+        pipe(observer, ObserverLike__schedule(continuation, delayStart ? options : none));
     };
     return hasDelay(options)
         ? RunnableObservableLike__create(onSink)

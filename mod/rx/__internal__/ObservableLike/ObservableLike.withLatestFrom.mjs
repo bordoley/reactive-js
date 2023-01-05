@@ -7,7 +7,7 @@ import DisposableLike__delegatingMixin from '../../../util/__internal__/Disposab
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import { getScheduler } from '../../ObserverLike.mjs';
+import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
 import ObservableLike__forEach from './ObservableLike.forEach.mjs';
@@ -21,13 +21,13 @@ const ObservableLike__withLatestFrom = /*@__PURE__*/ (() => {
         const typedObserverMixin = ObserverLike__mixin();
         return createInstanceFactory(mix(include(DisposableLike__delegatingMixin, typedObserverMixin), function WithLatestFromObserver(instance, delegate, other, selector) {
             init(DisposableLike__delegatingMixin, instance, delegate);
-            init(typedObserverMixin, instance, getScheduler(delegate));
+            init(typedObserverMixin, instance, ObserverLike__getScheduler(delegate));
             instance.delegate = delegate;
             instance.selector = selector;
             pipe(other, ObservableLike__forEach(next => {
                 instance.hasLatest = true;
                 instance.otherLatest = next;
-            }), ObservableLike__subscribe(getScheduler(delegate)), DisposableLike__addTo(instance), DisposableLike__onComplete(() => {
+            }), ObservableLike__subscribe(ObserverLike__getScheduler(delegate)), DisposableLike__addTo(instance), DisposableLike__onComplete(() => {
                 if (!instance.hasLatest) {
                     pipe(instance, DisposableLike__dispose());
                 }

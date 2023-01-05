@@ -8,9 +8,9 @@ import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/D
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import { getScheduler } from '../../ObserverLike.mjs';
 import ObservableLike__forEach from '../ObservableLike/ObservableLike.forEach.mjs';
 import ObservableLike__subscribe from '../ObservableLike/ObservableLike.subscribe.mjs';
+import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import SinkLike__notifySink from '../SinkLike/SinkLike.notifySink.mjs';
 
@@ -22,7 +22,7 @@ const HigherOrderObservableLike__mergeAll = (lift) => {
                 const nextObs = observer.queue.shift();
                 if (isSome(nextObs)) {
                     observer.activeCount++;
-                    pipe(nextObs, ObservableLike__forEach(SinkLike__notifySink(observer.delegate)), ObservableLike__subscribe(getScheduler(observer)), DisposableLike__addTo(observer.delegate), DisposableLike__onComplete(observer.onDispose));
+                    pipe(nextObs, ObservableLike__forEach(SinkLike__notifySink(observer.delegate)), ObservableLike__subscribe(ObserverLike__getScheduler(observer)), DisposableLike__addTo(observer.delegate), DisposableLike__onComplete(observer.onDispose));
                 }
                 else if (DisposableLike__isDisposed(observer)) {
                     pipe(observer.delegate, DisposableLike__dispose());
@@ -31,7 +31,7 @@ const HigherOrderObservableLike__mergeAll = (lift) => {
         };
         return createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
             init(DisposableLike__mixin, instance);
-            init(typedObserverMixin, instance, getScheduler(delegate));
+            init(typedObserverMixin, instance, ObserverLike__getScheduler(delegate));
             instance.delegate = delegate;
             instance.maxBufferSize = maxBufferSize;
             instance.maxConcurrency = maxConcurrency;

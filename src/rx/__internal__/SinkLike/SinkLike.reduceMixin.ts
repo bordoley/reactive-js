@@ -12,7 +12,7 @@ import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/Dis
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import { sinkInto } from "../../ReactiveContainerLike";
+import ReactiveContainerLike__sinkInto from "../ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const SinkLike__reduceMixin: <
@@ -67,7 +67,7 @@ const SinkLike__reduceMixin: <
           pipe(
             [instance[ReduceSink_private_acc]],
             fromArray,
-            sinkInto<C, TSink, TAcc>(delegate),
+            ReactiveContainerLike__sinkInto<C, TSink, TAcc>(delegate),
           );
         }),
       );

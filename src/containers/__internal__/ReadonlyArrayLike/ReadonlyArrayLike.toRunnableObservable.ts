@@ -6,8 +6,8 @@ import {
   SinkLike_notify,
   ToRunnableObservable,
 } from "../../../rx";
-import { schedule } from "../../../rx/ObserverLike";
 import EnumerableObservableLike__create from "../../../rx/__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
+import ObserverLike__schedule from "../../../rx/__internal__/ObserverLike/ObserverLike.schedule";
 import RunnableObservableLike__create from "../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create";
 import ContinuationLike__yield_ from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
@@ -51,7 +51,10 @@ const ReadonlyArrayLike__toRunnableObservable: ToRunnableObservable<
           pipe(observer, DisposableLike__dispose());
         };
 
-        pipe(observer, schedule(continuation, delayStart ? options : none));
+        pipe(
+          observer,
+          ObserverLike__schedule(continuation, delayStart ? options : none),
+        );
       };
 
       return hasDelay(options)

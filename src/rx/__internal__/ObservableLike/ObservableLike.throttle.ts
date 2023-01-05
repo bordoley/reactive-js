@@ -30,9 +30,9 @@ import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import { getScheduler } from "../../ObserverLike";
-import { sinkInto } from "../../ReactiveContainerLike";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
+import ReactiveContainerLike__sinkInto from "../ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import SinkLike__notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__lift from "./ObservableLike.lift";
@@ -68,7 +68,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
           pipe(
             observer.durationFunction(next),
             ObservableLike__forEach(observer.onNotify),
-            ObservableLike__subscribe(getScheduler(observer)),
+            ObservableLike__subscribe(ObserverLike__getScheduler(observer)),
           ),
         ),
       );
@@ -85,7 +85,11 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
           mode: ThrottleMode,
         ): ObserverLike<T> {
           init(DisposableLike__mixin, instance);
-          init(typedObserverMixin, instance, getScheduler(delegate));
+          init(
+            typedObserverMixin,
+            instance,
+            ObserverLike__getScheduler(delegate),
+          );
 
           instance.delegate = delegate;
           instance.durationFunction = durationFunction;
@@ -120,7 +124,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
                 pipe(
                   [instance.value],
                   ReadonlyArrayLike__toRunnableObservable(),
-                  sinkInto(delegate),
+                  ReactiveContainerLike__sinkInto(delegate),
                 );
               }
             }),

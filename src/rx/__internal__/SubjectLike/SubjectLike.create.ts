@@ -29,7 +29,7 @@ import DisposableLike__addIgnoringChildErrors from "../../../util/__internal__/D
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
-import { getDispatcher } from "../../ObserverLike";
+import ObserverLike__getDispatcher from "../ObserverLike/ObserverLike.getDispatcher";
 
 const SubjectLike__create: <T>(options?: {
   replay?: number;
@@ -91,7 +91,11 @@ const SubjectLike__create: <T>(options?: {
             }
 
             for (const observer of this.observers) {
-              pipe(observer, getDispatcher, DispatcherLike__dispatch(next));
+              pipe(
+                observer,
+                ObserverLike__getDispatcher,
+                DispatcherLike__dispatch(next),
+              );
             }
           }
         },
@@ -112,7 +116,7 @@ const SubjectLike__create: <T>(options?: {
             );
           }
 
-          const dispatcher = getDispatcher(observer);
+          const dispatcher = ObserverLike__getDispatcher(observer);
 
           // The idea here is that an onSubscribe function may
           // call next from unscheduled sources such as event handlers.

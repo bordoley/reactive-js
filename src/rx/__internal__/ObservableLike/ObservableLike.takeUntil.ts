@@ -1,8 +1,8 @@
 import { Function1, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
 import DisposableLike__bindTo from "../../../util/__internal__/DisposableLike/DisposableLike.bindTo";
-import { getScheduler } from "../../ObserverLike";
 import ObserverLike__createWithDelegate from "../ObserverLike/ObserverLike.createWithDelegate";
+import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObservableLike__isEnumerable from "./ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
 import ObservableLike__lift from "./ObservableLike.lift";
@@ -20,7 +20,7 @@ const ObservableLike__takeUntil = <T>(
         pipe(
           notifier,
           ObservableLike__takeFirst<T>(),
-          ObservableLike__subscribe(getScheduler(delegate)),
+          ObservableLike__subscribe(ObserverLike__getScheduler(delegate)),
         ),
       ),
     );

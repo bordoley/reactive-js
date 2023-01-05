@@ -12,7 +12,7 @@ import { DisposableLike } from "../../../util";
 import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import { sinkInto } from "../../ReactiveContainerLike";
+import ReactiveContainerLike__sinkInto from "../ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const TakeLastSink_last = Symbol("TakeLastSink_last");
@@ -58,7 +58,11 @@ const SinkLike__takeLastMixin: <
         instance,
         DisposableLike__addTo(delegate),
         DisposableLike__onComplete(() => {
-          pipe(instance[TakeLastSink_last], fromArray, sinkInto(delegate));
+          pipe(
+            instance[TakeLastSink_last],
+            fromArray,
+            ReactiveContainerLike__sinkInto(delegate),
+          );
         }),
       );
 

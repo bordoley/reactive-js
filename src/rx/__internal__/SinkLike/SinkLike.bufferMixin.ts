@@ -12,7 +12,7 @@ import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/Dis
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
-import { sinkInto } from "../../ReactiveContainerLike";
+import ReactiveContainerLike__sinkInto from "../ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 import SinkLike__notify from "./SinkLike.notify";
 
@@ -70,7 +70,7 @@ const SinkLike__bufferMixin: <
             pipe(
               [buffer],
               fromArray,
-              sinkInto<C, TSink, readonly T[]>(
+              ReactiveContainerLike__sinkInto<C, TSink, readonly T[]>(
                 instance[DelegatingSinkLike_delegate],
               ),
             );

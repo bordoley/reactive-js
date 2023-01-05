@@ -6,7 +6,7 @@ import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/Dis
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import { sinkInto } from '../../ReactiveContainerLike.mjs';
+import ReactiveContainerLike__sinkInto from '../ReactiveContainerLike/ReactiveContainerLike.sinkInto.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const SinkLike__reduceMixin = (fromArray) => {
@@ -24,7 +24,7 @@ const SinkLike__reduceMixin = (fromArray) => {
             pipe(instance, DisposableLike__dispose({ cause }));
         }
         pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(() => {
-            pipe([instance[ReduceSink_private_acc]], fromArray, sinkInto(delegate));
+            pipe([instance[ReduceSink_private_acc]], fromArray, ReactiveContainerLike__sinkInto(delegate));
         }));
         return instance;
     }, props({

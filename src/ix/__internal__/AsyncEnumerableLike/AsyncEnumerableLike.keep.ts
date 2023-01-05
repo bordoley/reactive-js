@@ -18,12 +18,12 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import { sinkInto } from "../../../rx/ReactiveContainerLike";
 import MulticastObservableLike__getObserverCount from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getObserverCount";
 import MulticastObservableLike__getReplay from "../../../rx/__internal__/MulticastObservableLike/MulticastObservableLike.getReplay";
 import ObservableLike__forEach from "../../../rx/__internal__/ObservableLike/ObservableLike.forEach";
 import ObservableLike__keep from "../../../rx/__internal__/ObservableLike/ObservableLike.keep";
 import ObservableLike__multicast from "../../../rx/__internal__/ObservableLike/ObservableLike.multicast";
+import ReactiveContainerLike__sinkInto from "../../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import DispatcherLike__dispatch from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.dispatch";
 import DispatcherLike__getScheduler from "../../../scheduling/__internal__/DispatcherLike/DispatcherLike.getScheduler";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
@@ -84,7 +84,7 @@ const AsyncEnumerableLike__keep: Keep<AsyncEnumerableLike>["keep"] =
             this: TProperties,
             observer: ObserverLike<T>,
           ): void {
-            pipe(this.obs, sinkInto(observer));
+            pipe(this.obs, ReactiveContainerLike__sinkInto(observer));
           },
         },
       ),

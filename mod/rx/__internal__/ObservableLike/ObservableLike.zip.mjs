@@ -19,8 +19,8 @@ import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/D
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
-import { getScheduler } from '../../ObserverLike.mjs';
 import EnumeratorSinkLike__create from '../EnumeratorSinkLike/EnumeratorSinkLike.create.mjs';
+import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import RunnableObservableLike__create from '../RunnableObservableLike/RunnableObservableLike.create.mjs';
 import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
@@ -37,7 +37,7 @@ const ObservableLike__zip = /*@__PURE__*/ (() => {
     const shouldComplete = compose(ReadonlyArrayLike__forEach(EnumeratorLike__move), ReadonlyArrayLike__some(DisposableLike__isDisposed));
     const createZipObserver = createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function ZipObserver(instance, delegate, enumerators, sinkEnumerator) {
         init(DisposableLike__mixin, instance);
-        init(typedObserverMixin, instance, getScheduler(delegate));
+        init(typedObserverMixin, instance, ObserverLike__getScheduler(delegate));
         instance.delegate = delegate;
         instance.sinkEnumerator = sinkEnumerator;
         instance.enumerators = enumerators;
