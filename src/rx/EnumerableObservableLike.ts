@@ -1,11 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
-  catchErrorEnumerableObservable,
-  mergeAllEnumerableObservable,
-  scanAsyncEnumerableObservable,
-  switchAllEnumerableObservable,
-} from "../__internal__/rx/ObservableLike.higher-order";
-import {
   Buffer,
   CatchError,
   Concat,
@@ -60,8 +54,12 @@ import {
   toReadonlyArray,
   zip,
 } from "./ObservableLike";
+import EnumerableObservableLike__catchError from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.catchError";
 import EnumerableObservableLike__create from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.create";
 import EnumerableObservableLike__defer from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.defer";
+import EnumerableObservableLike__mergeAll from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.mergeAll";
+import EnumerableObservableLike__scanAsync from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.scanAsync";
+import EnumerableObservableLike__switchAll from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.switchAll";
 
 export const create = EnumerableObservableLike__create;
 
@@ -76,7 +74,7 @@ export const bufferT: Buffer<EnumerableObservableLike> = {
 };
 
 export const catchError: CatchError<EnumerableObservableLike>["catchError"] =
-  catchErrorEnumerableObservable;
+  EnumerableObservableLike__catchError;
 export const catchErrorT: CatchError<EnumerableObservableLike> = { catchError };
 
 export const concatT: Concat<EnumerableObservableLike> = {
@@ -154,7 +152,7 @@ export const mergeAll: ConcatAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = mergeAllEnumerableObservable;
+>["concatAll"] = EnumerableObservableLike__mergeAll;
 export const mergeAllT: ConcatAll<
   EnumerableObservableLike,
   {
@@ -182,7 +180,7 @@ export const scanT: Scan<EnumerableObservableLike> = {
 export const scanAsync: ScanAsync<
   EnumerableObservableLike,
   EnumerableObservableLike
->["scanAsync"] = scanAsyncEnumerableObservable;
+>["scanAsync"] = EnumerableObservableLike__scanAsync;
 export const scanAsyncT: ScanAsync<
   EnumerableObservableLike,
   EnumerableObservableLike
@@ -198,7 +196,7 @@ export const someSatisfyT: SomeSatisfy<EnumerableObservableLike> = {
 };
 
 export const switchAll: ConcatAll<EnumerableObservableLike>["concatAll"] =
-  switchAllEnumerableObservable;
+  EnumerableObservableLike__switchAll;
 export const switchAllT: ConcatAll<EnumerableObservableLike> = {
   concatAll: switchAll,
 };

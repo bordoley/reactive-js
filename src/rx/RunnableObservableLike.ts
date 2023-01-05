@@ -1,11 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/constants";
 import {
-  catchErrorRunnableObservable,
-  mergeAllRunnableObservable,
-  scanAsyncRunnableObservable,
-  switchAllRunnableObservable,
-} from "../__internal__/rx/ObservableLike.higher-order";
-import {
   Buffer,
   CatchError,
   Concat,
@@ -60,8 +54,12 @@ import {
   toReadonlyArray,
   zip,
 } from "./ObservableLike";
+import RunnableObservableLike__catchError from "./__internal__/RunnableObservableLike/RunnableObservableLike.catchError";
 import RunnableObservableLike__create from "./__internal__/RunnableObservableLike/RunnableObservableLike.create";
 import RunnableObservableLike__defer from "./__internal__/RunnableObservableLike/RunnableObservableLike.defer";
+import RunnableObservableLike__mergeAll from "./__internal__/RunnableObservableLike/RunnableObservableLike.mergeAll";
+import RunnableObservableLike__scanAsync from "./__internal__/RunnableObservableLike/RunnableObservableLike.scanAsync";
+import RunnableObservableLike__switchAll from "./__internal__/RunnableObservableLike/RunnableObservableLike.switchAll";
 
 export const create = RunnableObservableLike__create;
 
@@ -76,7 +74,7 @@ export const bufferT: Buffer<RunnableObservableLike> = {
 };
 
 export const catchError: CatchError<RunnableObservableLike>["catchError"] =
-  catchErrorRunnableObservable;
+  RunnableObservableLike__catchError;
 export const catchErrorT: CatchError<RunnableObservableLike> = { catchError };
 
 export const concatT: Concat<RunnableObservableLike> = {
@@ -155,7 +153,7 @@ export const mergeAll: ConcatAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = mergeAllRunnableObservable;
+>["concatAll"] = RunnableObservableLike__mergeAll;
 export const mergeAllT: ConcatAll<
   RunnableObservableLike,
   {
@@ -183,7 +181,7 @@ export const scanT: Scan<RunnableObservableLike> = {
 export const scanAsync: ScanAsync<
   RunnableObservableLike,
   RunnableObservableLike
->["scanAsync"] = scanAsyncRunnableObservable;
+>["scanAsync"] = RunnableObservableLike__scanAsync;
 export const scanAsyncT: ScanAsync<
   RunnableObservableLike,
   RunnableObservableLike
@@ -199,7 +197,7 @@ export const someSatisfyT: SomeSatisfy<RunnableObservableLike> = {
 };
 
 export const switchAll: ConcatAll<RunnableObservableLike>["concatAll"] =
-  switchAllRunnableObservable;
+  RunnableObservableLike__switchAll;
 export const switchAllT: ConcatAll<RunnableObservableLike> = {
   concatAll: switchAll,
 };
