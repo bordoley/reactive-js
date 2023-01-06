@@ -241,5 +241,7 @@ export const props = <TProperties>(
 ): TProperties & {
   [Object_private_initializedProperties]?: true;
 } => {
-  return o as unknown as TProperties;
+  return o as unknown as TProperties & {
+    [Object_private_initializedProperties]?: true;
+  };
 };

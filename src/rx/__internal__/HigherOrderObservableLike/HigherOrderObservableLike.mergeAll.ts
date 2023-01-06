@@ -47,7 +47,7 @@ const HigherOrderObservableLike__mergeAll = <C extends ObservableLike>(
       readonly maxBufferSize: number;
       readonly maxConcurrency: number;
       readonly onDispose: SideEffect;
-      readonly queue: ContainerOf<C, T>[];
+      readonly queue: ObservableLike<T>[];
     };
 
     const subscribeNext = <T>(
