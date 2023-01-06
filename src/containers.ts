@@ -90,7 +90,7 @@ export type ContainerOf<C extends ContainerLike, T> = C extends {
       readonly _T: () => T;
     };
 
-export type ContainerOperator<C, TA, TB> = Function1<
+export type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<
   ContainerOf<C, TA>,
   ContainerOf<C, TB>
 >;

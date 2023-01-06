@@ -149,11 +149,11 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `TA` |
-| `TB` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
 
 ___
 

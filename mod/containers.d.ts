@@ -47,7 +47,7 @@ declare type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly _C: C;
     readonly _T: () => T;
 };
-declare type ContainerOperator<C, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
+declare type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 declare type Container<C extends ContainerLike> = {
     readonly ContainerLike_type?: C;
 };
