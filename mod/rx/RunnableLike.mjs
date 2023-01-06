@@ -1,254 +1,104 @@
 /// <reference types="./RunnableLike.d.ts" />
-import { createInstanceFactory, mix, include, init } from '../__internal__/mixins.mjs';
-import ContainerLike__repeat from '../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
-import ReadonlyArrayLike__toRunnable from '../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnable.mjs';
-import StatefulContainerLike__buffer from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.buffer.mjs';
-import StatefulContainerLike__decodeWithCharset from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.decodeWithCharset.mjs';
-import StatefulContainerLike__distinctUntilChanged from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged.mjs';
-import StatefulContainerLike__forEach from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.forEach.mjs';
-import StatefulContainerLike__keep from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep.mjs';
-import StatefulContainerLike__map from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map.mjs';
-import StatefulContainerLike__reduce from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.reduce.mjs';
-import StatefulContainerLike__scan from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
-import StatefulContainerLike__skipFirst from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.skipFirst.mjs';
-import StatefulContainerLike__takeFirst from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeFirst.mjs';
-import StatefulContainerLike__takeLast from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeLast.mjs';
-import StatefulContainerLike__takeWhile from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile.mjs';
-import StatefulContainerLike__throwIfEmpty from '../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty.mjs';
-import { reactive } from '../containers/__internal__/containers.internal.mjs';
-import { pipeUnsafe, newInstance, pipe, partial, pipeLazy, none, ignore, returns, isSome, raise, identity } from '../functions.mjs';
-import { ReactiveContainerLike_sinkInto, SinkLike_notify } from '../rx.mjs';
-import { DisposableLike_exception } from '../util.mjs';
-import DisposableLike__addTo from '../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
-import DisposableLike__bindTo from '../util/__internal__/DisposableLike/DisposableLike.bindTo.mjs';
-import DisposableLike__dispose from '../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
-import DisposableLike__isDisposed from '../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
-import DelegateSinkLike__create from './__internal__/DelegatingSinkLike/DelegatingSinkLike.create.mjs';
-import DelegateSinkLike__mixin from './__internal__/DelegatingSinkLike/DelegatingSinkLike.mixin.mjs';
-import ReactiveContainerLike__onSink from './__internal__/ReactiveContainerLike/ReactiveContainerLike.onSink.mjs';
+import { returns, identity } from '../functions.mjs';
+import RunnableLike__buffer from './__internal__/RunnableLike/RunnableLike.buffer.mjs';
+import RunnableLike__catchError from './__internal__/RunnableLike/RunnableLike.catchError.mjs';
+import RunnableLike__concat from './__internal__/RunnableLike/RunnableLike.concat.mjs';
+import RunnableLike__concatAll from './__internal__/RunnableLike/RunnableLike.concatAll.mjs';
 import RunnableLike__create from './__internal__/RunnableLike/RunnableLike.create.mjs';
-import SinkLike__bufferMixin from './__internal__/SinkLike/SinkLike.bufferMixin.mjs';
-import SinkLike__catchErrorMixin from './__internal__/SinkLike/SinkLike.catchErrorMixin.mjs';
-import SinkLike__create from './__internal__/SinkLike/SinkLike.create.mjs';
-import SinkLike__decodeWithCharsetMixin from './__internal__/SinkLike/SinkLike.decodeWithCharsetMixin.mjs';
-import SinkLike__distinctUntilChangedMixin from './__internal__/SinkLike/SinkLike.distinctUntilChangedMixin.mjs';
-import SinkLike__everySatisfyMixin from './__internal__/SinkLike/SinkLike.everySatisfyMixin.mjs';
-import { SinkLike__forEachMixin } from './__internal__/SinkLike/SinkLike.forEachMixin.mjs';
-import SinkLike__keepMixin from './__internal__/SinkLike/SinkLike.keepMixin.mjs';
-import { SinkLike__mapMixin } from './__internal__/SinkLike/SinkLike.mapMixin.mjs';
-import SinkLike__pairwiseMixin from './__internal__/SinkLike/SinkLike.pairwiseMixin.mjs';
-import SinkLike__reduceMixin from './__internal__/SinkLike/SinkLike.reduceMixin.mjs';
-import SinkLike__scanMixin from './__internal__/SinkLike/SinkLike.scanMixin.mjs';
-import SinkLike__skipFirstMixin from './__internal__/SinkLike/SinkLike.skipFirstMixin.mjs';
-import SinkLike__someSatisfyMixin from './__internal__/SinkLike/SinkLike.someSatisfyMixin.mjs';
-import SinkLike__sourceFrom from './__internal__/SinkLike/SinkLike.sourceFrom.mjs';
-import SinkLike__takeFirstMixin from './__internal__/SinkLike/SinkLike.takeFirstMixin.mjs';
-import SinkLike__takeLastMixin from './__internal__/SinkLike/SinkLike.takeLastMixin.mjs';
-import SinkLike__takeWhileMixin from './__internal__/SinkLike/SinkLike.takeWhileMixin.mjs';
-import SinkLike__throwIfEmptyMixin from './__internal__/SinkLike/SinkLike.throwIfEmptyMixin.mjs';
-import { DelegatingSinkLike_delegate } from './__internal__/rx.internal.mjs';
+import RunnableLike__decodeWithCharset from './__internal__/RunnableLike/RunnableLike.decodeWithCharset.mjs';
+import RunnableLike__defer from './__internal__/RunnableLike/RunnableLike.defer.mjs';
+import RunnableLike__distinctUntilChanged from './__internal__/RunnableLike/RunnableLike.distinctUntilChanged.mjs';
+import RunnableLike__empty from './__internal__/RunnableLike/RunnableLike.empty.mjs';
+import RunnableLike__everySatisfy from './__internal__/RunnableLike/RunnableLike.everySatisfy.mjs';
+import RunnableLike__first from './__internal__/RunnableLike/RunnableLike.first.mjs';
+import RunnableLike__forEach from './__internal__/RunnableLike/RunnableLike.forEach.mjs';
+import RunnableLike__generate from './__internal__/RunnableLike/RunnableLike.generate.mjs';
+import RunnableLike__keep from './__internal__/RunnableLike/RunnableLike.keep.mjs';
+import RunnableLike__last from './__internal__/RunnableLike/RunnableLike.last.mjs';
+import RunnableLike__map from './__internal__/RunnableLike/RunnableLike.map.mjs';
+import RunnableLike__never from './__internal__/RunnableLike/RunnableLike.never.mjs';
+import RunnableLike__onRun from './__internal__/RunnableLike/RunnableLike.onRun.mjs';
+import RunnableLike__pairwise from './__internal__/RunnableLike/RunnableLike.pairwise.mjs';
+import RunnableLike__reduce from './__internal__/RunnableLike/RunnableLike.reduce.mjs';
+import RunnableLike__repeat from './__internal__/RunnableLike/RunnableLike.repeat.mjs';
+import RunnableLike__run from './__internal__/RunnableLike/RunnableLike.run.mjs';
+import RunnableLike__scan from './__internal__/RunnableLike/RunnableLike.scan.mjs';
+import RunnableLike__skipFirst from './__internal__/RunnableLike/RunnableLike.skipFirst.mjs';
+import RunnableLike__someSatisfy from './__internal__/RunnableLike/RunnableLike.someSatisfy.mjs';
+import RunnableLike__takeFirst from './__internal__/RunnableLike/RunnableLike.takeFirst.mjs';
+import RunnableLike__takeLast from './__internal__/RunnableLike/RunnableLike.takeLast.mjs';
+import RunnableLike__takeWhile from './__internal__/RunnableLike/RunnableLike.takeWhile.mjs';
+import RunnableLike__throwIfEmpty from './__internal__/RunnableLike/RunnableLike.throwIfEmpty.mjs';
+import RunnableLike__toReadonlyArray from './__internal__/RunnableLike/RunnableLike.toReadonlyArray.mjs';
 
 const create = RunnableLike__create;
-const lift = /*@__PURE__*/ (() => {
-    class LiftedRunnable {
-        constructor(src, operators) {
-            this.src = src;
-            this.operators = operators;
-        }
-        [ReactiveContainerLike_sinkInto](sink) {
-            pipeUnsafe(sink, ...this.operators, SinkLike__sourceFrom(this.src));
-        }
-    }
-    return (operator) => (runnable) => {
-        const src = runnable instanceof LiftedRunnable ? runnable.src : runnable;
-        const allFunctions = runnable instanceof LiftedRunnable
-            ? [operator, ...runnable.operators]
-            : [operator];
-        return newInstance(LiftedRunnable, src, allFunctions);
-    };
-})();
-const liftT = {
-    lift,
-    variance: reactive,
-};
-const buffer = /*@__PURE__*/ (() => {
-    const typedBufferSinkMixin = SinkLike__bufferMixin(ReadonlyArrayLike__toRunnable());
-    return pipe(createInstanceFactory(typedBufferSinkMixin), StatefulContainerLike__buffer(liftT));
-})();
+const buffer = RunnableLike__buffer;
 const bufferT = { buffer };
-const catchError = 
-/*@__PURE__*/ (() => {
-    const createCatchErrorObserver = (() => createInstanceFactory(SinkLike__catchErrorMixin()))();
-    return (errorHandler => pipe(createCatchErrorObserver, partial(errorHandler), lift));
-})();
+const catchError = RunnableLike__catchError;
 const catchErrorT = { catchError };
-const concat = (...runnables) => pipe(runnables, ReadonlyArrayLike__toRunnable(), concatAll());
+const concat = RunnableLike__concat;
 const concatT = {
     concat,
 };
-const concatAll = /*@__PURE__*/ (() => {
-    const typedDelegatingSinkMixin = DelegateSinkLike__mixin();
-    return pipeLazy(createInstanceFactory(mix(include(typedDelegatingSinkMixin), function RunnableConcatAll(instance, delegate) {
-        init(typedDelegatingSinkMixin, instance, delegate);
-        pipe(instance, DisposableLike__bindTo(delegate));
-        return instance;
-    }, {}, {
-        [SinkLike_notify](next) {
-            const { [DelegatingSinkLike_delegate]: delegate } = this;
-            pipe(DelegateSinkLike__create(delegate), DisposableLike__addTo(this), SinkLike__sourceFrom(next), DisposableLike__dispose());
-        },
-    })), lift);
-})();
+const concatAll = RunnableLike__concatAll;
 const concatAllT = {
     concatAll,
 };
-const decodeWithCharset = 
-/*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = SinkLike__decodeWithCharsetMixin(ReadonlyArrayLike__toRunnable());
-    return pipe(createInstanceFactory(typedDecodeWithCharsetMixin), StatefulContainerLike__decodeWithCharset(liftT));
-})();
+const decodeWithCharset = RunnableLike__decodeWithCharset;
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
-const defer = f => create(sink => {
-    f()[ReactiveContainerLike_sinkInto](sink);
-});
+const defer = RunnableLike__defer;
 const deferT = { defer };
-const distinctUntilChanged = 
-/*@__PURE__*/ (() => {
-    const typedDistinctUntilChangedSinkMixin = SinkLike__distinctUntilChangedMixin();
-    return pipe(createInstanceFactory(typedDistinctUntilChangedSinkMixin), StatefulContainerLike__distinctUntilChanged(liftT));
-})();
+const distinctUntilChanged = RunnableLike__distinctUntilChanged;
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const empty = () => create(sink => {
-    pipe(sink, DisposableLike__dispose());
-});
+const empty = RunnableLike__empty;
 const emptyT = { empty };
-const everySatisfy = 
-/*@__PURE__*/ (() => {
-    const typedEverySatisfySinkMixin = SinkLike__everySatisfyMixin(ReadonlyArrayLike__toRunnable());
-    return (predicate) => pipe(createInstanceFactory(typedEverySatisfySinkMixin), partial(predicate), lift);
-})();
+const everySatisfy = RunnableLike__everySatisfy;
 const everySatisfyT = { everySatisfy };
-const first = () => src => {
-    let result = none;
-    pipe(src, takeFirst(), forEach(next => {
-        result = next;
-    }), run());
-    return result;
-};
-const forEach = /*@__PURE__*/ (() => {
-    const typedForEachSinkMixin = SinkLike__forEachMixin();
-    return pipe(createInstanceFactory(typedForEachSinkMixin), StatefulContainerLike__forEach(liftT));
-})();
+const first = RunnableLike__first;
+const forEach = RunnableLike__forEach;
 const forEachT = { forEach };
-const generate = (generator, initialValue) => create((sink) => {
-    let acc = initialValue();
-    while (!DisposableLike__isDisposed(sink)) {
-        acc = generator(acc);
-        sink[SinkLike_notify](acc);
-    }
-});
+const generate = RunnableLike__generate;
 const generateT = {
     generate,
 };
-const keep = /*@__PURE__*/ (() => {
-    const typedKeepSinkMixin = SinkLike__keepMixin();
-    return pipe(createInstanceFactory(typedKeepSinkMixin), StatefulContainerLike__keep(liftT));
-})();
+const keep = RunnableLike__keep;
 const keepT = { keep };
-const last = () => src => {
-    let result = none;
-    pipe(src, forEach(next => {
-        result = next;
-    }), run());
-    return result;
-};
-const map = /*@__PURE__*/ (() => {
-    const typedMapSinkMixin = SinkLike__mapMixin();
-    return pipe(createInstanceFactory(typedMapSinkMixin), StatefulContainerLike__map(liftT));
-})();
+const last = RunnableLike__last;
+const map = RunnableLike__map;
 const mapT = { map };
-const never = () => create(ignore);
+const never = RunnableLike__never;
 const neverT = {
     never: never,
 };
-const onRun = (f) => (runnable) => ReactiveContainerLike__onSink(create, runnable, f);
-const pairwise = /*@__PURE__*/ (() => {
-    const typedPairwiseSinkMixin = SinkLike__pairwiseMixin();
-    return pipe(createInstanceFactory(typedPairwiseSinkMixin), lift, returns);
-})();
+const onRun = RunnableLike__onRun;
+const pairwise = RunnableLike__pairwise;
 const pairwiseT = { pairwise };
-const reduce = /*@__PURE__*/ (() => {
-    const typedReduceSinkMixin = SinkLike__reduceMixin(ReadonlyArrayLike__toRunnable());
-    return pipe(createInstanceFactory(typedReduceSinkMixin), StatefulContainerLike__reduce(liftT));
-})();
+const reduce = RunnableLike__reduce;
 const reduceT = { reduce };
-const repeat = /*@__PURE__*/ (() => {
-    return ContainerLike__repeat((delegate, predicate) => create(sink => {
-        let count = 0;
-        do {
-            pipe(DelegateSinkLike__create(sink), DisposableLike__addTo(sink), SinkLike__sourceFrom(delegate), DisposableLike__dispose());
-            count++;
-        } while (!DisposableLike__isDisposed(sink) && predicate(count));
-    }));
-})();
+const repeat = RunnableLike__repeat;
 const repeatT = { repeat };
-const run = () => (runnable) => pipe(SinkLike__create(), SinkLike__sourceFrom(runnable), DisposableLike__dispose(), ({ [DisposableLike_exception]: error }) => {
-    if (isSome(error)) {
-        raise(error.cause);
-    }
-});
-const scan = /*@__PURE__*/ (() => {
-    const typedScanSinkMixin = SinkLike__scanMixin();
-    return pipe(createInstanceFactory(typedScanSinkMixin), StatefulContainerLike__scan(liftT));
-})();
+const run = RunnableLike__run;
+const scan = RunnableLike__scan;
 const scanT = { scan };
-const skipFirst = /*@__PURE__*/ (() => {
-    const typedSkipFirstSinkMixin = SinkLike__skipFirstMixin();
-    return pipe(createInstanceFactory(typedSkipFirstSinkMixin), StatefulContainerLike__skipFirst(liftT));
-})();
+const skipFirst = RunnableLike__skipFirst;
 const skipFirstT = { skipFirst };
-const someSatisfy = 
-/*@__PURE__*/ (() => {
-    const typedSomeSatisfySinkMixin = SinkLike__someSatisfyMixin(ReadonlyArrayLike__toRunnable());
-    return (predicate) => pipe(createInstanceFactory(typedSomeSatisfySinkMixin), partial(predicate), lift);
-})();
+const someSatisfy = RunnableLike__someSatisfy;
 const someSatisfyT = { someSatisfy };
-const takeFirst = /*@__PURE__*/ (() => {
-    const typedTakeFirstSinkMixin = SinkLike__takeFirstMixin();
-    return pipe(createInstanceFactory(typedTakeFirstSinkMixin), StatefulContainerLike__takeFirst({
-        ...liftT,
-    }));
-})();
+const takeFirst = RunnableLike__takeFirst;
 const takeFirstT = { takeFirst };
-const takeLast = /*@__PURE__*/ (() => {
-    const typedTakeLastSinkMixin = SinkLike__takeLastMixin(ReadonlyArrayLike__toRunnable());
-    return pipe(createInstanceFactory(typedTakeLastSinkMixin), StatefulContainerLike__takeLast({
-        ...liftT,
-    }));
-})();
+const takeLast = RunnableLike__takeLast;
 const takeLastT = { takeLast };
-const takeWhile = /*@__PURE__*/ (() => {
-    const typedTakeWhileSinkMixin = SinkLike__takeWhileMixin();
-    return pipe(createInstanceFactory(typedTakeWhileSinkMixin), StatefulContainerLike__takeWhile(liftT));
-})();
+const takeWhile = RunnableLike__takeWhile;
 const takeWhileT = { takeWhile };
-const throwIfEmpty = 
-/*@__PURE__*/ (() => {
-    const typedThrowIfEmptySinkMixin = SinkLike__throwIfEmptyMixin();
-    return pipe(createInstanceFactory(typedThrowIfEmptySinkMixin), StatefulContainerLike__throwIfEmpty(liftT));
-})();
+const throwIfEmpty = RunnableLike__throwIfEmpty;
 const throwIfEmptyT = {
     throwIfEmpty,
 };
-const toReadonlyArray = () => (runnable) => {
-    const result = [];
-    pipe(runnable, forEach(x => result.push(x)), run());
-    return result;
-};
+const toReadonlyArray = RunnableLike__toReadonlyArray;
 const toReadonlyArrayT = {
     toReadonlyArray,
 };
