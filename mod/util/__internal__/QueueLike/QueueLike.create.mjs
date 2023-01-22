@@ -1,5 +1,6 @@
-/// <reference types="./QueueLike.d.ts" />
-import { floor, getLength, isSome, none, newInstance } from '../../functions.mjs';
+/// <reference types="./QueueLike.create.d.ts" />
+import { floor, getLength, isSome, none, newInstance } from '../../../functions.mjs';
+import { QueueLike_count, QueueLike_clear, QueueLike_peek, QueueLike_pop, QueueLike_push } from '../util.internal.mjs';
 
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const siftDown = (queue, item) => {
@@ -46,16 +47,16 @@ class PriorityQueueImpl {
         this.compare = compare;
         this.values = [];
     }
-    get count() {
+    get [QueueLike_count]() {
         return getLength(this.values);
     }
-    clear() {
+    [QueueLike_clear]() {
         this.values.length = 0;
     }
-    peek() {
+    [QueueLike_peek]() {
         return this.values[0];
     }
-    pop() {
+    [QueueLike_pop]() {
         const { values } = this;
         const length = getLength(values);
         if (length === 0) {
@@ -72,12 +73,12 @@ class PriorityQueueImpl {
             return first;
         }
     }
-    push(item) {
+    [QueueLike_push](item) {
         const { values } = this;
         values.push(item);
         siftUp(this, item);
     }
 }
-const createPriorityQueue = (comparator) => newInstance(PriorityQueueImpl, comparator);
+const QueueLike__create = (comparator) => newInstance(PriorityQueueImpl, comparator);
 
-export { createPriorityQueue };
+export { QueueLike__create as default };

@@ -1,7 +1,5 @@
 /// <reference types="./ObservableLike.timeout.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { disposableRefMixin } from '../../../__internal__/util/DisposableRefLike.mjs';
-import { MutableRefLike_current, getCurrentRef } from '../../../__internal__/util/MutableRefLike.mjs';
 import ContainerLike__throws from '../../../containers/__internal__/ContainerLike/ContainerLike.throws.mjs';
 import ReadonlyArrayLike__toRunnableObservable from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { pipe, none, returns, isNumber, partial } from '../../../functions.mjs';
@@ -9,6 +7,9 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__disposed from '../../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
+import DisposableRefLike__mixin from '../../../util/__internal__/DisposableRefLike/DisposableRefLike.mixin.mjs';
+import MutableRefLike__get from '../../../util/__internal__/MutableRefLike/MutableRefLike.get.mjs';
+import { MutableRefLike_current } from '../../../util/__internal__/util.internal.mjs';
 import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
@@ -20,7 +21,7 @@ import ObservableLike__subscribe from './ObservableLike.subscribe.mjs';
 
 const ObservableLike__timeout = /*@__PURE__*/ (() => {
     const timeoutError = Symbol("ObservableLike.timeout.error");
-    const typedDisposableRefMixin = disposableRefMixin();
+    const typedDisposableRefMixin = DisposableRefLike__mixin();
     const typedObserverMixin = ObserverLike__mixin();
     const setupDurationSubscription = (observer) => {
         observer[MutableRefLike_current] = pipe(observer.duration, ObservableLike__subscribe(ObserverLike__getScheduler(observer.delegate)));
@@ -38,7 +39,7 @@ const ObservableLike__timeout = /*@__PURE__*/ (() => {
         duration: none,
     }), {
         [SinkLike_notify](next) {
-            pipe(this, getCurrentRef, DisposableLike__dispose());
+            pipe(this, MutableRefLike__get, DisposableLike__dispose());
             pipe(this.delegate, SinkLike__notify(next));
         },
     }));

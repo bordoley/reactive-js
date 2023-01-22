@@ -1,10 +1,7 @@
 /// <reference types="./QueueSchedulerLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../../__internal__/constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../../__internal__/mixins.mjs';
-import { createPriorityQueue } from '../../__internal__/scheduling/QueueLike.mjs';
 import { getDelay } from '../../__internal__/scheduling/SchedulerLike.options.mjs';
-import { disposableRefMixin } from '../../__internal__/util/DisposableRefLike.mjs';
-import { MutableRefLike_current } from '../../__internal__/util/MutableRefLike.mjs';
 import { isNone, none, isSome, max, pipe, unsafeCast } from '../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
 import EnumeratorLike__getCurrent from '../../ix/__internal__/EnumeratorLike/EnumeratorLike.getCurrent.mjs';
@@ -17,6 +14,12 @@ import DisposableLike__addIgnoringChildErrors from '../../util/__internal__/Disp
 import DisposableLike__disposed from '../../util/__internal__/DisposableLike/DisposableLike.disposed.mjs';
 import DisposableLike__isDisposed from '../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import DisposableRefLike__mixin from '../../util/__internal__/DisposableRefLike/DisposableRefLike.mixin.mjs';
+import QueueLike__create from '../../util/__internal__/QueueLike/QueueLike.create.mjs';
+import QueueLike__peek from '../../util/__internal__/QueueLike/QueueLike.peek.mjs';
+import QueueLike__pop from '../../util/__internal__/QueueLike/QueueLike.pop.mjs';
+import QueueLike__push from '../../util/__internal__/QueueLike/QueueLike.push.mjs';
+import { MutableRefLike_current } from '../../util/__internal__/util.internal.mjs';
 import ContinuationLike__run from './ContinuationLike/ContinuationLike.run.mjs';
 import ContinuationLike__yield_ from './ContinuationLike/ContinuationLike.yield.mjs';
 import SchedulerLike__getCurrentTime from './SchedulerLike/SchedulerLike.getCurrentTime.mjs';
@@ -42,7 +45,7 @@ const create =
         const { delayed, queue } = instance;
         const now = SchedulerLike__getCurrentTime(instance.host);
         while (true) {
-            const task = delayed.peek();
+            const task = QueueLike__peek(delayed);
             if (isNone(task)) {
                 break;
             }
@@ -50,23 +53,23 @@ const create =
             if (task.dueTime > now && !taskIsDispose) {
                 break;
             }
-            delayed.pop();
+            QueueLike__pop(delayed);
             if (!taskIsDispose) {
-                queue.push(task);
+                QueueLike__push(queue, task);
             }
         }
         let task = none;
         while (true) {
-            task = queue.peek();
+            task = QueueLike__peek(queue);
             if (isNone(task)) {
                 break;
             }
             if (!DisposableLike__isDisposed(task.continuation)) {
                 break;
             }
-            queue.pop();
+            QueueLike__pop(queue);
         }
-        return task !== null && task !== void 0 ? task : delayed.peek();
+        return task !== null && task !== void 0 ? task : QueueLike__peek(delayed);
     };
     const priorityShouldYield = (instance, next) => {
         const { [EnumeratorLike_current]: current } = instance;
@@ -105,14 +108,14 @@ const create =
         instance.hostContinuation = continuation;
         instance[MutableRefLike_current] = pipe(instance.host, SchedulerLike__schedule(continuation, { delay }));
     };
-    const typedDisposableRefMixin = disposableRefMixin();
+    const typedDisposableRefMixin = DisposableRefLike__mixin();
     const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin();
     return createInstanceFactory(mix(include(DisposableLike__mixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
         init(DisposableLike__mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(typedDisposableRefMixin, instance, DisposableLike__disposed);
-        instance.delayed = createPriorityQueue(delayedComparator);
-        instance.queue = createPriorityQueue(taskComparator);
+        instance.delayed = QueueLike__create(delayedComparator);
+        instance.queue = QueueLike__create(taskComparator);
         instance.host = host;
         return instance;
     }, props({
@@ -148,7 +151,7 @@ const create =
         [SourceLike_move]() {
             // First fast forward through disposed tasks.
             peek(this);
-            const task = this.queue.pop();
+            const task = QueueLike__pop(this.queue);
             if (isSome(task)) {
                 this[EnumeratorLike_current] = task;
             }
@@ -187,7 +190,7 @@ const create =
                     };
                 const { delayed, queue } = this;
                 const targetQueue = dueTime > now ? delayed : queue;
-                targetQueue.push(task);
+                QueueLike__push(targetQueue, task);
                 scheduleOnHost(this);
             }
         },

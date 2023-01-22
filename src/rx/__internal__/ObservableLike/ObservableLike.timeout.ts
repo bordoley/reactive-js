@@ -6,12 +6,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { disposableRefMixin } from "../../../__internal__/util/DisposableRefLike";
-import {
-  MutableRefLike,
-  MutableRefLike_current,
-  getCurrentRef,
-} from "../../../__internal__/util/MutableRefLike";
 import ContainerLike__throws from "../../../containers/__internal__/ContainerLike/ContainerLike.throws";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import { isNumber, none, partial, pipe, returns } from "../../../functions";
@@ -20,6 +14,12 @@ import { DisposableLike } from "../../../util";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/DisposableLike.disposed";
+import DisposableRefLike__mixin from "../../../util/__internal__/DisposableRefLike/DisposableRefLike.mixin";
+import MutableRefLike__get from "../../../util/__internal__/MutableRefLike/MutableRefLike.get";
+import {
+  MutableRefLike,
+  MutableRefLike_current,
+} from "../../../util/__internal__/util.internal";
 import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__notify from "../SinkLike/SinkLike.notify";
@@ -32,7 +32,7 @@ import ObservableLike__subscribe from "./ObservableLike.subscribe";
 const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
   const timeoutError = Symbol("ObservableLike.timeout.error");
 
-  const typedDisposableRefMixin = disposableRefMixin();
+  const typedDisposableRefMixin = DisposableRefLike__mixin();
   const typedObserverMixin = ObserverLike__mixin();
 
   type TProperties = {
@@ -86,7 +86,7 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
           this: TProperties & MutableRefLike<DisposableLike>,
           next: T,
         ) {
-          pipe(this, getCurrentRef, DisposableLike__dispose());
+          pipe(this, MutableRefLike__get, DisposableLike__dispose());
           pipe(this.delegate, SinkLike__notify(next));
         },
       },

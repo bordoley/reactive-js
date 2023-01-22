@@ -6,12 +6,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { disposableRefMixin } from "../../../__internal__/util/DisposableRefLike";
-import {
-  MutableRefLike,
-  getCurrentRef,
-  setCurrentRef,
-} from "../../../__internal__/util/MutableRefLike";
 import { ConcatAll } from "../../../containers";
 import { none, pipe, returns } from "../../../functions";
 import {
@@ -25,6 +19,10 @@ import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/D
 import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/DisposableLike.disposed";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableRefLike__mixin from "../../../util/__internal__/DisposableRefLike/DisposableRefLike.mixin";
+import MutableRefLike__get from "../../../util/__internal__/MutableRefLike/MutableRefLike.get";
+import MutableRefLike__set from "../../../util/__internal__/MutableRefLike/MutableRefLike.set";
+import { MutableRefLike } from "../../../util/__internal__/util.internal";
 import EnumeratorLike__getCurrent from "../EnumeratorLike/EnumeratorLike.getCurrent";
 import EnumeratorLike__move from "../EnumeratorLike/EnumeratorLike.move";
 import MutableEnumeratorLike__mixin from "../MutableEnumeratorLike/MutableEnumeratorLike.mixin";
@@ -35,7 +33,8 @@ import EnumerableLike__lift from "./EnumerableLike.lift";
 const EnumerableLike__concatAll: ConcatAll<EnumerableLike>["concatAll"] =
   /*@__PURE__*/ (<T>() => {
     const typedMutableEnumeratorMixin = MutableEnumeratorLike__mixin<T>();
-    const typedDisposableRefMixin = disposableRefMixin<EnumeratorLike<T>>();
+    const typedDisposableRefMixin =
+      DisposableRefLike__mixin<EnumeratorLike<T>>();
 
     type TProperties = {
       readonly delegate: EnumeratorLike<EnumerableLike<T>>;
@@ -74,7 +73,7 @@ const EnumerableLike__concatAll: ConcatAll<EnumerableLike>["concatAll"] =
                 MutableRefLike<EnumeratorLike<T>>,
             ) {
               const { delegate } = this;
-              const innerEnumerator = getCurrentRef(this);
+              const innerEnumerator = MutableRefLike__get(this);
 
               if (
                 DisposableLike__isDisposed(innerEnumerator) &&
@@ -85,11 +84,13 @@ const EnumerableLike__concatAll: ConcatAll<EnumerableLike>["concatAll"] =
                   EnumeratorLike__getCurrent,
                   EnumerableLike__enumerate(),
                 );
-                pipe(this, setCurrentRef(next));
+                pipe(this, MutableRefLike__set(next));
               }
 
-              while (!pipe(this, getCurrentRef, DisposableLike__isDisposed)) {
-                const innerEnumerator = getCurrentRef(this);
+              while (
+                !pipe(this, MutableRefLike__get, DisposableLike__isDisposed)
+              ) {
+                const innerEnumerator = MutableRefLike__get(this);
                 if (EnumeratorLike__move(innerEnumerator)) {
                   this[EnumeratorLike_current] =
                     EnumeratorLike__getCurrent(innerEnumerator);
@@ -100,7 +101,7 @@ const EnumerableLike__concatAll: ConcatAll<EnumerableLike>["concatAll"] =
                     EnumeratorLike__getCurrent,
                     EnumerableLike__enumerate(),
                   );
-                  pipe(this, setCurrentRef(next));
+                  pipe(this, MutableRefLike__set(next));
                 } else {
                   pipe(this, DisposableLike__dispose());
                 }

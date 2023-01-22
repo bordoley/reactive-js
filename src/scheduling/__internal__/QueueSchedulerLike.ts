@@ -7,16 +7,7 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins";
-import {
-  QueueLike,
-  createPriorityQueue,
-} from "../../__internal__/scheduling/QueueLike";
 import { getDelay } from "../../__internal__/scheduling/SchedulerLike.options";
-import {
-  DisposableRefLike,
-  disposableRefMixin,
-} from "../../__internal__/util/DisposableRefLike";
-import { MutableRefLike_current } from "../../__internal__/util/MutableRefLike";
 import {
   Function1,
   Optional,
@@ -57,6 +48,16 @@ import DisposableLike__addIgnoringChildErrors from "../../util/__internal__/Disp
 import DisposableLike__disposed from "../../util/__internal__/DisposableLike/DisposableLike.disposed";
 import DisposableLike__isDisposed from "../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import DisposableRefLike__mixin from "../../util/__internal__/DisposableRefLike/DisposableRefLike.mixin";
+import QueueLike__create from "../../util/__internal__/QueueLike/QueueLike.create";
+import QueueLike__peek from "../../util/__internal__/QueueLike/QueueLike.peek";
+import QueueLike__pop from "../../util/__internal__/QueueLike/QueueLike.pop";
+import QueueLike__push from "../../util/__internal__/QueueLike/QueueLike.push";
+import {
+  DisposableRefLike,
+  MutableRefLike_current,
+  QueueLike,
+} from "../../util/__internal__/util.internal";
 import ContinuationLike__run from "./ContinuationLike/ContinuationLike.run";
 import yield_ from "./ContinuationLike/ContinuationLike.yield";
 import getCurrentTime from "./SchedulerLike/SchedulerLike.getCurrentTime";
@@ -110,7 +111,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       const now = getCurrentTime(instance.host);
 
       while (true) {
-        const task = delayed.peek();
+        const task = QueueLike__peek(delayed);
 
         if (isNone(task)) {
           break;
@@ -121,16 +122,16 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           break;
         }
 
-        delayed.pop();
+        QueueLike__pop(delayed);
 
         if (!taskIsDispose) {
-          queue.push(task);
+          QueueLike__push(queue, task);
         }
       }
 
       let task: Optional<QueueTask> = none;
       while (true) {
-        task = queue.peek();
+        task = QueueLike__peek(queue);
 
         if (isNone(task)) {
           break;
@@ -140,10 +141,10 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           break;
         }
 
-        queue.pop();
+        QueueLike__pop(queue);
       }
 
-      return task ?? delayed.peek();
+      return task ?? QueueLike__peek(delayed);
     };
 
     const priorityShouldYield = (
@@ -207,7 +208,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       );
     };
 
-    const typedDisposableRefMixin = disposableRefMixin();
+    const typedDisposableRefMixin = DisposableRefLike__mixin();
     const typedMutableEnumeratorMixin =
       MutableEnumeratorLike__mixin<QueueTask>();
 
@@ -247,8 +248,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           init(typedMutableEnumeratorMixin, instance);
           init(typedDisposableRefMixin, instance, DisposableLike__disposed);
 
-          instance.delayed = createPriorityQueue(delayedComparator);
-          instance.queue = createPriorityQueue(taskComparator);
+          instance.delayed = QueueLike__create(delayedComparator);
+          instance.queue = QueueLike__create(taskComparator);
           instance.host = host;
 
           return instance;
@@ -298,7 +299,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           ): void {
             // First fast forward through disposed tasks.
             peek(this);
-            const task = this.queue.pop();
+            const task = QueueLike__pop(this.queue);
 
             if (isSome(task)) {
               this[EnumeratorLike_current] = task;
@@ -348,7 +349,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
 
               const { delayed, queue } = this;
               const targetQueue = dueTime > now ? delayed : queue;
-              targetQueue.push(task);
+              QueueLike__push(targetQueue, task);
 
               scheduleOnHost(this);
             }

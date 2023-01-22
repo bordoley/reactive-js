@@ -1,12 +1,19 @@
 import {
   Comparator,
-  Optional,
   floor,
   getLength,
   isSome,
   newInstance,
   none,
-} from "../../functions";
+} from "../../../functions";
+import {
+  QueueLike,
+  QueueLike_clear,
+  QueueLike_count,
+  QueueLike_peek,
+  QueueLike_pop,
+  QueueLike_push,
+} from "../util.internal";
 
 const computeParentIndex = (index: number) => floor((index - 1) / 2);
 
@@ -58,33 +65,24 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
   }
 };
 
-export interface QueueLike<T> {
-  readonly count: number;
-
-  clear(): void;
-  peek(): Optional<T>;
-  pop(): Optional<T>;
-  push(item: T): void;
-}
-
 class PriorityQueueImpl<T> implements QueueLike<T> {
   readonly values: T[] = [];
 
   constructor(readonly compare: Comparator<T>) {}
 
-  get count(): number {
+  get [QueueLike_count](): number {
     return getLength(this.values);
   }
 
-  clear() {
+  [QueueLike_clear]() {
     this.values.length = 0;
   }
 
-  peek() {
+  [QueueLike_peek]() {
     return this.values[0];
   }
 
-  pop() {
+  [QueueLike_pop]() {
     const { values } = this;
     const length = getLength(values);
     if (length === 0) {
@@ -102,13 +100,14 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
     }
   }
 
-  push(item: T) {
+  [QueueLike_push](item: T) {
     const { values } = this;
     values.push(item);
     siftUp(this, item);
   }
 }
 
-export const createPriorityQueue = <T>(
-  comparator: Comparator<T>,
-): QueueLike<T> => newInstance(PriorityQueueImpl, comparator);
+const QueueLike__create = <T>(comparator: Comparator<T>): QueueLike<T> =>
+  newInstance(PriorityQueueImpl, comparator);
+
+export default QueueLike__create;

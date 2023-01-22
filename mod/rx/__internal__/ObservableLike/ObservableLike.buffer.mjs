@@ -1,8 +1,6 @@
 /// <reference types="./ObservableLike.buffer.d.ts" />
 import { MAX_SAFE_INTEGER } from '../../../__internal__/constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { createDisposableRef } from '../../../__internal__/util/DisposableRefLike.mjs';
-import { MutableRefLike_current } from '../../../__internal__/util/MutableRefLike.mjs';
 import ReadonlyArrayLike__toRunnableObservable from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { pipe, isEmpty, none, getLength, isNumber, max } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
@@ -12,6 +10,8 @@ import DisposableLike__disposed from '../../../util/__internal__/DisposableLike/
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
+import DisposableRefLike__create from '../../../util/__internal__/DisposableRefLike/DisposableRefLike.create.mjs';
+import { MutableRefLike_current } from '../../../util/__internal__/util.internal.mjs';
 import EnumerableObservableLike__never from '../EnumerableObservableLike/EnumerableObservableLike.never.mjs';
 import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
@@ -29,7 +29,7 @@ const ObservableLike__buffer = /*@__PURE__*/ (() => {
         instance.buffer = [];
         instance.delegate = delegate;
         instance.durationFunction = durationFunction;
-        instance.durationSubscription = createDisposableRef(DisposableLike__disposed);
+        instance.durationSubscription = DisposableRefLike__create(DisposableLike__disposed);
         instance.maxBufferSize = maxBufferSize;
         pipe(instance, DisposableLike__onComplete(() => {
             const { buffer } = instance;
