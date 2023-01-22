@@ -1,7 +1,6 @@
 /// <reference types="./VirtualTimeSchedulerLike.create.d.ts" />
 import { MAX_SAFE_INTEGER } from '../../../__internal__/constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { createPriorityQueue } from '../../../__internal__/scheduling/QueueLike.mjs';
 import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { none, unsafeCast, pipe, isSome } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
@@ -13,6 +12,9 @@ import DisposableLike__addIgnoringChildErrors from '../../../util/__internal__/D
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import QueueLike__create from '../../../util/__internal__/QueueLike/QueueLike.create.mjs';
+import QueueLike__pop from '../../../util/__internal__/QueueLike/QueueLike.pop.mjs';
+import QueueLike__push from '../../../util/__internal__/QueueLike/QueueLike.push.mjs';
 import ContinuationLike__run from '../ContinuationLike/ContinuationLike.run.mjs';
 import SchedulerLike__getCurrentTime from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 
@@ -28,7 +30,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
     init(DisposableLike__mixin, instance);
     init(typedMutableEnumeratorMixin, instance);
     instance.maxMicroTaskTicks = maxMicroTaskTicks;
-    instance.taskQueue = createPriorityQueue(comparator);
+    instance.taskQueue = QueueLike__create(comparator);
     return instance;
 }, props({
     [SchedulerLike_inContinuation]: false,
@@ -67,7 +69,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         const delay = getDelay(options);
         pipe(this, DisposableLike__addIgnoringChildErrors(continuation));
         if (!DisposableLike__isDisposed(continuation)) {
-            this.taskQueue.push({
+            QueueLike__push(this.taskQueue, {
                 id: this.taskIDCount++,
                 dueTime: SchedulerLike__getCurrentTime(this) + delay,
                 continuation,
@@ -79,7 +81,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         if (DisposableLike__isDisposed(this)) {
             return;
         }
-        const task = taskQueue.pop();
+        const task = QueueLike__pop(taskQueue);
         if (isSome(task)) {
             this[EnumeratorLike_current] = task;
         }

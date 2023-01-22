@@ -1,6 +1,9 @@
 /// <reference types="./queues.test.d.ts" />
-import { createPriorityQueue } from '../../__internal__/scheduling/QueueLike.mjs';
 import { newInstance, floor, pipe } from '../../functions.mjs';
+import QueueLike__count from '../../util/__internal__/QueueLike/QueueLike.count.mjs';
+import QueueLike__create from '../../util/__internal__/QueueLike/QueueLike.create.mjs';
+import QueueLike__pop from '../../util/__internal__/QueueLike/QueueLike.pop.mjs';
+import QueueLike__push from '../../util/__internal__/QueueLike/QueueLike.push.mjs';
 import { testModule, test as createTest, expectArrayEquals } from '../testing.mjs';
 
 const compare = (a, b) => a - b;
@@ -22,14 +25,14 @@ const makeShuffledArray = (n) => {
     return result;
 };
 testModule("priority queue", createTest("push", () => {
-    const queue = createPriorityQueue(compare);
+    const queue = QueueLike__create(compare);
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray.length; i++) {
-        queue.push(shuffledArray[i]);
+        QueueLike__push(queue, shuffledArray[i]);
     }
     const acc = [];
-    while (queue.count > 0) {
-        acc.push(queue.pop());
+    while (QueueLike__count(queue) > 0) {
+        acc.push(QueueLike__pop(queue));
     }
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
 }));

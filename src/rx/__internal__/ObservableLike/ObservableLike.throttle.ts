@@ -6,14 +6,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import {
-  DisposableRefLike,
-  createDisposableRef,
-} from "../../../__internal__/util/DisposableRefLike";
-import {
-  getCurrentRef,
-  setCurrentRef,
-} from "../../../__internal__/util/MutableRefLike";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import {
   Function1,
@@ -30,6 +22,10 @@ import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
+import DisposableRefLike__create from "../../../util/__internal__/DisposableRefLike/DisposableRefLike.create";
+import MutableRefLike__get from "../../../util/__internal__/MutableRefLike/MutableRefLike.get";
+import MutableRefLike__set from "../../../util/__internal__/MutableRefLike/MutableRefLike.set";
+import { DisposableRefLike } from "../../../util/__internal__/util.internal";
 import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import ReactiveContainerLike__sinkInto from "../ReactiveContainerLike/ReactiveContainerLike.sinkInto";
@@ -64,7 +60,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
     ) => {
       pipe(
         observer.durationSubscription,
-        setCurrentRef(
+        MutableRefLike__set(
           pipe(
             observer.durationFunction(next),
             ObservableLike__forEach(observer.onNotify),
@@ -96,7 +92,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
           instance.mode = mode;
 
           instance.durationSubscription = pipe(
-            createDisposableRef(DisposableLike__disposed),
+            DisposableRefLike__create(DisposableLike__disposed),
             DisposableLike__addTo(delegate),
           );
 
@@ -148,7 +144,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
 
             const durationSubscriptionDisposableIsDisposed = pipe(
               this.durationSubscription,
-              getCurrentRef,
+              MutableRefLike__get,
               DisposableLike__isDisposed,
             );
 

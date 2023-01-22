@@ -7,11 +7,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import {
-  DisposableRefLike,
-  createDisposableRef,
-} from "../../../__internal__/util/DisposableRefLike";
-import { MutableRefLike_current } from "../../../__internal__/util/MutableRefLike";
 import { ContainerOperator } from "../../../containers";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import {
@@ -30,6 +25,11 @@ import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
+import DisposableRefLike__create from "../../../util/__internal__/DisposableRefLike/DisposableRefLike.create";
+import {
+  DisposableRefLike,
+  MutableRefLike_current,
+} from "../../../util/__internal__/util.internal";
 import EnumerableObservableLike__never from "../EnumerableObservableLike/EnumerableObservableLike.never";
 import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
@@ -75,7 +75,7 @@ const ObservableLike__buffer: <T>(options?: {
         instance.buffer = [];
         instance.delegate = delegate;
         instance.durationFunction = durationFunction;
-        instance.durationSubscription = createDisposableRef(
+        instance.durationSubscription = DisposableRefLike__create(
           DisposableLike__disposed,
         );
         instance.maxBufferSize = maxBufferSize;

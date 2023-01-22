@@ -1,5 +1,8 @@
-import { createPriorityQueue } from "../../__internal__/scheduling/QueueLike";
 import { floor, newInstance, pipe } from "../../functions";
+import QueueLike__count from "../../util/__internal__/QueueLike/QueueLike.count";
+import QueueLike__create from "../../util/__internal__/QueueLike/QueueLike.create";
+import QueueLike__pop from "../../util/__internal__/QueueLike/QueueLike.pop";
+import QueueLike__push from "../../util/__internal__/QueueLike/QueueLike.push";
 import { expectArrayEquals, test, testModule } from "../testing";
 
 const compare = (a: number, b: number): number => a - b;
@@ -29,15 +32,15 @@ const makeShuffledArray = (n: number) => {
 testModule(
   "priority queue",
   test("push", () => {
-    const queue = createPriorityQueue(compare);
+    const queue = QueueLike__create(compare);
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray.length; i++) {
-      queue.push(shuffledArray[i]);
+      QueueLike__push(queue, shuffledArray[i]);
     }
 
     const acc: number[] = [];
-    while (queue.count > 0) {
-      acc.push(queue.pop() as number);
+    while (QueueLike__count(queue) > 0) {
+      acc.push(QueueLike__pop(queue) as number);
     }
 
     pipe(acc, expectArrayEquals(makeSortedArray(100)));

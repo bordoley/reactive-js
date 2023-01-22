@@ -6,11 +6,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import {
-  DisposableRefLike,
-  createDisposableRef,
-} from "../../../__internal__/util/DisposableRefLike";
-import { MutableRefLike_current } from "../../../__internal__/util/MutableRefLike";
 import { ConcatAll, ContainerOf, ContainerOperator } from "../../../containers";
 import { Function1, none, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
@@ -21,6 +16,11 @@ import DisposableLike__disposed from "../../../util/__internal__/DisposableLike/
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onComplete from "../../../util/__internal__/DisposableLike/DisposableLike.onComplete";
+import DisposableRefLike__create from "../../../util/__internal__/DisposableRefLike/DisposableRefLike.create";
+import {
+  DisposableRefLike,
+  MutableRefLike_current,
+} from "../../../util/__internal__/util.internal";
 import ObservableLike__forEach from "../ObservableLike/ObservableLike.forEach";
 import ObservableLike__subscribe from "../ObservableLike/ObservableLike.subscribe";
 import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getScheduler";
@@ -68,7 +68,7 @@ const HigherOrderObservableLike__switchAll = <C extends ObservableLike>(
 
           instance.delegate = delegate;
           instance.currentRef = pipe(
-            createDisposableRef(DisposableLike__disposed),
+            DisposableRefLike__create(DisposableLike__disposed),
             DisposableLike__addTo(delegate),
           );
 

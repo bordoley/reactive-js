@@ -1,7 +1,5 @@
 /// <reference types="./ObservableLike.throttle.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { createDisposableRef } from '../../../__internal__/util/DisposableRefLike.mjs';
-import { setCurrentRef, getCurrentRef } from '../../../__internal__/util/MutableRefLike.mjs';
 import ReadonlyArrayLike__toRunnableObservable from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { pipe, none, isNumber, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
@@ -10,6 +8,9 @@ import DisposableLike__disposed from '../../../util/__internal__/DisposableLike/
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onComplete from '../../../util/__internal__/DisposableLike/DisposableLike.onComplete.mjs';
+import DisposableRefLike__create from '../../../util/__internal__/DisposableRefLike/DisposableRefLike.create.mjs';
+import MutableRefLike__get from '../../../util/__internal__/MutableRefLike/MutableRefLike.get.mjs';
+import MutableRefLike__set from '../../../util/__internal__/MutableRefLike/MutableRefLike.set.mjs';
 import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getScheduler.mjs';
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import ReactiveContainerLike__sinkInto from '../ReactiveContainerLike/ReactiveContainerLike.sinkInto.mjs';
@@ -22,7 +23,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
     const createThrottleObserver = (() => {
         const typedObserverMixin = ObserverLike__mixin();
         const setupDurationSubscription = (observer, next) => {
-            pipe(observer.durationSubscription, setCurrentRef(pipe(observer.durationFunction(next), ObservableLike__forEach(observer.onNotify), ObservableLike__subscribe(ObserverLike__getScheduler(observer)))));
+            pipe(observer.durationSubscription, MutableRefLike__set(pipe(observer.durationFunction(next), ObservableLike__forEach(observer.onNotify), ObservableLike__subscribe(ObserverLike__getScheduler(observer)))));
         };
         return createInstanceFactory(mix(include(DisposableLike__mixin, typedObserverMixin), function ThrottleObserver(instance, delegate, durationFunction, mode) {
             init(DisposableLike__mixin, instance);
@@ -30,7 +31,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
             instance.delegate = delegate;
             instance.durationFunction = durationFunction;
             instance.mode = mode;
-            instance.durationSubscription = pipe(createDisposableRef(DisposableLike__disposed), DisposableLike__addTo(delegate));
+            instance.durationSubscription = pipe(DisposableRefLike__create(DisposableLike__disposed), DisposableLike__addTo(delegate));
             instance.onNotify = (_) => {
                 if (instance.hasValue) {
                     const value = instance.value;
@@ -60,7 +61,7 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
             [SinkLike_notify](next) {
                 this.value = next;
                 this.hasValue = true;
-                const durationSubscriptionDisposableIsDisposed = pipe(this.durationSubscription, getCurrentRef, DisposableLike__isDisposed);
+                const durationSubscriptionDisposableIsDisposed = pipe(this.durationSubscription, MutableRefLike__get, DisposableLike__isDisposed);
                 if (durationSubscriptionDisposableIsDisposed &&
                     this.mode !== "last") {
                     this.onNotify();

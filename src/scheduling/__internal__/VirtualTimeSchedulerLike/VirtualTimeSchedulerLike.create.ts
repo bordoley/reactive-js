@@ -7,10 +7,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import {
-  QueueLike,
-  createPriorityQueue,
-} from "../../../__internal__/scheduling/QueueLike";
 import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { isSome, none, pipe, unsafeCast } from "../../../functions";
 import {
@@ -37,6 +33,10 @@ import DisposableLike__addIgnoringChildErrors from "../../../util/__internal__/D
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
+import QueueLike__create from "../../../util/__internal__/QueueLike/QueueLike.create";
+import QueueLike__pop from "../../../util/__internal__/QueueLike/QueueLike.pop";
+import QueueLike__push from "../../../util/__internal__/QueueLike/QueueLike.push";
+import { QueueLike } from "../../../util/__internal__/util.internal";
 import ContinuationLike__run from "../ContinuationLike/ContinuationLike.run";
 import getCurrentTime from "../SchedulerLike/SchedulerLike.getCurrentTime";
 
@@ -84,7 +84,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       init(typedMutableEnumeratorMixin, instance);
 
       instance.maxMicroTaskTicks = maxMicroTaskTicks;
-      instance.taskQueue = createPriorityQueue(comparator);
+      instance.taskQueue = QueueLike__create(comparator);
 
       return instance;
     },
@@ -141,7 +141,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         pipe(this, DisposableLike__addIgnoringChildErrors(continuation));
 
         if (!DisposableLike__isDisposed(continuation)) {
-          this.taskQueue.push({
+          QueueLike__push(this.taskQueue, {
             id: this.taskIDCount++,
             dueTime: getCurrentTime(this) + delay,
             continuation,
@@ -157,7 +157,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
           return;
         }
 
-        const task = taskQueue.pop();
+        const task = QueueLike__pop(taskQueue);
 
         if (isSome(task)) {
           this[EnumeratorLike_current] = task;
