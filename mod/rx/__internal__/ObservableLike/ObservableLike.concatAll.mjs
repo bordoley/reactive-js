@@ -1,5 +1,5 @@
 /// <reference types="./ObservableLike.concatAll.d.ts" />
-import { MAX_SAFE_INTEGER } from '../../../__internal__/constants.mjs';
+import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
 import ObservableLike__mergeAll from './ObservableLike.mergeAll.mjs';
 
 const ObservableLike__concatAll = (options = {}) => {

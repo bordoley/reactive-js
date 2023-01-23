@@ -1,4 +1,4 @@
-import { MAX_SAFE_INTEGER } from "../__internal__/constants";
+import { MAX_SAFE_INTEGER } from "../constants";
 import {
   Buffer,
   CatchError,

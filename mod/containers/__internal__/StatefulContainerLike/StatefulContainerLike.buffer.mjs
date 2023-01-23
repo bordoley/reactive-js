@@ -1,5 +1,5 @@
 /// <reference types="./StatefulContainerLike.buffer.d.ts" />
-import { MAX_SAFE_INTEGER } from '../../../__internal__/constants.mjs';
+import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
 import { max, pipe, partial } from '../../../functions.mjs';
 import StatefulContainerLike__lift from './StatefulContainerLike.lift.mjs';
 

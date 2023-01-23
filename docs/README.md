@@ -6,6 +6,7 @@ Reactive-JS
 
 ### Modules
 
+- [constants](modules/constants.md)
 - [containers](modules/containers.md)
 - [containers/ContainerLike](modules/containers_ContainerLike.md)
 - [containers/IterableLike](modules/containers_IterableLike.md)

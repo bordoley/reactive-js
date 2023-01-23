@@ -1,7 +1,7 @@
 /// <reference types="./QueueSchedulerLike.d.ts" />
-import { MAX_SAFE_INTEGER } from '../../__internal__/constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../../__internal__/mixins.mjs';
 import { getDelay } from '../../__internal__/scheduling/SchedulerLike.options.mjs';
+import { MAX_SAFE_INTEGER } from '../../constants.mjs';
 import { isNone, none, isSome, max, pipe, unsafeCast } from '../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
 import EnumeratorLike__getCurrent from '../../ix/__internal__/EnumeratorLike/EnumeratorLike.getCurrent.mjs';

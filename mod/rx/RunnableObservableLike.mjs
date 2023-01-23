@@ -1,5 +1,5 @@
 /// <reference types="./RunnableObservableLike.d.ts" />
-import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
+import { MAX_SAFE_INTEGER } from '../constants.mjs';
 import ReadonlyArrayLike__toRunnableObservable from '../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
 import RunnableObservableLike__catchError from './__internal__/RunnableObservableLike/RunnableObservableLike.catchError.mjs';
