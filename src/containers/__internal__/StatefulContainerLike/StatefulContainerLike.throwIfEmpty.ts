@@ -1,6 +1,5 @@
-import { Factory } from "react";
 import { StatefulContainerLike } from "../../../containers";
-import { Function2, partial, pipe } from "../../../functions";
+import { Factory, Function2, partial, pipe } from "../../../functions";
 import {
   Lift,
   StatefulContainerOperatorIn,

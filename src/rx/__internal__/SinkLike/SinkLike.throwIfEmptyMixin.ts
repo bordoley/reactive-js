@@ -1,4 +1,3 @@
-import { Factory } from "react";
 import {
   Mixin2,
   Mutable,
@@ -7,7 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { Optional, none, pipe, returns } from "../../../functions";
+import { Factory, Optional, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike, Exception } from "../../../util";
 import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
