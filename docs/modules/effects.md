@@ -430,7 +430,7 @@ ___
 
 ### \_\_stream
 
-▸ **__stream**<`TReq`, `T`, `TStream`\>(`streamable`, `__namedParameters?`): `TStream`
+▸ **__stream**<`TReq`, `T`, `TStream`\>(`streamable`, `«destructured»?`): `TStream`
 
 #### Type parameters
 
@@ -445,9 +445,9 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
-| `__namedParameters?` | `Object` |
-| `__namedParameters.replay?` | `number` |
-| `__namedParameters.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `«destructured»` | `Object` |
+| › `replay?` | `number` |
+| › `scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 
@@ -629,7 +629,7 @@ ___
 
 ### async
 
-▸ **async**<`T`\>(`computation`, `__namedParameters?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **async**<`T`\>(`computation`, `«destructured»?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -642,8 +642,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `__namedParameters?` | `Object` |
-| `__namedParameters.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+| `«destructured»` | `Object` |
+| › `mode?` | ``"batched"`` \| ``"combine-latest"`` |
 
 #### Returns
 

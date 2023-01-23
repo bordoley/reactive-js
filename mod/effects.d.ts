@@ -1,8 +1,8 @@
-import { Factory, Optional, Equality, Updater, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "./functions.mjs";
-import { ObservableLike } from "./rx.mjs";
-import { SchedulerLike } from "./scheduling.mjs";
-import { StreamLike, StreamableLike } from "./streaming.mjs";
-import { DisposableLike } from "./util.mjs";
+import { Factory, Optional, Equality, Updater, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "./functions.js";
+import { ObservableLike } from "./rx.js";
+import { SchedulerLike } from "./scheduling.js";
+import { StreamLike, StreamableLike } from "./streaming.js";
+import { DisposableLike } from "./util.js";
 declare const async: <T>(computation: Factory<T>, { mode }?: {
     mode?: "batched" | "combine-latest" | undefined;
 }) => ObservableLike<T>;

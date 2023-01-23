@@ -1,5 +1,5 @@
-import { Optional } from "../../functions.mjs";
-import { SchedulerLike } from "../../scheduling.mjs";
+import { Optional } from "../../functions.js";
+import { SchedulerLike } from "../../scheduling.js";
 declare const get: () => SchedulerLike;
 declare const getOrNone: () => Optional<SchedulerLike>;
 declare const set: (scheduler: Optional<SchedulerLike>) => void;

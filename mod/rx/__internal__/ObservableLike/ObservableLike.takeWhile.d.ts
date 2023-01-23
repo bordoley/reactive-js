@@ -1,4 +1,4 @@
-import { TakeWhile } from "../../../containers.mjs";
-import { ObservableLike } from "../../../rx.mjs";
+import { TakeWhile } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
 declare const ObservableLike__takeWhile: TakeWhile<ObservableLike>["takeWhile"];
 export { ObservableLike__takeWhile as default };

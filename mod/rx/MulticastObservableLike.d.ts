@@ -1,4 +1,4 @@
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay } from "../rx.mjs";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay } from "../rx.js";
 declare const getObserverCount: (obs: {
     [MulticastObservableLike_observerCount]: number;
 }) => number;

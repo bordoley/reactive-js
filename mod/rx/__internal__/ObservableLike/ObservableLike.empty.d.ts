@@ -1,4 +1,4 @@
-import { RunnableObservableLike } from "../../../rx.mjs";
+import { RunnableObservableLike } from "../../../rx.js";
 declare const ObservableLike__empty: <T>(options?: {
     delay: number;
 }) => RunnableObservableLike<T>;

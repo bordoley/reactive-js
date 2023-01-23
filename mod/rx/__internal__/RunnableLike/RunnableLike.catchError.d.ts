@@ -1,4 +1,4 @@
-import { CatchError } from "../../../containers.mjs";
-import { RunnableLike } from "../../../rx.mjs";
+import { CatchError } from "../../../containers.js";
+import { RunnableLike } from "../../../rx.js";
 declare const RunnableLike__catchError: CatchError<RunnableLike>["catchError"];
 export { RunnableLike__catchError as default };

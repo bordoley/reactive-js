@@ -1,5 +1,5 @@
-import { Factory, Function1 } from "../../../functions.mjs";
-import { ContainerLike, Container, ContainerOf, ContainerOperator } from "../../../containers.mjs";
+import { Factory, Function1 } from "../../../functions.js";
+import { ContainerLike, Container, ContainerOf, ContainerOperator } from "../../../containers.js";
 declare const ContainerLike__encodeUtf8: <C extends ContainerLike>(m: Container<C> & {
     defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 } & {

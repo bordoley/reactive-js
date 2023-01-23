@@ -1,8 +1,8 @@
-import { Updater, Function1 } from "../functions.mjs";
-import { ObservableLike } from "../rx.mjs";
-import { DispatcherLike_dispatch, SchedulerLike } from "../scheduling.mjs";
-import { StreamLike, StreamableLike, StreamableLike_stream } from "../streaming.mjs";
-declare type WindowLocationURI = {
+import { Updater, Function1 } from "../functions.js";
+import { ObservableLike } from "../rx.js";
+import { DispatcherLike_dispatch, SchedulerLike } from "../scheduling.js";
+import { StreamLike, StreamableLike, StreamableLike_stream } from "../streaming.js";
+type WindowLocationURI = {
     title: string;
     path: string;
     query: string;
@@ -21,7 +21,7 @@ interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLoca
         readonly replay?: number;
     }): WindowLocationStreamLike;
 }
-declare type FetchRequest = RequestInit & {
+type FetchRequest = RequestInit & {
     uri: string;
 };
 declare const createEventSource: (url: string | URL, options?: EventSourceInit & {

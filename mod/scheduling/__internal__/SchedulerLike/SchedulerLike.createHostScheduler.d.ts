@@ -1,4 +1,4 @@
-import { SchedulerLike } from "../../../scheduling.mjs";
+import { SchedulerLike } from "../../../scheduling.js";
 declare const SchedulerLike__createHostScheduler: (options?: {
     readonly yieldInterval?: number;
 }) => SchedulerLike;

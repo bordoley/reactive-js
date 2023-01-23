@@ -1,4 +1,4 @@
-import { DisposableLike, PauseableLike } from "./util.mjs";
+import { DisposableLike, PauseableLike } from "./util.js";
 /** @ignore */
 declare const ContinuationLike_run: unique symbol;
 /**
@@ -19,7 +19,7 @@ declare const SchedulerLike_requestYield: unique symbol;
 declare const SchedulerLike_shouldYield: unique symbol;
 /** @ignore */
 declare const SchedulerLike_schedule: unique symbol;
-declare type SchedulerOptions = {
+type SchedulerOptions = {
     readonly delay?: number;
 };
 interface SchedulerLike extends DisposableLike {
@@ -46,7 +46,7 @@ interface DispatcherLike<T = unknown> extends DisposableLike {
 }
 interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
 }
-declare type PrioritySchedulerOptions = {
+type PrioritySchedulerOptions = {
     readonly priority: number;
     readonly delay?: number;
 };

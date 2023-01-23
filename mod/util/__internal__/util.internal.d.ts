@@ -1,5 +1,5 @@
-import { Optional } from "../../functions.mjs";
-import { DisposableLike } from "../../util.mjs";
+import { Optional } from "../../functions.js";
+import { DisposableLike } from "../../util.js";
 declare const MutableRefLike_current: unique symbol;
 interface MutableRefLike<T = unknown> {
     get [MutableRefLike_current](): T;

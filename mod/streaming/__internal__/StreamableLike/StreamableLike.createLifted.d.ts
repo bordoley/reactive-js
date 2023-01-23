@@ -1,6 +1,6 @@
-import { ContainerOperator } from "../../../containers.mjs";
-import { ObservableLike } from "../../../rx.mjs";
-import { StreamableLike } from "../../../streaming.mjs";
+import { ContainerOperator } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
+import { StreamableLike } from "../../../streaming.js";
 interface CreateLiftedStreamable {
     <T, A>(op1: ContainerOperator<ObservableLike, T, A>): StreamableLike<T, A>;
     <T, A, B>(op1: ContainerOperator<ObservableLike, T, A>, op2: ContainerOperator<ObservableLike, A, B>): StreamableLike<T, B>;

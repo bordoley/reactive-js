@@ -1,7 +1,7 @@
-import { ContainerOperator } from "../../../containers.mjs";
-import { AsyncEnumeratorLike } from "../../../ix.mjs";
-import { ObservableLike } from "../../../rx.mjs";
-import { SchedulerLike } from "../../../scheduling.mjs";
+import { ContainerOperator } from "../../../containers.js";
+import { AsyncEnumeratorLike } from "../../../ix.js";
+import { ObservableLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
 declare const AsyncEnumerator__create: <T>(op: ContainerOperator<ObservableLike<unknown>, void, T>, scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => AsyncEnumeratorLike<T>;

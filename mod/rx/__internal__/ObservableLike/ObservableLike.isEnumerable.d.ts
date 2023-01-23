@@ -1,3 +1,3 @@
-import { ObservableLike, EnumerableObservableLike } from "../../../rx.mjs";
+import { ObservableLike, EnumerableObservableLike } from "../../../rx.js";
 declare const ObservableLike__isEnumerable: (obs: ObservableLike) => obs is EnumerableObservableLike<unknown>;
 export { ObservableLike__isEnumerable as default };

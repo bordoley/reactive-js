@@ -34,14 +34,14 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
+| `O` | extends `Object` = { `count`: `number` ; `start`: `number`  } |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromArray`: <T_1\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
-| `options?` | `Omit`<`Partial`<`O`\>, keyof [`FromArrayOptions`](containers.md#fromarrayoptions)\> |
+| `options?` | `Partial`<`O`\> |
 
 #### Returns
 
@@ -51,7 +51,7 @@ ___
 
 ### concatMap
 
-▸ **concatMap**<`C`, `TA`, `TB`, `O`\>(`__namedParameters`, `mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>
+▸ **concatMap**<`C`, `TA`, `TB`, `O`\>(`«destructured»`, `mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -66,7 +66,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA_1, TB_1\>(`mapper`: [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA_1`, `TB_1`\>  } & { `concatAll`: <T\>(`options?`: `Partial`<`O`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  } |
+| `«destructured»` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA_1, TB_1\>(`mapper`: [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA_1`, `TB_1`\>  } & { `concatAll`: <T\>(`options?`: `Partial`<`O`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  } |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ContainerOf`](containers.md#containerof)<`C`, `TB`\>\> |
 | `options?` | `Partial`<`O`\> |
 
@@ -78,7 +78,7 @@ ___
 
 ### concatWith
 
-▸ **concatWith**<`C`, `T`\>(`__namedParameters`, `snd`, ...`tail`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **concatWith**<`C`, `T`\>(`«destructured»`, `snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -91,7 +91,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Concat`](containers.md#concat)<`C`\> |
+| `«destructured»` | [`Concat`](containers.md#concat)<`C`\> |
 | `snd` | [`ContainerOf`](containers.md#containerof)<`C`, `T`\> |
 | `...tail` | readonly [`ContainerOf`](containers.md#containerof)<`C`, `T`\>[] |
 
@@ -103,7 +103,7 @@ ___
 
 ### contains
 
-▸ **contains**<`C`, `T`\>(`__namedParameters`, `value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `boolean`\>
+▸ **contains**<`C`, `T`\>(`«destructured»`, `value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `boolean`\>
 
 #### Type parameters
 
@@ -116,7 +116,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`SomeSatisfy`](containers.md#somesatisfy)<`C`\> |
+| `«destructured»` | [`SomeSatisfy`](containers.md#somesatisfy)<`C`\> |
 | `value` | `T` |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
@@ -151,7 +151,7 @@ ___
 
 ### endWith
 
-▸ **endWith**<`C`, `T`\>(`m`, `value`, ...`values`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **endWith**<`C`, `T`\>(`m`, `value`, `...values`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -176,7 +176,7 @@ ___
 
 ### fromOption
 
-▸ **fromOption**<`C`, `T`, `O`\>(`__namedParameters`, `options?`): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+▸ **fromOption**<`C`, `T`, `O`\>(`«destructured»`, `options?`): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -184,14 +184,14 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
+| `O` | extends `Object` = { `count`: `number` ; `start`: `number`  } |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`FromArray`](containers.md#fromarray)<`C`, `O`\> |
-| `options?` | `Omit`<`Partial`<`O`\>, keyof [`FromArrayOptions`](containers.md#fromarrayoptions)\> |
+| `«destructured»` | [`FromArray`](containers.md#fromarray)<`C`, `O`\> |
+| `options?` | `Partial`<`O`\> |
 
 #### Returns
 
@@ -229,7 +229,7 @@ ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`C`, `T`\>(`__namedParameters`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `unknown`, `T`\>
+▸ **ignoreElements**<`C`, `T`\>(`«destructured»`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `unknown`, `T`\>
 
 #### Type parameters
 
@@ -242,7 +242,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Keep`](containers.md#keep)<`C`\> |
+| `«destructured»` | [`Keep`](containers.md#keep)<`C`\> |
 
 #### Returns
 
@@ -252,7 +252,7 @@ ___
 
 ### keepType
 
-▸ **keepType**<`C`, `TA`, `TB`\>(`__namedParameters`, `predicate`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>
+▸ **keepType**<`C`, `TA`, `TB`\>(`«destructured»`, `predicate`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -266,7 +266,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Keep`](containers.md#keep)<`C`\> |
+| `«destructured»` | [`Keep`](containers.md#keep)<`C`\> |
 | `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
 
 #### Returns
@@ -277,7 +277,7 @@ ___
 
 ### mapTo
 
-▸ **mapTo**<`C`, `TA`, `TB`\>(`__namedParameters`, `value`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>
+▸ **mapTo**<`C`, `TA`, `TB`\>(`«destructured»`, `value`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -291,7 +291,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Map`](containers.md#map)<`C`\> |
+| `«destructured»` | [`Map`](containers.md#map)<`C`\> |
 | `value` | `TB` |
 
 #### Returns
@@ -302,7 +302,7 @@ ___
 
 ### noneSatisfy
 
-▸ **noneSatisfy**<`C`, `T`\>(`__namedParameters`, `predicate`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `boolean`\>
+▸ **noneSatisfy**<`C`, `T`\>(`«destructured»`, `predicate`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `boolean`\>
 
 #### Type parameters
 
@@ -315,7 +315,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`EverySatisfy`](containers.md#everysatisfy)<`C`\> |
+| `«destructured»` | [`EverySatisfy`](containers.md#everysatisfy)<`C`\> |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 
 #### Returns
@@ -326,7 +326,7 @@ ___
 
 ### startWith
 
-▸ **startWith**<`C`, `T`\>(`m`, `value`, ...`values`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **startWith**<`C`, `T`\>(`m`, `value`, `...values`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -359,14 +359,14 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
+| `O` | extends `Object` = { `count`: `number` ; `start`: `number`  } |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromArray`: <T_1\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
-| `options?` | `Omit`<`Partial`<`O`\>, keyof [`FromArrayOptions`](containers.md#fromarrayoptions)\> |
+| `options?` | `Omit`<`Partial`<`O`\>, ``"start"`` \| ``"count"``\> |
 
 #### Returns
 
@@ -376,7 +376,7 @@ ___
 
 ### zipWith
 
-▸ **zipWith**<`C`, `TA`, `TB`\>(`__namedParameters`, `b`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`C`, `TA`, `TB`\>(`«destructured»`, `b`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -390,14 +390,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `«destructured»` | [`Zip`](containers.md#zip)<`C`\> |
 | `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
 
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`]\>
 
-▸ **zipWith**<`C`, `TA`, `TB`, `TC`\>(`__namedParameters`, `b`, `c`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`\>(`«destructured»`, `b`, `c`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -412,7 +412,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `«destructured»` | [`Zip`](containers.md#zip)<`C`\> |
 | `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
 | `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
 
@@ -420,7 +420,7 @@ ___
 
 [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`\>(`__namedParameters`, `b`, `c`, `d`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`\>(`«destructured»`, `b`, `c`, `d`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -436,7 +436,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `«destructured»` | [`Zip`](containers.md#zip)<`C`\> |
 | `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
 | `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
 | `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
@@ -445,7 +445,7 @@ ___
 
 [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`__namedParameters`, `b`, `c`, `d`, `e`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`«destructured»`, `b`, `c`, `d`, `e`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -462,7 +462,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `«destructured»` | [`Zip`](containers.md#zip)<`C`\> |
 | `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
 | `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
 | `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
@@ -472,7 +472,7 @@ ___
 
 [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`__namedParameters`, `b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`«destructured»`, `b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -490,7 +490,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `«destructured»` | [`Zip`](containers.md#zip)<`C`\> |
 | `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
 | `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
 | `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
@@ -501,7 +501,7 @@ ___
 
 [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`__namedParameters`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`«destructured»`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -520,7 +520,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `«destructured»` | [`Zip`](containers.md#zip)<`C`\> |
 | `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
 | `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
 | `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
@@ -532,7 +532,7 @@ ___
 
 [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`__namedParameters`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`«destructured»`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -552,7 +552,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `«destructured»` | [`Zip`](containers.md#zip)<`C`\> |
 | `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
 | `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
 | `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |
@@ -565,7 +565,7 @@ ___
 
 [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`__namedParameters`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`C`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`«destructured»`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -586,7 +586,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Zip`](containers.md#zip)<`C`\> |
+| `«destructured»` | [`Zip`](containers.md#zip)<`C`\> |
 | `b` | [`ContainerOf`](containers.md#containerof)<`C`, `TB`\> |
 | `c` | [`ContainerOf`](containers.md#containerof)<`C`, `TC`\> |
 | `d` | [`ContainerOf`](containers.md#containerof)<`C`, `TD`\> |

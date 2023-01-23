@@ -1,5 +1,5 @@
-import { IterableLike } from "../../../containers.mjs";
-import { ToRunnableObservable } from "../../../rx.mjs";
+import { IterableLike } from "../../../containers.js";
+import { ToRunnableObservable } from "../../../rx.js";
 declare const IterableLike__toRunnableObservable: ToRunnableObservable<IterableLike, {
     delay: number;
     delayStart?: boolean;

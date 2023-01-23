@@ -33,7 +33,6 @@
 - [ForkConcat](containers.md#forkconcat)
 - [ForkZip](containers.md#forkzip)
 - [FromArray](containers.md#fromarray)
-- [FromArrayOptions](containers.md#fromarrayoptions)
 - [FromAsyncIterable](containers.md#fromasynciterable)
 - [FromIterable](containers.md#fromiterable)
 - [FromPromise](containers.md#frompromise)
@@ -263,20 +262,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
-
-___
-
-### FromArrayOptions
-
-Ƭ **FromArrayOptions**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `count` | [`Optional`](functions.md#optional)<`number`\> |
-| `start` | [`Optional`](functions.md#optional)<`number`\> |
+| `O` | extends `Object` = { `count`: `number` ; `start`: `number`  } |
 
 ___
 
@@ -341,7 +327,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | extends [`FromArrayOptions`](containers.md#fromarrayoptions) = [`FromArrayOptions`](containers.md#fromarrayoptions) |
+| `O` | `never` |
 
 ___
 

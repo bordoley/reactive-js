@@ -1,10 +1,10 @@
 import fs from 'fs';
 import { Readable, Writable, Transform } from 'stream';
 import { BrotliOptions, ZlibOptions } from 'zlib';
-import { ContainerOperator } from "../containers.mjs";
-import { Factory, SideEffect1, SideEffect2, Function1, SideEffect3, Function2, SideEffect4, Function3, SideEffect5, Function4, SideEffect6, Function5 } from "../functions.mjs";
-import { ObservableLike } from "../rx.mjs";
-import { FlowableLike, StreamableLike, FlowMode } from "../streaming.mjs";
+import { ContainerOperator } from "../containers.js";
+import { Factory, SideEffect1, SideEffect2, Function1, SideEffect3, Function2, SideEffect4, Function3, SideEffect5, Function4, SideEffect6, Function5 } from "../functions.js";
+import { ObservableLike } from "../rx.js";
+import { FlowableLike, StreamableLike, FlowMode } from "../streaming.js";
 interface BindNodeCallback {
     <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<ObservableLike<T>>;
     (callbackFunc: SideEffect1<SideEffect1<unknown>>): Factory<ObservableLike<void>>;

@@ -1,4 +1,4 @@
-import { Keep } from "../../../containers.mjs";
-import { EnumerableLike } from "../../../ix.mjs";
+import { Keep } from "../../../containers.js";
+import { EnumerableLike } from "../../../ix.js";
 declare const EnumerableLike__keep: Keep<EnumerableLike>["keep"];
 export { EnumerableLike__keep as default };

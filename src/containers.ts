@@ -224,14 +224,15 @@ export type ForkZip<C extends ContainerLike> = Container<C> & {
   ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 };
 
-export type FromArrayOptions = {
-  readonly start: Optional<number>;
-  readonly count: Optional<number>;
-};
-
 export type FromArray<
   C extends ContainerLike,
-  O extends FromArrayOptions = FromArrayOptions,
+  O extends {
+    readonly start: number;
+    readonly count: number;
+  } = {
+    readonly start: number;
+    readonly count: number;
+  },
 > = Container<C> & {
   fromArray<T>(
     options?: Partial<O>,
@@ -265,10 +266,7 @@ export type FromSequence<C extends ContainerLike, O = never> = Container<C> & {
   ): Function1<SequenceLike<T>, ContainerOf<C, T>>;
 };
 
-export type FromSet<
-  C extends ContainerLike,
-  O extends FromArrayOptions = FromArrayOptions,
-> = Container<C> & {
+export type FromSet<C extends ContainerLike, O = never> = Container<C> & {
   fromSet<T>(
     options?: Partial<O>,
   ): Function1<ReadonlySet<T>, ContainerOf<C, T>>;

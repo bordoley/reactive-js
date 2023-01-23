@@ -9,14 +9,15 @@ const RunnableObservableLike__mergeAll: ConcatAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = /*@__PURE__*/ HigherOrderObservableLike__mergeAll<RunnableObservableLike>(
-  RunnableObservableLike__lift,
-) as ConcatAll<
-  RunnableObservableLike,
-  {
-    readonly maxBufferSize?: number;
-    readonly maxConcurrency?: number;
-  }
->["concatAll"];
+>["concatAll"] =
+  /*@__PURE__*/ HigherOrderObservableLike__mergeAll<RunnableObservableLike>(
+    RunnableObservableLike__lift,
+  ) as ConcatAll<
+    RunnableObservableLike,
+    {
+      readonly maxBufferSize?: number;
+      readonly maxConcurrency?: number;
+    }
+  >["concatAll"];
 
 export default RunnableObservableLike__mergeAll;

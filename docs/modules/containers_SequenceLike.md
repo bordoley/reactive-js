@@ -151,7 +151,7 @@ ___
 
 ### concat
 
-▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
 
 #### Type parameters
 

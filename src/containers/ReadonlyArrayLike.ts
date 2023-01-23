@@ -48,11 +48,6 @@ export const mapT: Map<ReadonlyArrayLike> = { map };
 
 export const some = ReadonlyArrayLike__some;
 
-export type FromArrayOptions = {
-  readonly start: number;
-  readonly count: number;
-};
-
 export const toEnumerable: ToEnumerable<
   ReadonlyArrayLike,
   {
@@ -74,13 +69,14 @@ export const toEnumerableObservable: ToEnumerableObservable<
     readonly count?: number;
     readonly start?: number;
   }
->["toEnumerableObservable"] = ReadonlyArrayLike__toRunnableObservable as ToEnumerableObservable<
-  ReadonlyArrayLike,
-  {
-    readonly count?: number;
-    readonly start?: number;
-  }
->["toEnumerableObservable"];
+>["toEnumerableObservable"] =
+  ReadonlyArrayLike__toRunnableObservable as ToEnumerableObservable<
+    ReadonlyArrayLike,
+    {
+      readonly count?: number;
+      readonly start?: number;
+    }
+  >["toEnumerableObservable"];
 export const toEnumerableObservableT: ToEnumerableObservable<
   ReadonlyArrayLike,
   {

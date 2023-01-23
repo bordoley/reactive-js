@@ -1,6 +1,6 @@
-import { ContainerOperator } from "../../../containers.mjs";
-import { AsyncEnumerableLike } from "../../../ix.mjs";
-import { ObservableLike } from "../../../rx.mjs";
+import { ContainerOperator } from "../../../containers.js";
+import { AsyncEnumerableLike } from "../../../ix.js";
+import { ObservableLike } from "../../../rx.js";
 interface CreateAsyncEnumerable {
     <A>(op1: ContainerOperator<ObservableLike, void, A>): AsyncEnumerableLike<A>;
     <A, B>(op1: ContainerOperator<ObservableLike, void, A>, op2: ContainerOperator<ObservableLike, A, B>): AsyncEnumerableLike<B>;

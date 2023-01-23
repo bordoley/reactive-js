@@ -1,5 +1,5 @@
-import { EnumerableLike } from "../../../ix.mjs";
-import { ToRunnableObservable } from "../../../rx.mjs";
+import { EnumerableLike } from "../../../ix.js";
+import { ToRunnableObservable } from "../../../rx.js";
 declare const EnumerableLike__toRunnableObservable: ToRunnableObservable<EnumerableLike, {
     delay?: number;
     delayStart?: boolean;

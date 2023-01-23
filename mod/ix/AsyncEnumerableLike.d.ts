@@ -1,6 +1,6 @@
-import { FromArray, Generate, Keep, Map, Scan, TakeWhile, ToReadonlyArray } from "../containers.mjs";
-import { AsyncEnumerableLike, ToAsyncEnumerable, EnumerableLike } from "../ix.mjs";
-import { ScanAsync, ObservableLike, ToObservable } from "../rx.mjs";
+import { FromArray, Generate, Keep, Map, Scan, TakeWhile, ToReadonlyArray } from "../containers.js";
+import { AsyncEnumerableLike, ToAsyncEnumerable, EnumerableLike } from "../ix.js";
+import { ScanAsync, ObservableLike, ToObservable } from "../rx.js";
 declare const fromArray: FromArray<AsyncEnumerableLike>["fromArray"];
 declare const fromArrayT: FromArray<AsyncEnumerableLike>;
 /**

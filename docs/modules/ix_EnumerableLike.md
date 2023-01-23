@@ -238,7 +238,7 @@ ___
 
 ### concat
 
-▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 

@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Type Aliases
-
-- [FromArrayOptions](containers_ReadonlyArrayLike.md#fromarrayoptions)
-
 ### Variables
 
 - [emptyT](containers_ReadonlyArrayLike.md#emptyt)
@@ -37,19 +33,6 @@
 - [toRunnable](containers_ReadonlyArrayLike.md#torunnable)
 - [toRunnableObservable](containers_ReadonlyArrayLike.md#torunnableobservable)
 - [toSequence](containers_ReadonlyArrayLike.md#tosequence)
-
-## Type Aliases
-
-### FromArrayOptions
-
-Ƭ **FromArrayOptions**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `count` | `number` |
-| `start` | `number` |
 
 ## Variables
 

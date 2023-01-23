@@ -2,7 +2,6 @@ import {
   ContainerLike,
   ContainerOf,
   FromArray,
-  FromArrayOptions,
   Map,
 } from "../../../containers";
 import { Factory, Function1, callWith, compose } from "../../../functions";
@@ -10,17 +9,18 @@ import { Factory, Function1, callWith, compose } from "../../../functions";
 const ContainerLike__compute = <
   C extends ContainerLike,
   T,
-  O extends FromArrayOptions = FromArrayOptions,
+  O extends {
+    readonly start: number;
+    readonly count: number;
+  } = {
+    readonly start: number;
+    readonly count: number;
+  },
 >(
   m: Map<C> & FromArray<C, O>,
-  options?: Omit<Partial<O>, keyof FromArrayOptions>,
+  // FIXME: How do we omit the start/count options sanely
+  options?: Partial<O>,
 ): Function1<Factory<T>, ContainerOf<C, T>> =>
-  compose(
-    x => [x],
-    m.fromArray<Factory<T>>({
-      ...options,
-    }),
-    m.map(callWith()),
-  );
+  compose(x => [x], m.fromArray<Factory<T>>(options), m.map(callWith()));
 
 export default ContainerLike__compute;

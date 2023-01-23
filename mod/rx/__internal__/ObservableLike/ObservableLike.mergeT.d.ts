@@ -1,4 +1,4 @@
-import { Concat } from "../../../containers.mjs";
-import { ObservableLike } from "../../../rx.mjs";
+import { Concat } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
 declare const ObservableLike__mergeT: Concat<ObservableLike>;
 export { ObservableLike__mergeT as default };

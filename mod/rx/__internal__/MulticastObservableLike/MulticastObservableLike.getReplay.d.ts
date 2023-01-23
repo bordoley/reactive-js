@@ -1,4 +1,4 @@
-import { MulticastObservableLike_replay } from "../../../rx.mjs";
+import { MulticastObservableLike_replay } from "../../../rx.js";
 declare const MulticastObservableLike__getReplay: (obs: {
     [MulticastObservableLike_replay]: number;
 }) => number;

@@ -1,15 +1,15 @@
-import { Optional, Factory, Function1, Function2, Function3, Function4 } from "../functions.mjs";
+import { Optional, Factory, Function1, Function2, Function3, Function4 } from "../functions.js";
 declare const Object_init: unique symbol;
 declare const Object_properties: unique symbol;
 declare const Object_prototype: unique symbol;
 declare const Object_private_initializedProperties: unique symbol;
-declare type OptionalProperties<T> = T extends object ? {
+type OptionalProperties<T> = T extends object ? {
     [P in keyof T]: Optional<T[P]>;
 } : T;
-declare type Mutable<Type> = {
+type Mutable<Type> = {
     -readonly [Key in keyof Type]: Type[Key];
 };
-declare type PartialMixin = {
+type PartialMixin = {
     [Object_properties]: object;
     [Object_prototype]: object;
 };

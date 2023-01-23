@@ -1,4 +1,4 @@
-import { SideEffect1, Optional } from "./functions.mjs";
+import { SideEffect1, Optional } from "./functions.js";
 /** @ignore */
 declare const DisposableLike_add: unique symbol;
 /** @ignore */
@@ -7,7 +7,7 @@ declare const DisposableLike_dispose: unique symbol;
 declare const DisposableLike_error: unique symbol;
 /** @ignore */
 declare const DisposableLike_isDisposed: unique symbol;
-declare type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
+type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
  */

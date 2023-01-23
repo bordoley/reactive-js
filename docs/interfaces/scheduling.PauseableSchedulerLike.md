@@ -4,6 +4,8 @@
 
 [scheduling](../modules/scheduling.md).PauseableSchedulerLike
 
+Represents an unmanaged resource that can be disposed.
+
 ## Hierarchy
 
 - [`PauseableLike`](util.PauseableLike.md)

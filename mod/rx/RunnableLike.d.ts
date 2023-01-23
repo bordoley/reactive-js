@@ -1,7 +1,7 @@
-import { DisposableOrTeardown } from "../util.mjs";
-import { SideEffect1, Function1, Optional, Factory, Predicate } from "../functions.mjs";
-import { SinkLike, RunnableLike, ToRunnable } from "../rx.mjs";
-import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, Generate, Keep, Map, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.mjs";
+import { DisposableOrTeardown } from "../util.js";
+import { SideEffect1, Function1, Optional, Factory, Predicate } from "../functions.js";
+import { SinkLike, RunnableLike, ToRunnable } from "../rx.js";
+import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, Generate, Keep, Map, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.js";
 declare const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
 declare const buffer: Buffer<RunnableLike>["buffer"];
 declare const bufferT: Buffer<RunnableLike>;

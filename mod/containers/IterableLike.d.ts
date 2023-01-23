@@ -1,6 +1,6 @@
-import { IterableLike, ToIterable } from "../containers.mjs";
-import { ToAsyncEnumerable, ToEnumerable } from "../ix.mjs";
-import { ToEnumerableObservable, ToObservable, ToRunnableObservable } from "../rx.mjs";
+import { IterableLike, ToIterable } from "../containers.js";
+import { ToAsyncEnumerable, ToEnumerable } from "../ix.js";
+import { ToEnumerableObservable, ToObservable, ToRunnableObservable } from "../rx.js";
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *

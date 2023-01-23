@@ -1,7 +1,7 @@
 import { ReactElement, ComponentType } from 'react';
-import { Factory, Optional } from "../functions.mjs";
-import { ObservableLike } from "../rx.mjs";
-import { SchedulerLike } from "../scheduling.mjs";
+import { Factory, Optional } from "../functions.js";
+import { ObservableLike } from "../rx.js";
+import { SchedulerLike } from "../scheduling.js";
 /**
  * Returns the current value, if defined, of `observable`.
  *

@@ -4,6 +4,8 @@
 
 [integrations/web](../modules/integrations_web.md).WindowLocationStreamLike
 
+Represents a duplex stream
+
 ## Hierarchy
 
 - [`StreamLike`](streaming.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri)\> \| [`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri), [`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri)\>
@@ -37,7 +39,7 @@
 
 #### Overrides
 
-StreamLike.\_\_@DispatcherLike\_dispatch@23452
+StreamLike.\_\_@DispatcherLike\_dispatch@23765
 
 ___
 

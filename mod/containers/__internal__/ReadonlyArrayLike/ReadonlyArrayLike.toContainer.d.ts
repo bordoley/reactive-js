@@ -1,5 +1,5 @@
-import { ReadonlyArrayLike } from "../../../containers.mjs";
-import { Function1 } from "../../../functions.mjs";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import { Function1 } from "../../../functions.js";
 declare const ReadonlyArrayLike__toContainer: <C, T, O extends {
     readonly start: number;
     readonly count: number;
