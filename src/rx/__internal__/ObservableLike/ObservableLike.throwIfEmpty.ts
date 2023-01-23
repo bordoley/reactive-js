@@ -1,4 +1,3 @@
-import { Factory } from "react";
 import {
   createInstanceFactory,
   include,
@@ -7,7 +6,7 @@ import {
 } from "../../../__internal__/mixins";
 import { ThrowIfEmpty } from "../../../containers";
 import StatefulContainerLike__throwIfEmpty from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty";
-import { pipe } from "../../../functions";
+import { Factory, pipe } from "../../../functions";
 import {
   ObservableLike,
   ObserverLike,

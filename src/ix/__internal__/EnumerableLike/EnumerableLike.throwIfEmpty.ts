@@ -1,4 +1,3 @@
-import { Factory } from "react";
 import {
   createInstanceFactory,
   include,
@@ -9,7 +8,7 @@ import {
 import { ThrowIfEmpty } from "../../../containers";
 import StatefulContainerLike__throwIfEmpty from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Optional, none, pipe } from "../../../functions";
+import { Factory, Optional, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
 import { Exception } from "../../../util";
 import DisposableLike__addIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors";
