@@ -7,7 +7,6 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import ContainerLike__throws from "../../../containers/__internal__/ContainerLike/ContainerLike.throws";
-import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import { isNumber, none, partial, pipe, returns } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
@@ -24,6 +23,7 @@ import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getSchedule
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__concat from "./ObservableLike.concat";
+import ObservableLike__fromArrayT from "./ObservableLike.fromArrayT";
 import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
 import ObservableLike__lift from "./ObservableLike.lift";
 import ObservableLike__mapT from "./ObservableLike.mapT";
@@ -99,7 +99,7 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
     const durationObs = isNumber(duration)
       ? ContainerLike__throws(
           {
-            fromArray: ReadonlyArrayLike__toRunnableObservable,
+            ...ObservableLike__fromArrayT,
             ...ObservableLike__mapT,
           },
           { delay: duration, delayStart: true },
@@ -107,7 +107,7 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
       : ObservableLike__concat(
           duration,
           ContainerLike__throws({
-            fromArray: ReadonlyArrayLike__toRunnableObservable,
+            ...ObservableLike__fromArrayT,
             ...ObservableLike__mapT,
           })(returnTimeoutError),
         );
