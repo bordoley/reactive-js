@@ -99,7 +99,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<[`FromArrayOptions`](containers.md#fromarrayoptions)\> |
+| `options?` | `Partial`<{ `count`: `number` ; `start`: `number`  }\> |
 
 #### Returns
 

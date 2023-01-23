@@ -10,7 +10,6 @@ import {
   EverySatisfy,
   ForEach,
   FromArray,
-  FromArrayOptions,
   Keep,
   Map,
   Pairwise,
@@ -526,9 +525,23 @@ export const scanAsyncTests = <
   CInner extends ObservableLike,
 >(
   m: ScanAsync<C, CInner> &
-    FromArray<C, FromArrayOptions & { delay: number }> &
+    FromArray<
+      C,
+      {
+        readonly start: number;
+        readonly count: number;
+        delay: number;
+      }
+    > &
     ToReadonlyArray<C>,
-  mInner: FromArray<CInner, FromArrayOptions & { delay: number }>,
+  mInner: FromArray<
+    CInner,
+    {
+      readonly start: number;
+      readonly count: number;
+      delay: number;
+    }
+  >,
 ) =>
   describe(
     "scanAsync",

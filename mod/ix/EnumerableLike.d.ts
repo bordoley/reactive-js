@@ -1,6 +1,6 @@
-import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix.mjs";
-import { Buffer, Concat, ConcatAll, DistinctUntilChanged, Empty, ForEach, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip } from "../containers.mjs";
-import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.mjs";
+import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix.js";
+import { Buffer, Concat, ConcatAll, DistinctUntilChanged, Empty, ForEach, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip } from "../containers.js";
+import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
 declare const buffer: Buffer<EnumerableLike>["buffer"];
 declare const bufferT: Buffer<EnumerableLike>;

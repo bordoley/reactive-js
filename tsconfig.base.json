@@ -4,6 +4,7 @@
     "composite": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
     "lib": ["DOM"],
     "module": "ESNext",
     "moduleResolution": "node",

@@ -1,7 +1,7 @@
-import { Predicate, Function1 } from "../functions.mjs";
-import { Empty, ReadonlyArrayLike, ForEach, Keep, Map, ToReadonlyArray, ToSequence } from "../containers.mjs";
-import { ToEnumerable } from "../ix.mjs";
-import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.mjs";
+import { Predicate, Function1 } from "../functions.js";
+import { Empty, ReadonlyArrayLike, ForEach, Keep, Map, ToReadonlyArray, ToSequence } from "../containers.js";
+import { ToEnumerable } from "../ix.js";
+import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
 declare const empty: Empty<ReadonlyArrayLike>["empty"];
 declare const emptyT: Empty<ReadonlyArrayLike>;
 declare const every: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
@@ -12,10 +12,6 @@ declare const keepT: Keep<ReadonlyArrayLike>;
 declare const map: Map<ReadonlyArrayLike>["map"];
 declare const mapT: Map<ReadonlyArrayLike>;
 declare const some: <T>(predicate: Predicate<T>) => Function1<ReadonlyArrayLike<T>, boolean>;
-declare type FromArrayOptions = {
-    readonly start: number;
-    readonly count: number;
-};
 declare const toEnumerable: ToEnumerable<ReadonlyArrayLike, {
     readonly start: number;
     readonly count: number;
@@ -68,4 +64,4 @@ declare const toRunnableObservableT: ToRunnableObservable<ReadonlyArrayLike, {
 }>;
 declare const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"];
 declare const toSequenceT: ToSequence<ReadonlyArrayLike>;
-export { FromArrayOptions, empty, emptyT, every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, toSequence, toSequenceT };
+export { empty, emptyT, every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, toSequence, toSequenceT };

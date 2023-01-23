@@ -4,6 +4,8 @@
 
 [streaming](../modules/streaming.md).FlowableStreamLike
 
+Represents a duplex stream
+
 ## Type parameters
 
 | Name | Type |

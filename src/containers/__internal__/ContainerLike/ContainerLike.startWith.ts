@@ -3,15 +3,14 @@ import {
   ContainerLike,
   ContainerOperator,
   FromArray,
-  FromArrayOptions,
 } from "../../../containers";
 import { pipe } from "../../../functions";
 
 import ContainerLike__concatWith from "./ContainerLike.concatWith";
 
 const ContainerLike__startWith =
-  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
-    m: Concat<C> & FromArray<C, O>,
+  <C extends ContainerLike, T>(
+    m: Concat<C> & FromArray<C>,
     ...values: readonly T[]
   ): ContainerOperator<C, T, T> =>
   container =>

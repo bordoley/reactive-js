@@ -4,6 +4,8 @@
 
 [scheduling](../modules/scheduling.md).VirtualTimeSchedulerLike
 
+Represents an unmanaged resource that can be disposed.
+
 ## Hierarchy
 
 - [`SchedulerLike`](scheduling.SchedulerLike.md)

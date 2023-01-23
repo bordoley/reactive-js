@@ -1,5 +1,5 @@
-import { ConcatAll } from "../../../containers.mjs";
-import { EnumerableObservableLike } from "../../../rx.mjs";
+import { ConcatAll } from "../../../containers.js";
+import { EnumerableObservableLike } from "../../../rx.js";
 declare const EnumerableObservableLike__mergeAll: ConcatAll<EnumerableObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;

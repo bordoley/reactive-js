@@ -1,7 +1,7 @@
-import { SideEffect, Function1 } from "../../../functions.mjs";
-import { ObserverLike } from "../../../rx.mjs";
-import { ContinuationLike } from "../../../scheduling.mjs";
-import { DisposableLike } from "../../../util.mjs";
+import { SideEffect, Function1 } from "../../../functions.js";
+import { ObserverLike } from "../../../rx.js";
+import { ContinuationLike } from "../../../scheduling.js";
+import { DisposableLike } from "../../../util.js";
 declare const ObserverLike__schedule: (f: SideEffect | ContinuationLike, options?: {
     readonly delay?: number;
 }) => Function1<ObserverLike<unknown>, DisposableLike>;

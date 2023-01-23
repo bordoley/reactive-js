@@ -1,5 +1,5 @@
-import { Function1 } from "../functions.mjs";
-import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.mjs";
+import { Function1 } from "../functions.js";
+import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *

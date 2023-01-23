@@ -1,5 +1,5 @@
-import { Updater, SideEffect1 } from "../functions.mjs";
-import { DispatcherLike_dispatch, DispatcherLike_scheduler, SchedulerLike } from "../scheduling.mjs";
+import { Updater, SideEffect1 } from "../functions.js";
+import { DispatcherLike_dispatch, DispatcherLike_scheduler, SchedulerLike } from "../scheduling.js";
 declare const dispatch: <T, TDispatcher extends {
     [DispatcherLike_dispatch](v: T): void;
 }>(v: T) => Updater<TDispatcher>;

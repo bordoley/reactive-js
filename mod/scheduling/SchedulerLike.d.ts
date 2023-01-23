@@ -1,6 +1,6 @@
-import { DisposableLike } from "../util.mjs";
-import { SideEffect, Function1 } from "../functions.mjs";
-import { SchedulerLike, SchedulerLike_now, SchedulerLike_inContinuation, SchedulerLike_requestYield, SchedulerLike_shouldYield, ContinuationLike, PauseableSchedulerLike, PrioritySchedulerLike } from "../scheduling.mjs";
+import { DisposableLike } from "../util.js";
+import { SideEffect, Function1 } from "../functions.js";
+import { SchedulerLike, SchedulerLike_now, SchedulerLike_inContinuation, SchedulerLike_requestYield, SchedulerLike_shouldYield, ContinuationLike, PauseableSchedulerLike, PrioritySchedulerLike } from "../scheduling.js";
 declare const createHostScheduler: (options?: {
     readonly yieldInterval?: number | undefined;
 }) => SchedulerLike;

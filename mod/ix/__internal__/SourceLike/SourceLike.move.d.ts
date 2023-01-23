@@ -1,4 +1,4 @@
-import { SourceLike_move, SourceLike } from "../../../ix.mjs";
+import { SourceLike_move, SourceLike } from "../../../ix.js";
 declare const SourceLike__move: <TSource extends {
     [SourceLike_move](): void;
 } = SourceLike>(source: TSource) => TSource;

@@ -72,7 +72,8 @@ const HigherOrderObservableLike__mergeAll = (lift) => {
     })();
     return (options = {}) => {
         const { maxBufferSize = MAX_SAFE_INTEGER, maxConcurrency = MAX_SAFE_INTEGER, } = options;
-        return lift(pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency)));
+        const f = pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency));
+        return lift(f);
     };
 };
 

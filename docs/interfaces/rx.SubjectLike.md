@@ -4,6 +4,8 @@
 
 [rx](../modules/rx.md).SubjectLike
 
+The source of notifications which notifies a `ObserverLike` instance.
+
 ## Type parameters
 
 | Name | Type |

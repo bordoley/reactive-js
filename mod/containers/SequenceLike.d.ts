@@ -1,6 +1,6 @@
-import { SequenceLike, Concat, ConcatAll, DistinctUntilChanged, Generate, Keep, Map, Pairwise, Repeat, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip } from "../containers.mjs";
-import { ToEnumerable } from "../ix.mjs";
-import { ToRunnable } from "../rx.mjs";
+import { SequenceLike, Concat, ConcatAll, DistinctUntilChanged, Generate, Keep, Map, Pairwise, Repeat, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip } from "../containers.js";
+import { ToEnumerable } from "../ix.js";
+import { ToRunnable } from "../rx.js";
 declare const concat: <T>(fst: SequenceLike<T>, snd: SequenceLike<T>, ...tail: readonly SequenceLike<T>[]) => SequenceLike<T>;
 declare const concatT: Concat<SequenceLike>;
 declare const concatAll: ConcatAll<SequenceLike>["concatAll"];

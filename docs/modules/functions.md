@@ -96,11 +96,6 @@
 
 Compare two values to determine their relative ordering.
 
-**`returns`** A signed number indicating the relative order of `a` and `b`:
-  - If less than 0, `a` is less `b`.
-  - If 0, `a` equals `b`.
-  - If greater than 0, `a` is greater than `b`.
-
 #### Type parameters
 
 | Name |
@@ -234,8 +229,6 @@ ___
 Ƭ **Equality**<`T`\>: [`Function2`](functions.md#function2)<`T`, `T`, `boolean`\>
 
 Compare two values for equality.
-
-**`returns`** true if `a` is equals to `b`, otherwise false
 
 #### Type parameters
 
@@ -918,7 +911,7 @@ An alias for undefined.
 
 ### alwaysFalse
 
-▸ **alwaysFalse**(...`_args`): `boolean`
+▸ **alwaysFalse**(`..._args`): `boolean`
 
 A function that always returns `false`.
 
@@ -936,7 +929,7 @@ ___
 
 ### alwaysTrue
 
-▸ **alwaysTrue**(...`_args`): `boolean`
+▸ **alwaysTrue**(`..._args`): `boolean`
 
 A function that always returns `true`.
 
@@ -1475,7 +1468,7 @@ ___
 
 ### composeUnsafe
 
-▸ **composeUnsafe**(...`operators`): [`Function1`](functions.md#function1)<`any`, `unknown`\>
+▸ **composeUnsafe**(`...operators`): [`Function1`](functions.md#function1)<`any`, `unknown`\>
 
 #### Parameters
 
@@ -1685,7 +1678,7 @@ ___
 
 ### ignore
 
-▸ **ignore**(...`_args`): `void`
+▸ **ignore**(`..._args`): `void`
 
 A function that always returns `undefined`.
 
@@ -1962,7 +1955,7 @@ ___
 
 ### max
 
-▸ **max**(...`values`): `number`
+▸ **max**(`...values`): `number`
 
 #### Parameters
 
@@ -1978,7 +1971,7 @@ ___
 
 ### min
 
-▸ **min**(...`values`): `number`
+▸ **min**(`...values`): `number`
 
 #### Parameters
 
@@ -2996,7 +2989,7 @@ ___
 
 ### pipeUnsafe
 
-▸ **pipeUnsafe**(`source`, ...`operators`): `unknown`
+▸ **pipeUnsafe**(`source`, `...operators`): `unknown`
 
 Pipes `source` through a series of unary functions.
 
@@ -3059,7 +3052,7 @@ Returns a function that takes an arbitrary number of arguments and always return
 
 `fn`
 
-▸ (...`_args`): `T`
+▸ (`..._args`): `T`
 
 ##### Parameters
 
@@ -3100,7 +3093,7 @@ ___
 
 ### sum
 
-▸ **sum**(...`args`): `number`
+▸ **sum**(`...args`): `number`
 
 A function that returns the result of summing
 it's arguments.

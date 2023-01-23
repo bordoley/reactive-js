@@ -1,4 +1,4 @@
-import { Concat } from "../../../containers.mjs";
-import { RunnableLike } from "../../../rx.mjs";
+import { Concat } from "../../../containers.js";
+import { RunnableLike } from "../../../rx.js";
 declare const RunnableLike__concat: Concat<RunnableLike>["concat"];
 export { RunnableLike__concat as default };

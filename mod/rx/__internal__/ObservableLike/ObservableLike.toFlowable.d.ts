@@ -1,4 +1,4 @@
-import { ObservableLike } from "../../../rx.mjs";
-import { ToFlowable } from "../../../streaming.mjs";
+import { ObservableLike } from "../../../rx.js";
+import { ToFlowable } from "../../../streaming.js";
 declare const ObservableLike__toFlowable: ToFlowable<ObservableLike>["toFlowable"];
 export { ObservableLike__toFlowable as default };

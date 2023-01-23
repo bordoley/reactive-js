@@ -33,7 +33,13 @@ const HigherOrderObservableLike__mergeAll = <C extends ObservableLike>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>,
-): ConcatAll<C>["concatAll"] => {
+): ConcatAll<
+  C,
+  {
+    readonly maxBufferSize?: number;
+    readonly maxConcurrency?: number;
+  }
+>["concatAll"] => {
   const createMergeAllObserver: <T>(
     delegate: ObserverLike<T>,
     maxBufferSize: number,
@@ -148,20 +154,23 @@ const HigherOrderObservableLike__mergeAll = <C extends ObservableLike>(
     );
   })();
 
-  return (
-    options: {
-      readonly maxBufferSize?: number;
-      readonly maxConcurrency?: number;
-    } = {},
-  ) => {
+  return <T>(
+    options: Partial<{
+      readonly maxBufferSize: number;
+      readonly maxConcurrency: number;
+    }> = {},
+  ): ContainerOperator<C, ContainerOf<C, T>, T> => {
     const {
       maxBufferSize = MAX_SAFE_INTEGER,
       maxConcurrency = MAX_SAFE_INTEGER,
     } = options;
 
-    return lift(
-      pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency)),
+    const f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>> = pipe(
+      createMergeAllObserver,
+      partial(maxBufferSize, maxConcurrency),
     );
+
+    return lift(f);
   };
 };
 

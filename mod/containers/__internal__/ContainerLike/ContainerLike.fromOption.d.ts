@@ -1,4 +1,10 @@
-import { ContainerLike, FromArrayOptions, FromArray, ContainerOf } from "../../../containers.mjs";
-import { Function1, Optional } from "../../../functions.mjs";
-declare const ContainerLike__fromOption: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Optional<T>, ContainerOf<C, T>>;
+import { ContainerLike, FromArray, ContainerOf } from "../../../containers.js";
+import { Function1, Optional } from "../../../functions.js";
+declare const ContainerLike__fromOption: <C extends ContainerLike, T, O extends {
+    readonly start: number;
+    readonly count: number;
+} = {
+    readonly start: number;
+    readonly count: number;
+}>({ fromArray }: FromArray<C, O>, options?: Partial<O> | undefined) => Function1<Optional<T>, ContainerOf<C, T>>;
 export { ContainerLike__fromOption as default };

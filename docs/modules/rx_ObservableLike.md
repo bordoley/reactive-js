@@ -611,7 +611,7 @@ ___
 
 ### concat
 
-▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 Creates an `ObservableLike` which emits all values from each source sequentially.
 
@@ -1078,7 +1078,7 @@ ___
 
 ### forkMerge
 
-▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, ...`tail`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TIn`, `TOut`\>
 
 #### Type parameters
 
@@ -1498,7 +1498,7 @@ ___
 
 ### merge
 
-▸ **merge**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -1650,6 +1650,9 @@ ___
 
 ▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns an `ObservableLike` that applies the predicate function each time the source
+completes to determine if the subscription should be renewed.
+
 #### Type parameters
 
 | Name |
@@ -1658,15 +1661,17 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> | The predicate function to apply. |
 
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns an `ObservableLike` that repeats the source count times.
 
 #### Type parameters
 
@@ -1686,6 +1691,8 @@ ___
 
 ▸ **repeat**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns an `ObservableLike` that continually repeats the source.
+
 #### Type parameters
 
 | Name |
@@ -1702,6 +1709,9 @@ ___
 
 ▸ **retry**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns an `ObservableLike` that mirrors the source, re-subscribing
+if the source completes with an error.
+
 #### Type parameters
 
 | Name |
@@ -1713,6 +1723,9 @@ ___
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ▸ **retry**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns an `ObservableLike` that mirrors the source, resubscrbing
+if the source completes with an error which satisfies the predicate function.
 
 #### Type parameters
 
@@ -2030,6 +2043,8 @@ ___
 
 ▸ **throttle**<`T`\>(`duration`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
+Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
+
 #### Type parameters
 
 | Name |
@@ -2038,11 +2053,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `duration` | [`Function1`](functions.md#function1)<`T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `duration` | [`Function1`](functions.md#function1)<`T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> | Function function that is used to determine the silence duration in between emitted values. |
+| `options?` | `Object` | - |
+| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` | - |
 
 #### Returns
 
@@ -2050,6 +2065,9 @@ ___
 
 ▸ **throttle**<`T`\>(`duration`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns an `ObservableLike` which emits a value from the source,
+then ignores subsequent source values for `duration` milliseconds.
+
 #### Type parameters
 
 | Name |
@@ -2058,11 +2076,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `duration` | `number` |
-| `options?` | `Object` |
-| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `duration` | `number` | Time to wait before emitting another value after emitting the last value, measured in milliseconds. |
+| `options?` | `Object` | - |
+| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` | - |
 
 #### Returns
 
@@ -2096,6 +2114,9 @@ ___
 
 ▸ **timeout**<`T`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns an `ObservableLike` that completes with an error if the source
+does not emit a value in given time span.
+
 #### Type parameters
 
 | Name |
@@ -2104,9 +2125,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `duration` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `duration` | `number` | Time in ms within which the source must emit values. |
 
 #### Returns
 

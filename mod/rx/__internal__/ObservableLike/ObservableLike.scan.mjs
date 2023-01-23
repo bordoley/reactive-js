@@ -7,8 +7,7 @@ import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import SinkLike__scanMixin from '../SinkLike/SinkLike.scanMixin.mjs';
 import ObservableLike__liftEnumerableOperatorT from './ObservableLike.liftEnumerableOperatorT.mjs';
 
-const ObservableLike__scan = 
-/*@__PURE__*/ (() => {
+const ObservableLike__scan = /*@__PURE__*/ (() => {
     const createScanObserver = (() => {
         const typedScanSinkMixin = SinkLike__scanMixin();
         const typedObserverMixin = ObserverLike__mixin();

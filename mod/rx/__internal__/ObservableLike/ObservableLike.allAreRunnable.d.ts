@@ -1,5 +1,5 @@
-import { Function1 } from "../../../functions.mjs";
-import { ReadonlyArrayLike } from "../../../containers.mjs";
-import { ObservableLike } from "../../../rx.mjs";
+import { Function1 } from "../../../functions.js";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
 declare const ObservableLike__allAreRunnable: Function1<ReadonlyArrayLike<ObservableLike<unknown>>, boolean>;
 export { ObservableLike__allAreRunnable as default };

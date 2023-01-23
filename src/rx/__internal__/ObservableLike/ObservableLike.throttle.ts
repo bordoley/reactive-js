@@ -6,6 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
+import { ContainerOperator } from "../../../containers";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import {
   Function1,
@@ -34,7 +35,7 @@ import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__lift from "./ObservableLike.lift";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
 
-const ObservableLike__throttle = /*@__PURE__*/ (() => {
+const ObservableLike__throttle = /*@__PURE__*/ (<T>() => {
   type ThrottleMode = "first" | "last" | "interval";
 
   const createThrottleObserver: <T>(
@@ -162,10 +163,10 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
     );
   })();
 
-  return <T>(
+  return (
     duration: Function1<T, ObservableLike> | number,
     options: { readonly mode?: ThrottleMode } = {},
-  ) => {
+  ): ContainerOperator<ObservableLike, T, T> => {
     const { mode = "interval" } = options;
     const durationFunction = isNumber(duration)
       ? (_: T) =>
@@ -179,7 +180,12 @@ const ObservableLike__throttle = /*@__PURE__*/ (() => {
       : duration;
     return pipe(
       createThrottleObserver,
-      partial(durationFunction, mode),
+      partial<
+        ObserverLike<T>,
+        Function1<T, ObservableLike<T>>,
+        ThrottleMode,
+        ObserverLike<T>
+      >(durationFunction, mode),
       ObservableLike__lift(false, isNumber(duration)),
     );
   };

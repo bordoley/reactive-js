@@ -1,6 +1,6 @@
-import { ObservableLike } from "../rx.mjs";
-import { Updater, Factory, Optional, SideEffect, SideEffect1, Function1 } from "../functions.mjs";
-import { DisposableLike, DisposableLike_error, DisposableLike_isDisposed } from "../util.mjs";
+import { ObservableLike } from "../rx.js";
+import { Updater, Factory, Optional, SideEffect, SideEffect1, Function1 } from "../functions.js";
+import { DisposableLike, DisposableLike_error, DisposableLike_isDisposed } from "../util.js";
 declare const add: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
 declare const addIgnoringChildErrors: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
 declare const addTo: <T extends DisposableLike>(parent: DisposableLike) => Updater<T>;

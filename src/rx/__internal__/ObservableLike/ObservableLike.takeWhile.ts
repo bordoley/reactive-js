@@ -6,6 +6,7 @@ import {
 } from "../../../__internal__/mixins";
 import { TakeWhile } from "../../../containers";
 import StatefulContainerLike__takeWhile from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile";
+import { TReactive } from "../../../containers/__internal__/containers.internal";
 import { Predicate, pipe } from "../../../functions";
 import {
   ObservableLike,
@@ -17,8 +18,8 @@ import SinkLike__takeWhileMixin from "../SinkLike/SinkLike.takeWhileMixin";
 import ObservableLike__liftEnumerableOperatorT from "./ObservableLike.liftEnumerableOperatorT";
 
 const ObservableLike__takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
-  /*@__PURE__*/ (() => {
-    const createTakeWhileObserver: <T>(
+  /*@__PURE__*/ (<T>() => {
+    const createTakeWhileObserver: (
       delegate: ObserverLike<T>,
       predicate: Predicate<T>,
       inclusive: boolean,
@@ -56,7 +57,9 @@ const ObservableLike__takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
 
     return pipe(
       createTakeWhileObserver,
-      StatefulContainerLike__takeWhile(ObservableLike__liftEnumerableOperatorT),
+      StatefulContainerLike__takeWhile<ObservableLike, T, TReactive>(
+        ObservableLike__liftEnumerableOperatorT,
+      ),
     );
   })();
 

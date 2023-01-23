@@ -1,5 +1,5 @@
-import { ReadonlyArrayLike } from "../../../containers.mjs";
-import { ToAsyncEnumerable } from "../../../ix.mjs";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import { ToAsyncEnumerable } from "../../../ix.js";
 declare const ReadonlyArrayLike__toAsyncEnumerable: ToAsyncEnumerable<ReadonlyArrayLike, {
     readonly delay: number;
     readonly delayStart: boolean;

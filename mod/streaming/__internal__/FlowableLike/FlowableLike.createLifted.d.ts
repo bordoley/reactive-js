@@ -1,6 +1,6 @@
-import { ContainerOperator } from "../../../containers.mjs";
-import { ObservableLike } from "../../../rx.mjs";
-import { FlowMode, FlowableLike } from "../../../streaming.mjs";
+import { ContainerOperator } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
+import { FlowMode, FlowableLike } from "../../../streaming.js";
 interface CreateLiftedFlowable {
     <A>(op1: ContainerOperator<ObservableLike, FlowMode, A>): FlowableLike<A>;
     <A, B>(op1: ContainerOperator<ObservableLike, FlowMode, A>, op2: ContainerOperator<ObservableLike, A, B>): FlowableLike<B>;

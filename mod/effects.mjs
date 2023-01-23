@@ -6,19 +6,26 @@ import { notify } from './rx/SinkLike.mjs';
 import { stream, createStateStore } from './streaming/StreamableLike.mjs';
 import { disposed, isDisposed, dispose, addTo, onComplete } from './util/DisposableLike.mjs';
 
+var AsyncEffectType;
+(function (AsyncEffectType) {
+    AsyncEffectType[AsyncEffectType["Memo"] = 1] = "Memo";
+    AsyncEffectType[AsyncEffectType["Await"] = 2] = "Await";
+    AsyncEffectType[AsyncEffectType["Observe"] = 3] = "Observe";
+    AsyncEffectType[AsyncEffectType["Using"] = 4] = "Using";
+})(AsyncEffectType || (AsyncEffectType = {}));
 const validateAsyncEffect = ((ctx, type) => {
     const { effects, index } = ctx;
     ctx.index++;
     const effect = effects[index];
     if (isNone(effect)) {
-        const newEffect = type === 1 /* AsyncEffectType.Memo */
+        const newEffect = type === AsyncEffectType.Memo
             ? {
                 type,
                 f: ignore,
                 args: [],
                 value: none,
             }
-            : type === 2 /* AsyncEffectType.Await */ || type === 3 /* AsyncEffectType.Observe */
+            : type === AsyncEffectType.Await || type === AsyncEffectType.Observe
                 ? {
                     type,
                     observable: empty(),
@@ -26,7 +33,7 @@ const validateAsyncEffect = ((ctx, type) => {
                     value: none,
                     hasValue: false,
                 }
-                : type === 4 /* AsyncEffectType.Using */
+                : type === AsyncEffectType.Using
                     ? {
                         type,
                         f: ignore,
@@ -55,8 +62,8 @@ class AsyncContext {
         this.scheduledComputationSubscription = disposed;
         this.cleanup = () => {
             const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => (effect.type === 2 /* AsyncEffectType.Await */ ||
-                effect.type === 3 /* AsyncEffectType.Observe */) &&
+            const hasOutstandingEffects = effects.findIndex(effect => (effect.type === AsyncEffectType.Await ||
+                effect.type === AsyncEffectType.Observe) &&
                 !isDisposed(effect.subscription)) >= 0;
             if (!hasOutstandingEffects &&
                 isDisposed(this.scheduledComputationSubscription)) {
@@ -65,7 +72,7 @@ class AsyncContext {
         };
     }
     memo(f, ...args) {
-        const effect = validateAsyncEffect(this, 1 /* AsyncEffectType.Memo */);
+        const effect = validateAsyncEffect(this, AsyncEffectType.Memo);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -79,8 +86,8 @@ class AsyncContext {
     }
     awaitOrObserve(observable, shouldAwait) {
         const effect = shouldAwait
-            ? validateAsyncEffect(this, 2 /* AsyncEffectType.Await */)
-            : validateAsyncEffect(this, 3 /* AsyncEffectType.Observe */);
+            ? validateAsyncEffect(this, AsyncEffectType.Await)
+            : validateAsyncEffect(this, AsyncEffectType.Observe);
         if (effect.observable === observable) {
             return effect.value;
         }
@@ -109,7 +116,7 @@ class AsyncContext {
         }
     }
     using(f, ...args) {
-        const effect = validateAsyncEffect(this, 4 /* AsyncEffectType.Using */);
+        const effect = validateAsyncEffect(this, AsyncEffectType.Using);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -149,13 +156,13 @@ const async = (computation, { mode = "batched" } = {}) => create((observer) => {
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
             const { type } = effect;
-            if ((type === 2 /* AsyncEffectType.Await */ ||
-                type === 3 /* AsyncEffectType.Observe */) &&
+            if ((type === AsyncEffectType.Await ||
+                type === AsyncEffectType.Observe) &&
                 !effect.hasValue) {
                 allObserveEffectsHaveValues = false;
             }
-            if ((type === 2 /* AsyncEffectType.Await */ ||
-                type === 3 /* AsyncEffectType.Observe */) &&
+            if ((type === AsyncEffectType.Await ||
+                type === AsyncEffectType.Observe) &&
                 !isDisposed(effect.subscription)) {
                 hasOutstandingEffects = true;
             }

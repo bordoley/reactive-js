@@ -1,18 +1,18 @@
-declare type Constructor<T> = new () => T;
-declare type Constructor1<TA, T> = new (a: TA) => T;
-declare type Constructor2<TA, TB, T> = new (a: TA, b: TB) => T;
-declare type Constructor3<TA, TB, TC, T> = new (a: TA, b: TB, c: TC) => T;
-declare type Constructor4<TA, TB, TC, TD, T> = new (a: TA, b: TB, c: TC, d: TD) => T;
-declare type Factory<T> = () => T;
-declare type Function1<TA, T> = (a: TA) => T;
-declare type Function2<TA, TB, T> = (a: TA, b: TB) => T;
-declare type Function3<TA, TB, TC, T> = (a: TA, b: TB, c: TC) => T;
-declare type Function4<TA, TB, TC, TD, T> = (a: TA, b: TB, c: TC, d: TD) => T;
-declare type Function5<TA, TB, TC, TD, TE, T> = (a: TA, b: TB, c: TC, d: TD, e: TE) => T;
-declare type Function6<TA, TB, TC, TD, TE, TF, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => T;
-declare type Function7<TA, TB, TC, TD, TE, TF, TG, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T;
-declare type Function8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH) => T;
-declare type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH, i: TI) => T;
+type Constructor<T> = new () => T;
+type Constructor1<TA, T> = new (a: TA) => T;
+type Constructor2<TA, TB, T> = new (a: TA, b: TB) => T;
+type Constructor3<TA, TB, TC, T> = new (a: TA, b: TB, c: TC) => T;
+type Constructor4<TA, TB, TC, TD, T> = new (a: TA, b: TB, c: TC, d: TD) => T;
+type Factory<T> = () => T;
+type Function1<TA, T> = (a: TA) => T;
+type Function2<TA, TB, T> = (a: TA, b: TB) => T;
+type Function3<TA, TB, TC, T> = (a: TA, b: TB, c: TC) => T;
+type Function4<TA, TB, TC, TD, T> = (a: TA, b: TB, c: TC, d: TD) => T;
+type Function5<TA, TB, TC, TD, TE, T> = (a: TA, b: TB, c: TC, d: TD, e: TE) => T;
+type Function6<TA, TB, TC, TD, TE, TF, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => T;
+type Function7<TA, TB, TC, TD, TE, TF, TG, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T;
+type Function8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH) => T;
+type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH, i: TI) => T;
 /**
  * Compare two values to determine their relative ordering.
  *
@@ -21,45 +21,45 @@ declare type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (a: TA, b: TB, c
  *   - If 0, `a` equals `b`.
  *   - If greater than 0, `a` is greater than `b`.
  */
-declare type Comparator<T> = Function2<T, T, number>;
+type Comparator<T> = Function2<T, T, number>;
 /**
  * Compare two values for equality.
  *
  * @returns true if `a` is equals to `b`, otherwise false
  */
-declare type Equality<T> = Function2<T, T, boolean>;
+type Equality<T> = Function2<T, T, boolean>;
 /**
  * Represents an unboxed value of type T or undefined.
  */
-declare type Optional<T = unknown> = T | undefined;
+type Optional<T = unknown> = T | undefined;
 /**
  * A one argument predicate function.
  */
-declare type Predicate<T> = Function1<T, boolean>;
+type Predicate<T> = Function1<T, boolean>;
 /**
  * A pure function that takes the current accumulator and next value,
  * returning the next accumulated value.
  */
-declare type Reducer<T, TAcc> = Function2<TAcc, T, TAcc>;
-declare type SideEffect = () => void;
-declare type SideEffect1<TA> = (a: TA) => void;
-declare type SideEffect2<TA, TB> = (a: TA, b: TB) => void;
-declare type SideEffect3<TA, TB, TC> = (a: TA, b: TB, c: TC) => void;
-declare type SideEffect4<TA, TB, TC, TD> = (a: TA, b: TB, c: TC, d: TD) => void;
-declare type SideEffect5<TA, TB, TC, TD, TE> = (a: TA, b: TB, c: TC, d: TD, e: TE) => void;
-declare type SideEffect6<TA, TB, TC, TD, TE, TF> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => void;
-declare type SideEffect7<TA, TB, TC, TD, TE, TF, TG> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => void;
+type Reducer<T, TAcc> = Function2<TAcc, T, TAcc>;
+type SideEffect = () => void;
+type SideEffect1<TA> = (a: TA) => void;
+type SideEffect2<TA, TB> = (a: TA, b: TB) => void;
+type SideEffect3<TA, TB, TC> = (a: TA, b: TB, c: TC) => void;
+type SideEffect4<TA, TB, TC, TD> = (a: TA, b: TB, c: TC, d: TD) => void;
+type SideEffect5<TA, TB, TC, TD, TE> = (a: TA, b: TB, c: TC, d: TD, e: TE) => void;
+type SideEffect6<TA, TB, TC, TD, TE, TF> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => void;
+type SideEffect7<TA, TB, TC, TD, TE, TF, TG> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => void;
 /**
  * A type guard function that performs a runtime check
  * guaranteeing `v` is of type `TB`.
  *
  * @returns `true` if v is an instance of type `TB`, otherwise false.
  */
-declare type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
+type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
 /**
  * Computes a new value of type `T` from the previous value of type `T`.
  */
-declare type Updater<T> = Function1<T, T>;
+type Updater<T> = Function1<T, T>;
 /**
  * A function that always returns `false`.
  */

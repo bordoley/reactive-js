@@ -1,4 +1,4 @@
-import { SequenceLike } from "../../../containers.mjs";
-import { ToEnumerable } from "../../../ix.mjs";
+import { SequenceLike } from "../../../containers.js";
+import { ToEnumerable } from "../../../ix.js";
 declare const SequenceLike__toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"];
 export { SequenceLike__toEnumerable as default };

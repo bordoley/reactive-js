@@ -1,7 +1,7 @@
-import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator } from "./containers.mjs";
-import { Function2, Factory, Function1 } from "./functions.mjs";
-import { DispatcherLike, SchedulerLike } from "./scheduling.mjs";
-import { DisposableLike } from "./util.mjs";
+import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator } from "./containers.js";
+import { Function2, Factory, Function1 } from "./functions.js";
+import { DispatcherLike, SchedulerLike } from "./scheduling.js";
+import { DisposableLike } from "./util.js";
 /** @ignore */
 declare const SinkLike_notify: unique symbol;
 interface SinkLike<T = unknown> extends DisposableLike {
@@ -71,20 +71,20 @@ declare const SubjectLike_publish: unique symbol;
 interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;
 }
-declare type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
-declare type ScanAsync<C extends ContainerLike, CInner extends ObservableLike> = Container<C> & {
+type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
+type ScanAsync<C extends ContainerLike, CInner extends ObservableLike> = Container<C> & {
     scanAsync: <T, TAcc>(scanner: AsyncReducer<CInner, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
 };
-declare type ToObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
+type ToObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toObservable: <T>(options?: TOptions) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 };
-declare type ToRunnableObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
+type ToRunnableObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toRunnableObservable: <T>(options?: Partial<TOptions>) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
 };
-declare type ToEnumerableObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
+type ToEnumerableObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toEnumerableObservable: <T>(options?: TOptions) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
 };
-declare type ToRunnable<C extends ContainerLike, TOptions = never> = Container<C> & {
+type ToRunnable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toRunnable<T>(options?: TOptions): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
 export { AsyncReducer, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable };

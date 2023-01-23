@@ -1,5 +1,5 @@
-import { ContainerLike, Container, ContainerOperator, ContainerOf } from "../../../containers.mjs";
-import { Function1 } from "../../../functions.mjs";
+import { ContainerLike, Container, ContainerOperator, ContainerOf } from "../../../containers.js";
+import { Function1 } from "../../../functions.js";
 declare const ContainerLike__genMap: <C extends ContainerLike, TA, TB, OConcatAll = never, OFromIterable = never>(m: Container<C> & {
     map<TA_1, TB_1>(mapper: Function1<TA_1, TB_1>): ContainerOperator<C, TA_1, TB_1>;
 } & {

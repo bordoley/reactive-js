@@ -1,10 +1,16 @@
-import { Function1, Factory, Equality, Optional, TypePredicate, Predicate } from "../functions.mjs";
-import { ContainerLike, FromArrayOptions, Container, ContainerOperator, ContainerOf, Concat, SomeSatisfy, FromArray, Keep, Map, EverySatisfy, Zip } from "../containers.mjs";
-declare const compute: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(m: Container<C> & {
+import { Function1, Factory, Equality, Optional, TypePredicate, Predicate } from "../functions.js";
+import { ContainerLike, Container, ContainerOperator, ContainerOf, Concat, SomeSatisfy, FromArray, Keep, Map, EverySatisfy, Zip } from "../containers.js";
+declare const compute: <C extends ContainerLike, T, O extends {
+    readonly start: number;
+    readonly count: number;
+} = {
+    readonly start: number;
+    readonly count: number;
+}>(m: Container<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 } & {
     fromArray<T_1>(options?: Partial<O> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
-}, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Factory<T>, ContainerOf<C, T>>;
+}, options?: Partial<O> | undefined) => Function1<Factory<T>, ContainerOf<C, T>>;
 declare const concatMap: <C extends ContainerLike, TA, TB, O = never>({ map, concatAll }: Container<C> & {
     map<TA_1, TB_1>(mapper: Function1<TA_1, TB_1>): ContainerOperator<C, TA_1, TB_1>;
 } & {
@@ -20,7 +26,13 @@ declare const encodeUtf8: <C extends ContainerLike>(m: Container<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 }) => ContainerOperator<C, string, Uint8Array>;
 declare const endWith: <C extends ContainerLike, T>(m: Concat<C> & FromArray<C, never>, value: T, ...values: readonly T[]) => ContainerOperator<C, T, T>;
-declare const fromOption: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Optional<T>, ContainerOf<C, T>>;
+declare const fromOption: <C extends ContainerLike, T, O extends {
+    readonly start: number;
+    readonly count: number;
+} = {
+    readonly start: number;
+    readonly count: number;
+}>({ fromArray }: FromArray<C, O>, options?: Partial<O> | undefined) => Function1<Optional<T>, ContainerOf<C, T>>;
 declare const genMap: <C extends ContainerLike, TA, TB, OConcatAll = never, OFromIterable = never>(m: Container<C> & {
     map<TA_1, TB_1>(mapper: Function1<TA_1, TB_1>): ContainerOperator<C, TA_1, TB_1>;
 } & {
@@ -33,11 +45,17 @@ declare const keepType: <C extends ContainerLike, TA, TB extends TA>({ keep }: K
 declare const mapTo: <C extends ContainerLike, TA, TB>({ map }: Map<C>, value: TB) => ContainerOperator<C, TA, TB>;
 declare const noneSatisfy: <C extends ContainerLike, T>({ everySatisfy }: EverySatisfy<C>, predicate: Predicate<T>) => ContainerOperator<C, T, boolean>;
 declare const startWith: <C extends ContainerLike, T>(m: Concat<C> & FromArray<C, never>, value: T, ...values: readonly T[]) => ContainerOperator<C, T, T>;
-declare const throws: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(m: Container<C> & {
+declare const throws: <C extends ContainerLike, T, O extends {
+    readonly start: number;
+    readonly count: number;
+} = {
+    readonly start: number;
+    readonly count: number;
+}>(m: Container<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 } & {
     fromArray<T_1>(options?: Partial<O> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
-}, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Factory<unknown>, ContainerOf<C, T>>;
+}, options?: Omit<Partial<O>, "start" | "count"> | undefined) => Function1<Factory<unknown>, ContainerOf<C, T>>;
 interface ZipWith {
     <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, b: ContainerOf<C, TB>): ContainerOperator<C, TA, readonly [
         TA,

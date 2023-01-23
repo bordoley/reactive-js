@@ -36,14 +36,10 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "peerDependencies": {
-    "react": "^18.1.0",
+    "react": "^18.2.0",
     "scheduler": "^0.22.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "exports": {
-    "./*": "./*",
-    "./__internal__/*": null
   }
 }

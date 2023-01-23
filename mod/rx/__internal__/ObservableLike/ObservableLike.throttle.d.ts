@@ -1,6 +1,7 @@
-import { Function1 } from "../../../functions.mjs";
-import { ObservableLike } from "../../../rx.mjs";
-declare const ObservableLike__throttle: <T>(duration: number | Function1<T, ObservableLike<unknown>>, options?: {
+import { ContainerOperator } from "../../../containers.js";
+import { Function1 } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+declare const ObservableLike__throttle: (duration: number | Function1<unknown, ObservableLike<unknown>>, options?: {
     readonly mode?: ("interval" | "first" | "last") | undefined;
-}) => Function1<ObservableLike<unknown>, ObservableLike<unknown>>;
+}) => ContainerOperator<ObservableLike<unknown>, unknown, unknown>;
 export { ObservableLike__throttle as default };

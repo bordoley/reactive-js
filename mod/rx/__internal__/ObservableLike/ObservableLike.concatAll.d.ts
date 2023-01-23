@@ -1,5 +1,5 @@
-import { ConcatAll } from "../../../containers.mjs";
-import { ObservableLike } from "../../../rx.mjs";
+import { ConcatAll } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
 declare const ObservableLike__concatAll: ConcatAll<ObservableLike, {
     maxBufferSize?: number;
 }>["concatAll"];

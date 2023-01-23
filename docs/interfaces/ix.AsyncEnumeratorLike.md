@@ -4,6 +4,8 @@
 
 [ix](../modules/ix.md).AsyncEnumeratorLike
 
+Represents an unmanaged resource that can be disposed.
+
 ## Type parameters
 
 | Name | Type |

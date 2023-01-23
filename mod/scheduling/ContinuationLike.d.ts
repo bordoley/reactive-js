@@ -1,5 +1,5 @@
-import { Updater } from "../functions.mjs";
-import { ContinuationLike } from "../scheduling.mjs";
+import { Updater } from "../functions.js";
+import { ContinuationLike } from "../scheduling.js";
 declare const yield_: (options?: {
     delay?: number | undefined;
 } | undefined) => void;

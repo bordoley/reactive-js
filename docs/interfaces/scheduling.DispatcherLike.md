@@ -4,6 +4,8 @@
 
 [scheduling](../modules/scheduling.md).DispatcherLike
 
+Represents an unmanaged resource that can be disposed.
+
 ## Type parameters
 
 | Name | Type |

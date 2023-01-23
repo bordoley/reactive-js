@@ -1,4 +1,4 @@
-import { DelegatingEnumerator_move_delegate } from "../ix.internal.mjs";
+import { DelegatingEnumerator_move_delegate } from "../ix.internal.js";
 declare const DelegatingEnumeratorLike__move: (enumerator: {
     [DelegatingEnumerator_move_delegate](): boolean;
 }) => boolean;

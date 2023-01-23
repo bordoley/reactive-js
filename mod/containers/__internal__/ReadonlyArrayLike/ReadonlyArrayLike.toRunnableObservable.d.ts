@@ -1,5 +1,5 @@
-import { ReadonlyArrayLike } from "../../../containers.mjs";
-import { ToRunnableObservable } from "../../../rx.mjs";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import { ToRunnableObservable } from "../../../rx.js";
 declare const ReadonlyArrayLike__toRunnableObservable: ToRunnableObservable<ReadonlyArrayLike, {
     readonly delay: number;
     readonly delayStart: boolean;

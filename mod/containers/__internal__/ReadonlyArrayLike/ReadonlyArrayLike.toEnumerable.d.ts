@@ -1,5 +1,5 @@
-import { ReadonlyArrayLike } from "../../../containers.mjs";
-import { ToEnumerable } from "../../../ix.mjs";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import { ToEnumerable } from "../../../ix.js";
 declare const ReadonlyArrayLike__toEnumerable: ToEnumerable<ReadonlyArrayLike, {
     readonly start: number;
     readonly count: number;

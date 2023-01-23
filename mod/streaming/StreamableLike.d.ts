@@ -1,6 +1,6 @@
-import { Reducer, Factory, Equality, Updater, Function1 } from "../functions.mjs";
-import { SchedulerLike } from "../scheduling.mjs";
-import { StreamableLike, StreamLike } from "../streaming.mjs";
+import { Reducer, Factory, Equality, Updater, Function1 } from "../functions.js";
+import { SchedulerLike } from "../scheduling.js";
+import { StreamableLike, StreamLike } from "../streaming.js";
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.
