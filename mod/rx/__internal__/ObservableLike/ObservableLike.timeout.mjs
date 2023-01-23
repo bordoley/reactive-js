@@ -1,7 +1,6 @@
 /// <reference types="./ObservableLike.timeout.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import ContainerLike__throws from '../../../containers/__internal__/ContainerLike/ContainerLike.throws.mjs';
-import ReadonlyArrayLike__toRunnableObservable from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { pipe, none, returns, isNumber, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
@@ -14,6 +13,7 @@ import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getSchedule
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
 import ObservableLike__concat from './ObservableLike.concat.mjs';
+import ObservableLike__fromArrayT from './ObservableLike.fromArrayT.mjs';
 import ObservableLike__isRunnable from './ObservableLike.isRunnable.mjs';
 import ObservableLike__lift from './ObservableLike.lift.mjs';
 import ObservableLike__mapT from './ObservableLike.mapT.mjs';
@@ -47,11 +47,11 @@ const ObservableLike__timeout = /*@__PURE__*/ (() => {
     return (duration) => {
         const durationObs = isNumber(duration)
             ? ContainerLike__throws({
-                fromArray: ReadonlyArrayLike__toRunnableObservable,
+                ...ObservableLike__fromArrayT,
                 ...ObservableLike__mapT,
             }, { delay: duration, delayStart: true })(returnTimeoutError)
             : ObservableLike__concat(duration, ContainerLike__throws({
-                fromArray: ReadonlyArrayLike__toRunnableObservable,
+                ...ObservableLike__fromArrayT,
                 ...ObservableLike__mapT,
             })(returnTimeoutError));
         return pipe(createTimeoutObserver, partial(durationObs), ObservableLike__lift(false, isNumber(duration) || ObservableLike__isRunnable(duration)));

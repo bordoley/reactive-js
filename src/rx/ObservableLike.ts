@@ -68,6 +68,8 @@ import ObservableLike__forEach from "./__internal__/ObservableLike/ObservableLik
 import ObservableLike__forkCombineLatest from "./__internal__/ObservableLike/ObservableLike.forkCombineLatest";
 import ObservableLike__forkMerge from "./__internal__/ObservableLike/ObservableLike.forkMerge";
 import ObservableLike__forkZipLatest from "./__internal__/ObservableLike/ObservableLike.forkZipLatest";
+import ObservableLike__fromArray from "./__internal__/ObservableLike/ObservableLike.fromArray";
+import ObservableLike__fromArrayT from "./__internal__/ObservableLike/ObservableLike.fromArrayT";
 import ObservableLike__generate from "./__internal__/ObservableLike/ObservableLike.generate";
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
@@ -212,6 +214,10 @@ export const forkMerge: ForkConcat<ObservableLike>["forkConcat"] =
 
 export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] =
   ObservableLike__forkZipLatest;
+
+export const fromArray = ObservableLike__fromArray;
+export const fromArrayT = ObservableLike__fromArrayT;
+
 export const fromPromise: FromPromise<ObservableLike>["fromPromise"] =
   PromiseableLike__toObservable;
 export const fromPromiseT: FromPromise<ObservableLike> = { fromPromise };
