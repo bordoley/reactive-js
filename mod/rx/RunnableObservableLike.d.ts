@@ -1,6 +1,6 @@
 import { SideEffect1, Factory } from "../functions.js";
 import { ObserverLike, RunnableObservableLike, ScanAsync } from "../rx.js";
-import { Defer, Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, Empty, EverySatisfy, ForEach, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.js";
+import { Defer, Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromArray, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.js";
 import { VirtualTimeSchedulerLike } from "../scheduling.js";
 declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => RunnableObservableLike<T>;
 declare const defer: Defer<RunnableObservableLike>["defer"];
@@ -27,6 +27,12 @@ declare const everySatisfyT: EverySatisfy<RunnableObservableLike>;
 declare const exhaust: ConcatAll<RunnableObservableLike>["concatAll"];
 declare const exhaustT: ConcatAll<RunnableObservableLike>;
 declare const forEachT: ForEach<RunnableObservableLike>;
+declare const fromArrayT: FromArray<RunnableObservableLike, {
+    readonly delay: number;
+    readonly delayStart: boolean;
+    readonly start: number;
+    readonly count: number;
+}>;
 declare const generateT: Generate<RunnableObservableLike, {
     readonly delay: number;
     readonly delayStart: boolean;
@@ -60,4 +66,4 @@ declare const toReadonlyArrayT: ToReadonlyArray<RunnableObservableLike, {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 }>;
 declare const zipT: Zip<RunnableObservableLike>;
-export { bufferT, catchError, catchErrorT, concatAll, concatT, create, decodeWithCharsetT, defer, deferT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, generateT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, catchError, catchErrorT, concatAll, concatT, create, decodeWithCharsetT, defer, deferT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, fromArrayT, generateT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };

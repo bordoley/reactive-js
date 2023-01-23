@@ -16,6 +16,7 @@
 - [everySatisfyT](rx_RunnableObservableLike.md#everysatisfyt)
 - [exhaustT](rx_RunnableObservableLike.md#exhaustt)
 - [forEachT](rx_RunnableObservableLike.md#foreacht)
+- [fromArrayT](rx_RunnableObservableLike.md#fromarrayt)
 - [generateT](rx_RunnableObservableLike.md#generatet)
 - [keepT](rx_RunnableObservableLike.md#keept)
 - [mapT](rx_RunnableObservableLike.md#mapt)
@@ -106,6 +107,12 @@ ___
 ### forEachT
 
 • `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
+
+___
+
+### fromArrayT
+
+• `Const` **fromArrayT**: [`FromArray`](containers.md#fromarray)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), { `count`: `number` ; `delay`: `number` ; `delayStart`: `boolean` ; `start`: `number`  }\>
 
 ___
 
