@@ -1,4 +1,3 @@
-import { hasDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { ReadonlyArrayLike } from "../../../containers";
 import { none, pipe } from "../../../functions";
 import {
@@ -10,6 +9,7 @@ import EnumerableObservableLike__create from "../../../rx/__internal__/Enumerabl
 import ObserverLike__schedule from "../../../rx/__internal__/ObserverLike/ObserverLike.schedule";
 import RunnableObservableLike__create from "../../../rx/__internal__/RunnableObservableLike/RunnableObservableLike.create";
 import ContinuationLike__yield_ from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield";
+import { hasDelay } from "../../../scheduling/__internal__/SchedulerLike.options";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import ReadonlyArrayLike__toContainer from "./ReadonlyArrayLike.toContainer";

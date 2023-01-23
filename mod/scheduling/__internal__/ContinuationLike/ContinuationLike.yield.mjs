@@ -1,7 +1,7 @@
 /// <reference types="./ContinuationLike.yield.d.ts" />
-import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { newInstance } from '../../../functions.mjs';
 import { get } from '../CurrentScheduler.mjs';
+import { getDelay } from '../SchedulerLike.options.mjs';
 import SchedulerLike__shouldYield from '../SchedulerLike/SchedulerLike.shouldYield.mjs';
 import YieldError from '../YieldError.mjs';
 

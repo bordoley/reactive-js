@@ -1,6 +1,5 @@
 /// <reference types="./QueueSchedulerLike.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../__internal__/mixins.mjs';
-import { getDelay } from '../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { MAX_SAFE_INTEGER } from '../../constants.mjs';
 import { isNone, none, isSome, max, pipe, unsafeCast } from '../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
@@ -22,6 +21,7 @@ import QueueLike__push from '../../util/__internal__/QueueLike/QueueLike.push.mj
 import { MutableRefLike_current } from '../../util/__internal__/util.internal.mjs';
 import ContinuationLike__run from './ContinuationLike/ContinuationLike.run.mjs';
 import ContinuationLike__yield_ from './ContinuationLike/ContinuationLike.yield.mjs';
+import { getDelay } from './SchedulerLike.options.mjs';
 import SchedulerLike__getCurrentTime from './SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 import SchedulerLike__isInContinuation from './SchedulerLike/SchedulerLike.isInContinuation.mjs';
 import SchedulerLike__schedule from './SchedulerLike/SchedulerLike.schedule.mjs';

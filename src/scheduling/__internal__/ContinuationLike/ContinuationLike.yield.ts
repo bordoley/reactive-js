@@ -1,6 +1,6 @@
-import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { newInstance } from "../../../functions";
 import * as CurrentScheduler from "../CurrentScheduler";
+import { getDelay } from "../SchedulerLike.options";
 import shouldYield from "../SchedulerLike/SchedulerLike.shouldYield";
 import YieldError from "../YieldError";
 

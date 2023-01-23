@@ -1,7 +1,7 @@
-import { hasDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { Factory, Updater, none, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
 import ContinuationLike__yield_ from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield";
+import { hasDelay } from "../../../scheduling/__internal__/SchedulerLike.options";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import EnumerableObservableLike__create from "../EnumerableObservableLike/EnumerableObservableLike.create";
 import ObserverLike__schedule from "../ObserverLike/ObserverLike.schedule";

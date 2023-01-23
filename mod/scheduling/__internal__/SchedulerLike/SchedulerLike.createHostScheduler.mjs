@@ -1,6 +1,5 @@
 /// <reference types="./SchedulerLike.createHostScheduler.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { isFunction, pipe, unsafeCast } from '../../../functions.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import DisposableLike__addIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors.mjs';
@@ -11,6 +10,7 @@ import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLik
 import DisposableLike__mixin from '../../../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 import DisposableLike__onDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
 import ContinuationLike__run from '../ContinuationLike/ContinuationLike.run.mjs';
+import { getDelay } from '../SchedulerLike.options.mjs';
 import SchedulerLike__getCurrentTime from './SchedulerLike.getCurrentTime.mjs';
 import SchedulerLike__isInContinuation from './SchedulerLike.isInContinuation.mjs';
 
