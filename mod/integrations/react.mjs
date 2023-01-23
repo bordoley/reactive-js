@@ -2,7 +2,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_scheduleCallback, unstable_cancelCallback, unstable_IdlePriority, unstable_ImmediatePriority, unstable_NormalPriority, unstable_LowPriority, unstable_UserBlockingPriority } from 'scheduler';
 import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
-import { getDelay } from '../__internal__/scheduling/SchedulerLike.options.mjs';
 import { none, isSome, pipe, pipeLazy, ignore, raise, unsafeCast } from '../functions.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
 import { create, publish } from '../rx/SubjectLike.mjs';
@@ -10,6 +9,7 @@ import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYi
 import { run } from '../scheduling/ContinuationLike.mjs';
 import { toScheduler } from '../scheduling/PrioritySchedulerLike.mjs';
 import { isInContinuation } from '../scheduling/SchedulerLike.mjs';
+import { getDelay } from '../scheduling/__internal__/SchedulerLike.options.mjs';
 import { onError, dispose, addIgnoringChildErrors, isDisposed, create as create$1, onDisposed, addTo } from '../util/DisposableLike.mjs';
 import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
 

@@ -1,10 +1,10 @@
-import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { Generate } from "../../../containers";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import { Factory, Updater, pipe } from "../../../functions";
 import { AsyncEnumerableLike } from "../../../ix";
 import ObservableLike__scan from "../../../rx/__internal__/ObservableLike/ObservableLike.scan";
 import ObservableLike__scanAsync from "../../../rx/__internal__/ObservableLike/ObservableLike.scanAsync";
+import { getDelay } from "../../../scheduling/__internal__/SchedulerLike.options";
 import AsyncEnumerableLike__create from "./AsyncEnumerableLike.create";
 
 const AsyncEnumerableLike__generate: Generate<

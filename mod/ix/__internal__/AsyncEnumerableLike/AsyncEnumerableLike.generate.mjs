@@ -1,9 +1,9 @@
 /// <reference types="./AsyncEnumerableLike.generate.d.ts" />
-import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import ReadonlyArrayLike__toRunnableObservable from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { pipe } from '../../../functions.mjs';
 import ObservableLike__scan from '../../../rx/__internal__/ObservableLike/ObservableLike.scan.mjs';
 import ObservableLike__scanAsync from '../../../rx/__internal__/ObservableLike/ObservableLike.scanAsync.mjs';
+import { getDelay } from '../../../scheduling/__internal__/SchedulerLike.options.mjs';
 import AsyncEnumerableLike__create from './AsyncEnumerableLike.create.mjs';
 
 const AsyncEnumerableLike__generate = /*@__PURE__*/ (() => {

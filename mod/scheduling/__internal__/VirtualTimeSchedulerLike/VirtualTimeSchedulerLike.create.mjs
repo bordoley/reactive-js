@@ -1,6 +1,5 @@
 /// <reference types="./VirtualTimeSchedulerLike.create.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { getDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
 import { none, unsafeCast, pipe, isSome } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
@@ -16,6 +15,7 @@ import QueueLike__create from '../../../util/__internal__/QueueLike/QueueLike.cr
 import QueueLike__pop from '../../../util/__internal__/QueueLike/QueueLike.pop.mjs';
 import QueueLike__push from '../../../util/__internal__/QueueLike/QueueLike.push.mjs';
 import ContinuationLike__run from '../ContinuationLike/ContinuationLike.run.mjs';
+import { getDelay } from '../SchedulerLike.options.mjs';
 import SchedulerLike__getCurrentTime from '../SchedulerLike/SchedulerLike.getCurrentTime.mjs';
 
 const comparator = (a, b) => {

@@ -6,7 +6,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { Optional, isFunction, pipe, unsafeCast } from "../../../functions";
 import {
   ContinuationLike,
@@ -26,6 +25,7 @@ import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLik
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
 import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
 import ContinuationLike__run from "../ContinuationLike/ContinuationLike.run";
+import { getDelay } from "../SchedulerLike.options";
 import getCurrentTime from "./SchedulerLike.getCurrentTime";
 import isInContinuation from "./SchedulerLike.isInContinuation";
 

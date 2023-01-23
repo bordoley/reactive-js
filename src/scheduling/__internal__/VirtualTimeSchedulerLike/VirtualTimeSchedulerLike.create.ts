@@ -6,7 +6,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { getDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { MAX_SAFE_INTEGER } from "../../../constants";
 import { isSome, none, pipe, unsafeCast } from "../../../functions";
 import {
@@ -38,6 +37,7 @@ import QueueLike__pop from "../../../util/__internal__/QueueLike/QueueLike.pop";
 import QueueLike__push from "../../../util/__internal__/QueueLike/QueueLike.push";
 import { QueueLike } from "../../../util/__internal__/util.internal";
 import ContinuationLike__run from "../ContinuationLike/ContinuationLike.run";
+import { getDelay } from "../SchedulerLike.options";
 import getCurrentTime from "../SchedulerLike/SchedulerLike.getCurrentTime";
 
 type VirtualTask = {

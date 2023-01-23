@@ -25,7 +25,6 @@ import {
   mix,
   props,
 } from "../__internal__/mixins";
-import { getDelay } from "../__internal__/scheduling/SchedulerLike.options";
 import {
   Factory,
   Optional,
@@ -53,6 +52,7 @@ import {
 import { run } from "../scheduling/ContinuationLike";
 import { toScheduler } from "../scheduling/PrioritySchedulerLike";
 import { isInContinuation } from "../scheduling/SchedulerLike";
+import { getDelay } from "../scheduling/__internal__/SchedulerLike.options";
 import { DisposableLike } from "../util";
 import {
   addIgnoringChildErrors,

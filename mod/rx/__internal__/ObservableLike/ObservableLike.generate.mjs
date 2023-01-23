@@ -1,8 +1,8 @@
 /// <reference types="./ObservableLike.generate.d.ts" />
-import { hasDelay } from '../../../__internal__/scheduling/SchedulerLike.options.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import ContinuationLike__yield_ from '../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield.mjs';
+import { hasDelay } from '../../../scheduling/__internal__/SchedulerLike.options.mjs';
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import EnumerableObservableLike__create from '../EnumerableObservableLike/EnumerableObservableLike.create.mjs';
 import ObserverLike__schedule from '../ObserverLike/ObserverLike.schedule.mjs';

@@ -1,5 +1,5 @@
-import { hasDelay } from "../../../__internal__/scheduling/SchedulerLike.options";
 import { pipe, pipeLazy } from "../../../functions";
+import { hasDelay } from "../../../scheduling/__internal__/SchedulerLike.options";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import EnumerableObservableLike__create from "../EnumerableObservableLike/EnumerableObservableLike.create";
 import ObserverLike__schedule from "../ObserverLike/ObserverLike.schedule";
