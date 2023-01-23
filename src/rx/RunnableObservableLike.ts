@@ -10,6 +10,7 @@ import {
   Empty,
   EverySatisfy,
   ForEach,
+  FromArray,
   Generate,
   Keep,
   Map,
@@ -26,6 +27,7 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
+import ReadonlyArrayLike__toRunnableObservable from "../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import { Factory } from "../functions";
 import { RunnableObservableLike, ScanAsync } from "../rx";
 import { VirtualTimeSchedulerLike } from "../scheduling";
@@ -128,6 +130,18 @@ export const exhaustT: ConcatAll<RunnableObservableLike> = {
 
 export const forEachT: ForEach<RunnableObservableLike> = {
   forEach: forEach as ForEach<RunnableObservableLike>["forEach"],
+};
+
+export const fromArrayT: FromArray<
+  RunnableObservableLike,
+  {
+    readonly delay: number;
+    readonly delayStart: boolean;
+    readonly start: number;
+    readonly count: number;
+  }
+> = {
+  fromArray: ReadonlyArrayLike__toRunnableObservable,
 };
 
 export const generateT: Generate<

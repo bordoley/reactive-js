@@ -49,6 +49,7 @@ import {
   everySatisfyT,
   exhaust,
   forEachT,
+  fromArrayT,
   keepT,
   mapT,
   pairwiseT,
@@ -178,10 +179,7 @@ const mergeTests = describe(
       pipeLazy(
         merge(
           pipe([1, 4, 7], toRunnableObservable({ delay: 2 })),
-          throws(
-            { fromArray: toRunnableObservable, ...mapT },
-            { delay: 5 },
-          )(raise),
+          throws({ ...fromArrayT, ...mapT }, { delay: 5 })(raise),
         ),
         toReadonlyArray(),
       ),
@@ -232,7 +230,7 @@ const retryTests = describe(
         pipe(
           raise,
           throws<RunnableObservableLike, number>({
-            fromArray: toRunnableObservable,
+            ...fromArrayT,
             ...mapT,
           }),
         ),
@@ -287,7 +285,7 @@ const switchAllTests = describe(
       pipeLazy(
         raise,
         throws({
-          fromArray: toRunnableObservable,
+          ...fromArrayT,
           ...mapT,
         }),
         switchAll(),
@@ -549,10 +547,7 @@ const withLatestFromTest = describe(
       pipeLazy(
         [0],
         toRunnableObservable({ delay: 1 }),
-        withLatestFrom(
-          throws({ fromArray: toRunnableObservable, ...mapT })(returns(error)),
-          sum,
-        ),
+        withLatestFrom(throws({ ...fromArrayT, ...mapT })(returns(error)), sum),
         toReadonlyArray(),
         expectArrayEquals([] as number[]),
       ),
@@ -564,7 +559,7 @@ const withLatestFromTest = describe(
 const zipTests = describe(
   "zip",
   ...zipOperatorTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...zipT,
     ...toReadonlyArrayT,
   }).tests,
@@ -602,7 +597,7 @@ const zipTests = describe(
     pipeLazy(
       pipeLazy(
         zip(
-          pipe(raise, throws({ fromArray: toRunnableObservable, ...mapT })),
+          pipe(raise, throws({ ...fromArrayT, ...mapT })),
           pipe([1, 2, 3], toRunnableObservable()),
         ),
         map<readonly [unknown, number], number>(([, b]) => b),
@@ -641,7 +636,7 @@ const zipWithLatestTests = describe(
     "when source throws",
     pipeLazy(
       pipeLazy(
-        throws({ fromArray: toRunnableObservable, ...mapT })(raise),
+        throws({ ...fromArrayT, ...mapT })(raise),
         zipWithLatestFrom(pipe([1], toRunnableObservable()), (_, b) => b),
         toReadonlyArray(),
       ),
@@ -656,7 +651,7 @@ const zipWithLatestTests = describe(
         [1, 2, 3],
         toRunnableObservable({ delay: 1 }),
         zipWithLatestFrom(
-          throws({ fromArray: toRunnableObservable, ...mapT })(raise),
+          throws({ ...fromArrayT, ...mapT })(raise),
           (_, b) => b,
         ),
         toReadonlyArray(),
@@ -697,114 +692,112 @@ const zipWithLatestTests = describe(
 testModule(
   "ObservableLike",
   bufferTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...bufferT,
     ...toReadonlyArrayT,
   }),
   catchErrorTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...catchErrorT,
     ...mapT,
     ...toReadonlyArrayT,
   }),
   combineLatestTests,
   concatTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...concatT,
     ...toReadonlyArrayT,
   }),
   decodeWithCharsetTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...deferT,
     ...decodeWithCharsetT,
     ...mapT,
     ...toReadonlyArrayT,
   }),
   distinctUntilChangedTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...distinctUntilChangedT,
     ...toReadonlyArrayT,
   }),
   everySatisfyTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...everySatisfyT,
     ...toReadonlyArrayT,
   }),
   exhaustTests,
   forEachTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...forEachT,
     ...toReadonlyArrayT,
   }),
   keepTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...keepT,
     ...toReadonlyArrayT,
   }),
   mapTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...mapT,
     ...toReadonlyArrayT,
   }),
   mergeTests,
   onSubscribeTests,
   pairwiseTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...pairwiseT,
     ...toReadonlyArrayT,
   }),
   reduceTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...reduceT,
     ...toReadonlyArrayT,
   }),
   retryTests,
   scanTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...scanT,
     ...toReadonlyArrayT,
   }),
   scanAsyncTests<RunnableObservableLike, RunnableObservableLike>(
     {
-      fromArray: toRunnableObservable,
+      ...fromArrayT,
       ...scanAsyncT,
       ...toReadonlyArrayT,
     },
-    {
-      fromArray: toRunnableObservable,
-    },
+    fromArrayT,
   ),
   shareTests,
   skipFirstTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...skipFirstT,
     ...toReadonlyArrayT,
   }),
   someSatisfyTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...someSatisfyT,
     ...toReadonlyArrayT,
   }),
   switchAllTests,
   takeFirstTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...takeFirstT,
     ...toReadonlyArrayT,
   }),
   takeLastTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...takeLastT,
     ...toReadonlyArrayT,
   }),
   takeUntilTests,
   takeWhileTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...takeWhileT,
     ...toReadonlyArrayT,
   }),
   throttleTests,
   throwIfEmptyTests({
-    fromArray: toRunnableObservable,
+    ...fromArrayT,
     ...throwIfEmptyT,
     ...toReadonlyArrayT,
   }),

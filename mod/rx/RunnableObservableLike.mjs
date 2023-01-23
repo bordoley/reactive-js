@@ -1,5 +1,6 @@
 /// <reference types="./RunnableObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
+import ReadonlyArrayLike__toRunnableObservable from '../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
 import RunnableObservableLike__catchError from './__internal__/RunnableObservableLike/RunnableObservableLike.catchError.mjs';
 import RunnableObservableLike__create from './__internal__/RunnableObservableLike/RunnableObservableLike.create.mjs';
@@ -52,6 +53,9 @@ const exhaustT = {
 };
 const forEachT = {
     forEach: forEach,
+};
+const fromArrayT = {
+    fromArray: ReadonlyArrayLike__toRunnableObservable,
 };
 const generateT = { generate };
 const keepT = {
@@ -106,4 +110,4 @@ const zipT = {
     zip: zip,
 };
 
-export { bufferT, catchError, catchErrorT, concatAll, concatT, create, decodeWithCharsetT, defer, deferT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, generateT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { bufferT, catchError, catchErrorT, concatAll, concatT, create, decodeWithCharsetT, defer, deferT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, fromArrayT, generateT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
