@@ -9,7 +9,7 @@ import {
 import { TakeWhile } from "../../../containers";
 import StatefulContainerLike__takeWhile from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Predicate, none, pipe } from "../../../functions";
+import { Predicate, error, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
@@ -74,8 +74,8 @@ const EnumerableLike__takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
                   } else if (!satisfiesPredicate) {
                     pipe(this, DisposableLike__dispose());
                   }
-                } catch (cause) {
-                  pipe(this, DisposableLike__dispose({ cause }));
+                } catch (e) {
+                  pipe(this, DisposableLike__dispose(error(e)));
                 }
               }
             },

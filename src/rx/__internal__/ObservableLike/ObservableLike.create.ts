@@ -4,7 +4,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { SideEffect1, none, pipe } from "../../../functions";
+import { SideEffect1, error, none, pipe } from "../../../functions";
 import {
   ObservableLike,
   ObservableLike_isEnumerable,
@@ -12,7 +12,7 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
+import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 
 const ObservableLike__create: <T>(
   f: SideEffect1<ObserverLike>,
@@ -54,8 +54,8 @@ const ObservableLike__create: <T>(
         ) {
           try {
             this.f(observer);
-          } catch (cause) {
-            pipe(observer, DisposableLike__isDisposed({ cause }));
+          } catch (e) {
+            pipe(observer, DisposableLike__dispose(error(e)));
           }
         },
       },

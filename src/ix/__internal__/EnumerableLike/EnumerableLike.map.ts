@@ -9,7 +9,7 @@ import {
 import { Map } from "../../../containers";
 import StatefulContainerLike__map from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.map";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Function1, none, pipe } from "../../../functions";
+import { Function1, error, none, pipe } from "../../../functions";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -66,8 +66,8 @@ const EnumerableLike__map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
                 this[EnumeratorLike_current] = this.mapper(
                   EnumeratorLike__getCurrent(delegate),
                 );
-              } catch (cause) {
-                pipe(this, DisposableLike__dispose({ cause }));
+              } catch (e) {
+                pipe(this, DisposableLike__dispose(error(e)));
               }
             }
           },

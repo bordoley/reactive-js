@@ -1,6 +1,6 @@
 /// <reference types="./EnumerableLike.generate.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { none, pipe } from '../../../functions.mjs';
+import { none, pipe, error } from '../../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../../ix.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
@@ -23,8 +23,8 @@ const EnumerableLike__generate =
                 try {
                     this[EnumeratorLike_current] = this.f(this[EnumeratorLike_current]);
                 }
-                catch (cause) {
-                    pipe(this, DisposableLike__dispose({ cause }));
+                catch (e) {
+                    pipe(this, DisposableLike__dispose(error(e)));
                 }
             }
         },

@@ -6,9 +6,16 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { Factory, Optional, none, pipe, returns } from "../../../functions";
+import {
+  Factory,
+  Optional,
+  error,
+  none,
+  pipe,
+  returns,
+} from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import { DisposableLike, Exception } from "../../../util";
+import { DisposableLike } from "../../../util";
 import DisposableLike__addTo from "../../../util/__internal__/DisposableLike/DisposableLike.addTo";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
@@ -47,20 +54,17 @@ const SinkLike__throwIfEmptyMixin: <T>() => Mixin2<
           instance,
           DisposableLike__addTo(delegate),
           DisposableLike__onComplete(() => {
-            let error: Optional<Exception> = none;
+            let err: Optional<Error> = none;
 
             if (instance[ThrowIfEmptySink_private_isEmpty]) {
-              let cause: unknown = none;
               try {
-                cause = factory();
+                err = error(factory());
               } catch (e) {
-                cause = e;
+                err = error(e);
               }
-
-              error = { cause };
             }
 
-            pipe(delegate, DisposableLike__dispose(error));
+            pipe(delegate, DisposableLike__dispose(err));
           }),
         );
 

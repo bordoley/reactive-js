@@ -4,7 +4,7 @@ import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../
 import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../../rx.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../../scheduling.mjs';
 import ContinuationLike__yield_ from '../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield.mjs';
-import { DisposableLike_exception } from '../../../util.mjs';
+import { DisposableLike_error } from '../../../util.mjs';
 import DisposableLike__addToIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
@@ -35,7 +35,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         };
         instance.onContinuationDispose = () => {
             if (DisposableLike__isDisposed(instance)) {
-                pipe(observer, DisposableLike__dispose(instance[DisposableLike_exception]));
+                pipe(observer, DisposableLike__dispose(instance[DisposableLike_error]));
             }
         };
         pipe(instance, DisposableLike__onDisposed(e => {

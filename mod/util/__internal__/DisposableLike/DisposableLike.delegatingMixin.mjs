@@ -1,7 +1,7 @@
 /// <reference types="./DisposableLike.delegatingMixin.d.ts" />
 import { mix, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, unsafeCast } from '../../../functions.mjs';
-import { DisposableLike_isDisposed, DisposableLike_exception, DisposableLike_add, DisposableLike_dispose } from '../../../util.mjs';
+import { DisposableLike_isDisposed, DisposableLike_error, DisposableLike_add, DisposableLike_dispose } from '../../../util.mjs';
 import DisposableLike__dispose from './DisposableLike.dispose.mjs';
 import DisposableLike__onDisposed from './DisposableLike.onDisposed.mjs';
 
@@ -18,10 +18,10 @@ const DisposableLike__delegatingMixin =
         [DelegatingDisposable_private_delegate]: none,
         [DisposableLike_isDisposed]: false,
     }), {
-        get [DisposableLike_exception]() {
+        get [DisposableLike_error]() {
             unsafeCast(this);
             const delegate = this[DelegatingDisposable_private_delegate];
-            return delegate[DisposableLike_exception];
+            return delegate[DisposableLike_error];
         },
         [DisposableLike_add](disposable, ignoreChildErrors) {
             const delegate = this[DelegatingDisposable_private_delegate];

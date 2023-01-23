@@ -1,5 +1,12 @@
 import { ToPromiseable } from "../../../containers";
-import { Optional, isSome, newInstance, none, pipe } from "../../../functions";
+import {
+  Optional,
+  error,
+  isSome,
+  newInstance,
+  none,
+  pipe,
+} from "../../../functions";
 import { ObservableLike } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
 import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
@@ -31,15 +38,9 @@ const ObservableLike__toPromise: ToPromiseable<
         ObservableLike__subscribe(scheduler),
         DisposableLike__onDisposed(err => {
           if (isSome(err)) {
-            const { cause } = err;
-            reject(cause);
+            reject(err);
           } else if (!hasResult) {
-            reject(
-              newInstance(
-                Error,
-                "Observable completed without producing a value",
-              ),
-            );
+            reject(error("Observable completed without producing a value"));
           } else {
             resolve(result as T);
           }

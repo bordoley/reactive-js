@@ -11,6 +11,7 @@ import {
   Function2,
   Optional,
   SideEffect,
+  error,
   isFunction,
   isSome,
   none,
@@ -22,7 +23,7 @@ import {
   SchedulerLike,
   SchedulerLike_schedule,
 } from "../../../scheduling";
-import { DisposableLike, Exception } from "../../../util";
+import { DisposableLike } from "../../../util";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
@@ -64,7 +65,7 @@ export const createContinuation: Function2<
       {
         [ContinuationLike_run](this: TProperties & ContinuationLike) {
           if (!DisposableLike__isDisposed(this)) {
-            let error: Optional<Exception> = none;
+            let err: Optional<Error> = none;
             let yieldError: Optional<YieldError> = none;
 
             const { scheduler } = this;
@@ -72,11 +73,11 @@ export const createContinuation: Function2<
             CurrentScheduler.set(scheduler);
             try {
               this.f();
-            } catch (cause) {
-              if (isYieldError(cause)) {
-                yieldError = cause;
+            } catch (e) {
+              if (isYieldError(e)) {
+                yieldError = e;
               } else {
-                error = { cause };
+                err = error(e);
               }
             }
             CurrentScheduler.set(oldCurrentScheduler);
@@ -84,7 +85,7 @@ export const createContinuation: Function2<
             if (isSome(yieldError)) {
               pipe(scheduler, SchedulerLike__schedule(this, yieldError));
             } else {
-              pipe(this, DisposableLike__dispose(error));
+              pipe(this, DisposableLike__dispose(err));
             }
           }
         },

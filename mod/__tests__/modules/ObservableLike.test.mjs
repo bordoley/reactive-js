@@ -10,7 +10,7 @@ import { dispatch, dispatchTo } from '../../scheduling/DispatcherLike.mjs';
 import { schedule, getCurrentTime, createHostScheduler } from '../../scheduling/SchedulerLike.mjs';
 import { create } from '../../scheduling/VirtualTimeSchedulerLike.mjs';
 import { stream } from '../../streaming/StreamableLike.mjs';
-import { getException, dispose, isDisposed } from '../../util/DisposableLike.mjs';
+import { getError, dispose, isDisposed } from '../../util/DisposableLike.mjs';
 import { zipTests as zipTests$1, bufferTests, catchErrorTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, everySatisfyTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, scanAsyncTests, skipFirstTests, someSatisfyTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectToThrow, mockFn, expectToHaveBeenCalledTimes, expectIsSome, expectEquals, expectTrue, testAsync, expectPromiseToThrow, expectToThrowError, testModule } from '../testing.mjs';
 
@@ -34,7 +34,7 @@ const onSubscribeTests = createDescribe("onSubscribe", createTest("when subscrib
 }), createTest("when callback function throws", () => {
     const scheduler = create();
     const subscription = pipe([1], toRunnableObservable(), onSubscribe(raise), subscribe(scheduler));
-    pipe(subscription, getException, expectIsSome);
+    pipe(subscription, getError, expectIsSome);
 }));
 const retryTests = createDescribe("retry", createTest("repeats the observable n times", pipeLazy(concat(pipe([1, 2, 3], toRunnableObservable()), pipe(raise, throws({
     fromArray: toRunnableObservable,

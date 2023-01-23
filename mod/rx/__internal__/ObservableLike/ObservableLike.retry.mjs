@@ -7,7 +7,7 @@ const ObservableLike__retry = /*@__PURE__*/ (() => {
     return (predicate) => {
         const retryPredicate = isNone(predicate)
             ? defaultRetryPredicate
-            : (count, error) => isSome(error) && predicate(count, error.cause);
+            : (count, error) => isSome(error) && predicate(count, error);
         return ObservableLike__repeatOrRetry(retryPredicate);
     };
 })();

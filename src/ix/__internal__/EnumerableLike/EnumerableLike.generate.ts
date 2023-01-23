@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { Generate } from "../../../containers";
-import { Factory, Updater, none, pipe } from "../../../functions";
+import { Factory, Updater, error, none, pipe } from "../../../functions";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -52,8 +52,8 @@ const EnumerableLike__generate: Generate<EnumerableLike>["generate"] =
                 this[EnumeratorLike_current] = this.f(
                   this[EnumeratorLike_current],
                 );
-              } catch (cause) {
-                pipe(this, DisposableLike__dispose({ cause }));
+              } catch (e) {
+                pipe(this, DisposableLike__dispose(error(e)));
               }
             }
           },

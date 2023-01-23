@@ -1,5 +1,5 @@
 /// <reference types="./ObservableLike.repeatOrRetry.d.ts" />
-import { pipe, partial } from '../../../functions.mjs';
+import { error, pipe, partial } from '../../../functions.mjs';
 import DisposableLike__addToIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__onDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
@@ -13,17 +13,17 @@ import ObservableLike__subscribe from './ObservableLike.subscribe.mjs';
 const ObservableLike__repeatOrRetry = /*@__PURE__*/ (() => {
     const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         let count = 1;
-        const doOnDispose = (e) => {
+        const doOnDispose = (err) => {
             let shouldComplete = false;
             try {
-                shouldComplete = !shouldRepeat(count, e);
+                shouldComplete = !shouldRepeat(count, err);
             }
-            catch (cause) {
+            catch (e) {
                 shouldComplete = true;
-                e = { cause, parent: e };
+                err = error([e, err]);
             }
             if (shouldComplete) {
-                pipe(delegate, DisposableLike__dispose(e));
+                pipe(delegate, DisposableLike__dispose(err));
             }
             else {
                 count++;

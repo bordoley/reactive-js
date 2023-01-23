@@ -1,7 +1,7 @@
 /// <reference types="./node.d.ts" />
 import fs from 'fs';
 import { createBrotliDecompress, createGunzip, createInflate, createBrotliCompress, createGzip, createDeflate } from 'zlib';
-import { pipe, ignore, pipeLazy, isFunction } from '../functions.mjs';
+import { pipe, error, ignore, pipeLazy, isFunction } from '../functions.mjs';
 import { ObserverLike_dispatcher } from '../rx.mjs';
 import { create, forEach, subscribe } from '../rx/ObservableLike.mjs';
 import { getScheduler, getDispatcher } from '../rx/ObserverLike.mjs';
@@ -15,9 +15,9 @@ import { dispose, toErrorHandler, onError, onDisposed, onComplete } from '../uti
 
 const bindNodeCallback = (callback) => function (...args) {
     return create(({ [ObserverLike_dispatcher]: dispatcher }) => {
-        const handler = (cause, arg) => {
-            if (cause) {
-                pipe(dispatcher, dispose({ cause }));
+        const handler = (err, arg) => {
+            if (err) {
+                pipe(dispatcher, dispose(error(err)));
             }
             else {
                 pipe(dispatcher, dispatch(arg), dispose());

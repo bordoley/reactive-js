@@ -24,6 +24,7 @@ import {
   SideEffect4,
   SideEffect5,
   SideEffect6,
+  error,
   ignore,
   isFunction,
   pipe,
@@ -108,9 +109,9 @@ export const bindNodeCallback: BindNodeCallback = <T>(
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {
     return createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {
-      const handler = (cause: unknown, arg: unknown) => {
-        if (cause) {
-          pipe(dispatcher, dispose({ cause }));
+      const handler = (err: unknown, arg: unknown) => {
+        if (err) {
+          pipe(dispatcher, dispose(error(err)));
         } else {
           pipe(dispatcher, dispatch(arg), dispose());
         }

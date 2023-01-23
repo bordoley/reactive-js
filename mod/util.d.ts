@@ -4,13 +4,10 @@ declare const DisposableLike_add: unique symbol;
 /** @ignore */
 declare const DisposableLike_dispose: unique symbol;
 /** @ignore */
-declare const DisposableLike_exception: unique symbol;
+declare const DisposableLike_error: unique symbol;
 /** @ignore */
 declare const DisposableLike_isDisposed: unique symbol;
-declare type Exception = {
-    readonly cause: unknown;
-};
-declare type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Exception>>;
+declare type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
  */
@@ -18,7 +15,7 @@ interface DisposableLike {
     /**
      * The error the `Disposable` was disposed with if disposed.
      */
-    readonly [DisposableLike_exception]: Optional<Exception>;
+    readonly [DisposableLike_error]: Optional<Error>;
     /**
      * `true` if this resource has been disposed, otherwise false
      */
@@ -35,7 +32,7 @@ interface DisposableLike {
      *
      * @param error An optional error that signals the resource is being disposed due to an error.
      */
-    [DisposableLike_dispose](error?: Exception): void;
+    [DisposableLike_dispose](error?: Error): void;
 }
 /** @ignore */
 declare const PauseableLike_pause: unique symbol;
@@ -45,4 +42,4 @@ interface PauseableLike {
     [PauseableLike_pause](): void;
     [PauseableLike_resume](): void;
 }
-export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_exception, DisposableLike_isDisposed, DisposableOrTeardown, Exception, PauseableLike, PauseableLike_pause, PauseableLike_resume };
+export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, PauseableLike, PauseableLike_pause, PauseableLike_resume };

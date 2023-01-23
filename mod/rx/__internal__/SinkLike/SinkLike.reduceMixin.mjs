@@ -1,6 +1,6 @@
 /// <reference types="./SinkLike.reduceMixin.d.ts" />
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { pipe, none } from '../../../functions.mjs';
+import { pipe, error, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -20,8 +20,8 @@ const SinkLike__reduceMixin = (fromArray) => {
             const acc = initialValue();
             instance[ReduceSink_private_acc] = acc;
         }
-        catch (cause) {
-            pipe(instance, DisposableLike__dispose({ cause }));
+        catch (e) {
+            pipe(instance, DisposableLike__dispose(error(e)));
         }
         pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(() => {
             pipe([instance[ReduceSink_private_acc]], fromArray, ReactiveContainerLike__sinkInto(delegate));

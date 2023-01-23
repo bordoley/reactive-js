@@ -14,6 +14,7 @@ import {
   Optional,
   Updater,
   compose,
+  error,
   getLength,
   isEmpty,
   isFunction,
@@ -197,8 +198,8 @@ export const fetch: <T>(
                 : onResponseResult;
 
             pipe(resultObs, sinkInto(observer));
-          } catch (cause) {
-            pipe(observer, dispose({ cause }));
+          } catch (e) {
+            pipe(observer, dispose(error(e)));
           }
         });
   })();

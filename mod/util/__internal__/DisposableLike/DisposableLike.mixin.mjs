@@ -1,14 +1,14 @@
 /// <reference types="./DisposableLike.mixin.d.ts" />
 import { mix, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, isSome } from '../../../functions.mjs';
-import { DisposableLike_exception, DisposableLike_isDisposed, DisposableLike_dispose, DisposableLike_add } from '../../../util.mjs';
+import { DisposableLike_error, DisposableLike_isDisposed, DisposableLike_dispose, DisposableLike_add } from '../../../util.mjs';
 import DisposableLike__dispose from './DisposableLike.dispose.mjs';
-import DisposableLike__getException from './DisposableLike.getException.mjs';
+import DisposableLike__getError from './DisposableLike.getError.mjs';
 import DisposableLike__isDisposed from './DisposableLike.isDisposed.mjs';
 
 const DisposableLike__mixin = /*@__PURE__*/ (() => {
     const doDispose = (instance, disposable) => {
-        const error = DisposableLike__getException(instance);
+        const error = DisposableLike__getError(instance);
         if (disposable instanceof Function) {
             try {
                 disposable.call(instance, error);
@@ -28,13 +28,13 @@ const DisposableLike__mixin = /*@__PURE__*/ (() => {
         instance[Disposable_private_disposables] = new Set();
         return instance;
     }, props({
-        [DisposableLike_exception]: none,
+        [DisposableLike_error]: none,
         [DisposableLike_isDisposed]: false,
         [Disposable_private_disposables]: none,
     }), {
         [DisposableLike_dispose](error) {
             if (!DisposableLike__isDisposed(this)) {
-                this[DisposableLike_exception] = error;
+                this[DisposableLike_error] = error;
                 this[DisposableLike_isDisposed] = true;
                 const disposables = this[Disposable_private_disposables];
                 for (const disposable of disposables) {

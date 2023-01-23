@@ -1,10 +1,10 @@
 import { Optional, SideEffect1, Updater } from "../../../functions";
-import { DisposableLike, Exception } from "../../../util";
+import { DisposableLike } from "../../../util";
 import addDisposableOrTeardown from "./DisposableLike.addDisposableOrTeardown";
 
 const DisposableLike__onDisposed =
   <T extends DisposableLike>(
-    teardown: SideEffect1<Optional<Exception>>,
+    teardown: SideEffect1<Optional<Error>>,
   ): Updater<T> =>
   disposable => {
     addDisposableOrTeardown(disposable, teardown);

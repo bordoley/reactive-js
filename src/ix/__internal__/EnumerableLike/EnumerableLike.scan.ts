@@ -9,7 +9,14 @@ import {
 import { Scan } from "../../../containers";
 import StatefulContainerLike__scan from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Factory, Reducer, isSome, none, pipe } from "../../../functions";
+import {
+  Factory,
+  Reducer,
+  error,
+  isSome,
+  none,
+  pipe,
+} from "../../../functions";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -56,8 +63,8 @@ const EnumerableLike__scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
           try {
             const acc = initialValue();
             instance[EnumeratorLike_current] = acc;
-          } catch (cause) {
-            pipe(instance, DisposableLike__dispose({ cause }));
+          } catch (e) {
+            pipe(instance, DisposableLike__dispose(error(e)));
           }
 
           return instance;
@@ -76,8 +83,8 @@ const EnumerableLike__scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
                   acc,
                   EnumeratorLike__getCurrent(delegate),
                 );
-              } catch (cause) {
-                pipe(this, DisposableLike__dispose({ cause }));
+              } catch (e) {
+                pipe(this, DisposableLike__dispose(error(e)));
               }
             }
           },

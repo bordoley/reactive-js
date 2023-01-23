@@ -1,6 +1,6 @@
 /// <reference types="./SinkLike.scanMixin.d.ts" />
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { returns, pipe, none } from '../../../functions.mjs';
+import { returns, pipe, error, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -18,8 +18,8 @@ const SinkLike__scanMixin = /*@__PURE__*/ (() => {
             const acc = initialValue();
             instance[ScanSink_private_acc] = acc;
         }
-        catch (cause) {
-            pipe(instance, DisposableLike__dispose({ cause }));
+        catch (e) {
+            pipe(instance, DisposableLike__dispose(error(e)));
         }
         return instance;
     }, props({

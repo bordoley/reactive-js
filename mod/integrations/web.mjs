@@ -3,7 +3,7 @@ import { createInstanceFactory, mix, include, init, props } from '../__internal_
 import { ignoreElements } from '../containers/ContainerLike.mjs';
 import { toObservable } from '../containers/PromiseableLike.mjs';
 import { keep } from '../containers/ReadonlyArrayLike.mjs';
-import { pipe, newInstance, none, isString, isEmpty, getLength, unsafeCast, isSome, raise, isFunction, compose } from '../functions.mjs';
+import { pipe, newInstance, none, isString, error, isEmpty, getLength, unsafeCast, isSome, raise, isFunction, compose } from '../functions.mjs';
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
 import { create, map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
@@ -67,8 +67,8 @@ const fetch =
                 : onResponseResult;
             pipe(resultObs, sinkInto(observer));
         }
-        catch (cause) {
-            pipe(observer, dispose({ cause }));
+        catch (e) {
+            pipe(observer, dispose(error(e)));
         }
     });
 })();

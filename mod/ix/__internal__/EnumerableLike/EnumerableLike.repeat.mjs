@@ -1,7 +1,7 @@
 /// <reference types="./EnumerableLike.repeat.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import ContainerLike__repeat from '../../../containers/__internal__/ContainerLike/ContainerLike.repeat.mjs';
-import { none, isNone, pipe, unsafeCast, raise } from '../../../functions.mjs';
+import { none, isNone, pipe, error, unsafeCast, raise } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
 import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -40,8 +40,8 @@ const EnumerableLike__repeat =
                         break;
                     }
                 }
-                catch (cause) {
-                    pipe(this, DisposableLike__dispose({ cause }));
+                catch (e) {
+                    pipe(this, DisposableLike__dispose(error(e)));
                     break;
                 }
             }

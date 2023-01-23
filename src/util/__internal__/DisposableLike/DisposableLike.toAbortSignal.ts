@@ -8,7 +8,7 @@ const DisposableLike__toAbortSignal = (
   const abortController = newInstance(AbortController);
   pipe(
     disposable,
-    onDisposed(e => abortController.abort(e?.cause)),
+    onDisposed(e => abortController.abort(e)),
   );
   return abortController.signal;
 };

@@ -1,5 +1,5 @@
 /// <reference types="./effects.d.ts" />
-import { isNone, ignore, none, raise, arrayEquality, pipe, getLength, isSome, newInstance } from './functions.mjs';
+import { isNone, ignore, none, raise, arrayEquality, newInstance, pipe, error, getLength, isSome } from './functions.mjs';
 import { empty, forEach, subscribe, create } from './rx/ObservableLike.mjs';
 import { getScheduler, schedule } from './rx/ObserverLike.mjs';
 import { notify } from './rx/SinkLike.mjs';
@@ -44,7 +44,7 @@ const validateAsyncEffect = ((ctx, type) => {
     }
 });
 const arrayStrictEquality = arrayEquality();
-const awaiting = {};
+const awaiting = newInstance(Error);
 class AsyncContext {
     constructor(observer, runComputation, mode) {
         this.observer = observer;
@@ -127,16 +127,16 @@ let currentCtx = none;
 const async = (computation, { mode = "batched" } = {}) => create((observer) => {
     const runComputation = () => {
         let result = none;
-        let error = none;
+        let err = none;
         let isAwaiting = false;
         currentCtx = ctx;
         try {
             result = computation();
         }
-        catch (cause) {
-            isAwaiting = cause === awaiting;
+        catch (e) {
+            isAwaiting = e === awaiting;
             if (!isAwaiting) {
-                error = { cause };
+                err = error(e);
             }
         }
         currentCtx = none;
@@ -166,7 +166,7 @@ const async = (computation, { mode = "batched" } = {}) => create((observer) => {
         const combineLatestModeShouldNotify = mode === "combine-latest" &&
             allObserveEffectsHaveValues &&
             hasOutstandingEffects;
-        const hasError = isSome(error);
+        const hasError = isSome(err);
         const shouldNotify = !hasError &&
             !isAwaiting &&
             (combineLatestModeShouldNotify || mode === "batched");
@@ -175,7 +175,7 @@ const async = (computation, { mode = "batched" } = {}) => create((observer) => {
             pipe(observer, notify(result));
         }
         if (shouldDispose) {
-            pipe(observer, dispose(error));
+            pipe(observer, dispose(err));
         }
     };
     const ctx = newInstance(AsyncContext, observer, runComputation, mode);

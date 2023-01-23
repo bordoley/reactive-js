@@ -9,7 +9,7 @@ import {
 import { ForEach } from "../../../containers";
 import StatefulContainerLike__forEach from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.forEach";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { SideEffect1, none, pipe } from "../../../functions";
+import { SideEffect1, error, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
@@ -53,8 +53,8 @@ const EnumerableLike__forEach: ForEach<EnumerableLike>["forEach"] =
               if (DelegatingEnumeratorLike__move(this)) {
                 try {
                   this.effect(EnumeratorLike__getCurrent(this));
-                } catch (cause) {
-                  pipe(this, DisposableLike__dispose({ cause }));
+                } catch (e) {
+                  pipe(this, DisposableLike__dispose(error(e)));
                 }
               }
             },

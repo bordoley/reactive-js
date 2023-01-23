@@ -700,15 +700,20 @@ export const pipeLazy: PipeLazy =
   () =>
     pipeUnsafe(source, ...operators);
 
+export const error = (message?: unknown): Error =>
+  message instanceof Error
+    ? message
+    : isString(message)
+    ? newInstance(Error, message)
+    : isSome(message)
+    ? newInstance(Error, "", { cause: message })
+    : newInstance(Error);
+
 /**
  * Throws a javascript error using the provided message.
  */
 export const raise = <T>(message?: unknown): T => {
-  if (isNone(message) || isString(message)) {
-    throw newInstance(Error, message);
-  } else {
-    throw message;
-  }
+  throw error(message);
 };
 
 /**

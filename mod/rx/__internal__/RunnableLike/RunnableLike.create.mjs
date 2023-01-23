@@ -1,6 +1,6 @@
 /// <reference types="./RunnableLike.create.d.ts" />
 import { createInstanceFactory, mix, props } from '../../../__internal__/mixins.mjs';
-import { none, pipe } from '../../../functions.mjs';
+import { none, pipe, error } from '../../../functions.mjs';
 import { ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 
@@ -16,8 +16,8 @@ const RunnableLike__create = /*@__PURE__*/ (() => {
                 this.run(sink);
                 pipe(sink, DisposableLike__dispose());
             }
-            catch (cause) {
-                pipe(sink, DisposableLike__dispose({ cause }));
+            catch (e) {
+                pipe(sink, DisposableLike__dispose(error(e)));
             }
         },
     }));

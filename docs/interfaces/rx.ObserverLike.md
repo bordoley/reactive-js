@@ -20,7 +20,7 @@
 
 ### Properties
 
-- [[DisposableLike\_exception]](rx.ObserverLike.md#[disposablelike_exception])
+- [[DisposableLike\_error]](rx.ObserverLike.md#[disposablelike_error])
 - [[DisposableLike\_isDisposed]](rx.ObserverLike.md#[disposablelike_isdisposed])
 - [[ObserverLike\_dispatcher]](rx.ObserverLike.md#[observerlike_dispatcher])
 - [[ObserverLike\_scheduler]](rx.ObserverLike.md#[observerlike_scheduler])
@@ -33,15 +33,15 @@
 
 ## Properties
 
-### [DisposableLike\_exception]
+### [DisposableLike\_error]
 
-• `Readonly` **[DisposableLike\_exception]**: [`Optional`](../modules/functions.md#optional)<[`Exception`](../modules/util.md#exception)\>
+• `Readonly` **[DisposableLike\_error]**: [`Optional`](../modules/functions.md#optional)<`Error`\>
 
 The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[SinkLike](rx.SinkLike.md).[[DisposableLike_exception]](rx.SinkLike.md#[disposablelike_exception])
+[SinkLike](rx.SinkLike.md).[[DisposableLike_error]](rx.SinkLike.md#[disposablelike_error])
 
 ___
 
@@ -104,7 +104,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `error?` | [`Exception`](../modules/util.md#exception) | An optional error that signals the resource is being disposed due to an error. |
+| `error?` | `Error` | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
 

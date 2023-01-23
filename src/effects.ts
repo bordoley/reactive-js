@@ -17,6 +17,7 @@ import {
   SideEffect6,
   Updater,
   arrayEquality,
+  error,
   getLength,
   ignore,
   isNone,
@@ -38,7 +39,7 @@ import { notify } from "./rx/SinkLike";
 import { SchedulerLike } from "./scheduling";
 import { StreamLike, StreamableLike } from "./streaming";
 import { createStateStore, stream } from "./streaming/StreamableLike";
-import { DisposableLike, Exception } from "./util";
+import { DisposableLike } from "./util";
 import {
   addTo,
   dispose,
@@ -139,7 +140,7 @@ const validateAsyncEffect: ValidateAsyncEffect = ((
 
 const arrayStrictEquality = arrayEquality();
 
-const awaiting = {};
+const awaiting = newInstance(Error);
 
 class AsyncContext {
   index = 0;
@@ -264,16 +265,16 @@ export const async = <T>(
   createObservable((observer: ObserverLike<T>) => {
     const runComputation = () => {
       let result: Optional<T> = none;
-      let error: Optional<Exception> = none;
+      let err: Optional<Error> = none;
       let isAwaiting = false;
 
       currentCtx = ctx;
       try {
         result = computation();
-      } catch (cause) {
-        isAwaiting = cause === awaiting;
+      } catch (e) {
+        isAwaiting = e === awaiting;
         if (!isAwaiting) {
-          error = { cause };
+          err = error(e);
         }
       }
       currentCtx = none;
@@ -315,7 +316,7 @@ export const async = <T>(
         allObserveEffectsHaveValues &&
         hasOutstandingEffects;
 
-      const hasError = isSome(error);
+      const hasError = isSome(err);
 
       const shouldNotify =
         !hasError &&
@@ -329,7 +330,7 @@ export const async = <T>(
       }
 
       if (shouldDispose) {
-        pipe(observer, dispose(error));
+        pipe(observer, dispose(err));
       }
     };
 

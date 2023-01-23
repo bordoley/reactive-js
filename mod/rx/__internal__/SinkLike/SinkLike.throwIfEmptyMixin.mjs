@@ -1,6 +1,6 @@
 /// <reference types="./SinkLike.throwIfEmptyMixin.d.ts" />
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { returns, pipe, none } from '../../../functions.mjs';
+import { returns, pipe, none, error } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -15,18 +15,16 @@ const SinkLike__throwIfEmptyMixin = /*@__PURE__*/ (() => {
         init(DisposableLike__mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         pipe(instance, DisposableLike__addTo(delegate), DisposableLike__onComplete(() => {
-            let error = none;
+            let err = none;
             if (instance[ThrowIfEmptySink_private_isEmpty]) {
-                let cause = none;
                 try {
-                    cause = factory();
+                    err = error(factory());
                 }
                 catch (e) {
-                    cause = e;
+                    err = error(e);
                 }
-                error = { cause };
             }
-            pipe(delegate, DisposableLike__dispose(error));
+            pipe(delegate, DisposableLike__dispose(err));
         }));
         return instance;
     }, props({

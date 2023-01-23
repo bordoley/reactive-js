@@ -8,9 +8,8 @@ import {
 import { ThrowIfEmpty } from "../../../containers";
 import StatefulContainerLike__throwIfEmpty from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Factory, Optional, none, pipe } from "../../../functions";
+import { Factory, Optional, error, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import { Exception } from "../../../util";
 import DisposableLike__addIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__mixin from "../../../util/__internal__/DisposableLike/DisposableLike.mixin";
@@ -47,20 +46,17 @@ const EnumerableLike__throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"]
             pipe(
               delegate,
               DisposableLike__onComplete(() => {
-                let error: Optional<Exception> = none;
+                let err: Optional<Error> = none;
 
                 if (instance.isEmpty) {
-                  let cause: unknown = none;
                   try {
-                    cause = factory();
+                    err = error(factory());
                   } catch (e) {
-                    cause = e;
+                    err = error(e);
                   }
-
-                  error = { cause };
                 }
 
-                pipe(instance, DisposableLike__dispose(error));
+                pipe(instance, DisposableLike__dispose(err));
               }),
             );
 

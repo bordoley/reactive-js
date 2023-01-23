@@ -119,16 +119,18 @@ const pipe = pipeUnsafe;
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
 const pipeLazy = (source, ...operators) => () => pipeUnsafe(source, ...operators);
+const error = (message) => message instanceof Error
+    ? message
+    : isString(message)
+        ? newInstance(Error, message)
+        : isSome(message)
+            ? newInstance(Error, "", { cause: message })
+            : newInstance(Error);
 /**
  * Throws a javascript error using the provided message.
  */
 const raise = (message) => {
-    if (isNone(message) || isString(message)) {
-        throw newInstance(Error, message);
-    }
-    else {
-        throw message;
-    }
+    throw error(message);
 };
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
@@ -157,4 +159,4 @@ function unsafeCast(_v) { }
 const updateReducer = (acc, updater) => updater(acc);
 const { floor, max, min } = Math;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast, updateReducer };
