@@ -75,7 +75,7 @@ import {
 } from "../../scheduling/SchedulerLike";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeSchedulerLike";
 import { stream } from "../../streaming/StreamableLike";
-import { dispose, getException, isDisposed } from "../../util/DisposableLike";
+import { dispose, getError, isDisposed } from "../../util/DisposableLike";
 import {
   bufferTests,
   catchErrorTests,
@@ -218,7 +218,7 @@ const onSubscribeTests = describe(
       subscribe(scheduler),
     );
 
-    pipe(subscription, getException, expectIsSome);
+    pipe(subscription, getError, expectIsSome);
   }),
 );
 

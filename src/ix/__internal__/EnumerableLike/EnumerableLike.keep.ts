@@ -9,7 +9,7 @@ import {
 import { Keep } from "../../../containers";
 import StatefulContainerLike__keep from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.keep";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Predicate, none, pipe } from "../../../functions";
+import { Predicate, error, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
@@ -58,8 +58,8 @@ const EnumerableLike__keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<
                 DelegatingEnumeratorLike__move(this) &&
                 !predicate(EnumeratorLike__getCurrent(this))
               ) {}
-            } catch (cause) {
-              pipe(this, DisposableLike__dispose({ cause }));
+            } catch (e) {
+              pipe(this, DisposableLike__dispose(error(e)));
             }
           },
         },

@@ -34,6 +34,7 @@ import {
   none,
   pipe,
   pipeLazy,
+  raise,
   unsafeCast,
 } from "../functions";
 import { ObservableLike, SubjectLike } from "../rx";
@@ -52,7 +53,7 @@ import {
 import { run } from "../scheduling/ContinuationLike";
 import { toScheduler } from "../scheduling/PrioritySchedulerLike";
 import { isInContinuation } from "../scheduling/SchedulerLike";
-import { DisposableLike, Exception } from "../util";
+import { DisposableLike } from "../util";
 import {
   addIgnoringChildErrors,
   addTo,
@@ -75,7 +76,7 @@ export const useObservable = <T>(
   options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
 ): Optional<T> => {
   const [state, updateState] = useState<Optional<T>>(none);
-  const [error, updateError] = useState<Optional<Exception>>(none);
+  const [error, updateError] = useState<Optional<Error>>(none);
 
   useEffect(() => {
     const { scheduler: schedulerOption } = options;
@@ -102,12 +103,7 @@ export const useObservable = <T>(
     );
   }, [observable, updateState, updateError, options.scheduler]);
 
-  if (isSome(error)) {
-    const { cause } = error;
-    throw cause;
-  }
-
-  return state;
+  return isSome(error) ? raise<T>(error) : state;
 };
 
 const createReplaySubject = <TProps>() => createSubject<TProps>({ replay: 1 });

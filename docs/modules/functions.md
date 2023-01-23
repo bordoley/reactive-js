@@ -51,6 +51,7 @@
 - [composeUnsafe](functions.md#composeunsafe)
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
+- [error](functions.md#error)
 - [floor](functions.md#floor)
 - [forEach](functions.md#foreach)
 - [getLength](functions.md#getlength)
@@ -1521,6 +1522,22 @@ Returns a function that decrements a number `x` by the value `decr`.
 #### Returns
 
 [`Updater`](functions.md#updater)<`number`\>
+
+___
+
+### error
+
+▸ **error**(`message?`): `Error`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message?` | `unknown` |
+
+#### Returns
+
+`Error`
 
 ___
 

@@ -6,18 +6,14 @@ export const DisposableLike_add = Symbol("DisposableLike_add");
 export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
 
 /** @ignore */
-export const DisposableLike_exception = Symbol("DisposableLike_exception");
+export const DisposableLike_error = Symbol("DisposableLike_error");
 
 /** @ignore */
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 
-export type Exception = {
-  readonly cause: unknown;
-};
-
 export type DisposableOrTeardown =
   | DisposableLike
-  | SideEffect1<Optional<Exception>>;
+  | SideEffect1<Optional<Error>>;
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -26,7 +22,7 @@ export interface DisposableLike {
   /**
    * The error the `Disposable` was disposed with if disposed.
    */
-  readonly [DisposableLike_exception]: Optional<Exception>;
+  readonly [DisposableLike_error]: Optional<Error>;
 
   /**
    * `true` if this resource has been disposed, otherwise false
@@ -49,7 +45,7 @@ export interface DisposableLike {
    *
    * @param error An optional error that signals the resource is being disposed due to an error.
    */
-  [DisposableLike_dispose](error?: Exception): void;
+  [DisposableLike_dispose](error?: Error): void;
 }
 
 /** @ignore */

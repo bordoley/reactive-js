@@ -1,7 +1,7 @@
 /// <reference types="./EnumerableLike.takeWhile.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import StatefulContainerLike__takeWhile from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.takeWhile.mjs';
-import { pipe, none } from '../../../functions.mjs';
+import { pipe, none, error } from '../../../functions.mjs';
 import { SourceLike_move } from '../../../ix.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -41,8 +41,8 @@ const EnumerableLike__takeWhile =
                         pipe(this, DisposableLike__dispose());
                     }
                 }
-                catch (cause) {
-                    pipe(this, DisposableLike__dispose({ cause }));
+                catch (e) {
+                    pipe(this, DisposableLike__dispose(error(e)));
                 }
             }
         },

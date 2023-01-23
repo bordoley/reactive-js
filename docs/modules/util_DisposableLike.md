@@ -17,7 +17,7 @@
 - [bindTo](util_DisposableLike.md#bindto)
 - [create](util_DisposableLike.md#create)
 - [dispose](util_DisposableLike.md#dispose)
-- [getException](util_DisposableLike.md#getexception)
+- [getError](util_DisposableLike.md#geterror)
 - [isDisposed](util_DisposableLike.md#isdisposed)
 - [onComplete](util_DisposableLike.md#oncomplete)
 - [onDisposed](util_DisposableLike.md#ondisposed)
@@ -194,7 +194,7 @@ Dispose `disposable` with an optional error.
 
 | Name | Type |
 | :------ | :------ |
-| `e?` | [`Exception`](util.md#exception) |
+| `e?` | `Error` |
 
 #### Returns
 
@@ -202,20 +202,20 @@ Dispose `disposable` with an optional error.
 
 ___
 
-### getException
+### getError
 
-▸ **getException**(`disposable`): [`Optional`](functions.md#optional)<[`Exception`](util.md#exception)\>
+▸ **getError**(`disposable`): [`Optional`](functions.md#optional)<`Error`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `disposable` | `Object` |
-| `disposable.[DisposableLike_exception]` | [`Optional`](functions.md#optional)<[`Exception`](util.md#exception)\> |
+| `disposable.[DisposableLike_error]` | [`Optional`](functions.md#optional)<`Error`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`Exception`](util.md#exception)\>
+[`Optional`](functions.md#optional)<`Error`\>
 
 ___
 
@@ -272,7 +272,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<[`Exception`](util.md#exception)\>\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<`Error`\>\> |
 
 #### Returns
 
@@ -294,7 +294,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Exception`](util.md#exception)\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<`Error`\> |
 
 #### Returns
 

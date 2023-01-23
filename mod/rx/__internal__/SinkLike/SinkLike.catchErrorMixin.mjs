@@ -1,6 +1,6 @@
 /// <reference types="./SinkLike.catchErrorMixin.d.ts" />
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { returns, pipe, none, isSome } from '../../../functions.mjs';
+import { returns, pipe, none, isSome, error } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__addToIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -17,9 +17,9 @@ const SinkLike__catchErrorMixin =
         instance[DelegatingSinkLike_delegate] = delegate;
         pipe(instance, DisposableLike__addToIgnoringChildErrors(delegate), DisposableLike__onComplete(() => {
             pipe(delegate, DisposableLike__dispose());
-        }), DisposableLike__onError((e) => {
+        }), DisposableLike__onError((err) => {
             try {
-                const result = errorHandler(e.cause) || none;
+                const result = errorHandler(err) || none;
                 if (isSome(result)) {
                     pipe(result, ReactiveContainerLike__sinkInto(delegate));
                 }
@@ -27,10 +27,8 @@ const SinkLike__catchErrorMixin =
                     pipe(delegate, DisposableLike__dispose());
                 }
             }
-            catch (cause) {
-                pipe(delegate, DisposableLike__dispose({
-                    cause: { parent: e.cause, cause },
-                }));
+            catch (e) {
+                pipe(delegate, DisposableLike__dispose(error([e, err])));
             }
         }));
         return instance;

@@ -6,7 +6,14 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { Factory, Reducer, none, pipe, returns } from "../../../functions";
+import {
+  Factory,
+  Reducer,
+  error,
+  none,
+  pipe,
+  returns,
+} from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
@@ -46,8 +53,8 @@ const SinkLike__scanMixin: <T, TAcc>() => Mixin3<
         try {
           const acc = initialValue();
           instance[ScanSink_private_acc] = acc;
-        } catch (cause) {
-          pipe(instance, DisposableLike__dispose({ cause }));
+        } catch (e) {
+          pipe(instance, DisposableLike__dispose(error(e)));
         }
 
         return instance;

@@ -4,13 +4,12 @@ import {
   DisposableLike,
   DisposableLike_add,
   DisposableLike_dispose,
-  DisposableLike_exception,
+  DisposableLike_error,
   DisposableLike_isDisposed,
   DisposableOrTeardown,
-  Exception,
 } from "../../../util";
 import dispose from "./DisposableLike.dispose";
-import getException from "./DisposableLike.getException";
+import getError from "./DisposableLike.getError";
 import isDisposed from "./DisposableLike.isDisposed";
 
 const DisposableLike__mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
@@ -18,7 +17,7 @@ const DisposableLike__mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
     instance: DisposableLike,
     disposable: DisposableOrTeardown,
   ) => {
-    const error = getException(instance);
+    const error = getError(instance);
     if (disposable instanceof Function) {
       try {
         disposable.call(instance, error);
@@ -37,7 +36,7 @@ const DisposableLike__mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
   );
 
   type TProperties = {
-    [DisposableLike_exception]: Optional<Exception>;
+    [DisposableLike_error]: Optional<Error>;
     [DisposableLike_isDisposed]: boolean;
     readonly [Disposable_private_disposables]: Set<DisposableOrTeardown>;
   };
@@ -55,17 +54,17 @@ const DisposableLike__mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
       return instance;
     },
     props<TProperties>({
-      [DisposableLike_exception]: none,
+      [DisposableLike_error]: none,
       [DisposableLike_isDisposed]: false,
       [Disposable_private_disposables]: none,
     }),
     {
       [DisposableLike_dispose](
         this: TProperties & DisposableLike,
-        error?: Exception,
+        error?: Error,
       ) {
         if (!isDisposed(this)) {
-          this[DisposableLike_exception] = error;
+          this[DisposableLike_error] = error;
           this[DisposableLike_isDisposed] = true;
 
           const disposables = this[Disposable_private_disposables];

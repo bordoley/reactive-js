@@ -86,13 +86,13 @@ testModule(
       try {
         const encoder = newInstance(TextEncoder);
 
-        const cause = newInstance(Error);
+        const err = newInstance(Error);
         const writable = newInstance(Writable, {
           autoDestroy: true,
           highWaterMark: 4,
 
           write(_chunk, _encoding, callback) {
-            callback(cause);
+            callback(err);
           },
         });
 
@@ -160,11 +160,11 @@ testModule(
       const scheduler = createHostScheduler();
 
       try {
-        const cause = newInstance(Error);
+        const err = newInstance(Error);
 
         function* generate() {
           yield Buffer.from("abc", "utf8");
-          throw cause;
+          throw err;
         }
 
         const textDecoder = newInstance(TextDecoder);

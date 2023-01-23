@@ -8,7 +8,7 @@ import DisposableLike__bindTo from './__internal__/DisposableLike/DisposableLike
 import DisposableLike__create from './__internal__/DisposableLike/DisposableLike.create.mjs';
 import DisposableLike__dispose from './__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__disposed from './__internal__/DisposableLike/DisposableLike.disposed.mjs';
-import DisposableLike__getException from './__internal__/DisposableLike/DisposableLike.getException.mjs';
+import DisposableLike__getError from './__internal__/DisposableLike/DisposableLike.getError.mjs';
 import DisposableLike__isDisposed from './__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
 import DisposableLike__onComplete from './__internal__/DisposableLike/DisposableLike.onComplete.mjs';
 import DisposableLike__onDisposed from './__internal__/DisposableLike/DisposableLike.onDisposed.mjs';
@@ -28,7 +28,7 @@ const create = DisposableLike__create;
  */
 const dispose = DisposableLike__dispose;
 const disposed = DisposableLike__disposed;
-const getException = DisposableLike__getException;
+const getError = DisposableLike__getError;
 const isDisposed = DisposableLike__isDisposed;
 const onComplete = DisposableLike__onComplete;
 const onDisposed = DisposableLike__onDisposed;
@@ -40,4 +40,4 @@ const toAbortSignal = DisposableLike__toAbortSignal;
 const toErrorHandler = DisposableLike__toErrorHandler;
 const toObservable = DisposableLike__toObservable;
 
-export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, create, dispose, disposed, getException, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler, toObservable };
+export { add, addIgnoringChildErrors, addTo, addToIgnoringChildErrors, bindTo, create, dispose, disposed, getError, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler, toObservable };

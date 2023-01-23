@@ -9,7 +9,7 @@ import {
 import { DistinctUntilChanged } from "../../../containers";
 import StatefulContainerLike__distinctUntilChanged from "../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.distinctUntilChanged";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Equality, none, pipe } from "../../../functions";
+import { Equality, error, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
 import DisposableLike__delegatingMixin from "../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
@@ -68,8 +68,8 @@ const EnumerableLike__distinctUntilChanged: DistinctUntilChanged<EnumerableLike>
                     break;
                   }
                 }
-              } catch (cause) {
-                pipe(this, DisposableLike__dispose({ cause }));
+              } catch (e) {
+                pipe(this, DisposableLike__dispose(error(e)));
               }
             },
           },

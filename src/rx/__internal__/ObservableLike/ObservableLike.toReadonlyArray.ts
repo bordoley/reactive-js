@@ -1,10 +1,10 @@
 import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers";
-import { Factory, Function1, isSome, pipe } from "../../../functions";
+import { Factory, Function1, isSome, pipe, raise } from "../../../functions";
 import { ObservableLike } from "../../../rx";
 import { VirtualTimeSchedulerLike } from "../../../scheduling";
 import ContinuationLike__run from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.run";
 import VirtualTimeSchedulerLike__create from "../../../scheduling/__internal__/VirtualTimeSchedulerLike/VirtualTimeSchedulerLike.create";
-import DisposableLike__getException from "../../../util/__internal__/DisposableLike/DisposableLike.getException";
+import DisposableLike__getError from "../../../util/__internal__/DisposableLike/DisposableLike.getError";
 import ObservableLike__forEach from "./ObservableLike.forEach";
 import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
@@ -31,13 +31,9 @@ const ObservableLike__toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadon
         );
 
         ContinuationLike__run(scheduler);
-        const exception = DisposableLike__getException(subscription);
+        const error = DisposableLike__getError(subscription);
 
-        if (isSome(exception)) {
-          throw exception.cause;
-        }
-
-        return result;
+        return isSome(error) ? raise<T[]>(error) : result;
       } else {
         return [];
       }

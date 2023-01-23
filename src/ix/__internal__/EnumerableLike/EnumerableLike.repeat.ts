@@ -11,6 +11,7 @@ import ContainerLike__repeat from "../../../containers/__internal__/ContainerLik
 import {
   Optional,
   Predicate,
+  error,
   isNone,
   none,
   pipe,
@@ -93,8 +94,8 @@ const EnumerableLike__repeat: Repeat<EnumerableLike>["repeat"] =
                 } else {
                   break;
                 }
-              } catch (cause) {
-                pipe(this, DisposableLike__dispose({ cause }));
+              } catch (e) {
+                pipe(this, DisposableLike__dispose(error(e)));
                 break;
               }
             }

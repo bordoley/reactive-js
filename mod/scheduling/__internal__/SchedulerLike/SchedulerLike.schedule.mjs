@@ -1,6 +1,6 @@
 /// <reference types="./SchedulerLike.schedule.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { none, isSome, pipe, isFunction } from '../../../functions.mjs';
+import { none, error, isSome, pipe, isFunction } from '../../../functions.mjs';
 import { ContinuationLike_run, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 import DisposableLike__isDisposed from '../../../util/__internal__/DisposableLike/DisposableLike.isDisposed.mjs';
@@ -21,7 +21,7 @@ const createContinuation = /*@__PURE__*/ (() => {
     }), {
         [ContinuationLike_run]() {
             if (!DisposableLike__isDisposed(this)) {
-                let error = none;
+                let err = none;
                 let yieldError = none;
                 const { scheduler } = this;
                 const oldCurrentScheduler = getOrNone();
@@ -29,12 +29,12 @@ const createContinuation = /*@__PURE__*/ (() => {
                 try {
                     this.f();
                 }
-                catch (cause) {
-                    if (isYieldError(cause)) {
-                        yieldError = cause;
+                catch (e) {
+                    if (isYieldError(e)) {
+                        yieldError = e;
                     }
                     else {
-                        error = { cause };
+                        err = error(e);
                     }
                 }
                 set(oldCurrentScheduler);
@@ -42,7 +42,7 @@ const createContinuation = /*@__PURE__*/ (() => {
                     pipe(scheduler, SchedulerLike__schedule(this, yieldError));
                 }
                 else {
-                    pipe(this, DisposableLike__dispose(error));
+                    pipe(this, DisposableLike__dispose(err));
                 }
             }
         },

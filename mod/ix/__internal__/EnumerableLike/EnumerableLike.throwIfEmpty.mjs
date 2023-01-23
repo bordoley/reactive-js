@@ -1,7 +1,7 @@
 /// <reference types="./EnumerableLike.throwIfEmpty.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import StatefulContainerLike__throwIfEmpty from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.throwIfEmpty.mjs';
-import { pipe, none } from '../../../functions.mjs';
+import { pipe, none, error } from '../../../functions.mjs';
 import { SourceLike_move } from '../../../ix.mjs';
 import DisposableLike__addIgnoringChildErrors from '../../../util/__internal__/DisposableLike/DisposableLike.addIgnoringChildErrors.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -20,18 +20,16 @@ const EnumerableLike__throwIfEmpty =
         instance.isEmpty = true;
         pipe(instance, DisposableLike__addIgnoringChildErrors(delegate));
         pipe(delegate, DisposableLike__onComplete(() => {
-            let error = none;
+            let err = none;
             if (instance.isEmpty) {
-                let cause = none;
                 try {
-                    cause = factory();
+                    err = error(factory());
                 }
                 catch (e) {
-                    cause = e;
+                    err = error(e);
                 }
-                error = { cause };
             }
-            pipe(instance, DisposableLike__dispose(error));
+            pipe(instance, DisposableLike__dispose(err));
         }));
         return instance;
     }, props({

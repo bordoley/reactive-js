@@ -4,7 +4,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { SideEffect1, none, pipe } from "../../../functions";
+import { SideEffect1, error, none, pipe } from "../../../functions";
 import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
@@ -41,8 +41,8 @@ const RunnableLike__create: <T>(
           try {
             this.run(sink);
             pipe(sink, DisposableLike__dispose());
-          } catch (cause) {
-            pipe(sink, DisposableLike__dispose({ cause }));
+          } catch (e) {
+            pipe(sink, DisposableLike__dispose(error(e)));
           }
         },
       },

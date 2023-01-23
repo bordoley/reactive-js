@@ -1,7 +1,6 @@
 import { ContainerOperator } from "../../../containers";
-import { partial, pipe } from "../../../functions";
+import { error, partial, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
-import { Exception } from "../../../util";
 import DisposableLike__addToIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__onDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.onDisposed";
@@ -13,26 +12,26 @@ import ObservableLike__lift from "./ObservableLike.lift";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
 
 const ObservableLike__repeatOrRetry: <T>(
-  shouldRepeat: (count: number, error?: Exception) => boolean,
+  shouldRepeat: (count: number, error?: Error) => boolean,
 ) => ContainerOperator<ObservableLike, T, T> = /*@__PURE__*/ (() => {
   const createRepeatObserver = <T>(
     delegate: ObserverLike<T>,
     observable: ObservableLike<T>,
-    shouldRepeat: (count: number, error?: Exception) => boolean,
+    shouldRepeat: (count: number, error?: Error) => boolean,
   ) => {
     let count = 1;
 
-    const doOnDispose = (e?: Exception) => {
+    const doOnDispose = (err?: Error) => {
       let shouldComplete = false;
       try {
-        shouldComplete = !shouldRepeat(count, e);
-      } catch (cause) {
+        shouldComplete = !shouldRepeat(count, err);
+      } catch (e) {
         shouldComplete = true;
-        e = { cause, parent: e } as Exception;
+        err = error([e, err]);
       }
 
       if (shouldComplete) {
-        pipe(delegate, DisposableLike__dispose(e));
+        pipe(delegate, DisposableLike__dispose(err));
       } else {
         count++;
 
@@ -53,7 +52,7 @@ const ObservableLike__repeatOrRetry: <T>(
     );
   };
 
-  return <T>(shouldRepeat: (count: number, error?: Exception) => boolean) =>
+  return <T>(shouldRepeat: (count: number, error?: Error) => boolean) =>
     (observable: ObservableLike<T>) => {
       const operator = pipe(
         createRepeatObserver,

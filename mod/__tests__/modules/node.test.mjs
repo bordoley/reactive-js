@@ -41,12 +41,12 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
     const scheduler = createHostScheduler();
     try {
         const encoder = newInstance(TextEncoder);
-        const cause = newInstance(Error);
+        const err = newInstance(Error);
         const writable = newInstance(Writable, {
             autoDestroy: true,
             highWaterMark: 4,
             write(_chunk, _encoding, callback) {
-                callback(cause);
+                callback(err);
             },
         });
         const src = pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), toFlowable());
@@ -78,10 +78,10 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
 }), testAsync("reading from readable that throws", async () => {
     const scheduler = createHostScheduler();
     try {
-        const cause = newInstance(Error);
+        const err = newInstance(Error);
         function* generate() {
             yield Buffer.from("abc", "utf8");
-            throw cause;
+            throw err;
         }
         const textDecoder = newInstance(TextDecoder);
         await pipe(createReadableSource(() => pipe(generate(), Readable.from)), toObservable$1(), reduce((acc, next) => acc + textDecoder.decode(next), returns("")), endWith({

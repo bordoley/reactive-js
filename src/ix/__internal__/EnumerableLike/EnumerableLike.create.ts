@@ -4,7 +4,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { Factory, none, pipe } from "../../../functions";
+import { Factory, error, none, pipe } from "../../../functions";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -42,9 +42,9 @@ const EnumerableLike__create: <T>(
         }): EnumeratorLike<T> {
           try {
             return this.enumerate();
-          } catch (cause) {
+          } catch (e) {
             const emptyEnumerator = EnumeratorLike__empty<T>();
-            return pipe(emptyEnumerator, DisposableLike__dispose({ cause }));
+            return pipe(emptyEnumerator, DisposableLike__dispose(error(e)));
           }
         },
       },

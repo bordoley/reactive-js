@@ -12,22 +12,9 @@
 ### Type Aliases
 
 - [DisposableOrTeardown](util.md#disposableorteardown)
-- [Exception](util.md#exception)
 
 ## Type Aliases
 
 ### DisposableOrTeardown
 
-Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/util.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<[`Exception`](util.md#exception)\>\>
-
-___
-
-### Exception
-
-Ƭ **Exception**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `cause` | `unknown` |
+Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/util.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<`Error`\>\>

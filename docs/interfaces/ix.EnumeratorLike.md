@@ -20,7 +20,7 @@
 
 ### Properties
 
-- [[DisposableLike\_exception]](ix.EnumeratorLike.md#[disposablelike_exception])
+- [[DisposableLike\_error]](ix.EnumeratorLike.md#[disposablelike_error])
 - [[DisposableLike\_isDisposed]](ix.EnumeratorLike.md#[disposablelike_isdisposed])
 - [[EnumeratorLike\_current]](ix.EnumeratorLike.md#[enumeratorlike_current])
 - [[EnumeratorLike\_hasCurrent]](ix.EnumeratorLike.md#[enumeratorlike_hascurrent])
@@ -33,15 +33,15 @@
 
 ## Properties
 
-### [DisposableLike\_exception]
+### [DisposableLike\_error]
 
-• `Readonly` **[DisposableLike\_exception]**: [`Optional`](../modules/functions.md#optional)<[`Exception`](../modules/util.md#exception)\>
+• `Readonly` **[DisposableLike\_error]**: [`Optional`](../modules/functions.md#optional)<`Error`\>
 
 The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[SourceLike](ix.SourceLike.md).[[DisposableLike_exception]](ix.SourceLike.md#[disposablelike_exception])
+[SourceLike](ix.SourceLike.md).[[DisposableLike_error]](ix.SourceLike.md#[disposablelike_error])
 
 ___
 
@@ -104,7 +104,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `error?` | [`Exception`](../modules/util.md#exception) | An optional error that signals the resource is being disposed due to an error. |
+| `error?` | `Error` | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
 

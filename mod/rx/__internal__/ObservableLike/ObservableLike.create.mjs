@@ -1,6 +1,6 @@
 /// <reference types="./ObservableLike.create.d.ts" />
 import { createInstanceFactory, mix, props } from '../../../__internal__/mixins.mjs';
-import { none, pipe } from '../../../functions.mjs';
+import { none, pipe, error } from '../../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
 
@@ -19,8 +19,8 @@ const ObservableLike__create = /*@__PURE__*/ (() => {
             try {
                 this.f(observer);
             }
-            catch (cause) {
-                pipe(observer, DisposableLike__dispose({ cause }));
+            catch (e) {
+                pipe(observer, DisposableLike__dispose(error(e)));
             }
         },
     }));

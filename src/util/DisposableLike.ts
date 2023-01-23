@@ -1,9 +1,8 @@
 import { Optional } from "../functions";
 import {
   DisposableLike,
-  DisposableLike_exception,
+  DisposableLike_error,
   DisposableLike_isDisposed,
-  Exception,
 } from "../util";
 
 import DisposableLike__add from "./__internal__/DisposableLike/DisposableLike.add";
@@ -14,7 +13,7 @@ import DisposableLike__bindTo from "./__internal__/DisposableLike/DisposableLike
 import DisposableLike__create from "./__internal__/DisposableLike/DisposableLike.create";
 import DisposableLike__dispose from "./__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__disposed from "./__internal__/DisposableLike/DisposableLike.disposed";
-import DisposableLike__getException from "./__internal__/DisposableLike/DisposableLike.getException";
+import DisposableLike__getError from "./__internal__/DisposableLike/DisposableLike.getError";
 import DisposableLike__isDisposed from "./__internal__/DisposableLike/DisposableLike.isDisposed";
 import DisposableLike__onComplete from "./__internal__/DisposableLike/DisposableLike.onComplete";
 import DisposableLike__onDisposed from "./__internal__/DisposableLike/DisposableLike.onDisposed";
@@ -43,9 +42,9 @@ export const dispose = DisposableLike__dispose;
 
 export const disposed: DisposableLike = DisposableLike__disposed;
 
-export const getException: (disposable: {
-  [DisposableLike_exception]: Optional<Exception>;
-}) => Optional<Exception> = DisposableLike__getException;
+export const getError: (disposable: {
+  [DisposableLike_error]: Optional<Error>;
+}) => Optional<Error> = DisposableLike__getError;
 
 export const isDisposed: (disposable: {
   [DisposableLike_isDisposed]: boolean;

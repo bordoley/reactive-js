@@ -1,7 +1,7 @@
 /// <reference types="./EnumerableLike.scan.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import StatefulContainerLike__scan from '../../../containers/__internal__/StatefulContainerLike/StatefulContainerLike.scan.mjs';
-import { pipe, none, isSome } from '../../../functions.mjs';
+import { pipe, error, none, isSome } from '../../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../../ix.mjs';
 import DisposableLike__delegatingMixin from '../../../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
 import DisposableLike__dispose from '../../../util/__internal__/DisposableLike/DisposableLike.dispose.mjs';
@@ -22,8 +22,8 @@ const EnumerableLike__scan = /*@__PURE__*/ (() => {
             const acc = initialValue();
             instance[EnumeratorLike_current] = acc;
         }
-        catch (cause) {
-            pipe(instance, DisposableLike__dispose({ cause }));
+        catch (e) {
+            pipe(instance, DisposableLike__dispose(error(e)));
         }
         return instance;
     }, props({ reducer: none, delegate: none }), {
@@ -36,8 +36,8 @@ const EnumerableLike__scan = /*@__PURE__*/ (() => {
                 try {
                     this[EnumeratorLike_current] = reducer(acc, EnumeratorLike__getCurrent(delegate));
                 }
-                catch (cause) {
-                    pipe(this, DisposableLike__dispose({ cause }));
+                catch (e) {
+                    pipe(this, DisposableLike__dispose(error(e)));
                 }
             }
         },

@@ -30,7 +30,7 @@ import {
   SchedulerLike,
 } from "../../../scheduling";
 import ContinuationLike__yield_ from "../../../scheduling/__internal__/ContinuationLike/ContinuationLike.yield";
-import { DisposableLike, DisposableLike_exception } from "../../../util";
+import { DisposableLike, DisposableLike_error } from "../../../util";
 import DisposableLike__addToIgnoringChildErrors from "../../../util/__internal__/DisposableLike/DisposableLike.addToIgnoringChildErrors";
 import DisposableLike__dispose from "../../../util/__internal__/DisposableLike/DisposableLike.dispose";
 import DisposableLike__isDisposed from "../../../util/__internal__/DisposableLike/DisposableLike.isDisposed";
@@ -89,7 +89,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           if (DisposableLike__isDisposed(instance)) {
             pipe(
               observer,
-              DisposableLike__dispose(instance[DisposableLike_exception]),
+              DisposableLike__dispose(instance[DisposableLike_error]),
             );
           }
         };

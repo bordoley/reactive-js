@@ -1,16 +1,15 @@
-import { Optional, none, pipe, pipeLazy, raise } from "../../functions";
+import { Optional, error, none, pipe, pipeLazy, raise } from "../../functions";
 import { subscribe } from "../../rx/ObservableLike";
 import { run } from "../../scheduling/ContinuationLike";
 import { getCurrentTime, schedule } from "../../scheduling/SchedulerLike";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeSchedulerLike";
-import { Exception } from "../../util";
 import {
   add,
   addIgnoringChildErrors,
   addTo,
   create as createDisposable,
   dispose,
-  getException,
+  getError,
   isDisposed,
   onDisposed,
   toObservable,
@@ -56,19 +55,19 @@ testModule(
       onDisposed(teardown),
       dispose(),
     );
-    pipe(disposable, getException, expectIsNone);
+    pipe(disposable, getError, expectIsNone);
   }),
-  test("propogates errors when disposed with an Exception", () => {
-    const error: Optional<Exception> = { cause: null };
+  test("propogates errors when disposed with an Error", () => {
+    const err: Optional<Error> = error(null);
 
     const childTeardown = mockFn();
     const disposable = pipe(createDisposable(), onDisposed(childTeardown));
 
-    pipe(disposable, dispose(error));
+    pipe(disposable, dispose(err));
 
-    pipe(disposable, getException, expectEquals<Optional<Exception>>(error));
+    pipe(disposable, getError, expectEquals<Optional<Error>>(err));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
-    pipe(childTeardown.calls[0], expectArrayEquals([error]));
+    pipe(childTeardown.calls[0], expectArrayEquals([err]));
   }),
   test("ignores when it is added to itself", () => {
     const disposable = createDisposable();
@@ -80,15 +79,10 @@ testModule(
 
     pipe(parent, add(child));
 
-    const cause = new Error();
-    pipe(child, dispose({ cause }));
+    const e = new Error();
+    pipe(child, dispose(e));
 
-    pipe(
-      parent,
-      getException,
-      ({ cause }: Exception = { cause: undefined }) => cause,
-      expectEquals(cause as unknown),
-    );
+    pipe(parent, getError, expectEquals<Optional<Error>>(e));
   }),
   test("toObservable", () => {
     const disposable = createDisposable();
