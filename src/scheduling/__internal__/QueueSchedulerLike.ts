@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants";
 import {
   Mutable,
   createInstanceFactory,
@@ -8,6 +7,7 @@ import {
   props,
 } from "../../__internal__/mixins";
 import { getDelay } from "../../__internal__/scheduling/SchedulerLike.options";
+import { MAX_SAFE_INTEGER } from "../../constants";
 import {
   Function1,
   Optional,

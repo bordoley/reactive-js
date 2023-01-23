@@ -1,6 +1,6 @@
 /// <reference types="./HigherOrderObservableLike.mergeAll.d.ts" />
-import { MAX_SAFE_INTEGER } from '../../../__internal__/constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
 import { isSome, pipe, getLength, none, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import DisposableLike__addTo from '../../../util/__internal__/DisposableLike/DisposableLike.addTo.mjs';

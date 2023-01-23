@@ -1,6 +1,6 @@
 /// <reference types="./ObservableLike.buffer.d.ts" />
-import { MAX_SAFE_INTEGER } from '../../../__internal__/constants.mjs';
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
 import ReadonlyArrayLike__toRunnableObservable from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable.mjs';
 import { pipe, isEmpty, none, getLength, isNumber, max } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';

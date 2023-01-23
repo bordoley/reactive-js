@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants";
 import {
   Mutable,
   createInstanceFactory,
@@ -7,6 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
+import { MAX_SAFE_INTEGER } from "../../../constants";
 import { ContainerOperator } from "../../../containers";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import {

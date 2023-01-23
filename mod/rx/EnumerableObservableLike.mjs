@@ -1,5 +1,5 @@
 /// <reference types="./EnumerableObservableLike.d.ts" />
-import { MAX_SAFE_INTEGER } from '../__internal__/constants.mjs';
+import { MAX_SAFE_INTEGER } from '../constants.mjs';
 import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
 import EnumerableObservableLike__catchError from './__internal__/EnumerableObservableLike/EnumerableObservableLike.catchError.mjs';
 import EnumerableObservableLike__create from './__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';

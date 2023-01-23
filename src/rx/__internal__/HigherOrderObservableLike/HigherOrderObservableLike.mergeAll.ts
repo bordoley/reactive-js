@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants";
 import {
   Mutable,
   createInstanceFactory,
@@ -7,6 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
+import { MAX_SAFE_INTEGER } from "../../../constants";
 import { ConcatAll, ContainerOf, ContainerOperator } from "../../../containers";
 import {
   Function1,
