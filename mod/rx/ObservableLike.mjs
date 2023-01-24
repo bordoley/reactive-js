@@ -1,5 +1,7 @@
 /// <reference types="./ObservableLike.d.ts" />
 import PromiseableLike__toObservable from '../containers/__internal__/PromiseableLike/PromiseableLike.toObservable.mjs';
+import FlowableLike__toObservable from '../streaming/__internal__/FlowableLike/FlowableLike.toObservable.mjs';
+import DisposableLike__toObservable from '../util/__internal__/DisposableLike/DisposableLike.toObservable.mjs';
 import EnumerableObservableLike__never from './__internal__/EnumerableObservableLike/EnumerableObservableLike.never.mjs';
 import ObservableLike__buffer from './__internal__/ObservableLike/ObservableLike.buffer.mjs';
 import ObservableLike__catchError from './__internal__/ObservableLike/ObservableLike.catchError.mjs';
@@ -94,6 +96,8 @@ const forkCombineLatest = ObservableLike__forkCombineLatest;
 const forkMerge = ObservableLike__forkMerge;
 const forkZipLatest = ObservableLike__forkZipLatest;
 const fromArray = ObservableLike__fromArray;
+const fromDisposable = DisposableLike__toObservable;
+const fromFlowable = FlowableLike__toObservable;
 const fromPromise = PromiseableLike__toObservable;
 const generate = ObservableLike__generate;
 const isEnumerable = ObservableLike__isEnumerable;
@@ -162,4 +166,4 @@ const zip = ObservableLike__zip;
 const zipLatest = ObservableLike__zipLatest;
 const zipWithLatestFrom = ObservableLike__zipWithLatestFrom;
 
-export { buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

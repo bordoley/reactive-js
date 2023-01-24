@@ -27,7 +27,7 @@ ___
 
 ### FromFlowable
 
-Ƭ **FromFlowable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toFlowable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromFlowable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `fromFlowable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 

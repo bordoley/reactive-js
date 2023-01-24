@@ -42,8 +42,10 @@ import {
   ScanAsync,
 } from "../rx";
 import { SchedulerLike } from "../scheduling";
-import { ToFlowable } from "../streaming";
+import { FromFlowable, ToFlowable } from "../streaming";
+import FlowableLike__toObservable from "../streaming/__internal__/FlowableLike/FlowableLike.toObservable";
 import { DisposableLike, DisposableOrTeardown } from "../util";
+import DisposableLike__toObservable from "../util/__internal__/DisposableLike/DisposableLike.toObservable";
 import EnumerableObservableLike__never from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.never";
 import ObservableLike__buffer from "./__internal__/ObservableLike/ObservableLike.buffer";
 import ObservableLike__catchError from "./__internal__/ObservableLike/ObservableLike.catchError";
@@ -176,6 +178,11 @@ export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] =
   ObservableLike__forkZipLatest;
 
 export const fromArray = ObservableLike__fromArray;
+
+export const fromDisposable = DisposableLike__toObservable;
+
+export const fromFlowable =
+  FlowableLike__toObservable as FromFlowable<ObservableLike>["fromFlowable"];
 
 export const fromPromise: FromPromise<ObservableLike>["fromPromise"] =
   PromiseableLike__toObservable;

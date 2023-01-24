@@ -24,7 +24,7 @@ interface FlowableLike<T = unknown> extends StreamableLike<FlowMode, T, Flowable
     readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 type FromFlowable<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toFlowable<T>(options?: TOptions): Function1<FlowableLike<T>, ContainerOf<C, T>>;
+    fromFlowable<T>(options?: TOptions): Function1<FlowableLike<T>, ContainerOf<C, T>>;
 };
 type ToFlowable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toFlowable<T>(options?: TOptions): Function1<ContainerOf<C, T>, FlowableLike<T>>;

@@ -23,6 +23,8 @@
 - [forkMerge](rx_ObservableLike.md#forkmerge)
 - [forkZipLatest](rx_ObservableLike.md#forkziplatest)
 - [fromArray](rx_ObservableLike.md#fromarray)
+- [fromDisposable](rx_ObservableLike.md#fromdisposable)
+- [fromFlowable](rx_ObservableLike.md#fromflowable)
 - [fromPromise](rx_ObservableLike.md#frompromise)
 - [generate](rx_ObservableLike.md#generate)
 - [isEnumerable](rx_ObservableLike.md#isenumerable)
@@ -1095,6 +1097,44 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### fromDisposable
+
+▸ **fromDisposable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/util.DisposableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/util.DisposableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### fromFlowable
+
+▸ **fromFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 

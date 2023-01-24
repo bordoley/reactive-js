@@ -1,10 +1,10 @@
 import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling.js";
 import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, RunnableLike } from "../rx.js";
+import { FlowableLike, ToFlowable } from "../streaming.js";
 import { Function1, SideEffect1, Equality, Factory, Reducer, Function2, Updater, Predicate } from "../functions.js";
 import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, EverySatisfy, ForkZip, ForkConcat, FromPromise, Keep, Map, Never, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromiseable, ToReadonlyArray } from "../containers.js";
 import { ToEnumerable } from "../ix.js";
-import { ToFlowable } from "../streaming.js";
-import { DisposableOrTeardown, DisposableLike } from "../util.js";
+import { DisposableLike, DisposableOrTeardown } from "../util.js";
 declare const buffer: <T>(options?: {
     readonly duration?: number | Function1<T, ObservableLike>;
     readonly maxBufferSize?: number;
@@ -58,6 +58,8 @@ declare const fromArray: <T>(options?: Partial<{
     readonly start: number;
     readonly count: number;
 }> | undefined) => Function1<readonly T[], ObservableLike<T>>;
+declare const fromDisposable: <T>() => Function1<DisposableLike, ObservableLike<T>>;
+declare const fromFlowable: <T>(options?: undefined) => Function1<FlowableLike<T>, ObservableLike<T>>;
 declare const fromPromise: FromPromise<ObservableLike>["fromPromise"];
 interface GenerateObservable {
     <T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableObservableLike<T>;
@@ -209,4 +211,4 @@ declare const zip: Zip<ObservableLike>["zip"];
  */
 declare const zipLatest: Zip<ObservableLike>["zip"];
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike, TA, T>;
-export { buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
