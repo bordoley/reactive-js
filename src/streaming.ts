@@ -49,7 +49,7 @@ export type FromFlowable<
   C extends ContainerLike,
   TOptions = never,
 > = Container<C> & {
-  toFlowable<T>(
+  fromFlowable<T>(
     options?: TOptions,
   ): Function1<FlowableLike<T>, ContainerOf<C, T>>;
 };

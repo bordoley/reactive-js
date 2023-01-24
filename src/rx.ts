@@ -9,7 +9,11 @@ import {
   StatefulContainerLike_state,
 } from "./containers";
 import { Factory, Function1, Function2 } from "./functions";
-import { DispatcherLike, SchedulerLike } from "./scheduling";
+import {
+  DispatcherLike,
+  SchedulerLike,
+  VirtualTimeSchedulerLike,
+} from "./scheduling";
 import { DisposableLike } from "./util";
 
 /** @ignore */
@@ -126,6 +130,18 @@ export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
   T,
   ContainerOf<C, TAcc>
 >;
+
+export type FromEnumerableObservable<C extends ContainerLike> = Container<C> & {
+  fromEnumerableObservable: <T>(options?: {
+    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
+  }) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
+};
+
+export type FromObservable<C extends ContainerLike> = Container<C> & {
+  fromObservable: <T>(
+    scheduler: SchedulerLike,
+  ) => Function1<ObservableLike<T>, ContainerOf<C, T>>;
+};
 
 export type ScanAsync<
   C extends ContainerLike,

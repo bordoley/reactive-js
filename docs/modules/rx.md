@@ -19,6 +19,8 @@
 ### Type Aliases
 
 - [AsyncReducer](rx.md#asyncreducer)
+- [FromEnumerableObservable](rx.md#fromenumerableobservable)
+- [FromObservable](rx.md#fromobservable)
 - [ScanAsync](rx.md#scanasync)
 - [ToEnumerableObservable](rx.md#toenumerableobservable)
 - [ToObservable](rx.md#toobservable)
@@ -38,6 +40,30 @@
 | `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
+
+___
+
+### FromEnumerableObservable
+
+Ƭ **FromEnumerableObservable**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `fromEnumerableObservable`: <T\>(`options?`: { `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }) => [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+
+___
+
+### FromObservable
+
+Ƭ **FromObservable**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `fromObservable`: <T\>(`scheduler`: [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)) => [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 
 ___
 

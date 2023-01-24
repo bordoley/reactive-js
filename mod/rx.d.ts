@@ -1,6 +1,6 @@
 import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator } from "./containers.js";
 import { Function2, Factory, Function1 } from "./functions.js";
-import { DispatcherLike, SchedulerLike } from "./scheduling.js";
+import { DispatcherLike, SchedulerLike, VirtualTimeSchedulerLike } from "./scheduling.js";
 import { DisposableLike } from "./util.js";
 /** @ignore */
 declare const SinkLike_notify: unique symbol;
@@ -72,6 +72,14 @@ interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;
 }
 type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
+type FromEnumerableObservable<C extends ContainerLike> = Container<C> & {
+    fromEnumerableObservable: <T>(options?: {
+        readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
+    }) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
+};
+type FromObservable<C extends ContainerLike> = Container<C> & {
+    fromObservable: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, ContainerOf<C, T>>;
+};
 type ScanAsync<C extends ContainerLike, CInner extends ObservableLike> = Container<C> & {
     scanAsync: <T, TAcc>(scanner: AsyncReducer<CInner, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
 };
@@ -87,4 +95,4 @@ type ToEnumerableObservable<C extends ContainerLike, TOptions = never> = Contain
 type ToRunnable<C extends ContainerLike, TOptions = never> = Container<C> & {
     toRunnable<T>(options?: TOptions): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
-export { AsyncReducer, EnumerableObservableLike, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable };
+export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable };
