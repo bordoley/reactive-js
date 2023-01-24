@@ -23,6 +23,7 @@
 - [empty](containers_ReadonlyArrayLike.md#empty)
 - [every](containers_ReadonlyArrayLike.md#every)
 - [forEach](containers_ReadonlyArrayLike.md#foreach)
+- [fromArray](containers_ReadonlyArrayLike.md#fromarray)
 - [keep](containers_ReadonlyArrayLike.md#keep)
 - [map](containers_ReadonlyArrayLike.md#map)
 - [some](containers_ReadonlyArrayLike.md#some)
@@ -165,6 +166,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### fromArray
+
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<{ `count`: `number` ; `start`: `number`  }\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
 
 ___
 

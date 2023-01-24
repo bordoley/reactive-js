@@ -12,6 +12,7 @@
 - [distinctUntilChangedT](ix_EnumerableLike.md#distinctuntilchangedt)
 - [emptyT](ix_EnumerableLike.md#emptyt)
 - [forEachT](ix_EnumerableLike.md#foreacht)
+- [fromArrayT](ix_EnumerableLike.md#fromarrayt)
 - [generateT](ix_EnumerableLike.md#generatet)
 - [keepT](ix_EnumerableLike.md#keept)
 - [mapT](ix_EnumerableLike.md#mapt)
@@ -41,6 +42,7 @@
 - [empty](ix_EnumerableLike.md#empty)
 - [enumerate](ix_EnumerableLike.md#enumerate)
 - [forEach](ix_EnumerableLike.md#foreach)
+- [fromArray](ix_EnumerableLike.md#fromarray)
 - [generate](ix_EnumerableLike.md#generate)
 - [keep](ix_EnumerableLike.md#keep)
 - [map](ix_EnumerableLike.md#map)
@@ -96,6 +98,12 @@ ___
 ### forEachT
 
 • `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
+
+___
+
+### fromArrayT
+
+• `Const` **fromArrayT**: [`FromArray`](containers.md#fromarray)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ___
 
@@ -374,6 +382,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### fromArray
+
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count` | `number` |
+| `options.start` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
 
 ___
 

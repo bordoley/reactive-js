@@ -47,6 +47,7 @@
 - [everySatisfy](rx_RunnableLike.md#everysatisfy)
 - [first](rx_RunnableLike.md#first)
 - [forEach](rx_RunnableLike.md#foreach)
+- [fromArray](rx_RunnableLike.md#fromarray)
 - [generate](rx_RunnableLike.md#generate)
 - [keep](rx_RunnableLike.md#keep)
 - [last](rx_RunnableLike.md#last)
@@ -478,6 +479,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### fromArray
+
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 

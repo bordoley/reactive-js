@@ -55,6 +55,7 @@ import ObservableLike__toEnumerable from './__internal__/ObservableLike/Observab
 import ObservableLike__toFlowable from './__internal__/ObservableLike/ObservableLike.toFlowable.mjs';
 import ObservableLike__toPromise from './__internal__/ObservableLike/ObservableLike.toPromise.mjs';
 import ObservableLike__toReadonlyArray from './__internal__/ObservableLike/ObservableLike.toReadonlyArray.mjs';
+import ObservableLike__toRunnable from './__internal__/ObservableLike/ObservableLike.toRunnable.mjs';
 import ObservableLike__withLatestFrom from './__internal__/ObservableLike/ObservableLike.withLatestFrom.mjs';
 import ObservableLike__zip from './__internal__/ObservableLike/ObservableLike.zip.mjs';
 import ObservableLike__zipLatest from './__internal__/ObservableLike/ObservableLike.zipLatest.mjs';
@@ -215,6 +216,8 @@ const toReadonlyArray = ObservableLike__toReadonlyArray;
 const toReadonlyArrayT = {
     toReadonlyArray,
 };
+const toRunnable = ObservableLike__toRunnable;
+const toRunnableT = { toRunnable };
 const withLatestFrom = ObservableLike__withLatestFrom;
 const zip = ObservableLike__zip;
 const zipT = {
@@ -230,4 +233,4 @@ const zipLatestT = {
 };
 const zipWithLatestFrom = ObservableLike__zipWithLatestFrom;
 
-export { buffer, bufferT, catchError, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, create, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromPromise, fromPromiseT, generate, generateT, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };
+export { buffer, bufferT, catchError, combineLatest, combineLatestT, concat, concatAll, concatAllT, concatT, create, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, exhaust, exhaustT, forEach, forEachT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromPromise, fromPromiseT, generate, generateT, isEnumerable, isRunnable, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, neverT, onSubscribe, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, toEnumerable, toEnumerableT, toFlowable, toFlowableT, toPromise, toPromiseT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, withLatestFrom, zip, zipLatest, zipLatestT, zipT, zipWithLatestFrom };

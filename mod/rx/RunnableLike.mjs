@@ -12,6 +12,7 @@ import RunnableLike__empty from './__internal__/RunnableLike/RunnableLike.empty.
 import RunnableLike__everySatisfy from './__internal__/RunnableLike/RunnableLike.everySatisfy.mjs';
 import RunnableLike__first from './__internal__/RunnableLike/RunnableLike.first.mjs';
 import RunnableLike__forEach from './__internal__/RunnableLike/RunnableLike.forEach.mjs';
+import RunnableLike__fromArray from './__internal__/RunnableLike/RunnableLike.fromArray.mjs';
 import RunnableLike__generate from './__internal__/RunnableLike/RunnableLike.generate.mjs';
 import RunnableLike__keep from './__internal__/RunnableLike/RunnableLike.keep.mjs';
 import RunnableLike__last from './__internal__/RunnableLike/RunnableLike.last.mjs';
@@ -61,6 +62,7 @@ const everySatisfyT = { everySatisfy };
 const first = RunnableLike__first;
 const forEach = RunnableLike__forEach;
 const forEachT = { forEach };
+const fromArray = RunnableLike__fromArray;
 const generate = RunnableLike__generate;
 const generateT = {
     generate,
@@ -107,4 +109,4 @@ const toRunnableT = {
     toRunnable,
 };
 
-export { buffer, bufferT, catchError, catchErrorT, concat, concatAll, concatAllT, concatT, create, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, first, forEach, forEachT, generate, generateT, keep, keepT, last, map, mapT, never, neverT, onRun, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT };
+export { buffer, bufferT, catchError, catchErrorT, concat, concatAll, concatAllT, concatT, create, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, everySatisfy, everySatisfyT, first, forEach, forEachT, fromArray, generate, generateT, keep, keepT, last, map, mapT, never, neverT, onRun, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, run, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT };

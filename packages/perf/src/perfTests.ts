@@ -8,6 +8,22 @@ import {
   returns,
   callWith,
 } from "@reactive-js/core/functions";
+import {
+  ContainerLike,
+  FromArray,
+  Keep,
+  Map,
+  Scan,
+  ToReadonlyArray,
+} from "@reactive-js/core/containers";
+
+import * as EnumerableLike from "@reactive-js/core/ix/EnumerableLike";
+import * as ObservableLike from "@reactive-js/core/rx/ObservableLike";
+import * as ReadonlyArrayLike from "@reactive-js/core/containers/ReadonlyArrayLike";
+import * as RunnableLike from "@reactive-js/core/rx/RunnableLike";
+import * as SequenceLike from "@reactive-js/core/containers/SequenceLike";
+import { ToRunnable } from "@reactive-js/core/rx";
+import { __memo, __observe, async } from "@reactive-js/core/effects";
 
 export const passthrough = <T>(_: T, x: T) => x;
 export const createArray = (n: number): ReadonlyArray<number> => {
@@ -18,21 +34,14 @@ export const createArray = (n: number): ReadonlyArray<number> => {
   return src;
 };
 
-const createMapPerfTest = (name: string, module: string) =>
+const createMapPerfTest = <C extends ContainerLike>(
+  name: string,
+  m: FromArray<C> & Map<C> & ToReadonlyArray<C>,
+) =>
   benchmarkTest(
     name,
-    async (src: readonly number[]) => {
-      const m: any = await import(module);
-      const { toArray } = await import("@reactive-js/core/runnable");
-
-      return pipeLazy(
-        src,
-        m.fromArray(),
-        m.map(increment),
-        m.toRunnable(),
-        toArray(),
-      );
-    },
+    async (src: readonly number[]) =>
+      pipeLazy(src, m.fromArray(), m.map(increment), m.toReadonlyArray()),
     callWith(),
   );
 
@@ -40,42 +49,28 @@ export const map = (n: number) =>
   benchmarkGroup(
     `map ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createMapPerfTest("enumerable", "@reactive-js/core/enumerable"),
-    createMapPerfTest("observable", "@reactive-js/core/observable"),
-    createMapPerfTest("runnable", "@reactive-js/core/runnable"),
-    createMapPerfTest("sequence", "@reactive-js/core/sequence"),
+    createMapPerfTest("enumerable", EnumerableLike),
+    createMapPerfTest("observable", ObservableLike),
+    createMapPerfTest("runnable", RunnableLike),
+    createMapPerfTest("sequence", SequenceLike),
     benchmarkTest(
       "observable__observe",
       async src => {
-        const { fromArray, toRunnable, __observe, observable } = await import(
-          "@reactive-js/core/observable"
-        );
-        const { toArray } = await import("@reactive-js/core/runnable");
-
-        const arrObs = fromArray<number>()(src);
+        const arrObs = ObservableLike.fromArray<number>()(src);
         return pipeLazy(
-          observable(
+          async(
             () => {
               const v = __observe(arrObs) ?? 0;
               return increment(v);
             },
             { mode: "combine-latest" },
           ),
-          toRunnable(),
-          toArray(),
+          ObservableLike.toReadonlyArray(),
         );
       },
       callWith(),
     ),
-    benchmarkTest(
-      "readonlyArray",
-      async src => {
-        const { map } = await import("@reactive-js/core/readonlyArray");
-
-        return pipeLazy(src, map(increment));
-      },
-      callWith(),
-    ),
+    createMapPerfTest("readonlyArray", ReadonlyArrayLike),
     benchmarkTest(
       "array methods",
       async src => {
@@ -85,14 +80,14 @@ export const map = (n: number) =>
     ),
   );
 
-const createFilterMapFusionPerfTest = (name: string, module: string) =>
+const createFilterMapFusionPerfTest = <C extends ContainerLike>(
+  name: string,
+  m: FromArray<C> & Keep<C> & Map<C> & ToRunnable<C>,
+) =>
   benchmarkTest(
     name,
-    async (src: readonly number[]) => {
-      const m: any = await import(module);
-      const { first, reduce } = await import("@reactive-js/core/runnable");
-
-      return pipeLazy(
+    async (src: readonly number[]) =>
+      pipeLazy(
         src,
         m.fromArray(),
         m.map(increment),
@@ -101,10 +96,9 @@ const createFilterMapFusionPerfTest = (name: string, module: string) =>
         m.map(increment),
         m.keep(isEven),
         m.toRunnable(),
-        reduce(sum, returns(0)),
-        first(),
-      );
-    },
+        RunnableLike.reduce(sum, returns(0)),
+        RunnableLike.first(),
+      ),
     callWith(),
   );
 
@@ -112,10 +106,10 @@ export const filterMapFusion = (n: number) =>
   benchmarkGroup(
     `filter -> map -> fusion with ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createFilterMapFusionPerfTest("enumerable", "@reactive-js/core/enumerable"),
-    createFilterMapFusionPerfTest("observable", "@reactive-js/core/observable"),
-    createFilterMapFusionPerfTest("runnable", "@reactive-js/core/runnable"),
-    createFilterMapFusionPerfTest("sequence", "@reactive-js/core/sequence"),
+    createFilterMapFusionPerfTest("enumerable", EnumerableLike),
+    createFilterMapFusionPerfTest("observable", ObservableLike),
+    createFilterMapFusionPerfTest("runnable", RunnableLike),
+    createFilterMapFusionPerfTest("sequence", SequenceLike),
     benchmarkTest(
       "array methods",
       async src => {
@@ -132,23 +126,22 @@ export const filterMapFusion = (n: number) =>
     ),
   );
 
-const createFilterMapReducePerfTest = (name: string, module: string) =>
+const createFilterMapReducePerfTest = <C extends ContainerLike>(
+  name: string,
+  m: FromArray<C> & Keep<C> & Map<C> & ToRunnable<C>,
+) =>
   benchmarkTest(
     name,
-    async (src: readonly number[]) => {
-      const m: any = await import(module);
-      const { first, reduce } = await import("@reactive-js/core/runnable");
-
-      return pipeLazy(
+    async (src: readonly number[]) =>
+      pipeLazy(
         src,
         m.fromArray(),
         m.keep(isEven),
         m.map(increment),
         m.toRunnable(),
-        reduce(sum, returns(0)),
-        first(),
-      );
-    },
+        RunnableLike.reduce(sum, returns(0)),
+        RunnableLike.first(),
+      ),
     callWith(),
   );
 
@@ -156,10 +149,10 @@ export const filterMapReduce = (n: number) =>
   benchmarkGroup(
     `filter -> map -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createFilterMapReducePerfTest("enumerable", "@reactive-js/core/enumerable"),
-    createFilterMapReducePerfTest("observable", "@reactive-js/core/observable"),
-    createFilterMapReducePerfTest("runnable", "@reactive-js/core/runnable"),
-    createFilterMapReducePerfTest("sequence", "@reactive-js/core/sequence"),
+    createFilterMapReducePerfTest("enumerable", EnumerableLike),
+    createFilterMapReducePerfTest("observable", ObservableLike),
+    createFilterMapReducePerfTest("runnable", RunnableLike),
+    createFilterMapReducePerfTest("sequence", SequenceLike),
     benchmarkTest(
       "array methods",
       async src => {
@@ -185,22 +178,21 @@ export const filterMapReduce = (n: number) =>
     ),
   );
 
-const createScanReducePerfTest = (name: string, module: string) =>
+const createScanReducePerfTest = <C extends ContainerLike>(
+  name: string,
+  m: FromArray<C> & Map<C> & Scan<C> & ToRunnable<C>,
+) =>
   benchmarkTest(
     name,
-    async (src: readonly number[]) => {
-      const m: any = await import(module);
-      const { first, reduce } = await import("@reactive-js/core/runnable");
-
-      return pipeLazy(
+    async (src: readonly number[]) =>
+      pipeLazy(
         src,
         m.fromArray(),
         m.scan(sum, returns(0)),
         m.toRunnable(),
-        reduce<number, number>(passthrough, returns(0)),
-        first(),
-      );
-    },
+        RunnableLike.reduce<number, number>(passthrough, returns(0)),
+        RunnableLike.first(),
+      ),
     callWith(),
   );
 
@@ -208,22 +200,18 @@ export const scanReduce = (n: number) =>
   benchmarkGroup(
     `scan -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createScanReducePerfTest("enumerable", "@reactive-js/core/enumerable"),
-    createScanReducePerfTest("observable", "@reactive-js/core/observable"),
-    createScanReducePerfTest("runnable", "@reactive-js/core/runnable"),
-    createScanReducePerfTest("sequence", "@reactive-js/core/sequence"),
+    createScanReducePerfTest("enumerable", EnumerableLike),
+    createScanReducePerfTest("observable", ObservableLike),
+    createScanReducePerfTest("runnable", RunnableLike),
+    createScanReducePerfTest("sequence", SequenceLike),
     benchmarkTest(
       "observable__observe",
       async src => {
-        const { fromArray, toRunnable, __memo, __observe, observable } =
-          await import("@reactive-js/core/observable");
-        const { first, reduce } = await import("@reactive-js/core/runnable");
-
-        const arrObs = fromArray<number>()(src);
+        const arrObs = ObservableLike.fromArray<number>()(src);
         const createRef = (current: number) => ({ current });
 
         return pipeLazy(
-          observable(
+          async(
             () => {
               const ref = __memo(createRef, 0);
               const v = __observe(arrObs) ?? 0;
@@ -238,9 +226,9 @@ export const scanReduce = (n: number) =>
             },
             { mode: "combine-latest" },
           ),
-          toRunnable(),
-          reduce<number, number>(passthrough, returns(0)),
-          first(),
+          ObservableLike.toRunnable(),
+          RunnableLike.reduce<number, number>(passthrough, returns(0)),
+          RunnableLike.first(),
         );
       },
       callWith(),
@@ -265,30 +253,22 @@ export const every = (n: number) =>
     () => createArray(n),
     benchmarkTest(
       "runnable",
-      async src => {
-        const { first, fromArray, everySatisfy } = await import(
-          "@reactive-js/core/runnable"
-        );
-        return pipeLazy(
+      async src =>
+        pipeLazy(
           src,
-          fromArray(),
-          everySatisfy(i => i < 0),
-          first(),
-        );
-      },
+          RunnableLike.fromArray(),
+          RunnableLike.everySatisfy(i => i < 0),
+          RunnableLike.first(),
+        ),
       callWith(),
     ),
     benchmarkTest(
       "readonlyArray",
-      async src => {
-        const { everySatisfy } = await import(
-          "@reactive-js/core/readonlyArray"
-        );
-        return pipeLazy(
+      async src =>
+        pipeLazy(
           src,
-          everySatisfy(i => i < 0),
-        );
-      },
+          ReadonlyArrayLike.every(i => i < 0),
+        ),
       callWith(),
     ),
     benchmarkTest(

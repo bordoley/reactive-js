@@ -41,6 +41,7 @@
 - [toFlowableT](rx_ObservableLike.md#toflowablet)
 - [toPromiseT](rx_ObservableLike.md#topromiset)
 - [toReadonlyArrayT](rx_ObservableLike.md#toreadonlyarrayt)
+- [toRunnableT](rx_ObservableLike.md#torunnablet)
 - [zipLatestT](rx_ObservableLike.md#ziplatestt)
 - [zipT](rx_ObservableLike.md#zipt)
 
@@ -98,6 +99,7 @@
 - [toFlowable](rx_ObservableLike.md#toflowable)
 - [toPromise](rx_ObservableLike.md#topromise)
 - [toReadonlyArray](rx_ObservableLike.md#toreadonlyarray)
+- [toRunnable](rx_ObservableLike.md#torunnable)
 - [withLatestFrom](rx_ObservableLike.md#withlatestfrom)
 - [zip](rx_ObservableLike.md#zip)
 - [zipLatest](rx_ObservableLike.md#ziplatest)
@@ -312,6 +314,12 @@ ___
 ### toReadonlyArrayT
 
 • `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
+
+___
+
+### toRunnableT
+
+• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), { `schedulerFactory?`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }\>
 
 ___
 
@@ -2268,6 +2276,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.schedulerFactory?` | [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 

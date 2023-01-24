@@ -2,6 +2,7 @@ import {
   Concat,
   ConcatAll,
   DistinctUntilChanged,
+  FromArray,
   Generate,
   Keep,
   Map,
@@ -21,6 +22,7 @@ import { ToRunnable } from "../rx";
 import SequenceLike__concat from "./__internal__/SequenceLike/SequenceLike.concat";
 import SequenceLike__concatAll from "./__internal__/SequenceLike/SequenceLike.concatAll";
 import SequenceLike__distinctUntilChanged from "./__internal__/SequenceLike/SequenceLike.distinctUntilChanged";
+import SequenceLike__fromArray from "./__internal__/SequenceLike/SequenceLike.fromArray";
 import SequenceLike__generate from "./__internal__/SequenceLike/SequenceLike.generate";
 import SequenceLike__keep from "./__internal__/SequenceLike/SequenceLike.keep";
 import SequenceLike__map from "./__internal__/SequenceLike/SequenceLike.map";
@@ -53,6 +55,9 @@ export const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctU
 export const distinctUntilChangedT: DistinctUntilChanged<SequenceLike> = {
   distinctUntilChanged,
 };
+
+export const fromArray = SequenceLike__fromArray;
+export const fromArrayT: FromArray<SequenceLike> = { fromArray };
 
 export const generate: Generate<SequenceLike>["generate"] =
   SequenceLike__generate;

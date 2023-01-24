@@ -1,6 +1,7 @@
 import {
   Empty,
   ForEach,
+  FromArray,
   Keep,
   Map,
   ReadonlyArrayLike,
@@ -39,6 +40,10 @@ export const every = ReadonlyArrayLike__every;
 export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
   ReadonlyArrayLike__forEach;
 export const forEachT: ForEach<ReadonlyArrayLike> = { forEach };
+
+export const fromArray: FromArray<ReadonlyArrayLike>["fromArray"] =
+  // FIXME: Handle options
+  _options => identity;
 
 export const keep: Keep<ReadonlyArrayLike>["keep"] = ReadonlyArrayLike__keep;
 export const keepT: Keep<ReadonlyArrayLike> = ReadonlyArrayLike__keepT;
