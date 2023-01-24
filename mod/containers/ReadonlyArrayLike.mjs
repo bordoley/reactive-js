@@ -19,6 +19,9 @@ const emptyT = {
 const every = ReadonlyArrayLike__every;
 const forEach = ReadonlyArrayLike__forEach;
 const forEachT = { forEach };
+const fromArray = 
+// FIXME: Handle options
+_options => identity;
 const keep = ReadonlyArrayLike__keep;
 const keepT = ReadonlyArrayLike__keepT;
 const map = ReadonlyArrayLike__map;
@@ -43,4 +46,4 @@ const toSequenceT = {
     toSequence,
 };
 
-export { empty, emptyT, every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, toSequence, toSequenceT };
+export { empty, emptyT, every, forEach, forEachT, fromArray, keep, keepT, map, mapT, some, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, toSequence, toSequenceT };

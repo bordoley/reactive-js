@@ -47,8 +47,9 @@ import {
   ObserverLike,
   RunnableObservableLike,
   ScanAsync,
+  ToRunnable,
 } from "../rx";
-import { SchedulerLike } from "../scheduling";
+import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import { DisposableLike, DisposableOrTeardown } from "../util";
 import EnumerableObservableLike__never from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.never";
@@ -106,6 +107,7 @@ import ObservableLike__toEnumerable from "./__internal__/ObservableLike/Observab
 import ObservableLike__toFlowable from "./__internal__/ObservableLike/ObservableLike.toFlowable";
 import ObservableLike__toPromise from "./__internal__/ObservableLike/ObservableLike.toPromise";
 import ObservableLike__toReadonlyArray from "./__internal__/ObservableLike/ObservableLike.toReadonlyArray";
+import ObservableLike__toRunnable from "./__internal__/ObservableLike/ObservableLike.toRunnable";
 import ObservableLike__withLatestFrom from "./__internal__/ObservableLike/ObservableLike.withLatestFrom";
 import ObservableLike__zip from "./__internal__/ObservableLike/ObservableLike.zip";
 import ObservableLike__zipLatest from "./__internal__/ObservableLike/ObservableLike.zipLatest";
@@ -483,6 +485,14 @@ export const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"]
 export const toReadonlyArrayT: ToReadonlyArray<ObservableLike> = {
   toReadonlyArray,
 };
+
+export const toRunnable = ObservableLike__toRunnable;
+export const toRunnableT: ToRunnable<
+  ObservableLike,
+  {
+    readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
+  }
+> = { toRunnable };
 
 export const withLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,

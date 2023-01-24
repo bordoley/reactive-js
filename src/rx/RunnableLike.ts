@@ -39,6 +39,7 @@ import RunnableLike__empty from "./__internal__/RunnableLike/RunnableLike.empty"
 import RunnableLike__everySatisfy from "./__internal__/RunnableLike/RunnableLike.everySatisfy";
 import RunnableLike__first from "./__internal__/RunnableLike/RunnableLike.first";
 import RunnableLike__forEach from "./__internal__/RunnableLike/RunnableLike.forEach";
+import RunnableLike__fromArray from "./__internal__/RunnableLike/RunnableLike.fromArray";
 import RunnableLike__generate from "./__internal__/RunnableLike/RunnableLike.generate";
 import RunnableLike__keep from "./__internal__/RunnableLike/RunnableLike.keep";
 import RunnableLike__last from "./__internal__/RunnableLike/RunnableLike.last";
@@ -104,6 +105,8 @@ export const first = RunnableLike__first;
 
 export const forEach: ForEach<RunnableLike>["forEach"] = RunnableLike__forEach;
 export const forEachT: ForEach<RunnableLike> = { forEach };
+
+export const fromArray = RunnableLike__fromArray;
 
 export const generate: Generate<RunnableLike>["generate"] =
   RunnableLike__generate;

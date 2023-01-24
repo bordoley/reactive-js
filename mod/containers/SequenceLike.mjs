@@ -2,6 +2,7 @@
 import SequenceLike__concat from './__internal__/SequenceLike/SequenceLike.concat.mjs';
 import SequenceLike__concatAll from './__internal__/SequenceLike/SequenceLike.concatAll.mjs';
 import SequenceLike__distinctUntilChanged from './__internal__/SequenceLike/SequenceLike.distinctUntilChanged.mjs';
+import SequenceLike__fromArray from './__internal__/SequenceLike/SequenceLike.fromArray.mjs';
 import SequenceLike__generate from './__internal__/SequenceLike/SequenceLike.generate.mjs';
 import SequenceLike__keep from './__internal__/SequenceLike/SequenceLike.keep.mjs';
 import SequenceLike__map from './__internal__/SequenceLike/SequenceLike.map.mjs';
@@ -26,6 +27,8 @@ const distinctUntilChanged = SequenceLike__distinctUntilChanged;
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
+const fromArray = SequenceLike__fromArray;
+const fromArrayT = { fromArray };
 const generate = SequenceLike__generate;
 const generateT = { generate };
 const keep = SequenceLike__keep;
@@ -58,4 +61,4 @@ const toRunnableT = { toRunnable };
 const zip = SequenceLike__zip;
 const zipT = { zip };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };

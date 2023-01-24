@@ -9,6 +9,7 @@
 - [concatAllT](containers_SequenceLike.md#concatallt)
 - [concatT](containers_SequenceLike.md#concatt)
 - [distinctUntilChangedT](containers_SequenceLike.md#distinctuntilchangedt)
+- [fromArrayT](containers_SequenceLike.md#fromarrayt)
 - [generateT](containers_SequenceLike.md#generatet)
 - [keepT](containers_SequenceLike.md#keept)
 - [mapT](containers_SequenceLike.md#mapt)
@@ -29,6 +30,7 @@
 - [concat](containers_SequenceLike.md#concat)
 - [concatAll](containers_SequenceLike.md#concatall)
 - [distinctUntilChanged](containers_SequenceLike.md#distinctuntilchanged)
+- [fromArray](containers_SequenceLike.md#fromarray)
 - [generate](containers_SequenceLike.md#generate)
 - [keep](containers_SequenceLike.md#keep)
 - [map](containers_SequenceLike.md#map)
@@ -62,6 +64,12 @@ ___
 ### distinctUntilChangedT
 
 • `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
+
+___
+
+### fromArrayT
+
+• `Const` **fromArrayT**: [`FromArray`](containers.md#fromarray)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ___
 
@@ -215,6 +223,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### fromArray
+
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>
 
 ___
 

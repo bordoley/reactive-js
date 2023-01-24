@@ -1,5 +1,5 @@
 import { Predicate, Function1 } from "../functions.js";
-import { Empty, ReadonlyArrayLike, ForEach, Keep, Map, ToReadonlyArray, ToSequence } from "../containers.js";
+import { Empty, ReadonlyArrayLike, ForEach, FromArray, Keep, Map, ToReadonlyArray, ToSequence } from "../containers.js";
 import { ToEnumerable } from "../ix.js";
 import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
 declare const empty: Empty<ReadonlyArrayLike>["empty"];
@@ -7,6 +7,7 @@ declare const emptyT: Empty<ReadonlyArrayLike>;
 declare const every: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
 declare const forEach: ForEach<ReadonlyArrayLike>["forEach"];
 declare const forEachT: ForEach<ReadonlyArrayLike>;
+declare const fromArray: FromArray<ReadonlyArrayLike>["fromArray"];
 declare const keep: Keep<ReadonlyArrayLike>["keep"];
 declare const keepT: Keep<ReadonlyArrayLike>;
 declare const map: Map<ReadonlyArrayLike>["map"];
@@ -64,4 +65,4 @@ declare const toRunnableObservableT: ToRunnableObservable<ReadonlyArrayLike, {
 }>;
 declare const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"];
 declare const toSequenceT: ToSequence<ReadonlyArrayLike>;
-export { empty, emptyT, every, forEach, forEachT, keep, keepT, map, mapT, some, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, toSequence, toSequenceT };
+export { empty, emptyT, every, forEach, forEachT, fromArray, keep, keepT, map, mapT, some, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, toSequence, toSequenceT };

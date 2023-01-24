@@ -5,6 +5,7 @@ import {
   DistinctUntilChanged,
   Empty,
   ForEach,
+  FromArray,
   Generate,
   Keep,
   Map,
@@ -35,6 +36,7 @@ import EnumerableLike__distinctUntilChanged from "./__internal__/EnumerableLike/
 import EnumerableLike__empty from "./__internal__/EnumerableLike/EnumerableLike.empty";
 import EnumerableLike__enumerate from "./__internal__/EnumerableLike/EnumerableLike.enumerate";
 import EnumerableLike__forEach from "./__internal__/EnumerableLike/EnumerableLike.forEach";
+import EnumerableLike__fromArray from "./__internal__/EnumerableLike/EnumerableLike.fromArray";
 import EnumerableLike__generate from "./__internal__/EnumerableLike/EnumerableLike.generate";
 import EnumerableLike__keep from "./__internal__/EnumerableLike/EnumerableLike.keep";
 import EnumerableLike__map from "./__internal__/EnumerableLike/EnumerableLike.map";
@@ -81,6 +83,9 @@ export const emptyT: Empty<EnumerableLike> = { empty };
 export const forEach: ForEach<EnumerableLike>["forEach"] =
   EnumerableLike__forEach;
 export const forEachT: ForEach<EnumerableLike> = { forEach };
+
+export const fromArray = EnumerableLike__fromArray;
+export const fromArrayT: FromArray<EnumerableLike> = { fromArray };
 
 export const generate: Generate<EnumerableLike>["generate"] =
   EnumerableLike__generate;
