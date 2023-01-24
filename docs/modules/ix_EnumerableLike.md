@@ -4,35 +4,6 @@
 
 ## Table of contents
 
-### Variables
-
-- [bufferT](ix_EnumerableLike.md#buffert)
-- [concatAllT](ix_EnumerableLike.md#concatallt)
-- [concatT](ix_EnumerableLike.md#concatt)
-- [distinctUntilChangedT](ix_EnumerableLike.md#distinctuntilchangedt)
-- [emptyT](ix_EnumerableLike.md#emptyt)
-- [forEachT](ix_EnumerableLike.md#foreacht)
-- [fromArrayT](ix_EnumerableLike.md#fromarrayt)
-- [generateT](ix_EnumerableLike.md#generatet)
-- [keepT](ix_EnumerableLike.md#keept)
-- [mapT](ix_EnumerableLike.md#mapt)
-- [pairwiseT](ix_EnumerableLike.md#pairwiset)
-- [repeatT](ix_EnumerableLike.md#repeatt)
-- [scanT](ix_EnumerableLike.md#scant)
-- [skipFirstT](ix_EnumerableLike.md#skipfirstt)
-- [takeFirstT](ix_EnumerableLike.md#takefirstt)
-- [takeLastT](ix_EnumerableLike.md#takelastt)
-- [takeWhileT](ix_EnumerableLike.md#takewhilet)
-- [throwIfEmptyT](ix_EnumerableLike.md#throwifemptyt)
-- [toEnumerableObservableT](ix_EnumerableLike.md#toenumerableobservablet)
-- [toEnumerableT](ix_EnumerableLike.md#toenumerablet)
-- [toIterableT](ix_EnumerableLike.md#toiterablet)
-- [toObservableT](ix_EnumerableLike.md#toobservablet)
-- [toReadonlyArrayT](ix_EnumerableLike.md#toreadonlyarrayt)
-- [toRunnableObservableT](ix_EnumerableLike.md#torunnableobservablet)
-- [toRunnableT](ix_EnumerableLike.md#torunnablet)
-- [zipT](ix_EnumerableLike.md#zipt)
-
 ### Functions
 
 - [buffer](ix_EnumerableLike.md#buffer)
@@ -43,6 +14,7 @@
 - [enumerate](ix_EnumerableLike.md#enumerate)
 - [forEach](ix_EnumerableLike.md#foreach)
 - [fromArray](ix_EnumerableLike.md#fromarray)
+- [fromIterable](ix_EnumerableLike.md#fromiterable)
 - [generate](ix_EnumerableLike.md#generate)
 - [keep](ix_EnumerableLike.md#keep)
 - [map](ix_EnumerableLike.md#map)
@@ -62,162 +34,6 @@
 - [toRunnable](ix_EnumerableLike.md#torunnable)
 - [toRunnableObservable](ix_EnumerableLike.md#torunnableobservable)
 - [zip](ix_EnumerableLike.md#zip)
-
-## Variables
-
-### bufferT
-
-• `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### concatAllT
-
-• `Const` **concatAllT**: [`ConcatAll`](containers.md#concatall)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### concatT
-
-• `Const` **concatT**: [`Concat`](containers.md#concat)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### distinctUntilChangedT
-
-• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### emptyT
-
-• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### forEachT
-
-• `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### fromArrayT
-
-• `Const` **fromArrayT**: [`FromArray`](containers.md#fromarray)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### generateT
-
-• `Const` **generateT**: [`Generate`](containers.md#generate)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### keepT
-
-• `Const` **keepT**: [`Keep`](containers.md#keep)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### mapT
-
-• `Const` **mapT**: [`Map`](containers.md#map)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### pairwiseT
-
-• `Const` **pairwiseT**: [`Pairwise`](containers.md#pairwise)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### repeatT
-
-• `Const` **repeatT**: [`Repeat`](containers.md#repeat)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### scanT
-
-• `Const` **scanT**: [`Scan`](containers.md#scan)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### skipFirstT
-
-• `Const` **skipFirstT**: [`SkipFirst`](containers.md#skipfirst)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### takeFirstT
-
-• `Const` **takeFirstT**: [`TakeFirst`](containers.md#takefirst)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### takeLastT
-
-• `Const` **takeLastT**: [`TakeLast`](containers.md#takelast)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### takeWhileT
-
-• `Const` **takeWhileT**: [`TakeWhile`](containers.md#takewhile)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### throwIfEmptyT
-
-• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](containers.md#throwifempty)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### toEnumerableObservableT
-
-• `Const` **toEnumerableObservableT**: [`ToEnumerableObservable`](rx.md#toenumerableobservable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### toEnumerableT
-
-• `Const` **toEnumerableT**: [`ToEnumerable`](ix.md#toenumerable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### toIterableT
-
-• `Const` **toIterableT**: [`ToIterable`](containers.md#toiterable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### toObservableT
-
-• `Const` **toObservableT**: [`ToObservable`](rx.md#toobservable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md), { `delay?`: `number` ; `delayStart?`: `boolean`  }\>
-
-___
-
-### toReadonlyArrayT
-
-• `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### toRunnableObservableT
-
-• `Const` **toRunnableObservableT**: [`ToRunnableObservable`](rx.md#torunnableobservable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md), { `delay?`: `number` ; `delayStart?`: `boolean`  }\>
-
-___
-
-### toRunnableT
-
-• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
-
-___
-
-### zipT
-
-• `Const` **zipT**: [`Zip`](containers.md#zip)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ## Functions
 
@@ -406,6 +222,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
 
 ___
 

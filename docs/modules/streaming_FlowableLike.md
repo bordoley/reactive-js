@@ -4,19 +4,9 @@
 
 ## Table of contents
 
-### Variables
-
-- [toObservableT](streaming_FlowableLike.md#toobservablet)
-
 ### Functions
 
 - [toObservable](streaming_FlowableLike.md#toobservable)
-
-## Variables
-
-### toObservableT
-
-• `Const` **toObservableT**: [`ToObservable`](rx.md#toobservable)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)\>
 
 ## Functions
 

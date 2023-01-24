@@ -1,109 +1,81 @@
 /// <reference types="./EnumerableObservableLike.d.ts" />
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
-import { buffer, concat, decodeWithCharset, distinctUntilChanged, empty, everySatisfy, forEach, generate, keep, map, merge, never, pairwise, reduce, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, zip } from './ObservableLike.mjs';
 import EnumerableObservableLike__catchError from './__internal__/EnumerableObservableLike/EnumerableObservableLike.catchError.mjs';
 import EnumerableObservableLike__create from './__internal__/EnumerableObservableLike/EnumerableObservableLike.create.mjs';
 import EnumerableObservableLike__defer from './__internal__/EnumerableObservableLike/EnumerableObservableLike.defer.mjs';
 import EnumerableObservableLike__mergeAll from './__internal__/EnumerableObservableLike/EnumerableObservableLike.mergeAll.mjs';
+import EnumerableObservableLike__never from './__internal__/EnumerableObservableLike/EnumerableObservableLike.never.mjs';
 import EnumerableObservableLike__scanAsync from './__internal__/EnumerableObservableLike/EnumerableObservableLike.scanAsync.mjs';
 import EnumerableObservableLike__switchAll from './__internal__/EnumerableObservableLike/EnumerableObservableLike.switchAll.mjs';
+import ObservableLike__buffer from './__internal__/ObservableLike/ObservableLike.buffer.mjs';
+import ObservableLike__concat from './__internal__/ObservableLike/ObservableLike.concat.mjs';
+import ObservableLike__decodeWithCharset from './__internal__/ObservableLike/ObservableLike.decodeWithCharset.mjs';
+import ObservableLike__distinctUntilChanged from './__internal__/ObservableLike/ObservableLike.distinctUntilChanged.mjs';
+import ObservableLike__empty from './__internal__/ObservableLike/ObservableLike.empty.mjs';
+import ObservableLike__everySatisfy from './__internal__/ObservableLike/ObservableLike.everySatisfy.mjs';
+import ObservableLike__forEach from './__internal__/ObservableLike/ObservableLike.forEach.mjs';
+import ObservableLike__fromArray from './__internal__/ObservableLike/ObservableLike.fromArray.mjs';
+import ObservableLike__generate from './__internal__/ObservableLike/ObservableLike.generate.mjs';
+import ObservableLike__keep from './__internal__/ObservableLike/ObservableLike.keep.mjs';
+import ObservableLike__map from './__internal__/ObservableLike/ObservableLike.map.mjs';
+import ObservableLike__merge from './__internal__/ObservableLike/ObservableLike.merge.mjs';
+import ObservableLike__pairwise from './__internal__/ObservableLike/ObservableLike.pairwise.mjs';
+import ObservableLike__reduce from './__internal__/ObservableLike/ObservableLike.reduce.mjs';
+import ObservableLike__scan from './__internal__/ObservableLike/ObservableLike.scan.mjs';
+import ObservableLike__skipFirst from './__internal__/ObservableLike/ObservableLike.skipFirst.mjs';
+import ObservableLike__someSatisfy from './__internal__/ObservableLike/ObservableLike.someSatisfy.mjs';
+import ObservableLike__takeFirst from './__internal__/ObservableLike/ObservableLike.takeFirst.mjs';
+import ObservableLike__takeLast from './__internal__/ObservableLike/ObservableLike.takeLast.mjs';
+import ObservableLike__takeWhile from './__internal__/ObservableLike/ObservableLike.takeWhile.mjs';
+import ObservableLike__throwIfEmpty from './__internal__/ObservableLike/ObservableLike.throwIfEmpty.mjs';
+import ObservableLike__toEnumerable from './__internal__/ObservableLike/ObservableLike.toEnumerable.mjs';
+import ObservableLike__toFlowable from './__internal__/ObservableLike/ObservableLike.toFlowable.mjs';
+import ObservableLike__toPromise from './__internal__/ObservableLike/ObservableLike.toPromise.mjs';
+import ObservableLike__toReadonlyArray from './__internal__/ObservableLike/ObservableLike.toReadonlyArray.mjs';
+import ObservableLike__toRunnable from './__internal__/ObservableLike/ObservableLike.toRunnable.mjs';
+import ObservableLike__zip from './__internal__/ObservableLike/ObservableLike.zip.mjs';
 
-const create = EnumerableObservableLike__create;
-const defer = EnumerableObservableLike__defer;
-const deferT = {
-    defer,
-};
-const bufferT = {
-    buffer: buffer,
-};
+const buffer = ObservableLike__buffer;
 const catchError = EnumerableObservableLike__catchError;
-const catchErrorT = { catchError };
-const concatT = {
-    concat: concat,
-};
-/**
- * Converts a higher-order `ObservableLike` into a first-order
- * `ObservableLike` by concatenating the inner sources in order.
- *
- * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
- */
+const concat = ObservableLike__concat;
 const concatAll = (options = {}) => {
     const { maxBufferSize = MAX_SAFE_INTEGER } = options;
     return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
-const decodeWithCharsetT = {
-    decodeWithCharset: decodeWithCharset,
-};
-const distinctUntilChangedT = {
-    distinctUntilChanged: distinctUntilChanged,
-};
-const emptyT = {
-    empty,
-};
-const everySatisfyT = {
-    everySatisfy: everySatisfy,
-};
+const create = EnumerableObservableLike__create;
+const decodeWithCharset = ObservableLike__decodeWithCharset;
+const defer = EnumerableObservableLike__defer;
+const distinctUntilChanged = ObservableLike__distinctUntilChanged;
+const empty = ObservableLike__empty;
+const everySatisfy = ObservableLike__everySatisfy;
 const exhaust = () => mergeAll({
     maxBufferSize: 1,
     maxConcurrency: 1,
 });
-const exhaustT = {
-    concatAll: exhaust,
-};
-const forEachT = {
-    forEach: forEach,
-};
-const generateeT = { generate };
-const keepT = {
-    keep: keep,
-};
-const mapT = {
-    map: map,
-};
-const mergeT = {
-    concat: merge,
-};
+const forEach = ObservableLike__forEach;
+const fromArray = ObservableLike__fromArray;
+const generate = ObservableLike__generate;
+const keep = ObservableLike__keep;
+const map = ObservableLike__map;
+const merge = ObservableLike__merge;
 const mergeAll = EnumerableObservableLike__mergeAll;
-const mergeAllT = { concatAll: mergeAll };
-const neverT = {
-    never,
-};
-const pairwiseT = {
-    pairwise: pairwise,
-};
-const reduceT = {
-    reduce: reduce,
-};
-const scanT = {
-    scan: scan,
-};
+const never = EnumerableObservableLike__never;
+const pairwise = ObservableLike__pairwise;
+const reduce = ObservableLike__reduce;
+const scan = ObservableLike__scan;
 const scanAsync = EnumerableObservableLike__scanAsync;
-const scanAsyncT = { scanAsync };
-const skipFirstT = {
-    skipFirst: skipFirst,
-};
-const someSatisfyT = {
-    someSatisfy: someSatisfy,
-};
+const skipFirst = ObservableLike__skipFirst;
+const someSatisfy = ObservableLike__someSatisfy;
 const switchAll = EnumerableObservableLike__switchAll;
-const switchAllT = {
-    concatAll: switchAll,
-};
-const takeFirstT = {
-    takeFirst: takeFirst,
-};
-const takeLastT = {
-    takeLast: takeLast,
-};
-const takeWhileT = {
-    takeWhile: takeWhile,
-};
-const throwIfEmptyT = {
-    throwIfEmpty: throwIfEmpty,
-};
-const toReadonlyArrayT = { toReadonlyArray };
-const zipT = {
-    zip: zip,
-};
+const takeFirst = ObservableLike__takeFirst;
+const takeLast = ObservableLike__takeLast;
+const takeWhile = ObservableLike__takeWhile;
+const throwIfEmpty = ObservableLike__throwIfEmpty;
+const toEnumerable = ObservableLike__toEnumerable;
+const toFlowable = ObservableLike__toFlowable;
+const toPromise = ObservableLike__toPromise;
+const toReadonlyArray = ObservableLike__toReadonlyArray;
+const toRunnable = ObservableLike__toRunnable;
+const zip = ObservableLike__zip;
 
-export { bufferT, catchError, catchErrorT, concatAll, concatT, create, decodeWithCharsetT, defer, deferT, distinctUntilChangedT, emptyT, everySatisfyT, exhaust, exhaustT, forEachT, generateeT, keepT, mapT, mergeAll, mergeAllT, mergeT, neverT, pairwiseT, reduceT, scanAsync, scanAsyncT, scanT, skipFirstT, someSatisfyT, switchAll, switchAllT, takeFirstT, takeLastT, takeWhileT, throwIfEmptyT, toReadonlyArrayT, zipT };
+export { buffer, catchError, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };

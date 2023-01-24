@@ -4,18 +4,6 @@
 
 ## Table of contents
 
-### Variables
-
-- [fromArrayT](ix_AsyncEnumerableLike.md#fromarrayt)
-- [generateT](ix_AsyncEnumerableLike.md#generatet)
-- [keepT](ix_AsyncEnumerableLike.md#keept)
-- [mapT](ix_AsyncEnumerableLike.md#mapt)
-- [scanAsyncT](ix_AsyncEnumerableLike.md#scanasynct)
-- [scanT](ix_AsyncEnumerableLike.md#scant)
-- [takeWhileT](ix_AsyncEnumerableLike.md#takewhilet)
-- [toObservableT](ix_AsyncEnumerableLike.md#toobservablet)
-- [toReadonlyArrayT](ix_AsyncEnumerableLike.md#toreadonlyarrayt)
-
 ### Functions
 
 - [fromArray](ix_AsyncEnumerableLike.md#fromarray)
@@ -28,60 +16,6 @@
 - [takeWhile](ix_AsyncEnumerableLike.md#takewhile)
 - [toObservable](ix_AsyncEnumerableLike.md#toobservable)
 - [toReadonlyArray](ix_AsyncEnumerableLike.md#toreadonlyarray)
-
-## Variables
-
-### fromArrayT
-
-• `Const` **fromArrayT**: [`FromArray`](containers.md#fromarray)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
-
-___
-
-### generateT
-
-• `Const` **generateT**: [`Generate`](containers.md#generate)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md), { `delay`: `number`  }\>
-
-___
-
-### keepT
-
-• `Const` **keepT**: [`Keep`](containers.md#keep)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
-
-___
-
-### mapT
-
-• `Const` **mapT**: [`Map`](containers.md#map)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
-
-___
-
-### scanAsyncT
-
-• `Const` **scanAsyncT**: [`ScanAsync`](rx.md#scanasync)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
-
-___
-
-### scanT
-
-• `Const` **scanT**: [`Scan`](containers.md#scan)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
-
-___
-
-### takeWhileT
-
-• `Const` **takeWhileT**: [`TakeWhile`](containers.md#takewhile)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
-
-___
-
-### toObservableT
-
-• `Const` **toObservableT**: [`ToObservable`](rx.md#toobservable)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
-
-___
-
-### toReadonlyArrayT
-
-• `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
 
 ## Functions
 

@@ -11,6 +11,7 @@ import "./modules/IterableLike.test";
 import "./modules/ObservableLike.test";
 import "./modules/PromiseableLike.test";
 import "./modules/RunnableLike.test";
+import "./modules/RunnableObservableLike.test";
 import "./modules/SequenceLike.test";
 import "./modules/SubjectLike.test";
 import "./modules/effects.test";

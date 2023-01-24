@@ -23,10 +23,10 @@ import ObserverLike__getScheduler from "../ObserverLike/ObserverLike.getSchedule
 import ObserverLike__mixin from "../ObserverLike/ObserverLike.mixin";
 import SinkLike__notify from "../SinkLike/SinkLike.notify";
 import ObservableLike__concat from "./ObservableLike.concat";
-import ObservableLike__fromArrayT from "./ObservableLike.fromArrayT";
+import ObservableLike__fromArray from "./ObservableLike.fromArray";
 import ObservableLike__isRunnable from "./ObservableLike.isRunnable";
 import ObservableLike__lift from "./ObservableLike.lift";
-import ObservableLike__mapT from "./ObservableLike.mapT";
+import ObservableLike__map from "./ObservableLike.map";
 import ObservableLike__subscribe from "./ObservableLike.subscribe";
 
 const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
@@ -99,16 +99,16 @@ const ObservableLike__timeout = /*@__PURE__*/ (<T>() => {
     const durationObs = isNumber(duration)
       ? ContainerLike__throws(
           {
-            ...ObservableLike__fromArrayT,
-            ...ObservableLike__mapT,
+            fromArray: ObservableLike__fromArray,
+            map: ObservableLike__map,
           },
           { delay: duration, delayStart: true },
         )(returnTimeoutError)
       : ObservableLike__concat(
           duration,
           ContainerLike__throws({
-            ...ObservableLike__fromArrayT,
-            ...ObservableLike__mapT,
+            fromArray: ObservableLike__fromArray,
+            map: ObservableLike__map,
           })(returnTimeoutError),
         );
 

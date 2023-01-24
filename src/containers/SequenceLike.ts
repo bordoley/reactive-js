@@ -1,8 +1,6 @@
 import {
-  Concat,
   ConcatAll,
   DistinctUntilChanged,
-  FromArray,
   Generate,
   Keep,
   Map,
@@ -44,72 +42,50 @@ export const concat: <T>(
   snd: SequenceLike<T>,
   ...tail: readonly SequenceLike<T>[]
 ) => SequenceLike<T> = SequenceLike__concat;
-export const concatT: Concat<SequenceLike> = { concat };
 
 export const concatAll: ConcatAll<SequenceLike>["concatAll"] =
   SequenceLike__concatAll;
-export const concatAllT: ConcatAll<SequenceLike> = { concatAll };
 
 export const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"] =
   SequenceLike__distinctUntilChanged;
-export const distinctUntilChangedT: DistinctUntilChanged<SequenceLike> = {
-  distinctUntilChanged,
-};
 
 export const fromArray = SequenceLike__fromArray;
-export const fromArrayT: FromArray<SequenceLike> = { fromArray };
 
 export const generate: Generate<SequenceLike>["generate"] =
   SequenceLike__generate;
-export const generateT: Generate<SequenceLike> = { generate };
 
 export const keep: Keep<SequenceLike>["keep"] = SequenceLike__keep;
-export const keepT: Keep<SequenceLike> = { keep };
 
 export const map: Map<SequenceLike>["map"] = SequenceLike__map;
-export const mapT: Map<SequenceLike> = { map };
 
 export const pairwise: Pairwise<SequenceLike>["pairwise"] =
   SequenceLike__pairwise;
-export const pairwiseT: Pairwise<SequenceLike> = { pairwise };
 
 export const repeat: Repeat<SequenceLike>["repeat"] = SequenceLike__repeat;
-export const repeatT: Repeat<SequenceLike> = { repeat };
 
 export const scan: Scan<SequenceLike>["scan"] = SequenceLike__scan;
-export const scanT: Scan<SequenceLike> = { scan };
 
 export const seek = SequenceLike__seek;
 
 export const skipFirst: SkipFirst<SequenceLike>["skipFirst"] =
   SequenceLike__skipFirst;
-export const skipFirstT: SkipFirst<SequenceLike> = { skipFirst };
 
 export const takeFirst: TakeFirst<SequenceLike>["takeFirst"] =
   SequenceLike__takeFirst;
-export const takeFirstT: TakeFirst<SequenceLike> = { takeFirst };
 
 export const takeLast: TakeLast<SequenceLike>["takeLast"] =
   SequenceLike__takeLast;
-export const takeLastT: TakeLast<SequenceLike> = { takeLast };
 
 export const takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
   SequenceLike__takeWhile;
-export const takeWhileT: TakeWhile<SequenceLike> = { takeWhile };
 
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   SequenceLike__toEnumerable;
-export const toEnumerableT: ToEnumerable<SequenceLike> = { toEnumerable };
 
 export const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
   SequenceLike__toReadonlyArray;
-export const toReadonlyArrayT: ToReadonlyArray<SequenceLike> = {
-  toReadonlyArray,
-};
 
 export const toRunnable: ToRunnable<SequenceLike>["toRunnable"] =
   SequenceLike__toRunnable;
-export const toRunnableT: ToRunnable<SequenceLike> = { toRunnable };
 
 export const zip: Zip<SequenceLike>["zip"] = SequenceLike__zip;
-export const zipT: Zip<SequenceLike> = { zip };

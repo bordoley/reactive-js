@@ -4,6 +4,3 @@ import FlowableLike__toObservable from "./__internal__/FlowableLike/FlowableLike
 
 export const toObservable: ToObservable<FlowableLike>["toObservable"] =
   FlowableLike__toObservable;
-export const toObservableT: ToObservable<FlowableLike> = {
-  toObservable,
-};

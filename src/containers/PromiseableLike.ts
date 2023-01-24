@@ -4,4 +4,3 @@ import PromiseableLike__toObservable from "./__internal__/PromiseableLike/Promis
 
 export const toObservable: ToObservable<PromiseableLike>["toObservable"] =
   PromiseableLike__toObservable;
-export const toObservableT: ToObservable<PromiseableLike> = { toObservable };

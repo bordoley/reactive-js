@@ -13,10 +13,10 @@ import ObserverLike__getScheduler from '../ObserverLike/ObserverLike.getSchedule
 import ObserverLike__mixin from '../ObserverLike/ObserverLike.mixin.mjs';
 import SinkLike__notify from '../SinkLike/SinkLike.notify.mjs';
 import ObservableLike__concat from './ObservableLike.concat.mjs';
-import ObservableLike__fromArrayT from './ObservableLike.fromArrayT.mjs';
+import ObservableLike__fromArray from './ObservableLike.fromArray.mjs';
 import ObservableLike__isRunnable from './ObservableLike.isRunnable.mjs';
 import ObservableLike__lift from './ObservableLike.lift.mjs';
-import ObservableLike__mapT from './ObservableLike.mapT.mjs';
+import ObservableLike__map from './ObservableLike.map.mjs';
 import ObservableLike__subscribe from './ObservableLike.subscribe.mjs';
 
 const ObservableLike__timeout = /*@__PURE__*/ (() => {
@@ -47,12 +47,12 @@ const ObservableLike__timeout = /*@__PURE__*/ (() => {
     return (duration) => {
         const durationObs = isNumber(duration)
             ? ContainerLike__throws({
-                ...ObservableLike__fromArrayT,
-                ...ObservableLike__mapT,
+                fromArray: ObservableLike__fromArray,
+                map: ObservableLike__map,
             }, { delay: duration, delayStart: true })(returnTimeoutError)
             : ObservableLike__concat(duration, ContainerLike__throws({
-                ...ObservableLike__fromArrayT,
-                ...ObservableLike__mapT,
+                fromArray: ObservableLike__fromArray,
+                map: ObservableLike__map,
             })(returnTimeoutError));
         return pipe(createTimeoutObserver, partial(durationObs), ObservableLike__lift(false, isNumber(duration) || ObservableLike__isRunnable(duration)));
     };

@@ -10,7 +10,7 @@ import { Zip } from "../../../containers";
 import ContainerLike__keepType from "../../../containers/__internal__/ContainerLike/ContainerLike.keepType";
 import ReadonlyArrayLike__every from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every";
 import ReadonlyArrayLike__forEach from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach";
-import ReadonlyArrayLike__keepT from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keepT";
+import ReadonlyArrayLike__keep from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keep";
 import ReadonlyArrayLike__map from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map";
 import ReadonlyArrayLike__some from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.some";
 import {
@@ -183,7 +183,7 @@ const ObservableLike__zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
       ? pipe(
           observables,
           ReadonlyArrayLike__map(ObservableLike__toEnumerable()),
-          ContainerLike__keepType(ReadonlyArrayLike__keepT, isSome),
+          ContainerLike__keepType({ keep: ReadonlyArrayLike__keep }, isSome),
           enumerables =>
             (
               EnumerableLike__zip as unknown as (

@@ -11,22 +11,10 @@ import IterableLike__toRunnableObservable from './__internal__/IterableLike/Iter
  * @param iterable
  */
 const toAsyncEnumerable = IterableLike__toAsyncEnumerable;
-const toAsyncEnumerableT = {
-    toAsyncEnumerable,
-};
 const toEnumerable = IterableLike__toEnumerable;
-const toEnumerableT = { toEnumerable };
 const toIterable = () => identity;
-const toIterableT = {
-    toIterable,
-};
 const toEnumerableObservable = IterableLike__toEnumerableObservable;
-const toEnumerableObservableT = {
-    toEnumerableObservable,
-};
 const toObservable = IterableLike__toRunnableObservable;
-const toObservableT = { toObservable };
 const toRunnableObservable = IterableLike__toRunnableObservable;
-const toRunnableObservableT = { toRunnableObservable };
 
-export { toAsyncEnumerable, toAsyncEnumerableT, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toRunnableObservable, toRunnableObservableT };
+export { toAsyncEnumerable, toEnumerable, toEnumerableObservable, toIterable, toObservable, toRunnableObservable };

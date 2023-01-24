@@ -6,7 +6,7 @@ import { keep } from '../containers/ReadonlyArrayLike.mjs';
 import { pipe, newInstance, none, isString, error, isEmpty, getLength, unsafeCast, isSome, raise, isFunction, compose } from '../functions.mjs';
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { create, map, forkCombineLatest, takeWhile, forEach, keepT, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
+import { create, map, forkCombineLatest, takeWhile, forEach, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
 import { getDispatcher } from '../rx/ObserverLike.mjs';
 import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
@@ -174,20 +174,20 @@ const windowLocation =
             // Initialize the history state on page load
             windowLocationStream.historyCounter++;
             windowHistoryReplaceState(windowLocationStream, title, uri);
-        }), ignoreElements(keepT)), compose(keep$1(({ replace, title, uri }) => {
+        }), ignoreElements({ keep: keep$1 })), compose(keep$1(({ replace, title, uri }) => {
             const titleChanged = document.title !== title;
             const uriChanged = uri !== location.href;
             return replace || (titleChanged && !uriChanged);
         }), throttle(100), forEach(({ title, uri }) => {
             document.title = title;
             windowHistoryReplaceState(windowLocationStream, title, uri);
-        }), ignoreElements(keepT)), compose(keep$1(({ replace, uri }) => {
+        }), ignoreElements({ keep: keep$1 })), compose(keep$1(({ replace, uri }) => {
             const uriChanged = uri !== location.href;
             return !replace && uriChanged;
         }), throttle(100), forEach(({ title, uri }) => {
             document.title = title;
             windowHistoryPushState(windowLocationStream, title, uri);
-        }), ignoreElements(keepT))), subscribe(scheduler), addTo(windowLocationStream));
+        }), ignoreElements({ keep: keep$1 }))), subscribe(scheduler), addTo(windowLocationStream));
         pipe(window, addEventListener("popstate", (e) => {
             const { counter, title } = e.state;
             const uri = {

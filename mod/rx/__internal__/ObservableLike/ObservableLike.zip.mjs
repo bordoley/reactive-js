@@ -3,7 +3,7 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import ContainerLike__keepType from '../../../containers/__internal__/ContainerLike/ContainerLike.keepType.mjs';
 import ReadonlyArrayLike__every from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.every.mjs';
 import ReadonlyArrayLike__forEach from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.forEach.mjs';
-import ReadonlyArrayLike__keepT from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keepT.mjs';
+import ReadonlyArrayLike__keep from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.keep.mjs';
 import ReadonlyArrayLike__map from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.map.mjs';
 import ReadonlyArrayLike__some from '../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.some.mjs';
 import { compose, isTrue, pipe, none, getOrRaise, isSome } from '../../../functions.mjs';
@@ -89,7 +89,7 @@ const ObservableLike__zip = /*@__PURE__*/ (() => {
         const isEnumerable = ObservableLike__allAreEnumerable(observables);
         const isRunnable = ObservableLike__allAreRunnable(observables);
         return isEnumerable
-            ? pipe(observables, ReadonlyArrayLike__map(ObservableLike__toEnumerable()), ContainerLike__keepType(ReadonlyArrayLike__keepT, isSome), enumerables => EnumerableLike__zip(...enumerables), EnumerableLike__toRunnableObservable())
+            ? pipe(observables, ReadonlyArrayLike__map(ObservableLike__toEnumerable()), ContainerLike__keepType({ keep: ReadonlyArrayLike__keep }, isSome), enumerables => EnumerableLike__zip(...enumerables), EnumerableLike__toRunnableObservable())
             : isRunnable
                 ? RunnableObservableLike__create(onSink(observables))
                 : ObservableLike__create(onSink(observables));
