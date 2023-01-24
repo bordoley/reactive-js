@@ -4,224 +4,69 @@
 
 ## Table of contents
 
-### Variables
-
-- [bufferT](rx_EnumerableObservableLike.md#buffert)
-- [catchErrorT](rx_EnumerableObservableLike.md#catcherrort)
-- [concatT](rx_EnumerableObservableLike.md#concatt)
-- [decodeWithCharsetT](rx_EnumerableObservableLike.md#decodewithcharsett)
-- [deferT](rx_EnumerableObservableLike.md#defert)
-- [distinctUntilChangedT](rx_EnumerableObservableLike.md#distinctuntilchangedt)
-- [emptyT](rx_EnumerableObservableLike.md#emptyt)
-- [everySatisfyT](rx_EnumerableObservableLike.md#everysatisfyt)
-- [exhaustT](rx_EnumerableObservableLike.md#exhaustt)
-- [forEachT](rx_EnumerableObservableLike.md#foreacht)
-- [generateeT](rx_EnumerableObservableLike.md#generateet)
-- [keepT](rx_EnumerableObservableLike.md#keept)
-- [mapT](rx_EnumerableObservableLike.md#mapt)
-- [mergeAllT](rx_EnumerableObservableLike.md#mergeallt)
-- [mergeT](rx_EnumerableObservableLike.md#merget)
-- [neverT](rx_EnumerableObservableLike.md#nevert)
-- [pairwiseT](rx_EnumerableObservableLike.md#pairwiset)
-- [reduceT](rx_EnumerableObservableLike.md#reducet)
-- [scanAsyncT](rx_EnumerableObservableLike.md#scanasynct)
-- [scanT](rx_EnumerableObservableLike.md#scant)
-- [skipFirstT](rx_EnumerableObservableLike.md#skipfirstt)
-- [someSatisfyT](rx_EnumerableObservableLike.md#somesatisfyt)
-- [switchAllT](rx_EnumerableObservableLike.md#switchallt)
-- [takeFirstT](rx_EnumerableObservableLike.md#takefirstt)
-- [takeLastT](rx_EnumerableObservableLike.md#takelastt)
-- [takeWhileT](rx_EnumerableObservableLike.md#takewhilet)
-- [throwIfEmptyT](rx_EnumerableObservableLike.md#throwifemptyt)
-- [toReadonlyArrayT](rx_EnumerableObservableLike.md#toreadonlyarrayt)
-- [zipT](rx_EnumerableObservableLike.md#zipt)
-
 ### Functions
 
+- [buffer](rx_EnumerableObservableLike.md#buffer)
 - [catchError](rx_EnumerableObservableLike.md#catcherror)
+- [concat](rx_EnumerableObservableLike.md#concat)
 - [concatAll](rx_EnumerableObservableLike.md#concatall)
 - [create](rx_EnumerableObservableLike.md#create)
+- [decodeWithCharset](rx_EnumerableObservableLike.md#decodewithcharset)
 - [defer](rx_EnumerableObservableLike.md#defer)
+- [distinctUntilChanged](rx_EnumerableObservableLike.md#distinctuntilchanged)
+- [empty](rx_EnumerableObservableLike.md#empty)
+- [everySatisfy](rx_EnumerableObservableLike.md#everysatisfy)
 - [exhaust](rx_EnumerableObservableLike.md#exhaust)
+- [forEach](rx_EnumerableObservableLike.md#foreach)
+- [fromArray](rx_EnumerableObservableLike.md#fromarray)
+- [generate](rx_EnumerableObservableLike.md#generate)
+- [keep](rx_EnumerableObservableLike.md#keep)
+- [map](rx_EnumerableObservableLike.md#map)
+- [merge](rx_EnumerableObservableLike.md#merge)
 - [mergeAll](rx_EnumerableObservableLike.md#mergeall)
+- [never](rx_EnumerableObservableLike.md#never)
+- [pairwise](rx_EnumerableObservableLike.md#pairwise)
+- [reduce](rx_EnumerableObservableLike.md#reduce)
+- [scan](rx_EnumerableObservableLike.md#scan)
 - [scanAsync](rx_EnumerableObservableLike.md#scanasync)
+- [skipFirst](rx_EnumerableObservableLike.md#skipfirst)
+- [someSatisfy](rx_EnumerableObservableLike.md#somesatisfy)
 - [switchAll](rx_EnumerableObservableLike.md#switchall)
-
-## Variables
-
-### bufferT
-
-• `Const` **bufferT**: [`Buffer`](containers.md#buffer)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### catchErrorT
-
-• `Const` **catchErrorT**: [`CatchError`](containers.md#catcherror)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### concatT
-
-• `Const` **concatT**: [`Concat`](containers.md#concat)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### decodeWithCharsetT
-
-• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](containers.md#decodewithcharset)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### deferT
-
-• `Const` **deferT**: [`Defer`](containers.md#defer)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### distinctUntilChangedT
-
-• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### emptyT
-
-• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### everySatisfyT
-
-• `Const` **everySatisfyT**: [`EverySatisfy`](containers.md#everysatisfy)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### exhaustT
-
-• `Const` **exhaustT**: [`ConcatAll`](containers.md#concatall)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### forEachT
-
-• `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### generateeT
-
-• `Const` **generateeT**: [`Generate`](containers.md#generate)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### keepT
-
-• `Const` **keepT**: [`Keep`](containers.md#keep)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### mapT
-
-• `Const` **mapT**: [`Map`](containers.md#map)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### mergeAllT
-
-• `Const` **mergeAllT**: [`ConcatAll`](containers.md#concatall)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md), { `maxBufferSize?`: `number` ; `maxConcurrency?`: `number`  }\>
-
-___
-
-### mergeT
-
-• `Const` **mergeT**: [`Concat`](containers.md#concat)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### neverT
-
-• `Const` **neverT**: [`Never`](containers.md#never)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### pairwiseT
-
-• `Const` **pairwiseT**: [`Pairwise`](containers.md#pairwise)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### reduceT
-
-• `Const` **reduceT**: [`Reduce`](containers.md#reduce)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### scanAsyncT
-
-• `Const` **scanAsyncT**: [`ScanAsync`](rx.md#scanasync)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md), [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### scanT
-
-• `Const` **scanT**: [`Scan`](containers.md#scan)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### skipFirstT
-
-• `Const` **skipFirstT**: [`SkipFirst`](containers.md#skipfirst)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### someSatisfyT
-
-• `Const` **someSatisfyT**: [`SomeSatisfy`](containers.md#somesatisfy)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### switchAllT
-
-• `Const` **switchAllT**: [`ConcatAll`](containers.md#concatall)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### takeFirstT
-
-• `Const` **takeFirstT**: [`TakeFirst`](containers.md#takefirst)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### takeLastT
-
-• `Const` **takeLastT**: [`TakeLast`](containers.md#takelast)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### takeWhileT
-
-• `Const` **takeWhileT**: [`TakeWhile`](containers.md#takewhile)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### throwIfEmptyT
-
-• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](containers.md#throwifempty)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
-
-___
-
-### toReadonlyArrayT
-
-• `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md), { `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }\>
-
-___
-
-### zipT
-
-• `Const` **zipT**: [`Zip`](containers.md#zip)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
+- [takeFirst](rx_EnumerableObservableLike.md#takefirst)
+- [takeLast](rx_EnumerableObservableLike.md#takelast)
+- [takeWhile](rx_EnumerableObservableLike.md#takewhile)
+- [throwIfEmpty](rx_EnumerableObservableLike.md#throwifempty)
+- [toEnumerable](rx_EnumerableObservableLike.md#toenumerable)
+- [toFlowable](rx_EnumerableObservableLike.md#toflowable)
+- [toPromise](rx_EnumerableObservableLike.md#topromise)
+- [toReadonlyArray](rx_EnumerableObservableLike.md#toreadonlyarray)
+- [toRunnable](rx_EnumerableObservableLike.md#torunnable)
+- [zip](rx_EnumerableObservableLike.md#zip)
 
 ## Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+___
 
 ### catchError
 
@@ -245,12 +90,33 @@ ___
 
 ___
 
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
+| `snd` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+___
+
 ### concatAll
 
 ▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
-
-Converts a higher-order `ObservableLike` into a first-order
-`ObservableLike` by concatenating the inner sources in order.
 
 #### Type parameters
 
@@ -292,6 +158,22 @@ ___
 
 ___
 
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`charset?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+___
+
 ### defer
 
 ▸ **defer**<`T`\>(`factory`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
@@ -311,6 +193,73 @@ ___
 #### Returns
 
 [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+___
+
+### distinctUntilChanged
+
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(`options?`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<{ `delay`: `number`  }\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+___
+
+### everySatisfy
+
+▸ **everySatisfy**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 
@@ -336,6 +285,143 @@ ___
 
 ___
 
+### forEach
+
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### fromArray
+
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<{ `count`: `number` ; `start`: `number`  }\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+___
+
+### keep
+
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### map
+
+▸ **map**<`TA`, `TB`\>(`mapper`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
+| `snd` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+___
+
 ### mergeAll
 
 ▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
@@ -355,6 +441,86 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### never
+
+▸ **never**<`T`\>(): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+___
+
+### pairwise
+
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+___
+
+### scan
+
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
@@ -382,6 +548,51 @@ ___
 
 ___
 
+### skipFirst
+
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### someSatisfy
+
+▸ **someSatisfy**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+___
+
 ### switchAll
 
 ▸ **switchAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
@@ -401,3 +612,425 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### takeFirst
+
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### takeWhile
+
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `options?` | `Object` |
+| `options.inclusive?` | `boolean` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### throwIfEmpty
+
+▸ **throwIfEmpty**<`T`\>(`factory`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toFlowable
+
+▸ **toFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+
+___
+
+### toPromise
+
+▸ **toPromise**<`T`\>(`ctx`): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `ctx` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
+
+___
+
+### toReadonlyArray
+
+▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<{ `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+___
+
+### zip
+
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB`\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **zip**<`TA_1`, `TB_1`, `TC`\>(`a`, `b`, `c`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA_1` |
+| `TB_1` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_1`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_1`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC`\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
+
+▸ **zip**<`TA_2`, `TB_2`, `TC_1`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA_2` |
+| `TB_2` |
+| `TC_1` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_2`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_2`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_1`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD`\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
+
+▸ **zip**<`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA_3` |
+| `TB_3` |
+| `TC_2` |
+| `TD_1` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_3`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_3`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_2`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_1`\> |
+| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE`\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
+
+▸ **zip**<`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA_4` |
+| `TB_4` |
+| `TC_3` |
+| `TD_2` |
+| `TE_1` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_4`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_4`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_3`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_2`\> |
+| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE_1`\> |
+| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF`\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
+
+▸ **zip**<`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA_5` |
+| `TB_5` |
+| `TC_4` |
+| `TD_3` |
+| `TE_2` |
+| `TF_1` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_5`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_5`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_4`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_3`\> |
+| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE_2`\> |
+| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF_1`\> |
+| `g` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TG`\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
+
+▸ **zip**<`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA_6` |
+| `TB_6` |
+| `TC_5` |
+| `TD_4` |
+| `TE_3` |
+| `TF_2` |
+| `TG_1` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_6`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_6`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_5`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_4`\> |
+| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE_3`\> |
+| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF_2`\> |
+| `g` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TG_1`\> |
+| `h` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TH`\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
+
+▸ **zip**<`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA_7` |
+| `TB_7` |
+| `TC_6` |
+| `TD_5` |
+| `TE_4` |
+| `TF_3` |
+| `TG_2` |
+| `TH_1` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_7`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_7`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_6`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_5`\> |
+| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE_4`\> |
+| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF_3`\> |
+| `g` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TG_2`\> |
+| `h` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TH_1`\> |
+| `i` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TI`\> |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>

@@ -1,26 +1,19 @@
 import {
-  Buffer,
   CatchError,
   Concat,
   ConcatAll,
   ContainerOperator,
   DecodeWithCharset,
   Defer,
-  DistinctUntilChanged,
-  Empty,
   EverySatisfy,
-  ForEach,
   ForkConcat,
   ForkZip,
   FromPromise,
-  Generate,
   Keep,
   Map,
   Never,
   Pairwise,
   Reduce,
-  Repeat,
-  Scan,
   SkipFirst,
   SomeSatisfy,
   TakeFirst,
@@ -47,9 +40,8 @@ import {
   ObserverLike,
   RunnableObservableLike,
   ScanAsync,
-  ToRunnable,
 } from "../rx";
-import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling";
+import { SchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import { DisposableLike, DisposableOrTeardown } from "../util";
 import EnumerableObservableLike__never from "./__internal__/EnumerableObservableLike/EnumerableObservableLike.never";
@@ -58,7 +50,6 @@ import ObservableLike__catchError from "./__internal__/ObservableLike/Observable
 import ObservableLike__combineLatest from "./__internal__/ObservableLike/ObservableLike.combineLatest";
 import ObservableLike__concat from "./__internal__/ObservableLike/ObservableLike.concat";
 import ObservableLike__concatAll from "./__internal__/ObservableLike/ObservableLike.concatAll";
-import ObservableLike__concatT from "./__internal__/ObservableLike/ObservableLike.concatT";
 import ObservableLike__create from "./__internal__/ObservableLike/ObservableLike.create";
 import ObservableLike__decodeWithCharset from "./__internal__/ObservableLike/ObservableLike.decodeWithCharset";
 import ObservableLike__defer from "./__internal__/ObservableLike/ObservableLike.defer";
@@ -70,15 +61,12 @@ import ObservableLike__forkCombineLatest from "./__internal__/ObservableLike/Obs
 import ObservableLike__forkMerge from "./__internal__/ObservableLike/ObservableLike.forkMerge";
 import ObservableLike__forkZipLatest from "./__internal__/ObservableLike/ObservableLike.forkZipLatest";
 import ObservableLike__fromArray from "./__internal__/ObservableLike/ObservableLike.fromArray";
-import ObservableLike__fromArrayT from "./__internal__/ObservableLike/ObservableLike.fromArrayT";
 import ObservableLike__generate from "./__internal__/ObservableLike/ObservableLike.generate";
 import ObservableLike__isEnumerable from "./__internal__/ObservableLike/ObservableLike.isEnumerable";
 import ObservableLike__isRunnable from "./__internal__/ObservableLike/ObservableLike.isRunnable";
 import ObservableLike__keep from "./__internal__/ObservableLike/ObservableLike.keep";
-import ObservableLike__keepT from "./__internal__/ObservableLike/ObservableLike.keepT";
 import ObservableLike__map from "./__internal__/ObservableLike/ObservableLike.map";
 import ObservableLike__mapAsync from "./__internal__/ObservableLike/ObservableLike.mapAsync";
-import ObservableLike__mapT from "./__internal__/ObservableLike/ObservableLike.mapT";
 import ObservableLike__merge from "./__internal__/ObservableLike/ObservableLike.merge";
 import ObservableLike__mergeAll from "./__internal__/ObservableLike/ObservableLike.mergeAll";
 import ObservableLike__multicast from "./__internal__/ObservableLike/ObservableLike.multicast";
@@ -95,7 +83,6 @@ import ObservableLike__someSatisfy from "./__internal__/ObservableLike/Observabl
 import ObservableLike__subscribe from "./__internal__/ObservableLike/ObservableLike.subscribe";
 import ObservableLike__subscribeOn from "./__internal__/ObservableLike/ObservableLike.subscribeOn";
 import ObservableLike__switchAll from "./__internal__/ObservableLike/ObservableLike.switchAll";
-import ObservableLike__switchAllT from "./__internal__/ObservableLike/ObservableLike.switchAllT";
 import ObservableLike__takeFirst from "./__internal__/ObservableLike/ObservableLike.takeFirst";
 import ObservableLike__takeLast from "./__internal__/ObservableLike/ObservableLike.takeLast";
 import ObservableLike__takeUntil from "./__internal__/ObservableLike/ObservableLike.takeUntil";
@@ -118,9 +105,6 @@ export const buffer: <T>(options?: {
   readonly maxBufferSize?: number;
 }) => ContainerOperator<ObservableLike, T, readonly T[]> =
   ObservableLike__buffer;
-export const bufferT: Buffer<ObservableLike> = {
-  buffer,
-};
 
 export const catchError: CatchError<ObservableLike>["catchError"] =
   ObservableLike__catchError;
@@ -131,15 +115,11 @@ export const catchError: CatchError<ObservableLike>["catchError"] =
  */
 export const combineLatest: Zip<ObservableLike>["zip"] =
   ObservableLike__combineLatest;
-export const combineLatestT: Zip<ObservableLike> = {
-  zip: combineLatest,
-};
 
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  */
 export const concat: Concat<ObservableLike>["concat"] = ObservableLike__concat;
-export const concatT: Concat<ObservableLike> = ObservableLike__concatT;
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order
@@ -154,44 +134,24 @@ export const concatAll: ConcatAll<
   }
 >["concatAll"] = ObservableLike__concatAll;
 
-export const concatAllT: ConcatAll<
-  ObservableLike,
-  { readonly maxBufferSize: number }
-> = {
-  concatAll,
-};
-
 export const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T> =
   ObservableLike__create;
 
 export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   ObservableLike__decodeWithCharset;
-export const decodeWithCharsetT: DecodeWithCharset<ObservableLike> = {
-  decodeWithCharset,
-};
 
 export const defer: Defer<ObservableLike>["defer"] = ObservableLike__defer;
-export const deferT: Defer<ObservableLike> = {
-  defer,
-};
 
 export const distinctUntilChanged = ObservableLike__distinctUntilChanged;
-export const distinctUntilChangedT: DistinctUntilChanged<ObservableLike> = {
-  distinctUntilChanged,
-};
 
 interface EmptyObservable {
   <T>(): EnumerableObservableLike<T>;
   <T>(options: { delay: number }): RunnableObservableLike<T>;
 }
 export const empty: EmptyObservable = ObservableLike__empty as EmptyObservable;
-export const emptyT: Empty<ObservableLike, { delay: number }> = {
-  empty,
-};
 
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   ObservableLike__everySatisfy;
-export const everySatisfyT: EverySatisfy<ObservableLike> = { everySatisfy };
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
@@ -203,10 +163,8 @@ export const exhaust: ConcatAll<ObservableLike>["concatAll"] = <T>() =>
     maxBufferSize: 1,
     maxConcurrency: 1,
   });
-export const exhaustT: ConcatAll<ObservableLike> = { concatAll: exhaust };
 
 export const forEach = ObservableLike__forEach;
-export const forEachT: ForEach<ObservableLike> = { forEach };
 
 export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] =
   ObservableLike__forkCombineLatest;
@@ -218,11 +176,9 @@ export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] =
   ObservableLike__forkZipLatest;
 
 export const fromArray = ObservableLike__fromArray;
-export const fromArrayT = ObservableLike__fromArrayT;
 
 export const fromPromise: FromPromise<ObservableLike>["fromPromise"] =
   PromiseableLike__toObservable;
-export const fromPromiseT: FromPromise<ObservableLike> = { fromPromise };
 
 interface GenerateObservable {
   <T>(
@@ -242,11 +198,6 @@ interface GenerateObservable {
 export const generate: GenerateObservable =
   ObservableLike__generate as GenerateObservable;
 
-export const generateT: Generate<
-  ObservableLike,
-  { readonly delay: number; readonly delayStart: boolean }
-> = { generate };
-
 export const isEnumerable: (
   obs: ObservableLike,
 ) => obs is EnumerableObservableLike = ObservableLike__isEnumerable;
@@ -256,15 +207,12 @@ export const isRunnable: (
 ) => obs is RunnableObservableLike = ObservableLike__isRunnable;
 
 export const keep: Keep<ObservableLike>["keep"] = ObservableLike__keep;
-export const keepT: Keep<ObservableLike> = ObservableLike__keepT;
 
 export const map: Map<ObservableLike>["map"] = ObservableLike__map;
-export const mapT: Map<ObservableLike> = ObservableLike__mapT;
 
 export const mapAsync = ObservableLike__mapAsync;
 
 export const merge: Concat<ObservableLike>["concat"] = ObservableLike__merge;
-export const mergeT: Concat<ObservableLike> = { concat: merge };
 
 export const mergeAll: ConcatAll<
   ObservableLike,
@@ -273,13 +221,6 @@ export const mergeAll: ConcatAll<
     readonly maxConcurrency?: number;
   }
 >["concatAll"] = ObservableLike__mergeAll;
-export const mergeAllT: ConcatAll<
-  ObservableLike,
-  {
-    readonly maxBufferSize?: number;
-    readonly maxConcurrency?: number;
-  }
-> = { concatAll: mergeAll };
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -292,7 +233,6 @@ export const multicast = ObservableLike__multicast;
 
 export const never: Never<EnumerableObservableLike>["never"] =
   EnumerableObservableLike__never;
-export const neverT: Never<ObservableLike> = { never };
 
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
@@ -300,10 +240,8 @@ export const onSubscribe: <T>(
 
 export const pairwise: Pairwise<ObservableLike>["pairwise"] =
   ObservableLike__pairwise;
-export const pairwiseT: Pairwise<ObservableLike> = { pairwise };
 
 export const reduce: Reduce<ObservableLike>["reduce"] = ObservableLike__reduce;
-export const reduceT: Reduce<ObservableLike> = { reduce };
 
 interface RepeatOperator {
   /**
@@ -326,9 +264,6 @@ interface RepeatOperator {
   <T>(): ContainerOperator<ObservableLike, T, T>;
 }
 export const repeat: RepeatOperator = ObservableLike__repeat;
-export const repeatT: Repeat<ObservableLike> = {
-  repeat,
-};
 
 interface Retry {
   /**
@@ -352,7 +287,6 @@ interface Retry {
 export const retry: Retry = ObservableLike__retry;
 
 export const scan = ObservableLike__scan;
-export const scanT: Scan<ObservableLike> = { scan };
 
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
@@ -363,9 +297,6 @@ export const scanT: Scan<ObservableLike> = { scan };
  */
 export const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"] =
   ObservableLike__scanAsync;
-export const scanAsyncT: ScanAsync<ObservableLike, ObservableLike> = {
-  scanAsync,
-};
 
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
@@ -380,15 +311,12 @@ export const share = ObservableLike__share;
 
 export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
   ObservableLike__skipFirst;
-export const skipFirstT: SkipFirst<ObservableLike> = { skipFirst };
 
 export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
   ObservableLike__someSatisfy;
-export const someSatisfyT: SomeSatisfy<ObservableLike> = { someSatisfy };
 
 export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
   ObservableLike__switchAll;
-export const switchAllT: ConcatAll<ObservableLike> = ObservableLike__switchAllT;
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
@@ -398,17 +326,14 @@ export const subscribeOn = ObservableLike__subscribeOn;
 
 export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
   ObservableLike__takeFirst;
-export const takeFirstT: TakeFirst<ObservableLike> = { takeFirst };
 
 export const takeLast: TakeLast<ObservableLike>["takeLast"] =
   ObservableLike__takeLast;
-export const takeLastT: TakeLast<ObservableLike> = { takeLast };
 
 export const takeUntil = ObservableLike__takeUntil;
 
 export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
   ObservableLike__takeWhile;
-export const takeWhileT: TakeWhile<ObservableLike> = { takeWhile };
 
 interface Throttle {
   /**
@@ -439,9 +364,6 @@ export const throttle: Throttle = ObservableLike__throttle;
 
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   ObservableLike__throwIfEmpty;
-export const throwIfEmptyT: ThrowIfEmpty<ObservableLike> = {
-  throwIfEmpty,
-};
 
 interface Timeout {
   /**
@@ -466,33 +388,19 @@ export const timeout: Timeout = ObservableLike__timeout;
 
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   ObservableLike__toEnumerable;
-export const toEnumerableT: ToEnumerable<ObservableLike> = { toEnumerable };
 
 export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
   ObservableLike__toFlowable;
-export const toFlowableT: ToFlowable<ObservableLike> = { toFlowable };
 
 export const toPromise: ToPromiseable<
   ObservableLike,
   SchedulerLike
 >["toPromise"] = ObservableLike__toPromise;
-export const toPromiseT: ToPromiseable<ObservableLike, SchedulerLike> = {
-  toPromise,
-};
 
 export const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"] =
   ObservableLike__toReadonlyArray;
-export const toReadonlyArrayT: ToReadonlyArray<ObservableLike> = {
-  toReadonlyArray,
-};
 
 export const toRunnable = ObservableLike__toRunnable;
-export const toRunnableT: ToRunnable<
-  ObservableLike,
-  {
-    readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
-  }
-> = { toRunnable };
 
 export const withLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,
@@ -500,18 +408,12 @@ export const withLatestFrom: <TA, TB, T>(
 ) => ContainerOperator<ObservableLike, TA, T> = ObservableLike__withLatestFrom;
 
 export const zip: Zip<ObservableLike>["zip"] = ObservableLike__zip;
-export const zipT: Zip<ObservableLike> = {
-  zip: zip,
-};
 
 /**
  * Returns an `ObservableLike` that zips the latest values from
  * multiple sources.
  */
 export const zipLatest: Zip<ObservableLike>["zip"] = ObservableLike__zipLatest;
-export const zipLatestT: Zip<ObservableLike> = {
-  zip: zipLatest,
-};
 
 export const zipWithLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,

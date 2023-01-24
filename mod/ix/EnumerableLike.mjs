@@ -1,4 +1,5 @@
 /// <reference types="./EnumerableLike.d.ts" />
+import IterableLike__toEnumerable from '../containers/__internal__/IterableLike/IterableLike.toEnumerable.mjs';
 import { identity } from '../functions.mjs';
 import EnumerableLike__buffer from './__internal__/EnumerableLike/EnumerableLike.buffer.mjs';
 import EnumerableLike__concat from './__internal__/EnumerableLike/EnumerableLike.concat.mjs';
@@ -28,84 +29,31 @@ import EnumerableLike__zip from './__internal__/EnumerableLike/EnumerableLike.zi
 
 const enumerate = EnumerableLike__enumerate;
 const buffer = EnumerableLike__buffer;
-const bufferT = {
-    buffer,
-};
 const concat = EnumerableLike__concat;
-const concatT = {
-    concat,
-};
 const concatAll = EnumerableLike__concatAll;
-const concatAllT = { concatAll };
 const distinctUntilChanged = EnumerableLike__distinctUntilChanged;
-const distinctUntilChangedT = {
-    distinctUntilChanged,
-};
 const empty = EnumerableLike__empty;
-const emptyT = { empty };
 const forEach = EnumerableLike__forEach;
-const forEachT = { forEach };
 const fromArray = EnumerableLike__fromArray;
-const fromArrayT = { fromArray };
+const fromIterable = IterableLike__toEnumerable;
 const generate = EnumerableLike__generate;
-const generateT = {
-    generate,
-};
 const keep = EnumerableLike__keep;
-const keepT = {
-    keep,
-};
 const map = EnumerableLike__map;
-const mapT = { map };
 const pairwise = EnumerableLike__pairwise;
-const pairwiseT = {
-    pairwise,
-};
 const repeat = EnumerableLike__repeat;
-const repeatT = {
-    repeat,
-};
 const scan = EnumerableLike__scan;
-const scanT = {
-    scan,
-};
 const skipFirst = EnumerableLike__skipFirst;
-const skipFirstT = {
-    skipFirst,
-};
 const takeFirst = EnumerableLike__takeFirst;
-const takeFirstT = {
-    takeFirst,
-};
 const takeLast = EnumerableLike__takeLast;
-const takeLastT = { takeLast };
 const takeWhile = EnumerableLike__takeWhile;
-const takeWhileT = { takeWhile };
 const throwIfEmpty = EnumerableLike__throwIfEmpty;
-const throwIfEmptyT = {
-    throwIfEmpty,
-};
 const toEnumerable = () => identity;
-const toEnumerableT = {
-    toEnumerable,
-};
 const toEnumerableObservable = EnumerableLike__toEnumerableObservable;
-const toEnumerableObservableT = {
-    toEnumerableObservable,
-};
 const toIterable = EnumerableLike__toIterable;
-const toIterableT = { toIterable };
 const toObservable = EnumerableLike__toRunnableObservable;
-const toObservableT = { toObservable };
 const toReadonlyArray = EnumerableLike__toReadonlyArray;
-const toReadonlyArrayT = {
-    toReadonlyArray,
-};
 const toRunnable = EnumerableLike__toRunnable;
-const toRunnableT = { toRunnable };
 const toRunnableObservable = EnumerableLike__toRunnableObservable;
-const toRunnableObservableT = { toRunnableObservable };
 const zip = EnumerableLike__zip;
-const zipT = { zip };
 
-export { buffer, bufferT, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, empty, emptyT, enumerate, forEach, forEachT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableObservable, toEnumerableObservableT, toEnumerableT, toIterable, toIterableT, toObservable, toObservableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableObservable, toRunnableObservableT, toRunnableT, zip, zipT };
+export { buffer, concat, concatAll, distinctUntilChanged, empty, enumerate, forEach, fromArray, fromIterable, generate, keep, map, pairwise, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

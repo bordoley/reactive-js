@@ -41,7 +41,6 @@ import {
   forEach as forEachObs,
   forkCombineLatest,
   keep as keepObs,
-  keepT,
   map,
   subscribe,
   takeWhile,
@@ -428,7 +427,7 @@ export const windowLocation: WindowLocationStreamableLike =
               windowLocationStream.historyCounter++;
               windowHistoryReplaceState(windowLocationStream, title, uri);
             }),
-            ignoreElements(keepT),
+            ignoreElements({ keep: keepObs }),
           ),
           compose(
             keepObs(({ replace, title, uri }) => {
@@ -442,7 +441,7 @@ export const windowLocation: WindowLocationStreamableLike =
               document.title = title;
               windowHistoryReplaceState(windowLocationStream, title, uri);
             }),
-            ignoreElements(keepT),
+            ignoreElements({ keep: keepObs }),
           ),
           compose(
             keepObs(({ replace, uri }) => {
@@ -454,7 +453,7 @@ export const windowLocation: WindowLocationStreamableLike =
               document.title = title;
               windowHistoryPushState(windowLocationStream, title, uri);
             }),
-            ignoreElements(keepT),
+            ignoreElements({ keep: keepObs }),
           ),
         ),
         subscribe(scheduler),

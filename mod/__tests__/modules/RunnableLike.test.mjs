@@ -1,92 +1,91 @@
 /// <reference types="./RunnableLike.test.d.ts" />
-import { toRunnable } from '../../containers/ReadonlyArrayLike.mjs';
 import { pipeLazy, none } from '../../functions.mjs';
-import { bufferT, toReadonlyArrayT, catchErrorT, mapT, concatT, concatAllT, decodeWithCharsetT, deferT, distinctUntilChangedT, everySatisfyT, forEachT, keepT, pairwiseT, reduceT, repeatT, takeFirstT, scanT, skipFirstT, someSatisfyT, takeLastT, takeWhileT, throwIfEmptyT, first, last } from '../../rx/RunnableLike.mjs';
+import { fromArray, buffer, toReadonlyArray, catchError, map, concat, concatAll, decodeWithCharset, defer, distinctUntilChanged, everySatisfy, forEach, keep, pairwise, reduce, repeat, takeFirst, scan, skipFirst, someSatisfy, takeLast, takeWhile, throwIfEmpty, first, last } from '../../rx/RunnableLike.mjs';
 import { bufferTests, catchErrorTests, concatTests, concatAllTests, decodeWithCharsetTests, distinctUntilChangedTests, everySatisfyTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, repeatTests, scanTests, skipFirstTests, someSatisfyTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
 import { testModule, describe as createDescribe, test as createTest, expectEquals } from '../testing.mjs';
 
 testModule("RunnableLike", bufferTests({
-    fromArray: toRunnable,
-    ...bufferT,
-    ...toReadonlyArrayT,
+    fromArray,
+    buffer,
+    toReadonlyArray,
 }), catchErrorTests({
-    fromArray: toRunnable,
-    ...catchErrorT,
-    ...mapT,
-    ...toReadonlyArrayT,
+    fromArray,
+    catchError,
+    map,
+    toReadonlyArray,
 }), concatTests({
-    fromArray: toRunnable,
-    ...concatT,
-    ...toReadonlyArrayT,
+    fromArray,
+    concat,
+    toReadonlyArray,
 }), concatAllTests({
-    fromArray: toRunnable,
-    ...concatAllT,
-    ...toReadonlyArrayT,
+    fromArray,
+    concatAll,
+    toReadonlyArray,
 }), decodeWithCharsetTests({
-    fromArray: toRunnable,
-    ...decodeWithCharsetT,
-    ...deferT,
-    ...mapT,
-    ...toReadonlyArrayT,
+    fromArray,
+    decodeWithCharset,
+    defer,
+    map,
+    toReadonlyArray,
 }), distinctUntilChangedTests({
-    fromArray: toRunnable,
-    ...distinctUntilChangedT,
-    ...toReadonlyArrayT,
+    fromArray,
+    distinctUntilChanged,
+    toReadonlyArray,
 }), everySatisfyTests({
-    fromArray: toRunnable,
-    ...everySatisfyT,
-    ...toReadonlyArrayT,
+    fromArray,
+    everySatisfy,
+    toReadonlyArray,
 }), forEachTests({
-    fromArray: toRunnable,
-    ...forEachT,
-    ...toReadonlyArrayT,
+    fromArray,
+    forEach,
+    toReadonlyArray,
 }), keepTests({
-    fromArray: toRunnable,
-    ...keepT,
-    ...toReadonlyArrayT,
+    fromArray,
+    keep,
+    toReadonlyArray,
 }), mapTests({
-    fromArray: toRunnable,
-    ...mapT,
-    ...toReadonlyArrayT,
+    fromArray,
+    map,
+    toReadonlyArray,
 }), pairwiseTests({
-    fromArray: toRunnable,
-    ...pairwiseT,
-    ...toReadonlyArrayT,
+    fromArray,
+    pairwise,
+    toReadonlyArray,
 }), reduceTests({
-    fromArray: toRunnable,
-    ...reduceT,
-    ...toReadonlyArrayT,
+    fromArray,
+    reduce,
+    toReadonlyArray,
 }), repeatTests({
-    fromArray: toRunnable,
-    ...repeatT,
-    ...takeFirstT,
-    ...toReadonlyArrayT,
+    fromArray,
+    repeat,
+    takeFirst,
+    toReadonlyArray,
 }), scanTests({
-    fromArray: toRunnable,
-    ...scanT,
-    ...toReadonlyArrayT,
+    fromArray,
+    scan,
+    toReadonlyArray,
 }), skipFirstTests({
-    fromArray: toRunnable,
-    ...skipFirstT,
-    ...toReadonlyArrayT,
+    fromArray,
+    skipFirst,
+    toReadonlyArray,
 }), someSatisfyTests({
-    fromArray: toRunnable,
-    ...someSatisfyT,
-    ...toReadonlyArrayT,
+    fromArray,
+    someSatisfy,
+    toReadonlyArray,
 }), takeFirstTests({
-    fromArray: toRunnable,
-    ...takeFirstT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeFirst,
+    toReadonlyArray,
 }), takeLastTests({
-    fromArray: toRunnable,
-    ...takeLastT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeLast,
+    toReadonlyArray,
 }), takeWhileTests({
-    fromArray: toRunnable,
-    ...takeWhileT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeWhile,
+    toReadonlyArray,
 }), throwIfEmptyTests({
-    fromArray: toRunnable,
-    ...throwIfEmptyT,
-    ...toReadonlyArrayT,
-}), createDescribe("first", createTest("when the source has values", pipeLazy([0, 1, 2], toRunnable(), first(), expectEquals(0))), createTest("when the source is empty", pipeLazy([], toRunnable(), first(), expectEquals(none)))), createDescribe("last", createTest("when the source has values", pipeLazy([0, 1, 2], toRunnable(), last(), expectEquals(2))), createTest("when the source is empty", pipeLazy([], toRunnable(), last(), expectEquals(none)))));
+    fromArray,
+    throwIfEmpty,
+    toReadonlyArray,
+}), createDescribe("first", createTest("when the source has values", pipeLazy([0, 1, 2], fromArray(), first(), expectEquals(0))), createTest("when the source is empty", pipeLazy([], fromArray(), first(), expectEquals(none)))), createDescribe("last", createTest("when the source has values", pipeLazy([0, 1, 2], fromArray(), last(), expectEquals(2))), createTest("when the source is empty", pipeLazy([], fromArray(), last(), expectEquals(none)))));

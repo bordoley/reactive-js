@@ -4,20 +4,6 @@
 
 ## Table of contents
 
-### Variables
-
-- [emptyT](containers_ReadonlyArrayLike.md#emptyt)
-- [forEachT](containers_ReadonlyArrayLike.md#foreacht)
-- [keepT](containers_ReadonlyArrayLike.md#keept)
-- [mapT](containers_ReadonlyArrayLike.md#mapt)
-- [toEnumerableObservableT](containers_ReadonlyArrayLike.md#toenumerableobservablet)
-- [toEnumerableT](containers_ReadonlyArrayLike.md#toenumerablet)
-- [toObservableT](containers_ReadonlyArrayLike.md#toobservablet)
-- [toReadonlyArrayT](containers_ReadonlyArrayLike.md#toreadonlyarrayt)
-- [toRunnableObservableT](containers_ReadonlyArrayLike.md#torunnableobservablet)
-- [toRunnableT](containers_ReadonlyArrayLike.md#torunnablet)
-- [toSequenceT](containers_ReadonlyArrayLike.md#tosequencet)
-
 ### Functions
 
 - [empty](containers_ReadonlyArrayLike.md#empty)
@@ -34,72 +20,6 @@
 - [toRunnable](containers_ReadonlyArrayLike.md#torunnable)
 - [toRunnableObservable](containers_ReadonlyArrayLike.md#torunnableobservable)
 - [toSequence](containers_ReadonlyArrayLike.md#tosequence)
-
-## Variables
-
-### emptyT
-
-• `Const` **emptyT**: [`Empty`](containers.md#empty)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
-
-___
-
-### forEachT
-
-• `Const` **forEachT**: [`ForEach`](containers.md#foreach)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
-
-___
-
-### keepT
-
-• `Const` **keepT**: [`Keep`](containers.md#keep)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
-
-___
-
-### mapT
-
-• `Const` **mapT**: [`Map`](containers.md#map)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
-
-___
-
-### toEnumerableObservableT
-
-• `Const` **toEnumerableObservableT**: [`ToEnumerableObservable`](rx.md#toenumerableobservable)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md), { `count?`: `number` ; `start?`: `number`  }\>
-
-___
-
-### toEnumerableT
-
-• `Const` **toEnumerableT**: [`ToEnumerable`](ix.md#toenumerable)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md), { `count`: `number` ; `start`: `number`  }\>
-
-___
-
-### toObservableT
-
-• `Const` **toObservableT**: [`ToObservable`](rx.md#toobservable)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md), { `count?`: `number` ; `delay?`: `number` ; `delayStart?`: `boolean` ; `start?`: `number`  }\>
-
-___
-
-### toReadonlyArrayT
-
-• `Const` **toReadonlyArrayT**: [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md), { `count`: `number` ; `start`: `number`  }\>
-
-___
-
-### toRunnableObservableT
-
-• `Const` **toRunnableObservableT**: [`ToRunnableObservable`](rx.md#torunnableobservable)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md), { `count?`: `number` ; `delay?`: `number` ; `delayStart?`: `boolean` ; `start?`: `number`  }\>
-
-___
-
-### toRunnableT
-
-• `Const` **toRunnableT**: [`ToRunnable`](rx.md#torunnable)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
-
-___
-
-### toSequenceT
-
-• `Const` **toSequenceT**: [`ToSequence`](containers.md#tosequence)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)\>
 
 ## Functions
 

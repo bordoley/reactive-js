@@ -2,8 +2,5 @@
 import FlowableLike__toObservable from './__internal__/FlowableLike/FlowableLike.toObservable.mjs';
 
 const toObservable = FlowableLike__toObservable;
-const toObservableT = {
-    toObservable,
-};
 
-export { toObservable, toObservableT };
+export { toObservable };

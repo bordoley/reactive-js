@@ -1,13 +1,13 @@
 import { toRunnableObservable } from "../../containers/ReadonlyArrayLike";
 import { AsyncEnumerableLike } from "../../ix";
 import {
-  fromArrayT,
-  keepT,
-  mapT,
-  scanAsyncT,
-  scanT,
-  takeWhileT,
-  toReadonlyArrayT,
+  fromArray,
+  keep,
+  map,
+  scan,
+  scanAsync,
+  takeWhile,
+  toReadonlyArray,
 } from "../../ix/AsyncEnumerableLike";
 import { RunnableObservableLike } from "../../rx";
 import {
@@ -22,33 +22,33 @@ import { testModule } from "../testing";
 testModule(
   "AsyncEnumerableLike",
   keepTests({
-    ...fromArrayT,
-    ...keepT,
-    ...toReadonlyArrayT,
+    fromArray,
+    keep,
+    toReadonlyArray,
   }),
   mapTests({
-    ...fromArrayT,
-    ...mapT,
-    ...toReadonlyArrayT,
+    fromArray,
+    map,
+    toReadonlyArray,
   }),
   scanTests({
-    ...fromArrayT,
-    ...scanT,
-    ...toReadonlyArrayT,
+    fromArray,
+    scan,
+    toReadonlyArray,
   }),
   scanAsyncTests<AsyncEnumerableLike, RunnableObservableLike>(
     {
-      ...fromArrayT,
-      ...scanAsyncT,
-      ...toReadonlyArrayT,
+      fromArray,
+      scanAsync,
+      toReadonlyArray,
     },
     {
       fromArray: toRunnableObservable,
     },
   ),
   takeWhileTests({
-    ...fromArrayT,
-    ...takeWhileT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeWhile,
+    toReadonlyArray,
   }),
 );

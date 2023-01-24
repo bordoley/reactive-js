@@ -2,7 +2,7 @@
 import ContainerLike__ignoreElements from '../../../containers/__internal__/ContainerLike/ContainerLike.ignoreElements.mjs';
 import { pipe } from '../../../functions.mjs';
 import ObservableLike__forEach from '../../../rx/__internal__/ObservableLike/ObservableLike.forEach.mjs';
-import ObservableLike__keepT from '../../../rx/__internal__/ObservableLike/ObservableLike.keepT.mjs';
+import ObservableLike__keep from '../../../rx/__internal__/ObservableLike/ObservableLike.keep.mjs';
 import ObservableLike__merge from '../../../rx/__internal__/ObservableLike/ObservableLike.merge.mjs';
 import ObservableLike__onSubscribe from '../../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe.mjs';
 import ObservableLike__subscribe from '../../../rx/__internal__/ObservableLike/ObservableLike.subscribe.mjs';
@@ -15,7 +15,7 @@ import StreamableLike__stream from './StreamableLike.stream.mjs';
 const StreamableLike__sinkInto = (dest) => (src) => {
     const { [DispatcherLike_scheduler]: scheduler } = dest;
     const srcStream = pipe(src, StreamableLike__stream(scheduler));
-    pipe(ObservableLike__merge(pipe(srcStream, ObservableLike__forEach(DispatcherLike__dispatchTo(dest)), ContainerLike__ignoreElements(ObservableLike__keepT), ObservableLike__onSubscribe(() => dest)), pipe(dest, ObservableLike__forEach(DispatcherLike__dispatchTo(srcStream)), ContainerLike__ignoreElements(ObservableLike__keepT))), ContainerLike__ignoreElements(ObservableLike__keepT), ObservableLike__subscribe(scheduler), DisposableLike__addTo(dest), DisposableLike__add(srcStream));
+    pipe(ObservableLike__merge(pipe(srcStream, ObservableLike__forEach(DispatcherLike__dispatchTo(dest)), ContainerLike__ignoreElements({ keep: ObservableLike__keep }), ObservableLike__onSubscribe(() => dest)), pipe(dest, ObservableLike__forEach(DispatcherLike__dispatchTo(srcStream)), ContainerLike__ignoreElements({ keep: ObservableLike__keep }))), ContainerLike__ignoreElements({ keep: ObservableLike__keep }), ObservableLike__subscribe(scheduler), DisposableLike__addTo(dest), DisposableLike__add(srcStream));
     return src;
 };
 

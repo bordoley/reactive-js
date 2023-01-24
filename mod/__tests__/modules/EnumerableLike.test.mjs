@@ -1,72 +1,71 @@
 /// <reference types="./EnumerableLike.test.d.ts" />
-import { toEnumerable } from '../../containers/ReadonlyArrayLike.mjs';
-import { bufferT, toReadonlyArrayT, concatT, concatAllT, distinctUntilChangedT, forEachT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, throwIfEmptyT, zipT } from '../../ix/EnumerableLike.mjs';
+import { fromArray, buffer, toReadonlyArray, concat, concatAll, distinctUntilChanged, forEach, keep, map, pairwise, repeat, takeFirst, scan, skipFirst, takeLast, takeWhile, throwIfEmpty, zip } from '../../ix/EnumerableLike.mjs';
 import { bufferTests, concatTests, concatAllTests, distinctUntilChangedTests, forEachTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests } from '../operators.mjs';
 import { testModule } from '../testing.mjs';
 
 testModule("EnumerableLike", bufferTests({
-    fromArray: toEnumerable,
-    ...bufferT,
-    ...toReadonlyArrayT,
+    fromArray,
+    buffer,
+    toReadonlyArray,
 }), concatTests({
-    fromArray: toEnumerable,
-    ...concatT,
-    ...toReadonlyArrayT,
+    fromArray,
+    concat,
+    toReadonlyArray,
 }), concatAllTests({
-    fromArray: toEnumerable,
-    ...concatAllT,
-    ...toReadonlyArrayT,
+    fromArray,
+    concatAll,
+    toReadonlyArray,
 }), distinctUntilChangedTests({
-    fromArray: toEnumerable,
-    ...distinctUntilChangedT,
-    ...toReadonlyArrayT,
+    fromArray,
+    distinctUntilChanged,
+    toReadonlyArray,
 }), forEachTests({
-    fromArray: toEnumerable,
-    ...forEachT,
-    ...toReadonlyArrayT,
+    fromArray,
+    forEach,
+    toReadonlyArray,
 }), keepTests({
-    fromArray: toEnumerable,
-    ...keepT,
-    ...toReadonlyArrayT,
+    fromArray,
+    keep,
+    toReadonlyArray,
 }), mapTests({
-    fromArray: toEnumerable,
-    ...mapT,
-    ...toReadonlyArrayT,
+    fromArray,
+    map,
+    toReadonlyArray,
 }), pairwiseTests({
-    fromArray: toEnumerable,
-    ...pairwiseT,
-    ...toReadonlyArrayT,
+    fromArray,
+    pairwise,
+    toReadonlyArray,
 }), repeatTests({
-    fromArray: toEnumerable,
-    ...repeatT,
-    ...takeFirstT,
-    ...toReadonlyArrayT,
+    fromArray,
+    repeat,
+    takeFirst,
+    toReadonlyArray,
 }), scanTests({
-    fromArray: toEnumerable,
-    ...scanT,
-    ...toReadonlyArrayT,
+    fromArray,
+    scan,
+    toReadonlyArray,
 }), skipFirstTests({
-    fromArray: toEnumerable,
-    ...skipFirstT,
-    ...toReadonlyArrayT,
+    fromArray,
+    skipFirst,
+    toReadonlyArray,
 }), takeFirstTests({
-    fromArray: toEnumerable,
-    ...takeFirstT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeFirst,
+    toReadonlyArray,
 }), takeLastTests({
-    fromArray: toEnumerable,
-    ...takeLastT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeLast,
+    toReadonlyArray,
 }), takeWhileTests({
-    fromArray: toEnumerable,
-    ...takeWhileT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeWhile,
+    toReadonlyArray,
 }), throwIfEmptyTests({
-    fromArray: toEnumerable,
-    ...throwIfEmptyT,
-    ...toReadonlyArrayT,
+    fromArray,
+    throwIfEmpty,
+    toReadonlyArray,
 }), zipTests({
-    fromArray: toEnumerable,
-    ...zipT,
-    ...toReadonlyArrayT,
+    fromArray,
+    zip,
+    toReadonlyArray,
 }));

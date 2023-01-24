@@ -20,45 +20,23 @@ import SequenceLike__toRunnable from './__internal__/SequenceLike/SequenceLike.t
 import SequenceLike__zip from './__internal__/SequenceLike/SequenceLike.zip.mjs';
 
 const concat = SequenceLike__concat;
-const concatT = { concat };
 const concatAll = SequenceLike__concatAll;
-const concatAllT = { concatAll };
 const distinctUntilChanged = SequenceLike__distinctUntilChanged;
-const distinctUntilChangedT = {
-    distinctUntilChanged,
-};
 const fromArray = SequenceLike__fromArray;
-const fromArrayT = { fromArray };
 const generate = SequenceLike__generate;
-const generateT = { generate };
 const keep = SequenceLike__keep;
-const keepT = { keep };
 const map = SequenceLike__map;
-const mapT = { map };
 const pairwise = SequenceLike__pairwise;
-const pairwiseT = { pairwise };
 const repeat = SequenceLike__repeat;
-const repeatT = { repeat };
 const scan = SequenceLike__scan;
-const scanT = { scan };
 const seek = SequenceLike__seek;
 const skipFirst = SequenceLike__skipFirst;
-const skipFirstT = { skipFirst };
 const takeFirst = SequenceLike__takeFirst;
-const takeFirstT = { takeFirst };
 const takeLast = SequenceLike__takeLast;
-const takeLastT = { takeLast };
 const takeWhile = SequenceLike__takeWhile;
-const takeWhileT = { takeWhile };
 const toEnumerable = SequenceLike__toEnumerable;
-const toEnumerableT = { toEnumerable };
 const toReadonlyArray = SequenceLike__toReadonlyArray;
-const toReadonlyArrayT = {
-    toReadonlyArray,
-};
 const toRunnable = SequenceLike__toRunnable;
-const toRunnableT = { toRunnable };
 const zip = SequenceLike__zip;
-const zipT = { zip };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toReadonlyArray, toReadonlyArrayT, toRunnable, toRunnableT, zip, zipT };
+export { concat, concatAll, distinctUntilChanged, fromArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };

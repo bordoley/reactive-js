@@ -18,25 +18,15 @@ import IterableLike__toRunnableObservable from "./__internal__/IterableLike/Iter
  */
 export const toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"] =
   IterableLike__toAsyncEnumerable;
-export const toAsyncEnumerableT: ToAsyncEnumerable<IterableLike> = {
-  toAsyncEnumerable,
-};
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   IterableLike__toEnumerable;
-export const toEnumerableT: ToEnumerable<IterableLike> = { toEnumerable };
 
 export const toIterable: ToIterable<IterableLike>["toIterable"] = () =>
   identity;
-export const toIterableT: ToIterable<IterableLike> = {
-  toIterable,
-};
 
 export const toEnumerableObservable: ToEnumerableObservable<IterableLike>["toEnumerableObservable"] =
   IterableLike__toEnumerableObservable;
-export const toEnumerableObservableT: ToEnumerableObservable<IterableLike> = {
-  toEnumerableObservable,
-};
 
 export const toObservable: ToObservable<
   IterableLike,
@@ -45,13 +35,6 @@ export const toObservable: ToObservable<
     delayStart?: boolean;
   }
 >["toObservable"] = IterableLike__toRunnableObservable;
-export const toObservableT: ToObservable<
-  IterableLike,
-  {
-    readonly delay: number;
-    readonly delayStart: boolean;
-  }
-> = { toObservable };
 
 export const toRunnableObservable: ToRunnableObservable<
   IterableLike,
@@ -60,10 +43,3 @@ export const toRunnableObservable: ToRunnableObservable<
     delayStart?: boolean;
   }
 >["toRunnableObservable"] = IterableLike__toRunnableObservable;
-export const toRunnableObservableT: ToRunnableObservable<
-  IterableLike,
-  {
-    readonly delay: number;
-    readonly delayStart: boolean;
-  }
-> = { toRunnableObservable };

@@ -8,15 +8,18 @@ import {
   gunzip,
   gzip,
 } from "../../integrations/node";
+import { ObservableLike } from "../../rx";
 import {
-  concatT,
-  keepT,
+  concat,
+  fromArray,
+  keep,
   reduce,
   takeFirst,
   toFlowable,
   toPromise,
 } from "../../rx/ObservableLike";
 import { createHostScheduler } from "../../scheduling/SchedulerLike";
+import { FlowMode } from "../../streaming";
 import { toObservable as flowableToObservable } from "../../streaming/FlowableLike";
 import { sourceFrom } from "../../streaming/StreamLike";
 import { stream } from "../../streaming/StreamableLike";
@@ -63,10 +66,10 @@ testModule(
 
         await pipe(
           dest,
-          endWith(
+          endWith<ObservableLike, FlowMode>(
             {
-              fromArray: toObservable,
-              ...concatT,
+              fromArray,
+              concat,
             },
             "pause",
           ),
@@ -110,11 +113,11 @@ testModule(
 
         const promise = pipe(
           dest,
-          ignoreElements(keepT),
-          endWith(
+          ignoreElements({ keep }),
+          endWith<ObservableLike, number>(
             {
-              fromArray: toObservable,
-              ...concatT,
+              fromArray,
+              concat,
             },
             0,
           ),
@@ -175,10 +178,10 @@ testModule(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          endWith(
+          endWith<ObservableLike, string>(
             {
-              fromArray: toObservable,
-              ...concatT,
+              fromArray,
+              concat,
             },
             "",
           ),

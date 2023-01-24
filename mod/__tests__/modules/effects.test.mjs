@@ -3,7 +3,7 @@ import { keepType } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { async, __memo, __await } from '../../effects.mjs';
 import { pipe, isSome } from '../../functions.mjs';
-import { takeLast, forEach, subscribe, keepT } from '../../rx/ObservableLike.mjs';
+import { takeLast, forEach, subscribe, keep } from '../../rx/ObservableLike.mjs';
 import { run } from '../../scheduling/ContinuationLike.mjs';
 import { create } from '../../scheduling/VirtualTimeSchedulerLike.mjs';
 import { testModule, test as createTest, expectEquals, expectArrayEquals } from '../testing.mjs';
@@ -34,7 +34,7 @@ testModule("effects", createTest("batch mode", () => {
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), keepType(keepT, isSome), forEach(v => {
+    }, { mode: "combine-latest" }), keepType({ keep }, isSome), forEach(v => {
         result.push(v);
     }), subscribe(scheduler));
     run(scheduler);

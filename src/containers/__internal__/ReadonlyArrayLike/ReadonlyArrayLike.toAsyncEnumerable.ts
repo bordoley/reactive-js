@@ -3,8 +3,8 @@ import { increment, pipe, returns } from "../../../functions";
 import { ToAsyncEnumerable } from "../../../ix";
 import AsyncEnumerableLike__create from "../../../ix/__internal__/AsyncEnumerableLike/AsyncEnumerableLike.create";
 import { ObservableLike } from "../../../rx";
-import ObservableLike__concatAllT from "../../../rx/__internal__/ObservableLike/ObservableLike.concatAllT";
-import ObservableLike__mapT from "../../../rx/__internal__/ObservableLike/ObservableLike.mapT";
+import ObservableLike__concatAll from "../../../rx/__internal__/ObservableLike/ObservableLike.concatAll";
+import ObservableLike__map from "../../../rx/__internal__/ObservableLike/ObservableLike.map";
 import ObservableLike__scan from "../../../rx/__internal__/ObservableLike/ObservableLike.scan";
 import ObservableLike__takeFirst from "../../../rx/__internal__/ObservableLike/ObservableLike.takeFirst";
 import ContainerLike__concatMap from "../ContainerLike/ContainerLIke.concatMap";
@@ -25,7 +25,7 @@ const ReadonlyArrayLike__toAsyncEnumerable: ToAsyncEnumerable<
       AsyncEnumerableLike__create(
         ObservableLike__scan(increment, returns(start - 1)),
         ContainerLike__concatMap<ObservableLike, number, T>(
-          { ...ObservableLike__mapT, ...ObservableLike__concatAllT },
+          { map: ObservableLike__map, concatAll: ObservableLike__concatAll },
           (i: number) =>
             pipe([array[i]], ReadonlyArrayLike__toRunnableObservable(options)),
         ),

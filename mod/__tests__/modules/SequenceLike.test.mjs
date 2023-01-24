@@ -1,60 +1,59 @@
 /// <reference types="./SequenceLike.test.d.ts" />
-import { toSequence } from '../../containers/ReadonlyArrayLike.mjs';
-import { concatT, toReadonlyArrayT, concatAllT, distinctUntilChangedT, keepT, mapT, pairwiseT, repeatT, takeFirstT, scanT, skipFirstT, takeLastT, takeWhileT, zipT } from '../../containers/SequenceLike.mjs';
+import { fromArray, concat, toReadonlyArray, concatAll, distinctUntilChanged, keep, map, pairwise, repeat, takeFirst, scan, skipFirst, takeLast, takeWhile, zip } from '../../containers/SequenceLike.mjs';
 import { concatTests, concatAllTests, distinctUntilChangedTests, keepTests, mapTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, takeFirstTests, takeLastTests, takeWhileTests, zipTests } from '../operators.mjs';
 import { testModule } from '../testing.mjs';
 
 testModule("SequenceLike", concatTests({
-    fromArray: toSequence,
-    ...concatT,
-    ...toReadonlyArrayT,
+    fromArray,
+    concat,
+    toReadonlyArray,
 }), concatAllTests({
-    fromArray: toSequence,
-    ...concatAllT,
-    ...toReadonlyArrayT,
+    fromArray,
+    concatAll,
+    toReadonlyArray,
 }), distinctUntilChangedTests({
-    fromArray: toSequence,
-    ...distinctUntilChangedT,
-    ...toReadonlyArrayT,
+    fromArray,
+    distinctUntilChanged,
+    toReadonlyArray,
 }), keepTests({
-    fromArray: toSequence,
-    ...keepT,
-    ...toReadonlyArrayT,
+    fromArray,
+    keep,
+    toReadonlyArray,
 }), mapTests({
-    fromArray: toSequence,
-    ...mapT,
-    ...toReadonlyArrayT,
+    fromArray,
+    map,
+    toReadonlyArray,
 }), pairwiseTests({
-    fromArray: toSequence,
-    ...pairwiseT,
-    ...toReadonlyArrayT,
+    fromArray,
+    pairwise,
+    toReadonlyArray,
 }), repeatTests({
-    fromArray: toSequence,
-    ...repeatT,
-    ...takeFirstT,
-    ...toReadonlyArrayT,
+    fromArray,
+    repeat,
+    takeFirst,
+    toReadonlyArray,
 }), scanTests({
-    fromArray: toSequence,
-    ...scanT,
-    ...toReadonlyArrayT,
+    fromArray,
+    scan,
+    toReadonlyArray,
 }), skipFirstTests({
-    fromArray: toSequence,
-    ...skipFirstT,
-    ...toReadonlyArrayT,
+    fromArray,
+    skipFirst,
+    toReadonlyArray,
 }), takeFirstTests({
-    fromArray: toSequence,
-    ...takeFirstT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeFirst,
+    toReadonlyArray,
 }), takeLastTests({
-    fromArray: toSequence,
-    ...takeLastT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeLast,
+    toReadonlyArray,
 }), takeWhileTests({
-    fromArray: toSequence,
-    ...takeWhileT,
-    ...toReadonlyArrayT,
+    fromArray,
+    takeWhile,
+    toReadonlyArray,
 }), zipTests({
-    fromArray: toSequence,
-    ...zipT,
-    ...toReadonlyArrayT,
+    fromArray,
+    zip,
+    toReadonlyArray,
 }));

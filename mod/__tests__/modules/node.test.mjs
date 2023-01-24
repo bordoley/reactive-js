@@ -4,7 +4,7 @@ import { endWith, ignoreElements } from '../../containers/ContainerLike.mjs';
 import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
 import { newInstance, pipe, returns } from '../../functions.mjs';
 import { createWritableSink, createReadableSource, gzip, gunzip } from '../../integrations/node.mjs';
-import { toFlowable, concatT, toPromise, keepT, reduce, takeFirst } from '../../rx/ObservableLike.mjs';
+import { toFlowable, fromArray, concat, toPromise, keep, reduce, takeFirst } from '../../rx/ObservableLike.mjs';
 import { createHostScheduler } from '../../scheduling/SchedulerLike.mjs';
 import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs';
 import { sourceFrom } from '../../streaming/StreamLike.mjs';
@@ -28,8 +28,8 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
         const src = pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), toFlowable());
         const dest = pipe(createWritableSink(returns(writable)), stream(scheduler), sourceFrom(src));
         await pipe(dest, endWith({
-            fromArray: toObservable,
-            ...concatT,
+            fromArray,
+            concat,
         }, "pause"), toPromise(scheduler));
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
@@ -51,9 +51,9 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
         });
         const src = pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), toFlowable());
         const dest = pipe(createWritableSink(returns(writable)), stream(scheduler), sourceFrom(src));
-        const promise = pipe(dest, ignoreElements(keepT), endWith({
-            fromArray: toObservable,
-            ...concatT,
+        const promise = pipe(dest, ignoreElements({ keep }), endWith({
+            fromArray,
+            concat,
         }, 0), toPromise(scheduler));
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));
@@ -85,8 +85,8 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
         }
         const textDecoder = newInstance(TextDecoder);
         await pipe(createReadableSource(() => pipe(generate(), Readable.from)), toObservable$1(), reduce((acc, next) => acc + textDecoder.decode(next), returns("")), endWith({
-            fromArray: toObservable,
-            ...concatT,
+            fromArray,
+            concat,
         }, ""), toPromise(scheduler), expectPromiseToThrow);
     }
     finally {

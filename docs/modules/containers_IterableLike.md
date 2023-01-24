@@ -4,15 +4,6 @@
 
 ## Table of contents
 
-### Variables
-
-- [toAsyncEnumerableT](containers_IterableLike.md#toasyncenumerablet)
-- [toEnumerableObservableT](containers_IterableLike.md#toenumerableobservablet)
-- [toEnumerableT](containers_IterableLike.md#toenumerablet)
-- [toIterableT](containers_IterableLike.md#toiterablet)
-- [toObservableT](containers_IterableLike.md#toobservablet)
-- [toRunnableObservableT](containers_IterableLike.md#torunnableobservablet)
-
 ### Functions
 
 - [toAsyncEnumerable](containers_IterableLike.md#toasyncenumerable)
@@ -21,42 +12,6 @@
 - [toIterable](containers_IterableLike.md#toiterable)
 - [toObservable](containers_IterableLike.md#toobservable)
 - [toRunnableObservable](containers_IterableLike.md#torunnableobservable)
-
-## Variables
-
-### toAsyncEnumerableT
-
-• `Const` **toAsyncEnumerableT**: [`ToAsyncEnumerable`](ix.md#toasyncenumerable)<[`IterableLike`](../interfaces/containers.IterableLike.md)\>
-
-___
-
-### toEnumerableObservableT
-
-• `Const` **toEnumerableObservableT**: [`ToEnumerableObservable`](rx.md#toenumerableobservable)<[`IterableLike`](../interfaces/containers.IterableLike.md)\>
-
-___
-
-### toEnumerableT
-
-• `Const` **toEnumerableT**: [`ToEnumerable`](ix.md#toenumerable)<[`IterableLike`](../interfaces/containers.IterableLike.md)\>
-
-___
-
-### toIterableT
-
-• `Const` **toIterableT**: [`ToIterable`](containers.md#toiterable)<[`IterableLike`](../interfaces/containers.IterableLike.md)\>
-
-___
-
-### toObservableT
-
-• `Const` **toObservableT**: [`ToObservable`](rx.md#toobservable)<[`IterableLike`](../interfaces/containers.IterableLike.md), { `delay`: `number` ; `delayStart`: `boolean`  }\>
-
-___
-
-### toRunnableObservableT
-
-• `Const` **toRunnableObservableT**: [`ToRunnableObservable`](rx.md#torunnableobservable)<[`IterableLike`](../interfaces/containers.IterableLike.md), { `delay`: `number` ; `delayStart`: `boolean`  }\>
 
 ## Functions
 

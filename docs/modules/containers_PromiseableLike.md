@@ -4,19 +4,9 @@
 
 ## Table of contents
 
-### Variables
-
-- [toObservableT](containers_PromiseableLike.md#toobservablet)
-
 ### Functions
 
 - [toObservable](containers_PromiseableLike.md#toobservable)
-
-## Variables
-
-### toObservableT
-
-• `Const` **toObservableT**: [`ToObservable`](rx.md#toobservable)<[`PromiseableLike`](../interfaces/containers.PromiseableLike.md)\>
 
 ## Functions
 

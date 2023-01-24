@@ -8,6 +8,7 @@ import './modules/IterableLike.test.mjs';
 import './modules/ObservableLike.test.mjs';
 import './modules/PromiseableLike.test.mjs';
 import './modules/RunnableLike.test.mjs';
+import './modules/RunnableObservableLike.test.mjs';
 import './modules/SequenceLike.test.mjs';
 import './modules/SubjectLike.test.mjs';
 import './modules/effects.test.mjs';

@@ -1,7 +1,7 @@
 import ContainerLike__ignoreElements from "../../../containers/__internal__/ContainerLike/ContainerLike.ignoreElements";
 import { pipe } from "../../../functions";
 import ObservableLike__forEach from "../../../rx/__internal__/ObservableLike/ObservableLike.forEach";
-import ObservableLike__keepT from "../../../rx/__internal__/ObservableLike/ObservableLike.keepT";
+import ObservableLike__keep from "../../../rx/__internal__/ObservableLike/ObservableLike.keep";
 import ObservableLike__merge from "../../../rx/__internal__/ObservableLike/ObservableLike.merge";
 import ObservableLike__onSubscribe from "../../../rx/__internal__/ObservableLike/ObservableLike.onSubscribe";
 import ObservableLike__subscribe from "../../../rx/__internal__/ObservableLike/ObservableLike.subscribe";
@@ -24,16 +24,16 @@ const StreamableLike__sinkInto =
         pipe(
           srcStream,
           ObservableLike__forEach(DispatcherLike__dispatchTo(dest)),
-          ContainerLike__ignoreElements(ObservableLike__keepT),
+          ContainerLike__ignoreElements({ keep: ObservableLike__keep }),
           ObservableLike__onSubscribe(() => dest),
         ),
         pipe(
           dest,
           ObservableLike__forEach<TReq>(DispatcherLike__dispatchTo(srcStream)),
-          ContainerLike__ignoreElements(ObservableLike__keepT),
+          ContainerLike__ignoreElements({ keep: ObservableLike__keep }),
         ),
       ),
-      ContainerLike__ignoreElements(ObservableLike__keepT),
+      ContainerLike__ignoreElements({ keep: ObservableLike__keep }),
       ObservableLike__subscribe(scheduler),
       DisposableLike__addTo(dest),
       DisposableLike__add(srcStream),

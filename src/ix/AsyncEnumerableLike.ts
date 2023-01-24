@@ -22,7 +22,6 @@ import EnumerableLike__toAsyncEnumerable from "./__internal__/EnumerableLike/Enu
 
 export const fromArray: FromArray<AsyncEnumerableLike>["fromArray"] =
   ReadonlyArrayLike__toAsyncEnumerable;
-export const fromArrayT: FromArray<AsyncEnumerableLike> = { fromArray };
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
@@ -43,50 +42,25 @@ export const generate: Generate<
   AsyncEnumerableLike,
   { delay: number }
 >["generate"] = AsyncEnumerableLike__generate;
-export const generateT: Generate<AsyncEnumerableLike, { delay: number }> = {
-  generate,
-};
 
 export const keep: Keep<AsyncEnumerableLike>["keep"] =
   AsyncEnumerableLike__keep;
-export const keepT: Keep<AsyncEnumerableLike> = {
-  keep,
-};
 
 export const map: Map<AsyncEnumerableLike>["map"] = AsyncEnumerableLike__map;
-export const mapT: Map<AsyncEnumerableLike> = {
-  map,
-};
 
 export const scan: Scan<AsyncEnumerableLike>["scan"] =
   AsyncEnumerableLike__scan;
-export const scanT: Scan<AsyncEnumerableLike> = {
-  scan,
-};
 
 export const scanAsync: ScanAsync<
   AsyncEnumerableLike,
   ObservableLike
 >["scanAsync"] = AsyncEnumerableLike__scanAsync;
-export const scanAsyncT: ScanAsync<AsyncEnumerableLike, ObservableLike> = {
-  scanAsync,
-};
 
 export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
   AsyncEnumerableLike__takeWhile;
 
-export const takeWhileT: TakeWhile<AsyncEnumerableLike> = {
-  takeWhile,
-};
-
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
   AsyncEnumerableLike__toObservable;
-export const toObservableT: ToObservable<AsyncEnumerableLike> = {
-  toObservable,
-};
 
 export const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"] =
   AsyncEnumerableLike__toReadonlyArray;
-export const toReadonlyArrayT: ToReadonlyArray<AsyncEnumerableLike> = {
-  toReadonlyArray,
-};

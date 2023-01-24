@@ -1,9 +1,10 @@
 import ContainerLike__concatWith from "../../../containers/__internal__/ContainerLike/ContainerLike.concatWith";
 import ReadonlyArrayLike__toRunnableObservable from "../../../containers/__internal__/ReadonlyArrayLike/ReadonlyArrayLike.toRunnableObservable";
 import { Equality, Factory, Reducer, pipe, returns } from "../../../functions";
+import { ObservableLike } from "../../../rx";
 import ObservableLike__create from "../../../rx/__internal__/ObservableLike/ObservableLike.create";
 import ObservableLike__distinctUntilChanged from "../../../rx/__internal__/ObservableLike/ObservableLike.distinctUntilChanged";
-import ObservableLike__mergeT from "../../../rx/__internal__/ObservableLike/ObservableLike.mergeT";
+import ObservableLike__merge from "../../../rx/__internal__/ObservableLike/ObservableLike.merge";
 import ObservableLike__scan from "../../../rx/__internal__/ObservableLike/ObservableLike.scan";
 import ReactiveContainerLike__sinkInto from "../../../rx/__internal__/ReactiveContainerLike/ReactiveContainerLike.sinkInto";
 import { StreamableLike } from "../../../streaming";
@@ -21,8 +22,8 @@ const StreamableLike__createActionReducer = <TAction, T>(
       pipe(
         obs,
         ObservableLike__scan<TAction, T>(reducer, returns(acc)),
-        ContainerLike__concatWith(
-          ObservableLike__mergeT,
+        ContainerLike__concatWith<ObservableLike, T>(
+          { concat: ObservableLike__merge },
           pipe([acc], ReadonlyArrayLike__toRunnableObservable()),
         ),
         ObservableLike__distinctUntilChanged<T>(options),
