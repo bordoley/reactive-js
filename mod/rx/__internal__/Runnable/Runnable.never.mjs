@@ -1,7 +1,7 @@
 /// <reference types="./Runnable.never.d.ts" />
 import { ignore } from '../../../functions.mjs';
-import Runnable$create from './Runnable.create.mjs';
+import Runnable_create from './Runnable.create.mjs';
 
-const Runnable$never = () => Runnable$create(ignore);
+const Runnable_never = () => Runnable_create(ignore);
 
-export { Runnable$never as default };
+export { Runnable_never as default };

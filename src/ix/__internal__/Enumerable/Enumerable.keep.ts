@@ -7,20 +7,20 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { Keep } from "../../../containers";
-import StatefulContainer$keep from "../../../containers/__internal__/StatefulContainer/StatefulContainer.keep";
+import StatefulContainer_keep from "../../../containers/__internal__/StatefulContainer/StatefulContainer.keep";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { Predicate, error, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import DelegatingEnumerator$mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
-import DelegatingEnumerator$move from "../DelegatingEnumerator/DelegatingEnumerator.move";
-import Enumerator$getCurrent from "../Enumerator/Enumerator.getCurrent";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
+import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
+import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
 import { DelegatingEnumeratorLike } from "../ix.internal";
-import Enumerable$liftT from "./Enumerable.liftT";
+import Enumerable_liftT from "./Enumerable.liftT";
 
-const Enumerable$keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
-  const typedDelegatingEnumeratorMixin = DelegatingEnumerator$mixin<T>();
+const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
+  const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
   type TProperties = {
     readonly predicate: Predicate<T>;
@@ -29,14 +29,14 @@ const Enumerable$keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable$delegatingMixin, typedDelegatingEnumeratorMixin),
+        include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
         function KeepEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           predicate: Predicate<T>,
         ): EnumeratorLike<T> {
-          init(Disposable$delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin, instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
 
           instance.predicate = predicate;
@@ -50,18 +50,18 @@ const Enumerable$keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
             try {
               while (
-                DelegatingEnumerator$move(this) &&
-                !predicate(Enumerator$getCurrent(this))
+                DelegatingEnumerator_move(this) &&
+                !predicate(Enumerator_getCurrent(this))
               ) {}
             } catch (e) {
-              pipe(this, Disposable$dispose(error(e)));
+              pipe(this, Disposable_dispose(error(e)));
             }
           },
         },
       ),
     ),
-    StatefulContainer$keep<EnumerableLike, T, TInteractive>(Enumerable$liftT),
+    StatefulContainer_keep<EnumerableLike, T, TInteractive>(Enumerable_liftT),
   );
 })();
 
-export default Enumerable$keep;
+export default Enumerable_keep;

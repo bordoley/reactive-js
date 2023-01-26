@@ -1,20 +1,20 @@
 import { createInstanceFactory } from "../../../__internal__/mixins";
 import { TakeFirst } from "../../../containers";
-import StatefulContainer$takeFirst from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeFirst";
+import StatefulContainer_takeFirst from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeFirst";
 import { TReactive } from "../../../containers/__internal__/containers.internal";
 import { pipe } from "../../../functions";
 import { RunnableLike } from "../../../rx";
-import Sink$takeFirstMixin from "../../__internal__/Sink/Sink.takeFirstMixin";
-import Runnable$liftT from "./Runnable.liftT";
+import Sink_takeFirstMixin from "../../__internal__/Sink/Sink.takeFirstMixin";
+import Runnable_liftT from "./Runnable.liftT";
 
-const Runnable$takeFirst: TakeFirst<RunnableLike>["takeFirst"] =
+const Runnable_takeFirst: TakeFirst<RunnableLike>["takeFirst"] =
   /*@__PURE__*/ (<T>() => {
-    const typedTakeFirstSinkMixin = Sink$takeFirstMixin<T>();
+    const typedTakeFirstSinkMixin = Sink_takeFirstMixin<T>();
 
     return pipe(
       createInstanceFactory(typedTakeFirstSinkMixin),
-      StatefulContainer$takeFirst<RunnableLike, T, TReactive>(Runnable$liftT),
+      StatefulContainer_takeFirst<RunnableLike, T, TReactive>(Runnable_liftT),
     );
   })();
 
-export default Runnable$takeFirst;
+export default Runnable_takeFirst;

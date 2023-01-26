@@ -1,11 +1,11 @@
 import { ContainerOperator } from "../../../containers";
 import { composeUnsafe, getLength, pipe } from "../../../functions";
 import { ObservableLike } from "../../../rx";
-import Dispatcher$dispatch from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch";
+import Dispatcher_dispatch from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch";
 import { FlowMode, FlowableLike, FlowableStreamLike } from "../../../streaming";
 
-import Stream$create from "../Stream/Stream.create";
-import Streamable$create from "../Streamable/Streamable.create";
+import Stream_create from "../Stream/Stream.create";
+import Streamable_create from "../Streamable/Streamable.create";
 
 interface CreateLiftedFlowable {
   <A>(op1: ContainerOperator<ObservableLike, FlowMode, A>): FlowableLike<A>;
@@ -109,7 +109,7 @@ interface CreateLiftedFlowable {
     op12: ContainerOperator<ObservableLike, K, L>,
   ): FlowableLike<L>;
 }
-const Flowable$createLifted: CreateLiftedFlowable = <T>(
+const Flowable_createLifted: CreateLiftedFlowable = <T>(
   ...ops: readonly ContainerOperator<ObservableLike, any, any>[]
 ) => {
   const op =
@@ -120,14 +120,14 @@ const Flowable$createLifted: CreateLiftedFlowable = <T>(
           unknown
         >)
       : ops[0];
-  return Streamable$create((scheduler, options) => {
-    const stream = Stream$create<FlowMode, unknown>(
+  return Streamable_create((scheduler, options) => {
+    const stream = Stream_create<FlowMode, unknown>(
       op,
       scheduler,
       options,
     ) as FlowableStreamLike;
-    return pipe(stream, Dispatcher$dispatch("pause"));
+    return pipe(stream, Dispatcher_dispatch("pause"));
   }) as FlowableLike<T>;
 };
 
-export default Flowable$createLifted;
+export default Flowable_createLifted;

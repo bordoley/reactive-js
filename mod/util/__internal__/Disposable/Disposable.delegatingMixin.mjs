@@ -2,15 +2,15 @@
 import { mix, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, unsafeCast } from '../../../functions.mjs';
 import { DisposableLike_isDisposed, DisposableLike_error, DisposableLike_add, DisposableLike_dispose } from '../../../util.mjs';
-import Disposable$dispose from './Disposable.dispose.mjs';
-import Disposable$onDisposed from './Disposable.onDisposed.mjs';
+import Disposable_dispose from './Disposable.dispose.mjs';
+import Disposable_onDisposed from './Disposable.onDisposed.mjs';
 
-const Disposable$delegatingMixin = 
+const Disposable_delegatingMixin = 
 /*@__PURE__*/ (() => {
     const DelegatingDisposable_private_delegate = Symbol("DelegatingDisposable_private_delegate");
     return mix(function DelegatingDisposableMixin(instance, delegate) {
         instance[DelegatingDisposable_private_delegate] = delegate;
-        pipe(delegate, Disposable$onDisposed(_ => {
+        pipe(delegate, Disposable_onDisposed(_ => {
             instance[DisposableLike_isDisposed] = true;
         }));
         return instance;
@@ -28,9 +28,9 @@ const Disposable$delegatingMixin =
             delegate[DisposableLike_add](disposable, ignoreChildErrors);
         },
         [DisposableLike_dispose](error) {
-            pipe(this[DelegatingDisposable_private_delegate], Disposable$dispose(error));
+            pipe(this[DelegatingDisposable_private_delegate], Disposable_dispose(error));
         },
     });
 })();
 
-export { Disposable$delegatingMixin as default };
+export { Disposable_delegatingMixin as default };

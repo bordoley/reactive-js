@@ -1,17 +1,17 @@
 import { ReadonlyArrayLike } from "../../../containers";
 import { RunnableLike, SinkLike_notify, ToRunnable } from "../../../rx";
-import Runnable$create from "../../../rx/__internal__/Runnable/Runnable.create";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import ReadonlyArray$toContainer from "./ReadonlyArray.toContainer";
+import Runnable_create from "../../../rx/__internal__/Runnable/Runnable.create";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
 
-const ReadonlyArray$toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
+const ReadonlyArray_toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
   /*@__PURE__*/ (<T>() => {
-    return ReadonlyArray$toContainer<RunnableLike<T>, T>(
+    return ReadonlyArray_toContainer<RunnableLike<T>, T>(
       (values: readonly T[], startIndex: number, count: number) =>
-        Runnable$create<T>(sink => {
+        Runnable_create<T>(sink => {
           for (
             let index = startIndex, cnt = count;
-            !Disposable$isDisposed(sink) && cnt !== 0;
+            !Disposable_isDisposed(sink) && cnt !== 0;
             cnt > 0 ? index++ : index--, cnt > 0 ? cnt-- : cnt++
           ) {
             sink[SinkLike_notify](values[index]);
@@ -20,4 +20,4 @@ const ReadonlyArray$toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
     );
   })();
 
-export default ReadonlyArray$toRunnable;
+export default ReadonlyArray_toRunnable;

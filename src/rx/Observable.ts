@@ -24,7 +24,7 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import Promiseable$toObservable from "../containers/__internal__/Promiseable/Promiseable.toObservable";
+import Promiseable_toObservable from "../containers/__internal__/Promiseable/Promiseable.toObservable";
 import {
   Factory,
   Function1,
@@ -43,84 +43,84 @@ import {
 } from "../rx";
 import { SchedulerLike } from "../scheduling";
 import { FromFlowable, ToFlowable } from "../streaming";
-import Flowable$toObservable from "../streaming/__internal__/Flowable/Flowable.toObservable";
+import Flowable_toObservable from "../streaming/__internal__/Flowable/Flowable.toObservable";
 import { DisposableLike, DisposableOrTeardown } from "../util";
-import Disposable$toObservable from "../util/__internal__/Disposable/Disposable.toObservable";
-import EnumerableObservable$never from "./__internal__/EnumerableObservable/EnumerableObservable.never";
-import Observable$buffer from "./__internal__/Observable/Observable.buffer";
-import Observable$catchError from "./__internal__/Observable/Observable.catchError";
-import Observable$combineLatest from "./__internal__/Observable/Observable.combineLatest";
-import Observable$concat from "./__internal__/Observable/Observable.concat";
-import Observable$concatAll from "./__internal__/Observable/Observable.concatAll";
-import Observable$create from "./__internal__/Observable/Observable.create";
-import Observable$decodeWithCharset from "./__internal__/Observable/Observable.decodeWithCharset";
-import Observable$defer from "./__internal__/Observable/Observable.defer";
-import Observable$distinctUntilChanged from "./__internal__/Observable/Observable.distinctUntilChanged";
-import Observable$empty from "./__internal__/Observable/Observable.empty";
-import Observable$everySatisfy from "./__internal__/Observable/Observable.everySatisfy";
-import Observable$forEach from "./__internal__/Observable/Observable.forEach";
-import Observable$forkCombineLatest from "./__internal__/Observable/Observable.forkCombineLatest";
-import Observable$forkMerge from "./__internal__/Observable/Observable.forkMerge";
-import Observable$forkZipLatest from "./__internal__/Observable/Observable.forkZipLatest";
-import Observable$fromArray from "./__internal__/Observable/Observable.fromArray";
-import Observable$generate from "./__internal__/Observable/Observable.generate";
-import Observable$isEnumerable from "./__internal__/Observable/Observable.isEnumerable";
-import Observable$isRunnable from "./__internal__/Observable/Observable.isRunnable";
-import Observable$keep from "./__internal__/Observable/Observable.keep";
-import Observable$map from "./__internal__/Observable/Observable.map";
-import Observable$mapAsync from "./__internal__/Observable/Observable.mapAsync";
-import Observable$merge from "./__internal__/Observable/Observable.merge";
-import Observable$mergeAll from "./__internal__/Observable/Observable.mergeAll";
-import Observable$multicast from "./__internal__/Observable/Observable.multicast";
-import Observable$onSubscribe from "./__internal__/Observable/Observable.onSubscribe";
-import Observable$pairwise from "./__internal__/Observable/Observable.pairwise";
-import Observable$reduce from "./__internal__/Observable/Observable.reduce";
-import Observable$repeat from "./__internal__/Observable/Observable.repeat";
-import Observable$retry from "./__internal__/Observable/Observable.retry";
-import Observable$scan from "./__internal__/Observable/Observable.scan";
-import Observable$scanAsync from "./__internal__/Observable/Observable.scanAsync";
-import Observable$share from "./__internal__/Observable/Observable.share";
-import Observable$skipFirst from "./__internal__/Observable/Observable.skipFirst";
-import Observable$someSatisfy from "./__internal__/Observable/Observable.someSatisfy";
-import Observable$subscribe from "./__internal__/Observable/Observable.subscribe";
-import Observable$subscribeOn from "./__internal__/Observable/Observable.subscribeOn";
-import Observable$switchAll from "./__internal__/Observable/Observable.switchAll";
-import Observable$takeFirst from "./__internal__/Observable/Observable.takeFirst";
-import Observable$takeLast from "./__internal__/Observable/Observable.takeLast";
-import Observable$takeUntil from "./__internal__/Observable/Observable.takeUntil";
-import Observable$takeWhile from "./__internal__/Observable/Observable.takeWhile";
-import Observable$throttle from "./__internal__/Observable/Observable.throttle";
-import Observable$throwIfEmpty from "./__internal__/Observable/Observable.throwIfEmpty";
-import Observable$timeout from "./__internal__/Observable/Observable.timeout";
-import Observable$toEnumerable from "./__internal__/Observable/Observable.toEnumerable";
-import Observable$toFlowable from "./__internal__/Observable/Observable.toFlowable";
-import Observable$toPromise from "./__internal__/Observable/Observable.toPromise";
-import Observable$toReadonlyArray from "./__internal__/Observable/Observable.toReadonlyArray";
-import Observable$toRunnable from "./__internal__/Observable/Observable.toRunnable";
-import Observable$withLatestFrom from "./__internal__/Observable/Observable.withLatestFrom";
-import Observable$zip from "./__internal__/Observable/Observable.zip";
-import Observable$zipLatest from "./__internal__/Observable/Observable.zipLatest";
-import Observable$zipWithLatestFrom from "./__internal__/Observable/Observable.zipWithLatestFrom";
+import Disposable_toObservable from "../util/__internal__/Disposable/Disposable.toObservable";
+import EnumerableObservable_never from "./__internal__/EnumerableObservable/EnumerableObservable.never";
+import Observable_buffer from "./__internal__/Observable/Observable.buffer";
+import Observable_catchError from "./__internal__/Observable/Observable.catchError";
+import Observable_combineLatest from "./__internal__/Observable/Observable.combineLatest";
+import Observable_concat from "./__internal__/Observable/Observable.concat";
+import Observable_concatAll from "./__internal__/Observable/Observable.concatAll";
+import Observable_create from "./__internal__/Observable/Observable.create";
+import Observable_decodeWithCharset from "./__internal__/Observable/Observable.decodeWithCharset";
+import Observable_defer from "./__internal__/Observable/Observable.defer";
+import Observable_distinctUntilChanged from "./__internal__/Observable/Observable.distinctUntilChanged";
+import Observable_empty from "./__internal__/Observable/Observable.empty";
+import Observable_everySatisfy from "./__internal__/Observable/Observable.everySatisfy";
+import Observable_forEach from "./__internal__/Observable/Observable.forEach";
+import Observable_forkCombineLatest from "./__internal__/Observable/Observable.forkCombineLatest";
+import Observable_forkMerge from "./__internal__/Observable/Observable.forkMerge";
+import Observable_forkZipLatest from "./__internal__/Observable/Observable.forkZipLatest";
+import Observable_fromArray from "./__internal__/Observable/Observable.fromArray";
+import Observable_generate from "./__internal__/Observable/Observable.generate";
+import Observable_isEnumerable from "./__internal__/Observable/Observable.isEnumerable";
+import Observable_isRunnable from "./__internal__/Observable/Observable.isRunnable";
+import Observable_keep from "./__internal__/Observable/Observable.keep";
+import Observable_map from "./__internal__/Observable/Observable.map";
+import Observable_mapAsync from "./__internal__/Observable/Observable.mapAsync";
+import Observable_merge from "./__internal__/Observable/Observable.merge";
+import Observable_mergeAll from "./__internal__/Observable/Observable.mergeAll";
+import Observable_multicast from "./__internal__/Observable/Observable.multicast";
+import Observable_onSubscribe from "./__internal__/Observable/Observable.onSubscribe";
+import Observable_pairwise from "./__internal__/Observable/Observable.pairwise";
+import Observable_reduce from "./__internal__/Observable/Observable.reduce";
+import Observable_repeat from "./__internal__/Observable/Observable.repeat";
+import Observable_retry from "./__internal__/Observable/Observable.retry";
+import Observable_scan from "./__internal__/Observable/Observable.scan";
+import Observable_scanAsync from "./__internal__/Observable/Observable.scanAsync";
+import Observable_share from "./__internal__/Observable/Observable.share";
+import Observable_skipFirst from "./__internal__/Observable/Observable.skipFirst";
+import Observable_someSatisfy from "./__internal__/Observable/Observable.someSatisfy";
+import Observable_subscribe from "./__internal__/Observable/Observable.subscribe";
+import Observable_subscribeOn from "./__internal__/Observable/Observable.subscribeOn";
+import Observable_switchAll from "./__internal__/Observable/Observable.switchAll";
+import Observable_takeFirst from "./__internal__/Observable/Observable.takeFirst";
+import Observable_takeLast from "./__internal__/Observable/Observable.takeLast";
+import Observable_takeUntil from "./__internal__/Observable/Observable.takeUntil";
+import Observable_takeWhile from "./__internal__/Observable/Observable.takeWhile";
+import Observable_throttle from "./__internal__/Observable/Observable.throttle";
+import Observable_throwIfEmpty from "./__internal__/Observable/Observable.throwIfEmpty";
+import Observable_timeout from "./__internal__/Observable/Observable.timeout";
+import Observable_toEnumerable from "./__internal__/Observable/Observable.toEnumerable";
+import Observable_toFlowable from "./__internal__/Observable/Observable.toFlowable";
+import Observable_toPromise from "./__internal__/Observable/Observable.toPromise";
+import Observable_toReadonlyArray from "./__internal__/Observable/Observable.toReadonlyArray";
+import Observable_toRunnable from "./__internal__/Observable/Observable.toRunnable";
+import Observable_withLatestFrom from "./__internal__/Observable/Observable.withLatestFrom";
+import Observable_zip from "./__internal__/Observable/Observable.zip";
+import Observable_zipLatest from "./__internal__/Observable/Observable.zipLatest";
+import Observable_zipWithLatestFrom from "./__internal__/Observable/Observable.zipWithLatestFrom";
 
 export const buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableLike>;
   readonly maxBufferSize?: number;
-}) => ContainerOperator<ObservableLike, T, readonly T[]> = Observable$buffer;
+}) => ContainerOperator<ObservableLike, T, readonly T[]> = Observable_buffer;
 
 export const catchError: CatchError<ObservableLike>["catchError"] =
-  Observable$catchError;
+  Observable_catchError;
 
 /**
  * Returns an `ObservableLike` that combines the latest values from
  * multiple sources.
  */
 export const combineLatest: Zip<ObservableLike>["zip"] =
-  Observable$combineLatest;
+  Observable_combineLatest;
 
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  */
-export const concat: Concat<ObservableLike>["concat"] = Observable$concat;
+export const concat: Concat<ObservableLike>["concat"] = Observable_concat;
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order
@@ -133,26 +133,26 @@ export const concatAll: ConcatAll<
   {
     maxBufferSize?: number;
   }
->["concatAll"] = Observable$concatAll;
+>["concatAll"] = Observable_concatAll;
 
 export const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T> =
-  Observable$create;
+  Observable_create;
 
 export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
-  Observable$decodeWithCharset;
+  Observable_decodeWithCharset;
 
-export const defer: Defer<ObservableLike>["defer"] = Observable$defer;
+export const defer: Defer<ObservableLike>["defer"] = Observable_defer;
 
-export const distinctUntilChanged = Observable$distinctUntilChanged;
+export const distinctUntilChanged = Observable_distinctUntilChanged;
 
 interface EmptyObservable {
   <T>(): EnumerableObservableLike<T>;
   <T>(options: { delay: number }): RunnableObservableLike<T>;
 }
-export const empty: EmptyObservable = Observable$empty as EmptyObservable;
+export const empty: EmptyObservable = Observable_empty as EmptyObservable;
 
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
-  Observable$everySatisfy;
+  Observable_everySatisfy;
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
@@ -165,26 +165,26 @@ export const exhaust: ConcatAll<ObservableLike>["concatAll"] = <T>() =>
     maxConcurrency: 1,
   });
 
-export const forEach = Observable$forEach;
+export const forEach = Observable_forEach;
 
 export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] =
-  Observable$forkCombineLatest;
+  Observable_forkCombineLatest;
 
 export const forkMerge: ForkConcat<ObservableLike>["forkConcat"] =
-  Observable$forkMerge;
+  Observable_forkMerge;
 
 export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] =
-  Observable$forkZipLatest;
+  Observable_forkZipLatest;
 
-export const fromArray = Observable$fromArray;
+export const fromArray = Observable_fromArray;
 
-export const fromDisposable = Disposable$toObservable;
+export const fromDisposable = Disposable_toObservable;
 
 export const fromFlowable =
-  Flowable$toObservable as FromFlowable<ObservableLike>["fromFlowable"];
+  Flowable_toObservable as FromFlowable<ObservableLike>["fromFlowable"];
 
 export const fromPromise: FromPromise<ObservableLike>["fromPromise"] =
-  Promiseable$toObservable;
+  Promiseable_toObservable;
 
 interface GenerateObservable {
   <T>(
@@ -202,23 +202,23 @@ interface GenerateObservable {
   ): RunnableObservableLike<T>;
 }
 export const generate: GenerateObservable =
-  Observable$generate as GenerateObservable;
+  Observable_generate as GenerateObservable;
 
 export const isEnumerable: (
   obs: ObservableLike,
-) => obs is EnumerableObservableLike = Observable$isEnumerable;
+) => obs is EnumerableObservableLike = Observable_isEnumerable;
 
 export const isRunnable: (
   obs: ObservableLike,
-) => obs is RunnableObservableLike = Observable$isRunnable;
+) => obs is RunnableObservableLike = Observable_isRunnable;
 
-export const keep: Keep<ObservableLike>["keep"] = Observable$keep;
+export const keep: Keep<ObservableLike>["keep"] = Observable_keep;
 
-export const map: Map<ObservableLike>["map"] = Observable$map;
+export const map: Map<ObservableLike>["map"] = Observable_map;
 
-export const mapAsync = Observable$mapAsync;
+export const mapAsync = Observable_mapAsync;
 
-export const merge: Concat<ObservableLike>["concat"] = Observable$merge;
+export const merge: Concat<ObservableLike>["concat"] = Observable_merge;
 
 export const mergeAll: ConcatAll<
   ObservableLike,
@@ -226,7 +226,7 @@ export const mergeAll: ConcatAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = Observable$mergeAll;
+>["concatAll"] = Observable_mergeAll;
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -235,19 +235,19 @@ export const mergeAll: ConcatAll<
  * @param replay The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
  */
-export const multicast = Observable$multicast;
+export const multicast = Observable_multicast;
 
 export const never: Never<EnumerableObservableLike>["never"] =
-  EnumerableObservable$never;
+  EnumerableObservable_never;
 
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
-) => ContainerOperator<ObservableLike, T, T> = Observable$onSubscribe;
+) => ContainerOperator<ObservableLike, T, T> = Observable_onSubscribe;
 
 export const pairwise: Pairwise<ObservableLike>["pairwise"] =
-  Observable$pairwise;
+  Observable_pairwise;
 
-export const reduce: Reduce<ObservableLike>["reduce"] = Observable$reduce;
+export const reduce: Reduce<ObservableLike>["reduce"] = Observable_reduce;
 
 interface RepeatOperator {
   /**
@@ -269,7 +269,7 @@ interface RepeatOperator {
    */
   <T>(): ContainerOperator<ObservableLike, T, T>;
 }
-export const repeat: RepeatOperator = Observable$repeat;
+export const repeat: RepeatOperator = Observable_repeat;
 
 interface Retry {
   /**
@@ -290,9 +290,9 @@ interface Retry {
     T
   >;
 }
-export const retry: Retry = Observable$retry;
+export const retry: Retry = Observable_retry;
 
-export const scan = Observable$scan;
+export const scan = Observable_scan;
 
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
@@ -302,7 +302,7 @@ export const scan = Observable$scan;
  * @param initialValue The initial accumulation value.
  */
 export const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"] =
-  Observable$scanAsync;
+  Observable_scanAsync;
 
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
@@ -313,33 +313,33 @@ export const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"] =
  * @param replay The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
  */
-export const share = Observable$share;
+export const share = Observable_share;
 
 export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
-  Observable$skipFirst;
+  Observable_skipFirst;
 
 export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
-  Observable$someSatisfy;
+  Observable_someSatisfy;
 
 export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
-  Observable$switchAll;
+  Observable_switchAll;
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
-) => Function1<ObservableLike<T>, DisposableLike> = Observable$subscribe;
+) => Function1<ObservableLike<T>, DisposableLike> = Observable_subscribe;
 
-export const subscribeOn = Observable$subscribeOn;
+export const subscribeOn = Observable_subscribeOn;
 
 export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
-  Observable$takeFirst;
+  Observable_takeFirst;
 
 export const takeLast: TakeLast<ObservableLike>["takeLast"] =
-  Observable$takeLast;
+  Observable_takeLast;
 
-export const takeUntil = Observable$takeUntil;
+export const takeUntil = Observable_takeUntil;
 
 export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
-  Observable$takeWhile;
+  Observable_takeWhile;
 
 interface Throttle {
   /**
@@ -366,10 +366,10 @@ interface Throttle {
     options?: { readonly mode?: "first" | "last" | "interval" },
   ): ContainerOperator<ObservableLike, T, T>;
 }
-export const throttle: Throttle = Observable$throttle;
+export const throttle: Throttle = Observable_throttle;
 
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
-  Observable$throwIfEmpty;
+  Observable_throwIfEmpty;
 
 interface Timeout {
   /**
@@ -390,38 +390,38 @@ interface Timeout {
     T
   >;
 }
-export const timeout: Timeout = Observable$timeout;
+export const timeout: Timeout = Observable_timeout;
 
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
-  Observable$toEnumerable;
+  Observable_toEnumerable;
 
 export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
-  Observable$toFlowable;
+  Observable_toFlowable;
 
 export const toPromise: ToPromiseable<
   ObservableLike,
   SchedulerLike
->["toPromise"] = Observable$toPromise;
+>["toPromise"] = Observable_toPromise;
 
 export const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"] =
-  Observable$toReadonlyArray;
+  Observable_toReadonlyArray;
 
-export const toRunnable = Observable$toRunnable;
+export const toRunnable = Observable_toRunnable;
 
 export const withLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
-) => ContainerOperator<ObservableLike, TA, T> = Observable$withLatestFrom;
+) => ContainerOperator<ObservableLike, TA, T> = Observable_withLatestFrom;
 
-export const zip: Zip<ObservableLike>["zip"] = Observable$zip;
+export const zip: Zip<ObservableLike>["zip"] = Observable_zip;
 
 /**
  * Returns an `ObservableLike` that zips the latest values from
  * multiple sources.
  */
-export const zipLatest: Zip<ObservableLike>["zip"] = Observable$zipLatest;
+export const zipLatest: Zip<ObservableLike>["zip"] = Observable_zipLatest;
 
 export const zipWithLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
-) => ContainerOperator<ObservableLike, TA, T> = Observable$zipWithLatestFrom;
+) => ContainerOperator<ObservableLike, TA, T> = Observable_zipWithLatestFrom;

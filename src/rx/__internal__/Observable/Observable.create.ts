@@ -12,9 +12,9 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 
-const Observable$create: <T>(
+const Observable_create: <T>(
   f: SideEffect1<ObserverLike>,
   isEnumerable?: boolean,
   isRunnable?: boolean,
@@ -55,7 +55,7 @@ const Observable$create: <T>(
           try {
             this.f(observer);
           } catch (e) {
-            pipe(observer, Disposable$dispose(error(e)));
+            pipe(observer, Disposable_dispose(error(e)));
           }
         },
       },
@@ -63,4 +63,4 @@ const Observable$create: <T>(
   );
 })();
 
-export default Observable$create;
+export default Observable_create;

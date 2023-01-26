@@ -13,9 +13,9 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling
 import { dispatch, getScheduler, dispatchTo } from '../scheduling/Dispatcher.mjs';
 import '../streaming.mjs';
 import { createActionReducer, stream } from '../streaming/Streamable.mjs';
-import Streamable$create from '../streaming/__internal__/Streamable/Streamable.create.mjs';
+import Streamable_create from '../streaming/__internal__/Streamable/Streamable.create.mjs';
 import { onDisposed, toAbortSignal, dispose, addTo } from '../util/Disposable.mjs';
-import Disposable$delegatingMixin from '../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
+import Disposable_delegatingMixin from '../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 
 /** @ignore */
 const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
@@ -88,9 +88,9 @@ const windowLocation =
 /*@__PURE__*/ (() => {
     const { history, location } = window;
     const windowLocationURIToString = ({ path, query, fragment, }) => {
-        let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/${path}` : path;
-        uri = getLength(query) > 0 ? `${uri}?${query}` : uri;
-        uri = getLength(fragment) > 0 ? `${uri}#${fragment}` : uri;
+        let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/_{path}` : path;
+        uri = getLength(query) > 0 ? `_{uri}?_{query}` : uri;
+        uri = getLength(fragment) > 0 ? `_{uri}#_{fragment}` : uri;
         return newInstance(URL, uri, location.href).toString();
     };
     const getCurrentWindowLocationURI = () => {
@@ -116,8 +116,8 @@ const windowLocation =
         instance.historyCounter++;
         history.pushState({ counter: instance.historyCounter, title }, "", uri);
     };
-    const createWindowLocationStream = createInstanceFactory(mix(include(Disposable$delegatingMixin), function WindowLocationStream(instance, delegate) {
-        init(Disposable$delegatingMixin, instance, delegate);
+    const createWindowLocationStream = createInstanceFactory(mix(include(Disposable_delegatingMixin), function WindowLocationStream(instance, delegate) {
+        init(Disposable_delegatingMixin, instance, delegate);
         instance.delegate = delegate;
         instance.historyCounter = -1;
         return instance;
@@ -158,7 +158,7 @@ const windowLocation =
         },
     }));
     let currentWindowLocationStream = none;
-    return Streamable$create((scheduler, options) => {
+    return Streamable_create((scheduler, options) => {
         if (isSome(currentWindowLocationStream)) {
             raise("Cannot stream more than once");
         }

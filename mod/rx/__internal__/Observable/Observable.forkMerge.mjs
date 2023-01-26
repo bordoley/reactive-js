@@ -1,8 +1,8 @@
 /// <reference types="./Observable.forkMerge.d.ts" />
-import ReadonlyArray$map from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map.mjs';
+import ReadonlyArray_map from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map.mjs';
 import { pipe } from '../../../functions.mjs';
-import Observable$mergeObservables from './Observable.mergeObservables.mjs';
+import Observable_mergeObservables from './Observable.mergeObservables.mjs';
 
-const Observable$forkMerge = (...ops) => (obs) => pipe(ops, ReadonlyArray$map(op => op(obs)), Observable$mergeObservables);
+const Observable_forkMerge = (...ops) => (obs) => pipe(ops, ReadonlyArray_map(op => op(obs)), Observable_mergeObservables);
 
-export { Observable$forkMerge as default };
+export { Observable_forkMerge as default };

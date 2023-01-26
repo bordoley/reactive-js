@@ -1,7 +1,7 @@
 /// <reference types="./EnumerableObservable.scanAsync.d.ts" />
-import HigherOrderObservable$scanAsync from '../HigherOrderObservable/HigherOrderObservable.scanAsync.mjs';
-import EnumerableObservable$create from './EnumerableObservable.create.mjs';
+import HigherOrderObservable_scanAsync from '../HigherOrderObservable/HigherOrderObservable.scanAsync.mjs';
+import EnumerableObservable_create from './EnumerableObservable.create.mjs';
 
-const EnumerableObservable$scanAsync = HigherOrderObservable$scanAsync(EnumerableObservable$create);
+const EnumerableObservable_scanAsync = HigherOrderObservable_scanAsync(EnumerableObservable_create);
 
-export { EnumerableObservable$scanAsync as default };
+export { EnumerableObservable_scanAsync as default };

@@ -1,13 +1,13 @@
 import { Factory, Updater, none, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import Continuation$yield_ from "../../../scheduling/__internal__/Continuation/Continuation.yield";
+import Continuation_yield_ from "../../../scheduling/__internal__/Continuation/Continuation.yield";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import EnumerableObservable$create from "../EnumerableObservable/EnumerableObservable.create";
-import Observer$schedule from "../Observer/Observer.schedule";
-import RunnableObservable$create from "../RunnableObservable/RunnableObservable.create";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import EnumerableObservable_create from "../EnumerableObservable/EnumerableObservable.create";
+import Observer_schedule from "../Observer/Observer.schedule";
+import RunnableObservable_create from "../RunnableObservable/RunnableObservable.create";
 
-const Observable$generate = <T>(
+const Observable_generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
@@ -18,22 +18,22 @@ const Observable$generate = <T>(
     let acc = initialValue();
 
     const continuation = () => {
-      while (!Disposable$isDisposed(observer)) {
+      while (!Disposable_isDisposed(observer)) {
         acc = generator(acc);
         observer[SinkLike_notify](acc);
-        Continuation$yield_(options);
+        Continuation_yield_(options);
       }
     };
 
     pipe(
       observer,
-      Observer$schedule(continuation, delayStart ? options : none),
+      Observer_schedule(continuation, delayStart ? options : none),
     );
   };
 
   return hasDelay(options)
-    ? RunnableObservable$create(onSink)
-    : EnumerableObservable$create(onSink);
+    ? RunnableObservable_create(onSink)
+    : EnumerableObservable_create(onSink);
 };
 
-export default Observable$generate;
+export default Observable_generate;

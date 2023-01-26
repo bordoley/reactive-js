@@ -1,7 +1,7 @@
 /// <reference types="./StatefulContainer.reduce.d.ts" />
 import { pipe, partial } from '../../../functions.mjs';
-import StatefulContainer$lift from './StatefulContainer.lift.mjs';
+import StatefulContainer_lift from './StatefulContainer.lift.mjs';
 
-const StatefulContainer$reduce = (m) => (operator) => (reducer, initialValue) => pipe(operator, partial(reducer, initialValue), StatefulContainer$lift(m));
+const StatefulContainer_reduce = (m) => (operator) => (reducer, initialValue) => pipe(operator, partial(reducer, initialValue), StatefulContainer_lift(m));
 
-export { StatefulContainer$reduce as default };
+export { StatefulContainer_reduce as default };

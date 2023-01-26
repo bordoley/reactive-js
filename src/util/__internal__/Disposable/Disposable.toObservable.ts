@@ -1,12 +1,12 @@
 import { Function1, compose } from "../../../functions";
 import { ObservableLike } from "../../../rx";
-import Observable$create from "../../../rx/__internal__/Observable/Observable.create";
+import Observable_create from "../../../rx/__internal__/Observable/Observable.create";
 import { DisposableLike } from "../../../util";
 import addTo from "./Disposable.addTo";
 
-const Disposable$toObservable = <T>(): Function1<
+const Disposable_toObservable = <T>(): Function1<
   DisposableLike,
   ObservableLike<T>
-> => compose(addTo, Observable$create);
+> => compose(addTo, Observable_create);
 
-export default Disposable$toObservable;
+export default Disposable_toObservable;

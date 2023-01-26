@@ -1,7 +1,7 @@
-import Observer$getDispatcher from "./__internal__/Observer/Observer.getDispatcher";
-import Observer$getScheduler from "./__internal__/Observer/Observer.getScheduler";
-import Observer$schedule from "./__internal__/Observer/Observer.schedule";
+import Observer_getDispatcher from "./__internal__/Observer/Observer.getDispatcher";
+import Observer_getScheduler from "./__internal__/Observer/Observer.getScheduler";
+import Observer_schedule from "./__internal__/Observer/Observer.schedule";
 
-export const getDispatcher = Observer$getDispatcher;
-export const getScheduler = Observer$getScheduler;
-export const schedule = Observer$schedule;
+export const getDispatcher = Observer_getDispatcher;
+export const getScheduler = Observer_getScheduler;
+export const schedule = Observer_schedule;

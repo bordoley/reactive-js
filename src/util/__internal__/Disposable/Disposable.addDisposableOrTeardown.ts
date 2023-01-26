@@ -4,7 +4,7 @@ import {
   DisposableOrTeardown,
 } from "../../../util";
 
-const Disposable$addDisposableOrTeardown = (
+const Disposable_addDisposableOrTeardown = (
   parent: DisposableLike,
   child: DisposableOrTeardown,
   ignoreChildErrors = false,
@@ -12,4 +12,4 @@ const Disposable$addDisposableOrTeardown = (
   parent[DisposableLike_add](child, ignoreChildErrors);
 };
 
-export default Disposable$addDisposableOrTeardown;
+export default Disposable_addDisposableOrTeardown;

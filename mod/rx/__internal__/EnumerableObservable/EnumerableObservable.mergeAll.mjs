@@ -1,8 +1,8 @@
 /// <reference types="./EnumerableObservable.mergeAll.d.ts" />
-import HigherOrderObservable$mergeAll from '../HigherOrderObservable/HigherOrderObservable.mergeAll.mjs';
-import EnumerableObservable$lift from './EnumerableObservable.lift.mjs';
+import HigherOrderObservable_mergeAll from '../HigherOrderObservable/HigherOrderObservable.mergeAll.mjs';
+import EnumerableObservable_lift from './EnumerableObservable.lift.mjs';
 
-const EnumerableObservable$mergeAll = 
-/*@__PURE__*/ HigherOrderObservable$mergeAll(EnumerableObservable$lift);
+const EnumerableObservable_mergeAll = 
+/*@__PURE__*/ HigherOrderObservable_mergeAll(EnumerableObservable_lift);
 
-export { EnumerableObservable$mergeAll as default };
+export { EnumerableObservable_mergeAll as default };

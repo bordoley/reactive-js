@@ -1,6 +1,6 @@
 /// <reference types="./Queue.peek.d.ts" />
 import { QueueLike_peek } from '../util.internal.mjs';
 
-const Queue$peek = (queue) => queue[QueueLike_peek]();
+const Queue_peek = (queue) => queue[QueueLike_peek]();
 
-export { Queue$peek as default };
+export { Queue_peek as default };

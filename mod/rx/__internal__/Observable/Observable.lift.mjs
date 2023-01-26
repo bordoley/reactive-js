@@ -1,7 +1,7 @@
 /// <reference types="./Observable.lift.d.ts" />
 import { pipeUnsafe, newInstance } from '../../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
-import Sink$sourceFrom from '../Sink/Sink.sourceFrom.mjs';
+import Sink_sourceFrom from '../Sink/Sink.sourceFrom.mjs';
 
 class LiftedObservable {
     constructor(source, operators, isEnumerable, isRunnable) {
@@ -11,10 +11,10 @@ class LiftedObservable {
         this[ObservableLike_isRunnable] = isRunnable;
     }
     [ReactiveContainerLike_sinkInto](observer) {
-        pipeUnsafe(observer, ...this.operators, Sink$sourceFrom(this.source));
+        pipeUnsafe(observer, ...this.operators, Sink_sourceFrom(this.source));
     }
 }
-const Observable$lift = (isEnumerable = false, isRunnable = false) => (operator) => source => {
+const Observable_lift = (isEnumerable = false, isRunnable = false) => (operator) => source => {
     const sourceSource = source instanceof LiftedObservable ? source.source : source;
     const allFunctions = source instanceof LiftedObservable
         ? [operator, ...source.operators]
@@ -24,4 +24,4 @@ const Observable$lift = (isEnumerable = false, isRunnable = false) => (operator)
     return newInstance(LiftedObservable, sourceSource, allFunctions, isLiftedEnumerable, isLiftedRunnable);
 };
 
-export { Observable$lift as default };
+export { Observable_lift as default };

@@ -1,8 +1,8 @@
 /// <reference types="./Promiseable.d.ts" />
-import Observable$toPromise from '../rx/__internal__/Observable/Observable.toPromise.mjs';
-import Promiseable$toObservable from './__internal__/Promiseable/Promiseable.toObservable.mjs';
+import Observable_toPromise from '../rx/__internal__/Observable/Observable.toPromise.mjs';
+import Promiseable_toObservable from './__internal__/Promiseable/Promiseable.toObservable.mjs';
 
-const fromObservable = Observable$toPromise;
-const toObservable = Promiseable$toObservable;
+const fromObservable = Observable_toPromise;
+const toObservable = Promiseable_toObservable;
 
 export { fromObservable, toObservable };

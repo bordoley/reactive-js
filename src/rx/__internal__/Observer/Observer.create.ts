@@ -6,21 +6,21 @@ import {
 } from "../../../__internal__/mixins";
 import { ObserverLike, SinkLike_notify } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Observer$mixin from "./Observer.mixin";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Observer_mixin from "./Observer.mixin";
 
-const Observer$create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
+const Observer_create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
   /*@__PURE__*/ (<T>() => {
-    const typedObserverMixin = Observer$mixin<T>();
+    const typedObserverMixin = Observer_mixin<T>();
 
     return createInstanceFactory(
       mix(
-        include(Disposable$mixin, typedObserverMixin),
+        include(Disposable_mixin, typedObserverMixin),
         function Observer(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
           scheduler: SchedulerLike,
         ): ObserverLike<T> {
-          init(Disposable$mixin, instance);
+          init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, scheduler);
 
           return instance;
@@ -33,4 +33,4 @@ const Observer$create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
     );
   })();
 
-export default Observer$create;
+export default Observer_create;

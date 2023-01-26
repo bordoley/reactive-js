@@ -7,22 +7,22 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { TakeWhile } from "../../../containers";
-import StatefulContainer$takeWhile from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeWhile";
+import StatefulContainer_takeWhile from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeWhile";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { Predicate, error, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import DelegatingEnumerator$mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
-import DelegatingEnumerator$move from "../DelegatingEnumerator/DelegatingEnumerator.move";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
+import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
 import getCurrent from "../Enumerator/Enumerator.getCurrent";
 import { DelegatingEnumeratorLike } from "../ix.internal";
-import Enumerable$liftT from "./Enumerable.liftT";
+import Enumerable_liftT from "./Enumerable.liftT";
 
-const Enumerable$takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
+const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorMixin = DelegatingEnumerator$mixin<T>();
+    const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
     type TProperties = {
       readonly predicate: Predicate<T>;
@@ -33,7 +33,7 @@ const Enumerable$takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
     return pipe(
       createInstanceFactory(
         mix(
-          include(Disposable$delegatingMixin, typedDelegatingEnumeratorMixin),
+          include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
           function TakeWhileEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               Mutable<TProperties>,
@@ -41,7 +41,7 @@ const Enumerable$takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
             predicate: Predicate<T>,
             inclusive: boolean,
           ): EnumeratorLike<T> {
-            init(Disposable$delegatingMixin, instance, delegate);
+            init(Disposable_delegatingMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
             instance.predicate = predicate;
@@ -58,9 +58,9 @@ const Enumerable$takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               const { inclusive, predicate } = this;
 
-              if (this.done && !Disposable$isDisposed(this)) {
-                pipe(this, Disposable$dispose());
-              } else if (DelegatingEnumerator$move(this)) {
+              if (this.done && !Disposable_isDisposed(this)) {
+                pipe(this, Disposable_dispose());
+              } else if (DelegatingEnumerator_move(this)) {
                 const current = getCurrent(this);
 
                 try {
@@ -69,20 +69,20 @@ const Enumerable$takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
                   if (!satisfiesPredicate && inclusive) {
                     this.done = true;
                   } else if (!satisfiesPredicate) {
-                    pipe(this, Disposable$dispose());
+                    pipe(this, Disposable_dispose());
                   }
                 } catch (e) {
-                  pipe(this, Disposable$dispose(error(e)));
+                  pipe(this, Disposable_dispose(error(e)));
                 }
               }
             },
           },
         ),
       ),
-      StatefulContainer$takeWhile<EnumerableLike, T, TInteractive>(
-        Enumerable$liftT,
+      StatefulContainer_takeWhile<EnumerableLike, T, TInteractive>(
+        Enumerable_liftT,
       ),
     );
   })();
 
-export default Enumerable$takeWhile;
+export default Enumerable_takeWhile;

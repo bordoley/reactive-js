@@ -6,7 +6,7 @@ import {
   StreamableLike_stream,
 } from "../../../streaming";
 
-const Streamable$stream =
+const Streamable_stream =
   <TReq, T, TStream extends StreamLike<TReq, T>>(
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
@@ -14,4 +14,4 @@ const Streamable$stream =
   streamable =>
     streamable[StreamableLike_stream](scheduler, options);
 
-export default Streamable$stream;
+export default Streamable_stream;

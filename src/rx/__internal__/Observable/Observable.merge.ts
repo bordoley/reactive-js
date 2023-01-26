@@ -1,9 +1,9 @@
 import { Concat } from "../../../containers";
 import { ObservableLike } from "../../../rx";
-import Observable$mergeObservables from "./Observable.mergeObservables";
+import Observable_mergeObservables from "./Observable.mergeObservables";
 
-const Observable$merge: Concat<ObservableLike>["concat"] = <T>(
+const Observable_merge: Concat<ObservableLike>["concat"] = <T>(
   ...observables: ObservableLike<T>[]
-) => Observable$mergeObservables(observables);
+) => Observable_mergeObservables(observables);
 
-export default Observable$merge;
+export default Observable_merge;

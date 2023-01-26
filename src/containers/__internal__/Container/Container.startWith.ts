@@ -6,14 +6,14 @@ import {
 } from "../../../containers";
 import { pipe } from "../../../functions";
 
-import Container$concatWith from "./Container.concatWith";
+import Container_concatWith from "./Container.concatWith";
 
-const Container$startWith =
+const Container_startWith =
   <C extends ContainerLike, T>(
     m: Concat<C> & FromArray<C>,
     ...values: readonly T[]
   ): ContainerOperator<C, T, T> =>
   container =>
-    pipe(values, m.fromArray(), Container$concatWith(m, container));
+    pipe(values, m.fromArray(), Container_concatWith(m, container));
 
-export default Container$startWith;
+export default Container_startWith;

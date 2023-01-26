@@ -1,9 +1,9 @@
 /// <reference types="./Disposable.addIgnoringChildErrors.d.ts" />
-import Disposable$addDisposableOrTeardown from './Disposable.addDisposableOrTeardown.mjs';
+import Disposable_addDisposableOrTeardown from './Disposable.addDisposableOrTeardown.mjs';
 
-const Disposable$addIgnoringChildErrors = (child) => (parent) => {
-    Disposable$addDisposableOrTeardown(parent, child, true);
+const Disposable_addIgnoringChildErrors = (child) => (parent) => {
+    Disposable_addDisposableOrTeardown(parent, child, true);
     return parent;
 };
 
-export { Disposable$addIgnoringChildErrors as default };
+export { Disposable_addIgnoringChildErrors as default };

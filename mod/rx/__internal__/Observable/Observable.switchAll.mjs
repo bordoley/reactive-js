@@ -1,8 +1,8 @@
 /// <reference types="./Observable.switchAll.d.ts" />
-import HigherOrderObservable$switchAll from '../HigherOrderObservable/HigherOrderObservable.switchAll.mjs';
-import Observable$lift from './Observable.lift.mjs';
+import HigherOrderObservable_switchAll from '../HigherOrderObservable/HigherOrderObservable.switchAll.mjs';
+import Observable_lift from './Observable.lift.mjs';
 
-const Observable$switchAll = 
-/*@__PURE__*/ HigherOrderObservable$switchAll(Observable$lift());
+const Observable_switchAll = 
+/*@__PURE__*/ HigherOrderObservable_switchAll(Observable_lift());
 
-export { Observable$switchAll as default };
+export { Observable_switchAll as default };

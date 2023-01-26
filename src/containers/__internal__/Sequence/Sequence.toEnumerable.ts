@@ -17,29 +17,29 @@ import {
   SourceLike_move,
   ToEnumerable,
 } from "../../../ix";
-import Enumerable$create from "../../../ix/__internal__/Enumerable/Enumerable.create";
-import MutableEnumerator$mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
+import Enumerable_create from "../../../ix/__internal__/Enumerable/Enumerable.create";
+import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 
-const Sequence$toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
+const Sequence_toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
-    const typedMutableEnumeratorMixin = MutableEnumerator$mixin<T>();
+    const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
     type TProperties = {
       seq: SequenceLike<T>;
     };
 
     const createSequenceEnumerator = createInstanceFactory(
       mix(
-        include(Disposable$mixin, typedMutableEnumeratorMixin),
+        include(Disposable_mixin, typedMutableEnumeratorMixin),
         function SequenceEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             TProperties,
           seq: SequenceLike<T>,
         ): EnumeratorLike<T> {
-          init(Disposable$mixin, instance);
+          init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
           instance.seq = seq;
@@ -51,13 +51,13 @@ const Sequence$toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
         }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
               const next = this.seq();
               if (isSome(next)) {
                 this[EnumeratorLike_current] = next[SequenceLike_data];
                 this.seq = next[SequenceLike_next];
               } else {
-                pipe(this, Disposable$dispose());
+                pipe(this, Disposable_dispose());
               }
             }
           },
@@ -66,7 +66,7 @@ const Sequence$toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
     );
 
     return () => (seq: SequenceLike<T>) =>
-      Enumerable$create(() => createSequenceEnumerator(seq));
+      Enumerable_create(() => createSequenceEnumerator(seq));
   })();
 
-export default Sequence$toEnumerable;
+export default Sequence_toEnumerable;

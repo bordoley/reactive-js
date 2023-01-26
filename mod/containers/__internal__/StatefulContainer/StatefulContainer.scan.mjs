@@ -1,7 +1,7 @@
 /// <reference types="./StatefulContainer.scan.d.ts" />
 import { pipe, partial } from '../../../functions.mjs';
-import StatefulContainer$lift from './StatefulContainer.lift.mjs';
+import StatefulContainer_lift from './StatefulContainer.lift.mjs';
 
-const StatefulContainer$scan = (m) => (operator) => (reducer, initialValue) => pipe(operator, partial(reducer, initialValue), StatefulContainer$lift(m));
+const StatefulContainer_scan = (m) => (operator) => (reducer, initialValue) => pipe(operator, partial(reducer, initialValue), StatefulContainer_lift(m));
 
-export { StatefulContainer$scan as default };
+export { StatefulContainer_scan as default };

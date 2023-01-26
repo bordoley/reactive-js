@@ -1,4 +1,4 @@
 import { IterableLike } from "../../../containers.js";
 import { ToAsyncEnumerable } from "../../../ix.js";
-declare const Iterable$toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"];
-export { Iterable$toAsyncEnumerable as default };
+declare const Iterable_toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"];
+export { Iterable_toAsyncEnumerable as default };

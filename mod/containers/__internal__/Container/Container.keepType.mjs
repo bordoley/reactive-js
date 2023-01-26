@@ -1,4 +1,4 @@
 /// <reference types="./Container.keepType.d.ts" />
-const Container$keepType = ({ keep }, predicate) => keep(predicate);
+const Container_keepType = ({ keep }, predicate) => keep(predicate);
 
-export { Container$keepType as default };
+export { Container_keepType as default };

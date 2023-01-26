@@ -5,7 +5,7 @@ import {
   ContainerOperator,
 } from "../../../containers";
 
-const Container$concatWith =
+const Container_concatWith =
   <C extends ContainerLike, T>(
     { concat }: Concat<C>,
     snd: ContainerOf<C, T>,
@@ -14,4 +14,4 @@ const Container$concatWith =
   first =>
     concat(first, snd, ...tail);
 
-export default Container$concatWith;
+export default Container_concatWith;

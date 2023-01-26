@@ -1,12 +1,12 @@
 import { Factory } from "../../../functions";
 import { RunnableLike } from "../../../rx";
 import { DisposableOrTeardown } from "../../../util";
-import ReactiveContainer$onSink from "../ReactiveContainer/ReactiveContainer.onSink";
-import Runnable$create from "./Runnable.create";
+import ReactiveContainer_onSink from "../ReactiveContainer/ReactiveContainer.onSink";
+import Runnable_create from "./Runnable.create";
 
-const Runnable$onRun =
+const Runnable_onRun =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
   (runnable: RunnableLike<T>): RunnableLike<T> =>
-    ReactiveContainer$onSink(Runnable$create, runnable, f);
+    ReactiveContainer_onSink(Runnable_create, runnable, f);
 
-export default Runnable$onRun;
+export default Runnable_onRun;

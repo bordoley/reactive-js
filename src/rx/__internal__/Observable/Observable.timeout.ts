@@ -6,34 +6,34 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import Container$throws from "../../../containers/__internal__/Container/Container.throws";
+import Container_throws from "../../../containers/__internal__/Container/Container.throws";
 import { isNumber, none, partial, pipe, returns } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$disposed from "../../../util/__internal__/Disposable/Disposable.disposed";
-import DisposableRef$mixin from "../../../util/__internal__/DisposableRef/DisposableRef.mixin";
-import MutableRef$get from "../../../util/__internal__/MutableRef/MutableRef.get";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_disposed from "../../../util/__internal__/Disposable/Disposable.disposed";
+import DisposableRef_mixin from "../../../util/__internal__/DisposableRef/DisposableRef.mixin";
+import MutableRef_get from "../../../util/__internal__/MutableRef/MutableRef.get";
 import {
   MutableRefLike,
   MutableRefLike_current,
 } from "../../../util/__internal__/util.internal";
-import Observer$getScheduler from "../Observer/Observer.getScheduler";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$notify from "../Sink/Sink.notify";
-import Observable$concat from "./Observable.concat";
-import Observable$fromArray from "./Observable.fromArray";
-import Observable$isRunnable from "./Observable.isRunnable";
-import Observable$lift from "./Observable.lift";
-import Observable$map from "./Observable.map";
-import Observable$subscribe from "./Observable.subscribe";
+import Observer_getScheduler from "../Observer/Observer.getScheduler";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_notify from "../Sink/Sink.notify";
+import Observable_concat from "./Observable.concat";
+import Observable_fromArray from "./Observable.fromArray";
+import Observable_isRunnable from "./Observable.isRunnable";
+import Observable_lift from "./Observable.lift";
+import Observable_map from "./Observable.map";
+import Observable_subscribe from "./Observable.subscribe";
 
-const Observable$timeout = /*@__PURE__*/ (<T>() => {
+const Observable_timeout = /*@__PURE__*/ (<T>() => {
   const timeoutError = Symbol("Observable.timeout.error");
 
-  const typedDisposableRefMixin = DisposableRef$mixin();
-  const typedObserverMixin = Observer$mixin();
+  const typedDisposableRefMixin = DisposableRef_mixin();
+  const typedObserverMixin = Observer_mixin();
 
   type TProperties = {
     readonly delegate: ObserverLike<T>;
@@ -45,7 +45,7 @@ const Observable$timeout = /*@__PURE__*/ (<T>() => {
   ) => {
     observer[MutableRefLike_current] = pipe(
       observer.duration,
-      Observable$subscribe(Observer$getScheduler(observer.delegate)),
+      Observable_subscribe(Observer_getScheduler(observer.delegate)),
     );
   };
 
@@ -53,7 +53,7 @@ const Observable$timeout = /*@__PURE__*/ (<T>() => {
     mix(
       include(
         typedObserverMixin,
-        Disposable$delegatingMixin,
+        Disposable_delegatingMixin,
         typedDisposableRefMixin,
       ),
       function TimeoutObserver(
@@ -62,9 +62,9 @@ const Observable$timeout = /*@__PURE__*/ (<T>() => {
         delegate: ObserverLike<T>,
         duration: ObservableLike<unknown>,
       ): ObserverLike<T> {
-        init(typedObserverMixin, instance, Observer$getScheduler(delegate));
-        init(Disposable$delegatingMixin, instance, delegate);
-        init(typedDisposableRefMixin, instance, Disposable$disposed);
+        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(Disposable_delegatingMixin, instance, delegate);
+        init(typedDisposableRefMixin, instance, Disposable_disposed);
 
         instance.delegate = delegate;
         instance.duration = duration;
@@ -82,8 +82,8 @@ const Observable$timeout = /*@__PURE__*/ (<T>() => {
           this: TProperties & MutableRefLike<DisposableLike>,
           next: T,
         ) {
-          pipe(this, MutableRef$get, Disposable$dispose());
-          pipe(this.delegate, Sink$notify(next));
+          pipe(this, MutableRef_get, Disposable_dispose());
+          pipe(this.delegate, Sink_notify(next));
         },
       },
     ),
@@ -93,30 +93,30 @@ const Observable$timeout = /*@__PURE__*/ (<T>() => {
 
   return (duration: number | ObservableLike<unknown>) => {
     const durationObs = isNumber(duration)
-      ? Container$throws(
+      ? Container_throws(
           {
-            fromArray: Observable$fromArray,
-            map: Observable$map,
+            fromArray: Observable_fromArray,
+            map: Observable_map,
           },
           { delay: duration, delayStart: true },
         )(returnTimeoutError)
-      : Observable$concat(
+      : Observable_concat(
           duration,
-          Container$throws({
-            fromArray: Observable$fromArray,
-            map: Observable$map,
+          Container_throws({
+            fromArray: Observable_fromArray,
+            map: Observable_map,
           })(returnTimeoutError),
         );
 
     return pipe(
       createTimeoutObserver,
       partial(durationObs),
-      Observable$lift(
+      Observable_lift(
         false,
-        isNumber(duration) || Observable$isRunnable(duration),
+        isNumber(duration) || Observable_isRunnable(duration),
       ),
     );
   };
 })();
 
-export default Observable$timeout;
+export default Observable_timeout;

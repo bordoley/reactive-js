@@ -2,9 +2,9 @@ import { Mixin2, include, init, mix } from "../../../__internal__/mixins";
 import { Predicate, compose, negate } from "../../../functions";
 import { ReactiveContainerLike, SinkLike } from "../../../rx";
 
-import Sink$satisfyMixin from "./Sink.satisfyMixin";
+import Sink_satisfyMixin from "./Sink.satisfyMixin";
 
-const Sink$everySatisfyMixin: <
+const Sink_everySatisfyMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<boolean>,
   T,
@@ -17,7 +17,7 @@ const Sink$everySatisfyMixin: <
 >(
   fromArray: (v: readonly boolean[]) => C,
 ) => {
-  const typedSatisfySinkMixin = Sink$satisfyMixin<C, TSink, T>(fromArray, true);
+  const typedSatisfySinkMixin = Sink_satisfyMixin<C, TSink, T>(fromArray, true);
 
   return mix(
     include(typedSatisfySinkMixin),
@@ -37,4 +37,4 @@ const Sink$everySatisfyMixin: <
   );
 };
 
-export default Sink$everySatisfyMixin;
+export default Sink_everySatisfyMixin;

@@ -7,9 +7,9 @@ import {
   TInteractive,
   TReactive,
 } from "../containers.internal";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$takeWhile =
+const StatefulContainer_takeWhile =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -29,8 +29,8 @@ const StatefulContainer$takeWhile =
     return pipe(
       operator,
       partial(predicate, inclusive),
-      StatefulContainer$lift(m),
+      StatefulContainer_lift(m),
     );
   };
 
-export default StatefulContainer$takeWhile;
+export default StatefulContainer_takeWhile;

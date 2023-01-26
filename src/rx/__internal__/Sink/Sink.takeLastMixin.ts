@@ -9,15 +9,15 @@ import {
 import { getLength, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import ReactiveContainer$sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const TakeLastSink_last = Symbol("TakeLastSink_last");
 
-const Sink$takeLastMixin: <
+const Sink_takeLastMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
   T,
@@ -41,14 +41,14 @@ const Sink$takeLastMixin: <
   };
 
   return mix(
-    include(Disposable$mixin),
+    include(Disposable_mixin),
     function TakeLastSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
       delegate: TSink,
       takeLastCount: number,
     ): SinkLike<T> {
-      init(Disposable$mixin, instance);
+      init(Disposable_mixin, instance);
 
       instance[DelegatingSinkLike_delegate] = delegate;
       instance[TakeLastSink_private_takeLastCount] = takeLastCount;
@@ -56,12 +56,12 @@ const Sink$takeLastMixin: <
 
       pipe(
         instance,
-        Disposable$addTo(delegate),
-        Disposable$onComplete(() => {
+        Disposable_addTo(delegate),
+        Disposable_onComplete(() => {
           pipe(
             instance[TakeLastSink_last],
             fromArray,
-            ReactiveContainer$sinkInto(delegate),
+            ReactiveContainer_sinkInto(delegate),
           );
         }),
       );
@@ -87,4 +87,4 @@ const Sink$takeLastMixin: <
   );
 };
 
-export default Sink$takeLastMixin;
+export default Sink_takeLastMixin;

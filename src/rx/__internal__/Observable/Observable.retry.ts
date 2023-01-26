@@ -1,7 +1,7 @@
 import { isNone, isSome } from "../../../functions";
-import Observable$repeatOrRetry from "./Observable.repeatOrRetry";
+import Observable_repeatOrRetry from "./Observable.repeatOrRetry";
 
-const Observable$retry = /*@__PURE__*/ (() => {
+const Observable_retry = /*@__PURE__*/ (() => {
   const defaultRetryPredicate = (_: number, error?: Error): boolean =>
     isSome(error);
 
@@ -11,8 +11,8 @@ const Observable$retry = /*@__PURE__*/ (() => {
       : (count: number, error?: Error) =>
           isSome(error) && predicate(count, error);
 
-    return Observable$repeatOrRetry(retryPredicate);
+    return Observable_repeatOrRetry(retryPredicate);
   };
 })();
 
-export default Observable$retry;
+export default Observable_retry;

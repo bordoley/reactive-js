@@ -1,7 +1,7 @@
 /// <reference types="./StatefulContainer.keep.d.ts" />
 import { pipe, partial } from '../../../functions.mjs';
-import StatefulContainer$lift from './StatefulContainer.lift.mjs';
+import StatefulContainer_lift from './StatefulContainer.lift.mjs';
 
-const StatefulContainer$keep = (m) => (operator) => (predicate) => pipe(operator, partial(predicate), StatefulContainer$lift(m));
+const StatefulContainer_keep = (m) => (operator) => (predicate) => pipe(operator, partial(predicate), StatefulContainer_lift(m));
 
-export { StatefulContainer$keep as default };
+export { StatefulContainer_keep as default };

@@ -5,7 +5,7 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { Scan } from "../../../containers";
-import StatefulContainer$scan from "../../../containers/__internal__/StatefulContainer/StatefulContainer.scan";
+import StatefulContainer_scan from "../../../containers/__internal__/StatefulContainer/StatefulContainer.scan";
 import { TReactive } from "../../../containers/__internal__/containers.internal";
 import { Factory, Reducer, pipe } from "../../../functions";
 import {
@@ -14,11 +14,11 @@ import {
   ObserverLike_scheduler,
 } from "../../../rx";
 
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$scanMixin from "../Sink/Sink.scanMixin";
-import Observable$liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_scanMixin from "../Sink/Sink.scanMixin";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
 
-const Observable$scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
+const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
@@ -27,9 +27,9 @@ const Observable$scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ObserverLike<T> = (() => {
-    const typedScanSinkMixin = Sink$scanMixin<T, TAcc>();
+    const typedScanSinkMixin = Sink_scanMixin<T, TAcc>();
 
-    const typedObserverMixin = Observer$mixin<T>();
+    const typedObserverMixin = Observer_mixin<T>();
 
     return createInstanceFactory(
       mix(
@@ -51,10 +51,10 @@ const Observable$scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
 
   return pipe(
     createScanObserver,
-    StatefulContainer$scan<ObservableLike, T, TAcc, TReactive>(
-      Observable$liftEnumerableOperatorT,
+    StatefulContainer_scan<ObservableLike, T, TAcc, TReactive>(
+      Observable_liftEnumerableOperatorT,
     ),
   );
 })();
 
-export default Observable$scan;
+export default Observable_scan;

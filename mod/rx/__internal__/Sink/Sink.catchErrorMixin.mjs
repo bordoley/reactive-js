@@ -2,33 +2,33 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none, isSome, error } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$addToIgnoringChildErrors from '../../../util/__internal__/Disposable/Disposable.addToIgnoringChildErrors.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import Disposable$onError from '../../../util/__internal__/Disposable/Disposable.onError.mjs';
-import ReactiveContainer$sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
+import Disposable_addToIgnoringChildErrors from '../../../util/__internal__/Disposable/Disposable.addToIgnoringChildErrors.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import Disposable_onError from '../../../util/__internal__/Disposable/Disposable.onError.mjs';
+import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const Sink$catchErrorMixin = 
+const Sink_catchErrorMixin = 
 /*@__PURE__*/ (() => {
-    return returns(mix(include(Disposable$mixin), function CatchErrorSink(instance, delegate, errorHandler) {
-        init(Disposable$mixin, instance);
+    return returns(mix(include(Disposable_mixin), function CatchErrorSink(instance, delegate, errorHandler) {
+        init(Disposable_mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
-        pipe(instance, Disposable$addToIgnoringChildErrors(delegate), Disposable$onComplete(() => {
-            pipe(delegate, Disposable$dispose());
-        }), Disposable$onError((err) => {
+        pipe(instance, Disposable_addToIgnoringChildErrors(delegate), Disposable_onComplete(() => {
+            pipe(delegate, Disposable_dispose());
+        }), Disposable_onError((err) => {
             try {
                 const result = errorHandler(err) || none;
                 if (isSome(result)) {
-                    pipe(result, ReactiveContainer$sinkInto(delegate));
+                    pipe(result, ReactiveContainer_sinkInto(delegate));
                 }
                 else {
-                    pipe(delegate, Disposable$dispose());
+                    pipe(delegate, Disposable_dispose());
                 }
             }
             catch (e) {
-                pipe(delegate, Disposable$dispose(error([e, err])));
+                pipe(delegate, Disposable_dispose(error([e, err])));
             }
         }));
         return instance;
@@ -41,4 +41,4 @@ const Sink$catchErrorMixin =
     }));
 })();
 
-export { Sink$catchErrorMixin as default };
+export { Sink_catchErrorMixin as default };

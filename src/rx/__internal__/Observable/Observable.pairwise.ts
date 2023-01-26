@@ -11,17 +11,17 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$pairwiseMixin from "../Sink/Sink.pairwiseMixin";
-import Observable$lift from "./Observable.lift";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_pairwiseMixin from "../Sink/Sink.pairwiseMixin";
+import Observable_lift from "./Observable.lift";
 
-const Observable$pairwise: Pairwise<ObservableLike>["pairwise"] =
+const Observable_pairwise: Pairwise<ObservableLike>["pairwise"] =
   /*@__PURE__*/ (() => {
     const createPairwiseObserver: <T>(
       delegate: ObserverLike<readonly [T, T]>,
     ) => ObserverLike<T> = (<T>() => {
-      const typedPairwiseSinkMixin = Sink$pairwiseMixin<T>();
-      const typedObserverMixin = Observer$mixin<T>();
+      const typedPairwiseSinkMixin = Sink_pairwiseMixin<T>();
+      const typedObserverMixin = Observer_mixin<T>();
 
       return createInstanceFactory(
         mix(
@@ -43,7 +43,7 @@ const Observable$pairwise: Pairwise<ObservableLike>["pairwise"] =
       );
     })();
 
-    return pipe(createPairwiseObserver, Observable$lift(true), returns);
+    return pipe(createPairwiseObserver, Observable_lift(true), returns);
   })();
 
-export default Observable$pairwise;
+export default Observable_pairwise;

@@ -1,3 +1,3 @@
 import { SinkLike } from "../../../rx.js";
-declare const Sink$create: <T>() => SinkLike<T>;
-export { Sink$create as default };
+declare const Sink_create: <T>() => SinkLike<T>;
+export { Sink_create as default };

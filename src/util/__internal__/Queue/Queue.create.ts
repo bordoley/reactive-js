@@ -107,7 +107,7 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
   }
 }
 
-const Queue$create = <T>(comparator: Comparator<T>): QueueLike<T> =>
+const Queue_create = <T>(comparator: Comparator<T>): QueueLike<T> =>
   newInstance(PriorityQueueImpl, comparator);
 
-export default Queue$create;
+export default Queue_create;

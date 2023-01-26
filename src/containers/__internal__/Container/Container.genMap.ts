@@ -7,7 +7,7 @@ import {
 } from "../../../containers";
 import { Function1, compose, pipe } from "../../../functions";
 
-const Container$genMap = <
+const Container_genMap = <
   C extends ContainerLike,
   TA,
   TB,
@@ -23,4 +23,4 @@ const Container$genMap = <
     m.concatAll(options),
   );
 
-export default Container$genMap;
+export default Container_genMap;

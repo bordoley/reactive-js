@@ -1,10 +1,10 @@
 /// <reference types="./Observable.concatAll.d.ts" />
 import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
-import Observable$mergeAll from './Observable.mergeAll.mjs';
+import Observable_mergeAll from './Observable.mergeAll.mjs';
 
-const Observable$concatAll = (options = {}) => {
+const Observable_concatAll = (options = {}) => {
     const { maxBufferSize = MAX_SAFE_INTEGER } = options;
-    return Observable$mergeAll({ maxBufferSize, maxConcurrency: 1 });
+    return Observable_mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
 
-export { Observable$concatAll as default };
+export { Observable_concatAll as default };

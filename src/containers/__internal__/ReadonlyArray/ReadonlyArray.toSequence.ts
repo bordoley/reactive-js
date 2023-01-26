@@ -7,9 +7,9 @@ import {
 } from "../../../containers";
 import { Optional, none } from "../../../functions";
 
-import ReadonlyArray$toContainer from "./ReadonlyArray.toContainer";
+import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
 
-const ReadonlyArray$toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
+const ReadonlyArray_toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
   /*@__PURE__*/ (<T>() => {
     const _arraySequence = (
       arr: readonly T[],
@@ -31,10 +31,10 @@ const ReadonlyArray$toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
           }
         : none;
 
-    return ReadonlyArray$toContainer<SequenceLike<T>, T>(
+    return ReadonlyArray_toContainer<SequenceLike<T>, T>(
       (values: readonly T[], startIndex: number, count: number) => () =>
         _arraySequence(values, startIndex, count),
     );
   })();
 
-export default ReadonlyArray$toSequence;
+export default ReadonlyArray_toSequence;

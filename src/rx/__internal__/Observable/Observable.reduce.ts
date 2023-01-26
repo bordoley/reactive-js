@@ -5,8 +5,8 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { Reduce } from "../../../containers";
-import ReadonlyArray$toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
-import StatefulContainer$reduce from "../../../containers/__internal__/StatefulContainer/StatefulContainer.reduce";
+import ReadonlyArray_toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
+import StatefulContainer_reduce from "../../../containers/__internal__/StatefulContainer/StatefulContainer.reduce";
 import { TReactive } from "../../../containers/__internal__/containers.internal";
 import { Factory, Reducer, pipe } from "../../../functions";
 import {
@@ -14,22 +14,22 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$reduceMixin from "../Sink/Sink.reduceMixin";
-import Observable$liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_reduceMixin from "../Sink/Sink.reduceMixin";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
 
-const Observable$reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
+const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const typedReduceSinkMixin = Sink$reduceMixin<
+  const typedReduceSinkMixin = Sink_reduceMixin<
     ObservableLike<TAcc>,
     ObserverLike<TAcc>,
     T,
     TAcc
-  >(ReadonlyArray$toRunnableObservable());
+  >(ReadonlyArray_toRunnableObservable());
 
-  const typedObserverMixin = Observer$mixin<T>();
+  const typedObserverMixin = Observer_mixin<T>();
 
   const createReduceObserver = createInstanceFactory(
     mix(
@@ -50,10 +50,10 @@ const Observable$reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
 
   return pipe(
     createReduceObserver,
-    StatefulContainer$reduce<ObservableLike, T, TAcc, TReactive>(
-      Observable$liftEnumerableOperatorT,
+    StatefulContainer_reduce<ObservableLike, T, TAcc, TReactive>(
+      Observable_liftEnumerableOperatorT,
     ),
   );
 })();
 
-export default Observable$reduce;
+export default Observable_reduce;

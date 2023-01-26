@@ -2,7 +2,7 @@ import { Optional, SideEffect1, Updater } from "../../../functions";
 import { DisposableLike } from "../../../util";
 import addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown";
 
-const Disposable$onDisposed =
+const Disposable_onDisposed =
   <T extends DisposableLike>(
     teardown: SideEffect1<Optional<Error>>,
   ): Updater<T> =>
@@ -11,4 +11,4 @@ const Disposable$onDisposed =
     return disposable;
   };
 
-export default Disposable$onDisposed;
+export default Disposable_onDisposed;

@@ -1,8 +1,8 @@
 import { FromArray } from "../../../containers";
-import ReadonlyArray$toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
+import ReadonlyArray_toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
 import { ObservableLike } from "../../../rx";
 
-const Observable$fromArray: FromArray<
+const Observable_fromArray: FromArray<
   ObservableLike,
   {
     readonly delay: number;
@@ -10,5 +10,5 @@ const Observable$fromArray: FromArray<
     readonly start: number;
     readonly count: number;
   }
->["fromArray"] = ReadonlyArray$toRunnableObservable;
-export default Observable$fromArray;
+>["fromArray"] = ReadonlyArray_toRunnableObservable;
+export default Observable_fromArray;

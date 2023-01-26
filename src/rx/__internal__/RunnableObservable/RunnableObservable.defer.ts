@@ -1,8 +1,8 @@
 import { Defer } from "../../../containers";
 import { RunnableObservableLike } from "../../../rx";
-import Observable$defer from "../Observable/Observable.defer";
+import Observable_defer from "../Observable/Observable.defer";
 
-const RunnableObservable$defer: Defer<RunnableObservableLike>["defer"] = (f =>
-  Observable$defer(f, false, true)) as Defer<RunnableObservableLike>["defer"];
+const RunnableObservable_defer: Defer<RunnableObservableLike>["defer"] = (f =>
+  Observable_defer(f, false, true)) as Defer<RunnableObservableLike>["defer"];
 
-export default RunnableObservable$defer;
+export default RunnableObservable_defer;

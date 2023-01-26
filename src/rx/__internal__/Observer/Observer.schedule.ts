@@ -1,12 +1,12 @@
 import { Function1, SideEffect, pipe } from "../../../functions";
 import { ObserverLike } from "../../../rx";
 import { ContinuationLike } from "../../../scheduling";
-import Scheduler$schedule from "../../../scheduling/__internal__/Scheduler/Scheduler.schedule";
+import Scheduler_schedule from "../../../scheduling/__internal__/Scheduler/Scheduler.schedule";
 import { DisposableLike } from "../../../util";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
 import getScheduler from "./Observer.getScheduler";
 
-const Observer$schedule =
+const Observer_schedule =
   (
     f: SideEffect | ContinuationLike,
     options?: { readonly delay?: number },
@@ -15,8 +15,8 @@ const Observer$schedule =
     pipe(
       observer,
       getScheduler,
-      Scheduler$schedule(f, options),
-      Disposable$addTo(observer),
+      Scheduler_schedule(f, options),
+      Disposable_addTo(observer),
     );
 
-export default Observer$schedule;
+export default Observer_schedule;

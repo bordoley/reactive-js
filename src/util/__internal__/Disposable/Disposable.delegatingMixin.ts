@@ -8,10 +8,10 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
 } from "../../../util";
-import Disposable$dispose from "./Disposable.dispose";
-import Disposable$onDisposed from "./Disposable.onDisposed";
+import Disposable_dispose from "./Disposable.dispose";
+import Disposable_onDisposed from "./Disposable.onDisposed";
 
-const Disposable$delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
+const Disposable_delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
   /*@__PURE__*/ (() => {
     const DelegatingDisposable_private_delegate = Symbol(
       "DelegatingDisposable_private_delegate",
@@ -37,7 +37,7 @@ const Disposable$delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
 
         pipe(
           delegate,
-          Disposable$onDisposed(_ => {
+          Disposable_onDisposed(_ => {
             instance[DisposableLike_isDisposed] = true;
           }),
         );
@@ -66,11 +66,11 @@ const Disposable$delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
         [DisposableLike_dispose](this: TProperties, error?: Error) {
           pipe(
             this[DelegatingDisposable_private_delegate],
-            Disposable$dispose(error),
+            Disposable_dispose(error),
           );
         },
       },
     );
   })();
 
-export default Disposable$delegatingMixin;
+export default Disposable_delegatingMixin;

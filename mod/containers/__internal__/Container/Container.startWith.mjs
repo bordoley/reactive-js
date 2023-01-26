@@ -1,7 +1,7 @@
 /// <reference types="./Container.startWith.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import Container$concatWith from './Container.concatWith.mjs';
+import Container_concatWith from './Container.concatWith.mjs';
 
-const Container$startWith = (m, ...values) => container => pipe(values, m.fromArray(), Container$concatWith(m, container));
+const Container_startWith = (m, ...values) => container => pipe(values, m.fromArray(), Container_concatWith(m, container));
 
-export { Container$startWith as default };
+export { Container_startWith as default };

@@ -1,6 +1,6 @@
 /// <reference types="./Enumerator.getCurrent.d.ts" />
 import { EnumeratorLike_current } from '../../../ix.mjs';
 
-const Enumerator$getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
+const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
 
-export { Enumerator$getCurrent as default };
+export { Enumerator_getCurrent as default };

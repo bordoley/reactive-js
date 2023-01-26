@@ -8,14 +8,14 @@ import {
 } from "../../../__internal__/mixins";
 import { Factory, Reducer, error, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import ReactiveContainer$sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const Sink$reduceMixin: <
+const Sink_reduceMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<TAcc>,
   T,
@@ -40,7 +40,7 @@ const Sink$reduceMixin: <
   };
 
   return mix(
-    include(Disposable$mixin),
+    include(Disposable_mixin),
     function ReduceSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
@@ -48,7 +48,7 @@ const Sink$reduceMixin: <
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): SinkLike<T> {
-      init(Disposable$mixin, instance);
+      init(Disposable_mixin, instance);
 
       instance[DelegatingSinkLike_delegate] = delegate;
       instance[ReduceSink_private_reducer] = reducer;
@@ -57,17 +57,17 @@ const Sink$reduceMixin: <
         const acc = initialValue();
         instance[ReduceSink_private_acc] = acc;
       } catch (e) {
-        pipe(instance, Disposable$dispose(error(e)));
+        pipe(instance, Disposable_dispose(error(e)));
       }
 
       pipe(
         instance,
-        Disposable$addTo(delegate),
-        Disposable$onComplete(() => {
+        Disposable_addTo(delegate),
+        Disposable_onComplete(() => {
           pipe(
             [instance[ReduceSink_private_acc]],
             fromArray,
-            ReactiveContainer$sinkInto<C, TSink, TAcc>(delegate),
+            ReactiveContainer_sinkInto<C, TSink, TAcc>(delegate),
           );
         }),
       );
@@ -91,4 +91,4 @@ const Sink$reduceMixin: <
   );
 };
 
-export default Sink$reduceMixin;
+export default Sink_reduceMixin;

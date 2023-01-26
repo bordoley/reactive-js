@@ -6,9 +6,9 @@ import {
 } from "../../../containers";
 import { Factory, Function1, pipe, raise } from "../../../functions";
 
-import Container$compute from "./Container.compute";
+import Container_compute from "./Container.compute";
 
-const Container$throws =
+const Container_throws =
   <
     C extends ContainerLike,
     T,
@@ -27,6 +27,6 @@ const Container$throws =
     pipe(() => {
       const err = errorFactory();
       return raise<T>(err);
-    }, Container$compute(m, options));
+    }, Container_compute(m, options));
 
-export default Container$throws;
+export default Container_throws;

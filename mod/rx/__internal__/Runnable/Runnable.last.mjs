@@ -1,14 +1,14 @@
 /// <reference types="./Runnable.last.d.ts" />
 import { none, pipe } from '../../../functions.mjs';
-import Runnable$forEach from './Runnable.forEach.mjs';
-import Runnable$run from './Runnable.run.mjs';
+import Runnable_forEach from './Runnable.forEach.mjs';
+import Runnable_run from './Runnable.run.mjs';
 
-const Runnable$last = () => src => {
+const Runnable_last = () => src => {
     let result = none;
-    pipe(src, Runnable$forEach(next => {
+    pipe(src, Runnable_forEach(next => {
         result = next;
-    }), Runnable$run());
+    }), Runnable_run());
     return result;
 };
 
-export { Runnable$last as default };
+export { Runnable_last as default };

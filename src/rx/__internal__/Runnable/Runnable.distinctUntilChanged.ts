@@ -1,23 +1,23 @@
 import { createInstanceFactory } from "../../../__internal__/mixins";
 import { DistinctUntilChanged } from "../../../containers";
-import StatefulContainer$distinctUntilChanged from "../../../containers/__internal__/StatefulContainer/StatefulContainer.distinctUntilChanged";
+import StatefulContainer_distinctUntilChanged from "../../../containers/__internal__/StatefulContainer/StatefulContainer.distinctUntilChanged";
 import { TReactive } from "../../../containers/__internal__/containers.internal";
 import { pipe } from "../../../functions";
 import { RunnableLike } from "../../../rx";
-import Sink$distinctUntilChangedMixin from "../Sink/Sink.distinctUntilChangedMixin";
-import Runnable$liftT from "./Runnable.liftT";
+import Sink_distinctUntilChangedMixin from "../Sink/Sink.distinctUntilChangedMixin";
+import Runnable_liftT from "./Runnable.liftT";
 
-const Runnable$distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
+const Runnable_distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
     const typedDistinctUntilChangedSinkMixin =
-      Sink$distinctUntilChangedMixin<T>();
+      Sink_distinctUntilChangedMixin<T>();
 
     return pipe(
       createInstanceFactory(typedDistinctUntilChangedSinkMixin),
-      StatefulContainer$distinctUntilChanged<RunnableLike, T, TReactive>(
-        Runnable$liftT,
+      StatefulContainer_distinctUntilChanged<RunnableLike, T, TReactive>(
+        Runnable_liftT,
       ),
     );
   })();
 
-export default Runnable$distinctUntilChanged;
+export default Runnable_distinctUntilChanged;

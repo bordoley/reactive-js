@@ -3,26 +3,26 @@ import { createInstanceFactory, mix, init, props } from '../../../__internal__/m
 import { getLength, pipe, isEmpty, none, unsafeCast, isNone, returns } from '../../../functions.mjs';
 import { SinkLike_notify, ObserverLike_scheduler, ObserverLike_dispatcher } from '../../../rx.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../../../scheduling.mjs';
-import Continuation$yield_ from '../../../scheduling/__internal__/Continuation/Continuation.yield.mjs';
+import Continuation_yield_ from '../../../scheduling/__internal__/Continuation/Continuation.yield.mjs';
 import { DisposableLike_error } from '../../../util.mjs';
-import Disposable$addToIgnoringChildErrors from '../../../util/__internal__/Disposable/Disposable.addToIgnoringChildErrors.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import Disposable$onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
-import Observer$getScheduler from './Observer.getScheduler.mjs';
-import Observer$schedule from './Observer.schedule.mjs';
+import Disposable_addToIgnoringChildErrors from '../../../util/__internal__/Disposable/Disposable.addToIgnoringChildErrors.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import Disposable_onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
+import Observer_getScheduler from './Observer.getScheduler.mjs';
+import Observer_schedule from './Observer.schedule.mjs';
 
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {
         if (getLength(dispatcher.nextQueue) === 1) {
             const { observer } = dispatcher;
-            pipe(observer, Observer$schedule(dispatcher.continuation), Disposable$onComplete(dispatcher.onContinuationDispose));
+            pipe(observer, Observer_schedule(dispatcher.continuation), Disposable_onComplete(dispatcher.onContinuationDispose));
         }
     };
-    return createInstanceFactory(mix(Disposable$mixin, function ObserverDispatcher(instance, observer) {
-        init(Disposable$mixin, instance);
+    return createInstanceFactory(mix(Disposable_mixin, function ObserverDispatcher(instance, observer) {
+        init(Disposable_mixin, instance);
         instance.observer = observer;
         instance.nextQueue = [];
         instance.continuation = () => {
@@ -30,17 +30,17 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             while (getLength(nextQueue) > 0) {
                 const next = nextQueue.shift();
                 observer[SinkLike_notify](next);
-                Continuation$yield_();
+                Continuation_yield_();
             }
         };
         instance.onContinuationDispose = () => {
-            if (Disposable$isDisposed(instance)) {
-                pipe(observer, Disposable$dispose(instance[DisposableLike_error]));
+            if (Disposable_isDisposed(instance)) {
+                pipe(observer, Disposable_dispose(instance[DisposableLike_error]));
             }
         };
-        pipe(instance, Disposable$onDisposed(e => {
+        pipe(instance, Disposable_onDisposed(e => {
             if (isEmpty(instance.nextQueue)) {
-                pipe(observer, Disposable$dispose(e));
+                pipe(observer, Disposable_dispose(e));
             }
         }));
         return instance;
@@ -52,17 +52,17 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
     }), {
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            return Observer$getScheduler(this.observer);
+            return Observer_getScheduler(this.observer);
         },
         [DispatcherLike_dispatch](next) {
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
                 this.nextQueue.push(next);
                 scheduleDrainQueue(this);
             }
         },
     }));
 })();
-const Observer$mixin = 
+const Observer_mixin = 
 /*@__PURE__*/ (() => {
     return pipe(mix(function ObserverMixin(instance, scheduler) {
         instance[ObserverLike_scheduler] = scheduler;
@@ -75,7 +75,7 @@ const Observer$mixin =
             unsafeCast(this);
             let { dispatcher } = this;
             if (isNone(dispatcher)) {
-                dispatcher = pipe(createObserverDispatcher(this), Disposable$addToIgnoringChildErrors(this));
+                dispatcher = pipe(createObserverDispatcher(this), Disposable_addToIgnoringChildErrors(this));
                 this.dispatcher = dispatcher;
             }
             return dispatcher;
@@ -83,4 +83,4 @@ const Observer$mixin =
     }), returns);
 })();
 
-export { Observer$mixin as default };
+export { Observer_mixin as default };

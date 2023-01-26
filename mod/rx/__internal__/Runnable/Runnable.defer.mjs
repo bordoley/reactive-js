@@ -1,9 +1,9 @@
 /// <reference types="./Runnable.defer.d.ts" />
 import { ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
-import Runnable$create from './Runnable.create.mjs';
+import Runnable_create from './Runnable.create.mjs';
 
-const Runnable$defer = f => Runnable$create(sink => {
+const Runnable_defer = f => Runnable_create(sink => {
     f()[ReactiveContainerLike_sinkInto](sink);
 });
 
-export { Runnable$defer as default };
+export { Runnable_defer as default };

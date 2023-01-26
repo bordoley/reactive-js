@@ -1,5 +1,5 @@
 import { DelegatingEnumerator_move_delegate } from "../ix.internal.js";
-declare const DelegatingEnumerator$move: (enumerator: {
+declare const DelegatingEnumerator_move: (enumerator: {
     [DelegatingEnumerator_move_delegate](): boolean;
 }) => boolean;
-export { DelegatingEnumerator$move as default };
+export { DelegatingEnumerator_move as default };

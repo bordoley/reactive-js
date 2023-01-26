@@ -1,7 +1,7 @@
 import { ContainerLike, ContainerOf } from "../../../containers";
 import { Predicate, alwaysTrue, isNone, isNumber } from "../../../functions";
 
-const Container$repeat =
+const Container_repeat =
   <C extends ContainerLike, T>(
     repeat: (
       c: ContainerOf<C, T>,
@@ -18,4 +18,4 @@ const Container$repeat =
     return (c: ContainerOf<C, T>) => repeat(c, shouldRepeat);
   };
 
-export default Container$repeat;
+export default Container_repeat;

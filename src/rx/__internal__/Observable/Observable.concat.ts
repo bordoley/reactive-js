@@ -1,16 +1,16 @@
 import { Concat } from "../../../containers";
 import { getLength, isEmpty, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import Observer$createWithDelegate from "../Observer/Observer.createWithDelegate";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
-import Observable$allAreEnumerable from "./Observable.allAreEnumerable";
-import Observable$allAreRunnable from "./Observable.allAreRunnable";
-import Observable$create from "./Observable.create";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import Observer_createWithDelegate from "../Observer/Observer.createWithDelegate";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
+import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
+import Observable_allAreRunnable from "./Observable.allAreRunnable";
+import Observable_create from "./Observable.create";
 
-const Observable$concat: Concat<ObservableLike>["concat"] = /*@__PURE__*/ (<
+const Observable_concat: Concat<ObservableLike>["concat"] = /*@__PURE__*/ (<
   T,
 >() => {
   const createConcatObserver = <T>(
@@ -19,16 +19,16 @@ const Observable$concat: Concat<ObservableLike>["concat"] = /*@__PURE__*/ (<
     next: number,
   ) =>
     pipe(
-      Observer$createWithDelegate(delegate),
-      Disposable$addTo(delegate),
-      Disposable$onComplete(() => {
+      Observer_createWithDelegate(delegate),
+      Disposable_addTo(delegate),
+      Disposable_onComplete(() => {
         if (next < getLength(observables)) {
           pipe(
             createConcatObserver(delegate, observables, next + 1),
-            Sink$sourceFrom(observables[next]),
+            Sink_sourceFrom(observables[next]),
           );
         } else {
-          pipe(delegate, Disposable$dispose());
+          pipe(delegate, Disposable_dispose());
         }
       }),
     );
@@ -38,18 +38,18 @@ const Observable$concat: Concat<ObservableLike>["concat"] = /*@__PURE__*/ (<
       if (!isEmpty(observables)) {
         pipe(
           createConcatObserver(observer, observables, 1),
-          Sink$sourceFrom(observables[0]),
+          Sink_sourceFrom(observables[0]),
         );
       } else {
-        pipe(observer, Disposable$dispose());
+        pipe(observer, Disposable_dispose());
       }
     };
 
-    const isEnumerable = Observable$allAreEnumerable(observables);
-    const isRunnable = Observable$allAreRunnable(observables);
+    const isEnumerable = Observable_allAreEnumerable(observables);
+    const isRunnable = Observable_allAreRunnable(observables);
 
-    return Observable$create(onSink, isEnumerable, isRunnable);
+    return Observable_create(onSink, isEnumerable, isRunnable);
   };
 })();
 
-export default Observable$concat;
+export default Observable_concat;

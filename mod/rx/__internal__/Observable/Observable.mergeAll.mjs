@@ -1,7 +1,7 @@
 /// <reference types="./Observable.mergeAll.d.ts" />
-import HigherOrderObservable$mergeAll from '../HigherOrderObservable/HigherOrderObservable.mergeAll.mjs';
-import Observable$lift from './Observable.lift.mjs';
+import HigherOrderObservable_mergeAll from '../HigherOrderObservable/HigherOrderObservable.mergeAll.mjs';
+import Observable_lift from './Observable.lift.mjs';
 
-const Observable$mergeAll = /*@__PURE__*/ HigherOrderObservable$mergeAll(Observable$lift());
+const Observable_mergeAll = /*@__PURE__*/ HigherOrderObservable_mergeAll(Observable_lift());
 
-export { Observable$mergeAll as default };
+export { Observable_mergeAll as default };

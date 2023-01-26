@@ -1,5 +1,5 @@
 import { ToPromiseable } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
-declare const Observable$toPromise: ToPromiseable<ObservableLike, SchedulerLike>["toPromise"];
-export { Observable$toPromise as default };
+declare const Observable_toPromise: ToPromiseable<ObservableLike, SchedulerLike>["toPromise"];
+export { Observable_toPromise as default };

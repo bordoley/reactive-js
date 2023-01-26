@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { ContainerOperator } from "../../../containers";
-import ReadonlyArray$toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
+import ReadonlyArray_toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
 import {
   Function1,
   Optional,
@@ -18,24 +18,24 @@ import {
   pipe,
 } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$disposed from "../../../util/__internal__/Disposable/Disposable.disposed";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import DisposableRef$create from "../../../util/__internal__/DisposableRef/DisposableRef.create";
-import MutableRef$get from "../../../util/__internal__/MutableRef/MutableRef.get";
-import MutableRef$set from "../../../util/__internal__/MutableRef/MutableRef.set";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_disposed from "../../../util/__internal__/Disposable/Disposable.disposed";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import DisposableRef_create from "../../../util/__internal__/DisposableRef/DisposableRef.create";
+import MutableRef_get from "../../../util/__internal__/MutableRef/MutableRef.get";
+import MutableRef_set from "../../../util/__internal__/MutableRef/MutableRef.set";
 import { DisposableRefLike } from "../../../util/__internal__/util.internal";
-import Observer$getScheduler from "../Observer/Observer.getScheduler";
-import Observer$mixin from "../Observer/Observer.mixin";
-import ReactiveContainer$sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import Sink$notify from "../Sink/Sink.notify";
-import Observable$forEach from "./Observable.forEach";
-import Observable$lift from "./Observable.lift";
-import Observable$subscribe from "./Observable.subscribe";
+import Observer_getScheduler from "../Observer/Observer.getScheduler";
+import Observer_mixin from "../Observer/Observer.mixin";
+import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
+import Sink_notify from "../Sink/Sink.notify";
+import Observable_forEach from "./Observable.forEach";
+import Observable_lift from "./Observable.lift";
+import Observable_subscribe from "./Observable.subscribe";
 
-const Observable$throttle = /*@__PURE__*/ (<T>() => {
+const Observable_throttle = /*@__PURE__*/ (<T>() => {
   type ThrottleMode = "first" | "last" | "interval";
 
   const createThrottleObserver: <T>(
@@ -43,7 +43,7 @@ const Observable$throttle = /*@__PURE__*/ (<T>() => {
     durationFunction: Function1<T, ObservableLike>,
     mode: ThrottleMode,
   ) => ObserverLike<T> = (<T>() => {
-    const typedObserverMixin = Observer$mixin<T>();
+    const typedObserverMixin = Observer_mixin<T>();
 
     type TProperties = {
       readonly delegate: ObserverLike<T>;
@@ -61,11 +61,11 @@ const Observable$throttle = /*@__PURE__*/ (<T>() => {
     ) => {
       pipe(
         observer.durationSubscription,
-        MutableRef$set(
+        MutableRef_set(
           pipe(
             observer.durationFunction(next),
-            Observable$forEach(observer.onNotify),
-            Observable$subscribe(Observer$getScheduler(observer)),
+            Observable_forEach(observer.onNotify),
+            Observable_subscribe(Observer_getScheduler(observer)),
           ),
         ),
       );
@@ -73,7 +73,7 @@ const Observable$throttle = /*@__PURE__*/ (<T>() => {
 
     return createInstanceFactory(
       mix(
-        include(Disposable$mixin, typedObserverMixin),
+        include(Disposable_mixin, typedObserverMixin),
         function ThrottleObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
@@ -81,16 +81,16 @@ const Observable$throttle = /*@__PURE__*/ (<T>() => {
           durationFunction: Function1<T, ObservableLike>,
           mode: ThrottleMode,
         ): ObserverLike<T> {
-          init(Disposable$mixin, instance);
-          init(typedObserverMixin, instance, Observer$getScheduler(delegate));
+          init(Disposable_mixin, instance);
+          init(typedObserverMixin, instance, Observer_getScheduler(delegate));
 
           instance.delegate = delegate;
           instance.durationFunction = durationFunction;
           instance.mode = mode;
 
           instance.durationSubscription = pipe(
-            DisposableRef$create(Disposable$disposed),
-            Disposable$addTo(delegate),
+            DisposableRef_create(Disposable_disposed),
+            Disposable_addTo(delegate),
           );
 
           instance.onNotify = (_?: unknown) => {
@@ -99,7 +99,7 @@ const Observable$throttle = /*@__PURE__*/ (<T>() => {
               instance.value = none;
               instance.hasValue = false;
 
-              pipe(instance.delegate, Sink$notify(value));
+              pipe(instance.delegate, Sink_notify(value));
 
               setupDurationSubscription(instance, value);
             }
@@ -107,17 +107,17 @@ const Observable$throttle = /*@__PURE__*/ (<T>() => {
 
           pipe(
             instance,
-            Disposable$addTo(delegate),
-            Disposable$onComplete(() => {
+            Disposable_addTo(delegate),
+            Disposable_onComplete(() => {
               if (
                 instance.mode !== "first" &&
                 instance.hasValue &&
-                !Disposable$isDisposed(delegate)
+                !Disposable_isDisposed(delegate)
               ) {
                 pipe(
                   [instance.value],
-                  ReadonlyArray$toRunnableObservable(),
-                  ReactiveContainer$sinkInto(delegate),
+                  ReadonlyArray_toRunnableObservable(),
+                  ReactiveContainer_sinkInto(delegate),
                 );
               }
             }),
@@ -141,8 +141,8 @@ const Observable$throttle = /*@__PURE__*/ (<T>() => {
 
             const durationSubscriptionDisposableIsDisposed = pipe(
               this.durationSubscription,
-              MutableRef$get,
-              Disposable$isDisposed,
+              MutableRef_get,
+              Disposable_isDisposed,
             );
 
             if (
@@ -168,7 +168,7 @@ const Observable$throttle = /*@__PURE__*/ (<T>() => {
       ? (_: T) =>
           pipe(
             [none],
-            ReadonlyArray$toRunnableObservable({
+            ReadonlyArray_toRunnableObservable({
               delay: duration,
               delayStart: true,
             }),
@@ -182,9 +182,9 @@ const Observable$throttle = /*@__PURE__*/ (<T>() => {
         ThrottleMode,
         ObserverLike<T>
       >(durationFunction, mode),
-      Observable$lift(false, isNumber(duration)),
+      Observable_lift(false, isNumber(duration)),
     );
   };
 })();
 
-export default Observable$throttle;
+export default Observable_throttle;

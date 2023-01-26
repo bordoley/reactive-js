@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { Optional, isSome, none } from "../../../functions";
 
-const Sequence$concatAll: ConcatAll<SequenceLike>["concatAll"] =
+const Sequence_concatAll: ConcatAll<SequenceLike>["concatAll"] =
   <T>() =>
   (seq: SequenceLike<SequenceLike<T>>) => {
     const continueWith = (
@@ -52,4 +52,4 @@ const Sequence$concatAll: ConcatAll<SequenceLike>["concatAll"] =
     return () => flattenIter(seq());
   };
 
-export default Sequence$concatAll;
+export default Sequence_concatAll;

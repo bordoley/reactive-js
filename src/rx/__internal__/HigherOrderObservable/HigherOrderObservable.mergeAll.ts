@@ -18,18 +18,18 @@ import {
   pipe,
 } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import Observable$forEach from "../Observable/Observable.forEach";
-import Observable$subscribe from "../Observable/Observable.subscribe";
-import Observer$getScheduler from "../Observer/Observer.getScheduler";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$notifySink from "../Sink/Sink.notifySink";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import Observable_forEach from "../Observable/Observable.forEach";
+import Observable_subscribe from "../Observable/Observable.subscribe";
+import Observer_getScheduler from "../Observer/Observer.getScheduler";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_notifySink from "../Sink/Sink.notifySink";
 
-const HigherOrderObservable$mergeAll = <C extends ObservableLike>(
+const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>,
@@ -45,7 +45,7 @@ const HigherOrderObservable$mergeAll = <C extends ObservableLike>(
     maxBufferSize: number,
     maxConcurrency: number,
   ) => ObserverLike<ContainerOf<C, T>> = (<T>() => {
-    const typedObserverMixin = Observer$mixin<ContainerOf<C, T>>();
+    const typedObserverMixin = Observer_mixin<ContainerOf<C, T>>();
 
     type TProperties = {
       activeCount: number;
@@ -67,20 +67,20 @@ const HigherOrderObservable$mergeAll = <C extends ObservableLike>(
 
           pipe(
             nextObs,
-            Observable$forEach(Sink$notifySink(observer.delegate)),
-            Observable$subscribe(Observer$getScheduler(observer)),
-            Disposable$addTo(observer.delegate),
-            Disposable$onComplete(observer.onDispose),
+            Observable_forEach(Sink_notifySink(observer.delegate)),
+            Observable_subscribe(Observer_getScheduler(observer)),
+            Disposable_addTo(observer.delegate),
+            Disposable_onComplete(observer.onDispose),
           );
-        } else if (Disposable$isDisposed(observer)) {
-          pipe(observer.delegate, Disposable$dispose());
+        } else if (Disposable_isDisposed(observer)) {
+          pipe(observer.delegate, Disposable_dispose());
         }
       }
     };
 
     return createInstanceFactory(
       mix(
-        include(Disposable$mixin, typedObserverMixin),
+        include(Disposable_mixin, typedObserverMixin),
         function Observer(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -91,8 +91,8 @@ const HigherOrderObservable$mergeAll = <C extends ObservableLike>(
           maxBufferSize: number,
           maxConcurrency: number,
         ): ObserverLike<ContainerOf<C, T>> {
-          init(Disposable$mixin, instance);
-          init(typedObserverMixin, instance, Observer$getScheduler(delegate));
+          init(Disposable_mixin, instance);
+          init(typedObserverMixin, instance, Observer_getScheduler(delegate));
 
           instance.delegate = delegate;
           instance.maxBufferSize = maxBufferSize;
@@ -107,15 +107,15 @@ const HigherOrderObservable$mergeAll = <C extends ObservableLike>(
 
           pipe(
             instance,
-            Disposable$addTo(delegate),
-            Disposable$onComplete(() => {
-              if (Disposable$isDisposed(delegate)) {
+            Disposable_addTo(delegate),
+            Disposable_onComplete(() => {
+              if (Disposable_isDisposed(delegate)) {
                 instance.queue.length = 0;
               } else if (
                 getLength(instance.queue) + instance.activeCount ===
                 0
               ) {
-                pipe(instance.delegate, Disposable$dispose());
+                pipe(instance.delegate, Disposable_dispose());
               }
             }),
           );
@@ -170,4 +170,4 @@ const HigherOrderObservable$mergeAll = <C extends ObservableLike>(
   };
 };
 
-export default HigherOrderObservable$mergeAll;
+export default HigherOrderObservable_mergeAll;

@@ -1,7 +1,7 @@
 /// <reference types="./RunnableObservable.scanAsync.d.ts" />
-import HigherOrderObservable$scanAsync from '../HigherOrderObservable/HigherOrderObservable.scanAsync.mjs';
-import RunnableObservable$create from './RunnableObservable.create.mjs';
+import HigherOrderObservable_scanAsync from '../HigherOrderObservable/HigherOrderObservable.scanAsync.mjs';
+import RunnableObservable_create from './RunnableObservable.create.mjs';
 
-const RunnableObservable$scanAsync = HigherOrderObservable$scanAsync(RunnableObservable$create);
+const RunnableObservable_scanAsync = HigherOrderObservable_scanAsync(RunnableObservable_create);
 
-export { RunnableObservable$scanAsync as default };
+export { RunnableObservable_scanAsync as default };

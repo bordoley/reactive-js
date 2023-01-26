@@ -10,7 +10,7 @@ import {
 } from "../../../ix";
 import enumerate from "./Enumerable.enumerate";
 
-const Enumerable$lift: Lift<EnumerableLike, TInteractive>["lift"] =
+const Enumerable_lift: Lift<EnumerableLike, TInteractive>["lift"] =
   /*@__PURE__*/ (() => {
     class LiftedEnumerable<TA, TB> implements EnumerableLike<TB> {
       constructor(
@@ -52,4 +52,4 @@ const Enumerable$lift: Lift<EnumerableLike, TInteractive>["lift"] =
       };
   })();
 
-export default Enumerable$lift;
+export default Enumerable_lift;

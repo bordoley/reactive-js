@@ -1,8 +1,8 @@
 /// <reference types="./EnumerableObservable.switchAll.d.ts" />
-import HigherOrderObservable$switchAll from '../HigherOrderObservable/HigherOrderObservable.switchAll.mjs';
-import EnumerableObservable$lift from './EnumerableObservable.lift.mjs';
+import HigherOrderObservable_switchAll from '../HigherOrderObservable/HigherOrderObservable.switchAll.mjs';
+import EnumerableObservable_lift from './EnumerableObservable.lift.mjs';
 
-const EnumerableObservable$switchAll = 
-/*@__PURE__*/ HigherOrderObservable$switchAll(EnumerableObservable$lift);
+const EnumerableObservable_switchAll = 
+/*@__PURE__*/ HigherOrderObservable_switchAll(EnumerableObservable_lift);
 
-export { EnumerableObservable$switchAll as default };
+export { EnumerableObservable_switchAll as default };

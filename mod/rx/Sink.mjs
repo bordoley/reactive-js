@@ -1,10 +1,10 @@
 /// <reference types="./Sink.d.ts" />
-import Sink$notify from './__internal__/Sink/Sink.notify.mjs';
-import Sink$notifySink from './__internal__/Sink/Sink.notifySink.mjs';
-import Sink$sourceFrom from './__internal__/Sink/Sink.sourceFrom.mjs';
+import Sink_notify from './__internal__/Sink/Sink.notify.mjs';
+import Sink_notifySink from './__internal__/Sink/Sink.notifySink.mjs';
+import Sink_sourceFrom from './__internal__/Sink/Sink.sourceFrom.mjs';
 
-const notify = Sink$notify;
-const notifySink = Sink$notifySink;
-const sourceFrom = Sink$sourceFrom;
+const notify = Sink_notify;
+const notifySink = Sink_notifySink;
+const sourceFrom = Sink_sourceFrom;
 
 export { notify, notifySink, sourceFrom };

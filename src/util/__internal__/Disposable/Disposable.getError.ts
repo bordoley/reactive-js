@@ -1,8 +1,8 @@
 import { Optional } from "../../../functions";
 import { DisposableLike_error } from "../../../util";
 
-const Disposable$getError = (disposable: {
+const Disposable_getError = (disposable: {
   [DisposableLike_error]: Optional<Error>;
 }): Optional<Error> => disposable[DisposableLike_error];
 
-export default Disposable$getError;
+export default Disposable_getError;

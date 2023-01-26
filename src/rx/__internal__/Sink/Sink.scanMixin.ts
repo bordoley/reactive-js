@@ -15,12 +15,12 @@ import {
   returns,
 } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-const Sink$scanMixin: <T, TAcc>() => Mixin3<
+const Sink_scanMixin: <T, TAcc>() => Mixin3<
   SinkLike<T>,
   SinkLike<TAcc>,
   Reducer<T, TAcc>,
@@ -37,7 +37,7 @@ const Sink$scanMixin: <T, TAcc>() => Mixin3<
 
   return returns(
     mix(
-      include(Disposable$delegatingMixin),
+      include(Disposable_delegatingMixin),
       function ScanSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -45,7 +45,7 @@ const Sink$scanMixin: <T, TAcc>() => Mixin3<
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
       ): SinkLike<T> {
-        init(Disposable$delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
 
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[ScanSink_private_reducer] = reducer;
@@ -54,7 +54,7 @@ const Sink$scanMixin: <T, TAcc>() => Mixin3<
           const acc = initialValue();
           instance[ScanSink_private_acc] = acc;
         } catch (e) {
-          pipe(instance, Disposable$dispose(error(e)));
+          pipe(instance, Disposable_dispose(error(e)));
         }
 
         return instance;
@@ -71,11 +71,11 @@ const Sink$scanMixin: <T, TAcc>() => Mixin3<
             next,
           );
           this[ScanSink_private_acc] = nextAcc;
-          pipe(this[DelegatingSinkLike_delegate], Sink$notify(nextAcc));
+          pipe(this[DelegatingSinkLike_delegate], Sink_notify(nextAcc));
         },
       },
     ),
   );
 })();
 
-export default Sink$scanMixin;
+export default Sink_scanMixin;

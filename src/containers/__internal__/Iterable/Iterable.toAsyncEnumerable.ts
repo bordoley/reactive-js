@@ -1,10 +1,10 @@
 import { IterableLike } from "../../../containers";
 import { compose } from "../../../functions";
 import { ToAsyncEnumerable } from "../../../ix";
-import Enumerable$toAsyncEnumerable from "../../../ix/__internal__/Enumerable/Enumerable.toAsyncEnumerable";
-import Iterable$toEnumerable from "./Iterable.toEnumerable";
+import Enumerable_toAsyncEnumerable from "../../../ix/__internal__/Enumerable/Enumerable.toAsyncEnumerable";
+import Iterable_toEnumerable from "./Iterable.toEnumerable";
 
-const Iterable$toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"] =
-  () => compose(Iterable$toEnumerable(), Enumerable$toAsyncEnumerable());
+const Iterable_toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"] =
+  () => compose(Iterable_toEnumerable(), Enumerable_toAsyncEnumerable());
 
-export default Iterable$toAsyncEnumerable;
+export default Iterable_toAsyncEnumerable;

@@ -1,9 +1,9 @@
 import { Zip } from "../../../containers";
 import { ObservableLike } from "../../../rx";
-import Observable$latest from "./Observable.latest";
+import Observable_latest from "./Observable.latest";
 
-const Observable$zipLatest: Zip<ObservableLike>["zip"] = (
+const Observable_zipLatest: Zip<ObservableLike>["zip"] = (
   ...observables: readonly ObservableLike<any>[]
-): ObservableLike<readonly unknown[]> => Observable$latest(observables, 2);
+): ObservableLike<readonly unknown[]> => Observable_latest(observables, 2);
 
-export default Observable$zipLatest;
+export default Observable_zipLatest;

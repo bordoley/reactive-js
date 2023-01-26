@@ -6,7 +6,7 @@ import {
   StreamableLike_stream,
 } from "../../../streaming";
 
-const Streamable$create = /*@__PURE__*/ (() => {
+const Streamable_create = /*@__PURE__*/ (() => {
   class CreateStreamable<
     TReq,
     TData,
@@ -41,4 +41,4 @@ const Streamable$create = /*@__PURE__*/ (() => {
     newInstance(CreateStreamable, stream);
 })();
 
-export default Streamable$create;
+export default Streamable_create;

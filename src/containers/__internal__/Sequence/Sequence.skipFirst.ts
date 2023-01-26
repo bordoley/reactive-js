@@ -1,13 +1,13 @@
 import { SequenceLike, SkipFirst } from "../../../containers";
 
-import Sequence$seek from "./Sequence.seek";
+import Sequence_seek from "./Sequence.seek";
 
-const Sequence$skipFirst: SkipFirst<SequenceLike>["skipFirst"] =
+const Sequence_skipFirst: SkipFirst<SequenceLike>["skipFirst"] =
   <T>(options: { readonly count?: number } = {}) =>
   (seq: SequenceLike<T>) =>
   () => {
     const { count = 1 } = options;
-    return Sequence$seek<T>(count)(seq)();
+    return Sequence_seek<T>(count)(seq)();
   };
 
-export default Sequence$skipFirst;
+export default Sequence_skipFirst;

@@ -1,23 +1,23 @@
 import { Function1, Optional, none, pipe } from "../../../functions";
 import { RunnableLike } from "../../../rx";
-import Runnable$forEach from "./Runnable.forEach";
-import Runnable$run from "./Runnable.run";
-import Runnable$takeFirst from "./Runnable.takeFirst";
+import Runnable_forEach from "./Runnable.forEach";
+import Runnable_run from "./Runnable.run";
+import Runnable_takeFirst from "./Runnable.takeFirst";
 
-const Runnable$first =
+const Runnable_first =
   <T>(): Function1<RunnableLike<T>, Optional<T>> =>
   src => {
     let result: Optional<T> = none;
 
     pipe(
       src,
-      Runnable$takeFirst(),
-      Runnable$forEach(next => {
+      Runnable_takeFirst(),
+      Runnable_forEach(next => {
         result = next;
       }),
-      Runnable$run(),
+      Runnable_run(),
     );
     return result;
   };
 
-export default Runnable$first;
+export default Runnable_first;

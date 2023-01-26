@@ -7,22 +7,22 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { ForEach } from "../../../containers";
-import StatefulContainer$forEach from "../../../containers/__internal__/StatefulContainer/StatefulContainer.forEach";
+import StatefulContainer_forEach from "../../../containers/__internal__/StatefulContainer/StatefulContainer.forEach";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { SideEffect1, error, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import DelegatingEnumerator$mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
-import DelegatingEnumerator$move from "../DelegatingEnumerator/DelegatingEnumerator.move";
-import Enumerator$getCurrent from "../Enumerator/Enumerator.getCurrent";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
+import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
+import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
 import { DelegatingEnumeratorLike } from "../ix.internal";
-import Enumerable$liftT from "./Enumerable.liftT";
+import Enumerable_liftT from "./Enumerable.liftT";
 
-const Enumerable$forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
+const Enumerable_forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedDelegatingEnumeratorMixin = DelegatingEnumerator$mixin<T>();
+  const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
   type TProperties = {
     readonly effect: SideEffect1<T>;
@@ -31,14 +31,14 @@ const Enumerable$forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable$delegatingMixin, typedDelegatingEnumeratorMixin),
+        include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
         function forEachEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           effect: SideEffect1<T>,
         ): EnumeratorLike<T> {
-          init(Disposable$delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin, instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
 
           instance.effect = effect;
@@ -48,21 +48,21 @@ const Enumerable$forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
         props<TProperties>({ effect: none }),
         {
           [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-            if (DelegatingEnumerator$move(this)) {
+            if (DelegatingEnumerator_move(this)) {
               try {
-                this.effect(Enumerator$getCurrent(this));
+                this.effect(Enumerator_getCurrent(this));
               } catch (e) {
-                pipe(this, Disposable$dispose(error(e)));
+                pipe(this, Disposable_dispose(error(e)));
               }
             }
           },
         },
       ),
     ),
-    StatefulContainer$forEach<EnumerableLike, T, TInteractive>(
-      Enumerable$liftT,
+    StatefulContainer_forEach<EnumerableLike, T, TInteractive>(
+      Enumerable_liftT,
     ),
   );
 })();
 
-export default Enumerable$forEach;
+export default Enumerable_forEach;

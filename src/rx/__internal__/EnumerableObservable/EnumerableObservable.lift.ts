@@ -10,9 +10,9 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
 
-const EnumerableObservable$lift: Lift<
+const EnumerableObservable_lift: Lift<
   EnumerableObservableLike,
   TReactive
 >["lift"] = /*@__PURE__*/ (() => {
@@ -31,7 +31,7 @@ const EnumerableObservable$lift: Lift<
     ) {}
 
     [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-      pipeUnsafe(observer, ...this.operators, Sink$sourceFrom(this.source));
+      pipeUnsafe(observer, ...this.operators, Sink_sourceFrom(this.source));
     }
   }
 
@@ -55,4 +55,4 @@ const EnumerableObservable$lift: Lift<
     };
 })();
 
-export default EnumerableObservable$lift;
+export default EnumerableObservable_lift;

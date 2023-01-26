@@ -7,9 +7,9 @@ import {
   TInteractive,
   TReactive,
 } from "../containers.internal";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$scan =
+const StatefulContainer_scan =
   <
     C extends StatefulContainerLike,
     T,
@@ -27,6 +27,6 @@ const StatefulContainer$scan =
     >,
   ) =>
   (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-    pipe(operator, partial(reducer, initialValue), StatefulContainer$lift(m));
+    pipe(operator, partial(reducer, initialValue), StatefulContainer_lift(m));
 
-export default StatefulContainer$scan;
+export default StatefulContainer_scan;

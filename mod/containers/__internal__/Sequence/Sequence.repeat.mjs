@@ -1,9 +1,9 @@
 /// <reference types="./Sequence.repeat.d.ts" />
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome, none } from '../../../functions.mjs';
-import Container$repeat from '../Container/Container.repeat.mjs';
+import Container_repeat from '../Container/Container.repeat.mjs';
 
-const Sequence$repeat = /*@__PURE__*/ (() => {
+const Sequence_repeat = /*@__PURE__*/ (() => {
     const _repeat = (src, predicate, count, seq) => () => {
         const result = seq();
         if (isSome(result)) {
@@ -19,7 +19,7 @@ const Sequence$repeat = /*@__PURE__*/ (() => {
             return none;
         }
     };
-    return Container$repeat((seq, predicate) => _repeat(seq, predicate, 1, seq));
+    return Container_repeat((seq, predicate) => _repeat(seq, predicate, 1, seq));
 })();
 
-export { Sequence$repeat as default };
+export { Sequence_repeat as default };

@@ -2,34 +2,34 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe, error } from '../../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../../ix.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import MutableEnumerator$mixin from '../MutableEnumerator/MutableEnumerator.mixin.mjs';
-import Enumerable$create from './Enumerable.create.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import MutableEnumerator_mixin from '../MutableEnumerator/MutableEnumerator.mixin.mjs';
+import Enumerable_create from './Enumerable.create.mjs';
 
-const Enumerable$generate = 
+const Enumerable_generate = 
 /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = MutableEnumerator$mixin();
-    const createGenerateEnumerator = createInstanceFactory(mix(include(Disposable$mixin, typedMutableEnumeratorMixin), function GenerateEnumerator(instance, f, acc) {
-        init(Disposable$mixin, instance);
+    const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    const createGenerateEnumerator = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function GenerateEnumerator(instance, f, acc) {
+        init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.f = f;
         instance[EnumeratorLike_current] = acc;
         return instance;
     }, props({ f: none }), {
         [SourceLike_move]() {
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
                 try {
                     this[EnumeratorLike_current] = this.f(this[EnumeratorLike_current]);
                 }
                 catch (e) {
-                    pipe(this, Disposable$dispose(error(e)));
+                    pipe(this, Disposable_dispose(error(e)));
                 }
             }
         },
     }));
-    return (generator, initialValue) => Enumerable$create(() => createGenerateEnumerator(generator, initialValue()));
+    return (generator, initialValue) => Enumerable_create(() => createGenerateEnumerator(generator, initialValue()));
 })();
 
-export { Enumerable$generate as default };
+export { Enumerable_generate as default };

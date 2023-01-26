@@ -2,7 +2,7 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome, none } from '../../../functions.mjs';
 
-const Sequence$scan = /*@__PURE__*/ (() => {
+const Sequence_scan = /*@__PURE__*/ (() => {
     const _scan = (reducer, acc, seq) => () => {
         const result = seq();
         if (isSome(result)) {
@@ -19,4 +19,4 @@ const Sequence$scan = /*@__PURE__*/ (() => {
     return (reducer, initialValue) => (seq) => () => _scan(reducer, initialValue(), seq)();
 })();
 
-export { Sequence$scan as default };
+export { Sequence_scan as default };

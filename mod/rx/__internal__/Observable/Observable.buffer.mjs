@@ -1,45 +1,45 @@
 /// <reference types="./Observable.buffer.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
-import ReadonlyArray$toRunnableObservable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable.mjs';
+import ReadonlyArray_toRunnableObservable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable.mjs';
 import { pipe, isEmpty, none, getLength, isNumber, max } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$disposed from '../../../util/__internal__/Disposable/Disposable.disposed.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import DisposableRef$create from '../../../util/__internal__/DisposableRef/DisposableRef.create.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_disposed from '../../../util/__internal__/Disposable/Disposable.disposed.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import DisposableRef_create from '../../../util/__internal__/DisposableRef/DisposableRef.create.mjs';
 import { MutableRefLike_current } from '../../../util/__internal__/util.internal.mjs';
-import EnumerableObservable$never from '../EnumerableObservable/EnumerableObservable.never.mjs';
-import Observer$getScheduler from '../Observer/Observer.getScheduler.mjs';
-import Observer$mixin from '../Observer/Observer.mixin.mjs';
-import ReactiveContainer$sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
-import Sink$notify from '../Sink/Sink.notify.mjs';
-import Observable$forEach from './Observable.forEach.mjs';
-import Observable$lift from './Observable.lift.mjs';
-import Observable$subscribe from './Observable.subscribe.mjs';
+import EnumerableObservable_never from '../EnumerableObservable/EnumerableObservable.never.mjs';
+import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
+import Observer_mixin from '../Observer/Observer.mixin.mjs';
+import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
+import Sink_notify from '../Sink/Sink.notify.mjs';
+import Observable_forEach from './Observable.forEach.mjs';
+import Observable_lift from './Observable.lift.mjs';
+import Observable_subscribe from './Observable.subscribe.mjs';
 
-const Observable$buffer = /*@__PURE__*/ (() => {
-    const typedObserverMixin = Observer$mixin();
-    const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable$mixin), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
-        init(Disposable$mixin, instance);
-        init(typedObserverMixin, instance, Observer$getScheduler(delegate));
+const Observable_buffer = /*@__PURE__*/ (() => {
+    const typedObserverMixin = Observer_mixin();
+    const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
+        init(Disposable_mixin, instance);
+        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
         instance.buffer = [];
         instance.delegate = delegate;
         instance.durationFunction = durationFunction;
         instance.durationSubscription =
-            DisposableRef$create(Disposable$disposed);
+            DisposableRef_create(Disposable_disposed);
         instance.maxBufferSize = maxBufferSize;
-        pipe(instance, Disposable$onComplete(() => {
+        pipe(instance, Disposable_onComplete(() => {
             const { buffer } = instance;
             instance.buffer = [];
             if (isEmpty(buffer)) {
-                pipe(delegate, Disposable$dispose());
+                pipe(delegate, Disposable_dispose());
             }
             else {
-                pipe([buffer], ReadonlyArray$toRunnableObservable(), ReactiveContainer$sinkInto(delegate));
+                pipe([buffer], ReadonlyArray_toRunnableObservable(), ReactiveContainer_sinkInto(delegate));
             }
         }));
         return instance;
@@ -55,16 +55,16 @@ const Observable$buffer = /*@__PURE__*/ (() => {
             buffer.push(next);
             const doOnNotify = () => {
                 this.durationSubscription[MutableRefLike_current] =
-                    Disposable$disposed;
+                    Disposable_disposed;
                 const buffer = this.buffer;
                 this.buffer = [];
-                pipe(this.delegate, Sink$notify(buffer));
+                pipe(this.delegate, Sink_notify(buffer));
             };
             if (getLength(buffer) === maxBufferSize) {
                 doOnNotify();
             }
-            else if (Disposable$isDisposed(this.durationSubscription[MutableRefLike_current])) {
-                this.durationSubscription[MutableRefLike_current] = pipe(next, this.durationFunction, Observable$forEach(doOnNotify), Observable$subscribe(Observer$getScheduler(this)));
+            else if (Disposable_isDisposed(this.durationSubscription[MutableRefLike_current])) {
+                this.durationSubscription[MutableRefLike_current] = pipe(next, this.durationFunction, Observable_forEach(doOnNotify), Observable_subscribe(Observer_getScheduler(this)));
             }
         },
     }));
@@ -72,16 +72,16 @@ const Observable$buffer = /*@__PURE__*/ (() => {
         var _a, _b;
         const durationOption = (_a = options.duration) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER;
         const durationFunction = durationOption === MAX_SAFE_INTEGER
-            ? EnumerableObservable$never
+            ? EnumerableObservable_never
             : isNumber(durationOption)
-                ? (_) => pipe([none], ReadonlyArray$toRunnableObservable())
+                ? (_) => pipe([none], ReadonlyArray_toRunnableObservable())
                 : durationOption;
         const maxBufferSize = max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER, 1);
         const operator = (delegate) => {
-            return pipe(createBufferObserver(delegate, durationFunction, maxBufferSize), Disposable$addTo(delegate));
+            return pipe(createBufferObserver(delegate, durationFunction, maxBufferSize), Disposable_addTo(delegate));
         };
-        return pipe(operator, Observable$lift(durationOption === MAX_SAFE_INTEGER));
+        return pipe(operator, Observable_lift(durationOption === MAX_SAFE_INTEGER));
     };
 })();
 
-export { Observable$buffer as default };
+export { Observable_buffer as default };

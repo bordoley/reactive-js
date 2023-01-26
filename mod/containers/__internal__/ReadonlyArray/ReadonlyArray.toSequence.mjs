@@ -1,9 +1,9 @@
 /// <reference types="./ReadonlyArray.toSequence.d.ts" />
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { none } from '../../../functions.mjs';
-import ReadonlyArray$toContainer from './ReadonlyArray.toContainer.mjs';
+import ReadonlyArray_toContainer from './ReadonlyArray.toContainer.mjs';
 
-const ReadonlyArray$toSequence = 
+const ReadonlyArray_toSequence = 
 /*@__PURE__*/ (() => {
     const _arraySequence = (arr, index, count) => count !== 0 && index >= 0
         ? {
@@ -11,7 +11,7 @@ const ReadonlyArray$toSequence =
             [SequenceLike_next]: () => _arraySequence(arr, count > 0 ? index + 1 : index - 1, count > 0 ? count - 1 : count + 1),
         }
         : none;
-    return ReadonlyArray$toContainer((values, startIndex, count) => () => _arraySequence(values, startIndex, count));
+    return ReadonlyArray_toContainer((values, startIndex, count) => () => _arraySequence(values, startIndex, count));
 })();
 
-export { ReadonlyArray$toSequence as default };
+export { ReadonlyArray_toSequence as default };

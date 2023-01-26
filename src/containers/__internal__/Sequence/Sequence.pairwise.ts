@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { isSome, none } from "../../../functions";
 
-const Sequence$pairwise: Pairwise<SequenceLike>["pairwise"] =
+const Sequence_pairwise: Pairwise<SequenceLike>["pairwise"] =
   /*@__PURE__*/ (() => {
     const _pairwise =
       <T>(prev: T, seq: SequenceLike<T>): SequenceLike<readonly [T, T]> =>
@@ -36,4 +36,4 @@ const Sequence$pairwise: Pairwise<SequenceLike>["pairwise"] =
       };
   })();
 
-export default Sequence$pairwise;
+export default Sequence_pairwise;

@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { Factory, Updater } from "../../../functions";
 
-const Sequence$generate: Generate<SequenceLike>["generate"] =
+const Sequence_generate: Generate<SequenceLike>["generate"] =
   /*@__PURE__*/ (() => {
     const _generate =
       <T>(generator: Updater<T>, data: T): SequenceLike<T> =>
@@ -22,4 +22,4 @@ const Sequence$generate: Generate<SequenceLike>["generate"] =
       };
   })();
 
-export default Sequence$generate;
+export default Sequence_generate;

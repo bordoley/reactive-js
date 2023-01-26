@@ -1,10 +1,10 @@
 import { Defer } from "../../../containers";
 import { ReactiveContainerLike_sinkInto, RunnableLike } from "../../../rx";
-import Runnable$create from "./Runnable.create";
+import Runnable_create from "./Runnable.create";
 
-const Runnable$defer: Defer<RunnableLike>["defer"] = f =>
-  Runnable$create(sink => {
+const Runnable_defer: Defer<RunnableLike>["defer"] = f =>
+  Runnable_create(sink => {
     f()[ReactiveContainerLike_sinkInto](sink);
   });
 
-export default Runnable$defer;
+export default Runnable_defer;

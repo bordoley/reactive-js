@@ -7,15 +7,15 @@ import {
   pipe,
 } from "../../../functions";
 import { MulticastObservableLike, ObservableLike } from "../../../rx";
-import MulticastObservable$getObserverCount from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getObserverCount";
+import MulticastObservable_getObserverCount from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getObserverCount";
 import { SchedulerLike } from "../../../scheduling";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
-import Observable$create from "./Observable.create";
-import Observable$multicast from "./Observable.multicast";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
+import Observable_create from "./Observable.create";
+import Observable_multicast from "./Observable.multicast";
 
-const Observable$share =
+const Observable_share =
   <T>(
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
@@ -24,20 +24,20 @@ const Observable$share =
     let multicasted: Optional<MulticastObservableLike<T>> = none;
 
     // FIXME: Type test scheduler for VTS
-    return Observable$create<T>(observer => {
+    return Observable_create<T>(observer => {
       if (isNone(multicasted)) {
-        multicasted = pipe(source, Observable$multicast(scheduler, options));
+        multicasted = pipe(source, Observable_multicast(scheduler, options));
       }
 
       pipe(
         observer,
-        Sink$sourceFrom(multicasted),
-        Disposable$onDisposed(() => {
+        Sink_sourceFrom(multicasted),
+        Disposable_onDisposed(() => {
           if (
             isSome(multicasted) &&
-            MulticastObservable$getObserverCount(multicasted) === 0
+            MulticastObservable_getObserverCount(multicasted) === 0
           ) {
-            pipe(multicasted, Disposable$dispose());
+            pipe(multicasted, Disposable_dispose());
             multicasted = none;
           }
         }),
@@ -45,4 +45,4 @@ const Observable$share =
     });
   };
 
-export default Observable$share;
+export default Observable_share;

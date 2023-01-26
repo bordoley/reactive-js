@@ -1,12 +1,12 @@
 /// <reference types="./Runnable.toReadonlyArray.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import Runnable$forEach from './Runnable.forEach.mjs';
-import Runnable$run from './Runnable.run.mjs';
+import Runnable_forEach from './Runnable.forEach.mjs';
+import Runnable_run from './Runnable.run.mjs';
 
-const Runnable$toReadonlyArray = () => (runnable) => {
+const Runnable_toReadonlyArray = () => (runnable) => {
     const result = [];
-    pipe(runnable, Runnable$forEach(x => result.push(x)), Runnable$run());
+    pipe(runnable, Runnable_forEach(x => result.push(x)), Runnable_run());
     return result;
 };
 
-export { Runnable$toReadonlyArray as default };
+export { Runnable_toReadonlyArray as default };

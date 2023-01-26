@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { ContainerOperator, Map } from "../../../containers";
-import StatefulContainer$map from "../../../containers/__internal__/StatefulContainer/StatefulContainer.map";
+import StatefulContainer_map from "../../../containers/__internal__/StatefulContainer/StatefulContainer.map";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { Function1, none, pipe, unsafeCast } from "../../../functions";
 import { AsyncEnumerableLike, AsyncEnumeratorLike } from "../../../ix";
@@ -18,15 +18,15 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import MulticastObservable$getObserverCount from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getObserverCount";
-import MulticastObservable$getReplay from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getReplay";
-import Observable$map from "../../../rx/__internal__/Observable/Observable.map";
-import ReactiveContainer$sinkInto from "../../../rx/__internal__/ReactiveContainer/ReactiveContainer.sinkInto";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import DelegatingAsyncEnumerator$mixin from "../DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin";
-import AsyncEnumerable$liftT from "./AsyncEnumerable.liftT";
+import MulticastObservable_getObserverCount from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getObserverCount";
+import MulticastObservable_getReplay from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getReplay";
+import Observable_map from "../../../rx/__internal__/Observable/Observable.map";
+import ReactiveContainer_sinkInto from "../../../rx/__internal__/ReactiveContainer/ReactiveContainer.sinkInto";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import DelegatingAsyncEnumerator_mixin from "../DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin";
+import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT";
 
-const AsyncEnumerable$map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
+const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
   TA,
   TB,
 >() => {
@@ -37,7 +37,7 @@ const AsyncEnumerable$map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
 
   const createMapAsyncEnumerator = createInstanceFactory(
     mix(
-      include(Disposable$delegatingMixin, DelegatingAsyncEnumerator$mixin()),
+      include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()),
       function MapAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TB>,
@@ -49,11 +49,11 @@ const AsyncEnumerable$map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
         delegate: AsyncEnumeratorLike<TA>,
         mapper: Function1<TA, TB>,
       ): AsyncEnumeratorLike<TB> {
-        init(Disposable$delegatingMixin, instance, delegate);
-        init(DelegatingAsyncEnumerator$mixin(), instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
+        init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
         instance.delegate = delegate;
-        instance.op = Observable$map(mapper);
+        instance.op = Observable_map(mapper);
         return instance;
       },
       props<TProperties>({
@@ -63,17 +63,17 @@ const AsyncEnumerable$map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable$getObserverCount(this.delegate);
+          return MulticastObservable_getObserverCount(this.delegate);
         },
         get [MulticastObservableLike_replay]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable$getReplay(this.delegate);
+          return MulticastObservable_getReplay(this.delegate);
         },
         [ReactiveContainerLike_sinkInto](
           this: TProperties,
           observer: ObserverLike<TB>,
         ): void {
-          pipe(this.delegate, this.op, ReactiveContainer$sinkInto(observer));
+          pipe(this.delegate, this.op, ReactiveContainer_sinkInto(observer));
         },
       },
     ),
@@ -81,10 +81,10 @@ const AsyncEnumerable$map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
 
   return pipe(
     createMapAsyncEnumerator,
-    StatefulContainer$map<AsyncEnumerableLike, TA, TB, TInteractive>(
-      AsyncEnumerable$liftT,
+    StatefulContainer_map<AsyncEnumerableLike, TA, TB, TInteractive>(
+      AsyncEnumerable_liftT,
     ),
   );
 })();
 
-export default AsyncEnumerable$map;
+export default AsyncEnumerable_map;

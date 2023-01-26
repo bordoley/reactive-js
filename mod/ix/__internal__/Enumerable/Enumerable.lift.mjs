@@ -1,9 +1,9 @@
 /// <reference types="./Enumerable.lift.d.ts" />
 import { pipeUnsafe, newInstance } from '../../../functions.mjs';
 import { InteractiveContainerLike_interact } from '../../../ix.mjs';
-import Enumerable$enumerate from './Enumerable.enumerate.mjs';
+import Enumerable_enumerate from './Enumerable.enumerate.mjs';
 
-const Enumerable$lift = 
+const Enumerable_lift = 
 /*@__PURE__*/ (() => {
     class LiftedEnumerable {
         constructor(src, operators) {
@@ -11,7 +11,7 @@ const Enumerable$lift =
             this.operators = operators;
         }
         [InteractiveContainerLike_interact]() {
-            return pipeUnsafe(this.src, Enumerable$enumerate(), ...this.operators);
+            return pipeUnsafe(this.src, Enumerable_enumerate(), ...this.operators);
         }
     }
     return (operator) => (enumerable) => {
@@ -25,4 +25,4 @@ const Enumerable$lift =
     };
 })();
 
-export { Enumerable$lift as default };
+export { Enumerable_lift as default };

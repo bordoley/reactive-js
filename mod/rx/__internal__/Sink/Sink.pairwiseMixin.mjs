@@ -2,15 +2,15 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
+import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink$notify from './Sink.notify.mjs';
+import Sink_notify from './Sink.notify.mjs';
 
-const Sink$pairwiseMixin = /*@__PURE__*/ (() => {
+const Sink_pairwiseMixin = /*@__PURE__*/ (() => {
     const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
     const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
-    return returns(mix(include(Disposable$delegatingMixin), function PairwiseSink(instance, delegate) {
-        init(Disposable$delegatingMixin, instance, delegate);
+    return returns(mix(include(Disposable_delegatingMixin), function PairwiseSink(instance, delegate) {
+        init(Disposable_delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         return instance;
     }, props({
@@ -21,7 +21,7 @@ const Sink$pairwiseMixin = /*@__PURE__*/ (() => {
         [SinkLike_notify](next) {
             const prev = this[PairwiseSink_private_prev];
             if (this[PairwiseSink_private_hasPrev]) {
-                pipe(this[DelegatingSinkLike_delegate], Sink$notify([
+                pipe(this[DelegatingSinkLike_delegate], Sink_notify([
                     prev,
                     next,
                 ]));
@@ -32,4 +32,4 @@ const Sink$pairwiseMixin = /*@__PURE__*/ (() => {
     }));
 })();
 
-export { Sink$pairwiseMixin as default };
+export { Sink_pairwiseMixin as default };

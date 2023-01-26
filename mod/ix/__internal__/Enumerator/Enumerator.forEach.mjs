@@ -1,12 +1,12 @@
 /// <reference types="./Enumerator.forEach.d.ts" />
-import Enumerator$getCurrent from './Enumerator.getCurrent.mjs';
-import Enumerator$move from './Enumerator.move.mjs';
+import Enumerator_getCurrent from './Enumerator.getCurrent.mjs';
+import Enumerator_move from './Enumerator.move.mjs';
 
-const Enumerator$forEach = (f) => enumerator => {
-    while (Enumerator$move(enumerator)) {
-        f(Enumerator$getCurrent(enumerator));
+const Enumerator_forEach = (f) => enumerator => {
+    while (Enumerator_move(enumerator)) {
+        f(Enumerator_getCurrent(enumerator));
     }
     return enumerator;
 };
 
-export { Enumerator$forEach as default };
+export { Enumerator_forEach as default };

@@ -1,13 +1,13 @@
 import { Factory } from "../../../functions";
 import { ObservableLike, ReactiveContainerLike_sinkInto } from "../../../rx";
-import Observable$create from "./Observable.create";
+import Observable_create from "./Observable.create";
 
-const Observable$defer = <T>(
+const Observable_defer = <T>(
   factory: Factory<ObservableLike<T>>,
   isEnumerable = false,
   isRunnable = false,
 ): ObservableLike<T> =>
-  Observable$create(
+  Observable_create(
     observer => {
       factory()[ReactiveContainerLike_sinkInto](observer);
     },
@@ -15,4 +15,4 @@ const Observable$defer = <T>(
     isRunnable,
   );
 
-export default Observable$defer;
+export default Observable_defer;

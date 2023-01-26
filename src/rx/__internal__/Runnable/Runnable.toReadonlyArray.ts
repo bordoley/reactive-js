@@ -1,20 +1,20 @@
 import { ToReadonlyArray } from "../../../containers";
 import { pipe } from "../../../functions";
 import { RunnableLike } from "../../../rx";
-import Runnable$forEach from "./Runnable.forEach";
-import Runnable$run from "./Runnable.run";
+import Runnable_forEach from "./Runnable.forEach";
+import Runnable_run from "./Runnable.run";
 
-const Runnable$toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
+const Runnable_toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
 
     <T>() =>
     (runnable: RunnableLike<T>) => {
       const result: T[] = [];
       pipe(
         runnable,
-        Runnable$forEach<T>(x => result.push(x)),
-        Runnable$run(),
+        Runnable_forEach<T>(x => result.push(x)),
+        Runnable_run(),
       );
       return result;
     };
 
-export default Runnable$toReadonlyArray;
+export default Runnable_toReadonlyArray;

@@ -5,9 +5,9 @@ import {
   SequenceLike_next,
 } from "../../../containers";
 import { Predicate, isSome, none } from "../../../functions";
-import Container$repeat from "../Container/Container.repeat";
+import Container_repeat from "../Container/Container.repeat";
 
-const Sequence$repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (<
+const Sequence_repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (<
   T,
 >() => {
   const _repeat =
@@ -35,9 +35,9 @@ const Sequence$repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (<
         return none;
       }
     };
-  return Container$repeat<SequenceLike, T>((seq, predicate) =>
+  return Container_repeat<SequenceLike, T>((seq, predicate) =>
     _repeat(seq, predicate, 1, seq),
   );
 })();
 
-export default Sequence$repeat;
+export default Sequence_repeat;

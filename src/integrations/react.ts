@@ -63,7 +63,7 @@ import {
   onDisposed,
   onError,
 } from "../util/Disposable";
-import Disposable$mixin from "../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_mixin from "../util/__internal__/Disposable/Disposable.mixin";
 /**
  * Returns the current value, if defined, of `observable`.
  *
@@ -136,7 +136,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(Disposable$mixin),
+      include(Disposable_mixin),
       function ReactPriorityScheduler(
         instance: Omit<
           PrioritySchedulerLike,
@@ -144,7 +144,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
         > &
           TProperties,
       ): PrioritySchedulerLike {
-        init(Disposable$mixin, instance);
+        init(Disposable_mixin, instance);
         return instance;
       },
       props<TProperties>({

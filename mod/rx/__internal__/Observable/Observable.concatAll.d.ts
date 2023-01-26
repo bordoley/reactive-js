@@ -1,6 +1,6 @@
 import { ConcatAll } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable$concatAll: ConcatAll<ObservableLike, {
+declare const Observable_concatAll: ConcatAll<ObservableLike, {
     maxBufferSize?: number;
 }>["concatAll"];
-export { Observable$concatAll as default };
+export { Observable_concatAll as default };

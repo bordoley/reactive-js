@@ -1,5 +1,5 @@
 import { EnumeratorLike_current } from "../../../ix.js";
-declare const Enumerator$getCurrent: <T>(enumerator: {
+declare const Enumerator_getCurrent: <T>(enumerator: {
     [EnumeratorLike_current]: T;
 }) => T;
-export { Enumerator$getCurrent as default };
+export { Enumerator_getCurrent as default };

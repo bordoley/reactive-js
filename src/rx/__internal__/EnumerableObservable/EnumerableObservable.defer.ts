@@ -1,13 +1,13 @@
 import { Defer } from "../../../containers";
 import { EnumerableObservableLike } from "../../../rx";
-import Observable$defer from "../Observable/Observable.defer";
+import Observable_defer from "../Observable/Observable.defer";
 
-const EnumerableObservable$defer: Defer<EnumerableObservableLike>["defer"] =
+const EnumerableObservable_defer: Defer<EnumerableObservableLike>["defer"] =
   (f =>
-    Observable$defer(
+    Observable_defer(
       f,
       true,
       true,
     )) as Defer<EnumerableObservableLike>["defer"];
 
-export default EnumerableObservable$defer;
+export default EnumerableObservable_defer;

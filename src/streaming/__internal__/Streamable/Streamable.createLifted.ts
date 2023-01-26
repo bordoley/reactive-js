@@ -3,8 +3,8 @@ import { composeUnsafe, getLength } from "../../../functions";
 import { ObservableLike } from "../../../rx";
 import { StreamableLike } from "../../../streaming";
 
-import Stream$create from "../Stream/Stream.create";
-import Streamable$create from "./Streamable.create";
+import Stream_create from "../Stream/Stream.create";
+import Streamable_create from "./Streamable.create";
 
 interface CreateLiftedStreamable {
   <T, A>(op1: ContainerOperator<ObservableLike, T, A>): StreamableLike<T, A>;
@@ -108,7 +108,7 @@ interface CreateLiftedStreamable {
     op12: ContainerOperator<ObservableLike, K, L>,
   ): StreamableLike<T, L>;
 }
-const Streamable$createLifted: CreateLiftedStreamable = (
+const Streamable_createLifted: CreateLiftedStreamable = (
   ...ops: readonly ContainerOperator<ObservableLike<any>, any, any>[]
 ) => {
   const op =
@@ -119,9 +119,9 @@ const Streamable$createLifted: CreateLiftedStreamable = (
           unknown
         >)
       : ops[0];
-  return Streamable$create((scheduler, options) =>
-    Stream$create(op, scheduler, options),
+  return Streamable_create((scheduler, options) =>
+    Stream_create(op, scheduler, options),
   );
 };
 
-export default Streamable$createLifted;
+export default Streamable_createLifted;

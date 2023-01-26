@@ -5,22 +5,22 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { SomeSatisfy } from "../../../containers";
-import ReadonlyArray$toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
+import ReadonlyArray_toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
 import { Predicate, partial, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike } from "../../../rx";
-import Observer$getScheduler from "../Observer/Observer.getScheduler";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$someSatisfyMixin from "../Sink/Sink.someSatisfyMixin";
-import Observable$lift from "./Observable.lift";
+import Observer_getScheduler from "../Observer/Observer.getScheduler";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_someSatisfyMixin from "../Sink/Sink.someSatisfyMixin";
+import Observable_lift from "./Observable.lift";
 
-const Observable$someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
+const Observable_someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
   /*@__PURE__*/ (<T>() => {
-    const typedObserverMixin = Observer$mixin();
-    const typedSomeSatisfySinkMixin = Sink$someSatisfyMixin<
+    const typedObserverMixin = Observer_mixin();
+    const typedSomeSatisfySinkMixin = Sink_someSatisfyMixin<
       ObservableLike<boolean>,
       SinkLike<boolean>,
       T
-    >(ReadonlyArray$toRunnableObservable());
+    >(ReadonlyArray_toRunnableObservable());
 
     const someSatisfyObserverMixin = mix(
       include(typedSomeSatisfySinkMixin, typedObserverMixin),
@@ -29,7 +29,7 @@ const Observable$someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
         delegate: ObserverLike<boolean>,
         predicate: Predicate<T>,
       ): ObserverLike<T> {
-        init(typedObserverMixin, instance, Observer$getScheduler(delegate));
+        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
         init(typedSomeSatisfySinkMixin, instance, delegate, predicate);
 
         return instance;
@@ -40,8 +40,8 @@ const Observable$someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
       pipe(
         createInstanceFactory(someSatisfyObserverMixin),
         partial(predicate),
-        Observable$lift(true, true),
+        Observable_lift(true, true),
       );
   })();
 
-export default Observable$someSatisfy;
+export default Observable_someSatisfy;

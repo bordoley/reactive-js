@@ -4,14 +4,14 @@ import { ObservableLike } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
 import { StreamLike } from "../../../streaming";
 
-import Stream$mixin from "./Stream.mixin";
+import Stream_mixin from "./Stream.mixin";
 
-const Stream$create = /*@__PURE__*/ (() => {
+const Stream_create = /*@__PURE__*/ (() => {
   const createStreamInternal: <TReq, T>(
     op: ContainerOperator<ObservableLike, TReq, T>,
     scheduler: SchedulerLike,
     replay: number,
-  ) => StreamLike<TReq, T> = createInstanceFactory(Stream$mixin());
+  ) => StreamLike<TReq, T> = createInstanceFactory(Stream_mixin());
 
   return <TReq, T>(
     op: ContainerOperator<ObservableLike, TReq, T>,
@@ -27,4 +27,4 @@ const Stream$create = /*@__PURE__*/ (() => {
   };
 })();
 
-export default Stream$create;
+export default Stream_create;

@@ -2,19 +2,19 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, isSome, returns } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
-import Disposable$delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Enumerator$getCurrent from '../Enumerator/Enumerator.getCurrent.mjs';
-import Enumerator$hasCurrent from '../Enumerator/Enumerator.hasCurrent.mjs';
-import Enumerator$move from '../Enumerator/Enumerator.move.mjs';
-import MutableEnumerator$mixin from '../MutableEnumerator/MutableEnumerator.mixin.mjs';
-import Enumerable$lift from './Enumerable.lift.mjs';
+import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Enumerator_getCurrent from '../Enumerator/Enumerator.getCurrent.mjs';
+import Enumerator_hasCurrent from '../Enumerator/Enumerator.hasCurrent.mjs';
+import Enumerator_move from '../Enumerator/Enumerator.move.mjs';
+import MutableEnumerator_mixin from '../MutableEnumerator/MutableEnumerator.mixin.mjs';
+import Enumerable_lift from './Enumerable.lift.mjs';
 
-const Enumerable$pairwise = 
+const Enumerable_pairwise = 
 /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = MutableEnumerator$mixin();
-    return pipe(createInstanceFactory(mix(include(Disposable$delegatingMixin, typedMutableEnumeratorMixin), function PairwiseEnumerator(instance, delegate) {
-        init(Disposable$delegatingMixin, instance, delegate);
+    const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedMutableEnumeratorMixin), function PairwiseEnumerator(instance, delegate) {
+        init(Disposable_delegatingMixin, instance, delegate);
         init(typedMutableEnumeratorMixin, instance);
         instance.delegate = delegate;
         return instance;
@@ -23,20 +23,20 @@ const Enumerable$pairwise =
     }), {
         [SourceLike_move]() {
             const { delegate } = this;
-            const prev = Enumerator$hasCurrent(this)
-                ? Enumerator$getCurrent(this)[1]
-                : Enumerator$move(delegate)
-                    ? Enumerator$getCurrent(delegate)
+            const prev = Enumerator_hasCurrent(this)
+                ? Enumerator_getCurrent(this)[1]
+                : Enumerator_move(delegate)
+                    ? Enumerator_getCurrent(delegate)
                     : none;
-            if (isSome(prev) && Enumerator$move(delegate)) {
-                const current = Enumerator$getCurrent(delegate);
+            if (isSome(prev) && Enumerator_move(delegate)) {
+                const current = Enumerator_getCurrent(delegate);
                 this[EnumeratorLike_current] = [prev, current];
             }
             else {
-                pipe(this, Disposable$dispose());
+                pipe(this, Disposable_dispose());
             }
         },
-    })), Enumerable$lift, returns);
+    })), Enumerable_lift, returns);
 })();
 
-export { Enumerable$pairwise as default };
+export { Enumerable_pairwise as default };

@@ -2,9 +2,9 @@
 import { createInstanceFactory, mix, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe, error } from '../../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
 
-const Observable$create = /*@__PURE__*/ (() => {
+const Observable_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(function CreateObservable(instance, f, isEnumerable = false, isRunnable = false) {
         instance.f = f;
         instance[ObservableLike_isEnumerable] = isEnumerable;
@@ -20,10 +20,10 @@ const Observable$create = /*@__PURE__*/ (() => {
                 this.f(observer);
             }
             catch (e) {
-                pipe(observer, Disposable$dispose(error(e)));
+                pipe(observer, Disposable_dispose(error(e)));
             }
         },
     }));
 })();
 
-export { Observable$create as default };
+export { Observable_create as default };

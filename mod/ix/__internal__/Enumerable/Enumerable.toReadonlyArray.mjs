@@ -1,18 +1,18 @@
 /// <reference types="./Enumerable.toReadonlyArray.d.ts" />
 import { pipe, isSome, raise } from '../../../functions.mjs';
-import Disposable$getError from '../../../util/__internal__/Disposable/Disposable.getError.mjs';
-import Enumerator$getCurrent from '../Enumerator/Enumerator.getCurrent.mjs';
-import Enumerator$move from '../Enumerator/Enumerator.move.mjs';
-import Enumerable$enumerate from './Enumerable.enumerate.mjs';
+import Disposable_getError from '../../../util/__internal__/Disposable/Disposable.getError.mjs';
+import Enumerator_getCurrent from '../Enumerator/Enumerator.getCurrent.mjs';
+import Enumerator_move from '../Enumerator/Enumerator.move.mjs';
+import Enumerable_enumerate from './Enumerable.enumerate.mjs';
 
-const Enumerable$toReadonlyArray = () => (enumerable) => {
-    const enumerator = pipe(enumerable, Enumerable$enumerate());
+const Enumerable_toReadonlyArray = () => (enumerable) => {
+    const enumerator = pipe(enumerable, Enumerable_enumerate());
     const result = [];
-    while (Enumerator$move(enumerator)) {
-        result.push(Enumerator$getCurrent(enumerator));
+    while (Enumerator_move(enumerator)) {
+        result.push(Enumerator_getCurrent(enumerator));
     }
-    const error = Disposable$getError(enumerator);
+    const error = Disposable_getError(enumerator);
     return isSome(error) ? raise(error) : result;
 };
 
-export { Enumerable$toReadonlyArray as default };
+export { Enumerable_toReadonlyArray as default };

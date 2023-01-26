@@ -5,25 +5,25 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { SkipFirst } from "../../../containers";
-import StatefulContainer$skipFirst from "../../../containers/__internal__/StatefulContainer/StatefulContainer.skipFirst";
+import StatefulContainer_skipFirst from "../../../containers/__internal__/StatefulContainer/StatefulContainer.skipFirst";
 import { pipe } from "../../../functions";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$skipFirstMixin from "../Sink/Sink.skipFirstMixin";
-import Observable$liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_skipFirstMixin from "../Sink/Sink.skipFirstMixin";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
 
-const Observable$skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
+const Observable_skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
   /*@__PURE__*/ (() => {
     const createSkipFirstObserver: <T>(
       delegate: ObserverLike<T>,
       count: number,
     ) => ObserverLike<T> = (<T>() => {
-      const typedSkipFirstSinkMixin = Sink$skipFirstMixin<T>();
-      const typedObserverMixin = Observer$mixin<T>();
+      const typedSkipFirstSinkMixin = Sink_skipFirstMixin<T>();
+      const typedObserverMixin = Observer_mixin<T>();
 
       return createInstanceFactory(
         mix(
@@ -48,8 +48,8 @@ const Observable$skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
 
     return pipe(
       createSkipFirstObserver,
-      StatefulContainer$skipFirst(Observable$liftEnumerableOperatorT),
+      StatefulContainer_skipFirst(Observable_liftEnumerableOperatorT),
     );
   })();
 
-export default Observable$skipFirst;
+export default Observable_skipFirst;

@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.toEnumerableObservable.d.ts" />
-import Enumerable$toRunnableObservable from './Enumerable.toRunnableObservable.mjs';
+import Enumerable_toRunnableObservable from './Enumerable.toRunnableObservable.mjs';
 
-const Enumerable$toEnumerableObservable = Enumerable$toRunnableObservable;
+const Enumerable_toEnumerableObservable = Enumerable_toRunnableObservable;
 
-export { Enumerable$toEnumerableObservable as default };
+export { Enumerable_toEnumerableObservable as default };

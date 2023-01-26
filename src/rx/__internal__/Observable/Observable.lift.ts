@@ -6,7 +6,7 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../../../rx";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   readonly [ObservableLike_isEnumerable]: boolean;
@@ -26,11 +26,11 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   }
 
   [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-    pipeUnsafe(observer, ...this.operators, Sink$sourceFrom(this.source));
+    pipeUnsafe(observer, ...this.operators, Sink_sourceFrom(this.source));
   }
 }
 
-const Observable$lift =
+const Observable_lift =
   (isEnumerable = false, isRunnable = false) =>
   <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
@@ -58,4 +58,4 @@ const Observable$lift =
     );
   };
 
-export default Observable$lift;
+export default Observable_lift;

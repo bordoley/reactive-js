@@ -2,18 +2,18 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, error, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import ReactiveContainer$sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const Sink$reduceMixin = (fromArray) => {
+const Sink_reduceMixin = (fromArray) => {
     const ReduceSink_private_reducer = Symbol("ReduceSink_private_reducer");
     const ReduceSink_private_acc = Symbol("ReduceSink_private_acc");
-    return mix(include(Disposable$mixin), function ReduceSink(instance, delegate, reducer, initialValue) {
-        init(Disposable$mixin, instance);
+    return mix(include(Disposable_mixin), function ReduceSink(instance, delegate, reducer, initialValue) {
+        init(Disposable_mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[ReduceSink_private_reducer] = reducer;
         try {
@@ -21,10 +21,10 @@ const Sink$reduceMixin = (fromArray) => {
             instance[ReduceSink_private_acc] = acc;
         }
         catch (e) {
-            pipe(instance, Disposable$dispose(error(e)));
+            pipe(instance, Disposable_dispose(error(e)));
         }
-        pipe(instance, Disposable$addTo(delegate), Disposable$onComplete(() => {
-            pipe([instance[ReduceSink_private_acc]], fromArray, ReactiveContainer$sinkInto(delegate));
+        pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
+            pipe([instance[ReduceSink_private_acc]], fromArray, ReactiveContainer_sinkInto(delegate));
         }));
         return instance;
     }, props({
@@ -39,4 +39,4 @@ const Sink$reduceMixin = (fromArray) => {
     });
 };
 
-export { Sink$reduceMixin as default };
+export { Sink_reduceMixin as default };

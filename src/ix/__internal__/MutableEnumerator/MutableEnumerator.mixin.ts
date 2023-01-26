@@ -7,7 +7,7 @@ import {
   SourceLike_move,
 } from "../../../ix";
 import { DisposableLike } from "../../../util";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
 import { MutableEnumeratorLike } from "../ix.internal";
 
 type TEnumeratorMixinReturn<T> = Omit<
@@ -15,7 +15,7 @@ type TEnumeratorMixinReturn<T> = Omit<
   keyof DisposableLike | typeof SourceLike_move
 >;
 
-const MutableEnumerator$mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
+const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
   /*@__PURE__*/ (<T>() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");
     const Enumerator_private_hasCurrent = Symbol(
@@ -53,7 +53,7 @@ const MutableEnumerator$mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           },
           set [EnumeratorLike_current](v: T) {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
               this[Enumerator_private_current] = v;
               this[Enumerator_private_hasCurrent] = true;
             }
@@ -61,7 +61,7 @@ const MutableEnumerator$mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           get [EnumeratorLike_hasCurrent](): boolean {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
             return (
-              !Disposable$isDisposed(this) &&
+              !Disposable_isDisposed(this) &&
               this[Enumerator_private_hasCurrent]
             );
           },
@@ -71,4 +71,4 @@ const MutableEnumerator$mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
     );
   })();
 
-export default MutableEnumerator$mixin;
+export default MutableEnumerator_mixin;

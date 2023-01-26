@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { Factory, Function1, callWith, compose } from "../../../functions";
 
-const Container$compute = <
+const Container_compute = <
   C extends ContainerLike,
   T,
   O extends {
@@ -23,4 +23,4 @@ const Container$compute = <
 ): Function1<Factory<T>, ContainerOf<C, T>> =>
   compose(x => [x], m.fromArray<Factory<T>>(options), m.map(callWith()));
 
-export default Container$compute;
+export default Container_compute;

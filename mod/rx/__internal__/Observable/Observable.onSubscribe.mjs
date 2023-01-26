@@ -1,17 +1,17 @@
 /// <reference types="./Observable.onSubscribe.d.ts" />
-import Observable$create from './Observable.create.mjs';
-import EnumerableObservable$create from '../EnumerableObservable/EnumerableObservable.create.mjs';
-import Observable$isEnumerable from './Observable.isEnumerable.mjs';
-import Observable$isRunnable from './Observable.isRunnable.mjs';
-import ReactiveContainer$onSink from '../ReactiveContainer/ReactiveContainer.onSink.mjs';
-import RunnableObservable$create from '../RunnableObservable/RunnableObservable.create.mjs';
+import Observable_create from './Observable.create.mjs';
+import EnumerableObservable_create from '../EnumerableObservable/EnumerableObservable.create.mjs';
+import Observable_isEnumerable from './Observable.isEnumerable.mjs';
+import Observable_isRunnable from './Observable.isRunnable.mjs';
+import ReactiveContainer_onSink from '../ReactiveContainer/ReactiveContainer.onSink.mjs';
+import RunnableObservable_create from '../RunnableObservable/RunnableObservable.create.mjs';
 
-const Observable$onSubscribe = (f) => (obs) => {
-    return ReactiveContainer$onSink(onSink => Observable$isEnumerable(obs)
-        ? EnumerableObservable$create(onSink)
-        : Observable$isRunnable(obs)
-            ? RunnableObservable$create(onSink)
-            : Observable$create(onSink), obs, f);
+const Observable_onSubscribe = (f) => (obs) => {
+    return ReactiveContainer_onSink(onSink => Observable_isEnumerable(obs)
+        ? EnumerableObservable_create(onSink)
+        : Observable_isRunnable(obs)
+            ? RunnableObservable_create(onSink)
+            : Observable_create(onSink), obs, f);
 };
 
-export { Observable$onSubscribe as default };
+export { Observable_onSubscribe as default };

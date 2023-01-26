@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { Scan } from "../../../containers";
-import StatefulContainer$scan from "../../../containers/__internal__/StatefulContainer/StatefulContainer.scan";
+import StatefulContainer_scan from "../../../containers/__internal__/StatefulContainer/StatefulContainer.scan";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import {
   Factory,
@@ -23,20 +23,20 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Enumerator$getCurrent from "../Enumerator/Enumerator.getCurrent";
-import Enumerator$hasCurrent from "../Enumerator/Enumerator.hasCurrent";
-import Enumerator$move from "../Enumerator/Enumerator.move";
-import MutableEnumerator$mixin from "../MutableEnumerator/MutableEnumerator.mixin";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
+import Enumerator_hasCurrent from "../Enumerator/Enumerator.hasCurrent";
+import Enumerator_move from "../Enumerator/Enumerator.move";
+import MutableEnumerator_mixin from "../MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
-import Enumerable$liftT from "./Enumerable.liftT";
+import Enumerable_liftT from "./Enumerable.liftT";
 
-const Enumerable$scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
+const Enumerable_scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const typedMutableEnumeratorMixin = MutableEnumerator$mixin<TAcc>();
+  const typedMutableEnumeratorMixin = MutableEnumerator_mixin<TAcc>();
 
   type TProperties = {
     readonly reducer: Reducer<T, TAcc>;
@@ -46,7 +46,7 @@ const Enumerable$scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable$delegatingMixin, typedMutableEnumeratorMixin),
+        include(Disposable_delegatingMixin, typedMutableEnumeratorMixin),
         function ScanEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
@@ -54,7 +54,7 @@ const Enumerable$scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
           reducer: Reducer<T, TAcc>,
           initialValue: Factory<TAcc>,
         ): MutableEnumeratorLike<TAcc> {
-          init(Disposable$delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin, instance, delegate);
           init(typedMutableEnumeratorMixin, instance);
 
           instance.delegate = delegate;
@@ -64,7 +64,7 @@ const Enumerable$scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
             const acc = initialValue();
             instance[EnumeratorLike_current] = acc;
           } catch (e) {
-            pipe(instance, Disposable$dispose(error(e)));
+            pipe(instance, Disposable_dispose(error(e)));
           }
 
           return instance;
@@ -72,29 +72,29 @@ const Enumerable$scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
         props<TProperties>({ reducer: none, delegate: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<TAcc>) {
-            const acc = Enumerator$hasCurrent(this)
-              ? Enumerator$getCurrent(this)
+            const acc = Enumerator_hasCurrent(this)
+              ? Enumerator_getCurrent(this)
               : none;
 
             const { delegate, reducer } = this;
-            if (isSome(acc) && Enumerator$move(delegate)) {
+            if (isSome(acc) && Enumerator_move(delegate)) {
               try {
                 this[EnumeratorLike_current] = reducer(
                   acc,
-                  Enumerator$getCurrent(delegate),
+                  Enumerator_getCurrent(delegate),
                 );
               } catch (e) {
-                pipe(this, Disposable$dispose(error(e)));
+                pipe(this, Disposable_dispose(error(e)));
               }
             }
           },
         },
       ),
     ),
-    StatefulContainer$scan<EnumerableLike, T, TAcc, TInteractive>(
-      Enumerable$liftT,
+    StatefulContainer_scan<EnumerableLike, T, TAcc, TInteractive>(
+      Enumerable_liftT,
     ),
   );
 })();
 
-export default Enumerable$scan;
+export default Enumerable_scan;

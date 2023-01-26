@@ -1,7 +1,7 @@
 /// <reference types="./StatefulContainer.forEach.d.ts" />
 import { pipe, partial } from '../../../functions.mjs';
-import StatefulContainer$lift from './StatefulContainer.lift.mjs';
+import StatefulContainer_lift from './StatefulContainer.lift.mjs';
 
-const StatefulContainer$forEach = (m) => (operator) => (effect) => pipe(operator, partial(effect), StatefulContainer$lift(m));
+const StatefulContainer_forEach = (m) => (operator) => (effect) => pipe(operator, partial(effect), StatefulContainer_lift(m));
 
-export { StatefulContainer$forEach as default };
+export { StatefulContainer_forEach as default };

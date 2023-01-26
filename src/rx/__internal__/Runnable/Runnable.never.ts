@@ -1,9 +1,9 @@
 import { Never } from "../../../containers";
 import { ignore } from "../../../functions";
 import { RunnableLike } from "../../../rx";
-import Runnable$create from "./Runnable.create";
+import Runnable_create from "./Runnable.create";
 
-const Runnable$never: Never<RunnableLike>["never"] = () =>
-  Runnable$create(ignore);
+const Runnable_never: Never<RunnableLike>["never"] = () =>
+  Runnable_create(ignore);
 
-export default Runnable$never;
+export default Runnable_never;

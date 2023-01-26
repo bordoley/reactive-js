@@ -6,16 +6,16 @@ import {
 } from "../../../__internal__/mixins";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 
-const Sink$create: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
+const Sink_create: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(Disposable$mixin),
+      include(Disposable_mixin),
       function CreateSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
       ): SinkLike<T> {
-        init(Disposable$mixin, instance);
+        init(Disposable_mixin, instance);
 
         return instance;
       },
@@ -26,4 +26,4 @@ const Sink$create: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
     ),
   ))();
 
-export default Sink$create;
+export default Sink_create;

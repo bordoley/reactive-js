@@ -5,22 +5,22 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { EverySatisfy } from "../../../containers";
-import ReadonlyArray$toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
+import ReadonlyArray_toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
 import { Predicate, partial, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike } from "../../../rx";
-import Observer$getScheduler from "../Observer/Observer.getScheduler";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$everySatisfyMixin from "../Sink/Sink.everySatisfyMixin";
-import Observable$lift from "./Observable.lift";
+import Observer_getScheduler from "../Observer/Observer.getScheduler";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_everySatisfyMixin from "../Sink/Sink.everySatisfyMixin";
+import Observable_lift from "./Observable.lift";
 
-const Observable$everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
+const Observable_everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   /*@__PURE__*/ (<T>() => {
-    const typedObserverMixin = Observer$mixin();
-    const typedEverySatisfySinkMixin = Sink$everySatisfyMixin<
+    const typedObserverMixin = Observer_mixin();
+    const typedEverySatisfySinkMixin = Sink_everySatisfyMixin<
       ObservableLike<boolean>,
       SinkLike<boolean>,
       T
-    >(ReadonlyArray$toRunnableObservable());
+    >(ReadonlyArray_toRunnableObservable());
 
     const everySatisfyObserverMixin = mix(
       include(typedEverySatisfySinkMixin, typedObserverMixin),
@@ -29,7 +29,7 @@ const Observable$everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
         delegate: ObserverLike<boolean>,
         predicate: Predicate<T>,
       ): ObserverLike<T> {
-        init(typedObserverMixin, instance, Observer$getScheduler(delegate));
+        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
         init(typedEverySatisfySinkMixin, instance, delegate, predicate);
 
         return instance;
@@ -40,8 +40,8 @@ const Observable$everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
       pipe(
         createInstanceFactory(everySatisfyObserverMixin),
         partial(predicate),
-        Observable$lift(true, true),
+        Observable_lift(true, true),
       );
   })();
 
-export default Observable$everySatisfy;
+export default Observable_everySatisfy;

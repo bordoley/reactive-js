@@ -2,10 +2,10 @@
 import { createInstanceFactory, mix, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe, error } from '../../../functions.mjs';
 import { InteractiveContainerLike_interact } from '../../../ix.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Enumerator$empty from '../Enumerator/Enumerator.empty.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Enumerator_empty from '../Enumerator/Enumerator.empty.mjs';
 
-const Enumerable$create = /*@__PURE__*/ (() => {
+const Enumerable_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(function CreateEnumerable(instance, enumerate) {
         instance.enumerate = enumerate;
         return instance;
@@ -17,11 +17,11 @@ const Enumerable$create = /*@__PURE__*/ (() => {
                 return this.enumerate();
             }
             catch (e) {
-                const emptyEnumerator = Enumerator$empty();
-                return pipe(emptyEnumerator, Disposable$dispose(error(e)));
+                const emptyEnumerator = Enumerator_empty();
+                return pipe(emptyEnumerator, Disposable_dispose(error(e)));
             }
         },
     }));
 })();
 
-export { Enumerable$create as default };
+export { Enumerable_create as default };

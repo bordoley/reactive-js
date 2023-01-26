@@ -1,4 +1,4 @@
 import { Reduce } from "../../../containers.js";
 import { RunnableLike } from "../../../rx.js";
-declare const Runnable$reduce: Reduce<RunnableLike>["reduce"];
-export { Runnable$reduce as default };
+declare const Runnable_reduce: Reduce<RunnableLike>["reduce"];
+export { Runnable_reduce as default };

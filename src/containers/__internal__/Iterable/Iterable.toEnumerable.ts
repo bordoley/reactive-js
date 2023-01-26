@@ -14,16 +14,16 @@ import {
   SourceLike_move,
   ToEnumerable,
 } from "../../../ix";
-import Enumerable$create from "../../../ix/__internal__/Enumerable/Enumerable.create";
-import MutableEnumerator$mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
+import Enumerable_create from "../../../ix/__internal__/Enumerable/Enumerable.create";
+import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 
-const Iterable$toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
+const Iterable_toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
-    const typedMutableEnumeratorMixin = MutableEnumerator$mixin<T>();
+    const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
 
     type TProperties = {
       readonly iterator: Iterator<T>;
@@ -31,13 +31,13 @@ const Iterable$toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
 
     const createIterableEnumerator = createInstanceFactory(
       mix(
-        include(Disposable$mixin, typedMutableEnumeratorMixin),
+        include(Disposable_mixin, typedMutableEnumeratorMixin),
         function IteratorEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
           iterator: Iterator<T>,
         ): EnumeratorLike<T> {
-          init(Disposable$mixin, instance);
+          init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
           instance.iterator = iterator;
@@ -47,13 +47,13 @@ const Iterable$toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
         props<TProperties>({ iterator: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
               const next = this.iterator.next();
 
               if (!next.done) {
                 this[EnumeratorLike_current] = next.value;
               } else {
-                pipe(this, Disposable$dispose());
+                pipe(this, Disposable_dispose());
               }
             }
           },
@@ -62,9 +62,9 @@ const Iterable$toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
     );
 
     return () => (iterable: Iterable<T>) =>
-      Enumerable$create(() =>
+      Enumerable_create(() =>
         createIterableEnumerator(iterable[Symbol.iterator]()),
       );
   })();
 
-export default Iterable$toEnumerable;
+export default Iterable_toEnumerable;

@@ -1,6 +1,6 @@
 /// <reference types="./Sequence.fromArray.d.ts" />
-import ReadonlyArray$toSequence from '../ReadonlyArray/ReadonlyArray.toSequence.mjs';
+import ReadonlyArray_toSequence from '../ReadonlyArray/ReadonlyArray.toSequence.mjs';
 
-const Sequence$fromArray = ReadonlyArray$toSequence;
+const Sequence_fromArray = ReadonlyArray_toSequence;
 
-export { Sequence$fromArray as default };
+export { Sequence_fromArray as default };

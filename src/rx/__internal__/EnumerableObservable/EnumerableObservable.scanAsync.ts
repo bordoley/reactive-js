@@ -1,13 +1,13 @@
 import { EnumerableObservableLike, ScanAsync } from "../../../rx";
-import HigherOrderObservable$scanAsync from "../HigherOrderObservable/HigherOrderObservable.scanAsync";
-import EnumerableObservable$create from "./EnumerableObservable.create";
+import HigherOrderObservable_scanAsync from "../HigherOrderObservable/HigherOrderObservable.scanAsync";
+import EnumerableObservable_create from "./EnumerableObservable.create";
 
-const EnumerableObservable$scanAsync: ScanAsync<
+const EnumerableObservable_scanAsync: ScanAsync<
   EnumerableObservableLike,
   EnumerableObservableLike
->["scanAsync"] = HigherOrderObservable$scanAsync<
+>["scanAsync"] = HigherOrderObservable_scanAsync<
   EnumerableObservableLike,
   EnumerableObservableLike
->(EnumerableObservable$create);
+>(EnumerableObservable_create);
 
-export default EnumerableObservable$scanAsync;
+export default EnumerableObservable_scanAsync;

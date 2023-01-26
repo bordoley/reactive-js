@@ -1,4 +1,4 @@
 /// <reference types="./ReadonlyArray.map.d.ts" />
-const ReadonlyArray$map = (mapper) => (arr) => arr.map(mapper);
+const ReadonlyArray_map = (mapper) => (arr) => arr.map(mapper);
 
-export { ReadonlyArray$map as default };
+export { ReadonlyArray_map as default };

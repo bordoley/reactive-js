@@ -1,9 +1,9 @@
 import { Never } from "../../../containers";
 import { ignore } from "../../../functions";
 import { EnumerableObservableLike } from "../../../rx";
-import EnumerableObservable$create from "./EnumerableObservable.create";
+import EnumerableObservable_create from "./EnumerableObservable.create";
 
-const EnumerableObservable$never: Never<EnumerableObservableLike>["never"] =
-  () => EnumerableObservable$create(ignore);
+const EnumerableObservable_never: Never<EnumerableObservableLike>["never"] =
+  () => EnumerableObservable_create(ignore);
 
-export default EnumerableObservable$never;
+export default EnumerableObservable_never;

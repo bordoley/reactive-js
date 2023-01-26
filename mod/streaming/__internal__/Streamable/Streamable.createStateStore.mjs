@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.createStateStore.d.ts" />
 import { updateReducer } from '../../../functions.mjs';
-import Streamable$createActionReducer from './Streamable.createActionReducer.mjs';
+import Streamable_createActionReducer from './Streamable.createActionReducer.mjs';
 
-const Streamable$createStateStore = (initialState, options) => Streamable$createActionReducer(updateReducer, initialState, options);
+const Streamable_createStateStore = (initialState, options) => Streamable_createActionReducer(updateReducer, initialState, options);
 
-export { Streamable$createStateStore as default };
+export { Streamable_createStateStore as default };

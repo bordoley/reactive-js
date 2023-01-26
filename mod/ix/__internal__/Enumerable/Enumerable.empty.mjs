@@ -1,7 +1,7 @@
 /// <reference types="./Enumerable.empty.d.ts" />
-import Enumerator$empty from '../Enumerator/Enumerator.empty.mjs';
-import Enumerable$create from './Enumerable.create.mjs';
+import Enumerator_empty from '../Enumerator/Enumerator.empty.mjs';
+import Enumerable_create from './Enumerable.create.mjs';
 
-const Enumerable$empty = /*@__PURE__*/ (() => () => Enumerable$create(Enumerator$empty))();
+const Enumerable_empty = /*@__PURE__*/ (() => () => Enumerable_create(Enumerator_empty))();
 
-export { Enumerable$empty as default };
+export { Enumerable_empty as default };

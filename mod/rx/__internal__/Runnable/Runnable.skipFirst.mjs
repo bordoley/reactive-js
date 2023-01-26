@@ -1,14 +1,14 @@
 /// <reference types="./Runnable.skipFirst.d.ts" />
 import { createInstanceFactory } from '../../../__internal__/mixins.mjs';
-import StatefulContainer$skipFirst from '../../../containers/__internal__/StatefulContainer/StatefulContainer.skipFirst.mjs';
+import StatefulContainer_skipFirst from '../../../containers/__internal__/StatefulContainer/StatefulContainer.skipFirst.mjs';
 import { pipe } from '../../../functions.mjs';
-import Sink$skipFirstMixin from '../Sink/Sink.skipFirstMixin.mjs';
-import Runnable$liftT from './Runnable.liftT.mjs';
+import Sink_skipFirstMixin from '../Sink/Sink.skipFirstMixin.mjs';
+import Runnable_liftT from './Runnable.liftT.mjs';
 
-const Runnable$skipFirst = 
+const Runnable_skipFirst = 
 /*@__PURE__*/ (() => {
-    const typedSkipFirstSinkMixin = Sink$skipFirstMixin();
-    return pipe(createInstanceFactory(typedSkipFirstSinkMixin), StatefulContainer$skipFirst(Runnable$liftT));
+    const typedSkipFirstSinkMixin = Sink_skipFirstMixin();
+    return pipe(createInstanceFactory(typedSkipFirstSinkMixin), StatefulContainer_skipFirst(Runnable_liftT));
 })();
 
-export { Runnable$skipFirst as default };
+export { Runnable_skipFirst as default };

@@ -1,13 +1,13 @@
 /// <reference types="./Streamable.createLifted.d.ts" />
 import { getLength, composeUnsafe } from '../../../functions.mjs';
-import Stream$create from '../Stream/Stream.create.mjs';
-import Streamable$create from './Streamable.create.mjs';
+import Stream_create from '../Stream/Stream.create.mjs';
+import Streamable_create from './Streamable.create.mjs';
 
-const Streamable$createLifted = (...ops) => {
+const Streamable_createLifted = (...ops) => {
     const op = getLength(ops) > 1
         ? composeUnsafe(...ops)
         : ops[0];
-    return Streamable$create((scheduler, options) => Stream$create(op, scheduler, options));
+    return Streamable_create((scheduler, options) => Stream_create(op, scheduler, options));
 };
 
-export { Streamable$createLifted as default };
+export { Streamable_createLifted as default };

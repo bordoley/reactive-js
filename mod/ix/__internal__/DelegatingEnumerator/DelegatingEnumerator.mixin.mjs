@@ -2,10 +2,10 @@
 import { mix, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, unsafeCast, raise, returns } from '../../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
-import Enumerator$move from '../Enumerator/Enumerator.move.mjs';
+import Enumerator_move from '../Enumerator/Enumerator.move.mjs';
 import { DelegatingEnumerator_move_delegate } from '../ix.internal.mjs';
 
-const DelegatingEnumerator$mixin = /*@__PURE__*/ (() => {
+const DelegatingEnumerator_mixin = /*@__PURE__*/ (() => {
     const DelegatingEnumerator_private_delegate = Symbol("DelegatingEnumerator_private_delegate");
     return pipe(mix(function DelegatingEnumerator(instance, delegate) {
         instance[DelegatingEnumerator_private_delegate] = delegate;
@@ -24,9 +24,9 @@ const DelegatingEnumerator$mixin = /*@__PURE__*/ (() => {
         },
         [DelegatingEnumerator_move_delegate]() {
             const delegate = this[DelegatingEnumerator_private_delegate];
-            return Enumerator$move(delegate);
+            return Enumerator_move(delegate);
         },
     }), returns);
 })();
 
-export { DelegatingEnumerator$mixin as default };
+export { DelegatingEnumerator_mixin as default };

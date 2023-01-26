@@ -2,9 +2,9 @@
 import { createInstanceFactory, mix, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe, error } from '../../../functions.mjs';
 import { ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
 
-const Runnable$create = 
+const Runnable_create = 
 /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(function Runnable(instance, run) {
         instance.run = run;
@@ -15,13 +15,13 @@ const Runnable$create =
         [ReactiveContainerLike_sinkInto](sink) {
             try {
                 this.run(sink);
-                pipe(sink, Disposable$dispose());
+                pipe(sink, Disposable_dispose());
             }
             catch (e) {
-                pipe(sink, Disposable$dispose(error(e)));
+                pipe(sink, Disposable_dispose(error(e)));
             }
         },
     }));
 })();
 
-export { Runnable$create as default };
+export { Runnable_create as default };

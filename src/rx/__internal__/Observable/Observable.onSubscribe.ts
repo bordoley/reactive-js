@@ -1,26 +1,26 @@
 import { Factory } from "../../../functions";
 import { ObservableLike } from "../../../rx";
-import Observable$create from "../../../rx/__internal__/Observable/Observable.create";
+import Observable_create from "../../../rx/__internal__/Observable/Observable.create";
 import { DisposableOrTeardown } from "../../../util";
-import EnumerableObservable$create from "../EnumerableObservable/EnumerableObservable.create";
-import Observable$isEnumerable from "../Observable/Observable.isEnumerable";
-import Observable$isRunnable from "../Observable/Observable.isRunnable";
-import ReactiveContainer$onSink from "../ReactiveContainer/ReactiveContainer.onSink";
-import RunnableObservable$create from "../RunnableObservable/RunnableObservable.create";
+import EnumerableObservable_create from "../EnumerableObservable/EnumerableObservable.create";
+import Observable_isEnumerable from "../Observable/Observable.isEnumerable";
+import Observable_isRunnable from "../Observable/Observable.isRunnable";
+import ReactiveContainer_onSink from "../ReactiveContainer/ReactiveContainer.onSink";
+import RunnableObservable_create from "../RunnableObservable/RunnableObservable.create";
 
-const Observable$onSubscribe =
+const Observable_onSubscribe =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
   (obs: ObservableLike<T>): ObservableLike<T> => {
-    return ReactiveContainer$onSink(
+    return ReactiveContainer_onSink(
       onSink =>
-        Observable$isEnumerable(obs)
-          ? EnumerableObservable$create(onSink)
-          : Observable$isRunnable(obs)
-          ? RunnableObservable$create(onSink)
-          : Observable$create(onSink),
+        Observable_isEnumerable(obs)
+          ? EnumerableObservable_create(onSink)
+          : Observable_isRunnable(obs)
+          ? RunnableObservable_create(onSink)
+          : Observable_create(onSink),
       obs,
       f,
     );
   };
 
-export default Observable$onSubscribe;
+export default Observable_onSubscribe;

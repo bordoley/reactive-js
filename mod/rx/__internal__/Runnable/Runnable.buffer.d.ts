@@ -1,4 +1,4 @@
 import { Buffer } from "../../../containers.js";
 import { RunnableLike } from "../../../rx.js";
-declare const Runnable$buffer: Buffer<RunnableLike>["buffer"];
-export { Runnable$buffer as default };
+declare const Runnable_buffer: Buffer<RunnableLike>["buffer"];
+export { Runnable_buffer as default };

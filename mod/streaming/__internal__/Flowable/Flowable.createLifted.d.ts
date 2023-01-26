@@ -15,5 +15,5 @@ interface CreateLiftedFlowable {
     <A, B, C, D, E, F, G, H, I, J, K>(op1: ContainerOperator<ObservableLike, FlowMode, A>, op2: ContainerOperator<ObservableLike, A, B>, op3: ContainerOperator<ObservableLike, B, C>, op4: ContainerOperator<ObservableLike, C, D>, op5: ContainerOperator<ObservableLike, D, E>, op6: ContainerOperator<ObservableLike, E, F>, op7: ContainerOperator<ObservableLike, F, G>, op8: ContainerOperator<ObservableLike, G, H>, op9: ContainerOperator<ObservableLike, H, I>, op10: ContainerOperator<ObservableLike, I, J>, op11: ContainerOperator<ObservableLike, J, K>): FlowableLike<K>;
     <A, B, C, D, E, F, G, H, I, J, K, L>(op1: ContainerOperator<ObservableLike, FlowMode, A>, op2: ContainerOperator<ObservableLike, A, B>, op3: ContainerOperator<ObservableLike, B, C>, op4: ContainerOperator<ObservableLike, C, D>, op5: ContainerOperator<ObservableLike, D, E>, op6: ContainerOperator<ObservableLike, E, F>, op7: ContainerOperator<ObservableLike, F, G>, op8: ContainerOperator<ObservableLike, G, H>, op9: ContainerOperator<ObservableLike, H, I>, op10: ContainerOperator<ObservableLike, I, J>, op11: ContainerOperator<ObservableLike, J, K>, op12: ContainerOperator<ObservableLike, K, L>): FlowableLike<L>;
 }
-declare const Flowable$createLifted: CreateLiftedFlowable;
-export { Flowable$createLifted as default };
+declare const Flowable_createLifted: CreateLiftedFlowable;
+export { Flowable_createLifted as default };

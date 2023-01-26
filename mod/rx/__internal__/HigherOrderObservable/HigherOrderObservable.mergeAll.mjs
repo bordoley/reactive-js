@@ -3,35 +3,35 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
 import { isSome, pipe, getLength, none, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import Observable$forEach from '../Observable/Observable.forEach.mjs';
-import Observable$subscribe from '../Observable/Observable.subscribe.mjs';
-import Observer$getScheduler from '../Observer/Observer.getScheduler.mjs';
-import Observer$mixin from '../Observer/Observer.mixin.mjs';
-import Sink$notifySink from '../Sink/Sink.notifySink.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import Observable_forEach from '../Observable/Observable.forEach.mjs';
+import Observable_subscribe from '../Observable/Observable.subscribe.mjs';
+import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
+import Observer_mixin from '../Observer/Observer.mixin.mjs';
+import Sink_notifySink from '../Sink/Sink.notifySink.mjs';
 
-const HigherOrderObservable$mergeAll = (lift) => {
+const HigherOrderObservable_mergeAll = (lift) => {
     const createMergeAllObserver = (() => {
-        const typedObserverMixin = Observer$mixin();
+        const typedObserverMixin = Observer_mixin();
         const subscribeNext = (observer) => {
             if (observer.activeCount < observer.maxConcurrency) {
                 const nextObs = observer.queue.shift();
                 if (isSome(nextObs)) {
                     observer.activeCount++;
-                    pipe(nextObs, Observable$forEach(Sink$notifySink(observer.delegate)), Observable$subscribe(Observer$getScheduler(observer)), Disposable$addTo(observer.delegate), Disposable$onComplete(observer.onDispose));
+                    pipe(nextObs, Observable_forEach(Sink_notifySink(observer.delegate)), Observable_subscribe(Observer_getScheduler(observer)), Disposable_addTo(observer.delegate), Disposable_onComplete(observer.onDispose));
                 }
-                else if (Disposable$isDisposed(observer)) {
-                    pipe(observer.delegate, Disposable$dispose());
+                else if (Disposable_isDisposed(observer)) {
+                    pipe(observer.delegate, Disposable_dispose());
                 }
             }
         };
-        return createInstanceFactory(mix(include(Disposable$mixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
-            init(Disposable$mixin, instance);
-            init(typedObserverMixin, instance, Observer$getScheduler(delegate));
+        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
+            init(Disposable_mixin, instance);
+            init(typedObserverMixin, instance, Observer_getScheduler(delegate));
             instance.delegate = delegate;
             instance.maxBufferSize = maxBufferSize;
             instance.maxConcurrency = maxConcurrency;
@@ -41,13 +41,13 @@ const HigherOrderObservable$mergeAll = (lift) => {
                 subscribeNext(instance);
             };
             instance.queue = [];
-            pipe(instance, Disposable$addTo(delegate), Disposable$onComplete(() => {
-                if (Disposable$isDisposed(delegate)) {
+            pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
+                if (Disposable_isDisposed(delegate)) {
                     instance.queue.length = 0;
                 }
                 else if (getLength(instance.queue) + instance.activeCount ===
                     0) {
-                    pipe(instance.delegate, Disposable$dispose());
+                    pipe(instance.delegate, Disposable_dispose());
                 }
             }));
             return instance;
@@ -77,4 +77,4 @@ const HigherOrderObservable$mergeAll = (lift) => {
     };
 };
 
-export { HigherOrderObservable$mergeAll as default };
+export { HigherOrderObservable_mergeAll as default };

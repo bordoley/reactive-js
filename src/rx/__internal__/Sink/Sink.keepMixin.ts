@@ -8,11 +8,11 @@ import {
 } from "../../../__internal__/mixins";
 import { Predicate, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-const Sink$keepMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, Predicate<T>> =
+const Sink_keepMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, Predicate<T>> =
   /*@__PURE__*/ (<T>() => {
     const KeepSink_private_predicate = Symbol("KeepSink_private_predicate");
 
@@ -23,14 +23,14 @@ const Sink$keepMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, Predicate<T>> =
 
     return returns(
       mix(
-        include(Disposable$delegatingMixin),
+        include(Disposable_delegatingMixin),
         function KeepSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: SinkLike<T>,
           predicate: Predicate<T>,
         ): SinkLike<T> {
-          init(Disposable$delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin, instance, delegate);
 
           instance[DelegatingSinkLike_delegate] = delegate;
           instance[KeepSink_private_predicate] = predicate;
@@ -44,7 +44,7 @@ const Sink$keepMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, Predicate<T>> =
         {
           [SinkLike_notify](this: TProperties, next: T) {
             if (this[KeepSink_private_predicate](next)) {
-              pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+              pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
             }
           },
         },
@@ -52,4 +52,4 @@ const Sink$keepMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, Predicate<T>> =
     );
   })();
 
-export default Sink$keepMixin;
+export default Sink_keepMixin;

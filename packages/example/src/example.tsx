@@ -125,7 +125,9 @@ const Root = () => {
           onChange={onChange}
           value={String(uri?.path ?? "")}
         ></input>
-        <button onClick={onGoBack} disabled={!canGoBack}>Back</button>
+        <button onClick={onGoBack} disabled={!canGoBack}>
+          Back
+        </button>
       </div>
       <StreamPauseResume />
     </div>

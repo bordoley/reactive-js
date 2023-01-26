@@ -32,49 +32,49 @@ import { ToEnumerable } from "../ix";
 import { EnumerableObservableLike, ScanAsync, ToRunnable } from "../rx";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
-import EnumerableObservable$catchError from "./__internal__/EnumerableObservable/EnumerableObservable.catchError";
-import EnumerableObservable$create from "./__internal__/EnumerableObservable/EnumerableObservable.create";
-import EnumerableObservable$defer from "./__internal__/EnumerableObservable/EnumerableObservable.defer";
-import EnumerableObservable$mergeAll from "./__internal__/EnumerableObservable/EnumerableObservable.mergeAll";
-import EnumerableObservable$never from "./__internal__/EnumerableObservable/EnumerableObservable.never";
-import EnumerableObservable$scanAsync from "./__internal__/EnumerableObservable/EnumerableObservable.scanAsync";
-import EnumerableObservable$switchAll from "./__internal__/EnumerableObservable/EnumerableObservable.switchAll";
-import Observable$buffer from "./__internal__/Observable/Observable.buffer";
-import Observable$concat from "./__internal__/Observable/Observable.concat";
-import Observable$decodeWithCharset from "./__internal__/Observable/Observable.decodeWithCharset";
-import Observable$distinctUntilChanged from "./__internal__/Observable/Observable.distinctUntilChanged";
-import Observable$empty from "./__internal__/Observable/Observable.empty";
-import Observable$everySatisfy from "./__internal__/Observable/Observable.everySatisfy";
-import Observable$forEach from "./__internal__/Observable/Observable.forEach";
-import Observable$fromArray from "./__internal__/Observable/Observable.fromArray";
-import Observable$generate from "./__internal__/Observable/Observable.generate";
-import Observable$keep from "./__internal__/Observable/Observable.keep";
-import Observable$map from "./__internal__/Observable/Observable.map";
-import Observable$merge from "./__internal__/Observable/Observable.merge";
-import Observable$pairwise from "./__internal__/Observable/Observable.pairwise";
-import Observable$reduce from "./__internal__/Observable/Observable.reduce";
-import Observable$scan from "./__internal__/Observable/Observable.scan";
-import Observable$skipFirst from "./__internal__/Observable/Observable.skipFirst";
-import Observable$someSatisfy from "./__internal__/Observable/Observable.someSatisfy";
-import Observable$takeFirst from "./__internal__/Observable/Observable.takeFirst";
-import Observable$takeLast from "./__internal__/Observable/Observable.takeLast";
-import Observable$takeWhile from "./__internal__/Observable/Observable.takeWhile";
-import Observable$throwIfEmpty from "./__internal__/Observable/Observable.throwIfEmpty";
-import Observable$toEnumerable from "./__internal__/Observable/Observable.toEnumerable";
-import Observable$toFlowable from "./__internal__/Observable/Observable.toFlowable";
-import Observable$toPromise from "./__internal__/Observable/Observable.toPromise";
-import Observable$toReadonlyArray from "./__internal__/Observable/Observable.toReadonlyArray";
-import Observable$toRunnable from "./__internal__/Observable/Observable.toRunnable";
-import Observable$zip from "./__internal__/Observable/Observable.zip";
+import EnumerableObservable_catchError from "./__internal__/EnumerableObservable/EnumerableObservable.catchError";
+import EnumerableObservable_create from "./__internal__/EnumerableObservable/EnumerableObservable.create";
+import EnumerableObservable_defer from "./__internal__/EnumerableObservable/EnumerableObservable.defer";
+import EnumerableObservable_mergeAll from "./__internal__/EnumerableObservable/EnumerableObservable.mergeAll";
+import EnumerableObservable_never from "./__internal__/EnumerableObservable/EnumerableObservable.never";
+import EnumerableObservable_scanAsync from "./__internal__/EnumerableObservable/EnumerableObservable.scanAsync";
+import EnumerableObservable_switchAll from "./__internal__/EnumerableObservable/EnumerableObservable.switchAll";
+import Observable_buffer from "./__internal__/Observable/Observable.buffer";
+import Observable_concat from "./__internal__/Observable/Observable.concat";
+import Observable_decodeWithCharset from "./__internal__/Observable/Observable.decodeWithCharset";
+import Observable_distinctUntilChanged from "./__internal__/Observable/Observable.distinctUntilChanged";
+import Observable_empty from "./__internal__/Observable/Observable.empty";
+import Observable_everySatisfy from "./__internal__/Observable/Observable.everySatisfy";
+import Observable_forEach from "./__internal__/Observable/Observable.forEach";
+import Observable_fromArray from "./__internal__/Observable/Observable.fromArray";
+import Observable_generate from "./__internal__/Observable/Observable.generate";
+import Observable_keep from "./__internal__/Observable/Observable.keep";
+import Observable_map from "./__internal__/Observable/Observable.map";
+import Observable_merge from "./__internal__/Observable/Observable.merge";
+import Observable_pairwise from "./__internal__/Observable/Observable.pairwise";
+import Observable_reduce from "./__internal__/Observable/Observable.reduce";
+import Observable_scan from "./__internal__/Observable/Observable.scan";
+import Observable_skipFirst from "./__internal__/Observable/Observable.skipFirst";
+import Observable_someSatisfy from "./__internal__/Observable/Observable.someSatisfy";
+import Observable_takeFirst from "./__internal__/Observable/Observable.takeFirst";
+import Observable_takeLast from "./__internal__/Observable/Observable.takeLast";
+import Observable_takeWhile from "./__internal__/Observable/Observable.takeWhile";
+import Observable_throwIfEmpty from "./__internal__/Observable/Observable.throwIfEmpty";
+import Observable_toEnumerable from "./__internal__/Observable/Observable.toEnumerable";
+import Observable_toFlowable from "./__internal__/Observable/Observable.toFlowable";
+import Observable_toPromise from "./__internal__/Observable/Observable.toPromise";
+import Observable_toReadonlyArray from "./__internal__/Observable/Observable.toReadonlyArray";
+import Observable_toRunnable from "./__internal__/Observable/Observable.toRunnable";
+import Observable_zip from "./__internal__/Observable/Observable.zip";
 
 export const buffer =
-  Observable$buffer as Buffer<EnumerableObservableLike>["buffer"];
+  Observable_buffer as Buffer<EnumerableObservableLike>["buffer"];
 
 export const catchError: CatchError<EnumerableObservableLike>["catchError"] =
-  EnumerableObservable$catchError;
+  EnumerableObservable_catchError;
 
 export const concat =
-  Observable$concat as Concat<EnumerableObservableLike>["concat"];
+  Observable_concat as Concat<EnumerableObservableLike>["concat"];
 
 export const concatAll: ConcatAll<
   EnumerableObservableLike,
@@ -86,24 +86,24 @@ export const concatAll: ConcatAll<
   return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
 
-export const create = EnumerableObservable$create;
+export const create = EnumerableObservable_create;
 
 export const decodeWithCharset =
-  Observable$decodeWithCharset as DecodeWithCharset<EnumerableObservableLike>["decodeWithCharset"];
+  Observable_decodeWithCharset as DecodeWithCharset<EnumerableObservableLike>["decodeWithCharset"];
 
 export const defer: Defer<EnumerableObservableLike>["defer"] =
-  EnumerableObservable$defer;
+  EnumerableObservable_defer;
 
 export const distinctUntilChanged =
-  Observable$distinctUntilChanged as DistinctUntilChanged<EnumerableObservableLike>["distinctUntilChanged"];
+  Observable_distinctUntilChanged as DistinctUntilChanged<EnumerableObservableLike>["distinctUntilChanged"];
 
-export const empty = Observable$empty as Empty<
+export const empty = Observable_empty as Empty<
   EnumerableObservableLike,
   { delay: number }
 >["empty"];
 
 export const everySatisfy =
-  Observable$everySatisfy as EverySatisfy<EnumerableObservableLike>["everySatisfy"];
+  Observable_everySatisfy as EverySatisfy<EnumerableObservableLike>["everySatisfy"];
 
 export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] = <
   T,
@@ -114,20 +114,20 @@ export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] = <
   });
 
 export const forEach =
-  Observable$forEach as ForEach<EnumerableObservableLike>["forEach"];
+  Observable_forEach as ForEach<EnumerableObservableLike>["forEach"];
 
 export const fromArray =
-  Observable$fromArray as FromArray<EnumerableObservableLike>["fromArray"];
+  Observable_fromArray as FromArray<EnumerableObservableLike>["fromArray"];
 
 export const generate =
-  Observable$generate as Generate<EnumerableObservableLike>["generate"];
+  Observable_generate as Generate<EnumerableObservableLike>["generate"];
 
-export const keep = Observable$keep as Keep<EnumerableObservableLike>["keep"];
+export const keep = Observable_keep as Keep<EnumerableObservableLike>["keep"];
 
-export const map = Observable$map as Map<EnumerableObservableLike>["map"];
+export const map = Observable_map as Map<EnumerableObservableLike>["map"];
 
 export const merge =
-  Observable$merge as Concat<EnumerableObservableLike>["concat"];
+  Observable_merge as Concat<EnumerableObservableLike>["concat"];
 
 export const mergeAll: ConcatAll<
   EnumerableObservableLike,
@@ -135,56 +135,56 @@ export const mergeAll: ConcatAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = EnumerableObservable$mergeAll;
+>["concatAll"] = EnumerableObservable_mergeAll;
 
-export const never = EnumerableObservable$never;
+export const never = EnumerableObservable_never;
 
 export const pairwise =
-  Observable$pairwise as Pairwise<EnumerableObservableLike>["pairwise"];
+  Observable_pairwise as Pairwise<EnumerableObservableLike>["pairwise"];
 
 export const reduce =
-  Observable$reduce as Reduce<EnumerableObservableLike>["reduce"];
+  Observable_reduce as Reduce<EnumerableObservableLike>["reduce"];
 
-export const scan = Observable$scan as Scan<EnumerableObservableLike>["scan"];
+export const scan = Observable_scan as Scan<EnumerableObservableLike>["scan"];
 
 export const scanAsync: ScanAsync<
   EnumerableObservableLike,
   EnumerableObservableLike
->["scanAsync"] = EnumerableObservable$scanAsync;
+>["scanAsync"] = EnumerableObservable_scanAsync;
 
 export const skipFirst =
-  Observable$skipFirst as SkipFirst<EnumerableObservableLike>["skipFirst"];
+  Observable_skipFirst as SkipFirst<EnumerableObservableLike>["skipFirst"];
 
 export const someSatisfy =
-  Observable$someSatisfy as SomeSatisfy<EnumerableObservableLike>["someSatisfy"];
+  Observable_someSatisfy as SomeSatisfy<EnumerableObservableLike>["someSatisfy"];
 
 export const switchAll: ConcatAll<EnumerableObservableLike>["concatAll"] =
-  EnumerableObservable$switchAll;
+  EnumerableObservable_switchAll;
 
 export const takeFirst =
-  Observable$takeFirst as TakeFirst<EnumerableObservableLike>["takeFirst"];
+  Observable_takeFirst as TakeFirst<EnumerableObservableLike>["takeFirst"];
 
 export const takeLast =
-  Observable$takeLast as TakeLast<EnumerableObservableLike>["takeLast"];
+  Observable_takeLast as TakeLast<EnumerableObservableLike>["takeLast"];
 
 export const takeWhile =
-  Observable$takeWhile as TakeWhile<EnumerableObservableLike>["takeWhile"];
+  Observable_takeWhile as TakeWhile<EnumerableObservableLike>["takeWhile"];
 
 export const throwIfEmpty =
-  Observable$throwIfEmpty as ThrowIfEmpty<EnumerableObservableLike>["throwIfEmpty"];
+  Observable_throwIfEmpty as ThrowIfEmpty<EnumerableObservableLike>["throwIfEmpty"];
 
 export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"] =
-  Observable$toEnumerable;
+  Observable_toEnumerable;
 
 export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
-  Observable$toFlowable;
+  Observable_toFlowable;
 
 export const toPromise: ToPromiseable<
   EnumerableObservableLike,
   SchedulerLike
->["toPromise"] = Observable$toPromise;
+>["toPromise"] = Observable_toPromise;
 
-export const toReadonlyArray = Observable$toReadonlyArray as ToReadonlyArray<
+export const toReadonlyArray = Observable_toReadonlyArray as ToReadonlyArray<
   EnumerableObservableLike,
   {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
@@ -192,6 +192,6 @@ export const toReadonlyArray = Observable$toReadonlyArray as ToReadonlyArray<
 >["toReadonlyArray"];
 
 export const toRunnable =
-  Observable$toRunnable as ToRunnable<EnumerableObservableLike>["toRunnable"];
+  Observable_toRunnable as ToRunnable<EnumerableObservableLike>["toRunnable"];
 
-export const zip = Observable$zip as Zip<EnumerableObservableLike>["zip"];
+export const zip = Observable_zip as Zip<EnumerableObservableLike>["zip"];

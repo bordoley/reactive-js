@@ -1,8 +1,8 @@
 import { floor, newInstance, pipe } from "../../functions";
-import Queue$count from "../../util/__internal__/Queue/Queue.count";
-import Queue$create from "../../util/__internal__/Queue/Queue.create";
-import Queue$pop from "../../util/__internal__/Queue/Queue.pop";
-import Queue$push from "../../util/__internal__/Queue/Queue.push";
+import Queue_count from "../../util/__internal__/Queue/Queue.count";
+import Queue_create from "../../util/__internal__/Queue/Queue.create";
+import Queue_pop from "../../util/__internal__/Queue/Queue.pop";
+import Queue_push from "../../util/__internal__/Queue/Queue.push";
 import { expectArrayEquals, test, testModule } from "../testing";
 
 const compare = (a: number, b: number): number => a - b;
@@ -32,15 +32,15 @@ const makeShuffledArray = (n: number) => {
 testModule(
   "priority queue",
   test("push", () => {
-    const queue = Queue$create(compare);
+    const queue = Queue_create(compare);
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray.length; i++) {
-      Queue$push(queue, shuffledArray[i]);
+      Queue_push(queue, shuffledArray[i]);
     }
 
     const acc: number[] = [];
-    while (Queue$count(queue) > 0) {
-      acc.push(Queue$pop(queue) as number);
+    while (Queue_count(queue) > 0) {
+      acc.push(Queue_pop(queue) as number);
     }
 
     pipe(acc, expectArrayEquals(makeSortedArray(100)));

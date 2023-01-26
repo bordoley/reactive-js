@@ -1,21 +1,21 @@
 /// <reference types="./Observable.mergeObservables.d.ts" />
 import { pipe, getLength } from '../../../functions.mjs';
-import Observable$create from './Observable.create.mjs';
-import Sink$sourceFrom from '../Sink/Sink.sourceFrom.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import EnumerableObservable$create from '../EnumerableObservable/EnumerableObservable.create.mjs';
-import Observer$createWithDelegate from '../Observer/Observer.createWithDelegate.mjs';
-import RunnableObservable$create from '../RunnableObservable/RunnableObservable.create.mjs';
-import Observable$allAreEnumerable from './Observable.allAreEnumerable.mjs';
-import Observable$allAreRunnable from './Observable.allAreRunnable.mjs';
+import Observable_create from './Observable.create.mjs';
+import Sink_sourceFrom from '../Sink/Sink.sourceFrom.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import EnumerableObservable_create from '../EnumerableObservable/EnumerableObservable.create.mjs';
+import Observer_createWithDelegate from '../Observer/Observer.createWithDelegate.mjs';
+import RunnableObservable_create from '../RunnableObservable/RunnableObservable.create.mjs';
+import Observable_allAreEnumerable from './Observable.allAreEnumerable.mjs';
+import Observable_allAreRunnable from './Observable.allAreRunnable.mjs';
 
-const Observable$mergeObservables = /*@__PURE__*/ (() => {
-    const createMergeObserver = (delegate, count, ctx) => pipe(Observer$createWithDelegate(delegate), Disposable$addTo(delegate), Disposable$onComplete(() => {
+const Observable_mergeObservables = /*@__PURE__*/ (() => {
+    const createMergeObserver = (delegate, count, ctx) => pipe(Observer_createWithDelegate(delegate), Disposable_addTo(delegate), Disposable_onComplete(() => {
         ctx.completedCount++;
         if (ctx.completedCount >= count) {
-            pipe(delegate, Disposable$dispose());
+            pipe(delegate, Disposable_dispose());
         }
     }));
     return (observables) => {
@@ -23,17 +23,17 @@ const Observable$mergeObservables = /*@__PURE__*/ (() => {
             const count = getLength(observables);
             const ctx = { completedCount: 0 };
             for (const observable of observables) {
-                pipe(createMergeObserver(observer, count, ctx), Sink$sourceFrom(observable));
+                pipe(createMergeObserver(observer, count, ctx), Sink_sourceFrom(observable));
             }
         };
-        const isEnumerable = Observable$allAreEnumerable(observables);
-        const isRunnable = Observable$allAreRunnable(observables);
+        const isEnumerable = Observable_allAreEnumerable(observables);
+        const isRunnable = Observable_allAreRunnable(observables);
         return isEnumerable
-            ? EnumerableObservable$create(onSink)
+            ? EnumerableObservable_create(onSink)
             : isRunnable
-                ? RunnableObservable$create(onSink)
-                : Observable$create(onSink);
+                ? RunnableObservable_create(onSink)
+                : Observable_create(onSink);
     };
 })();
 
-export { Observable$mergeObservables as default };
+export { Observable_mergeObservables as default };

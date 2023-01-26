@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { isSome, none } from "../../../functions";
 
-const Sequence$takeFirst: TakeFirst<SequenceLike>["takeFirst"] =
+const Sequence_takeFirst: TakeFirst<SequenceLike>["takeFirst"] =
   /*@__PURE__*/ (() => {
     const _takeFirst =
       <T>(count: number, seq: SequenceLike<T>): SequenceLike<T> =>
@@ -34,4 +34,4 @@ const Sequence$takeFirst: TakeFirst<SequenceLike>["takeFirst"] =
       };
   })();
 
-export default Sequence$takeFirst;
+export default Sequence_takeFirst;

@@ -5,24 +5,24 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { TakeLast } from "../../../containers";
-import ReadonlyArray$toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
-import StatefulContainer$takeLast from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeLast";
+import ReadonlyArray_toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
+import StatefulContainer_takeLast from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeLast";
 import { pipe } from "../../../functions";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$takeLastMixin from "../Sink/Sink.takeLastMixin";
-import Observable$liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_takeLastMixin from "../Sink/Sink.takeLastMixin";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
 
-const Observable$takeLast: TakeLast<ObservableLike>["takeLast"] =
+const Observable_takeLast: TakeLast<ObservableLike>["takeLast"] =
   /*@__PURE__*/ (() => {
-    const typedTakeLastSinkMixin = Sink$takeLastMixin(
-      ReadonlyArray$toRunnableObservable(),
+    const typedTakeLastSinkMixin = Sink_takeLastMixin(
+      ReadonlyArray_toRunnableObservable(),
     );
-    const typedObserverMixin = Observer$mixin();
+    const typedObserverMixin = Observer_mixin();
 
     const createTakeLastObserver = createInstanceFactory(
       mix(
@@ -42,8 +42,8 @@ const Observable$takeLast: TakeLast<ObservableLike>["takeLast"] =
 
     return pipe(
       createTakeLastObserver,
-      StatefulContainer$takeLast(Observable$liftEnumerableOperatorT),
+      StatefulContainer_takeLast(Observable_liftEnumerableOperatorT),
     );
   })();
 
-export default Observable$takeLast;
+export default Observable_takeLast;

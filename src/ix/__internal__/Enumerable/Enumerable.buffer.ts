@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { Buffer } from "../../../containers";
-import StatefulContainer$buffer from "../../../containers/__internal__/StatefulContainer/StatefulContainer.buffer";
+import StatefulContainer_buffer from "../../../containers/__internal__/StatefulContainer/StatefulContainer.buffer";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { getLength, none, pipe } from "../../../functions";
 import {
@@ -16,19 +16,19 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import Disposable$add from "../../../util/__internal__/Disposable/Disposable.add";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Enumerator$getCurrent from "../Enumerator/Enumerator.getCurrent";
-import Enumerator$move from "../Enumerator/Enumerator.move";
-import MutableEnumerator$mixin from "../MutableEnumerator/MutableEnumerator.mixin";
+import Disposable_add from "../../../util/__internal__/Disposable/Disposable.add";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
+import Enumerator_move from "../Enumerator/Enumerator.move";
+import MutableEnumerator_mixin from "../MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
-import Enumerable$liftT from "./Enumerable.liftT";
+import Enumerable_liftT from "./Enumerable.liftT";
 
-const Enumerable$buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
+const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedMutableEnumeratorMixin = MutableEnumerator$mixin<readonly T[]>();
+  const typedMutableEnumeratorMixin = MutableEnumerator_mixin<readonly T[]>();
 
   type TProperties = {
     readonly delegate: EnumeratorLike<T>;
@@ -38,20 +38,20 @@ const Enumerable$buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable$mixin, typedMutableEnumeratorMixin),
+        include(Disposable_mixin, typedMutableEnumeratorMixin),
         function BufferEnumerator(
           instance: Pick<EnumeratorLike<readonly T[]>, typeof SourceLike_move> &
             Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           maxBufferSize: number,
         ): EnumeratorLike<readonly T[]> {
-          init(Disposable$mixin, instance);
+          init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
           instance.delegate = delegate;
           instance.maxBufferSize = maxBufferSize;
 
-          pipe(instance, Disposable$add(delegate));
+          pipe(instance, Disposable_add(delegate));
 
           return instance;
         },
@@ -69,23 +69,23 @@ const Enumerable$buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
 
             while (
               getLength(buffer) < maxBufferSize &&
-              Enumerator$move(delegate)
+              Enumerator_move(delegate)
             ) {
-              buffer.push(Enumerator$getCurrent(delegate));
+              buffer.push(Enumerator_getCurrent(delegate));
             }
 
             const bufferLength = getLength(buffer);
             if (bufferLength > 0) {
               this[EnumeratorLike_current] = buffer;
             } else if (bufferLength === 0) {
-              pipe(this, Disposable$dispose());
+              pipe(this, Disposable_dispose());
             }
           },
         },
       ),
     ),
-    StatefulContainer$buffer<EnumerableLike, T, TInteractive>(Enumerable$liftT),
+    StatefulContainer_buffer<EnumerableLike, T, TInteractive>(Enumerable_liftT),
   );
 })();
 
-export default Enumerable$buffer;
+export default Enumerable_buffer;

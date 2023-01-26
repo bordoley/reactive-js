@@ -1,20 +1,20 @@
 import { pipe, pipeLazy } from "../../../functions";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import EnumerableObservable$create from "../EnumerableObservable/EnumerableObservable.create";
-import Observer$schedule from "../Observer/Observer.schedule";
-import RunnableObservable$create from "../RunnableObservable/RunnableObservable.create";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import EnumerableObservable_create from "../EnumerableObservable/EnumerableObservable.create";
+import Observer_schedule from "../Observer/Observer.schedule";
+import RunnableObservable_create from "../RunnableObservable/RunnableObservable.create";
 
-const Observable$empty = <T>(options?: { delay: number }) =>
+const Observable_empty = <T>(options?: { delay: number }) =>
   hasDelay(options)
-    ? RunnableObservable$create<T>(observer => {
+    ? RunnableObservable_create<T>(observer => {
         pipe(
           observer,
-          Observer$schedule(pipeLazy(observer, Disposable$dispose()), options),
+          Observer_schedule(pipeLazy(observer, Disposable_dispose()), options),
         );
       })
-    : EnumerableObservable$create<T>(sink => {
-        pipe(sink, Disposable$dispose());
+    : EnumerableObservable_create<T>(sink => {
+        pipe(sink, Disposable_dispose());
       });
 
-export default Observable$empty;
+export default Observable_empty;

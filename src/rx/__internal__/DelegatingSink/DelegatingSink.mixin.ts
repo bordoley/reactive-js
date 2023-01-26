@@ -8,10 +8,10 @@ import {
 } from "../../../__internal__/mixins";
 import { none, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import { DelegateSinkLike, DelegatingSinkLike_delegate } from "../rx.internal";
 
-const DelegateSink$mixin: <T>() => Mixin1<DelegateSinkLike<T>, SinkLike<T>> =
+const DelegateSink_mixin: <T>() => Mixin1<DelegateSinkLike<T>, SinkLike<T>> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
       [DelegatingSinkLike_delegate]: SinkLike<T>;
@@ -19,13 +19,13 @@ const DelegateSink$mixin: <T>() => Mixin1<DelegateSinkLike<T>, SinkLike<T>> =
 
     return returns(
       mix(
-        include(Disposable$mixin),
+        include(Disposable_mixin),
         function DelegatingSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: SinkLike<T>,
         ): DelegateSinkLike<T> {
-          init(Disposable$mixin, instance);
+          init(Disposable_mixin, instance);
 
           instance[DelegatingSinkLike_delegate] = delegate;
 
@@ -43,4 +43,4 @@ const DelegateSink$mixin: <T>() => Mixin1<DelegateSinkLike<T>, SinkLike<T>> =
     );
   })();
 
-export default DelegateSink$mixin;
+export default DelegateSink_mixin;

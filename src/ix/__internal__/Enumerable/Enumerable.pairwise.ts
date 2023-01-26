@@ -14,18 +14,18 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Enumerator$getCurrent from "../Enumerator/Enumerator.getCurrent";
-import Enumerator$hasCurrent from "../Enumerator/Enumerator.hasCurrent";
-import Enumerator$move from "../Enumerator/Enumerator.move";
-import MutableEnumerator$mixin from "../MutableEnumerator/MutableEnumerator.mixin";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
+import Enumerator_hasCurrent from "../Enumerator/Enumerator.hasCurrent";
+import Enumerator_move from "../Enumerator/Enumerator.move";
+import MutableEnumerator_mixin from "../MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
-import Enumerable$lift from "./Enumerable.lift";
+import Enumerable_lift from "./Enumerable.lift";
 
-const Enumerable$pairwise: Pairwise<EnumerableLike>["pairwise"] =
+const Enumerable_pairwise: Pairwise<EnumerableLike>["pairwise"] =
   /*@__PURE__*/ (<T>() => {
-    const typedMutableEnumeratorMixin = MutableEnumerator$mixin<[T, T]>();
+    const typedMutableEnumeratorMixin = MutableEnumerator_mixin<[T, T]>();
 
     type TProperties = {
       readonly delegate: EnumeratorLike<T>;
@@ -34,13 +34,13 @@ const Enumerable$pairwise: Pairwise<EnumerableLike>["pairwise"] =
     return pipe(
       createInstanceFactory(
         mix(
-          include(Disposable$delegatingMixin, typedMutableEnumeratorMixin),
+          include(Disposable_delegatingMixin, typedMutableEnumeratorMixin),
           function PairwiseEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               Mutable<TProperties>,
             delegate: EnumeratorLike<T>,
           ): EnumeratorLike<readonly [T, T]> {
-            init(Disposable$delegatingMixin, instance, delegate);
+            init(Disposable_delegatingMixin, instance, delegate);
             init(typedMutableEnumeratorMixin, instance);
 
             instance.delegate = delegate;
@@ -56,25 +56,25 @@ const Enumerable$pairwise: Pairwise<EnumerableLike>["pairwise"] =
             ) {
               const { delegate } = this;
 
-              const prev = Enumerator$hasCurrent(this)
-                ? Enumerator$getCurrent(this)[1]
-                : Enumerator$move(delegate)
-                ? Enumerator$getCurrent(delegate)
+              const prev = Enumerator_hasCurrent(this)
+                ? Enumerator_getCurrent(this)[1]
+                : Enumerator_move(delegate)
+                ? Enumerator_getCurrent(delegate)
                 : none;
 
-              if (isSome(prev) && Enumerator$move(delegate)) {
-                const current = Enumerator$getCurrent(delegate);
+              if (isSome(prev) && Enumerator_move(delegate)) {
+                const current = Enumerator_getCurrent(delegate);
                 this[EnumeratorLike_current] = [prev, current];
               } else {
-                pipe(this, Disposable$dispose());
+                pipe(this, Disposable_dispose());
               }
             },
           },
         ),
       ),
-      Enumerable$lift,
+      Enumerable_lift,
       returns,
     );
   })();
 
-export default Enumerable$pairwise;
+export default Enumerable_pairwise;

@@ -7,9 +7,9 @@ import {
   TReactive,
 } from "../../../containers/__internal__/containers.internal";
 import { Function2, Predicate, partial, pipe } from "../../../functions";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$keep =
+const StatefulContainer_keep =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -21,6 +21,6 @@ const StatefulContainer$keep =
     >,
   ) =>
   (predicate: Predicate<T>) =>
-    pipe(operator, partial(predicate), StatefulContainer$lift(m));
+    pipe(operator, partial(predicate), StatefulContainer_lift(m));
 
-export default StatefulContainer$keep;
+export default StatefulContainer_keep;

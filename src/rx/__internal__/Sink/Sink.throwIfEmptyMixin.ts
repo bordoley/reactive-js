@@ -16,14 +16,14 @@ import {
 } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-const Sink$throwIfEmptyMixin: <T>() => Mixin2<
+const Sink_throwIfEmptyMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
   Factory<unknown>
@@ -39,21 +39,21 @@ const Sink$throwIfEmptyMixin: <T>() => Mixin2<
 
   return returns(
     mix(
-      include(Disposable$mixin),
+      include(Disposable_mixin),
       function ThrowIfEmptySink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         factory: Factory<unknown>,
       ): SinkLike<T> {
-        init(Disposable$mixin, instance);
+        init(Disposable_mixin, instance);
 
         instance[DelegatingSinkLike_delegate] = delegate;
 
         pipe(
           instance,
-          Disposable$addTo(delegate),
-          Disposable$onComplete(() => {
+          Disposable_addTo(delegate),
+          Disposable_onComplete(() => {
             let err: Optional<Error> = none;
 
             if (instance[ThrowIfEmptySink_private_isEmpty]) {
@@ -64,7 +64,7 @@ const Sink$throwIfEmptyMixin: <T>() => Mixin2<
               }
             }
 
-            pipe(delegate, Disposable$dispose(err));
+            pipe(delegate, Disposable_dispose(err));
           }),
         );
 
@@ -77,11 +77,11 @@ const Sink$throwIfEmptyMixin: <T>() => Mixin2<
       {
         [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
           this[ThrowIfEmptySink_private_isEmpty] = false;
-          pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+          pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
         },
       },
     ),
   );
 })();
 
-export default Sink$throwIfEmptyMixin;
+export default Sink_throwIfEmptyMixin;

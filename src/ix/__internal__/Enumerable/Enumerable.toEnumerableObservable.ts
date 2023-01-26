@@ -1,8 +1,8 @@
 import { EnumerableLike } from "../../../ix";
 import { ToEnumerableObservable } from "../../../rx";
-import Enumerable$toRunnableObservable from "./Enumerable.toRunnableObservable";
+import Enumerable_toRunnableObservable from "./Enumerable.toRunnableObservable";
 
-const Enumerable$toEnumerableObservable: ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"] =
-  Enumerable$toRunnableObservable as ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"];
+const Enumerable_toEnumerableObservable: ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"] =
+  Enumerable_toRunnableObservable as ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"];
 
-export default Enumerable$toEnumerableObservable;
+export default Enumerable_toEnumerableObservable;
