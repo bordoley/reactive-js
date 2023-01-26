@@ -1,11 +1,11 @@
 /// <reference types="./effects.test.d.ts" />
-import { keepType } from '../../containers/ContainerLike.mjs';
-import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
+import { keepType } from '../../containers/Container.mjs';
+import { toObservable } from '../../containers/ReadonlyArray.mjs';
 import { async, __memo, __await } from '../../effects.mjs';
 import { pipe, isSome } from '../../functions.mjs';
-import { takeLast, forEach, subscribe, keep } from '../../rx/ObservableLike.mjs';
-import { run } from '../../scheduling/ContinuationLike.mjs';
-import { create } from '../../scheduling/VirtualTimeSchedulerLike.mjs';
+import { takeLast, forEach, subscribe, keep } from '../../rx/Observable.mjs';
+import { run } from '../../scheduling/Continuation.mjs';
+import { create } from '../../scheduling/VirtualTimeScheduler.mjs';
 import { testModule, test as createTest, expectEquals, expectArrayEquals } from '../testing.mjs';
 
 testModule("effects", createTest("batch mode", () => {

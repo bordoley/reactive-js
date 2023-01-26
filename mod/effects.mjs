@@ -1,10 +1,10 @@
 /// <reference types="./effects.d.ts" />
 import { isNone, ignore, none, raise, arrayEquality, newInstance, pipe, error, getLength, isSome } from './functions.mjs';
-import { empty, forEach, subscribe, create } from './rx/ObservableLike.mjs';
-import { getScheduler, schedule } from './rx/ObserverLike.mjs';
-import { notify } from './rx/SinkLike.mjs';
-import { stream, createStateStore } from './streaming/StreamableLike.mjs';
-import { disposed, isDisposed, dispose, addTo, onComplete } from './util/DisposableLike.mjs';
+import { empty, forEach, subscribe, create } from './rx/Observable.mjs';
+import { getScheduler, schedule } from './rx/Observer.mjs';
+import { notify } from './rx/Sink.mjs';
+import { stream, createStateStore } from './streaming/Streamable.mjs';
+import { disposed, isDisposed, dispose, addTo, onComplete } from './util/Disposable.mjs';
 
 var AsyncEffectType;
 (function (AsyncEffectType) {

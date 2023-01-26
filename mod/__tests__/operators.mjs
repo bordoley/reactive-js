@@ -1,6 +1,6 @@
 /// <reference types="./operators.d.ts" />
-import { throws, encodeUtf8, contains } from '../containers/ContainerLike.mjs';
-import { empty } from '../containers/ReadonlyArrayLike.mjs';
+import { throws, encodeUtf8, contains } from '../containers/Container.mjs';
+import { empty } from '../containers/ReadonlyArray.mjs';
 import { pipeLazy, arrayEquality, pipe, alwaysFalse, alwaysTrue, increment, returns, sum } from '../functions.mjs';
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from './testing.mjs';
 

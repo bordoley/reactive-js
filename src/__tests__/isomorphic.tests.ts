@@ -3,17 +3,17 @@
  */
 
 import "./modules/AsyncEnumerable.test";
-import "./modules/ContainerLike.test";
-import "./modules/DisposableLike.test";
-import "./modules/EnumerableLike.test";
-import "./modules/FlowableLike.test";
-import "./modules/IterableLike.test";
-import "./modules/ObservableLike.test";
-import "./modules/PromiseableLike.test";
-import "./modules/RunnableLike.test";
-import "./modules/RunnableObservableLike.test";
-import "./modules/SequenceLike.test";
-import "./modules/SubjectLike.test";
+import "./modules/Container.test";
+import "./modules/Disposable.test";
+import "./modules/Enumerable.test";
+import "./modules/Flowable.test";
+import "./modules/Iterable.test";
+import "./modules/Observable.test";
+import "./modules/Promiseable.test";
+import "./modules/Runnable.test";
+import "./modules/RunnableObservable.test";
+import "./modules/Sequence.test";
+import "./modules/Subject.test";
 import "./modules/effects.test";
 import "./modules/queues.test";
 import "./modules/streaming.test";

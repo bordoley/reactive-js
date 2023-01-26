@@ -3,15 +3,15 @@ import { useState, useEffect, useMemo } from 'react';
 import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_scheduleCallback, unstable_cancelCallback, unstable_IdlePriority, unstable_ImmediatePriority, unstable_NormalPriority, unstable_LowPriority, unstable_UserBlockingPriority } from 'scheduler';
 import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
 import { none, isSome, pipe, pipeLazy, ignore, raise, unsafeCast } from '../functions.mjs';
-import { forEach, subscribe, distinctUntilChanged } from '../rx/ObservableLike.mjs';
-import { create, publish } from '../rx/SubjectLike.mjs';
+import { forEach, subscribe, distinctUntilChanged } from '../rx/Observable.mjs';
+import { create, publish } from '../rx/Subject.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
-import { run } from '../scheduling/ContinuationLike.mjs';
-import { toScheduler } from '../scheduling/PrioritySchedulerLike.mjs';
-import { isInContinuation } from '../scheduling/SchedulerLike.mjs';
-import { getDelay } from '../scheduling/__internal__/SchedulerLike.options.mjs';
-import { onError, dispose, addIgnoringChildErrors, isDisposed, create as create$1, onDisposed, addTo } from '../util/DisposableLike.mjs';
-import DisposableLike__mixin from '../util/__internal__/DisposableLike/DisposableLike.mixin.mjs';
+import { run } from '../scheduling/Continuation.mjs';
+import { toScheduler } from '../scheduling/PriorityScheduler.mjs';
+import { isInContinuation } from '../scheduling/Scheduler.mjs';
+import { getDelay } from '../scheduling/__internal__/Scheduler.options.mjs';
+import { onError, dispose, addIgnoringChildErrors, isDisposed, create as create$1, onDisposed, addTo } from '../util/Disposable.mjs';
+import Disposable$mixin from '../util/__internal__/Disposable/Disposable.mixin.mjs';
 
 /**
  * Returns the current value, if defined, of `observable`.
@@ -51,8 +51,8 @@ const createComponent = (fn, options = {}) => {
     return ObservableComponent;
 };
 const createReactPriorityScheduler = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(DisposableLike__mixin), function ReactPriorityScheduler(instance) {
-        init(DisposableLike__mixin, instance);
+    return createInstanceFactory(mix(include(Disposable$mixin), function ReactPriorityScheduler(instance) {
+        init(Disposable$mixin, instance);
         return instance;
     }, props({
         [SchedulerLike_inContinuation]: false,

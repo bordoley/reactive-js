@@ -1,0 +1,81 @@
+/// <reference types="./RunnableObservable.d.ts" />
+import { MAX_SAFE_INTEGER } from '../constants.mjs';
+import EnumerableObservable$never from './__internal__/EnumerableObservable/EnumerableObservable.never.mjs';
+import Observable$buffer from './__internal__/Observable/Observable.buffer.mjs';
+import Observable$concat from './__internal__/Observable/Observable.concat.mjs';
+import Observable$decodeWithCharset from './__internal__/Observable/Observable.decodeWithCharset.mjs';
+import Observable$distinctUntilChanged from './__internal__/Observable/Observable.distinctUntilChanged.mjs';
+import Observable$empty from './__internal__/Observable/Observable.empty.mjs';
+import Observable$everySatisfy from './__internal__/Observable/Observable.everySatisfy.mjs';
+import Observable$forEach from './__internal__/Observable/Observable.forEach.mjs';
+import Observable$fromArray from './__internal__/Observable/Observable.fromArray.mjs';
+import Observable$generate from './__internal__/Observable/Observable.generate.mjs';
+import Observable$keep from './__internal__/Observable/Observable.keep.mjs';
+import Observable$map from './__internal__/Observable/Observable.map.mjs';
+import Observable$merge from './__internal__/Observable/Observable.merge.mjs';
+import Observable$pairwise from './__internal__/Observable/Observable.pairwise.mjs';
+import Observable$reduce from './__internal__/Observable/Observable.reduce.mjs';
+import Observable$scan from './__internal__/Observable/Observable.scan.mjs';
+import Observable$skipFirst from './__internal__/Observable/Observable.skipFirst.mjs';
+import Observable$someSatisfy from './__internal__/Observable/Observable.someSatisfy.mjs';
+import Observable$takeFirst from './__internal__/Observable/Observable.takeFirst.mjs';
+import Observable$takeLast from './__internal__/Observable/Observable.takeLast.mjs';
+import Observable$takeWhile from './__internal__/Observable/Observable.takeWhile.mjs';
+import Observable$throwIfEmpty from './__internal__/Observable/Observable.throwIfEmpty.mjs';
+import Observable$toEnumerable from './__internal__/Observable/Observable.toEnumerable.mjs';
+import Observable$toFlowable from './__internal__/Observable/Observable.toFlowable.mjs';
+import Observable$toPromise from './__internal__/Observable/Observable.toPromise.mjs';
+import Observable$toReadonlyArray from './__internal__/Observable/Observable.toReadonlyArray.mjs';
+import Observable$toRunnable from './__internal__/Observable/Observable.toRunnable.mjs';
+import Observable$zip from './__internal__/Observable/Observable.zip.mjs';
+import RunnableObservable$catchError from './__internal__/RunnableObservable/RunnableObservable.catchError.mjs';
+import RunnableObservable$create from './__internal__/RunnableObservable/RunnableObservable.create.mjs';
+import RunnableObservable$defer from './__internal__/RunnableObservable/RunnableObservable.defer.mjs';
+import RunnableObservable$mergeAll from './__internal__/RunnableObservable/RunnableObservable.mergeAll.mjs';
+import RunnableObservable$scanAsync from './__internal__/RunnableObservable/RunnableObservable.scanAsync.mjs';
+import RunnableObservable$switchAll from './__internal__/RunnableObservable/RunnableObservable.switchAll.mjs';
+
+const buffer = Observable$buffer;
+const catchError = RunnableObservable$catchError;
+const concat = Observable$concat;
+const concatAll = (options = {}) => {
+    const { maxBufferSize = MAX_SAFE_INTEGER } = options;
+    return mergeAll({ maxBufferSize, maxConcurrency: 1 });
+};
+const create = RunnableObservable$create;
+const decodeWithCharset = Observable$decodeWithCharset;
+const defer = RunnableObservable$defer;
+const distinctUntilChanged = Observable$distinctUntilChanged;
+const empty = Observable$empty;
+const everySatisfy = Observable$everySatisfy;
+const exhaust = () => mergeAll({
+    maxBufferSize: 1,
+    maxConcurrency: 1,
+});
+const forEach = Observable$forEach;
+const fromArray = Observable$fromArray;
+const generate = Observable$generate;
+const keep = Observable$keep;
+const map = Observable$map;
+const merge = Observable$merge;
+const mergeAll = RunnableObservable$mergeAll;
+const never = EnumerableObservable$never;
+const pairwise = Observable$pairwise;
+const reduce = Observable$reduce;
+const scan = Observable$scan;
+const scanAsync = RunnableObservable$scanAsync;
+const skipFirst = Observable$skipFirst;
+const someSatisfy = Observable$someSatisfy;
+const switchAll = RunnableObservable$switchAll;
+const takeFirst = Observable$takeFirst;
+const takeLast = Observable$takeLast;
+const takeWhile = Observable$takeWhile;
+const throwIfEmpty = Observable$throwIfEmpty;
+const toEnumerable = Observable$toEnumerable;
+const toFlowable = Observable$toFlowable;
+const toPromise = Observable$toPromise;
+const toReadonlyArray = Observable$toReadonlyArray;
+const toRunnable = Observable$toRunnable;
+const zip = Observable$zip;
+
+export { buffer, catchError, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };

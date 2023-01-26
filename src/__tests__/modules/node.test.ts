@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
-import { endWith, ignoreElements } from "../../containers/ContainerLike";
-import { toObservable } from "../../containers/ReadonlyArrayLike";
+import { endWith, ignoreElements } from "../../containers/Container";
+import { toObservable } from "../../containers/ReadonlyArray";
 import { newInstance, pipe, returns } from "../../functions";
 import {
   createReadableSource,
@@ -17,13 +17,13 @@ import {
   takeFirst,
   toFlowable,
   toPromise,
-} from "../../rx/ObservableLike";
-import { createHostScheduler } from "../../scheduling/SchedulerLike";
+} from "../../rx/Observable";
+import { createHostScheduler } from "../../scheduling/Scheduler";
 import { FlowMode } from "../../streaming";
-import { toObservable as flowableToObservable } from "../../streaming/FlowableLike";
-import { sourceFrom } from "../../streaming/StreamLike";
-import { stream } from "../../streaming/StreamableLike";
-import { dispose } from "../../util/DisposableLike";
+import { toObservable as flowableToObservable } from "../../streaming/Flowable";
+import { sourceFrom } from "../../streaming/Stream";
+import { stream } from "../../streaming/Streamable";
+import { dispose } from "../../util/Disposable";
 import {
   describe,
   expectEquals,

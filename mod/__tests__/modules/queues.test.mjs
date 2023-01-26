@@ -1,9 +1,9 @@
 /// <reference types="./queues.test.d.ts" />
 import { newInstance, floor, pipe } from '../../functions.mjs';
-import QueueLike__count from '../../util/__internal__/QueueLike/QueueLike.count.mjs';
-import QueueLike__create from '../../util/__internal__/QueueLike/QueueLike.create.mjs';
-import QueueLike__pop from '../../util/__internal__/QueueLike/QueueLike.pop.mjs';
-import QueueLike__push from '../../util/__internal__/QueueLike/QueueLike.push.mjs';
+import Queue$count from '../../util/__internal__/Queue/Queue.count.mjs';
+import Queue$create from '../../util/__internal__/Queue/Queue.create.mjs';
+import Queue$pop from '../../util/__internal__/Queue/Queue.pop.mjs';
+import Queue$push from '../../util/__internal__/Queue/Queue.push.mjs';
 import { testModule, test as createTest, expectArrayEquals } from '../testing.mjs';
 
 const compare = (a, b) => a - b;
@@ -25,14 +25,14 @@ const makeShuffledArray = (n) => {
     return result;
 };
 testModule("priority queue", createTest("push", () => {
-    const queue = QueueLike__create(compare);
+    const queue = Queue$create(compare);
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray.length; i++) {
-        QueueLike__push(queue, shuffledArray[i]);
+        Queue$push(queue, shuffledArray[i]);
     }
     const acc = [];
-    while (QueueLike__count(queue) > 0) {
-        acc.push(QueueLike__pop(queue));
+    while (Queue$count(queue) > 0) {
+        acc.push(Queue$pop(queue));
     }
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
 }));

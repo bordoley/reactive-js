@@ -1,14 +1,14 @@
 import { pipe, returns } from "../../functions";
-import { forEach, subscribe } from "../../rx/ObservableLike";
-import { run } from "../../scheduling/ContinuationLike";
-import { dispatch } from "../../scheduling/DispatcherLike";
-import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeSchedulerLike";
-import { createStateStore, stream } from "../../streaming/StreamableLike";
-import { dispose } from "../../util/DisposableLike";
+import { forEach, subscribe } from "../../rx/Observable";
+import { run } from "../../scheduling/Continuation";
+import { dispatch } from "../../scheduling/Dispatcher";
+import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
+import { createStateStore, stream } from "../../streaming/Streamable";
+import { dispose } from "../../util/Disposable";
 import { describe, expectArrayEquals, test, testModule } from "../testing";
 
 testModule(
-  "StreamableLike",
+  "Streamable",
   describe(
     "stateStore",
     test("createStateStore", () => {
