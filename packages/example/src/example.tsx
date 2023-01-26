@@ -54,7 +54,7 @@ const createActions = (
   onValueChanged: (value: number) =>
     pipe(
       historyStream,
-      WindowLocationStream.replaceWindowLocation((uri: WindowLocationURI) => ({
+      WindowLocationStream.replace((uri: WindowLocationURI) => ({
         ...uri,
         query: `v=${value}`,
       })),
@@ -64,7 +64,8 @@ const createActions = (
       (mode: FlowMode) => (mode === "pause" ? "resume" : "pause"),
       Dispatcher.dispatchTo(stateDispatcher),
     ),
-  setCounterMode: (mode: FlowMode) => pipe(counterDispatcher, Dispatcher.dispatch(mode)),
+  setCounterMode: (mode: FlowMode) =>
+    pipe(counterDispatcher, Dispatcher.dispatch(mode)),
 });
 
 const initialFlowModeState = () => "pause" as FlowMode;
@@ -114,6 +115,8 @@ const onGoBack = pipeLazy(historyStream, WindowLocationStream.goBack);
 const Root = () => {
   const uri = useObservable(historyStream);
 
+  const canGoBack = WindowLocationStream.canGoBack(historyStream);
+
   return (
     <div>
       <div>
@@ -122,7 +125,7 @@ const Root = () => {
           onChange={onChange}
           value={String(uri?.path ?? "")}
         ></input>
-        <button onClick={onGoBack}>Back</button>
+        <button onClick={onGoBack} disabled={!canGoBack}>Back</button>
       </div>
       <StreamPauseResume />
     </div>

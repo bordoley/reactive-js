@@ -6,10 +6,27 @@
 
 ### Functions
 
+- [canGoBack](integrations_web_WindowLocationStream.md#cangoback)
 - [goBack](integrations_web_WindowLocationStream.md#goback)
-- [replaceWindowLocation](integrations_web_WindowLocationStream.md#replacewindowlocation)
+- [replace](integrations_web_WindowLocationStream.md#replace)
 
 ## Functions
+
+### canGoBack
+
+▸ **canGoBack**(`stream`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `stream` | [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md) |
+
+#### Returns
+
+`boolean`
+
+___
 
 ### goBack
 
@@ -27,9 +44,9 @@
 
 ___
 
-### replaceWindowLocation
+### replace
 
-▸ **replaceWindowLocation**(`uri`): [`Function1`](functions.md#function1)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md), [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
+▸ **replace**(`uri`): [`Function1`](functions.md#function1)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md), [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
 
 #### Parameters
 
