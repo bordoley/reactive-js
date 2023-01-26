@@ -78,6 +78,12 @@ export type WindowLocationURI = {
 export const WindowLocationStreamLike_goBack = Symbol(
   "WindowLocationStreamLike_goBack",
 );
+
+/** @ignore */
+export const WindowLocationStreamLike_canGoBack = Symbol(
+  "WindowLocationStreamLike_canGoBack",
+);
+
 export interface WindowLocationStreamLike
   extends StreamLike<
     Updater<WindowLocationURI> | WindowLocationURI,
@@ -87,6 +93,8 @@ export interface WindowLocationStreamLike
     stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI,
     options?: { readonly replace?: boolean },
   ): void;
+
+  readonly [WindowLocationStreamLike_canGoBack]: boolean;
 
   [WindowLocationStreamLike_goBack](): boolean;
 }
@@ -305,6 +313,7 @@ export const windowLocation: WindowLocationStreamableLike =
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof DispatcherLike_dispatch
+            | typeof WindowLocationStreamLike_canGoBack
             | typeof WindowLocationStreamLike_goBack
             | typeof ReactiveContainerLike_sinkInto
           > &
@@ -338,6 +347,11 @@ export const windowLocation: WindowLocationStreamableLike =
             return pipe(this.delegate, getScheduler);
           },
 
+          get [WindowLocationStreamLike_canGoBack](): boolean {
+            unsafeCast<TProperties>(this);
+            return this.historyCounter > 0;
+          },
+
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
 
@@ -349,8 +363,10 @@ export const windowLocation: WindowLocationStreamableLike =
             pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
           },
 
-          [WindowLocationStreamLike_goBack](this: TProperties): boolean {
-            const canGoBack = this.historyCounter > 0;
+          [WindowLocationStreamLike_goBack](
+            this: WindowLocationStreamLike,
+          ): boolean {
+            const canGoBack = this[WindowLocationStreamLike_canGoBack];
 
             if (canGoBack) {
               history.back();

@@ -19,6 +19,8 @@ import Disposable$delegatingMixin from '../util/__internal__/Disposable/Disposab
 
 /** @ignore */
 const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
+/** @ignore */
+const WindowLocationStreamLike_canGoBack = Symbol("WindowLocationStreamLike_canGoBack");
 const reservedEvents = ["error", "open"];
 const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
@@ -135,13 +137,17 @@ const windowLocation =
             unsafeCast(this);
             return pipe(this.delegate, getScheduler);
         },
+        get [WindowLocationStreamLike_canGoBack]() {
+            unsafeCast(this);
+            return this.historyCounter > 0;
+        },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [DispatcherLike_dispatch](stateOrUpdater, { replace } = { replace: false }) {
             pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
         },
         [WindowLocationStreamLike_goBack]() {
-            const canGoBack = this.historyCounter > 0;
+            const canGoBack = this[WindowLocationStreamLike_canGoBack];
             if (canGoBack) {
                 history.back();
             }
@@ -203,4 +209,4 @@ const windowLocation =
     });
 })();
 
-export { WindowLocationStreamLike_goBack, addEventListener, createEventSource, fetch, windowLocation };
+export { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, addEventListener, createEventSource, fetch, windowLocation };

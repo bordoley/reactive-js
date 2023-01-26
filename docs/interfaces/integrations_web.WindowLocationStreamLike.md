@@ -14,10 +14,20 @@ Represents a duplex stream
 
 ## Table of contents
 
+### Properties
+
+- [[WindowLocationStreamLike\_canGoBack]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_cangoback])
+
 ### Methods
 
 - [[DispatcherLike\_dispatch]](integrations_web.WindowLocationStreamLike.md#[dispatcherlike_dispatch])
 - [[WindowLocationStreamLike\_goBack]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_goback])
+
+## Properties
+
+### [WindowLocationStreamLike\_canGoBack]
+
+• `Readonly` **[WindowLocationStreamLike\_canGoBack]**: `boolean`
 
 ## Methods
 
