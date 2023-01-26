@@ -1,66 +1,66 @@
 import { pipe } from "../../../functions";
 import { ObservableLike } from "../../../rx";
-import Scheduler$toPausableScheduler from "../../../scheduling/__internal__/Scheduler/Scheduler.toPausableScheduler";
+import Scheduler_toPausableScheduler from "../../../scheduling/__internal__/Scheduler/Scheduler.toPausableScheduler";
 import { FlowMode, ToFlowable } from "../../../streaming";
-import Flowable$createLifted from "../../../streaming/__internal__/Flowable/Flowable.createLifted";
-import Disposable$add from "../../../util/__internal__/Disposable/Disposable.add";
-import Disposable$bindTo from "../../../util/__internal__/Disposable/Disposable.bindTo";
-import Disposable$toObservable from "../../../util/__internal__/Disposable/Disposable.toObservable";
-import Pauseable$pause from "../../../util/__internal__/Pauseable/Pauseable.pause";
-import Pauseable$resume from "../../../util/__internal__/Pauseable/Pauseable.resume";
-import Observer$getScheduler from "../Observer/Observer.getScheduler";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
-import Observable$create from "./Observable.create";
-import Observable$empty from "./Observable.empty";
-import Observable$forEach from "./Observable.forEach";
-import Observable$isRunnable from "./Observable.isRunnable";
-import Observable$subscribe from "./Observable.subscribe";
-import Observable$subscribeOn from "./Observable.subscribeOn";
-import Observable$takeUntil from "./Observable.takeUntil";
+import Flowable_createLifted from "../../../streaming/__internal__/Flowable/Flowable.createLifted";
+import Disposable_add from "../../../util/__internal__/Disposable/Disposable.add";
+import Disposable_bindTo from "../../../util/__internal__/Disposable/Disposable.bindTo";
+import Disposable_toObservable from "../../../util/__internal__/Disposable/Disposable.toObservable";
+import Pauseable_pause from "../../../util/__internal__/Pauseable/Pauseable.pause";
+import Pauseable_resume from "../../../util/__internal__/Pauseable/Pauseable.resume";
+import Observer_getScheduler from "../Observer/Observer.getScheduler";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
+import Observable_create from "./Observable.create";
+import Observable_empty from "./Observable.empty";
+import Observable_forEach from "./Observable.forEach";
+import Observable_isRunnable from "./Observable.isRunnable";
+import Observable_subscribe from "./Observable.subscribe";
+import Observable_subscribeOn from "./Observable.subscribeOn";
+import Observable_takeUntil from "./Observable.takeUntil";
 
-const Observable$toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
+const Observable_toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
   () => observable =>
-    Observable$isRunnable(observable)
-      ? Flowable$createLifted((modeObs: ObservableLike<FlowMode>) =>
-          Observable$create(observer => {
+    Observable_isRunnable(observable)
+      ? Flowable_createLifted((modeObs: ObservableLike<FlowMode>) =>
+          Observable_create(observer => {
             const pausableScheduler = pipe(
               observer,
-              Observer$getScheduler,
-              Scheduler$toPausableScheduler,
+              Observer_getScheduler,
+              Scheduler_toPausableScheduler,
             );
 
             pipe(
               observer,
-              Sink$sourceFrom(
+              Sink_sourceFrom(
                 pipe(
                   observable,
-                  Observable$subscribeOn(pausableScheduler),
-                  Observable$takeUntil(
-                    pipe(pausableScheduler, Disposable$toObservable()),
+                  Observable_subscribeOn(pausableScheduler),
+                  Observable_takeUntil(
+                    pipe(pausableScheduler, Disposable_toObservable()),
                   ),
                 ),
               ),
-              Disposable$add(
+              Disposable_add(
                 pipe(
                   modeObs,
-                  Observable$forEach(mode => {
+                  Observable_forEach(mode => {
                     switch (mode) {
                       case "pause":
-                        Pauseable$pause(pausableScheduler);
+                        Pauseable_pause(pausableScheduler);
                         break;
                       case "resume":
-                        Pauseable$resume(pausableScheduler);
+                        Pauseable_resume(pausableScheduler);
                         break;
                     }
                   }),
-                  Observable$subscribe(Observer$getScheduler(observer)),
-                  Disposable$bindTo(pausableScheduler),
+                  Observable_subscribe(Observer_getScheduler(observer)),
+                  Disposable_bindTo(pausableScheduler),
                 ),
               ),
-              Disposable$add(pausableScheduler),
+              Disposable_add(pausableScheduler),
             );
           }),
         )
-      : Flowable$createLifted(_ => Observable$empty());
+      : Flowable_createLifted(_ => Observable_empty());
 
-export default Observable$toFlowable;
+export default Observable_toFlowable;

@@ -1,4 +1,4 @@
 import { DecodeWithCharset } from "../../../containers.js";
 import { RunnableLike } from "../../../rx.js";
-declare const Runnable$decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"];
-export { Runnable$decodeWithCharset as default };
+declare const Runnable_decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"];
+export { Runnable_decodeWithCharset as default };

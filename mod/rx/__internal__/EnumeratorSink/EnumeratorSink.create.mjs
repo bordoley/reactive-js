@@ -3,15 +3,15 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import { pipe, none, getLength } from '../../../functions.mjs';
 import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SourceLike_move } from '../../../ix.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
 
-const EnumeratorSink$create = (() => {
-    return createInstanceFactory(mix(include(Disposable$mixin), function EnumeratorSink(instance) {
-        init(Disposable$mixin, instance);
+const EnumeratorSink_create = (() => {
+    return createInstanceFactory(mix(include(Disposable_mixin), function EnumeratorSink(instance) {
+        init(Disposable_mixin, instance);
         instance.buffer = [];
-        pipe(instance, Disposable$onDisposed(() => {
+        pipe(instance, Disposable_onDisposed(() => {
             instance.buffer.length = 0;
             instance[EnumeratorLike_hasCurrent] = false;
         }));
@@ -22,14 +22,14 @@ const EnumeratorSink$create = (() => {
         [EnumeratorLike_hasCurrent]: false,
     }), {
         [SinkLike_notify](next) {
-            if (Disposable$isDisposed(this)) {
+            if (Disposable_isDisposed(this)) {
                 return;
             }
             this.buffer.push(next);
         },
         [SourceLike_move]() {
             const { buffer } = this;
-            if (!Disposable$isDisposed(this) && getLength(buffer) > 0) {
+            if (!Disposable_isDisposed(this) && getLength(buffer) > 0) {
                 const next = buffer.shift();
                 this[EnumeratorLike_current] = next;
                 this[EnumeratorLike_hasCurrent] = true;
@@ -41,4 +41,4 @@ const EnumeratorSink$create = (() => {
     }));
 })();
 
-export { EnumeratorSink$create as default };
+export { EnumeratorSink_create as default };

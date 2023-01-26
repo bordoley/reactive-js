@@ -7,26 +7,26 @@ import {
   ToRunnableObservable,
 } from "../rx";
 
-import Iterable$toAsyncEnumerable from "./__internal__/Iterable/Iterable.toAsyncEnumerable";
-import Iterable$toEnumerable from "./__internal__/Iterable/Iterable.toEnumerable";
-import Iterable$toEnumerableObservable from "./__internal__/Iterable/Iterable.toEnumerableObservable";
-import Iterable$toRunnableObservable from "./__internal__/Iterable/Iterable.toRunnableObservable";
+import Iterable_toAsyncEnumerable from "./__internal__/Iterable/Iterable.toAsyncEnumerable";
+import Iterable_toEnumerable from "./__internal__/Iterable/Iterable.toEnumerable";
+import Iterable_toEnumerableObservable from "./__internal__/Iterable/Iterable.toEnumerableObservable";
+import Iterable_toRunnableObservable from "./__internal__/Iterable/Iterable.toRunnableObservable";
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
  * @param iterable
  */
 export const toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"] =
-  Iterable$toAsyncEnumerable;
+  Iterable_toAsyncEnumerable;
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
-  Iterable$toEnumerable;
+  Iterable_toEnumerable;
 
 export const toIterable: ToIterable<IterableLike>["toIterable"] = () =>
   identity;
 
 export const toEnumerableObservable: ToEnumerableObservable<IterableLike>["toEnumerableObservable"] =
-  Iterable$toEnumerableObservable;
+  Iterable_toEnumerableObservable;
 
 export const toObservable: ToObservable<
   IterableLike,
@@ -34,7 +34,7 @@ export const toObservable: ToObservable<
     delay: number;
     delayStart?: boolean;
   }
->["toObservable"] = Iterable$toRunnableObservable;
+>["toObservable"] = Iterable_toRunnableObservable;
 
 export const toRunnableObservable: ToRunnableObservable<
   IterableLike,
@@ -42,4 +42,4 @@ export const toRunnableObservable: ToRunnableObservable<
     delay: number;
     delayStart?: boolean;
   }
->["toRunnableObservable"] = Iterable$toRunnableObservable;
+>["toRunnableObservable"] = Iterable_toRunnableObservable;

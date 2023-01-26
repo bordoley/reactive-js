@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { Predicate, isSome } from "../../../functions";
 
-const Sequence$keep: Keep<SequenceLike>["keep"] = /*@__PURE__*/ (() => {
+const Sequence_keep: Keep<SequenceLike>["keep"] = /*@__PURE__*/ (() => {
   const _keep =
     <T>(predicate: Predicate<T>, seq: SequenceLike<T>): SequenceLike<T> =>
     () => {
@@ -32,4 +32,4 @@ const Sequence$keep: Keep<SequenceLike>["keep"] = /*@__PURE__*/ (() => {
       _keep(predicate, seq);
 })();
 
-export default Sequence$keep;
+export default Sequence_keep;

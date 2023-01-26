@@ -12,7 +12,7 @@ import dispose from "./Disposable.dispose";
 import getError from "./Disposable.getError";
 import isDisposed from "./Disposable.isDisposed";
 
-const Disposable$mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
+const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
   const doDispose = (
     instance: DisposableLike,
     disposable: DisposableOrTeardown,
@@ -104,4 +104,4 @@ const Disposable$mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
   );
 })();
 
-export default Disposable$mixin;
+export default Disposable_mixin;

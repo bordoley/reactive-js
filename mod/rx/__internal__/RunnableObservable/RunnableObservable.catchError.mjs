@@ -1,8 +1,8 @@
 /// <reference types="./RunnableObservable.catchError.d.ts" />
-import HigherOrderObservable$catchError from '../HigherOrderObservable/HigherOrderObservable.catchError.mjs';
-import RunnableObservable$lift from './RunnableObservable.lift.mjs';
+import HigherOrderObservable_catchError from '../HigherOrderObservable/HigherOrderObservable.catchError.mjs';
+import RunnableObservable_lift from './RunnableObservable.lift.mjs';
 
-const RunnableObservable$catchError = 
-/*@__PURE__*/ HigherOrderObservable$catchError(RunnableObservable$lift);
+const RunnableObservable_catchError = 
+/*@__PURE__*/ HigherOrderObservable_catchError(RunnableObservable_lift);
 
-export { RunnableObservable$catchError as default };
+export { RunnableObservable_catchError as default };

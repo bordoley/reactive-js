@@ -1,4 +1,4 @@
 import { Keep } from "../../../containers.js";
 import { AsyncEnumerableLike } from "../../../ix.js";
-declare const AsyncEnumerable$keep: Keep<AsyncEnumerableLike>["keep"];
-export { AsyncEnumerable$keep as default };
+declare const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"];
+export { AsyncEnumerable_keep as default };

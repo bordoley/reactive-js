@@ -1,3 +1,3 @@
 import { Pairwise, SequenceLike } from "../../../containers.js";
-declare const Sequence$pairwise: Pairwise<SequenceLike>["pairwise"];
-export { Sequence$pairwise as default };
+declare const Sequence_pairwise: Pairwise<SequenceLike>["pairwise"];
+export { Sequence_pairwise as default };

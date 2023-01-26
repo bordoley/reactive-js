@@ -9,11 +9,11 @@ import {
 } from "../../../functions";
 import { ObservableLike } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
-import Disposable$onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
-import Observable$forEach from "./Observable.forEach";
-import Observable$subscribe from "./Observable.subscribe";
+import Disposable_onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
+import Observable_forEach from "./Observable.forEach";
+import Observable_subscribe from "./Observable.subscribe";
 
-const Observable$toPromise: ToPromiseable<
+const Observable_toPromise: ToPromiseable<
   ObservableLike,
   SchedulerLike
 >["toPromise"] =
@@ -31,12 +31,12 @@ const Observable$toPromise: ToPromiseable<
 
       pipe(
         observable,
-        Observable$forEach<T>(next => {
+        Observable_forEach<T>(next => {
           hasResult = true;
           result = next;
         }),
-        Observable$subscribe(scheduler),
-        Disposable$onDisposed(err => {
+        Observable_subscribe(scheduler),
+        Disposable_onDisposed(err => {
           if (isSome(err)) {
             reject(err);
           } else if (!hasResult) {
@@ -48,4 +48,4 @@ const Observable$toPromise: ToPromiseable<
       );
     });
 
-export default Observable$toPromise;
+export default Observable_toPromise;

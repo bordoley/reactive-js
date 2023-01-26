@@ -1,13 +1,13 @@
 import { Generate } from "../../../containers";
-import ReadonlyArray$toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
+import ReadonlyArray_toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
 import { Factory, Updater, pipe } from "../../../functions";
 import { AsyncEnumerableLike } from "../../../ix";
-import Observable$scan from "../../../rx/__internal__/Observable/Observable.scan";
-import Observable$scanAsync from "../../../rx/__internal__/Observable/Observable.scanAsync";
+import Observable_scan from "../../../rx/__internal__/Observable/Observable.scan";
+import Observable_scanAsync from "../../../rx/__internal__/Observable/Observable.scanAsync";
 import { getDelay } from "../../../scheduling/__internal__/Scheduler.options";
-import AsyncEnumerable$create from "./AsyncEnumerable.create";
+import AsyncEnumerable_create from "./AsyncEnumerable.create";
 
-const AsyncEnumerable$generate: Generate<
+const AsyncEnumerable_generate: Generate<
   AsyncEnumerableLike,
   { delay: number }
 >["generate"] = /*@__PURE__*/ (() => {
@@ -23,7 +23,7 @@ const AsyncEnumerable$generate: Generate<
         acc,
         generator,
         x => [x],
-        ReadonlyArray$toRunnableObservable<T>(options),
+        ReadonlyArray_toRunnableObservable<T>(options),
       );
 
   return <T>(
@@ -33,15 +33,15 @@ const AsyncEnumerable$generate: Generate<
   ): AsyncEnumerableLike<T> => {
     const delay = getDelay(options);
 
-    return AsyncEnumerable$create(
+    return AsyncEnumerable_create(
       delay > 0
-        ? Observable$scanAsync<void, T>(
+        ? Observable_scanAsync<void, T>(
             asyncGeneratorScanner(generator, options),
             initialValue,
           )
-        : Observable$scan(generateScanner(generator), initialValue),
+        : Observable_scan(generateScanner(generator), initialValue),
     );
   };
 })();
 
-export default AsyncEnumerable$generate;
+export default AsyncEnumerable_generate;

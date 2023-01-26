@@ -1,6 +1,6 @@
 import { ContainerLike, Container, ContainerOperator, ContainerOf } from "../../../containers.js";
 import { Function1, Factory } from "../../../functions.js";
-declare const Container$compute: <C extends ContainerLike, T, O extends {
+declare const Container_compute: <C extends ContainerLike, T, O extends {
     readonly start: number;
     readonly count: number;
 } = {
@@ -11,4 +11,4 @@ declare const Container$compute: <C extends ContainerLike, T, O extends {
 } & {
     fromArray<T_1>(options?: Partial<O> | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 }, options?: Partial<O> | undefined) => Function1<Factory<T>, ContainerOf<C, T>>;
-export { Container$compute as default };
+export { Container_compute as default };

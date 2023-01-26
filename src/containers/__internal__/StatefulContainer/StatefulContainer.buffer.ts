@@ -8,9 +8,9 @@ import {
   TInteractive,
   TReactive,
 } from "../containers.internal";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$buffer =
+const StatefulContainer_buffer =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -28,7 +28,7 @@ const StatefulContainer$buffer =
   ) => {
     const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
-    return pipe(operator, partial(maxBufferSize), StatefulContainer$lift(m));
+    return pipe(operator, partial(maxBufferSize), StatefulContainer_lift(m));
   };
 
-export default StatefulContainer$buffer;
+export default StatefulContainer_buffer;

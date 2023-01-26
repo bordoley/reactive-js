@@ -1,6 +1,6 @@
 /// <reference types="./Observable.fromArray.d.ts" />
-import ReadonlyArray$toRunnableObservable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable.mjs';
+import ReadonlyArray_toRunnableObservable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable.mjs';
 
-const Observable$fromArray = ReadonlyArray$toRunnableObservable;
+const Observable_fromArray = ReadonlyArray_toRunnableObservable;
 
-export { Observable$fromArray as default };
+export { Observable_fromArray as default };

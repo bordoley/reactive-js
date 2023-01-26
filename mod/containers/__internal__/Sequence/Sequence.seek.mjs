@@ -2,7 +2,7 @@
 import { SequenceLike_next } from '../../../containers.mjs';
 import { isSome } from '../../../functions.mjs';
 
-const Sequence$seek = (count) => (seq) => {
+const Sequence_seek = (count) => (seq) => {
     if (count <= 0) {
         return seq;
     }
@@ -18,4 +18,4 @@ const Sequence$seek = (count) => (seq) => {
     }
 };
 
-export { Sequence$seek as default };
+export { Sequence_seek as default };

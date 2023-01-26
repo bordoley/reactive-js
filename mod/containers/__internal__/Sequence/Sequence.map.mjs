@@ -2,7 +2,7 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome, none } from '../../../functions.mjs';
 
-const Sequence$map = /*@__PURE__*/ (() => {
+const Sequence_map = /*@__PURE__*/ (() => {
     const _map = (mapper, seq) => () => {
         const result = seq();
         return isSome(result)
@@ -15,4 +15,4 @@ const Sequence$map = /*@__PURE__*/ (() => {
     return (mapper) => (seq) => _map(mapper, seq);
 })();
 
-export { Sequence$map as default };
+export { Sequence_map as default };

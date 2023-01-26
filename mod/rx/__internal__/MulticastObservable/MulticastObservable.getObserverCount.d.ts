@@ -1,5 +1,5 @@
 import { MulticastObservableLike_observerCount } from "../../../rx.js";
-declare const MulticastObservable$getObserverCount: (obs: {
+declare const MulticastObservable_getObserverCount: (obs: {
     [MulticastObservableLike_observerCount]: number;
 }) => number;
-export { MulticastObservable$getObserverCount as default };
+export { MulticastObservable_getObserverCount as default };

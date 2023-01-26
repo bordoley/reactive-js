@@ -1,13 +1,13 @@
 import { RunnableObservableLike, ScanAsync } from "../../../rx";
-import HigherOrderObservable$scanAsync from "../HigherOrderObservable/HigherOrderObservable.scanAsync";
-import RunnableObservable$create from "./RunnableObservable.create";
+import HigherOrderObservable_scanAsync from "../HigherOrderObservable/HigherOrderObservable.scanAsync";
+import RunnableObservable_create from "./RunnableObservable.create";
 
-const RunnableObservable$scanAsync: ScanAsync<
+const RunnableObservable_scanAsync: ScanAsync<
   RunnableObservableLike,
   RunnableObservableLike
->["scanAsync"] = HigherOrderObservable$scanAsync<
+>["scanAsync"] = HigherOrderObservable_scanAsync<
   RunnableObservableLike,
   RunnableObservableLike
->(RunnableObservable$create);
+>(RunnableObservable_create);
 
-export default RunnableObservable$scanAsync;
+export default RunnableObservable_scanAsync;

@@ -7,9 +7,9 @@ import {
   TInteractive,
   TReactive,
 } from "../containers.internal";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$forEach =
+const StatefulContainer_forEach =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -21,6 +21,6 @@ const StatefulContainer$forEach =
     >,
   ) =>
   (effect: SideEffect1<T>) =>
-    pipe(operator, partial(effect), StatefulContainer$lift(m));
+    pipe(operator, partial(effect), StatefulContainer_lift(m));
 
-export default StatefulContainer$forEach;
+export default StatefulContainer_forEach;

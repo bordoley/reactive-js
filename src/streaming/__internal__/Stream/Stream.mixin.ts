@@ -19,12 +19,12 @@ import {
   ReactiveContainerLike_sinkInto,
   SubjectLike,
 } from "../../../rx";
-import MulticastObservable$getObserverCount from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getObserverCount";
-import MulticastObservable$getReplay from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getReplay";
-import Observable$multicast from "../../../rx/__internal__/Observable/Observable.multicast";
-import ReactiveContainer$sinkInto from "../../../rx/__internal__/ReactiveContainer/ReactiveContainer.sinkInto";
-import Subject$create from "../../../rx/__internal__/Subject/Subject.create";
-import Subject$publish from "../../../rx/__internal__/Subject/Subject.publish";
+import MulticastObservable_getObserverCount from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getObserverCount";
+import MulticastObservable_getReplay from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getReplay";
+import Observable_multicast from "../../../rx/__internal__/Observable/Observable.multicast";
+import ReactiveContainer_sinkInto from "../../../rx/__internal__/ReactiveContainer/ReactiveContainer.sinkInto";
+import Subject_create from "../../../rx/__internal__/Subject/Subject.create";
+import Subject_publish from "../../../rx/__internal__/Subject/Subject.publish";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
@@ -32,9 +32,9 @@ import {
 } from "../../../scheduling";
 import { StreamLike } from "../../../streaming";
 import add from "../../../util/__internal__/Disposable/Disposable.add";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 
-const Stream$mixin: <TReq, T>() => Mixin3<
+const Stream_mixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T>,
   ContainerOperator<ObservableLike, TReq, T>,
   SchedulerLike,
@@ -48,7 +48,7 @@ const Stream$mixin: <TReq, T>() => Mixin3<
 
   return returns(
     mix(
-      include(Disposable$delegatingMixin),
+      include(Disposable_delegatingMixin),
       function Stream(
         instance: Pick<
           StreamLike<TReq, T>,
@@ -64,9 +64,9 @@ const Stream$mixin: <TReq, T>() => Mixin3<
         scheduler: SchedulerLike,
         replay: number,
       ): StreamLike<TReq, T> {
-        const subject = Subject$create({ replay });
+        const subject = Subject_create({ replay });
 
-        init(Disposable$delegatingMixin, instance, subject);
+        init(Disposable_delegatingMixin, instance, subject);
 
         instance[DispatcherLike_scheduler] = scheduler;
         instance.subject = subject;
@@ -74,7 +74,7 @@ const Stream$mixin: <TReq, T>() => Mixin3<
         instance.observable = pipe(
           subject,
           op,
-          Observable$multicast<T>(scheduler, { replay }),
+          Observable_multicast<T>(scheduler, { replay }),
           add(instance),
         );
 
@@ -88,12 +88,12 @@ const Stream$mixin: <TReq, T>() => Mixin3<
       {
         get [MulticastObservableLike_observerCount](): number {
           unsafeCast<TProperties>(this);
-          return MulticastObservable$getObserverCount(this.observable);
+          return MulticastObservable_getObserverCount(this.observable);
         },
 
         get [MulticastObservableLike_replay](): number {
           unsafeCast<TProperties>(this);
-          return MulticastObservable$getReplay(this.observable);
+          return MulticastObservable_getReplay(this.observable);
         },
 
         [ObservableLike_isEnumerable]: false,
@@ -101,18 +101,18 @@ const Stream$mixin: <TReq, T>() => Mixin3<
         [ObservableLike_isRunnable]: false,
 
         [DispatcherLike_dispatch](this: TProperties, req: TReq) {
-          pipe(this.subject, Subject$publish(req));
+          pipe(this.subject, Subject_publish(req));
         },
 
         [ReactiveContainerLike_sinkInto](
           this: TProperties,
           observer: ObserverLike<T>,
         ) {
-          pipe(this.observable, ReactiveContainer$sinkInto(observer));
+          pipe(this.observable, ReactiveContainer_sinkInto(observer));
         },
       },
     ),
   );
 })();
 
-export default Stream$mixin;
+export default Stream_mixin;

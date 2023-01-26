@@ -9,17 +9,17 @@ import { none, pipe } from "../../../functions";
 import { AsyncEnumeratorLike, SourceLike, SourceLike_move } from "../../../ix";
 import { ObservableLike } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
-import Dispatcher$dispatch from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch";
+import Dispatcher_dispatch from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch";
 import { StreamLike } from "../../../streaming";
-import Stream$mixin from "../../../streaming/__internal__/Stream/Stream.mixin";
+import Stream_mixin from "../../../streaming/__internal__/Stream/Stream.mixin";
 
-const AsyncEnumerator$create = /*@__PURE__*/ (() => {
+const AsyncEnumerator_create = /*@__PURE__*/ (() => {
   const createAsyncEnumeratorInternal: <T>(
     op: ContainerOperator<ObservableLike, void, T>,
     scheduler: SchedulerLike,
     replay: number,
   ) => AsyncEnumeratorLike<T> = (<T>() => {
-    const typedStreamMixin = Stream$mixin<void, T>();
+    const typedStreamMixin = Stream_mixin<void, T>();
     return createInstanceFactory(
       mix(
         include(typedStreamMixin),
@@ -36,7 +36,7 @@ const AsyncEnumerator$create = /*@__PURE__*/ (() => {
         {},
         {
           [SourceLike_move](this: StreamLike<void, T>) {
-            pipe(this, Dispatcher$dispatch(none));
+            pipe(this, Dispatcher_dispatch(none));
           },
         },
       ),
@@ -57,4 +57,4 @@ const AsyncEnumerator$create = /*@__PURE__*/ (() => {
   };
 })();
 
-export default AsyncEnumerator$create;
+export default AsyncEnumerator_create;

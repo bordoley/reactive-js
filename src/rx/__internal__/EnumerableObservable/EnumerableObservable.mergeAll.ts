@@ -1,17 +1,17 @@
 import { ConcatAll } from "../../../containers";
 import { EnumerableObservableLike } from "../../../rx";
-import HigherOrderObservable$mergeAll from "../HigherOrderObservable/HigherOrderObservable.mergeAll";
-import EnumerableObservable$lift from "./EnumerableObservable.lift";
+import HigherOrderObservable_mergeAll from "../HigherOrderObservable/HigherOrderObservable.mergeAll";
+import EnumerableObservable_lift from "./EnumerableObservable.lift";
 
-const EnumerableObservable$mergeAll: ConcatAll<
+const EnumerableObservable_mergeAll: ConcatAll<
   EnumerableObservableLike,
   {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
 >["concatAll"] =
-  /*@__PURE__*/ HigherOrderObservable$mergeAll<EnumerableObservableLike>(
-    EnumerableObservable$lift,
+  /*@__PURE__*/ HigherOrderObservable_mergeAll<EnumerableObservableLike>(
+    EnumerableObservable_lift,
   ) as ConcatAll<
     EnumerableObservableLike,
     {
@@ -20,4 +20,4 @@ const EnumerableObservable$mergeAll: ConcatAll<
     }
   >["concatAll"];
 
-export default EnumerableObservable$mergeAll;
+export default EnumerableObservable_mergeAll;

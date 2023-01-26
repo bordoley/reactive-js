@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArray.empty.d.ts" />
-const ReadonlyArray$empty = /*@__PURE__*/ (() => {
+const ReadonlyArray_empty = /*@__PURE__*/ (() => {
     const _empty = [];
     return () => _empty;
 })();
 
-export { ReadonlyArray$empty as default };
+export { ReadonlyArray_empty as default };

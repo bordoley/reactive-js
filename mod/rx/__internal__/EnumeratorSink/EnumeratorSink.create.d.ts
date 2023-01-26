@@ -1,3 +1,3 @@
 import { EnumeratorSinkLike } from "../rx.internal.js";
-declare const EnumeratorSink$create: <T>() => EnumeratorSinkLike<T>;
-export { EnumeratorSink$create as default };
+declare const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T>;
+export { EnumeratorSink_create as default };

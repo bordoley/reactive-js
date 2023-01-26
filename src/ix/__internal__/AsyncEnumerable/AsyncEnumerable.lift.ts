@@ -7,7 +7,7 @@ import {
 } from "../../../ix";
 import { SchedulerLike } from "../../../scheduling";
 import { StreamableLike_stream } from "../../../streaming";
-import Streamable$stream from "../../../streaming/__internal__/Streamable/Streamable.stream";
+import Streamable_stream from "../../../streaming/__internal__/Streamable/Streamable.stream";
 
 class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
   constructor(
@@ -19,19 +19,19 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
   ) {}
 
   [InteractiveContainerLike_interact](scheduler: SchedulerLike) {
-    return pipe(this, Streamable$stream(scheduler));
+    return pipe(this, Streamable_stream(scheduler));
   }
 
   [StreamableLike_stream](
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): AsyncEnumeratorLike<T> {
-    const src = pipe(this.src, Streamable$stream(scheduler, options));
+    const src = pipe(this.src, Streamable_stream(scheduler, options));
     return pipeUnsafe(src, ...this.operators) as AsyncEnumeratorLike<T>;
   }
 }
 
-const AsyncEnumerable$lift =
+const AsyncEnumerable_lift =
   <TA, TB>(
     operator: Function1<AsyncEnumeratorLike<TA>, AsyncEnumeratorLike<TB>>,
   ): ContainerOperator<AsyncEnumerableLike, TA, TB> =>
@@ -51,4 +51,4 @@ const AsyncEnumerable$lift =
     >(LiftedAsyncEnumerable, src, allFunctions);
   };
 
-export default AsyncEnumerable$lift;
+export default AsyncEnumerable_lift;

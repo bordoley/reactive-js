@@ -5,7 +5,7 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { TakeWhile } from "../../../containers";
-import StatefulContainer$takeWhile from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeWhile";
+import StatefulContainer_takeWhile from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeWhile";
 import { TReactive } from "../../../containers/__internal__/containers.internal";
 import { Predicate, pipe } from "../../../functions";
 import {
@@ -13,19 +13,19 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$takeWhileMixin from "../Sink/Sink.takeWhileMixin";
-import Observable$liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_takeWhileMixin from "../Sink/Sink.takeWhileMixin";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
 
-const Observable$takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
+const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
     const createTakeWhileObserver: (
       delegate: ObserverLike<T>,
       predicate: Predicate<T>,
       inclusive: boolean,
     ) => ObserverLike<T> = (<T>() => {
-      const typedTakeWhileSinkMixin = Sink$takeWhileMixin<T>();
-      const typedObserverMixin = Observer$mixin<T>();
+      const typedTakeWhileSinkMixin = Sink_takeWhileMixin<T>();
+      const typedObserverMixin = Observer_mixin<T>();
 
       return createInstanceFactory(
         mix(
@@ -57,10 +57,10 @@ const Observable$takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
 
     return pipe(
       createTakeWhileObserver,
-      StatefulContainer$takeWhile<ObservableLike, T, TReactive>(
-        Observable$liftEnumerableOperatorT,
+      StatefulContainer_takeWhile<ObservableLike, T, TReactive>(
+        Observable_liftEnumerableOperatorT,
       ),
     );
   })();
 
-export default Observable$takeWhile;
+export default Observable_takeWhile;

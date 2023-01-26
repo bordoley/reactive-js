@@ -1,14 +1,14 @@
 import { Function1, pipe } from "../../../functions";
 import { StreamLike, StreamableLike } from "../../../streaming";
-import Streamable$sinkInto from "../Streamable/Streamable.sinkInto";
+import Streamable_sinkInto from "../Streamable/Streamable.sinkInto";
 
-const Stream$sourceFrom =
+const Stream_sourceFrom =
   <TReq, T, TSinkStream extends StreamLike<T, TReq>>(
     streamable: StreamableLike<TReq, T>,
   ): Function1<TSinkStream, TSinkStream> =>
   dest => {
-    pipe(streamable, Streamable$sinkInto(dest));
+    pipe(streamable, Streamable_sinkInto(dest));
     return dest;
   };
 
-export default Stream$sourceFrom;
+export default Stream_sourceFrom;

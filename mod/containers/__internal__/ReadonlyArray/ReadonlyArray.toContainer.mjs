@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArray.toContainer.d.ts" />
 import { getLength, isSome, max, min } from '../../../functions.mjs';
 
-const ReadonlyArray$toContainer = (factory) => (options = {}) => values => {
+const ReadonlyArray_toContainer = (factory) => (options = {}) => values => {
     const valuesLength = getLength(values);
     const { start: startOption, count: countOption } = options;
     const { start, count } = (() => {
@@ -33,4 +33,4 @@ const ReadonlyArray$toContainer = (factory) => (options = {}) => values => {
     return factory(values, start, count, options);
 };
 
-export { ReadonlyArray$toContainer as default };
+export { ReadonlyArray_toContainer as default };

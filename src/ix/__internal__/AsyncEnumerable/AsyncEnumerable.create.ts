@@ -14,8 +14,8 @@ import {
 import { ObservableLike } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
 import { StreamableLike_stream } from "../../../streaming";
-import Streamable$stream from "../../../streaming/__internal__/Streamable/Streamable.stream";
-import AsyncEnumerator$create from "../AsyncEnumerator/AsyncEnumerator.create";
+import Streamable_stream from "../../../streaming/__internal__/Streamable/Streamable.stream";
+import AsyncEnumerator_create from "../AsyncEnumerator/AsyncEnumerator.create";
 
 interface CreateAsyncEnumerable {
   <A>(op1: ContainerOperator<ObservableLike, void, A>): AsyncEnumerableLike<A>;
@@ -119,7 +119,7 @@ interface CreateAsyncEnumerable {
     op12: ContainerOperator<ObservableLike, K, L>,
   ): AsyncEnumerableLike<L>;
 }
-const AsyncEnumerable$create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
+const AsyncEnumerable_create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
   const AsyncEnumerable_op = Symbol("AsyncEnumerable_ops");
 
   type TProperties = {
@@ -154,7 +154,7 @@ const AsyncEnumerable$create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
           scheduler: SchedulerLike,
           options?: { readonly replay?: number },
         ) {
-          return AsyncEnumerator$create(
+          return AsyncEnumerator_create(
             this[AsyncEnumerable_op],
             scheduler,
             options,
@@ -163,7 +163,7 @@ const AsyncEnumerable$create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
         [InteractiveContainerLike_interact](
           ctx: SchedulerLike,
         ): AsyncEnumeratorLike<T> {
-          return pipe(this, Streamable$stream(ctx));
+          return pipe(this, Streamable_stream(ctx));
         },
       },
     ),
@@ -177,4 +177,4 @@ const AsyncEnumerable$create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
   };
 })();
 
-export default AsyncEnumerable$create;
+export default AsyncEnumerable_create;

@@ -8,13 +8,13 @@ import {
 } from "../../../__internal__/mixins";
 import { none } from "../../../functions";
 import { ObserverLike, SinkLike_notify } from "../../../rx";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Observer$getScheduler from "./Observer.getScheduler";
-import Observer$mixin from "./Observer.mixin";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Observer_getScheduler from "./Observer.getScheduler";
+import Observer_mixin from "./Observer.mixin";
 
-const Observer$createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
+const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
   /*@__PURE__*/ (<T>() => {
-    const typedObserverMixin = Observer$mixin<T>();
+    const typedObserverMixin = Observer_mixin<T>();
 
     type TProperties = {
       delegate: ObserverLike<T>;
@@ -22,14 +22,14 @@ const Observer$createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
 
     return createInstanceFactory(
       mix(
-        include(Disposable$mixin, typedObserverMixin),
+        include(Disposable_mixin, typedObserverMixin),
         function DelegatingObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           observer: ObserverLike<T>,
         ): ObserverLike<T> {
-          init(Disposable$mixin, instance);
-          init(typedObserverMixin, instance, Observer$getScheduler(observer));
+          init(Disposable_mixin, instance);
+          init(typedObserverMixin, instance, Observer_getScheduler(observer));
 
           instance.delegate = observer;
 
@@ -47,4 +47,4 @@ const Observer$createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
     );
   })();
 
-export default Observer$createWithDelegate;
+export default Observer_createWithDelegate;

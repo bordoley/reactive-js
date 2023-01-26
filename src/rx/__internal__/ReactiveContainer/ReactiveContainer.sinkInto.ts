@@ -5,7 +5,7 @@ import {
   SinkLike,
 } from "../../../rx";
 
-const ReactiveContainer$sinkInto =
+const ReactiveContainer_sinkInto =
   <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
     sink: TSink,
   ): Function1<C, C> =>
@@ -14,4 +14,4 @@ const ReactiveContainer$sinkInto =
     return source;
   };
 
-export default ReactiveContainer$sinkInto;
+export default ReactiveContainer_sinkInto;

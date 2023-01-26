@@ -1,3 +1,3 @@
 import { ObservableLike } from "../../../rx.js";
-declare const Observable$mergeObservables: <T>(observables: readonly ObservableLike<T>[]) => ObservableLike<T>;
-export { Observable$mergeObservables as default };
+declare const Observable_mergeObservables: <T>(observables: readonly ObservableLike<T>[]) => ObservableLike<T>;
+export { Observable_mergeObservables as default };

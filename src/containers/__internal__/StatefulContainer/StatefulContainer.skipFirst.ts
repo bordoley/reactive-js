@@ -7,9 +7,9 @@ import {
   TReactive,
 } from "../../../containers/__internal__/containers.internal";
 import { Function2, partial, pipe } from "../../../functions";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$skipFirst =
+const StatefulContainer_skipFirst =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -22,8 +22,8 @@ const StatefulContainer$skipFirst =
   ) =>
   (options: { readonly count?: number } = {}): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
-    const lifted = pipe(operator, partial(count), StatefulContainer$lift(m));
+    const lifted = pipe(operator, partial(count), StatefulContainer_lift(m));
     return container => (count > 0 ? pipe(container, lifted) : container);
   };
 
-export default StatefulContainer$skipFirst;
+export default StatefulContainer_skipFirst;

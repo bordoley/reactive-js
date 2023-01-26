@@ -7,9 +7,9 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { Zip } from "../../../containers";
-import ReadonlyArray$every from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.every";
-import ReadonlyArray$forEach from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.forEach";
-import ReadonlyArray$map from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map";
+import ReadonlyArray_every from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.every";
+import ReadonlyArray_forEach from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.forEach";
+import ReadonlyArray_map from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map";
 import { none, pipe } from "../../../functions";
 import {
   EnumerableLike,
@@ -17,30 +17,30 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Enumerator$getCurrent from "../Enumerator/Enumerator.getCurrent";
-import Enumerator$hasCurrent from "../Enumerator/Enumerator.hasCurrent";
-import MutableEnumerator$mixin from "../MutableEnumerator/MutableEnumerator.mixin";
-import Source$move from "../Source/Source.move";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
+import Enumerator_hasCurrent from "../Enumerator/Enumerator.hasCurrent";
+import MutableEnumerator_mixin from "../MutableEnumerator/MutableEnumerator.mixin";
+import Source_move from "../Source/Source.move";
 import { MutableEnumeratorLike } from "../ix.internal";
-import Enumerable$create from "./Enumerable.create";
-import Enumerable$enumerate from "./Enumerable.enumerate";
+import Enumerable_create from "./Enumerable.create";
+import Enumerable_enumerate from "./Enumerable.enumerate";
 
-const Enumerable$zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
+const Enumerable_zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const moveAll = (enumerators: readonly EnumeratorLike[]) => {
     for (const enumerator of enumerators) {
-      Source$move(enumerator);
+      Source_move(enumerator);
     }
   };
 
   const allHaveCurrent = (enumerators: readonly EnumeratorLike[]) =>
-    pipe(enumerators, ReadonlyArray$every(Enumerator$hasCurrent));
+    pipe(enumerators, ReadonlyArray_every(Enumerator_hasCurrent));
 
   const typedMutableEnumeratorMixin =
-    MutableEnumerator$mixin<readonly unknown[]>();
+    MutableEnumerator_mixin<readonly unknown[]>();
 
   type TProperties = {
     readonly enumerators: readonly EnumeratorLike[];
@@ -48,7 +48,7 @@ const Enumerable$zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
 
   const createZipEnumerator = createInstanceFactory(
     mix(
-      include(Disposable$mixin, typedMutableEnumeratorMixin),
+      include(Disposable_mixin, typedMutableEnumeratorMixin),
       function ZipEnumerator(
         instance: Pick<
           EnumeratorLike<readonly unknown[]>,
@@ -57,7 +57,7 @@ const Enumerable$zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
           Mutable<TProperties>,
         enumerators: readonly EnumeratorLike[],
       ): EnumeratorLike<readonly unknown[]> {
-        init(Disposable$mixin, instance);
+        init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
 
         instance.enumerators = enumerators;
@@ -71,17 +71,17 @@ const Enumerable$zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
         [SourceLike_move](
           this: TProperties & MutableEnumeratorLike<readonly unknown[]>,
         ) {
-          if (!Disposable$isDisposed(this)) {
+          if (!Disposable_isDisposed(this)) {
             const { enumerators } = this;
             moveAll(enumerators);
 
             if (allHaveCurrent(enumerators)) {
               this[EnumeratorLike_current] = pipe(
                 enumerators,
-                ReadonlyArray$map(Enumerator$getCurrent),
+                ReadonlyArray_map(Enumerator_getCurrent),
               );
             } else {
-              pipe(this, Disposable$dispose());
+              pipe(this, Disposable_dispose());
             }
           }
         },
@@ -93,18 +93,18 @@ const Enumerable$zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
     enumerators: readonly EnumeratorLike[],
   ): EnumeratorLike<readonly unknown[]> => {
     const instance = createZipEnumerator(enumerators);
-    pipe(enumerators, ReadonlyArray$forEach(Disposable$addTo(instance)));
+    pipe(enumerators, ReadonlyArray_forEach(Disposable_addTo(instance)));
     return instance;
   };
 
   return (...enumerables: readonly EnumerableLike[]): EnumerableLike<any> =>
-    Enumerable$create(() =>
+    Enumerable_create(() =>
       pipe(
         enumerables,
-        ReadonlyArray$map(Enumerable$enumerate()),
+        ReadonlyArray_map(Enumerable_enumerate()),
         zipEnumerators,
       ),
     );
 })();
 
-export default Enumerable$zip;
+export default Enumerable_zip;

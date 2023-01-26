@@ -5,22 +5,22 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { ThrowIfEmpty } from "../../../containers";
-import StatefulContainer$throwIfEmpty from "../../../containers/__internal__/StatefulContainer/StatefulContainer.throwIfEmpty";
+import StatefulContainer_throwIfEmpty from "../../../containers/__internal__/StatefulContainer/StatefulContainer.throwIfEmpty";
 import { Factory, pipe } from "../../../functions";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$throwIfEmptyMixin from "../Sink/Sink.throwIfEmptyMixin";
-import Observable$liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_throwIfEmptyMixin from "../Sink/Sink.throwIfEmptyMixin";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
 
-const Observable$throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
+const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (<T>() => {
-      const typedThrowIfEmptySinkMixin = Sink$throwIfEmptyMixin<T>();
-      const typedObserverMixin = Observer$mixin<T>();
+      const typedThrowIfEmptySinkMixin = Sink_throwIfEmptyMixin<T>();
+      const typedObserverMixin = Observer_mixin<T>();
 
       return createInstanceFactory(
         mix(
@@ -45,8 +45,8 @@ const Observable$throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
 
     return pipe(
       createThrowIfEmptyObserver,
-      StatefulContainer$throwIfEmpty(Observable$liftEnumerableOperatorT),
+      StatefulContainer_throwIfEmpty(Observable_liftEnumerableOperatorT),
     );
   })();
 
-export default Observable$throwIfEmpty;
+export default Observable_throwIfEmpty;

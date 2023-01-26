@@ -1,23 +1,23 @@
 import { pipe } from "../../../functions";
 import { ObservableLike, ObserverLike_dispatcher } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
-import Dispatcher$dispatchTo from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo";
-import Disposable$bindTo from "../../../util/__internal__/Disposable/Disposable.bindTo";
-import Observable$create from "./Observable.create";
-import Observable$forEach from "./Observable.forEach";
-import Observable$subscribe from "./Observable.subscribe";
+import Dispatcher_dispatchTo from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo";
+import Disposable_bindTo from "../../../util/__internal__/Disposable/Disposable.bindTo";
+import Observable_create from "./Observable.create";
+import Observable_forEach from "./Observable.forEach";
+import Observable_subscribe from "./Observable.subscribe";
 
-const Observable$subscribeOn =
+const Observable_subscribeOn =
   <T>(scheduler: SchedulerLike) =>
   (observable: ObservableLike<T>): ObservableLike<T> =>
     // FIXME: type test for VTS
-    Observable$create<T>(({ [ObserverLike_dispatcher]: dispatcher }) =>
+    Observable_create<T>(({ [ObserverLike_dispatcher]: dispatcher }) =>
       pipe(
         observable,
-        Observable$forEach<T>(Dispatcher$dispatchTo(dispatcher)),
-        Observable$subscribe(scheduler),
-        Disposable$bindTo(dispatcher),
+        Observable_forEach<T>(Dispatcher_dispatchTo(dispatcher)),
+        Observable_subscribe(scheduler),
+        Disposable_bindTo(dispatcher),
       ),
     );
 
-export default Observable$subscribeOn;
+export default Observable_subscribeOn;

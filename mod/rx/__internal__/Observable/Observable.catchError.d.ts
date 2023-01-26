@@ -1,4 +1,4 @@
 import { CatchError } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable$catchError: CatchError<ObservableLike>["catchError"];
-export { Observable$catchError as default };
+declare const Observable_catchError: CatchError<ObservableLike>["catchError"];
+export { Observable_catchError as default };

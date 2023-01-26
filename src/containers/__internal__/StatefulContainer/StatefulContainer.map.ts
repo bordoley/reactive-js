@@ -7,9 +7,9 @@ import {
   TReactive,
 } from "../../../containers/__internal__/containers.internal";
 import { Function1, Function2, partial, pipe } from "../../../functions";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$map =
+const StatefulContainer_map =
   <
     C extends StatefulContainerLike,
     TA,
@@ -26,6 +26,6 @@ const StatefulContainer$map =
     >,
   ) =>
   (mapper: Function1<TA, TB>) =>
-    pipe(operator, partial(mapper), StatefulContainer$lift(m));
+    pipe(operator, partial(mapper), StatefulContainer_lift(m));
 
-export default StatefulContainer$map;
+export default StatefulContainer_map;

@@ -2,52 +2,52 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { getLength, pipe, isEmpty, none, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import Observer$getScheduler from '../Observer/Observer.getScheduler.mjs';
-import Observer$mixin from '../Observer/Observer.mixin.mjs';
-import Sink$notify from '../Sink/Sink.notify.mjs';
-import Observable$forEach from './Observable.forEach.mjs';
-import Observable$isEnumerable from './Observable.isEnumerable.mjs';
-import Observable$isRunnable from './Observable.isRunnable.mjs';
-import Observable$lift from './Observable.lift.mjs';
-import Observable$subscribe from './Observable.subscribe.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
+import Observer_mixin from '../Observer/Observer.mixin.mjs';
+import Sink_notify from '../Sink/Sink.notify.mjs';
+import Observable_forEach from './Observable.forEach.mjs';
+import Observable_isEnumerable from './Observable.isEnumerable.mjs';
+import Observable_isRunnable from './Observable.isRunnable.mjs';
+import Observable_lift from './Observable.lift.mjs';
+import Observable_subscribe from './Observable.subscribe.mjs';
 
-const Observable$zipWithLatestFrom = /*@__PURE__*/ (() => {
+const Observable_zipWithLatestFrom = /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
-        const typedObserverMixin = Observer$mixin();
+        const typedObserverMixin = Observer_mixin();
         const notifyDelegate = (observer) => {
             if (getLength(observer.queue) > 0 && observer.hasLatest) {
                 observer.hasLatest = false;
                 const next = observer.queue.shift();
                 const result = observer.selector(next, observer.otherLatest);
-                pipe(observer.delegate, Sink$notify(result));
+                pipe(observer.delegate, Sink_notify(result));
             }
         };
-        return createInstanceFactory(mix(include(Disposable$mixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
-            init(Disposable$mixin, instance);
-            init(typedObserverMixin, instance, Observer$getScheduler(delegate));
+        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function ZipWithLatestFromObserer(instance, delegate, other, selector) {
+            init(Disposable_mixin, instance);
+            init(typedObserverMixin, instance, Observer_getScheduler(delegate));
             instance.delegate = delegate;
             instance.queue = [];
             instance.selector = selector;
             const disposeDelegate = () => {
-                if (Disposable$isDisposed(instance) &&
-                    Disposable$isDisposed(otherSubscription)) {
-                    pipe(delegate, Disposable$dispose());
+                if (Disposable_isDisposed(instance) &&
+                    Disposable_isDisposed(otherSubscription)) {
+                    pipe(delegate, Disposable_dispose());
                 }
             };
-            const otherSubscription = pipe(other, Observable$forEach(otherLatest => {
+            const otherSubscription = pipe(other, Observable_forEach(otherLatest => {
                 instance.hasLatest = true;
                 instance.otherLatest = otherLatest;
                 notifyDelegate(instance);
-                if (Disposable$isDisposed(instance) && isEmpty(instance.queue)) {
-                    pipe(instance.delegate, Disposable$dispose());
+                if (Disposable_isDisposed(instance) && isEmpty(instance.queue)) {
+                    pipe(instance.delegate, Disposable_dispose());
                 }
-            }), Observable$subscribe(Observer$getScheduler(delegate)), Disposable$onComplete(disposeDelegate), Disposable$addTo(delegate));
-            pipe(instance, Disposable$addTo(delegate), Disposable$onComplete(disposeDelegate));
+            }), Observable_subscribe(Observer_getScheduler(delegate)), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
+            pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({
             delegate: none,
@@ -62,7 +62,7 @@ const Observable$zipWithLatestFrom = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return (other, selector) => pipe(createZipWithLatestFromObserver, partial(other, selector), Observable$lift(Observable$isEnumerable(other), Observable$isRunnable(other)));
+    return (other, selector) => pipe(createZipWithLatestFromObserver, partial(other, selector), Observable_lift(Observable_isEnumerable(other), Observable_isRunnable(other)));
 })();
 
-export { Observable$zipWithLatestFrom as default };
+export { Observable_zipWithLatestFrom as default };

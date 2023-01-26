@@ -79,6 +79,6 @@ class PriorityQueueImpl {
         siftUp(this, item);
     }
 }
-const Queue$create = (comparator) => newInstance(PriorityQueueImpl, comparator);
+const Queue_create = (comparator) => newInstance(PriorityQueueImpl, comparator);
 
-export { Queue$create as default };
+export { Queue_create as default };

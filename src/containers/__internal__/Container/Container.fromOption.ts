@@ -1,7 +1,7 @@
 import { ContainerLike, ContainerOf, FromArray } from "../../../containers";
 import { Function1, Optional, isSome, pipe } from "../../../functions";
 
-const Container$fromOption =
+const Container_fromOption =
   <
     C extends ContainerLike,
     T,
@@ -20,4 +20,4 @@ const Container$fromOption =
   option =>
     pipe(isSome(option) ? [option] : [], fromArray<T>(options));
 
-export default Container$fromOption;
+export default Container_fromOption;

@@ -1,17 +1,17 @@
 import { ContainerOperator } from "../../../containers";
-import Container$concatMap from "../../../containers/__internal__/Container/ContainerLIke.concatMap";
-import Promiseable$toObservable from "../../../containers/__internal__/Promiseable/Promiseable.toObservable";
+import Container_concatMap from "../../../containers/__internal__/Container/ContainerLIke.concatMap";
+import Promiseable_toObservable from "../../../containers/__internal__/Promiseable/Promiseable.toObservable";
 import { Function1, pipe } from "../../../functions";
 import { ObservableLike } from "../../../rx";
-import Observable$map from "./Observable.map";
-import Observable$switchAll from "./Observable.switchAll";
+import Observable_map from "./Observable.map";
+import Observable_switchAll from "./Observable.switchAll";
 
-const Observable$mapAsync = <TA, TB>(
+const Observable_mapAsync = <TA, TB>(
   f: Function1<TA, Promise<TB>>,
 ): ContainerOperator<ObservableLike, TA, TB> =>
-  Container$concatMap(
-    { concatAll: Observable$switchAll, map: Observable$map },
-    (a: TA) => pipe(a, f, Promiseable$toObservable()),
+  Container_concatMap(
+    { concatAll: Observable_switchAll, map: Observable_map },
+    (a: TA) => pipe(a, f, Promiseable_toObservable()),
   );
 
-export default Observable$mapAsync;
+export default Observable_mapAsync;

@@ -1,9 +1,9 @@
 /// <reference types="./Observer.schedule.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import Scheduler$schedule from '../../../scheduling/__internal__/Scheduler/Scheduler.schedule.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Observer$getScheduler from './Observer.getScheduler.mjs';
+import Scheduler_schedule from '../../../scheduling/__internal__/Scheduler/Scheduler.schedule.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Observer_getScheduler from './Observer.getScheduler.mjs';
 
-const Observer$schedule = (f, options) => observer => pipe(observer, Observer$getScheduler, Scheduler$schedule(f, options), Disposable$addTo(observer));
+const Observer_schedule = (f, options) => observer => pipe(observer, Observer_getScheduler, Scheduler_schedule(f, options), Disposable_addTo(observer));
 
-export { Observer$schedule as default };
+export { Observer_schedule as default };

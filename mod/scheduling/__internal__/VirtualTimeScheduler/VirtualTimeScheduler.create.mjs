@@ -3,20 +3,20 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
 import { none, unsafeCast, pipe, isSome } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
-import Enumerator$getCurrent from '../../../ix/__internal__/Enumerator/Enumerator.getCurrent.mjs';
-import Enumerator$move from '../../../ix/__internal__/Enumerator/Enumerator.move.mjs';
-import MutableEnumerator$mixin from '../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
+import Enumerator_getCurrent from '../../../ix/__internal__/Enumerator/Enumerator.getCurrent.mjs';
+import Enumerator_move from '../../../ix/__internal__/Enumerator/Enumerator.move.mjs';
+import MutableEnumerator_mixin from '../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, ContinuationLike_run, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
-import Disposable$addIgnoringChildErrors from '../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Queue$create from '../../../util/__internal__/Queue/Queue.create.mjs';
-import Queue$pop from '../../../util/__internal__/Queue/Queue.pop.mjs';
-import Queue$push from '../../../util/__internal__/Queue/Queue.push.mjs';
-import Continuation$run from '../Continuation/Continuation.run.mjs';
+import Disposable_addIgnoringChildErrors from '../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Queue_create from '../../../util/__internal__/Queue/Queue.create.mjs';
+import Queue_pop from '../../../util/__internal__/Queue/Queue.pop.mjs';
+import Queue_push from '../../../util/__internal__/Queue/Queue.push.mjs';
+import Continuation_run from '../Continuation/Continuation.run.mjs';
 import { getDelay } from '../Scheduler.options.mjs';
-import Scheduler$getCurrentTime from '../Scheduler/Scheduler.getCurrentTime.mjs';
+import Scheduler_getCurrentTime from '../Scheduler/Scheduler.getCurrentTime.mjs';
 
 const comparator = (a, b) => {
     let diff = 0;
@@ -25,12 +25,12 @@ const comparator = (a, b) => {
     return diff;
 };
 const typedMutableEnumeratorMixin = 
-/*@__PURE__*/ MutableEnumerator$mixin();
-const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(Disposable$mixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
-    init(Disposable$mixin, instance);
+/*@__PURE__*/ MutableEnumerator_mixin();
+const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+    init(Disposable_mixin, instance);
     init(typedMutableEnumeratorMixin, instance);
     instance.maxMicroTaskTicks = maxMicroTaskTicks;
-    instance.taskQueue = Queue$create(comparator);
+    instance.taskQueue = Queue_create(comparator);
     return instance;
 }, props({
     [SchedulerLike_inContinuation]: false,
@@ -52,13 +52,13 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
             (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks));
     },
     [ContinuationLike_run]() {
-        while (Enumerator$move(this)) {
-            const task = Enumerator$getCurrent(this);
+        while (Enumerator_move(this)) {
+            const task = Enumerator_getCurrent(this);
             const { dueTime, continuation } = task;
             this.microTaskTicks = 0;
             this[SchedulerLike_now] = dueTime;
             this[SchedulerLike_inContinuation] = true;
-            Continuation$run(continuation);
+            Continuation_run(continuation);
             this[SchedulerLike_inContinuation] = false;
         }
     },
@@ -67,32 +67,32 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
     },
     [SchedulerLike_schedule](continuation, options) {
         const delay = getDelay(options);
-        pipe(this, Disposable$addIgnoringChildErrors(continuation));
-        if (!Disposable$isDisposed(continuation)) {
-            Queue$push(this.taskQueue, {
+        pipe(this, Disposable_addIgnoringChildErrors(continuation));
+        if (!Disposable_isDisposed(continuation)) {
+            Queue_push(this.taskQueue, {
                 id: this.taskIDCount++,
-                dueTime: Scheduler$getCurrentTime(this) + delay,
+                dueTime: Scheduler_getCurrentTime(this) + delay,
                 continuation,
             });
         }
     },
     [SourceLike_move]() {
         const taskQueue = this.taskQueue;
-        if (Disposable$isDisposed(this)) {
+        if (Disposable_isDisposed(this)) {
             return;
         }
-        const task = Queue$pop(taskQueue);
+        const task = Queue_pop(taskQueue);
         if (isSome(task)) {
             this[EnumeratorLike_current] = task;
         }
         else {
-            pipe(this, Disposable$dispose());
+            pipe(this, Disposable_dispose());
         }
     },
 }));
-const VirtualTimeScheduler$create = (options = {}) => {
+const VirtualTimeScheduler_create = (options = {}) => {
     const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
     return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
 };
 
-export { VirtualTimeScheduler$create as default };
+export { VirtualTimeScheduler_create as default };

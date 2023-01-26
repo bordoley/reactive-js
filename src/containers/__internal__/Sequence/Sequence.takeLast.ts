@@ -5,9 +5,9 @@ import {
   TakeLast,
 } from "../../../containers";
 import { callWith, getLength, isSome, pipe } from "../../../functions";
-import ReadonlyArray$toSequence from "../ReadonlyArray/ReadonlyArray.toSequence";
+import ReadonlyArray_toSequence from "../ReadonlyArray/ReadonlyArray.toSequence";
 
-const Sequence$takeLast: TakeLast<SequenceLike>["takeLast"] =
+const Sequence_takeLast: TakeLast<SequenceLike>["takeLast"] =
   /*@__PURE__*/ (() => {
     const _takeLast =
       <T>(maxCount: number, seq: SequenceLike<T>): SequenceLike<T> =>
@@ -25,7 +25,7 @@ const Sequence$takeLast: TakeLast<SequenceLike>["takeLast"] =
             break;
           }
         }
-        return pipe(last, ReadonlyArray$toSequence(), callWith());
+        return pipe(last, ReadonlyArray_toSequence(), callWith());
       };
 
     return <T>(options: { readonly count?: number } = {}) =>
@@ -35,4 +35,4 @@ const Sequence$takeLast: TakeLast<SequenceLike>["takeLast"] =
       };
   })();
 
-export default Sequence$takeLast;
+export default Sequence_takeLast;

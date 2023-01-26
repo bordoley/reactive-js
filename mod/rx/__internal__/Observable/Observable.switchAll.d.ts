@@ -1,4 +1,4 @@
 import { ConcatAll } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable$switchAll: ConcatAll<ObservableLike>["concatAll"];
-export { Observable$switchAll as default };
+declare const Observable_switchAll: ConcatAll<ObservableLike>["concatAll"];
+export { Observable_switchAll as default };

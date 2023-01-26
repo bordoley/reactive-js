@@ -1,15 +1,15 @@
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins";
 import { none, pipe, returns, unsafeCast } from "../../../functions";
 import { DisposableLike } from "../../../util";
-import Disposable$add from "../Disposable/Disposable.add";
-import Disposable$dispose from "../Disposable/Disposable.dispose";
+import Disposable_add from "../Disposable/Disposable.add";
+import Disposable_dispose from "../Disposable/Disposable.dispose";
 import {
   DisposableRefLike,
   MutableRefLike,
   MutableRefLike_current,
 } from "../util.internal";
 
-const DisposableRef$mixin: <TDisposable extends DisposableLike>() => Mixin1<
+const DisposableRef_mixin: <TDisposable extends DisposableLike>() => Mixin1<
   MutableRefLike<TDisposable>,
   TDisposable
 > = /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
@@ -32,7 +32,7 @@ const DisposableRef$mixin: <TDisposable extends DisposableLike>() => Mixin1<
         unsafeCast<DisposableLike>(instance);
 
         instance[DisposableRef_private_current] = defaultValue;
-        pipe(instance, Disposable$add(defaultValue));
+        pipe(instance, Disposable_add(defaultValue));
 
         return instance;
       },
@@ -47,10 +47,10 @@ const DisposableRef$mixin: <TDisposable extends DisposableLike>() => Mixin1<
         set [MutableRefLike_current](v: TDisposable) {
           unsafeCast<TProperties & DisposableLike>(this);
           const oldValue = this[DisposableRef_private_current];
-          pipe(oldValue, Disposable$dispose());
+          pipe(oldValue, Disposable_dispose());
 
           this[DisposableRef_private_current] = v;
-          pipe(this, Disposable$add(v));
+          pipe(this, Disposable_add(v));
         },
       },
     ),
@@ -58,4 +58,4 @@ const DisposableRef$mixin: <TDisposable extends DisposableLike>() => Mixin1<
   );
 })();
 
-export default DisposableRef$mixin;
+export default DisposableRef_mixin;

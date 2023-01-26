@@ -6,22 +6,22 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { ThrowIfEmpty } from "../../../containers";
-import StatefulContainer$throwIfEmpty from "../../../containers/__internal__/StatefulContainer/StatefulContainer.throwIfEmpty";
+import StatefulContainer_throwIfEmpty from "../../../containers/__internal__/StatefulContainer/StatefulContainer.throwIfEmpty";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { Factory, Optional, error, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import Disposable$addIgnoringChildErrors from "../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import DelegatingEnumerator$mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
-import DelegatingEnumerator$move from "../DelegatingEnumerator/DelegatingEnumerator.move";
+import Disposable_addIgnoringChildErrors from "../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
+import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
 import { DelegatingEnumeratorLike } from "../ix.internal";
-import Enumerable$liftT from "./Enumerable.liftT";
+import Enumerable_liftT from "./Enumerable.liftT";
 
-const Enumerable$throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
+const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingEnumeratorMixin = DelegatingEnumerator$mixin<T>();
+    const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
     type TProperties = {
       isEmpty: boolean;
@@ -30,22 +30,22 @@ const Enumerable$throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
     return pipe(
       createInstanceFactory(
         mix(
-          include(Disposable$mixin, typedDelegatingEnumeratorMixin),
+          include(Disposable_mixin, typedDelegatingEnumeratorMixin),
           function TakeWhileEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               TProperties,
             delegate: EnumeratorLike,
             factory: Factory<unknown>,
           ): EnumeratorLike<T> {
-            init(Disposable$mixin, instance);
+            init(Disposable_mixin, instance);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
             instance.isEmpty = true;
 
-            pipe(instance, Disposable$addIgnoringChildErrors(delegate));
+            pipe(instance, Disposable_addIgnoringChildErrors(delegate));
             pipe(
               delegate,
-              Disposable$onComplete(() => {
+              Disposable_onComplete(() => {
                 let err: Optional<Error> = none;
 
                 if (instance.isEmpty) {
@@ -56,7 +56,7 @@ const Enumerable$throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
                   }
                 }
 
-                pipe(instance, Disposable$dispose(err));
+                pipe(instance, Disposable_dispose(err));
               }),
             );
 
@@ -67,17 +67,17 @@ const Enumerable$throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
           }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              if (DelegatingEnumerator$move(this)) {
+              if (DelegatingEnumerator_move(this)) {
                 this.isEmpty = false;
               }
             },
           },
         ),
       ),
-      StatefulContainer$throwIfEmpty<EnumerableLike, T, TInteractive>(
-        Enumerable$liftT,
+      StatefulContainer_throwIfEmpty<EnumerableLike, T, TInteractive>(
+        Enumerable_liftT,
       ),
     );
   })();
 
-export default Enumerable$throwIfEmpty;
+export default Enumerable_throwIfEmpty;

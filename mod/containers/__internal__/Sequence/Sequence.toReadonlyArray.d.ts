@@ -1,3 +1,3 @@
 import { ToReadonlyArray, SequenceLike } from "../../../containers.js";
-declare const Sequence$toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"];
-export { Sequence$toReadonlyArray as default };
+declare const Sequence_toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"];
+export { Sequence_toReadonlyArray as default };

@@ -3,29 +3,29 @@ import { createInstanceFactory, mix, include, init, props } from '../../__intern
 import { MAX_SAFE_INTEGER } from '../../constants.mjs';
 import { isNone, none, isSome, max, pipe, unsafeCast } from '../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
-import Enumerator$getCurrent from '../../ix/__internal__/Enumerator/Enumerator.getCurrent.mjs';
-import Enumerator$hasCurrent from '../../ix/__internal__/Enumerator/Enumerator.hasCurrent.mjs';
-import MutableEnumerator$mixin from '../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
-import Source$move from '../../ix/__internal__/Source/Source.move.mjs';
+import Enumerator_getCurrent from '../../ix/__internal__/Enumerator/Enumerator.getCurrent.mjs';
+import Enumerator_hasCurrent from '../../ix/__internal__/Enumerator/Enumerator.hasCurrent.mjs';
+import MutableEnumerator_mixin from '../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
+import Source_move from '../../ix/__internal__/Source/Source.move.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../scheduling.mjs';
 import { PauseableLike_pause, PauseableLike_resume } from '../../util.mjs';
-import Disposable$addIgnoringChildErrors from '../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors.mjs';
-import Disposable$disposed from '../../util/__internal__/Disposable/Disposable.disposed.mjs';
-import Disposable$isDisposed from '../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import DisposableRef$mixin from '../../util/__internal__/DisposableRef/DisposableRef.mixin.mjs';
-import Queue$create from '../../util/__internal__/Queue/Queue.create.mjs';
-import Queue$peek from '../../util/__internal__/Queue/Queue.peek.mjs';
-import Queue$pop from '../../util/__internal__/Queue/Queue.pop.mjs';
-import Queue$push from '../../util/__internal__/Queue/Queue.push.mjs';
+import Disposable_addIgnoringChildErrors from '../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors.mjs';
+import Disposable_disposed from '../../util/__internal__/Disposable/Disposable.disposed.mjs';
+import Disposable_isDisposed from '../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import DisposableRef_mixin from '../../util/__internal__/DisposableRef/DisposableRef.mixin.mjs';
+import Queue_create from '../../util/__internal__/Queue/Queue.create.mjs';
+import Queue_peek from '../../util/__internal__/Queue/Queue.peek.mjs';
+import Queue_pop from '../../util/__internal__/Queue/Queue.pop.mjs';
+import Queue_push from '../../util/__internal__/Queue/Queue.push.mjs';
 import { MutableRefLike_current } from '../../util/__internal__/util.internal.mjs';
-import Continuation$run from './Continuation/Continuation.run.mjs';
-import Continuation$yield_ from './Continuation/Continuation.yield.mjs';
+import Continuation_run from './Continuation/Continuation.run.mjs';
+import Continuation_yield_ from './Continuation/Continuation.yield.mjs';
 import { getDelay } from './Scheduler.options.mjs';
-import Scheduler$getCurrentTime from './Scheduler/Scheduler.getCurrentTime.mjs';
-import Scheduler$isInContinuation from './Scheduler/Scheduler.isInContinuation.mjs';
-import Scheduler$schedule from './Scheduler/Scheduler.schedule.mjs';
-import Scheduler$shouldYield from './Scheduler/Scheduler.shouldYield.mjs';
+import Scheduler_getCurrentTime from './Scheduler/Scheduler.getCurrentTime.mjs';
+import Scheduler_isInContinuation from './Scheduler/Scheduler.isInContinuation.mjs';
+import Scheduler_schedule from './Scheduler/Scheduler.schedule.mjs';
+import Scheduler_shouldYield from './Scheduler/Scheduler.shouldYield.mjs';
 
 const create = 
 /*@__PURE__*/ (() => {
@@ -43,79 +43,79 @@ const create =
     };
     const peek = (instance) => {
         const { delayed, queue } = instance;
-        const now = Scheduler$getCurrentTime(instance.host);
+        const now = Scheduler_getCurrentTime(instance.host);
         while (true) {
-            const task = Queue$peek(delayed);
+            const task = Queue_peek(delayed);
             if (isNone(task)) {
                 break;
             }
-            const taskIsDispose = Disposable$isDisposed(task.continuation);
+            const taskIsDispose = Disposable_isDisposed(task.continuation);
             if (task.dueTime > now && !taskIsDispose) {
                 break;
             }
-            Queue$pop(delayed);
+            Queue_pop(delayed);
             if (!taskIsDispose) {
-                Queue$push(queue, task);
+                Queue_push(queue, task);
             }
         }
         let task = none;
         while (true) {
-            task = Queue$peek(queue);
+            task = Queue_peek(queue);
             if (isNone(task)) {
                 break;
             }
-            if (!Disposable$isDisposed(task.continuation)) {
+            if (!Disposable_isDisposed(task.continuation)) {
                 break;
             }
-            Queue$pop(queue);
+            Queue_pop(queue);
         }
-        return task !== null && task !== void 0 ? task : Queue$peek(delayed);
+        return task !== null && task !== void 0 ? task : Queue_peek(delayed);
     };
     const priorityShouldYield = (instance, next) => {
         const { [EnumeratorLike_current]: current } = instance;
         return (current !== next &&
-            next.dueTime <= Scheduler$getCurrentTime(instance.host) &&
+            next.dueTime <= Scheduler_getCurrentTime(instance.host) &&
             next.priority > current.priority);
     };
     const scheduleOnHost = (instance) => {
         var _a;
         const task = peek(instance);
-        const continuationActive = !Disposable$isDisposed(instance[MutableRefLike_current]) &&
+        const continuationActive = !Disposable_isDisposed(instance[MutableRefLike_current]) &&
             isSome(task) &&
             instance.dueTime <= task.dueTime;
         if (isNone(task) || continuationActive || instance.isPaused) {
             return;
         }
         const dueTime = task.dueTime;
-        const delay = max(dueTime - Scheduler$getCurrentTime(instance.host), 0);
+        const delay = max(dueTime - Scheduler_getCurrentTime(instance.host), 0);
         instance.dueTime = dueTime;
         const continuation = (_a = instance.hostContinuation) !== null && _a !== void 0 ? _a : (() => {
-            for (let task = peek(instance); isSome(task) && !Disposable$isDisposed(instance); task = peek(instance)) {
+            for (let task = peek(instance); isSome(task) && !Disposable_isDisposed(instance); task = peek(instance)) {
                 const { continuation, dueTime } = task;
-                const delay = max(dueTime - Scheduler$getCurrentTime(instance.host), 0);
+                const delay = max(dueTime - Scheduler_getCurrentTime(instance.host), 0);
                 if (delay === 0) {
-                    Source$move(instance);
+                    Source_move(instance);
                     instance[SchedulerLike_inContinuation] = true;
-                    Continuation$run(continuation);
+                    Continuation_run(continuation);
                     instance[SchedulerLike_inContinuation] = false;
                 }
                 else {
-                    instance.dueTime = Scheduler$getCurrentTime(instance.host) + delay;
+                    instance.dueTime = Scheduler_getCurrentTime(instance.host) + delay;
                 }
-                Continuation$yield_({ delay });
+                Continuation_yield_({ delay });
             }
         });
         instance.hostContinuation = continuation;
-        instance[MutableRefLike_current] = pipe(instance.host, Scheduler$schedule(continuation, { delay }));
+        instance[MutableRefLike_current] = pipe(instance.host, Scheduler_schedule(continuation, { delay }));
     };
-    const typedDisposableRefMixin = DisposableRef$mixin();
-    const typedMutableEnumeratorMixin = MutableEnumerator$mixin();
-    return createInstanceFactory(mix(include(Disposable$mixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
-        init(Disposable$mixin, instance);
+    const typedDisposableRefMixin = DisposableRef_mixin();
+    const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    return createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
+        init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        init(typedDisposableRefMixin, instance, Disposable$disposed);
-        instance.delayed = Queue$create(delayedComparator);
-        instance.queue = Queue$create(taskComparator);
+        init(typedDisposableRefMixin, instance, Disposable_disposed);
+        instance.delayed = Queue_create(delayedComparator);
+        instance.queue = Queue_create(taskComparator);
         instance.host = host;
         return instance;
     }, props({
@@ -131,7 +131,7 @@ const create =
     }), {
         get [SchedulerLike_now]() {
             unsafeCast(this);
-            return Scheduler$getCurrentTime(this.host);
+            return Scheduler_getCurrentTime(this.host);
         },
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
@@ -142,16 +142,16 @@ const create =
             const next = peek(this);
             return (inContinuation &&
                 (yieldRequested ||
-                    Disposable$isDisposed(this) ||
-                    !Enumerator$hasCurrent(this) ||
+                    Disposable_isDisposed(this) ||
+                    !Enumerator_hasCurrent(this) ||
                     this.isPaused ||
                     (isSome(next) ? priorityShouldYield(this, next) : false) ||
-                    Scheduler$shouldYield(this.host)));
+                    Scheduler_shouldYield(this.host)));
         },
         [SourceLike_move]() {
             // First fast forward through disposed tasks.
             peek(this);
-            const task = Queue$pop(this.queue);
+            const task = Queue_pop(this.queue);
             if (isSome(task)) {
                 this[EnumeratorLike_current] = task;
             }
@@ -161,7 +161,7 @@ const create =
         },
         [PauseableLike_pause]() {
             this.isPaused = true;
-            this[MutableRefLike_current] = Disposable$disposed;
+            this[MutableRefLike_current] = Disposable_disposed;
         },
         [PauseableLike_resume]() {
             this.isPaused = false;
@@ -170,15 +170,15 @@ const create =
         [SchedulerLike_schedule](continuation, options) {
             const delay = getDelay(options);
             const { priority } = options !== null && options !== void 0 ? options : {};
-            pipe(this, Disposable$addIgnoringChildErrors(continuation));
-            if (!Disposable$isDisposed(continuation)) {
-                const now = Scheduler$getCurrentTime(this.host);
+            pipe(this, Disposable_addIgnoringChildErrors(continuation));
+            if (!Disposable_isDisposed(continuation)) {
+                const now = Scheduler_getCurrentTime(this.host);
                 const dueTime = max(now + delay, now);
-                const task = Scheduler$isInContinuation(this) &&
-                    Enumerator$hasCurrent(this) &&
-                    Enumerator$getCurrent(this).continuation === continuation &&
+                const task = Scheduler_isInContinuation(this) &&
+                    Enumerator_hasCurrent(this) &&
+                    Enumerator_getCurrent(this).continuation === continuation &&
                     delay <= 0
-                    ? Enumerator$getCurrent(this)
+                    ? Enumerator_getCurrent(this)
                     : {
                         taskID: this.taskIDCounter++,
                         continuation,
@@ -189,7 +189,7 @@ const create =
                     };
                 const { delayed, queue } = this;
                 const targetQueue = dueTime > now ? delayed : queue;
-                Queue$push(targetQueue, task);
+                Queue_push(targetQueue, task);
                 scheduleOnHost(this);
             }
         },

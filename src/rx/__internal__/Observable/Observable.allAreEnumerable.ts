@@ -1,11 +1,11 @@
-import ReadonlyArray$every from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.every";
-import ReadonlyArray$map from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map";
+import ReadonlyArray_every from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.every";
+import ReadonlyArray_map from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map";
 import { compose, isTrue } from "../../../functions";
-import Observable$isEnumerable from "./Observable.isEnumerable";
+import Observable_isEnumerable from "./Observable.isEnumerable";
 
-const Observable$allAreEnumerable = compose(
-  ReadonlyArray$map(Observable$isEnumerable),
-  ReadonlyArray$every(isTrue),
+const Observable_allAreEnumerable = compose(
+  ReadonlyArray_map(Observable_isEnumerable),
+  ReadonlyArray_every(isTrue),
 );
 
-export default Observable$allAreEnumerable;
+export default Observable_allAreEnumerable;

@@ -1,7 +1,7 @@
 import { Predicate, isNone, isNumber } from "../../../functions";
-import Observable$repeatOrRetry from "./Observable.repeatOrRetry";
+import Observable_repeatOrRetry from "./Observable.repeatOrRetry";
 
-const Observable$repeat = /*@__PURE__*/ (() => {
+const Observable_repeat = /*@__PURE__*/ (() => {
   const defaultRepeatPredicate = (_: number, e?: Error): boolean => isNone(e);
 
   return (predicate?: Predicate<number> | number) => {
@@ -11,8 +11,8 @@ const Observable$repeat = /*@__PURE__*/ (() => {
       ? (count: number, e?: Error) => isNone(e) && count < predicate
       : (count: number, e?: Error) => isNone(e) && predicate(count);
 
-    return Observable$repeatOrRetry(repeatPredicate);
+    return Observable_repeatOrRetry(repeatPredicate);
   };
 })();
 
-export default Observable$repeat;
+export default Observable_repeat;

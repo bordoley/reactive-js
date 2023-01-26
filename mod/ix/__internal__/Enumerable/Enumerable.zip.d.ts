@@ -1,4 +1,4 @@
 import { Zip } from "../../../containers.js";
 import { EnumerableLike } from "../../../ix.js";
-declare const Enumerable$zip: Zip<EnumerableLike>["zip"];
-export { Enumerable$zip as default };
+declare const Enumerable_zip: Zip<EnumerableLike>["zip"];
+export { Enumerable_zip as default };

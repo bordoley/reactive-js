@@ -9,12 +9,12 @@ import {
 import { none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-const Sink$takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
+const Sink_takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
   /*@__PURE__*/ (<T>() => {
     const TakeFirstSink_private_takeCount = Symbol(
       "TakeFirstSink_private_takeCount",
@@ -30,20 +30,20 @@ const Sink$takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
 
     return returns(
       mix(
-        include(Disposable$delegatingMixin),
+        include(Disposable_delegatingMixin),
         function TakeFirstSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: SinkLike<T>,
           takeCount: number,
         ): SinkLike<T> {
-          init(Disposable$delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin, instance, delegate);
 
           instance[DelegatingSinkLike_delegate] = delegate;
           instance[TakeFirstSink_private_takeCount] = takeCount;
 
           if (takeCount === 0) {
-            pipe(instance, Disposable$dispose());
+            pipe(instance, Disposable_dispose());
           }
 
           return instance;
@@ -56,12 +56,12 @@ const Sink$takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
         {
           [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
             this[TakeFirstSink_private_count]++;
-            pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+            pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
             if (
               this[TakeFirstSink_private_count] >=
               this[TakeFirstSink_private_takeCount]
             ) {
-              pipe(this, Disposable$dispose());
+              pipe(this, Disposable_dispose());
             }
           },
         },
@@ -69,4 +69,4 @@ const Sink$takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
     );
   })();
 
-export default Sink$takeFirstMixin;
+export default Sink_takeFirstMixin;

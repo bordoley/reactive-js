@@ -5,16 +5,16 @@ import {
   SinkLike_notify,
   ToRunnableObservable,
 } from "../../../rx";
-import EnumerableObservable$create from "../../../rx/__internal__/EnumerableObservable/EnumerableObservable.create";
-import Observer$schedule from "../../../rx/__internal__/Observer/Observer.schedule";
-import RunnableObservable$create from "../../../rx/__internal__/RunnableObservable/RunnableObservable.create";
-import Continuation$yield_ from "../../../scheduling/__internal__/Continuation/Continuation.yield";
+import EnumerableObservable_create from "../../../rx/__internal__/EnumerableObservable/EnumerableObservable.create";
+import Observer_schedule from "../../../rx/__internal__/Observer/Observer.schedule";
+import RunnableObservable_create from "../../../rx/__internal__/RunnableObservable/RunnableObservable.create";
+import Continuation_yield_ from "../../../scheduling/__internal__/Continuation/Continuation.yield";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import ReadonlyArray$toContainer from "./ReadonlyArray.toContainer";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
 
-const ReadonlyArray$toRunnableObservable: ToRunnableObservable<
+const ReadonlyArray_toRunnableObservable: ToRunnableObservable<
   ReadonlyArrayLike,
   {
     readonly delay: number;
@@ -23,7 +23,7 @@ const ReadonlyArray$toRunnableObservable: ToRunnableObservable<
     readonly count: number;
   }
 >["toRunnableObservable"] = /*@__PURE__*/ (<T>() =>
-  ReadonlyArray$toContainer(
+  ReadonlyArray_toContainer(
     (values: readonly T[], startIndex: number, count: number, options) => {
       const { delayStart = false } = options ?? {};
 
@@ -32,7 +32,7 @@ const ReadonlyArray$toRunnableObservable: ToRunnableObservable<
           cnt = count;
 
         const continuation = () => {
-          while (!Disposable$isDisposed(observer) && cnt !== 0) {
+          while (!Disposable_isDisposed(observer) && cnt !== 0) {
             const value = values[index];
             if (cnt > 0) {
               index++;
@@ -45,22 +45,22 @@ const ReadonlyArray$toRunnableObservable: ToRunnableObservable<
             observer[SinkLike_notify](value);
 
             if (cnt !== 0) {
-              Continuation$yield_(options);
+              Continuation_yield_(options);
             }
           }
-          pipe(observer, Disposable$dispose());
+          pipe(observer, Disposable_dispose());
         };
 
         pipe(
           observer,
-          Observer$schedule(continuation, delayStart ? options : none),
+          Observer_schedule(continuation, delayStart ? options : none),
         );
       };
 
       return hasDelay(options)
-        ? RunnableObservable$create(onSink)
-        : EnumerableObservable$create(onSink);
+        ? RunnableObservable_create(onSink)
+        : EnumerableObservable_create(onSink);
     },
   ))();
 
-export default ReadonlyArray$toRunnableObservable;
+export default ReadonlyArray_toRunnableObservable;

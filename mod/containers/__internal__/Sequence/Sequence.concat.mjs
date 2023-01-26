@@ -1,8 +1,8 @@
 /// <reference types="./Sequence.concat.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import ReadonlyArray$toSequence from '../ReadonlyArray/ReadonlyArray.toSequence.mjs';
-import Sequence$concatAll from './Sequence.concatAll.mjs';
+import ReadonlyArray_toSequence from '../ReadonlyArray/ReadonlyArray.toSequence.mjs';
+import Sequence_concatAll from './Sequence.concatAll.mjs';
 
-const Sequence$concat = (...sequences) => pipe(sequences, ReadonlyArray$toSequence(), Sequence$concatAll());
+const Sequence_concat = (...sequences) => pipe(sequences, ReadonlyArray_toSequence(), Sequence_concatAll());
 
-export { Sequence$concat as default };
+export { Sequence_concat as default };

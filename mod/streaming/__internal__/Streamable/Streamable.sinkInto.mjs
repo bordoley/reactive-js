@@ -1,22 +1,22 @@
 /// <reference types="./Streamable.sinkInto.d.ts" />
-import Container$ignoreElements from '../../../containers/__internal__/Container/Container.ignoreElements.mjs';
+import Container_ignoreElements from '../../../containers/__internal__/Container/Container.ignoreElements.mjs';
 import { pipe } from '../../../functions.mjs';
-import Observable$forEach from '../../../rx/__internal__/Observable/Observable.forEach.mjs';
-import Observable$keep from '../../../rx/__internal__/Observable/Observable.keep.mjs';
-import Observable$merge from '../../../rx/__internal__/Observable/Observable.merge.mjs';
-import Observable$onSubscribe from '../../../rx/__internal__/Observable/Observable.onSubscribe.mjs';
-import Observable$subscribe from '../../../rx/__internal__/Observable/Observable.subscribe.mjs';
+import Observable_forEach from '../../../rx/__internal__/Observable/Observable.forEach.mjs';
+import Observable_keep from '../../../rx/__internal__/Observable/Observable.keep.mjs';
+import Observable_merge from '../../../rx/__internal__/Observable/Observable.merge.mjs';
+import Observable_onSubscribe from '../../../rx/__internal__/Observable/Observable.onSubscribe.mjs';
+import Observable_subscribe from '../../../rx/__internal__/Observable/Observable.subscribe.mjs';
 import { DispatcherLike_scheduler } from '../../../scheduling.mjs';
-import Dispatcher$dispatchTo from '../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo.mjs';
-import Disposable$add from '../../../util/__internal__/Disposable/Disposable.add.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Streamable$stream from './Streamable.stream.mjs';
+import Dispatcher_dispatchTo from '../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo.mjs';
+import Disposable_add from '../../../util/__internal__/Disposable/Disposable.add.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Streamable_stream from './Streamable.stream.mjs';
 
-const Streamable$sinkInto = (dest) => (src) => {
+const Streamable_sinkInto = (dest) => (src) => {
     const { [DispatcherLike_scheduler]: scheduler } = dest;
-    const srcStream = pipe(src, Streamable$stream(scheduler));
-    pipe(Observable$merge(pipe(srcStream, Observable$forEach(Dispatcher$dispatchTo(dest)), Container$ignoreElements({ keep: Observable$keep }), Observable$onSubscribe(() => dest)), pipe(dest, Observable$forEach(Dispatcher$dispatchTo(srcStream)), Container$ignoreElements({ keep: Observable$keep }))), Container$ignoreElements({ keep: Observable$keep }), Observable$subscribe(scheduler), Disposable$addTo(dest), Disposable$add(srcStream));
+    const srcStream = pipe(src, Streamable_stream(scheduler));
+    pipe(Observable_merge(pipe(srcStream, Observable_forEach(Dispatcher_dispatchTo(dest)), Container_ignoreElements({ keep: Observable_keep }), Observable_onSubscribe(() => dest)), pipe(dest, Observable_forEach(Dispatcher_dispatchTo(srcStream)), Container_ignoreElements({ keep: Observable_keep }))), Container_ignoreElements({ keep: Observable_keep }), Observable_subscribe(scheduler), Disposable_addTo(dest), Disposable_add(srcStream));
     return src;
 };
 
-export { Streamable$sinkInto as default };
+export { Streamable_sinkInto as default };

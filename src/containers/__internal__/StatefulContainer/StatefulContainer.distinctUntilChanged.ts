@@ -13,9 +13,9 @@ import {
   TInteractive,
   TReactive,
 } from "../containers.internal";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$distinctUntilChanged =
+const StatefulContainer_distinctUntilChanged =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -28,7 +28,7 @@ const StatefulContainer$distinctUntilChanged =
   ) =>
   (options?: { readonly equality?: Equality<T> }) => {
     const { equality = strictEquality } = options ?? {};
-    return pipe(operator, partial(equality), StatefulContainer$lift(m));
+    return pipe(operator, partial(equality), StatefulContainer_lift(m));
   };
 
-export default StatefulContainer$distinctUntilChanged;
+export default StatefulContainer_distinctUntilChanged;

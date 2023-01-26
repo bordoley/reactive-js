@@ -1,9 +1,9 @@
 /// <reference types="./RunnableObservable.lift.d.ts" />
 import { pipeUnsafe, newInstance } from '../../../functions.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
-import Sink$sourceFrom from '../Sink/Sink.sourceFrom.mjs';
+import Sink_sourceFrom from '../Sink/Sink.sourceFrom.mjs';
 
-const RunnableObservable$lift = 
+const RunnableObservable_lift = 
 /*@__PURE__*/ (() => {
     var _a, _b;
     class LiftedRunnableObservable {
@@ -14,7 +14,7 @@ const RunnableObservable$lift =
             this[_b] = true;
         }
         [(_a = ObservableLike_isEnumerable, _b = ObservableLike_isRunnable, ReactiveContainerLike_sinkInto)](observer) {
-            pipeUnsafe(observer, ...this.operators, Sink$sourceFrom(this.source));
+            pipeUnsafe(observer, ...this.operators, Sink_sourceFrom(this.source));
         }
     }
     return (operator) => source => {
@@ -26,4 +26,4 @@ const RunnableObservable$lift =
     };
 })();
 
-export { RunnableObservable$lift as default };
+export { RunnableObservable_lift as default };

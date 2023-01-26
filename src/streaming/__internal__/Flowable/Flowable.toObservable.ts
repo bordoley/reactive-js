@@ -1,5 +1,5 @@
-import Container$ignoreElements from "../../../containers/__internal__/Container/Container.ignoreElements";
-import Container$startWith from "../../../containers/__internal__/Container/Container.startWith";
+import Container_ignoreElements from "../../../containers/__internal__/Container/Container.ignoreElements";
+import Container_startWith from "../../../containers/__internal__/Container/Container.startWith";
 import { compose, pipe } from "../../../functions";
 import {
   ObservableLike,
@@ -7,45 +7,45 @@ import {
   ObserverLike_scheduler,
   ToObservable,
 } from "../../../rx";
-import Observable$concat from "../../../rx/__internal__/Observable/Observable.concat";
-import Observable$create from "../../../rx/__internal__/Observable/Observable.create";
-import Observable$forEach from "../../../rx/__internal__/Observable/Observable.forEach";
-import Observable$fromArray from "../../../rx/__internal__/Observable/Observable.fromArray";
-import Observable$keep from "../../../rx/__internal__/Observable/Observable.keep";
-import Observable$onSubscribe from "../../../rx/__internal__/Observable/Observable.onSubscribe";
-import Dispatcher$dispatchTo from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo";
+import Observable_concat from "../../../rx/__internal__/Observable/Observable.concat";
+import Observable_create from "../../../rx/__internal__/Observable/Observable.create";
+import Observable_forEach from "../../../rx/__internal__/Observable/Observable.forEach";
+import Observable_fromArray from "../../../rx/__internal__/Observable/Observable.fromArray";
+import Observable_keep from "../../../rx/__internal__/Observable/Observable.keep";
+import Observable_onSubscribe from "../../../rx/__internal__/Observable/Observable.onSubscribe";
+import Dispatcher_dispatchTo from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo";
 import { FlowableLike } from "../../../streaming";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Stream$create from "../Stream/Stream.create";
-import Stream$sourceFrom from "../Stream/Stream.sourceFrom";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Stream_create from "../Stream/Stream.create";
+import Stream_sourceFrom from "../Stream/Stream.sourceFrom";
 
-const Flowable$toObservable: ToObservable<FlowableLike>["toObservable"] =
+const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
   () => src =>
-    Observable$create(observer => {
+    Observable_create(observer => {
       const {
         [ObserverLike_dispatcher]: dispatcher,
         [ObserverLike_scheduler]: scheduler,
       } = observer;
 
       const op = compose(
-        Observable$forEach(Dispatcher$dispatchTo(dispatcher)),
-        Container$ignoreElements({ keep: Observable$keep }),
-        Container$startWith<ObservableLike, string>(
+        Observable_forEach(Dispatcher_dispatchTo(dispatcher)),
+        Container_ignoreElements({ keep: Observable_keep }),
+        Container_startWith<ObservableLike, string>(
           {
-            fromArray: Observable$fromArray,
-            concat: Observable$concat,
+            fromArray: Observable_fromArray,
+            concat: Observable_concat,
           },
           "pause",
           "resume",
         ),
-        Observable$onSubscribe(() => dispatcher),
+        Observable_onSubscribe(() => dispatcher),
       );
 
       pipe(
-        Stream$create(op, scheduler),
-        Stream$sourceFrom(src),
-        Disposable$addTo(observer),
+        Stream_create(op, scheduler),
+        Stream_sourceFrom(src),
+        Disposable_addTo(observer),
       );
     });
 
-export default Flowable$toObservable;
+export default Flowable_toObservable;

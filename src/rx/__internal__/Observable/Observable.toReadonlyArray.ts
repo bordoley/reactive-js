@@ -2,14 +2,14 @@ import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers";
 import { Factory, Function1, isSome, pipe, raise } from "../../../functions";
 import { ObservableLike } from "../../../rx";
 import { VirtualTimeSchedulerLike } from "../../../scheduling";
-import Continuation$run from "../../../scheduling/__internal__/Continuation/Continuation.run";
-import VirtualTimeScheduler$create from "../../../scheduling/__internal__/VirtualTimeScheduler/VirtualTimeScheduler.create";
-import Disposable$getError from "../../../util/__internal__/Disposable/Disposable.getError";
-import Observable$forEach from "./Observable.forEach";
-import Observable$isRunnable from "./Observable.isRunnable";
-import Observable$subscribe from "./Observable.subscribe";
+import Continuation_run from "../../../scheduling/__internal__/Continuation/Continuation.run";
+import VirtualTimeScheduler_create from "../../../scheduling/__internal__/VirtualTimeScheduler/VirtualTimeScheduler.create";
+import Disposable_getError from "../../../util/__internal__/Disposable/Disposable.getError";
+import Observable_forEach from "./Observable.forEach";
+import Observable_isRunnable from "./Observable.isRunnable";
+import Observable_subscribe from "./Observable.subscribe";
 
-const Observable$toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"] =
+const Observable_toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"] =
 
     <T>(
       options: {
@@ -17,21 +17,21 @@ const Observable$toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArr
       } = {},
     ): Function1<ObservableLike<T>, ReadonlyArrayLike<T>> =>
     observable => {
-      if (Observable$isRunnable(observable)) {
-        const { schedulerFactory = VirtualTimeScheduler$create } = options;
+      if (Observable_isRunnable(observable)) {
+        const { schedulerFactory = VirtualTimeScheduler_create } = options;
         const scheduler = schedulerFactory();
         const result: T[] = [];
 
         const subscription = pipe(
           observable,
-          Observable$forEach<T>(next => {
+          Observable_forEach<T>(next => {
             result.push(next);
           }),
-          Observable$subscribe(scheduler),
+          Observable_subscribe(scheduler),
         );
 
-        Continuation$run(scheduler);
-        const error = Disposable$getError(subscription);
+        Continuation_run(scheduler);
+        const error = Disposable_getError(subscription);
 
         return isSome(error) ? raise<T[]>(error) : result;
       } else {
@@ -39,4 +39,4 @@ const Observable$toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArr
       }
     };
 
-export default Observable$toReadonlyArray;
+export default Observable_toReadonlyArray;

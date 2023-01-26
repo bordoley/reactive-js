@@ -1,7 +1,7 @@
 /// <reference types="./Runnable.onRun.d.ts" />
-import ReactiveContainer$onSink from '../ReactiveContainer/ReactiveContainer.onSink.mjs';
-import Runnable$create from './Runnable.create.mjs';
+import ReactiveContainer_onSink from '../ReactiveContainer/ReactiveContainer.onSink.mjs';
+import Runnable_create from './Runnable.create.mjs';
 
-const Runnable$onRun = (f) => (runnable) => ReactiveContainer$onSink(Runnable$create, runnable, f);
+const Runnable_onRun = (f) => (runnable) => ReactiveContainer_onSink(Runnable_create, runnable, f);
 
-export { Runnable$onRun as default };
+export { Runnable_onRun as default };

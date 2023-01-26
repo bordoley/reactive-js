@@ -2,16 +2,16 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
+import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink$notify from './Sink.notify.mjs';
+import Sink_notify from './Sink.notify.mjs';
 
-const Sink$distinctUntilChangedMixin = /*@__PURE__*/ (() => {
+const Sink_distinctUntilChangedMixin = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
     const DistinctUntilChangedSink_private_prev = Symbol("DistinctUntilChangedSink_private_prev");
     const DistinctUntilChangedSink_private_hasValue = Symbol("DistinctUntilChangedSink_private_hasValue");
-    return returns(mix(include(Disposable$delegatingMixin), function DistinctUntilChangedSink(instance, delegate, equality) {
-        init(Disposable$delegatingMixin, instance, delegate);
+    return returns(mix(include(Disposable_delegatingMixin), function DistinctUntilChangedSink(instance, delegate, equality) {
+        init(Disposable_delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[DistinctUntilChangedSink_private_equality] = equality;
         return instance;
@@ -27,10 +27,10 @@ const Sink$distinctUntilChangedMixin = /*@__PURE__*/ (() => {
             if (shouldEmit) {
                 this[DistinctUntilChangedSink_private_prev] = next;
                 this[DistinctUntilChangedSink_private_hasValue] = true;
-                pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+                pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
             }
         },
     }));
 })();
 
-export { Sink$distinctUntilChangedMixin as default };
+export { Sink_distinctUntilChangedMixin as default };

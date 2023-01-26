@@ -5,61 +5,61 @@ import {
   DisposableLike_isDisposed,
 } from "../util";
 
-import Disposable$add from "./__internal__/Disposable/Disposable.add";
-import Disposable$addIgnoringChildErrors from "./__internal__/Disposable/Disposable.addIgnoringChildErrors";
-import Disposable$addTo from "./__internal__/Disposable/Disposable.addTo";
-import Disposable$addToIgnoringChildErrors from "./__internal__/Disposable/Disposable.addToIgnoringChildErrors";
-import Disposable$bindTo from "./__internal__/Disposable/Disposable.bindTo";
-import Disposable$create from "./__internal__/Disposable/Disposable.create";
-import Disposable$dispose from "./__internal__/Disposable/Disposable.dispose";
-import Disposable$disposed from "./__internal__/Disposable/Disposable.disposed";
-import Disposable$getError from "./__internal__/Disposable/Disposable.getError";
-import Disposable$isDisposed from "./__internal__/Disposable/Disposable.isDisposed";
-import Disposable$onComplete from "./__internal__/Disposable/Disposable.onComplete";
-import Disposable$onDisposed from "./__internal__/Disposable/Disposable.onDisposed";
-import Disposable$onError from "./__internal__/Disposable/Disposable.onError";
-import Disposable$toAbortSignal from "./__internal__/Disposable/Disposable.toAbortSignal";
-import Disposable$toErrorHandler from "./__internal__/Disposable/Disposable.toErrorHandler";
-import Disposable$toObservable from "./__internal__/Disposable/Disposable.toObservable";
+import Disposable_add from "./__internal__/Disposable/Disposable.add";
+import Disposable_addIgnoringChildErrors from "./__internal__/Disposable/Disposable.addIgnoringChildErrors";
+import Disposable_addTo from "./__internal__/Disposable/Disposable.addTo";
+import Disposable_addToIgnoringChildErrors from "./__internal__/Disposable/Disposable.addToIgnoringChildErrors";
+import Disposable_bindTo from "./__internal__/Disposable/Disposable.bindTo";
+import Disposable_create from "./__internal__/Disposable/Disposable.create";
+import Disposable_dispose from "./__internal__/Disposable/Disposable.dispose";
+import Disposable_disposed from "./__internal__/Disposable/Disposable.disposed";
+import Disposable_getError from "./__internal__/Disposable/Disposable.getError";
+import Disposable_isDisposed from "./__internal__/Disposable/Disposable.isDisposed";
+import Disposable_onComplete from "./__internal__/Disposable/Disposable.onComplete";
+import Disposable_onDisposed from "./__internal__/Disposable/Disposable.onDisposed";
+import Disposable_onError from "./__internal__/Disposable/Disposable.onError";
+import Disposable_toAbortSignal from "./__internal__/Disposable/Disposable.toAbortSignal";
+import Disposable_toErrorHandler from "./__internal__/Disposable/Disposable.toErrorHandler";
+import Disposable_toObservable from "./__internal__/Disposable/Disposable.toObservable";
 
-export const add = Disposable$add;
+export const add = Disposable_add;
 
-export const addIgnoringChildErrors = Disposable$addIgnoringChildErrors;
+export const addIgnoringChildErrors = Disposable_addIgnoringChildErrors;
 
-export const addTo = Disposable$addTo;
+export const addTo = Disposable_addTo;
 
-export const addToIgnoringChildErrors = Disposable$addToIgnoringChildErrors;
+export const addToIgnoringChildErrors = Disposable_addToIgnoringChildErrors;
 
-export const bindTo = Disposable$bindTo;
+export const bindTo = Disposable_bindTo;
 
-export const create = Disposable$create;
+export const create = Disposable_create;
 
 /**
  * Dispose `disposable` with an optional error.
  */
-export const dispose = Disposable$dispose;
+export const dispose = Disposable_dispose;
 
-export const disposed: DisposableLike = Disposable$disposed;
+export const disposed: DisposableLike = Disposable_disposed;
 
 export const getError: (disposable: {
   [DisposableLike_error]: Optional<Error>;
-}) => Optional<Error> = Disposable$getError;
+}) => Optional<Error> = Disposable_getError;
 
 export const isDisposed: (disposable: {
   [DisposableLike_isDisposed]: boolean;
-}) => boolean = Disposable$isDisposed;
+}) => boolean = Disposable_isDisposed;
 
-export const onComplete = Disposable$onComplete;
+export const onComplete = Disposable_onComplete;
 
-export const onDisposed = Disposable$onDisposed;
+export const onDisposed = Disposable_onDisposed;
 
-export const onError = Disposable$onError;
+export const onError = Disposable_onError;
 
-export const toAbortSignal = Disposable$toAbortSignal;
+export const toAbortSignal = Disposable_toAbortSignal;
 
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
-export const toErrorHandler = Disposable$toErrorHandler;
+export const toErrorHandler = Disposable_toErrorHandler;
 
-export const toObservable = Disposable$toObservable;
+export const toObservable = Disposable_toObservable;

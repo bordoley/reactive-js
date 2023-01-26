@@ -1,6 +1,6 @@
 /// <reference types="./Observable.zipLatest.d.ts" />
-import Observable$latest from './Observable.latest.mjs';
+import Observable_latest from './Observable.latest.mjs';
 
-const Observable$zipLatest = (...observables) => Observable$latest(observables, 2);
+const Observable_zipLatest = (...observables) => Observable_latest(observables, 2);
 
-export { Observable$zipLatest as default };
+export { Observable_zipLatest as default };

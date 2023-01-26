@@ -1,6 +1,6 @@
 /// <reference types="./EnumerableObservable.defer.d.ts" />
-import Observable$defer from '../Observable/Observable.defer.mjs';
+import Observable_defer from '../Observable/Observable.defer.mjs';
 
-const EnumerableObservable$defer = (f => Observable$defer(f, true, true));
+const EnumerableObservable_defer = (f => Observable_defer(f, true, true));
 
-export { EnumerableObservable$defer as default };
+export { EnumerableObservable_defer as default };

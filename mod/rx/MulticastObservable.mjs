@@ -1,9 +1,9 @@
 /// <reference types="./MulticastObservable.d.ts" />
 import '../rx.mjs';
-import MulticastObservable$getObserverCount from './__internal__/MulticastObservable/MulticastObservable.getObserverCount.mjs';
-import MulticastObservable$getReplay from './__internal__/MulticastObservable/MulticastObservable.getReplay.mjs';
+import MulticastObservable_getObserverCount from './__internal__/MulticastObservable/MulticastObservable.getObserverCount.mjs';
+import MulticastObservable_getReplay from './__internal__/MulticastObservable/MulticastObservable.getReplay.mjs';
 
-const getObserverCount = MulticastObservable$getObserverCount;
-const getReplay = MulticastObservable$getReplay;
+const getObserverCount = MulticastObservable_getObserverCount;
+const getReplay = MulticastObservable_getReplay;
 
 export { getObserverCount, getReplay };

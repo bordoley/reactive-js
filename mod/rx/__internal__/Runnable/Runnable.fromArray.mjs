@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.fromArray.d.ts" />
-import ReadonlyArray$toRunnable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnable.mjs';
+import ReadonlyArray_toRunnable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnable.mjs';
 
-const Runnable$fromArray = ReadonlyArray$toRunnable;
+const Runnable_fromArray = ReadonlyArray_toRunnable;
 
-export { Runnable$fromArray as default };
+export { Runnable_fromArray as default };

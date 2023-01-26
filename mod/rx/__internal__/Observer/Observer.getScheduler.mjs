@@ -1,6 +1,6 @@
 /// <reference types="./Observer.getScheduler.d.ts" />
 import { ObserverLike_scheduler } from '../../../rx.mjs';
 
-const Observer$getScheduler = (observer) => observer[ObserverLike_scheduler];
+const Observer_getScheduler = (observer) => observer[ObserverLike_scheduler];
 
-export { Observer$getScheduler as default };
+export { Observer_getScheduler as default };

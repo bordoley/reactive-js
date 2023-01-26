@@ -1,7 +1,7 @@
 /// <reference types="./EnumerableObservable.never.d.ts" />
 import { ignore } from '../../../functions.mjs';
-import EnumerableObservable$create from './EnumerableObservable.create.mjs';
+import EnumerableObservable_create from './EnumerableObservable.create.mjs';
 
-const EnumerableObservable$never = () => EnumerableObservable$create(ignore);
+const EnumerableObservable_never = () => EnumerableObservable_create(ignore);
 
-export { EnumerableObservable$never as default };
+export { EnumerableObservable_never as default };

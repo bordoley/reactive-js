@@ -1,11 +1,11 @@
 import { ConcatAll } from "../../../containers";
 import { EnumerableObservableLike } from "../../../rx";
-import HigherOrderObservable$switchAll from "../HigherOrderObservable/HigherOrderObservable.switchAll";
-import EnumerableObservable$lift from "./EnumerableObservable.lift";
+import HigherOrderObservable_switchAll from "../HigherOrderObservable/HigherOrderObservable.switchAll";
+import EnumerableObservable_lift from "./EnumerableObservable.lift";
 
-const EnumerableObservable$switchAll: ConcatAll<EnumerableObservableLike>["concatAll"] =
-  /*@__PURE__*/ HigherOrderObservable$switchAll<EnumerableObservableLike>(
-    EnumerableObservable$lift,
+const EnumerableObservable_switchAll: ConcatAll<EnumerableObservableLike>["concatAll"] =
+  /*@__PURE__*/ HigherOrderObservable_switchAll<EnumerableObservableLike>(
+    EnumerableObservable_lift,
   );
 
-export default EnumerableObservable$switchAll;
+export default EnumerableObservable_switchAll;

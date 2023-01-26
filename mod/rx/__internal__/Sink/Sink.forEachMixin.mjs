@@ -2,14 +2,14 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, none, pipe } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
+import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink$notify from './Sink.notify.mjs';
+import Sink_notify from './Sink.notify.mjs';
 
-const Sink$forEachMixin = /*@__PURE__*/ (() => {
+const Sink_forEachMixin = /*@__PURE__*/ (() => {
     const ForEachSink_private_effect = Symbol("ForEachSink_private_effect");
-    return returns(mix(include(Disposable$delegatingMixin), function ForEachSink(instance, delegate, effect) {
-        init(Disposable$delegatingMixin, instance, delegate);
+    return returns(mix(include(Disposable_delegatingMixin), function ForEachSink(instance, delegate, effect) {
+        init(Disposable_delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[ForEachSink_private_effect] = effect;
         return instance;
@@ -19,9 +19,9 @@ const Sink$forEachMixin = /*@__PURE__*/ (() => {
     }), {
         [SinkLike_notify](next) {
             this[ForEachSink_private_effect](next);
-            pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+            pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
         },
     }));
 })();
 
-export { Sink$forEachMixin, Sink$forEachMixin as default };
+export { Sink_forEachMixin, Sink_forEachMixin as default };

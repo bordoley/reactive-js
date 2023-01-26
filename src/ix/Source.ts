@@ -1,6 +1,6 @@
 import { SourceLike, SourceLike_move } from "../ix";
 
-import Source$move from "./__internal__/Source/Source.move";
+import Source_move from "./__internal__/Source/Source.move";
 
 export const move: <
   TSource extends {
@@ -8,4 +8,4 @@ export const move: <
   } = SourceLike,
 >(
   source: TSource,
-) => TSource = Source$move;
+) => TSource = Source_move;

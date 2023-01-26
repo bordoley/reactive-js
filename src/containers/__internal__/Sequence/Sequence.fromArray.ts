@@ -1,4 +1,4 @@
-import ReadonlyArray$toSequence from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toSequence";
+import ReadonlyArray_toSequence from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toSequence";
 
-const Sequence$fromArray = ReadonlyArray$toSequence;
-export default Sequence$fromArray;
+const Sequence_fromArray = ReadonlyArray_toSequence;
+export default Sequence_fromArray;

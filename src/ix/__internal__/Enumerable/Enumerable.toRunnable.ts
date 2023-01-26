@@ -5,13 +5,13 @@ import {
   InteractiveContainerLike_interact,
 } from "../../../ix";
 import { RunnableLike, SinkLike, ToRunnable } from "../../../rx";
-import Runnable$create from "../../../rx/__internal__/Runnable/Runnable.create";
-import Sink$notifySink from "../../../rx/__internal__/Sink/Sink.notifySink";
-import Disposable$add from "../../../util/__internal__/Disposable/Disposable.add";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Enumerator$forEach from "../Enumerator/Enumerator.forEach";
+import Runnable_create from "../../../rx/__internal__/Runnable/Runnable.create";
+import Sink_notifySink from "../../../rx/__internal__/Sink/Sink.notifySink";
+import Disposable_add from "../../../util/__internal__/Disposable/Disposable.add";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Enumerator_forEach from "../Enumerator/Enumerator.forEach";
 
-const Enumerable$toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
+const Enumerable_toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
   /*@__PURE__*/ (() => {
     const enumeratorToRunnable = <T>(
       f: Factory<EnumeratorLike<T>>,
@@ -19,12 +19,12 @@ const Enumerable$toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
       const run = (sink: SinkLike<T>) => {
         pipe(
           f(),
-          Disposable$add(sink),
-          Enumerator$forEach(Sink$notifySink(sink)),
-          Disposable$dispose(),
+          Disposable_add(sink),
+          Enumerator_forEach(Sink_notifySink(sink)),
+          Disposable_dispose(),
         );
       };
-      return Runnable$create(run);
+      return Runnable_create(run);
     };
 
     return <T>() =>
@@ -34,4 +34,4 @@ const Enumerable$toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
         );
   })();
 
-export default Enumerable$toRunnable;
+export default Enumerable_toRunnable;

@@ -8,11 +8,11 @@ import {
 } from "../../../__internal__/mixins";
 import { none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-const Sink$skipFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
+const Sink_skipFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
   /*@__PURE__*/ (<T>() => {
     const SkipFirstSink_private_skipCount = Symbol(
       "SkipFirstSink_private_skipCount",
@@ -28,14 +28,14 @@ const Sink$skipFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
 
     return returns(
       mix(
-        include(Disposable$delegatingMixin),
+        include(Disposable_delegatingMixin),
         function SkipFirstSink(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: SinkLike<T>,
           skipCount: number,
         ): SinkLike<T> {
-          init(Disposable$delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin, instance, delegate);
 
           instance[DelegatingSinkLike_delegate] = delegate;
           instance[SkipFirstSink_private_skipCount] = skipCount;
@@ -54,7 +54,7 @@ const Sink$skipFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
               this[SkipFirstSink_private_count] >
               this[SkipFirstSink_private_skipCount]
             ) {
-              pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+              pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
             }
           },
         },
@@ -62,4 +62,4 @@ const Sink$skipFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
     );
   })();
 
-export default Sink$skipFirstMixin;
+export default Sink_skipFirstMixin;

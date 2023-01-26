@@ -1,35 +1,35 @@
-import Container$concatWith from "../../../containers/__internal__/Container/Container.concatWith";
-import ReadonlyArray$toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
+import Container_concatWith from "../../../containers/__internal__/Container/Container.concatWith";
+import ReadonlyArray_toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
 import { Equality, Factory, Reducer, pipe, returns } from "../../../functions";
 import { ObservableLike } from "../../../rx";
-import Observable$create from "../../../rx/__internal__/Observable/Observable.create";
-import Observable$distinctUntilChanged from "../../../rx/__internal__/Observable/Observable.distinctUntilChanged";
-import Observable$merge from "../../../rx/__internal__/Observable/Observable.merge";
-import Observable$scan from "../../../rx/__internal__/Observable/Observable.scan";
-import ReactiveContainer$sinkInto from "../../../rx/__internal__/ReactiveContainer/ReactiveContainer.sinkInto";
+import Observable_create from "../../../rx/__internal__/Observable/Observable.create";
+import Observable_distinctUntilChanged from "../../../rx/__internal__/Observable/Observable.distinctUntilChanged";
+import Observable_merge from "../../../rx/__internal__/Observable/Observable.merge";
+import Observable_scan from "../../../rx/__internal__/Observable/Observable.scan";
+import ReactiveContainer_sinkInto from "../../../rx/__internal__/ReactiveContainer/ReactiveContainer.sinkInto";
 import { StreamableLike } from "../../../streaming";
 
-import Streamable$createLifted from "./Streamable.createLifted";
+import Streamable_createLifted from "./Streamable.createLifted";
 
-const Streamable$createActionReducer = <TAction, T>(
+const Streamable_createActionReducer = <TAction, T>(
   reducer: Reducer<TAction, T>,
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
 ): StreamableLike<TAction, T> =>
-  Streamable$createLifted(obs =>
-    Observable$create(observer => {
+  Streamable_createLifted(obs =>
+    Observable_create(observer => {
       const acc = initialState();
       pipe(
         obs,
-        Observable$scan<TAction, T>(reducer, returns(acc)),
-        Container$concatWith<ObservableLike, T>(
-          { concat: Observable$merge },
-          pipe([acc], ReadonlyArray$toRunnableObservable()),
+        Observable_scan<TAction, T>(reducer, returns(acc)),
+        Container_concatWith<ObservableLike, T>(
+          { concat: Observable_merge },
+          pipe([acc], ReadonlyArray_toRunnableObservable()),
         ),
-        Observable$distinctUntilChanged<T>(options),
-        ReactiveContainer$sinkInto(observer),
+        Observable_distinctUntilChanged<T>(options),
+        ReactiveContainer_sinkInto(observer),
       );
     }),
   );
 
-export default Streamable$createActionReducer;
+export default Streamable_createActionReducer;

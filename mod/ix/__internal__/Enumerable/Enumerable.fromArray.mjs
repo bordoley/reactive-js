@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.fromArray.d.ts" />
-import ReadonlyArray$toEnumerable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toEnumerable.mjs';
+import ReadonlyArray_toEnumerable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toEnumerable.mjs';
 
-const Enumerable$fromArray = ReadonlyArray$toEnumerable;
+const Enumerable_fromArray = ReadonlyArray_toEnumerable;
 
-export { Enumerable$fromArray as default };
+export { Enumerable_fromArray as default };

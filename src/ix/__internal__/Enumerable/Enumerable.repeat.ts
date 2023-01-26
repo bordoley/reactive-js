@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { Repeat } from "../../../containers";
-import Container$repeat from "../../../containers/__internal__/Container/Container.repeat";
+import Container_repeat from "../../../containers/__internal__/Container/Container.repeat";
 import {
   Optional,
   Predicate,
@@ -25,15 +25,15 @@ import {
   EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../../../ix";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Enumerator$hasCurrent from "../Enumerator/Enumerator.hasCurrent";
-import Enumerator$move from "../Enumerator/Enumerator.move";
-import Enumerable$create from "./Enumerable.create";
-import Enumerable$enumerate from "./Enumerable.enumerate";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Enumerator_hasCurrent from "../Enumerator/Enumerator.hasCurrent";
+import Enumerator_move from "../Enumerator/Enumerator.move";
+import Enumerable_create from "./Enumerable.create";
+import Enumerable_enumerate from "./Enumerable.enumerate";
 
-const Enumerable$repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
+const Enumerable_repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   T,
 >() => {
   type TProperties = {
@@ -45,7 +45,7 @@ const Enumerable$repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
 
   const createRepeatEnumerator = createInstanceFactory(
     mix(
-      include(Disposable$mixin),
+      include(Disposable_mixin),
       function RepeatEnumerator(
         instance: Pick<
           EnumeratorLike<T>,
@@ -57,7 +57,7 @@ const Enumerable$repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
         src: EnumerableLike<T>,
         shouldRepeat: Predicate<number>,
       ): EnumeratorLike<T> {
-        init(Disposable$mixin, instance);
+        init(Disposable_mixin, instance);
 
         instance.src = src;
         instance.shouldRepeat = shouldRepeat;
@@ -75,35 +75,35 @@ const Enumerable$repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
           if (isNone(this.enumerator)) {
             this.enumerator = pipe(
               this.src,
-              Enumerable$enumerate(),
-              Disposable$addTo(this),
+              Enumerable_enumerate(),
+              Disposable_addTo(this),
             );
           }
 
           let { enumerator } = this;
-          while (!Enumerator$move(enumerator)) {
+          while (!Enumerator_move(enumerator)) {
             this.count++;
 
             try {
               if (this.shouldRepeat(this.count)) {
                 enumerator = pipe(
                   this.src,
-                  Enumerable$enumerate(),
-                  Disposable$addTo(this),
+                  Enumerable_enumerate(),
+                  Disposable_addTo(this),
                 );
                 this.enumerator = enumerator;
               } else {
                 break;
               }
             } catch (e) {
-              pipe(this, Disposable$dispose(error(e)));
+              pipe(this, Disposable_dispose(error(e)));
               break;
             }
           }
         },
         get [EnumeratorLike_current](): T {
           unsafeCast<TProperties>(this);
-          return Enumerator$hasCurrent(this)
+          return Enumerator_hasCurrent(this)
             ? this.enumerator?.[EnumeratorLike_current] ?? raise()
             : raise();
         },
@@ -115,9 +115,9 @@ const Enumerable$repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
     ),
   );
 
-  return Container$repeat<EnumerableLike, T>((delegate, predicate) =>
-    Enumerable$create(() => createRepeatEnumerator(delegate, predicate)),
+  return Container_repeat<EnumerableLike, T>((delegate, predicate) =>
+    Enumerable_create(() => createRepeatEnumerator(delegate, predicate)),
   );
 })();
 
-export default Enumerable$repeat;
+export default Enumerable_repeat;

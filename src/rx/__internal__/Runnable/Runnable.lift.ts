@@ -8,9 +8,9 @@ import {
   RunnableLike,
   SinkLike,
 } from "../../../rx";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
 
-const Runnable$lift: Lift<RunnableLike, TReactive>["lift"] =
+const Runnable_lift: Lift<RunnableLike, TReactive>["lift"] =
   /*@__PURE__*/ (() => {
     class LiftedRunnable<TA, TB> implements RunnableLike<TB> {
       constructor(
@@ -19,7 +19,7 @@ const Runnable$lift: Lift<RunnableLike, TReactive>["lift"] =
       ) {}
 
       [ReactiveContainerLike_sinkInto](sink: SinkLike<TB>) {
-        pipeUnsafe(sink, ...this.operators, Sink$sourceFrom(this.src));
+        pipeUnsafe(sink, ...this.operators, Sink_sourceFrom(this.src));
       }
     }
 
@@ -37,4 +37,4 @@ const Runnable$lift: Lift<RunnableLike, TReactive>["lift"] =
       };
   })();
 
-export default Runnable$lift;
+export default Runnable_lift;

@@ -2,7 +2,7 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome, none } from '../../../functions.mjs';
 
-const Sequence$takeFirst = 
+const Sequence_takeFirst = 
 /*@__PURE__*/ (() => {
     const _takeFirst = (count, seq) => () => {
         if (count > 0) {
@@ -24,4 +24,4 @@ const Sequence$takeFirst =
     };
 })();
 
-export { Sequence$takeFirst as default };
+export { Sequence_takeFirst as default };

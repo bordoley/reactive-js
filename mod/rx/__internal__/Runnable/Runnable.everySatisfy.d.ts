@@ -1,4 +1,4 @@
 import { EverySatisfy } from "../../../containers.js";
 import { RunnableLike } from "../../../rx.js";
-declare const Runnable$everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"];
-export { Runnable$everySatisfy as default };
+declare const Runnable_everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"];
+export { Runnable_everySatisfy as default };

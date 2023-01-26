@@ -2,10 +2,10 @@ import { Equality, Factory, Function1, Reducer, Updater } from "../functions";
 import { SchedulerLike } from "../scheduling";
 import { StreamLike, StreamableLike } from "../streaming";
 
-import Streamable$createActionReducer from "./__internal__/Streamable/Streamable.createActionReducer";
-import Streamable$createStateStore from "./__internal__/Streamable/Streamable.createStateStore";
-import Streamable$sinkInto from "./__internal__/Streamable/Streamable.sinkInto";
-import Streamable$stream from "./__internal__/Streamable/Streamable.stream";
+import Streamable_createActionReducer from "./__internal__/Streamable/Streamable.createActionReducer";
+import Streamable_createStateStore from "./__internal__/Streamable/Streamable.createStateStore";
+import Streamable_sinkInto from "./__internal__/Streamable/Streamable.sinkInto";
+import Streamable_stream from "./__internal__/Streamable/Streamable.stream";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -20,7 +20,7 @@ export const createActionReducer: <TAction, T>(
   reducer: Reducer<TAction, T>,
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-) => StreamableLike<TAction, T> = Streamable$createActionReducer;
+) => StreamableLike<TAction, T> = Streamable_createActionReducer;
 
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
@@ -34,14 +34,14 @@ export const createActionReducer: <TAction, T>(
 export const createStateStore: <T>(
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-) => StreamableLike<Updater<T>, T> = Streamable$createStateStore;
+) => StreamableLike<Updater<T>, T> = Streamable_createStateStore;
 
 export const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(
   dest: TSinkStream,
 ) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T> =
-  Streamable$sinkInto;
+  Streamable_sinkInto;
 
 export const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(
   scheduler: SchedulerLike,
   options?: { readonly replay?: number },
-) => Function1<StreamableLike<TReq, T, TStream>, TStream> = Streamable$stream;
+) => Function1<StreamableLike<TReq, T, TStream>, TStream> = Streamable_stream;

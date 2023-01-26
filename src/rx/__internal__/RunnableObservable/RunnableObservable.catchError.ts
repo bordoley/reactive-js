@@ -1,11 +1,11 @@
 import { CatchError } from "../../../containers";
 import { RunnableObservableLike } from "../../../rx";
-import HigherOrderObservable$catchError from "../HigherOrderObservable/HigherOrderObservable.catchError";
-import RunnableObservable$lift from "./RunnableObservable.lift";
+import HigherOrderObservable_catchError from "../HigherOrderObservable/HigherOrderObservable.catchError";
+import RunnableObservable_lift from "./RunnableObservable.lift";
 
-const RunnableObservable$catchError: CatchError<RunnableObservableLike>["catchError"] =
-  /*@__PURE__*/ HigherOrderObservable$catchError<RunnableObservableLike>(
-    RunnableObservable$lift,
+const RunnableObservable_catchError: CatchError<RunnableObservableLike>["catchError"] =
+  /*@__PURE__*/ HigherOrderObservable_catchError<RunnableObservableLike>(
+    RunnableObservable_lift,
   ) as CatchError<RunnableObservableLike>["catchError"];
 
-export default RunnableObservable$catchError;
+export default RunnableObservable_catchError;

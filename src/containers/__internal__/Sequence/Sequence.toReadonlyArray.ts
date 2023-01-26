@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { isSome } from "../../../functions";
 
-const Sequence$toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
+const Sequence_toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
 
     <T>() =>
     (seq: SequenceLike<T>) => {
@@ -21,4 +21,4 @@ const Sequence$toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"]
       return result;
     };
 
-export default Sequence$toReadonlyArray;
+export default Sequence_toReadonlyArray;

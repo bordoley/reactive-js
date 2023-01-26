@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { Map } from "../../../containers";
-import StatefulContainer$map from "../../../containers/__internal__/StatefulContainer/StatefulContainer.map";
+import StatefulContainer_map from "../../../containers/__internal__/StatefulContainer/StatefulContainer.map";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
 import { Function1, error, none, pipe } from "../../../functions";
 import {
@@ -16,19 +16,19 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../../ix";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Enumerator$getCurrent from "../Enumerator/Enumerator.getCurrent";
-import Enumerator$move from "../Enumerator/Enumerator.move";
-import MutableEnumerator$mixin from "../MutableEnumerator/MutableEnumerator.mixin";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
+import Enumerator_move from "../Enumerator/Enumerator.move";
+import MutableEnumerator_mixin from "../MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
-import Enumerable$liftT from "./Enumerable.liftT";
+import Enumerable_liftT from "./Enumerable.liftT";
 
-const Enumerable$map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
+const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
   TA,
   TB,
 >() => {
-  const typedMutableEnumeratorMixin = MutableEnumerator$mixin<TB>();
+  const typedMutableEnumeratorMixin = MutableEnumerator_mixin<TB>();
 
   type TProperties = {
     readonly mapper: Function1<TA, TB>;
@@ -38,14 +38,14 @@ const Enumerable$map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable$delegatingMixin, typedMutableEnumeratorMixin),
+        include(Disposable_delegatingMixin, typedMutableEnumeratorMixin),
         function MapEnumerator(
           instance: Pick<EnumeratorLike<TB>, typeof SourceLike_move> &
             Mutable<TProperties>,
           delegate: EnumeratorLike<TA>,
           mapper: Function1<TA, TB>,
         ): EnumeratorLike<TB> {
-          init(Disposable$delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin, instance, delegate);
           init(typedMutableEnumeratorMixin, instance);
 
           instance.delegate = delegate;
@@ -61,23 +61,23 @@ const Enumerable$map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<TB>) {
             const { delegate } = this;
 
-            if (Enumerator$move(delegate)) {
+            if (Enumerator_move(delegate)) {
               try {
                 this[EnumeratorLike_current] = this.mapper(
-                  Enumerator$getCurrent(delegate),
+                  Enumerator_getCurrent(delegate),
                 );
               } catch (e) {
-                pipe(this, Disposable$dispose(error(e)));
+                pipe(this, Disposable_dispose(error(e)));
               }
             }
           },
         },
       ),
     ),
-    StatefulContainer$map<EnumerableLike, TA, TB, TInteractive>(
-      Enumerable$liftT,
+    StatefulContainer_map<EnumerableLike, TA, TB, TInteractive>(
+      Enumerable_liftT,
     ),
   );
 })();
 
-export default Enumerable$map;
+export default Enumerable_map;

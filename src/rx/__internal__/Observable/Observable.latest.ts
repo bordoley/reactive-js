@@ -6,27 +6,27 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import ReadonlyArray$map from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map";
+import ReadonlyArray_map from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map";
 import { getLength, none, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
 import { SchedulerLike } from "../../../scheduling";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import Observer$getScheduler from "../Observer/Observer.getScheduler";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$notify from "../Sink/Sink.notify";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
-import Observable$allAreEnumerable from "./Observable.allAreEnumerable";
-import Observable$allAreRunnable from "./Observable.allAreRunnable";
-import Observable$create from "./Observable.create";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import Observer_getScheduler from "../Observer/Observer.getScheduler";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_notify from "../Sink/Sink.notify";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
+import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
+import Observable_allAreRunnable from "./Observable.allAreRunnable";
+import Observable_create from "./Observable.create";
 
 type LatestMode = 1 | 2;
 const zipMode = 2;
 
-const Observable$latest = /*@__PURE__*/ (() => {
-  const typedObserverMixin = Observer$mixin();
+const Observable_latest = /*@__PURE__*/ (() => {
+  const typedObserverMixin = Observer_mixin();
   type LatestCtx = {
     delegate: ObserverLike<readonly unknown[]>;
     mode: LatestMode;
@@ -46,9 +46,9 @@ const Observable$latest = /*@__PURE__*/ (() => {
     if (isReady) {
       const result = pipe(
         observers,
-        ReadonlyArray$map(observer => observer.latest),
+        ReadonlyArray_map(observer => observer.latest),
       );
-      pipe(instance.delegate, Sink$notify(result));
+      pipe(instance.delegate, Sink_notify(result));
 
       if (mode === zipMode) {
         for (const sub of observers) {
@@ -63,7 +63,7 @@ const Observable$latest = /*@__PURE__*/ (() => {
     instance.completedCount++;
 
     if (instance.completedCount === getLength(instance.observers)) {
-      pipe(instance.delegate, Disposable$dispose());
+      pipe(instance.delegate, Disposable_dispose());
     }
   };
 
@@ -75,14 +75,14 @@ const Observable$latest = /*@__PURE__*/ (() => {
 
   const createLatestObserver = createInstanceFactory(
     mix(
-      include(typedObserverMixin, Disposable$mixin),
+      include(typedObserverMixin, Disposable_mixin),
       function LatestObserver(
         instance: Pick<ObserverLike, typeof SinkLike_notify> &
           Mutable<TProperties>,
         scheduler: SchedulerLike,
         ctx: LatestCtx,
       ): ObserverLike & TProperties {
-        init(Disposable$mixin, instance);
+        init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, scheduler);
 
         instance.ctx = ctx;
@@ -122,25 +122,25 @@ const Observable$latest = /*@__PURE__*/ (() => {
         onCompleted(ctx);
       };
 
-      const scheduler = Observer$getScheduler(delegate);
+      const scheduler = Observer_getScheduler(delegate);
 
       for (const observable of observables) {
         const innerObserver = pipe(
           createLatestObserver(scheduler, ctx),
-          Disposable$addTo(delegate),
-          Disposable$onComplete(onCompleteCb),
-          Sink$sourceFrom(observable),
+          Disposable_addTo(delegate),
+          Disposable_onComplete(onCompleteCb),
+          Sink_sourceFrom(observable),
         );
 
         add(ctx, innerObserver);
       }
     };
 
-    const isEnumerable = Observable$allAreEnumerable(observables);
-    const isRunnable = Observable$allAreRunnable(observables);
+    const isEnumerable = Observable_allAreEnumerable(observables);
+    const isRunnable = Observable_allAreRunnable(observables);
 
-    return Observable$create(onSink, isEnumerable, isRunnable);
+    return Observable_create(onSink, isEnumerable, isRunnable);
   };
 })();
 
-export default Observable$latest;
+export default Observable_latest;

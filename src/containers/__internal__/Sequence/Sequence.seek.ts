@@ -5,7 +5,7 @@ import {
 } from "../../../containers";
 import { isSome } from "../../../functions";
 
-const Sequence$seek =
+const Sequence_seek =
   <T>(count: number): ContainerOperator<SequenceLike, T, T> =>
   (seq: SequenceLike<T>) => {
     if (count <= 0) {
@@ -24,4 +24,4 @@ const Sequence$seek =
     }
   };
 
-export default Sequence$seek;
+export default Sequence_seek;

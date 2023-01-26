@@ -5,25 +5,25 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { TakeFirst } from "../../../containers";
-import StatefulContainer$takeFirst from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeFirst";
+import StatefulContainer_takeFirst from "../../../containers/__internal__/StatefulContainer/StatefulContainer.takeFirst";
 import { pipe } from "../../../functions";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx";
-import Observer$mixin from "../Observer/Observer.mixin";
+import Observer_mixin from "../Observer/Observer.mixin";
 import SinkLike_takeFirstMixin from "../Sink/Sink.takeFirstMixin";
-import Observable$liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
 
-const Observable$takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
+const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
   /*@__PURE__*/ (() => {
     const createTakeFirstObserver: <T>(
       delegate: ObserverLike<T>,
       count: number,
     ) => ObserverLike<T> = (<T>() => {
       const typedTakeFirstSinkMixin = SinkLike_takeFirstMixin<T>();
-      const typedObserverMixin = Observer$mixin<T>();
+      const typedObserverMixin = Observer_mixin<T>();
 
       return createInstanceFactory(
         mix(
@@ -48,8 +48,8 @@ const Observable$takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
 
     return pipe(
       createTakeFirstObserver,
-      StatefulContainer$takeFirst(Observable$liftEnumerableOperatorT),
+      StatefulContainer_takeFirst(Observable_liftEnumerableOperatorT),
     );
   })();
 
-export default Observable$takeFirst;
+export default Observable_takeFirst;

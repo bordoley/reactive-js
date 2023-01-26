@@ -4,11 +4,11 @@ import {
   reactive,
 } from "../../../containers/__internal__/containers.internal";
 import { RunnableLike } from "../../../rx";
-import Runnable$lift from "./Runnable.lift";
+import Runnable_lift from "./Runnable.lift";
 
-const Runnable$liftT: Lift<RunnableLike, TReactive> = {
-  lift: Runnable$lift,
+const Runnable_liftT: Lift<RunnableLike, TReactive> = {
+  lift: Runnable_lift,
   variance: reactive,
 };
 
-export default Runnable$liftT;
+export default Runnable_liftT;

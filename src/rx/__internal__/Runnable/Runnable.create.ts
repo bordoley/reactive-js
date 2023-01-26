@@ -10,9 +10,9 @@ import {
   RunnableLike,
   SinkLike,
 } from "../../../rx";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 
-const Runnable$create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
+const Runnable_create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
       readonly run: SideEffect1<SinkLike<T>>;
@@ -39,9 +39,9 @@ const Runnable$create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
           ) {
             try {
               this.run(sink);
-              pipe(sink, Disposable$dispose());
+              pipe(sink, Disposable_dispose());
             } catch (e) {
-              pipe(sink, Disposable$dispose(error(e)));
+              pipe(sink, Disposable_dispose(error(e)));
             }
           },
         },
@@ -49,4 +49,4 @@ const Runnable$create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
     );
   })();
 
-export default Runnable$create;
+export default Runnable_create;

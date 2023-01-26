@@ -60,9 +60,9 @@ import {
   StreamableLike_stream,
 } from "../streaming";
 import { createActionReducer, stream } from "../streaming/Streamable";
-import Streamable$create from "../streaming/__internal__/Streamable/Streamable.create";
+import Streamable_create from "../streaming/__internal__/Streamable/Streamable.create";
 import { addTo, dispose, onDisposed, toAbortSignal } from "../util/Disposable";
-import Disposable$delegatingMixin from "../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_delegatingMixin from "../util/__internal__/Disposable/Disposable.delegatingMixin";
 
 export type WindowLocationURI = {
   title: string;
@@ -234,9 +234,9 @@ export const windowLocation: WindowLocationStreamableLike =
       query,
       fragment,
     }: WindowLocationURI): string => {
-      let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/${path}` : path;
-      uri = getLength(query) > 0 ? `${uri}?${query}` : uri;
-      uri = getLength(fragment) > 0 ? `${uri}#${fragment}` : uri;
+      let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/_{path}` : path;
+      uri = getLength(query) > 0 ? `_{uri}?_{query}` : uri;
+      uri = getLength(fragment) > 0 ? `_{uri}#_{fragment}` : uri;
       return newInstance(URL, uri, location.href).toString();
     };
 
@@ -303,7 +303,7 @@ export const windowLocation: WindowLocationStreamableLike =
 
     const createWindowLocationStream = createInstanceFactory(
       mix(
-        include(Disposable$delegatingMixin),
+        include(Disposable_delegatingMixin),
         function WindowLocationStream(
           instance: Pick<
             WindowLocationStreamLike,
@@ -320,7 +320,7 @@ export const windowLocation: WindowLocationStreamableLike =
             Mutable<TProperties>,
           delegate: StreamLike<TAction, TState>,
         ): WindowLocationStreamLike & TProperties {
-          init(Disposable$delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin, instance, delegate);
 
           instance.delegate = delegate;
           instance.historyCounter = -1;
@@ -391,7 +391,7 @@ export const windowLocation: WindowLocationStreamableLike =
 
     let currentWindowLocationStream: Optional<WindowLocationStreamLike> = none;
 
-    return Streamable$create<
+    return Streamable_create<
       Updater<WindowLocationURI> | WindowLocationURI,
       WindowLocationURI,
       WindowLocationStreamLike

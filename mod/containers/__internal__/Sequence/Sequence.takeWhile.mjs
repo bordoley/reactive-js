@@ -2,7 +2,7 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome, returns, none } from '../../../functions.mjs';
 
-const Sequence$takeWhile = 
+const Sequence_takeWhile = 
 /*@__PURE__*/ (() => {
     const _takeWhile = (predicate, inclusive, seq) => () => {
         const result = seq();
@@ -24,4 +24,4 @@ const Sequence$takeWhile =
     };
 })();
 
-export { Sequence$takeWhile as default };
+export { Sequence_takeWhile as default };

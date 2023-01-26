@@ -2,19 +2,19 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { returns, pipe, none, error } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink$notify from './Sink.notify.mjs';
+import Sink_notify from './Sink.notify.mjs';
 
-const Sink$throwIfEmptyMixin = /*@__PURE__*/ (() => {
+const Sink_throwIfEmptyMixin = /*@__PURE__*/ (() => {
     const ThrowIfEmptySink_private_isEmpty = Symbol("ThrowIfEmptySink_private_isEmpty");
-    return returns(mix(include(Disposable$mixin), function ThrowIfEmptySink(instance, delegate, factory) {
-        init(Disposable$mixin, instance);
+    return returns(mix(include(Disposable_mixin), function ThrowIfEmptySink(instance, delegate, factory) {
+        init(Disposable_mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
-        pipe(instance, Disposable$addTo(delegate), Disposable$onComplete(() => {
+        pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             let err = none;
             if (instance[ThrowIfEmptySink_private_isEmpty]) {
                 try {
@@ -24,7 +24,7 @@ const Sink$throwIfEmptyMixin = /*@__PURE__*/ (() => {
                     err = error(e);
                 }
             }
-            pipe(delegate, Disposable$dispose(err));
+            pipe(delegate, Disposable_dispose(err));
         }));
         return instance;
     }, props({
@@ -33,9 +33,9 @@ const Sink$throwIfEmptyMixin = /*@__PURE__*/ (() => {
     }), {
         [SinkLike_notify](next) {
             this[ThrowIfEmptySink_private_isEmpty] = false;
-            pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+            pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
         },
     }));
 })();
 
-export { Sink$throwIfEmptyMixin as default };
+export { Sink_throwIfEmptyMixin as default };

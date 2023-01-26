@@ -3,16 +3,16 @@ import {
   EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../../../ix";
-import Source$move from "../Source/Source.move";
-import Enumerator$hasCurrent from "./Enumerator.hasCurrent";
+import Source_move from "../Source/Source.move";
+import Enumerator_hasCurrent from "./Enumerator.hasCurrent";
 
-const Enumerator$move = <T>(enumerator: {
+const Enumerator_move = <T>(enumerator: {
   [EnumeratorLike_current]: T;
   [EnumeratorLike_hasCurrent]: boolean;
   [SourceLike_move]: () => void;
 }): boolean => {
-  Source$move(enumerator);
-  return Enumerator$hasCurrent(enumerator);
+  Source_move(enumerator);
+  return Enumerator_hasCurrent(enumerator);
 };
 
-export default Enumerator$move;
+export default Enumerator_move;

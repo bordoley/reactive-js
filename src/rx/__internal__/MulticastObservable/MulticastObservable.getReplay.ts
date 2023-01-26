@@ -1,7 +1,7 @@
 import { MulticastObservableLike_replay } from "../../../rx";
 
-const MulticastObservable$getReplay = (obs: {
+const MulticastObservable_getReplay = (obs: {
   [MulticastObservableLike_replay]: number;
 }) => obs[MulticastObservableLike_replay];
 
-export default MulticastObservable$getReplay;
+export default MulticastObservable_getReplay;

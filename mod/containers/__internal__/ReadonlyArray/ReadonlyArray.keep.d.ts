@@ -1,3 +1,3 @@
 import { Keep, ReadonlyArrayLike } from "../../../containers.js";
-declare const ReadonlyArray$keep: Keep<ReadonlyArrayLike>["keep"];
-export { ReadonlyArray$keep as default };
+declare const ReadonlyArray_keep: Keep<ReadonlyArrayLike>["keep"];
+export { ReadonlyArray_keep as default };

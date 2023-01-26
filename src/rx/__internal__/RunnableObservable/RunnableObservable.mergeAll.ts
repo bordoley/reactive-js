@@ -1,17 +1,17 @@
 import { ConcatAll } from "../../../containers";
 import { RunnableObservableLike } from "../../../rx";
-import HigherOrderObservable$mergeAll from "../HigherOrderObservable/HigherOrderObservable.mergeAll";
-import RunnableObservable$lift from "./RunnableObservable.lift";
+import HigherOrderObservable_mergeAll from "../HigherOrderObservable/HigherOrderObservable.mergeAll";
+import RunnableObservable_lift from "./RunnableObservable.lift";
 
-const RunnableObservable$mergeAll: ConcatAll<
+const RunnableObservable_mergeAll: ConcatAll<
   RunnableObservableLike,
   {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
 >["concatAll"] =
-  /*@__PURE__*/ HigherOrderObservable$mergeAll<RunnableObservableLike>(
-    RunnableObservable$lift,
+  /*@__PURE__*/ HigherOrderObservable_mergeAll<RunnableObservableLike>(
+    RunnableObservable_lift,
   ) as ConcatAll<
     RunnableObservableLike,
     {
@@ -20,4 +20,4 @@ const RunnableObservable$mergeAll: ConcatAll<
     }
   >["concatAll"];
 
-export default RunnableObservable$mergeAll;
+export default RunnableObservable_mergeAll;

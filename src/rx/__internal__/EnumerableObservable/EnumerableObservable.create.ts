@@ -1,10 +1,10 @@
 import { SideEffect1 } from "../../../functions";
 import { EnumerableObservableLike, ObserverLike } from "../../../rx";
-import Observable$create from "../Observable/Observable.create";
+import Observable_create from "../Observable/Observable.create";
 
-const EnumerableObservable$create = <T>(
+const EnumerableObservable_create = <T>(
   f: SideEffect1<ObserverLike<T>>,
 ): EnumerableObservableLike<T> =>
-  Observable$create(f, true, true) as EnumerableObservableLike<T>;
+  Observable_create(f, true, true) as EnumerableObservableLike<T>;
 
-export default EnumerableObservable$create;
+export default EnumerableObservable_create;

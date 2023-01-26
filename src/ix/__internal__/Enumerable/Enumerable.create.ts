@@ -10,10 +10,10 @@ import {
   EnumeratorLike,
   InteractiveContainerLike_interact,
 } from "../../../ix";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Enumerator$empty from "../Enumerator/Enumerator.empty";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Enumerator_empty from "../Enumerator/Enumerator.empty";
 
-const Enumerable$create: <T>(
+const Enumerable_create: <T>(
   f: Factory<EnumeratorLike<T>>,
 ) => EnumerableLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
@@ -43,8 +43,8 @@ const Enumerable$create: <T>(
           try {
             return this.enumerate();
           } catch (e) {
-            const emptyEnumerator = Enumerator$empty<T>();
-            return pipe(emptyEnumerator, Disposable$dispose(error(e)));
+            const emptyEnumerator = Enumerator_empty<T>();
+            return pipe(emptyEnumerator, Disposable_dispose(error(e)));
           }
         },
       },
@@ -52,4 +52,4 @@ const Enumerable$create: <T>(
   );
 })();
 
-export default Enumerable$create;
+export default Enumerable_create;

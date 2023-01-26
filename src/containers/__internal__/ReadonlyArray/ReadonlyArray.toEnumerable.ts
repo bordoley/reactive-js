@@ -15,22 +15,22 @@ import {
   SourceLike_move,
   ToEnumerable,
 } from "../../../ix";
-import Enumerable$create from "../../../ix/__internal__/Enumerable/Enumerable.create";
-import MutableEnumerator$mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
+import Enumerable_create from "../../../ix/__internal__/Enumerable/Enumerable.create";
+import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import ReadonlyArray$toContainer from "./ReadonlyArray.toContainer";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
 
-const ReadonlyArray$toEnumerable: ToEnumerable<
+const ReadonlyArray_toEnumerable: ToEnumerable<
   ReadonlyArrayLike,
   {
     readonly start: number;
     readonly count: number;
   }
 >["toEnumerable"] = /*@__PURE__*/ (<T>() => {
-  const typedMutableEnumeratorMixin = MutableEnumerator$mixin<T>();
+  const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
 
   type TProperties = {
     readonly array: readonly T[];
@@ -40,7 +40,7 @@ const ReadonlyArray$toEnumerable: ToEnumerable<
 
   const createReadonlyArrayEnumerator = createInstanceFactory(
     mix(
-      include(Disposable$mixin, typedMutableEnumeratorMixin),
+      include(Disposable_mixin, typedMutableEnumeratorMixin),
       function ReadonlyArrayEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
           Mutable<TProperties>,
@@ -48,7 +48,7 @@ const ReadonlyArray$toEnumerable: ToEnumerable<
         start: number,
         count: number,
       ): EnumeratorLike<T> {
-        init(Disposable$mixin, instance);
+        init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
 
         instance.array = array;
@@ -65,7 +65,7 @@ const ReadonlyArray$toEnumerable: ToEnumerable<
       {
         [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
           const { array } = this;
-          if (!Disposable$isDisposed(this)) {
+          if (!Disposable_isDisposed(this)) {
             this.index++;
             const { index, count } = this;
 
@@ -74,7 +74,7 @@ const ReadonlyArray$toEnumerable: ToEnumerable<
 
               this.count = count > 0 ? this.count - 1 : this.count + 1;
             } else {
-              pipe(this, Disposable$dispose());
+              pipe(this, Disposable_dispose());
             }
           }
         },
@@ -82,12 +82,12 @@ const ReadonlyArray$toEnumerable: ToEnumerable<
     ),
   );
 
-  return ReadonlyArray$toContainer<EnumerableLike<T>, T>(
+  return ReadonlyArray_toContainer<EnumerableLike<T>, T>(
     (array: readonly T[], start: number, count: number) =>
-      Enumerable$create(() =>
+      Enumerable_create(() =>
         createReadonlyArrayEnumerator(array, start, count),
       ),
   );
 })();
 
-export default ReadonlyArray$toEnumerable;
+export default ReadonlyArray_toEnumerable;

@@ -1,7 +1,7 @@
 import { SchedulerLike_inContinuation } from "../../../scheduling";
 
-const Scheduler$isInContinuation = (scheduler: {
+const Scheduler_isInContinuation = (scheduler: {
   readonly [SchedulerLike_inContinuation]: boolean;
 }): boolean => scheduler[SchedulerLike_inContinuation];
 
-export default Scheduler$isInContinuation;
+export default Scheduler_isInContinuation;

@@ -5,12 +5,12 @@ import {
 } from "../../../containers";
 import { Function1, isSome } from "../../../functions";
 import { RunnableLike, SinkLike_notify } from "../../../rx";
-import Runnable$create from "../../../rx/__internal__/Runnable/Runnable.create";
+import Runnable_create from "../../../rx/__internal__/Runnable/Runnable.create";
 
-const Sequence$toRunnable =
+const Sequence_toRunnable =
   <T>(): Function1<SequenceLike<T>, RunnableLike<T>> =>
   (seq: SequenceLike<T>) =>
-    Runnable$create(sink => {
+    Runnable_create(sink => {
       let result = seq();
       while (isSome(result)) {
         sink[SinkLike_notify](result[SequenceLike_data]);
@@ -18,4 +18,4 @@ const Sequence$toRunnable =
       }
     });
 
-export default Sequence$toRunnable;
+export default Sequence_toRunnable;

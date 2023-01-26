@@ -2,34 +2,34 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
-import Enumerable$create from '../../../ix/__internal__/Enumerable/Enumerable.create.mjs';
-import MutableEnumerator$mixin from '../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Enumerable_create from '../../../ix/__internal__/Enumerable/Enumerable.create.mjs';
+import MutableEnumerator_mixin from '../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
 
-const Iterable$toEnumerable = 
+const Iterable_toEnumerable = 
 /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = MutableEnumerator$mixin();
-    const createIterableEnumerator = createInstanceFactory(mix(include(Disposable$mixin, typedMutableEnumeratorMixin), function IteratorEnumerator(instance, iterator) {
-        init(Disposable$mixin, instance);
+    const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    const createIterableEnumerator = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function IteratorEnumerator(instance, iterator) {
+        init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance.iterator = iterator;
         return instance;
     }, props({ iterator: none }), {
         [SourceLike_move]() {
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
                 const next = this.iterator.next();
                 if (!next.done) {
                     this[EnumeratorLike_current] = next.value;
                 }
                 else {
-                    pipe(this, Disposable$dispose());
+                    pipe(this, Disposable_dispose());
                 }
             }
         },
     }));
-    return () => (iterable) => Enumerable$create(() => createIterableEnumerator(iterable[Symbol.iterator]()));
+    return () => (iterable) => Enumerable_create(() => createIterableEnumerator(iterable[Symbol.iterator]()));
 })();
 
-export { Iterable$toEnumerable as default };
+export { Iterable_toEnumerable as default };

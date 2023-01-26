@@ -7,18 +7,18 @@ import {
 import { ConcatAll } from "../../../containers";
 import { pipe, pipeLazy } from "../../../functions";
 import { RunnableLike, SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$bindTo from "../../../util/__internal__/Disposable/Disposable.bindTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import DelegateSink$create from "../DelegatingSink/DelegatingSink.create";
-import DelegateSink$mixin from "../DelegatingSink/DelegatingSink.mixin";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_bindTo from "../../../util/__internal__/Disposable/Disposable.bindTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import DelegateSink_create from "../DelegatingSink/DelegatingSink.create";
+import DelegateSink_mixin from "../DelegatingSink/DelegatingSink.mixin";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
 import { DelegateSinkLike, DelegatingSinkLike_delegate } from "../rx.internal";
-import Runnable$lift from "./Runnable.lift";
+import Runnable_lift from "./Runnable.lift";
 
-const Runnable$concatAll: ConcatAll<RunnableLike>["concatAll"] =
+const Runnable_concatAll: ConcatAll<RunnableLike>["concatAll"] =
   /*@__PURE__*/ (<T>() => {
-    const typedDelegatingSinkMixin = DelegateSink$mixin<T>();
+    const typedDelegatingSinkMixin = DelegateSink_mixin<T>();
 
     return pipeLazy(
       createInstanceFactory(
@@ -29,7 +29,7 @@ const Runnable$concatAll: ConcatAll<RunnableLike>["concatAll"] =
             delegate: SinkLike<T>,
           ): SinkLike<RunnableLike<T>> {
             init(typedDelegatingSinkMixin, instance, delegate);
-            pipe(instance, Disposable$bindTo(delegate));
+            pipe(instance, Disposable_bindTo(delegate));
 
             return instance;
           },
@@ -41,17 +41,17 @@ const Runnable$concatAll: ConcatAll<RunnableLike>["concatAll"] =
             ) {
               const { [DelegatingSinkLike_delegate]: delegate } = this;
               pipe(
-                DelegateSink$create(delegate),
-                Disposable$addTo<SinkLike<T>>(this),
-                Sink$sourceFrom(next),
-                Disposable$dispose(),
+                DelegateSink_create(delegate),
+                Disposable_addTo<SinkLike<T>>(this),
+                Sink_sourceFrom(next),
+                Disposable_dispose(),
               );
             },
           },
         ),
       ),
-      Runnable$lift,
+      Runnable_lift,
     );
   })();
 
-export default Runnable$concatAll;
+export default Runnable_concatAll;

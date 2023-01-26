@@ -8,16 +8,16 @@ import {
 } from "../../../__internal__/mixins";
 import { Predicate, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import ReactiveContainer$sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-const Sink$satisfyMixin: <
+const Sink_satisfyMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<boolean>,
   T,
@@ -40,26 +40,26 @@ const Sink$satisfyMixin: <
   };
 
   return mix(
-    include(Disposable$mixin),
+    include(Disposable_mixin),
     function SatisfySink(
       instance: Mutable<TProperties> &
         Pick<SinkLike<T>, typeof SinkLike_notify>,
       delegate: TSink,
       predicate: Predicate<T>,
     ): SinkLike<T> {
-      init(Disposable$mixin, instance);
+      init(Disposable_mixin, instance);
       instance[DelegatingSinkLike_delegate] = delegate;
       instance[SatisfySink_private_predicate] = predicate;
 
       pipe(
         instance,
-        Disposable$addTo(delegate),
-        Disposable$onComplete(() => {
-          if (!Disposable$isDisposed(delegate)) {
+        Disposable_addTo(delegate),
+        Disposable_onComplete(() => {
+          if (!Disposable_isDisposed(delegate)) {
             pipe(
               [defaultResult],
               fromArray,
-              ReactiveContainer$sinkInto(delegate),
+              ReactiveContainer_sinkInto(delegate),
             );
           }
         }),
@@ -76,8 +76,8 @@ const Sink$satisfyMixin: <
         if (this[SatisfySink_private_predicate](next)) {
           pipe(
             this[DelegatingSinkLike_delegate],
-            Sink$notify(!defaultResult),
-            Disposable$dispose(),
+            Sink_notify(!defaultResult),
+            Disposable_dispose(),
           );
         }
       },
@@ -85,4 +85,4 @@ const Sink$satisfyMixin: <
   );
 };
 
-export default Sink$satisfyMixin;
+export default Sink_satisfyMixin;

@@ -7,9 +7,9 @@ import {
   TInteractive,
   TReactive,
 } from "../containers.internal";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$takeFirst =
+const StatefulContainer_takeFirst =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -25,8 +25,8 @@ const StatefulContainer$takeFirst =
     const containerOperator = pipe(
       operator,
       partial(count),
-      StatefulContainer$lift(m),
+      StatefulContainer_lift(m),
     );
     return container => pipe(container, containerOperator);
   };
-export default StatefulContainer$takeFirst;
+export default StatefulContainer_takeFirst;

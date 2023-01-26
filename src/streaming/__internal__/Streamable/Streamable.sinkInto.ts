@@ -1,45 +1,45 @@
-import Container$ignoreElements from "../../../containers/__internal__/Container/Container.ignoreElements";
+import Container_ignoreElements from "../../../containers/__internal__/Container/Container.ignoreElements";
 import { pipe } from "../../../functions";
-import Observable$forEach from "../../../rx/__internal__/Observable/Observable.forEach";
-import Observable$keep from "../../../rx/__internal__/Observable/Observable.keep";
-import Observable$merge from "../../../rx/__internal__/Observable/Observable.merge";
-import Observable$onSubscribe from "../../../rx/__internal__/Observable/Observable.onSubscribe";
-import Observable$subscribe from "../../../rx/__internal__/Observable/Observable.subscribe";
+import Observable_forEach from "../../../rx/__internal__/Observable/Observable.forEach";
+import Observable_keep from "../../../rx/__internal__/Observable/Observable.keep";
+import Observable_merge from "../../../rx/__internal__/Observable/Observable.merge";
+import Observable_onSubscribe from "../../../rx/__internal__/Observable/Observable.onSubscribe";
+import Observable_subscribe from "../../../rx/__internal__/Observable/Observable.subscribe";
 import { DispatcherLike_scheduler } from "../../../scheduling";
-import Dispatcher$dispatchTo from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo";
+import Dispatcher_dispatchTo from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo";
 import { StreamLike, StreamableLike } from "../../../streaming";
-import Disposable$add from "../../../util/__internal__/Disposable/Disposable.add";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_add from "../../../util/__internal__/Disposable/Disposable.add";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
 
-import Streamable$stream from "./Streamable.stream";
+import Streamable_stream from "./Streamable.stream";
 
-const Streamable$sinkInto =
+const Streamable_sinkInto =
   <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) =>
   (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
     const { [DispatcherLike_scheduler]: scheduler } = dest;
-    const srcStream = pipe(src, Streamable$stream(scheduler));
+    const srcStream = pipe(src, Streamable_stream(scheduler));
 
     pipe(
-      Observable$merge(
+      Observable_merge(
         pipe(
           srcStream,
-          Observable$forEach(Dispatcher$dispatchTo(dest)),
-          Container$ignoreElements({ keep: Observable$keep }),
-          Observable$onSubscribe(() => dest),
+          Observable_forEach(Dispatcher_dispatchTo(dest)),
+          Container_ignoreElements({ keep: Observable_keep }),
+          Observable_onSubscribe(() => dest),
         ),
         pipe(
           dest,
-          Observable$forEach<TReq>(Dispatcher$dispatchTo(srcStream)),
-          Container$ignoreElements({ keep: Observable$keep }),
+          Observable_forEach<TReq>(Dispatcher_dispatchTo(srcStream)),
+          Container_ignoreElements({ keep: Observable_keep }),
         ),
       ),
-      Container$ignoreElements({ keep: Observable$keep }),
-      Observable$subscribe(scheduler),
-      Disposable$addTo(dest),
-      Disposable$add(srcStream),
+      Container_ignoreElements({ keep: Observable_keep }),
+      Observable_subscribe(scheduler),
+      Disposable_addTo(dest),
+      Disposable_add(srcStream),
     );
 
     return src;
   };
 
-export default Streamable$sinkInto;
+export default Streamable_sinkInto;

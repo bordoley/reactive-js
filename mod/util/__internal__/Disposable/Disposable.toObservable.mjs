@@ -1,8 +1,8 @@
 /// <reference types="./Disposable.toObservable.d.ts" />
 import { compose } from '../../../functions.mjs';
-import Observable$create from '../../../rx/__internal__/Observable/Observable.create.mjs';
-import Disposable$addTo from './Disposable.addTo.mjs';
+import Observable_create from '../../../rx/__internal__/Observable/Observable.create.mjs';
+import Disposable_addTo from './Disposable.addTo.mjs';
 
-const Disposable$toObservable = () => compose(Disposable$addTo, Observable$create);
+const Disposable_toObservable = () => compose(Disposable_addTo, Observable_create);
 
-export { Disposable$toObservable as default };
+export { Disposable_toObservable as default };

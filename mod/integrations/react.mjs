@@ -11,7 +11,7 @@ import { toScheduler } from '../scheduling/PriorityScheduler.mjs';
 import { isInContinuation } from '../scheduling/Scheduler.mjs';
 import { getDelay } from '../scheduling/__internal__/Scheduler.options.mjs';
 import { onError, dispose, addIgnoringChildErrors, isDisposed, create as create$1, onDisposed, addTo } from '../util/Disposable.mjs';
-import Disposable$mixin from '../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_mixin from '../util/__internal__/Disposable/Disposable.mixin.mjs';
 
 /**
  * Returns the current value, if defined, of `observable`.
@@ -51,8 +51,8 @@ const createComponent = (fn, options = {}) => {
     return ObservableComponent;
 };
 const createReactPriorityScheduler = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable$mixin), function ReactPriorityScheduler(instance) {
-        init(Disposable$mixin, instance);
+    return createInstanceFactory(mix(include(Disposable_mixin), function ReactPriorityScheduler(instance) {
+        init(Disposable_mixin, instance);
         return instance;
     }, props({
         [SchedulerLike_inContinuation]: false,

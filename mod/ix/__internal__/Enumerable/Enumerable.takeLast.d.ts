@@ -1,4 +1,4 @@
 import { TakeLast } from "../../../containers.js";
 import { EnumerableLike } from "../../../ix.js";
-declare const Enumerable$takeLast: TakeLast<EnumerableLike>["takeLast"];
-export { Enumerable$takeLast as default };
+declare const Enumerable_takeLast: TakeLast<EnumerableLike>["takeLast"];
+export { Enumerable_takeLast as default };

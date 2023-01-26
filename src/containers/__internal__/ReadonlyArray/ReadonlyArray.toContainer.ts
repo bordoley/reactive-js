@@ -1,7 +1,7 @@
 import { ReadonlyArrayLike } from "../../../containers";
 import { Function1, getLength, isSome, max, min } from "../../../functions";
 
-const ReadonlyArray$toContainer =
+const ReadonlyArray_toContainer =
   <
     C,
     T,
@@ -58,4 +58,4 @@ const ReadonlyArray$toContainer =
     return factory(values, start, count, options);
   };
 
-export default ReadonlyArray$toContainer;
+export default ReadonlyArray_toContainer;

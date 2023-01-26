@@ -1,19 +1,19 @@
 /// <reference types="./Promiseable.toObservable.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import Observable$create from '../../../rx/__internal__/Observable/Observable.create.mjs';
-import Observer$getDispatcher from '../../../rx/__internal__/Observer/Observer.getDispatcher.mjs';
-import Dispatcher$dispatch from '../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$toErrorHandler from '../../../util/__internal__/Disposable/Disposable.toErrorHandler.mjs';
+import Observable_create from '../../../rx/__internal__/Observable/Observable.create.mjs';
+import Observer_getDispatcher from '../../../rx/__internal__/Observer/Observer.getDispatcher.mjs';
+import Dispatcher_dispatch from '../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_toErrorHandler from '../../../util/__internal__/Disposable/Disposable.toErrorHandler.mjs';
 
-const Promiseable$toObservable = () => (promise) => Observable$create(observer => {
-    const dispatcher = Observer$getDispatcher(observer);
+const Promiseable_toObservable = () => (promise) => Observable_create(observer => {
+    const dispatcher = Observer_getDispatcher(observer);
     promise.then(next => {
-        if (!Disposable$isDisposed(dispatcher)) {
-            pipe(dispatcher, Dispatcher$dispatch(next), Disposable$dispose());
+        if (!Disposable_isDisposed(dispatcher)) {
+            pipe(dispatcher, Dispatcher_dispatch(next), Disposable_dispose());
         }
-    }, Disposable$toErrorHandler(dispatcher));
+    }, Disposable_toErrorHandler(dispatcher));
 });
 
-export { Promiseable$toObservable as default };
+export { Promiseable_toObservable as default };

@@ -5,8 +5,8 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { DecodeWithCharset } from "../../../containers";
-import ReadonlyArray$toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
-import StatefulContainer$decodeWithCharset from "../../../containers/__internal__/StatefulContainer/StatefulContainer.decodeWithCharset";
+import ReadonlyArray_toRunnableObservable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
+import StatefulContainer_decodeWithCharset from "../../../containers/__internal__/StatefulContainer/StatefulContainer.decodeWithCharset";
 import { TReactive } from "../../../containers/__internal__/containers.internal";
 import { pipe } from "../../../functions";
 import {
@@ -14,16 +14,16 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$decodeWithCharsetMixin from "../Sink/Sink.decodeWithCharsetMixin";
-import Observable$liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_decodeWithCharsetMixin from "../Sink/Sink.decodeWithCharsetMixin";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
 
-const Observable$decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
+const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = Sink$decodeWithCharsetMixin(
-      ReadonlyArray$toRunnableObservable(),
+    const typedDecodeWithCharsetMixin = Sink_decodeWithCharsetMixin(
+      ReadonlyArray_toRunnableObservable(),
     );
-    const typedObserverMixin = Observer$mixin<ArrayBuffer>();
+    const typedObserverMixin = Observer_mixin<ArrayBuffer>();
 
     const createDecodeWithCharsetObserver = createInstanceFactory(
       mix(
@@ -43,10 +43,10 @@ const Observable$decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
 
     return pipe(
       createDecodeWithCharsetObserver,
-      StatefulContainer$decodeWithCharset<ObservableLike, TReactive>(
-        Observable$liftEnumerableOperatorT,
+      StatefulContainer_decodeWithCharset<ObservableLike, TReactive>(
+        Observable_liftEnumerableOperatorT,
       ),
     );
   })();
 
-export default Observable$decodeWithCharset;
+export default Observable_decodeWithCharset;

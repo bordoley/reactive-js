@@ -1,10 +1,10 @@
 /// <reference types="./Stream.sourceFrom.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import Streamable$sinkInto from '../Streamable/Streamable.sinkInto.mjs';
+import Streamable_sinkInto from '../Streamable/Streamable.sinkInto.mjs';
 
-const Stream$sourceFrom = (streamable) => dest => {
-    pipe(streamable, Streamable$sinkInto(dest));
+const Stream_sourceFrom = (streamable) => dest => {
+    pipe(streamable, Streamable_sinkInto(dest));
     return dest;
 };
 
-export { Stream$sourceFrom as default };
+export { Stream_sourceFrom as default };

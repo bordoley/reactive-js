@@ -7,9 +7,9 @@ import {
   TInteractive,
   TReactive,
 } from "../containers.internal";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$throwIfEmpty =
+const StatefulContainer_throwIfEmpty =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
   ) =>
@@ -21,6 +21,6 @@ const StatefulContainer$throwIfEmpty =
     >,
   ) =>
   (factory: Factory<unknown>) =>
-    pipe(operator, partial(factory), StatefulContainer$lift(m));
+    pipe(operator, partial(factory), StatefulContainer_lift(m));
 
-export default StatefulContainer$throwIfEmpty;
+export default StatefulContainer_throwIfEmpty;

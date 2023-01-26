@@ -1,7 +1,7 @@
 /// <reference types="./Sequence.generate.d.ts" />
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 
-const Sequence$generate = 
+const Sequence_generate = 
 /*@__PURE__*/ (() => {
     const _generate = (generator, data) => () => ({
         [SequenceLike_data]: data,
@@ -13,4 +13,4 @@ const Sequence$generate =
     };
 })();
 
-export { Sequence$generate as default };
+export { Sequence_generate as default };

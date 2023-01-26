@@ -9,12 +9,12 @@ import {
 import { Predicate, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-const Sink$takeWhileMixin: <T>() => Mixin3<
+const Sink_takeWhileMixin: <T>() => Mixin3<
   SinkLike<T>,
   SinkLike<T>,
   Predicate<T>,
@@ -35,7 +35,7 @@ const Sink$takeWhileMixin: <T>() => Mixin3<
 
   return returns(
     mix(
-      include(Disposable$delegatingMixin),
+      include(Disposable_delegatingMixin),
       function TakeWhileSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -43,7 +43,7 @@ const Sink$takeWhileMixin: <T>() => Mixin3<
         predicate: Predicate<T>,
         inclusive: boolean,
       ): SinkLike<T> {
-        init(Disposable$delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
 
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[TakeWhileSink_private_predicate] = predicate;
@@ -62,11 +62,11 @@ const Sink$takeWhileMixin: <T>() => Mixin3<
             this[TakeWhileSink_private_predicate](next);
 
           if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
-            pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+            pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
           }
 
           if (!satisfiesPredicate) {
-            pipe(this, Disposable$dispose());
+            pipe(this, Disposable_dispose());
           }
         },
       },
@@ -74,4 +74,4 @@ const Sink$takeWhileMixin: <T>() => Mixin3<
   );
 })();
 
-export default Sink$takeWhileMixin;
+export default Sink_takeWhileMixin;

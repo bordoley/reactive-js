@@ -8,11 +8,11 @@ import {
 } from "../../../__internal__/mixins";
 import { Equality, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-const Sink$distinctUntilChangedMixin: <T>() => Mixin2<
+const Sink_distinctUntilChangedMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
   Equality<T>
@@ -36,14 +36,14 @@ const Sink$distinctUntilChangedMixin: <T>() => Mixin2<
 
   return returns(
     mix(
-      include(Disposable$delegatingMixin),
+      include(Disposable_delegatingMixin),
       function DistinctUntilChangedSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         equality: Equality<T>,
       ): SinkLike<T> {
-        init(Disposable$delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
 
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[DistinctUntilChangedSink_private_equality] = equality;
@@ -68,7 +68,7 @@ const Sink$distinctUntilChangedMixin: <T>() => Mixin2<
           if (shouldEmit) {
             this[DistinctUntilChangedSink_private_prev] = next;
             this[DistinctUntilChangedSink_private_hasValue] = true;
-            pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+            pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
           }
         },
       },
@@ -76,4 +76,4 @@ const Sink$distinctUntilChangedMixin: <T>() => Mixin2<
   );
 })();
 
-export default Sink$distinctUntilChangedMixin;
+export default Sink_distinctUntilChangedMixin;

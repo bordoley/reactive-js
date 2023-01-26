@@ -1,5 +1,5 @@
 import { SubjectLike } from "../../../rx.js";
-declare const Subject$create: <T>(options?: {
+declare const Subject_create: <T>(options?: {
     replay?: number;
 }) => SubjectLike<T>;
-export { Subject$create as default };
+export { Subject_create as default };

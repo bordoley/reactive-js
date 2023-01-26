@@ -1,22 +1,22 @@
 import { createInstanceFactory } from "../../../__internal__/mixins";
 import { DecodeWithCharset } from "../../../containers";
-import ReadonlyArray$toRunnable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnable";
-import StatefulContainer$decodeWithCharset from "../../../containers/__internal__/StatefulContainer/StatefulContainer.decodeWithCharset";
+import ReadonlyArray_toRunnable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnable";
+import StatefulContainer_decodeWithCharset from "../../../containers/__internal__/StatefulContainer/StatefulContainer.decodeWithCharset";
 import { pipe } from "../../../functions";
 import { RunnableLike } from "../../../rx";
-import Sink$decodeWithCharsetMixin from "../Sink/Sink.decodeWithCharsetMixin";
-import Runnable$liftT from "./Runnable.liftT";
+import Sink_decodeWithCharsetMixin from "../Sink/Sink.decodeWithCharsetMixin";
+import Runnable_liftT from "./Runnable.liftT";
 
-const Runnable$decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
+const Runnable_decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = Sink$decodeWithCharsetMixin(
-      ReadonlyArray$toRunnable(),
+    const typedDecodeWithCharsetMixin = Sink_decodeWithCharsetMixin(
+      ReadonlyArray_toRunnable(),
     );
 
     return pipe(
       createInstanceFactory(typedDecodeWithCharsetMixin),
-      StatefulContainer$decodeWithCharset(Runnable$liftT),
+      StatefulContainer_decodeWithCharset(Runnable_liftT),
     );
   })();
 
-export default Runnable$decodeWithCharset;
+export default Runnable_decodeWithCharset;

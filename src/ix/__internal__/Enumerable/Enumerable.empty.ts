@@ -1,12 +1,12 @@
 import { Empty } from "../../../containers";
 import { EnumerableLike } from "../../../ix";
-import Enumerator$empty from "../Enumerator/Enumerator.empty";
-import Enumerable$create from "./Enumerable.create";
+import Enumerator_empty from "../Enumerator/Enumerator.empty";
+import Enumerable_create from "./Enumerable.create";
 
-const Enumerable$empty: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (
+const Enumerable_empty: Empty<EnumerableLike>["empty"] = /*@__PURE__*/ (
   <T>() =>
   () =>
-    Enumerable$create<T>(Enumerator$empty)
+    Enumerable_create<T>(Enumerator_empty)
 )();
 
-export default Enumerable$empty;
+export default Enumerable_empty;

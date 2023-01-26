@@ -1,7 +1,7 @@
 /// <reference types="./Container.repeat.d.ts" />
 import { isNone, alwaysTrue, isNumber } from '../../../functions.mjs';
 
-const Container$repeat = (repeat) => (predicate) => {
+const Container_repeat = (repeat) => (predicate) => {
     const shouldRepeat = isNone(predicate)
         ? alwaysTrue
         : isNumber(predicate)
@@ -10,4 +10,4 @@ const Container$repeat = (repeat) => (predicate) => {
     return (c) => repeat(c, shouldRepeat);
 };
 
-export { Container$repeat as default };
+export { Container_repeat as default };

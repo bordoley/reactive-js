@@ -18,14 +18,14 @@ import {
   SchedulerLike_shouldYield,
 } from "../../../scheduling";
 import { DisposableLike } from "../../../util";
-import Disposable$addIgnoringChildErrors from "../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_addIgnoringChildErrors from "../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import { getDelay } from "../Scheduler.options";
-import Scheduler$getCurrentTime from "../Scheduler/Scheduler.getCurrentTime";
-import Scheduler$isInContinuation from "../Scheduler/Scheduler.isInContinuation";
-import Scheduler$requestYield from "../Scheduler/Scheduler.requestYield";
-import Scheduler$shouldYield from "../Scheduler/Scheduler.shouldYield";
+import Scheduler_getCurrentTime from "../Scheduler/Scheduler.getCurrentTime";
+import Scheduler_isInContinuation from "../Scheduler/Scheduler.isInContinuation";
+import Scheduler_requestYield from "../Scheduler/Scheduler.requestYield";
+import Scheduler_shouldYield from "../Scheduler/Scheduler.shouldYield";
 
 type TProperties = {
   readonly priorityScheduler: PrioritySchedulerLike;
@@ -34,7 +34,7 @@ type TProperties = {
 
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   mix(
-    include(Disposable$mixin),
+    include(Disposable_mixin),
     function PrioritySchedulerDelegatingScheduler(
       instance: Pick<
         SchedulerLike,
@@ -48,7 +48,7 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       scheduler: PrioritySchedulerLike,
       priority: number,
     ): SchedulerLike {
-      init(Disposable$mixin, instance);
+      init(Disposable_mixin, instance);
 
       instance.priorityScheduler = scheduler;
       instance.priority = priority;
@@ -62,18 +62,18 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     {
       get [SchedulerLike_inContinuation]() {
         unsafeCast<TProperties>(this);
-        return Scheduler$isInContinuation(this.priorityScheduler);
+        return Scheduler_isInContinuation(this.priorityScheduler);
       },
       get [SchedulerLike_now]() {
         unsafeCast<TProperties>(this);
-        return Scheduler$getCurrentTime(this.priorityScheduler);
+        return Scheduler_getCurrentTime(this.priorityScheduler);
       },
       get [SchedulerLike_shouldYield]() {
         unsafeCast<TProperties>(this);
-        return Scheduler$shouldYield(this.priorityScheduler);
+        return Scheduler_shouldYield(this.priorityScheduler);
       },
       [SchedulerLike_requestYield](this: TProperties): void {
-        Scheduler$requestYield(this.priorityScheduler);
+        Scheduler_requestYield(this.priorityScheduler);
       },
       [SchedulerLike_schedule](
         this: TProperties & DisposableLike,
@@ -82,9 +82,9 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       ) {
         const delay = getDelay(options);
 
-        pipe(this, Disposable$addIgnoringChildErrors(continuation));
+        pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
-        if (!Disposable$isDisposed(continuation)) {
+        if (!Disposable_isDisposed(continuation)) {
           this.priorityScheduler[SchedulerLike_schedule](continuation, {
             priority: this.priority,
             delay,
@@ -95,9 +95,9 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   ),
 );
 
-const PriorityScheduler$toScheduler = (
+const PriorityScheduler_toScheduler = (
   priority: number,
 ): Function1<PrioritySchedulerLike, SchedulerLike> =>
   pipe(createSchedulerInstance, partial(priority));
 
-export default PriorityScheduler$toScheduler;
+export default PriorityScheduler_toScheduler;

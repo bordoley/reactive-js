@@ -8,11 +8,11 @@ import {
 } from "../../../__internal__/mixins";
 import { SideEffect1, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-export const Sink$forEachMixin: <T>() => Mixin2<
+export const Sink_forEachMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
   SideEffect1<T>
@@ -26,14 +26,14 @@ export const Sink$forEachMixin: <T>() => Mixin2<
 
   return returns(
     mix(
-      include(Disposable$delegatingMixin),
+      include(Disposable_delegatingMixin),
       function ForEachSink(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         effect: SideEffect1<T>,
       ): SinkLike<T> {
-        init(Disposable$delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
 
         instance[DelegatingSinkLike_delegate] = delegate;
         instance[ForEachSink_private_effect] = effect;
@@ -47,11 +47,11 @@ export const Sink$forEachMixin: <T>() => Mixin2<
       {
         [SinkLike_notify](this: TProperties, next: T) {
           this[ForEachSink_private_effect](next);
-          pipe(this[DelegatingSinkLike_delegate], Sink$notify(next));
+          pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
         },
       },
     ),
   );
 })();
 
-export default Sink$forEachMixin;
+export default Sink_forEachMixin;

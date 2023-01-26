@@ -2,16 +2,16 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Observer$getScheduler from './Observer.getScheduler.mjs';
-import Observer$mixin from './Observer.mixin.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Observer_getScheduler from './Observer.getScheduler.mjs';
+import Observer_mixin from './Observer.mixin.mjs';
 
-const Observer$createWithDelegate = 
+const Observer_createWithDelegate = 
 /*@__PURE__*/ (() => {
-    const typedObserverMixin = Observer$mixin();
-    return createInstanceFactory(mix(include(Disposable$mixin, typedObserverMixin), function DelegatingObserver(instance, observer) {
-        init(Disposable$mixin, instance);
-        init(typedObserverMixin, instance, Observer$getScheduler(observer));
+    const typedObserverMixin = Observer_mixin();
+    return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function DelegatingObserver(instance, observer) {
+        init(Disposable_mixin, instance);
+        init(typedObserverMixin, instance, Observer_getScheduler(observer));
         instance.delegate = observer;
         return instance;
     }, props({
@@ -23,4 +23,4 @@ const Observer$createWithDelegate =
     }));
 })();
 
-export { Observer$createWithDelegate as default };
+export { Observer_createWithDelegate as default };

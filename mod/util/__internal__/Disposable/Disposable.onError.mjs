@@ -1,9 +1,9 @@
 /// <reference types="./Disposable.onError.d.ts" />
 import { isSome } from '../../../functions.mjs';
-import Disposable$addDisposableOrTeardown from './Disposable.addDisposableOrTeardown.mjs';
+import Disposable_addDisposableOrTeardown from './Disposable.addDisposableOrTeardown.mjs';
 
-const Disposable$onError = (teardown) => disposable => {
-    Disposable$addDisposableOrTeardown(disposable, e => {
+const Disposable_onError = (teardown) => disposable => {
+    Disposable_addDisposableOrTeardown(disposable, e => {
         if (isSome(e)) {
             teardown.call(disposable, e);
         }
@@ -11,4 +11,4 @@ const Disposable$onError = (teardown) => disposable => {
     return disposable;
 };
 
-export { Disposable$onError as default };
+export { Disposable_onError as default };

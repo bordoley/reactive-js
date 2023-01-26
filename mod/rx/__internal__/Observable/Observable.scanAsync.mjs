@@ -1,7 +1,7 @@
 /// <reference types="./Observable.scanAsync.d.ts" />
-import HigherOrderObservable$scanAsync from '../HigherOrderObservable/HigherOrderObservable.scanAsync.mjs';
-import Observable$create from './Observable.create.mjs';
+import HigherOrderObservable_scanAsync from '../HigherOrderObservable/HigherOrderObservable.scanAsync.mjs';
+import Observable_create from './Observable.create.mjs';
 
-const Observable$scanAsync = HigherOrderObservable$scanAsync(Observable$create);
+const Observable_scanAsync = HigherOrderObservable_scanAsync(Observable_create);
 
-export { Observable$scanAsync as default };
+export { Observable_scanAsync as default };

@@ -24,14 +24,14 @@ import {
   SubjectLike,
   SubjectLike_publish,
 } from "../../../rx";
-import Dispatcher$dispatch from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch";
-import Disposable$addIgnoringChildErrors from "../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
-import Observer$getDispatcher from "../Observer/Observer.getDispatcher";
+import Dispatcher_dispatch from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch";
+import Disposable_addIgnoringChildErrors from "../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
+import Observer_getDispatcher from "../Observer/Observer.getDispatcher";
 
-const Subject$create: <T>(options?: { replay?: number }) => SubjectLike<T> =
+const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
       readonly [MulticastObservableLike_replay]: number;
@@ -41,7 +41,7 @@ const Subject$create: <T>(options?: { replay?: number }) => SubjectLike<T> =
 
     const createSubjectInstance = createInstanceFactory(
       mix(
-        include(Disposable$mixin),
+        include(Disposable_mixin),
         function Subject(
           instance: Pick<
             SubjectLike<T>,
@@ -54,7 +54,7 @@ const Subject$create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             Mutable<TProperties>,
           replay: number,
         ): SubjectLike<T> {
-          init(Disposable$mixin, instance);
+          init(Disposable_mixin, instance);
 
           instance[MulticastObservableLike_replay] = replay;
           instance.observers = newInstance<Set<ObserverLike>>(Set);
@@ -77,7 +77,7 @@ const Subject$create: <T>(options?: { replay?: number }) => SubjectLike<T> =
           },
 
           [SubjectLike_publish](this: TProperties & SubjectLike<T>, next: T) {
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
               const { replayed } = this;
 
               const replay = this[MulticastObservableLike_replay];
@@ -92,8 +92,8 @@ const Subject$create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               for (const observer of this.observers) {
                 pipe(
                   observer,
-                  Observer$getDispatcher,
-                  Dispatcher$dispatch(next),
+                  Observer_getDispatcher,
+                  Dispatcher_dispatch(next),
                 );
               }
             }
@@ -103,28 +103,28 @@ const Subject$create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             this: TProperties & SubjectLike,
             observer: ObserverLike<T>,
           ) {
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
               const { observers } = this;
               observers.add(observer);
 
               pipe(
                 observer,
-                Disposable$onDisposed(_ => {
+                Disposable_onDisposed(_ => {
                   observers.delete(observer);
                 }),
               );
             }
 
-            const dispatcher = Observer$getDispatcher(observer);
+            const dispatcher = Observer_getDispatcher(observer);
 
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
             for (const next of this.replayed) {
-              pipe(dispatcher, Dispatcher$dispatch(next));
+              pipe(dispatcher, Dispatcher_dispatch(next));
             }
 
-            pipe(this, Disposable$addIgnoringChildErrors(dispatcher));
+            pipe(this, Disposable_addIgnoringChildErrors(dispatcher));
           },
         },
       ),
@@ -138,4 +138,4 @@ const Subject$create: <T>(options?: { replay?: number }) => SubjectLike<T> =
     };
   })();
 
-export default Subject$create;
+export default Subject_create;

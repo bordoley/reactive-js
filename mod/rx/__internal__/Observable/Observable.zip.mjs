@@ -1,51 +1,51 @@
 /// <reference types="./Observable.zip.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import Container$keepType from '../../../containers/__internal__/Container/Container.keepType.mjs';
-import ReadonlyArray$every from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.every.mjs';
-import ReadonlyArray$forEach from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.forEach.mjs';
-import ReadonlyArray$keep from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.keep.mjs';
-import ReadonlyArray$map from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map.mjs';
-import ReadonlyArray$some from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.some.mjs';
+import Container_keepType from '../../../containers/__internal__/Container/Container.keepType.mjs';
+import ReadonlyArray_every from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.every.mjs';
+import ReadonlyArray_forEach from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.forEach.mjs';
+import ReadonlyArray_keep from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.keep.mjs';
+import ReadonlyArray_map from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map.mjs';
+import ReadonlyArray_some from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.some.mjs';
 import { compose, isTrue, pipe, none, getOrRaise, isSome } from '../../../functions.mjs';
-import Enumerable$enumerate from '../../../ix/__internal__/Enumerable/Enumerable.enumerate.mjs';
-import Enumerable$toRunnableObservable from '../../../ix/__internal__/Enumerable/Enumerable.toRunnableObservable.mjs';
-import Enumerable$zip from '../../../ix/__internal__/Enumerable/Enumerable.zip.mjs';
-import Enumerator$getCurrent from '../../../ix/__internal__/Enumerator/Enumerator.getCurrent.mjs';
-import Enumerator$hasCurrent from '../../../ix/__internal__/Enumerator/Enumerator.hasCurrent.mjs';
-import Enumerator$move from '../../../ix/__internal__/Enumerator/Enumerator.move.mjs';
+import Enumerable_enumerate from '../../../ix/__internal__/Enumerable/Enumerable.enumerate.mjs';
+import Enumerable_toRunnableObservable from '../../../ix/__internal__/Enumerable/Enumerable.toRunnableObservable.mjs';
+import Enumerable_zip from '../../../ix/__internal__/Enumerable/Enumerable.zip.mjs';
+import Enumerator_getCurrent from '../../../ix/__internal__/Enumerator/Enumerator.getCurrent.mjs';
+import Enumerator_hasCurrent from '../../../ix/__internal__/Enumerator/Enumerator.hasCurrent.mjs';
+import Enumerator_move from '../../../ix/__internal__/Enumerator/Enumerator.move.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import EnumeratorSink$create from '../EnumeratorSink/EnumeratorSink.create.mjs';
-import Observer$getScheduler from '../Observer/Observer.getScheduler.mjs';
-import Observer$mixin from '../Observer/Observer.mixin.mjs';
-import RunnableObservable$create from '../RunnableObservable/RunnableObservable.create.mjs';
-import Sink$notify from '../Sink/Sink.notify.mjs';
-import Sink$sourceFrom from '../Sink/Sink.sourceFrom.mjs';
-import Observable$allAreEnumerable from './Observable.allAreEnumerable.mjs';
-import Observable$allAreRunnable from './Observable.allAreRunnable.mjs';
-import Observable$create from './Observable.create.mjs';
-import Observable$isEnumerable from './Observable.isEnumerable.mjs';
-import Observable$toEnumerable from './Observable.toEnumerable.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import EnumeratorSink_create from '../EnumeratorSink/EnumeratorSink.create.mjs';
+import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
+import Observer_mixin from '../Observer/Observer.mixin.mjs';
+import RunnableObservable_create from '../RunnableObservable/RunnableObservable.create.mjs';
+import Sink_notify from '../Sink/Sink.notify.mjs';
+import Sink_sourceFrom from '../Sink/Sink.sourceFrom.mjs';
+import Observable_allAreEnumerable from './Observable.allAreEnumerable.mjs';
+import Observable_allAreRunnable from './Observable.allAreRunnable.mjs';
+import Observable_create from './Observable.create.mjs';
+import Observable_isEnumerable from './Observable.isEnumerable.mjs';
+import Observable_toEnumerable from './Observable.toEnumerable.mjs';
 
-const Observable$zip = /*@__PURE__*/ (() => {
-    const typedObserverMixin = Observer$mixin();
-    const shouldEmit = compose(ReadonlyArray$map((x) => Enumerator$hasCurrent(x) || Enumerator$move(x)), ReadonlyArray$every(isTrue));
-    const shouldComplete = compose(ReadonlyArray$forEach(Enumerator$move), ReadonlyArray$some(Disposable$isDisposed));
-    const createZipObserver = createInstanceFactory(mix(include(Disposable$mixin, typedObserverMixin), function ZipObserver(instance, delegate, enumerators, sinkEnumerator) {
-        init(Disposable$mixin, instance);
-        init(typedObserverMixin, instance, Observer$getScheduler(delegate));
+const Observable_zip = /*@__PURE__*/ (() => {
+    const typedObserverMixin = Observer_mixin();
+    const shouldEmit = compose(ReadonlyArray_map((x) => Enumerator_hasCurrent(x) || Enumerator_move(x)), ReadonlyArray_every(isTrue));
+    const shouldComplete = compose(ReadonlyArray_forEach(Enumerator_move), ReadonlyArray_some(Disposable_isDisposed));
+    const createZipObserver = createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function ZipObserver(instance, delegate, enumerators, sinkEnumerator) {
+        init(Disposable_mixin, instance);
+        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
         instance.delegate = delegate;
         instance.sinkEnumerator = sinkEnumerator;
         instance.enumerators = enumerators;
-        pipe(instance, Disposable$onComplete(() => {
-            if (Disposable$isDisposed(sinkEnumerator) ||
-                (!Enumerator$hasCurrent(sinkEnumerator) &&
-                    !Enumerator$move(sinkEnumerator))) {
-                pipe(delegate, Disposable$dispose());
+        pipe(instance, Disposable_onComplete(() => {
+            if (Disposable_isDisposed(sinkEnumerator) ||
+                (!Enumerator_hasCurrent(sinkEnumerator) &&
+                    !Enumerator_move(sinkEnumerator))) {
+                pipe(delegate, Disposable_dispose());
             }
         }));
         return instance;
@@ -56,44 +56,44 @@ const Observable$zip = /*@__PURE__*/ (() => {
     }), {
         [SinkLike_notify](next) {
             const { sinkEnumerator, enumerators } = this;
-            if (Disposable$isDisposed(this)) {
+            if (Disposable_isDisposed(this)) {
                 return;
             }
-            pipe(sinkEnumerator, Sink$notify(next));
+            pipe(sinkEnumerator, Sink_notify(next));
             if (!shouldEmit(enumerators)) {
                 return;
             }
-            const zippedNext = pipe(enumerators, ReadonlyArray$map(Enumerator$getCurrent));
-            pipe(this.delegate, Sink$notify(zippedNext));
+            const zippedNext = pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent));
+            pipe(this.delegate, Sink_notify(zippedNext));
             if (shouldComplete(enumerators)) {
-                pipe(this, Disposable$dispose());
+                pipe(this, Disposable_dispose());
             }
         },
     }));
     const onSink = (observables) => (observer) => {
         const enumerators = [];
         for (const next of observables) {
-            if (Observable$isEnumerable(next)) {
-                const enumerator = pipe(next, Observable$toEnumerable(), getOrRaise(), Enumerable$enumerate(), Disposable$addTo(observer));
-                Enumerator$move(enumerator);
+            if (Observable_isEnumerable(next)) {
+                const enumerator = pipe(next, Observable_toEnumerable(), getOrRaise(), Enumerable_enumerate(), Disposable_addTo(observer));
+                Enumerator_move(enumerator);
                 enumerators.push(enumerator);
             }
             else {
-                const enumerator = pipe(EnumeratorSink$create(), Disposable$addTo(observer));
+                const enumerator = pipe(EnumeratorSink_create(), Disposable_addTo(observer));
                 enumerators.push(enumerator);
-                pipe(createZipObserver(observer, enumerators, enumerator), Disposable$addTo(observer), Sink$sourceFrom(next));
+                pipe(createZipObserver(observer, enumerators, enumerator), Disposable_addTo(observer), Sink_sourceFrom(next));
             }
         }
     };
     return (...observables) => {
-        const isEnumerable = Observable$allAreEnumerable(observables);
-        const isRunnable = Observable$allAreRunnable(observables);
+        const isEnumerable = Observable_allAreEnumerable(observables);
+        const isRunnable = Observable_allAreRunnable(observables);
         return isEnumerable
-            ? pipe(observables, ReadonlyArray$map(Observable$toEnumerable()), Container$keepType({ keep: ReadonlyArray$keep }, isSome), enumerables => Enumerable$zip(...enumerables), Enumerable$toRunnableObservable())
+            ? pipe(observables, ReadonlyArray_map(Observable_toEnumerable()), Container_keepType({ keep: ReadonlyArray_keep }, isSome), enumerables => Enumerable_zip(...enumerables), Enumerable_toRunnableObservable())
             : isRunnable
-                ? RunnableObservable$create(onSink(observables))
-                : Observable$create(onSink(observables));
+                ? RunnableObservable_create(onSink(observables))
+                : Observable_create(onSink(observables));
     };
 })();
 
-export { Observable$zip as default };
+export { Observable_zip as default };

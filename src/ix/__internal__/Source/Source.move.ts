@@ -1,6 +1,6 @@
 import { SourceLike, SourceLike_move } from "../../../ix";
 
-const Source$move = <
+const Source_move = <
   TSource extends {
     [SourceLike_move](): void;
   } = SourceLike,
@@ -11,4 +11,4 @@ const Source$move = <
   return source;
 };
 
-export default Source$move;
+export default Source_move;

@@ -14,9 +14,9 @@ import {
   SourceLike_move,
   ToEnumerable,
 } from "../../../ix";
-import Enumerable$create from "../../../ix/__internal__/Enumerable/Enumerable.create";
-import Enumerable$empty from "../../../ix/__internal__/Enumerable/Enumerable.empty";
-import MutableEnumerator$mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
+import Enumerable_create from "../../../ix/__internal__/Enumerable/Enumerable.create";
+import Enumerable_empty from "../../../ix/__internal__/Enumerable/Enumerable.empty";
+import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
 import {
@@ -28,22 +28,22 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling";
-import Continuation$run from "../../../scheduling/__internal__/Continuation/Continuation.run";
-import Scheduler$isInContinuation from "../../../scheduling/__internal__/Scheduler/Scheduler.isInContinuation";
+import Continuation_run from "../../../scheduling/__internal__/Continuation/Continuation.run";
+import Scheduler_isInContinuation from "../../../scheduling/__internal__/Scheduler/Scheduler.isInContinuation";
 import { DisposableLike } from "../../../util";
-import Disposable$add from "../../../util/__internal__/Disposable/Disposable.add";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
-import Observable$isEnumerable from "./Observable.isEnumerable";
+import Disposable_add from "../../../util/__internal__/Disposable/Disposable.add";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
+import Observable_isEnumerable from "./Observable.isEnumerable";
 
-const Observable$toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
+const Observable_toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
-    const typedMutableEnumeratorMixin = MutableEnumerator$mixin<T>();
-    const typedObserverMixin = Observer$mixin<T>();
+    const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
+    const typedObserverMixin = Observer_mixin<T>();
 
     type TEnumeratorSchedulerProperties = {
       [SchedulerLike_inContinuation]: boolean;
@@ -54,7 +54,7 @@ const Observable$toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
     const createEnumeratorScheduler = createInstanceFactory(
       mix(
-        include(Disposable$mixin, typedMutableEnumeratorMixin),
+        include(Disposable_mixin, typedMutableEnumeratorMixin),
         function EnumeratorScheduler(
           instance: Pick<
             SchedulerLike & SourceLike,
@@ -66,7 +66,7 @@ const Observable$toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
           > &
             Mutable<TEnumeratorSchedulerProperties>,
         ): EnumeratorScheduler {
-          init(Disposable$mixin, instance);
+          init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
           instance.continuations = [];
@@ -81,7 +81,7 @@ const Observable$toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
           [SchedulerLike_now]: 0,
           get [SchedulerLike_shouldYield](): boolean {
             unsafeCast<TEnumeratorSchedulerProperties>(this);
-            return Scheduler$isInContinuation(this);
+            return Scheduler_isInContinuation(this);
           },
           [SchedulerLike_requestYield](): void {
             // No-Op: We yield whenever the continuation is running.
@@ -89,16 +89,16 @@ const Observable$toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
           [SourceLike_move](
             this: TEnumeratorSchedulerProperties & MutableEnumeratorLike<T>,
           ) {
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
               const { continuations } = this;
 
               const continuation = continuations.shift();
               if (isSome(continuation)) {
                 this[SchedulerLike_inContinuation] = true;
-                Continuation$run(continuation);
+                Continuation_run(continuation);
                 this[SchedulerLike_inContinuation] = false;
               } else {
-                pipe(this, Disposable$dispose());
+                pipe(this, Disposable_dispose());
               }
             }
           },
@@ -107,9 +107,9 @@ const Observable$toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
             continuation: ContinuationLike,
             _?: { readonly delay?: number },
           ): void {
-            pipe(this, Disposable$add(continuation));
+            pipe(this, Disposable_add(continuation));
 
-            if (!Disposable$isDisposed(continuation)) {
+            if (!Disposable_isDisposed(continuation)) {
               this.continuations.push(continuation);
             }
           },
@@ -123,13 +123,13 @@ const Observable$toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
     const createEnumeratorObserver = createInstanceFactory(
       mix(
-        include(Disposable$mixin, typedObserverMixin),
+        include(Disposable_mixin, typedObserverMixin),
         function EnumeratorObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
             Mutable<TEnumeratorObserverProperties>,
           enumerator: EnumeratorScheduler,
         ): ObserverLike<T> {
-          init(Disposable$mixin, instance);
+          init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, enumerator);
 
           instance.enumerator = enumerator;
@@ -149,19 +149,19 @@ const Observable$toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
     return () =>
       (obs: ObservableLike<T>): EnumerableLike<T> =>
-        Observable$isEnumerable(obs)
-          ? Enumerable$create(() => {
+        Observable_isEnumerable(obs)
+          ? Enumerable_create(() => {
               const scheduler = createEnumeratorScheduler();
 
               pipe(
                 createEnumeratorObserver(scheduler),
-                Disposable$addTo(scheduler),
-                Sink$sourceFrom(obs),
+                Disposable_addTo(scheduler),
+                Sink_sourceFrom(obs),
               );
 
               return scheduler;
             })
-          : Enumerable$empty();
+          : Enumerable_empty();
   })();
 
-export default Observable$toEnumerable;
+export default Observable_toEnumerable;

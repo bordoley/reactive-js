@@ -7,48 +7,48 @@ import {
   Zip,
 } from "../containers";
 
-import Container$compute from "./__internal__/Container/Container.compute";
-import Container$concatWith from "./__internal__/Container/Container.concatWith";
-import Container$contains from "./__internal__/Container/Container.contains";
-import Container$encodeUtf8 from "./__internal__/Container/Container.encodeUtf8";
-import Container$endWith from "./__internal__/Container/Container.endWith";
-import Container$fromOption from "./__internal__/Container/Container.fromOption";
-import Container$genMap from "./__internal__/Container/Container.genMap";
-import Container$ignoreElements from "./__internal__/Container/Container.ignoreElements";
-import Container$keepType from "./__internal__/Container/Container.keepType";
-import Container$mapTo from "./__internal__/Container/Container.mapTo";
-import Container$noneSatisfy from "./__internal__/Container/Container.noneSatisfy";
-import Container$startWith from "./__internal__/Container/Container.startWith";
-import Container$throws from "./__internal__/Container/Container.throws";
-import Container$zipWith from "./__internal__/Container/Container.zipWith";
-import Container$concatMap from "./__internal__/Container/ContainerLIke.concatMap";
+import Container_compute from "./__internal__/Container/Container.compute";
+import Container_concatWith from "./__internal__/Container/Container.concatWith";
+import Container_contains from "./__internal__/Container/Container.contains";
+import Container_encodeUtf8 from "./__internal__/Container/Container.encodeUtf8";
+import Container_endWith from "./__internal__/Container/Container.endWith";
+import Container_fromOption from "./__internal__/Container/Container.fromOption";
+import Container_genMap from "./__internal__/Container/Container.genMap";
+import Container_ignoreElements from "./__internal__/Container/Container.ignoreElements";
+import Container_keepType from "./__internal__/Container/Container.keepType";
+import Container_mapTo from "./__internal__/Container/Container.mapTo";
+import Container_noneSatisfy from "./__internal__/Container/Container.noneSatisfy";
+import Container_startWith from "./__internal__/Container/Container.startWith";
+import Container_throws from "./__internal__/Container/Container.throws";
+import Container_zipWith from "./__internal__/Container/Container.zipWith";
+import Container_concatMap from "./__internal__/Container/ContainerLIke.concatMap";
 
-export const compute = Container$compute;
-export const concatMap = Container$concatMap;
-export const concatWith = Container$concatWith;
-export const contains = Container$contains;
-export const encodeUtf8 = Container$encodeUtf8;
+export const compute = Container_compute;
+export const concatMap = Container_concatMap;
+export const concatWith = Container_concatWith;
+export const contains = Container_contains;
+export const encodeUtf8 = Container_encodeUtf8;
 
 export const endWith: <C extends ContainerLike, T>(
   m: Concat<C> & FromArray<C, never>,
   value: T,
   ...values: readonly T[]
-) => ContainerOperator<C, T, T> = Container$endWith;
+) => ContainerOperator<C, T, T> = Container_endWith;
 
-export const fromOption = Container$fromOption;
-export const genMap = Container$genMap;
-export const ignoreElements = Container$ignoreElements;
-export const keepType = Container$keepType;
-export const mapTo = Container$mapTo;
-export const noneSatisfy = Container$noneSatisfy;
+export const fromOption = Container_fromOption;
+export const genMap = Container_genMap;
+export const ignoreElements = Container_ignoreElements;
+export const keepType = Container_keepType;
+export const mapTo = Container_mapTo;
+export const noneSatisfy = Container_noneSatisfy;
 
 export const startWith: <C extends ContainerLike, T>(
   m: Concat<C> & FromArray<C, never>,
   value: T,
   ...values: readonly T[]
-) => ContainerOperator<C, T, T> = Container$startWith;
+) => ContainerOperator<C, T, T> = Container_startWith;
 
-export const throws = Container$throws;
+export const throws = Container_throws;
 
 interface ZipWith {
   <C extends ContainerLike, TA, TB>(
@@ -112,4 +112,4 @@ interface ZipWith {
     i: ContainerOf<C, TI>,
   ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
-export const zipWith: ZipWith = Container$zipWith;
+export const zipWith: ZipWith = Container_zipWith;

@@ -1,3 +1,3 @@
 import { SinkLike } from "../../../rx.js";
-declare const DelegateSink$create: <T>(delegate: SinkLike<T>) => SinkLike<T>;
-export { DelegateSink$create as default };
+declare const DelegateSink_create: <T>(delegate: SinkLike<T>) => SinkLike<T>;
+export { DelegateSink_create as default };

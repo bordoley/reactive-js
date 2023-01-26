@@ -1,15 +1,15 @@
 /// <reference types="./Observable.retry.d.ts" />
 import { isSome, isNone } from '../../../functions.mjs';
-import Observable$repeatOrRetry from './Observable.repeatOrRetry.mjs';
+import Observable_repeatOrRetry from './Observable.repeatOrRetry.mjs';
 
-const Observable$retry = /*@__PURE__*/ (() => {
+const Observable_retry = /*@__PURE__*/ (() => {
     const defaultRetryPredicate = (_, error) => isSome(error);
     return (predicate) => {
         const retryPredicate = isNone(predicate)
             ? defaultRetryPredicate
             : (count, error) => isSome(error) && predicate(count, error);
-        return Observable$repeatOrRetry(retryPredicate);
+        return Observable_repeatOrRetry(retryPredicate);
     };
 })();
 
-export { Observable$retry as default };
+export { Observable_retry as default };

@@ -17,14 +17,14 @@ import {
   SchedulerLike_shouldYield,
 } from "../../../scheduling";
 import { DisposableLike } from "../../../util";
-import Disposable$addIgnoringChildErrors from "../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$create from "../../../util/__internal__/Disposable/Disposable.create";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
-import Continuation$run from "../Continuation/Continuation.run";
+import Disposable_addIgnoringChildErrors from "../../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_create from "../../../util/__internal__/Disposable/Disposable.create";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
+import Continuation_run from "../Continuation/Continuation.run";
 import { getDelay } from "../Scheduler.options";
 import getCurrentTime from "./Scheduler.getCurrentTime";
 import isInContinuation from "./Scheduler.isInContinuation";
@@ -56,9 +56,9 @@ const scheduleImmediateWithSetImmediate = (
   continuation: ContinuationLike,
 ) => {
   const disposable = pipe(
-    Disposable$create(),
-    Disposable$addTo(continuation),
-    Disposable$onDisposed(() => clearImmediate(immmediate)),
+    Disposable_create(),
+    Disposable_addTo(continuation),
+    Disposable_onDisposed(() => clearImmediate(immmediate)),
   );
   const immmediate: ReturnType<typeof setImmediate> = setImmediate(
     runContinuation,
@@ -74,9 +74,9 @@ const scheduleDelayed = (
   delay: number,
 ) => {
   const disposable = pipe(
-    Disposable$create(),
-    Disposable$addTo(continuation),
-    Disposable$onDisposed(_ => clearTimeout(timeout)),
+    Disposable_create(),
+    Disposable_addTo(continuation),
+    Disposable_onDisposed(_ => clearTimeout(timeout)),
   );
 
   const timeout: ReturnType<typeof setTimeout> = setTimeout(
@@ -105,10 +105,10 @@ const runContinuation = (
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
   // clear the immediateOrTimer disposable
-  pipe(immmediateOrTimerDisposable, Disposable$dispose());
+  pipe(immmediateOrTimerDisposable, Disposable_dispose());
   scheduler.startTime = getCurrentTime(scheduler);
   scheduler[SchedulerLike_inContinuation] = true;
-  Continuation$run(continuation);
+  Continuation_run(continuation);
   scheduler[SchedulerLike_inContinuation] = false;
 };
 
@@ -121,7 +121,7 @@ type TProperties = {
 
 const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   mix(
-    include(Disposable$mixin),
+    include(Disposable_mixin),
     function HostScheduler(
       instance: Pick<
         SchedulerLike,
@@ -133,7 +133,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         Mutable<TProperties>,
       yieldInterval: number,
     ): SchedulerLike {
-      init(Disposable$mixin, instance);
+      init(Disposable_mixin, instance);
 
       instance.yieldInterval = yieldInterval;
 
@@ -186,9 +186,9 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       ) {
         const delay = getDelay(options);
 
-        pipe(this, Disposable$addIgnoringChildErrors(continuation));
+        pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
-        const continuationIsDisposed = Disposable$isDisposed(continuation);
+        const continuationIsDisposed = Disposable_isDisposed(continuation);
         if (!continuationIsDisposed && delay > 0) {
           scheduleDelayed(this, continuation, delay);
         } else if (!continuationIsDisposed) {
@@ -199,7 +199,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   ),
 );
 
-const Scheduler$createHostScheduler = (
+const Scheduler_createHostScheduler = (
   options: {
     readonly yieldInterval?: number;
   } = {},
@@ -208,4 +208,4 @@ const Scheduler$createHostScheduler = (
   return createHostSchedulerInstance(yieldInterval);
 };
 
-export default Scheduler$createHostScheduler;
+export default Scheduler_createHostScheduler;

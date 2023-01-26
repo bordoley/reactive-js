@@ -10,9 +10,9 @@ import {
   ReactiveContainerLike_sinkInto,
   RunnableObservableLike,
 } from "../../../rx";
-import Sink$sourceFrom from "../Sink/Sink.sourceFrom";
+import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
 
-const RunnableObservable$lift: Lift<RunnableObservableLike, TReactive>["lift"] =
+const RunnableObservable_lift: Lift<RunnableObservableLike, TReactive>["lift"] =
   /*@__PURE__*/ (() => {
     class LiftedRunnableObservable<TIn, TOut>
       implements RunnableObservableLike<TOut>
@@ -29,7 +29,7 @@ const RunnableObservable$lift: Lift<RunnableObservableLike, TReactive>["lift"] =
       ) {}
 
       [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-        pipeUnsafe(observer, ...this.operators, Sink$sourceFrom(this.source));
+        pipeUnsafe(observer, ...this.operators, Sink_sourceFrom(this.source));
       }
     }
 
@@ -53,4 +53,4 @@ const RunnableObservable$lift: Lift<RunnableObservableLike, TReactive>["lift"] =
       };
   })();
 
-export default RunnableObservable$lift;
+export default RunnableObservable_lift;

@@ -1,16 +1,16 @@
 /// <reference types="./Observable.toPromise.d.ts" />
 import { newInstance, none, pipe, isSome, error } from '../../../functions.mjs';
-import Disposable$onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
-import Observable$forEach from './Observable.forEach.mjs';
-import Observable$subscribe from './Observable.subscribe.mjs';
+import Disposable_onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
+import Observable_forEach from './Observable.forEach.mjs';
+import Observable_subscribe from './Observable.subscribe.mjs';
 
-const Observable$toPromise = (scheduler) => (observable) => newInstance(Promise, (resolve, reject) => {
+const Observable_toPromise = (scheduler) => (observable) => newInstance(Promise, (resolve, reject) => {
     let result = none;
     let hasResult = false;
-    pipe(observable, Observable$forEach(next => {
+    pipe(observable, Observable_forEach(next => {
         hasResult = true;
         result = next;
-    }), Observable$subscribe(scheduler), Disposable$onDisposed(err => {
+    }), Observable_subscribe(scheduler), Disposable_onDisposed(err => {
         if (isSome(err)) {
             reject(err);
         }
@@ -23,4 +23,4 @@ const Observable$toPromise = (scheduler) => (observable) => newInstance(Promise,
     }));
 });
 
-export { Observable$toPromise as default };
+export { Observable_toPromise as default };

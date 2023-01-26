@@ -1,6 +1,6 @@
 /// <reference types="./EnumerableObservable.create.d.ts" />
-import Observable$create from '../Observable/Observable.create.mjs';
+import Observable_create from '../Observable/Observable.create.mjs';
 
-const EnumerableObservable$create = (f) => Observable$create(f, true, true);
+const EnumerableObservable_create = (f) => Observable_create(f, true, true);
 
-export { EnumerableObservable$create as default };
+export { EnumerableObservable_create as default };

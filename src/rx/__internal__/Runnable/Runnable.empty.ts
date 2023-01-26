@@ -1,12 +1,12 @@
 import { Empty } from "../../../containers";
 import { pipe } from "../../../functions";
 import { RunnableLike } from "../../../rx";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Runnable$create from "./Runnable.create";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Runnable_create from "./Runnable.create";
 
-const Runnable$empty: Empty<RunnableLike>["empty"] = <T>() =>
-  Runnable$create<T>(sink => {
-    pipe(sink, Disposable$dispose());
+const Runnable_empty: Empty<RunnableLike>["empty"] = <T>() =>
+  Runnable_create<T>(sink => {
+    pipe(sink, Disposable_dispose());
   });
 
-export default Runnable$empty;
+export default Runnable_empty;

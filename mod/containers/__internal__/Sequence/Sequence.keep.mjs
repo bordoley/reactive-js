@@ -2,7 +2,7 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome } from '../../../functions.mjs';
 
-const Sequence$keep = /*@__PURE__*/ (() => {
+const Sequence_keep = /*@__PURE__*/ (() => {
     const _keep = (predicate, seq) => () => {
         let result = seq();
         while (true) {
@@ -25,4 +25,4 @@ const Sequence$keep = /*@__PURE__*/ (() => {
     return (predicate) => (seq) => _keep(predicate, seq);
 })();
 
-export { Sequence$keep as default };
+export { Sequence_keep as default };

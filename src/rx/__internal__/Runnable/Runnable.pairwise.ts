@@ -2,19 +2,19 @@ import { createInstanceFactory } from "../../../__internal__/mixins";
 import { Pairwise } from "../../../containers";
 import { pipe, returns } from "../../../functions";
 import { RunnableLike } from "../../../rx";
-import Sink$pairwiseMixin from "../Sink/Sink.pairwiseMixin";
-import Runnable$lift from "./Runnable.lift";
+import Sink_pairwiseMixin from "../Sink/Sink.pairwiseMixin";
+import Runnable_lift from "./Runnable.lift";
 
-const Runnable$pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
+const Runnable_pairwise: Pairwise<RunnableLike>["pairwise"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const typedPairwiseSinkMixin = Sink$pairwiseMixin<T>();
+  const typedPairwiseSinkMixin = Sink_pairwiseMixin<T>();
 
   return pipe(
     createInstanceFactory(typedPairwiseSinkMixin),
-    Runnable$lift,
+    Runnable_lift,
     returns,
   );
 })();
 
-export default Runnable$pairwise;
+export default Runnable_pairwise;

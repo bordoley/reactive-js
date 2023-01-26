@@ -7,9 +7,9 @@ import {
   TReactive,
 } from "../../../containers/__internal__/containers.internal";
 import { Factory, Function3, Reducer, partial, pipe } from "../../../functions";
-import StatefulContainer$lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift";
 
-const StatefulContainer$reduce =
+const StatefulContainer_reduce =
   <
     C extends StatefulContainerLike,
     T,
@@ -27,6 +27,6 @@ const StatefulContainer$reduce =
     >,
   ) =>
   (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-    pipe(operator, partial(reducer, initialValue), StatefulContainer$lift(m));
+    pipe(operator, partial(reducer, initialValue), StatefulContainer_lift(m));
 
-export default StatefulContainer$reduce;
+export default StatefulContainer_reduce;

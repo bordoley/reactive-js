@@ -2,28 +2,28 @@
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { newInstance, pipe, isEmpty, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable$addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable$onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import ReactiveContainer$sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
+import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink$notify from './Sink.notify.mjs';
+import Sink_notify from './Sink.notify.mjs';
 
-const Sink$decodeWithCharsetMixin = (fromArray) => {
+const Sink_decodeWithCharsetMixin = (fromArray) => {
     const DecodeWithCharsetSink_private_textDecoder = Symbol("DecodeWithCharsetSink_private_textDecoder");
-    return mix(include(Disposable$mixin), function DecodeWithCharsetSink(instance, delegate, charset) {
-        init(Disposable$mixin, instance);
+    return mix(include(Disposable_mixin), function DecodeWithCharsetSink(instance, delegate, charset) {
+        init(Disposable_mixin, instance);
         const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
         instance[DecodeWithCharsetSink_private_textDecoder] = textDecoder;
         instance[DelegatingSinkLike_delegate] = delegate;
-        pipe(instance, Disposable$addTo(delegate), Disposable$onComplete(() => {
+        pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             const data = textDecoder.decode();
             if (!isEmpty(data)) {
-                pipe([data], fromArray, ReactiveContainer$sinkInto(delegate));
+                pipe([data], fromArray, ReactiveContainer_sinkInto(delegate));
             }
             else {
-                pipe(delegate, Disposable$dispose());
+                pipe(delegate, Disposable_dispose());
             }
         }));
         return instance;
@@ -34,10 +34,10 @@ const Sink$decodeWithCharsetMixin = (fromArray) => {
         [SinkLike_notify](next) {
             const data = this[DecodeWithCharsetSink_private_textDecoder].decode(next, { stream: true });
             if (!isEmpty(data)) {
-                pipe(this[DelegatingSinkLike_delegate], Sink$notify(data));
+                pipe(this[DelegatingSinkLike_delegate], Sink_notify(data));
             }
         },
     });
 };
 
-export { Sink$decodeWithCharsetMixin as default };
+export { Sink_decodeWithCharsetMixin as default };

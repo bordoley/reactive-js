@@ -2,9 +2,9 @@
 import { mix, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, unsafeCast, raise, returns } from '../../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
-import Disposable$isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
 
-const MutableEnumerator$mixin = 
+const MutableEnumerator_mixin = 
 /*@__PURE__*/ (() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");
     const Enumerator_private_hasCurrent = Symbol("Enumerator_private_hasCurrent");
@@ -23,17 +23,17 @@ const MutableEnumerator$mixin =
         },
         set [EnumeratorLike_current](v) {
             unsafeCast(this);
-            if (!Disposable$isDisposed(this)) {
+            if (!Disposable_isDisposed(this)) {
                 this[Enumerator_private_current] = v;
                 this[Enumerator_private_hasCurrent] = true;
             }
         },
         get [EnumeratorLike_hasCurrent]() {
             unsafeCast(this);
-            return (!Disposable$isDisposed(this) &&
+            return (!Disposable_isDisposed(this) &&
                 this[Enumerator_private_hasCurrent]);
         },
     }), returns);
 })();
 
-export { MutableEnumerator$mixin as default };
+export { MutableEnumerator_mixin as default };

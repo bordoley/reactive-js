@@ -1,4 +1,4 @@
 import { Concat } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable$merge: Concat<ObservableLike>["concat"];
-export { Observable$merge as default };
+declare const Observable_merge: Concat<ObservableLike>["concat"];
+export { Observable_merge as default };

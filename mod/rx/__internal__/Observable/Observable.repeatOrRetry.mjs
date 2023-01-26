@@ -1,16 +1,16 @@
 /// <reference types="./Observable.repeatOrRetry.d.ts" />
 import { error, pipe, partial } from '../../../functions.mjs';
-import Disposable$addToIgnoringChildErrors from '../../../util/__internal__/Disposable/Disposable.addToIgnoringChildErrors.mjs';
-import Disposable$dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable$onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
-import Observer$createWithDelegate from '../Observer/Observer.createWithDelegate.mjs';
-import Observer$getScheduler from '../Observer/Observer.getScheduler.mjs';
-import Sink$notifySink from '../Sink/Sink.notifySink.mjs';
-import Observable$forEach from './Observable.forEach.mjs';
-import Observable$lift from './Observable.lift.mjs';
-import Observable$subscribe from './Observable.subscribe.mjs';
+import Disposable_addToIgnoringChildErrors from '../../../util/__internal__/Disposable/Disposable.addToIgnoringChildErrors.mjs';
+import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
+import Disposable_onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
+import Observer_createWithDelegate from '../Observer/Observer.createWithDelegate.mjs';
+import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
+import Sink_notifySink from '../Sink/Sink.notifySink.mjs';
+import Observable_forEach from './Observable.forEach.mjs';
+import Observable_lift from './Observable.lift.mjs';
+import Observable_subscribe from './Observable.subscribe.mjs';
 
-const Observable$repeatOrRetry = /*@__PURE__*/ (() => {
+const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
     const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         let count = 1;
         const doOnDispose = (err) => {
@@ -23,19 +23,19 @@ const Observable$repeatOrRetry = /*@__PURE__*/ (() => {
                 err = error([e, err]);
             }
             if (shouldComplete) {
-                pipe(delegate, Disposable$dispose(err));
+                pipe(delegate, Disposable_dispose(err));
             }
             else {
                 count++;
-                pipe(observable, Observable$forEach(Sink$notifySink(delegate)), Observable$subscribe(Observer$getScheduler(delegate)), Disposable$addToIgnoringChildErrors(delegate), Disposable$onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(Sink_notifySink(delegate)), Observable_subscribe(Observer_getScheduler(delegate)), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
             }
         };
-        return pipe(Observer$createWithDelegate(delegate), Disposable$addToIgnoringChildErrors(delegate), Disposable$onDisposed(doOnDispose));
+        return pipe(Observer_createWithDelegate(delegate), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
     };
     return (shouldRepeat) => (observable) => {
         const operator = pipe(createRepeatObserver, partial(observable, shouldRepeat));
-        return pipe(observable, Observable$lift(true, true)(operator));
+        return pipe(observable, Observable_lift(true, true)(operator));
     };
 })();
 
-export { Observable$repeatOrRetry as default };
+export { Observable_repeatOrRetry as default };

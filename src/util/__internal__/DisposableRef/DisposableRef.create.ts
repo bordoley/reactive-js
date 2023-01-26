@@ -5,25 +5,25 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { DisposableLike } from "../../../util";
-import Disposable$mixin from "../Disposable/Disposable.mixin";
+import Disposable_mixin from "../Disposable/Disposable.mixin";
 import { DisposableRefLike } from "../util.internal";
-import DisposableRef$mixin from "./DisposableRef.mixin";
+import DisposableRef_mixin from "./DisposableRef.mixin";
 
-const DisposableRef$create: <TDisposable extends DisposableLike>(
+const DisposableRef_create: <TDisposable extends DisposableLike>(
   initialValue: TDisposable,
 ) => DisposableRefLike<TDisposable> = /*@__PURE__*/ (<
   TDisposable extends DisposableLike,
 >() => {
-  const typedDisposableRefMixin = DisposableRef$mixin<TDisposable>();
+  const typedDisposableRefMixin = DisposableRef_mixin<TDisposable>();
 
   return createInstanceFactory(
     mix(
-      include(Disposable$mixin, typedDisposableRefMixin),
+      include(Disposable_mixin, typedDisposableRefMixin),
       function DisposableRef(
         instance: unknown,
         initialValue: TDisposable,
       ): DisposableRefLike<TDisposable> {
-        init(Disposable$mixin, instance);
+        init(Disposable_mixin, instance);
         init(typedDisposableRefMixin, instance, initialValue);
         return instance;
       },
@@ -31,4 +31,4 @@ const DisposableRef$create: <TDisposable extends DisposableLike>(
   );
 })();
 
-export default DisposableRef$create;
+export default DisposableRef_create;

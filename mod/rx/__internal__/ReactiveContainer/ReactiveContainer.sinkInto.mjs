@@ -1,9 +1,9 @@
 /// <reference types="./ReactiveContainer.sinkInto.d.ts" />
 import { ReactiveContainerLike_sinkInto } from '../../../rx.mjs';
 
-const ReactiveContainer$sinkInto = (sink) => source => {
+const ReactiveContainer_sinkInto = (sink) => source => {
     source[ReactiveContainerLike_sinkInto](sink);
     return source;
 };
 
-export { ReactiveContainer$sinkInto as default };
+export { ReactiveContainer_sinkInto as default };

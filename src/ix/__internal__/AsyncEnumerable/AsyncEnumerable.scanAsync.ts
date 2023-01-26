@@ -19,17 +19,17 @@ import {
   ReactiveContainerLike_sinkInto,
   ScanAsync,
 } from "../../../rx";
-import MulticastObservable$getObserverCount from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getObserverCount";
-import MulticastObservable$getReplay from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getReplay";
-import Observable$multicast from "../../../rx/__internal__/Observable/Observable.multicast";
-import Observable$scanAsync from "../../../rx/__internal__/Observable/Observable.scanAsync";
-import ReactiveContainer$sinkInto from "../../../rx/__internal__/ReactiveContainer/ReactiveContainer.sinkInto";
-import Dispatcher$getScheduler from "../../../scheduling/__internal__/Dispatcher/Dispatcher.getScheduler";
-import Disposable$delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
-import DelegatingAsyncEnumerator$mixin from "../DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin";
-import AsyncEnumerable$lift from "./AsyncEnumerable.lift";
+import MulticastObservable_getObserverCount from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getObserverCount";
+import MulticastObservable_getReplay from "../../../rx/__internal__/MulticastObservable/MulticastObservable.getReplay";
+import Observable_multicast from "../../../rx/__internal__/Observable/Observable.multicast";
+import Observable_scanAsync from "../../../rx/__internal__/Observable/Observable.scanAsync";
+import ReactiveContainer_sinkInto from "../../../rx/__internal__/ReactiveContainer/ReactiveContainer.sinkInto";
+import Dispatcher_getScheduler from "../../../scheduling/__internal__/Dispatcher/Dispatcher.getScheduler";
+import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
+import DelegatingAsyncEnumerator_mixin from "../DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift";
 
-const AsyncEnumerable$scanAsync: ScanAsync<
+const AsyncEnumerable_scanAsync: ScanAsync<
   AsyncEnumerableLike,
   ObservableLike
 >["scanAsync"] = /*@__PURE__*/ (<T, TAcc>() => {
@@ -39,7 +39,7 @@ const AsyncEnumerable$scanAsync: ScanAsync<
 
   const creatScanAsyncAsyncEnumerator = createInstanceFactory(
     mix(
-      include(Disposable$delegatingMixin, DelegatingAsyncEnumerator$mixin()),
+      include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()),
       function ScanAsyncAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TAcc>,
@@ -52,13 +52,13 @@ const AsyncEnumerable$scanAsync: ScanAsync<
         reducer: AsyncReducer<ObservableLike, T, TAcc>,
         initialValue: Factory<TAcc>,
       ): AsyncEnumeratorLike<TAcc> {
-        init(Disposable$delegatingMixin, instance, delegate);
-        init(DelegatingAsyncEnumerator$mixin(), instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
+        init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
         instance.obs = pipe(
           delegate,
-          Observable$scanAsync(reducer, initialValue),
-          Observable$multicast(Dispatcher$getScheduler(delegate)),
+          Observable_scanAsync(reducer, initialValue),
+          Observable_multicast(Dispatcher_getScheduler(delegate)),
         );
         return instance;
       },
@@ -68,17 +68,17 @@ const AsyncEnumerable$scanAsync: ScanAsync<
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable$getObserverCount(this.obs);
+          return MulticastObservable_getObserverCount(this.obs);
         },
         get [MulticastObservableLike_replay]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable$getReplay(this.obs);
+          return MulticastObservable_getReplay(this.obs);
         },
         [ReactiveContainerLike_sinkInto](
           this: TProperties,
           observer: ObserverLike<TAcc>,
         ): void {
-          pipe(this.obs, ReactiveContainer$sinkInto(observer));
+          pipe(this.obs, ReactiveContainer_sinkInto(observer));
         },
       },
     ),
@@ -91,8 +91,8 @@ const AsyncEnumerable$scanAsync: ScanAsync<
     pipe(
       creatScanAsyncAsyncEnumerator,
       partial(reducer, initialValue),
-      AsyncEnumerable$lift,
+      AsyncEnumerable_lift,
     );
 })();
 
-export default AsyncEnumerable$scanAsync;
+export default AsyncEnumerable_scanAsync;

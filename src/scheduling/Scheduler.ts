@@ -8,38 +8,38 @@ import {
   SchedulerLike_shouldYield,
 } from "../scheduling";
 
-import { create as Scheduler$toPriorityScheduler } from "./__internal__/QueueScheduler";
-import Scheduler$createHostScheduler from "./__internal__/Scheduler/Scheduler.createHostScheduler";
-import Scheduler$getCurrentTime from "./__internal__/Scheduler/Scheduler.getCurrentTime";
-import Scheduler$isInContinuation from "./__internal__/Scheduler/Scheduler.isInContinuation";
-import Scheduler$requestYield from "./__internal__/Scheduler/Scheduler.requestYield";
-import Scheduler$schedule from "./__internal__/Scheduler/Scheduler.schedule";
-import Scheduler$shouldYield from "./__internal__/Scheduler/Scheduler.shouldYield";
-import Scheduler$toPausableScheduler from "./__internal__/Scheduler/Scheduler.toPausableScheduler";
+import { create as Scheduler_toPriorityScheduler } from "./__internal__/QueueScheduler";
+import Scheduler_createHostScheduler from "./__internal__/Scheduler/Scheduler.createHostScheduler";
+import Scheduler_getCurrentTime from "./__internal__/Scheduler/Scheduler.getCurrentTime";
+import Scheduler_isInContinuation from "./__internal__/Scheduler/Scheduler.isInContinuation";
+import Scheduler_requestYield from "./__internal__/Scheduler/Scheduler.requestYield";
+import Scheduler_schedule from "./__internal__/Scheduler/Scheduler.schedule";
+import Scheduler_shouldYield from "./__internal__/Scheduler/Scheduler.shouldYield";
+import Scheduler_toPausableScheduler from "./__internal__/Scheduler/Scheduler.toPausableScheduler";
 
-export const createHostScheduler = Scheduler$createHostScheduler;
+export const createHostScheduler = Scheduler_createHostScheduler;
 
 export const getCurrentTime: (scheduler: {
   readonly [SchedulerLike_now]: number;
-}) => number = Scheduler$getCurrentTime;
+}) => number = Scheduler_getCurrentTime;
 
 export const isInContinuation: (scheduler: {
   readonly [SchedulerLike_inContinuation]: boolean;
-}) => boolean = Scheduler$isInContinuation;
+}) => boolean = Scheduler_isInContinuation;
 
 export const requestYield: (scheduler: {
   [SchedulerLike_requestYield](): void;
-}) => void = Scheduler$requestYield;
+}) => void = Scheduler_requestYield;
 
 export const shouldYield: (scheduler: {
   [SchedulerLike_shouldYield]: boolean;
-}) => boolean = Scheduler$shouldYield;
+}) => boolean = Scheduler_shouldYield;
 
-export const schedule = Scheduler$schedule;
+export const schedule = Scheduler_schedule;
 
-export const toPausableScheduler = Scheduler$toPausableScheduler;
+export const toPausableScheduler = Scheduler_toPausableScheduler;
 
 export const toPriorityScheduler: Function1<
   SchedulerLike,
   PrioritySchedulerLike
-> = Scheduler$toPriorityScheduler;
+> = Scheduler_toPriorityScheduler;

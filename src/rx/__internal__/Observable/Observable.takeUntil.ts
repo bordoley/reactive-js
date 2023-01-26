@@ -1,36 +1,36 @@
 import { Function1, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
-import Disposable$bindTo from "../../../util/__internal__/Disposable/Disposable.bindTo";
-import Observer$createWithDelegate from "../Observer/Observer.createWithDelegate";
-import Observer$getScheduler from "../Observer/Observer.getScheduler";
-import Observable$isEnumerable from "./Observable.isEnumerable";
-import Observable$isRunnable from "./Observable.isRunnable";
-import Observable$lift from "./Observable.lift";
-import Observable$subscribe from "./Observable.subscribe";
-import Observable$takeFirst from "./Observable.takeFirst";
+import Disposable_bindTo from "../../../util/__internal__/Disposable/Disposable.bindTo";
+import Observer_createWithDelegate from "../Observer/Observer.createWithDelegate";
+import Observer_getScheduler from "../Observer/Observer.getScheduler";
+import Observable_isEnumerable from "./Observable.isEnumerable";
+import Observable_isRunnable from "./Observable.isRunnable";
+import Observable_lift from "./Observable.lift";
+import Observable_subscribe from "./Observable.subscribe";
+import Observable_takeFirst from "./Observable.takeFirst";
 
-const Observable$takeUntil = <T>(
+const Observable_takeUntil = <T>(
   notifier: ObservableLike,
 ): Function1<ObservableLike<T>, ObservableLike<T>> => {
   const operator = (delegate: ObserverLike<T>) =>
     pipe(
-      Observer$createWithDelegate(delegate),
-      Disposable$bindTo(delegate),
-      Disposable$bindTo(
+      Observer_createWithDelegate(delegate),
+      Disposable_bindTo(delegate),
+      Disposable_bindTo(
         pipe(
           notifier,
-          Observable$takeFirst<T>(),
-          Observable$subscribe(Observer$getScheduler(delegate)),
+          Observable_takeFirst<T>(),
+          Observable_subscribe(Observer_getScheduler(delegate)),
         ),
       ),
     );
   return pipe(
     operator,
-    Observable$lift(
-      Observable$isEnumerable(notifier),
-      Observable$isRunnable(notifier),
+    Observable_lift(
+      Observable_isEnumerable(notifier),
+      Observable_isRunnable(notifier),
     ),
   );
 };
 
-export default Observable$takeUntil;
+export default Observable_takeUntil;

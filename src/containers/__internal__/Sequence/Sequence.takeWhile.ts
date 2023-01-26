@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { Predicate, isSome, none, returns } from "../../../functions";
 
-const Sequence$takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
+const Sequence_takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
   /*@__PURE__*/ (() => {
     const _takeWhile =
       <T>(
@@ -44,4 +44,4 @@ const Sequence$takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
       };
   })();
 
-export default Sequence$takeWhile;
+export default Sequence_takeWhile;

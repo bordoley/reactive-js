@@ -1,11 +1,11 @@
 import { SequenceLike } from "../../../containers";
 import { pipe } from "../../../functions";
-import ReadonlyArray$toSequence from "../ReadonlyArray/ReadonlyArray.toSequence";
-import ReadonlyArray$concatAll from "./Sequence.concatAll";
+import ReadonlyArray_toSequence from "../ReadonlyArray/ReadonlyArray.toSequence";
+import ReadonlyArray_concatAll from "./Sequence.concatAll";
 
-const Sequence$concat = <T>(
+const Sequence_concat = <T>(
   ...sequences: readonly SequenceLike<T>[]
 ): SequenceLike<T> =>
-  pipe(sequences, ReadonlyArray$toSequence(), ReadonlyArray$concatAll());
+  pipe(sequences, ReadonlyArray_toSequence(), ReadonlyArray_concatAll());
 
-export default Sequence$concat;
+export default Sequence_concat;

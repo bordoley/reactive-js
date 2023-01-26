@@ -2,7 +2,7 @@
 import { SequenceLike_data, SequenceLike_next } from '../../../containers.mjs';
 import { isSome, none } from '../../../functions.mjs';
 
-const Sequence$concatAll = () => (seq) => {
+const Sequence_concatAll = () => (seq) => {
     const continueWith = (result, continuation) => {
         if (isSome(result)) {
             return {
@@ -25,4 +25,4 @@ const Sequence$concatAll = () => (seq) => {
     return () => flattenIter(seq());
 };
 
-export { Sequence$concatAll as default };
+export { Sequence_concatAll as default };

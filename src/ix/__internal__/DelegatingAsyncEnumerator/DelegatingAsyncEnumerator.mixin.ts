@@ -9,11 +9,11 @@ import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
 } from "../../../scheduling";
-import Dispatcher$dispatch from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch";
-import Dispatcher$getScheduler from "../../../scheduling/__internal__/Dispatcher/Dispatcher.getScheduler";
+import Dispatcher_dispatch from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch";
+import Dispatcher_getScheduler from "../../../scheduling/__internal__/Dispatcher/Dispatcher.getScheduler";
 import { StreamLike } from "../../../streaming";
 
-const DelegatingAsyncEnumerator$mixin: <T>() => Mixin1<
+const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
   Pick<
     AsyncEnumeratorLike<T>,
     | typeof DispatcherLike_dispatch
@@ -52,16 +52,16 @@ const DelegatingAsyncEnumerator$mixin: <T>() => Mixin1<
       }),
       {
         [DispatcherLike_dispatch](this: TProperties, _: void) {
-          pipe(this.delegate, Dispatcher$dispatch(none));
+          pipe(this.delegate, Dispatcher_dispatch(none));
         },
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
-          return Dispatcher$getScheduler(this.delegate);
+          return Dispatcher_getScheduler(this.delegate);
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [SourceLike_move](this: StreamLike<void, T>) {
-          pipe(this, Dispatcher$dispatch(none));
+          pipe(this, Dispatcher_dispatch(none));
         },
       },
     ),
@@ -69,4 +69,4 @@ const DelegatingAsyncEnumerator$mixin: <T>() => Mixin1<
   );
 })();
 
-export default DelegatingAsyncEnumerator$mixin;
+export default DelegatingAsyncEnumerator_mixin;

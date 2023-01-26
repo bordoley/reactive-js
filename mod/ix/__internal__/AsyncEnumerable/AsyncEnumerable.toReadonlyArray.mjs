@@ -1,8 +1,8 @@
 /// <reference types="./AsyncEnumerable.toReadonlyArray.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import Observable$toReadonlyArray from '../../../rx/__internal__/Observable/Observable.toReadonlyArray.mjs';
-import AsyncEnumerable$toObservable from './AsyncEnumerable.toObservable.mjs';
+import Observable_toReadonlyArray from '../../../rx/__internal__/Observable/Observable.toReadonlyArray.mjs';
+import AsyncEnumerable_toObservable from './AsyncEnumerable.toObservable.mjs';
 
-const AsyncEnumerable$toReadonlyArray = () => (asyncEnumerable) => pipe(asyncEnumerable, AsyncEnumerable$toObservable(), Observable$toReadonlyArray());
+const AsyncEnumerable_toReadonlyArray = () => (asyncEnumerable) => pipe(asyncEnumerable, AsyncEnumerable_toObservable(), Observable_toReadonlyArray());
 
-export { AsyncEnumerable$toReadonlyArray as default };
+export { AsyncEnumerable_toReadonlyArray as default };

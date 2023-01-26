@@ -1,4 +1,4 @@
-import ReadonlyArray$toEnumerable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toEnumerable";
+import ReadonlyArray_toEnumerable from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toEnumerable";
 
-const Enumerable$fromArray = ReadonlyArray$toEnumerable;
-export default Enumerable$fromArray;
+const Enumerable_fromArray = ReadonlyArray_toEnumerable;
+export default Enumerable_fromArray;

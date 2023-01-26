@@ -1,10 +1,10 @@
 /// <reference types="./Container.throws.d.ts" />
 import { pipe, raise } from '../../../functions.mjs';
-import Container$compute from './Container.compute.mjs';
+import Container_compute from './Container.compute.mjs';
 
-const Container$throws = (m, options) => (errorFactory) => pipe(() => {
+const Container_throws = (m, options) => (errorFactory) => pipe(() => {
     const err = errorFactory();
     return raise(err);
-}, Container$compute(m, options));
+}, Container_compute(m, options));
 
-export { Container$throws as default };
+export { Container_throws as default };

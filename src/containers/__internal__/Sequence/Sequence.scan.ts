@@ -6,7 +6,7 @@ import {
 } from "../../../containers";
 import { Factory, Reducer, isSome, none } from "../../../functions";
 
-const Sequence$scan: Scan<SequenceLike>["scan"] = /*@__PURE__*/ (() => {
+const Sequence_scan: Scan<SequenceLike>["scan"] = /*@__PURE__*/ (() => {
   const _scan =
     <T, TAcc>(
       reducer: Reducer<T, TAcc>,
@@ -36,4 +36,4 @@ const Sequence$scan: Scan<SequenceLike>["scan"] = /*@__PURE__*/ (() => {
       _scan(reducer, initialValue(), seq)();
 })();
 
-export default Sequence$scan;
+export default Sequence_scan;

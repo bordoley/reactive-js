@@ -8,15 +8,15 @@ import {
 } from "../../../__internal__/mixins";
 import { getLength, isEmpty, none, pipe } from "../../../functions";
 import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable$dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable$mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable$onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import ReactiveContainer$sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink$notify from "./Sink.notify";
+import Sink_notify from "./Sink.notify";
 
-const Sink$bufferMixin: <
+const Sink_bufferMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<readonly T[]>,
   T,
@@ -41,14 +41,14 @@ const Sink$bufferMixin: <
   };
 
   return mix(
-    include(Disposable$mixin),
+    include(Disposable_mixin),
     function BufferSink(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
       delegate: TSink,
       maxBufferSize: number,
     ): SinkLike<T> {
-      init(Disposable$mixin, instance);
+      init(Disposable_mixin, instance);
 
       instance[DelegatingSinkLike_delegate] = delegate;
       instance[BufferSink_private_maxBufferSize] = maxBufferSize;
@@ -56,18 +56,18 @@ const Sink$bufferMixin: <
 
       pipe(
         instance,
-        Disposable$addTo(delegate),
-        Disposable$onComplete(() => {
+        Disposable_addTo(delegate),
+        Disposable_onComplete(() => {
           const { [BufferSink_private_buffer]: buffer } = instance;
           instance[BufferSink_private_buffer] = [];
 
           if (isEmpty(buffer)) {
-            pipe(instance[DelegatingSinkLike_delegate], Disposable$dispose());
+            pipe(instance[DelegatingSinkLike_delegate], Disposable_dispose());
           } else {
             pipe(
               [buffer],
               fromArray,
-              ReactiveContainer$sinkInto<C, TSink, readonly T[]>(
+              ReactiveContainer_sinkInto<C, TSink, readonly T[]>(
                 instance[DelegatingSinkLike_delegate],
               ),
             );
@@ -95,11 +95,11 @@ const Sink$bufferMixin: <
           const buffer = this[BufferSink_private_buffer];
           this[BufferSink_private_buffer] = [];
 
-          pipe(this[DelegatingSinkLike_delegate], Sink$notify(buffer));
+          pipe(this[DelegatingSinkLike_delegate], Sink_notify(buffer));
         }
       },
     },
   );
 };
 
-export default Sink$bufferMixin;
+export default Sink_bufferMixin;

@@ -6,18 +6,18 @@ import {
   ObserverLike,
   ScanAsync,
 } from "../../../rx";
-import Disposable$addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Observable$forEach from "../Observable/Observable.forEach";
-import Observable$onSubscribe from "../Observable/Observable.onSubscribe";
-import Observable$switchAll from "../Observable/Observable.switchAll";
-import Observable$takeFirst from "../Observable/Observable.takeFirst";
-import Observable$zipWithLatestFrom from "../Observable/Observable.zipWithLatestFrom";
-import ReactiveContainer$sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import Subject$create from "../Subject/Subject.create";
-import Subject$publish from "../Subject/Subject.publish";
-import Subject$publishTo from "../Subject/Subject.publishTo";
+import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
+import Observable_forEach from "../Observable/Observable.forEach";
+import Observable_onSubscribe from "../Observable/Observable.onSubscribe";
+import Observable_switchAll from "../Observable/Observable.switchAll";
+import Observable_takeFirst from "../Observable/Observable.takeFirst";
+import Observable_zipWithLatestFrom from "../Observable/Observable.zipWithLatestFrom";
+import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
+import Subject_create from "../Subject/Subject.create";
+import Subject_publish from "../Subject/Subject.publish";
+import Subject_publishTo from "../Subject/Subject.publishTo";
 
-const HigherOrderObservable$scanAsync = <
+const HigherOrderObservable_scanAsync = <
   C extends ObservableLike,
   CInner extends ObservableLike,
 >(
@@ -30,21 +30,21 @@ const HigherOrderObservable$scanAsync = <
     observable => {
       const onSink = (observer: ObserverLike<TAcc>) => {
         const accFeedbackStream = pipe(
-          Subject$create(),
-          Disposable$addTo(observer),
+          Subject_create(),
+          Disposable_addTo(observer),
         );
 
         pipe(
           observable,
-          Observable$zipWithLatestFrom(accFeedbackStream, (next, acc: TAcc) =>
-            pipe(scanner(acc, next), Observable$takeFirst()),
+          Observable_zipWithLatestFrom(accFeedbackStream, (next, acc: TAcc) =>
+            pipe(scanner(acc, next), Observable_takeFirst()),
           ),
-          Observable$switchAll(),
-          Observable$forEach(Subject$publishTo(accFeedbackStream)),
-          Observable$onSubscribe(() =>
-            pipe(accFeedbackStream, Subject$publish(initialValue())),
+          Observable_switchAll(),
+          Observable_forEach(Subject_publishTo(accFeedbackStream)),
+          Observable_onSubscribe(() =>
+            pipe(accFeedbackStream, Subject_publish(initialValue())),
           ),
-          ReactiveContainer$sinkInto(observer),
+          ReactiveContainer_sinkInto(observer),
         );
       };
 
@@ -52,4 +52,4 @@ const HigherOrderObservable$scanAsync = <
     };
 };
 
-export default HigherOrderObservable$scanAsync;
+export default HigherOrderObservable_scanAsync;

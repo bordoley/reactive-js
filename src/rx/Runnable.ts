@@ -26,110 +26,110 @@ import {
 } from "../containers";
 import { identity, returns } from "../functions";
 import { RunnableLike, ToRunnable } from "../rx";
-import Runnable$buffer from "./__internal__/Runnable/Runnable.buffer";
-import Runnable$catchError from "./__internal__/Runnable/Runnable.catchError";
-import Runnable$concat from "./__internal__/Runnable/Runnable.concat";
-import Runnable$concatAll from "./__internal__/Runnable/Runnable.concatAll";
-import Runnable$create from "./__internal__/Runnable/Runnable.create";
-import Runnable$decodeWithCharset from "./__internal__/Runnable/Runnable.decodeWithCharset";
-import Runnable$defer from "./__internal__/Runnable/Runnable.defer";
-import Runnable$distinctUntilChanged from "./__internal__/Runnable/Runnable.distinctUntilChanged";
-import Runnable$empty from "./__internal__/Runnable/Runnable.empty";
-import Runnable$everySatisfy from "./__internal__/Runnable/Runnable.everySatisfy";
-import Runnable$first from "./__internal__/Runnable/Runnable.first";
-import Runnable$forEach from "./__internal__/Runnable/Runnable.forEach";
-import Runnable$fromArray from "./__internal__/Runnable/Runnable.fromArray";
-import Runnable$generate from "./__internal__/Runnable/Runnable.generate";
-import Runnable$keep from "./__internal__/Runnable/Runnable.keep";
-import Runnable$last from "./__internal__/Runnable/Runnable.last";
-import Runnable$map from "./__internal__/Runnable/Runnable.map";
-import Runnable$never from "./__internal__/Runnable/Runnable.never";
-import Runnable$onRun from "./__internal__/Runnable/Runnable.onRun";
-import Runnable$pairwise from "./__internal__/Runnable/Runnable.pairwise";
-import Runnable$reduce from "./__internal__/Runnable/Runnable.reduce";
-import Runnable$repeat from "./__internal__/Runnable/Runnable.repeat";
-import Runnable$run from "./__internal__/Runnable/Runnable.run";
-import Runnable$scan from "./__internal__/Runnable/Runnable.scan";
-import Runnable$skipFirst from "./__internal__/Runnable/Runnable.skipFirst";
-import Runnable$someSatisfy from "./__internal__/Runnable/Runnable.someSatisfy";
-import Runnable$takeFirst from "./__internal__/Runnable/Runnable.takeFirst";
-import Runnable$takeLast from "./__internal__/Runnable/Runnable.takeLast";
-import Runnable$takeWhile from "./__internal__/Runnable/Runnable.takeWhile";
-import Runnable$throwIfEmpty from "./__internal__/Runnable/Runnable.throwIfEmpty";
-import Runnable$toReadonlyArray from "./__internal__/Runnable/Runnable.toReadonlyArray";
+import Runnable_buffer from "./__internal__/Runnable/Runnable.buffer";
+import Runnable_catchError from "./__internal__/Runnable/Runnable.catchError";
+import Runnable_concat from "./__internal__/Runnable/Runnable.concat";
+import Runnable_concatAll from "./__internal__/Runnable/Runnable.concatAll";
+import Runnable_create from "./__internal__/Runnable/Runnable.create";
+import Runnable_decodeWithCharset from "./__internal__/Runnable/Runnable.decodeWithCharset";
+import Runnable_defer from "./__internal__/Runnable/Runnable.defer";
+import Runnable_distinctUntilChanged from "./__internal__/Runnable/Runnable.distinctUntilChanged";
+import Runnable_empty from "./__internal__/Runnable/Runnable.empty";
+import Runnable_everySatisfy from "./__internal__/Runnable/Runnable.everySatisfy";
+import Runnable_first from "./__internal__/Runnable/Runnable.first";
+import Runnable_forEach from "./__internal__/Runnable/Runnable.forEach";
+import Runnable_fromArray from "./__internal__/Runnable/Runnable.fromArray";
+import Runnable_generate from "./__internal__/Runnable/Runnable.generate";
+import Runnable_keep from "./__internal__/Runnable/Runnable.keep";
+import Runnable_last from "./__internal__/Runnable/Runnable.last";
+import Runnable_map from "./__internal__/Runnable/Runnable.map";
+import Runnable_never from "./__internal__/Runnable/Runnable.never";
+import Runnable_onRun from "./__internal__/Runnable/Runnable.onRun";
+import Runnable_pairwise from "./__internal__/Runnable/Runnable.pairwise";
+import Runnable_reduce from "./__internal__/Runnable/Runnable.reduce";
+import Runnable_repeat from "./__internal__/Runnable/Runnable.repeat";
+import Runnable_run from "./__internal__/Runnable/Runnable.run";
+import Runnable_scan from "./__internal__/Runnable/Runnable.scan";
+import Runnable_skipFirst from "./__internal__/Runnable/Runnable.skipFirst";
+import Runnable_someSatisfy from "./__internal__/Runnable/Runnable.someSatisfy";
+import Runnable_takeFirst from "./__internal__/Runnable/Runnable.takeFirst";
+import Runnable_takeLast from "./__internal__/Runnable/Runnable.takeLast";
+import Runnable_takeWhile from "./__internal__/Runnable/Runnable.takeWhile";
+import Runnable_throwIfEmpty from "./__internal__/Runnable/Runnable.throwIfEmpty";
+import Runnable_toReadonlyArray from "./__internal__/Runnable/Runnable.toReadonlyArray";
 
-export const create = Runnable$create;
+export const create = Runnable_create;
 
-export const buffer: Buffer<RunnableLike>["buffer"] = Runnable$buffer;
+export const buffer: Buffer<RunnableLike>["buffer"] = Runnable_buffer;
 
 export const catchError: CatchError<RunnableLike>["catchError"] =
-  Runnable$catchError;
+  Runnable_catchError;
 
-export const concat: Concat<RunnableLike>["concat"] = Runnable$concat;
+export const concat: Concat<RunnableLike>["concat"] = Runnable_concat;
 
 export const concatAll: ConcatAll<RunnableLike>["concatAll"] =
-  Runnable$concatAll;
+  Runnable_concatAll;
 
 export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
-  Runnable$decodeWithCharset;
+  Runnable_decodeWithCharset;
 
-export const defer: Defer<RunnableLike>["defer"] = Runnable$defer;
+export const defer: Defer<RunnableLike>["defer"] = Runnable_defer;
 
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
-  Runnable$distinctUntilChanged;
+  Runnable_distinctUntilChanged;
 
-export const empty: Empty<RunnableLike>["empty"] = Runnable$empty;
+export const empty: Empty<RunnableLike>["empty"] = Runnable_empty;
 
 export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
-  Runnable$everySatisfy;
+  Runnable_everySatisfy;
 
-export const first = Runnable$first;
+export const first = Runnable_first;
 
-export const forEach: ForEach<RunnableLike>["forEach"] = Runnable$forEach;
+export const forEach: ForEach<RunnableLike>["forEach"] = Runnable_forEach;
 
-export const fromArray = Runnable$fromArray;
+export const fromArray = Runnable_fromArray;
 
-export const generate: Generate<RunnableLike>["generate"] = Runnable$generate;
+export const generate: Generate<RunnableLike>["generate"] = Runnable_generate;
 
-export const keep: Keep<RunnableLike>["keep"] = Runnable$keep;
+export const keep: Keep<RunnableLike>["keep"] = Runnable_keep;
 
-export const last = Runnable$last;
+export const last = Runnable_last;
 
-export const map: Map<RunnableLike>["map"] = Runnable$map;
+export const map: Map<RunnableLike>["map"] = Runnable_map;
 
-export const never: Never<RunnableLike>["never"] = Runnable$never;
+export const never: Never<RunnableLike>["never"] = Runnable_never;
 
-export const onRun = Runnable$onRun;
+export const onRun = Runnable_onRun;
 
-export const pairwise: Pairwise<RunnableLike>["pairwise"] = Runnable$pairwise;
+export const pairwise: Pairwise<RunnableLike>["pairwise"] = Runnable_pairwise;
 
-export const reduce: Reduce<RunnableLike>["reduce"] = Runnable$reduce;
+export const reduce: Reduce<RunnableLike>["reduce"] = Runnable_reduce;
 
-export const repeat = Runnable$repeat;
+export const repeat = Runnable_repeat;
 
-export const run = Runnable$run;
+export const run = Runnable_run;
 
-export const scan: Scan<RunnableLike>["scan"] = Runnable$scan;
+export const scan: Scan<RunnableLike>["scan"] = Runnable_scan;
 
 export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
-  Runnable$skipFirst;
+  Runnable_skipFirst;
 
 export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
-  Runnable$someSatisfy;
+  Runnable_someSatisfy;
 
 export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] =
-  Runnable$takeFirst;
+  Runnable_takeFirst;
 
-export const takeLast: TakeLast<RunnableLike>["takeLast"] = Runnable$takeLast;
+export const takeLast: TakeLast<RunnableLike>["takeLast"] = Runnable_takeLast;
 
 export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] =
-  Runnable$takeWhile;
+  Runnable_takeWhile;
 
 export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
-  Runnable$throwIfEmpty;
+  Runnable_throwIfEmpty;
 
 export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
-  Runnable$toReadonlyArray;
+  Runnable_toReadonlyArray;
 
 export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
   returns(identity);

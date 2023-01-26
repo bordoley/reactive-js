@@ -5,7 +5,7 @@ import {
   mix,
 } from "../../../__internal__/mixins";
 import { DistinctUntilChanged } from "../../../containers";
-import StatefulContainer$distinctUntilChanged from "../../../containers/__internal__/StatefulContainer/StatefulContainer.distinctUntilChanged";
+import StatefulContainer_distinctUntilChanged from "../../../containers/__internal__/StatefulContainer/StatefulContainer.distinctUntilChanged";
 import { TReactive } from "../../../containers/__internal__/containers.internal";
 import { Equality, pipe } from "../../../functions";
 import {
@@ -13,19 +13,19 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx";
-import Observer$mixin from "../Observer/Observer.mixin";
-import Sink$distinctUntilChangedMixin from "../Sink/Sink.distinctUntilChangedMixin";
-import Observable$liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observer_mixin from "../Observer/Observer.mixin";
+import Sink_distinctUntilChangedMixin from "../Sink/Sink.distinctUntilChangedMixin";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
 
-const Observable$distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
+const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
     const createDistinctUntilChangedObserver: <T>(
       delegate: ObserverLike<T>,
       equality: Equality<T>,
     ) => ObserverLike<T> = (<T>() => {
       const typedDistinctUntilChangedSinkMixin =
-        Sink$distinctUntilChangedMixin<T>();
-      const typedObserverMixin = Observer$mixin<T>();
+        Sink_distinctUntilChangedMixin<T>();
+      const typedObserverMixin = Observer_mixin<T>();
 
       return createInstanceFactory(
         mix(
@@ -55,10 +55,10 @@ const Observable$distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
 
     return pipe(
       createDistinctUntilChangedObserver,
-      StatefulContainer$distinctUntilChanged<ObservableLike, T, TReactive>(
-        Observable$liftEnumerableOperatorT,
+      StatefulContainer_distinctUntilChanged<ObservableLike, T, TReactive>(
+        Observable_liftEnumerableOperatorT,
       ),
     );
   })();
 
-export default Observable$distinctUntilChanged;
+export default Observable_distinctUntilChanged;

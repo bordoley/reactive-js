@@ -1,3 +1,3 @@
 import { ObservableLike, RunnableObservableLike } from "../../../rx.js";
-declare const Observable$isRunnable: (obs: ObservableLike) => obs is RunnableObservableLike<unknown>;
-export { Observable$isRunnable as default };
+declare const Observable_isRunnable: (obs: ObservableLike) => obs is RunnableObservableLike<unknown>;
+export { Observable_isRunnable as default };

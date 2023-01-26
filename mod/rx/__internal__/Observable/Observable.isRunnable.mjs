@@ -1,6 +1,6 @@
 /// <reference types="./Observable.isRunnable.d.ts" />
 import { ObservableLike_isRunnable } from '../../../rx.mjs';
 
-const Observable$isRunnable = (obs) => obs[ObservableLike_isRunnable];
+const Observable_isRunnable = (obs) => obs[ObservableLike_isRunnable];
 
-export { Observable$isRunnable as default };
+export { Observable_isRunnable as default };
