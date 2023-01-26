@@ -1,15 +1,15 @@
 /// <reference types="./node.test.d.ts" />
 import { Writable, Readable } from 'stream';
-import { endWith, ignoreElements } from '../../containers/ContainerLike.mjs';
-import { toObservable } from '../../containers/ReadonlyArrayLike.mjs';
+import { endWith, ignoreElements } from '../../containers/Container.mjs';
+import { toObservable } from '../../containers/ReadonlyArray.mjs';
 import { newInstance, pipe, returns } from '../../functions.mjs';
 import { createWritableSink, createReadableSource, gzip, gunzip } from '../../integrations/node.mjs';
-import { toFlowable, fromArray, concat, toPromise, keep, reduce, takeFirst } from '../../rx/ObservableLike.mjs';
-import { createHostScheduler } from '../../scheduling/SchedulerLike.mjs';
-import { toObservable as toObservable$1 } from '../../streaming/FlowableLike.mjs';
-import { sourceFrom } from '../../streaming/StreamLike.mjs';
-import { stream } from '../../streaming/StreamableLike.mjs';
-import { dispose } from '../../util/DisposableLike.mjs';
+import { toFlowable, fromArray, concat, toPromise, keep, reduce, takeFirst } from '../../rx/Observable.mjs';
+import { createHostScheduler } from '../../scheduling/Scheduler.mjs';
+import { toObservable as toObservable$1 } from '../../streaming/Flowable.mjs';
+import { sourceFrom } from '../../streaming/Stream.mjs';
+import { stream } from '../../streaming/Streamable.mjs';
+import { dispose } from '../../util/Disposable.mjs';
 import { testModule, describe as createDescribe, testAsync, expectEquals, expectPromiseToThrow } from '../testing.mjs';
 
 testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to writable", async () => {

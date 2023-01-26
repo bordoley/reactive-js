@@ -1,11 +1,11 @@
-import { keepType } from "../../containers/ContainerLike";
-import { toObservable } from "../../containers/ReadonlyArrayLike";
+import { keepType } from "../../containers/Container";
+import { toObservable } from "../../containers/ReadonlyArray";
 import { __await, __memo, async } from "../../effects";
 import { isSome, pipe } from "../../functions";
 import { ObservableLike } from "../../rx";
-import { forEach, keep, subscribe, takeLast } from "../../rx/ObservableLike";
-import { run } from "../../scheduling/ContinuationLike";
-import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeSchedulerLike";
+import { forEach, keep, subscribe, takeLast } from "../../rx/Observable";
+import { run } from "../../scheduling/Continuation";
+import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
 import { expectArrayEquals, expectEquals, test, testModule } from "../testing";
 
 testModule(

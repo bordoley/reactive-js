@@ -6,9 +6,9 @@ import {
   mix,
   props,
 } from "../__internal__/mixins";
-import { ignoreElements } from "../containers/ContainerLike";
-import { toObservable } from "../containers/PromiseableLike";
-import { keep } from "../containers/ReadonlyArrayLike";
+import { ignoreElements } from "../containers/Container";
+import { toObservable } from "../containers/Promiseable";
+import { keep } from "../containers/ReadonlyArray";
 import {
   Function1,
   Optional,
@@ -35,7 +35,7 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../rx";
-import { getObserverCount, getReplay } from "../rx/MulticastObservableLike";
+import { getObserverCount, getReplay } from "../rx/MulticastObservable";
 import {
   create as createObservable,
   forEach as forEachObs,
@@ -45,33 +45,24 @@ import {
   subscribe,
   takeWhile,
   throttle,
-} from "../rx/ObservableLike";
-import { getDispatcher } from "../rx/ObserverLike";
-import { sinkInto } from "../rx/ReactiveContainerLike";
+} from "../rx/Observable";
+import { getDispatcher } from "../rx/Observer";
+import { sinkInto } from "../rx/ReactiveContainer";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
 } from "../scheduling";
-import {
-  dispatch,
-  dispatchTo,
-  getScheduler,
-} from "../scheduling/DispatcherLike";
+import { dispatch, dispatchTo, getScheduler } from "../scheduling/Dispatcher";
 import {
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../streaming";
-import { createActionReducer, stream } from "../streaming/StreamableLike";
-import StreamableLike__create from "../streaming/__internal__/StreamableLike/StreamableLike.create";
-import {
-  addTo,
-  dispose,
-  onDisposed,
-  toAbortSignal,
-} from "../util/DisposableLike";
-import DisposableLike__delegatingMixin from "../util/__internal__/DisposableLike/DisposableLike.delegatingMixin";
+import { createActionReducer, stream } from "../streaming/Streamable";
+import Streamable$create from "../streaming/__internal__/Streamable/Streamable.create";
+import { addTo, dispose, onDisposed, toAbortSignal } from "../util/Disposable";
+import Disposable$delegatingMixin from "../util/__internal__/Disposable/Disposable.delegatingMixin";
 
 export type WindowLocationURI = {
   title: string;
@@ -304,7 +295,7 @@ export const windowLocation: WindowLocationStreamableLike =
 
     const createWindowLocationStream = createInstanceFactory(
       mix(
-        include(DisposableLike__delegatingMixin),
+        include(Disposable$delegatingMixin),
         function WindowLocationStream(
           instance: Pick<
             WindowLocationStreamLike,
@@ -320,7 +311,7 @@ export const windowLocation: WindowLocationStreamableLike =
             Mutable<TProperties>,
           delegate: StreamLike<TAction, TState>,
         ): WindowLocationStreamLike & TProperties {
-          init(DisposableLike__delegatingMixin, instance, delegate);
+          init(Disposable$delegatingMixin, instance, delegate);
 
           instance.delegate = delegate;
           instance.historyCounter = -1;
@@ -384,7 +375,7 @@ export const windowLocation: WindowLocationStreamableLike =
 
     let currentWindowLocationStream: Optional<WindowLocationStreamLike> = none;
 
-    return StreamableLike__create<
+    return Streamable$create<
       Updater<WindowLocationURI> | WindowLocationURI,
       WindowLocationURI,
       WindowLocationStreamLike

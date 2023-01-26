@@ -1,4 +1,4 @@
-import { toRunnableObservable } from "../../containers/ReadonlyArrayLike";
+import { toRunnableObservable } from "../../containers/ReadonlyArray";
 import { AsyncEnumerableLike } from "../../ix";
 import {
   fromArray,
@@ -8,7 +8,7 @@ import {
   scanAsync,
   takeWhile,
   toReadonlyArray,
-} from "../../ix/AsyncEnumerableLike";
+} from "../../ix/AsyncEnumerable";
 import { RunnableObservableLike } from "../../rx";
 import {
   keepTests,
@@ -20,7 +20,7 @@ import {
 import { testModule } from "../testing";
 
 testModule(
-  "AsyncEnumerableLike",
+  "AsyncEnumerable",
   keepTests({
     fromArray,
     keep,

@@ -25,8 +25,8 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { contains, encodeUtf8, throws } from "../containers/ContainerLike";
-import { empty as emptyReadonlyArray } from "../containers/ReadonlyArrayLike";
+import { contains, encodeUtf8, throws } from "../containers/Container";
+import { empty as emptyReadonlyArray } from "../containers/ReadonlyArray";
 import {
   alwaysFalse,
   alwaysTrue,

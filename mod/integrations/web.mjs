@@ -1,21 +1,21 @@
 /// <reference types="./web.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
-import { ignoreElements } from '../containers/ContainerLike.mjs';
-import { toObservable } from '../containers/PromiseableLike.mjs';
-import { keep } from '../containers/ReadonlyArrayLike.mjs';
+import { ignoreElements } from '../containers/Container.mjs';
+import { toObservable } from '../containers/Promiseable.mjs';
+import { keep } from '../containers/ReadonlyArray.mjs';
 import { pipe, newInstance, none, isString, error, isEmpty, getLength, unsafeCast, isSome, raise, isFunction, compose } from '../functions.mjs';
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
-import { getObserverCount, getReplay } from '../rx/MulticastObservableLike.mjs';
-import { create, map, forkCombineLatest, takeWhile, forEach, keep as keep$1, throttle, subscribe } from '../rx/ObservableLike.mjs';
-import { getDispatcher } from '../rx/ObserverLike.mjs';
-import { sinkInto } from '../rx/ReactiveContainerLike.mjs';
+import { getObserverCount, getReplay } from '../rx/MulticastObservable.mjs';
+import { create, map, forkCombineLatest, takeWhile, forEach, keep as keep$1, throttle, subscribe } from '../rx/Observable.mjs';
+import { getDispatcher } from '../rx/Observer.mjs';
+import { sinkInto } from '../rx/ReactiveContainer.mjs';
 import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling.mjs';
-import { dispatch, getScheduler, dispatchTo } from '../scheduling/DispatcherLike.mjs';
+import { dispatch, getScheduler, dispatchTo } from '../scheduling/Dispatcher.mjs';
 import '../streaming.mjs';
-import { createActionReducer, stream } from '../streaming/StreamableLike.mjs';
-import StreamableLike__create from '../streaming/__internal__/StreamableLike/StreamableLike.create.mjs';
-import { onDisposed, toAbortSignal, dispose, addTo } from '../util/DisposableLike.mjs';
-import DisposableLike__delegatingMixin from '../util/__internal__/DisposableLike/DisposableLike.delegatingMixin.mjs';
+import { createActionReducer, stream } from '../streaming/Streamable.mjs';
+import Streamable$create from '../streaming/__internal__/Streamable/Streamable.create.mjs';
+import { onDisposed, toAbortSignal, dispose, addTo } from '../util/Disposable.mjs';
+import Disposable$delegatingMixin from '../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 
 /** @ignore */
 const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
@@ -114,8 +114,8 @@ const windowLocation =
         instance.historyCounter++;
         history.pushState({ counter: instance.historyCounter, title }, "", uri);
     };
-    const createWindowLocationStream = createInstanceFactory(mix(include(DisposableLike__delegatingMixin), function WindowLocationStream(instance, delegate) {
-        init(DisposableLike__delegatingMixin, instance, delegate);
+    const createWindowLocationStream = createInstanceFactory(mix(include(Disposable$delegatingMixin), function WindowLocationStream(instance, delegate) {
+        init(Disposable$delegatingMixin, instance, delegate);
         instance.delegate = delegate;
         instance.historyCounter = -1;
         return instance;
@@ -152,7 +152,7 @@ const windowLocation =
         },
     }));
     let currentWindowLocationStream = none;
-    return StreamableLike__create((scheduler, options) => {
+    return Streamable$create((scheduler, options) => {
         if (isSome(currentWindowLocationStream)) {
             raise("Cannot stream more than once");
         }

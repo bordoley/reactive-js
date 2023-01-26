@@ -9,7 +9,7 @@ import {
   __state,
   __stream,
 } from "@reactive-js/core/effects";
-import { generate, toFlowable } from "@reactive-js/core/rx/ObservableLike";
+import * as Observable from "@reactive-js/core/rx/Observable";
 import { FlowMode } from "@reactive-js/core/streaming";
 import {
   createComponent,
@@ -20,10 +20,7 @@ import {
   windowLocation,
   WindowLocationURI,
 } from "@reactive-js/core/integrations/web";
-import {
-  replaceWindowLocation,
-  goBack,
-} from "@reactive-js/core/integrations/web/WindowLocationStreamLike";
+import * as WindowLocationStream from "@reactive-js/core/integrations/web/WindowLocationStream";
 import {
   increment,
   pipe,
@@ -32,25 +29,22 @@ import {
   Updater,
 } from "@reactive-js/core/functions";
 import { DispatcherLike } from "@reactive-js/core/scheduling";
-import {
-  dispatch,
-  dispatchTo,
-} from "@reactive-js/core/scheduling/DispatcherLike";
-import { stream } from "@reactive-js/core/streaming/StreamableLike";
+import * as Dispatcher from "@reactive-js/core/scheduling/Dispatcher";
+import * as Streamable from "@reactive-js/core/streaming/Streamable";
 
 const normalPriorityScheduler = createReactNormalPriorityScheduler();
 
 // History must be globally unique to an application
 const historyStream = pipe(
   windowLocation,
-  stream(normalPriorityScheduler, {
+  Streamable.stream(normalPriorityScheduler, {
     replay: 1,
   }),
 );
 
 const counterFlowable = pipe(
-  generate(increment, returns(0), { delay: 100 }),
-  toFlowable(),
+  Observable.generate(increment, returns(0), { delay: 100 }),
+  Observable.toFlowable(),
 );
 
 const createActions = (
@@ -60,7 +54,7 @@ const createActions = (
   onValueChanged: (value: number) =>
     pipe(
       historyStream,
-      replaceWindowLocation((uri: WindowLocationURI) => ({
+      WindowLocationStream.replaceWindowLocation((uri: WindowLocationURI) => ({
         ...uri,
         query: `v=${value}`,
       })),
@@ -68,9 +62,9 @@ const createActions = (
   toggleStateMode: () =>
     pipe(
       (mode: FlowMode) => (mode === "pause" ? "resume" : "pause"),
-      dispatchTo(stateDispatcher),
+      Dispatcher.dispatchTo(stateDispatcher),
     ),
-  setCounterMode: (mode: FlowMode) => pipe(counterDispatcher, dispatch(mode)),
+  setCounterMode: (mode: FlowMode) => pipe(counterDispatcher, Dispatcher.dispatch(mode)),
 });
 
 const initialFlowModeState = () => "pause" as FlowMode;
@@ -108,14 +102,14 @@ const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
 
   pipe(
     historyStream,
-    dispatch((uri: WindowLocationURI) => ({
+    Dispatcher.dispatch((uri: WindowLocationURI) => ({
       ...uri,
       path,
     })),
   );
 };
 
-const onGoBack = pipeLazy(historyStream, goBack);
+const onGoBack = pipeLazy(historyStream, WindowLocationStream.goBack);
 
 const Root = () => {
   const uri = useObservable(historyStream);

@@ -35,19 +35,19 @@ import {
   create as createObservable,
   forEach,
   subscribe,
-} from "../rx/ObservableLike";
-import { getDispatcher, getScheduler } from "../rx/ObserverLike";
-import { sinkInto } from "../rx/ReactiveContainerLike";
+} from "../rx/Observable";
+import { getDispatcher, getScheduler } from "../rx/Observer";
+import { sinkInto } from "../rx/ReactiveContainer";
 import {
   dispatch,
   dispatchTo,
   getScheduler as dispatcherGetScheduler,
-} from "../scheduling/DispatcherLike";
+} from "../scheduling/Dispatcher";
 import { FlowMode, FlowableLike, StreamableLike } from "../streaming";
-import { sourceFrom } from "../streaming/StreamLike";
-import { stream } from "../streaming/StreamableLike";
-import FlowableLike__createLifted from "../streaming/__internal__/FlowableLike/FlowableLike.createLifted";
-import StreamableLike__createLifted from "../streaming/__internal__/StreamableLike/StreamableLike.createLifted";
+import { sourceFrom } from "../streaming/Stream";
+import { stream } from "../streaming/Streamable";
+import Flowable$createLifted from "../streaming/__internal__/Flowable/Flowable.createLifted";
+import Streamable$createLifted from "../streaming/__internal__/Streamable/Streamable.createLifted";
 import { DisposableLike } from "../util";
 import {
   dispose,
@@ -55,7 +55,7 @@ import {
   onDisposed,
   onError,
   toErrorHandler,
-} from "../util/DisposableLike";
+} from "../util/Disposable";
 
 interface BindNodeCallback {
   <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<
@@ -168,7 +168,7 @@ const addToDisposable =
 export const createReadableSource = (
   factory: Factory<Readable> | Readable,
 ): FlowableLike<Uint8Array> =>
-  FlowableLike__createLifted(mode =>
+  Flowable$createLifted(mode =>
     createObservable(observer => {
       const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
@@ -220,7 +220,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
   return (
     factory: Factory<Writable> | Writable,
   ): StreamableLike<Uint8Array, FlowMode> =>
-    StreamableLike__createLifted(events =>
+    Streamable$createLifted(events =>
       createObservable(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
@@ -268,7 +268,7 @@ export const transform =
     factory: Factory<Transform>,
   ): ContainerOperator<FlowableLike, Uint8Array, Uint8Array> =>
   src =>
-    FlowableLike__createLifted(modeObs =>
+    Flowable$createLifted(modeObs =>
       createObservable(observer => {
         const transform = pipe(
           factory(),

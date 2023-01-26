@@ -33,12 +33,12 @@ import {
   empty,
   forEach,
   subscribe,
-} from "./rx/ObservableLike";
-import { getScheduler, schedule } from "./rx/ObserverLike";
-import { notify } from "./rx/SinkLike";
+} from "./rx/Observable";
+import { getScheduler, schedule } from "./rx/Observer";
+import { notify } from "./rx/Sink";
 import { SchedulerLike } from "./scheduling";
 import { StreamLike, StreamableLike } from "./streaming";
-import { createStateStore, stream } from "./streaming/StreamableLike";
+import { createStateStore, stream } from "./streaming/Streamable";
 import { DisposableLike } from "./util";
 import {
   addTo,
@@ -46,7 +46,7 @@ import {
   disposed,
   isDisposed,
   onComplete,
-} from "./util/DisposableLike";
+} from "./util/Disposable";
 
 type EffectsMode = "batched" | "combine-latest";
 

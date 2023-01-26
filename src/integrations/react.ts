@@ -37,8 +37,8 @@ import {
   unsafeCast,
 } from "../functions";
 import { ObservableLike, SubjectLike } from "../rx";
-import { distinctUntilChanged, forEach, subscribe } from "../rx/ObservableLike";
-import { create as createSubject, publish } from "../rx/SubjectLike";
+import { distinctUntilChanged, forEach, subscribe } from "../rx/Observable";
+import { create as createSubject, publish } from "../rx/Subject";
 import {
   ContinuationLike,
   PrioritySchedulerLike,
@@ -49,10 +49,10 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../scheduling";
-import { run } from "../scheduling/ContinuationLike";
-import { toScheduler } from "../scheduling/PrioritySchedulerLike";
-import { isInContinuation } from "../scheduling/SchedulerLike";
-import { getDelay } from "../scheduling/__internal__/SchedulerLike.options";
+import { run } from "../scheduling/Continuation";
+import { toScheduler } from "../scheduling/PriorityScheduler";
+import { isInContinuation } from "../scheduling/Scheduler";
+import { getDelay } from "../scheduling/__internal__/Scheduler.options";
 import { DisposableLike } from "../util";
 import {
   addIgnoringChildErrors,
@@ -62,8 +62,8 @@ import {
   isDisposed,
   onDisposed,
   onError,
-} from "../util/DisposableLike";
-import DisposableLike__mixin from "../util/__internal__/DisposableLike/DisposableLike.mixin";
+} from "../util/Disposable";
+import Disposable$mixin from "../util/__internal__/Disposable/Disposable.mixin";
 /**
  * Returns the current value, if defined, of `observable`.
  *
@@ -136,7 +136,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(DisposableLike__mixin),
+      include(Disposable$mixin),
       function ReactPriorityScheduler(
         instance: Omit<
           PrioritySchedulerLike,
@@ -144,7 +144,7 @@ const createReactPriorityScheduler = /*@__PURE__*/ (() => {
         > &
           TProperties,
       ): PrioritySchedulerLike {
-        init(DisposableLike__mixin, instance);
+        init(Disposable$mixin, instance);
         return instance;
       },
       props<TProperties>({
