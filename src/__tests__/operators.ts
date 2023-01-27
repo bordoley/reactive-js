@@ -528,18 +528,18 @@ export const scanAsyncTests = <
     FromArray<
       C,
       {
-        readonly start: number;
-        readonly count: number;
-        delay: number;
+        readonly start?: number;
+        readonly count?: number;
+        delay?: number;
       }
     > &
     ToReadonlyArray<C>,
   mInner: FromArray<
     CInner,
     {
-      readonly start: number;
-      readonly count: number;
-      delay: number;
+      readonly start?: number;
+      readonly count?: number;
+      delay?: number;
     }
   >,
 ) =>

@@ -100,7 +100,7 @@ ___
 
 ### ConcatAll
 
-Ƭ **ConcatAll**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `concatAll`: <T\>(`options?`: `Partial`<`O`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  }
+Ƭ **ConcatAll**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `concatAll`: <T\>(`options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  }
 
 #### Type parameters
 
@@ -194,7 +194,7 @@ ___
 
 ### Empty
 
-Ƭ **Empty**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `empty`: <T\>(`options?`: `Partial`<`O`\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+Ƭ **Empty**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `empty`: <T\>(`options?`: `O`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
 
 #### Type parameters
 
@@ -255,20 +255,20 @@ ___
 
 ### FromArray
 
-Ƭ **FromArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromArray`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromArray`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | extends `Object` = { `count`: `number` ; `start`: `number`  } |
+| `O` | extends `Object` = { `count?`: `number` ; `start?`: `number`  } |
 
 ___
 
 ### FromAsyncIterable
 
-Ƭ **FromAsyncIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromAsyncIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromAsyncIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromAsyncIterable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
@@ -281,7 +281,7 @@ ___
 
 ### FromIterable
 
-Ƭ **FromIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromIterable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
@@ -294,7 +294,7 @@ ___
 
 ### FromPromise
 
-Ƭ **FromPromise**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromPromise`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromPromise**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromPromise`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
@@ -307,7 +307,7 @@ ___
 
 ### FromSequence
 
-Ƭ **FromSequence**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromSequence`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromSequence**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromSequence`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
@@ -320,7 +320,7 @@ ___
 
 ### FromSet
 
-Ƭ **FromSet**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromSet`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<`ReadonlySet`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromSet**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromSet`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<`ReadonlySet`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
@@ -333,7 +333,7 @@ ___
 
 ### Generate
 
-Ƭ **Generate**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `generate`: <T\>(`generator`: [`Updater`](functions.md#updater)<`T`\>, `initialValue`: [`Factory`](functions.md#factory)<`T`\>, `options?`: `Partial`<`O`\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+Ƭ **Generate**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `generate`: <T\>(`generator`: [`Updater`](functions.md#updater)<`T`\>, `initialValue`: [`Factory`](functions.md#factory)<`T`\>, `options?`: `O`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
 
 #### Type parameters
 
@@ -502,7 +502,7 @@ ___
 
 ### ToAsyncIterable
 
-Ƭ **ToAsyncIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toAsyncIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>\>  }
+Ƭ **ToAsyncIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toAsyncIterable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>\>  }
 
 #### Type parameters
 
@@ -515,7 +515,7 @@ ___
 
 ### ToIterable
 
-Ƭ **ToIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toIterable`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>  }
+Ƭ **ToIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toIterable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>  }
 
 #### Type parameters
 
@@ -541,7 +541,7 @@ ___
 
 ### ToReadonlyArray
 
-Ƭ **ToReadonlyArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlyArray`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>  }
+Ƭ **ToReadonlyArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlyArray`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>  }
 
 #### Type parameters
 
@@ -554,7 +554,7 @@ ___
 
 ### ToReadonlySet
 
-Ƭ **ToReadonlySet**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlySet`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`T`\>\>  }
+Ƭ **ToReadonlySet**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlySet`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`T`\>\>  }
 
 #### Type parameters
 
@@ -567,7 +567,7 @@ ___
 
 ### ToSequence
 
-Ƭ **ToSequence**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toSequence`: <T\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>  }
+Ƭ **ToSequence**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toSequence`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>  }
 
 #### Type parameters
 

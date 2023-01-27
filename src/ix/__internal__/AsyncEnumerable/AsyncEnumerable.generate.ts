@@ -9,7 +9,7 @@ import AsyncEnumerable_create from "./AsyncEnumerable.create";
 
 const AsyncEnumerable_generate: Generate<
   AsyncEnumerableLike,
-  { delay: number }
+  { delay?: number }
 >["generate"] = /*@__PURE__*/ (() => {
   const generateScanner =
     <T>(generator: Updater<T>) =>

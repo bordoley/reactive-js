@@ -151,10 +151,10 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
   })();
 
   return <T>(
-    options: Partial<{
-      readonly maxBufferSize: number;
-      readonly maxConcurrency: number;
-    }> = {},
+    options: {
+      readonly maxBufferSize?: number;
+      readonly maxConcurrency?: number;
+    } = {},
   ): ContainerOperator<C, ContainerOf<C, T>, T> => {
     const {
       maxBufferSize = MAX_SAFE_INTEGER,

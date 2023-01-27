@@ -69,36 +69,31 @@ export interface AsyncEnumerableLike<T = unknown>
 
 export type FromAsyncEnumerable<
   C extends ContainerLike,
-  TOptions = never,
+  O = never,
 > = Container<C> & {
   fromAsyncEnumerable<T>(
-    options?: TOptions,
+    options?: O,
   ): Function1<AsyncEnumerableLike<T>, ContainerOf<C, T>>;
 };
 
 export type FromEnumerable<
   C extends ContainerLike,
-  TOptions = never,
+  O = never,
 > = Container<C> & {
   fromEnumerable<T>(
-    options?: TOptions,
+    options?: O,
   ): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
 };
 
 export type ToAsyncEnumerable<
   C extends ContainerLike,
-  TOptions = never,
+  O = never,
 > = Container<C> & {
   toAsyncEnumerable<T>(
-    options?: TOptions,
+    options?: O,
   ): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
 };
 
-export type ToEnumerable<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
-  toEnumerable<T>(
-    options?: TOptions,
-  ): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+export type ToEnumerable<C extends ContainerLike, O = never> = Container<C> & {
+  toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };

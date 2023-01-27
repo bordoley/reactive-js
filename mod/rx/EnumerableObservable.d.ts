@@ -18,16 +18,16 @@ declare const defer: Defer<EnumerableObservableLike>["defer"];
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
-declare const empty: <T>(options?: Partial<{
+declare const empty: <T>(options?: {
     delay: number;
-}> | undefined) => EnumerableObservableLike<T>;
+} | undefined) => EnumerableObservableLike<T>;
 declare const everySatisfy: <T>(predicate: Predicate<T>) => ContainerOperator<EnumerableObservableLike<unknown>, T, boolean>;
 declare const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"];
 declare const forEach: <T>(effect: SideEffect1<T>) => ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
-declare const fromArray: <T>(options?: Partial<{
-    readonly start: number;
-    readonly count: number;
-}> | undefined) => Function1<readonly T[], EnumerableObservableLike<T>>;
+declare const fromArray: <T>(options?: {
+    readonly start?: number | undefined;
+    readonly count?: number | undefined;
+} | undefined) => Function1<readonly T[], EnumerableObservableLike<T>>;
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: undefined) => EnumerableObservableLike<T>;
 declare const keep: <T>(predicate: Predicate<T>) => ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<EnumerableObservableLike<unknown>, TA, TB>;
@@ -62,9 +62,9 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ContainerOperator<
 declare const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"];
 declare const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"];
 declare const toPromise: ToPromiseable<EnumerableObservableLike, SchedulerLike>["toPromise"];
-declare const toReadonlyArray: <T>(options?: Partial<{
+declare const toReadonlyArray: <T>(options?: {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-}> | undefined) => Function1<EnumerableObservableLike<T>, ReadonlyArrayLike<T>>;
+} | undefined) => Function1<EnumerableObservableLike<T>, ReadonlyArrayLike<T>>;
 declare const toRunnable: <T>(options?: undefined) => Function1<EnumerableObservableLike<T>, RunnableLike<T>>;
 declare const zip: {
     <TA, TB>(a: EnumerableObservableLike<TA>, b: EnumerableObservableLike<TB>): EnumerableObservableLike<readonly [

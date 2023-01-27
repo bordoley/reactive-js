@@ -18,22 +18,22 @@ declare const defer: Defer<RunnableObservableLike>["defer"];
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-declare const empty: <T>(options?: Partial<{
+declare const empty: <T>(options?: {
     delay: number;
-}> | undefined) => RunnableObservableLike<T>;
+} | undefined) => RunnableObservableLike<T>;
 declare const everySatisfy: <T>(predicate: Predicate<T>) => ContainerOperator<RunnableObservableLike<unknown>, T, boolean>;
 declare const exhaust: ConcatAll<RunnableObservableLike>["concatAll"];
 declare const forEach: <T>(effect: SideEffect1<T>) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-declare const fromArray: <T>(options?: Partial<{
+declare const fromArray: <T>(options?: {
+    readonly delay?: number | undefined;
+    readonly delayStart?: boolean | undefined;
+    readonly start?: number | undefined;
+    readonly count?: number | undefined;
+} | undefined) => Function1<readonly T[], RunnableObservableLike<T>>;
+declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
     readonly delay: number;
     readonly delayStart: boolean;
-    readonly start: number;
-    readonly count: number;
-}> | undefined) => Function1<readonly T[], RunnableObservableLike<T>>;
-declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: Partial<{
-    readonly delay: number;
-    readonly delayStart: boolean;
-}> | undefined) => RunnableObservableLike<T>;
+} | undefined) => RunnableObservableLike<T>;
 declare const keep: <T>(predicate: Predicate<T>) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<RunnableObservableLike<unknown>, TA, TB>;
 declare const merge: <T>(fst: RunnableObservableLike<T>, snd: RunnableObservableLike<T>, ...tail: readonly RunnableObservableLike<T>[]) => RunnableObservableLike<T>;
@@ -67,9 +67,9 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ContainerOperator<
 declare const toEnumerable: ToEnumerable<RunnableObservableLike>["toEnumerable"];
 declare const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"];
 declare const toPromise: ToPromiseable<RunnableObservableLike, SchedulerLike>["toPromise"];
-declare const toReadonlyArray: <T>(options?: Partial<{
+declare const toReadonlyArray: <T>(options?: {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-}> | undefined) => Function1<RunnableObservableLike<T>, ReadonlyArrayLike<T>>;
+} | undefined) => Function1<RunnableObservableLike<T>, ReadonlyArrayLike<T>>;
 declare const toRunnable: <T>(options?: undefined) => Function1<RunnableObservableLike<T>, RunnableLike<T>>;
 declare const zip: {
     <TA, TB>(a: RunnableObservableLike<TA>, b: RunnableObservableLike<TB>): RunnableObservableLike<readonly [

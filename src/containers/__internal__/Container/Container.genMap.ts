@@ -16,7 +16,7 @@ const Container_genMap = <
 >(
   m: Map<C> & ConcatAll<C, OConcatAll> & FromIterable<C, OFromIterable>,
   mapper: Function1<TA, Generator<TB, any, any>>,
-  options?: Partial<OConcatAll & OFromIterable>,
+  options?: OConcatAll & OFromIterable,
 ): ContainerOperator<C, TA, TB> =>
   compose(
     m.map(x => pipe(x, mapper, m.fromIterable<TB>(options))),

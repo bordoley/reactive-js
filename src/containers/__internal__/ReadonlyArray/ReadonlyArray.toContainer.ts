@@ -6,24 +6,24 @@ const ReadonlyArray_toContainer =
     C,
     T,
     O extends {
-      readonly start: number;
-      readonly count: number;
+      readonly start?: number;
+      readonly count?: number;
     } = {
-      readonly start: number;
-      readonly count: number;
+      readonly start?: number;
+      readonly count?: number;
     },
   >(
     factory: (
       values: readonly T[],
       start: number,
       count: number,
-      options?: Partial<O>,
+      options?: O,
     ) => C,
   ) =>
-  (options: Partial<O> = {}): Function1<ReadonlyArrayLike<T>, C> =>
+  (options?: O): Function1<ReadonlyArrayLike<T>, C> =>
   values => {
     const valuesLength = getLength(values);
-    const { start: startOption, count: countOption } = options;
+    const { start: startOption, count: countOption } = options ?? {};
 
     const { start, count } = (() => {
       if (isSome(countOption) && countOption >= 0) {

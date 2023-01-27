@@ -107,7 +107,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `count`: `number` ; `start`: `number`  }\> |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 
@@ -359,7 +361,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `count`: `number` ; `start`: `number`  }\> |
+| `options?` | `Object` |
+| `options.count` | `number` |
+| `options.start` | `number` |
 
 #### Returns
 
@@ -403,7 +407,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `count?`: `number` ; `delay?`: `number` ; `delayStart?`: `boolean` ; `start?`: `number`  }\> |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
 
 #### Returns
 

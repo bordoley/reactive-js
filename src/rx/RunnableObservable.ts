@@ -118,10 +118,10 @@ export const forEach =
 export const fromArray = Observable_fromArray as FromArray<
   RunnableObservableLike,
   {
-    readonly delay: number;
-    readonly delayStart: boolean;
-    readonly start: number;
-    readonly count: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+    readonly count?: number;
   }
 >["fromArray"];
 

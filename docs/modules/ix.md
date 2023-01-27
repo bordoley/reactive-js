@@ -24,50 +24,50 @@
 
 ### FromAsyncEnumerable
 
-Ƭ **FromAsyncEnumerable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `fromAsyncEnumerable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromAsyncEnumerable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromAsyncEnumerable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 
 ### FromEnumerable
 
-Ƭ **FromEnumerable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `fromEnumerable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromEnumerable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromEnumerable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 
 ### ToAsyncEnumerable
 
-Ƭ **ToAsyncEnumerable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toAsyncEnumerable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>  }
+Ƭ **ToAsyncEnumerable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toAsyncEnumerable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |
 
 ___
 
 ### ToEnumerable
 
-Ƭ **ToEnumerable**<`C`, `TOptions`\>: [`Container`](containers.md#container)<`C`\> & { `toEnumerable`: <T\>(`options?`: `TOptions`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>  }
+Ƭ **ToEnumerable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toEnumerable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `TOptions` | `never` |
+| `O` | `never` |

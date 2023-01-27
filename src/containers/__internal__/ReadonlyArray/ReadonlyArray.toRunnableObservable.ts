@@ -17,10 +17,10 @@ import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
 const ReadonlyArray_toRunnableObservable: ToRunnableObservable<
   ReadonlyArrayLike,
   {
-    readonly delay: number;
-    readonly delayStart: boolean;
-    readonly start: number;
-    readonly count: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+    readonly count?: number;
   }
 >["toRunnableObservable"] = /*@__PURE__*/ (<T>() =>
   ReadonlyArray_toContainer(
