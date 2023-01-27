@@ -128,7 +128,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `maxBufferSize?`: `number`  }\> |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
 
 #### Returns
 
@@ -233,7 +234,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `delay`: `number`  }\> |
+| `options?` | `Object` |
+| `options.delay` | `number` |
 
 #### Returns
 
@@ -321,7 +323,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `count`: `number` ; `delay`: `number` ; `delayStart`: `boolean` ; `start`: `number`  }\> |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
 
 #### Returns
 
@@ -345,7 +351,9 @@ ___
 | :------ | :------ |
 | `generator` | [`Updater`](functions.md#updater)<`T`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `Partial`<{ `delay`: `number` ; `delayStart`: `boolean`  }\> |
+| `options?` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart` | `boolean` |
 
 #### Returns
 
@@ -436,7 +444,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `maxBufferSize?`: `number` ; `maxConcurrency?`: `number`  }\> |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+| `options.maxConcurrency?` | `number` |
 
 #### Returns
 
@@ -787,7 +797,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }\> |
+| `options?` | `Object` |
+| `options.schedulerFactory` | [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\> |
 
 #### Returns
 

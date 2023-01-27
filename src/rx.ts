@@ -153,38 +153,30 @@ export type ScanAsync<
   ) => ContainerOperator<C, T, TAcc>;
 };
 
-export type ToObservable<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
+export type ToObservable<C extends ContainerLike, O = never> = Container<C> & {
   toObservable: <T>(
-    options?: TOptions,
+    options?: O,
   ) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 };
 
 export type ToRunnableObservable<
   C extends ContainerLike,
-  TOptions = never,
+  O = never,
 > = Container<C> & {
   toRunnableObservable: <T>(
-    options?: Partial<TOptions>,
+    options?: O,
   ) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
 };
 
 export type ToEnumerableObservable<
   C extends ContainerLike,
-  TOptions = never,
+  O = never,
 > = Container<C> & {
   toEnumerableObservable: <T>(
-    options?: TOptions,
+    options?: O,
   ) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
 };
 
-export type ToRunnable<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
-  toRunnable<T>(
-    options?: TOptions,
-  ): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+export type ToRunnable<C extends ContainerLike, O = never> = Container<C> & {
+  toRunnable<T>(options?: O): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };

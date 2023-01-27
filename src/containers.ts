@@ -120,9 +120,7 @@ export type Concat<C extends ContainerLike> = Container<C> & {
 };
 
 export type ConcatAll<C extends ContainerLike, O = never> = Container<C> & {
-  concatAll: <T>(
-    options?: Partial<O>,
-  ) => ContainerOperator<C, ContainerOf<C, T>, T>;
+  concatAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
 };
 
 export type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
@@ -146,7 +144,7 @@ export type EverySatisfy<C extends ContainerLike> = Container<C> & {
 };
 
 export type Empty<C extends ContainerLike, O = never> = Container<C> & {
-  empty<T>(options?: Partial<O>): ContainerOf<C, T>;
+  empty<T>(options?: O): ContainerOf<C, T>;
 };
 
 export type ForEach<C extends ContainerLike> = Container<C> & {
@@ -227,16 +225,14 @@ export type ForkZip<C extends ContainerLike> = Container<C> & {
 export type FromArray<
   C extends ContainerLike,
   O extends {
-    readonly start: number;
-    readonly count: number;
+    readonly start?: number;
+    readonly count?: number;
   } = {
-    readonly start: number;
-    readonly count: number;
+    readonly start?: number;
+    readonly count?: number;
   },
 > = Container<C> & {
-  fromArray<T>(
-    options?: Partial<O>,
-  ): Function1<readonly T[], ContainerOf<C, T>>;
+  fromArray<T>(options?: O): Function1<readonly T[], ContainerOf<C, T>>;
 };
 
 export type FromAsyncIterable<
@@ -244,39 +240,31 @@ export type FromAsyncIterable<
   O = never,
 > = Container<C> & {
   fromAsyncIterable<T>(
-    options?: Partial<O>,
+    options?: O,
   ): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
 };
 
 export type FromIterable<C extends ContainerLike, O = never> = Container<C> & {
-  fromIterable<T>(
-    options?: Partial<O>,
-  ): Function1<Iterable<T>, ContainerOf<C, T>>;
+  fromIterable<T>(options?: O): Function1<Iterable<T>, ContainerOf<C, T>>;
 };
 
 export type FromPromise<C extends ContainerLike, O = never> = Container<C> & {
-  fromPromise<T>(
-    options?: Partial<O>,
-  ): Function1<PromiseableLike<T>, ContainerOf<C, T>>;
+  fromPromise<T>(options?: O): Function1<PromiseableLike<T>, ContainerOf<C, T>>;
 };
 
 export type FromSequence<C extends ContainerLike, O = never> = Container<C> & {
-  fromSequence<T>(
-    options?: Partial<O>,
-  ): Function1<SequenceLike<T>, ContainerOf<C, T>>;
+  fromSequence<T>(options?: O): Function1<SequenceLike<T>, ContainerOf<C, T>>;
 };
 
 export type FromSet<C extends ContainerLike, O = never> = Container<C> & {
-  fromSet<T>(
-    options?: Partial<O>,
-  ): Function1<ReadonlySet<T>, ContainerOf<C, T>>;
+  fromSet<T>(options?: O): Function1<ReadonlySet<T>, ContainerOf<C, T>>;
 };
 
 export type Generate<C extends ContainerLike, O = never> = Container<C> & {
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
-    options?: Partial<O>,
+    options?: O,
   ): ContainerOf<C, T>;
 };
 
@@ -354,14 +342,12 @@ export type ToAsyncIterable<
   O = never,
 > = Container<C> & {
   toAsyncIterable<T>(
-    options?: Partial<O>,
+    options?: O,
   ): Function1<ContainerOf<C, T>, AsyncIterableLike<T>>;
 };
 
 export type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
-  toIterable<T>(
-    options?: Partial<O>,
-  ): Function1<ContainerOf<C, T>, IterableLike<T>>;
+  toIterable<T>(options?: O): Function1<ContainerOf<C, T>, IterableLike<T>>;
 };
 
 export type ToPromiseable<
@@ -376,19 +362,17 @@ export type ToReadonlyArray<
   O = never,
 > = Container<C> & {
   toReadonlyArray<T>(
-    options?: Partial<O>,
+    options?: O,
   ): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
 };
 
 export type ToSequence<C extends ContainerLike, O = never> = Container<C> & {
-  toSequence<T>(
-    options?: Partial<O>,
-  ): Function1<ContainerOf<C, T>, SequenceLike<T>>;
+  toSequence<T>(options?: O): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 };
 
 export type ToReadonlySet<C extends ContainerLike, O = never> = Container<C> & {
   toReadonlySet<T>(
-    options?: Partial<O>,
+    options?: O,
   ): Function1<ContainerOf<C, T>, ReadonlySetLike<T>>;
 };
 

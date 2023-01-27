@@ -671,7 +671,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `delay?`: `number` ; `delayStart?`: `boolean`  }\> |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 

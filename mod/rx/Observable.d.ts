@@ -52,12 +52,12 @@ declare const forEach: <T>(effect: SideEffect1<T>) => ContainerOperator<Observab
 declare const forkCombineLatest: ForkZip<ObservableLike>["forkZip"];
 declare const forkMerge: ForkConcat<ObservableLike>["forkConcat"];
 declare const forkZipLatest: ForkZip<ObservableLike>["forkZip"];
-declare const fromArray: <T>(options?: Partial<{
+declare const fromArray: <T>(options?: {
     readonly delay: number;
     readonly delayStart: boolean;
     readonly start: number;
     readonly count: number;
-}> | undefined) => Function1<readonly T[], ObservableLike<T>>;
+} | undefined) => Function1<readonly T[], ObservableLike<T>>;
 declare const fromDisposable: <T>() => Function1<DisposableLike, ObservableLike<T>>;
 declare const fromFlowable: <T>(options?: undefined) => Function1<FlowableLike<T>, ObservableLike<T>>;
 declare const fromPromise: FromPromise<ObservableLike>["fromPromise"];

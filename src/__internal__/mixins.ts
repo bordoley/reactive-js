@@ -231,6 +231,7 @@ export const createInstanceFactory: CreateInstanceFactory = <TReturn>(
 
   return (...args: readonly any[]) => {
     const instance: unknown = createObject(prototype, propertyDescription);
+    debugger;
     initUnsafe(mixin, instance, ...args);
     return instance;
   };

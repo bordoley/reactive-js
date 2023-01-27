@@ -83,16 +83,16 @@ type FromObservable<C extends ContainerLike> = Container<C> & {
 type ScanAsync<C extends ContainerLike, CInner extends ObservableLike> = Container<C> & {
     scanAsync: <T, TAcc>(scanner: AsyncReducer<CInner, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
 };
-type ToObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toObservable: <T>(options?: TOptions) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
+type ToObservable<C extends ContainerLike, O = never> = Container<C> & {
+    toObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 };
-type ToRunnableObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toRunnableObservable: <T>(options?: Partial<TOptions>) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
+type ToRunnableObservable<C extends ContainerLike, O = never> = Container<C> & {
+    toRunnableObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
 };
-type ToEnumerableObservable<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toEnumerableObservable: <T>(options?: TOptions) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
+type ToEnumerableObservable<C extends ContainerLike, O = never> = Container<C> & {
+    toEnumerableObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
 };
-type ToRunnable<C extends ContainerLike, TOptions = never> = Container<C> & {
-    toRunnable<T>(options?: TOptions): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+type ToRunnable<C extends ContainerLike, O = never> = Container<C> & {
+    toRunnable<T>(options?: O): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
 export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable };

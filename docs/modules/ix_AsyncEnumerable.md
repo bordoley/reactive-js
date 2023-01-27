@@ -33,7 +33,9 @@
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `count`: `number` ; `start`: `number`  }\> |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 
@@ -84,7 +86,8 @@ that is applied to an accumulator value.
 | :------ | :------ | :------ |
 | `generator` | [`Updater`](functions.md#updater)<`T`\> | The generator function. |
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function to generate the initial accumulator. |
-| `options?` | `Partial`<{ `delay`: `number`  }\> | - |
+| `options?` | `Object` | - |
+| `options.delay` | `number` | - |
 
 #### Returns
 

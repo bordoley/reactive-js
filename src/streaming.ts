@@ -45,20 +45,10 @@ export interface FlowableLike<T = unknown>
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 
-export type FromFlowable<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
-  fromFlowable<T>(
-    options?: TOptions,
-  ): Function1<FlowableLike<T>, ContainerOf<C, T>>;
+export type FromFlowable<C extends ContainerLike, O = never> = Container<C> & {
+  fromFlowable<T>(options?: O): Function1<FlowableLike<T>, ContainerOf<C, T>>;
 };
 
-export type ToFlowable<
-  C extends ContainerLike,
-  TOptions = never,
-> = Container<C> & {
-  toFlowable<T>(
-    options?: TOptions,
-  ): Function1<ContainerOf<C, T>, FlowableLike<T>>;
+export type ToFlowable<C extends ContainerLike, O = never> = Container<C> & {
+  toFlowable<T>(options?: O): Function1<ContainerOf<C, T>, FlowableLike<T>>;
 };

@@ -401,7 +401,8 @@ Converts a higher-order `ObservableLike` into a first-order
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `maxBufferSize?`: `number`  }\> |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
 
 #### Returns
 
@@ -1092,7 +1093,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `count`: `number` ; `delay`: `number` ; `delayStart`: `boolean` ; `start`: `number`  }\> |
+| `options?` | `Object` |
+| `options.count` | `number` |
+| `options.delay` | `number` |
+| `options.delayStart` | `boolean` |
+| `options.start` | `number` |
 
 #### Returns
 
@@ -1343,7 +1348,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `maxBufferSize?`: `number` ; `maxConcurrency?`: `number`  }\> |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+| `options.maxConcurrency?` | `number` |
 
 #### Returns
 

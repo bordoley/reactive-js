@@ -14,10 +14,10 @@ import ReadonlyArray_toRunnableObservable from "./ReadonlyArray.toRunnableObserv
 const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
   ReadonlyArrayLike,
   {
-    readonly delay: number;
-    readonly delayStart: boolean;
-    readonly start: number;
-    readonly count: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+    readonly count?: number;
   }
 >["toAsyncEnumerable"] = /*@__PURE__*/ (<T>() =>
   ReadonlyArray_toContainer(

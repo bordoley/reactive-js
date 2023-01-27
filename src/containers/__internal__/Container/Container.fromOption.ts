@@ -6,16 +6,16 @@ const Container_fromOption =
     C extends ContainerLike,
     T,
     O extends {
-      readonly start: number;
-      readonly count: number;
+      readonly start?: number;
+      readonly count?: number;
     } = {
-      readonly start: number;
-      readonly count: number;
+      readonly start?: number;
+      readonly count?: number;
     },
   >(
     { fromArray }: FromArray<C, O>,
     // FIXME: How do we omit the start/count options sanely
-    options?: Partial<O>,
+    options?: O,
   ): Function1<Optional<T>, ContainerOf<C, T>> =>
   option =>
     pipe(isSome(option) ? [option] : [], fromArray<T>(options));

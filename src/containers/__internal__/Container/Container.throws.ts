@@ -13,15 +13,15 @@ const Container_throws =
     C extends ContainerLike,
     T,
     O extends {
-      readonly start: number;
-      readonly count: number;
+      readonly start?: number;
+      readonly count?: number;
     } = {
-      readonly start: number;
-      readonly count: number;
+      readonly start?: number;
+      readonly count?: number;
     },
   >(
     m: Map<C> & FromArray<C, O>,
-    options?: Omit<Partial<O>, "start" | "count">,
+    options?: Omit<O, "start" | "count">,
   ): Function1<Factory<unknown>, ContainerOf<C, T>> =>
   (errorFactory): ContainerOf<C, T> =>
     pipe(() => {

@@ -61,6 +61,7 @@ const createInstanceFactory = (mixin) => {
     const prototype = createObject(objectPrototype, prototypeDescription);
     return (...args) => {
         const instance = createObject(prototype, propertyDescription);
+        debugger;
         initUnsafe(mixin, instance, ...args);
         return instance;
     };
