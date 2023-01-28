@@ -19,7 +19,7 @@ import {
   toPromise,
 } from "../../rx/Observable";
 import { createHostScheduler } from "../../scheduling/Scheduler";
-import { FlowMode } from "../../streaming";
+import { FlowMode, FlowMode_pause } from "../../streaming";
 import { toObservable as flowableToObservable } from "../../streaming/Flowable";
 import { sourceFrom } from "../../streaming/Stream";
 import { stream } from "../../streaming/Streamable";
@@ -71,7 +71,7 @@ testModule(
               fromArray,
               concat,
             },
-            "pause",
+            FlowMode_pause,
           ),
           toPromise(scheduler),
         );

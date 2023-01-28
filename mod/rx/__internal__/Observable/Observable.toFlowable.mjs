@@ -1,6 +1,7 @@
 /// <reference types="./Observable.toFlowable.d.ts" />
 import { pipe } from '../../../functions.mjs';
 import Scheduler_toPausableScheduler from '../../../scheduling/__internal__/Scheduler/Scheduler.toPausableScheduler.mjs';
+import { FlowMode_resume, FlowMode_pause } from '../../../streaming.mjs';
 import Flowable_createLifted from '../../../streaming/__internal__/Flowable/Flowable.createLifted.mjs';
 import Disposable_add from '../../../util/__internal__/Disposable/Disposable.add.mjs';
 import Disposable_bindTo from '../../../util/__internal__/Disposable/Disposable.bindTo.mjs';
@@ -22,10 +23,10 @@ const Observable_toFlowable = () => observable => Observable_isRunnable(observab
         const pausableScheduler = pipe(observer, Observer_getScheduler, Scheduler_toPausableScheduler);
         pipe(observer, Sink_sourceFrom(pipe(observable, Observable_subscribeOn(pausableScheduler), Observable_takeUntil(pipe(pausableScheduler, Disposable_toObservable())))), Disposable_add(pipe(modeObs, Observable_forEach(mode => {
             switch (mode) {
-                case "pause":
+                case FlowMode_pause:
                     Pauseable_pause(pausableScheduler);
                     break;
-                case "resume":
+                case FlowMode_resume:
                     Pauseable_resume(pausableScheduler);
                     break;
             }

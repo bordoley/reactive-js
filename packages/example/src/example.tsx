@@ -10,7 +10,11 @@ import {
   __stream,
 } from "@reactive-js/core/effects";
 import * as Observable from "@reactive-js/core/rx/Observable";
-import { FlowMode } from "@reactive-js/core/streaming";
+import {
+  FlowMode,
+  FlowMode_pause,
+  FlowMode_resume,
+} from "@reactive-js/core/streaming";
 import {
   createComponent,
   createReactNormalPriorityScheduler,
@@ -61,14 +65,15 @@ const createActions = (
     ),
   toggleStateMode: () =>
     pipe(
-      (mode: FlowMode) => (mode === "pause" ? "resume" : "pause"),
+      (mode: FlowMode) =>
+        mode === FlowMode_pause ? FlowMode_resume : FlowMode_pause,
       Dispatcher.dispatchTo(stateDispatcher),
     ),
   setCounterMode: (mode: FlowMode) =>
     pipe(counterDispatcher, Dispatcher.dispatch(mode)),
 });
 
-const initialFlowModeState = () => "pause" as FlowMode;
+const initialFlowModeState = (): FlowMode => FlowMode_pause;
 
 const StreamPauseResume = createComponent(() =>
   async(() => {
@@ -87,7 +92,7 @@ const StreamPauseResume = createComponent(() =>
     const value = __observe(counter) ?? 0;
     __do(onValueChanged, value);
 
-    const label = mode === "resume" ? "PAUSE" : "RESUME";
+    const label = mode === FlowMode_resume ? "PAUSE" : "RESUME";
 
     return (
       <>
