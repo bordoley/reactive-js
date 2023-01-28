@@ -36,7 +36,6 @@ import Queue_create from "../../../util/__internal__/Queue/Queue.create";
 import Queue_pop from "../../../util/__internal__/Queue/Queue.pop";
 import Queue_push from "../../../util/__internal__/Queue/Queue.push";
 import { QueueLike } from "../../../util/__internal__/util.internal";
-import Continuation_run from "../Continuation/Continuation.run";
 import { getDelay } from "../Scheduler.options";
 import getCurrentTime from "../Scheduler/Scheduler.getCurrentTime";
 
@@ -124,7 +123,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
           this.microTaskTicks = 0;
           this[SchedulerLike_now] = dueTime;
           this[SchedulerLike_inContinuation] = true;
-          Continuation_run(continuation);
+          continuation[ContinuationLike_run]();
           this[SchedulerLike_inContinuation] = false;
         }
       },

@@ -2,11 +2,9 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import StatefulContainer_map from '../../../containers/__internal__/StatefulContainer/StatefulContainer.map.mjs';
 import { pipe, none, error } from '../../../functions.mjs';
-import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
+import { SourceLike_move, EnumeratorLike_hasCurrent, EnumeratorLike_current } from '../../../ix.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Enumerator_getCurrent from '../Enumerator/Enumerator.getCurrent.mjs';
-import Enumerator_move from '../Enumerator/Enumerator.move.mjs';
 import MutableEnumerator_mixin from '../MutableEnumerator/MutableEnumerator.mixin.mjs';
 import Enumerable_liftT from './Enumerable.liftT.mjs';
 
@@ -24,13 +22,15 @@ const Enumerable_map = /*@__PURE__*/ (() => {
     }), {
         [SourceLike_move]() {
             const { delegate } = this;
-            if (Enumerator_move(delegate)) {
-                try {
-                    this[EnumeratorLike_current] = this.mapper(Enumerator_getCurrent(delegate));
-                }
-                catch (e) {
-                    pipe(this, Disposable_dispose(error(e)));
-                }
+            delegate[SourceLike_move]();
+            if (!delegate[EnumeratorLike_hasCurrent]) {
+                return;
+            }
+            try {
+                this[EnumeratorLike_current] = this.mapper(delegate[EnumeratorLike_current]);
+            }
+            catch (e) {
+                pipe(this, Disposable_dispose(error(e)));
             }
         },
     })), StatefulContainer_map(Enumerable_liftT));

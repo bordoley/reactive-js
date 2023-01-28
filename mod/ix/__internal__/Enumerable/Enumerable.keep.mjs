@@ -2,12 +2,11 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import StatefulContainer_keep from '../../../containers/__internal__/StatefulContainer/StatefulContainer.keep.mjs';
 import { pipe, none, error } from '../../../functions.mjs';
-import { SourceLike_move } from '../../../ix.mjs';
+import { SourceLike_move, EnumeratorLike_hasCurrent, EnumeratorLike_current } from '../../../ix.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
 import DelegatingEnumerator_mixin from '../DelegatingEnumerator/DelegatingEnumerator.mixin.mjs';
-import DelegatingEnumerator_move from '../DelegatingEnumerator/DelegatingEnumerator.move.mjs';
-import Enumerator_getCurrent from '../Enumerator/Enumerator.getCurrent.mjs';
+import { DelegatingEnumeratorLike_delegate } from '../ix.internal.mjs';
 import Enumerable_liftT from './Enumerable.liftT.mjs';
 
 const Enumerable_keep = /*@__PURE__*/ (() => {
@@ -21,8 +20,9 @@ const Enumerable_keep = /*@__PURE__*/ (() => {
         [SourceLike_move]() {
             const { predicate } = this;
             try {
-                while (DelegatingEnumerator_move(this) &&
-                    !predicate(Enumerator_getCurrent(this))) { }
+                while ((this[DelegatingEnumeratorLike_delegate][SourceLike_move](),
+                    this[DelegatingEnumeratorLike_delegate][EnumeratorLike_hasCurrent]) &&
+                    !predicate(this[EnumeratorLike_current])) { }
             }
             catch (e) {
                 pipe(this, Disposable_dispose(error(e)));

@@ -10,8 +10,8 @@ import Observer_schedule from "../../../rx/__internal__/Observer/Observer.schedu
 import RunnableObservable_create from "../../../rx/__internal__/RunnableObservable/RunnableObservable.create";
 import Continuation_yield_ from "../../../scheduling/__internal__/Continuation/Continuation.yield";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
+import { DisposableLike_isDisposed } from "../../../util";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
 
 const ReadonlyArray_toRunnableObservable: ToRunnableObservable<
@@ -32,7 +32,7 @@ const ReadonlyArray_toRunnableObservable: ToRunnableObservable<
           cnt = count;
 
         const continuation = () => {
-          while (!Disposable_isDisposed(observer) && cnt !== 0) {
+          while (!observer[DisposableLike_isDisposed] && cnt !== 0) {
             const value = values[index];
             if (cnt > 0) {
               index++;
