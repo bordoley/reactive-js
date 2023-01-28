@@ -6,15 +6,16 @@ import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable
 import Enumerator_empty from '../Enumerator/Enumerator.empty.mjs';
 
 const Enumerable_create = /*@__PURE__*/ (() => {
+    const CreateEnumerable_enumerate = Symbol("CreateEnumerable_enumerate");
     return createInstanceFactory(mix(function CreateEnumerable(instance, enumerate) {
-        instance.enumerate = enumerate;
+        instance[CreateEnumerable_enumerate] = enumerate;
         return instance;
     }, props({
-        enumerate: none,
+        [CreateEnumerable_enumerate]: none,
     }), {
         [InteractiveContainerLike_interact]() {
             try {
-                return this.enumerate();
+                return this[CreateEnumerable_enumerate]();
             }
             catch (e) {
                 const emptyEnumerator = Enumerator_empty();
