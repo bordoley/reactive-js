@@ -16,8 +16,10 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
   /*@__PURE__*/ (<T>() => {
     const typedObserverMixin = Observer_mixin<T>();
 
+    const DelegatingObserver_delegate = Symbol("DelegatingObserver_delegate");
+
     type TProperties = {
-      delegate: ObserverLike<T>;
+      [DelegatingObserver_delegate]: ObserverLike<T>;
     };
 
     return createInstanceFactory(
@@ -31,16 +33,16 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
           init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, Observer_getScheduler(observer));
 
-          instance.delegate = observer;
+          instance[DelegatingObserver_delegate] = observer;
 
           return instance;
         },
         props<TProperties>({
-          delegate: none,
+          [DelegatingObserver_delegate]: none,
         }),
         {
           [SinkLike_notify](this: TProperties, next: T) {
-            this.delegate[SinkLike_notify](next);
+            this[DelegatingObserver_delegate][SinkLike_notify](next);
           },
         },
       ),

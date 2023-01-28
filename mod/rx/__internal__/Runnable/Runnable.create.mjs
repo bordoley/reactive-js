@@ -6,15 +6,16 @@ import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable
 
 const Runnable_create = 
 /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(function Runnable(instance, run) {
-        instance.run = run;
+    const Runnable_effect = Symbol("Runnable_effect");
+    return createInstanceFactory(mix(function Runnable(instance, effect) {
+        instance[Runnable_effect] = effect;
         return instance;
     }, props({
-        run: none,
+        [Runnable_effect]: none,
     }), {
         [ReactiveContainerLike_sinkInto](sink) {
             try {
-                this.run(sink);
+                this[Runnable_effect](sink);
                 pipe(sink, Disposable_dispose());
             }
             catch (e) {

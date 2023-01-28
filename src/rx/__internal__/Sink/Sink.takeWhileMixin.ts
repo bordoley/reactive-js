@@ -19,23 +19,19 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
   Predicate<T>,
   boolean
 > = /*@__PURE__*/ (<T>() => {
-  const TakeWhileSink_private_predicate = Symbol(
-    "TakeWhileSink_private_predicate",
-  );
-  const TakeWhileSink_private_inclusive = Symbol(
-    "TakeWhileSink_private_inclusive",
-  );
+  const TakeWhileSinkMixin_predicate = Symbol("TakeWhileSinkMixin_predicate");
+  const TakeWhileSinkMixin_inclusive = Symbol("TakeWhileSinkMixin_inclusive");
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
-    readonly [TakeWhileSink_private_predicate]: Predicate<T>;
-    readonly [TakeWhileSink_private_inclusive]: boolean;
+    readonly [TakeWhileSinkMixin_predicate]: Predicate<T>;
+    readonly [TakeWhileSinkMixin_inclusive]: boolean;
   };
 
   return returns(
     mix(
       include(Disposable_delegatingMixin),
-      function TakeWhileSink(
+      function TakeWhileSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
@@ -45,22 +41,21 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
         init(Disposable_delegatingMixin, instance, delegate);
 
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[TakeWhileSink_private_predicate] = predicate;
-        instance[TakeWhileSink_private_inclusive] = inclusive;
+        instance[TakeWhileSinkMixin_predicate] = predicate;
+        instance[TakeWhileSinkMixin_inclusive] = inclusive;
 
         return instance;
       },
       props<TProperties>({
         [DelegatingSinkLike_delegate]: none,
-        [TakeWhileSink_private_predicate]: none,
-        [TakeWhileSink_private_inclusive]: none,
+        [TakeWhileSinkMixin_predicate]: none,
+        [TakeWhileSinkMixin_inclusive]: none,
       }),
       {
         [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-          const satisfiesPredicate =
-            this[TakeWhileSink_private_predicate](next);
+          const satisfiesPredicate = this[TakeWhileSinkMixin_predicate](next);
 
-          if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
+          if (satisfiesPredicate || this[TakeWhileSinkMixin_inclusive]) {
             this[DelegatingSinkLike_delegate][SinkLike_notify](next);
           }
 

@@ -8,18 +8,19 @@ import Dispatcher_dispatch from '../../../scheduling/__internal__/Dispatcher/Dis
 import Dispatcher_getScheduler from '../../../scheduling/__internal__/Dispatcher/Dispatcher.getScheduler.mjs';
 
 const DelegatingAsyncEnumerator_mixin = /*@__PURE__*/ (() => {
-    return pipe(mix(function DelegatingAsyncEnumerator(instance, delegate) {
-        instance.delegate = delegate;
+    const DelegatingAsyncEnumeratorMixin_delegate = Symbol("DelegatingAsyncEnumeratorMixin_delegate");
+    return pipe(mix(function DelegatingAsyncEnumeratorMixin(instance, delegate) {
+        instance[DelegatingAsyncEnumeratorMixin_delegate] = delegate;
         return instance;
     }, props({
-        delegate: none,
+        [DelegatingAsyncEnumeratorMixin_delegate]: none,
     }), {
         [DispatcherLike_dispatch](_) {
-            pipe(this.delegate, Dispatcher_dispatch(none));
+            pipe(this[DelegatingAsyncEnumeratorMixin_delegate], Dispatcher_dispatch(none));
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            return Dispatcher_getScheduler(this.delegate);
+            return Dispatcher_getScheduler(this[DelegatingAsyncEnumeratorMixin_delegate]);
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

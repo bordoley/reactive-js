@@ -13,13 +13,13 @@ import Disposable_onDisposed from "./Disposable.onDisposed";
 
 const Disposable_delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
   /*@__PURE__*/ (() => {
-    const DelegatingDisposable_private_delegate = Symbol(
-      "DelegatingDisposable_private_delegate",
+    const DelegatingDisposableMixin_delegate = Symbol(
+      "DelegatingDisposableMixin_delegate",
     );
 
     type TProperties = {
       [DisposableLike_isDisposed]: boolean;
-      readonly [DelegatingDisposable_private_delegate]: DisposableLike;
+      readonly [DelegatingDisposableMixin_delegate]: DisposableLike;
     };
 
     return mix(
@@ -33,7 +33,7 @@ const Disposable_delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
           Mutable<TProperties>,
         delegate: DisposableLike,
       ): DisposableLike {
-        instance[DelegatingDisposable_private_delegate] = delegate;
+        instance[DelegatingDisposableMixin_delegate] = delegate;
 
         pipe(
           delegate,
@@ -45,14 +45,14 @@ const Disposable_delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
         return instance;
       },
       props<TProperties>({
-        [DelegatingDisposable_private_delegate]: none,
+        [DelegatingDisposableMixin_delegate]: none,
         [DisposableLike_isDisposed]: false,
       }),
       {
         get [DisposableLike_error](): Optional<Error> {
           unsafeCast<TProperties>(this);
 
-          const delegate = this[DelegatingDisposable_private_delegate];
+          const delegate = this[DelegatingDisposableMixin_delegate];
           return delegate[DisposableLike_error];
         },
         [DisposableLike_add](
@@ -60,12 +60,12 @@ const Disposable_delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
           disposable: DisposableOrTeardown,
           ignoreChildErrors: boolean,
         ) {
-          const delegate = this[DelegatingDisposable_private_delegate];
+          const delegate = this[DelegatingDisposableMixin_delegate];
           delegate[DisposableLike_add](disposable, ignoreChildErrors);
         },
         [DisposableLike_dispose](this: TProperties, error?: Error) {
           pipe(
-            this[DelegatingDisposable_private_delegate],
+            this[DelegatingDisposableMixin_delegate],
             Disposable_dispose(error),
           );
         },

@@ -9,14 +9,13 @@ import {
 import { ContainerOperator } from "../../../containers";
 import { Function2, Optional, none, partial, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
+import { DisposableLike_isDisposed } from "../../../util";
 import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import Observer_getScheduler from "../Observer/Observer.getScheduler";
 import Observer_mixin from "../Observer/Observer.mixin";
-import Sink_notify from "../Sink/Sink.notify";
 import Observable_forEach from "./Observable.forEach";
 import Observable_isEnumerable from "./Observable.isEnumerable";
 import Observable_isRunnable from "./Observable.isRunnable";
@@ -82,9 +81,9 @@ const Observable_withLatestFrom: <TA, TB, T>(
         }),
         {
           [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
-            if (!Disposable_isDisposed(this) && this.hasLatest) {
+            if (!this[DisposableLike_isDisposed] && this.hasLatest) {
               const result = this.selector(next, this.otherLatest as TB);
-              pipe(this.delegate, Sink_notify(result));
+              this.delegate[SinkLike_notify](result);
             }
           },
         },

@@ -14,31 +14,33 @@ import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable
 
 const Runnable_create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
   /*@__PURE__*/ (<T>() => {
+    const Runnable_effect = Symbol("Runnable_effect");
+
     type TProperties = {
-      readonly run: SideEffect1<SinkLike<T>>;
+      readonly [Runnable_effect]: SideEffect1<SinkLike<T>>;
     };
     return createInstanceFactory(
       mix(
         function Runnable(
           instance: Pick<RunnableLike, typeof ReactiveContainerLike_sinkInto> &
             Mutable<TProperties>,
-          run: SideEffect1<SinkLike<T>>,
+          effect: SideEffect1<SinkLike<T>>,
         ): RunnableLike<T> {
-          instance.run = run;
+          instance[Runnable_effect] = effect;
           return instance;
         },
         props<TProperties>({
-          run: none,
+          [Runnable_effect]: none,
         }),
         {
           [ReactiveContainerLike_sinkInto](
             this: {
-              run: SideEffect1<SinkLike<T>>;
+              [Runnable_effect]: SideEffect1<SinkLike<T>>;
             },
             sink: SinkLike<T>,
           ) {
             try {
-              this.run(sink);
+              this[Runnable_effect](sink);
               pipe(sink, Disposable_dispose());
             } catch (e) {
               pipe(sink, Disposable_dispose(error(e)));

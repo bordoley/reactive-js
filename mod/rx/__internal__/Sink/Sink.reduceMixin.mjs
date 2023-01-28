@@ -10,31 +10,31 @@ import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.s
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_reduceMixin = (fromArray) => {
-    const ReduceSink_private_reducer = Symbol("ReduceSink_private_reducer");
-    const ReduceSink_private_acc = Symbol("ReduceSink_private_acc");
-    return mix(include(Disposable_mixin), function ReduceSink(instance, delegate, reducer, initialValue) {
+    const ReduceSinkMixin_reducer = Symbol("ReduceSinkMixin_reducer");
+    const ReduceSinkMixin_acc = Symbol("ReduceSinkMixin_acc");
+    return mix(include(Disposable_mixin), function ReduceSinkMixin(instance, delegate, reducer, initialValue) {
         init(Disposable_mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[ReduceSink_private_reducer] = reducer;
+        instance[ReduceSinkMixin_reducer] = reducer;
         try {
             const acc = initialValue();
-            instance[ReduceSink_private_acc] = acc;
+            instance[ReduceSinkMixin_acc] = acc;
         }
         catch (e) {
             pipe(instance, Disposable_dispose(error(e)));
         }
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            pipe([instance[ReduceSink_private_acc]], fromArray, ReactiveContainer_sinkInto(delegate));
+            pipe([instance[ReduceSinkMixin_acc]], fromArray, ReactiveContainer_sinkInto(delegate));
         }));
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [ReduceSink_private_reducer]: none,
-        [ReduceSink_private_acc]: none,
+        [ReduceSinkMixin_reducer]: none,
+        [ReduceSinkMixin_acc]: none,
     }), {
         [SinkLike_notify](next) {
-            const nextAcc = this[ReduceSink_private_reducer](this[ReduceSink_private_acc], next);
-            this[ReduceSink_private_acc] = nextAcc;
+            const nextAcc = this[ReduceSinkMixin_reducer](this[ReduceSinkMixin_acc], next);
+            this[ReduceSinkMixin_acc] = nextAcc;
         },
     });
 };

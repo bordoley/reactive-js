@@ -8,26 +8,26 @@ import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_takeFirstMixin = 
 /*@__PURE__*/ (() => {
-    const TakeFirstSink_private_takeCount = Symbol("TakeFirstSink_private_takeCount");
-    const TakeFirstSink_private_count = Symbol("TakeFirstSink_private_count");
-    return returns(mix(include(Disposable_delegatingMixin), function TakeFirstSink(instance, delegate, takeCount) {
+    const TakeFirstSinkMixin_takeCount = Symbol("TakeFirstSinkMixin_takeCount");
+    const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
+    return returns(mix(include(Disposable_delegatingMixin), function TakeFirstSinkMixin(instance, delegate, takeCount) {
         init(Disposable_delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[TakeFirstSink_private_takeCount] = takeCount;
+        instance[TakeFirstSinkMixin_takeCount] = takeCount;
         if (takeCount === 0) {
             pipe(instance, Disposable_dispose());
         }
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [TakeFirstSink_private_takeCount]: 0,
-        [TakeFirstSink_private_count]: 0,
+        [TakeFirstSinkMixin_count]: 0,
+        [TakeFirstSinkMixin_takeCount]: 0,
     }), {
         [SinkLike_notify](next) {
-            this[TakeFirstSink_private_count]++;
+            this[TakeFirstSinkMixin_count]++;
             this[DelegatingSinkLike_delegate][SinkLike_notify](next);
-            if (this[TakeFirstSink_private_count] >=
-                this[TakeFirstSink_private_takeCount]) {
+            if (this[TakeFirstSinkMixin_count] >=
+                this[TakeFirstSinkMixin_takeCount]) {
                 pipe(this, Disposable_dispose());
             }
         },

@@ -15,8 +15,6 @@ import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposa
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
 
-const TakeLastSink_last = Symbol("TakeLastSink_last");
-
 const Sink_takeLastMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
@@ -30,19 +28,20 @@ const Sink_takeLastMixin: <
 >(
   fromArray: (v: readonly T[]) => C,
 ) => {
-  const TakeLastSink_private_takeLastCount = Symbol(
-    "TakeLastSink_private_takeLastCount",
+  const TakeLastSinkMixin_last = Symbol("TakeLastSinkMixin_last");
+  const TakeLastSinkMixin_takeLastCount = Symbol(
+    "TakeLastSinkMixin_takeLastCount",
   );
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
-    readonly [TakeLastSink_private_takeLastCount]: number;
-    readonly [TakeLastSink_last]: T[];
+    readonly [TakeLastSinkMixin_takeLastCount]: number;
+    readonly [TakeLastSinkMixin_last]: T[];
   };
 
   return mix(
     include(Disposable_mixin),
-    function TakeLastSink(
+    function TakeLastSinkMixin(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
       delegate: TSink,
@@ -51,15 +50,15 @@ const Sink_takeLastMixin: <
       init(Disposable_mixin, instance);
 
       instance[DelegatingSinkLike_delegate] = delegate;
-      instance[TakeLastSink_private_takeLastCount] = takeLastCount;
-      instance[TakeLastSink_last] = [];
+      instance[TakeLastSinkMixin_takeLastCount] = takeLastCount;
+      instance[TakeLastSinkMixin_last] = [];
 
       pipe(
         instance,
         Disposable_addTo(delegate),
         Disposable_onComplete(() => {
           pipe(
-            instance[TakeLastSink_last],
+            instance[TakeLastSinkMixin_last],
             fromArray,
             ReactiveContainer_sinkInto(delegate),
           );
@@ -70,16 +69,16 @@ const Sink_takeLastMixin: <
     },
     props<TProperties>({
       [DelegatingSinkLike_delegate]: none,
-      [TakeLastSink_private_takeLastCount]: 0,
-      [TakeLastSink_last]: none,
+      [TakeLastSinkMixin_takeLastCount]: 0,
+      [TakeLastSinkMixin_last]: none,
     }),
     {
       [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-        const { [TakeLastSink_last]: last } = this;
+        const { [TakeLastSinkMixin_last]: last } = this;
 
         last.push(next);
 
-        if (getLength(last) > this[TakeLastSink_private_takeLastCount]) {
+        if (getLength(last) > this[TakeLastSinkMixin_takeLastCount]) {
           last.shift();
         }
       },

@@ -11,26 +11,28 @@ import Observer_getDispatcher from '../Observer/Observer.getDispatcher.mjs';
 
 const Subject_create = 
 /*@__PURE__*/ (() => {
+    const Subject_observers = Symbol("Subject_observers");
+    const Subject_replayed = Symbol("Subject_replayed");
     const createSubjectInstance = createInstanceFactory(mix(include(Disposable_mixin), function Subject(instance, replay) {
         init(Disposable_mixin, instance);
         instance[MulticastObservableLike_replay] = replay;
-        instance.observers = newInstance(Set);
-        instance.replayed = [];
+        instance[Subject_observers] = newInstance(Set);
+        instance[Subject_replayed] = [];
         return instance;
     }, props({
         [MulticastObservableLike_replay]: 0,
-        observers: none,
-        replayed: none,
+        [Subject_observers]: none,
+        [Subject_replayed]: none,
     }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return this.observers.size;
+            return this[Subject_observers].size;
         },
         [SubjectLike_publish](next) {
             if (!Disposable_isDisposed(this)) {
-                const { replayed } = this;
+                const { [Subject_replayed]: replayed } = this;
                 const replay = this[MulticastObservableLike_replay];
                 if (replay > 0) {
                     replayed.push(next);
@@ -38,14 +40,14 @@ const Subject_create =
                         replayed.shift();
                     }
                 }
-                for (const observer of this.observers) {
+                for (const observer of this[Subject_observers]) {
                     pipe(observer, Observer_getDispatcher, Dispatcher_dispatch(next));
                 }
             }
         },
         [ReactiveContainerLike_sinkInto](observer) {
             if (!Disposable_isDisposed(this)) {
-                const { observers } = this;
+                const { [Subject_observers]: observers } = this;
                 observers.add(observer);
                 pipe(observer, Disposable_onDisposed(_ => {
                     observers.delete(observer);
@@ -55,7 +57,7 @@ const Subject_create =
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            for (const next of this.replayed) {
+            for (const next of this[Subject_replayed]) {
                 pipe(dispatcher, Dispatcher_dispatch(next));
             }
             pipe(this, Disposable_addIgnoringChildErrors(dispatcher));

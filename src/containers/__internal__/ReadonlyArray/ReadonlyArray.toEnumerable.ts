@@ -32,10 +32,14 @@ const ReadonlyArray_toEnumerable: ToEnumerable<
 >["toEnumerable"] = /*@__PURE__*/ (<T>() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
 
+  const ReadonlyArrayEnumerator_array = Symbol("ReadonlyArrayEnumerator_array");
+  const ReadonlyArrayEnumerator_count = Symbol("ReadonlyArrayEnumerator_count");
+  const ReadonlyArrayEnumerator_index = Symbol("ReadonlyArrayEnumerator_index");
+
   type TProperties = {
-    readonly array: readonly T[];
-    count: number;
-    index: number;
+    readonly [ReadonlyArrayEnumerator_array]: readonly T[];
+    [ReadonlyArrayEnumerator_count]: number;
+    [ReadonlyArrayEnumerator_index]: number;
   };
 
   const createReadonlyArrayEnumerator = createInstanceFactory(
@@ -51,28 +55,34 @@ const ReadonlyArray_toEnumerable: ToEnumerable<
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
 
-        instance.array = array;
-        instance.index = start - 1;
-        instance.count = count;
+        instance[ReadonlyArrayEnumerator_array] = array;
+        instance[ReadonlyArrayEnumerator_index] = start - 1;
+        instance[ReadonlyArrayEnumerator_count] = count;
 
         return instance;
       },
       props<TProperties>({
-        array: none,
-        count: 0,
-        index: 0,
+        [ReadonlyArrayEnumerator_array]: none,
+        [ReadonlyArrayEnumerator_count]: 0,
+        [ReadonlyArrayEnumerator_index]: 0,
       }),
       {
         [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
-          const { array } = this;
+          const { [ReadonlyArrayEnumerator_array]: array } = this;
           if (!Disposable_isDisposed(this)) {
-            this.index++;
-            const { index, count } = this;
+            this[ReadonlyArrayEnumerator_index]++;
+            const {
+              [ReadonlyArrayEnumerator_index]: index,
+              [ReadonlyArrayEnumerator_count]: count,
+            } = this;
 
             if (count !== 0) {
               this[EnumeratorLike_current] = array[index];
 
-              this.count = count > 0 ? this.count - 1 : this.count + 1;
+              this[ReadonlyArrayEnumerator_count] =
+                count > 0
+                  ? this[ReadonlyArrayEnumerator_count] - 1
+                  : this[ReadonlyArrayEnumerator_count] + 1;
             } else {
               pipe(this, Disposable_dispose());
             }

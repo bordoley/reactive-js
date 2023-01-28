@@ -25,8 +25,10 @@ const Iterable_toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
 
+    const IteratorEnumerator_iterator = Symbol("IteratorEnumerator_iterator");
+
     type TProperties = {
-      readonly iterator: Iterator<T>;
+      readonly [IteratorEnumerator_iterator]: Iterator<T>;
     };
 
     const createIterableEnumerator = createInstanceFactory(
@@ -40,15 +42,15 @@ const Iterable_toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
           init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
-          instance.iterator = iterator;
+          instance[IteratorEnumerator_iterator] = iterator;
 
           return instance;
         },
-        props<TProperties>({ iterator: none }),
+        props<TProperties>({ [IteratorEnumerator_iterator]: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike) {
             if (!Disposable_isDisposed(this)) {
-              const next = this.iterator.next();
+              const next = this[IteratorEnumerator_iterator].next();
 
               if (!next.done) {
                 this[EnumeratorLike_current] = next.value;

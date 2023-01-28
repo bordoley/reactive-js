@@ -13,22 +13,20 @@ import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const Sink_skipFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
   /*@__PURE__*/ (<T>() => {
-    const SkipFirstSink_private_skipCount = Symbol(
-      "SkipFirstSink_private_skipCount",
-    );
+    const SkipFirstSinkMixin_skipCount = Symbol("SkipFirstSinkMixin_skipCount");
 
-    const SkipFirstSink_private_count = Symbol("SkipFirstSink_private_count");
+    const SkipFirstSinkMixin_count = Symbol("SkipFirstSinkMixin_count");
 
     type TProperties = {
       readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
-      readonly [SkipFirstSink_private_skipCount]: number;
-      [SkipFirstSink_private_count]: number;
+      readonly [SkipFirstSinkMixin_skipCount]: number;
+      [SkipFirstSinkMixin_count]: number;
     };
 
     return returns(
       mix(
         include(Disposable_delegatingMixin),
-        function SkipFirstSink(
+        function SkipFirstSinkMixin(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: SinkLike<T>,
@@ -37,21 +35,21 @@ const Sink_skipFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
           init(Disposable_delegatingMixin, instance, delegate);
 
           instance[DelegatingSinkLike_delegate] = delegate;
-          instance[SkipFirstSink_private_skipCount] = skipCount;
+          instance[SkipFirstSinkMixin_skipCount] = skipCount;
 
           return instance;
         },
         props<TProperties>({
           [DelegatingSinkLike_delegate]: none,
-          [SkipFirstSink_private_skipCount]: 0,
-          [SkipFirstSink_private_count]: 0,
+          [SkipFirstSinkMixin_skipCount]: 0,
+          [SkipFirstSinkMixin_count]: 0,
         }),
         {
           [SinkLike_notify](this: TProperties, next: T) {
-            this[SkipFirstSink_private_count]++;
+            this[SkipFirstSinkMixin_count]++;
             if (
-              this[SkipFirstSink_private_count] >
-              this[SkipFirstSink_private_skipCount]
+              this[SkipFirstSinkMixin_count] >
+              this[SkipFirstSinkMixin_skipCount]
             ) {
               this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             }

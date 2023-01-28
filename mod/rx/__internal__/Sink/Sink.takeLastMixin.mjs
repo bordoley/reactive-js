@@ -8,27 +8,27 @@ import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposa
 import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
-const TakeLastSink_last = Symbol("TakeLastSink_last");
 const Sink_takeLastMixin = (fromArray) => {
-    const TakeLastSink_private_takeLastCount = Symbol("TakeLastSink_private_takeLastCount");
-    return mix(include(Disposable_mixin), function TakeLastSink(instance, delegate, takeLastCount) {
+    const TakeLastSinkMixin_last = Symbol("TakeLastSinkMixin_last");
+    const TakeLastSinkMixin_takeLastCount = Symbol("TakeLastSinkMixin_takeLastCount");
+    return mix(include(Disposable_mixin), function TakeLastSinkMixin(instance, delegate, takeLastCount) {
         init(Disposable_mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[TakeLastSink_private_takeLastCount] = takeLastCount;
-        instance[TakeLastSink_last] = [];
+        instance[TakeLastSinkMixin_takeLastCount] = takeLastCount;
+        instance[TakeLastSinkMixin_last] = [];
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            pipe(instance[TakeLastSink_last], fromArray, ReactiveContainer_sinkInto(delegate));
+            pipe(instance[TakeLastSinkMixin_last], fromArray, ReactiveContainer_sinkInto(delegate));
         }));
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [TakeLastSink_private_takeLastCount]: 0,
-        [TakeLastSink_last]: none,
+        [TakeLastSinkMixin_takeLastCount]: 0,
+        [TakeLastSinkMixin_last]: none,
     }), {
         [SinkLike_notify](next) {
-            const { [TakeLastSink_last]: last } = this;
+            const { [TakeLastSinkMixin_last]: last } = this;
             last.push(next);
-            if (getLength(last) > this[TakeLastSink_private_takeLastCount]) {
+            if (getLength(last) > this[TakeLastSinkMixin_takeLastCount]) {
                 last.shift();
             }
         },

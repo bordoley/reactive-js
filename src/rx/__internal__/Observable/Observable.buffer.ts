@@ -34,7 +34,6 @@ import EnumerableObservable_never from "../EnumerableObservable/EnumerableObserv
 import Observer_getScheduler from "../Observer/Observer.getScheduler";
 import Observer_mixin from "../Observer/Observer.mixin";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import Sink_notify from "../Sink/Sink.notify";
 import Observable_forEach from "./Observable.forEach";
 import Observable_lift from "./Observable.lift";
 import Observable_subscribe from "./Observable.subscribe";
@@ -115,7 +114,7 @@ const Observable_buffer: <T>(options?: {
             const buffer = this.buffer;
             this.buffer = [];
 
-            pipe(this.delegate, Sink_notify(buffer));
+            this.delegate[SinkLike_notify](buffer);
           };
 
           if (getLength(buffer) === maxBufferSize) {

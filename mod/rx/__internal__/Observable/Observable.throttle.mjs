@@ -3,18 +3,18 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import ReadonlyArray_toRunnableObservable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable.mjs';
 import { pipe, none, isNumber, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
+import { DisposableLike_isDisposed } from '../../../util.mjs';
 import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
 import Disposable_disposed from '../../../util/__internal__/Disposable/Disposable.disposed.mjs';
 import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
 import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
 import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
 import DisposableRef_create from '../../../util/__internal__/DisposableRef/DisposableRef.create.mjs';
-import MutableRef_get from '../../../util/__internal__/MutableRef/MutableRef.get.mjs';
 import MutableRef_set from '../../../util/__internal__/MutableRef/MutableRef.set.mjs';
+import { MutableRefLike_current } from '../../../util/__internal__/util.internal.mjs';
 import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
 import Observer_mixin from '../Observer/Observer.mixin.mjs';
 import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
-import Sink_notify from '../Sink/Sink.notify.mjs';
 import Observable_forEach from './Observable.forEach.mjs';
 import Observable_lift from './Observable.lift.mjs';
 import Observable_subscribe from './Observable.subscribe.mjs';
@@ -37,7 +37,7 @@ const Observable_throttle = /*@__PURE__*/ (() => {
                     const value = instance.value;
                     instance.value = none;
                     instance.hasValue = false;
-                    pipe(instance.delegate, Sink_notify(value));
+                    instance.delegate[SinkLike_notify](value);
                     setupDurationSubscription(instance, value);
                 }
             };
@@ -61,7 +61,7 @@ const Observable_throttle = /*@__PURE__*/ (() => {
             [SinkLike_notify](next) {
                 this.value = next;
                 this.hasValue = true;
-                const durationSubscriptionDisposableIsDisposed = pipe(this.durationSubscription, MutableRef_get, Disposable_isDisposed);
+                const durationSubscriptionDisposableIsDisposed = this.durationSubscription[MutableRefLike_current][DisposableLike_isDisposed];
                 if (durationSubscriptionDisposableIsDisposed &&
                     this.mode !== "last") {
                     this.onNotify();

@@ -27,9 +27,16 @@ import Scheduler_isInContinuation from "../Scheduler/Scheduler.isInContinuation"
 import Scheduler_requestYield from "../Scheduler/Scheduler.requestYield";
 import Scheduler_shouldYield from "../Scheduler/Scheduler.shouldYield";
 
+const PrioritySchedulerDelegatingScheduler_priorityScheduler = Symbol(
+  "PrioritySchedulerDelegatingScheduler_priorityScheduler",
+);
+const PrioritySchedulerDelegatingScheduler_priority = Symbol(
+  "PrioritySchedulerDelegatingScheduler_priority",
+);
+
 type TProperties = {
-  readonly priorityScheduler: PrioritySchedulerLike;
-  readonly priority: number;
+  readonly [PrioritySchedulerDelegatingScheduler_priorityScheduler]: PrioritySchedulerLike;
+  readonly [PrioritySchedulerDelegatingScheduler_priority]: number;
 };
 
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
@@ -50,30 +57,39 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     ): SchedulerLike {
       init(Disposable_mixin, instance);
 
-      instance.priorityScheduler = scheduler;
-      instance.priority = priority;
+      instance[PrioritySchedulerDelegatingScheduler_priorityScheduler] =
+        scheduler;
+      instance[PrioritySchedulerDelegatingScheduler_priority] = priority;
 
       return instance;
     },
     props<TProperties>({
-      priorityScheduler: none,
-      priority: 0,
+      [PrioritySchedulerDelegatingScheduler_priorityScheduler]: none,
+      [PrioritySchedulerDelegatingScheduler_priority]: 0,
     }),
     {
       get [SchedulerLike_inContinuation]() {
         unsafeCast<TProperties>(this);
-        return Scheduler_isInContinuation(this.priorityScheduler);
+        return Scheduler_isInContinuation(
+          this[PrioritySchedulerDelegatingScheduler_priorityScheduler],
+        );
       },
       get [SchedulerLike_now]() {
         unsafeCast<TProperties>(this);
-        return Scheduler_getCurrentTime(this.priorityScheduler);
+        return Scheduler_getCurrentTime(
+          this[PrioritySchedulerDelegatingScheduler_priorityScheduler],
+        );
       },
       get [SchedulerLike_shouldYield]() {
         unsafeCast<TProperties>(this);
-        return Scheduler_shouldYield(this.priorityScheduler);
+        return Scheduler_shouldYield(
+          this[PrioritySchedulerDelegatingScheduler_priorityScheduler],
+        );
       },
       [SchedulerLike_requestYield](this: TProperties): void {
-        Scheduler_requestYield(this.priorityScheduler);
+        Scheduler_requestYield(
+          this[PrioritySchedulerDelegatingScheduler_priorityScheduler],
+        );
       },
       [SchedulerLike_schedule](
         this: TProperties & DisposableLike,
@@ -85,8 +101,10 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
         if (!Disposable_isDisposed(continuation)) {
-          this.priorityScheduler[SchedulerLike_schedule](continuation, {
-            priority: this.priority,
+          this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
+            SchedulerLike_schedule
+          ](continuation, {
+            priority: this[PrioritySchedulerDelegatingScheduler_priority],
             delay,
           });
         }

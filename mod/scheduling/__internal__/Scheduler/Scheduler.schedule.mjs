@@ -10,24 +10,26 @@ import YieldError from '../YieldError.mjs';
 
 const isYieldError = (e) => e instanceof YieldError;
 const createContinuation = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_mixin), function Continuation(instance, scheduler, f) {
+    const Continuation_scheduler = Symbol("Continuation_scheduler");
+    const Continuation_effect = Symbol("Continuation_effect");
+    return createInstanceFactory(mix(include(Disposable_mixin), function Continuation(instance, scheduler, effect) {
         init(Disposable_mixin, instance);
-        instance.scheduler = scheduler;
-        instance.f = f;
+        instance[Continuation_scheduler] = scheduler;
+        instance[Continuation_effect] = effect;
         return instance;
     }, props({
-        scheduler: none,
-        f: none,
+        [Continuation_scheduler]: none,
+        [Continuation_effect]: none,
     }), {
         [ContinuationLike_run]() {
             if (!Disposable_isDisposed(this)) {
                 let err = none;
                 let yieldError = none;
-                const { scheduler } = this;
+                const { [Continuation_scheduler]: scheduler } = this;
                 const oldCurrentScheduler = getOrNone();
                 set(scheduler);
                 try {
-                    this.f();
+                    this[Continuation_effect]();
                 }
                 catch (e) {
                     if (isYieldError(e)) {

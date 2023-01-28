@@ -13,10 +13,10 @@ const DisposableRef_mixin: <TDisposable extends DisposableLike>() => Mixin1<
   MutableRefLike<TDisposable>,
   TDisposable
 > = /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
-  const DisposableRef_private_current = Symbol("DisposableRef_private_current");
+  const DisposableRefMixin_current = Symbol("DisposableRefMixin_current");
 
   type TProperties = {
-    [DisposableRef_private_current]: TDisposable;
+    [DisposableRefMixin_current]: TDisposable;
   };
 
   return pipe(
@@ -31,25 +31,25 @@ const DisposableRef_mixin: <TDisposable extends DisposableLike>() => Mixin1<
       ): MutableRefLike<TDisposable> {
         unsafeCast<DisposableLike>(instance);
 
-        instance[DisposableRef_private_current] = defaultValue;
+        instance[DisposableRefMixin_current] = defaultValue;
         pipe(instance, Disposable_add(defaultValue));
 
         return instance;
       },
       props<TProperties>({
-        [DisposableRef_private_current]: none,
+        [DisposableRefMixin_current]: none,
       }),
       {
         get [MutableRefLike_current](): TDisposable {
           unsafeCast<TProperties>(this);
-          return this[DisposableRef_private_current];
+          return this[DisposableRefMixin_current];
         },
         set [MutableRefLike_current](v: TDisposable) {
           unsafeCast<TProperties & DisposableLike>(this);
-          const oldValue = this[DisposableRef_private_current];
+          const oldValue = this[DisposableRefMixin_current];
           pipe(oldValue, Disposable_dispose());
 
-          this[DisposableRef_private_current] = v;
+          this[DisposableRefMixin_current] = v;
           pipe(this, Disposable_add(v));
         },
       },

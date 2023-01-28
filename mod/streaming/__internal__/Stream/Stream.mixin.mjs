@@ -13,33 +13,35 @@ import Disposable_add from '../../../util/__internal__/Disposable/Disposable.add
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 
 const Stream_mixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(Disposable_delegatingMixin), function Stream(instance, op, scheduler, replay) {
+    const StreamMixin_subject = Symbol("StreamMixin_subject");
+    const StreamMixin_observable = Symbol("StreamMixin_observable");
+    return returns(mix(include(Disposable_delegatingMixin), function StreamMixin(instance, op, scheduler, replay) {
         const subject = Subject_create({ replay });
         init(Disposable_delegatingMixin, instance, subject);
         instance[DispatcherLike_scheduler] = scheduler;
-        instance.subject = subject;
-        instance.observable = pipe(subject, op, Observable_multicast(scheduler, { replay }), Disposable_add(instance));
+        instance[StreamMixin_subject] = subject;
+        instance[StreamMixin_observable] = pipe(subject, op, Observable_multicast(scheduler, { replay }), Disposable_add(instance));
         return instance;
     }, props({
-        subject: none,
-        observable: none,
+        [StreamMixin_subject]: none,
+        [StreamMixin_observable]: none,
         [DispatcherLike_scheduler]: none,
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return MulticastObservable_getObserverCount(this.observable);
+            return MulticastObservable_getObserverCount(this[StreamMixin_observable]);
         },
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
-            return MulticastObservable_getReplay(this.observable);
+            return MulticastObservable_getReplay(this[StreamMixin_observable]);
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [DispatcherLike_dispatch](req) {
-            pipe(this.subject, Subject_publish(req));
+            pipe(this[StreamMixin_subject], Subject_publish(req));
         },
         [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this.observable, ReactiveContainer_sinkInto(observer));
+            pipe(this[StreamMixin_observable], ReactiveContainer_sinkInto(observer));
         },
     }));
 })();

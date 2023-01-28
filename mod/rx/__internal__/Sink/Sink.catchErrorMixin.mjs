@@ -12,7 +12,7 @@ import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_catchErrorMixin = 
 /*@__PURE__*/ (() => {
-    return returns(mix(include(Disposable_mixin), function CatchErrorSink(instance, delegate, errorHandler) {
+    return returns(mix(include(Disposable_mixin), function CatchErrorSinkMixin(instance, delegate, errorHandler) {
         init(Disposable_mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         pipe(instance, Disposable_addToIgnoringChildErrors(delegate), Disposable_onComplete(() => {

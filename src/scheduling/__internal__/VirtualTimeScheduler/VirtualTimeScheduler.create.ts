@@ -55,14 +55,28 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 const typedMutableEnumeratorMixin =
   /*@__PURE__*/ MutableEnumerator_mixin<VirtualTask>();
 
+const VirtualTimeScheduler_maxMicroTaskTicks = Symbol(
+  "VirtualTimeScheduler_maxMicroTaskTicks",
+);
+const VirtualTimeScheduler_microTaskTicks = Symbol(
+  "VirtualTimeScheduler_microTaskTicks",
+);
+const VirtualTimeScheduler_taskIDCount = Symbol(
+  "VirtualTimeScheduler_taskIDCount",
+);
+const VirtualTimeScheduler_yieldRequested = Symbol(
+  "VirtualTimeScheduler_yieldRequested",
+);
+const VirtualTimeScheduler_taskQueue = Symbol("VirtualTimeScheduler_taskQueue");
+
 type TProperties = {
   [SchedulerLike_inContinuation]: boolean;
   [SchedulerLike_now]: number;
-  readonly maxMicroTaskTicks: number;
-  microTaskTicks: number;
-  taskIDCount: number;
-  yieldRequested: boolean;
-  readonly taskQueue: QueueLike<VirtualTask>;
+  readonly [VirtualTimeScheduler_maxMicroTaskTicks]: number;
+  [VirtualTimeScheduler_microTaskTicks]: number;
+  [VirtualTimeScheduler_taskIDCount]: number;
+  [VirtualTimeScheduler_yieldRequested]: boolean;
+  readonly [VirtualTimeScheduler_taskQueue]: QueueLike<VirtualTask>;
 };
 
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
@@ -82,37 +96,39 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       init(Disposable_mixin, instance);
       init(typedMutableEnumeratorMixin, instance);
 
-      instance.maxMicroTaskTicks = maxMicroTaskTicks;
-      instance.taskQueue = Queue_create(comparator);
+      instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
+      instance[VirtualTimeScheduler_taskQueue] = Queue_create(comparator);
 
       return instance;
     },
     props<TProperties>({
       [SchedulerLike_inContinuation]: false,
       [SchedulerLike_now]: 0,
-      maxMicroTaskTicks: MAX_SAFE_INTEGER,
-      microTaskTicks: 0,
-      taskIDCount: 0,
-      yieldRequested: false,
-      taskQueue: none,
+      [VirtualTimeScheduler_maxMicroTaskTicks]: MAX_SAFE_INTEGER,
+      [VirtualTimeScheduler_microTaskTicks]: 0,
+      [VirtualTimeScheduler_taskIDCount]: 0,
+      [VirtualTimeScheduler_yieldRequested]: false,
+      [VirtualTimeScheduler_taskQueue]: none,
     }),
     {
       get [SchedulerLike_shouldYield]() {
         unsafeCast<TProperties>(this);
 
         const {
-          yieldRequested,
+          [VirtualTimeScheduler_yieldRequested]: yieldRequested,
           [SchedulerLike_inContinuation]: inContinuation,
         } = this;
 
         if (inContinuation) {
-          this.microTaskTicks++;
-          this.yieldRequested = false;
+          this[VirtualTimeScheduler_microTaskTicks]++;
+          this[VirtualTimeScheduler_yieldRequested] = false;
         }
 
         return (
           inContinuation &&
-          (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks)
+          (yieldRequested ||
+            this[VirtualTimeScheduler_microTaskTicks] >=
+              this[VirtualTimeScheduler_maxMicroTaskTicks])
         );
       },
       [ContinuationLike_run](this: TProperties & EnumeratorLike<VirtualTask>) {
@@ -120,7 +136,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
           const task = Enumerator_getCurrent(this);
           const { dueTime, continuation } = task;
 
-          this.microTaskTicks = 0;
+          this[VirtualTimeScheduler_microTaskTicks] = 0;
           this[SchedulerLike_now] = dueTime;
           this[SchedulerLike_inContinuation] = true;
           continuation[ContinuationLike_run]();
@@ -128,7 +144,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         }
       },
       [SchedulerLike_requestYield](this: TProperties): void {
-        this.yieldRequested = true;
+        this[VirtualTimeScheduler_yieldRequested] = true;
       },
       [SchedulerLike_schedule](
         this: TProperties & DisposableLike,
@@ -140,8 +156,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
         if (!Disposable_isDisposed(continuation)) {
-          Queue_push(this.taskQueue, {
-            id: this.taskIDCount++,
+          Queue_push(this[VirtualTimeScheduler_taskQueue], {
+            id: this[VirtualTimeScheduler_taskIDCount]++,
             dueTime: getCurrentTime(this) + delay,
             continuation,
           });
@@ -150,7 +166,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       [SourceLike_move](
         this: TProperties & MutableEnumeratorLike<VirtualTask>,
       ): void {
-        const taskQueue = this.taskQueue;
+        const taskQueue = this[VirtualTimeScheduler_taskQueue];
 
         if (Disposable_isDisposed(this)) {
           return;

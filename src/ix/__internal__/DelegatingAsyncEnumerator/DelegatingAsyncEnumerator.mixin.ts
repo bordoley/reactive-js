@@ -24,8 +24,12 @@ const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
   >,
   AsyncEnumeratorLike<T>
 > = /*@__PURE__*/ (<T>() => {
+  const DelegatingAsyncEnumeratorMixin_delegate = Symbol(
+    "DelegatingAsyncEnumeratorMixin_delegate",
+  );
+
   type TProperties = {
-    readonly delegate: AsyncEnumeratorLike<T>;
+    readonly [DelegatingAsyncEnumeratorMixin_delegate]: AsyncEnumeratorLike<T>;
   };
 
   type TReturn = Pick<
@@ -39,24 +43,29 @@ const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
 
   return pipe(
     mix(
-      function DelegatingAsyncEnumerator(
+      function DelegatingAsyncEnumeratorMixin(
         instance: Mutable<TProperties> & TReturn,
         delegate: AsyncEnumeratorLike<T>,
       ): TReturn {
-        instance.delegate = delegate;
+        instance[DelegatingAsyncEnumeratorMixin_delegate] = delegate;
 
         return instance;
       },
       props<TProperties>({
-        delegate: none,
+        [DelegatingAsyncEnumeratorMixin_delegate]: none,
       }),
       {
         [DispatcherLike_dispatch](this: TProperties, _: void) {
-          pipe(this.delegate, Dispatcher_dispatch(none));
+          pipe(
+            this[DelegatingAsyncEnumeratorMixin_delegate],
+            Dispatcher_dispatch(none),
+          );
         },
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
-          return Dispatcher_getScheduler(this.delegate);
+          return Dispatcher_getScheduler(
+            this[DelegatingAsyncEnumeratorMixin_delegate],
+          );
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

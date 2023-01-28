@@ -37,9 +37,12 @@ export const createContinuation: Function2<
   SideEffect,
   ContinuationLike
 > = /*@__PURE__*/ (() => {
+  const Continuation_scheduler = Symbol("Continuation_scheduler");
+  const Continuation_effect = Symbol("Continuation_effect");
+
   type TProperties = {
-    readonly scheduler: SchedulerLike;
-    readonly f: SideEffect;
+    readonly [Continuation_scheduler]: SchedulerLike;
+    readonly [Continuation_effect]: SideEffect;
   };
 
   return createInstanceFactory(
@@ -49,18 +52,18 @@ export const createContinuation: Function2<
         instance: Pick<ContinuationLike, typeof ContinuationLike_run> &
           Mutable<TProperties>,
         scheduler: SchedulerLike,
-        f: SideEffect,
+        effect: SideEffect,
       ): ContinuationLike {
         init(Disposable_mixin, instance);
 
-        instance.scheduler = scheduler;
-        instance.f = f;
+        instance[Continuation_scheduler] = scheduler;
+        instance[Continuation_effect] = effect;
 
         return instance;
       },
       props<TProperties>({
-        scheduler: none,
-        f: none,
+        [Continuation_scheduler]: none,
+        [Continuation_effect]: none,
       }),
       {
         [ContinuationLike_run](this: TProperties & ContinuationLike) {
@@ -68,11 +71,11 @@ export const createContinuation: Function2<
             let err: Optional<Error> = none;
             let yieldError: Optional<YieldError> = none;
 
-            const { scheduler } = this;
+            const { [Continuation_scheduler]: scheduler } = this;
             const oldCurrentScheduler = CurrentScheduler.getOrNone();
             CurrentScheduler.set(scheduler);
             try {
-              this.f();
+              this[Continuation_effect]();
             } catch (e) {
               if (isYieldError(e)) {
                 yieldError = e;

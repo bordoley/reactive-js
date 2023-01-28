@@ -40,16 +40,19 @@ const Stream_mixin: <TReq, T>() => Mixin3<
   SchedulerLike,
   number
 > = /*@__PURE__*/ (<TReq, T>() => {
+  const StreamMixin_subject = Symbol("StreamMixin_subject");
+  const StreamMixin_observable = Symbol("StreamMixin_observable");
+
   type TProperties = {
-    readonly subject: SubjectLike<TReq>;
-    readonly observable: MulticastObservableLike<T>;
+    readonly [StreamMixin_subject]: SubjectLike<TReq>;
+    readonly [StreamMixin_observable]: MulticastObservableLike<T>;
     readonly [DispatcherLike_scheduler]: SchedulerLike;
   };
 
   return returns(
     mix(
       include(Disposable_delegatingMixin),
-      function Stream(
+      function StreamMixin(
         instance: Pick<
           StreamLike<TReq, T>,
           | typeof MulticastObservableLike_observerCount
@@ -69,9 +72,9 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         init(Disposable_delegatingMixin, instance, subject);
 
         instance[DispatcherLike_scheduler] = scheduler;
-        instance.subject = subject;
+        instance[StreamMixin_subject] = subject;
 
-        instance.observable = pipe(
+        instance[StreamMixin_observable] = pipe(
           subject,
           op,
           Observable_multicast<T>(scheduler, { replay }),
@@ -81,19 +84,21 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         return instance;
       },
       props<TProperties>({
-        subject: none,
-        observable: none,
+        [StreamMixin_subject]: none,
+        [StreamMixin_observable]: none,
         [DispatcherLike_scheduler]: none,
       }),
       {
         get [MulticastObservableLike_observerCount](): number {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getObserverCount(this.observable);
+          return MulticastObservable_getObserverCount(
+            this[StreamMixin_observable],
+          );
         },
 
         get [MulticastObservableLike_replay](): number {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getReplay(this.observable);
+          return MulticastObservable_getReplay(this[StreamMixin_observable]);
         },
 
         [ObservableLike_isEnumerable]: false,
@@ -101,14 +106,17 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         [ObservableLike_isRunnable]: false,
 
         [DispatcherLike_dispatch](this: TProperties, req: TReq) {
-          pipe(this.subject, Subject_publish(req));
+          pipe(this[StreamMixin_subject], Subject_publish(req));
         },
 
         [ReactiveContainerLike_sinkInto](
           this: TProperties,
           observer: ObserverLike<T>,
         ) {
-          pipe(this.observable, ReactiveContainer_sinkInto(observer));
+          pipe(
+            this[StreamMixin_observable],
+            ReactiveContainer_sinkInto(observer),
+          );
         },
       },
     ),

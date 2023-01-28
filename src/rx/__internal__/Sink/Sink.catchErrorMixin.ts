@@ -40,7 +40,7 @@ const Sink_catchErrorMixin: <
     return returns(
       mix(
         include(Disposable_mixin),
-        function CatchErrorSink(
+        function CatchErrorSinkMixin(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: SinkLike<T>,

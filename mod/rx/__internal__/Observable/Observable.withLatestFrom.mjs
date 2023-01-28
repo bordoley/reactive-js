@@ -2,14 +2,13 @@
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
+import { DisposableLike_isDisposed } from '../../../util.mjs';
 import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
 import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
 import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
 import Observer_mixin from '../Observer/Observer.mixin.mjs';
-import Sink_notify from '../Sink/Sink.notify.mjs';
 import Observable_forEach from './Observable.forEach.mjs';
 import Observable_isEnumerable from './Observable.isEnumerable.mjs';
 import Observable_isRunnable from './Observable.isRunnable.mjs';
@@ -40,9 +39,9 @@ const Observable_withLatestFrom = /*@__PURE__*/ (() => {
             selector: none,
         }), {
             [SinkLike_notify](next) {
-                if (!Disposable_isDisposed(this) && this.hasLatest) {
+                if (!this[DisposableLike_isDisposed] && this.hasLatest) {
                     const result = this.selector(next, this.otherLatest);
-                    pipe(this.delegate, Sink_notify(result));
+                    this.delegate[SinkLike_notify](result);
                 }
             },
         }));

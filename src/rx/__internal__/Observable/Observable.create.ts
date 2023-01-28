@@ -19,8 +19,10 @@ const Observable_create: <T>(
   isEnumerable?: boolean,
   isRunnable?: boolean,
 ) => ObservableLike<T> = /*@__PURE__*/ (() => {
+  const CreateObservable_effect = Symbol("CreateObservable_effect");
+
   type TProperties = {
-    readonly f: SideEffect1<ObserverLike>;
+    readonly [CreateObservable_effect]: SideEffect1<ObserverLike>;
     readonly [ObservableLike_isEnumerable]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   };
@@ -30,30 +32,28 @@ const Observable_create: <T>(
       function CreateObservable(
         instance: Pick<ObservableLike, typeof ReactiveContainerLike_sinkInto> &
           Mutable<TProperties>,
-        f: SideEffect1<ObserverLike>,
+        effect: SideEffect1<ObserverLike>,
         isEnumerable = false,
         isRunnable = false,
       ): ObservableLike {
-        instance.f = f;
+        instance[CreateObservable_effect] = effect;
         instance[ObservableLike_isEnumerable] = isEnumerable;
         instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
 
         return instance;
       },
       props<TProperties>({
-        f: none,
+        [CreateObservable_effect]: none,
         [ObservableLike_isRunnable]: false,
         [ObservableLike_isEnumerable]: false,
       }),
       {
         [ReactiveContainerLike_sinkInto](
-          this: {
-            f: SideEffect1<ObserverLike>;
-          },
+          this: TProperties,
           observer: ObserverLike,
         ) {
           try {
-            this.f(observer);
+            this[CreateObservable_effect](observer);
           } catch (e) {
             pipe(observer, Disposable_dispose(error(e)));
           }

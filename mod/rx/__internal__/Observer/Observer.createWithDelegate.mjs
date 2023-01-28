@@ -9,16 +9,17 @@ import Observer_mixin from './Observer.mixin.mjs';
 const Observer_createWithDelegate = 
 /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
+    const DelegatingObserver_delegate = Symbol("DelegatingObserver_delegate");
     return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function DelegatingObserver(instance, observer) {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, Observer_getScheduler(observer));
-        instance.delegate = observer;
+        instance[DelegatingObserver_delegate] = observer;
         return instance;
     }, props({
-        delegate: none,
+        [DelegatingObserver_delegate]: none,
     }), {
         [SinkLike_notify](next) {
-            this.delegate[SinkLike_notify](next);
+            this[DelegatingObserver_delegate][SinkLike_notify](next);
         },
     }));
 })();

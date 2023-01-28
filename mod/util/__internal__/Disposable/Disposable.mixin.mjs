@@ -23,20 +23,20 @@ const Disposable_mixin = /*@__PURE__*/ (() => {
             pipe(disposable, Disposable_dispose(error));
         }
     };
-    const Disposable_private_disposables = Symbol("Disposable_private_disposables");
+    const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
     return mix(function DisposableMixin(instance) {
-        instance[Disposable_private_disposables] = new Set();
+        instance[DisposableMixin_disposables] = new Set();
         return instance;
     }, props({
         [DisposableLike_error]: none,
         [DisposableLike_isDisposed]: false,
-        [Disposable_private_disposables]: none,
+        [DisposableMixin_disposables]: none,
     }), {
         [DisposableLike_dispose](error) {
             if (!Disposable_isDisposed(this)) {
                 this[DisposableLike_error] = error;
                 this[DisposableLike_isDisposed] = true;
-                const disposables = this[Disposable_private_disposables];
+                const disposables = this[DisposableMixin_disposables];
                 for (const disposable of disposables) {
                     disposables.delete(disposable);
                     doDispose(this, disposable);
@@ -44,7 +44,7 @@ const Disposable_mixin = /*@__PURE__*/ (() => {
             }
         },
         [DisposableLike_add](disposable, ignoreChildErrors) {
-            const disposables = this[Disposable_private_disposables];
+            const disposables = this[DisposableMixin_disposables];
             if (this === disposable) {
                 return;
             }

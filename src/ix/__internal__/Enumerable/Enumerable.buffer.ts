@@ -30,9 +30,14 @@ const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
 >() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<readonly T[]>();
 
+  const BufferEnumerator_delegate = Symbol("BufferEnumerator_delegate");
+  const BufferEnumerator_maxBufferSize = Symbol(
+    "BufferEnumerator_maxBufferSize",
+  );
+
   type TProperties = {
-    readonly delegate: EnumeratorLike<T>;
-    readonly maxBufferSize: number;
+    readonly [BufferEnumerator_delegate]: EnumeratorLike<T>;
+    readonly [BufferEnumerator_maxBufferSize]: number;
   };
 
   return pipe(
@@ -48,16 +53,16 @@ const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
           init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
-          instance.delegate = delegate;
-          instance.maxBufferSize = maxBufferSize;
+          instance[BufferEnumerator_delegate] = delegate;
+          instance[BufferEnumerator_maxBufferSize] = maxBufferSize;
 
           pipe(instance, Disposable_add(delegate));
 
           return instance;
         },
         props<TProperties>({
-          delegate: none,
-          maxBufferSize: 0,
+          [BufferEnumerator_delegate]: none,
+          [BufferEnumerator_maxBufferSize]: 0,
         }),
         {
           [SourceLike_move](
@@ -65,7 +70,10 @@ const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
           ) {
             const buffer: T[] = [];
 
-            const { delegate, maxBufferSize } = this;
+            const {
+              [BufferEnumerator_delegate]: delegate,
+              [BufferEnumerator_maxBufferSize]: maxBufferSize,
+            } = this;
 
             while (
               getLength(buffer) < maxBufferSize &&

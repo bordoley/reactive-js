@@ -40,20 +40,23 @@ const scheduleImmediate = (scheduler, continuation) => {
 const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     pipe(immmediateOrTimerDisposable, Disposable_dispose());
-    scheduler.startTime = Scheduler_getCurrentTime(scheduler);
+    scheduler[HostScheduler_startTime] = Scheduler_getCurrentTime(scheduler);
     scheduler[SchedulerLike_inContinuation] = true;
     Continuation_run(continuation);
     scheduler[SchedulerLike_inContinuation] = false;
 };
+const HostScheduler_startTime = Symbol("HostScheduler_startTime");
+const HostScheduler_yieldInterval = Symbol("HostScheduler_yieldInterval");
+const HostScheduler_yieldRequested = Symbol("HostScheduler_yieldRequested");
 const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(Disposable_mixin), function HostScheduler(instance, yieldInterval) {
     init(Disposable_mixin, instance);
-    instance.yieldInterval = yieldInterval;
+    instance[HostScheduler_yieldInterval] = yieldInterval;
     return instance;
 }, props({
     [SchedulerLike_inContinuation]: false,
-    startTime: 0,
-    yieldInterval: 0,
-    yieldRequested: false,
+    [HostScheduler_startTime]: 0,
+    [HostScheduler_yieldInterval]: 0,
+    [HostScheduler_yieldRequested]: false,
 }), {
     get [SchedulerLike_now]() {
         if (supportsPerformanceNow) {
@@ -70,17 +73,19 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(incl
     get [SchedulerLike_shouldYield]() {
         unsafeCast(this);
         const inContinuation = Scheduler_isInContinuation(this);
-        const { yieldRequested } = this;
+        const { [HostScheduler_yieldRequested]: yieldRequested } = this;
         if (inContinuation) {
-            this.yieldRequested = false;
+            this[HostScheduler_yieldRequested] = false;
         }
         return (inContinuation &&
             (yieldRequested ||
-                Scheduler_getCurrentTime(this) > this.startTime + this.yieldInterval ||
+                Scheduler_getCurrentTime(this) >
+                    this[HostScheduler_startTime] +
+                        this[HostScheduler_yieldInterval] ||
                 isInputPending()));
     },
     [SchedulerLike_requestYield]() {
-        this.yieldRequested = true;
+        this[HostScheduler_yieldRequested] = true;
     },
     [SchedulerLike_schedule](continuation, options) {
         const delay = getDelay(options);

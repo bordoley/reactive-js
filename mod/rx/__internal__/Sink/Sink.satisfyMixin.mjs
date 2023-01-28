@@ -12,11 +12,11 @@ import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 import Sink_notify from './Sink.notify.mjs';
 
 const Sink_satisfyMixin = (fromArray, defaultResult) => {
-    const SatisfySink_private_predicate = Symbol("SatisfySink_private_predicate");
-    return mix(include(Disposable_mixin), function SatisfySink(instance, delegate, predicate) {
+    const SatisfySinkMixin_predicate = Symbol("SatisfySinkMixin_predicate");
+    return mix(include(Disposable_mixin), function SatisfySinkMixin(instance, delegate, predicate) {
         init(Disposable_mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[SatisfySink_private_predicate] = predicate;
+        instance[SatisfySinkMixin_predicate] = predicate;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             if (!Disposable_isDisposed(delegate)) {
                 pipe([defaultResult], fromArray, ReactiveContainer_sinkInto(delegate));
@@ -25,10 +25,10 @@ const Sink_satisfyMixin = (fromArray, defaultResult) => {
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [SatisfySink_private_predicate]: none,
+        [SatisfySinkMixin_predicate]: none,
     }), {
         [SinkLike_notify](next) {
-            if (this[SatisfySink_private_predicate](next)) {
+            if (this[SatisfySinkMixin_predicate](next)) {
                 pipe(this[DelegatingSinkLike_delegate], Sink_notify(!defaultResult), Disposable_dispose());
             }
         },

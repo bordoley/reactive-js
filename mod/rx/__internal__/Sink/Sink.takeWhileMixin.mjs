@@ -7,22 +7,22 @@ import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_takeWhileMixin = /*@__PURE__*/ (() => {
-    const TakeWhileSink_private_predicate = Symbol("TakeWhileSink_private_predicate");
-    const TakeWhileSink_private_inclusive = Symbol("TakeWhileSink_private_inclusive");
-    return returns(mix(include(Disposable_delegatingMixin), function TakeWhileSink(instance, delegate, predicate, inclusive) {
+    const TakeWhileSinkMixin_predicate = Symbol("TakeWhileSinkMixin_predicate");
+    const TakeWhileSinkMixin_inclusive = Symbol("TakeWhileSinkMixin_inclusive");
+    return returns(mix(include(Disposable_delegatingMixin), function TakeWhileSinkMixin(instance, delegate, predicate, inclusive) {
         init(Disposable_delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[TakeWhileSink_private_predicate] = predicate;
-        instance[TakeWhileSink_private_inclusive] = inclusive;
+        instance[TakeWhileSinkMixin_predicate] = predicate;
+        instance[TakeWhileSinkMixin_inclusive] = inclusive;
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [TakeWhileSink_private_predicate]: none,
-        [TakeWhileSink_private_inclusive]: none,
+        [TakeWhileSinkMixin_predicate]: none,
+        [TakeWhileSinkMixin_inclusive]: none,
     }), {
         [SinkLike_notify](next) {
-            const satisfiesPredicate = this[TakeWhileSink_private_predicate](next);
-            if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
+            const satisfiesPredicate = this[TakeWhileSinkMixin_predicate](next);
+            if (satisfiesPredicate || this[TakeWhileSinkMixin_inclusive]) {
                 this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             }
             if (!satisfiesPredicate) {

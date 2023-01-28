@@ -11,7 +11,6 @@ import MutableRef_get from '../../../util/__internal__/MutableRef/MutableRef.get
 import { MutableRefLike_current } from '../../../util/__internal__/util.internal.mjs';
 import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
 import Observer_mixin from '../Observer/Observer.mixin.mjs';
-import Sink_notify from '../Sink/Sink.notify.mjs';
 import Observable_concat from './Observable.concat.mjs';
 import Observable_fromArray from './Observable.fromArray.mjs';
 import Observable_isRunnable from './Observable.isRunnable.mjs';
@@ -40,7 +39,7 @@ const Observable_timeout = /*@__PURE__*/ (() => {
     }), {
         [SinkLike_notify](next) {
             pipe(this, MutableRef_get, Disposable_dispose());
-            pipe(this.delegate, Sink_notify(next));
+            this.delegate[SinkLike_notify](next);
         },
     }));
     const returnTimeoutError = returns(timeoutError);

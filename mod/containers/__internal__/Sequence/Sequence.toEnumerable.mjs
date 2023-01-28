@@ -12,20 +12,21 @@ import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.m
 const Sequence_toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    const SequenceEnumerator_seq = Symbol("SequenceEnumerator_seq");
     const createSequenceEnumerator = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function SequenceEnumerator(instance, seq) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        instance.seq = seq;
+        instance[SequenceEnumerator_seq] = seq;
         return instance;
     }, props({
-        seq: none,
+        [SequenceEnumerator_seq]: none,
     }), {
         [SourceLike_move]() {
             if (!Disposable_isDisposed(this)) {
-                const next = this.seq();
+                const next = this[SequenceEnumerator_seq]();
                 if (isSome(next)) {
                     this[EnumeratorLike_current] = next[SequenceLike_data];
-                    this.seq = next[SequenceLike_next];
+                    this[SequenceEnumerator_seq] = next[SequenceLike_next];
                 }
                 else {
                     pipe(this, Disposable_dispose());
