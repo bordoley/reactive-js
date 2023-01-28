@@ -14,7 +14,6 @@ import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.m
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 const Sink_decodeWithCharsetMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -77,7 +76,7 @@ const Sink_decodeWithCharsetMixin: <
           { stream: true },
         );
         if (!isEmpty(data)) {
-          pipe(this[DelegatingSinkLike_delegate], Sink_notify(data));
+          this[DelegatingSinkLike_delegate][SinkLike_notify](data);
         }
       },
     },

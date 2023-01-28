@@ -1,10 +1,9 @@
 /// <reference types="./Sink.pairwiseMixin.d.ts" />
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { returns, none, pipe } from '../../../functions.mjs';
+import { returns, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink_notify from './Sink.notify.mjs';
 
 const Sink_pairwiseMixin = /*@__PURE__*/ (() => {
     const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
@@ -21,10 +20,7 @@ const Sink_pairwiseMixin = /*@__PURE__*/ (() => {
         [SinkLike_notify](next) {
             const prev = this[PairwiseSink_private_prev];
             if (this[PairwiseSink_private_hasPrev]) {
-                pipe(this[DelegatingSinkLike_delegate], Sink_notify([
-                    prev,
-                    next,
-                ]));
+                this[DelegatingSinkLike_delegate][SinkLike_notify]([prev, next]);
             }
             this[PairwiseSink_private_hasPrev] = true;
             this[PairwiseSink_private_prev] = next;

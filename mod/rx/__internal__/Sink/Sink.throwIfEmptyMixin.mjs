@@ -7,7 +7,6 @@ import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable
 import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
 import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink_notify from './Sink.notify.mjs';
 
 const Sink_throwIfEmptyMixin = /*@__PURE__*/ (() => {
     const ThrowIfEmptySink_private_isEmpty = Symbol("ThrowIfEmptySink_private_isEmpty");
@@ -33,7 +32,7 @@ const Sink_throwIfEmptyMixin = /*@__PURE__*/ (() => {
     }), {
         [SinkLike_notify](next) {
             this[ThrowIfEmptySink_private_isEmpty] = false;
-            pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
+            this[DelegatingSinkLike_delegate][SinkLike_notify](next);
         },
     }));
 })();

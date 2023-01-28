@@ -6,11 +6,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { none, pipe, returns } from "../../../functions";
+import { none, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 const Sink_skipFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
   /*@__PURE__*/ (<T>() => {
@@ -54,7 +53,7 @@ const Sink_skipFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
               this[SkipFirstSink_private_count] >
               this[SkipFirstSink_private_skipCount]
             ) {
-              pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
+              this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             }
           },
         },

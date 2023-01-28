@@ -5,7 +5,6 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink_notify from './Sink.notify.mjs';
 
 const Sink_scanMixin = /*@__PURE__*/ (() => {
     const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
@@ -30,7 +29,7 @@ const Sink_scanMixin = /*@__PURE__*/ (() => {
         [SinkLike_notify](next) {
             const nextAcc = this[ScanSink_private_reducer](this[ScanSink_private_acc], next);
             this[ScanSink_private_acc] = nextAcc;
-            pipe(this[DelegatingSinkLike_delegate], Sink_notify(nextAcc));
+            this[DelegatingSinkLike_delegate][SinkLike_notify](nextAcc);
         },
     }));
 })();

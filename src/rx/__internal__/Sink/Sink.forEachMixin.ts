@@ -6,11 +6,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { SideEffect1, none, pipe, returns } from "../../../functions";
+import { SideEffect1, none, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 export const Sink_forEachMixin: <T>() => Mixin2<
   SinkLike<T>,
@@ -47,7 +46,7 @@ export const Sink_forEachMixin: <T>() => Mixin2<
       {
         [SinkLike_notify](this: TProperties, next: T) {
           this[ForEachSink_private_effect](next);
-          pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
+          this[DelegatingSinkLike_delegate][SinkLike_notify](next);
         },
       },
     ),

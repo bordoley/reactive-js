@@ -8,7 +8,6 @@ import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.m
 import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
 import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink_notify from './Sink.notify.mjs';
 
 const Sink_bufferMixin = (fromArray) => {
     const BufferSink_private_maxBufferSize = Symbol("BufferSink_private_maxBufferSize");
@@ -40,7 +39,7 @@ const Sink_bufferMixin = (fromArray) => {
             if (getLength(buffer) === maxBufferSize) {
                 const buffer = this[BufferSink_private_buffer];
                 this[BufferSink_private_buffer] = [];
-                pipe(this[DelegatingSinkLike_delegate], Sink_notify(buffer));
+                this[DelegatingSinkLike_delegate][SinkLike_notify](buffer);
             }
         },
     });

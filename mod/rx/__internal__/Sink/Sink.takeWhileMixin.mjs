@@ -5,7 +5,6 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink_notify from './Sink.notify.mjs';
 
 const Sink_takeWhileMixin = /*@__PURE__*/ (() => {
     const TakeWhileSink_private_predicate = Symbol("TakeWhileSink_private_predicate");
@@ -24,7 +23,7 @@ const Sink_takeWhileMixin = /*@__PURE__*/ (() => {
         [SinkLike_notify](next) {
             const satisfiesPredicate = this[TakeWhileSink_private_predicate](next);
             if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
-                pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
+                this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             }
             if (!satisfiesPredicate) {
                 pipe(this, Disposable_dispose());

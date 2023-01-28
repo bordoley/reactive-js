@@ -12,7 +12,6 @@ import { DisposableLike } from "../../../util";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 const Sink_takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
   /*@__PURE__*/ (<T>() => {
@@ -56,7 +55,7 @@ const Sink_takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
         {
           [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
             this[TakeFirstSink_private_count]++;
-            pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
+            this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             if (
               this[TakeFirstSink_private_count] >=
               this[TakeFirstSink_private_takeCount]

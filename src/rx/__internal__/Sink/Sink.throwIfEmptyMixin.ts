@@ -21,7 +21,6 @@ import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 const Sink_throwIfEmptyMixin: <T>() => Mixin2<
   SinkLike<T>,
@@ -77,7 +76,7 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
       {
         [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
           this[ThrowIfEmptySink_private_isEmpty] = false;
-          pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
+          this[DelegatingSinkLike_delegate][SinkLike_notify](next);
         },
       },
     ),

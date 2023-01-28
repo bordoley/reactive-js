@@ -6,11 +6,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { none, pipe, returns } from "../../../functions";
+import { none, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 const Sink_pairwiseMixin: <T>() => Mixin1<
   SinkLike<T>,
@@ -49,13 +48,7 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
           const prev = this[PairwiseSink_private_prev];
 
           if (this[PairwiseSink_private_hasPrev]) {
-            pipe(
-              this[DelegatingSinkLike_delegate],
-              Sink_notify<SinkLike<readonly [T, T]>, readonly [T, T]>([
-                prev,
-                next,
-              ]),
-            );
+            this[DelegatingSinkLike_delegate][SinkLike_notify]([prev, next]);
           }
 
           this[PairwiseSink_private_hasPrev] = true;
