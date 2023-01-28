@@ -25,19 +25,19 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
   Reducer<T, TAcc>,
   Factory<TAcc>
 > = /*@__PURE__*/ (<T, TAcc>() => {
-  const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
-  const ScanSink_private_acc = Symbol("ScanSink_private_acc");
+  const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");
+  const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<TAcc>;
-    readonly [ScanSink_private_reducer]: Reducer<T, TAcc>;
-    [ScanSink_private_acc]: TAcc;
+    readonly [ScanSinkMixin_reducer]: Reducer<T, TAcc>;
+    [ScanSinkMixin_acc]: TAcc;
   };
 
   return returns(
     mix(
       include(Disposable_delegatingMixin),
-      function ScanSink(
+      function ScanSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<TAcc>,
@@ -47,11 +47,11 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
         init(Disposable_delegatingMixin, instance, delegate);
 
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[ScanSink_private_reducer] = reducer;
+        instance[ScanSinkMixin_reducer] = reducer;
 
         try {
           const acc = initialValue();
-          instance[ScanSink_private_acc] = acc;
+          instance[ScanSinkMixin_acc] = acc;
         } catch (e) {
           pipe(instance, Disposable_dispose(error(e)));
         }
@@ -60,16 +60,16 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
       },
       props<TProperties>({
         [DelegatingSinkLike_delegate]: none,
-        [ScanSink_private_reducer]: none,
-        [ScanSink_private_acc]: none,
+        [ScanSinkMixin_reducer]: none,
+        [ScanSinkMixin_acc]: none,
       }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
-          const nextAcc = this[ScanSink_private_reducer](
-            this[ScanSink_private_acc],
+          const nextAcc = this[ScanSinkMixin_reducer](
+            this[ScanSinkMixin_acc],
             next,
           );
-          this[ScanSink_private_acc] = nextAcc;
+          this[ScanSinkMixin_acc] = nextAcc;
           this[DelegatingSinkLike_delegate][SinkLike_notify](nextAcc);
         },
       },

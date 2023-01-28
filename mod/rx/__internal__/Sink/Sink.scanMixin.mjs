@@ -7,15 +7,15 @@ import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_scanMixin = /*@__PURE__*/ (() => {
-    const ScanSink_private_reducer = Symbol("ScanSink_private_reducer");
-    const ScanSink_private_acc = Symbol("ScanSink_private_acc");
-    return returns(mix(include(Disposable_delegatingMixin), function ScanSink(instance, delegate, reducer, initialValue) {
+    const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");
+    const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
+    return returns(mix(include(Disposable_delegatingMixin), function ScanSinkMixin(instance, delegate, reducer, initialValue) {
         init(Disposable_delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[ScanSink_private_reducer] = reducer;
+        instance[ScanSinkMixin_reducer] = reducer;
         try {
             const acc = initialValue();
-            instance[ScanSink_private_acc] = acc;
+            instance[ScanSinkMixin_acc] = acc;
         }
         catch (e) {
             pipe(instance, Disposable_dispose(error(e)));
@@ -23,12 +23,12 @@ const Sink_scanMixin = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [ScanSink_private_reducer]: none,
-        [ScanSink_private_acc]: none,
+        [ScanSinkMixin_reducer]: none,
+        [ScanSinkMixin_acc]: none,
     }), {
         [SinkLike_notify](next) {
-            const nextAcc = this[ScanSink_private_reducer](this[ScanSink_private_acc], next);
-            this[ScanSink_private_acc] = nextAcc;
+            const nextAcc = this[ScanSinkMixin_reducer](this[ScanSinkMixin_acc], next);
+            this[ScanSinkMixin_acc] = nextAcc;
             this[DelegatingSinkLike_delegate][SinkLike_notify](nextAcc);
         },
     }));

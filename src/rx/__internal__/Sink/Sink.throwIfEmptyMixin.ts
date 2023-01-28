@@ -27,19 +27,17 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
   SinkLike<T>,
   Factory<unknown>
 > = /*@__PURE__*/ (<T>() => {
-  const ThrowIfEmptySink_private_isEmpty = Symbol(
-    "ThrowIfEmptySink_private_isEmpty",
-  );
+  const ThrowIfEmptySinkMixin_isEmpty = Symbol("ThrowIfEmptySinkMixin_isEmpty");
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
-    [ThrowIfEmptySink_private_isEmpty]: boolean;
+    [ThrowIfEmptySinkMixin_isEmpty]: boolean;
   };
 
   return returns(
     mix(
       include(Disposable_mixin),
-      function ThrowIfEmptySink(
+      function ThrowIfEmptySinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
@@ -55,7 +53,7 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
           Disposable_onComplete(() => {
             let err: Optional<Error> = none;
 
-            if (instance[ThrowIfEmptySink_private_isEmpty]) {
+            if (instance[ThrowIfEmptySinkMixin_isEmpty]) {
               try {
                 err = error(factory());
               } catch (e) {
@@ -71,11 +69,11 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
       },
       props<TProperties>({
         [DelegatingSinkLike_delegate]: none,
-        [ThrowIfEmptySink_private_isEmpty]: true,
+        [ThrowIfEmptySinkMixin_isEmpty]: true,
       }),
       {
         [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-          this[ThrowIfEmptySink_private_isEmpty] = false;
+          this[ThrowIfEmptySinkMixin_isEmpty] = false;
           this[DelegatingSinkLike_delegate][SinkLike_notify](next);
         },
       },

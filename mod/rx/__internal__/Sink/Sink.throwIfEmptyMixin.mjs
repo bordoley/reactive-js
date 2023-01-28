@@ -9,13 +9,13 @@ import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposa
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_throwIfEmptyMixin = /*@__PURE__*/ (() => {
-    const ThrowIfEmptySink_private_isEmpty = Symbol("ThrowIfEmptySink_private_isEmpty");
-    return returns(mix(include(Disposable_mixin), function ThrowIfEmptySink(instance, delegate, factory) {
+    const ThrowIfEmptySinkMixin_isEmpty = Symbol("ThrowIfEmptySinkMixin_isEmpty");
+    return returns(mix(include(Disposable_mixin), function ThrowIfEmptySinkMixin(instance, delegate, factory) {
         init(Disposable_mixin, instance);
         instance[DelegatingSinkLike_delegate] = delegate;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             let err = none;
-            if (instance[ThrowIfEmptySink_private_isEmpty]) {
+            if (instance[ThrowIfEmptySinkMixin_isEmpty]) {
                 try {
                     err = error(factory());
                 }
@@ -28,10 +28,10 @@ const Sink_throwIfEmptyMixin = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [ThrowIfEmptySink_private_isEmpty]: true,
+        [ThrowIfEmptySinkMixin_isEmpty]: true,
     }), {
         [SinkLike_notify](next) {
-            this[ThrowIfEmptySink_private_isEmpty] = false;
+            this[ThrowIfEmptySinkMixin_isEmpty] = false;
             this[DelegatingSinkLike_delegate][SinkLike_notify](next);
         },
     }));

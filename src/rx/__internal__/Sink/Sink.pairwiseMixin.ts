@@ -15,19 +15,19 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
   SinkLike<T>,
   SinkLike<readonly [T, T]>
 > = /*@__PURE__*/ (<T>() => {
-  const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
-  const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
+  const PairwiseSinkMixin_prev = Symbol("PairwiseSinkMixin_prev");
+  const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<readonly [T, T]>;
-    [PairwiseSink_private_prev]: T;
-    [PairwiseSink_private_hasPrev]: boolean;
+    [PairwiseSinkMixin_prev]: T;
+    [PairwiseSinkMixin_hasPrev]: boolean;
   };
 
   return returns(
     mix(
       include(Disposable_delegatingMixin),
-      function PairwiseSink(
+      function PairwiseSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<readonly [T, T]>,
@@ -40,19 +40,19 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
       },
       props<TProperties>({
         [DelegatingSinkLike_delegate]: none,
-        [PairwiseSink_private_prev]: none,
-        [PairwiseSink_private_hasPrev]: false,
+        [PairwiseSinkMixin_prev]: none,
+        [PairwiseSinkMixin_hasPrev]: false,
       }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
-          const prev = this[PairwiseSink_private_prev];
+          const prev = this[PairwiseSinkMixin_prev];
 
-          if (this[PairwiseSink_private_hasPrev]) {
+          if (this[PairwiseSinkMixin_hasPrev]) {
             this[DelegatingSinkLike_delegate][SinkLike_notify]([prev, next]);
           }
 
-          this[PairwiseSink_private_hasPrev] = true;
-          this[PairwiseSink_private_prev] = next;
+          this[PairwiseSinkMixin_hasPrev] = true;
+          this[PairwiseSinkMixin_prev] = next;
         },
       },
     ),

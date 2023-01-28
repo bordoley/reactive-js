@@ -16,7 +16,6 @@ import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.m
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import Observer_getScheduler from "../Observer/Observer.getScheduler";
 import Observer_mixin from "../Observer/Observer.mixin";
-import Sink_notify from "../Sink/Sink.notify";
 import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
 import Observable_allAreRunnable from "./Observable.allAreRunnable";
@@ -48,7 +47,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         observers,
         ReadonlyArray_map(observer => observer.latest),
       );
-      pipe(instance.delegate, Sink_notify(result));
+      instance.delegate[SinkLike_notify](result);
 
       if (mode === zipMode) {
         for (const sub of observers) {

@@ -32,16 +32,16 @@ const Sink_satisfyMixin: <
   fromArray: (v: readonly boolean[]) => C,
   defaultResult: boolean,
 ) => {
-  const SatisfySink_private_predicate = Symbol("SatisfySink_private_predicate");
+  const SatisfySinkMixin_predicate = Symbol("SatisfySinkMixin_predicate");
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<boolean>;
-    readonly [SatisfySink_private_predicate]: Predicate<T>;
+    readonly [SatisfySinkMixin_predicate]: Predicate<T>;
   };
 
   return mix(
     include(Disposable_mixin),
-    function SatisfySink(
+    function SatisfySinkMixin(
       instance: Mutable<TProperties> &
         Pick<SinkLike<T>, typeof SinkLike_notify>,
       delegate: TSink,
@@ -49,7 +49,7 @@ const Sink_satisfyMixin: <
     ): SinkLike<T> {
       init(Disposable_mixin, instance);
       instance[DelegatingSinkLike_delegate] = delegate;
-      instance[SatisfySink_private_predicate] = predicate;
+      instance[SatisfySinkMixin_predicate] = predicate;
 
       pipe(
         instance,
@@ -69,11 +69,11 @@ const Sink_satisfyMixin: <
     },
     props<TProperties>({
       [DelegatingSinkLike_delegate]: none,
-      [SatisfySink_private_predicate]: none,
+      [SatisfySinkMixin_predicate]: none,
     }),
     {
       [SinkLike_notify](this: TProperties, next: T) {
-        if (this[SatisfySink_private_predicate](next)) {
+        if (this[SatisfySinkMixin_predicate](next)) {
           pipe(
             this[DelegatingSinkLike_delegate],
             Sink_notify(!defaultResult),

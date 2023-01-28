@@ -31,14 +31,12 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
     }
   };
 
-  const Disposable_private_disposables = Symbol(
-    "Disposable_private_disposables",
-  );
+  const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
 
   type TProperties = {
     [DisposableLike_error]: Optional<Error>;
     [DisposableLike_isDisposed]: boolean;
-    readonly [Disposable_private_disposables]: Set<DisposableOrTeardown>;
+    readonly [DisposableMixin_disposables]: Set<DisposableOrTeardown>;
   };
 
   return mix(
@@ -49,14 +47,14 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
       > &
         Mutable<TProperties>,
     ): DisposableLike {
-      instance[Disposable_private_disposables] = new Set();
+      instance[DisposableMixin_disposables] = new Set();
 
       return instance;
     },
     props<TProperties>({
       [DisposableLike_error]: none,
       [DisposableLike_isDisposed]: false,
-      [Disposable_private_disposables]: none,
+      [DisposableMixin_disposables]: none,
     }),
     {
       [DisposableLike_dispose](
@@ -67,7 +65,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
           this[DisposableLike_error] = error;
           this[DisposableLike_isDisposed] = true;
 
-          const disposables = this[Disposable_private_disposables];
+          const disposables = this[DisposableMixin_disposables];
 
           for (const disposable of disposables) {
             disposables.delete(disposable);
@@ -80,7 +78,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
         disposable: DisposableOrTeardown,
         ignoreChildErrors: boolean,
       ) {
-        const disposables = this[Disposable_private_disposables];
+        const disposables = this[DisposableMixin_disposables];
 
         if ((this as unknown) === disposable) {
           return;

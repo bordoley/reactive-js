@@ -16,17 +16,17 @@ export const Sink_forEachMixin: <T>() => Mixin2<
   SinkLike<T>,
   SideEffect1<T>
 > = /*@__PURE__*/ (<T>() => {
-  const ForEachSink_private_effect = Symbol("ForEachSink_private_effect");
+  const ForEachSinkMixin_effect = Symbol("ForEachSinkMixin_effect");
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
-    readonly [ForEachSink_private_effect]: SideEffect1<T>;
+    readonly [ForEachSinkMixin_effect]: SideEffect1<T>;
   };
 
   return returns(
     mix(
       include(Disposable_delegatingMixin),
-      function ForEachSink(
+      function ForEachSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
@@ -35,17 +35,17 @@ export const Sink_forEachMixin: <T>() => Mixin2<
         init(Disposable_delegatingMixin, instance, delegate);
 
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[ForEachSink_private_effect] = effect;
+        instance[ForEachSinkMixin_effect] = effect;
 
         return instance;
       },
       props<TProperties>({
         [DelegatingSinkLike_delegate]: none,
-        [ForEachSink_private_effect]: none,
+        [ForEachSinkMixin_effect]: none,
       }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
-          this[ForEachSink_private_effect](next);
+          this[ForEachSinkMixin_effect](next);
           this[DelegatingSinkLike_delegate][SinkLike_notify](next);
         },
       },

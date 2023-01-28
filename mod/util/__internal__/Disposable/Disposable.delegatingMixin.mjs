@@ -7,28 +7,28 @@ import Disposable_onDisposed from './Disposable.onDisposed.mjs';
 
 const Disposable_delegatingMixin = 
 /*@__PURE__*/ (() => {
-    const DelegatingDisposable_private_delegate = Symbol("DelegatingDisposable_private_delegate");
+    const DelegatingDisposableMixin_delegate = Symbol("DelegatingDisposableMixin_delegate");
     return mix(function DelegatingDisposableMixin(instance, delegate) {
-        instance[DelegatingDisposable_private_delegate] = delegate;
+        instance[DelegatingDisposableMixin_delegate] = delegate;
         pipe(delegate, Disposable_onDisposed(_ => {
             instance[DisposableLike_isDisposed] = true;
         }));
         return instance;
     }, props({
-        [DelegatingDisposable_private_delegate]: none,
+        [DelegatingDisposableMixin_delegate]: none,
         [DisposableLike_isDisposed]: false,
     }), {
         get [DisposableLike_error]() {
             unsafeCast(this);
-            const delegate = this[DelegatingDisposable_private_delegate];
+            const delegate = this[DelegatingDisposableMixin_delegate];
             return delegate[DisposableLike_error];
         },
         [DisposableLike_add](disposable, ignoreChildErrors) {
-            const delegate = this[DelegatingDisposable_private_delegate];
+            const delegate = this[DelegatingDisposableMixin_delegate];
             delegate[DisposableLike_add](disposable, ignoreChildErrors);
         },
         [DisposableLike_dispose](error) {
-            pipe(this[DelegatingDisposable_private_delegate], Disposable_dispose(error));
+            pipe(this[DelegatingDisposableMixin_delegate], Disposable_dispose(error));
         },
     });
 })();

@@ -34,6 +34,7 @@ import {
   SinkLike,
   SinkLike_notify,
 } from "../../../rx";
+import { DisposableLike_isDisposed } from "../../../util";
 import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
@@ -43,7 +44,6 @@ import EnumeratorSink_create from "../EnumeratorSink/EnumeratorSink.create";
 import Observer_getScheduler from "../Observer/Observer.getScheduler";
 import Observer_mixin from "../Observer/Observer.mixin";
 import RunnableObservable_create from "../RunnableObservable/RunnableObservable.create";
-import Sink_notify from "../Sink/Sink.notify";
 import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
 import Observable_allAreRunnable from "./Observable.allAreRunnable";
@@ -112,11 +112,11 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
       {
         [SinkLike_notify](this: ObserverLike & TProperties, next: unknown) {
           const { sinkEnumerator, enumerators } = this;
-          if (Disposable_isDisposed(this)) {
+          if (this[DisposableLike_isDisposed]) {
             return;
           }
 
-          pipe(sinkEnumerator, Sink_notify(next));
+          sinkEnumerator[SinkLike_notify](next);
 
           if (!shouldEmit(enumerators)) {
             return;
@@ -126,7 +126,8 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
             enumerators,
             ReadonlyArray_map(Enumerator_getCurrent),
           );
-          pipe(this.delegate, Sink_notify(zippedNext));
+
+          this.delegate[SinkLike_notify](zippedNext);
 
           if (shouldComplete(enumerators)) {
             pipe(this, Disposable_dispose());

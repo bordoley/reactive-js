@@ -42,21 +42,32 @@ import Observer_schedule from "./Observer.schedule";
 
 const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
   const scheduleDrainQueue = (dispatcher: TProperties) => {
-    if (getLength(dispatcher.nextQueue) === 1) {
-      const { observer } = dispatcher;
+    if (getLength(dispatcher[ObserverDispatcher_nextQueue]) === 1) {
+      const { [ObserverDispatcher_observer]: observer } = dispatcher;
       pipe(
         observer,
-        Observer_schedule(dispatcher.continuation),
-        Disposable_onComplete(dispatcher.onContinuationDispose),
+        Observer_schedule(dispatcher[ObserverDispatcher_continuation]),
+        Disposable_onComplete(
+          dispatcher[ObserverDispatcher_onContinuationDispose],
+        ),
       );
     }
   };
 
+  const ObserverDispatcher_continuation = Symbol(
+    "ObserverDispatcher_continuation",
+  );
+  const ObserverDispatcher_nextQueue = Symbol("ObserverDispatcher_nextQueue");
+  const ObserverDispatcher_observer = Symbol("ObserverDispatcher_observer");
+  const ObserverDispatcher_onContinuationDispose = Symbol(
+    "ObserverDispatcher_onContinuationDispose",
+  );
+
   type TProperties = {
-    readonly continuation: SideEffect;
-    readonly nextQueue: T[];
-    readonly observer: ObserverLike<T>;
-    readonly onContinuationDispose: SideEffect;
+    readonly [ObserverDispatcher_continuation]: SideEffect;
+    readonly [ObserverDispatcher_nextQueue]: T[];
+    readonly [ObserverDispatcher_observer]: ObserverLike<T>;
+    readonly [ObserverDispatcher_onContinuationDispose]: SideEffect;
   };
 
   return createInstanceFactory(
@@ -72,11 +83,14 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
       ): DispatcherLike<T> {
         init(Disposable_mixin, instance);
 
-        instance.observer = observer;
-        instance.nextQueue = [];
+        instance[ObserverDispatcher_observer] = observer;
+        instance[ObserverDispatcher_nextQueue] = [];
 
-        instance.continuation = () => {
-          const { nextQueue, observer } = instance;
+        instance[ObserverDispatcher_continuation] = () => {
+          const {
+            [ObserverDispatcher_nextQueue]: nextQueue,
+            [ObserverDispatcher_observer]: observer,
+          } = instance;
 
           while (getLength(nextQueue) > 0) {
             const next = nextQueue.shift() as T;
@@ -85,7 +99,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           }
         };
 
-        instance.onContinuationDispose = () => {
+        instance[ObserverDispatcher_onContinuationDispose] = () => {
           if (Disposable_isDisposed(instance)) {
             pipe(observer, Disposable_dispose(instance[DisposableLike_error]));
           }
@@ -94,7 +108,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         pipe(
           instance,
           Disposable_onDisposed(e => {
-            if (isEmpty(instance.nextQueue)) {
+            if (isEmpty(instance[ObserverDispatcher_nextQueue])) {
               pipe(observer, Disposable_dispose(e));
             }
           }),
@@ -103,19 +117,19 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         return instance;
       },
       props<TProperties>({
-        continuation: none,
-        nextQueue: none,
-        observer: none,
-        onContinuationDispose: none,
+        [ObserverDispatcher_continuation]: none,
+        [ObserverDispatcher_nextQueue]: none,
+        [ObserverDispatcher_observer]: none,
+        [ObserverDispatcher_onContinuationDispose]: none,
       }),
       {
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
-          return Observer_getsScheduler(this.observer);
+          return Observer_getsScheduler(this[ObserverDispatcher_observer]);
         },
         [DispatcherLike_dispatch](this: TProperties & DisposableLike, next: T) {
           if (!Disposable_isDisposed(this)) {
-            this.nextQueue.push(next);
+            this[ObserverDispatcher_nextQueue].push(next);
             scheduleDrainQueue(this);
           }
         },
@@ -131,9 +145,11 @@ type TObserverMixinReturn<T> = Omit<
 
 const Observer_mixin: <T>() => Mixin1<TObserverMixinReturn<T>, SchedulerLike> =
   /*@__PURE__*/ (<T>() => {
+    const ObserverMixin_dispatcher = Symbol("ObserverMixin_dispatcher");
+
     type TProperties = {
       readonly [ObserverLike_scheduler]: SchedulerLike;
-      dispatcher: Optional<DispatcherLike<T>>;
+      [ObserverMixin_dispatcher]: Optional<DispatcherLike<T>>;
     };
 
     return pipe(
@@ -149,18 +165,18 @@ const Observer_mixin: <T>() => Mixin1<TObserverMixinReturn<T>, SchedulerLike> =
         },
         props<TProperties>({
           [ObserverLike_scheduler]: none,
-          dispatcher: none,
+          [ObserverMixin_dispatcher]: none,
         }),
         {
           get [ObserverLike_dispatcher](): DispatcherLike<T> {
             unsafeCast<ObserverLike<T> & TProperties>(this);
-            let { dispatcher } = this;
+            let { [ObserverMixin_dispatcher]: dispatcher } = this;
             if (isNone(dispatcher)) {
               dispatcher = pipe(
                 createObserverDispatcher(this),
                 Disposable_addToIgnoringChildErrors<DispatcherLike<T>>(this),
               );
-              this.dispatcher = dispatcher;
+              this[ObserverMixin_dispatcher] = dispatcher;
             }
             return dispatcher;
           },

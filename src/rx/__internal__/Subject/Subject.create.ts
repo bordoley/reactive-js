@@ -33,10 +33,13 @@ import Observer_getDispatcher from "../Observer/Observer.getDispatcher";
 
 const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
   /*@__PURE__*/ (<T>() => {
+    const Subject_observers = Symbol("Subject_observers");
+    const Subject_replayed = Symbol("Subject_replayed");
+
     type TProperties = {
       readonly [MulticastObservableLike_replay]: number;
-      readonly observers: Set<ObserverLike<T>>;
-      readonly replayed: Array<T>;
+      readonly [Subject_observers]: Set<ObserverLike<T>>;
+      readonly [Subject_replayed]: Array<T>;
     };
 
     const createSubjectInstance = createInstanceFactory(
@@ -57,15 +60,15 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
           init(Disposable_mixin, instance);
 
           instance[MulticastObservableLike_replay] = replay;
-          instance.observers = newInstance<Set<ObserverLike>>(Set);
-          instance.replayed = [];
+          instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
+          instance[Subject_replayed] = [];
 
           return instance;
         },
         props<TProperties>({
           [MulticastObservableLike_replay]: 0,
-          observers: none,
-          replayed: none,
+          [Subject_observers]: none,
+          [Subject_replayed]: none,
         }),
         {
           [ObservableLike_isEnumerable]: false,
@@ -73,12 +76,12 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
 
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);
-            return this.observers.size;
+            return this[Subject_observers].size;
           },
 
           [SubjectLike_publish](this: TProperties & SubjectLike<T>, next: T) {
             if (!Disposable_isDisposed(this)) {
-              const { replayed } = this;
+              const { [Subject_replayed]: replayed } = this;
 
               const replay = this[MulticastObservableLike_replay];
 
@@ -89,7 +92,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
                 }
               }
 
-              for (const observer of this.observers) {
+              for (const observer of this[Subject_observers]) {
                 pipe(
                   observer,
                   Observer_getDispatcher,
@@ -104,7 +107,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             observer: ObserverLike<T>,
           ) {
             if (!Disposable_isDisposed(this)) {
-              const { observers } = this;
+              const { [Subject_observers]: observers } = this;
               observers.add(observer);
 
               pipe(
@@ -120,7 +123,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            for (const next of this.replayed) {
+            for (const next of this[Subject_replayed]) {
               pipe(dispatcher, Dispatcher_dispatch(next));
             }
 

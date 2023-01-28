@@ -30,18 +30,18 @@ const Sink_reduceMixin: <
 >(
   fromArray: (v: readonly TAcc[]) => C,
 ) => {
-  const ReduceSink_private_reducer = Symbol("ReduceSink_private_reducer");
-  const ReduceSink_private_acc = Symbol("ReduceSink_private_acc");
+  const ReduceSinkMixin_reducer = Symbol("ReduceSinkMixin_reducer");
+  const ReduceSinkMixin_acc = Symbol("ReduceSinkMixin_acc");
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: TSink;
-    readonly [ReduceSink_private_reducer]: Reducer<T, TAcc>;
-    [ReduceSink_private_acc]: TAcc;
+    readonly [ReduceSinkMixin_reducer]: Reducer<T, TAcc>;
+    [ReduceSinkMixin_acc]: TAcc;
   };
 
   return mix(
     include(Disposable_mixin),
-    function ReduceSink(
+    function ReduceSinkMixin(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
       delegate: TSink,
@@ -51,11 +51,11 @@ const Sink_reduceMixin: <
       init(Disposable_mixin, instance);
 
       instance[DelegatingSinkLike_delegate] = delegate;
-      instance[ReduceSink_private_reducer] = reducer;
+      instance[ReduceSinkMixin_reducer] = reducer;
 
       try {
         const acc = initialValue();
-        instance[ReduceSink_private_acc] = acc;
+        instance[ReduceSinkMixin_acc] = acc;
       } catch (e) {
         pipe(instance, Disposable_dispose(error(e)));
       }
@@ -65,7 +65,7 @@ const Sink_reduceMixin: <
         Disposable_addTo(delegate),
         Disposable_onComplete(() => {
           pipe(
-            [instance[ReduceSink_private_acc]],
+            [instance[ReduceSinkMixin_acc]],
             fromArray,
             ReactiveContainer_sinkInto<C, TSink, TAcc>(delegate),
           );
@@ -76,16 +76,16 @@ const Sink_reduceMixin: <
     },
     props<TProperties>({
       [DelegatingSinkLike_delegate]: none,
-      [ReduceSink_private_reducer]: none,
-      [ReduceSink_private_acc]: none,
+      [ReduceSinkMixin_reducer]: none,
+      [ReduceSinkMixin_acc]: none,
     }),
     {
       [SinkLike_notify](this: TProperties, next: T) {
-        const nextAcc = this[ReduceSink_private_reducer](
-          this[ReduceSink_private_acc],
+        const nextAcc = this[ReduceSinkMixin_reducer](
+          this[ReduceSinkMixin_acc],
           next,
         );
-        this[ReduceSink_private_acc] = nextAcc;
+        this[ReduceSinkMixin_acc] = nextAcc;
       },
     },
   );

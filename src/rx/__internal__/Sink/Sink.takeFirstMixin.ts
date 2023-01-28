@@ -15,22 +15,19 @@ import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const Sink_takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
   /*@__PURE__*/ (<T>() => {
-    const TakeFirstSink_private_takeCount = Symbol(
-      "TakeFirstSink_private_takeCount",
-    );
-
-    const TakeFirstSink_private_count = Symbol("TakeFirstSink_private_count");
+    const TakeFirstSinkMixin_takeCount = Symbol("TakeFirstSinkMixin_takeCount");
+    const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
 
     type TProperties = {
       readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
-      readonly [TakeFirstSink_private_takeCount]: number;
-      [TakeFirstSink_private_count]: number;
+      readonly [TakeFirstSinkMixin_takeCount]: number;
+      [TakeFirstSinkMixin_count]: number;
     };
 
     return returns(
       mix(
         include(Disposable_delegatingMixin),
-        function TakeFirstSink(
+        function TakeFirstSinkMixin(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: SinkLike<T>,
@@ -39,7 +36,7 @@ const Sink_takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
           init(Disposable_delegatingMixin, instance, delegate);
 
           instance[DelegatingSinkLike_delegate] = delegate;
-          instance[TakeFirstSink_private_takeCount] = takeCount;
+          instance[TakeFirstSinkMixin_takeCount] = takeCount;
 
           if (takeCount === 0) {
             pipe(instance, Disposable_dispose());
@@ -49,16 +46,16 @@ const Sink_takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
         },
         props<TProperties>({
           [DelegatingSinkLike_delegate]: none,
-          [TakeFirstSink_private_takeCount]: 0,
-          [TakeFirstSink_private_count]: 0,
+          [TakeFirstSinkMixin_count]: 0,
+          [TakeFirstSinkMixin_takeCount]: 0,
         }),
         {
           [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-            this[TakeFirstSink_private_count]++;
+            this[TakeFirstSinkMixin_count]++;
             this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             if (
-              this[TakeFirstSink_private_count] >=
-              this[TakeFirstSink_private_takeCount]
+              this[TakeFirstSinkMixin_count] >=
+              this[TakeFirstSinkMixin_takeCount]
             ) {
               pipe(this, Disposable_dispose());
             }

@@ -6,26 +6,26 @@ import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Di
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_distinctUntilChangedMixin = /*@__PURE__*/ (() => {
-    const DistinctUntilChangedSink_private_equality = Symbol("DistinctUntilChangedSink_private_equality");
-    const DistinctUntilChangedSink_private_prev = Symbol("DistinctUntilChangedSink_private_prev");
-    const DistinctUntilChangedSink_private_hasValue = Symbol("DistinctUntilChangedSink_private_hasValue");
-    return returns(mix(include(Disposable_delegatingMixin), function DistinctUntilChangedSink(instance, delegate, equality) {
+    const DistinctUntilChangedSinkMixin_equality = Symbol("DistinctUntilChangedSinkMixin_equality");
+    const DistinctUntilChangedSinkMixin_prev = Symbol("DistinctUntilChangedSinkMixin_prev");
+    const DistinctUntilChangedSinkMixin_hasValue = Symbol("DistinctUntilChangedSinkMixin_hasValue");
+    return returns(mix(include(Disposable_delegatingMixin), function DistinctUntilChangedSinkMixin(instance, delegate, equality) {
         init(Disposable_delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[DistinctUntilChangedSink_private_equality] = equality;
+        instance[DistinctUntilChangedSinkMixin_equality] = equality;
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [DistinctUntilChangedSink_private_equality]: none,
-        [DistinctUntilChangedSink_private_prev]: none,
-        [DistinctUntilChangedSink_private_hasValue]: false,
+        [DistinctUntilChangedSinkMixin_equality]: none,
+        [DistinctUntilChangedSinkMixin_prev]: none,
+        [DistinctUntilChangedSinkMixin_hasValue]: false,
     }), {
         [SinkLike_notify](next) {
-            const shouldEmit = !this[DistinctUntilChangedSink_private_hasValue] ||
-                !this[DistinctUntilChangedSink_private_equality](this[DistinctUntilChangedSink_private_prev], next);
+            const shouldEmit = !this[DistinctUntilChangedSinkMixin_hasValue] ||
+                !this[DistinctUntilChangedSinkMixin_equality](this[DistinctUntilChangedSinkMixin_prev], next);
             if (shouldEmit) {
-                this[DistinctUntilChangedSink_private_prev] = next;
-                this[DistinctUntilChangedSink_private_hasValue] = true;
+                this[DistinctUntilChangedSinkMixin_prev] = next;
+                this[DistinctUntilChangedSinkMixin_hasValue] = true;
                 this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             }
         },

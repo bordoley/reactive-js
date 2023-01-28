@@ -18,19 +18,21 @@ import {
   pipe,
 } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
+import { DisposableLike_isDisposed } from "../../../util";
 import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
 import Disposable_disposed from "../../../util/__internal__/Disposable/Disposable.disposed";
 import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import DisposableRef_create from "../../../util/__internal__/DisposableRef/DisposableRef.create";
-import MutableRef_get from "../../../util/__internal__/MutableRef/MutableRef.get";
 import MutableRef_set from "../../../util/__internal__/MutableRef/MutableRef.set";
-import { DisposableRefLike } from "../../../util/__internal__/util.internal";
+import {
+  DisposableRefLike,
+  MutableRefLike_current,
+} from "../../../util/__internal__/util.internal";
 import Observer_getScheduler from "../Observer/Observer.getScheduler";
 import Observer_mixin from "../Observer/Observer.mixin";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import Sink_notify from "../Sink/Sink.notify";
 import Observable_forEach from "./Observable.forEach";
 import Observable_lift from "./Observable.lift";
 import Observable_subscribe from "./Observable.subscribe";
@@ -99,7 +101,7 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
               instance.value = none;
               instance.hasValue = false;
 
-              pipe(instance.delegate, Sink_notify(value));
+              instance.delegate[SinkLike_notify](value);
 
               setupDurationSubscription(instance, value);
             }
@@ -139,11 +141,10 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
             this.value = next;
             this.hasValue = true;
 
-            const durationSubscriptionDisposableIsDisposed = pipe(
-              this.durationSubscription,
-              MutableRef_get,
-              Disposable_isDisposed,
-            );
+            const durationSubscriptionDisposableIsDisposed =
+              this.durationSubscription[MutableRefLike_current][
+                DisposableLike_isDisposed
+              ];
 
             if (
               durationSubscriptionDisposableIsDisposed &&

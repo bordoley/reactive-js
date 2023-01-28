@@ -21,7 +21,6 @@ import {
 } from "../../../util/__internal__/util.internal";
 import Observer_getScheduler from "../Observer/Observer.getScheduler";
 import Observer_mixin from "../Observer/Observer.mixin";
-import Sink_notify from "../Sink/Sink.notify";
 import Observable_concat from "./Observable.concat";
 import Observable_fromArray from "./Observable.fromArray";
 import Observable_isRunnable from "./Observable.isRunnable";
@@ -83,7 +82,7 @@ const Observable_timeout = /*@__PURE__*/ (<T>() => {
           next: T,
         ) {
           pipe(this, MutableRef_get, Disposable_dispose());
-          pipe(this.delegate, Sink_notify(next));
+          this.delegate[SinkLike_notify](next);
         },
       },
     ),

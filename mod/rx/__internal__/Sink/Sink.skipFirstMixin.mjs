@@ -7,22 +7,22 @@ import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_skipFirstMixin = 
 /*@__PURE__*/ (() => {
-    const SkipFirstSink_private_skipCount = Symbol("SkipFirstSink_private_skipCount");
-    const SkipFirstSink_private_count = Symbol("SkipFirstSink_private_count");
-    return returns(mix(include(Disposable_delegatingMixin), function SkipFirstSink(instance, delegate, skipCount) {
+    const SkipFirstSinkMixin_skipCount = Symbol("SkipFirstSinkMixin_skipCount");
+    const SkipFirstSinkMixin_count = Symbol("SkipFirstSinkMixin_count");
+    return returns(mix(include(Disposable_delegatingMixin), function SkipFirstSinkMixin(instance, delegate, skipCount) {
         init(Disposable_delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[SkipFirstSink_private_skipCount] = skipCount;
+        instance[SkipFirstSinkMixin_skipCount] = skipCount;
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [SkipFirstSink_private_skipCount]: 0,
-        [SkipFirstSink_private_count]: 0,
+        [SkipFirstSinkMixin_skipCount]: 0,
+        [SkipFirstSinkMixin_count]: 0,
     }), {
         [SinkLike_notify](next) {
-            this[SkipFirstSink_private_count]++;
-            if (this[SkipFirstSink_private_count] >
-                this[SkipFirstSink_private_skipCount]) {
+            this[SkipFirstSinkMixin_count]++;
+            if (this[SkipFirstSinkMixin_count] >
+                this[SkipFirstSinkMixin_skipCount]) {
                 this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             }
         },

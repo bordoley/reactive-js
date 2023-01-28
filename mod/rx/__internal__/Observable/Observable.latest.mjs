@@ -9,7 +9,6 @@ import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.m
 import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
 import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
 import Observer_mixin from '../Observer/Observer.mixin.mjs';
-import Sink_notify from '../Sink/Sink.notify.mjs';
 import Sink_sourceFrom from '../Sink/Sink.sourceFrom.mjs';
 import Observable_allAreEnumerable from './Observable.allAreEnumerable.mjs';
 import Observable_allAreRunnable from './Observable.allAreRunnable.mjs';
@@ -26,7 +25,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         const isReady = observers.every(x => x.ready);
         if (isReady) {
             const result = pipe(observers, ReadonlyArray_map(observer => observer.latest));
-            pipe(instance.delegate, Sink_notify(result));
+            instance.delegate[SinkLike_notify](result);
             if (mode === zipMode) {
                 for (const sub of observers) {
                     sub.ready = false;

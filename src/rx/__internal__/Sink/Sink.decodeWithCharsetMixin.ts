@@ -26,18 +26,18 @@ const Sink_decodeWithCharsetMixin: <
 >(
   fromArray: (v: readonly string[]) => C,
 ) => {
-  const DecodeWithCharsetSink_private_textDecoder = Symbol(
-    "DecodeWithCharsetSink_private_textDecoder",
+  const DecodeWithCharsetSinkMixin_textDecoder = Symbol(
+    "DecodeWithCharsetSinkMixin_textDecoder",
   );
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<string>;
-    readonly [DecodeWithCharsetSink_private_textDecoder]: TextDecoder;
+    readonly [DecodeWithCharsetSinkMixin_textDecoder]: TextDecoder;
   };
 
   return mix(
     include(Disposable_mixin),
-    function DecodeWithCharsetSink(
+    function DecodeWithCharsetSinkMixin(
       instance: Pick<SinkLike<ArrayBuffer>, typeof SinkLike_notify> &
         Mutable<TProperties>,
       delegate: SinkLike<string>,
@@ -46,7 +46,7 @@ const Sink_decodeWithCharsetMixin: <
       init(Disposable_mixin, instance);
 
       const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
-      instance[DecodeWithCharsetSink_private_textDecoder] = textDecoder;
+      instance[DecodeWithCharsetSinkMixin_textDecoder] = textDecoder;
       instance[DelegatingSinkLike_delegate] = delegate;
 
       pipe(
@@ -67,14 +67,13 @@ const Sink_decodeWithCharsetMixin: <
     },
     props<TProperties>({
       [DelegatingSinkLike_delegate]: none,
-      [DecodeWithCharsetSink_private_textDecoder]: none,
+      [DecodeWithCharsetSinkMixin_textDecoder]: none,
     }),
     {
       [SinkLike_notify](this: TProperties, next: ArrayBuffer) {
-        const data = this[DecodeWithCharsetSink_private_textDecoder].decode(
-          next,
-          { stream: true },
-        );
+        const data = this[DecodeWithCharsetSinkMixin_textDecoder].decode(next, {
+          stream: true,
+        });
         if (!isEmpty(data)) {
           this[DelegatingSinkLike_delegate][SinkLike_notify](data);
         }

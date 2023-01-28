@@ -16,17 +16,17 @@ export const Sink_mapMixin: <TA, TB>() => Mixin2<
   SinkLike<TB>,
   Function1<TA, TB>
 > = /*@__PURE__*/ (<TA, TB>() => {
-  const MapSink_private_mapper = Symbol("MapSink_private_mapper");
+  const MapSinkMixin_mapper = Symbol("MapSinkMixin_mapper");
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<TB>;
-    readonly [MapSink_private_mapper]: Function1<TA, TB>;
+    readonly [MapSinkMixin_mapper]: Function1<TA, TB>;
   };
 
   return returns(
     mix(
       include(Disposable_delegatingMixin),
-      function MapSink(
+      function MapSinkMixin(
         instance: Pick<SinkLike<TA>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<TB>,
@@ -35,17 +35,17 @@ export const Sink_mapMixin: <TA, TB>() => Mixin2<
         init(Disposable_delegatingMixin, instance, delegate);
 
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[MapSink_private_mapper] = mapper;
+        instance[MapSinkMixin_mapper] = mapper;
 
         return instance;
       },
       props<TProperties>({
         [DelegatingSinkLike_delegate]: none,
-        [MapSink_private_mapper]: none,
+        [MapSinkMixin_mapper]: none,
       }),
       {
         [SinkLike_notify](this: TProperties, next: TA) {
-          const mapped = this[MapSink_private_mapper](next);
+          const mapped = this[MapSinkMixin_mapper](next);
           this[DelegatingSinkLike_delegate][SinkLike_notify](mapped);
         },
       },

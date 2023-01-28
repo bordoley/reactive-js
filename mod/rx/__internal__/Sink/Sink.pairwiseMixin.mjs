@@ -6,24 +6,24 @@ import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Di
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_pairwiseMixin = /*@__PURE__*/ (() => {
-    const PairwiseSink_private_prev = Symbol("PairwiseSink_private_prev");
-    const PairwiseSink_private_hasPrev = Symbol("PairwiseSink_private_hasPrev");
-    return returns(mix(include(Disposable_delegatingMixin), function PairwiseSink(instance, delegate) {
+    const PairwiseSinkMixin_prev = Symbol("PairwiseSinkMixin_prev");
+    const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");
+    return returns(mix(include(Disposable_delegatingMixin), function PairwiseSinkMixin(instance, delegate) {
         init(Disposable_delegatingMixin, instance, delegate);
         instance[DelegatingSinkLike_delegate] = delegate;
         return instance;
     }, props({
         [DelegatingSinkLike_delegate]: none,
-        [PairwiseSink_private_prev]: none,
-        [PairwiseSink_private_hasPrev]: false,
+        [PairwiseSinkMixin_prev]: none,
+        [PairwiseSinkMixin_hasPrev]: false,
     }), {
         [SinkLike_notify](next) {
-            const prev = this[PairwiseSink_private_prev];
-            if (this[PairwiseSink_private_hasPrev]) {
+            const prev = this[PairwiseSinkMixin_prev];
+            if (this[PairwiseSinkMixin_hasPrev]) {
                 this[DelegatingSinkLike_delegate][SinkLike_notify]([prev, next]);
             }
-            this[PairwiseSink_private_hasPrev] = true;
-            this[PairwiseSink_private_prev] = next;
+            this[PairwiseSinkMixin_hasPrev] = true;
+            this[PairwiseSinkMixin_prev] = next;
         },
     }));
 })();

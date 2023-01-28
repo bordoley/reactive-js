@@ -28,20 +28,18 @@ const Sink_bufferMixin: <
 >(
   fromArray: (v: readonly T[][]) => C,
 ) => {
-  const BufferSink_private_maxBufferSize = Symbol(
-    "BufferSink_private_maxBufferSize",
-  );
-  const BufferSink_private_buffer = Symbol("BufferSink_private_buffer");
+  const BufferSinkMixin_maxBufferSize = Symbol("BufferSinkMixin_maxBufferSize");
+  const BufferSinkMixin_buffer = Symbol("BufferSinkMixin_buffer");
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: TSink;
-    readonly [BufferSink_private_maxBufferSize]: number;
-    [BufferSink_private_buffer]: T[];
+    readonly [BufferSinkMixin_maxBufferSize]: number;
+    [BufferSinkMixin_buffer]: T[];
   };
 
   return mix(
     include(Disposable_mixin),
-    function BufferSink(
+    function BufferSinkMixin(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
       delegate: TSink,
@@ -50,15 +48,15 @@ const Sink_bufferMixin: <
       init(Disposable_mixin, instance);
 
       instance[DelegatingSinkLike_delegate] = delegate;
-      instance[BufferSink_private_maxBufferSize] = maxBufferSize;
-      instance[BufferSink_private_buffer] = [];
+      instance[BufferSinkMixin_maxBufferSize] = maxBufferSize;
+      instance[BufferSinkMixin_buffer] = [];
 
       pipe(
         instance,
         Disposable_addTo(delegate),
         Disposable_onComplete(() => {
-          const { [BufferSink_private_buffer]: buffer } = instance;
-          instance[BufferSink_private_buffer] = [];
+          const { [BufferSinkMixin_buffer]: buffer } = instance;
+          instance[BufferSinkMixin_buffer] = [];
 
           if (isEmpty(buffer)) {
             pipe(instance[DelegatingSinkLike_delegate], Disposable_dispose());
@@ -78,21 +76,21 @@ const Sink_bufferMixin: <
     },
     props<TProperties>({
       [DelegatingSinkLike_delegate]: none,
-      [BufferSink_private_maxBufferSize]: 0,
-      [BufferSink_private_buffer]: none,
+      [BufferSinkMixin_maxBufferSize]: 0,
+      [BufferSinkMixin_buffer]: none,
     }),
     {
       [SinkLike_notify](this: TProperties, next: T) {
         const {
-          [BufferSink_private_buffer]: buffer,
-          [BufferSink_private_maxBufferSize]: maxBufferSize,
+          [BufferSinkMixin_buffer]: buffer,
+          [BufferSinkMixin_maxBufferSize]: maxBufferSize,
         } = this;
 
         buffer.push(next);
 
         if (getLength(buffer) === maxBufferSize) {
-          const buffer = this[BufferSink_private_buffer];
-          this[BufferSink_private_buffer] = [];
+          const buffer = this[BufferSinkMixin_buffer];
+          this[BufferSinkMixin_buffer] = [];
 
           this[DelegatingSinkLike_delegate][SinkLike_notify](buffer);
         }

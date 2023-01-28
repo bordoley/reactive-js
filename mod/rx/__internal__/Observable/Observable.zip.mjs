@@ -14,6 +14,7 @@ import Enumerator_getCurrent from '../../../ix/__internal__/Enumerator/Enumerato
 import Enumerator_hasCurrent from '../../../ix/__internal__/Enumerator/Enumerator.hasCurrent.mjs';
 import Enumerator_move from '../../../ix/__internal__/Enumerator/Enumerator.move.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
+import { DisposableLike_isDisposed } from '../../../util.mjs';
 import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
 import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
@@ -23,7 +24,6 @@ import EnumeratorSink_create from '../EnumeratorSink/EnumeratorSink.create.mjs';
 import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
 import Observer_mixin from '../Observer/Observer.mixin.mjs';
 import RunnableObservable_create from '../RunnableObservable/RunnableObservable.create.mjs';
-import Sink_notify from '../Sink/Sink.notify.mjs';
 import Sink_sourceFrom from '../Sink/Sink.sourceFrom.mjs';
 import Observable_allAreEnumerable from './Observable.allAreEnumerable.mjs';
 import Observable_allAreRunnable from './Observable.allAreRunnable.mjs';
@@ -56,15 +56,15 @@ const Observable_zip = /*@__PURE__*/ (() => {
     }), {
         [SinkLike_notify](next) {
             const { sinkEnumerator, enumerators } = this;
-            if (Disposable_isDisposed(this)) {
+            if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            pipe(sinkEnumerator, Sink_notify(next));
+            sinkEnumerator[SinkLike_notify](next);
             if (!shouldEmit(enumerators)) {
                 return;
             }
             const zippedNext = pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent));
-            pipe(this.delegate, Sink_notify(zippedNext));
+            this.delegate[SinkLike_notify](zippedNext);
             if (shouldComplete(enumerators)) {
                 pipe(this, Disposable_dispose());
             }

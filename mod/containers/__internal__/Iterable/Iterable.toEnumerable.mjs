@@ -11,15 +11,16 @@ import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.m
 const Iterable_toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    const IteratorEnumerator_iterator = Symbol("IteratorEnumerator_iterator");
     const createIterableEnumerator = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function IteratorEnumerator(instance, iterator) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        instance.iterator = iterator;
+        instance[IteratorEnumerator_iterator] = iterator;
         return instance;
-    }, props({ iterator: none }), {
+    }, props({ [IteratorEnumerator_iterator]: none }), {
         [SourceLike_move]() {
             if (!Disposable_isDisposed(this)) {
-                const next = this.iterator.next();
+                const next = this[IteratorEnumerator_iterator].next();
                 if (!next.done) {
                     this[EnumeratorLike_current] = next.value;
                 }

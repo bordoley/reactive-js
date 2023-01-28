@@ -106,17 +106,21 @@ const runContinuation = (
 ) => {
   // clear the immediateOrTimer disposable
   pipe(immmediateOrTimerDisposable, Disposable_dispose());
-  scheduler.startTime = getCurrentTime(scheduler);
+  scheduler[HostScheduler_startTime] = getCurrentTime(scheduler);
   scheduler[SchedulerLike_inContinuation] = true;
   Continuation_run(continuation);
   scheduler[SchedulerLike_inContinuation] = false;
 };
 
+const HostScheduler_startTime = Symbol("HostScheduler_startTime");
+const HostScheduler_yieldInterval = Symbol("HostScheduler_yieldInterval");
+const HostScheduler_yieldRequested = Symbol("HostScheduler_yieldRequested");
+
 type TProperties = {
   [SchedulerLike_inContinuation]: boolean;
-  startTime: number;
-  readonly yieldInterval: number;
-  yieldRequested: boolean;
+  [HostScheduler_startTime]: number;
+  readonly [HostScheduler_yieldInterval]: number;
+  [HostScheduler_yieldRequested]: boolean;
 };
 
 const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
@@ -135,15 +139,15 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     ): SchedulerLike {
       init(Disposable_mixin, instance);
 
-      instance.yieldInterval = yieldInterval;
+      instance[HostScheduler_yieldInterval] = yieldInterval;
 
       return instance;
     },
     props<TProperties>({
       [SchedulerLike_inContinuation]: false,
-      startTime: 0,
-      yieldInterval: 0,
-      yieldRequested: false,
+      [HostScheduler_startTime]: 0,
+      [HostScheduler_yieldInterval]: 0,
+      [HostScheduler_yieldRequested]: false,
     }),
     {
       get [SchedulerLike_now](): number {
@@ -161,22 +165,24 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         unsafeCast<TProperties & SchedulerLike>(this);
 
         const inContinuation = isInContinuation(this);
-        const { yieldRequested } = this;
+        const { [HostScheduler_yieldRequested]: yieldRequested } = this;
 
         if (inContinuation) {
-          this.yieldRequested = false;
+          this[HostScheduler_yieldRequested] = false;
         }
 
         return (
           inContinuation &&
           (yieldRequested ||
-            getCurrentTime(this) > this.startTime + this.yieldInterval ||
+            getCurrentTime(this) >
+              this[HostScheduler_startTime] +
+                this[HostScheduler_yieldInterval] ||
             isInputPending())
         );
       },
 
       [SchedulerLike_requestYield](this: TProperties): void {
-        this.yieldRequested = true;
+        this[HostScheduler_yieldRequested] = true;
       },
 
       [SchedulerLike_schedule](

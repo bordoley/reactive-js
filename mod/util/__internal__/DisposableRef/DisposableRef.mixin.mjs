@@ -6,24 +6,24 @@ import Disposable_dispose from '../Disposable/Disposable.dispose.mjs';
 import { MutableRefLike_current } from '../util.internal.mjs';
 
 const DisposableRef_mixin = /*@__PURE__*/ (() => {
-    const DisposableRef_private_current = Symbol("DisposableRef_private_current");
+    const DisposableRefMixin_current = Symbol("DisposableRefMixin_current");
     return pipe(mix(function DisposableRef(instance, defaultValue) {
         unsafeCast(instance);
-        instance[DisposableRef_private_current] = defaultValue;
+        instance[DisposableRefMixin_current] = defaultValue;
         pipe(instance, Disposable_add(defaultValue));
         return instance;
     }, props({
-        [DisposableRef_private_current]: none,
+        [DisposableRefMixin_current]: none,
     }), {
         get [MutableRefLike_current]() {
             unsafeCast(this);
-            return this[DisposableRef_private_current];
+            return this[DisposableRefMixin_current];
         },
         set [MutableRefLike_current](v) {
             unsafeCast(this);
-            const oldValue = this[DisposableRef_private_current];
+            const oldValue = this[DisposableRefMixin_current];
             pipe(oldValue, Disposable_dispose());
-            this[DisposableRef_private_current] = v;
+            this[DisposableRefMixin_current] = v;
             pipe(this, Disposable_add(v));
         },
     }), returns);

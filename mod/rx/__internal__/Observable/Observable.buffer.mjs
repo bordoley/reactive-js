@@ -16,7 +16,6 @@ import EnumerableObservable_never from '../EnumerableObservable/EnumerableObserv
 import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
 import Observer_mixin from '../Observer/Observer.mixin.mjs';
 import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
-import Sink_notify from '../Sink/Sink.notify.mjs';
 import Observable_forEach from './Observable.forEach.mjs';
 import Observable_lift from './Observable.lift.mjs';
 import Observable_subscribe from './Observable.subscribe.mjs';
@@ -58,7 +57,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                     Disposable_disposed;
                 const buffer = this.buffer;
                 this.buffer = [];
-                pipe(this.delegate, Sink_notify(buffer));
+                this.delegate[SinkLike_notify](buffer);
             };
             if (getLength(buffer) === maxBufferSize) {
                 doOnNotify();

@@ -16,27 +16,27 @@ const Sink_distinctUntilChangedMixin: <T>() => Mixin2<
   SinkLike<T>,
   Equality<T>
 > = /*@__PURE__*/ (<T>() => {
-  const DistinctUntilChangedSink_private_equality = Symbol(
-    "DistinctUntilChangedSink_private_equality",
+  const DistinctUntilChangedSinkMixin_equality = Symbol(
+    "DistinctUntilChangedSinkMixin_equality",
   );
-  const DistinctUntilChangedSink_private_prev = Symbol(
-    "DistinctUntilChangedSink_private_prev",
+  const DistinctUntilChangedSinkMixin_prev = Symbol(
+    "DistinctUntilChangedSinkMixin_prev",
   );
-  const DistinctUntilChangedSink_private_hasValue = Symbol(
-    "DistinctUntilChangedSink_private_hasValue",
+  const DistinctUntilChangedSinkMixin_hasValue = Symbol(
+    "DistinctUntilChangedSinkMixin_hasValue",
   );
 
   type TProperties = {
     readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
-    readonly [DistinctUntilChangedSink_private_equality]: Equality<T>;
-    [DistinctUntilChangedSink_private_prev]: T;
-    [DistinctUntilChangedSink_private_hasValue]: boolean;
+    readonly [DistinctUntilChangedSinkMixin_equality]: Equality<T>;
+    [DistinctUntilChangedSinkMixin_prev]: T;
+    [DistinctUntilChangedSinkMixin_hasValue]: boolean;
   };
 
   return returns(
     mix(
       include(Disposable_delegatingMixin),
-      function DistinctUntilChangedSink(
+      function DistinctUntilChangedSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
@@ -45,28 +45,28 @@ const Sink_distinctUntilChangedMixin: <T>() => Mixin2<
         init(Disposable_delegatingMixin, instance, delegate);
 
         instance[DelegatingSinkLike_delegate] = delegate;
-        instance[DistinctUntilChangedSink_private_equality] = equality;
+        instance[DistinctUntilChangedSinkMixin_equality] = equality;
 
         return instance;
       },
       props<TProperties>({
         [DelegatingSinkLike_delegate]: none,
-        [DistinctUntilChangedSink_private_equality]: none,
-        [DistinctUntilChangedSink_private_prev]: none,
-        [DistinctUntilChangedSink_private_hasValue]: false,
+        [DistinctUntilChangedSinkMixin_equality]: none,
+        [DistinctUntilChangedSinkMixin_prev]: none,
+        [DistinctUntilChangedSinkMixin_hasValue]: false,
       }),
       {
         [SinkLike_notify](this: TProperties, next: T) {
           const shouldEmit =
-            !this[DistinctUntilChangedSink_private_hasValue] ||
-            !this[DistinctUntilChangedSink_private_equality](
-              this[DistinctUntilChangedSink_private_prev],
+            !this[DistinctUntilChangedSinkMixin_hasValue] ||
+            !this[DistinctUntilChangedSinkMixin_equality](
+              this[DistinctUntilChangedSinkMixin_prev],
               next,
             );
 
           if (shouldEmit) {
-            this[DistinctUntilChangedSink_private_prev] = next;
-            this[DistinctUntilChangedSink_private_hasValue] = true;
+            this[DistinctUntilChangedSinkMixin_prev] = next;
+            this[DistinctUntilChangedSinkMixin_hasValue] = true;
             this[DelegatingSinkLike_delegate][SinkLike_notify](next);
           }
         },
