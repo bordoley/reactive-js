@@ -14,7 +14,6 @@ import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.m
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 const Sink_bufferMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -95,7 +94,7 @@ const Sink_bufferMixin: <
           const buffer = this[BufferSink_private_buffer];
           this[BufferSink_private_buffer] = [];
 
-          pipe(this[DelegatingSinkLike_delegate], Sink_notify(buffer));
+          this[DelegatingSinkLike_delegate][SinkLike_notify](buffer);
         }
       },
     },

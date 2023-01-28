@@ -6,11 +6,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { Function1, none, pipe, returns } from "../../../functions";
+import { Function1, none, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 export const Sink_mapMixin: <TA, TB>() => Mixin2<
   SinkLike<TA>,
@@ -47,7 +46,7 @@ export const Sink_mapMixin: <TA, TB>() => Mixin2<
       {
         [SinkLike_notify](this: TProperties, next: TA) {
           const mapped = this[MapSink_private_mapper](next);
-          pipe(this[DelegatingSinkLike_delegate], Sink_notify(mapped));
+          this[DelegatingSinkLike_delegate][SinkLike_notify](mapped);
         },
       },
     ),

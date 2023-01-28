@@ -5,7 +5,6 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink_notify from './Sink.notify.mjs';
 
 const Sink_takeFirstMixin = 
 /*@__PURE__*/ (() => {
@@ -26,7 +25,7 @@ const Sink_takeFirstMixin =
     }), {
         [SinkLike_notify](next) {
             this[TakeFirstSink_private_count]++;
-            pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
+            this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             if (this[TakeFirstSink_private_count] >=
                 this[TakeFirstSink_private_takeCount]) {
                 pipe(this, Disposable_dispose());

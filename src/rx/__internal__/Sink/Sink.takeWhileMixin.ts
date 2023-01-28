@@ -12,7 +12,6 @@ import { DisposableLike } from "../../../util";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 const Sink_takeWhileMixin: <T>() => Mixin3<
   SinkLike<T>,
@@ -62,7 +61,7 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
             this[TakeWhileSink_private_predicate](next);
 
           if (satisfiesPredicate || this[TakeWhileSink_private_inclusive]) {
-            pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
+            this[DelegatingSinkLike_delegate][SinkLike_notify](next);
           }
 
           if (!satisfiesPredicate) {

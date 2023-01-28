@@ -8,7 +8,6 @@ import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.m
 import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
 import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink_notify from './Sink.notify.mjs';
 
 const Sink_decodeWithCharsetMixin = (fromArray) => {
     const DecodeWithCharsetSink_private_textDecoder = Symbol("DecodeWithCharsetSink_private_textDecoder");
@@ -34,7 +33,7 @@ const Sink_decodeWithCharsetMixin = (fromArray) => {
         [SinkLike_notify](next) {
             const data = this[DecodeWithCharsetSink_private_textDecoder].decode(next, { stream: true });
             if (!isEmpty(data)) {
-                pipe(this[DelegatingSinkLike_delegate], Sink_notify(data));
+                this[DelegatingSinkLike_delegate][SinkLike_notify](data);
             }
         },
     });

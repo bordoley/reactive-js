@@ -1,10 +1,9 @@
 /// <reference types="./Sink.keepMixin.d.ts" />
 import { mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { returns, none, pipe } from '../../../functions.mjs';
+import { returns, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
-import Sink_notify from './Sink.notify.mjs';
 
 const Sink_keepMixin = 
 /*@__PURE__*/ (() => {
@@ -20,7 +19,7 @@ const Sink_keepMixin =
     }), {
         [SinkLike_notify](next) {
             if (this[KeepSink_private_predicate](next)) {
-                pipe(this[DelegatingSinkLike_delegate], Sink_notify(next));
+                this[DelegatingSinkLike_delegate][SinkLike_notify](next);
             }
         },
     }));

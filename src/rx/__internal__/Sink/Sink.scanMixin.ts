@@ -18,7 +18,6 @@ import { SinkLike, SinkLike_notify } from "../../../rx";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import { DelegatingSinkLike_delegate } from "../rx.internal";
-import Sink_notify from "./Sink.notify";
 
 const Sink_scanMixin: <T, TAcc>() => Mixin3<
   SinkLike<T>,
@@ -71,7 +70,7 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
             next,
           );
           this[ScanSink_private_acc] = nextAcc;
-          pipe(this[DelegatingSinkLike_delegate], Sink_notify(nextAcc));
+          this[DelegatingSinkLike_delegate][SinkLike_notify](nextAcc);
         },
       },
     ),
