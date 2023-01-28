@@ -89,8 +89,8 @@ const windowLocation =
     const { history, location } = window;
     const windowLocationURIToString = ({ path, query, fragment, }) => {
         let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/_{path}` : path;
-        uri = getLength(query) > 0 ? `_{uri}?_{query}` : uri;
-        uri = getLength(fragment) > 0 ? `_{uri}#_{fragment}` : uri;
+        uri = getLength(query) > 0 ? `${uri}?${query}` : uri;
+        uri = getLength(fragment) > 0 ? `${uri}#${fragment}` : uri;
         return newInstance(URL, uri, location.href).toString();
     };
     const getCurrentWindowLocationURI = () => {
