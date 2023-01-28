@@ -281,7 +281,7 @@ export const windowLocation: WindowLocationStreamableLike =
       uri: string,
     ) => {
       history.replaceState(
-        { counter: instance.historyCounter, title },
+        { counter: instance[WindowLocationStream_historyCounter], title },
         "",
         uri,
       );
@@ -292,13 +292,24 @@ export const windowLocation: WindowLocationStreamableLike =
       title: string,
       uri: string,
     ) => {
-      instance.historyCounter++;
-      history.pushState({ counter: instance.historyCounter, title }, "", uri);
+      instance[WindowLocationStream_historyCounter]++;
+      history.pushState(
+        { counter: instance[WindowLocationStream_historyCounter], title },
+        "",
+        uri,
+      );
     };
 
+    const WindowLocationStream_delegate = Symbol(
+      "WindowLocationStream_delegate",
+    );
+    const WindowLocationStream_historyCounter = Symbol(
+      "WindowLocationStream_historyCounter",
+    );
+
     type TProperties = {
-      readonly delegate: StreamLike<TAction, TState>;
-      historyCounter: number;
+      readonly [WindowLocationStream_delegate]: StreamLike<TAction, TState>;
+      [WindowLocationStream_historyCounter]: number;
     };
 
     const createWindowLocationStream = createInstanceFactory(
@@ -322,34 +333,34 @@ export const windowLocation: WindowLocationStreamableLike =
         ): WindowLocationStreamLike & TProperties {
           init(Disposable_delegatingMixin, instance, delegate);
 
-          instance.delegate = delegate;
-          instance.historyCounter = -1;
+          instance[WindowLocationStream_delegate] = delegate;
+          instance[WindowLocationStream_historyCounter] = -1;
 
           return instance;
         },
         props<TProperties>({
-          delegate: none,
-          historyCounter: -1,
+          [WindowLocationStream_delegate]: none,
+          [WindowLocationStream_historyCounter]: -1,
         }),
         {
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);
-            return pipe(this.delegate, getObserverCount);
+            return pipe(this[WindowLocationStream_delegate], getObserverCount);
           },
 
           get [MulticastObservableLike_replay](): number {
             unsafeCast<TProperties>(this);
-            return pipe(this.delegate, getReplay);
+            return pipe(this[WindowLocationStream_delegate], getReplay);
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
             unsafeCast<TProperties>(this);
-            return pipe(this.delegate, getScheduler);
+            return pipe(this[WindowLocationStream_delegate], getScheduler);
           },
 
           get [WindowLocationStreamLike_canGoBack](): boolean {
             unsafeCast<TProperties>(this);
-            return this.historyCounter > 0;
+            return this[WindowLocationStream_historyCounter] > 0;
           },
 
           [ObservableLike_isEnumerable]: false,
@@ -360,7 +371,10 @@ export const windowLocation: WindowLocationStreamableLike =
             stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
             { replace }: { replace: boolean } = { replace: false },
           ): void {
-            pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
+            pipe(
+              { stateOrUpdater, replace },
+              dispatchTo(this[WindowLocationStream_delegate]),
+            );
           },
 
           [WindowLocationStreamLike_goBack](
@@ -380,7 +394,7 @@ export const windowLocation: WindowLocationStreamableLike =
             observer: ObserverLike<WindowLocationURI>,
           ): void {
             pipe(
-              this.delegate,
+              this[WindowLocationStream_delegate],
               map(({ uri }) => uri),
               sinkInto(observer),
             );
@@ -428,10 +442,14 @@ export const windowLocation: WindowLocationStreamableLike =
         })),
         forkCombineLatest(
           compose(
-            takeWhile(_ => windowLocationStream.historyCounter === -1),
+            takeWhile(
+              _ =>
+                windowLocationStream[WindowLocationStream_historyCounter] ===
+                -1,
+            ),
             forEachObs(({ uri, title }) => {
               // Initialize the history state on page load
-              windowLocationStream.historyCounter++;
+              windowLocationStream[WindowLocationStream_historyCounter]++;
               windowHistoryReplaceState(windowLocationStream, title, uri);
             }),
             ignoreElements({ keep: keepObs }),
@@ -483,7 +501,7 @@ export const windowLocation: WindowLocationStreamableLike =
           return { counter, uri };
         }),
         forEachObs(({ counter, uri }) => {
-          windowLocationStream.historyCounter = counter;
+          windowLocationStream[WindowLocationStream_historyCounter] = counter;
           windowLocationStream[DispatcherLike_dispatch](uri, { replace: true });
         }),
         subscribe(scheduler),

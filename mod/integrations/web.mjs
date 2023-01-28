@@ -110,41 +110,43 @@ const windowLocation =
             a.query === b.query &&
             a.fragment === b.fragment);
     const windowHistoryReplaceState = (instance, title, uri) => {
-        history.replaceState({ counter: instance.historyCounter, title }, "", uri);
+        history.replaceState({ counter: instance[WindowLocationStream_historyCounter], title }, "", uri);
     };
     const windowHistoryPushState = (instance, title, uri) => {
-        instance.historyCounter++;
-        history.pushState({ counter: instance.historyCounter, title }, "", uri);
+        instance[WindowLocationStream_historyCounter]++;
+        history.pushState({ counter: instance[WindowLocationStream_historyCounter], title }, "", uri);
     };
+    const WindowLocationStream_delegate = Symbol("WindowLocationStream_delegate");
+    const WindowLocationStream_historyCounter = Symbol("WindowLocationStream_historyCounter");
     const createWindowLocationStream = createInstanceFactory(mix(include(Disposable_delegatingMixin), function WindowLocationStream(instance, delegate) {
         init(Disposable_delegatingMixin, instance, delegate);
-        instance.delegate = delegate;
-        instance.historyCounter = -1;
+        instance[WindowLocationStream_delegate] = delegate;
+        instance[WindowLocationStream_historyCounter] = -1;
         return instance;
     }, props({
-        delegate: none,
-        historyCounter: -1,
+        [WindowLocationStream_delegate]: none,
+        [WindowLocationStream_historyCounter]: -1,
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return pipe(this.delegate, getObserverCount);
+            return pipe(this[WindowLocationStream_delegate], getObserverCount);
         },
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
-            return pipe(this.delegate, getReplay);
+            return pipe(this[WindowLocationStream_delegate], getReplay);
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            return pipe(this.delegate, getScheduler);
+            return pipe(this[WindowLocationStream_delegate], getScheduler);
         },
         get [WindowLocationStreamLike_canGoBack]() {
             unsafeCast(this);
-            return this.historyCounter > 0;
+            return this[WindowLocationStream_historyCounter] > 0;
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [DispatcherLike_dispatch](stateOrUpdater, { replace } = { replace: false }) {
-            pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
+            pipe({ stateOrUpdater, replace }, dispatchTo(this[WindowLocationStream_delegate]));
         },
         [WindowLocationStreamLike_goBack]() {
             const canGoBack = this[WindowLocationStreamLike_canGoBack];
@@ -154,7 +156,7 @@ const windowLocation =
             return canGoBack;
         },
         [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this.delegate, map(({ uri }) => uri), sinkInto(observer));
+            pipe(this[WindowLocationStream_delegate], map(({ uri }) => uri), sinkInto(observer));
         },
     }));
     let currentWindowLocationStream = none;
@@ -176,9 +178,10 @@ const windowLocation =
             uri: windowLocationURIToString(uri),
             title: uri.title,
             replace,
-        })), forkCombineLatest(compose(takeWhile(_ => windowLocationStream.historyCounter === -1), forEach(({ uri, title }) => {
+        })), forkCombineLatest(compose(takeWhile(_ => windowLocationStream[WindowLocationStream_historyCounter] ===
+            -1), forEach(({ uri, title }) => {
             // Initialize the history state on page load
-            windowLocationStream.historyCounter++;
+            windowLocationStream[WindowLocationStream_historyCounter]++;
             windowHistoryReplaceState(windowLocationStream, title, uri);
         }), ignoreElements({ keep: keep$1 })), compose(keep$1(({ replace, title, uri }) => {
             const titleChanged = document.title !== title;
@@ -202,7 +205,7 @@ const windowLocation =
             };
             return { counter, uri };
         }), forEach(({ counter, uri }) => {
-            windowLocationStream.historyCounter = counter;
+            windowLocationStream[WindowLocationStream_historyCounter] = counter;
             windowLocationStream[DispatcherLike_dispatch](uri, { replace: true });
         }), subscribe(scheduler), addTo(windowLocationStream));
         return windowLocationStream;
