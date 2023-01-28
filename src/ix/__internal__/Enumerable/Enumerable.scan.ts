@@ -9,25 +9,16 @@ import {
 import { Scan } from "../../../containers";
 import StatefulContainer_scan from "../../../containers/__internal__/StatefulContainer/StatefulContainer.scan";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import {
-  Factory,
-  Reducer,
-  error,
-  isSome,
-  none,
-  pipe,
-} from "../../../functions";
+import { Factory, Reducer, error, none, pipe } from "../../../functions";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../../../ix";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
-import Enumerator_hasCurrent from "../Enumerator/Enumerator.hasCurrent";
-import Enumerator_move from "../Enumerator/Enumerator.move";
 import MutableEnumerator_mixin from "../MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
 import Enumerable_liftT from "./Enumerable.liftT";
@@ -72,20 +63,28 @@ const Enumerable_scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
         props<TProperties>({ reducer: none, delegate: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<TAcc>) {
-            const acc = Enumerator_hasCurrent(this)
-              ? Enumerator_getCurrent(this)
+            const acc = this[EnumeratorLike_hasCurrent]
+              ? this[EnumeratorLike_current]
               : none;
 
             const { delegate, reducer } = this;
-            if (isSome(acc) && Enumerator_move(delegate)) {
-              try {
-                this[EnumeratorLike_current] = reducer(
-                  acc,
-                  Enumerator_getCurrent(delegate),
-                );
-              } catch (e) {
-                pipe(this, Disposable_dispose(error(e)));
-              }
+            if (acc === none) {
+              return;
+            }
+
+            delegate[SourceLike_move]();
+
+            if (!delegate[EnumeratorLike_hasCurrent]) {
+              return;
+            }
+
+            try {
+              this[EnumeratorLike_current] = reducer(
+                acc,
+                delegate[EnumeratorLike_current],
+              );
+            } catch (e) {
+              pipe(this, Disposable_dispose(error(e)));
             }
           },
         },

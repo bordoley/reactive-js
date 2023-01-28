@@ -14,12 +14,11 @@ import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   SourceLike_move,
 } from "../../../ix";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
-import Enumerator_move from "../Enumerator/Enumerator.move";
 import MutableEnumerator_mixin from "../MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../ix.internal";
 import Enumerable_liftT from "./Enumerable.liftT";
@@ -61,14 +60,18 @@ const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<TB>) {
             const { delegate } = this;
 
-            if (Enumerator_move(delegate)) {
-              try {
-                this[EnumeratorLike_current] = this.mapper(
-                  Enumerator_getCurrent(delegate),
-                );
-              } catch (e) {
-                pipe(this, Disposable_dispose(error(e)));
-              }
+            delegate[SourceLike_move]();
+
+            if (!delegate[EnumeratorLike_hasCurrent]) {
+              return;
+            }
+
+            try {
+              this[EnumeratorLike_current] = this.mapper(
+                delegate[EnumeratorLike_current],
+              );
+            } catch (e) {
+              pipe(this, Disposable_dispose(error(e)));
             }
           },
         },

@@ -14,7 +14,6 @@ import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.m
 import Queue_create from '../../../util/__internal__/Queue/Queue.create.mjs';
 import Queue_pop from '../../../util/__internal__/Queue/Queue.pop.mjs';
 import Queue_push from '../../../util/__internal__/Queue/Queue.push.mjs';
-import Continuation_run from '../Continuation/Continuation.run.mjs';
 import { getDelay } from '../Scheduler.options.mjs';
 import Scheduler_getCurrentTime from '../Scheduler/Scheduler.getCurrentTime.mjs';
 
@@ -58,7 +57,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
             this.microTaskTicks = 0;
             this[SchedulerLike_now] = dueTime;
             this[SchedulerLike_inContinuation] = true;
-            Continuation_run(continuation);
+            continuation[ContinuationLike_run]();
             this[SchedulerLike_inContinuation] = false;
         }
     },

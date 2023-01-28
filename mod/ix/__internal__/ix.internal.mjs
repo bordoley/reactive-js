@@ -1,6 +1,6 @@
 /// <reference types="./ix.internal.d.ts" />
 import '../../ix.mjs';
 
-const DelegatingEnumerator_move_delegate = Symbol("DelegatingEnumerator_move_delegate");
+const DelegatingEnumeratorLike_delegate = Symbol("DelegatingEnumeratorLike_delegate");
 
-export { DelegatingEnumerator_move_delegate };
+export { DelegatingEnumeratorLike_delegate };

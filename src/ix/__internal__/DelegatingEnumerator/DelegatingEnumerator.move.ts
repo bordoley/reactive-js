@@ -1,7 +1,17 @@
-import { DelegatingEnumerator_move_delegate } from "../ix.internal";
+import {
+  EnumeratorLike,
+  EnumeratorLike_hasCurrent,
+  SourceLike_move,
+} from "../../../ix";
+import { DelegatingEnumeratorLike_delegate } from "../ix.internal";
 
 const DelegatingEnumerator_move = (enumerator: {
-  [DelegatingEnumerator_move_delegate](): boolean;
-}): boolean => enumerator[DelegatingEnumerator_move_delegate]();
+  [DelegatingEnumeratorLike_delegate]: EnumeratorLike;
+}): boolean => {
+  enumerator[DelegatingEnumeratorLike_delegate][SourceLike_move]();
+  return enumerator[DelegatingEnumeratorLike_delegate][
+    EnumeratorLike_hasCurrent
+  ];
+};
 
 export default DelegatingEnumerator_move;
