@@ -1,7 +1,12 @@
 import { pipe } from "../../../functions";
 import { ObservableLike } from "../../../rx";
 import Scheduler_toPausableScheduler from "../../../scheduling/__internal__/Scheduler/Scheduler.toPausableScheduler";
-import { FlowMode, ToFlowable } from "../../../streaming";
+import {
+  FlowMode,
+  FlowMode_pause,
+  FlowMode_resume,
+  ToFlowable,
+} from "../../../streaming";
 import Flowable_createLifted from "../../../streaming/__internal__/Flowable/Flowable.createLifted";
 import Disposable_add from "../../../util/__internal__/Disposable/Disposable.add";
 import Disposable_bindTo from "../../../util/__internal__/Disposable/Disposable.bindTo";
@@ -45,10 +50,10 @@ const Observable_toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
                   modeObs,
                   Observable_forEach(mode => {
                     switch (mode) {
-                      case "pause":
+                      case FlowMode_pause:
                         Pauseable_pause(pausableScheduler);
                         break;
-                      case "resume":
+                      case FlowMode_resume:
                         Pauseable_resume(pausableScheduler);
                         break;
                     }

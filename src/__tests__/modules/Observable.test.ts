@@ -39,6 +39,7 @@ import { run } from "../../scheduling/Continuation";
 import { dispatch, dispatchTo } from "../../scheduling/Dispatcher";
 import { getCurrentTime, schedule } from "../../scheduling/Scheduler";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
+import { FlowMode_pause, FlowMode_resume } from "../../streaming";
 import { stream } from "../../streaming/Streamable";
 import { dispose, getError, isDisposed } from "../../util/Disposable";
 import {
@@ -276,18 +277,18 @@ const toFlowableTests = describe(
       stream(scheduler),
     );
 
-    pipe(generateStream, dispatch("resume"));
+    pipe(generateStream, dispatch(FlowMode_resume));
 
     pipe(
       scheduler,
-      schedule(pipeLazy("pause", dispatchTo(generateStream)), {
+      schedule(pipeLazy(FlowMode_pause, dispatchTo(generateStream)), {
         delay: 2,
       }),
     );
 
     pipe(
       scheduler,
-      schedule(pipeLazy("resume", dispatchTo(generateStream)), {
+      schedule(pipeLazy(FlowMode_resume, dispatchTo(generateStream)), {
         delay: 4,
       }),
     );

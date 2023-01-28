@@ -7,6 +7,7 @@ import { create, forEach, subscribe } from '../rx/Observable.mjs';
 import { getScheduler, getDispatcher } from '../rx/Observer.mjs';
 import { sinkInto } from '../rx/ReactiveContainer.mjs';
 import { dispatch, dispatchTo, getScheduler as getScheduler$1 } from '../scheduling/Dispatcher.mjs';
+import { FlowMode_resume, FlowMode_pause } from '../streaming.mjs';
 import { sourceFrom } from '../streaming/Stream.mjs';
 import { stream } from '../streaming/Streamable.mjs';
 import Flowable_createLifted from '../streaming/__internal__/Flowable/Flowable.createLifted.mjs';
@@ -60,10 +61,10 @@ const createReadableSource = (factory) => Flowable_createLifted(mode => create(o
     readable.pause();
     pipe(mode, forEach(ev => {
         switch (ev) {
-            case "pause":
+            case FlowMode_pause:
                 readable.pause();
                 break;
-            case "resume":
+            case FlowMode_resume:
                 readable.resume();
                 break;
         }
@@ -94,13 +95,13 @@ const createWritableSink = /*@__PURE__*/ (() => {
         }), subscribe(getScheduler$1(dispatcher)), addToNodeStream(writable), onComplete(() => {
             writable.end();
         }));
-        const onDrain = pipeLazy(dispatcher, dispatch("resume"));
+        const onDrain = pipeLazy(dispatcher, dispatch(FlowMode_resume));
         const onFinish = pipeLazy(dispatcher, dispose());
-        const onPause = pipeLazy(dispatcher, dispatch("pause"));
+        const onPause = pipeLazy(dispatcher, dispatch(FlowMode_pause));
         writable.on("drain", onDrain);
         writable.on("finish", onFinish);
         writable.on(NODE_JS_PAUSE_EVENT, onPause);
-        pipe(dispatcher, dispatch("resume"));
+        pipe(dispatcher, dispatch(FlowMode_resume));
     }));
 })();
 const transform = (factory) => src => Flowable_createLifted(modeObs => create(observer => {

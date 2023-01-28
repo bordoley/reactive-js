@@ -17,7 +17,9 @@ interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLi
         readonly replay?: number;
     }): TStream;
 }
-type FlowMode = "resume" | "pause";
+declare const FlowMode_resume: unique symbol;
+declare const FlowMode_pause: unique symbol;
+type FlowMode = typeof FlowMode_resume | typeof FlowMode_pause;
 interface FlowableStreamLike<T = unknown> extends StreamLike<FlowMode, T>, PauseableLike {
 }
 interface FlowableLike<T = unknown> extends StreamableLike<FlowMode, T, FlowableStreamLike<T>>, ContainerLike {
@@ -29,4 +31,4 @@ type FromFlowable<C extends ContainerLike, O = never> = Container<C> & {
 type ToFlowable<C extends ContainerLike, O = never> = Container<C> & {
     toFlowable<T>(options?: O): Function1<ContainerOf<C, T>, FlowableLike<T>>;
 };
-export { FlowMode, FlowableLike, FlowableStreamLike, FromFlowable, StreamLike, StreamableLike, StreamableLike_stream, ToFlowable };
+export { FlowMode, FlowMode_pause, FlowMode_resume, FlowableLike, FlowableStreamLike, FromFlowable, StreamLike, StreamableLike, StreamableLike_stream, ToFlowable };

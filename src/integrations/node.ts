@@ -43,7 +43,13 @@ import {
   dispatchTo,
   getScheduler as dispatcherGetScheduler,
 } from "../scheduling/Dispatcher";
-import { FlowMode, FlowableLike, StreamableLike } from "../streaming";
+import {
+  FlowMode,
+  FlowMode_pause,
+  FlowMode_resume,
+  FlowableLike,
+  StreamableLike,
+} from "../streaming";
 import { sourceFrom } from "../streaming/Stream";
 import { stream } from "../streaming/Streamable";
 import Flowable_createLifted from "../streaming/__internal__/Flowable/Flowable.createLifted";
@@ -182,10 +188,10 @@ export const createReadableSource = (
         mode,
         forEach(ev => {
           switch (ev) {
-            case "pause":
+            case FlowMode_pause:
               readable.pause();
               break;
-            case "resume":
+            case FlowMode_resume:
               readable.resume();
               break;
           }
@@ -250,15 +256,15 @@ export const createWritableSink = /*@__PURE__*/ (() => {
           }),
         );
 
-        const onDrain = pipeLazy(dispatcher, dispatch("resume"));
+        const onDrain = pipeLazy(dispatcher, dispatch(FlowMode_resume));
         const onFinish = pipeLazy(dispatcher, dispose());
-        const onPause = pipeLazy(dispatcher, dispatch("pause"));
+        const onPause = pipeLazy(dispatcher, dispatch(FlowMode_pause));
 
         writable.on("drain", onDrain);
         writable.on("finish", onFinish);
         writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-        pipe(dispatcher, dispatch("resume"));
+        pipe(dispatcher, dispatch(FlowMode_resume));
       }),
     );
 })();

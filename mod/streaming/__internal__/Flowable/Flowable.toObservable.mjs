@@ -10,6 +10,7 @@ import Observable_fromArray from '../../../rx/__internal__/Observable/Observable
 import Observable_keep from '../../../rx/__internal__/Observable/Observable.keep.mjs';
 import Observable_onSubscribe from '../../../rx/__internal__/Observable/Observable.onSubscribe.mjs';
 import Dispatcher_dispatchTo from '../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo.mjs';
+import { FlowMode_pause, FlowMode_resume } from '../../../streaming.mjs';
 import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
 import Stream_create from '../Stream/Stream.create.mjs';
 import Stream_sourceFrom from '../Stream/Stream.sourceFrom.mjs';
@@ -19,7 +20,7 @@ const Flowable_toObservable = () => src => Observable_create(observer => {
     const op = compose(Observable_forEach(Dispatcher_dispatchTo(dispatcher)), Container_ignoreElements({ keep: Observable_keep }), Container_startWith({
         fromArray: Observable_fromArray,
         concat: Observable_concat,
-    }, "pause", "resume"), Observable_onSubscribe(() => dispatcher));
+    }, FlowMode_pause, FlowMode_resume), Observable_onSubscribe(() => dispatcher));
     pipe(Stream_create(op, scheduler), Stream_sourceFrom(src), Disposable_addTo(observer));
 });
 

@@ -14,7 +14,12 @@ import Observable_fromArray from "../../../rx/__internal__/Observable/Observable
 import Observable_keep from "../../../rx/__internal__/Observable/Observable.keep";
 import Observable_onSubscribe from "../../../rx/__internal__/Observable/Observable.onSubscribe";
 import Dispatcher_dispatchTo from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatchTo";
-import { FlowableLike } from "../../../streaming";
+import {
+  FlowMode,
+  FlowMode_pause,
+  FlowMode_resume,
+  FlowableLike,
+} from "../../../streaming";
 import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
 import Stream_create from "../Stream/Stream.create";
 import Stream_sourceFrom from "../Stream/Stream.sourceFrom";
@@ -30,13 +35,13 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       const op = compose(
         Observable_forEach(Dispatcher_dispatchTo(dispatcher)),
         Container_ignoreElements({ keep: Observable_keep }),
-        Container_startWith<ObservableLike, string>(
+        Container_startWith<ObservableLike, FlowMode>(
           {
             fromArray: Observable_fromArray,
             concat: Observable_concat,
           },
-          "pause",
-          "resume",
+          FlowMode_pause,
+          FlowMode_resume,
         ),
         Observable_onSubscribe(() => dispatcher),
       );

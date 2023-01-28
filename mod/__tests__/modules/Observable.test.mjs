@@ -7,6 +7,7 @@ import { run } from '../../scheduling/Continuation.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/Dispatcher.mjs';
 import { schedule, getCurrentTime } from '../../scheduling/Scheduler.mjs';
 import { create } from '../../scheduling/VirtualTimeScheduler.mjs';
+import { FlowMode_resume, FlowMode_pause } from '../../streaming.mjs';
 import { stream } from '../../streaming/Streamable.mjs';
 import { getError, dispose, isDisposed } from '../../util/Disposable.mjs';
 import { describe as createDescribe, test as createTest, expectArrayEquals, mockFn, expectToHaveBeenCalledTimes, expectIsSome, expectToThrow, expectEquals, expectTrue, expectToThrowError, testModule } from '../testing.mjs';
@@ -59,11 +60,11 @@ const toFlowableTests = createDescribe("toFlowable", createTest("flow a generati
         delay: 1,
         delayStart: true,
     }), toFlowable(), stream(scheduler));
-    pipe(generateStream, dispatch("resume"));
-    pipe(scheduler, schedule(pipeLazy("pause", dispatchTo(generateStream)), {
+    pipe(generateStream, dispatch(FlowMode_resume));
+    pipe(scheduler, schedule(pipeLazy(FlowMode_pause, dispatchTo(generateStream)), {
         delay: 2,
     }));
-    pipe(scheduler, schedule(pipeLazy("resume", dispatchTo(generateStream)), {
+    pipe(scheduler, schedule(pipeLazy(FlowMode_resume, dispatchTo(generateStream)), {
         delay: 4,
     }));
     pipe(scheduler, schedule(pipeLazy(generateStream, dispose()), { delay: 5 }));

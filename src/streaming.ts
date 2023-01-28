@@ -33,7 +33,10 @@ export interface StreamableLike<
   ): TStream;
 }
 
-export type FlowMode = "resume" | "pause";
+export const FlowMode_resume = Symbol("FlowMode_resume");
+export const FlowMode_pause = Symbol("FlowMode_pause");
+
+export type FlowMode = typeof FlowMode_resume | typeof FlowMode_pause;
 
 export interface FlowableStreamLike<T = unknown>
   extends StreamLike<FlowMode, T>,

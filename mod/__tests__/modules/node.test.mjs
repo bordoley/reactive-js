@@ -6,6 +6,7 @@ import { newInstance, pipe, returns } from '../../functions.mjs';
 import { createWritableSink, createReadableSource, gzip, gunzip } from '../../integrations/node.mjs';
 import { toFlowable, fromArray, concat, toPromise, keep, reduce, takeFirst } from '../../rx/Observable.mjs';
 import { createHostScheduler } from '../../scheduling/Scheduler.mjs';
+import { FlowMode_pause } from '../../streaming.mjs';
 import { toObservable as toObservable$1 } from '../../streaming/Flowable.mjs';
 import { sourceFrom } from '../../streaming/Stream.mjs';
 import { stream } from '../../streaming/Streamable.mjs';
@@ -30,7 +31,7 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
         await pipe(dest, endWith({
             fromArray,
             concat,
-        }, "pause"), toPromise(scheduler));
+        }, FlowMode_pause), toPromise(scheduler));
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
     }
