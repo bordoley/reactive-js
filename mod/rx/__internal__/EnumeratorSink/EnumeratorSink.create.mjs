@@ -7,17 +7,18 @@ import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposa
 import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
 import Disposable_onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
 
+const EnumeratorSink_buffer = Symbol("EnumeratorSink_buffer");
 const EnumeratorSink_create = (() => {
     return createInstanceFactory(mix(include(Disposable_mixin), function EnumeratorSink(instance) {
         init(Disposable_mixin, instance);
-        instance.buffer = [];
+        instance[EnumeratorSink_buffer] = [];
         pipe(instance, Disposable_onDisposed(() => {
-            instance.buffer.length = 0;
+            instance[EnumeratorSink_buffer].length = 0;
             instance[EnumeratorLike_hasCurrent] = false;
         }));
         return instance;
     }, props({
-        buffer: none,
+        [EnumeratorSink_buffer]: none,
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
     }), {
@@ -25,10 +26,10 @@ const EnumeratorSink_create = (() => {
             if (Disposable_isDisposed(this)) {
                 return;
             }
-            this.buffer.push(next);
+            this[EnumeratorSink_buffer].push(next);
         },
         [SourceLike_move]() {
-            const { buffer } = this;
+            const { [EnumeratorSink_buffer]: buffer } = this;
             if (!Disposable_isDisposed(this) && getLength(buffer) > 0) {
                 const next = buffer.shift();
                 this[EnumeratorLike_current] = next;
