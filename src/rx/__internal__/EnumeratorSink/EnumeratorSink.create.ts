@@ -20,11 +20,13 @@ import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.m
 import Disposable_onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
 import { EnumeratorSinkLike } from "../rx.internal";
 
+const EnumeratorSink_buffer = Symbol("EnumeratorSink_buffer");
+
 const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
   type TProperties = {
     [EnumeratorLike_current]: T;
     [EnumeratorLike_hasCurrent]: boolean;
-    readonly buffer: T[];
+    readonly [EnumeratorSink_buffer]: T[];
   };
 
   return createInstanceFactory(
@@ -39,12 +41,12 @@ const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
       ): EnumeratorLike<T> & SinkLike<T> {
         init(Disposable_mixin, instance);
 
-        instance.buffer = [];
+        instance[EnumeratorSink_buffer] = [];
 
         pipe(
           instance,
           Disposable_onDisposed(() => {
-            instance.buffer.length = 0;
+            instance[EnumeratorSink_buffer].length = 0;
             instance[EnumeratorLike_hasCurrent] = false;
           }),
         );
@@ -52,7 +54,7 @@ const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
         return instance;
       },
       props<TProperties>({
-        buffer: none,
+        [EnumeratorSink_buffer]: none,
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
       }),
@@ -61,10 +63,10 @@ const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
           if (Disposable_isDisposed(this)) {
             return;
           }
-          this.buffer.push(next);
+          this[EnumeratorSink_buffer].push(next);
         },
         [SourceLike_move](this: DisposableLike & TProperties) {
-          const { buffer } = this;
+          const { [EnumeratorSink_buffer]: buffer } = this;
 
           if (!Disposable_isDisposed(this) && getLength(buffer) > 0) {
             const next = buffer.shift() as T;
