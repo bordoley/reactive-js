@@ -1,5 +1,11 @@
 import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers";
-import { Factory, Function1, isSome, pipe, raise } from "../../../functions";
+import {
+  Factory,
+  Function1,
+  isSome,
+  pipe,
+  raiseError,
+} from "../../../functions";
 import { ObservableLike } from "../../../rx";
 import { VirtualTimeSchedulerLike } from "../../../scheduling";
 import Continuation_run from "../../../scheduling/__internal__/Continuation/Continuation.run";
@@ -33,7 +39,7 @@ const Observable_toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArr
         Continuation_run(scheduler);
         const error = Disposable_getError(subscription);
 
-        return isSome(error) ? raise<T[]>(error) : result;
+        return isSome(error) ? raiseError<T[]>(error) : result;
       } else {
         return [];
       }

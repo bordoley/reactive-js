@@ -25,7 +25,8 @@ import {
   newInstance,
   none,
   pipe,
-  raise,
+  raiseError,
+  raiseWithDebugMessage,
 } from "./functions";
 import { ObservableLike, ObserverLike } from "./rx";
 import {
@@ -61,35 +62,50 @@ type AsyncEffectType =
   | typeof Observe
   | typeof Using;
 
+const AsyncEffect_type = Symbol("AsyncEffect_type");
+
+const MemoOrUsingEffect_func = Symbol("MemoOrUsingEffect_func");
+const MemoOrUsingEffect_args = Symbol("MemoOrUsingEffect_args");
+const MemoOrUsingEffect_value = Symbol("MemoOrUsingEffect_value");
+
+type MemoOrUsingEffect<T = unknown> = {
+  [MemoOrUsingEffect_func]: (...args: any[]) => unknown;
+  [MemoOrUsingEffect_args]: unknown[];
+  [MemoOrUsingEffect_value]: T;
+};
+
 type MemoEffect = {
-  readonly type: typeof Memo;
-  f: (...args: any[]) => unknown;
-  args: unknown[];
-  value: unknown;
-};
-
-type AwaitEffect = {
-  readonly type: typeof Await;
-  observable: ObservableLike;
-  subscription: DisposableLike;
-  value: Optional;
-  hasValue: boolean;
-};
-
-type ObserveEffect = {
-  readonly type: typeof Observe;
-  observable: ObservableLike;
-  subscription: DisposableLike;
-  value: Optional;
-  hasValue: boolean;
-};
+  readonly [AsyncEffect_type]: typeof Memo;
+} & MemoOrUsingEffect;
 
 type UsingEffect = {
-  readonly type: typeof Using;
-  f: (...args: any[]) => unknown;
-  args: unknown[];
-  value: DisposableLike;
+  readonly [AsyncEffect_type]: typeof Using;
+  [MemoOrUsingEffect_func]: (...args: any[]) => unknown;
+  [MemoOrUsingEffect_args]: unknown[];
+} & MemoOrUsingEffect<DisposableLike>;
+
+const AwaitOrObserveEffect_observable = Symbol(
+  "AwaitOrObserveEffect_observable",
+);
+const AwaitOrObserveEffect_subscription = Symbol(
+  "AwaitOrObserveEffect_subscription",
+);
+const AwaitOrObserveEffect_value = Symbol("AwaitOrObserveEffect_value");
+const AwaitOrObserveEffect_hasValue = Symbol("AwaitOrObserveEffect_hasValue");
+type AwaitOrObserveEffect = {
+  [AwaitOrObserveEffect_observable]: ObservableLike;
+  [AwaitOrObserveEffect_subscription]: DisposableLike;
+  [AwaitOrObserveEffect_value]: Optional;
+  [AwaitOrObserveEffect_hasValue]: boolean;
 };
+type ObserveEffect = {
+  readonly [AsyncEffect_type]: typeof Observe;
+} & AwaitOrObserveEffect;
+
+type AwaitEffect = {
+  readonly [AsyncEffect_type]: typeof Await;
+} & AwaitOrObserveEffect;
+
 type AsyncEffect = AwaitEffect | MemoEffect | ObserveEffect | UsingEffect;
 
 interface ValidateAsyncEffect {
@@ -102,8 +118,8 @@ const validateAsyncEffect: ValidateAsyncEffect = ((
   ctx: AsyncContext,
   type: AsyncEffectType,
 ): AsyncEffect => {
-  const { effects, index } = ctx;
-  ctx.index++;
+  const { [AsyncContext_effects]: effects, [AsyncContext_index]: index } = ctx;
+  ctx[AsyncContext_index]++;
 
   const effect = effects[index];
 
@@ -111,34 +127,34 @@ const validateAsyncEffect: ValidateAsyncEffect = ((
     const newEffect: AsyncEffect =
       type === Memo
         ? {
-            type,
-            f: ignore,
-            args: [],
-            value: none,
+            [AsyncEffect_type]: type,
+            [MemoOrUsingEffect_func]: ignore,
+            [MemoOrUsingEffect_args]: [],
+            [MemoOrUsingEffect_value]: none,
           }
         : type === Await || type === Observe
         ? {
-            type,
-            observable: empty(),
-            subscription: disposed,
-            value: none,
-            hasValue: false,
+            [AsyncEffect_type]: type,
+            [AwaitOrObserveEffect_observable]: empty(),
+            [AwaitOrObserveEffect_subscription]: disposed,
+            [AwaitOrObserveEffect_value]: none,
+            [AwaitOrObserveEffect_hasValue]: false,
           }
         : type === Using
         ? {
-            type,
-            f: ignore,
-            args: [],
-            value: disposed,
+            [AsyncEffect_type]: type,
+            [MemoOrUsingEffect_func]: ignore,
+            [MemoOrUsingEffect_args]: [],
+            [MemoOrUsingEffect_value]: disposed,
           }
-        : raise("invalid effect type");
+        : raiseWithDebugMessage("invalid effect type");
 
     effects.push(newEffect);
     return newEffect;
   } else {
-    return effect.type === type
+    return effect[AsyncEffect_type] === type
       ? effect
-      : raise("observable effect called out of order");
+      : raiseWithDebugMessage("observable effect called out of order");
   }
 }) as ValidateAsyncEffect;
 
@@ -146,50 +162,57 @@ const arrayStrictEquality = arrayEquality();
 
 const awaiting = error();
 
+const AsyncContext_index = Symbol("AsyncContext_index");
+const AsyncContext_cleanup = Symbol("AsyncContext_cleanup");
+const AsyncContext_effects = Symbol("AsyncContext_effects");
+const AsyncContext_mode = Symbol("AsyncContext_mode");
+const AsyncContext_observer = Symbol("AsyncContext_observer");
+const AsyncContext_runComputation = Symbol("AsyncContext_runComputation");
+const AsyncContext_scheduledComputationSubscription = Symbol(
+  "AsyncContext_scheduledComputationSubscription",
+);
+const AsyncContext_awaitOrObserve = Symbol("AsyncContext_awaitOrObserve");
+const AsyncContext_memoOrUse = Symbol("AsyncContext_memoOrUse");
+
 class AsyncContext {
-  index = 0;
-  readonly effects: AsyncEffect[] = [];
-  private scheduledComputationSubscription: DisposableLike = disposed;
+  [AsyncContext_index] = 0;
+  readonly [AsyncContext_effects]: AsyncEffect[] = [];
+  readonly [AsyncContext_observer]: ObserverLike;
 
-  constructor(
-    readonly observer: ObserverLike,
-    private readonly runComputation: () => void,
-    private readonly mode: EffectsMode,
-  ) {}
-
-  private readonly cleanup = () => {
-    const { effects } = this;
+  private [AsyncContext_scheduledComputationSubscription]: DisposableLike =
+    disposed;
+  private readonly [AsyncContext_runComputation]: () => void;
+  private readonly [AsyncContext_mode]: EffectsMode;
+  private readonly [AsyncContext_cleanup] = () => {
+    const { [AsyncContext_effects]: effects } = this;
 
     const hasOutstandingEffects =
       effects.findIndex(
         effect =>
-          (effect.type === Await || effect.type === Observe) &&
-          !isDisposed(effect.subscription),
+          (effect[AsyncEffect_type] === Await ||
+            effect[AsyncEffect_type] === Observe) &&
+          !isDisposed(effect[AwaitOrObserveEffect_subscription]),
       ) >= 0;
 
     if (
       !hasOutstandingEffects &&
-      isDisposed(this.scheduledComputationSubscription)
+      isDisposed(this[AsyncContext_scheduledComputationSubscription])
     ) {
-      pipe(this.observer, dispose());
+      pipe(this[AsyncContext_observer], dispose());
     }
   };
 
-  memo<T>(f: (...args: any[]) => T, ...args: unknown[]): T {
-    const effect = validateAsyncEffect(this, Memo);
-
-    if (f === effect.f && arrayStrictEquality(args, effect.args)) {
-      return effect.value as T;
-    } else {
-      const value = f(...args);
-      effect.f = f;
-      effect.args = args;
-      effect.value = value;
-      return value;
-    }
+  constructor(
+    observer: ObserverLike,
+    runComputation: () => void,
+    mode: EffectsMode,
+  ) {
+    this[AsyncContext_observer] = observer;
+    this[AsyncContext_runComputation] = runComputation;
+    this[AsyncContext_mode] = mode;
   }
 
-  awaitOrObserve<T>(
+  [AsyncContext_awaitOrObserve]<T>(
     observable: ObservableLike<T>,
     shouldAwait: boolean,
   ): Optional<T> {
@@ -197,26 +220,32 @@ class AsyncContext {
       ? validateAsyncEffect(this, Await)
       : validateAsyncEffect(this, Observe);
 
-    if (effect.observable === observable) {
-      return effect.value as T;
+    if (effect[AwaitOrObserveEffect_observable] === observable) {
+      return effect[AwaitOrObserveEffect_value] as T;
     } else {
-      pipe(effect.subscription, dispose());
+      pipe(effect[AwaitOrObserveEffect_subscription], dispose());
 
-      const { observer, runComputation } = this;
+      const {
+        [AsyncContext_observer]: observer,
+        [AsyncContext_runComputation]: runComputation,
+      } = this;
       const scheduler = getScheduler(observer);
 
       const subscription = pipe(
         observable,
         forEach<T>(next => {
-          effect.value = next;
-          effect.hasValue = true;
+          effect[AwaitOrObserveEffect_value] = next;
+          effect[AwaitOrObserveEffect_hasValue] = true;
 
-          if (this.mode === "combine-latest") {
+          if (this[AsyncContext_mode] === "combine-latest") {
             runComputation();
           } else {
-            let { scheduledComputationSubscription } = this;
+            let {
+              [AsyncContext_scheduledComputationSubscription]:
+                scheduledComputationSubscription,
+            } = this;
 
-            this.scheduledComputationSubscription = isDisposed(
+            this[AsyncContext_scheduledComputationSubscription] = isDisposed(
               scheduledComputationSubscription,
             )
               ? pipe(observer, schedule(runComputation))
@@ -225,34 +254,55 @@ class AsyncContext {
         }),
         subscribe(scheduler),
         addTo(observer),
-        onComplete(this.cleanup),
+        onComplete(this[AsyncContext_cleanup]),
       );
 
-      effect.observable = observable;
-      effect.subscription = subscription;
-      effect.value = none;
-      effect.hasValue = false;
+      effect[AwaitOrObserveEffect_observable] = observable;
+      effect[AwaitOrObserveEffect_subscription] = subscription;
+      effect[AwaitOrObserveEffect_value] = none;
+      effect[AwaitOrObserveEffect_hasValue] = false;
 
-      return shouldAwait ? raise(awaiting) : none;
+      return shouldAwait ? raiseError(awaiting) : none;
     }
   }
 
-  using<T extends DisposableLike>(
+  [AsyncContext_memoOrUse]<T>(
+    shouldUse: false,
+    f: (...args: any[]) => T,
+    ...args: unknown[]
+  ): T;
+  [AsyncContext_memoOrUse]<T extends DisposableLike>(
+    shouldUse: true,
+    f: (...args: any[]) => T,
+    ...args: unknown[]
+  ): T;
+  [AsyncContext_memoOrUse]<T>(
+    shouldUse: boolean,
     f: (...args: any[]) => T,
     ...args: unknown[]
   ): T {
-    const effect = validateAsyncEffect(this, Using);
+    const effect = shouldUse
+      ? validateAsyncEffect(this, Using)
+      : validateAsyncEffect(this, Memo);
 
-    if (f === effect.f && arrayStrictEquality(args, effect.args)) {
-      return effect.value as T;
+    if (
+      f === effect[MemoOrUsingEffect_func] &&
+      arrayStrictEquality(args, effect[MemoOrUsingEffect_args])
+    ) {
+      return effect[MemoOrUsingEffect_value] as T;
     } else {
-      pipe(effect.value, dispose());
+      if (shouldUse) {
+        pipe(effect[MemoOrUsingEffect_value] as DisposableLike, dispose());
+      }
 
-      const value = pipe(f(...args), addTo(this.observer));
+      const value = f(...args);
+      effect[MemoOrUsingEffect_func] = f;
+      effect[MemoOrUsingEffect_args] = args;
+      effect[MemoOrUsingEffect_value] = value;
 
-      effect.f = f;
-      effect.args = args;
-      effect.value = value;
+      if (shouldUse) {
+        pipe(value as DisposableLike, addTo(this[AsyncContext_observer]));
+      }
 
       return value;
     }
@@ -281,9 +331,9 @@ export const async = <T>(
         }
       }
       currentCtx = none;
-      ctx.index = 0;
+      ctx[AsyncContext_index] = 0;
 
-      const { effects } = ctx;
+      const { [AsyncContext_effects]: effects } = ctx;
       const effectsLength = getLength(effects);
 
       // Inline this for perf
@@ -291,18 +341,20 @@ export const async = <T>(
       let hasOutstandingEffects = false;
       for (let i = 0; i < effectsLength; i++) {
         const effect = effects[i];
-        const { type } = effect;
+        const { [AsyncEffect_type]: type } = effect;
 
         if (
           (type === Await || type === Observe) &&
-          !(effect as ObserveEffect).hasValue
+          !(effect as AwaitOrObserveEffect)[AwaitOrObserveEffect_hasValue]
         ) {
           allObserveEffectsHaveValues = false;
         }
 
         if (
           (type === Await || type === Observe) &&
-          !isDisposed((effect as ObserveEffect).subscription)
+          !isDisposed(
+            (effect as ObserveEffect)[AwaitOrObserveEffect_subscription],
+          )
         ) {
           hasOutstandingEffects = true;
         }
@@ -342,7 +394,9 @@ export const async = <T>(
 
 const assertCurrentContext = (): AsyncContext =>
   isNone(currentCtx)
-    ? raise("effect must be called within a computational expression")
+    ? raiseWithDebugMessage(
+        "effect must be called within a computational expression",
+      )
     : currentCtx;
 
 interface __Memo {
@@ -380,17 +434,17 @@ export const __memo: __Memo = <T>(
   ...args: unknown[]
 ): T => {
   const ctx = assertCurrentContext();
-  return ctx.memo(f, ...args);
+  return ctx[AsyncContext_memoOrUse](false, f, ...args);
 };
 
 export const __await = <T>(observable: ObservableLike<T>): T => {
   const ctx = assertCurrentContext();
-  return ctx.awaitOrObserve(observable, true) as T;
+  return ctx[AsyncContext_awaitOrObserve](observable, true) as T;
 };
 
 export const __observe = <T>(observable: ObservableLike<T>): Optional<T> => {
   const ctx = assertCurrentContext();
-  return ctx.awaitOrObserve(observable, false);
+  return ctx[AsyncContext_awaitOrObserve](observable, false);
 };
 
 interface __Do {
@@ -437,10 +491,19 @@ export const __do: __Do = /*@__PURE__*/ (() => {
   return (f: (...args: any[]) => void, ...args: unknown[]): void => {
     const ctx = assertCurrentContext();
 
-    const scheduler = getScheduler(ctx.observer);
-    const observable = ctx.memo(deferSideEffect, f, ...args);
-    const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
-    ctx.using(subscribeOnScheduler, observable);
+    const scheduler = getScheduler(ctx[AsyncContext_observer]);
+    const observable = ctx[AsyncContext_memoOrUse](
+      false,
+      deferSideEffect,
+      f,
+      ...args,
+    );
+    const subscribeOnScheduler = ctx[AsyncContext_memoOrUse](
+      false,
+      subscribe,
+      scheduler,
+    );
+    ctx[AsyncContext_memoOrUse](true, subscribeOnScheduler, observable);
   };
 })();
 
@@ -484,12 +547,12 @@ export const __using: __Using = <T extends DisposableLike>(
   ...args: unknown[]
 ): T => {
   const ctx = assertCurrentContext();
-  return ctx.using(f, ...args);
+  return ctx[AsyncContext_memoOrUse](true, f, ...args);
 };
 
 export function __currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
-  return getScheduler(ctx.observer);
+  return getScheduler(ctx[AsyncContext_observer]);
 }
 
 export const __stream = /*@__PURE__*/ (() => {

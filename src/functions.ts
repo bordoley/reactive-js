@@ -318,7 +318,7 @@ export const getOrDefault =
 export const getOrRaise =
   <T>() =>
   (v: Optional<T>): T =>
-    isSome(v) ? v : raise();
+    isSome(v) ? v : raiseWithDebugMessage("value is none");
 
 /**
  * The identity function.
@@ -719,12 +719,17 @@ export const error = (message?: unknown): Error =>
     ? newInstance(Error, "", { cause: message })
     : newInstance(Error);
 
+export const raiseError = <T>(e: Error): T => {
+  throw e;
+};
+
 /**
  * Throws a javascript error using the provided message.
  */
-export const raise = <T>(message?: unknown): T => {
-  throw error(__DEV__ ? message : none);
-};
+export const raiseWithDebugMessage = <T>(message: string): T =>
+  raiseError(error(__DEV__ ? message : none));
+
+export const raise = <T>(e?: unknown): T => raiseError(error(e));
 
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.

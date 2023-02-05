@@ -1,6 +1,6 @@
 /// <reference types="./MutableEnumerator.mixin.d.ts" />
 import { mix, props } from '../../../__internal__/mixins.mjs';
-import { pipe, none, unsafeCast, raise, returns } from '../../../functions.mjs';
+import { pipe, none, unsafeCast, raiseWithDebugMessage, returns } from '../../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
 import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
 
@@ -19,7 +19,7 @@ const MutableEnumerator_mixin =
             unsafeCast(this);
             return this[EnumeratorLike_hasCurrent]
                 ? this[Enumerator_private_current]
-                : raise();
+                : raiseWithDebugMessage("Enumerator does not have current value");
         },
         set [EnumeratorLike_current](v) {
             unsafeCast(this);

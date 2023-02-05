@@ -1,5 +1,11 @@
 import { Mixin, mix, props } from "../../../__internal__/mixins";
-import { none, pipe, raise, returns, unsafeCast } from "../../../functions";
+import {
+  none,
+  pipe,
+  raiseWithDebugMessage,
+  returns,
+  unsafeCast,
+} from "../../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -49,7 +55,7 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
             return this[EnumeratorLike_hasCurrent]
               ? this[Enumerator_private_current]
-              : raise();
+              : raiseWithDebugMessage("Enumerator does not have current value");
           },
           set [EnumeratorLike_current](v: T) {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);

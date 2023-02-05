@@ -1,5 +1,5 @@
 /// <reference types="./Observable.toReadonlyArray.d.ts" />
-import { pipe, isSome, raise } from '../../../functions.mjs';
+import { pipe, isSome, raiseError } from '../../../functions.mjs';
 import Continuation_run from '../../../scheduling/__internal__/Continuation/Continuation.run.mjs';
 import VirtualTimeScheduler_create from '../../../scheduling/__internal__/VirtualTimeScheduler/VirtualTimeScheduler.create.mjs';
 import Disposable_getError from '../../../util/__internal__/Disposable/Disposable.getError.mjs';
@@ -17,7 +17,7 @@ const Observable_toReadonlyArray = (options = {}) => observable => {
         }), Observable_subscribe(scheduler));
         Continuation_run(scheduler);
         const error = Disposable_getError(subscription);
-        return isSome(error) ? raise(error) : result;
+        return isSome(error) ? raiseError(error) : result;
     }
     else {
         return [];

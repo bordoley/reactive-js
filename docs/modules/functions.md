@@ -82,6 +82,8 @@
 - [pipeLazy](functions.md#pipelazy)
 - [pipeUnsafe](functions.md#pipeunsafe)
 - [raise](functions.md#raise)
+- [raiseError](functions.md#raiseerror)
+- [raiseWithDebugMessage](functions.md#raisewithdebugmessage)
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
 - [sum](functions.md#sum)
@@ -3007,7 +3009,51 @@ ___
 
 ### raise
 
-▸ **raise**<`T`\>(`message?`): `T`
+▸ **raise**<`T`\>(`e?`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `e?` | `unknown` |
+
+#### Returns
+
+`T`
+
+___
+
+### raiseError
+
+▸ **raiseError**<`T`\>(`e`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `e` | `Error` |
+
+#### Returns
+
+`T`
+
+___
+
+### raiseWithDebugMessage
+
+▸ **raiseWithDebugMessage**<`T`\>(`message`): `T`
 
 Throws a javascript error using the provided message.
 
@@ -3021,7 +3067,7 @@ Throws a javascript error using the provided message.
 
 | Name | Type |
 | :------ | :------ |
-| `message?` | `unknown` |
+| `message` | `string` |
 
 #### Returns
 
