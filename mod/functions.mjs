@@ -1,4 +1,6 @@
 /// <reference types="./functions.d.ts" />
+import { __DEV__ } from './constants.mjs';
+
 /**
  * A function that always returns `false`.
  */
@@ -121,16 +123,16 @@ const pipe = pipeUnsafe;
 const pipeLazy = (source, ...operators) => () => pipeUnsafe(source, ...operators);
 const error = (message) => message instanceof Error
     ? message
-    : isString(message)
+    : __DEV__ && isString(message)
         ? newInstance(Error, message)
-        : isSome(message)
+        : __DEV__ && isSome(message)
             ? newInstance(Error, "", { cause: message })
             : newInstance(Error);
 /**
  * Throws a javascript error using the provided message.
  */
 const raise = (message) => {
-    throw error(message);
+    throw error(__DEV__ ? message : none);
 };
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.

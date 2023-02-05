@@ -50,22 +50,26 @@ import {
 
 type EffectsMode = "batched" | "combine-latest";
 
-const enum AsyncEffectType {
-  Memo = 1,
-  Await = 2,
-  Observe = 3,
-  Using = 4,
-}
+const Memo = 1;
+const Await = 2;
+const Observe = 3;
+const Using = 4;
+
+type AsyncEffectType =
+  | typeof Memo
+  | typeof Await
+  | typeof Observe
+  | typeof Using;
 
 type MemoEffect = {
-  readonly type: AsyncEffectType.Memo;
+  readonly type: typeof Memo;
   f: (...args: any[]) => unknown;
   args: unknown[];
   value: unknown;
 };
 
 type AwaitEffect = {
-  readonly type: AsyncEffectType.Await;
+  readonly type: typeof Await;
   observable: ObservableLike;
   subscription: DisposableLike;
   value: Optional;
@@ -73,7 +77,7 @@ type AwaitEffect = {
 };
 
 type ObserveEffect = {
-  readonly type: AsyncEffectType.Observe;
+  readonly type: typeof Observe;
   observable: ObservableLike;
   subscription: DisposableLike;
   value: Optional;
@@ -81,7 +85,7 @@ type ObserveEffect = {
 };
 
 type UsingEffect = {
-  readonly type: AsyncEffectType.Using;
+  readonly type: typeof Using;
   f: (...args: any[]) => unknown;
   args: unknown[];
   value: DisposableLike;
@@ -89,10 +93,10 @@ type UsingEffect = {
 type AsyncEffect = AwaitEffect | MemoEffect | ObserveEffect | UsingEffect;
 
 interface ValidateAsyncEffect {
-  (ctx: AsyncContext, type: AsyncEffectType.Await): AwaitEffect;
-  (ctx: AsyncContext, type: AsyncEffectType.Memo): MemoEffect;
-  (ctx: AsyncContext, type: AsyncEffectType.Observe): ObserveEffect;
-  (ctx: AsyncContext, type: AsyncEffectType.Using): UsingEffect;
+  (ctx: AsyncContext, type: typeof Await): AwaitEffect;
+  (ctx: AsyncContext, type: typeof Memo): MemoEffect;
+  (ctx: AsyncContext, type: typeof Observe): ObserveEffect;
+  (ctx: AsyncContext, type: typeof Using): UsingEffect;
 }
 const validateAsyncEffect: ValidateAsyncEffect = ((
   ctx: AsyncContext,
@@ -105,14 +109,14 @@ const validateAsyncEffect: ValidateAsyncEffect = ((
 
   if (isNone(effect)) {
     const newEffect: AsyncEffect =
-      type === AsyncEffectType.Memo
+      type === Memo
         ? {
             type,
             f: ignore,
             args: [],
             value: none,
           }
-        : type === AsyncEffectType.Await || type === AsyncEffectType.Observe
+        : type === Await || type === Observe
         ? {
             type,
             observable: empty(),
@@ -120,7 +124,7 @@ const validateAsyncEffect: ValidateAsyncEffect = ((
             value: none,
             hasValue: false,
           }
-        : type === AsyncEffectType.Using
+        : type === Using
         ? {
             type,
             f: ignore,
@@ -140,7 +144,7 @@ const validateAsyncEffect: ValidateAsyncEffect = ((
 
 const arrayStrictEquality = arrayEquality();
 
-const awaiting = newInstance(Error);
+const awaiting = error();
 
 class AsyncContext {
   index = 0;
@@ -159,8 +163,7 @@ class AsyncContext {
     const hasOutstandingEffects =
       effects.findIndex(
         effect =>
-          (effect.type === AsyncEffectType.Await ||
-            effect.type === AsyncEffectType.Observe) &&
+          (effect.type === Await || effect.type === Observe) &&
           !isDisposed(effect.subscription),
       ) >= 0;
 
@@ -173,7 +176,7 @@ class AsyncContext {
   };
 
   memo<T>(f: (...args: any[]) => T, ...args: unknown[]): T {
-    const effect = validateAsyncEffect(this, AsyncEffectType.Memo);
+    const effect = validateAsyncEffect(this, Memo);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
       return effect.value as T;
@@ -191,8 +194,8 @@ class AsyncContext {
     shouldAwait: boolean,
   ): Optional<T> {
     const effect = shouldAwait
-      ? validateAsyncEffect(this, AsyncEffectType.Await)
-      : validateAsyncEffect(this, AsyncEffectType.Observe);
+      ? validateAsyncEffect(this, Await)
+      : validateAsyncEffect(this, Observe);
 
     if (effect.observable === observable) {
       return effect.value as T;
@@ -238,7 +241,7 @@ class AsyncContext {
     f: (...args: any[]) => T,
     ...args: unknown[]
   ): T {
-    const effect = validateAsyncEffect(this, AsyncEffectType.Using);
+    const effect = validateAsyncEffect(this, Using);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
       return effect.value as T;
@@ -291,16 +294,14 @@ export const async = <T>(
         const { type } = effect;
 
         if (
-          (type === AsyncEffectType.Await ||
-            type === AsyncEffectType.Observe) &&
+          (type === Await || type === Observe) &&
           !(effect as ObserveEffect).hasValue
         ) {
           allObserveEffectsHaveValues = false;
         }
 
         if (
-          (type === AsyncEffectType.Await ||
-            type === AsyncEffectType.Observe) &&
+          (type === Await || type === Observe) &&
           !isDisposed((effect as ObserveEffect).subscription)
         ) {
           hasOutstandingEffects = true;
