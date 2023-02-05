@@ -1,7 +1,7 @@
 import typescript from "@rollup/plugin-typescript";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
-//import terser from "@rollup/plugin-terser";
+import terser from "@rollup/plugin-terser";
 
 const typescriptConfig = {
   tsconfig: "tsconfig.json",
@@ -28,13 +28,13 @@ export default [
       replace({
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
-      }) /*
+      }),
       terser({
         compress: {
           unsafe: true,
           unsafe_symbols: true,
         },
-      }),*/,
+      }),
     ],
   },
 ];

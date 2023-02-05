@@ -1,31 +1,28 @@
 /// <reference types="./effects.d.ts" />
-import { isNone, ignore, none, raise, arrayEquality, newInstance, pipe, error, getLength, isSome } from './functions.mjs';
+import { isNone, ignore, none, raise, arrayEquality, error, pipe, getLength, isSome, newInstance } from './functions.mjs';
 import { empty, forEach, subscribe, create } from './rx/Observable.mjs';
 import { getScheduler, schedule } from './rx/Observer.mjs';
 import { notify } from './rx/Sink.mjs';
 import { stream, createStateStore } from './streaming/Streamable.mjs';
 import { disposed, isDisposed, dispose, addTo, onComplete } from './util/Disposable.mjs';
 
-var AsyncEffectType;
-(function (AsyncEffectType) {
-    AsyncEffectType[AsyncEffectType["Memo"] = 1] = "Memo";
-    AsyncEffectType[AsyncEffectType["Await"] = 2] = "Await";
-    AsyncEffectType[AsyncEffectType["Observe"] = 3] = "Observe";
-    AsyncEffectType[AsyncEffectType["Using"] = 4] = "Using";
-})(AsyncEffectType || (AsyncEffectType = {}));
+const Memo = 1;
+const Await = 2;
+const Observe = 3;
+const Using = 4;
 const validateAsyncEffect = ((ctx, type) => {
     const { effects, index } = ctx;
     ctx.index++;
     const effect = effects[index];
     if (isNone(effect)) {
-        const newEffect = type === AsyncEffectType.Memo
+        const newEffect = type === Memo
             ? {
                 type,
                 f: ignore,
                 args: [],
                 value: none,
             }
-            : type === AsyncEffectType.Await || type === AsyncEffectType.Observe
+            : type === Await || type === Observe
                 ? {
                     type,
                     observable: empty(),
@@ -33,7 +30,7 @@ const validateAsyncEffect = ((ctx, type) => {
                     value: none,
                     hasValue: false,
                 }
-                : type === AsyncEffectType.Using
+                : type === Using
                     ? {
                         type,
                         f: ignore,
@@ -51,7 +48,7 @@ const validateAsyncEffect = ((ctx, type) => {
     }
 });
 const arrayStrictEquality = arrayEquality();
-const awaiting = newInstance(Error);
+const awaiting = error();
 class AsyncContext {
     constructor(observer, runComputation, mode) {
         this.observer = observer;
@@ -62,8 +59,7 @@ class AsyncContext {
         this.scheduledComputationSubscription = disposed;
         this.cleanup = () => {
             const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => (effect.type === AsyncEffectType.Await ||
-                effect.type === AsyncEffectType.Observe) &&
+            const hasOutstandingEffects = effects.findIndex(effect => (effect.type === Await || effect.type === Observe) &&
                 !isDisposed(effect.subscription)) >= 0;
             if (!hasOutstandingEffects &&
                 isDisposed(this.scheduledComputationSubscription)) {
@@ -72,7 +68,7 @@ class AsyncContext {
         };
     }
     memo(f, ...args) {
-        const effect = validateAsyncEffect(this, AsyncEffectType.Memo);
+        const effect = validateAsyncEffect(this, Memo);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -86,8 +82,8 @@ class AsyncContext {
     }
     awaitOrObserve(observable, shouldAwait) {
         const effect = shouldAwait
-            ? validateAsyncEffect(this, AsyncEffectType.Await)
-            : validateAsyncEffect(this, AsyncEffectType.Observe);
+            ? validateAsyncEffect(this, Await)
+            : validateAsyncEffect(this, Observe);
         if (effect.observable === observable) {
             return effect.value;
         }
@@ -116,7 +112,7 @@ class AsyncContext {
         }
     }
     using(f, ...args) {
-        const effect = validateAsyncEffect(this, AsyncEffectType.Using);
+        const effect = validateAsyncEffect(this, Using);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -156,13 +152,11 @@ const async = (computation, { mode = "batched" } = {}) => create((observer) => {
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
             const { type } = effect;
-            if ((type === AsyncEffectType.Await ||
-                type === AsyncEffectType.Observe) &&
+            if ((type === Await || type === Observe) &&
                 !effect.hasValue) {
                 allObserveEffectsHaveValues = false;
             }
-            if ((type === AsyncEffectType.Await ||
-                type === AsyncEffectType.Observe) &&
+            if ((type === Await || type === Observe) &&
                 !isDisposed(effect.subscription)) {
                 hasOutstandingEffects = true;
             }

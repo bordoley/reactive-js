@@ -1,3 +1,5 @@
+import { __DEV__ } from "./constants";
+
 export type Constructor<T> = new () => T;
 export type Constructor1<TA, T> = new (a: TA) => T;
 export type Constructor2<TA, TB, T> = new (a: TA, b: TB) => T;
@@ -703,9 +705,9 @@ export const pipeLazy: PipeLazy =
 export const error = (message?: unknown): Error =>
   message instanceof Error
     ? message
-    : isString(message)
+    : __DEV__ && isString(message)
     ? newInstance(Error, message)
-    : isSome(message)
+    : __DEV__ && isSome(message)
     ? newInstance(Error, "", { cause: message })
     : newInstance(Error);
 
@@ -713,7 +715,7 @@ export const error = (message?: unknown): Error =>
  * Throws a javascript error using the provided message.
  */
 export const raise = <T>(message?: unknown): T => {
-  throw error(message);
+  throw error(__DEV__ ? message : none);
 };
 
 /**
