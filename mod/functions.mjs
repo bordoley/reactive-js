@@ -112,7 +112,14 @@ const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
 /**
  * Pipes `source` through a series of unary functions.
  */
-const pipeUnsafe = (source, ...operators) => operators.reduce(updateReducer, source);
+const pipeUnsafe = (source, ...operators) => {
+    let acc = source;
+    const length = getLength(operators);
+    for (let i = 0; i < length; i++) {
+        acc = operators[i](acc);
+    }
+    return acc;
+};
 /**
  * Pipes `source` through a series of unary functions.
  */
@@ -148,17 +155,13 @@ const strictEquality = (a, b) => a === b;
  */
 const sum = (...args) => {
     let acc = 0;
-    for (let i = 0; i < getLength(args); i++) {
+    const length = getLength(args);
+    for (let i = 0; i < length; i++) {
         acc += args[i];
     }
     return acc;
 };
 function unsafeCast(_v) { }
-/**
- * A `Reducer` functions that applies `updater` to `acc` to compute the next
- * accumulator value.
- */
-const updateReducer = (acc, updater) => updater(acc);
 const { floor, max, min } = Math;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast };

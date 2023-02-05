@@ -466,7 +466,15 @@ export const partial: Partial =
 export const pipeUnsafe = (
   source: unknown,
   ...operators: Function1<any, any>[]
-): unknown => operators.reduce(updateReducer, source);
+): unknown => {
+  let acc = source;
+  const length = getLength(operators);
+  for (let i = 0; i < length; i++) {
+    acc = operators[i](acc);
+  }
+
+  return acc;
+};
 
 interface Pipe {
   <T, A>(src: T, op1: Function1<T, A>): A;
@@ -737,18 +745,13 @@ export const strictEquality = <T>(a: T, b: T) => a === b;
  */
 export const sum = (...args: number[]) => {
   let acc = 0;
-  for (let i = 0; i < getLength(args); i++) {
+  const length = getLength(args);
+  for (let i = 0; i < length; i++) {
     acc += args[i];
   }
   return acc;
 };
 
 export function unsafeCast<T>(_v: unknown): asserts _v is T {}
-
-/**
- * A `Reducer` functions that applies `updater` to `acc` to compute the next
- * accumulator value.
- */
-export const updateReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
 
 export const { floor, max, min } = Math;

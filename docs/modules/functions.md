@@ -86,7 +86,6 @@
 - [strictEquality](functions.md#strictequality)
 - [sum](functions.md#sum)
 - [unsafeCast](functions.md#unsafecast)
-- [updateReducer](functions.md#updatereducer)
 
 ## Type Aliases
 
@@ -3129,29 +3128,3 @@ ___
 #### Returns
 
 asserts \_v is T
-
-___
-
-### updateReducer
-
-▸ **updateReducer**<`T`\>(`acc`, `updater`): `T`
-
-A `Reducer` functions that applies `updater` to `acc` to compute the next
-accumulator value.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `acc` | `T` |
-| `updater` | [`Updater`](functions.md#updater)<`T`\> |
-
-#### Returns
-
-`T`

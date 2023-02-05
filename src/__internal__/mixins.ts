@@ -5,6 +5,7 @@ import {
   Function3,
   Function4,
   Optional,
+  getLength,
   isFunction,
 } from "../functions";
 
@@ -103,19 +104,27 @@ export const include: (
   m0: PartialMixin,
   ...tail: readonly PartialMixin[]
 ) => PartialMixin = (...mixins: readonly PartialMixin[]) => {
-  if (mixins.length == 1) {
+  const length = getLength(mixins);
+  if (length == 1) {
     return mixins[0];
   } else {
-    const properties = mixins
-      .map(mixin => mixin[Object_properties])
-      .reduce((acc, next) => ({ ...acc, ...next }), {});
+    let propertyDescriptions = {};
+    let prototypeDescriptions = {};
 
-    const prototypeDescriptions = mixins
-      .map(mixin => getOwnPropertyDescriptors(mixin[Object_prototype]))
-      .reduce((acc, next) => ({ ...acc, ...next }), {});
+    for (let i = 0; i < length; i++) {
+      const mixin = mixins[i];
+      propertyDescriptions = {
+        ...propertyDescriptions,
+        ...getOwnPropertyDescriptors(mixin[Object_properties]),
+      };
+      prototypeDescriptions = {
+        ...prototypeDescriptions,
+        ...getOwnPropertyDescriptors(mixin[Object_prototype]),
+      };
+    }
 
     return {
-      [Object_properties]: properties,
+      [Object_properties]: createObject(objectPrototype, propertyDescriptions),
       [Object_prototype]: createObject(objectPrototype, prototypeDescriptions),
     };
   }
