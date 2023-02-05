@@ -1,5 +1,5 @@
 /// <reference types="./Enumerable.toReadonlyArray.d.ts" />
-import { pipe, isSome, raise } from '../../../functions.mjs';
+import { pipe, isSome, raiseError } from '../../../functions.mjs';
 import Disposable_getError from '../../../util/__internal__/Disposable/Disposable.getError.mjs';
 import Enumerator_getCurrent from '../Enumerator/Enumerator.getCurrent.mjs';
 import Enumerator_move from '../Enumerator/Enumerator.move.mjs';
@@ -12,7 +12,7 @@ const Enumerable_toReadonlyArray = () => (enumerable) => {
         result.push(Enumerator_getCurrent(enumerator));
     }
     const error = Disposable_getError(enumerator);
-    return isSome(error) ? raise(error) : result;
+    return isSome(error) ? raiseError(error) : result;
 };
 
 export { Enumerable_toReadonlyArray as default };

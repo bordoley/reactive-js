@@ -40,7 +40,7 @@ const forEach = (f) => arr => {
 };
 const getLength = (arr) => arr.length;
 const getOrDefault = (defaultValue) => (v) => isSome(v) ? v : defaultValue;
-const getOrRaise = () => (v) => isSome(v) ? v : raise();
+const getOrRaise = () => (v) => isSome(v) ? v : raiseWithDebugMessage("value is none");
 /**
  * The identity function.
  *
@@ -135,12 +135,14 @@ const error = (message) => message instanceof Error
         : __DEV__ && isSome(message)
             ? newInstance(Error, "", { cause: message })
             : newInstance(Error);
+const raiseError = (e) => {
+    throw e;
+};
 /**
  * Throws a javascript error using the provided message.
  */
-const raise = (message) => {
-    throw error(__DEV__ ? message : none);
-};
+const raiseWithDebugMessage = (message) => raiseError(error(__DEV__ ? message : none));
+const raise = (e) => raiseError(error(e));
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
@@ -164,4 +166,4 @@ const sum = (...args) => {
 function unsafeCast(_v) { }
 const { floor, max, min } = Math;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, raiseError, raiseWithDebugMessage, returns, strictEquality, sum, unsafeCast };

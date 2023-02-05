@@ -23,7 +23,7 @@ import {
   newInstance,
   none,
   pipe,
-  raise,
+  raiseWithDebugMessage,
   unsafeCast,
 } from "../functions";
 import {
@@ -411,7 +411,7 @@ export const windowLocation: WindowLocationStreamableLike =
       WindowLocationStreamLike
     >((scheduler, options): WindowLocationStreamLike => {
       if (isSome(currentWindowLocationStream)) {
-        raise("Cannot stream more than once");
+        raiseWithDebugMessage("Cannot stream more than once");
       }
 
       const actionReducer = pipe(

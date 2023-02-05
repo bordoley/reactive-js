@@ -1,11 +1,11 @@
-import { Optional, isNone, none, raise } from "../../functions";
+import { Optional, isNone, none, raiseWithDebugMessage } from "../../functions";
 import { SchedulerLike } from "../../scheduling";
 
 let currentScheduler: Optional<SchedulerLike> = none;
 
 export const get = (): SchedulerLike =>
   isNone(currentScheduler)
-    ? raise<SchedulerLike>("scheduler is none")
+    ? raiseWithDebugMessage<SchedulerLike>("scheduler is none")
     : currentScheduler;
 
 export const getOrNone = (): Optional<SchedulerLike> => currentScheduler;

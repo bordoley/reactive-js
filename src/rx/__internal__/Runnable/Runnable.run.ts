@@ -1,4 +1,4 @@
-import { isSome, pipe, raise } from "../../../functions";
+import { isSome, pipe, raiseError } from "../../../functions";
 import { RunnableLike } from "../../../rx";
 import { DisposableLike_error } from "../../../util";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
@@ -14,7 +14,7 @@ const Runnable_run =
       Disposable_dispose(),
       ({ [DisposableLike_error]: error }) => {
         if (isSome(error)) {
-          raise(error);
+          raiseError(error);
         }
       },
     );

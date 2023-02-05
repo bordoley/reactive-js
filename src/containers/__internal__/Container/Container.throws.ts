@@ -4,7 +4,7 @@ import {
   FromArray,
   Map,
 } from "../../../containers";
-import { Factory, Function1, pipe, raise } from "../../../functions";
+import { Factory, Function1, error, pipe, raise } from "../../../functions";
 
 import Container_compute from "./Container.compute";
 
@@ -26,7 +26,7 @@ const Container_throws =
   (errorFactory): ContainerOf<C, T> =>
     pipe(() => {
       const err = errorFactory();
-      return raise<T>(err);
+      return raise<T>(error(err));
     }, Container_compute(m, options));
 
 export default Container_throws;

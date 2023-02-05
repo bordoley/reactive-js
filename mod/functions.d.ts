@@ -228,10 +228,12 @@ interface PipeLazy {
  */
 declare const pipeLazy: PipeLazy;
 declare const error: (message?: unknown) => Error;
+declare const raiseError: <T>(e: Error) => T;
 /**
  * Throws a javascript error using the provided message.
  */
-declare const raise: <T>(message?: unknown) => T;
+declare const raiseWithDebugMessage: <T>(message: string) => T;
+declare const raise: <T>(e?: unknown) => T;
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
@@ -249,4 +251,4 @@ declare function unsafeCast<T>(_v: unknown): asserts _v is T;
 declare const floor: (x: number) => number;
 declare const max: (...values: number[]) => number;
 declare const min: (...values: number[]) => number;
-export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Optional, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, returns, strictEquality, sum, unsafeCast };
+export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Optional, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, raiseError, raiseWithDebugMessage, returns, strictEquality, sum, unsafeCast };

@@ -15,7 +15,7 @@ import {
   isNone,
   none,
   pipe,
-  raise,
+  raiseWithDebugMessage,
   unsafeCast,
 } from "../../../functions";
 import {
@@ -104,8 +104,8 @@ const Enumerable_repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
         get [EnumeratorLike_current](): T {
           unsafeCast<TProperties>(this);
           return Enumerator_hasCurrent(this)
-            ? this.enumerator?.[EnumeratorLike_current] ?? raise()
-            : raise();
+            ? (this.enumerator as EnumeratorLike<T>)[EnumeratorLike_current]
+            : raiseWithDebugMessage("Enumerator does not have current value");
         },
         get [EnumeratorLike_hasCurrent]() {
           unsafeCast<TProperties>(this);

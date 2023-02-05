@@ -1,7 +1,7 @@
 /// <reference types="./Enumerable.repeat.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import Container_repeat from '../../../containers/__internal__/Container/Container.repeat.mjs';
-import { none, isNone, pipe, error, unsafeCast, raise } from '../../../functions.mjs';
+import { none, isNone, pipe, error, unsafeCast, raiseWithDebugMessage } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
 import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
@@ -46,11 +46,10 @@ const Enumerable_repeat = /*@__PURE__*/ (() => {
             }
         },
         get [EnumeratorLike_current]() {
-            var _a, _b;
             unsafeCast(this);
             return Enumerator_hasCurrent(this)
-                ? (_b = (_a = this.enumerator) === null || _a === void 0 ? void 0 : _a[EnumeratorLike_current]) !== null && _b !== void 0 ? _b : raise()
-                : raise();
+                ? this.enumerator[EnumeratorLike_current]
+                : raiseWithDebugMessage("Enumerator does not have current value");
         },
         get [EnumeratorLike_hasCurrent]() {
             var _a, _b;

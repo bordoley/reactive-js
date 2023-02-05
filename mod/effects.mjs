@@ -1,127 +1,141 @@
 /// <reference types="./effects.d.ts" />
-import { isNone, ignore, none, raise, arrayEquality, error, pipe, getLength, isSome, newInstance } from './functions.mjs';
+import { isNone, ignore, none, raiseWithDebugMessage, arrayEquality, error, pipe, raiseError, getLength, isSome, newInstance } from './functions.mjs';
 import { empty, forEach, subscribe, create } from './rx/Observable.mjs';
 import { getScheduler, schedule } from './rx/Observer.mjs';
 import { notify } from './rx/Sink.mjs';
 import { stream, createStateStore } from './streaming/Streamable.mjs';
 import { disposed, isDisposed, dispose, addTo, onComplete } from './util/Disposable.mjs';
 
+var _a, _b, _c, _d;
 const Memo = 1;
 const Await = 2;
 const Observe = 3;
 const Using = 4;
+const AsyncEffect_type = Symbol("AsyncEffect_type");
+const MemoOrUsingEffect_func = Symbol("MemoOrUsingEffect_func");
+const MemoOrUsingEffect_args = Symbol("MemoOrUsingEffect_args");
+const MemoOrUsingEffect_value = Symbol("MemoOrUsingEffect_value");
+const AwaitOrObserveEffect_observable = Symbol("AwaitOrObserveEffect_observable");
+const AwaitOrObserveEffect_subscription = Symbol("AwaitOrObserveEffect_subscription");
+const AwaitOrObserveEffect_value = Symbol("AwaitOrObserveEffect_value");
+const AwaitOrObserveEffect_hasValue = Symbol("AwaitOrObserveEffect_hasValue");
 const validateAsyncEffect = ((ctx, type) => {
-    const { effects, index } = ctx;
-    ctx.index++;
+    const { [AsyncContext_effects]: effects, [AsyncContext_index]: index } = ctx;
+    ctx[AsyncContext_index]++;
     const effect = effects[index];
     if (isNone(effect)) {
         const newEffect = type === Memo
             ? {
-                type,
-                f: ignore,
-                args: [],
-                value: none,
+                [AsyncEffect_type]: type,
+                [MemoOrUsingEffect_func]: ignore,
+                [MemoOrUsingEffect_args]: [],
+                [MemoOrUsingEffect_value]: none,
             }
             : type === Await || type === Observe
                 ? {
-                    type,
-                    observable: empty(),
-                    subscription: disposed,
-                    value: none,
-                    hasValue: false,
+                    [AsyncEffect_type]: type,
+                    [AwaitOrObserveEffect_observable]: empty(),
+                    [AwaitOrObserveEffect_subscription]: disposed,
+                    [AwaitOrObserveEffect_value]: none,
+                    [AwaitOrObserveEffect_hasValue]: false,
                 }
                 : type === Using
                     ? {
-                        type,
-                        f: ignore,
-                        args: [],
-                        value: disposed,
+                        [AsyncEffect_type]: type,
+                        [MemoOrUsingEffect_func]: ignore,
+                        [MemoOrUsingEffect_args]: [],
+                        [MemoOrUsingEffect_value]: disposed,
                     }
-                    : raise("invalid effect type");
+                    : raiseWithDebugMessage("invalid effect type");
         effects.push(newEffect);
         return newEffect;
     }
     else {
-        return effect.type === type
+        return effect[AsyncEffect_type] === type
             ? effect
-            : raise("observable effect called out of order");
+            : raiseWithDebugMessage("observable effect called out of order");
     }
 });
 const arrayStrictEquality = arrayEquality();
 const awaiting = error();
+const AsyncContext_index = Symbol("AsyncContext_index");
+const AsyncContext_cleanup = Symbol("AsyncContext_cleanup");
+const AsyncContext_effects = Symbol("AsyncContext_effects");
+const AsyncContext_mode = Symbol("AsyncContext_mode");
+const AsyncContext_observer = Symbol("AsyncContext_observer");
+const AsyncContext_runComputation = Symbol("AsyncContext_runComputation");
+const AsyncContext_scheduledComputationSubscription = Symbol("AsyncContext_scheduledComputationSubscription");
+const AsyncContext_awaitOrObserve = Symbol("AsyncContext_awaitOrObserve");
+const AsyncContext_memoOrUse = Symbol("AsyncContext_memoOrUse");
 class AsyncContext {
     constructor(observer, runComputation, mode) {
-        this.observer = observer;
-        this.runComputation = runComputation;
-        this.mode = mode;
-        this.index = 0;
-        this.effects = [];
-        this.scheduledComputationSubscription = disposed;
-        this.cleanup = () => {
-            const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => (effect.type === Await || effect.type === Observe) &&
-                !isDisposed(effect.subscription)) >= 0;
+        this[_a] = 0;
+        this[_b] = [];
+        this[_c] = disposed;
+        this[_d] = () => {
+            const { [AsyncContext_effects]: effects } = this;
+            const hasOutstandingEffects = effects.findIndex(effect => (effect[AsyncEffect_type] === Await ||
+                effect[AsyncEffect_type] === Observe) &&
+                !isDisposed(effect[AwaitOrObserveEffect_subscription])) >= 0;
             if (!hasOutstandingEffects &&
-                isDisposed(this.scheduledComputationSubscription)) {
-                pipe(this.observer, dispose());
+                isDisposed(this[AsyncContext_scheduledComputationSubscription])) {
+                pipe(this[AsyncContext_observer], dispose());
             }
         };
+        this[AsyncContext_observer] = observer;
+        this[AsyncContext_runComputation] = runComputation;
+        this[AsyncContext_mode] = mode;
     }
-    memo(f, ...args) {
-        const effect = validateAsyncEffect(this, Memo);
-        if (f === effect.f && arrayStrictEquality(args, effect.args)) {
-            return effect.value;
-        }
-        else {
-            const value = f(...args);
-            effect.f = f;
-            effect.args = args;
-            effect.value = value;
-            return value;
-        }
-    }
-    awaitOrObserve(observable, shouldAwait) {
+    [(_a = AsyncContext_index, _b = AsyncContext_effects, _c = AsyncContext_scheduledComputationSubscription, _d = AsyncContext_cleanup, AsyncContext_awaitOrObserve)](observable, shouldAwait) {
         const effect = shouldAwait
             ? validateAsyncEffect(this, Await)
             : validateAsyncEffect(this, Observe);
-        if (effect.observable === observable) {
-            return effect.value;
+        if (effect[AwaitOrObserveEffect_observable] === observable) {
+            return effect[AwaitOrObserveEffect_value];
         }
         else {
-            pipe(effect.subscription, dispose());
-            const { observer, runComputation } = this;
+            pipe(effect[AwaitOrObserveEffect_subscription], dispose());
+            const { [AsyncContext_observer]: observer, [AsyncContext_runComputation]: runComputation, } = this;
             const scheduler = getScheduler(observer);
             const subscription = pipe(observable, forEach(next => {
-                effect.value = next;
-                effect.hasValue = true;
-                if (this.mode === "combine-latest") {
+                effect[AwaitOrObserveEffect_value] = next;
+                effect[AwaitOrObserveEffect_hasValue] = true;
+                if (this[AsyncContext_mode] === "combine-latest") {
                     runComputation();
                 }
                 else {
-                    let { scheduledComputationSubscription } = this;
-                    this.scheduledComputationSubscription = isDisposed(scheduledComputationSubscription)
+                    let { [AsyncContext_scheduledComputationSubscription]: scheduledComputationSubscription, } = this;
+                    this[AsyncContext_scheduledComputationSubscription] = isDisposed(scheduledComputationSubscription)
                         ? pipe(observer, schedule(runComputation))
                         : scheduledComputationSubscription;
                 }
-            }), subscribe(scheduler), addTo(observer), onComplete(this.cleanup));
-            effect.observable = observable;
-            effect.subscription = subscription;
-            effect.value = none;
-            effect.hasValue = false;
-            return shouldAwait ? raise(awaiting) : none;
+            }), subscribe(scheduler), addTo(observer), onComplete(this[AsyncContext_cleanup]));
+            effect[AwaitOrObserveEffect_observable] = observable;
+            effect[AwaitOrObserveEffect_subscription] = subscription;
+            effect[AwaitOrObserveEffect_value] = none;
+            effect[AwaitOrObserveEffect_hasValue] = false;
+            return shouldAwait ? raiseError(awaiting) : none;
         }
     }
-    using(f, ...args) {
-        const effect = validateAsyncEffect(this, Using);
-        if (f === effect.f && arrayStrictEquality(args, effect.args)) {
-            return effect.value;
+    [AsyncContext_memoOrUse](shouldUse, f, ...args) {
+        const effect = shouldUse
+            ? validateAsyncEffect(this, Using)
+            : validateAsyncEffect(this, Memo);
+        if (f === effect[MemoOrUsingEffect_func] &&
+            arrayStrictEquality(args, effect[MemoOrUsingEffect_args])) {
+            return effect[MemoOrUsingEffect_value];
         }
         else {
-            pipe(effect.value, dispose());
-            const value = pipe(f(...args), addTo(this.observer));
-            effect.f = f;
-            effect.args = args;
-            effect.value = value;
+            if (shouldUse) {
+                pipe(effect[MemoOrUsingEffect_value], dispose());
+            }
+            const value = f(...args);
+            effect[MemoOrUsingEffect_func] = f;
+            effect[MemoOrUsingEffect_args] = args;
+            effect[MemoOrUsingEffect_value] = value;
+            if (shouldUse) {
+                pipe(value, addTo(this[AsyncContext_observer]));
+            }
             return value;
         }
     }
@@ -143,21 +157,21 @@ const async = (computation, { mode = "batched" } = {}) => create((observer) => {
             }
         }
         currentCtx = none;
-        ctx.index = 0;
-        const { effects } = ctx;
+        ctx[AsyncContext_index] = 0;
+        const { [AsyncContext_effects]: effects } = ctx;
         const effectsLength = getLength(effects);
         // Inline this for perf
         let allObserveEffectsHaveValues = true;
         let hasOutstandingEffects = false;
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
-            const { type } = effect;
+            const { [AsyncEffect_type]: type } = effect;
             if ((type === Await || type === Observe) &&
-                !effect.hasValue) {
+                !effect[AwaitOrObserveEffect_hasValue]) {
                 allObserveEffectsHaveValues = false;
             }
             if ((type === Await || type === Observe) &&
-                !isDisposed(effect.subscription)) {
+                !isDisposed(effect[AwaitOrObserveEffect_subscription])) {
                 hasOutstandingEffects = true;
             }
             if (!allObserveEffectsHaveValues && hasOutstandingEffects) {
@@ -183,19 +197,19 @@ const async = (computation, { mode = "batched" } = {}) => create((observer) => {
     pipe(observer, schedule(runComputation));
 });
 const assertCurrentContext = () => isNone(currentCtx)
-    ? raise("effect must be called within a computational expression")
+    ? raiseWithDebugMessage("effect must be called within a computational expression")
     : currentCtx;
 const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
-    return ctx.memo(f, ...args);
+    return ctx[AsyncContext_memoOrUse](false, f, ...args);
 };
 const __await = (observable) => {
     const ctx = assertCurrentContext();
-    return ctx.awaitOrObserve(observable, true);
+    return ctx[AsyncContext_awaitOrObserve](observable, true);
 };
 const __observe = (observable) => {
     const ctx = assertCurrentContext();
-    return ctx.awaitOrObserve(observable, false);
+    return ctx[AsyncContext_awaitOrObserve](observable, false);
 };
 const __do = /*@__PURE__*/ (() => {
     const deferSideEffect = (f, ...args) => create(observer => {
@@ -207,19 +221,19 @@ const __do = /*@__PURE__*/ (() => {
     });
     return (f, ...args) => {
         const ctx = assertCurrentContext();
-        const scheduler = getScheduler(ctx.observer);
-        const observable = ctx.memo(deferSideEffect, f, ...args);
-        const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
-        ctx.using(subscribeOnScheduler, observable);
+        const scheduler = getScheduler(ctx[AsyncContext_observer]);
+        const observable = ctx[AsyncContext_memoOrUse](false, deferSideEffect, f, ...args);
+        const subscribeOnScheduler = ctx[AsyncContext_memoOrUse](false, subscribe, scheduler);
+        ctx[AsyncContext_memoOrUse](true, subscribeOnScheduler, observable);
     };
 })();
 const __using = (f, ...args) => {
     const ctx = assertCurrentContext();
-    return ctx.using(f, ...args);
+    return ctx[AsyncContext_memoOrUse](true, f, ...args);
 };
 function __currentScheduler() {
     const ctx = assertCurrentContext();
-    return getScheduler(ctx.observer);
+    return getScheduler(ctx[AsyncContext_observer]);
 }
 const __stream = /*@__PURE__*/ (() => {
     const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));

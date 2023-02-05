@@ -33,7 +33,7 @@ import {
   none,
   pipe,
   pipeLazy,
-  raise,
+  raiseError,
   unsafeCast,
 } from "../functions";
 import { ObservableLike, SubjectLike } from "../rx";
@@ -103,7 +103,7 @@ export const useObservable = <T>(
     );
   }, [observable, updateState, updateError, options.scheduler]);
 
-  return isSome(error) ? raise<T>(error) : state;
+  return isSome(error) ? raiseError<T>(error) : state;
 };
 
 const createReplaySubject = <TProps>() => createSubject<TProps>({ replay: 1 });

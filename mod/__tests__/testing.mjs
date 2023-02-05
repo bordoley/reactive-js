@@ -1,5 +1,5 @@
 /// <reference types="./testing.d.ts" />
-import { ignore, raise, none, strictEquality, arrayEquality, isSome, isNone, getLength } from '../functions.mjs';
+import { ignore, raiseWithDebugMessage, none, strictEquality, arrayEquality, isSome, isNone, getLength } from '../functions.mjs';
 
 const DescribeType = 1;
 const TestType = 2;
@@ -34,7 +34,7 @@ const expectToThrow = (f) => {
         didThrow = true;
     }
     if (!didThrow) {
-        raise("expected function to throw");
+        raiseWithDebugMessage("expected function to throw");
     }
 };
 const expectToThrowError = (error) => (f) => {
@@ -48,41 +48,41 @@ const expectToThrowError = (error) => (f) => {
         errorThrown = e;
     }
     if (!didThrow) {
-        raise("expected function to throw");
+        raiseWithDebugMessage("expected function to throw");
     }
     else if (errorThrown !== error) {
-        raise(`expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(errorThrown)}`);
+        raiseWithDebugMessage(`expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(errorThrown)}`);
     }
 };
 const expectEquals = (b, valueEquality = strictEquality) => (a) => {
     if (!valueEquality(a, b)) {
-        raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
+        raiseWithDebugMessage(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
 };
 const expectArrayEquals = (b, valueEquality = strictEquality) => (a) => {
     const equals = arrayEquality(valueEquality);
     if (!equals(a, b)) {
-        raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
+        raiseWithDebugMessage(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
 };
 const expectTrue = (v) => {
     if (!v) {
-        raise("expected true");
+        raiseWithDebugMessage("expected true");
     }
 };
 const expectFalse = (v) => {
     if (v) {
-        raise("expected false");
+        raiseWithDebugMessage("expected false");
     }
 };
 const expectIsNone = (v) => {
     if (isSome(v)) {
-        raise(`expected none but recieved ${v}`);
+        raiseWithDebugMessage(`expected none but recieved ${v}`);
     }
 };
 const expectIsSome = (v) => {
     if (isNone(v)) {
-        raise(`expected Some(?) but recieved None`);
+        raiseWithDebugMessage(`expected Some(?) but recieved None`);
     }
 };
 const mockFn = (retval) => {
@@ -96,7 +96,7 @@ const mockFn = (retval) => {
 };
 const expectToHaveBeenCalledTimes = (times) => (fn) => {
     if (getLength(fn.calls) !== times) {
-        raise(`expected fn to be called ${times} times, but was only called ${getLength(fn.calls)} times.`);
+        raiseWithDebugMessage(`expected fn to be called ${times} times, but was only called ${getLength(fn.calls)} times.`);
     }
 };
 const expectPromiseToThrow = async (promise) => {
@@ -108,7 +108,7 @@ const expectPromiseToThrow = async (promise) => {
         didThrow = true;
     }
     if (!didThrow) {
-        raise("expected function to throw");
+        raiseWithDebugMessage("expected function to throw");
     }
 };
 const __DENO__ = typeof Deno === "object";

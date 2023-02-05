@@ -1,5 +1,5 @@
 import { ToReadonlyArray } from "../../../containers";
-import { isSome, pipe, raise } from "../../../functions";
+import { isSome, pipe, raiseError } from "../../../functions";
 import { EnumerableLike } from "../../../ix";
 import Disposable_getError from "../../../util/__internal__/Disposable/Disposable.getError";
 import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
@@ -18,7 +18,7 @@ const Enumerable_toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArr
       }
 
       const error = Disposable_getError(enumerator);
-      return isSome(error) ? raise<T[]>(error) : result;
+      return isSome(error) ? raiseError<T[]>(error) : result;
     };
 
 export default Enumerable_toReadonlyArray;

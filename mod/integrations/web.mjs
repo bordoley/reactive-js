@@ -3,7 +3,7 @@ import { createInstanceFactory, mix, include, init, props } from '../__internal_
 import { ignoreElements } from '../containers/Container.mjs';
 import { toObservable } from '../containers/Promiseable.mjs';
 import { keep } from '../containers/ReadonlyArray.mjs';
-import { pipe, newInstance, none, isString, error, isEmpty, getLength, unsafeCast, isSome, raise, isFunction, compose } from '../functions.mjs';
+import { pipe, newInstance, none, isString, error, isEmpty, getLength, unsafeCast, isSome, raiseWithDebugMessage, isFunction, compose } from '../functions.mjs';
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto } from '../rx.mjs';
 import { getObserverCount, getReplay } from '../rx/MulticastObservable.mjs';
 import { create, map, forkCombineLatest, takeWhile, forEach, keep as keep$1, throttle, subscribe } from '../rx/Observable.mjs';
@@ -162,7 +162,7 @@ const windowLocation =
     let currentWindowLocationStream = none;
     return Streamable_create((scheduler, options) => {
         if (isSome(currentWindowLocationStream)) {
-            raise("Cannot stream more than once");
+            raiseWithDebugMessage("Cannot stream more than once");
         }
         const actionReducer = pipe(createActionReducer(({ uri: stateURI }, { replace, stateOrUpdater }) => {
             const uri = isFunction(stateOrUpdater)
