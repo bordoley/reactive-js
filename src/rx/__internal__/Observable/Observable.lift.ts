@@ -8,25 +8,36 @@ import {
 } from "../../../rx";
 import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
 
+const LiftedObservable_source = Symbol("LiftedObservable_source");
+const LiftedObservable_operators = Symbol("LiftedObservable_operators");
+
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
+  readonly [LiftedObservable_source]: ObservableLike<TIn>;
+  readonly [LiftedObservable_operators]: readonly Function1<
+    ObserverLike<any>,
+    ObserverLike<any>
+  >[];
   readonly [ObservableLike_isEnumerable]: boolean;
   readonly [ObservableLike_isRunnable]: boolean;
 
   constructor(
-    readonly source: ObservableLike<TIn>,
-    readonly operators: readonly Function1<
-      ObserverLike<any>,
-      ObserverLike<any>
-    >[],
+    source: ObservableLike<TIn>,
+    operators: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
     isEnumerable: boolean,
     isRunnable: boolean,
   ) {
+    this[LiftedObservable_source] = source;
+    this[LiftedObservable_operators] = operators;
     this[ObservableLike_isEnumerable] = isEnumerable;
     this[ObservableLike_isRunnable] = isRunnable;
   }
 
   [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-    pipeUnsafe(observer, ...this.operators, Sink_sourceFrom(this.source));
+    pipeUnsafe(
+      observer,
+      ...this[LiftedObservable_operators],
+      Sink_sourceFrom(this[LiftedObservable_source]),
+    );
   }
 }
 
@@ -37,11 +48,13 @@ const Observable_lift =
   ): Function1<ObservableLike<TA>, ObservableLike<TB>> =>
   source => {
     const sourceSource =
-      source instanceof LiftedObservable ? source.source : source;
+      source instanceof LiftedObservable
+        ? source[LiftedObservable_source]
+        : source;
 
     const allFunctions =
       source instanceof LiftedObservable
-        ? [operator, ...source.operators]
+        ? [operator, ...source[LiftedObservable_operators]]
         : [operator];
 
     const isLiftedEnumerable =

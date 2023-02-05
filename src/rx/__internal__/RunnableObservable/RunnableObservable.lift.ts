@@ -12,45 +12,60 @@ import {
 } from "../../../rx";
 import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
 
-const RunnableObservable_lift: Lift<RunnableObservableLike, TReactive>["lift"] =
-  /*@__PURE__*/ (() => {
-    class LiftedRunnableObservable<TIn, TOut>
-      implements RunnableObservableLike<TOut>
-    {
-      readonly [ObservableLike_isEnumerable] = false;
-      readonly [ObservableLike_isRunnable] = true;
+const LiftedRunnableObservable_source = Symbol(
+  "LiftedRunnableObservable_source",
+);
+const LiftedRunnableObservable_operators = Symbol(
+  "LiftedRunnableObservable_operators",
+);
 
-      constructor(
-        readonly source: RunnableObservableLike<TIn>,
-        readonly operators: readonly Function1<
-          ObserverLike<any>,
-          ObserverLike<any>
-        >[],
-      ) {}
+class LiftedRunnableObservable<TIn, TOut>
+  implements RunnableObservableLike<TOut>
+{
+  readonly [ObservableLike_isEnumerable] = false;
+  readonly [ObservableLike_isRunnable] = true;
+  readonly [LiftedRunnableObservable_source]: RunnableObservableLike<TIn>;
+  readonly [LiftedRunnableObservable_operators]: readonly Function1<
+    ObserverLike<any>,
+    ObserverLike<any>
+  >[];
 
-      [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
-        pipeUnsafe(observer, ...this.operators, Sink_sourceFrom(this.source));
-      }
-    }
+  constructor(
+    source: RunnableObservableLike<TIn>,
+    operators: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
+  ) {
+    this[LiftedRunnableObservable_source] = source;
+    this[LiftedRunnableObservable_operators] = operators;
+  }
 
-    return <TA, TB>(
-        operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-      ): Function1<RunnableObservableLike<TA>, RunnableObservableLike<TB>> =>
-      source => {
-        const sourceSource =
-          source instanceof LiftedRunnableObservable ? source.source : source;
+  [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
+    pipeUnsafe(
+      observer,
+      ...this[LiftedRunnableObservable_operators],
+      Sink_sourceFrom(this[LiftedRunnableObservable_source]),
+    );
+  }
+}
 
-        const allFunctions =
-          source instanceof LiftedRunnableObservable
-            ? [operator, ...source.operators]
-            : [operator];
+const RunnableObservable_lift: Lift<
+  RunnableObservableLike,
+  TReactive
+>["lift"] =
+  <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ): Function1<RunnableObservableLike<TA>, RunnableObservableLike<TB>> =>
+  source => {
+    const sourceSource =
+      source instanceof LiftedRunnableObservable
+        ? source[LiftedRunnableObservable_source]
+        : source;
 
-        return newInstance(
-          LiftedRunnableObservable,
-          sourceSource,
-          allFunctions,
-        );
-      };
-  })();
+    const allFunctions =
+      source instanceof LiftedRunnableObservable
+        ? [operator, ...source[LiftedRunnableObservable_operators]]
+        : [operator];
+
+    return newInstance(LiftedRunnableObservable, sourceSource, allFunctions);
+  };
 
 export default RunnableObservable_lift;

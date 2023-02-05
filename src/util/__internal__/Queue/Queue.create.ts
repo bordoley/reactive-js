@@ -18,7 +18,10 @@ import {
 const computeParentIndex = (index: number) => floor((index - 1) / 2);
 
 const siftDown = <T>(queue: PriorityQueueImpl<T>, item: T) => {
-  const { values, compare } = queue;
+  const {
+    [PriorityQueueImpl_values]: values,
+    [PriorityQueueImpl_comparator]: compare,
+  } = queue;
   const length = getLength(values);
 
   for (let index = 0; index < length; ) {
@@ -49,7 +52,10 @@ const siftDown = <T>(queue: PriorityQueueImpl<T>, item: T) => {
 };
 
 const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
-  const { values, compare } = queue;
+  const {
+    [PriorityQueueImpl_values]: values,
+    [PriorityQueueImpl_comparator]: compare,
+  } = queue;
 
   for (
     let index = getLength(values) - 1,
@@ -65,25 +71,31 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
   }
 };
 
-class PriorityQueueImpl<T> implements QueueLike<T> {
-  readonly values: T[] = [];
+const PriorityQueueImpl_comparator = Symbol("PriorityQueueImpl_comparator");
+const PriorityQueueImpl_values = Symbol("PriorityQueueImpl_values");
 
-  constructor(readonly compare: Comparator<T>) {}
+class PriorityQueueImpl<T> implements QueueLike<T> {
+  readonly [PriorityQueueImpl_values]: T[] = [];
+  readonly [PriorityQueueImpl_comparator]: Comparator<T>;
+
+  constructor(comparator: Comparator<T>) {
+    this[PriorityQueueImpl_comparator] = comparator;
+  }
 
   get [QueueLike_count](): number {
-    return getLength(this.values);
+    return getLength(this[PriorityQueueImpl_values]);
   }
 
   [QueueLike_clear]() {
-    this.values.length = 0;
+    this[PriorityQueueImpl_values].length = 0;
   }
 
   [QueueLike_peek]() {
-    return this.values[0];
+    return this[PriorityQueueImpl_values][0];
   }
 
   [QueueLike_pop]() {
-    const { values } = this;
+    const { [PriorityQueueImpl_values]: values } = this;
     const length = getLength(values);
     if (length === 0) {
       return none;
@@ -101,8 +113,7 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
   }
 
   [QueueLike_push](item: T) {
-    const { values } = this;
-    values.push(item);
+    this[PriorityQueueImpl_values].push(item);
     siftUp(this, item);
   }
 }

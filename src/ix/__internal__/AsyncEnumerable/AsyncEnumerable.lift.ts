@@ -9,14 +9,28 @@ import { SchedulerLike } from "../../../scheduling";
 import { StreamableLike_stream } from "../../../streaming";
 import Streamable_stream from "../../../streaming/__internal__/Streamable/Streamable.stream";
 
+const LiftedAsyncEnumerable_src = Symbol("LiftedAsyncEnumerable_src");
+const LiftedAsyncEnumerable_operators = Symbol(
+  "LiftedAsyncEnumerable_operators",
+);
+
 class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
+  readonly [LiftedAsyncEnumerable_src]: AsyncEnumerableLike<any>;
+  readonly [LiftedAsyncEnumerable_operators]: readonly Function1<
+    AsyncEnumeratorLike<any>,
+    AsyncEnumeratorLike<any>
+  >[];
+
   constructor(
-    readonly src: AsyncEnumerableLike<any>,
-    readonly operators: readonly Function1<
+    src: AsyncEnumerableLike<any>,
+    operators: readonly Function1<
       AsyncEnumeratorLike<any>,
       AsyncEnumeratorLike<any>
     >[],
-  ) {}
+  ) {
+    this[LiftedAsyncEnumerable_src] = src;
+    this[LiftedAsyncEnumerable_operators] = operators;
+  }
 
   [InteractiveContainerLike_interact](scheduler: SchedulerLike) {
     return pipe(this, Streamable_stream(scheduler));
@@ -26,8 +40,14 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): AsyncEnumeratorLike<T> {
-    const src = pipe(this.src, Streamable_stream(scheduler, options));
-    return pipeUnsafe(src, ...this.operators) as AsyncEnumeratorLike<T>;
+    const src = pipe(
+      this[LiftedAsyncEnumerable_src],
+      Streamable_stream(scheduler, options),
+    );
+    return pipeUnsafe(
+      src,
+      ...this[LiftedAsyncEnumerable_operators],
+    ) as AsyncEnumeratorLike<T>;
   }
 }
 
@@ -37,11 +57,13 @@ const AsyncEnumerable_lift =
   ): ContainerOperator<AsyncEnumerableLike, TA, TB> =>
   enumerable => {
     const src =
-      enumerable instanceof LiftedAsyncEnumerable ? enumerable.src : enumerable;
+      enumerable instanceof LiftedAsyncEnumerable
+        ? enumerable[LiftedAsyncEnumerable_src]
+        : enumerable;
 
     const allFunctions =
       enumerable instanceof LiftedAsyncEnumerable
-        ? [...enumerable.operators, operator]
+        ? [...enumerable[LiftedAsyncEnumerable_operators], operator]
         : [operator];
 
     return newInstance<

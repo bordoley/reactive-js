@@ -4,20 +4,18 @@ import Enumerator_getCurrent from '../Enumerator/Enumerator.getCurrent.mjs';
 import Source_move from '../Source/Source.move.mjs';
 import Enumerable_enumerate from './Enumerable.enumerate.mjs';
 
-const Enumerable_toIterable = 
-/*@__PURE__*/ (() => {
-    class EnumerableIterable {
-        constructor(enumerable) {
-            this.enumerable = enumerable;
-        }
-        *[Symbol.iterator]() {
-            const enumerator = pipe(this.enumerable, Enumerable_enumerate());
-            while (Source_move(enumerator)) {
-                yield Enumerator_getCurrent(enumerator);
-            }
+const EnumerableIterable_enumerable = Symbol("EnumerableIterable_enumerable");
+class EnumerableIterable {
+    constructor(enumerable) {
+        this[EnumerableIterable_enumerable] = enumerable;
+    }
+    *[Symbol.iterator]() {
+        const enumerator = pipe(this[EnumerableIterable_enumerable], Enumerable_enumerate());
+        while (Source_move(enumerator)) {
+            yield Enumerator_getCurrent(enumerator);
         }
     }
-    return () => enumerable => newInstance(EnumerableIterable, enumerable);
-})();
+}
+const Enumerable_toIterable = () => enumerable => newInstance(EnumerableIterable, enumerable);
 
 export { Enumerable_toIterable as default };
