@@ -1,7 +1,9 @@
-import { Equality, Factory, Updater, updateReducer } from "../../../functions";
+import { Equality, Factory, Updater } from "../../../functions";
 import { StreamableLike } from "../../../streaming";
 
 import Streamable_createActionReducer from "./Streamable.createActionReducer";
+
+const updateReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
 
 const Streamable_createStateStore = <T>(
   initialState: Factory<T>,

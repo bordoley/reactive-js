@@ -1,5 +1,5 @@
 /// <reference types="./mixins.d.ts" />
-import { isFunction } from '../functions.mjs';
+import { getLength, isFunction } from '../functions.mjs';
 
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
@@ -12,18 +12,26 @@ function initUnsafe(mixin, instance, ...args) {
 }
 const init = initUnsafe;
 const include = (...mixins) => {
-    if (mixins.length == 1) {
+    const length = getLength(mixins);
+    if (length == 1) {
         return mixins[0];
     }
     else {
-        const properties = mixins
-            .map(mixin => mixin[Object_properties])
-            .reduce((acc, next) => ({ ...acc, ...next }), {});
-        const prototypeDescriptions = mixins
-            .map(mixin => getOwnPropertyDescriptors(mixin[Object_prototype]))
-            .reduce((acc, next) => ({ ...acc, ...next }), {});
+        let propertyDescriptions = {};
+        let prototypeDescriptions = {};
+        for (let i = 0; i < length; i++) {
+            const mixin = mixins[i];
+            propertyDescriptions = {
+                ...propertyDescriptions,
+                ...getOwnPropertyDescriptors(mixin[Object_properties]),
+            };
+            prototypeDescriptions = {
+                ...prototypeDescriptions,
+                ...getOwnPropertyDescriptors(mixin[Object_prototype]),
+            };
+        }
         return {
-            [Object_properties]: properties,
+            [Object_properties]: createObject(objectPrototype, propertyDescriptions),
             [Object_prototype]: createObject(objectPrototype, prototypeDescriptions),
         };
     }
