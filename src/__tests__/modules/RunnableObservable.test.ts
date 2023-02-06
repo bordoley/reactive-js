@@ -7,7 +7,7 @@ import {
   pipeLazy,
   raise,
 } from "../../functions";
-import { toReadonlyArray as enumerableToReadonlyArray } from "../../ix/Enumerable";
+import Enumerable from "../../ix/Enumerable";
 import { RunnableObservableLike } from "../../rx";
 import RunnableObservable, {
   empty,
@@ -171,7 +171,7 @@ const toEnumerableTests = describe(
       [1, 2, 3, 4],
       toRunnableObservable(),
       toEnumerable(),
-      enumerableToReadonlyArray(),
+      Enumerable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 4]),
     ),
   ),

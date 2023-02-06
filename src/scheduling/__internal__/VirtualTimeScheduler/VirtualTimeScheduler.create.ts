@@ -50,10 +50,8 @@ type VirtualTask = {
 };
 
 const comparator = (a: VirtualTask, b: VirtualTask) => {
-  let diff = 0;
-  diff = diff !== 0 ? diff : a[VirtualTask_dueTime] - b[VirtualTask_dueTime];
-  diff = diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];
-  return diff;
+  const diff = a[VirtualTask_dueTime] - b[VirtualTask_dueTime];
+  return diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];
 };
 
 const typedMutableEnumeratorMixin =

@@ -2,7 +2,7 @@
 import { throws, concatMap } from '../../containers/Container.mjs';
 import { toRunnableObservable } from '../../containers/ReadonlyArray.mjs';
 import { pipeLazy, pipe, raise, identity, arrayEquality } from '../../functions.mjs';
-import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/Enumerable.mjs';
+import Enumerable from '../../ix/Enumerable.mjs';
 import RunnableObservable, { exhaust, toReadonlyArray, merge, empty, switchAll, map, toEnumerable, toPromise, zip } from '../../rx/RunnableObservable.mjs';
 import { createHostScheduler } from '../../scheduling/Scheduler.mjs';
 import { dispose } from '../../util/Disposable.mjs';
@@ -16,7 +16,7 @@ const exhaustTests = createDescribe("exhaust", createTest("when the initial obse
 ], toRunnableObservable({ delay: 5 }), exhaust(), toReadonlyArray(), expectArrayEquals([1, 2, 3, 7, 8, 9]))));
 const mergeTests = createDescribe("merge", createTest("two arrays", pipeLazy(merge(pipe([0, 2, 3, 5, 6], toRunnableObservable({ delay: 1, delayStart: true })), pipe([1, 4, 7], toRunnableObservable({ delay: 2, delayStart: true }))), toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), createTest("when one source throws", pipeLazy(pipeLazy(merge(pipe([1, 4, 7], toRunnableObservable({ delay: 2 })), throws(RunnableObservable, { delay: 5 })(raise)), toReadonlyArray()), expectToThrow)));
 const switchAllTests = createDescribe("switchAll", createTest("with empty source", pipeLazy(empty({ delay: 1 }), switchAll(), toReadonlyArray(), expectArrayEquals([]))), createTest("when source throw", pipeLazy(pipeLazy(raise, throws(RunnableObservable), switchAll(), toReadonlyArray()), expectToThrow, identity)), createTest("concating arrays", pipeLazy([1, 2, 3], toRunnableObservable({ delay: 1 }), concatMap({ concatAll: switchAll, map }, _ => pipe([1, 2, 3], toRunnableObservable({ delay: 0 }))), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), createTest("overlapping notification", pipeLazy([1, 2, 3], toRunnableObservable({ delay: 4 }), concatMap({ concatAll: switchAll, map }, _ => pipe([1, 2, 3], toRunnableObservable({ delay: 2 }))), toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))));
-const toEnumerableTests = createDescribe("toEnumerable", createTest("with an enumerable observable", pipeLazy([1, 2, 3, 4], toRunnableObservable(), toEnumerable(), toReadonlyArray$1(), expectArrayEquals([1, 2, 3, 4]))));
+const toEnumerableTests = createDescribe("toEnumerable", createTest("with an enumerable observable", pipeLazy([1, 2, 3, 4], toRunnableObservable(), toEnumerable(), Enumerable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))));
 const toPromiseTests = createDescribe("toPromise", testAsync("when observable completes without producing a value", async () => {
     const scheduler = createHostScheduler();
     try {
