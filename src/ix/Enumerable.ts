@@ -147,6 +147,7 @@ const Enumerable: Buffer<EnumerableLike> &
   Empty<EnumerableLike, { delay: number }> &
   ForEach<EnumerableLike> &
   FromArray<EnumerableLike> &
+  FromIterable<EnumerableLike> &
   Generate<EnumerableLike> &
   Keep<EnumerableLike> &
   Map<EnumerableLike> &
@@ -172,6 +173,7 @@ const Enumerable: Buffer<EnumerableLike> &
   empty,
   forEach,
   fromArray,
+  fromIterable,
   generate,
   keep,
   map,

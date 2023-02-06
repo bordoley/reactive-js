@@ -1,7 +1,7 @@
-import { toRunnableObservable } from "../../containers/ReadonlyArray";
 import { AsyncEnumerableLike } from "../../ix";
 import AsyncEnumerable from "../../ix/AsyncEnumerable";
 import { RunnableObservableLike } from "../../rx";
+import RunnableObservable from "../../rx/RunnableObservable";
 import {
   keepTests,
   mapTests,
@@ -16,8 +16,9 @@ testModule(
   keepTests(AsyncEnumerable),
   mapTests(AsyncEnumerable),
   scanTests(AsyncEnumerable),
-  scanAsyncTests<AsyncEnumerableLike, RunnableObservableLike>(AsyncEnumerable, {
-    fromArray: toRunnableObservable,
-  }),
+  scanAsyncTests<AsyncEnumerableLike, RunnableObservableLike>(
+    AsyncEnumerable,
+    RunnableObservable,
+  ),
   takeWhileTests(AsyncEnumerable),
 );

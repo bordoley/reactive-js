@@ -3,7 +3,6 @@
  */
 
 import "./modules/AsyncEnumerable.test";
-import "./modules/Container.test";
 import "./modules/Disposable.test";
 import "./modules/Enumerable.test";
 import "./modules/Flowable.test";
