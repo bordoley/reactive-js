@@ -29,8 +29,10 @@ import Enumerable_liftT from "./Enumerable.liftT";
 const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
+  const KeepEnumerator_predicate = Symbol("KeepEnumerator_predicate");
+
   type TProperties = {
-    readonly predicate: Predicate<T>;
+    readonly [KeepEnumerator_predicate]: Predicate<T>;
   };
 
   return pipe(
@@ -46,14 +48,14 @@ const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
           init(Disposable_delegatingMixin, instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
 
-          instance.predicate = predicate;
+          instance[KeepEnumerator_predicate] = predicate;
 
           return instance;
         },
-        props<TProperties>({ predicate: none }),
+        props<TProperties>({ [KeepEnumerator_predicate]: none }),
         {
           [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-            const { predicate } = this;
+            const { [KeepEnumerator_predicate]: predicate } = this;
 
             try {
               while (

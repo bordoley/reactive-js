@@ -13,24 +13,25 @@ import DelegatingAsyncEnumerator_mixin from '../DelegatingAsyncEnumerator/Delega
 import AsyncEnumerable_lift from './AsyncEnumerable.lift.mjs';
 
 const AsyncEnumerable_scanAsync = /*@__PURE__*/ (() => {
+    const ScanAsyncAsyncEnumerator_obs = Symbol("ScanAsyncAsyncEnumerator_obs");
     const creatScanAsyncAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()), function ScanAsyncAsyncEnumerator(instance, delegate, reducer, initialValue) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
-        instance.obs = pipe(delegate, Observable_scanAsync(reducer, initialValue), Observable_multicast(Dispatcher_getScheduler(delegate)));
+        instance[ScanAsyncAsyncEnumerator_obs] = pipe(delegate, Observable_scanAsync(reducer, initialValue), Observable_multicast(Dispatcher_getScheduler(delegate)));
         return instance;
     }, props({
-        obs: none,
+        [ScanAsyncAsyncEnumerator_obs]: none,
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return MulticastObservable_getObserverCount(this.obs);
+            return MulticastObservable_getObserverCount(this[ScanAsyncAsyncEnumerator_obs]);
         },
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
-            return MulticastObservable_getReplay(this.obs);
+            return MulticastObservable_getReplay(this[ScanAsyncAsyncEnumerator_obs]);
         },
         [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this.obs, ReactiveContainer_sinkInto(observer));
+            pipe(this[ScanAsyncAsyncEnumerator_obs], ReactiveContainer_sinkInto(observer));
         },
     }));
     return (reducer, initialValue) => pipe(creatScanAsyncAsyncEnumerator, partial(reducer, initialValue), AsyncEnumerable_lift);

@@ -13,6 +13,7 @@ import {
   Predicate,
   error,
   isNone,
+  isSome,
   none,
   pipe,
   raiseWithDebugMessage,
@@ -36,11 +37,16 @@ import Enumerable_enumerate from "./Enumerable.enumerate";
 const Enumerable_repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   T,
 >() => {
+  const RepeatEnumerator_count = Symbol("RepeatEnumerator_count");
+  const RepeatEnumerator_enumerator = Symbol("RepeatEnumerator_enumerator");
+  const RepeatEnumerator_shouldRepeat = Symbol("RepeatEnumerator_shouldRepeat");
+  const RepeatEnumerator_src = Symbol("RepeatEnumerator_src");
+
   type TProperties = {
-    count: number;
-    enumerator: Optional<EnumeratorLike<T>>;
-    readonly shouldRepeat: Predicate<number>;
-    readonly src: EnumerableLike<T>;
+    [RepeatEnumerator_count]: number;
+    [RepeatEnumerator_enumerator]: Optional<EnumeratorLike<T>>;
+    readonly [RepeatEnumerator_shouldRepeat]: Predicate<number>;
+    readonly [RepeatEnumerator_src]: EnumerableLike<T>;
   };
 
   const createRepeatEnumerator = createInstanceFactory(
@@ -59,39 +65,43 @@ const Enumerable_repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
       ): EnumeratorLike<T> {
         init(Disposable_mixin, instance);
 
-        instance.src = src;
-        instance.shouldRepeat = shouldRepeat;
+        instance[RepeatEnumerator_src] = src;
+        instance[RepeatEnumerator_shouldRepeat] = shouldRepeat;
 
         return instance;
       },
       props<TProperties>({
-        count: 0,
-        enumerator: none,
-        shouldRepeat: none,
-        src: none,
+        [RepeatEnumerator_count]: 0,
+        [RepeatEnumerator_enumerator]: none,
+        [RepeatEnumerator_shouldRepeat]: none,
+        [RepeatEnumerator_src]: none,
       }),
       {
         [SourceLike_move](this: TProperties & EnumeratorLike<T>) {
-          if (isNone(this.enumerator)) {
-            this.enumerator = pipe(
-              this.src,
+          if (isNone(this[RepeatEnumerator_enumerator])) {
+            this[RepeatEnumerator_enumerator] = pipe(
+              this[RepeatEnumerator_src],
               Enumerable_enumerate(),
               Disposable_addTo(this),
             );
           }
 
-          let { enumerator } = this;
-          while (!Enumerator_move(enumerator)) {
-            this.count++;
+          let { [RepeatEnumerator_enumerator]: enumerator } = this;
+          while (isSome(enumerator) && !Enumerator_move(enumerator)) {
+            this[RepeatEnumerator_count]++;
 
             try {
-              if (this.shouldRepeat(this.count)) {
+              if (
+                this[RepeatEnumerator_shouldRepeat](
+                  this[RepeatEnumerator_count],
+                )
+              ) {
                 enumerator = pipe(
-                  this.src,
+                  this[RepeatEnumerator_src],
                   Enumerable_enumerate(),
                   Disposable_addTo(this),
                 );
-                this.enumerator = enumerator;
+                this[RepeatEnumerator_enumerator] = enumerator;
               } else {
                 break;
               }
@@ -104,12 +114,17 @@ const Enumerable_repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
         get [EnumeratorLike_current](): T {
           unsafeCast<TProperties>(this);
           return Enumerator_hasCurrent(this)
-            ? (this.enumerator as EnumeratorLike<T>)[EnumeratorLike_current]
+            ? (this[RepeatEnumerator_enumerator] as EnumeratorLike<T>)[
+                EnumeratorLike_current
+              ]
             : raiseWithDebugMessage("Enumerator does not have current value");
         },
         get [EnumeratorLike_hasCurrent]() {
           unsafeCast<TProperties>(this);
-          return this.enumerator?.[EnumeratorLike_hasCurrent] ?? false;
+          return (
+            this[RepeatEnumerator_enumerator]?.[EnumeratorLike_hasCurrent] ??
+            false
+          );
         },
       },
     ),

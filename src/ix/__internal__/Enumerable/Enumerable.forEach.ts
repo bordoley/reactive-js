@@ -24,15 +24,17 @@ const Enumerable_forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
 >() => {
   const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
+  const ForEachEnumerator_effect = Symbol("ForEachEnumerator_effect");
+
   type TProperties = {
-    readonly effect: SideEffect1<T>;
+    readonly [ForEachEnumerator_effect]: SideEffect1<T>;
   };
 
   return pipe(
     createInstanceFactory(
       mix(
         include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
-        function forEachEnumerator(
+        function ForEachEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
@@ -41,16 +43,16 @@ const Enumerable_forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
           init(Disposable_delegatingMixin, instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
 
-          instance.effect = effect;
+          instance[ForEachEnumerator_effect] = effect;
 
           return instance;
         },
-        props<TProperties>({ effect: none }),
+        props<TProperties>({ [ForEachEnumerator_effect]: none }),
         {
           [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
             if (DelegatingEnumerator_move(this)) {
               try {
-                this.effect(Enumerator_getCurrent(this));
+                this[ForEachEnumerator_effect](Enumerator_getCurrent(this));
               } catch (e) {
                 pipe(this, Disposable_dispose(error(e)));
               }

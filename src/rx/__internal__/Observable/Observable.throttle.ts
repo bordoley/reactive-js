@@ -47,14 +47,29 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
   ) => ObserverLike<T> = (<T>() => {
     const typedObserverMixin = Observer_mixin<T>();
 
+    const ThrottleObserver_delegate = Symbol("ThrottleObserver_delegate");
+    const ThrottleObserver_value = Symbol("ThrottleObserver_value");
+    const ThrottleObserver_hasValue = Symbol("ThrottleObserver_hasValue");
+    const ThrottleObserver_durationSubscription = Symbol(
+      "ThrottleObserver_durationSubscription",
+    );
+    const ThrottleObserver_durationFunction = Symbol(
+      "ThrottleObserver_durationFunction",
+    );
+    const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
+    const ThrottleObserver_onNotify = Symbol("ThrottleObserver_onNotify");
+
     type TProperties = {
-      readonly delegate: ObserverLike<T>;
-      value: Optional<T>;
-      hasValue: boolean;
-      readonly durationSubscription: DisposableRefLike;
-      readonly durationFunction: Function1<T, ObservableLike>;
-      readonly mode: ThrottleMode;
-      readonly onNotify: SideEffect;
+      readonly [ThrottleObserver_delegate]: ObserverLike<T>;
+      [ThrottleObserver_value]: Optional<T>;
+      [ThrottleObserver_hasValue]: boolean;
+      readonly [ThrottleObserver_durationSubscription]: DisposableRefLike;
+      readonly [ThrottleObserver_durationFunction]: Function1<
+        T,
+        ObservableLike
+      >;
+      readonly [ThrottleObserver_mode]: ThrottleMode;
+      readonly [ThrottleObserver_onNotify]: SideEffect;
     };
 
     const setupDurationSubscription = (
@@ -62,11 +77,11 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
       next: T,
     ) => {
       pipe(
-        observer.durationSubscription,
+        observer[ThrottleObserver_durationSubscription],
         MutableRef_set(
           pipe(
-            observer.durationFunction(next),
-            Observable_forEach(observer.onNotify),
+            observer[ThrottleObserver_durationFunction](next),
+            Observable_forEach(observer[ThrottleObserver_onNotify]),
             Observable_subscribe(Observer_getScheduler(observer)),
           ),
         ),
@@ -86,22 +101,22 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
           init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, Observer_getScheduler(delegate));
 
-          instance.delegate = delegate;
-          instance.durationFunction = durationFunction;
-          instance.mode = mode;
+          instance[ThrottleObserver_delegate] = delegate;
+          instance[ThrottleObserver_durationFunction] = durationFunction;
+          instance[ThrottleObserver_mode] = mode;
 
-          instance.durationSubscription = pipe(
+          instance[ThrottleObserver_durationSubscription] = pipe(
             DisposableRef_create(Disposable_disposed),
             Disposable_addTo(delegate),
           );
 
-          instance.onNotify = (_?: unknown) => {
-            if (instance.hasValue) {
-              const value = instance.value as T;
-              instance.value = none;
-              instance.hasValue = false;
+          instance[ThrottleObserver_onNotify] = (_?: unknown) => {
+            if (instance[ThrottleObserver_hasValue]) {
+              const value = instance[ThrottleObserver_value] as T;
+              instance[ThrottleObserver_value] = none;
+              instance[ThrottleObserver_hasValue] = false;
 
-              instance.delegate[SinkLike_notify](value);
+              instance[ThrottleObserver_delegate][SinkLike_notify](value);
 
               setupDurationSubscription(instance, value);
             }
@@ -112,12 +127,12 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
             Disposable_addTo(delegate),
             Disposable_onComplete(() => {
               if (
-                instance.mode !== "first" &&
-                instance.hasValue &&
+                instance[ThrottleObserver_mode] !== "first" &&
+                instance[ThrottleObserver_hasValue] &&
                 !Disposable_isDisposed(delegate)
               ) {
                 pipe(
-                  [instance.value],
+                  [instance[ThrottleObserver_value]],
                   ReadonlyArray_toRunnableObservable(),
                   ReactiveContainer_sinkInto(delegate),
                 );
@@ -128,29 +143,29 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
           return instance;
         },
         props<TProperties>({
-          delegate: none,
-          value: none,
-          hasValue: false,
-          durationSubscription: none,
-          durationFunction: none,
-          mode: "interval",
-          onNotify: none,
+          [ThrottleObserver_delegate]: none,
+          [ThrottleObserver_value]: none,
+          [ThrottleObserver_hasValue]: false,
+          [ThrottleObserver_durationSubscription]: none,
+          [ThrottleObserver_durationFunction]: none,
+          [ThrottleObserver_mode]: "interval",
+          [ThrottleObserver_onNotify]: none,
         }),
         {
           [SinkLike_notify](this: ObserverLike<T> & TProperties, next: T) {
-            this.value = next;
-            this.hasValue = true;
+            this[ThrottleObserver_value] = next;
+            this[ThrottleObserver_hasValue] = true;
 
             const durationSubscriptionDisposableIsDisposed =
-              this.durationSubscription[MutableRefLike_current][
-                DisposableLike_isDisposed
-              ];
+              this[ThrottleObserver_durationSubscription][
+                MutableRefLike_current
+              ][DisposableLike_isDisposed];
 
             if (
               durationSubscriptionDisposableIsDisposed &&
-              this.mode !== "last"
+              this[ThrottleObserver_mode] !== "last"
             ) {
-              this.onNotify();
+              this[ThrottleObserver_onNotify]();
             } else if (durationSubscriptionDisposableIsDisposed) {
               setupDurationSubscription(this, next);
             }

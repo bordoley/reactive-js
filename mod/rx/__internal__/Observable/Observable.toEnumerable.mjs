@@ -22,14 +22,15 @@ const Observable_toEnumerable =
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const typedObserverMixin = Observer_mixin();
+    const EnumeratorScheduler_continuations = Symbol("EnumeratorScheduler_continuations");
     const createEnumeratorScheduler = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function EnumeratorScheduler(instance) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        instance.continuations = [];
+        instance[EnumeratorScheduler_continuations] = [];
         return instance;
     }, props({
         [SchedulerLike_inContinuation]: false,
-        continuations: none,
+        [EnumeratorScheduler_continuations]: none,
     }), {
         [SchedulerLike_now]: 0,
         get [SchedulerLike_shouldYield]() {
@@ -41,7 +42,7 @@ const Observable_toEnumerable =
         },
         [SourceLike_move]() {
             if (!Disposable_isDisposed(this)) {
-                const { continuations } = this;
+                const { [EnumeratorScheduler_continuations]: continuations } = this;
                 const continuation = continuations.shift();
                 if (isSome(continuation)) {
                     this[SchedulerLike_inContinuation] = true;
@@ -56,7 +57,7 @@ const Observable_toEnumerable =
         [SchedulerLike_schedule](continuation, _) {
             pipe(this, Disposable_add(continuation));
             if (!Disposable_isDisposed(continuation)) {
-                this.continuations.push(continuation);
+                this[EnumeratorScheduler_continuations].push(continuation);
             }
         },
     }));

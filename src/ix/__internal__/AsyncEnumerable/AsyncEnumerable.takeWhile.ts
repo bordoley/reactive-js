@@ -31,8 +31,10 @@ import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT";
 
 const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
+    const TakeWhileAsyncEnumerator_obs = Symbol("TakeWhileAsyncEnumerator_obs");
+
     type TProperties = {
-      readonly obs: MulticastObservableLike<T>;
+      readonly [TakeWhileAsyncEnumerator_obs]: MulticastObservableLike<T>;
     };
 
     const createTakeWhileAsyncEnumerator = createInstanceFactory(
@@ -53,7 +55,7 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
           init(Disposable_delegatingMixin, instance, delegate);
           init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
-          instance.obs = pipe(
+          instance[TakeWhileAsyncEnumerator_obs] = pipe(
             delegate,
             Observable_takeWhile(predicate, { inclusive }),
             Observable_multicast(Dispatcher_getScheduler(delegate)),
@@ -62,22 +64,29 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
           return instance;
         },
         props<TProperties>({
-          obs: none,
+          [TakeWhileAsyncEnumerator_obs]: none,
         }),
         {
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);
-            return MulticastObservable_getObserverCount(this.obs);
+            return MulticastObservable_getObserverCount(
+              this[TakeWhileAsyncEnumerator_obs],
+            );
           },
           get [MulticastObservableLike_replay]() {
             unsafeCast<TProperties>(this);
-            return MulticastObservable_getReplay(this.obs);
+            return MulticastObservable_getReplay(
+              this[TakeWhileAsyncEnumerator_obs],
+            );
           },
           [ReactiveContainerLike_sinkInto](
             this: TProperties,
             observer: ObserverLike<T>,
           ): void {
-            pipe(this.obs, ReactiveContainer_sinkInto(observer));
+            pipe(
+              this[TakeWhileAsyncEnumerator_obs],
+              ReactiveContainer_sinkInto(observer),
+            );
           },
         },
       ),

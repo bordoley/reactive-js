@@ -33,8 +33,10 @@ const AsyncEnumerable_scanAsync: ScanAsync<
   AsyncEnumerableLike,
   ObservableLike
 >["scanAsync"] = /*@__PURE__*/ (<T, TAcc>() => {
+  const ScanAsyncAsyncEnumerator_obs = Symbol("ScanAsyncAsyncEnumerator_obs");
+
   type TProperties = {
-    readonly obs: MulticastObservableLike<TAcc>;
+    readonly [ScanAsyncAsyncEnumerator_obs]: MulticastObservableLike<TAcc>;
   };
 
   const creatScanAsyncAsyncEnumerator = createInstanceFactory(
@@ -55,7 +57,7 @@ const AsyncEnumerable_scanAsync: ScanAsync<
         init(Disposable_delegatingMixin, instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
-        instance.obs = pipe(
+        instance[ScanAsyncAsyncEnumerator_obs] = pipe(
           delegate,
           Observable_scanAsync(reducer, initialValue),
           Observable_multicast(Dispatcher_getScheduler(delegate)),
@@ -63,22 +65,29 @@ const AsyncEnumerable_scanAsync: ScanAsync<
         return instance;
       },
       props<TProperties>({
-        obs: none,
+        [ScanAsyncAsyncEnumerator_obs]: none,
       }),
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getObserverCount(this.obs);
+          return MulticastObservable_getObserverCount(
+            this[ScanAsyncAsyncEnumerator_obs],
+          );
         },
         get [MulticastObservableLike_replay]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getReplay(this.obs);
+          return MulticastObservable_getReplay(
+            this[ScanAsyncAsyncEnumerator_obs],
+          );
         },
         [ReactiveContainerLike_sinkInto](
           this: TProperties,
           observer: ObserverLike<TAcc>,
         ): void {
-          pipe(this.obs, ReactiveContainer_sinkInto(observer));
+          pipe(
+            this[ScanAsyncAsyncEnumerator_obs],
+            ReactiveContainer_sinkInto(observer),
+          );
         },
       },
     ),

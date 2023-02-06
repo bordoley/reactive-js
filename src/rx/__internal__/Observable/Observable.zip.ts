@@ -66,10 +66,14 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
     ReadonlyArray_some(Disposable_isDisposed),
   );
 
+  const ZipObserver_delegate = Symbol("ZipObserver_delegate");
+  const ZipObserver_enumerators = Symbol("ZipObserver_enumerators");
+  const ZipObserver_sinkEnumerator = Symbol("ZipObserver_sinkEnumerator");
+
   type TProperties = {
-    readonly delegate: ObserverLike<readonly unknown[]>;
-    readonly enumerators: readonly EnumeratorLike<any>[];
-    readonly sinkEnumerator: EnumeratorLike & SinkLike;
+    readonly [ZipObserver_delegate]: ObserverLike<readonly unknown[]>;
+    readonly [ZipObserver_enumerators]: readonly EnumeratorLike<any>[];
+    readonly [ZipObserver_sinkEnumerator]: EnumeratorLike & SinkLike;
   };
 
   const createZipObserver = createInstanceFactory(
@@ -85,9 +89,9 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, Observer_getScheduler(delegate));
 
-        instance.delegate = delegate;
-        instance.sinkEnumerator = sinkEnumerator;
-        instance.enumerators = enumerators;
+        instance[ZipObserver_delegate] = delegate;
+        instance[ZipObserver_sinkEnumerator] = sinkEnumerator;
+        instance[ZipObserver_enumerators] = enumerators;
 
         pipe(
           instance,
@@ -105,13 +109,16 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
         return instance;
       },
       props<TProperties>({
-        delegate: none,
-        enumerators: none,
-        sinkEnumerator: none,
+        [ZipObserver_delegate]: none,
+        [ZipObserver_enumerators]: none,
+        [ZipObserver_sinkEnumerator]: none,
       }),
       {
         [SinkLike_notify](this: ObserverLike & TProperties, next: unknown) {
-          const { sinkEnumerator, enumerators } = this;
+          const {
+            [ZipObserver_sinkEnumerator]: sinkEnumerator,
+            [ZipObserver_enumerators]: enumerators,
+          } = this;
           if (this[DisposableLike_isDisposed]) {
             return;
           }
@@ -127,7 +134,7 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
             ReadonlyArray_map(Enumerator_getCurrent),
           );
 
-          this.delegate[SinkLike_notify](zippedNext);
+          this[ZipObserver_delegate][SinkLike_notify](zippedNext);
 
           if (shouldComplete(enumerators)) {
             pipe(this, Disposable_dispose());

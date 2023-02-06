@@ -35,12 +35,15 @@ const Observable_zip = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
     const shouldEmit = compose(ReadonlyArray_map((x) => Enumerator_hasCurrent(x) || Enumerator_move(x)), ReadonlyArray_every(isTrue));
     const shouldComplete = compose(ReadonlyArray_forEach(Enumerator_move), ReadonlyArray_some(Disposable_isDisposed));
+    const ZipObserver_delegate = Symbol("ZipObserver_delegate");
+    const ZipObserver_enumerators = Symbol("ZipObserver_enumerators");
+    const ZipObserver_sinkEnumerator = Symbol("ZipObserver_sinkEnumerator");
     const createZipObserver = createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function ZipObserver(instance, delegate, enumerators, sinkEnumerator) {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-        instance.delegate = delegate;
-        instance.sinkEnumerator = sinkEnumerator;
-        instance.enumerators = enumerators;
+        instance[ZipObserver_delegate] = delegate;
+        instance[ZipObserver_sinkEnumerator] = sinkEnumerator;
+        instance[ZipObserver_enumerators] = enumerators;
         pipe(instance, Disposable_onComplete(() => {
             if (Disposable_isDisposed(sinkEnumerator) ||
                 (!Enumerator_hasCurrent(sinkEnumerator) &&
@@ -50,12 +53,12 @@ const Observable_zip = /*@__PURE__*/ (() => {
         }));
         return instance;
     }, props({
-        delegate: none,
-        enumerators: none,
-        sinkEnumerator: none,
+        [ZipObserver_delegate]: none,
+        [ZipObserver_enumerators]: none,
+        [ZipObserver_sinkEnumerator]: none,
     }), {
         [SinkLike_notify](next) {
-            const { sinkEnumerator, enumerators } = this;
+            const { [ZipObserver_sinkEnumerator]: sinkEnumerator, [ZipObserver_enumerators]: enumerators, } = this;
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
@@ -64,7 +67,7 @@ const Observable_zip = /*@__PURE__*/ (() => {
                 return;
             }
             const zippedNext = pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent));
-            this.delegate[SinkLike_notify](zippedNext);
+            this[ZipObserver_delegate][SinkLike_notify](zippedNext);
             if (shouldComplete(enumerators)) {
                 pipe(this, Disposable_dispose());
             }

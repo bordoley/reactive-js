@@ -27,8 +27,9 @@ const Enumerable_pairwise: Pairwise<EnumerableLike>["pairwise"] =
   /*@__PURE__*/ (<T>() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin<[T, T]>();
 
+    const PairwiseEnumerator_delegate = Symbol("PairwiseEnumerator_delegate");
     type TProperties = {
-      readonly delegate: EnumeratorLike<T>;
+      readonly [PairwiseEnumerator_delegate]: EnumeratorLike<T>;
     };
 
     return pipe(
@@ -43,18 +44,18 @@ const Enumerable_pairwise: Pairwise<EnumerableLike>["pairwise"] =
             init(Disposable_delegatingMixin, instance, delegate);
             init(typedMutableEnumeratorMixin, instance);
 
-            instance.delegate = delegate;
+            instance[PairwiseEnumerator_delegate] = delegate;
 
             return instance;
           },
           props<TProperties>({
-            delegate: none,
+            [PairwiseEnumerator_delegate]: none,
           }),
           {
             [SourceLike_move](
               this: TProperties & MutableEnumeratorLike<[T, T]>,
             ) {
-              const { delegate } = this;
+              const { [PairwiseEnumerator_delegate]: delegate } = this;
 
               const prev = Enumerator_hasCurrent(this)
                 ? Enumerator_getCurrent(this)[1]

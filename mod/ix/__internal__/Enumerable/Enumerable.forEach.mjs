@@ -12,16 +12,17 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 
 const Enumerable_forEach = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function forEachEnumerator(instance, delegate, effect) {
+    const ForEachEnumerator_effect = Symbol("ForEachEnumerator_effect");
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function ForEachEnumerator(instance, delegate, effect) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        instance.effect = effect;
+        instance[ForEachEnumerator_effect] = effect;
         return instance;
-    }, props({ effect: none }), {
+    }, props({ [ForEachEnumerator_effect]: none }), {
         [SourceLike_move]() {
             if (DelegatingEnumerator_move(this)) {
                 try {
-                    this.effect(Enumerator_getCurrent(this));
+                    this[ForEachEnumerator_effect](Enumerator_getCurrent(this));
                 }
                 catch (e) {
                     pipe(this, Disposable_dispose(error(e)));

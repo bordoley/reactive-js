@@ -17,10 +17,13 @@ import Queue_push from '../../../util/__internal__/Queue/Queue.push.mjs';
 import { getDelay } from '../Scheduler.options.mjs';
 import Scheduler_getCurrentTime from '../Scheduler/Scheduler.getCurrentTime.mjs';
 
+const VirtualTask_continuation = Symbol("VirtualTask_continuation");
+const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");
+const VirtualTask_id = Symbol("VirtualTask_id");
 const comparator = (a, b) => {
     let diff = 0;
-    diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
-    diff = diff !== 0 ? diff : a.id - b.id;
+    diff = diff !== 0 ? diff : a[VirtualTask_dueTime] - b[VirtualTask_dueTime];
+    diff = diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];
     return diff;
 };
 const typedMutableEnumeratorMixin = 
@@ -60,7 +63,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
     [ContinuationLike_run]() {
         while (Enumerator_move(this)) {
             const task = Enumerator_getCurrent(this);
-            const { dueTime, continuation } = task;
+            const { [VirtualTask_dueTime]: dueTime, [VirtualTask_continuation]: continuation, } = task;
             this[VirtualTimeScheduler_microTaskTicks] = 0;
             this[SchedulerLike_now] = dueTime;
             this[SchedulerLike_inContinuation] = true;
@@ -76,9 +79,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
         if (!Disposable_isDisposed(continuation)) {
             Queue_push(this[VirtualTimeScheduler_taskQueue], {
-                id: this[VirtualTimeScheduler_taskIDCount]++,
-                dueTime: Scheduler_getCurrentTime(this) + delay,
-                continuation,
+                [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
+                [VirtualTask_dueTime]: Scheduler_getCurrentTime(this) + delay,
+                [VirtualTask_continuation]: continuation,
             });
         }
     },

@@ -42,27 +42,49 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
   ) => ObserverLike<TA> = (<TA, TB, T>() => {
     const typedObserverMixin = Observer_mixin<TA>();
 
+    const ZipWithLatestFromObserver_delegate = Symbol(
+      "ZipWithLatestFromObserver_delegate",
+    );
+    const ZipWithLatestFromObserver_hasLatest = Symbol(
+      "ZipWithLatestFromObserver_hasLatest",
+    );
+    const ZipWithLatestFromObserver_otherLatest = Symbol(
+      "ZipWithLatestFromObserver_otherLatest",
+    );
+    const ZipWithLatestFromObserver_queue = Symbol(
+      "ZipWithLatestFromObserver_queue",
+    );
+    const ZipWithLatestFromObserver_selector = Symbol(
+      "ZipWithLatestFromObserver_selector",
+    );
+
     type TProperties = {
-      readonly delegate: ObserverLike<T>;
-      hasLatest: boolean;
-      otherLatest: Optional<TB>;
-      readonly queue: TA[];
-      readonly selector: Function2<TA, TB, T>;
+      readonly [ZipWithLatestFromObserver_delegate]: ObserverLike<T>;
+      [ZipWithLatestFromObserver_hasLatest]: boolean;
+      [ZipWithLatestFromObserver_otherLatest]: Optional<TB>;
+      readonly [ZipWithLatestFromObserver_queue]: TA[];
+      readonly [ZipWithLatestFromObserver_selector]: Function2<TA, TB, T>;
     };
 
     const notifyDelegate = (observer: TProperties & ObserverLike<TA>) => {
-      if (getLength(observer.queue) > 0 && observer.hasLatest) {
-        observer.hasLatest = false;
-        const next = observer.queue.shift() as TA;
-        const result = observer.selector(next, observer.otherLatest as TB);
-        pipe(observer.delegate, notify(result));
+      if (
+        getLength(observer[ZipWithLatestFromObserver_queue]) > 0 &&
+        observer[ZipWithLatestFromObserver_hasLatest]
+      ) {
+        observer[ZipWithLatestFromObserver_hasLatest] = false;
+        const next = observer[ZipWithLatestFromObserver_queue].shift() as TA;
+        const result = observer[ZipWithLatestFromObserver_selector](
+          next,
+          observer[ZipWithLatestFromObserver_otherLatest] as TB,
+        );
+        pipe(observer[ZipWithLatestFromObserver_delegate], notify(result));
       }
     };
 
     return createInstanceFactory(
       mix(
         include(Disposable_mixin, typedObserverMixin),
-        function ZipWithLatestFromObserer(
+        function ZipWithLatestFromObserver(
           instance: Pick<ObserverLike, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -72,9 +94,9 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
           init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, getScheduler(delegate));
 
-          instance.delegate = delegate;
-          instance.queue = [];
-          instance.selector = selector;
+          instance[ZipWithLatestFromObserver_delegate] = delegate;
+          instance[ZipWithLatestFromObserver_queue] = [];
+          instance[ZipWithLatestFromObserver_selector] = selector;
 
           const disposeDelegate = () => {
             if (
@@ -88,12 +110,18 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
           const otherSubscription = pipe(
             other,
             Observable_forEach(otherLatest => {
-              instance.hasLatest = true;
-              instance.otherLatest = otherLatest;
+              instance[ZipWithLatestFromObserver_hasLatest] = true;
+              instance[ZipWithLatestFromObserver_otherLatest] = otherLatest;
               notifyDelegate(instance);
 
-              if (Disposable_isDisposed(instance) && isEmpty(instance.queue)) {
-                pipe(instance.delegate, Disposable_dispose());
+              if (
+                Disposable_isDisposed(instance) &&
+                isEmpty(instance[ZipWithLatestFromObserver_queue])
+              ) {
+                pipe(
+                  instance[ZipWithLatestFromObserver_delegate],
+                  Disposable_dispose(),
+                );
               }
             }),
             Observable_subscribe(getScheduler(delegate)),
@@ -110,15 +138,15 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
           return instance;
         },
         props<TProperties>({
-          delegate: none,
-          hasLatest: false,
-          otherLatest: none,
-          queue: none,
-          selector: none,
+          [ZipWithLatestFromObserver_delegate]: none,
+          [ZipWithLatestFromObserver_hasLatest]: false,
+          [ZipWithLatestFromObserver_otherLatest]: none,
+          [ZipWithLatestFromObserver_queue]: none,
+          [ZipWithLatestFromObserver_selector]: none,
         }),
         {
           [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
-            this.queue.push(next);
+            this[ZipWithLatestFromObserver_queue].push(next);
             notifyDelegate(this);
           },
         },

@@ -11,14 +11,15 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 
 const Enumerable_keep = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
+    const KeepEnumerator_predicate = Symbol("KeepEnumerator_predicate");
     return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function KeepEnumerator(instance, delegate, predicate) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        instance.predicate = predicate;
+        instance[KeepEnumerator_predicate] = predicate;
         return instance;
-    }, props({ predicate: none }), {
+    }, props({ [KeepEnumerator_predicate]: none }), {
         [SourceLike_move]() {
-            const { predicate } = this;
+            const { [KeepEnumerator_predicate]: predicate } = this;
             try {
                 while ((this[DelegatingEnumeratorLike_delegate][SourceLike_move](),
                     this[DelegatingEnumeratorLike_delegate][EnumeratorLike_hasCurrent]) &&

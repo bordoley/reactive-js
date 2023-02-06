@@ -30,9 +30,12 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
   TA,
   TB,
 >() => {
+  const MapAsyncEnumerator_op = Symbol("MapAsyncEnumerator_op");
+  const MapAsyncEnumerator_delegate = Symbol("MapAsyncEnumerator_delegate");
+
   type TProperties = {
-    readonly op: ContainerOperator<ObservableLike, TA, TB>;
-    readonly delegate: AsyncEnumeratorLike<TA>;
+    readonly [MapAsyncEnumerator_op]: ContainerOperator<ObservableLike, TA, TB>;
+    readonly [MapAsyncEnumerator_delegate]: AsyncEnumeratorLike<TA>;
   };
 
   const createMapAsyncEnumerator = createInstanceFactory(
@@ -52,28 +55,36 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
         init(Disposable_delegatingMixin, instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
-        instance.delegate = delegate;
-        instance.op = Observable_map(mapper);
+        instance[MapAsyncEnumerator_delegate] = delegate;
+        instance[MapAsyncEnumerator_op] = Observable_map(mapper);
         return instance;
       },
       props<TProperties>({
-        op: none,
-        delegate: none,
+        [MapAsyncEnumerator_op]: none,
+        [MapAsyncEnumerator_delegate]: none,
       }),
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getObserverCount(this.delegate);
+          return MulticastObservable_getObserverCount(
+            this[MapAsyncEnumerator_delegate],
+          );
         },
         get [MulticastObservableLike_replay]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getReplay(this.delegate);
+          return MulticastObservable_getReplay(
+            this[MapAsyncEnumerator_delegate],
+          );
         },
         [ReactiveContainerLike_sinkInto](
           this: TProperties,
           observer: ObserverLike<TB>,
         ): void {
-          pipe(this.delegate, this.op, ReactiveContainer_sinkInto(observer));
+          pipe(
+            this[MapAsyncEnumerator_delegate],
+            this[MapAsyncEnumerator_op],
+            ReactiveContainer_sinkInto(observer),
+          );
         },
       },
     ),

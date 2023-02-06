@@ -27,9 +27,11 @@ const Enumerable_takeLast: TakeLast<EnumerableLike>["takeLast"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
+    const TakeLastEnumerator_maxCount = Symbol("TakeLastEnumerator_maxCount");
+    const TakeLastEnumerator_isStarted = Symbol("TakeLastEnumerator_isStarted");
     type TProperties = {
-      readonly maxCount: number;
-      isStarted: boolean;
+      readonly [TakeLastEnumerator_maxCount]: number;
+      [TakeLastEnumerator_isStarted]: boolean;
     };
 
     return pipe(
@@ -45,28 +47,31 @@ const Enumerable_takeLast: TakeLast<EnumerableLike>["takeLast"] =
             init(Disposable_mixin, instance);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
-            instance.maxCount = maxCount;
-            instance.isStarted = false;
+            instance[TakeLastEnumerator_maxCount] = maxCount;
+            instance[TakeLastEnumerator_isStarted] = false;
 
             pipe(instance, Disposable_add(delegate));
 
             return instance;
           },
           props<TProperties>({
-            maxCount: 0,
-            isStarted: false,
+            [TakeLastEnumerator_maxCount]: 0,
+            [TakeLastEnumerator_isStarted]: false,
           }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              if (!Disposable_isDisposed(this) && !this.isStarted) {
-                this.isStarted = true;
+              if (
+                !Disposable_isDisposed(this) &&
+                !this[TakeLastEnumerator_isStarted]
+              ) {
+                this[TakeLastEnumerator_isStarted] = true;
 
                 const last: unknown[] = [];
 
                 while (DelegatingEnumerator_move(this)) {
                   last.push(Enumerator_getCurrent(this));
 
-                  if (getLength(last) > this.maxCount) {
+                  if (getLength(last) > this[TakeLastEnumerator_maxCount]) {
                     last.shift();
                   }
                 }

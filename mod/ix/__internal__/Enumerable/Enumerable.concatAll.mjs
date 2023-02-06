@@ -20,18 +20,19 @@ const Enumerable_concatAll =
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const typedDisposableRefMixin = DisposableRef_mixin();
+    const ConcatAllEnumerator_delegate = Symbol("ConcatAllEnumerator_delegate");
     return pipe(createInstanceFactory(mix(include(Disposable_mixin, typedDisposableRefMixin, typedMutableEnumeratorMixin), function ConcatAllEnumerator(instance, delegate) {
         init(Disposable_mixin, instance);
         init(typedDisposableRefMixin, instance, Disposable_disposed);
         init(typedMutableEnumeratorMixin, instance);
-        instance.delegate = delegate;
+        instance[ConcatAllEnumerator_delegate] = delegate;
         pipe(instance, Disposable_add(delegate));
         return instance;
     }, props({
-        delegate: none,
+        [ConcatAllEnumerator_delegate]: none,
     }), {
         [SourceLike_move]() {
-            const { delegate } = this;
+            const { [ConcatAllEnumerator_delegate]: delegate } = this;
             const innerEnumerator = MutableRef_get(this);
             if (Disposable_isDisposed(innerEnumerator) &&
                 Enumerator_move(delegate)) {

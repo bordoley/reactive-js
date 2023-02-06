@@ -35,8 +35,11 @@ const Enumerable_concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
     const typedDisposableRefMixin = DisposableRef_mixin<EnumeratorLike<T>>();
 
+    const ConcatAllEnumerator_delegate = Symbol("ConcatAllEnumerator_delegate");
     type TProperties = {
-      readonly delegate: EnumeratorLike<EnumerableLike<T>>;
+      readonly [ConcatAllEnumerator_delegate]: EnumeratorLike<
+        EnumerableLike<T>
+      >;
     };
 
     return pipe(
@@ -56,14 +59,14 @@ const Enumerable_concatAll: ConcatAll<EnumerableLike>["concatAll"] =
             init(typedDisposableRefMixin, instance, Disposable_disposed);
             init(typedMutableEnumeratorMixin, instance);
 
-            instance.delegate = delegate;
+            instance[ConcatAllEnumerator_delegate] = delegate;
 
             pipe(instance, Disposable_add(delegate));
 
             return instance;
           },
           props<TProperties>({
-            delegate: none,
+            [ConcatAllEnumerator_delegate]: none,
           }),
           {
             [SourceLike_move](
@@ -71,7 +74,7 @@ const Enumerable_concatAll: ConcatAll<EnumerableLike>["concatAll"] =
                 MutableEnumeratorLike<T> &
                 MutableRefLike<EnumeratorLike<T>>,
             ) {
-              const { delegate } = this;
+              const { [ConcatAllEnumerator_delegate]: delegate } = this;
               const innerEnumerator = MutableRef_get(this);
 
               if (

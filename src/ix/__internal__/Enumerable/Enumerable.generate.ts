@@ -25,7 +25,8 @@ const Enumerable_generate: Generate<EnumerableLike>["generate"] =
   /*@__PURE__*/ (<T>() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
 
-    type TProperties = { readonly f: Updater<T> };
+    const GenerateEnumerator_generator = Symbol("GenerateEnumerator_generator");
+    type TProperties = { readonly [GenerateEnumerator_generator]: Updater<T> };
 
     const createGenerateEnumerator = createInstanceFactory(
       mix(
@@ -39,19 +40,19 @@ const Enumerable_generate: Generate<EnumerableLike>["generate"] =
           init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
-          instance.f = f;
+          instance[GenerateEnumerator_generator] = f;
           instance[EnumeratorLike_current] = acc;
 
           return instance;
         },
-        props<TProperties>({ f: none }),
+        props<TProperties>({ [GenerateEnumerator_generator]: none }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
             if (!Disposable_isDisposed(this)) {
               try {
-                this[EnumeratorLike_current] = this.f(
-                  this[EnumeratorLike_current],
-                );
+                this[EnumeratorLike_current] = this[
+                  GenerateEnumerator_generator
+                ](this[EnumeratorLike_current]);
               } catch (e) {
                 pipe(this, Disposable_dispose(error(e)));
               }

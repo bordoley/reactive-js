@@ -12,18 +12,21 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 const Enumerable_takeFirst = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
+    const TakeFirstEnumerator_maxCount = Symbol("TakeFirstEnumerator_maxCount");
+    const TakeFirstEnumerator_count = Symbol("TakeFirstEnumerator_count");
     return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function TakeFirstEnumerator(instance, delegate, maxCount) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        instance.maxCount = maxCount;
+        instance[TakeFirstEnumerator_maxCount] = maxCount;
         return instance;
     }, props({
-        maxCount: 0,
-        count: 0,
+        [TakeFirstEnumerator_maxCount]: 0,
+        [TakeFirstEnumerator_count]: 0,
     }), {
         [SourceLike_move]() {
-            if (this.count < this.maxCount) {
-                this.count++;
+            if (this[TakeFirstEnumerator_count] <
+                this[TakeFirstEnumerator_maxCount]) {
+                this[TakeFirstEnumerator_count]++;
                 DelegatingEnumerator_move(this);
             }
             else {

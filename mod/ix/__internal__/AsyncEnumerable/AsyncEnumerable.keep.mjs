@@ -16,28 +16,29 @@ import DelegatingAsyncEnumerator_mixin from '../DelegatingAsyncEnumerator/Delega
 import AsyncEnumerable_liftT from './AsyncEnumerable.liftT.mjs';
 
 const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
+    const KeepAsyncEnumerator_obs = Symbol("KeepAsyncEnumerator_obs");
     const createKeepAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()), function KeepAsyncEnumerator(instance, delegate, predicate) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
-        instance.obs = pipe(delegate, Observable_forEach(x => {
+        instance[KeepAsyncEnumerator_obs] = pipe(delegate, Observable_forEach(x => {
             if (!predicate(x)) {
                 pipe(delegate, Dispatcher_dispatch(none));
             }
         }), Observable_keep(predicate), Observable_multicast(Dispatcher_getScheduler(delegate)));
         return instance;
     }, props({
-        obs: none,
+        [KeepAsyncEnumerator_obs]: none,
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return MulticastObservable_getObserverCount(this.obs);
+            return MulticastObservable_getObserverCount(this[KeepAsyncEnumerator_obs]);
         },
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
-            return MulticastObservable_getReplay(this.obs);
+            return MulticastObservable_getReplay(this[KeepAsyncEnumerator_obs]);
         },
         [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this.obs, ReactiveContainer_sinkInto(observer));
+            pipe(this[KeepAsyncEnumerator_obs], ReactiveContainer_sinkInto(observer));
         },
     }));
     return pipe(createKeepAsyncEnumerator, StatefulContainer_keep(AsyncEnumerable_liftT));
