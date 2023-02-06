@@ -381,13 +381,14 @@ export const isFalse = (v: boolean): v is false => !v;
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const isFunction = (f: unknown): f is Function =>
-  typeof f === "function";
+  typeof f === "function" || f instanceof Function;
 
 export const isNumber = (n: unknown): n is number => typeof n === "number";
 
 export const isObject = (o: unknown): o is object => typeof o === "object";
 
-export const isString = (s: unknown): s is string => typeof s === "string";
+export const isString = (s: unknown): s is string =>
+  typeof s === "string" || s instanceof String;
 
 /**
  * Returns `true` if `x` is an odd number, otherwise `false`.

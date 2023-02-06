@@ -22,9 +22,9 @@ import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable
 import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import getScheduler from "../Observer/Observer.getScheduler";
+import Observer_getScheduler from "../Observer/Observer.getScheduler";
 import Observer_mixin from "../Observer/Observer.mixin";
-import notify from "../Sink/Sink.notify";
+import Sink_notify from "../Sink/Sink.notify";
 import Observable_forEach from "./Observable.forEach";
 import Observable_isEnumerable from "./Observable.isEnumerable";
 import Observable_isRunnable from "./Observable.isRunnable";
@@ -77,7 +77,7 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
           next,
           observer[ZipWithLatestFromObserver_otherLatest] as TB,
         );
-        pipe(observer[ZipWithLatestFromObserver_delegate], notify(result));
+        pipe(observer[ZipWithLatestFromObserver_delegate], Sink_notify(result));
       }
     };
 
@@ -92,7 +92,7 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
           init(Disposable_mixin, instance);
-          init(typedObserverMixin, instance, getScheduler(delegate));
+          init(typedObserverMixin, instance, Observer_getScheduler(delegate));
 
           instance[ZipWithLatestFromObserver_delegate] = delegate;
           instance[ZipWithLatestFromObserver_queue] = [];
@@ -124,7 +124,7 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
                 );
               }
             }),
-            Observable_subscribe(getScheduler(delegate)),
+            Observable_subscribe(Observer_getScheduler(delegate)),
             Disposable_onComplete(disposeDelegate),
             Disposable_addTo(delegate),
           );

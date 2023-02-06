@@ -82,10 +82,10 @@ const isEmpty = (arr) => getLength(arr) === 0;
 const isEven = (x) => x % 2 === 0;
 const isFalse = (v) => !v;
 // eslint-disable-next-line @typescript-eslint/ban-types
-const isFunction = (f) => typeof f === "function";
+const isFunction = (f) => typeof f === "function" || f instanceof Function;
 const isNumber = (n) => typeof n === "number";
 const isObject = (o) => typeof o === "object";
-const isString = (s) => typeof s === "string";
+const isString = (s) => typeof s === "string" || s instanceof String;
 /**
  * Returns `true` if `x` is an odd number, otherwise `false`.
  */

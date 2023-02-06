@@ -1,4 +1,11 @@
-import { Factory, identity, isSome, none, pipe } from "../../../functions";
+import {
+  Factory,
+  identity,
+  isFunction,
+  isSome,
+  none,
+  pipe,
+} from "../../../functions";
 import { ReactiveContainerLike, SinkLike } from "../../../rx";
 import { DisposableOrTeardown } from "../../../util";
 import Disposable_add from "../../../util/__internal__/Disposable/Disposable.add";
@@ -20,7 +27,7 @@ const ReactiveContainer_onSink = <
     const disposable = f() || none;
     pipe(
       sink,
-      disposable instanceof Function
+      isFunction(disposable)
         ? Disposable_onDisposed(disposable)
         : isSome(disposable)
         ? Disposable_add(disposable)

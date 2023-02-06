@@ -1,6 +1,6 @@
 /// <reference types="./Disposable.mixin.d.ts" />
 import { mix, props } from '../../../__internal__/mixins.mjs';
-import { pipe, none, isSome } from '../../../functions.mjs';
+import { isFunction, pipe, none, isSome } from '../../../functions.mjs';
 import { DisposableLike_error, DisposableLike_isDisposed, DisposableLike_dispose, DisposableLike_add } from '../../../util.mjs';
 import Disposable_dispose from './Disposable.dispose.mjs';
 import Disposable_getError from './Disposable.getError.mjs';
@@ -9,7 +9,7 @@ import Disposable_isDisposed from './Disposable.isDisposed.mjs';
 const Disposable_mixin = /*@__PURE__*/ (() => {
     const doDispose = (instance, disposable) => {
         const error = Disposable_getError(instance);
-        if (disposable instanceof Function) {
+        if (isFunction(disposable)) {
             try {
                 disposable.call(instance, error);
             }
@@ -53,7 +53,7 @@ const Disposable_mixin = /*@__PURE__*/ (() => {
             }
             else if (!disposables.has(disposable)) {
                 disposables.add(disposable);
-                if (!(disposable instanceof Function)) {
+                if (!isFunction(disposable)) {
                     disposable[DisposableLike_add](e => {
                         disposables.delete(disposable);
                         if (isSome(e) && !ignoreChildErrors) {
