@@ -2,6 +2,7 @@
 import './modules/AsyncEnumerable.test.mjs';
 import './modules/Disposable.test.mjs';
 import './modules/Enumerable.test.mjs';
+import './modules/EnumerableObservable.test.mjs';
 import './modules/Flowable.test.mjs';
 import './modules/Iterable.test.mjs';
 import './modules/Observable.test.mjs';
