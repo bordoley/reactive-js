@@ -191,7 +191,7 @@ const toPromiseTests = describe(
 
 const zipTests = describe(
   "zip",
-  zipOperatorTests<RunnableObservableLike>(RunnableObservable),
+  zipOperatorTests(RunnableObservable),
   test(
     "with synchronous and non-synchronous sources",
     pipeLazy(
@@ -241,7 +241,7 @@ testModule(
   "RunnableObservable",
   bufferTests(RunnableObservable),
   catchErrorTests(RunnableObservable),
-  concatTests<RunnableObservableLike>(RunnableObservable),
+  concatTests(RunnableObservable),
   concatAllTests<RunnableObservableLike>(RunnableObservable),
   concatMapTests(RunnableObservable),
   concatWithTests(RunnableObservable),

@@ -5,6 +5,7 @@
 import "./modules/AsyncEnumerable.test";
 import "./modules/Disposable.test";
 import "./modules/Enumerable.test";
+import "./modules/EnumerableObservable.test";
 import "./modules/Flowable.test";
 import "./modules/Iterable.test";
 import "./modules/Observable.test";
