@@ -12,7 +12,7 @@ import {
   sum,
 } from "../../functions";
 import { ObservableLike } from "../../rx";
-import {
+import Observable, {
   combineLatest,
   concat,
   empty,
@@ -439,7 +439,7 @@ const zipWithLatestTests = describe(
         pipe([2, 4, 6, 8], toRunnableObservable({ delay: 1 })),
         (a, b) => a + b,
       ),
-      toReadonlyArray(),
+      Observable.toReadonlyArray(),
       expectArrayEquals([3, 6, 11]),
     ),
   ),

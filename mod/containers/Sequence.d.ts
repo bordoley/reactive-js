@@ -1,5 +1,5 @@
 import { Function1 } from "../functions.js";
-import { SequenceLike, ConcatAll, DistinctUntilChanged, ReadonlyArrayLike, Generate, Keep, Map, Pairwise, Repeat, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip } from "../containers.js";
+import { SequenceLike, ConcatAll, DistinctUntilChanged, ReadonlyArrayLike, Generate, Keep, Map, Pairwise, Repeat, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip, Concat, FromArray } from "../containers.js";
 import { ToEnumerable } from "../ix.js";
 import { ToRunnable } from "../rx.js";
 declare const concat: <T>(fst: SequenceLike<T>, snd: SequenceLike<T>, ...tail: readonly SequenceLike<T>[]) => SequenceLike<T>;
@@ -21,4 +21,5 @@ declare const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"];
 declare const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"];
 declare const toRunnable: ToRunnable<SequenceLike>["toRunnable"];
 declare const zip: Zip<SequenceLike>["zip"];
-export { concat, concatAll, distinctUntilChanged, fromArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };
+declare const Sequence: Concat<SequenceLike> & ConcatAll<SequenceLike> & DistinctUntilChanged<SequenceLike> & FromArray<SequenceLike> & Generate<SequenceLike> & Keep<SequenceLike> & Map<SequenceLike> & Pairwise<SequenceLike> & Repeat<SequenceLike> & Scan<SequenceLike> & SkipFirst<SequenceLike> & TakeFirst<SequenceLike> & TakeLast<SequenceLike> & TakeWhile<SequenceLike> & ToEnumerable<SequenceLike> & ToReadonlyArray<SequenceLike> & ToRunnable<SequenceLike> & Zip<SequenceLike>;
+export { concat, concatAll, Sequence as default, distinctUntilChanged, fromArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };

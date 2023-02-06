@@ -64,5 +64,33 @@ const takeWhile = Runnable_takeWhile;
 const throwIfEmpty = Runnable_throwIfEmpty;
 const toReadonlyArray = Runnable_toReadonlyArray;
 const toRunnable = returns(identity);
+const Runnable = {
+    buffer,
+    catchError,
+    concat,
+    concatAll,
+    decodeWithCharset,
+    defer,
+    distinctUntilChanged,
+    empty,
+    everySatisfy,
+    forEach,
+    fromArray,
+    generate,
+    keep,
+    map,
+    pairwise,
+    reduce,
+    repeat,
+    scan,
+    skipFirst,
+    someSatisfy,
+    takeFirst,
+    takeLast,
+    takeWhile,
+    throwIfEmpty,
+    toReadonlyArray,
+    toRunnable,
+};
 
-export { buffer, catchError, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromArray, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };
+export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromArray, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };

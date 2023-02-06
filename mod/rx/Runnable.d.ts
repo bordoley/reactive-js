@@ -1,5 +1,5 @@
 import { DisposableOrTeardown } from "../util.js";
-import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ReadonlyArrayLike, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray } from "../containers.js";
+import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ReadonlyArrayLike, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, FromArray, Repeat } from "../containers.js";
 import { SideEffect1, Function1, Optional, Factory, Predicate } from "../functions.js";
 import { SinkLike, RunnableLike, ToRunnable } from "../rx.js";
 declare const create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
@@ -34,4 +34,7 @@ declare const takeWhile: TakeWhile<RunnableLike>["takeWhile"];
 declare const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"];
 declare const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"];
 declare const toRunnable: ToRunnable<RunnableLike>["toRunnable"];
-export { buffer, catchError, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromArray, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };
+declare const Runnable: Buffer<RunnableLike> & CatchError<RunnableLike> & Concat<RunnableLike> & ConcatAll<RunnableLike> & DecodeWithCharset<RunnableLike> & Defer<RunnableLike> & DistinctUntilChanged<RunnableLike> & Empty<RunnableLike, {
+    delay: number;
+}> & EverySatisfy<RunnableLike> & ForEach<RunnableLike> & FromArray<RunnableLike> & Generate<RunnableLike> & Keep<RunnableLike> & Map<RunnableLike> & Pairwise<RunnableLike> & Reduce<RunnableLike> & Repeat<RunnableLike> & Scan<RunnableLike> & SkipFirst<RunnableLike> & SomeSatisfy<RunnableLike> & TakeFirst<RunnableLike> & TakeLast<RunnableLike> & TakeWhile<RunnableLike> & ThrowIfEmpty<RunnableLike> & ToReadonlyArray<RunnableLike> & ToRunnable<RunnableLike>;
+export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromArray, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };

@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Variables
+
+- [default](containers_Sequence.md#default)
+
 ### Functions
 
 - [concat](containers_Sequence.md#concat)
@@ -25,6 +29,12 @@
 - [toReadonlyArray](containers_Sequence.md#toreadonlyarray)
 - [toRunnable](containers_Sequence.md#torunnable)
 - [zip](containers_Sequence.md#zip)
+
+## Variables
+
+### default
+
+• `Const` **default**: [`Concat`](containers.md#concat)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`ConcatAll`](containers.md#concatall)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`FromArray`](containers.md#fromarray)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`Generate`](containers.md#generate)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`Keep`](containers.md#keep)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`Map`](containers.md#map)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`Pairwise`](containers.md#pairwise)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`Repeat`](containers.md#repeat)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`Scan`](containers.md#scan)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`SkipFirst`](containers.md#skipfirst)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`TakeFirst`](containers.md#takefirst)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`TakeLast`](containers.md#takelast)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`TakeWhile`](containers.md#takewhile)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`ToEnumerable`](ix.md#toenumerable)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`ToRunnable`](rx.md#torunnable)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\> & [`Zip`](containers.md#zip)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)\>
 
 ## Functions
 

@@ -25,4 +25,5 @@ declare const scanAsync: ScanAsync<AsyncEnumerableLike, ObservableLike>["scanAsy
 declare const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"];
 declare const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"];
 declare const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"];
-export { fromArray, fromEnumerable, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };
+declare const AsyncEnumerable: FromArray<AsyncEnumerableLike> & Generate<AsyncEnumerableLike> & Keep<AsyncEnumerableLike> & Map<AsyncEnumerableLike> & Scan<AsyncEnumerableLike> & ScanAsync<AsyncEnumerableLike, ObservableLike> & TakeWhile<AsyncEnumerableLike> & ToReadonlyArray<AsyncEnumerableLike>;
+export { AsyncEnumerable as default, fromArray, fromEnumerable, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };

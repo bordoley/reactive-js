@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Variables
+
+- [default](rx_Observable.md#default)
+
 ### Functions
 
 - [buffer](rx_Observable.md#buffer)
@@ -65,6 +69,12 @@
 - [zip](rx_Observable.md#zip)
 - [zipLatest](rx_Observable.md#ziplatest)
 - [zipWithLatestFrom](rx_Observable.md#zipwithlatestfrom)
+
+## Variables
+
+### default
+
+• `Const` **default**: [`Buffer`](containers.md#buffer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`CatchError`](containers.md#catcherror)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Concat`](containers.md#concat)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`ConcatAll`](containers.md#concatall)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), { `maxBufferSize?`: `number`  }\> & [`DecodeWithCharset`](containers.md#decodewithcharset)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Defer`](containers.md#defer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Empty`](containers.md#empty)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), { `delay`: `number`  }\> & [`EverySatisfy`](containers.md#everysatisfy)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`ForEach`](containers.md#foreach)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`FromArray`](containers.md#fromarray)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`FromFlowable`](streaming.md#fromflowable)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`FromPromise`](containers.md#frompromise)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Generate`](containers.md#generate)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Keep`](containers.md#keep)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Map`](containers.md#map)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Never`](containers.md#never)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Pairwise`](containers.md#pairwise)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Reduce`](containers.md#reduce)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Repeat`](containers.md#repeat)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Scan`](containers.md#scan)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`ScanAsync`](rx.md#scanasync)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`SkipFirst`](containers.md#skipfirst)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`SomeSatisfy`](containers.md#somesatisfy)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`TakeFirst`](containers.md#takefirst)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`TakeLast`](containers.md#takelast)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`TakeWhile`](containers.md#takewhile)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`ThrowIfEmpty`](containers.md#throwifempty)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`ToEnumerable`](ix.md#toenumerable)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`ToFlowable`](streaming.md#toflowable)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`ToPromiseable`](containers.md#topromiseable)<[`ObservableLike`](../interfaces/rx.ObservableLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> & [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`ToRunnable`](rx.md#torunnable)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`Zip`](containers.md#zip)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)\>
 
 ## Functions
 

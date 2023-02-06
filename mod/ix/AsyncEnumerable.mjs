@@ -32,5 +32,15 @@ const scanAsync = AsyncEnumerable_scanAsync;
 const takeWhile = AsyncEnumerable_takeWhile;
 const toObservable = AsyncEnumerable_toObservable;
 const toReadonlyArray = AsyncEnumerable_toReadonlyArray;
+const AsyncEnumerable = {
+    fromArray,
+    generate,
+    keep,
+    map,
+    scan,
+    scanAsync,
+    takeWhile,
+    toReadonlyArray,
+};
 
-export { fromArray, fromEnumerable, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };
+export { AsyncEnumerable as default, fromArray, fromEnumerable, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };

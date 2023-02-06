@@ -55,5 +55,29 @@ const toReadonlyArray = Enumerable_toReadonlyArray;
 const toRunnable = Enumerable_toRunnable;
 const toRunnableObservable = Enumerable_toRunnableObservable;
 const zip = Enumerable_zip;
+const Enumerable = {
+    buffer,
+    concat,
+    concatAll,
+    distinctUntilChanged,
+    empty,
+    forEach,
+    fromArray,
+    generate,
+    keep,
+    map,
+    pairwise,
+    repeat,
+    scan,
+    skipFirst,
+    takeFirst,
+    takeLast,
+    takeWhile,
+    throwIfEmpty,
+    toEnumerable,
+    toReadonlyArray,
+    toRunnable,
+    zip,
+};
 
-export { buffer, concat, concatAll, distinctUntilChanged, empty, enumerate, forEach, fromArray, fromIterable, generate, keep, map, pairwise, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };
+export { buffer, concat, concatAll, Enumerable as default, distinctUntilChanged, empty, enumerate, forEach, fromArray, fromIterable, generate, keep, map, pairwise, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

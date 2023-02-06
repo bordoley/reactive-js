@@ -165,5 +165,41 @@ const zip = Observable_zip;
  */
 const zipLatest = Observable_zipLatest;
 const zipWithLatestFrom = Observable_zipWithLatestFrom;
+const Observable = {
+    buffer,
+    catchError,
+    concat,
+    concatAll,
+    decodeWithCharset,
+    defer,
+    distinctUntilChanged,
+    empty,
+    everySatisfy,
+    forEach,
+    fromArray,
+    fromFlowable,
+    fromPromise,
+    generate,
+    keep,
+    map,
+    never,
+    pairwise,
+    reduce,
+    repeat,
+    scan,
+    scanAsync,
+    skipFirst,
+    someSatisfy,
+    takeFirst,
+    takeLast,
+    takeWhile,
+    throwIfEmpty,
+    toEnumerable,
+    toFlowable,
+    toPromise,
+    toReadonlyArray,
+    toRunnable,
+    zip,
+};
 
-export { buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

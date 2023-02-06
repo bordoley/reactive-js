@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Variables
+
+- [default](ix_AsyncEnumerable.md#default)
+
 ### Functions
 
 - [fromArray](ix_AsyncEnumerable.md#fromarray)
@@ -16,6 +20,12 @@
 - [takeWhile](ix_AsyncEnumerable.md#takewhile)
 - [toObservable](ix_AsyncEnumerable.md#toobservable)
 - [toReadonlyArray](ix_AsyncEnumerable.md#toreadonlyarray)
+
+## Variables
+
+### default
+
+• `Const` **default**: [`FromArray`](containers.md#fromarray)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\> & [`Generate`](containers.md#generate)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\> & [`Keep`](containers.md#keep)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\> & [`Map`](containers.md#map)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\> & [`Scan`](containers.md#scan)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\> & [`ScanAsync`](rx.md#scanasync)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)\> & [`TakeWhile`](containers.md#takewhile)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\> & [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)\>
 
 ## Functions
 
