@@ -21,10 +21,8 @@ const VirtualTask_continuation = Symbol("VirtualTask_continuation");
 const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");
 const VirtualTask_id = Symbol("VirtualTask_id");
 const comparator = (a, b) => {
-    let diff = 0;
-    diff = diff !== 0 ? diff : a[VirtualTask_dueTime] - b[VirtualTask_dueTime];
-    diff = diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];
-    return diff;
+    const diff = a[VirtualTask_dueTime] - b[VirtualTask_dueTime];
+    return diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];
 };
 const typedMutableEnumeratorMixin = 
 /*@__PURE__*/ MutableEnumerator_mixin();
