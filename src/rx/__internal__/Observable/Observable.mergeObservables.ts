@@ -12,19 +12,22 @@ import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
 import Observable_allAreRunnable from "./Observable.allAreRunnable";
 
 const Observable_mergeObservables = /*@__PURE__*/ (() => {
+  const MergeObserverCtx_completedCount = Symbol(
+    "MergeObserverCtx_completedCount",
+  );
   const createMergeObserver = <T>(
     delegate: ObserverLike<T>,
     count: number,
     ctx: {
-      completedCount: number;
+      [MergeObserverCtx_completedCount]: number;
     },
   ) =>
     pipe(
       Observer_createWithDelegate(delegate),
       Disposable_addTo(delegate),
       Disposable_onComplete(() => {
-        ctx.completedCount++;
-        if (ctx.completedCount >= count) {
+        ctx[MergeObserverCtx_completedCount]++;
+        if (ctx[MergeObserverCtx_completedCount] >= count) {
           pipe(delegate, Disposable_dispose());
         }
       }),
@@ -33,7 +36,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
   return <T>(observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
     const onSink = (observer: ObserverLike<T>) => {
       const count = getLength(observables);
-      const ctx = { completedCount: 0 };
+      const ctx = { [MergeObserverCtx_completedCount]: 0 };
 
       for (const observable of observables) {
         pipe(
