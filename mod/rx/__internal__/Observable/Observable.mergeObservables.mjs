@@ -12,16 +12,17 @@ import Observable_allAreEnumerable from './Observable.allAreEnumerable.mjs';
 import Observable_allAreRunnable from './Observable.allAreRunnable.mjs';
 
 const Observable_mergeObservables = /*@__PURE__*/ (() => {
+    const MergeObserverCtx_completedCount = Symbol("MergeObserverCtx_completedCount");
     const createMergeObserver = (delegate, count, ctx) => pipe(Observer_createWithDelegate(delegate), Disposable_addTo(delegate), Disposable_onComplete(() => {
-        ctx.completedCount++;
-        if (ctx.completedCount >= count) {
+        ctx[MergeObserverCtx_completedCount]++;
+        if (ctx[MergeObserverCtx_completedCount] >= count) {
             pipe(delegate, Disposable_dispose());
         }
     }));
     return (observables) => {
         const onSink = (observer) => {
             const count = getLength(observables);
-            const ctx = { completedCount: 0 };
+            const ctx = { [MergeObserverCtx_completedCount]: 0 };
             for (const observable of observables) {
                 pipe(createMergeObserver(observer, count, ctx), Sink_sourceFrom(observable));
             }
