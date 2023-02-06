@@ -1,5 +1,5 @@
 import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins";
-import { Optional, isSome, none, pipe } from "../../../functions";
+import { Optional, isFunction, isSome, none, pipe } from "../../../functions";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -18,7 +18,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
     disposable: DisposableOrTeardown,
   ) => {
     const error = getError(instance);
-    if (disposable instanceof Function) {
+    if (isFunction(disposable)) {
       try {
         disposable.call(instance, error);
       } catch (_) {
@@ -87,7 +87,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ (() => {
         } else if (!disposables.has(disposable)) {
           disposables.add(disposable);
 
-          if (!(disposable instanceof Function)) {
+          if (!isFunction(disposable)) {
             disposable[DisposableLike_add](e => {
               disposables.delete(disposable);
 

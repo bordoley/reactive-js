@@ -29,6 +29,7 @@ import {
   Factory,
   Optional,
   ignore,
+  isFunction,
   isSome,
   none,
   pipe,
@@ -81,10 +82,9 @@ export const useObservable = <T>(
   useEffect(() => {
     const { scheduler: schedulerOption } = options;
 
-    const scheduler =
-      isSome(schedulerOption) && schedulerOption instanceof Function
-        ? schedulerOption()
-        : schedulerOption ?? createReactNormalPriorityScheduler();
+    const scheduler = isFunction(schedulerOption)
+      ? schedulerOption()
+      : schedulerOption ?? createReactNormalPriorityScheduler();
 
     const subscription = pipe(
       observable,

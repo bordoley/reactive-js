@@ -2,7 +2,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { unstable_now, unstable_shouldYield, unstable_requestPaint, unstable_scheduleCallback, unstable_cancelCallback, unstable_IdlePriority, unstable_ImmediatePriority, unstable_NormalPriority, unstable_LowPriority, unstable_UserBlockingPriority } from 'scheduler';
 import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
-import { none, isSome, pipe, pipeLazy, ignore, raiseError, unsafeCast } from '../functions.mjs';
+import { none, isFunction, pipe, pipeLazy, ignore, isSome, raiseError, unsafeCast } from '../functions.mjs';
 import { forEach, subscribe, distinctUntilChanged } from '../rx/Observable.mjs';
 import { create, publish } from '../rx/Subject.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../scheduling.mjs';
@@ -25,7 +25,7 @@ const useObservable = (observable, options = {}) => {
     const [error, updateError] = useState(none);
     useEffect(() => {
         const { scheduler: schedulerOption } = options;
-        const scheduler = isSome(schedulerOption) && schedulerOption instanceof Function
+        const scheduler = isFunction(schedulerOption)
             ? schedulerOption()
             : schedulerOption !== null && schedulerOption !== void 0 ? schedulerOption : createReactNormalPriorityScheduler();
         const subscription = pipe(observable, forEach(v => updateState(_ => v)), subscribe(scheduler), onError(updateError));
