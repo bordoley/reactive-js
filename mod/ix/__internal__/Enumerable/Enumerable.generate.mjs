@@ -11,17 +11,18 @@ import Enumerable_create from './Enumerable.create.mjs';
 const Enumerable_generate = 
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    const GenerateEnumerator_generator = Symbol("GenerateEnumerator_generator");
     const createGenerateEnumerator = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function GenerateEnumerator(instance, f, acc) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        instance.f = f;
+        instance[GenerateEnumerator_generator] = f;
         instance[EnumeratorLike_current] = acc;
         return instance;
-    }, props({ f: none }), {
+    }, props({ [GenerateEnumerator_generator]: none }), {
         [SourceLike_move]() {
             if (!Disposable_isDisposed(this)) {
                 try {
-                    this[EnumeratorLike_current] = this.f(this[EnumeratorLike_current]);
+                    this[EnumeratorLike_current] = this[GenerateEnumerator_generator](this[EnumeratorLike_current]);
                 }
                 catch (e) {
                     pipe(this, Disposable_dispose(error(e)));

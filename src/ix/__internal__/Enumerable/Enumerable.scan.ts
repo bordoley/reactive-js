@@ -29,9 +29,12 @@ const Enumerable_scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
 >() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<TAcc>();
 
+  const ScanEnumerator_reducer = Symbol("ScanEnumerator_reducer");
+  const ScanEnumerator_delegate = Symbol("ScanEnumerator_delegate");
+
   type TProperties = {
-    readonly reducer: Reducer<T, TAcc>;
-    readonly delegate: EnumeratorLike<T>;
+    readonly [ScanEnumerator_reducer]: Reducer<T, TAcc>;
+    readonly [ScanEnumerator_delegate]: EnumeratorLike<T>;
   };
 
   return pipe(
@@ -48,8 +51,8 @@ const Enumerable_scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
           init(Disposable_delegatingMixin, instance, delegate);
           init(typedMutableEnumeratorMixin, instance);
 
-          instance.delegate = delegate;
-          instance.reducer = reducer;
+          instance[ScanEnumerator_delegate] = delegate;
+          instance[ScanEnumerator_reducer] = reducer;
 
           try {
             const acc = initialValue();
@@ -60,14 +63,20 @@ const Enumerable_scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
 
           return instance;
         },
-        props<TProperties>({ reducer: none, delegate: none }),
+        props<TProperties>({
+          [ScanEnumerator_reducer]: none,
+          [ScanEnumerator_delegate]: none,
+        }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<TAcc>) {
             const acc = this[EnumeratorLike_hasCurrent]
               ? this[EnumeratorLike_current]
               : none;
 
-            const { delegate, reducer } = this;
+            const {
+              [ScanEnumerator_delegate]: delegate,
+              [ScanEnumerator_reducer]: reducer,
+            } = this;
             if (acc === none) {
               return;
             }

@@ -30,9 +30,16 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
+  const ScanAsyncEnumerator_op = Symbol("ScanAsyncEnumerator_op");
+  const ScanAsyncEnumerator_delegate = Symbol("ScanAsyncEnumerator_delegate");
+
   type TProperties = {
-    readonly op: ContainerOperator<ObservableLike, T, TAcc>;
-    readonly delegate: AsyncEnumeratorLike<T>;
+    readonly [ScanAsyncEnumerator_op]: ContainerOperator<
+      ObservableLike,
+      T,
+      TAcc
+    >;
+    readonly [ScanAsyncEnumerator_delegate]: AsyncEnumeratorLike<T>;
   };
 
   const createScanAsyncEnumerator = createInstanceFactory(
@@ -53,28 +60,36 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
         init(Disposable_delegatingMixin, instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
-        instance.delegate = delegate;
-        instance.op = Observable_scan(reducer, acc);
+        instance[ScanAsyncEnumerator_delegate] = delegate;
+        instance[ScanAsyncEnumerator_op] = Observable_scan(reducer, acc);
         return instance;
       },
       props<TProperties>({
-        op: none,
-        delegate: none,
+        [ScanAsyncEnumerator_op]: none,
+        [ScanAsyncEnumerator_delegate]: none,
       }),
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getObserverCount(this.delegate);
+          return MulticastObservable_getObserverCount(
+            this[ScanAsyncEnumerator_delegate],
+          );
         },
         get [MulticastObservableLike_replay]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getReplay(this.delegate);
+          return MulticastObservable_getReplay(
+            this[ScanAsyncEnumerator_delegate],
+          );
         },
         [ReactiveContainerLike_sinkInto](
           this: TProperties,
           observer: ObserverLike<TAcc>,
         ): void {
-          pipe(this.delegate, this.op, ReactiveContainer_sinkInto(observer));
+          pipe(
+            this[ScanAsyncEnumerator_delegate],
+            this[ScanAsyncEnumerator_op],
+            ReactiveContainer_sinkInto(observer),
+          );
         },
       },
     ),

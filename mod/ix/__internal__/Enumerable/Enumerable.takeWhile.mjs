@@ -14,20 +14,24 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 const Enumerable_takeWhile = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
+    const TakeWhileEnumerator_predicate = Symbol("TakeWhileEnumerator_predicate");
+    const TakeWhileEnumerator_inclusive = Symbol("TakeWhileEnumerator_inclusive");
+    const TakeWhileEnumerator_done = Symbol("TakeWhileEnumerator_done");
     return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function TakeWhileEnumerator(instance, delegate, predicate, inclusive) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        instance.predicate = predicate;
-        instance.inclusive = inclusive;
+        instance[TakeWhileEnumerator_predicate] = predicate;
+        instance[TakeWhileEnumerator_inclusive] = inclusive;
         return instance;
     }, props({
-        predicate: none,
-        inclusive: false,
-        done: false,
+        [TakeWhileEnumerator_predicate]: none,
+        [TakeWhileEnumerator_inclusive]: false,
+        [TakeWhileEnumerator_done]: false,
     }), {
         [SourceLike_move]() {
-            const { inclusive, predicate } = this;
-            if (this.done && !Disposable_isDisposed(this)) {
+            const { [TakeWhileEnumerator_inclusive]: inclusive, [TakeWhileEnumerator_predicate]: predicate, } = this;
+            if (this[TakeWhileEnumerator_done] &&
+                !Disposable_isDisposed(this)) {
                 pipe(this, Disposable_dispose());
             }
             else if (DelegatingEnumerator_move(this)) {
@@ -35,7 +39,7 @@ const Enumerable_takeWhile =
                 try {
                     const satisfiesPredicate = predicate(current);
                     if (!satisfiesPredicate && inclusive) {
-                        this.done = true;
+                        this[TakeWhileEnumerator_done] = true;
                     }
                     else if (!satisfiesPredicate) {
                         pipe(this, Disposable_dispose());

@@ -42,8 +42,9 @@ const Enumerable_zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const typedMutableEnumeratorMixin =
     MutableEnumerator_mixin<readonly unknown[]>();
 
+  const ZipEnumerator_enumerators = Symbol("ZipEnumerator_enumerators");
   type TProperties = {
-    readonly enumerators: readonly EnumeratorLike[];
+    readonly [ZipEnumerator_enumerators]: readonly EnumeratorLike[];
   };
 
   const createZipEnumerator = createInstanceFactory(
@@ -60,19 +61,19 @@ const Enumerable_zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
 
-        instance.enumerators = enumerators;
+        instance[ZipEnumerator_enumerators] = enumerators;
 
         return instance;
       },
       props<TProperties>({
-        enumerators: none,
+        [ZipEnumerator_enumerators]: none,
       }),
       {
         [SourceLike_move](
           this: TProperties & MutableEnumeratorLike<readonly unknown[]>,
         ) {
           if (!Disposable_isDisposed(this)) {
-            const { enumerators } = this;
+            const { [ZipEnumerator_enumerators]: enumerators } = this;
             moveAll(enumerators);
 
             if (allHaveCurrent(enumerators)) {

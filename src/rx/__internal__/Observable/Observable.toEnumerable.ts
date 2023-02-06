@@ -45,9 +45,12 @@ const Observable_toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
     const typedObserverMixin = Observer_mixin<T>();
 
+    const EnumeratorScheduler_continuations = Symbol(
+      "EnumeratorScheduler_continuations",
+    );
     type TEnumeratorSchedulerProperties = {
       [SchedulerLike_inContinuation]: boolean;
-      readonly continuations: ContinuationLike[];
+      readonly [EnumeratorScheduler_continuations]: ContinuationLike[];
     };
 
     type EnumeratorScheduler = SchedulerLike & MutableEnumeratorLike<T>;
@@ -69,13 +72,13 @@ const Observable_toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
           init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
 
-          instance.continuations = [];
+          instance[EnumeratorScheduler_continuations] = [];
 
           return instance;
         },
         props<TEnumeratorSchedulerProperties>({
           [SchedulerLike_inContinuation]: false,
-          continuations: none,
+          [EnumeratorScheduler_continuations]: none,
         }),
         {
           [SchedulerLike_now]: 0,
@@ -90,7 +93,8 @@ const Observable_toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
             this: TEnumeratorSchedulerProperties & MutableEnumeratorLike<T>,
           ) {
             if (!Disposable_isDisposed(this)) {
-              const { continuations } = this;
+              const { [EnumeratorScheduler_continuations]: continuations } =
+                this;
 
               const continuation = continuations.shift();
               if (isSome(continuation)) {
@@ -110,7 +114,7 @@ const Observable_toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
             pipe(this, Disposable_add(continuation));
 
             if (!Disposable_isDisposed(continuation)) {
-              this.continuations.push(continuation);
+              this[EnumeratorScheduler_continuations].push(continuation);
             }
           },
         },

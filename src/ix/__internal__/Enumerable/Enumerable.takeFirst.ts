@@ -22,9 +22,11 @@ const Enumerable_takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
+    const TakeFirstEnumerator_maxCount = Symbol("TakeFirstEnumerator_maxCount");
+    const TakeFirstEnumerator_count = Symbol("TakeFirstEnumerator_count");
     type TProperties = {
-      readonly maxCount: number;
-      count: number;
+      readonly [TakeFirstEnumerator_maxCount]: number;
+      [TakeFirstEnumerator_count]: number;
     };
 
     return pipe(
@@ -40,18 +42,21 @@ const Enumerable_takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
             init(Disposable_delegatingMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
-            instance.maxCount = maxCount;
+            instance[TakeFirstEnumerator_maxCount] = maxCount;
 
             return instance;
           },
           props<TProperties>({
-            maxCount: 0,
-            count: 0,
+            [TakeFirstEnumerator_maxCount]: 0,
+            [TakeFirstEnumerator_count]: 0,
           }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              if (this.count < this.maxCount) {
-                this.count++;
+              if (
+                this[TakeFirstEnumerator_count] <
+                this[TakeFirstEnumerator_maxCount]
+              ) {
+                this[TakeFirstEnumerator_count]++;
                 DelegatingEnumerator_move(this);
               } else {
                 pipe(this, Disposable_dispose());

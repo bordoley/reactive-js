@@ -24,17 +24,18 @@ const Enumerable_zip = /*@__PURE__*/ (() => {
     };
     const allHaveCurrent = (enumerators) => pipe(enumerators, ReadonlyArray_every(Enumerator_hasCurrent));
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    const ZipEnumerator_enumerators = Symbol("ZipEnumerator_enumerators");
     const createZipEnumerator = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function ZipEnumerator(instance, enumerators) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        instance.enumerators = enumerators;
+        instance[ZipEnumerator_enumerators] = enumerators;
         return instance;
     }, props({
-        enumerators: none,
+        [ZipEnumerator_enumerators]: none,
     }), {
         [SourceLike_move]() {
             if (!Disposable_isDisposed(this)) {
-                const { enumerators } = this;
+                const { [ZipEnumerator_enumerators]: enumerators } = this;
                 moveAll(enumerators);
                 if (allHaveCurrent(enumerators)) {
                     this[EnumeratorLike_current] = pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent));

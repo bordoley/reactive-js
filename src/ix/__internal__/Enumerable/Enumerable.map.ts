@@ -29,9 +29,12 @@ const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
 >() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<TB>();
 
+  const MapEnumerator_mapper = Symbol("MapEnumerator_mapper");
+  const MapEnumerator_delegate = Symbol("MapEnumerator_delegate");
+
   type TProperties = {
-    readonly mapper: Function1<TA, TB>;
-    readonly delegate: EnumeratorLike<TA>;
+    readonly [MapEnumerator_mapper]: Function1<TA, TB>;
+    readonly [MapEnumerator_delegate]: EnumeratorLike<TA>;
   };
 
   return pipe(
@@ -47,18 +50,18 @@ const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
           init(Disposable_delegatingMixin, instance, delegate);
           init(typedMutableEnumeratorMixin, instance);
 
-          instance.delegate = delegate;
-          instance.mapper = mapper;
+          instance[MapEnumerator_delegate] = delegate;
+          instance[MapEnumerator_mapper] = mapper;
 
           return instance;
         },
         props<TProperties>({
-          mapper: none,
-          delegate: none,
+          [MapEnumerator_mapper]: none,
+          [MapEnumerator_delegate]: none,
         }),
         {
           [SourceLike_move](this: TProperties & MutableEnumeratorLike<TB>) {
-            const { delegate } = this;
+            const { [MapEnumerator_delegate]: delegate } = this;
 
             delegate[SourceLike_move]();
 
@@ -67,7 +70,7 @@ const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
             }
 
             try {
-              this[EnumeratorLike_current] = this.mapper(
+              this[EnumeratorLike_current] = this[MapEnumerator_mapper](
                 delegate[EnumeratorLike_current],
               );
             } catch (e) {

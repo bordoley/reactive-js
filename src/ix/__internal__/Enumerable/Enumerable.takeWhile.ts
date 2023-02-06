@@ -24,10 +24,18 @@ const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
+    const TakeWhileEnumerator_predicate = Symbol(
+      "TakeWhileEnumerator_predicate",
+    );
+    const TakeWhileEnumerator_inclusive = Symbol(
+      "TakeWhileEnumerator_inclusive",
+    );
+    const TakeWhileEnumerator_done = Symbol("TakeWhileEnumerator_done");
+
     type TProperties = {
-      readonly predicate: Predicate<T>;
-      readonly inclusive: boolean;
-      done: boolean;
+      readonly [TakeWhileEnumerator_predicate]: Predicate<T>;
+      readonly [TakeWhileEnumerator_inclusive]: boolean;
+      [TakeWhileEnumerator_done]: boolean;
     };
 
     return pipe(
@@ -44,21 +52,27 @@ const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
             init(Disposable_delegatingMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
-            instance.predicate = predicate;
-            instance.inclusive = inclusive;
+            instance[TakeWhileEnumerator_predicate] = predicate;
+            instance[TakeWhileEnumerator_inclusive] = inclusive;
 
             return instance;
           },
           props<TProperties>({
-            predicate: none,
-            inclusive: false,
-            done: false,
+            [TakeWhileEnumerator_predicate]: none,
+            [TakeWhileEnumerator_inclusive]: false,
+            [TakeWhileEnumerator_done]: false,
           }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              const { inclusive, predicate } = this;
+              const {
+                [TakeWhileEnumerator_inclusive]: inclusive,
+                [TakeWhileEnumerator_predicate]: predicate,
+              } = this;
 
-              if (this.done && !Disposable_isDisposed(this)) {
+              if (
+                this[TakeWhileEnumerator_done] &&
+                !Disposable_isDisposed(this)
+              ) {
                 pipe(this, Disposable_dispose());
               } else if (DelegatingEnumerator_move(this)) {
                 const current = getCurrent(this);
@@ -67,7 +81,7 @@ const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
                   const satisfiesPredicate = predicate(current);
 
                   if (!satisfiesPredicate && inclusive) {
-                    this.done = true;
+                    this[TakeWhileEnumerator_done] = true;
                   } else if (!satisfiesPredicate) {
                     pipe(this, Disposable_dispose());
                   }

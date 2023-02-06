@@ -24,15 +24,19 @@ const Enumerable_distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["dis
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
+    const DistinctUntilChangedEnumerator_equality = Symbol(
+      "DistinctUntilChangedEnumerator_equality",
+    );
+
     type TProperties = {
-      readonly equality: Equality<T>;
+      readonly [DistinctUntilChangedEnumerator_equality]: Equality<T>;
     };
 
     return pipe(
       createInstanceFactory(
         mix(
           include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
-          function DistinctUntilChanged(
+          function DistinctUntilChangedEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               Mutable<TProperties>,
             delegate: EnumeratorLike<T>,
@@ -41,11 +45,13 @@ const Enumerable_distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["dis
             init(Disposable_delegatingMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
-            instance.equality = equality;
+            instance[DistinctUntilChangedEnumerator_equality] = equality;
 
             return instance;
           },
-          props<TProperties>({ equality: none }),
+          props<TProperties>({
+            [DistinctUntilChangedEnumerator_equality]: none,
+          }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               const hadCurrent = Enumerator_hasCurrent(this);
@@ -57,7 +63,7 @@ const Enumerable_distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["dis
                 while (DelegatingEnumerator_move(this)) {
                   if (
                     !hadCurrent ||
-                    !this.equality(
+                    !this[DistinctUntilChangedEnumerator_equality](
                       prevCurrent as T,
                       Enumerator_getCurrent(this),
                     )

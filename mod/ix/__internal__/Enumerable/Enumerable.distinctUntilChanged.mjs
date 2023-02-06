@@ -14,12 +14,15 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 const Enumerable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function DistinctUntilChanged(instance, delegate, equality) {
+    const DistinctUntilChangedEnumerator_equality = Symbol("DistinctUntilChangedEnumerator_equality");
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function DistinctUntilChangedEnumerator(instance, delegate, equality) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        instance.equality = equality;
+        instance[DistinctUntilChangedEnumerator_equality] = equality;
         return instance;
-    }, props({ equality: none }), {
+    }, props({
+        [DistinctUntilChangedEnumerator_equality]: none,
+    }), {
         [SourceLike_move]() {
             const hadCurrent = Enumerator_hasCurrent(this);
             const prevCurrent = hadCurrent
@@ -28,7 +31,7 @@ const Enumerable_distinctUntilChanged =
             try {
                 while (DelegatingEnumerator_move(this)) {
                     if (!hadCurrent ||
-                        !this.equality(prevCurrent, Enumerator_getCurrent(this))) {
+                        !this[DistinctUntilChangedEnumerator_equality](prevCurrent, Enumerator_getCurrent(this))) {
                         break;
                     }
                 }

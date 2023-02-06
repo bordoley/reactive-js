@@ -17,53 +17,62 @@ import Sink_notifySink from '../Sink/Sink.notifySink.mjs';
 const HigherOrderObservable_mergeAll = (lift) => {
     const createMergeAllObserver = (() => {
         const typedObserverMixin = Observer_mixin();
+        const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
+        const MergeAllObserver_delegate = Symbol("MergeAllObserver_delegate");
+        const MergeAllObserver_maxBufferSize = Symbol("MergeAllObserver_maxBufferSize");
+        const MergeAllObserver_maxConcurrency = Symbol("MergeAllObserver_maxConcurrency");
+        const MergeAllObserver_onDispose = Symbol("MergeAllObserver_onDispose");
+        const MergeAllObserver_queue = Symbol("MergeAllObserver_queue");
         const subscribeNext = (observer) => {
-            if (observer.activeCount < observer.maxConcurrency) {
-                const nextObs = observer.queue.shift();
+            if (observer[MergeAllObserver_activeCount] <
+                observer[MergeAllObserver_maxConcurrency]) {
+                const nextObs = observer[MergeAllObserver_queue].shift();
                 if (isSome(nextObs)) {
-                    observer.activeCount++;
-                    pipe(nextObs, Observable_forEach(Sink_notifySink(observer.delegate)), Observable_subscribe(Observer_getScheduler(observer)), Disposable_addTo(observer.delegate), Disposable_onComplete(observer.onDispose));
+                    observer[MergeAllObserver_activeCount]++;
+                    pipe(nextObs, Observable_forEach(Sink_notifySink(observer[MergeAllObserver_delegate])), Observable_subscribe(Observer_getScheduler(observer)), Disposable_addTo(observer[MergeAllObserver_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
                 }
                 else if (Disposable_isDisposed(observer)) {
-                    pipe(observer.delegate, Disposable_dispose());
+                    pipe(observer[MergeAllObserver_delegate], Disposable_dispose());
                 }
             }
         };
-        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function Observer(instance, delegate, maxBufferSize, maxConcurrency) {
+        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function MergeAllObserver(instance, delegate, maxBufferSize, maxConcurrency) {
             init(Disposable_mixin, instance);
             init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-            instance.delegate = delegate;
-            instance.maxBufferSize = maxBufferSize;
-            instance.maxConcurrency = maxConcurrency;
-            instance.activeCount = 0;
-            instance.onDispose = () => {
-                instance.activeCount--;
+            instance[MergeAllObserver_delegate] = delegate;
+            instance[MergeAllObserver_maxBufferSize] = maxBufferSize;
+            instance[MergeAllObserver_maxConcurrency] = maxConcurrency;
+            instance[MergeAllObserver_activeCount] = 0;
+            instance[MergeAllObserver_onDispose] = () => {
+                instance[MergeAllObserver_activeCount]--;
                 subscribeNext(instance);
             };
-            instance.queue = [];
+            instance[MergeAllObserver_queue] = [];
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
                 if (Disposable_isDisposed(delegate)) {
-                    instance.queue.length = 0;
+                    instance[MergeAllObserver_queue].length = 0;
                 }
-                else if (getLength(instance.queue) + instance.activeCount ===
+                else if (getLength(instance[MergeAllObserver_queue]) +
+                    instance[MergeAllObserver_activeCount] ===
                     0) {
-                    pipe(instance.delegate, Disposable_dispose());
+                    pipe(instance[MergeAllObserver_delegate], Disposable_dispose());
                 }
             }));
             return instance;
         }, props({
-            activeCount: 0,
-            delegate: none,
-            maxBufferSize: 0,
-            maxConcurrency: 0,
-            onDispose: none,
-            queue: none,
+            [MergeAllObserver_activeCount]: 0,
+            [MergeAllObserver_delegate]: none,
+            [MergeAllObserver_maxBufferSize]: 0,
+            [MergeAllObserver_maxConcurrency]: 0,
+            [MergeAllObserver_onDispose]: none,
+            [MergeAllObserver_queue]: none,
         }), {
             [SinkLike_notify](next) {
-                const { queue } = this;
+                const { [MergeAllObserver_queue]: queue } = this;
                 queue.push(next);
                 // Drop old events if the maxBufferSize has been exceeded
-                if (getLength(queue) + this.activeCount > this.maxBufferSize) {
+                if (getLength(queue) + this[MergeAllObserver_activeCount] >
+                    this[MergeAllObserver_maxBufferSize]) {
                     queue.shift();
                 }
                 subscribeNext(this);

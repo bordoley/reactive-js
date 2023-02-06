@@ -33,11 +33,24 @@ const Observable_withLatestFrom: <TA, TB, T>(
   ) => ObserverLike<TA> = (<TA, TB, T>() => {
     const typedObserverMixin = Observer_mixin<TA>();
 
+    const WithLatestFromObserver_delegate = Symbol(
+      "WithLatestFromObserver_delegate",
+    );
+    const WithLatestFromObserver_hasLatest = Symbol(
+      "WithLatestFromObserver_hasLatest",
+    );
+    const WithLatestFromObserver_otherLatest = Symbol(
+      "WithLatestFromObserver_otherLatest",
+    );
+    const WithLatestFromObserver_selector = Symbol(
+      "WithLatestFromObserver_selector",
+    );
+
     type TProperties = {
-      readonly delegate: ObserverLike<T>;
-      hasLatest: boolean;
-      otherLatest: Optional<TB>;
-      readonly selector: Function2<TA, TB, T>;
+      readonly [WithLatestFromObserver_delegate]: ObserverLike<T>;
+      [WithLatestFromObserver_hasLatest]: boolean;
+      [WithLatestFromObserver_otherLatest]: Optional<TB>;
+      readonly [WithLatestFromObserver_selector]: Function2<TA, TB, T>;
     };
 
     return createInstanceFactory(
@@ -53,19 +66,19 @@ const Observable_withLatestFrom: <TA, TB, T>(
           init(Disposable_delegatingMixin, instance, delegate);
           init(typedObserverMixin, instance, Observer_getScheduler(delegate));
 
-          instance.delegate = delegate;
-          instance.selector = selector;
+          instance[WithLatestFromObserver_delegate] = delegate;
+          instance[WithLatestFromObserver_selector] = selector;
 
           pipe(
             other,
             Observable_forEach(next => {
-              instance.hasLatest = true;
-              instance.otherLatest = next;
+              instance[WithLatestFromObserver_hasLatest] = true;
+              instance[WithLatestFromObserver_otherLatest] = next;
             }),
             Observable_subscribe(Observer_getScheduler(delegate)),
             Disposable_addTo(instance),
             Disposable_onComplete(() => {
-              if (!instance.hasLatest) {
+              if (!instance[WithLatestFromObserver_hasLatest]) {
                 pipe(instance, Disposable_dispose());
               }
             }),
@@ -74,16 +87,22 @@ const Observable_withLatestFrom: <TA, TB, T>(
           return instance;
         },
         props<TProperties>({
-          delegate: none,
-          hasLatest: false,
-          otherLatest: none,
-          selector: none,
+          [WithLatestFromObserver_delegate]: none,
+          [WithLatestFromObserver_hasLatest]: false,
+          [WithLatestFromObserver_otherLatest]: none,
+          [WithLatestFromObserver_selector]: none,
         }),
         {
           [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
-            if (!this[DisposableLike_isDisposed] && this.hasLatest) {
-              const result = this.selector(next, this.otherLatest as TB);
-              this.delegate[SinkLike_notify](result);
+            if (
+              !this[DisposableLike_isDisposed] &&
+              this[WithLatestFromObserver_hasLatest]
+            ) {
+              const result = this[WithLatestFromObserver_selector](
+                next,
+                this[WithLatestFromObserver_otherLatest] as TB,
+              );
+              this[WithLatestFromObserver_delegate][SinkLike_notify](result);
             }
           },
         },

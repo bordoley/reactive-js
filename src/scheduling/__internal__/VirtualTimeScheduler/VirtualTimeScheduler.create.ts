@@ -39,16 +39,20 @@ import { QueueLike } from "../../../util/__internal__/util.internal";
 import { getDelay } from "../Scheduler.options";
 import getCurrentTime from "../Scheduler/Scheduler.getCurrentTime";
 
+const VirtualTask_continuation = Symbol("VirtualTask_continuation");
+const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");
+const VirtualTask_id = Symbol("VirtualTask_id");
+
 type VirtualTask = {
-  readonly continuation: ContinuationLike;
-  dueTime: number;
-  id: number;
+  readonly [VirtualTask_continuation]: ContinuationLike;
+  [VirtualTask_dueTime]: number;
+  [VirtualTask_id]: number;
 };
 
 const comparator = (a: VirtualTask, b: VirtualTask) => {
   let diff = 0;
-  diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
-  diff = diff !== 0 ? diff : a.id - b.id;
+  diff = diff !== 0 ? diff : a[VirtualTask_dueTime] - b[VirtualTask_dueTime];
+  diff = diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];
   return diff;
 };
 
@@ -134,7 +138,10 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       [ContinuationLike_run](this: TProperties & EnumeratorLike<VirtualTask>) {
         while (Enumerator_move(this)) {
           const task = Enumerator_getCurrent(this);
-          const { dueTime, continuation } = task;
+          const {
+            [VirtualTask_dueTime]: dueTime,
+            [VirtualTask_continuation]: continuation,
+          } = task;
 
           this[VirtualTimeScheduler_microTaskTicks] = 0;
           this[SchedulerLike_now] = dueTime;
@@ -157,9 +164,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
 
         if (!Disposable_isDisposed(continuation)) {
           Queue_push(this[VirtualTimeScheduler_taskQueue], {
-            id: this[VirtualTimeScheduler_taskIDCount]++,
-            dueTime: getCurrentTime(this) + delay,
-            continuation,
+            [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
+            [VirtualTask_dueTime]: getCurrentTime(this) + delay,
+            [VirtualTask_continuation]: continuation,
           });
         }
       },

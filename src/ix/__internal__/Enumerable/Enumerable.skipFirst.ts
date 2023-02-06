@@ -21,9 +21,14 @@ const Enumerable_skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
+    const SkipFirstEnumerator_skipCount = Symbol(
+      "SkipFirstEnumerator_skipCount",
+    );
+    const SkipFirstEnumerator_count = Symbol("SkipFirstEnumerator_count");
+
     type TProperties = {
-      readonly skipCount: number;
-      count: number;
+      readonly [SkipFirstEnumerator_skipCount]: number;
+      [SkipFirstEnumerator_count]: number;
     };
 
     return pipe(
@@ -39,26 +44,30 @@ const Enumerable_skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
             init(Disposable_delegatingMixin, instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
-            instance.skipCount = skipCount;
-            instance.count = 0;
+            instance[SkipFirstEnumerator_skipCount] = skipCount;
+            instance[SkipFirstEnumerator_count] = 0;
 
             return instance;
           },
           props<TProperties>({
-            skipCount: 0,
-            count: 0,
+            [SkipFirstEnumerator_skipCount]: 0,
+            [SkipFirstEnumerator_count]: 0,
           }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
-              const { skipCount } = this;
+              const { [SkipFirstEnumerator_skipCount]: skipCount } = this;
 
-              for (let { count } = this; count < skipCount; count++) {
+              for (
+                let { [SkipFirstEnumerator_count]: count } = this;
+                count < skipCount;
+                count++
+              ) {
                 if (!DelegatingEnumerator_move(this)) {
                   break;
                 }
               }
 
-              this.count = skipCount;
+              this[SkipFirstEnumerator_count] = skipCount;
               DelegatingEnumerator_move(this);
             },
           },

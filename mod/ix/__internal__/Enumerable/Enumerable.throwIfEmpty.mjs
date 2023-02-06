@@ -14,14 +14,15 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 const Enumerable_throwIfEmpty = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
-    return pipe(createInstanceFactory(mix(include(Disposable_mixin, typedDelegatingEnumeratorMixin), function TakeWhileEnumerator(instance, delegate, factory) {
+    const ThrowIfEmptyEnumerator_isEmpty = Symbol("");
+    return pipe(createInstanceFactory(mix(include(Disposable_mixin, typedDelegatingEnumeratorMixin), function ThrowIfEmptyEnumerator(instance, delegate, factory) {
         init(Disposable_mixin, instance);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        instance.isEmpty = true;
+        instance[ThrowIfEmptyEnumerator_isEmpty] = true;
         pipe(instance, Disposable_addIgnoringChildErrors(delegate));
         pipe(delegate, Disposable_onComplete(() => {
             let err = none;
-            if (instance.isEmpty) {
+            if (instance[ThrowIfEmptyEnumerator_isEmpty]) {
                 try {
                     err = error(factory());
                 }
@@ -33,11 +34,11 @@ const Enumerable_throwIfEmpty =
         }));
         return instance;
     }, props({
-        isEmpty: true,
+        [ThrowIfEmptyEnumerator_isEmpty]: true,
     }), {
         [SourceLike_move]() {
             if (DelegatingEnumerator_move(this)) {
-                this.isEmpty = false;
+                this[ThrowIfEmptyEnumerator_isEmpty] = false;
             }
         },
     })), StatefulContainer_throwIfEmpty(Enumerable_liftT));

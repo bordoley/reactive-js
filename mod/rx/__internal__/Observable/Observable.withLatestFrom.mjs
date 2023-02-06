@@ -18,30 +18,35 @@ import Observable_subscribe from './Observable.subscribe.mjs';
 const Observable_withLatestFrom = /*@__PURE__*/ (() => {
     const createWithLatestObserver = (() => {
         const typedObserverMixin = Observer_mixin();
+        const WithLatestFromObserver_delegate = Symbol("WithLatestFromObserver_delegate");
+        const WithLatestFromObserver_hasLatest = Symbol("WithLatestFromObserver_hasLatest");
+        const WithLatestFromObserver_otherLatest = Symbol("WithLatestFromObserver_otherLatest");
+        const WithLatestFromObserver_selector = Symbol("WithLatestFromObserver_selector");
         return createInstanceFactory(mix(include(Disposable_delegatingMixin, typedObserverMixin), function WithLatestFromObserver(instance, delegate, other, selector) {
             init(Disposable_delegatingMixin, instance, delegate);
             init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-            instance.delegate = delegate;
-            instance.selector = selector;
+            instance[WithLatestFromObserver_delegate] = delegate;
+            instance[WithLatestFromObserver_selector] = selector;
             pipe(other, Observable_forEach(next => {
-                instance.hasLatest = true;
-                instance.otherLatest = next;
+                instance[WithLatestFromObserver_hasLatest] = true;
+                instance[WithLatestFromObserver_otherLatest] = next;
             }), Observable_subscribe(Observer_getScheduler(delegate)), Disposable_addTo(instance), Disposable_onComplete(() => {
-                if (!instance.hasLatest) {
+                if (!instance[WithLatestFromObserver_hasLatest]) {
                     pipe(instance, Disposable_dispose());
                 }
             }));
             return instance;
         }, props({
-            delegate: none,
-            hasLatest: false,
-            otherLatest: none,
-            selector: none,
+            [WithLatestFromObserver_delegate]: none,
+            [WithLatestFromObserver_hasLatest]: false,
+            [WithLatestFromObserver_otherLatest]: none,
+            [WithLatestFromObserver_selector]: none,
         }), {
             [SinkLike_notify](next) {
-                if (!this[DisposableLike_isDisposed] && this.hasLatest) {
-                    const result = this.selector(next, this.otherLatest);
-                    this.delegate[SinkLike_notify](result);
+                if (!this[DisposableLike_isDisposed] &&
+                    this[WithLatestFromObserver_hasLatest]) {
+                    const result = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest]);
+                    this[WithLatestFromObserver_delegate][SinkLike_notify](result);
                 }
             },
         }));

@@ -34,17 +34,21 @@ const Observable_timeout = /*@__PURE__*/ (<T>() => {
   const typedDisposableRefMixin = DisposableRef_mixin();
   const typedObserverMixin = Observer_mixin();
 
+  const TimeoutObserver_delegate = Symbol("TimeoutObserver_delegate");
+  const TimeoutObserver_duration = Symbol("TimeoutObserver_duration");
   type TProperties = {
-    readonly delegate: ObserverLike<T>;
-    readonly duration: ObservableLike<unknown>;
+    readonly [TimeoutObserver_delegate]: ObserverLike<T>;
+    readonly [TimeoutObserver_duration]: ObservableLike<unknown>;
   };
 
   const setupDurationSubscription = (
     observer: MutableRefLike<DisposableLike> & TProperties,
   ) => {
     observer[MutableRefLike_current] = pipe(
-      observer.duration,
-      Observable_subscribe(Observer_getScheduler(observer.delegate)),
+      observer[TimeoutObserver_duration],
+      Observable_subscribe(
+        Observer_getScheduler(observer[TimeoutObserver_delegate]),
+      ),
     );
   };
 
@@ -65,16 +69,16 @@ const Observable_timeout = /*@__PURE__*/ (<T>() => {
         init(Disposable_delegatingMixin, instance, delegate);
         init(typedDisposableRefMixin, instance, Disposable_disposed);
 
-        instance.delegate = delegate;
-        instance.duration = duration;
+        instance[TimeoutObserver_delegate] = delegate;
+        instance[TimeoutObserver_duration] = duration;
 
         setupDurationSubscription(instance);
 
         return instance;
       },
       props<TProperties>({
-        delegate: none,
-        duration: none,
+        [TimeoutObserver_delegate]: none,
+        [TimeoutObserver_duration]: none,
       }),
       {
         [SinkLike_notify](
@@ -82,7 +86,7 @@ const Observable_timeout = /*@__PURE__*/ (<T>() => {
           next: T,
         ) {
           pipe(this, MutableRef_get, Disposable_dispose());
-          this.delegate[SinkLike_notify](next);
+          this[TimeoutObserver_delegate][SinkLike_notify](next);
         },
       },
     ),

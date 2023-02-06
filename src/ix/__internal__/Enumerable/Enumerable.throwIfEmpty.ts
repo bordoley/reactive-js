@@ -23,15 +23,16 @@ const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
 
+    const ThrowIfEmptyEnumerator_isEmpty = Symbol("");
     type TProperties = {
-      isEmpty: boolean;
+      [ThrowIfEmptyEnumerator_isEmpty]: boolean;
     };
 
     return pipe(
       createInstanceFactory(
         mix(
           include(Disposable_mixin, typedDelegatingEnumeratorMixin),
-          function TakeWhileEnumerator(
+          function ThrowIfEmptyEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               TProperties,
             delegate: EnumeratorLike,
@@ -40,7 +41,7 @@ const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
             init(Disposable_mixin, instance);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
-            instance.isEmpty = true;
+            instance[ThrowIfEmptyEnumerator_isEmpty] = true;
 
             pipe(instance, Disposable_addIgnoringChildErrors(delegate));
             pipe(
@@ -48,7 +49,7 @@ const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
               Disposable_onComplete(() => {
                 let err: Optional<Error> = none;
 
-                if (instance.isEmpty) {
+                if (instance[ThrowIfEmptyEnumerator_isEmpty]) {
                   try {
                     err = error(factory());
                   } catch (e) {
@@ -63,12 +64,12 @@ const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
             return instance;
           },
           props<TProperties>({
-            isEmpty: true,
+            [ThrowIfEmptyEnumerator_isEmpty]: true,
           }),
           {
             [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
               if (DelegatingEnumerator_move(this)) {
-                this.isEmpty = false;
+                this[ThrowIfEmptyEnumerator_isEmpty] = false;
               }
             },
           },

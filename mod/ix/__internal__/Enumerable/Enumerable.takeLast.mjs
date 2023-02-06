@@ -17,24 +17,27 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 const Enumerable_takeLast = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
+    const TakeLastEnumerator_maxCount = Symbol("TakeLastEnumerator_maxCount");
+    const TakeLastEnumerator_isStarted = Symbol("TakeLastEnumerator_isStarted");
     return pipe(createInstanceFactory(mix(include(Disposable_mixin, typedDelegatingEnumeratorMixin), function TakeLastEnumerator(instance, delegate, maxCount) {
         init(Disposable_mixin, instance);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
-        instance.maxCount = maxCount;
-        instance.isStarted = false;
+        instance[TakeLastEnumerator_maxCount] = maxCount;
+        instance[TakeLastEnumerator_isStarted] = false;
         pipe(instance, Disposable_add(delegate));
         return instance;
     }, props({
-        maxCount: 0,
-        isStarted: false,
+        [TakeLastEnumerator_maxCount]: 0,
+        [TakeLastEnumerator_isStarted]: false,
     }), {
         [SourceLike_move]() {
-            if (!Disposable_isDisposed(this) && !this.isStarted) {
-                this.isStarted = true;
+            if (!Disposable_isDisposed(this) &&
+                !this[TakeLastEnumerator_isStarted]) {
+                this[TakeLastEnumerator_isStarted] = true;
                 const last = [];
                 while (DelegatingEnumerator_move(this)) {
                     last.push(Enumerator_getCurrent(this));
-                    if (getLength(last) > this.maxCount) {
+                    if (getLength(last) > this[TakeLastEnumerator_maxCount]) {
                         last.shift();
                     }
                 }

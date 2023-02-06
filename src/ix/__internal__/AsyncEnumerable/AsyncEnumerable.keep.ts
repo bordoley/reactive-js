@@ -33,8 +33,10 @@ import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT";
 const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
   T,
 >() => {
+  const KeepAsyncEnumerator_obs = Symbol("KeepAsyncEnumerator_obs");
+
   type TProperties = {
-    readonly obs: MulticastObservableLike<T>;
+    readonly [KeepAsyncEnumerator_obs]: MulticastObservableLike<T>;
   };
 
   const createKeepAsyncEnumerator = createInstanceFactory(
@@ -54,7 +56,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
         init(Disposable_delegatingMixin, instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
-        instance.obs = pipe(
+        instance[KeepAsyncEnumerator_obs] = pipe(
           delegate,
           Observable_forEach(x => {
             if (!predicate(x)) {
@@ -67,22 +69,27 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
         return instance;
       },
       props<TProperties>({
-        obs: none,
+        [KeepAsyncEnumerator_obs]: none,
       }),
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getObserverCount(this.obs);
+          return MulticastObservable_getObserverCount(
+            this[KeepAsyncEnumerator_obs],
+          );
         },
         get [MulticastObservableLike_replay]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getReplay(this.obs);
+          return MulticastObservable_getReplay(this[KeepAsyncEnumerator_obs]);
         },
         [ReactiveContainerLike_sinkInto](
           this: TProperties,
           observer: ObserverLike<T>,
         ): void {
-          pipe(this.obs, ReactiveContainer_sinkInto(observer));
+          pipe(
+            this[KeepAsyncEnumerator_obs],
+            ReactiveContainer_sinkInto(observer),
+          );
         },
       },
     ),

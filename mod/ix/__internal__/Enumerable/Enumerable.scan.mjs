@@ -10,11 +10,13 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 
 const Enumerable_scan = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    const ScanEnumerator_reducer = Symbol("ScanEnumerator_reducer");
+    const ScanEnumerator_delegate = Symbol("ScanEnumerator_delegate");
     return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedMutableEnumeratorMixin), function ScanEnumerator(instance, delegate, reducer, initialValue) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(typedMutableEnumeratorMixin, instance);
-        instance.delegate = delegate;
-        instance.reducer = reducer;
+        instance[ScanEnumerator_delegate] = delegate;
+        instance[ScanEnumerator_reducer] = reducer;
         try {
             const acc = initialValue();
             instance[EnumeratorLike_current] = acc;
@@ -23,12 +25,15 @@ const Enumerable_scan = /*@__PURE__*/ (() => {
             pipe(instance, Disposable_dispose(error(e)));
         }
         return instance;
-    }, props({ reducer: none, delegate: none }), {
+    }, props({
+        [ScanEnumerator_reducer]: none,
+        [ScanEnumerator_delegate]: none,
+    }), {
         [SourceLike_move]() {
             const acc = this[EnumeratorLike_hasCurrent]
                 ? this[EnumeratorLike_current]
                 : none;
-            const { delegate, reducer } = this;
+            const { [ScanEnumerator_delegate]: delegate, [ScanEnumerator_reducer]: reducer, } = this;
             if (acc === none) {
                 return;
             }

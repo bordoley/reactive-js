@@ -10,24 +10,26 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 
 const Enumerable_map = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    const MapEnumerator_mapper = Symbol("MapEnumerator_mapper");
+    const MapEnumerator_delegate = Symbol("MapEnumerator_delegate");
     return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedMutableEnumeratorMixin), function MapEnumerator(instance, delegate, mapper) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(typedMutableEnumeratorMixin, instance);
-        instance.delegate = delegate;
-        instance.mapper = mapper;
+        instance[MapEnumerator_delegate] = delegate;
+        instance[MapEnumerator_mapper] = mapper;
         return instance;
     }, props({
-        mapper: none,
-        delegate: none,
+        [MapEnumerator_mapper]: none,
+        [MapEnumerator_delegate]: none,
     }), {
         [SourceLike_move]() {
-            const { delegate } = this;
+            const { [MapEnumerator_delegate]: delegate } = this;
             delegate[SourceLike_move]();
             if (!delegate[EnumeratorLike_hasCurrent]) {
                 return;
             }
             try {
-                this[EnumeratorLike_current] = this.mapper(delegate[EnumeratorLike_current]);
+                this[EnumeratorLike_current] = this[MapEnumerator_mapper](delegate[EnumeratorLike_current]);
             }
             catch (e) {
                 pipe(this, Disposable_dispose(error(e)));

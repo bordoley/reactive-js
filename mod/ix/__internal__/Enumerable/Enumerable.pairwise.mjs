@@ -13,16 +13,17 @@ import Enumerable_lift from './Enumerable.lift.mjs';
 const Enumerable_pairwise = 
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    const PairwiseEnumerator_delegate = Symbol("PairwiseEnumerator_delegate");
     return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedMutableEnumeratorMixin), function PairwiseEnumerator(instance, delegate) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(typedMutableEnumeratorMixin, instance);
-        instance.delegate = delegate;
+        instance[PairwiseEnumerator_delegate] = delegate;
         return instance;
     }, props({
-        delegate: none,
+        [PairwiseEnumerator_delegate]: none,
     }), {
         [SourceLike_move]() {
-            const { delegate } = this;
+            const { [PairwiseEnumerator_delegate]: delegate } = this;
             const prev = Enumerator_hasCurrent(this)
                 ? Enumerator_getCurrent(this)[1]
                 : Enumerator_move(delegate)

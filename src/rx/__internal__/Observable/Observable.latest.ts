@@ -26,50 +26,64 @@ const zipMode = 2;
 
 const Observable_latest = /*@__PURE__*/ (() => {
   const typedObserverMixin = Observer_mixin();
+
+  const LatestCtx_delegate = Symbol("LatestCtx_delegate");
+  const LatestCtx_mode = Symbol("LatestCtx_mode");
+  const LatestCtx_completedCount = Symbol("LatestCtx_completedCount");
+  const LatestCtx_observers = Symbol("LatestCtx_observers");
+
   type LatestCtx = {
-    delegate: ObserverLike<readonly unknown[]>;
-    mode: LatestMode;
-    completedCount: number;
-    observers: TProperties[];
+    [LatestCtx_delegate]: ObserverLike<readonly unknown[]>;
+    [LatestCtx_mode]: LatestMode;
+    [LatestCtx_completedCount]: number;
+    [LatestCtx_observers]: TProperties[];
   };
 
   const add = (instance: LatestCtx, observer: TProperties): void => {
-    instance.observers.push(observer);
+    instance[LatestCtx_observers].push(observer);
   };
 
   const onNotify = (instance: LatestCtx) => {
-    const { mode, observers } = instance;
+    const { [LatestCtx_mode]: mode, [LatestCtx_observers]: observers } =
+      instance;
 
-    const isReady = observers.every(x => x.ready);
+    const isReady = observers.every(x => x[LatestObserver_ready]);
 
     if (isReady) {
       const result = pipe(
         observers,
-        ReadonlyArray_map(observer => observer.latest),
+        ReadonlyArray_map(observer => observer[LatestObserver_latest]),
       );
-      instance.delegate[SinkLike_notify](result);
+      instance[LatestCtx_delegate][SinkLike_notify](result);
 
       if (mode === zipMode) {
         for (const sub of observers) {
-          sub.ready = false;
-          sub.latest = none as any;
+          sub[LatestObserver_ready] = false;
+          sub[LatestObserver_latest] = none as any;
         }
       }
     }
   };
 
   const onCompleted = (instance: LatestCtx) => {
-    instance.completedCount++;
+    instance[LatestCtx_completedCount]++;
 
-    if (instance.completedCount === getLength(instance.observers)) {
-      pipe(instance.delegate, Disposable_dispose());
+    if (
+      instance[LatestCtx_completedCount] ===
+      getLength(instance[LatestCtx_observers])
+    ) {
+      pipe(instance[LatestCtx_delegate], Disposable_dispose());
     }
   };
 
+  const LatestObserver_ready = Symbol("LatestObserver_ready");
+  const LatestObserver_latest = Symbol("LatestObserver_latest");
+  const LatestObserver_ctx = Symbol("LatestObserver_ctx");
+
   type TProperties = {
-    ready: boolean;
-    latest: unknown;
-    readonly ctx: LatestCtx;
+    [LatestObserver_ready]: boolean;
+    [LatestObserver_latest]: unknown;
+    readonly [LatestObserver_ctx]: LatestCtx;
   };
 
   const createLatestObserver = createInstanceFactory(
@@ -84,20 +98,20 @@ const Observable_latest = /*@__PURE__*/ (() => {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, scheduler);
 
-        instance.ctx = ctx;
+        instance[LatestObserver_ctx] = ctx;
 
         return instance;
       },
       props<TProperties>({
-        ready: false,
-        latest: none,
-        ctx: none,
+        [LatestObserver_ready]: false,
+        [LatestObserver_latest]: none,
+        [LatestObserver_ctx]: none,
       }),
       {
         [SinkLike_notify](this: TProperties, next: unknown) {
-          const { ctx } = this;
-          this.latest = next;
-          this.ready = true;
+          const { [LatestObserver_ctx]: ctx } = this;
+          this[LatestObserver_latest] = next;
+          this[LatestObserver_ready] = true;
 
           onNotify(ctx);
         },
@@ -111,10 +125,10 @@ const Observable_latest = /*@__PURE__*/ (() => {
   ): ObservableLike<readonly unknown[]> => {
     const onSink = (delegate: ObserverLike<readonly unknown[]>) => {
       const ctx: LatestCtx = {
-        completedCount: 0,
-        observers: [],
-        delegate,
-        mode,
+        [LatestCtx_completedCount]: 0,
+        [LatestCtx_observers]: [],
+        [LatestCtx_delegate]: delegate,
+        [LatestCtx_mode]: mode,
       };
 
       const onCompleteCb = () => {
