@@ -1,5 +1,5 @@
 import { Function1 } from "../functions.js";
-import { Buffer, Concat, ConcatAll, DistinctUntilChanged, Empty, ForEach, ReadonlyArrayLike, FromIterable, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip } from "../containers.js";
+import { Buffer, Concat, ConcatAll, DistinctUntilChanged, Empty, ForEach, ReadonlyArrayLike, FromIterable, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip, FromArray } from "../containers.js";
 import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix.js";
 import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
 declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
@@ -39,4 +39,7 @@ declare const toRunnableObservable: ToRunnableObservable<EnumerableLike, {
     delayStart?: boolean;
 }>["toRunnableObservable"];
 declare const zip: Zip<EnumerableLike>["zip"];
-export { buffer, concat, concatAll, distinctUntilChanged, empty, enumerate, forEach, fromArray, fromIterable, generate, keep, map, pairwise, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };
+declare const Enumerable: Buffer<EnumerableLike> & Concat<EnumerableLike> & ConcatAll<EnumerableLike> & DistinctUntilChanged<EnumerableLike> & Empty<EnumerableLike, {
+    delay: number;
+}> & ForEach<EnumerableLike> & FromArray<EnumerableLike> & Generate<EnumerableLike> & Keep<EnumerableLike> & Map<EnumerableLike> & Pairwise<EnumerableLike> & Repeat<EnumerableLike> & Scan<EnumerableLike> & SkipFirst<EnumerableLike> & TakeFirst<EnumerableLike> & TakeLast<EnumerableLike> & TakeWhile<EnumerableLike> & ThrowIfEmpty<EnumerableLike> & ToEnumerable<EnumerableLike> & ToReadonlyArray<EnumerableLike> & ToRunnable<EnumerableLike> & Zip<EnumerableLike>;
+export { buffer, concat, concatAll, Enumerable as default, distinctUntilChanged, empty, enumerate, forEach, fromArray, fromIterable, generate, keep, map, pairwise, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

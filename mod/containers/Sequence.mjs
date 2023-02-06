@@ -38,5 +38,25 @@ const toEnumerable = Sequence_toEnumerable;
 const toReadonlyArray = Sequence_toReadonlyArray;
 const toRunnable = Sequence_toRunnable;
 const zip = Sequence_zip;
+const Sequence = {
+    concat,
+    concatAll,
+    distinctUntilChanged,
+    fromArray,
+    generate,
+    keep,
+    map,
+    pairwise,
+    repeat,
+    scan,
+    skipFirst,
+    takeFirst,
+    takeLast,
+    takeWhile,
+    toEnumerable,
+    toReadonlyArray,
+    toRunnable,
+    zip,
+};
 
-export { concat, concatAll, distinctUntilChanged, fromArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };
+export { concat, concatAll, Sequence as default, distinctUntilChanged, fromArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };

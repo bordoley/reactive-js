@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Variables
+
+- [default](rx_EnumerableObservable.md#default)
+
 ### Functions
 
 - [buffer](rx_EnumerableObservable.md#buffer)
@@ -42,6 +46,12 @@
 - [toReadonlyArray](rx_EnumerableObservable.md#toreadonlyarray)
 - [toRunnable](rx_EnumerableObservable.md#torunnable)
 - [zip](rx_EnumerableObservable.md#zip)
+
+## Variables
+
+### default
+
+• `Const` **default**: [`Buffer`](containers.md#buffer)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`CatchError`](containers.md#catcherror)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Concat`](containers.md#concat)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`ConcatAll`](containers.md#concatall)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md), { `maxBufferSize?`: `number`  }\> & [`DecodeWithCharset`](containers.md#decodewithcharset)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Defer`](containers.md#defer)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Empty`](containers.md#empty)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md), { `delay`: `number`  }\> & [`EverySatisfy`](containers.md#everysatisfy)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`ForEach`](containers.md#foreach)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`FromArray`](containers.md#fromarray)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Generate`](containers.md#generate)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Keep`](containers.md#keep)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Map`](containers.md#map)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Pairwise`](containers.md#pairwise)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Reduce`](containers.md#reduce)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Scan`](containers.md#scan)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`ScanAsync`](rx.md#scanasync)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md), [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`SkipFirst`](containers.md#skipfirst)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`SomeSatisfy`](containers.md#somesatisfy)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`TakeFirst`](containers.md#takefirst)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`TakeLast`](containers.md#takelast)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`TakeWhile`](containers.md#takewhile)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`ThrowIfEmpty`](containers.md#throwifempty)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`ToEnumerable`](ix.md#toenumerable)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`ToFlowable`](streaming.md#toflowable)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`ToPromiseable`](containers.md#topromiseable)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> & [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`ToRunnable`](rx.md#torunnable)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\> & [`Zip`](containers.md#zip)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)\>
 
 ## Functions
 

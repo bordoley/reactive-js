@@ -3,7 +3,7 @@ import { throws, concatMap } from '../../containers/Container.mjs';
 import { toRunnableObservable } from '../../containers/ReadonlyArray.mjs';
 import { pipeLazy, pipe, raise, identity, arrayEquality } from '../../functions.mjs';
 import { toReadonlyArray as toReadonlyArray$1 } from '../../ix/Enumerable.mjs';
-import { exhaust, toReadonlyArray, merge, fromArray, map, empty, switchAll, toEnumerable, toPromise, zip, buffer, catchError, concat, defer, decodeWithCharset, distinctUntilChanged, everySatisfy, forEach, keep, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty } from '../../rx/RunnableObservable.mjs';
+import RunnableObservable, { exhaust, toReadonlyArray, merge, fromArray, map, empty, switchAll, toEnumerable, toPromise, zip, buffer } from '../../rx/RunnableObservable.mjs';
 import { createHostScheduler } from '../../scheduling/Scheduler.mjs';
 import { dispose } from '../../util/Disposable.mjs';
 import { zipTests as zipTests$1, bufferTests, catchErrorTests, concatTests, decodeWithCharsetTests, distinctUntilChangedTests, everySatisfyTests, forEachTests, keepTests, mapTests, pairwiseTests, reduceTests, scanTests, scanAsyncTests, skipFirstTests, someSatisfyTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests } from '../operators.mjs';
@@ -38,79 +38,4 @@ testModule("RunnableObservable", bufferTests({
     fromArray,
     buffer,
     toReadonlyArray,
-}), catchErrorTests({
-    fromArray,
-    catchError,
-    map,
-    toReadonlyArray,
-}), concatTests({
-    fromArray,
-    concat,
-    toReadonlyArray,
-}), decodeWithCharsetTests({
-    fromArray,
-    defer,
-    decodeWithCharset,
-    map,
-    toReadonlyArray,
-}), distinctUntilChangedTests({
-    fromArray,
-    distinctUntilChanged,
-    toReadonlyArray,
-}), everySatisfyTests({
-    fromArray,
-    everySatisfy,
-    toReadonlyArray,
-}), exhaustTests, forEachTests({
-    fromArray,
-    forEach,
-    toReadonlyArray,
-}), keepTests({
-    fromArray,
-    keep,
-    toReadonlyArray,
-}), mapTests({
-    fromArray,
-    map,
-    toReadonlyArray,
-}), mergeTests, pairwiseTests({
-    fromArray,
-    pairwise,
-    toReadonlyArray,
-}), reduceTests({
-    fromArray,
-    reduce,
-    toReadonlyArray,
-}), scanTests({
-    fromArray,
-    scan,
-    toReadonlyArray,
-}), scanAsyncTests({
-    fromArray,
-    scanAsync,
-    toReadonlyArray,
-}, { fromArray }), skipFirstTests({
-    fromArray,
-    skipFirst,
-    toReadonlyArray,
-}), someSatisfyTests({
-    fromArray,
-    someSatisfy,
-    toReadonlyArray,
-}), switchAllTests, takeFirstTests({
-    fromArray,
-    takeFirst,
-    toReadonlyArray,
-}), takeLastTests({
-    fromArray,
-    takeLast,
-    toReadonlyArray,
-}), takeWhileTests({
-    fromArray,
-    takeWhile,
-    toReadonlyArray,
-}), throwIfEmptyTests({
-    fromArray,
-    throwIfEmpty,
-    toReadonlyArray,
-}), toEnumerableTests, toPromiseTests, zipTests);
+}), catchErrorTests(RunnableObservable), concatTests(RunnableObservable), decodeWithCharsetTests(RunnableObservable), distinctUntilChangedTests(RunnableObservable), everySatisfyTests(RunnableObservable), exhaustTests, forEachTests(RunnableObservable), keepTests(RunnableObservable), mapTests(RunnableObservable), mergeTests, pairwiseTests(RunnableObservable), reduceTests(RunnableObservable), scanTests(RunnableObservable), scanAsyncTests(RunnableObservable, { fromArray }), skipFirstTests(RunnableObservable), someSatisfyTests(RunnableObservable), switchAllTests, takeFirstTests(RunnableObservable), takeLastTests(RunnableObservable), takeWhileTests(RunnableObservable), throwIfEmptyTests(RunnableObservable), toEnumerableTests, toPromiseTests, zipTests);

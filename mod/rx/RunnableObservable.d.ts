@@ -1,6 +1,6 @@
 import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer } from "../functions.js";
-import { RunnableObservableLike, ObserverLike, ScanAsync, RunnableLike } from "../rx.js";
-import { ContainerOperator, CatchError, ConcatAll, Defer, ToPromiseable, ReadonlyArrayLike } from "../containers.js";
+import { RunnableObservableLike, ObserverLike, ScanAsync, RunnableLike, ToRunnable } from "../rx.js";
+import { ContainerOperator, CatchError, ConcatAll, Defer, ToPromiseable, ReadonlyArrayLike, Buffer, Concat, DecodeWithCharset, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromArray, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, Zip } from "../containers.js";
 import { ToEnumerable } from "../ix.js";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling.js";
 import { ToFlowable } from "../streaming.js";
@@ -133,4 +133,9 @@ declare const zip: {
         TI
     ]>;
 };
-export { buffer, catchError, concat, concatAll, create, decodeWithCharset, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
+declare const RunnableObservable: Buffer<RunnableObservableLike> & CatchError<RunnableObservableLike> & Concat<RunnableObservableLike> & ConcatAll<RunnableObservableLike, {
+    maxBufferSize?: number;
+}> & DecodeWithCharset<RunnableObservableLike> & Defer<RunnableObservableLike> & DistinctUntilChanged<RunnableObservableLike> & Empty<RunnableObservableLike, {
+    delay: number;
+}> & EverySatisfy<RunnableObservableLike> & ForEach<RunnableObservableLike> & FromArray<RunnableObservableLike> & Generate<RunnableObservableLike> & Keep<RunnableObservableLike> & Map<RunnableObservableLike> & Never<RunnableObservableLike> & Pairwise<RunnableObservableLike> & Reduce<RunnableObservableLike> & Scan<RunnableObservableLike> & ScanAsync<RunnableObservableLike, RunnableObservableLike> & SkipFirst<RunnableObservableLike> & SomeSatisfy<RunnableObservableLike> & TakeFirst<RunnableObservableLike> & TakeLast<RunnableObservableLike> & TakeWhile<RunnableObservableLike> & ThrowIfEmpty<RunnableObservableLike> & ToEnumerable<RunnableObservableLike> & ToFlowable<RunnableObservableLike> & ToPromiseable<RunnableObservableLike, SchedulerLike> & ToReadonlyArray<RunnableObservableLike> & ToRunnable<RunnableObservableLike> & Zip<RunnableObservableLike>;
+export { buffer, catchError, concat, concatAll, create, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };

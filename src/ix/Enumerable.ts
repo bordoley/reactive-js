@@ -5,6 +5,7 @@ import {
   DistinctUntilChanged,
   Empty,
   ForEach,
+  FromArray,
   FromIterable,
   Generate,
   Keep,
@@ -138,3 +139,54 @@ export const toRunnableObservable: ToRunnableObservable<
 >["toRunnableObservable"] = Enumerable_toRunnableObservable;
 
 export const zip: Zip<EnumerableLike>["zip"] = Enumerable_zip;
+
+const Enumerable: Buffer<EnumerableLike> &
+  Concat<EnumerableLike> &
+  ConcatAll<EnumerableLike> &
+  DistinctUntilChanged<EnumerableLike> &
+  Empty<EnumerableLike, { delay: number }> &
+  ForEach<EnumerableLike> &
+  FromArray<EnumerableLike> &
+  Generate<EnumerableLike> &
+  Keep<EnumerableLike> &
+  Map<EnumerableLike> &
+  Pairwise<EnumerableLike> &
+  //Reduce<EnumerableLike> &
+  Repeat<EnumerableLike> &
+  Scan<EnumerableLike> &
+  SkipFirst<EnumerableLike> &
+  TakeFirst<EnumerableLike> &
+  TakeLast<EnumerableLike> &
+  TakeWhile<EnumerableLike> &
+  ThrowIfEmpty<EnumerableLike> &
+  ToEnumerable<EnumerableLike> &
+  //ToFlowable<EnumerableLike> &
+  //ToPromiseable<EnumerableLike, SchedulerLike> &
+  ToReadonlyArray<EnumerableLike> &
+  ToRunnable<EnumerableLike> &
+  Zip<EnumerableLike> = {
+  buffer,
+  concat,
+  concatAll,
+  distinctUntilChanged,
+  empty,
+  forEach,
+  fromArray,
+  generate,
+  keep,
+  map,
+  pairwise,
+  repeat,
+  scan,
+  skipFirst,
+  takeFirst,
+  takeLast,
+  takeWhile,
+  throwIfEmpty,
+  toEnumerable,
+  toReadonlyArray,
+  toRunnable,
+  zip,
+};
+
+export default Enumerable;

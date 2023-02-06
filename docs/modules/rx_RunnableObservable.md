@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Variables
+
+- [default](rx_RunnableObservable.md#default)
+
 ### Functions
 
 - [buffer](rx_RunnableObservable.md#buffer)
@@ -42,6 +46,12 @@
 - [toReadonlyArray](rx_RunnableObservable.md#toreadonlyarray)
 - [toRunnable](rx_RunnableObservable.md#torunnable)
 - [zip](rx_RunnableObservable.md#zip)
+
+## Variables
+
+### default
+
+• `Const` **default**: [`Buffer`](containers.md#buffer)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`CatchError`](containers.md#catcherror)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Concat`](containers.md#concat)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`ConcatAll`](containers.md#concatall)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), { `maxBufferSize?`: `number`  }\> & [`DecodeWithCharset`](containers.md#decodewithcharset)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Defer`](containers.md#defer)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Empty`](containers.md#empty)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), { `delay`: `number`  }\> & [`EverySatisfy`](containers.md#everysatisfy)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`ForEach`](containers.md#foreach)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`FromArray`](containers.md#fromarray)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Generate`](containers.md#generate)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Keep`](containers.md#keep)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Map`](containers.md#map)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Never`](containers.md#never)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Pairwise`](containers.md#pairwise)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Reduce`](containers.md#reduce)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Scan`](containers.md#scan)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`ScanAsync`](rx.md#scanasync)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`SkipFirst`](containers.md#skipfirst)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`SomeSatisfy`](containers.md#somesatisfy)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`TakeFirst`](containers.md#takefirst)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`TakeLast`](containers.md#takelast)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`TakeWhile`](containers.md#takewhile)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`ThrowIfEmpty`](containers.md#throwifempty)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`ToEnumerable`](ix.md#toenumerable)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`ToFlowable`](streaming.md#toflowable)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`ToPromiseable`](containers.md#topromiseable)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> & [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`ToRunnable`](rx.md#torunnable)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\> & [`Zip`](containers.md#zip)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)\>
 
 ## Functions
 

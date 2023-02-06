@@ -1,19 +1,27 @@
 import {
+  Buffer,
   CatchError,
   Concat,
   ConcatAll,
   ContainerOperator,
   DecodeWithCharset,
   Defer,
+  DistinctUntilChanged,
+  Empty,
   EverySatisfy,
+  ForEach,
   ForkConcat,
   ForkZip,
+  FromArray,
   FromPromise,
+  Generate,
   Keep,
   Map,
   Never,
   Pairwise,
   Reduce,
+  Repeat,
+  Scan,
   SkipFirst,
   SomeSatisfy,
   TakeFirst,
@@ -40,6 +48,7 @@ import {
   ObserverLike,
   RunnableObservableLike,
   ScanAsync,
+  ToRunnable,
 } from "../rx";
 import { SchedulerLike } from "../scheduling";
 import { FromFlowable, ToFlowable } from "../streaming";
@@ -425,3 +434,80 @@ export const zipWithLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
 ) => ContainerOperator<ObservableLike, TA, T> = Observable_zipWithLatestFrom;
+
+const Observable: Buffer<ObservableLike> &
+  CatchError<ObservableLike> &
+  Concat<ObservableLike> &
+  ConcatAll<
+    ObservableLike,
+    {
+      maxBufferSize?: number;
+    }
+  > &
+  DecodeWithCharset<ObservableLike> &
+  Defer<ObservableLike> &
+  DistinctUntilChanged<ObservableLike> &
+  Empty<ObservableLike, { delay: number }> &
+  EverySatisfy<ObservableLike> &
+  ForEach<ObservableLike> &
+  FromArray<ObservableLike> &
+  FromFlowable<ObservableLike> &
+  FromPromise<ObservableLike> &
+  Generate<ObservableLike> &
+  Keep<ObservableLike> &
+  Map<ObservableLike> &
+  Never<ObservableLike> &
+  Pairwise<ObservableLike> &
+  Reduce<ObservableLike> &
+  Repeat<ObservableLike> &
+  Scan<ObservableLike> &
+  ScanAsync<ObservableLike, ObservableLike> &
+  SkipFirst<ObservableLike> &
+  SomeSatisfy<ObservableLike> &
+  TakeFirst<ObservableLike> &
+  TakeLast<ObservableLike> &
+  TakeWhile<ObservableLike> &
+  ThrowIfEmpty<ObservableLike> &
+  ToEnumerable<ObservableLike> &
+  ToFlowable<ObservableLike> &
+  ToPromiseable<ObservableLike, SchedulerLike> &
+  ToReadonlyArray<ObservableLike> &
+  ToRunnable<ObservableLike> &
+  Zip<ObservableLike> = {
+  buffer,
+  catchError,
+  concat,
+  concatAll,
+  decodeWithCharset,
+  defer,
+  distinctUntilChanged,
+  empty,
+  everySatisfy,
+  forEach,
+  fromArray,
+  fromFlowable,
+  fromPromise,
+  generate,
+  keep,
+  map,
+  never,
+  pairwise,
+  reduce,
+  repeat,
+  scan,
+  scanAsync,
+  skipFirst,
+  someSatisfy,
+  takeFirst,
+  takeLast,
+  takeWhile,
+  throwIfEmpty,
+  toEnumerable,
+  toFlowable,
+  toPromise,
+  toReadonlyArray,
+  toRunnable,
+  zip,
+};
+
+export default Observable;
