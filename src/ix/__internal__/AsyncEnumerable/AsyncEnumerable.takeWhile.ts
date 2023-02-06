@@ -39,7 +39,10 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
 
     const createTakeWhileAsyncEnumerator = createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()),
+        include(
+          Disposable_delegatingMixin(),
+          DelegatingAsyncEnumerator_mixin(),
+        ),
         function TakeWhileAsyncEnumerator(
           instance: Pick<
             AsyncEnumeratorLike<T>,
@@ -52,7 +55,7 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
           predicate: Predicate<T>,
           inclusive: boolean,
         ): AsyncEnumeratorLike<T> {
-          init(Disposable_delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin(), instance, delegate);
           init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
           instance[TakeWhileAsyncEnumerator_obs] = pipe(

@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -48,7 +51,6 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
     const typedObserverMixin = Observer_mixin<ContainerOf<C, T>>();
 
     const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
-    const MergeAllObserver_delegate = Symbol("MergeAllObserver_delegate");
     const MergeAllObserver_maxBufferSize = Symbol(
       "MergeAllObserver_maxBufferSize",
     );
@@ -60,15 +62,16 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
     type TProperties = {
       [MergeAllObserver_activeCount]: number;
-      readonly [MergeAllObserver_delegate]: ObserverLike<T>;
       readonly [MergeAllObserver_maxBufferSize]: number;
       readonly [MergeAllObserver_maxConcurrency]: number;
       readonly [MergeAllObserver_onDispose]: SideEffect;
       readonly [MergeAllObserver_queue]: ObservableLike<T>[];
     };
 
-    const subscribeNext = <T>(
-      observer: TProperties & ObserverLike<ContainerOf<C, T>>,
+    const subscribeNext = (
+      observer: TProperties &
+        ObserverLike<ContainerOf<C, T>> &
+        DelegatingLike<ObserverLike<T>>,
     ) => {
       if (
         observer[MergeAllObserver_activeCount] <
@@ -82,21 +85,21 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           pipe(
             nextObs,
             Observable_forEach(
-              Sink_notifySink(observer[MergeAllObserver_delegate]),
+              Sink_notifySink(observer[DelegatingLike_delegate]),
             ),
             Observable_subscribe(Observer_getScheduler(observer)),
-            Disposable_addTo(observer[MergeAllObserver_delegate]),
+            Disposable_addTo(observer[DelegatingLike_delegate]),
             Disposable_onComplete(observer[MergeAllObserver_onDispose]),
           );
         } else if (Disposable_isDisposed(observer)) {
-          pipe(observer[MergeAllObserver_delegate], Disposable_dispose());
+          pipe(observer[DelegatingLike_delegate], Disposable_dispose());
         }
       }
     };
 
     return createInstanceFactory(
       mix(
-        include(Disposable_mixin, typedObserverMixin),
+        include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
         function MergeAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -109,8 +112,8 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
         ): ObserverLike<ContainerOf<C, T>> {
           init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+          init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
 
-          instance[MergeAllObserver_delegate] = delegate;
           instance[MergeAllObserver_maxBufferSize] = maxBufferSize;
           instance[MergeAllObserver_maxConcurrency] = maxConcurrency;
 
@@ -132,7 +135,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
                   instance[MergeAllObserver_activeCount] ===
                 0
               ) {
-                pipe(instance[MergeAllObserver_delegate], Disposable_dispose());
+                pipe(delegate, Disposable_dispose());
               }
             }),
           );
@@ -141,7 +144,6 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
         },
         props<TProperties>({
           [MergeAllObserver_activeCount]: 0,
-          [MergeAllObserver_delegate]: none,
           [MergeAllObserver_maxBufferSize]: 0,
           [MergeAllObserver_maxConcurrency]: 0,
           [MergeAllObserver_onDispose]: none,
@@ -149,7 +151,9 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
         }),
         {
           [SinkLike_notify](
-            this: TProperties & ObserverLike<ContainerOf<C, T>>,
+            this: TProperties &
+              ObserverLike<ContainerOf<C, T>> &
+              DelegatingLike<ObserverLike<T>>,
             next: ContainerOf<C, T>,
           ) {
             const { [MergeAllObserver_queue]: queue } = this;

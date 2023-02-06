@@ -1,4 +1,5 @@
 import {
+  DelegatingLike,
   Mutable,
   createInstanceFactory,
   include,
@@ -17,7 +18,6 @@ import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumer
 import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
 import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
 import Enumerator_hasCurrent from "../Enumerator/Enumerator.hasCurrent";
-import { DelegatingEnumeratorLike } from "../ix.internal";
 import Enumerable_liftT from "./Enumerable.liftT";
 
 const Enumerable_distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"] =
@@ -35,14 +35,14 @@ const Enumerable_distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["dis
     return pipe(
       createInstanceFactory(
         mix(
-          include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
+          include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin),
           function DistinctUntilChangedEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               Mutable<TProperties>,
             delegate: EnumeratorLike<T>,
             equality: Equality<T>,
           ): EnumeratorLike<T> {
-            init(Disposable_delegatingMixin, instance, delegate);
+            init(Disposable_delegatingMixin(), instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
             instance[DistinctUntilChangedEnumerator_equality] = equality;
@@ -53,7 +53,11 @@ const Enumerable_distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["dis
             [DistinctUntilChangedEnumerator_equality]: none,
           }),
           {
-            [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            [SourceLike_move](
+              this: TProperties &
+                DelegatingLike<EnumeratorLike<T>> &
+                EnumeratorLike<T>,
+            ) {
               const hadCurrent = Enumerator_hasCurrent(this);
               const prevCurrent = hadCurrent
                 ? Enumerator_getCurrent(this)

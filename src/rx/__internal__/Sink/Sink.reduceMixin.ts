@@ -13,7 +13,6 @@ import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const Sink_reduceMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -34,7 +33,6 @@ const Sink_reduceMixin: <
   const ReduceSinkMixin_acc = Symbol("ReduceSinkMixin_acc");
 
   type TProperties = {
-    readonly [DelegatingSinkLike_delegate]: TSink;
     readonly [ReduceSinkMixin_reducer]: Reducer<T, TAcc>;
     [ReduceSinkMixin_acc]: TAcc;
   };
@@ -50,7 +48,6 @@ const Sink_reduceMixin: <
     ): SinkLike<T> {
       init(Disposable_mixin, instance);
 
-      instance[DelegatingSinkLike_delegate] = delegate;
       instance[ReduceSinkMixin_reducer] = reducer;
 
       try {
@@ -75,7 +72,6 @@ const Sink_reduceMixin: <
       return instance;
     },
     props<TProperties>({
-      [DelegatingSinkLike_delegate]: none,
       [ReduceSinkMixin_reducer]: none,
       [ReduceSinkMixin_acc]: none,
     }),

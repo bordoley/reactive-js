@@ -1,5 +1,5 @@
 /// <reference types="./web.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props, DelegatingLike_delegate } from '../__internal__/mixins.mjs';
 import { ignoreElements } from '../containers/Container.mjs';
 import { toObservable } from '../containers/Promiseable.mjs';
 import { keep } from '../containers/ReadonlyArray.mjs';
@@ -116,28 +116,25 @@ const windowLocation =
         instance[WindowLocationStream_historyCounter]++;
         history.pushState({ counter: instance[WindowLocationStream_historyCounter], title }, "", uri);
     };
-    const WindowLocationStream_delegate = Symbol("WindowLocationStream_delegate");
     const WindowLocationStream_historyCounter = Symbol("WindowLocationStream_historyCounter");
-    const createWindowLocationStream = createInstanceFactory(mix(include(Disposable_delegatingMixin), function WindowLocationStream(instance, delegate) {
-        init(Disposable_delegatingMixin, instance, delegate);
-        instance[WindowLocationStream_delegate] = delegate;
+    const createWindowLocationStream = createInstanceFactory(mix(include(Disposable_delegatingMixin()), function WindowLocationStream(instance, delegate) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         instance[WindowLocationStream_historyCounter] = -1;
         return instance;
     }, props({
-        [WindowLocationStream_delegate]: none,
         [WindowLocationStream_historyCounter]: -1,
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return pipe(this[WindowLocationStream_delegate], getObserverCount);
+            return pipe(this[DelegatingLike_delegate], getObserverCount);
         },
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
-            return pipe(this[WindowLocationStream_delegate], getReplay);
+            return pipe(this[DelegatingLike_delegate], getReplay);
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            return pipe(this[WindowLocationStream_delegate], getScheduler);
+            return pipe(this[DelegatingLike_delegate], getScheduler);
         },
         get [WindowLocationStreamLike_canGoBack]() {
             unsafeCast(this);
@@ -146,7 +143,7 @@ const windowLocation =
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [DispatcherLike_dispatch](stateOrUpdater, { replace } = { replace: false }) {
-            pipe({ stateOrUpdater, replace }, dispatchTo(this[WindowLocationStream_delegate]));
+            pipe({ stateOrUpdater, replace }, dispatchTo(this[DelegatingLike_delegate]));
         },
         [WindowLocationStreamLike_goBack]() {
             const canGoBack = this[WindowLocationStreamLike_canGoBack];
@@ -156,7 +153,7 @@ const windowLocation =
             return canGoBack;
         },
         [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this[WindowLocationStream_delegate], map(({ uri }) => uri), sinkInto(observer));
+            pipe(this[DelegatingLike_delegate], map(({ uri }) => uri), sinkInto(observer));
         },
     }));
     let currentWindowLocationStream = none;

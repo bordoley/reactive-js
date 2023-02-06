@@ -1,3 +1,4 @@
+import { DelegatingLike } from "../../__internal__/mixins";
 import { Optional } from "../../functions";
 import { DisposableLike } from "../../util";
 
@@ -12,6 +13,11 @@ export interface DisposableRefLike<
   TDisposable extends DisposableLike = DisposableLike,
 > extends DisposableLike,
     MutableRefLike<TDisposable> {}
+
+export interface DelegatingDisposableLike<
+  TDisposable extends DisposableLike = DisposableLike,
+> extends DelegatingLike<TDisposable>,
+    DisposableLike {}
 
 export const QueueLike_clear = Symbol("QueueLike_clear");
 export const QueueLike_count = Symbol("QueueLike_count");

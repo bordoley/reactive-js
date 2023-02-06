@@ -1,4 +1,13 @@
-import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+  Mixin1,
+  delegatingMixin,
+  include,
+  init,
+  mix,
+  props,
+} from "../../../__internal__/mixins";
 import { none, pipe, returns, unsafeCast } from "../../../functions";
 import { AsyncEnumeratorLike, SourceLike_move } from "../../../ix";
 import {
@@ -24,14 +33,6 @@ const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
   >,
   AsyncEnumeratorLike<T>
 > = /*@__PURE__*/ (<T>() => {
-  const DelegatingAsyncEnumeratorMixin_delegate = Symbol(
-    "DelegatingAsyncEnumeratorMixin_delegate",
-  );
-
-  type TProperties = {
-    readonly [DelegatingAsyncEnumeratorMixin_delegate]: AsyncEnumeratorLike<T>;
-  };
-
   type TReturn = Pick<
     AsyncEnumeratorLike<T>,
     | typeof DispatcherLike_dispatch
@@ -43,29 +44,26 @@ const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
 
   return pipe(
     mix(
+      include(delegatingMixin()),
       function DelegatingAsyncEnumeratorMixin(
-        instance: Mutable<TProperties> & TReturn,
+        instance: TReturn,
         delegate: AsyncEnumeratorLike<T>,
       ): TReturn {
-        instance[DelegatingAsyncEnumeratorMixin_delegate] = delegate;
+        init(delegatingMixin(), instance, delegate);
 
         return instance;
       },
-      props<TProperties>({
-        [DelegatingAsyncEnumeratorMixin_delegate]: none,
-      }),
+      props({}),
       {
-        [DispatcherLike_dispatch](this: TProperties, _: void) {
-          pipe(
-            this[DelegatingAsyncEnumeratorMixin_delegate],
-            Dispatcher_dispatch(none),
-          );
+        [DispatcherLike_dispatch](
+          this: DelegatingLike<AsyncEnumeratorLike<T>>,
+          _: void,
+        ) {
+          pipe(this[DelegatingLike_delegate], Dispatcher_dispatch(none));
         },
         get [DispatcherLike_scheduler]() {
-          unsafeCast<TProperties>(this);
-          return Dispatcher_getScheduler(
-            this[DelegatingAsyncEnumeratorMixin_delegate],
-          );
+          unsafeCast<DelegatingLike<AsyncEnumeratorLike<T>>>(this);
+          return Dispatcher_getScheduler(this[DelegatingLike_delegate]);
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

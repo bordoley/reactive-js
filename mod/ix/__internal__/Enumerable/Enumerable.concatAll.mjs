@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.concatAll.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { pipe, none, returns } from '../../../functions.mjs';
+import { createInstanceFactory, mix, include, delegatingMixin, init, props, DelegatingLike_delegate } from '../../../__internal__/mixins.mjs';
+import { pipe, returns } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import Disposable_add from '../../../util/__internal__/Disposable/Disposable.add.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
@@ -20,19 +20,16 @@ const Enumerable_concatAll =
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const typedDisposableRefMixin = DisposableRef_mixin();
-    const ConcatAllEnumerator_delegate = Symbol("ConcatAllEnumerator_delegate");
-    return pipe(createInstanceFactory(mix(include(Disposable_mixin, typedDisposableRefMixin, typedMutableEnumeratorMixin), function ConcatAllEnumerator(instance, delegate) {
+    return pipe(createInstanceFactory(mix(include(Disposable_mixin, typedDisposableRefMixin, typedMutableEnumeratorMixin, delegatingMixin()), function ConcatAllEnumerator(instance, delegate) {
         init(Disposable_mixin, instance);
         init(typedDisposableRefMixin, instance, Disposable_disposed);
         init(typedMutableEnumeratorMixin, instance);
-        instance[ConcatAllEnumerator_delegate] = delegate;
+        init(delegatingMixin(), instance, delegate);
         pipe(instance, Disposable_add(delegate));
         return instance;
-    }, props({
-        [ConcatAllEnumerator_delegate]: none,
-    }), {
+    }, props({}), {
         [SourceLike_move]() {
-            const { [ConcatAllEnumerator_delegate]: delegate } = this;
+            const { [DelegatingLike_delegate]: delegate } = this;
             const innerEnumerator = MutableRef_get(this);
             if (Disposable_isDisposed(innerEnumerator) &&
                 Enumerator_move(delegate)) {

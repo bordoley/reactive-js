@@ -1,4 +1,6 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
   include,
@@ -34,20 +36,20 @@ const Observable_timeout = /*@__PURE__*/ (<T>() => {
   const typedDisposableRefMixin = DisposableRef_mixin();
   const typedObserverMixin = Observer_mixin();
 
-  const TimeoutObserver_delegate = Symbol("TimeoutObserver_delegate");
   const TimeoutObserver_duration = Symbol("TimeoutObserver_duration");
   type TProperties = {
-    readonly [TimeoutObserver_delegate]: ObserverLike<T>;
     readonly [TimeoutObserver_duration]: ObservableLike<unknown>;
   };
 
   const setupDurationSubscription = (
-    observer: MutableRefLike<DisposableLike> & TProperties,
+    observer: MutableRefLike<DisposableLike> &
+      TProperties &
+      DelegatingLike<ObserverLike<T>>,
   ) => {
     observer[MutableRefLike_current] = pipe(
       observer[TimeoutObserver_duration],
       Observable_subscribe(
-        Observer_getScheduler(observer[TimeoutObserver_delegate]),
+        Observer_getScheduler(observer[DelegatingLike_delegate]),
       ),
     );
   };
@@ -56,7 +58,7 @@ const Observable_timeout = /*@__PURE__*/ (<T>() => {
     mix(
       include(
         typedObserverMixin,
-        Disposable_delegatingMixin,
+        Disposable_delegatingMixin<ObserverLike<T>>(),
         typedDisposableRefMixin,
       ),
       function TimeoutObserver(
@@ -66,10 +68,9 @@ const Observable_timeout = /*@__PURE__*/ (<T>() => {
         duration: ObservableLike<unknown>,
       ): ObserverLike<T> {
         init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin<ObserverLike<T>>(), instance, delegate);
         init(typedDisposableRefMixin, instance, Disposable_disposed);
 
-        instance[TimeoutObserver_delegate] = delegate;
         instance[TimeoutObserver_duration] = duration;
 
         setupDurationSubscription(instance);
@@ -77,16 +78,17 @@ const Observable_timeout = /*@__PURE__*/ (<T>() => {
         return instance;
       },
       props<TProperties>({
-        [TimeoutObserver_delegate]: none,
         [TimeoutObserver_duration]: none,
       }),
       {
         [SinkLike_notify](
-          this: TProperties & MutableRefLike<DisposableLike>,
+          this: TProperties &
+            MutableRefLike<DisposableLike> &
+            DelegatingLike<ObserverLike<T>>,
           next: T,
         ) {
           pipe(this, MutableRef_get, Disposable_dispose());
-          this[TimeoutObserver_delegate][SinkLike_notify](next);
+          this[DelegatingLike_delegate][SinkLike_notify](next);
         },
       },
     ),

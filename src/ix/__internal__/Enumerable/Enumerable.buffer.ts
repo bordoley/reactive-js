@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -9,7 +12,7 @@ import {
 import { Buffer } from "../../../containers";
 import StatefulContainer_buffer from "../../../containers/__internal__/StatefulContainer/StatefulContainer.buffer";
 import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { getLength, none, pipe } from "../../../functions";
+import { getLength, pipe } from "../../../functions";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -30,20 +33,22 @@ const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
 >() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<readonly T[]>();
 
-  const BufferEnumerator_delegate = Symbol("BufferEnumerator_delegate");
   const BufferEnumerator_maxBufferSize = Symbol(
     "BufferEnumerator_maxBufferSize",
   );
 
   type TProperties = {
-    readonly [BufferEnumerator_delegate]: EnumeratorLike<T>;
     readonly [BufferEnumerator_maxBufferSize]: number;
   };
 
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable_mixin, typedMutableEnumeratorMixin),
+        include(
+          Disposable_mixin,
+          typedMutableEnumeratorMixin,
+          delegatingMixin(),
+        ),
         function BufferEnumerator(
           instance: Pick<EnumeratorLike<readonly T[]>, typeof SourceLike_move> &
             Mutable<TProperties>,
@@ -52,8 +57,8 @@ const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
         ): EnumeratorLike<readonly T[]> {
           init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
+          init(delegatingMixin(), instance, delegate);
 
-          instance[BufferEnumerator_delegate] = delegate;
           instance[BufferEnumerator_maxBufferSize] = maxBufferSize;
 
           pipe(instance, Disposable_add(delegate));
@@ -61,17 +66,18 @@ const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
           return instance;
         },
         props<TProperties>({
-          [BufferEnumerator_delegate]: none,
           [BufferEnumerator_maxBufferSize]: 0,
         }),
         {
           [SourceLike_move](
-            this: TProperties & MutableEnumeratorLike<readonly T[]>,
+            this: TProperties &
+              MutableEnumeratorLike<readonly T[]> &
+              DelegatingLike<EnumeratorLike<T>>,
           ) {
             const buffer: T[] = [];
 
             const {
-              [BufferEnumerator_delegate]: delegate,
+              [DelegatingLike_delegate]: delegate,
               [BufferEnumerator_maxBufferSize]: maxBufferSize,
             } = this;
 

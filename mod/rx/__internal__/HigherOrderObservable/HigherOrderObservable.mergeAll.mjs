@@ -1,5 +1,5 @@
 /// <reference types="./HigherOrderObservable.mergeAll.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { DelegatingLike_delegate, createInstanceFactory, mix, include, delegatingMixin, init, props } from '../../../__internal__/mixins.mjs';
 import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
 import { isSome, pipe, getLength, none, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
@@ -18,7 +18,6 @@ const HigherOrderObservable_mergeAll = (lift) => {
     const createMergeAllObserver = (() => {
         const typedObserverMixin = Observer_mixin();
         const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
-        const MergeAllObserver_delegate = Symbol("MergeAllObserver_delegate");
         const MergeAllObserver_maxBufferSize = Symbol("MergeAllObserver_maxBufferSize");
         const MergeAllObserver_maxConcurrency = Symbol("MergeAllObserver_maxConcurrency");
         const MergeAllObserver_onDispose = Symbol("MergeAllObserver_onDispose");
@@ -29,17 +28,17 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 const nextObs = observer[MergeAllObserver_queue].shift();
                 if (isSome(nextObs)) {
                     observer[MergeAllObserver_activeCount]++;
-                    pipe(nextObs, Observable_forEach(Sink_notifySink(observer[MergeAllObserver_delegate])), Observable_subscribe(Observer_getScheduler(observer)), Disposable_addTo(observer[MergeAllObserver_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
+                    pipe(nextObs, Observable_forEach(Sink_notifySink(observer[DelegatingLike_delegate])), Observable_subscribe(Observer_getScheduler(observer)), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
                 }
                 else if (Disposable_isDisposed(observer)) {
-                    pipe(observer[MergeAllObserver_delegate], Disposable_dispose());
+                    pipe(observer[DelegatingLike_delegate], Disposable_dispose());
                 }
             }
         };
-        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function MergeAllObserver(instance, delegate, maxBufferSize, maxConcurrency) {
+        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function MergeAllObserver(instance, delegate, maxBufferSize, maxConcurrency) {
             init(Disposable_mixin, instance);
             init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-            instance[MergeAllObserver_delegate] = delegate;
+            init(delegatingMixin(), instance, delegate);
             instance[MergeAllObserver_maxBufferSize] = maxBufferSize;
             instance[MergeAllObserver_maxConcurrency] = maxConcurrency;
             instance[MergeAllObserver_activeCount] = 0;
@@ -55,13 +54,12 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 else if (getLength(instance[MergeAllObserver_queue]) +
                     instance[MergeAllObserver_activeCount] ===
                     0) {
-                    pipe(instance[MergeAllObserver_delegate], Disposable_dispose());
+                    pipe(delegate, Disposable_dispose());
                 }
             }));
             return instance;
         }, props({
             [MergeAllObserver_activeCount]: 0,
-            [MergeAllObserver_delegate]: none,
             [MergeAllObserver_maxBufferSize]: 0,
             [MergeAllObserver_maxConcurrency]: 0,
             [MergeAllObserver_onDispose]: none,

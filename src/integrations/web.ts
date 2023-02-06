@@ -1,4 +1,6 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
   include,
@@ -300,21 +302,17 @@ export const windowLocation: WindowLocationStreamableLike =
       );
     };
 
-    const WindowLocationStream_delegate = Symbol(
-      "WindowLocationStream_delegate",
-    );
     const WindowLocationStream_historyCounter = Symbol(
       "WindowLocationStream_historyCounter",
     );
 
     type TProperties = {
-      readonly [WindowLocationStream_delegate]: StreamLike<TAction, TState>;
       [WindowLocationStream_historyCounter]: number;
     };
 
     const createWindowLocationStream = createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin),
+        include(Disposable_delegatingMixin()),
         function WindowLocationStream(
           instance: Pick<
             WindowLocationStreamLike,
@@ -331,31 +329,28 @@ export const windowLocation: WindowLocationStreamableLike =
             Mutable<TProperties>,
           delegate: StreamLike<TAction, TState>,
         ): WindowLocationStreamLike & TProperties {
-          init(Disposable_delegatingMixin, instance, delegate);
-
-          instance[WindowLocationStream_delegate] = delegate;
+          init(Disposable_delegatingMixin(), instance, delegate);
           instance[WindowLocationStream_historyCounter] = -1;
 
           return instance;
         },
         props<TProperties>({
-          [WindowLocationStream_delegate]: none,
           [WindowLocationStream_historyCounter]: -1,
         }),
         {
           get [MulticastObservableLike_observerCount]() {
-            unsafeCast<TProperties>(this);
-            return pipe(this[WindowLocationStream_delegate], getObserverCount);
+            unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
+            return pipe(this[DelegatingLike_delegate], getObserverCount);
           },
 
           get [MulticastObservableLike_replay](): number {
-            unsafeCast<TProperties>(this);
-            return pipe(this[WindowLocationStream_delegate], getReplay);
+            unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
+            return pipe(this[DelegatingLike_delegate], getReplay);
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
-            unsafeCast<TProperties>(this);
-            return pipe(this[WindowLocationStream_delegate], getScheduler);
+            unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
+            return pipe(this[DelegatingLike_delegate], getScheduler);
           },
 
           get [WindowLocationStreamLike_canGoBack](): boolean {
@@ -367,13 +362,13 @@ export const windowLocation: WindowLocationStreamableLike =
           [ObservableLike_isRunnable]: false,
 
           [DispatcherLike_dispatch](
-            this: TProperties,
+            this: DelegatingLike<StreamLike<TAction, TState>>,
             stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
             { replace }: { replace: boolean } = { replace: false },
           ): void {
             pipe(
               { stateOrUpdater, replace },
-              dispatchTo(this[WindowLocationStream_delegate]),
+              dispatchTo(this[DelegatingLike_delegate]),
             );
           },
 
@@ -390,11 +385,11 @@ export const windowLocation: WindowLocationStreamableLike =
           },
 
           [ReactiveContainerLike_sinkInto](
-            this: TProperties,
+            this: DelegatingLike<StreamLike<TAction, TState>>,
             observer: ObserverLike<WindowLocationURI>,
           ): void {
             pipe(
-              this[WindowLocationStream_delegate],
+              this[DelegatingLike_delegate],
               map(({ uri }) => uri),
               sinkInto(observer),
             );

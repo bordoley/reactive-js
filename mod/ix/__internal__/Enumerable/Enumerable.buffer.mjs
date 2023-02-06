@@ -1,7 +1,7 @@
 /// <reference types="./Enumerable.buffer.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, delegatingMixin, init, props, DelegatingLike_delegate } from '../../../__internal__/mixins.mjs';
 import StatefulContainer_buffer from '../../../containers/__internal__/StatefulContainer/StatefulContainer.buffer.mjs';
-import { pipe, none, getLength } from '../../../functions.mjs';
+import { pipe, getLength } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import Disposable_add from '../../../util/__internal__/Disposable/Disposable.add.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
@@ -13,22 +13,20 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 
 const Enumerable_buffer = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
-    const BufferEnumerator_delegate = Symbol("BufferEnumerator_delegate");
     const BufferEnumerator_maxBufferSize = Symbol("BufferEnumerator_maxBufferSize");
-    return pipe(createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function BufferEnumerator(instance, delegate, maxBufferSize) {
+    return pipe(createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, delegatingMixin()), function BufferEnumerator(instance, delegate, maxBufferSize) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        instance[BufferEnumerator_delegate] = delegate;
+        init(delegatingMixin(), instance, delegate);
         instance[BufferEnumerator_maxBufferSize] = maxBufferSize;
         pipe(instance, Disposable_add(delegate));
         return instance;
     }, props({
-        [BufferEnumerator_delegate]: none,
         [BufferEnumerator_maxBufferSize]: 0,
     }), {
         [SourceLike_move]() {
             const buffer = [];
-            const { [BufferEnumerator_delegate]: delegate, [BufferEnumerator_maxBufferSize]: maxBufferSize, } = this;
+            const { [DelegatingLike_delegate]: delegate, [BufferEnumerator_maxBufferSize]: maxBufferSize, } = this;
             while (getLength(buffer) < maxBufferSize &&
                 Enumerator_move(delegate)) {
                 buffer.push(Enumerator_getCurrent(delegate));

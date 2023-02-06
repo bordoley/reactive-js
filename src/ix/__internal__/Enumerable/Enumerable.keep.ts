@@ -1,4 +1,6 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
   include,
@@ -20,10 +22,6 @@ import {
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
-import {
-  DelegatingEnumeratorLike,
-  DelegatingEnumeratorLike_delegate,
-} from "../ix.internal";
 import Enumerable_liftT from "./Enumerable.liftT";
 
 const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
@@ -38,14 +36,14 @@ const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
+        include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin),
         function KeepEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           predicate: Predicate<T>,
         ): EnumeratorLike<T> {
-          init(Disposable_delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin(), instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
 
           instance[KeepEnumerator_predicate] = predicate;
@@ -54,15 +52,17 @@ const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         },
         props<TProperties>({ [KeepEnumerator_predicate]: none }),
         {
-          [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+          [SourceLike_move](
+            this: TProperties &
+              DelegatingLike<EnumeratorLike<T>> &
+              EnumeratorLike<T>,
+          ) {
             const { [KeepEnumerator_predicate]: predicate } = this;
 
             try {
               while (
-                (this[DelegatingEnumeratorLike_delegate][SourceLike_move](),
-                this[DelegatingEnumeratorLike_delegate][
-                  EnumeratorLike_hasCurrent
-                ]) &&
+                (this[DelegatingLike_delegate][SourceLike_move](),
+                this[DelegatingLike_delegate][EnumeratorLike_hasCurrent]) &&
                 !predicate(this[EnumeratorLike_current])
               ) {}
             } catch (e) {

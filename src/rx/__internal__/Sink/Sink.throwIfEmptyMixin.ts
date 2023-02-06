@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mixin2,
   Mutable,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -20,7 +23,6 @@ import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.a
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const Sink_throwIfEmptyMixin: <T>() => Mixin2<
   SinkLike<T>,
@@ -30,13 +32,12 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
   const ThrowIfEmptySinkMixin_isEmpty = Symbol("ThrowIfEmptySinkMixin_isEmpty");
 
   type TProperties = {
-    readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
     [ThrowIfEmptySinkMixin_isEmpty]: boolean;
   };
 
   return returns(
     mix(
-      include(Disposable_mixin),
+      include(Disposable_mixin, delegatingMixin()),
       function ThrowIfEmptySinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -44,8 +45,7 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
         factory: Factory<unknown>,
       ): SinkLike<T> {
         init(Disposable_mixin, instance);
-
-        instance[DelegatingSinkLike_delegate] = delegate;
+        init(delegatingMixin(), instance, delegate);
 
         pipe(
           instance,
@@ -68,13 +68,15 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
         return instance;
       },
       props<TProperties>({
-        [DelegatingSinkLike_delegate]: none,
         [ThrowIfEmptySinkMixin_isEmpty]: true,
       }),
       {
-        [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
+        [SinkLike_notify](
+          this: TProperties & DisposableLike & DelegatingLike<SinkLike<T>>,
+          next: T,
+        ) {
           this[ThrowIfEmptySinkMixin_isEmpty] = false;
-          this[DelegatingSinkLike_delegate][SinkLike_notify](next);
+          this[DelegatingLike_delegate][SinkLike_notify](next);
         },
       },
     ),

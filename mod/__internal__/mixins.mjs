@@ -1,5 +1,5 @@
 /// <reference types="./mixins.d.ts" />
-import { getLength, isFunction } from '../functions.mjs';
+import { getLength, isFunction, pipe, none, returns } from '../functions.mjs';
 
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
@@ -76,5 +76,14 @@ const createInstanceFactory = (mixin) => {
 const props = (o) => {
     return o;
 };
+const DelegatingLike_delegate = Symbol("DelegatingMixin_delegate");
+const delegatingMixin = /*@__PURE__*/ (() => {
+    return pipe(mix(function DelegatingDisposableMixin(instance, delegate) {
+        instance[DelegatingLike_delegate] = delegate;
+        return instance;
+    }, props({
+        [DelegatingLike_delegate]: none,
+    }), {}), returns);
+})();
 
-export { createInstanceFactory, include, init, mix, props };
+export { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props };

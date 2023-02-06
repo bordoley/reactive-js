@@ -7,14 +7,12 @@ import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable
 import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
 import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
 import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
-import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_reduceMixin = (fromArray) => {
     const ReduceSinkMixin_reducer = Symbol("ReduceSinkMixin_reducer");
     const ReduceSinkMixin_acc = Symbol("ReduceSinkMixin_acc");
     return mix(include(Disposable_mixin), function ReduceSinkMixin(instance, delegate, reducer, initialValue) {
         init(Disposable_mixin, instance);
-        instance[DelegatingSinkLike_delegate] = delegate;
         instance[ReduceSinkMixin_reducer] = reducer;
         try {
             const acc = initialValue();
@@ -28,7 +26,6 @@ const Sink_reduceMixin = (fromArray) => {
         }));
         return instance;
     }, props({
-        [DelegatingSinkLike_delegate]: none,
         [ReduceSinkMixin_reducer]: none,
         [ReduceSinkMixin_acc]: none,
     }), {

@@ -41,7 +41,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
 
   const createKeepAsyncEnumerator = createInstanceFactory(
     mix(
-      include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()),
+      include(Disposable_delegatingMixin(), DelegatingAsyncEnumerator_mixin()),
       function KeepAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<T>,
@@ -53,7 +53,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
         delegate: AsyncEnumeratorLike<T>,
         predicate: Predicate<T>,
       ): AsyncEnumeratorLike<T> {
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
         instance[KeepAsyncEnumerator_obs] = pipe(

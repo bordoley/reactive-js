@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -42,9 +45,6 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
   ) => ObserverLike<TA> = (<TA, TB, T>() => {
     const typedObserverMixin = Observer_mixin<TA>();
 
-    const ZipWithLatestFromObserver_delegate = Symbol(
-      "ZipWithLatestFromObserver_delegate",
-    );
     const ZipWithLatestFromObserver_hasLatest = Symbol(
       "ZipWithLatestFromObserver_hasLatest",
     );
@@ -59,14 +59,17 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
     );
 
     type TProperties = {
-      readonly [ZipWithLatestFromObserver_delegate]: ObserverLike<T>;
       [ZipWithLatestFromObserver_hasLatest]: boolean;
       [ZipWithLatestFromObserver_otherLatest]: Optional<TB>;
       readonly [ZipWithLatestFromObserver_queue]: TA[];
       readonly [ZipWithLatestFromObserver_selector]: Function2<TA, TB, T>;
     };
 
-    const notifyDelegate = (observer: TProperties & ObserverLike<TA>) => {
+    const notifyDelegate = (
+      observer: TProperties &
+        ObserverLike<TA> &
+        DelegatingLike<ObserverLike<T>>,
+    ) => {
       if (
         getLength(observer[ZipWithLatestFromObserver_queue]) > 0 &&
         observer[ZipWithLatestFromObserver_hasLatest]
@@ -77,13 +80,13 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
           next,
           observer[ZipWithLatestFromObserver_otherLatest] as TB,
         );
-        pipe(observer[ZipWithLatestFromObserver_delegate], Sink_notify(result));
+        pipe(observer[DelegatingLike_delegate], Sink_notify(result));
       }
     };
 
     return createInstanceFactory(
       mix(
-        include(Disposable_mixin, typedObserverMixin),
+        include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
         function ZipWithLatestFromObserver(
           instance: Pick<ObserverLike, typeof SinkLike_notify> &
             Mutable<TProperties>,
@@ -93,8 +96,8 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
         ): ObserverLike<TA> {
           init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+          init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
 
-          instance[ZipWithLatestFromObserver_delegate] = delegate;
           instance[ZipWithLatestFromObserver_queue] = [];
           instance[ZipWithLatestFromObserver_selector] = selector;
 
@@ -118,10 +121,7 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
                 Disposable_isDisposed(instance) &&
                 isEmpty(instance[ZipWithLatestFromObserver_queue])
               ) {
-                pipe(
-                  instance[ZipWithLatestFromObserver_delegate],
-                  Disposable_dispose(),
-                );
+                pipe(instance[DelegatingLike_delegate], Disposable_dispose());
               }
             }),
             Observable_subscribe(Observer_getScheduler(delegate)),
@@ -138,14 +138,18 @@ const Observable_zipWithLatestFrom: <TA, TB, T>(
           return instance;
         },
         props<TProperties>({
-          [ZipWithLatestFromObserver_delegate]: none,
           [ZipWithLatestFromObserver_hasLatest]: false,
           [ZipWithLatestFromObserver_otherLatest]: none,
           [ZipWithLatestFromObserver_queue]: none,
           [ZipWithLatestFromObserver_selector]: none,
         }),
         {
-          [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
+          [SinkLike_notify](
+            this: TProperties &
+              ObserverLike<TA> &
+              DelegatingLike<ObserverLike<T>>,
+            next: TA,
+          ) {
             this[ZipWithLatestFromObserver_queue].push(next);
             notifyDelegate(this);
           },

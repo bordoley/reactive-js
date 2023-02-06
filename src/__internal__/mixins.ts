@@ -7,6 +7,9 @@ import {
   Optional,
   getLength,
   isFunction,
+  none,
+  pipe,
+  returns,
 } from "../functions";
 
 const Object_init = Symbol("Object_init");
@@ -254,3 +257,35 @@ export const props = <TProperties>(
     [Object_private_initializedProperties]?: true;
   };
 };
+
+export const DelegatingLike_delegate = Symbol("DelegatingMixin_delegate");
+
+export interface DelegatingLike<T> {
+  readonly [DelegatingLike_delegate]: T;
+}
+
+export const delegatingMixin: <TDelegate>() => Mixin1<
+  DelegatingLike<TDelegate>,
+  TDelegate
+> = /*@__PURE__*/ (<TDelegate>() => {
+  type TProperties = {
+    readonly [DelegatingLike_delegate]: TDelegate;
+  };
+
+  return pipe(
+    mix(
+      function DelegatingDisposableMixin(
+        instance: Mutable<TProperties>,
+        delegate: TDelegate,
+      ): DelegatingLike<TDelegate> {
+        instance[DelegatingLike_delegate] = delegate;
+        return instance;
+      },
+      props<TProperties>({
+        [DelegatingLike_delegate]: none,
+      }),
+      {},
+    ),
+    returns,
+  );
+})();

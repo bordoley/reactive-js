@@ -14,8 +14,8 @@ const Enumerable_takeFirst =
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
     const TakeFirstEnumerator_maxCount = Symbol("TakeFirstEnumerator_maxCount");
     const TakeFirstEnumerator_count = Symbol("TakeFirstEnumerator_count");
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function TakeFirstEnumerator(instance, delegate, maxCount) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin), function TakeFirstEnumerator(instance, delegate, maxCount) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         instance[TakeFirstEnumerator_maxCount] = maxCount;
         return instance;

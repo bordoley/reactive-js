@@ -1,5 +1,14 @@
-import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins";
-import { none, pipe, returns, unsafeCast } from "../../../functions";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+  Mixin1,
+  delegatingMixin,
+  include,
+  init,
+  mix,
+  props,
+} from "../../../__internal__/mixins";
+import { returns, unsafeCast } from "../../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -7,10 +16,6 @@ import {
   SourceLike_move,
 } from "../../../ix";
 import { DisposableLike } from "../../../util";
-import {
-  DelegatingEnumeratorLike,
-  DelegatingEnumeratorLike_delegate,
-} from "../ix.internal";
 
 type TDelegatingEnumeratorMixinReturn<T> = Omit<
   EnumeratorLike<T>,
@@ -20,47 +25,33 @@ type TDelegatingEnumeratorMixinReturn<T> = Omit<
 const DelegatingEnumerator_mixin: <T>() => Mixin1<
   TDelegatingEnumeratorMixinReturn<T>,
   EnumeratorLike<T>
-> = /*@__PURE__*/ (<T>() => {
-  type TProperties = {
-    readonly [DelegatingEnumeratorLike_delegate]: EnumeratorLike<T>;
-  };
-
-  return pipe(
+> = /*@__PURE__*/ (<T>() =>
+  returns(
     mix(
+      include(delegatingMixin()),
       function DelegatingEnumerator(
         instance: Pick<
-          DelegatingEnumeratorLike<T>,
-          | typeof EnumeratorLike_current
-          | typeof EnumeratorLike_hasCurrent
-          | typeof DelegatingEnumeratorLike_delegate
-        > &
-          Mutable<TProperties>,
+          EnumeratorLike<T>,
+          typeof EnumeratorLike_current | typeof EnumeratorLike_hasCurrent
+        >,
         delegate: EnumeratorLike<T>,
       ): TDelegatingEnumeratorMixinReturn<T> {
-        instance[DelegatingEnumeratorLike_delegate] = delegate;
+        init(delegatingMixin(), instance, delegate);
 
         return instance;
       },
-      props<TProperties>({
-        [DelegatingEnumeratorLike_delegate]: none,
-      }),
+      props({}),
       {
         get [EnumeratorLike_current](): T {
-          unsafeCast<TProperties>(this);
-          return this[DelegatingEnumeratorLike_delegate][
-            EnumeratorLike_current
-          ];
+          unsafeCast<DelegatingLike<EnumeratorLike<T>>>(this);
+          return this[DelegatingLike_delegate][EnumeratorLike_current];
         },
         get [EnumeratorLike_hasCurrent](): boolean {
-          unsafeCast<TProperties>(this);
-          return this[DelegatingEnumeratorLike_delegate][
-            EnumeratorLike_hasCurrent
-          ];
+          unsafeCast<DelegatingLike<EnumeratorLike<T>>>(this);
+          return this[DelegatingLike_delegate][EnumeratorLike_hasCurrent];
         },
       },
     ),
-    returns,
-  );
-})();
+  ))();
 
 export default DelegatingEnumerator_mixin;

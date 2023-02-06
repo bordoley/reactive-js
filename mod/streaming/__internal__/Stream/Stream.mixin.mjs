@@ -15,9 +15,9 @@ import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Di
 const Stream_mixin = /*@__PURE__*/ (() => {
     const StreamMixin_subject = Symbol("StreamMixin_subject");
     const StreamMixin_observable = Symbol("StreamMixin_observable");
-    return returns(mix(include(Disposable_delegatingMixin), function StreamMixin(instance, op, scheduler, replay) {
+    return returns(mix(include(Disposable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay) {
         const subject = Subject_create({ replay });
-        init(Disposable_delegatingMixin, instance, subject);
+        init(Disposable_delegatingMixin(), instance, subject);
         instance[DispatcherLike_scheduler] = scheduler;
         instance[StreamMixin_subject] = subject;
         instance[StreamMixin_observable] = pipe(subject, op, Observable_multicast(scheduler, { replay }), Disposable_add(instance));

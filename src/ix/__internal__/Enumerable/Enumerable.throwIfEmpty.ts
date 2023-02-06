@@ -1,4 +1,5 @@
 import {
+  DelegatingLike,
   createInstanceFactory,
   include,
   init,
@@ -16,7 +17,6 @@ import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.m
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
 import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
-import { DelegatingEnumeratorLike } from "../ix.internal";
 import Enumerable_liftT from "./Enumerable.liftT";
 
 const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
@@ -67,7 +67,11 @@ const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
             [ThrowIfEmptyEnumerator_isEmpty]: true,
           }),
           {
-            [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            [SourceLike_move](
+              this: TProperties &
+                DelegatingLike<EnumeratorLike<T>> &
+                EnumeratorLike<T>,
+            ) {
               if (DelegatingEnumerator_move(this)) {
                 this[ThrowIfEmptyEnumerator_isEmpty] = false;
               }

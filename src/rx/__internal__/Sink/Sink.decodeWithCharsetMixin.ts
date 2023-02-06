@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mixin2,
   Mutable,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -13,7 +16,6 @@ import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const Sink_decodeWithCharsetMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -31,12 +33,11 @@ const Sink_decodeWithCharsetMixin: <
   );
 
   type TProperties = {
-    readonly [DelegatingSinkLike_delegate]: SinkLike<string>;
     readonly [DecodeWithCharsetSinkMixin_textDecoder]: TextDecoder;
   };
 
   return mix(
-    include(Disposable_mixin),
+    include(Disposable_mixin, delegatingMixin()),
     function DecodeWithCharsetSinkMixin(
       instance: Pick<SinkLike<ArrayBuffer>, typeof SinkLike_notify> &
         Mutable<TProperties>,
@@ -44,10 +45,10 @@ const Sink_decodeWithCharsetMixin: <
       charset: string,
     ): SinkLike<ArrayBuffer> {
       init(Disposable_mixin, instance);
+      init(delegatingMixin(), instance, delegate);
 
       const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
       instance[DecodeWithCharsetSinkMixin_textDecoder] = textDecoder;
-      instance[DelegatingSinkLike_delegate] = delegate;
 
       pipe(
         instance,
@@ -66,16 +67,18 @@ const Sink_decodeWithCharsetMixin: <
       return instance;
     },
     props<TProperties>({
-      [DelegatingSinkLike_delegate]: none,
       [DecodeWithCharsetSinkMixin_textDecoder]: none,
     }),
     {
-      [SinkLike_notify](this: TProperties, next: ArrayBuffer) {
+      [SinkLike_notify](
+        this: TProperties & DelegatingLike<SinkLike<string>>,
+        next: ArrayBuffer,
+      ) {
         const data = this[DecodeWithCharsetSinkMixin_textDecoder].decode(next, {
           stream: true,
         });
         if (!isEmpty(data)) {
-          this[DelegatingSinkLike_delegate][SinkLike_notify](data);
+          this[DelegatingLike_delegate][SinkLike_notify](data);
         }
       },
     },

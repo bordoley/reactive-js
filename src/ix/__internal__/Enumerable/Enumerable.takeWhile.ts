@@ -1,4 +1,5 @@
 import {
+  DelegatingLike,
   Mutable,
   createInstanceFactory,
   include,
@@ -17,7 +18,6 @@ import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposa
 import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
 import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
 import getCurrent from "../Enumerator/Enumerator.getCurrent";
-import { DelegatingEnumeratorLike } from "../ix.internal";
 import Enumerable_liftT from "./Enumerable.liftT";
 
 const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
@@ -41,7 +41,7 @@ const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
     return pipe(
       createInstanceFactory(
         mix(
-          include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
+          include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin),
           function TakeWhileEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               Mutable<TProperties>,
@@ -49,7 +49,7 @@ const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
             predicate: Predicate<T>,
             inclusive: boolean,
           ): EnumeratorLike<T> {
-            init(Disposable_delegatingMixin, instance, delegate);
+            init(Disposable_delegatingMixin(), instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
             instance[TakeWhileEnumerator_predicate] = predicate;
@@ -63,7 +63,11 @@ const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
             [TakeWhileEnumerator_done]: false,
           }),
           {
-            [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            [SourceLike_move](
+              this: TProperties &
+                DelegatingLike<EnumeratorLike<T>> &
+                EnumeratorLike<T>,
+            ) {
               const {
                 [TakeWhileEnumerator_inclusive]: inclusive,
                 [TakeWhileEnumerator_predicate]: predicate,

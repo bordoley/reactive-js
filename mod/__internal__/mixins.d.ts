@@ -66,4 +66,9 @@ declare const createInstanceFactory: CreateInstanceFactory;
 declare const props: <TProperties>(o: OptionalProperties<TProperties>) => TProperties & {
     [Object_private_initializedProperties]?: true | undefined;
 };
-export { Mixin, Mixin1, Mixin2, Mixin3, Mixin4, MixinAny, Mutable, PartialMixin, createInstanceFactory, include, init, mix, props };
+declare const DelegatingLike_delegate: unique symbol;
+interface DelegatingLike<T> {
+    readonly [DelegatingLike_delegate]: T;
+}
+declare const delegatingMixin: <TDelegate>() => Mixin1<DelegatingLike<TDelegate>, TDelegate>;
+export { DelegatingLike, DelegatingLike_delegate, Mixin, Mixin1, Mixin2, Mixin3, Mixin4, MixinAny, Mutable, PartialMixin, createInstanceFactory, delegatingMixin, include, init, mix, props };

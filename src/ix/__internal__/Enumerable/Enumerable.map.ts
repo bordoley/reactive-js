@@ -1,4 +1,6 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
   include,
@@ -30,38 +32,38 @@ const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<TB>();
 
   const MapEnumerator_mapper = Symbol("MapEnumerator_mapper");
-  const MapEnumerator_delegate = Symbol("MapEnumerator_delegate");
 
   type TProperties = {
     readonly [MapEnumerator_mapper]: Function1<TA, TB>;
-    readonly [MapEnumerator_delegate]: EnumeratorLike<TA>;
   };
 
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin, typedMutableEnumeratorMixin),
+        include(Disposable_delegatingMixin(), typedMutableEnumeratorMixin),
         function MapEnumerator(
           instance: Pick<EnumeratorLike<TB>, typeof SourceLike_move> &
             Mutable<TProperties>,
           delegate: EnumeratorLike<TA>,
           mapper: Function1<TA, TB>,
         ): EnumeratorLike<TB> {
-          init(Disposable_delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin(), instance, delegate);
           init(typedMutableEnumeratorMixin, instance);
 
-          instance[MapEnumerator_delegate] = delegate;
           instance[MapEnumerator_mapper] = mapper;
 
           return instance;
         },
         props<TProperties>({
           [MapEnumerator_mapper]: none,
-          [MapEnumerator_delegate]: none,
         }),
         {
-          [SourceLike_move](this: TProperties & MutableEnumeratorLike<TB>) {
-            const { [MapEnumerator_delegate]: delegate } = this;
+          [SourceLike_move](
+            this: TProperties &
+              MutableEnumeratorLike<TB> &
+              DelegatingLike<EnumeratorLike<TA>>,
+          ) {
+            const { [DelegatingLike_delegate]: delegate } = this;
 
             delegate[SourceLike_move]();
 

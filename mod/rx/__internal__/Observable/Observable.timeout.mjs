@@ -1,5 +1,5 @@
 /// <reference types="./Observable.timeout.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { DelegatingLike_delegate, createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import Container_throws from '../../../containers/__internal__/Container/Container.throws.mjs';
 import { pipe, none, returns, isNumber, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
@@ -22,26 +22,23 @@ const Observable_timeout = /*@__PURE__*/ (() => {
     const timeoutError = Symbol("Observable.timeout.error");
     const typedDisposableRefMixin = DisposableRef_mixin();
     const typedObserverMixin = Observer_mixin();
-    const TimeoutObserver_delegate = Symbol("TimeoutObserver_delegate");
     const TimeoutObserver_duration = Symbol("TimeoutObserver_duration");
     const setupDurationSubscription = (observer) => {
-        observer[MutableRefLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribe(Observer_getScheduler(observer[TimeoutObserver_delegate])));
+        observer[MutableRefLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribe(Observer_getScheduler(observer[DelegatingLike_delegate])));
     };
-    const createTimeoutObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_delegatingMixin, typedDisposableRefMixin), function TimeoutObserver(instance, delegate, duration) {
+    const createTimeoutObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_delegatingMixin(), typedDisposableRefMixin), function TimeoutObserver(instance, delegate, duration) {
         init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(typedDisposableRefMixin, instance, Disposable_disposed);
-        instance[TimeoutObserver_delegate] = delegate;
         instance[TimeoutObserver_duration] = duration;
         setupDurationSubscription(instance);
         return instance;
     }, props({
-        [TimeoutObserver_delegate]: none,
         [TimeoutObserver_duration]: none,
     }), {
         [SinkLike_notify](next) {
             pipe(this, MutableRef_get, Disposable_dispose());
-            this[TimeoutObserver_delegate][SinkLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
         },
     }));
     const returnTimeoutError = returns(timeoutError);

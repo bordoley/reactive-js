@@ -1,5 +1,5 @@
 /// <reference types="./HigherOrderObservable.switchAll.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { DelegatingLike_delegate, createInstanceFactory, mix, include, delegatingMixin, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
@@ -17,31 +17,29 @@ import Observer_mixin from '../Observer/Observer.mixin.mjs';
 import Sink_notifySink from '../Sink/Sink.notifySink.mjs';
 
 const HigherOrderObservable_currentRef = Symbol("HigherOrderObservable_currentRef");
-const HigherOrderObservable_delegate = Symbol("HigherOrderObservable_delegate");
 const HigherOrderObservable_switchAll = (lift) => {
     const createSwitchAllObserver = (() => {
         const typedObserverMixin = Observer_mixin();
         function onDispose() {
             if (Disposable_isDisposed(this[HigherOrderObservable_currentRef][MutableRefLike_current])) {
-                pipe(this[HigherOrderObservable_delegate], Disposable_dispose());
+                pipe(this[DelegatingLike_delegate], Disposable_dispose());
             }
         }
-        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function SwitchAllObserver(instance, delegate) {
+        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function SwitchAllObserver(instance, delegate) {
             init(Disposable_mixin, instance);
             init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-            instance[HigherOrderObservable_delegate] = delegate;
+            init(delegatingMixin(), instance, delegate);
             instance[HigherOrderObservable_currentRef] = pipe(DisposableRef_create(Disposable_disposed), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(onDispose));
             return instance;
         }, props({
             [HigherOrderObservable_currentRef]: none,
-            [HigherOrderObservable_delegate]: none,
         }), {
             [SinkLike_notify](next) {
                 this[HigherOrderObservable_currentRef][MutableRefLike_current] =
-                    pipe(next, Observable_forEach(Sink_notifySink(this[HigherOrderObservable_delegate])), Observable_subscribe(Observer_getScheduler(this)), Disposable_onComplete(() => {
+                    pipe(next, Observable_forEach(Sink_notifySink(this[DelegatingLike_delegate])), Observable_subscribe(Observer_getScheduler(this)), Disposable_onComplete(() => {
                         if (Disposable_isDisposed(this)) {
-                            pipe(this[HigherOrderObservable_delegate], Disposable_dispose());
+                            pipe(this[DelegatingLike_delegate], Disposable_dispose());
                         }
                     }));
             },

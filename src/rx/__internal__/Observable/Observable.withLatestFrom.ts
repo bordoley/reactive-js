@@ -1,4 +1,6 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
   include,
@@ -33,9 +35,6 @@ const Observable_withLatestFrom: <TA, TB, T>(
   ) => ObserverLike<TA> = (<TA, TB, T>() => {
     const typedObserverMixin = Observer_mixin<TA>();
 
-    const WithLatestFromObserver_delegate = Symbol(
-      "WithLatestFromObserver_delegate",
-    );
     const WithLatestFromObserver_hasLatest = Symbol(
       "WithLatestFromObserver_hasLatest",
     );
@@ -47,7 +46,6 @@ const Observable_withLatestFrom: <TA, TB, T>(
     );
 
     type TProperties = {
-      readonly [WithLatestFromObserver_delegate]: ObserverLike<T>;
       [WithLatestFromObserver_hasLatest]: boolean;
       [WithLatestFromObserver_otherLatest]: Optional<TB>;
       readonly [WithLatestFromObserver_selector]: Function2<TA, TB, T>;
@@ -55,7 +53,7 @@ const Observable_withLatestFrom: <TA, TB, T>(
 
     return createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin, typedObserverMixin),
+        include(Disposable_delegatingMixin(), typedObserverMixin),
         function WithLatestFromObserver(
           instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
             Mutable<TProperties>,
@@ -63,10 +61,9 @@ const Observable_withLatestFrom: <TA, TB, T>(
           other: ObservableLike<TB>,
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
-          init(Disposable_delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin(), instance, delegate);
           init(typedObserverMixin, instance, Observer_getScheduler(delegate));
 
-          instance[WithLatestFromObserver_delegate] = delegate;
           instance[WithLatestFromObserver_selector] = selector;
 
           pipe(
@@ -87,13 +84,17 @@ const Observable_withLatestFrom: <TA, TB, T>(
           return instance;
         },
         props<TProperties>({
-          [WithLatestFromObserver_delegate]: none,
           [WithLatestFromObserver_hasLatest]: false,
           [WithLatestFromObserver_otherLatest]: none,
           [WithLatestFromObserver_selector]: none,
         }),
         {
-          [SinkLike_notify](this: TProperties & ObserverLike<TA>, next: TA) {
+          [SinkLike_notify](
+            this: TProperties &
+              ObserverLike<TA> &
+              DelegatingLike<ObserverLike<T>>,
+            next: TA,
+          ) {
             if (
               !this[DisposableLike_isDisposed] &&
               this[WithLatestFromObserver_hasLatest]
@@ -102,7 +103,7 @@ const Observable_withLatestFrom: <TA, TB, T>(
                 next,
                 this[WithLatestFromObserver_otherLatest] as TB,
               );
-              this[WithLatestFromObserver_delegate][SinkLike_notify](result);
+              this[DelegatingLike_delegate][SinkLike_notify](result);
             }
           },
         },

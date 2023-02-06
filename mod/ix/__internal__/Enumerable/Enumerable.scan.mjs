@@ -1,5 +1,5 @@
 /// <reference types="./Enumerable.scan.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, delegatingMixin, init, props, DelegatingLike_delegate } from '../../../__internal__/mixins.mjs';
 import StatefulContainer_scan from '../../../containers/__internal__/StatefulContainer/StatefulContainer.scan.mjs';
 import { pipe, error, none } from '../../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
@@ -11,11 +11,10 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 const Enumerable_scan = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const ScanEnumerator_reducer = Symbol("ScanEnumerator_reducer");
-    const ScanEnumerator_delegate = Symbol("ScanEnumerator_delegate");
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedMutableEnumeratorMixin), function ScanEnumerator(instance, delegate, reducer, initialValue) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin(), typedMutableEnumeratorMixin, delegatingMixin()), function ScanEnumerator(instance, delegate, reducer, initialValue) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(typedMutableEnumeratorMixin, instance);
-        instance[ScanEnumerator_delegate] = delegate;
+        init(delegatingMixin(), instance, delegate);
         instance[ScanEnumerator_reducer] = reducer;
         try {
             const acc = initialValue();
@@ -27,13 +26,12 @@ const Enumerable_scan = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [ScanEnumerator_reducer]: none,
-        [ScanEnumerator_delegate]: none,
     }), {
         [SourceLike_move]() {
             const acc = this[EnumeratorLike_hasCurrent]
                 ? this[EnumeratorLike_current]
                 : none;
-            const { [ScanEnumerator_delegate]: delegate, [ScanEnumerator_reducer]: reducer, } = this;
+            const { [DelegatingLike_delegate]: delegate, [ScanEnumerator_reducer]: reducer, } = this;
             if (acc === none) {
                 return;
             }

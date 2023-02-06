@@ -13,7 +13,6 @@ import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.a
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const Sink_takeLastMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -34,7 +33,6 @@ const Sink_takeLastMixin: <
   );
 
   type TProperties = {
-    readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
     readonly [TakeLastSinkMixin_takeLastCount]: number;
     readonly [TakeLastSinkMixin_last]: T[];
   };
@@ -49,7 +47,6 @@ const Sink_takeLastMixin: <
     ): SinkLike<T> {
       init(Disposable_mixin, instance);
 
-      instance[DelegatingSinkLike_delegate] = delegate;
       instance[TakeLastSinkMixin_takeLastCount] = takeLastCount;
       instance[TakeLastSinkMixin_last] = [];
 
@@ -68,7 +65,6 @@ const Sink_takeLastMixin: <
       return instance;
     },
     props<TProperties>({
-      [DelegatingSinkLike_delegate]: none,
       [TakeLastSinkMixin_takeLastCount]: 0,
       [TakeLastSinkMixin_last]: none,
     }),
