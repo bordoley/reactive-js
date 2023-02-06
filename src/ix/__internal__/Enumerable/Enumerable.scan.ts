@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -30,17 +33,19 @@ const Enumerable_scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<TAcc>();
 
   const ScanEnumerator_reducer = Symbol("ScanEnumerator_reducer");
-  const ScanEnumerator_delegate = Symbol("ScanEnumerator_delegate");
 
   type TProperties = {
     readonly [ScanEnumerator_reducer]: Reducer<T, TAcc>;
-    readonly [ScanEnumerator_delegate]: EnumeratorLike<T>;
   };
 
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin, typedMutableEnumeratorMixin),
+        include(
+          Disposable_delegatingMixin(),
+          typedMutableEnumeratorMixin,
+          delegatingMixin(),
+        ),
         function ScanEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
@@ -48,10 +53,10 @@ const Enumerable_scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
           reducer: Reducer<T, TAcc>,
           initialValue: Factory<TAcc>,
         ): MutableEnumeratorLike<TAcc> {
-          init(Disposable_delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin(), instance, delegate);
           init(typedMutableEnumeratorMixin, instance);
+          init(delegatingMixin(), instance, delegate);
 
-          instance[ScanEnumerator_delegate] = delegate;
           instance[ScanEnumerator_reducer] = reducer;
 
           try {
@@ -65,16 +70,19 @@ const Enumerable_scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
         },
         props<TProperties>({
           [ScanEnumerator_reducer]: none,
-          [ScanEnumerator_delegate]: none,
         }),
         {
-          [SourceLike_move](this: TProperties & MutableEnumeratorLike<TAcc>) {
+          [SourceLike_move](
+            this: TProperties &
+              MutableEnumeratorLike<TAcc> &
+              DelegatingLike<EnumeratorLike<T>>,
+          ) {
             const acc = this[EnumeratorLike_hasCurrent]
               ? this[EnumeratorLike_current]
               : none;
 
             const {
-              [ScanEnumerator_delegate]: delegate,
+              [DelegatingLike_delegate]: delegate,
               [ScanEnumerator_reducer]: reducer,
             } = this;
             if (acc === none) {

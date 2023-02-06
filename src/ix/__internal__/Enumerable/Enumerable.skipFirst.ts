@@ -1,4 +1,5 @@
 import {
+  DelegatingLike,
   Mutable,
   createInstanceFactory,
   include,
@@ -14,7 +15,6 @@ import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
 import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
-import { DelegatingEnumeratorLike } from "../ix.internal";
 import Enumerable_liftT from "./Enumerable.liftT";
 
 const Enumerable_skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
@@ -34,14 +34,14 @@ const Enumerable_skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
     return pipe(
       createInstanceFactory(
         mix(
-          include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
+          include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin),
           function SkipFirstEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               Mutable<TProperties>,
             delegate: EnumeratorLike<T>,
             skipCount: number,
           ): EnumeratorLike<T> {
-            init(Disposable_delegatingMixin, instance, delegate);
+            init(Disposable_delegatingMixin(), instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
             instance[SkipFirstEnumerator_skipCount] = skipCount;
@@ -54,7 +54,11 @@ const Enumerable_skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
             [SkipFirstEnumerator_count]: 0,
           }),
           {
-            [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            [SourceLike_move](
+              this: TProperties &
+                DelegatingLike<EnumeratorLike<T>> &
+                EnumeratorLike<T>,
+            ) {
               const { [SkipFirstEnumerator_skipCount]: skipCount } = this;
 
               for (

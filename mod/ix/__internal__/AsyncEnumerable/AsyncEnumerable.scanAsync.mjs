@@ -14,8 +14,8 @@ import AsyncEnumerable_lift from './AsyncEnumerable.lift.mjs';
 
 const AsyncEnumerable_scanAsync = /*@__PURE__*/ (() => {
     const ScanAsyncAsyncEnumerator_obs = Symbol("ScanAsyncAsyncEnumerator_obs");
-    const creatScanAsyncAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()), function ScanAsyncAsyncEnumerator(instance, delegate, reducer, initialValue) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    const creatScanAsyncAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin(), DelegatingAsyncEnumerator_mixin()), function ScanAsyncAsyncEnumerator(instance, delegate, reducer, initialValue) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
         instance[ScanAsyncAsyncEnumerator_obs] = pipe(delegate, Observable_scanAsync(reducer, initialValue), Observable_multicast(Dispatcher_getScheduler(delegate)));
         return instance;

@@ -1,5 +1,5 @@
 /// <reference types="./Observable.zipWithLatestFrom.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { DelegatingLike_delegate, createInstanceFactory, mix, include, delegatingMixin, init, props } from '../../../__internal__/mixins.mjs';
 import { getLength, pipe, isEmpty, none, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
@@ -19,7 +19,6 @@ import Observable_subscribe from './Observable.subscribe.mjs';
 const Observable_zipWithLatestFrom = /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
         const typedObserverMixin = Observer_mixin();
-        const ZipWithLatestFromObserver_delegate = Symbol("ZipWithLatestFromObserver_delegate");
         const ZipWithLatestFromObserver_hasLatest = Symbol("ZipWithLatestFromObserver_hasLatest");
         const ZipWithLatestFromObserver_otherLatest = Symbol("ZipWithLatestFromObserver_otherLatest");
         const ZipWithLatestFromObserver_queue = Symbol("ZipWithLatestFromObserver_queue");
@@ -30,13 +29,13 @@ const Observable_zipWithLatestFrom = /*@__PURE__*/ (() => {
                 observer[ZipWithLatestFromObserver_hasLatest] = false;
                 const next = observer[ZipWithLatestFromObserver_queue].shift();
                 const result = observer[ZipWithLatestFromObserver_selector](next, observer[ZipWithLatestFromObserver_otherLatest]);
-                pipe(observer[ZipWithLatestFromObserver_delegate], Sink_notify(result));
+                pipe(observer[DelegatingLike_delegate], Sink_notify(result));
             }
         };
-        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
+        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
             init(Disposable_mixin, instance);
             init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-            instance[ZipWithLatestFromObserver_delegate] = delegate;
+            init(delegatingMixin(), instance, delegate);
             instance[ZipWithLatestFromObserver_queue] = [];
             instance[ZipWithLatestFromObserver_selector] = selector;
             const disposeDelegate = () => {
@@ -51,13 +50,12 @@ const Observable_zipWithLatestFrom = /*@__PURE__*/ (() => {
                 notifyDelegate(instance);
                 if (Disposable_isDisposed(instance) &&
                     isEmpty(instance[ZipWithLatestFromObserver_queue])) {
-                    pipe(instance[ZipWithLatestFromObserver_delegate], Disposable_dispose());
+                    pipe(instance[DelegatingLike_delegate], Disposable_dispose());
                 }
             }), Observable_subscribe(Observer_getScheduler(delegate)), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({
-            [ZipWithLatestFromObserver_delegate]: none,
             [ZipWithLatestFromObserver_hasLatest]: false,
             [ZipWithLatestFromObserver_otherLatest]: none,
             [ZipWithLatestFromObserver_queue]: none,

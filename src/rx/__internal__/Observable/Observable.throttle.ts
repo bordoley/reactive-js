@@ -47,7 +47,6 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
   ) => ObserverLike<T> = (<T>() => {
     const typedObserverMixin = Observer_mixin<T>();
 
-    const ThrottleObserver_delegate = Symbol("ThrottleObserver_delegate");
     const ThrottleObserver_value = Symbol("ThrottleObserver_value");
     const ThrottleObserver_hasValue = Symbol("ThrottleObserver_hasValue");
     const ThrottleObserver_durationSubscription = Symbol(
@@ -60,7 +59,6 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
     const ThrottleObserver_onNotify = Symbol("ThrottleObserver_onNotify");
 
     type TProperties = {
-      readonly [ThrottleObserver_delegate]: ObserverLike<T>;
       [ThrottleObserver_value]: Optional<T>;
       [ThrottleObserver_hasValue]: boolean;
       readonly [ThrottleObserver_durationSubscription]: DisposableRefLike;
@@ -101,7 +99,6 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
           init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, Observer_getScheduler(delegate));
 
-          instance[ThrottleObserver_delegate] = delegate;
           instance[ThrottleObserver_durationFunction] = durationFunction;
           instance[ThrottleObserver_mode] = mode;
 
@@ -116,7 +113,7 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
               instance[ThrottleObserver_value] = none;
               instance[ThrottleObserver_hasValue] = false;
 
-              instance[ThrottleObserver_delegate][SinkLike_notify](value);
+              delegate[SinkLike_notify](value);
 
               setupDurationSubscription(instance, value);
             }
@@ -143,7 +140,6 @@ const Observable_throttle = /*@__PURE__*/ (<T>() => {
           return instance;
         },
         props<TProperties>({
-          [ThrottleObserver_delegate]: none,
           [ThrottleObserver_value]: none,
           [ThrottleObserver_hasValue]: false,
           [ThrottleObserver_durationSubscription]: none,

@@ -1,4 +1,5 @@
 import {
+  DelegatingLike,
   Mutable,
   createInstanceFactory,
   include,
@@ -19,7 +20,6 @@ import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.m
 import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
 import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
 import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
-import { DelegatingEnumeratorLike } from "../ix.internal";
 import Enumerable_enumerate from "./Enumerable.enumerate";
 import Enumerable_liftT from "./Enumerable.liftT";
 
@@ -59,7 +59,11 @@ const Enumerable_takeLast: TakeLast<EnumerableLike>["takeLast"] =
             [TakeLastEnumerator_isStarted]: false,
           }),
           {
-            [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            [SourceLike_move](
+              this: TProperties &
+                DelegatingLike<EnumeratorLike<T>> &
+                EnumeratorLike<T>,
+            ) {
               if (
                 !Disposable_isDisposed(this) &&
                 !this[TakeLastEnumerator_isStarted]

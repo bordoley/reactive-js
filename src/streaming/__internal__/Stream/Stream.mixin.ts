@@ -51,7 +51,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
 
   return returns(
     mix(
-      include(Disposable_delegatingMixin),
+      include(Disposable_delegatingMixin()),
       function StreamMixin(
         instance: Pick<
           StreamLike<TReq, T>,
@@ -69,7 +69,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
       ): StreamLike<TReq, T> {
         const subject = Subject_create({ replay });
 
-        init(Disposable_delegatingMixin, instance, subject);
+        init(Disposable_delegatingMixin(), instance, subject);
 
         instance[DispatcherLike_scheduler] = scheduler;
         instance[StreamMixin_subject] = subject;

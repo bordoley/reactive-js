@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -66,19 +69,17 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
     ReadonlyArray_some(Disposable_isDisposed),
   );
 
-  const ZipObserver_delegate = Symbol("ZipObserver_delegate");
   const ZipObserver_enumerators = Symbol("ZipObserver_enumerators");
   const ZipObserver_sinkEnumerator = Symbol("ZipObserver_sinkEnumerator");
 
   type TProperties = {
-    readonly [ZipObserver_delegate]: ObserverLike<readonly unknown[]>;
     readonly [ZipObserver_enumerators]: readonly EnumeratorLike<any>[];
     readonly [ZipObserver_sinkEnumerator]: EnumeratorLike & SinkLike;
   };
 
   const createZipObserver = createInstanceFactory(
     mix(
-      include(Disposable_mixin, typedObserverMixin),
+      include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
       function ZipObserver(
         instance: Pick<ObserverLike, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -88,8 +89,8 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
       ): ObserverLike {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(delegatingMixin(), instance, delegate);
 
-        instance[ZipObserver_delegate] = delegate;
         instance[ZipObserver_sinkEnumerator] = sinkEnumerator;
         instance[ZipObserver_enumerators] = enumerators;
 
@@ -109,12 +110,16 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
         return instance;
       },
       props<TProperties>({
-        [ZipObserver_delegate]: none,
         [ZipObserver_enumerators]: none,
         [ZipObserver_sinkEnumerator]: none,
       }),
       {
-        [SinkLike_notify](this: ObserverLike & TProperties, next: unknown) {
+        [SinkLike_notify](
+          this: ObserverLike &
+            TProperties &
+            DelegatingLike<ObserverLike<readonly unknown[]>>,
+          next: unknown,
+        ) {
           const {
             [ZipObserver_sinkEnumerator]: sinkEnumerator,
             [ZipObserver_enumerators]: enumerators,
@@ -134,7 +139,7 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
             ReadonlyArray_map(Enumerator_getCurrent),
           );
 
-          this[ZipObserver_delegate][SinkLike_notify](zippedNext);
+          this[DelegatingLike_delegate][SinkLike_notify](zippedNext);
 
           if (shouldComplete(enumerators)) {
             pipe(this, Disposable_dispose());

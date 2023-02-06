@@ -1,5 +1,5 @@
 /// <reference types="./DelegatingAsyncEnumerator.mixin.d.ts" />
-import { mix, props } from '../../../__internal__/mixins.mjs';
+import { mix, include, delegatingMixin, init, props, DelegatingLike_delegate } from '../../../__internal__/mixins.mjs';
 import { pipe, none, unsafeCast, returns } from '../../../functions.mjs';
 import { SourceLike_move } from '../../../ix.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable } from '../../../rx.mjs';
@@ -8,19 +8,16 @@ import Dispatcher_dispatch from '../../../scheduling/__internal__/Dispatcher/Dis
 import Dispatcher_getScheduler from '../../../scheduling/__internal__/Dispatcher/Dispatcher.getScheduler.mjs';
 
 const DelegatingAsyncEnumerator_mixin = /*@__PURE__*/ (() => {
-    const DelegatingAsyncEnumeratorMixin_delegate = Symbol("DelegatingAsyncEnumeratorMixin_delegate");
-    return pipe(mix(function DelegatingAsyncEnumeratorMixin(instance, delegate) {
-        instance[DelegatingAsyncEnumeratorMixin_delegate] = delegate;
+    return pipe(mix(include(delegatingMixin()), function DelegatingAsyncEnumeratorMixin(instance, delegate) {
+        init(delegatingMixin(), instance, delegate);
         return instance;
-    }, props({
-        [DelegatingAsyncEnumeratorMixin_delegate]: none,
-    }), {
+    }, props({}), {
         [DispatcherLike_dispatch](_) {
-            pipe(this[DelegatingAsyncEnumeratorMixin_delegate], Dispatcher_dispatch(none));
+            pipe(this[DelegatingLike_delegate], Dispatcher_dispatch(none));
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            return Dispatcher_getScheduler(this[DelegatingAsyncEnumeratorMixin_delegate]);
+            return Dispatcher_getScheduler(this[DelegatingLike_delegate]);
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

@@ -1,5 +1,5 @@
 /// <reference types="./Observable.buffer.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, delegatingMixin, init, props, DelegatingLike_delegate } from '../../../__internal__/mixins.mjs';
 import { MAX_SAFE_INTEGER } from '../../../constants.mjs';
 import ReadonlyArray_toRunnableObservable from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable.mjs';
 import { pipe, isEmpty, none, getLength, isNumber, max } from '../../../functions.mjs';
@@ -23,15 +23,14 @@ import Observable_subscribe from './Observable.subscribe.mjs';
 const Observable_buffer = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
     const BufferObserver_buffer = Symbol("BufferObserver_buffer");
-    const BufferObserver_delegate = Symbol("BufferObserver_delegate");
     const BufferObserver_durationFunction = Symbol("BufferObserver_durationFunction");
     const BufferObserver_durationSubscription = Symbol("BufferObserver_durationSubscription");
     const BufferObserver_maxBufferSize = Symbol("BufferObserver_maxBufferSize");
-    const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
+    const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin, delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(delegatingMixin(), instance, delegate);
         instance[BufferObserver_buffer] = [];
-        instance[BufferObserver_delegate] = delegate;
         instance[BufferObserver_durationFunction] = durationFunction;
         instance[BufferObserver_durationSubscription] =
             DisposableRef_create(Disposable_disposed);
@@ -49,7 +48,6 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [BufferObserver_buffer]: none,
-        [BufferObserver_delegate]: none,
         [BufferObserver_durationFunction]: none,
         [BufferObserver_durationSubscription]: none,
         [BufferObserver_maxBufferSize]: 0,
@@ -62,7 +60,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                     Disposable_disposed;
                 const buffer = this[BufferObserver_buffer];
                 this[BufferObserver_buffer] = [];
-                this[BufferObserver_delegate][SinkLike_notify](buffer);
+                this[DelegatingLike_delegate][SinkLike_notify](buffer);
             };
             if (getLength(buffer) === maxBufferSize) {
                 doOnNotify();

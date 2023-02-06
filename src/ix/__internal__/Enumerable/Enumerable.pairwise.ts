@@ -1,5 +1,6 @@
 import {
-  Mutable,
+  DelegatingLike,
+  DelegatingLike_delegate,
   createInstanceFactory,
   include,
   init,
@@ -27,35 +28,26 @@ const Enumerable_pairwise: Pairwise<EnumerableLike>["pairwise"] =
   /*@__PURE__*/ (<T>() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin<[T, T]>();
 
-    const PairwiseEnumerator_delegate = Symbol("PairwiseEnumerator_delegate");
-    type TProperties = {
-      readonly [PairwiseEnumerator_delegate]: EnumeratorLike<T>;
-    };
-
     return pipe(
       createInstanceFactory(
         mix(
-          include(Disposable_delegatingMixin, typedMutableEnumeratorMixin),
+          include(Disposable_delegatingMixin(), typedMutableEnumeratorMixin),
           function PairwiseEnumerator(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
-              Mutable<TProperties>,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
             delegate: EnumeratorLike<T>,
           ): EnumeratorLike<readonly [T, T]> {
-            init(Disposable_delegatingMixin, instance, delegate);
+            init(Disposable_delegatingMixin(), instance, delegate);
             init(typedMutableEnumeratorMixin, instance);
-
-            instance[PairwiseEnumerator_delegate] = delegate;
 
             return instance;
           },
-          props<TProperties>({
-            [PairwiseEnumerator_delegate]: none,
-          }),
+          props({}),
           {
             [SourceLike_move](
-              this: TProperties & MutableEnumeratorLike<[T, T]>,
+              this: MutableEnumeratorLike<[T, T]> &
+                DelegatingLike<EnumeratorLike<T>>,
             ) {
-              const { [PairwiseEnumerator_delegate]: delegate } = this;
+              const { [DelegatingLike_delegate]: delegate } = this;
 
               const prev = Enumerator_hasCurrent(this)
                 ? Enumerator_getCurrent(this)[1]

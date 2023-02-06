@@ -1,4 +1,5 @@
 import {
+  DelegatingLike,
   Mutable,
   createInstanceFactory,
   include,
@@ -15,7 +16,6 @@ import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Di
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
 import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
 import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
-import { DelegatingEnumeratorLike } from "../ix.internal";
 import Enumerable_liftT from "./Enumerable.liftT";
 
 const Enumerable_takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
@@ -32,14 +32,14 @@ const Enumerable_takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
     return pipe(
       createInstanceFactory(
         mix(
-          include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
+          include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin),
           function TakeFirstEnumerator(
             instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
               Mutable<TProperties>,
             delegate: EnumeratorLike<T>,
             maxCount: number,
           ): EnumeratorLike<T> {
-            init(Disposable_delegatingMixin, instance, delegate);
+            init(Disposable_delegatingMixin(), instance, delegate);
             init(typedDelegatingEnumeratorMixin, instance, delegate);
 
             instance[TakeFirstEnumerator_maxCount] = maxCount;
@@ -51,7 +51,11 @@ const Enumerable_takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
             [TakeFirstEnumerator_count]: 0,
           }),
           {
-            [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+            [SourceLike_move](
+              this: TProperties &
+                DelegatingLike<EnumeratorLike<T>> &
+                EnumeratorLike<T>,
+            ) {
               if (
                 this[TakeFirstEnumerator_count] <
                 this[TakeFirstEnumerator_maxCount]

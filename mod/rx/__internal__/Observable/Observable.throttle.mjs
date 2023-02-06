@@ -22,7 +22,6 @@ import Observable_subscribe from './Observable.subscribe.mjs';
 const Observable_throttle = /*@__PURE__*/ (() => {
     const createThrottleObserver = (() => {
         const typedObserverMixin = Observer_mixin();
-        const ThrottleObserver_delegate = Symbol("ThrottleObserver_delegate");
         const ThrottleObserver_value = Symbol("ThrottleObserver_value");
         const ThrottleObserver_hasValue = Symbol("ThrottleObserver_hasValue");
         const ThrottleObserver_durationSubscription = Symbol("ThrottleObserver_durationSubscription");
@@ -35,7 +34,6 @@ const Observable_throttle = /*@__PURE__*/ (() => {
         return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function ThrottleObserver(instance, delegate, durationFunction, mode) {
             init(Disposable_mixin, instance);
             init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-            instance[ThrottleObserver_delegate] = delegate;
             instance[ThrottleObserver_durationFunction] = durationFunction;
             instance[ThrottleObserver_mode] = mode;
             instance[ThrottleObserver_durationSubscription] = pipe(DisposableRef_create(Disposable_disposed), Disposable_addTo(delegate));
@@ -44,7 +42,7 @@ const Observable_throttle = /*@__PURE__*/ (() => {
                     const value = instance[ThrottleObserver_value];
                     instance[ThrottleObserver_value] = none;
                     instance[ThrottleObserver_hasValue] = false;
-                    instance[ThrottleObserver_delegate][SinkLike_notify](value);
+                    delegate[SinkLike_notify](value);
                     setupDurationSubscription(instance, value);
                 }
             };
@@ -57,7 +55,6 @@ const Observable_throttle = /*@__PURE__*/ (() => {
             }));
             return instance;
         }, props({
-            [ThrottleObserver_delegate]: none,
             [ThrottleObserver_value]: none,
             [ThrottleObserver_hasValue]: false,
             [ThrottleObserver_durationSubscription]: none,

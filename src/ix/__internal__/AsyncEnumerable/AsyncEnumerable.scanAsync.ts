@@ -41,7 +41,7 @@ const AsyncEnumerable_scanAsync: ScanAsync<
 
   const creatScanAsyncAsyncEnumerator = createInstanceFactory(
     mix(
-      include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()),
+      include(Disposable_delegatingMixin(), DelegatingAsyncEnumerator_mixin()),
       function ScanAsyncAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TAcc>,
@@ -54,7 +54,7 @@ const AsyncEnumerable_scanAsync: ScanAsync<
         reducer: AsyncReducer<ObservableLike, T, TAcc>,
         initialValue: Factory<TAcc>,
       ): AsyncEnumeratorLike<TAcc> {
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
 
         instance[ScanAsyncAsyncEnumerator_obs] = pipe(

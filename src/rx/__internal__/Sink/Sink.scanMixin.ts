@@ -1,4 +1,6 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mixin3,
   Mutable,
   include,
@@ -17,7 +19,6 @@ import {
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const Sink_scanMixin: <T, TAcc>() => Mixin3<
   SinkLike<T>,
@@ -29,14 +30,13 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
   const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
 
   type TProperties = {
-    readonly [DelegatingSinkLike_delegate]: SinkLike<TAcc>;
     readonly [ScanSinkMixin_reducer]: Reducer<T, TAcc>;
     [ScanSinkMixin_acc]: TAcc;
   };
 
   return returns(
     mix(
-      include(Disposable_delegatingMixin),
+      include(Disposable_delegatingMixin<SinkLike<TAcc>>()),
       function ScanSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -44,9 +44,8 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
       ): SinkLike<T> {
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin<SinkLike<TAcc>>(), instance, delegate);
 
-        instance[DelegatingSinkLike_delegate] = delegate;
         instance[ScanSinkMixin_reducer] = reducer;
 
         try {
@@ -59,18 +58,20 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
         return instance;
       },
       props<TProperties>({
-        [DelegatingSinkLike_delegate]: none,
         [ScanSinkMixin_reducer]: none,
         [ScanSinkMixin_acc]: none,
       }),
       {
-        [SinkLike_notify](this: TProperties, next: T) {
+        [SinkLike_notify](
+          this: TProperties & DelegatingLike<SinkLike<TAcc>>,
+          next: T,
+        ) {
           const nextAcc = this[ScanSinkMixin_reducer](
             this[ScanSinkMixin_acc],
             next,
           );
           this[ScanSinkMixin_acc] = nextAcc;
-          this[DelegatingSinkLike_delegate][SinkLike_notify](nextAcc);
+          this[DelegatingLike_delegate][SinkLike_notify](nextAcc);
         },
       },
     ),

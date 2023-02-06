@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mixin2,
   Mutable,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -14,7 +17,6 @@ import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposa
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
 import Sink_notify from "./Sink.notify";
 
 const Sink_satisfyMixin: <
@@ -35,12 +37,11 @@ const Sink_satisfyMixin: <
   const SatisfySinkMixin_predicate = Symbol("SatisfySinkMixin_predicate");
 
   type TProperties = {
-    readonly [DelegatingSinkLike_delegate]: SinkLike<boolean>;
     readonly [SatisfySinkMixin_predicate]: Predicate<T>;
   };
 
   return mix(
-    include(Disposable_mixin),
+    include(Disposable_mixin, delegatingMixin()),
     function SatisfySinkMixin(
       instance: Mutable<TProperties> &
         Pick<SinkLike<T>, typeof SinkLike_notify>,
@@ -48,7 +49,8 @@ const Sink_satisfyMixin: <
       predicate: Predicate<T>,
     ): SinkLike<T> {
       init(Disposable_mixin, instance);
-      instance[DelegatingSinkLike_delegate] = delegate;
+      init(delegatingMixin(), instance, delegate);
+
       instance[SatisfySinkMixin_predicate] = predicate;
 
       pipe(
@@ -68,14 +70,13 @@ const Sink_satisfyMixin: <
       return instance;
     },
     props<TProperties>({
-      [DelegatingSinkLike_delegate]: none,
       [SatisfySinkMixin_predicate]: none,
     }),
     {
-      [SinkLike_notify](this: TProperties, next: T) {
+      [SinkLike_notify](this: TProperties & DelegatingLike<TSink>, next: T) {
         if (this[SatisfySinkMixin_predicate](next)) {
           pipe(
-            this[DelegatingSinkLike_delegate],
+            this[DelegatingLike_delegate],
             Sink_notify(!defaultResult),
             Disposable_dispose(),
           );

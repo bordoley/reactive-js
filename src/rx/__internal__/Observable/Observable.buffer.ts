@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -47,7 +50,6 @@ const Observable_buffer: <T>(options?: {
   const typedObserverMixin = Observer_mixin<T>();
 
   const BufferObserver_buffer = Symbol("BufferObserver_buffer");
-  const BufferObserver_delegate = Symbol("BufferObserver_delegate");
   const BufferObserver_durationFunction = Symbol(
     "BufferObserver_durationFunction",
   );
@@ -58,7 +60,6 @@ const Observable_buffer: <T>(options?: {
 
   type TProperties = {
     [BufferObserver_buffer]: T[];
-    readonly [BufferObserver_delegate]: ObserverLike<readonly T[]>;
     readonly [BufferObserver_durationFunction]: Function1<T, ObservableLike>;
     readonly [BufferObserver_durationSubscription]: DisposableRefLike;
     readonly [BufferObserver_maxBufferSize]: number;
@@ -66,7 +67,7 @@ const Observable_buffer: <T>(options?: {
 
   const createBufferObserver = createInstanceFactory(
     mix(
-      include(typedObserverMixin, Disposable_mixin),
+      include(typedObserverMixin, Disposable_mixin, delegatingMixin()),
       function BufferObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -76,9 +77,9 @@ const Observable_buffer: <T>(options?: {
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(delegatingMixin(), instance, delegate);
 
         instance[BufferObserver_buffer] = [];
-        instance[BufferObserver_delegate] = delegate;
         instance[BufferObserver_durationFunction] = durationFunction;
         instance[BufferObserver_durationSubscription] =
           DisposableRef_create(Disposable_disposed);
@@ -106,13 +107,17 @@ const Observable_buffer: <T>(options?: {
       },
       props<TProperties>({
         [BufferObserver_buffer]: none,
-        [BufferObserver_delegate]: none,
         [BufferObserver_durationFunction]: none,
         [BufferObserver_durationSubscription]: none,
         [BufferObserver_maxBufferSize]: 0,
       }),
       {
-        [SinkLike_notify](this: TProperties & ObserverLike<T>, next: T) {
+        [SinkLike_notify](
+          this: TProperties &
+            ObserverLike<T> &
+            DelegatingLike<ObserverLike<readonly T[]>>,
+          next: T,
+        ) {
           const {
             [BufferObserver_buffer]: buffer,
             [BufferObserver_maxBufferSize]: maxBufferSize,
@@ -127,7 +132,7 @@ const Observable_buffer: <T>(options?: {
             const buffer = this[BufferObserver_buffer];
             this[BufferObserver_buffer] = [];
 
-            this[BufferObserver_delegate][SinkLike_notify](buffer);
+            this[DelegatingLike_delegate][SinkLike_notify](buffer);
           };
 
           if (getLength(buffer) === maxBufferSize) {

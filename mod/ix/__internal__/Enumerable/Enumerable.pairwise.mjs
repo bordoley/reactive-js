@@ -1,5 +1,5 @@
 /// <reference types="./Enumerable.pairwise.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props, DelegatingLike_delegate } from '../../../__internal__/mixins.mjs';
 import { pipe, none, isSome, returns } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
@@ -13,17 +13,13 @@ import Enumerable_lift from './Enumerable.lift.mjs';
 const Enumerable_pairwise = 
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
-    const PairwiseEnumerator_delegate = Symbol("PairwiseEnumerator_delegate");
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedMutableEnumeratorMixin), function PairwiseEnumerator(instance, delegate) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin(), typedMutableEnumeratorMixin), function PairwiseEnumerator(instance, delegate) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(typedMutableEnumeratorMixin, instance);
-        instance[PairwiseEnumerator_delegate] = delegate;
         return instance;
-    }, props({
-        [PairwiseEnumerator_delegate]: none,
-    }), {
+    }, props({}), {
         [SourceLike_move]() {
-            const { [PairwiseEnumerator_delegate]: delegate } = this;
+            const { [DelegatingLike_delegate]: delegate } = this;
             const prev = Enumerator_hasCurrent(this)
                 ? Enumerator_getCurrent(this)[1]
                 : Enumerator_move(delegate)

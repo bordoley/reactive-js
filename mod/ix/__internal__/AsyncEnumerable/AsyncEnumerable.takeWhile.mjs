@@ -17,8 +17,8 @@ import AsyncEnumerable_liftT from './AsyncEnumerable.liftT.mjs';
 const AsyncEnumerable_takeWhile = 
 /*@__PURE__*/ (() => {
     const TakeWhileAsyncEnumerator_obs = Symbol("TakeWhileAsyncEnumerator_obs");
-    const createTakeWhileAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()), function TakeWhileAsyncEnumerator(instance, delegate, predicate, inclusive) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    const createTakeWhileAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin(), DelegatingAsyncEnumerator_mixin()), function TakeWhileAsyncEnumerator(instance, delegate, predicate, inclusive) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
         instance[TakeWhileAsyncEnumerator_obs] = pipe(delegate, Observable_takeWhile(predicate, { inclusive }), Observable_multicast(Dispatcher_getScheduler(delegate)), Disposable_add(instance));
         return instance;

@@ -6,14 +6,12 @@ import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.a
 import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
 import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
 import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
-import { DelegatingSinkLike_delegate } from '../rx.internal.mjs';
 
 const Sink_takeLastMixin = (fromArray) => {
     const TakeLastSinkMixin_last = Symbol("TakeLastSinkMixin_last");
     const TakeLastSinkMixin_takeLastCount = Symbol("TakeLastSinkMixin_takeLastCount");
     return mix(include(Disposable_mixin), function TakeLastSinkMixin(instance, delegate, takeLastCount) {
         init(Disposable_mixin, instance);
-        instance[DelegatingSinkLike_delegate] = delegate;
         instance[TakeLastSinkMixin_takeLastCount] = takeLastCount;
         instance[TakeLastSinkMixin_last] = [];
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
@@ -21,7 +19,6 @@ const Sink_takeLastMixin = (fromArray) => {
         }));
         return instance;
     }, props({
-        [DelegatingSinkLike_delegate]: none,
         [TakeLastSinkMixin_takeLastCount]: 0,
         [TakeLastSinkMixin_last]: none,
     }), {

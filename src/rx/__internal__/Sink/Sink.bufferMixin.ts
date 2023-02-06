@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mixin2,
   Mutable,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -13,7 +16,6 @@ import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const Sink_bufferMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -32,13 +34,12 @@ const Sink_bufferMixin: <
   const BufferSinkMixin_buffer = Symbol("BufferSinkMixin_buffer");
 
   type TProperties = {
-    readonly [DelegatingSinkLike_delegate]: TSink;
     readonly [BufferSinkMixin_maxBufferSize]: number;
     [BufferSinkMixin_buffer]: T[];
   };
 
   return mix(
-    include(Disposable_mixin),
+    include(Disposable_mixin, delegatingMixin()),
     function BufferSinkMixin(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
@@ -46,8 +47,8 @@ const Sink_bufferMixin: <
       maxBufferSize: number,
     ): SinkLike<T> {
       init(Disposable_mixin, instance);
+      init(delegatingMixin<TSink>(), instance, delegate);
 
-      instance[DelegatingSinkLike_delegate] = delegate;
       instance[BufferSinkMixin_maxBufferSize] = maxBufferSize;
       instance[BufferSinkMixin_buffer] = [];
 
@@ -59,13 +60,13 @@ const Sink_bufferMixin: <
           instance[BufferSinkMixin_buffer] = [];
 
           if (isEmpty(buffer)) {
-            pipe(instance[DelegatingSinkLike_delegate], Disposable_dispose());
+            pipe(instance[DelegatingLike_delegate], Disposable_dispose());
           } else {
             pipe(
               [buffer],
               fromArray,
               ReactiveContainer_sinkInto<C, TSink, readonly T[]>(
-                instance[DelegatingSinkLike_delegate],
+                instance[DelegatingLike_delegate],
               ),
             );
           }
@@ -75,12 +76,11 @@ const Sink_bufferMixin: <
       return instance;
     },
     props<TProperties>({
-      [DelegatingSinkLike_delegate]: none,
       [BufferSinkMixin_maxBufferSize]: 0,
       [BufferSinkMixin_buffer]: none,
     }),
     {
-      [SinkLike_notify](this: TProperties, next: T) {
+      [SinkLike_notify](this: TProperties & DelegatingLike<TSink>, next: T) {
         const {
           [BufferSinkMixin_buffer]: buffer,
           [BufferSinkMixin_maxBufferSize]: maxBufferSize,
@@ -92,7 +92,7 @@ const Sink_bufferMixin: <
           const buffer = this[BufferSinkMixin_buffer];
           this[BufferSinkMixin_buffer] = [];
 
-          this[DelegatingSinkLike_delegate][SinkLike_notify](buffer);
+          this[DelegatingLike_delegate][SinkLike_notify](buffer);
         }
       },
     },

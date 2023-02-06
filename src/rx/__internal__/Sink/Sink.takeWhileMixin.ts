@@ -1,4 +1,5 @@
 import {
+  DelegatingLike_delegate,
   Mixin3,
   Mutable,
   include,
@@ -8,10 +9,9 @@ import {
 } from "../../../__internal__/mixins";
 import { Predicate, none, pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import { DisposableLike } from "../../../util";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
+import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal";
 
 const Sink_takeWhileMixin: <T>() => Mixin3<
   SinkLike<T>,
@@ -23,14 +23,13 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
   const TakeWhileSinkMixin_inclusive = Symbol("TakeWhileSinkMixin_inclusive");
 
   type TProperties = {
-    readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
     readonly [TakeWhileSinkMixin_predicate]: Predicate<T>;
     readonly [TakeWhileSinkMixin_inclusive]: boolean;
   };
 
   return returns(
     mix(
-      include(Disposable_delegatingMixin),
+      include(Disposable_delegatingMixin<SinkLike<T>>()),
       function TakeWhileSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -38,25 +37,26 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
         predicate: Predicate<T>,
         inclusive: boolean,
       ): SinkLike<T> {
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_delegatingMixin<SinkLike<T>>(), instance, delegate);
 
-        instance[DelegatingSinkLike_delegate] = delegate;
         instance[TakeWhileSinkMixin_predicate] = predicate;
         instance[TakeWhileSinkMixin_inclusive] = inclusive;
 
         return instance;
       },
       props<TProperties>({
-        [DelegatingSinkLike_delegate]: none,
         [TakeWhileSinkMixin_predicate]: none,
         [TakeWhileSinkMixin_inclusive]: none,
       }),
       {
-        [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
+        [SinkLike_notify](
+          this: TProperties & DelegatingDisposableLike<SinkLike<T>>,
+          next: T,
+        ) {
           const satisfiesPredicate = this[TakeWhileSinkMixin_predicate](next);
 
           if (satisfiesPredicate || this[TakeWhileSinkMixin_inclusive]) {
-            this[DelegatingSinkLike_delegate][SinkLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
           }
 
           if (!satisfiesPredicate) {

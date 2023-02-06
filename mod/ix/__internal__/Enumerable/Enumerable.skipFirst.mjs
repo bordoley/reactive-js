@@ -13,8 +13,8 @@ const Enumerable_skipFirst =
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
     const SkipFirstEnumerator_skipCount = Symbol("SkipFirstEnumerator_skipCount");
     const SkipFirstEnumerator_count = Symbol("SkipFirstEnumerator_count");
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function SkipFirstEnumerator(instance, delegate, skipCount) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin), function SkipFirstEnumerator(instance, delegate, skipCount) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         instance[SkipFirstEnumerator_skipCount] = skipCount;
         instance[SkipFirstEnumerator_count] = 0;

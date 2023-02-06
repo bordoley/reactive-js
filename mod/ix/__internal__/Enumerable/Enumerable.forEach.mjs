@@ -13,8 +13,8 @@ import Enumerable_liftT from './Enumerable.liftT.mjs';
 const Enumerable_forEach = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
     const ForEachEnumerator_effect = Symbol("ForEachEnumerator_effect");
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function ForEachEnumerator(instance, delegate, effect) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin), function ForEachEnumerator(instance, delegate, effect) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         instance[ForEachEnumerator_effect] = effect;
         return instance;

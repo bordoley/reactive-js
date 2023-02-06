@@ -17,8 +17,8 @@ import AsyncEnumerable_liftT from './AsyncEnumerable.liftT.mjs';
 
 const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
     const KeepAsyncEnumerator_obs = Symbol("KeepAsyncEnumerator_obs");
-    const createKeepAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin, DelegatingAsyncEnumerator_mixin()), function KeepAsyncEnumerator(instance, delegate, predicate) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    const createKeepAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin(), DelegatingAsyncEnumerator_mixin()), function KeepAsyncEnumerator(instance, delegate, predicate) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
         instance[KeepAsyncEnumerator_obs] = pipe(delegate, Observable_forEach(x => {
             if (!predicate(x)) {

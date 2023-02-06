@@ -15,8 +15,8 @@ const Enumerable_distinctUntilChanged =
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
     const DistinctUntilChangedEnumerator_equality = Symbol("DistinctUntilChangedEnumerator_equality");
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function DistinctUntilChangedEnumerator(instance, delegate, equality) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin), function DistinctUntilChangedEnumerator(instance, delegate, equality) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         instance[DistinctUntilChangedEnumerator_equality] = equality;
         return instance;

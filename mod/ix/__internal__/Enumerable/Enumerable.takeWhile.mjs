@@ -17,8 +17,8 @@ const Enumerable_takeWhile =
     const TakeWhileEnumerator_predicate = Symbol("TakeWhileEnumerator_predicate");
     const TakeWhileEnumerator_inclusive = Symbol("TakeWhileEnumerator_inclusive");
     const TakeWhileEnumerator_done = Symbol("TakeWhileEnumerator_done");
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function TakeWhileEnumerator(instance, delegate, predicate, inclusive) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin), function TakeWhileEnumerator(instance, delegate, predicate, inclusive) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         instance[TakeWhileEnumerator_predicate] = predicate;
         instance[TakeWhileEnumerator_inclusive] = inclusive;

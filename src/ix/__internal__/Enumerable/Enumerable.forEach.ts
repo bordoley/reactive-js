@@ -1,4 +1,5 @@
 import {
+  DelegatingLike,
   Mutable,
   createInstanceFactory,
   include,
@@ -16,7 +17,6 @@ import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable
 import DelegatingEnumerator_mixin from "../DelegatingEnumerator/DelegatingEnumerator.mixin";
 import DelegatingEnumerator_move from "../DelegatingEnumerator/DelegatingEnumerator.move";
 import Enumerator_getCurrent from "../Enumerator/Enumerator.getCurrent";
-import { DelegatingEnumeratorLike } from "../ix.internal";
 import Enumerable_liftT from "./Enumerable.liftT";
 
 const Enumerable_forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
@@ -33,14 +33,14 @@ const Enumerable_forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
   return pipe(
     createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin),
+        include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin),
         function ForEachEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
           delegate: EnumeratorLike<T>,
           effect: SideEffect1<T>,
         ): EnumeratorLike<T> {
-          init(Disposable_delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin(), instance, delegate);
           init(typedDelegatingEnumeratorMixin, instance, delegate);
 
           instance[ForEachEnumerator_effect] = effect;
@@ -49,7 +49,11 @@ const Enumerable_forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
         },
         props<TProperties>({ [ForEachEnumerator_effect]: none }),
         {
-          [SourceLike_move](this: TProperties & DelegatingEnumeratorLike<T>) {
+          [SourceLike_move](
+            this: TProperties &
+              DelegatingLike<EnumeratorLike<T>> &
+              EnumeratorLike<T>,
+          ) {
             if (DelegatingEnumerator_move(this)) {
               try {
                 this[ForEachEnumerator_effect](Enumerator_getCurrent(this));

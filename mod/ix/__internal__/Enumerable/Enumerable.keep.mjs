@@ -1,19 +1,18 @@
 /// <reference types="./Enumerable.keep.d.ts" />
-import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props, DelegatingLike_delegate } from '../../../__internal__/mixins.mjs';
 import StatefulContainer_keep from '../../../containers/__internal__/StatefulContainer/StatefulContainer.keep.mjs';
 import { pipe, none, error } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_hasCurrent, EnumeratorLike_current } from '../../../ix.mjs';
 import Disposable_delegatingMixin from '../../../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
 import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
 import DelegatingEnumerator_mixin from '../DelegatingEnumerator/DelegatingEnumerator.mixin.mjs';
-import { DelegatingEnumeratorLike_delegate } from '../ix.internal.mjs';
 import Enumerable_liftT from './Enumerable.liftT.mjs';
 
 const Enumerable_keep = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
     const KeepEnumerator_predicate = Symbol("KeepEnumerator_predicate");
-    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin, typedDelegatingEnumeratorMixin), function KeepEnumerator(instance, delegate, predicate) {
-        init(Disposable_delegatingMixin, instance, delegate);
+    return pipe(createInstanceFactory(mix(include(Disposable_delegatingMixin(), typedDelegatingEnumeratorMixin), function KeepEnumerator(instance, delegate, predicate) {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(typedDelegatingEnumeratorMixin, instance, delegate);
         instance[KeepEnumerator_predicate] = predicate;
         return instance;
@@ -21,8 +20,8 @@ const Enumerable_keep = /*@__PURE__*/ (() => {
         [SourceLike_move]() {
             const { [KeepEnumerator_predicate]: predicate } = this;
             try {
-                while ((this[DelegatingEnumeratorLike_delegate][SourceLike_move](),
-                    this[DelegatingEnumeratorLike_delegate][EnumeratorLike_hasCurrent]) &&
+                while ((this[DelegatingLike_delegate][SourceLike_move](),
+                    this[DelegatingLike_delegate][EnumeratorLike_hasCurrent]) &&
                     !predicate(this[EnumeratorLike_current])) { }
             }
             catch (e) {

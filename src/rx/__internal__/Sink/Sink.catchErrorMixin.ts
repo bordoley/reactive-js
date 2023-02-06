@@ -1,6 +1,8 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mixin2,
-  Mutable,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -21,7 +23,6 @@ import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.m
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
 import Disposable_onError from "../../../util/__internal__/Disposable/Disposable.onError";
 import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
 
 const Sink_catchErrorMixin: <
   C extends ReactiveContainerLike<TSink>,
@@ -33,22 +34,16 @@ const Sink_catchErrorMixin: <
     TSink extends SinkLike<T>,
     T,
   >() => {
-    type TProperties = {
-      readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
-    };
-
     return returns(
       mix(
-        include(Disposable_mixin),
+        include(Disposable_mixin, delegatingMixin()),
         function CatchErrorSinkMixin(
-          instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
-            Mutable<TProperties>,
+          instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
           delegate: SinkLike<T>,
           errorHandler: Function1<unknown, C | void>,
         ): SinkLike<T> {
           init(Disposable_mixin, instance);
-
-          instance[DelegatingSinkLike_delegate] = delegate;
+          init(delegatingMixin(), instance, delegate);
 
           pipe(
             instance,
@@ -72,12 +67,10 @@ const Sink_catchErrorMixin: <
 
           return instance;
         },
-        props<TProperties>({
-          [DelegatingSinkLike_delegate]: none,
-        }),
+        props({}),
         {
-          [SinkLike_notify](this: TProperties, next: T) {
-            this[DelegatingSinkLike_delegate][SinkLike_notify](next);
+          [SinkLike_notify](this: DelegatingLike<SinkLike<T>>, next: T) {
+            this[DelegatingLike_delegate][SinkLike_notify](next);
           },
         },
       ),

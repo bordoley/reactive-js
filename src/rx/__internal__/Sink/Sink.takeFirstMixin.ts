@@ -1,4 +1,5 @@
 import {
+  DelegatingLike_delegate,
   Mixin2,
   Mutable,
   include,
@@ -6,12 +7,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins";
-import { none, pipe, returns } from "../../../functions";
+import { pipe, returns } from "../../../functions";
 import { SinkLike, SinkLike_notify } from "../../../rx";
-import { DisposableLike } from "../../../util";
 import Disposable_delegatingMixin from "../../../util/__internal__/Disposable/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import { DelegatingSinkLike_delegate } from "../rx.internal";
+import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal";
 
 const Sink_takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
   /*@__PURE__*/ (<T>() => {
@@ -19,23 +19,21 @@ const Sink_takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
     const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
 
     type TProperties = {
-      readonly [DelegatingSinkLike_delegate]: SinkLike<T>;
       readonly [TakeFirstSinkMixin_takeCount]: number;
       [TakeFirstSinkMixin_count]: number;
     };
 
     return returns(
       mix(
-        include(Disposable_delegatingMixin),
+        include(Disposable_delegatingMixin<SinkLike<T>>()),
         function TakeFirstSinkMixin(
           instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
             Mutable<TProperties>,
           delegate: SinkLike<T>,
           takeCount: number,
         ): SinkLike<T> {
-          init(Disposable_delegatingMixin, instance, delegate);
+          init(Disposable_delegatingMixin<SinkLike<T>>(), instance, delegate);
 
-          instance[DelegatingSinkLike_delegate] = delegate;
           instance[TakeFirstSinkMixin_takeCount] = takeCount;
 
           if (takeCount === 0) {
@@ -45,14 +43,16 @@ const Sink_takeFirstMixin: <T>() => Mixin2<SinkLike<T>, SinkLike<T>, number> =
           return instance;
         },
         props<TProperties>({
-          [DelegatingSinkLike_delegate]: none,
           [TakeFirstSinkMixin_count]: 0,
           [TakeFirstSinkMixin_takeCount]: 0,
         }),
         {
-          [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
+          [SinkLike_notify](
+            this: TProperties & DelegatingDisposableLike<SinkLike<T>>,
+            next: T,
+          ) {
             this[TakeFirstSinkMixin_count]++;
-            this[DelegatingSinkLike_delegate][SinkLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
             if (
               this[TakeFirstSinkMixin_count] >=
               this[TakeFirstSinkMixin_takeCount]

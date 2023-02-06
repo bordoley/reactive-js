@@ -1,6 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -30,7 +33,6 @@ import Sink_notifySink from "../Sink/Sink.notifySink";
 const HigherOrderObservable_currentRef = Symbol(
   "HigherOrderObservable_currentRef",
 );
-const HigherOrderObservable_delegate = Symbol("HigherOrderObservable_delegate");
 
 const HigherOrderObservable_switchAll = <C extends ObservableLike>(
   lift: <T>(
@@ -44,22 +46,23 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
 
     type TProperties = {
       readonly [HigherOrderObservable_currentRef]: DisposableRefLike;
-      readonly [HigherOrderObservable_delegate]: ObserverLike<T>;
     };
 
-    function onDispose(this: TProperties & DisposableLike) {
+    function onDispose(
+      this: TProperties & DisposableLike & DelegatingLike<ObserverLike<T>>,
+    ) {
       if (
         Disposable_isDisposed(
           this[HigherOrderObservable_currentRef][MutableRefLike_current],
         )
       ) {
-        pipe(this[HigherOrderObservable_delegate], Disposable_dispose());
+        pipe(this[DelegatingLike_delegate], Disposable_dispose());
       }
     }
 
     return createInstanceFactory(
       mix(
-        include(Disposable_mixin, typedObserverMixin),
+        include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
         function SwitchAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -70,8 +73,8 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
         ): ObserverLike<ContainerOf<C, T>> {
           init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+          init(delegatingMixin(), instance, delegate);
 
-          instance[HigherOrderObservable_delegate] = delegate;
           instance[HigherOrderObservable_currentRef] = pipe(
             DisposableRef_create(Disposable_disposed),
             Disposable_addTo(delegate),
@@ -87,28 +90,25 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
         },
         props<TProperties>({
           [HigherOrderObservable_currentRef]: none,
-          [HigherOrderObservable_delegate]: none,
         }),
         {
           [SinkLike_notify](
             this: TProperties &
               ObserverLike<ContainerOf<C, T>> &
-              DisposableRefLike,
+              DisposableRefLike &
+              DelegatingLike<ObserverLike<T>>,
             next: ContainerOf<C, T>,
           ) {
             this[HigherOrderObservable_currentRef][MutableRefLike_current] =
               pipe(
                 next,
                 Observable_forEach(
-                  Sink_notifySink(this[HigherOrderObservable_delegate]),
+                  Sink_notifySink(this[DelegatingLike_delegate]),
                 ),
                 Observable_subscribe(Observer_getScheduler(this)),
                 Disposable_onComplete(() => {
                   if (Disposable_isDisposed(this)) {
-                    pipe(
-                      this[HigherOrderObservable_delegate],
-                      Disposable_dispose(),
-                    );
+                    pipe(this[DelegatingLike_delegate], Disposable_dispose());
                   }
                 }),
               );

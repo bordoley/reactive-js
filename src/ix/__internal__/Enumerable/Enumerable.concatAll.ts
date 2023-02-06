@@ -1,13 +1,15 @@
 import {
-  Mutable,
+  DelegatingLike,
+  DelegatingLike_delegate,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins";
 import { ConcatAll } from "../../../containers";
-import { none, pipe, returns } from "../../../functions";
+import { pipe, returns } from "../../../functions";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -35,13 +37,6 @@ const Enumerable_concatAll: ConcatAll<EnumerableLike>["concatAll"] =
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
     const typedDisposableRefMixin = DisposableRef_mixin<EnumeratorLike<T>>();
 
-    const ConcatAllEnumerator_delegate = Symbol("ConcatAllEnumerator_delegate");
-    type TProperties = {
-      readonly [ConcatAllEnumerator_delegate]: EnumeratorLike<
-        EnumerableLike<T>
-      >;
-    };
-
     return pipe(
       createInstanceFactory(
         mix(
@@ -49,32 +44,29 @@ const Enumerable_concatAll: ConcatAll<EnumerableLike>["concatAll"] =
             Disposable_mixin,
             typedDisposableRefMixin,
             typedMutableEnumeratorMixin,
+            delegatingMixin(),
           ),
           function ConcatAllEnumerator(
-            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
-              Mutable<TProperties>,
+            instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
             delegate: EnumeratorLike<EnumerableLike<T>>,
           ): EnumeratorLike<T> {
             init(Disposable_mixin, instance);
             init(typedDisposableRefMixin, instance, Disposable_disposed);
             init(typedMutableEnumeratorMixin, instance);
-
-            instance[ConcatAllEnumerator_delegate] = delegate;
+            init(delegatingMixin(), instance, delegate);
 
             pipe(instance, Disposable_add(delegate));
 
             return instance;
           },
-          props<TProperties>({
-            [ConcatAllEnumerator_delegate]: none,
-          }),
+          props({}),
           {
             [SourceLike_move](
-              this: TProperties &
+              this: DelegatingLike<EnumeratorLike<EnumerableLike<T>>> &
                 MutableEnumeratorLike<T> &
                 MutableRefLike<EnumeratorLike<T>>,
             ) {
-              const { [ConcatAllEnumerator_delegate]: delegate } = this;
+              const { [DelegatingLike_delegate]: delegate } = this;
               const innerEnumerator = MutableRef_get(this);
 
               if (
