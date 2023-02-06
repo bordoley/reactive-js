@@ -10,10 +10,8 @@ import {
 import { toReadonlyArray as enumerableToReadonlyArray } from "../../ix/Enumerable";
 import { RunnableObservableLike } from "../../rx";
 import RunnableObservable, {
-  buffer,
   empty,
   exhaust,
-  fromArray,
   map,
   merge,
   switchAll,
@@ -27,24 +25,32 @@ import { dispose } from "../../util/Disposable";
 import {
   bufferTests,
   catchErrorTests,
+  concatAllTests,
+  concatMapTests,
   concatTests,
+  concatWithTests,
   decodeWithCharsetTests,
   distinctUntilChangedTests,
+  endWithTests,
   everySatisfyTests,
   forEachTests,
+  ignoreElementsTests,
   keepTests,
   mapTests,
+  mapToTests,
   pairwiseTests,
   reduceTests,
   scanAsyncTests,
   scanTests,
   skipFirstTests,
   someSatisfyTests,
+  startWithTests,
   takeFirstTests,
   takeLastTests,
   takeWhileTests,
   throwIfEmptyTests,
   zipTests as zipOperatorTests,
+  zipWithTests,
 } from "../operators";
 import {
   describe,
@@ -96,7 +102,7 @@ const mergeTests = describe(
       pipeLazy(
         merge(
           pipe([1, 4, 7], toRunnableObservable({ delay: 2 })),
-          throws({ fromArray, map }, { delay: 5 })(raise),
+          throws(RunnableObservable, { delay: 5 })(raise),
         ),
         toReadonlyArray(),
       ),
@@ -121,10 +127,7 @@ const switchAllTests = describe(
     pipeLazy(
       pipeLazy(
         raise,
-        throws({
-          fromArray,
-          map,
-        }),
+        throws(RunnableObservable),
         switchAll(),
         toReadonlyArray(),
       ),
@@ -188,11 +191,7 @@ const toPromiseTests = describe(
 
 const zipTests = describe(
   "zip",
-  zipOperatorTests<RunnableObservableLike>({
-    fromArray,
-    zip,
-    toReadonlyArray,
-  }),
+  zipOperatorTests<RunnableObservableLike>(RunnableObservable),
   test(
     "with synchronous and non-synchronous sources",
     pipeLazy(
@@ -227,7 +226,7 @@ const zipTests = describe(
     pipeLazy(
       pipeLazy(
         zip(
-          pipe(raise, throws({ fromArray, map })),
+          pipe(raise, throws(RunnableObservable)),
           pipe([1, 2, 3], toRunnableObservable()),
         ),
         map<readonly [unknown, number], number>(([, b]) => b),
@@ -240,35 +239,39 @@ const zipTests = describe(
 
 testModule(
   "RunnableObservable",
-  bufferTests({
-    fromArray,
-    buffer,
-    toReadonlyArray,
-  }),
+  bufferTests(RunnableObservable),
   catchErrorTests(RunnableObservable),
   concatTests<RunnableObservableLike>(RunnableObservable),
+  concatAllTests<RunnableObservableLike>(RunnableObservable),
+  concatMapTests(RunnableObservable),
+  concatWithTests(RunnableObservable),
   decodeWithCharsetTests(RunnableObservable),
   distinctUntilChangedTests(RunnableObservable),
+  endWithTests(RunnableObservable),
   everySatisfyTests(RunnableObservable),
   exhaustTests,
   forEachTests(RunnableObservable),
+  ignoreElementsTests(RunnableObservable),
   keepTests(RunnableObservable),
   mapTests(RunnableObservable),
+  mapToTests(RunnableObservable),
   mergeTests,
   pairwiseTests(RunnableObservable),
   reduceTests(RunnableObservable),
   scanTests(RunnableObservable),
   scanAsyncTests<RunnableObservableLike, RunnableObservableLike>(
     RunnableObservable,
-    { fromArray },
+    RunnableObservable,
   ),
   skipFirstTests(RunnableObservable),
   someSatisfyTests(RunnableObservable),
+  startWithTests(RunnableObservable),
   switchAllTests,
   takeFirstTests(RunnableObservable),
   takeLastTests(RunnableObservable),
   takeWhileTests(RunnableObservable),
   throwIfEmptyTests(RunnableObservable),
+  zipWithTests(RunnableObservable),
   toEnumerableTests,
   toPromiseTests,
   zipTests,

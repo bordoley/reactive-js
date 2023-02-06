@@ -1,6 +1,5 @@
 /// <reference types="./isomorphic.tests.d.ts" />
 import './modules/AsyncEnumerable.test.mjs';
-import './modules/Container.test.mjs';
 import './modules/Disposable.test.mjs';
 import './modules/Enumerable.test.mjs';
 import './modules/Flowable.test.mjs';

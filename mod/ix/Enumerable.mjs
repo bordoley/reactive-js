@@ -63,6 +63,7 @@ const Enumerable = {
     empty,
     forEach,
     fromArray,
+    fromIterable,
     generate,
     keep,
     map,
