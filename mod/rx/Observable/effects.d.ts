@@ -1,11 +1,9 @@
-import { Factory, Optional, Equality, Updater, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "./functions.js";
-import { ObservableLike } from "./rx.js";
-import { SchedulerLike } from "./scheduling.js";
-import { StreamLike, StreamableLike } from "./streaming.js";
-import { DisposableLike } from "./util.js";
-declare const async: <T>(computation: Factory<T>, { mode }?: {
-    mode?: "batched" | "combine-latest" | undefined;
-}) => ObservableLike<T>;
+import { Factory } from 'react';
+import { Optional, Equality, Updater, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../../functions.js";
+import { ObservableLike } from "../../rx.js";
+import { SchedulerLike } from "../../scheduling.js";
+import { StreamLike, StreamableLike } from "../../streaming.js";
+import { DisposableLike } from "../../util.js";
 interface __Memo {
     <T>(fn: Factory<T>): T;
     <TA, T>(fn: Function1<TA, T>, a: TA): T;
@@ -46,4 +44,4 @@ declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamabl
 declare const __state: <T>(initialState: () => T, options?: {
     readonly equality?: Optional<Equality<T>>;
 }) => StreamLike<Updater<T>, T>;
-export { __await, __currentScheduler, __do, __memo, __observe, __state, __stream, __using, async };
+export { __await, __currentScheduler, __do, __memo, __observe, __state, __stream, __using };

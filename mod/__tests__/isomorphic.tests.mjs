@@ -11,7 +11,6 @@ import './modules/Runnable.test.mjs';
 import './modules/RunnableObservable.test.mjs';
 import './modules/Sequence.test.mjs';
 import './modules/Subject.test.mjs';
-import './modules/effects.test.mjs';
 import './modules/queues.test.mjs';
 import './modules/streaming.test.mjs';
 

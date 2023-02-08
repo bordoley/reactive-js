@@ -1,8 +1,9 @@
 /// <reference types="./Observable.test.d.ts" />
 import Container from '../../containers/Container.mjs';
 import { toRunnableObservable } from '../../containers/ReadonlyArray.mjs';
-import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, increment, sum, newInstance } from '../../functions.mjs';
+import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, increment, sum, newInstance, isSome } from '../../functions.mjs';
 import Observable from '../../rx/Observable.mjs';
+import { __memo, __await } from '../../rx/Observable/effects.mjs';
 import { run } from '../../scheduling/Continuation.mjs';
 import { dispatch, dispatchTo } from '../../scheduling/Dispatcher.mjs';
 import { schedule, getCurrentTime } from '../../scheduling/Scheduler.mjs';
@@ -87,4 +88,56 @@ const withLatestFromTest = createDescribe("withLatestFrom", createTest("when sou
 }));
 const zipLatestTests = createDescribe("zipLatest", createTest("zipLatestWith", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], toRunnableObservable({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], toRunnableObservable({ delay: 2, delayStart: true }))), Observable.map(([a, b]) => a + b), Observable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))));
 const zipWithLatestTests = createDescribe("zipWithLatestFrom", createTest("when source throws", pipeLazy(pipeLazy(Container.throws(Observable)(raise), Observable.zipWithLatestFrom(pipe([1], toRunnableObservable()), (_, b) => b), Observable.toReadonlyArray()), expectToThrow)), createTest("when other throws", pipeLazy(pipeLazy([1, 2, 3], toRunnableObservable({ delay: 1 }), Observable.zipWithLatestFrom(Container.throws(Observable)(raise), (_, b) => b), Observable.toReadonlyArray()), expectToThrow)), createTest("when other completes first", pipeLazy([1, 2, 3], toRunnableObservable({ delay: 2 }), Observable.zipWithLatestFrom(pipe([2, 4], toRunnableObservable({ delay: 1 })), (a, b) => a + b), Observable.toReadonlyArray(), expectArrayEquals([3, 6]))), createTest("when this completes first", pipeLazy([1, 2, 3], toRunnableObservable({ delay: 2 }), Observable.zipWithLatestFrom(pipe([2, 4, 6, 8], toRunnableObservable({ delay: 1 })), (a, b) => a + b), Observable.toReadonlyArray(), expectArrayEquals([3, 6, 11]))));
-testModule("Observable", combineLatestTests, onSubscribeTests, retryTests, shareTests, takeUntilTests, throttleTests, timeoutTests, toFlowableTests, withLatestFromTest, zipLatestTests, zipWithLatestTests);
+const asyncTests = createDescribe("async", createTest("batch mode", () => {
+    const scheduler = create();
+    const fromValueWithDelay = (delay, value) => pipe([value], Observable.fromArray({ delay }));
+    let result = -1;
+    pipe(Observable.async(() => {
+        const obs1 = __memo(fromValueWithDelay, 10, 5);
+        const result1 = __await(obs1);
+        const obs2 = __memo(fromValueWithDelay, 20, 10);
+        const result2 = __await(obs2);
+        const obs3 = __memo(fromValueWithDelay, 30, 7);
+        const result3 = __await(obs3);
+        return result1 + result2 + result3;
+    }), Observable.takeLast(), Observable.forEach(v => {
+        result = v;
+    }), Observable.subscribe(scheduler));
+    run(scheduler);
+    pipe(result, expectEquals(22));
+}), createTest("combined-latest mode", () => {
+    const scheduler = create();
+    const oneTwoThreeDelayed = pipe([1, 2, 3], Observable.fromArray({ delay: 1 }));
+    const createOneTwoThree = (_) => pipe([1, 2, 3], Observable.fromArray());
+    const result = [];
+    pipe(Observable.async(() => {
+        const v = __await(oneTwoThreeDelayed);
+        const next = __memo(createOneTwoThree, v);
+        return __await(next);
+    }, { mode: "combine-latest" }), Container.keepType(Observable, isSome), Observable.forEach(v => {
+        result.push(v);
+    }), Observable.subscribe(scheduler));
+    run(scheduler);
+    pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
+}), createTest("conditional hooks", () => {
+    const scheduler = create();
+    const src = pipe([0, 1, 2, 3, 4, 5], Observable.fromArray({ delay: 5 }));
+    const src2 = Observable.generate(increment, returns(100), {
+        delay: 2,
+        delayStart: false,
+    });
+    const result = [];
+    pipe(Observable.async(() => {
+        const v = __await(src);
+        if (v % 2 === 0) {
+            __memo(increment, 1);
+            return __await(src2);
+        }
+        return v;
+    }), Observable.forEach(v => {
+        result.push(v);
+    }), Observable.subscribe(scheduler));
+    run(scheduler);
+    pipe(result, expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]));
+}));
+testModule("Observable", asyncTests, combineLatestTests, onSubscribeTests, retryTests, shareTests, takeUntilTests, throttleTests, timeoutTests, toFlowableTests, withLatestFromTest, zipLatestTests, zipWithLatestTests);
