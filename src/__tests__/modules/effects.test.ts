@@ -1,9 +1,8 @@
 import { keepType } from "../../containers/Container";
-import { toObservable } from "../../containers/ReadonlyArray";
 import { __await, __memo, async } from "../../effects";
-import { isSome, pipe } from "../../functions";
+import { increment, isSome, pipe, returns } from "../../functions";
 import { ObservableLike } from "../../rx";
-import { forEach, keep, subscribe, takeLast } from "../../rx/Observable";
+import Observable, { subscribe } from "../../rx/Observable";
 import { run } from "../../scheduling/Continuation";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
 import { expectArrayEquals, expectEquals, test, testModule } from "../testing";
@@ -16,7 +15,7 @@ testModule(
     const fromValueWithDelay = (
       delay: number,
       value: number,
-    ): ObservableLike<number> => pipe([value], toObservable({ delay }));
+    ): ObservableLike<number> => pipe([value], Observable.fromArray({ delay }));
 
     let result = -1;
 
@@ -31,8 +30,8 @@ testModule(
 
         return result1 + result2 + result3;
       }),
-      takeLast<number>(),
-      forEach<number>(v => {
+      Observable.takeLast<number>(),
+      Observable.forEach<number>(v => {
         result = v;
       }),
       subscribe(scheduler),
@@ -45,8 +44,12 @@ testModule(
   test("combined-latest mode", () => {
     const scheduler = createVirtualTimeScheduler();
 
-    const oneTwoThreeDelayed = pipe([1, 2, 3], toObservable({ delay: 1 }));
-    const createOneTwoThree = (_: unknown) => pipe([1, 2, 3], toObservable());
+    const oneTwoThreeDelayed = pipe(
+      [1, 2, 3],
+      Observable.fromArray({ delay: 1 }),
+    );
+    const createOneTwoThree = (_: unknown) =>
+      pipe([1, 2, 3], Observable.fromArray());
 
     const result: number[] = [];
 
@@ -59,8 +62,8 @@ testModule(
         },
         { mode: "combine-latest" },
       ),
-      keepType({ keep }, isSome),
-      forEach<number>(v => {
+      keepType(Observable, isSome),
+      Observable.forEach<number>(v => {
         result.push(v);
       }),
       subscribe(scheduler),
@@ -69,5 +72,39 @@ testModule(
     run(scheduler);
 
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
+  }),
+  test("conditional hooks", () => {
+    const scheduler = createVirtualTimeScheduler();
+
+    const src = pipe([0, 1, 2, 3, 4, 5], Observable.fromArray({ delay: 5 }));
+    const src2 = Observable.generate(increment, returns(100), {
+      delay: 2,
+      delayStart: false,
+    });
+
+    const result: number[] = [];
+
+    pipe(
+      async(() => {
+        const v = __await(src);
+
+        if (v % 2 === 0) {
+          __memo(increment, 1);
+          return __await(src2);
+        }
+        return v;
+      }),
+      Observable.forEach<number>(v => {
+        result.push(v);
+      }),
+      subscribe(scheduler),
+    );
+
+    run(scheduler);
+
+    pipe(
+      result,
+      expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]),
+    );
   }),
 );

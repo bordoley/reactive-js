@@ -1,10 +1,10 @@
 /// <reference types="./effects.d.ts" />
-import { isNone, ignore, none, raiseWithDebugMessage, arrayEquality, error, pipe, raiseError, getLength, isSome, newInstance } from './functions.mjs';
+import { isSome, pipe, ignore, none, raiseWithDebugMessage, arrayEquality, error, raiseError, getLength, newInstance, isNone } from './functions.mjs';
 import { empty, forEach, subscribe, create } from './rx/Observable.mjs';
 import { getScheduler, schedule } from './rx/Observer.mjs';
 import { notify } from './rx/Sink.mjs';
 import { stream, createStateStore } from './streaming/Streamable.mjs';
-import { disposed, isDisposed, dispose, addTo, onComplete } from './util/Disposable.mjs';
+import { dispose, disposed, isDisposed, addTo, onComplete } from './util/Disposable.mjs';
 
 var _a, _b, _c, _d;
 const Memo = 1;
@@ -23,7 +23,15 @@ const validateAsyncEffect = ((ctx, type) => {
     const { [AsyncContext_effects]: effects, [AsyncContext_index]: index } = ctx;
     ctx[AsyncContext_index]++;
     const effect = effects[index];
-    if (isNone(effect)) {
+    if (isSome(effect) && effect[AsyncEffect_type] === type) {
+        return effect;
+    }
+    else {
+        if (isSome(effect) &&
+            (effect[AsyncEffect_type] === Await ||
+                effect[AsyncEffect_type] === Observe)) {
+            pipe(effect[AwaitOrObserveEffect_subscription], dispose());
+        }
         const newEffect = type === Memo
             ? {
                 [AsyncEffect_type]: type,
@@ -47,13 +55,13 @@ const validateAsyncEffect = ((ctx, type) => {
                         [MemoOrUsingEffect_value]: disposed,
                     }
                     : raiseWithDebugMessage("invalid effect type");
-        effects.push(newEffect);
+        if (isSome(effect)) {
+            effects[index] = newEffect;
+        }
+        else {
+            effects.push(newEffect);
+        }
         return newEffect;
-    }
-    else {
-        return effect[AsyncEffect_type] === type
-            ? effect
-            : raiseWithDebugMessage("observable effect called out of order");
     }
 });
 const arrayStrictEquality = arrayEquality();
@@ -156,9 +164,20 @@ const async = (computation, { mode = "batched" } = {}) => create((observer) => {
                 err = error(e);
             }
         }
+        const { [AsyncContext_effects]: effects } = ctx;
+        if (getLength(effects) > ctx[AsyncContext_index]) {
+            const effectsLength = effects.length;
+            for (let i = ctx[AsyncContext_index]; i < effectsLength; i++) {
+                const effect = ctx[AsyncContext_effects][i];
+                if (effect[AsyncEffect_type] === Await ||
+                    effect[AsyncEffect_type] === Observe) {
+                    pipe(effect[AwaitOrObserveEffect_subscription], dispose());
+                }
+            }
+        }
+        ctx[AsyncContext_effects].length = ctx[AsyncContext_index];
         currentCtx = none;
         ctx[AsyncContext_index] = 0;
-        const { [AsyncContext_effects]: effects } = ctx;
         const effectsLength = getLength(effects);
         // Inline this for perf
         let allObserveEffectsHaveValues = true;
