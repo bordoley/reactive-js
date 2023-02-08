@@ -1,5 +1,5 @@
 /// <reference types="./Observable.test.d.ts" />
-import { throws } from '../../containers/Container.mjs';
+import Container from '../../containers/Container.mjs';
 import { toRunnableObservable } from '../../containers/ReadonlyArray.mjs';
 import { pipeLazy, pipe, incrementBy, returns, arrayEquality, raise, increment, sum, newInstance } from '../../functions.mjs';
 import Observable from '../../rx/Observable.mjs';
@@ -28,7 +28,7 @@ const onSubscribeTests = createDescribe("onSubscribe", createTest("when subscrib
     const subscription = pipe([1], toRunnableObservable(), Observable.onSubscribe(raise), Observable.subscribe(scheduler));
     pipe(subscription, getError, expectIsSome);
 }));
-const retryTests = createDescribe("retry", createTest("repeats the observable n times", pipeLazy(Observable.concat(pipe([1, 2, 3], toRunnableObservable()), pipe(raise, throws(Observable))), Observable.retry(), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
+const retryTests = createDescribe("retry", createTest("repeats the observable n times", pipeLazy(Observable.concat(pipe([1, 2, 3], toRunnableObservable()), pipe(raise, Container.throws(Observable))), Observable.retry(), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
 const shareTests = createDescribe("share", createTest("shared observable zipped with itself", () => {
     const scheduler = create();
     const shared = pipe([1, 2, 3], toRunnableObservable({ delay: 1 }), Observable.share(scheduler, { replay: 1 }));
@@ -83,8 +83,8 @@ const withLatestFromTest = createDescribe("withLatestFrom", createTest("when sou
     [3, 1],
 ], arrayEquality()))), createTest("when latest produces no values", pipeLazy([0], toRunnableObservable({ delay: 1 }), Observable.withLatestFrom(Observable.empty(), sum), Observable.toReadonlyArray(), expectArrayEquals([]))), createTest("when latest throws", () => {
     const error = newInstance(Error);
-    pipe(pipeLazy([0], toRunnableObservable({ delay: 1 }), Observable.withLatestFrom(throws(Observable)(returns(error)), sum), Observable.toReadonlyArray(), expectArrayEquals([])), expectToThrowError(error));
+    pipe(pipeLazy([0], toRunnableObservable({ delay: 1 }), Observable.withLatestFrom(Container.throws(Observable)(returns(error)), sum), Observable.toReadonlyArray(), expectArrayEquals([])), expectToThrowError(error));
 }));
 const zipLatestTests = createDescribe("zipLatest", createTest("zipLatestWith", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], toRunnableObservable({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], toRunnableObservable({ delay: 2, delayStart: true }))), Observable.map(([a, b]) => a + b), Observable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))));
-const zipWithLatestTests = createDescribe("zipWithLatestFrom", createTest("when source throws", pipeLazy(pipeLazy(throws(Observable)(raise), Observable.zipWithLatestFrom(pipe([1], toRunnableObservable()), (_, b) => b), Observable.toReadonlyArray()), expectToThrow)), createTest("when other throws", pipeLazy(pipeLazy([1, 2, 3], toRunnableObservable({ delay: 1 }), Observable.zipWithLatestFrom(throws(Observable)(raise), (_, b) => b), Observable.toReadonlyArray()), expectToThrow)), createTest("when other completes first", pipeLazy([1, 2, 3], toRunnableObservable({ delay: 2 }), Observable.zipWithLatestFrom(pipe([2, 4], toRunnableObservable({ delay: 1 })), (a, b) => a + b), Observable.toReadonlyArray(), expectArrayEquals([3, 6]))), createTest("when this completes first", pipeLazy([1, 2, 3], toRunnableObservable({ delay: 2 }), Observable.zipWithLatestFrom(pipe([2, 4, 6, 8], toRunnableObservable({ delay: 1 })), (a, b) => a + b), Observable.toReadonlyArray(), expectArrayEquals([3, 6, 11]))));
+const zipWithLatestTests = createDescribe("zipWithLatestFrom", createTest("when source throws", pipeLazy(pipeLazy(Container.throws(Observable)(raise), Observable.zipWithLatestFrom(pipe([1], toRunnableObservable()), (_, b) => b), Observable.toReadonlyArray()), expectToThrow)), createTest("when other throws", pipeLazy(pipeLazy([1, 2, 3], toRunnableObservable({ delay: 1 }), Observable.zipWithLatestFrom(Container.throws(Observable)(raise), (_, b) => b), Observable.toReadonlyArray()), expectToThrow)), createTest("when other completes first", pipeLazy([1, 2, 3], toRunnableObservable({ delay: 2 }), Observable.zipWithLatestFrom(pipe([2, 4], toRunnableObservable({ delay: 1 })), (a, b) => a + b), Observable.toReadonlyArray(), expectArrayEquals([3, 6]))), createTest("when this completes first", pipeLazy([1, 2, 3], toRunnableObservable({ delay: 2 }), Observable.zipWithLatestFrom(pipe([2, 4, 6, 8], toRunnableObservable({ delay: 1 })), (a, b) => a + b), Observable.toReadonlyArray(), expectArrayEquals([3, 6, 11]))));
 testModule("Observable", combineLatestTests, onSubscribeTests, retryTests, shareTests, takeUntilTests, throttleTests, timeoutTests, toFlowableTests, withLatestFromTest, zipLatestTests, zipWithLatestTests);

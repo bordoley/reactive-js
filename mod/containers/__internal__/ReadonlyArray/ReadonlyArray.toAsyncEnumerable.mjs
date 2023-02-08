@@ -5,7 +5,7 @@ import Observable_concatAll from '../../../rx/__internal__/Observable/Observable
 import Observable_map from '../../../rx/__internal__/Observable/Observable.map.mjs';
 import Observable_scan from '../../../rx/__internal__/Observable/Observable.scan.mjs';
 import Observable_takeFirst from '../../../rx/__internal__/Observable/Observable.takeFirst.mjs';
-import Container_concatMap from '../Container/ContainerLIke.concatMap.mjs';
+import Container_concatMap from '../Container/Container.concatMap.mjs';
 import ReadonlyArray_toContainer from './ReadonlyArray.toContainer.mjs';
 import ReadonlyArray_toRunnableObservable from './ReadonlyArray.toRunnableObservable.mjs';
 

@@ -7,7 +7,7 @@ import Observable_concatAll from "../../../rx/__internal__/Observable/Observable
 import Observable_map from "../../../rx/__internal__/Observable/Observable.map";
 import Observable_scan from "../../../rx/__internal__/Observable/Observable.scan";
 import Observable_takeFirst from "../../../rx/__internal__/Observable/Observable.takeFirst";
-import Container_concatMap from "../Container/ContainerLIke.concatMap";
+import Container_concatMap from "../Container/Container.concatMap";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
 import ReadonlyArray_toRunnableObservable from "./ReadonlyArray.toRunnableObservable";
 

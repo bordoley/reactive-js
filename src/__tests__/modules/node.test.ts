@@ -1,5 +1,5 @@
 import { Readable, Writable } from "stream";
-import { endWith, ignoreElements } from "../../containers/Container";
+import Container from "../../containers/Container";
 import { toObservable } from "../../containers/ReadonlyArray";
 import { newInstance, pipe, returns } from "../../functions";
 import {
@@ -58,7 +58,10 @@ testModule(
 
         await pipe(
           dest,
-          endWith<ObservableLike, FlowMode>(Observable, FlowMode_pause),
+          Container.endWith<ObservableLike, FlowMode>(
+            Observable,
+            FlowMode_pause,
+          ),
           Observable.toPromise(scheduler),
         );
 
@@ -99,8 +102,8 @@ testModule(
 
         const promise = pipe(
           dest,
-          ignoreElements(Observable),
-          endWith<ObservableLike, number>(Observable, 0),
+          Container.ignoreElements(Observable),
+          Container.endWith<ObservableLike, number>(Observable, 0),
           Observable.toPromise(scheduler),
         );
         await expectPromiseToThrow(promise);
@@ -158,7 +161,7 @@ testModule(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          endWith<ObservableLike, string>(Observable, ""),
+          Container.endWith<ObservableLike, string>(Observable, ""),
           Observable.toPromise(scheduler),
           expectPromiseToThrow,
         );
