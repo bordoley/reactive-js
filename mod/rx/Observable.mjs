@@ -165,9 +165,11 @@ const zip = Observable_zip;
  */
 const zipLatest = Observable_zipLatest;
 const zipWithLatestFrom = Observable_zipWithLatestFrom;
+/** @ignore */
 const Observable = {
     buffer,
     catchError,
+    combineLatest,
     concat,
     concatAll,
     decodeWithCharset,
@@ -183,23 +185,33 @@ const Observable = {
     keep,
     map,
     never,
+    onSubscribe,
     pairwise,
     reduce,
     repeat,
+    retry,
     scan,
     scanAsync,
+    share,
     skipFirst,
     someSatisfy,
+    subscribe,
     takeFirst,
     takeLast,
+    takeUntil,
     takeWhile,
+    throttle,
     throwIfEmpty,
+    timeout,
     toEnumerable,
     toFlowable,
     toPromise,
     toReadonlyArray,
     toRunnable,
+    withLatestFrom,
     zip,
+    zipLatest,
+    zipWithLatestFrom,
 };
 
 export { buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

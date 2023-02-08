@@ -133,6 +133,7 @@ declare const zip: {
         TI
     ]>;
 };
+/** @ignore */
 declare const RunnableObservable: Buffer<RunnableObservableLike> & CatchError<RunnableObservableLike> & Concat<RunnableObservableLike> & ConcatAll<RunnableObservableLike, {
     maxBufferSize?: number;
 }> & DecodeWithCharset<RunnableObservableLike> & Defer<RunnableObservableLike> & DistinctUntilChanged<RunnableObservableLike> & Empty<RunnableObservableLike, {

@@ -32,6 +32,7 @@ const scanAsync = AsyncEnumerable_scanAsync;
 const takeWhile = AsyncEnumerable_takeWhile;
 const toObservable = AsyncEnumerable_toObservable;
 const toReadonlyArray = AsyncEnumerable_toReadonlyArray;
+/** @ignore */
 const AsyncEnumerable = {
     fromArray,
     generate,

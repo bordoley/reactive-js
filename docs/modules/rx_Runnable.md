@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Variables
-
-- [default](rx_Runnable.md#default)
-
 ### Functions
 
 - [buffer](rx_Runnable.md#buffer)
@@ -42,12 +38,6 @@
 - [throwIfEmpty](rx_Runnable.md#throwifempty)
 - [toReadonlyArray](rx_Runnable.md#toreadonlyarray)
 - [toRunnable](rx_Runnable.md#torunnable)
-
-## Variables
-
-### default
-
-• `Const` **default**: [`Buffer`](containers.md#buffer)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`CatchError`](containers.md#catcherror)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Concat`](containers.md#concat)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`ConcatAll`](containers.md#concatall)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`DecodeWithCharset`](containers.md#decodewithcharset)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Defer`](containers.md#defer)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Empty`](containers.md#empty)<[`RunnableLike`](../interfaces/rx.RunnableLike.md), { `delay`: `number`  }\> & [`EverySatisfy`](containers.md#everysatisfy)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`ForEach`](containers.md#foreach)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`FromArray`](containers.md#fromarray)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Generate`](containers.md#generate)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Keep`](containers.md#keep)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Map`](containers.md#map)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Pairwise`](containers.md#pairwise)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Reduce`](containers.md#reduce)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Repeat`](containers.md#repeat)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`Scan`](containers.md#scan)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`SkipFirst`](containers.md#skipfirst)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`SomeSatisfy`](containers.md#somesatisfy)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`TakeFirst`](containers.md#takefirst)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`TakeLast`](containers.md#takelast)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`TakeWhile`](containers.md#takewhile)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`ThrowIfEmpty`](containers.md#throwifempty)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\> & [`ToRunnable`](rx.md#torunnable)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)\>
 
 ## Functions
 

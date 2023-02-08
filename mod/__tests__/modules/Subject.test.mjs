@@ -2,7 +2,7 @@
 import { toRunnable } from '../../containers/ReadonlyArray.mjs';
 import { pipe } from '../../functions.mjs';
 import { getObserverCount } from '../../rx/MulticastObservable.mjs';
-import { forEach as forEach$1, subscribe } from '../../rx/Observable.mjs';
+import Observable from '../../rx/Observable.mjs';
 import { forEach, run } from '../../rx/Runnable.mjs';
 import { create as create$1, publishTo } from '../../rx/Subject.mjs';
 import { run as run$1 } from '../../scheduling/Continuation.mjs';
@@ -16,18 +16,18 @@ testModule("Subject", createTest("with replay", () => {
     pipe([1, 2, 3, 4], toRunnable(), forEach(publishTo(subject)), run());
     pipe(subject, dispose());
     const result = [];
-    pipe(subject, forEach$1(x => {
+    pipe(subject, Observable.forEach(x => {
         result.push(x);
-    }), subscribe(scheduler));
+    }), Observable.subscribe(scheduler));
     run$1(scheduler);
     pipe(result, expectArrayEquals([3, 4]));
 }), createTest("with multiple observers", () => {
     const scheduler = create();
     const subject = create$1();
     pipe(subject, getObserverCount, expectEquals(0));
-    const sub1 = pipe(subject, subscribe(scheduler));
+    const sub1 = pipe(subject, Observable.subscribe(scheduler));
     pipe(subject, getObserverCount, expectEquals(1));
-    const sub2 = pipe(subject, subscribe(scheduler));
+    const sub2 = pipe(subject, Observable.subscribe(scheduler));
     pipe(subject, getObserverCount, expectEquals(2));
     pipe(sub1, dispose());
     pipe(subject, getObserverCount, expectEquals(1));

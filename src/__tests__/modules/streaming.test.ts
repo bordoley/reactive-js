@@ -1,5 +1,5 @@
 import { pipe, returns } from "../../functions";
-import { forEach, subscribe } from "../../rx/Observable";
+import Observable from "../../rx/Observable";
 import { run } from "../../scheduling/Continuation";
 import { dispatch } from "../../scheduling/Dispatcher";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
@@ -21,10 +21,10 @@ testModule(
 
       pipe(
         stateStream,
-        forEach<number>(x => {
+        Observable.forEach<number>(x => {
           result.push(x);
         }),
-        subscribe(scheduler),
+        Observable.subscribe(scheduler),
       );
 
       run(scheduler);

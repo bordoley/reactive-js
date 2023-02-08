@@ -21,5 +21,6 @@ declare const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"];
 declare const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"];
 declare const toRunnable: ToRunnable<SequenceLike>["toRunnable"];
 declare const zip: Zip<SequenceLike>["zip"];
+/** @ignore */
 declare const Sequence: Concat<SequenceLike> & ConcatAll<SequenceLike> & DistinctUntilChanged<SequenceLike> & FromArray<SequenceLike> & Generate<SequenceLike> & Keep<SequenceLike> & Map<SequenceLike> & Pairwise<SequenceLike> & Repeat<SequenceLike> & Scan<SequenceLike> & SkipFirst<SequenceLike> & TakeFirst<SequenceLike> & TakeLast<SequenceLike> & TakeWhile<SequenceLike> & ToEnumerable<SequenceLike> & ToReadonlyArray<SequenceLike> & ToRunnable<SequenceLike> & Zip<SequenceLike>;
 export { concat, concatAll, Sequence as default, distinctUntilChanged, fromArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };

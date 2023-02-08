@@ -1,6 +1,6 @@
 /// <reference types="./streaming.test.d.ts" />
 import { pipe, returns } from '../../functions.mjs';
-import { forEach, subscribe } from '../../rx/Observable.mjs';
+import Observable from '../../rx/Observable.mjs';
 import { run } from '../../scheduling/Continuation.mjs';
 import { dispatch } from '../../scheduling/Dispatcher.mjs';
 import { create } from '../../scheduling/VirtualTimeScheduler.mjs';
@@ -13,9 +13,9 @@ testModule("Streamable", createDescribe("stateStore", createTest("createStateSto
     const stateStream = pipe(createStateStore(returns(1)), stream(scheduler));
     pipe(stateStream, dispatch(returns(2)), dispatch(returns(3)), dispose());
     let result = [];
-    pipe(stateStream, forEach(x => {
+    pipe(stateStream, Observable.forEach(x => {
         result.push(x);
-    }), subscribe(scheduler));
+    }), Observable.subscribe(scheduler));
     run(scheduler);
     pipe(result, expectArrayEquals([1, 2, 3]));
 })));

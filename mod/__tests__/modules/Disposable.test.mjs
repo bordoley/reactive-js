@@ -1,6 +1,6 @@
 /// <reference types="./Disposable.test.d.ts" />
 import { pipe, pipeLazy, none, raise, error } from '../../functions.mjs';
-import { subscribe } from '../../rx/Observable.mjs';
+import Observable from '../../rx/Observable.mjs';
 import { run } from '../../scheduling/Continuation.mjs';
 import { getCurrentTime, schedule } from '../../scheduling/Scheduler.mjs';
 import { create as create$1 } from '../../scheduling/VirtualTimeScheduler.mjs';
@@ -45,7 +45,7 @@ testModule("Disposable", createTest("disposes child disposable when disposed", (
     const disposable = create();
     const scheduler = create$1();
     let disposedTime = 0;
-    pipe(disposable, toObservable(), subscribe(scheduler), onDisposed(_ => {
+    pipe(disposable, toObservable(), Observable.subscribe(scheduler), onDisposed(_ => {
         disposedTime = getCurrentTime(scheduler);
     }));
     pipe(scheduler, schedule(() => {

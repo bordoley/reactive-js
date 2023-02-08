@@ -89,6 +89,7 @@ export const toRunnable: ToRunnable<SequenceLike>["toRunnable"] =
 
 export const zip: Zip<SequenceLike>["zip"] = Sequence_zip;
 
+/** @ignore */
 const Sequence: Concat<SequenceLike> &
   ConcatAll<SequenceLike> &
   DistinctUntilChanged<SequenceLike> &

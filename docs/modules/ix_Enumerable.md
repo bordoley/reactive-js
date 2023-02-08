@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Variables
-
-- [default](ix_Enumerable.md#default)
-
 ### Functions
 
 - [buffer](ix_Enumerable.md#buffer)
@@ -38,12 +34,6 @@
 - [toRunnable](ix_Enumerable.md#torunnable)
 - [toRunnableObservable](ix_Enumerable.md#torunnableobservable)
 - [zip](ix_Enumerable.md#zip)
-
-## Variables
-
-### default
-
-• `Const` **default**: [`Buffer`](containers.md#buffer)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`Concat`](containers.md#concat)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`ConcatAll`](containers.md#concatall)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`DistinctUntilChanged`](containers.md#distinctuntilchanged)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`Empty`](containers.md#empty)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md), { `delay`: `number`  }\> & [`ForEach`](containers.md#foreach)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`FromArray`](containers.md#fromarray)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`FromIterable`](containers.md#fromiterable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`Generate`](containers.md#generate)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`Keep`](containers.md#keep)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`Map`](containers.md#map)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`Pairwise`](containers.md#pairwise)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`Repeat`](containers.md#repeat)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`Scan`](containers.md#scan)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`SkipFirst`](containers.md#skipfirst)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`TakeFirst`](containers.md#takefirst)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`TakeLast`](containers.md#takelast)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`TakeWhile`](containers.md#takewhile)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`ThrowIfEmpty`](containers.md#throwifempty)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`ToEnumerable`](ix.md#toenumerable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`ToReadonlyArray`](containers.md#toreadonlyarray)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`ToRunnable`](rx.md#torunnable)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\> & [`Zip`](containers.md#zip)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)\>
 
 ## Functions
 

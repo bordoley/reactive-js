@@ -2,7 +2,7 @@ import { keepType } from "../../containers/Container";
 import { __await, __memo, async } from "../../effects";
 import { increment, isSome, pipe, returns } from "../../functions";
 import { ObservableLike } from "../../rx";
-import Observable, { subscribe } from "../../rx/Observable";
+import Observable from "../../rx/Observable";
 import { run } from "../../scheduling/Continuation";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
 import { expectArrayEquals, expectEquals, test, testModule } from "../testing";
@@ -34,7 +34,7 @@ testModule(
       Observable.forEach<number>(v => {
         result = v;
       }),
-      subscribe(scheduler),
+      Observable.subscribe(scheduler),
     );
 
     run(scheduler);
@@ -66,7 +66,7 @@ testModule(
       Observable.forEach<number>(v => {
         result.push(v);
       }),
-      subscribe(scheduler),
+      Observable.subscribe(scheduler),
     );
 
     run(scheduler);
@@ -97,7 +97,7 @@ testModule(
       Observable.forEach<number>(v => {
         result.push(v);
       }),
-      subscribe(scheduler),
+      Observable.subscribe(scheduler),
     );
 
     run(scheduler);

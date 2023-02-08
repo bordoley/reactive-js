@@ -1,6 +1,6 @@
 import { toObservable } from "../../containers/Promiseable";
 import { newInstance, pipe } from "../../functions";
-import { toPromise } from "../../rx/Observable";
+import Observable from "../../rx/Observable";
 import { createHostScheduler } from "../../scheduling/Scheduler";
 import { dispose } from "../../util/Disposable";
 import {
@@ -24,7 +24,7 @@ testModule(
         const result = await pipe(
           promise,
           toObservable(),
-          toPromise(scheduler),
+          Observable.toPromise(scheduler),
         );
         pipe(result, expectEquals(1));
       } finally {
@@ -39,7 +39,7 @@ testModule(
 
       try {
         await pipe(
-          pipe(promise, toObservable(), toPromise(scheduler)),
+          pipe(promise, toObservable(), Observable.toPromise(scheduler)),
           expectPromiseToThrow,
         );
       } finally {

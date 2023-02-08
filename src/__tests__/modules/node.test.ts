@@ -9,15 +9,7 @@ import {
   gzip,
 } from "../../integrations/node";
 import { ObservableLike } from "../../rx";
-import {
-  concat,
-  fromArray,
-  keep,
-  reduce,
-  takeFirst,
-  toFlowable,
-  toPromise,
-} from "../../rx/Observable";
+import Observable from "../../rx/Observable";
 import { createHostScheduler } from "../../scheduling/Scheduler";
 import { FlowMode, FlowMode_pause } from "../../streaming";
 import { toObservable as flowableToObservable } from "../../streaming/Flowable";
@@ -55,7 +47,7 @@ testModule(
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
           toObservable(),
-          toFlowable(),
+          Observable.toFlowable(),
         );
 
         const dest = pipe(
@@ -66,14 +58,8 @@ testModule(
 
         await pipe(
           dest,
-          endWith<ObservableLike, FlowMode>(
-            {
-              fromArray,
-              concat,
-            },
-            FlowMode_pause,
-          ),
-          toPromise(scheduler),
+          endWith<ObservableLike, FlowMode>(Observable, FlowMode_pause),
+          Observable.toPromise(scheduler),
         );
 
         pipe(writable.destroyed, expectEquals(true));
@@ -102,7 +88,7 @@ testModule(
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
           toObservable(),
-          toFlowable(),
+          Observable.toFlowable(),
         );
 
         const dest = pipe(
@@ -113,15 +99,9 @@ testModule(
 
         const promise = pipe(
           dest,
-          ignoreElements({ keep }),
-          endWith<ObservableLike, number>(
-            {
-              fromArray,
-              concat,
-            },
-            0,
-          ),
-          toPromise(scheduler),
+          ignoreElements(Observable),
+          endWith<ObservableLike, number>(Observable, 0),
+          Observable.toPromise(scheduler),
         );
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));
@@ -147,12 +127,12 @@ testModule(
         const acc = await pipe(
           createReadableSource(() => pipe(generate(), Readable.from)),
           flowableToObservable(),
-          reduce<Uint8Array, string>(
+          Observable.reduce<Uint8Array, string>(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          takeFirst<string>({ count: 1 }),
-          toPromise(scheduler),
+          Observable.takeFirst<string>({ count: 1 }),
+          Observable.toPromise(scheduler),
         );
         pipe(acc, expectEquals("abcdefg"));
       } finally {
@@ -174,18 +154,12 @@ testModule(
         await pipe(
           createReadableSource(() => pipe(generate(), Readable.from)),
           flowableToObservable(),
-          reduce<Uint8Array, string>(
+          Observable.reduce<Uint8Array, string>(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          endWith<ObservableLike, string>(
-            {
-              fromArray,
-              concat,
-            },
-            "",
-          ),
-          toPromise(scheduler),
+          endWith<ObservableLike, string>(Observable, ""),
+          Observable.toPromise(scheduler),
           expectPromiseToThrow,
         );
       } finally {
@@ -203,16 +177,16 @@ testModule(
       const acc = await pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         toObservable(),
-        toFlowable(),
+        Observable.toFlowable(),
         gzip(),
         gunzip(),
         flowableToObservable(),
-        reduce<Uint8Array, string>(
+        Observable.reduce<Uint8Array, string>(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
         ),
-        takeFirst<string>({ count: 1 }),
-        toPromise(scheduler),
+        Observable.takeFirst<string>({ count: 1 }),
+        Observable.toPromise(scheduler),
       );
 
       pipe(acc, expectEquals("abcdefg"));

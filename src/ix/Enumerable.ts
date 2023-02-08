@@ -140,6 +140,7 @@ export const toRunnableObservable: ToRunnableObservable<
 
 export const zip: Zip<EnumerableLike>["zip"] = Enumerable_zip;
 
+/** @ignore */
 const Enumerable: Buffer<EnumerableLike> &
   Concat<EnumerableLike> &
   ConcatAll<EnumerableLike> &
