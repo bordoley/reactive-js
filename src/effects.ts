@@ -123,7 +123,17 @@ const validateAsyncEffect: ValidateAsyncEffect = ((
 
   const effect = effects[index];
 
-  if (isNone(effect)) {
+  if (isSome(effect) && effect[AsyncEffect_type] === type) {
+    return effect;
+  } else {
+    if (
+      isSome(effect) &&
+      (effect[AsyncEffect_type] === Await ||
+        effect[AsyncEffect_type] === Observe)
+    ) {
+      pipe(effect[AwaitOrObserveEffect_subscription], dispose());
+    }
+
     const newEffect: AsyncEffect =
       type === Memo
         ? {
@@ -149,12 +159,12 @@ const validateAsyncEffect: ValidateAsyncEffect = ((
           }
         : raiseWithDebugMessage("invalid effect type");
 
-    effects.push(newEffect);
+    if (isSome(effect)) {
+      effects[index] = newEffect;
+    } else {
+      effects.push(newEffect);
+    }
     return newEffect;
-  } else {
-    return effect[AsyncEffect_type] === type
-      ? effect
-      : raiseWithDebugMessage("observable effect called out of order");
   }
 }) as ValidateAsyncEffect;
 
@@ -330,10 +340,27 @@ export const async = <T>(
           err = error(e);
         }
       }
+
+      const { [AsyncContext_effects]: effects } = ctx;
+
+      if (getLength(effects) > ctx[AsyncContext_index]) {
+        const effectsLength = effects.length;
+
+        for (let i = ctx[AsyncContext_index]; i < effectsLength; i++) {
+          const effect = ctx[AsyncContext_effects][i];
+
+          if (
+            effect[AsyncEffect_type] === Await ||
+            effect[AsyncEffect_type] === Observe
+          ) {
+            pipe(effect[AwaitOrObserveEffect_subscription], dispose());
+          }
+        }
+      }
+      ctx[AsyncContext_effects].length = ctx[AsyncContext_index];
       currentCtx = none;
       ctx[AsyncContext_index] = 0;
 
-      const { [AsyncContext_effects]: effects } = ctx;
       const effectsLength = getLength(effects);
 
       // Inline this for perf
