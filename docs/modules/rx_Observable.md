@@ -6,6 +6,7 @@
 
 ### Functions
 
+- [async](rx_Observable.md#async)
 - [buffer](rx_Observable.md#buffer)
 - [catchError](rx_Observable.md#catcherror)
 - [combineLatest](rx_Observable.md#combinelatest)
@@ -67,6 +68,30 @@
 - [zipWithLatestFrom](rx_Observable.md#zipwithlatestfrom)
 
 ## Functions
+
+### async
+
+▸ **async**<`T`\>(`computation`, `«destructured»?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `«destructured»` | `Object` |
+| › `mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
 
 ### buffer
 

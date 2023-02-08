@@ -1,20 +1,19 @@
-[Reactive-JS](../README.md) / effects
+[Reactive-JS](../README.md) / rx/Observable/effects
 
-# Module: effects
+# Module: rx/Observable/effects
 
 ## Table of contents
 
 ### Functions
 
-- [\_\_await](effects.md#__await)
-- [\_\_currentScheduler](effects.md#__currentscheduler)
-- [\_\_do](effects.md#__do)
-- [\_\_memo](effects.md#__memo)
-- [\_\_observe](effects.md#__observe)
-- [\_\_state](effects.md#__state)
-- [\_\_stream](effects.md#__stream)
-- [\_\_using](effects.md#__using)
-- [async](effects.md#async)
+- [\_\_await](rx_Observable_effects.md#__await)
+- [\_\_currentScheduler](rx_Observable_effects.md#__currentscheduler)
+- [\_\_do](rx_Observable_effects.md#__do)
+- [\_\_memo](rx_Observable_effects.md#__memo)
+- [\_\_observe](rx_Observable_effects.md#__observe)
+- [\_\_state](rx_Observable_effects.md#__state)
+- [\_\_stream](rx_Observable_effects.md#__stream)
+- [\_\_using](rx_Observable_effects.md#__using)
 
 ## Functions
 
@@ -224,7 +223,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Factory`](functions.md#factory)<`T`\> |
+| `fn` | `Factory`<`T`\> |
 
 #### Returns
 
@@ -469,7 +468,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Factory`](functions.md#factory)<`T`\> |
+| `fn` | `Factory`<`T`\> |
 
 #### Returns
 
@@ -624,27 +623,3 @@ ___
 #### Returns
 
 `T`
-
-___
-
-### async
-
-▸ **async**<`T`\>(`computation`, `«destructured»?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `«destructured»` | `Object` |
-| › `mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>

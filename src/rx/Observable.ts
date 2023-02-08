@@ -47,6 +47,7 @@ import Flowable_toObservable from "../streaming/__internal__/Flowable/Flowable.t
 import { DisposableLike, DisposableOrTeardown } from "../util";
 import Disposable_toObservable from "../util/__internal__/Disposable/Disposable.toObservable";
 import EnumerableObservable_never from "./__internal__/EnumerableObservable/EnumerableObservable.never";
+import Observable_async from "./__internal__/Observable/Observable.async";
 import Observable_buffer from "./__internal__/Observable/Observable.buffer";
 import Observable_catchError from "./__internal__/Observable/Observable.catchError";
 import Observable_combineLatest from "./__internal__/Observable/Observable.combineLatest";
@@ -101,6 +102,8 @@ import Observable_withLatestFrom from "./__internal__/Observable/Observable.with
 import Observable_zip from "./__internal__/Observable/Observable.zip";
 import Observable_zipLatest from "./__internal__/Observable/Observable.zipLatest";
 import Observable_zipWithLatestFrom from "./__internal__/Observable/Observable.zipWithLatestFrom";
+
+export const async = Observable_async;
 
 export const buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableLike>;
@@ -428,6 +431,7 @@ export const zipWithLatestFrom: <TA, TB, T>(
 
 /** @ignore */
 const Observable = {
+  async,
   buffer,
   catchError,
   combineLatest,
