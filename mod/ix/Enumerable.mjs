@@ -55,6 +55,7 @@ const toReadonlyArray = Enumerable_toReadonlyArray;
 const toRunnable = Enumerable_toRunnable;
 const toRunnableObservable = Enumerable_toRunnableObservable;
 const zip = Enumerable_zip;
+/** @ignore */
 const Enumerable = {
     buffer,
     concat,

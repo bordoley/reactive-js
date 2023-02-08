@@ -1,5 +1,5 @@
 import { Optional, error, none, pipe, pipeLazy, raise } from "../../functions";
-import { subscribe } from "../../rx/Observable";
+import Observable from "../../rx/Observable";
 import { run } from "../../scheduling/Continuation";
 import { getCurrentTime, schedule } from "../../scheduling/Scheduler";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
@@ -92,7 +92,7 @@ testModule(
     pipe(
       disposable,
       toObservable(),
-      subscribe(scheduler),
+      Observable.subscribe(scheduler),
       onDisposed(_ => {
         disposedTime = getCurrentTime(scheduler);
       }),

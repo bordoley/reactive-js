@@ -205,6 +205,7 @@ export const toRunnable =
 
 export const zip = Observable_zip as Zip<RunnableObservableLike>["zip"];
 
+/** @ignore */
 const RunnableObservable: Buffer<RunnableObservableLike> &
   CatchError<RunnableObservableLike> &
   Concat<RunnableObservableLike> &

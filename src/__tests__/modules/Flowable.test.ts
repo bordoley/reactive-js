@@ -1,6 +1,6 @@
 import { toObservable as arrayToObservable } from "../../containers/ReadonlyArray";
 import { pipe } from "../../functions";
-import { forEach, subscribe, toFlowable } from "../../rx/Observable";
+import Observable from "../../rx/Observable";
 import { run } from "../../scheduling/Continuation";
 import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
 import { toObservable } from "../../streaming/Flowable";
@@ -16,12 +16,12 @@ testModule(
     pipe(
       [0, 1, 2, 3, 4],
       arrayToObservable({ delay: 1 }),
-      toFlowable(),
+      Observable.toFlowable(),
       toObservable<number>(),
-      forEach<number>(v => {
+      Observable.forEach<number>(v => {
         result.push(v);
       }),
-      subscribe(scheduler),
+      Observable.subscribe(scheduler),
     );
 
     run(scheduler);

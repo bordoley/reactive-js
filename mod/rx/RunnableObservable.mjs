@@ -77,6 +77,7 @@ const toPromise = Observable_toPromise;
 const toReadonlyArray = Observable_toReadonlyArray;
 const toRunnable = Observable_toRunnable;
 const zip = Observable_zip;
+/** @ignore */
 const RunnableObservable = {
     buffer,
     catchError,

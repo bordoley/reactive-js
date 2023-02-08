@@ -9,14 +9,12 @@ import {
   Empty,
   EverySatisfy,
   ForEach,
-  FromArray,
   Generate,
   Keep,
   Map,
   Never,
   Pairwise,
   Reduce,
-  Repeat,
   Scan,
   SkipFirst,
   SomeSatisfy,
@@ -136,32 +134,8 @@ export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
 export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
   returns(identity);
 
-const Runnable: Buffer<RunnableLike> &
-  CatchError<RunnableLike> &
-  Concat<RunnableLike> &
-  ConcatAll<RunnableLike> &
-  DecodeWithCharset<RunnableLike> &
-  Defer<RunnableLike> &
-  DistinctUntilChanged<RunnableLike> &
-  Empty<RunnableLike, { delay: number }> &
-  EverySatisfy<RunnableLike> &
-  ForEach<RunnableLike> &
-  FromArray<RunnableLike> &
-  Generate<RunnableLike> &
-  Keep<RunnableLike> &
-  Map<RunnableLike> &
-  Pairwise<RunnableLike> &
-  Reduce<RunnableLike> &
-  Repeat<RunnableLike> &
-  Scan<RunnableLike> &
-  SkipFirst<RunnableLike> &
-  SomeSatisfy<RunnableLike> &
-  TakeFirst<RunnableLike> &
-  TakeLast<RunnableLike> &
-  TakeWhile<RunnableLike> &
-  ThrowIfEmpty<RunnableLike> &
-  ToReadonlyArray<RunnableLike> &
-  ToRunnable<RunnableLike> = {
+/** @ignore */
+const Runnable = {
   buffer,
   catchError,
   concat,
@@ -171,10 +145,12 @@ const Runnable: Buffer<RunnableLike> &
   distinctUntilChanged,
   empty,
   everySatisfy,
+  first,
   forEach,
   fromArray,
   generate,
   keep,
+  last,
   map,
   pairwise,
   reduce,

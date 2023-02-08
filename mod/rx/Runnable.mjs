@@ -64,6 +64,7 @@ const takeWhile = Runnable_takeWhile;
 const throwIfEmpty = Runnable_throwIfEmpty;
 const toReadonlyArray = Runnable_toReadonlyArray;
 const toRunnable = returns(identity);
+/** @ignore */
 const Runnable = {
     buffer,
     catchError,
@@ -74,10 +75,12 @@ const Runnable = {
     distinctUntilChanged,
     empty,
     everySatisfy,
+    first,
     forEach,
     fromArray,
     generate,
     keep,
+    last,
     map,
     pairwise,
     reduce,

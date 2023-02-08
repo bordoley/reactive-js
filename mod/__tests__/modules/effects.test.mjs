@@ -2,7 +2,7 @@
 import { keepType } from '../../containers/Container.mjs';
 import { async, __memo, __await } from '../../effects.mjs';
 import { pipe, isSome, increment, returns } from '../../functions.mjs';
-import Observable, { subscribe } from '../../rx/Observable.mjs';
+import Observable from '../../rx/Observable.mjs';
 import { run } from '../../scheduling/Continuation.mjs';
 import { create } from '../../scheduling/VirtualTimeScheduler.mjs';
 import { testModule, test as createTest, expectEquals, expectArrayEquals } from '../testing.mjs';
@@ -21,7 +21,7 @@ testModule("effects", createTest("batch mode", () => {
         return result1 + result2 + result3;
     }), Observable.takeLast(), Observable.forEach(v => {
         result = v;
-    }), subscribe(scheduler));
+    }), Observable.subscribe(scheduler));
     run(scheduler);
     pipe(result, expectEquals(22));
 }), createTest("combined-latest mode", () => {
@@ -35,7 +35,7 @@ testModule("effects", createTest("batch mode", () => {
         return __await(next);
     }, { mode: "combine-latest" }), keepType(Observable, isSome), Observable.forEach(v => {
         result.push(v);
-    }), subscribe(scheduler));
+    }), Observable.subscribe(scheduler));
     run(scheduler);
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), createTest("conditional hooks", () => {
@@ -55,7 +55,7 @@ testModule("effects", createTest("batch mode", () => {
         return v;
     }), Observable.forEach(v => {
         result.push(v);
-    }), subscribe(scheduler));
+    }), Observable.subscribe(scheduler));
     run(scheduler);
     pipe(result, expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]));
 }));

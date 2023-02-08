@@ -63,14 +63,8 @@ export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
 export const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"] =
   AsyncEnumerable_toReadonlyArray;
 
-const AsyncEnumerable: FromArray<AsyncEnumerableLike> &
-  Generate<AsyncEnumerableLike> &
-  Keep<AsyncEnumerableLike> &
-  Map<AsyncEnumerableLike> &
-  Scan<AsyncEnumerableLike> &
-  ScanAsync<AsyncEnumerableLike, ObservableLike> &
-  TakeWhile<AsyncEnumerableLike> &
-  ToReadonlyArray<AsyncEnumerableLike> = {
+/** @ignore */
+const AsyncEnumerable = {
   fromArray,
   generate,
   keep,

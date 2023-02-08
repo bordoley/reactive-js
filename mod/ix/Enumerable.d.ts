@@ -39,6 +39,7 @@ declare const toRunnableObservable: ToRunnableObservable<EnumerableLike, {
     delayStart?: boolean;
 }>["toRunnableObservable"];
 declare const zip: Zip<EnumerableLike>["zip"];
+/** @ignore */
 declare const Enumerable: Buffer<EnumerableLike> & Concat<EnumerableLike> & ConcatAll<EnumerableLike> & DistinctUntilChanged<EnumerableLike> & Empty<EnumerableLike, {
     delay: number;
 }> & ForEach<EnumerableLike> & FromArray<EnumerableLike> & FromIterable<EnumerableLike> & Generate<EnumerableLike> & Keep<EnumerableLike> & Map<EnumerableLike> & Pairwise<EnumerableLike> & Repeat<EnumerableLike> & Scan<EnumerableLike> & SkipFirst<EnumerableLike> & TakeFirst<EnumerableLike> & TakeLast<EnumerableLike> & TakeWhile<EnumerableLike> & ThrowIfEmpty<EnumerableLike> & ToEnumerable<EnumerableLike> & ToReadonlyArray<EnumerableLike> & ToRunnable<EnumerableLike> & Zip<EnumerableLike>;

@@ -1,6 +1,6 @@
 import { Optional, none, pipeLazy } from "../../functions";
 import { RunnableLike } from "../../rx";
-import Runnable, { first, fromArray, last } from "../../rx/Runnable";
+import Runnable from "../../rx/Runnable";
 import {
   bufferTests,
   catchErrorTests,
@@ -53,14 +53,19 @@ testModule(
       "when the source has values",
       pipeLazy(
         [0, 1, 2],
-        fromArray(),
-        first(),
+        Runnable.fromArray(),
+        Runnable.first(),
         expectEquals<Optional<number>>(0),
       ),
     ),
     test(
       "when the source is empty",
-      pipeLazy([], fromArray(), first(), expectEquals<Optional<number>>(none)),
+      pipeLazy(
+        [],
+        Runnable.fromArray(),
+        Runnable.first(),
+        expectEquals<Optional<number>>(none),
+      ),
     ),
   ),
   describe(
@@ -69,14 +74,19 @@ testModule(
       "when the source has values",
       pipeLazy(
         [0, 1, 2],
-        fromArray(),
-        last(),
+        Runnable.fromArray(),
+        Runnable.last(),
         expectEquals<Optional<number>>(2),
       ),
     ),
     test(
       "when the source is empty",
-      pipeLazy([], fromArray(), last(), expectEquals<Optional<number>>(none)),
+      pipeLazy(
+        [],
+        Runnable.fromArray(),
+        Runnable.last(),
+        expectEquals<Optional<number>>(none),
+      ),
     ),
   ),
 );

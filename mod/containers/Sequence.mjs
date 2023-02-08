@@ -38,6 +38,7 @@ const toEnumerable = Sequence_toEnumerable;
 const toReadonlyArray = Sequence_toReadonlyArray;
 const toRunnable = Sequence_toRunnable;
 const zip = Sequence_zip;
+/** @ignore */
 const Sequence = {
     concat,
     concatAll,

@@ -426,9 +426,11 @@ export const zipWithLatestFrom: <TA, TB, T>(
   selector: Function2<TA, TB, T>,
 ) => ContainerOperator<ObservableLike, TA, T> = Observable_zipWithLatestFrom;
 
+/** @ignore */
 const Observable = {
   buffer,
   catchError,
+  combineLatest,
   concat,
   concatAll,
   decodeWithCharset,
@@ -444,23 +446,33 @@ const Observable = {
   keep,
   map,
   never,
+  onSubscribe,
   pairwise,
   reduce,
   repeat,
+  retry,
   scan,
   scanAsync,
+  share,
   skipFirst,
   someSatisfy,
+  subscribe,
   takeFirst,
   takeLast,
+  takeUntil,
   takeWhile,
+  throttle,
   throwIfEmpty,
+  timeout,
   toEnumerable,
   toFlowable,
   toPromise,
   toReadonlyArray,
   toRunnable,
+  withLatestFrom,
   zip,
+  zipLatest,
+  zipWithLatestFrom,
 };
 
 export default Observable;

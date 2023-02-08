@@ -1,7 +1,7 @@
 import { toRunnable as arrayToRunnable } from "../../containers/ReadonlyArray";
 import { pipe } from "../../functions";
 import { getObserverCount } from "../../rx/MulticastObservable";
-import { forEach as forEachObservable, subscribe } from "../../rx/Observable";
+import Observable from "../../rx/Observable";
 import { forEach, run } from "../../rx/Runnable";
 import { create as createSubject, publishTo } from "../../rx/Subject";
 import { run as runContinuation } from "../../scheduling/Continuation";
@@ -21,10 +21,10 @@ testModule(
     const result: number[] = [];
     pipe(
       subject,
-      forEachObservable<number>(x => {
+      Observable.forEach<number>(x => {
         result.push(x);
       }),
-      subscribe(scheduler),
+      Observable.subscribe(scheduler),
     );
     runContinuation(scheduler);
 
@@ -36,9 +36,9 @@ testModule(
 
     const subject = createSubject();
     pipe(subject, getObserverCount, expectEquals(0));
-    const sub1 = pipe(subject, subscribe(scheduler));
+    const sub1 = pipe(subject, Observable.subscribe(scheduler));
     pipe(subject, getObserverCount, expectEquals(1));
-    const sub2 = pipe(subject, subscribe(scheduler));
+    const sub2 = pipe(subject, Observable.subscribe(scheduler));
     pipe(subject, getObserverCount, expectEquals(2));
     pipe(sub1, dispose());
     pipe(subject, getObserverCount, expectEquals(1));

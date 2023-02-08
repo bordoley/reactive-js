@@ -128,6 +128,7 @@ declare const zip: {
         TI
     ]>;
 };
+/** @ignore */
 declare const EnumerableObservable: Buffer<EnumerableObservableLike> & CatchError<EnumerableObservableLike> & Concat<EnumerableObservableLike> & ConcatAll<EnumerableObservableLike, {
     maxBufferSize?: number;
 }> & DecodeWithCharset<EnumerableObservableLike> & Defer<EnumerableObservableLike> & DistinctUntilChanged<EnumerableObservableLike> & Empty<EnumerableObservableLike, {
