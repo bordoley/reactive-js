@@ -1,6 +1,6 @@
 /// <reference types="./node.test.d.ts" />
 import { Writable, Readable } from 'stream';
-import { endWith, ignoreElements } from '../../containers/Container.mjs';
+import Container from '../../containers/Container.mjs';
 import { toObservable } from '../../containers/ReadonlyArray.mjs';
 import { newInstance, pipe, returns } from '../../functions.mjs';
 import { createWritableSink, createReadableSource, gzip, gunzip } from '../../integrations/node.mjs';
@@ -28,7 +28,7 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
         });
         const src = pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), Observable.toFlowable());
         const dest = pipe(createWritableSink(returns(writable)), stream(scheduler), sourceFrom(src));
-        await pipe(dest, endWith(Observable, FlowMode_pause), Observable.toPromise(scheduler));
+        await pipe(dest, Container.endWith(Observable, FlowMode_pause), Observable.toPromise(scheduler));
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
     }
@@ -49,7 +49,7 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
         });
         const src = pipe([encoder.encode("abc"), encoder.encode("defg")], toObservable(), Observable.toFlowable());
         const dest = pipe(createWritableSink(returns(writable)), stream(scheduler), sourceFrom(src));
-        const promise = pipe(dest, ignoreElements(Observable), endWith(Observable, 0), Observable.toPromise(scheduler));
+        const promise = pipe(dest, Container.ignoreElements(Observable), Container.endWith(Observable, 0), Observable.toPromise(scheduler));
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));
     }
@@ -79,7 +79,7 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
             throw err;
         }
         const textDecoder = newInstance(TextDecoder);
-        await pipe(createReadableSource(() => pipe(generate(), Readable.from)), toObservable$1(), Observable.reduce((acc, next) => acc + textDecoder.decode(next), returns("")), endWith(Observable, ""), Observable.toPromise(scheduler), expectPromiseToThrow);
+        await pipe(createReadableSource(() => pipe(generate(), Readable.from)), toObservable$1(), Observable.reduce((acc, next) => acc + textDecoder.decode(next), returns("")), Container.endWith(Observable, ""), Observable.toPromise(scheduler), expectPromiseToThrow);
     }
     finally {
         pipe(scheduler, dispose());

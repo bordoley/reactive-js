@@ -1,5 +1,5 @@
 /// <reference types="./effects.test.d.ts" />
-import { keepType } from '../../containers/Container.mjs';
+import Container from '../../containers/Container.mjs';
 import { async, __memo, __await } from '../../effects.mjs';
 import { pipe, isSome, increment, returns } from '../../functions.mjs';
 import Observable from '../../rx/Observable.mjs';
@@ -33,7 +33,7 @@ testModule("effects", createTest("batch mode", () => {
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), keepType(Observable, isSome), Observable.forEach(v => {
+    }, { mode: "combine-latest" }), Container.keepType(Observable, isSome), Observable.forEach(v => {
         result.push(v);
     }), Observable.subscribe(scheduler));
     run(scheduler);

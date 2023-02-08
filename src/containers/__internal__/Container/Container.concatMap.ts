@@ -7,10 +7,9 @@ import {
 } from "../../../containers";
 import { Function1, compose } from "../../../functions";
 
-const Container_concatMap = <C extends ContainerLike, TA, TB, O = never>(
-  { map, concatAll }: Map<C> & ConcatAll<C, O>,
+const Container_concatMap = <C extends ContainerLike, TA, TB>(
+  m: Map<C> & ConcatAll<C>,
   mapper: Function1<TA, ContainerOf<C, TB>>,
-  options?: O,
-): ContainerOperator<C, TA, TB> => compose(map(mapper), concatAll(options));
+): ContainerOperator<C, TA, TB> => compose(m.map(mapper), m.concatAll());
 
 export default Container_concatMap;

@@ -1,4 +1,4 @@
-import { throws } from "../../containers/Container";
+import Container from "../../containers/Container";
 import { toRunnableObservable } from "../../containers/ReadonlyArray";
 import {
   arrayEquality,
@@ -102,7 +102,7 @@ const retryTests = describe(
     pipeLazy(
       Observable.concat(
         pipe([1, 2, 3], toRunnableObservable()),
-        pipe(raise, throws<ObservableLike, number>(Observable)),
+        pipe(raise, Container.throws<ObservableLike, number>(Observable)),
       ),
       Observable.retry(),
       Observable.takeFirst({ count: 6 }),
@@ -335,7 +335,10 @@ const withLatestFromTest = describe(
       pipeLazy(
         [0],
         toRunnableObservable({ delay: 1 }),
-        Observable.withLatestFrom(throws(Observable)(returns(error)), sum),
+        Observable.withLatestFrom(
+          Container.throws(Observable)(returns(error)),
+          sum,
+        ),
         Observable.toReadonlyArray(),
         expectArrayEquals([] as number[]),
       ),
@@ -372,7 +375,7 @@ const zipWithLatestTests = describe(
     "when source throws",
     pipeLazy(
       pipeLazy(
-        throws(Observable)(raise),
+        Container.throws(Observable)(raise),
         Observable.zipWithLatestFrom(
           pipe([1], toRunnableObservable()),
           (_, b) => b,
@@ -389,7 +392,10 @@ const zipWithLatestTests = describe(
       pipeLazy(
         [1, 2, 3],
         toRunnableObservable({ delay: 1 }),
-        Observable.zipWithLatestFrom(throws(Observable)(raise), (_, b) => b),
+        Observable.zipWithLatestFrom(
+          Container.throws(Observable)(raise),
+          (_, b) => b,
+        ),
         Observable.toReadonlyArray(),
       ),
       expectToThrow,

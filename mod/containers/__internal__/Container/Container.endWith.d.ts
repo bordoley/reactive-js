@@ -1,11 +1,3 @@
-import { Function1 } from "../../../functions.js";
-import { ContainerLike, Container, ContainerOf, ContainerOperator } from "../../../containers.js";
-declare const Container_endWith: <C extends ContainerLike, T>(m: Container<C> & {
-    concat<T_1>(fst: ContainerOf<C, T_1>, snd: ContainerOf<C, T_1>, ...tail: readonly ContainerOf<C, T_1>[]): ContainerOf<C, T_1>;
-} & {
-    fromArray<T_2>(options?: {
-        readonly start?: number | undefined;
-        readonly count?: number | undefined;
-    } | undefined): Function1<readonly T_2[], ContainerOf<C, T_2>>;
-}, ...values: readonly T[]) => ContainerOperator<C, T, T>;
+import { ContainerLike, Concat, FromArray, ContainerOperator } from "../../../containers.js";
+declare const Container_endWith: <C extends ContainerLike, T>(m: Concat<C> & FromArray<C, never>, value: T, ...values: readonly T[]) => ContainerOperator<C, T, T>;
 export { Container_endWith as default };

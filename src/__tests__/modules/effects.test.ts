@@ -1,4 +1,4 @@
-import { keepType } from "../../containers/Container";
+import Container from "../../containers/Container";
 import { __await, __memo, async } from "../../effects";
 import { increment, isSome, pipe, returns } from "../../functions";
 import { ObservableLike } from "../../rx";
@@ -62,7 +62,7 @@ testModule(
         },
         { mode: "combine-latest" },
       ),
-      keepType(Observable, isSome),
+      Container.keepType(Observable, isSome),
       Observable.forEach<number>(v => {
         result.push(v);
       }),

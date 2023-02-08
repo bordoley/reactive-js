@@ -1,5 +1,5 @@
 import { ContainerOperator } from "../../../containers";
-import Container_concatMap from "../../../containers/__internal__/Container/ContainerLIke.concatMap";
+import Container_concatMap from "../../../containers/__internal__/Container/Container.concatMap";
 import Promiseable_toObservable from "../../../containers/__internal__/Promiseable/Promiseable.toObservable";
 import { Function1, pipe } from "../../../functions";
 import { ObservableLike } from "../../../rx";

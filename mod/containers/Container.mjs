@@ -1,5 +1,6 @@
 /// <reference types="./Container.d.ts" />
 import Container_compute from './__internal__/Container/Container.compute.mjs';
+import Container_concatMap from './__internal__/Container/Container.concatMap.mjs';
 import Container_concatWith from './__internal__/Container/Container.concatWith.mjs';
 import Container_contains from './__internal__/Container/Container.contains.mjs';
 import Container_encodeUtf8 from './__internal__/Container/Container.encodeUtf8.mjs';
@@ -13,7 +14,6 @@ import Container_noneSatisfy from './__internal__/Container/Container.noneSatisf
 import Container_startWith from './__internal__/Container/Container.startWith.mjs';
 import Container_throws from './__internal__/Container/Container.throws.mjs';
 import Container_zipWith from './__internal__/Container/Container.zipWith.mjs';
-import Container_concatMap from './__internal__/Container/ContainerLIke.concatMap.mjs';
 
 const compute = Container_compute;
 const concatMap = Container_concatMap;
@@ -30,5 +30,23 @@ const noneSatisfy = Container_noneSatisfy;
 const startWith = Container_startWith;
 const throws = Container_throws;
 const zipWith = Container_zipWith;
+/** @ignore */
+const Container = {
+    compute,
+    concatMap,
+    concatWith,
+    contains,
+    encodeUtf8,
+    endWith,
+    fromOption,
+    genMap,
+    ignoreElements,
+    keepType,
+    mapTo,
+    noneSatisfy,
+    startWith,
+    throws,
+    zipWith,
+};
 
-export { compute, concatMap, concatWith, contains, encodeUtf8, endWith, fromOption, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { compute, concatMap, concatWith, contains, Container as default, encodeUtf8, endWith, fromOption, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

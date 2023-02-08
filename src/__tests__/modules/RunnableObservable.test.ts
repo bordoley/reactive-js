@@ -1,4 +1,4 @@
-import { concatMap, throws } from "../../containers/Container";
+import Container from "../../containers/Container";
 import { toRunnableObservable } from "../../containers/ReadonlyArray";
 import {
   arrayEquality,
@@ -102,7 +102,7 @@ const mergeTests = describe(
       pipeLazy(
         merge(
           pipe([1, 4, 7], toRunnableObservable({ delay: 2 })),
-          throws(RunnableObservable, { delay: 5 })(raise),
+          Container.throws(RunnableObservable, { delay: 5 })(raise),
         ),
         toReadonlyArray(),
       ),
@@ -127,7 +127,7 @@ const switchAllTests = describe(
     pipeLazy(
       pipeLazy(
         raise,
-        throws(RunnableObservable),
+        Container.throws(RunnableObservable),
         switchAll(),
         toReadonlyArray(),
       ),
@@ -140,7 +140,7 @@ const switchAllTests = describe(
     pipeLazy(
       [1, 2, 3],
       toRunnableObservable({ delay: 1 }),
-      concatMap<RunnableObservableLike, number, number>(
+      Container.concatMap<RunnableObservableLike, number, number>(
         { concatAll: switchAll, map },
         _ => pipe([1, 2, 3], toRunnableObservable({ delay: 0 })),
       ),
@@ -153,7 +153,7 @@ const switchAllTests = describe(
     pipeLazy(
       [1, 2, 3],
       toRunnableObservable({ delay: 4 }),
-      concatMap<RunnableObservableLike, number, number>(
+      Container.concatMap<RunnableObservableLike, number, number>(
         { concatAll: switchAll, map },
         _ => pipe([1, 2, 3], toRunnableObservable({ delay: 2 })),
       ),
@@ -226,7 +226,7 @@ const zipTests = describe(
     pipeLazy(
       pipeLazy(
         zip(
-          pipe(raise, throws(RunnableObservable)),
+          pipe(raise, Container.throws(RunnableObservable)),
           pipe([1, 2, 3], toRunnableObservable()),
         ),
         map<readonly [unknown, number], number>(([, b]) => b),
