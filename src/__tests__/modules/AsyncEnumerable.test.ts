@@ -3,6 +3,7 @@ import AsyncEnumerable from "../../ix/AsyncEnumerable";
 import { RunnableObservableLike } from "../../rx";
 import RunnableObservable from "../../rx/RunnableObservable";
 import {
+  fromArrayTests,
   keepTests,
   mapTests,
   scanAsyncTests,
@@ -13,6 +14,7 @@ import { testModule } from "../testing";
 
 testModule(
   "AsyncEnumerable",
+  fromArrayTests<AsyncEnumerableLike>(AsyncEnumerable),
   keepTests(AsyncEnumerable),
   mapTests(AsyncEnumerable),
   scanTests(AsyncEnumerable),

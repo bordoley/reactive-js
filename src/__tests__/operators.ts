@@ -361,6 +361,61 @@ export const forEachTests = <C extends ContainerLike>(
     }),
   );
 
+export const fromArrayTests = <C extends ContainerLike>(
+  m: FromArray<C> & ToReadonlyArray<C>,
+) =>
+  describe(
+    "fromArray",
+    test("negative count with start index", () => {
+      pipe(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        m.fromArray({ count: -3, start: 4 }),
+        m.toReadonlyArray(),
+        expectArrayEquals([5, 4, 3]),
+      );
+    }),
+    test("positive count with start index", () => {
+      pipe(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        m.fromArray({ count: 3, start: 4 }),
+        m.toReadonlyArray(),
+        expectArrayEquals([5, 6, 7]),
+      );
+    }),
+    test("negative count exceeding bounds with start index", () => {
+      pipe(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        m.fromArray({ count: -100, start: 3 }),
+        m.toReadonlyArray(),
+        expectArrayEquals([4, 3, 2, 1]),
+      );
+    }),
+    test("positive count exceeding bounds with start index", () => {
+      pipe(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        m.fromArray({ count: 100, start: 7 }),
+        m.toReadonlyArray(),
+        expectArrayEquals([8, 9]),
+      );
+    }),
+    test("negative count without start index", () => {
+      pipe(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        m.fromArray({ count: -3 }),
+        m.toReadonlyArray(),
+        expectArrayEquals([9, 8, 7]),
+      );
+    }),
+    test("positive count without start index", () => {
+      pipe(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        m.fromArray({ count: 3 }),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      );
+    }),
+  );
+
 export const genMapTests = <C extends ContainerLike>(
   m: ConcatAll<C> &
     FromArray<C> &
