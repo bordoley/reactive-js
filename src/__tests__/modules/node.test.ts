@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
 import Container from "../../containers/Container";
-import { toObservable } from "../../containers/ReadonlyArray";
+import ReadonlyArray from "../../containers/ReadonlyArray";
 import { newInstance, pipe, returns } from "../../functions";
 import {
   createReadableSource,
@@ -10,12 +10,12 @@ import {
 } from "../../integrations/node";
 import { ObservableLike } from "../../rx";
 import Observable from "../../rx/Observable";
-import { createHostScheduler } from "../../scheduling/Scheduler";
+import Scheduler from "../../scheduling/Scheduler";
 import { FlowMode, FlowMode_pause } from "../../streaming";
-import { toObservable as flowableToObservable } from "../../streaming/Flowable";
-import { sourceFrom } from "../../streaming/Stream";
-import { stream } from "../../streaming/Streamable";
-import { dispose } from "../../util/Disposable";
+import Flowable from "../../streaming/Flowable";
+import Stream from "../../streaming/Stream";
+import Streamable from "../../streaming/Streamable";
+import Disposable from "../../util/Disposable";
 import {
   describe,
   expectEquals,
@@ -29,7 +29,7 @@ testModule(
   describe(
     "createWritableIOSink",
     testAsync("sinking to writable", async () => {
-      const scheduler = createHostScheduler();
+      const scheduler = Scheduler.createHostScheduler();
 
       try {
         const encoder = newInstance(TextEncoder);
@@ -46,14 +46,14 @@ testModule(
 
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
-          toObservable(),
+          ReadonlyArray.toObservable(),
           Observable.toFlowable(),
         );
 
         const dest = pipe(
           createWritableSink(returns(writable)),
-          stream(scheduler),
-          sourceFrom(src),
+          Streamable.stream(scheduler),
+          Stream.sourceFrom(src),
         );
 
         await pipe(
@@ -68,12 +68,12 @@ testModule(
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
       } finally {
-        pipe(scheduler, dispose());
+        pipe(scheduler, Disposable.dispose());
       }
     }),
 
     testAsync("sinking to writable that throws", async () => {
-      const scheduler = createHostScheduler();
+      const scheduler = Scheduler.createHostScheduler();
 
       try {
         const encoder = newInstance(TextEncoder);
@@ -90,14 +90,14 @@ testModule(
 
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
-          toObservable(),
+          ReadonlyArray.toObservable(),
           Observable.toFlowable(),
         );
 
         const dest = pipe(
           createWritableSink(returns(writable)),
-          stream(scheduler),
-          sourceFrom(src),
+          Streamable.stream(scheduler),
+          Stream.sourceFrom(src),
         );
 
         const promise = pipe(
@@ -109,7 +109,7 @@ testModule(
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));
       } finally {
-        pipe(scheduler, dispose());
+        pipe(scheduler, Disposable.dispose());
       }
     }),
   ),
@@ -117,7 +117,7 @@ testModule(
   describe(
     "createReadableIOSource",
     testAsync("reading from readable", async () => {
-      const scheduler = createHostScheduler();
+      const scheduler = Scheduler.createHostScheduler();
 
       try {
         function* generate() {
@@ -129,7 +129,7 @@ testModule(
 
         const acc = await pipe(
           createReadableSource(() => pipe(generate(), Readable.from)),
-          flowableToObservable(),
+          Flowable.toObservable(),
           Observable.reduce<Uint8Array, string>(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
@@ -139,11 +139,11 @@ testModule(
         );
         pipe(acc, expectEquals("abcdefg"));
       } finally {
-        pipe(scheduler, dispose());
+        pipe(scheduler, Disposable.dispose());
       }
     }),
     testAsync("reading from readable that throws", async () => {
-      const scheduler = createHostScheduler();
+      const scheduler = Scheduler.createHostScheduler();
 
       try {
         const err = newInstance(Error);
@@ -156,7 +156,7 @@ testModule(
         const textDecoder = newInstance(TextDecoder);
         await pipe(
           createReadableSource(() => pipe(generate(), Readable.from)),
-          flowableToObservable(),
+          Flowable.toObservable(),
           Observable.reduce<Uint8Array, string>(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
@@ -166,12 +166,12 @@ testModule(
           expectPromiseToThrow,
         );
       } finally {
-        pipe(scheduler, dispose());
+        pipe(scheduler, Disposable.dispose());
       }
     }),
   ),
   testAsync("transform", async () => {
-    const scheduler = createHostScheduler();
+    const scheduler = Scheduler.createHostScheduler();
 
     try {
       const encoder = newInstance(TextEncoder);
@@ -179,11 +179,11 @@ testModule(
 
       const acc = await pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
-        toObservable(),
+        ReadonlyArray.toObservable(),
         Observable.toFlowable(),
         gzip(),
         gunzip(),
-        flowableToObservable(),
+        Flowable.toObservable(),
         Observable.reduce<Uint8Array, string>(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
@@ -194,7 +194,7 @@ testModule(
 
       pipe(acc, expectEquals("abcdefg"));
     } finally {
-      pipe(scheduler, dispose());
+      pipe(scheduler, Disposable.dispose());
     }
   }),
 );

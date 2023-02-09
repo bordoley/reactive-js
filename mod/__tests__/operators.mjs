@@ -1,6 +1,6 @@
 /// <reference types="./operators.d.ts" />
 import Container from '../containers/Container.mjs';
-import { empty } from '../containers/ReadonlyArray.mjs';
+import ReadonlyArray from '../containers/ReadonlyArray.mjs';
 import { pipeLazy, arrayEquality, pipe, alwaysFalse, alwaysTrue, none, increment, returns, sum } from '../functions.mjs';
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from './testing.mjs';
 
@@ -56,7 +56,7 @@ const genMapTests = (m) => createDescribe("genMap", createTest("maps the incomin
     yield 2;
     yield 3;
 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
-const ignoreElementsTests = (m) => createDescribe("ignoreElements", createTest("ignores all elements", pipeLazy([1, 2, 3], m.fromArray(), Container.ignoreElements(m), m.toReadonlyArray(), expectArrayEquals(empty()))));
+const ignoreElementsTests = (m) => createDescribe("ignoreElements", createTest("ignores all elements", pipeLazy([1, 2, 3], m.fromArray(), Container.ignoreElements(m), m.toReadonlyArray(), expectArrayEquals(ReadonlyArray.empty()))));
 const keepTests = (m) => createDescribe("keep", createTest("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], m.fromArray(), m.keep(x => x > 5), m.toReadonlyArray(), expectArrayEquals([8, 10, 7]))), createTest("when predicate throws", () => {
     const err = new Error();
     const predicate = (_a) => {
@@ -104,7 +104,7 @@ const scanTests = (m) => createDescribe("scan", createTest("sums all the values 
     pipe(pipeLazy([1, 1], m.fromArray(), m.scan(sum, initialValue), m.toReadonlyArray()), expectToThrowError(err));
 }));
 const scanAsyncTests = (m, mInner) => createDescribe("scanAsync", createTest("fast lib, slow acc", pipeLazy([1, 2, 3], m.fromArray(), m.scanAsync((acc, x) => pipe([x + acc], mInner.fromArray({ delay: 4 })), returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 3, 6]))), createTest("slow lib, fast acc", pipeLazy([1, 2, 3], m.fromArray({ delay: 4 }), m.scanAsync((acc, x) => pipe([x + acc], mInner.fromArray({ delay: 4 })), returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 3, 6]))), createTest("slow lib, slow acc", pipeLazy([1, 2, 3], m.fromArray({ delay: 4 }), m.scanAsync((acc, x) => pipe([x + acc], mInner.fromArray({ delay: 4 })), returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 3, 6]))), createTest("fast lib, fast acc", pipeLazy([1, 2, 3], m.fromArray(), m.scanAsync((acc, x) => pipe([x + acc], mInner.fromArray()), returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 3, 6]))));
-const skipFirstTests = (m) => createDescribe("skipFirst", createTest("when skipped source has additional elements", pipeLazy([1, 2, 3], m.fromArray(), m.skipFirst({ count: 2 }), m.toReadonlyArray(), expectArrayEquals([3]))), createTest("when all elements are skipped", pipeLazy([1, 2, 3], m.fromArray(), m.skipFirst({ count: 4 }), m.toReadonlyArray(), expectArrayEquals(empty()))));
+const skipFirstTests = (m) => createDescribe("skipFirst", createTest("when skipped source has additional elements", pipeLazy([1, 2, 3], m.fromArray(), m.skipFirst({ count: 2 }), m.toReadonlyArray(), expectArrayEquals([3]))), createTest("when all elements are skipped", pipeLazy([1, 2, 3], m.fromArray(), m.skipFirst({ count: 4 }), m.toReadonlyArray(), expectArrayEquals(ReadonlyArray.empty()))));
 const someSatisfyTests = (m) => createDescribe("someSatisfy", createTest("source is empty", pipeLazy([], m.fromArray(), Container.contains(m, 1), m.toReadonlyArray(), expectArrayEquals([false]))), createTest("source contains value", pipeLazy([0, 1, 2], m.fromArray(), Container.contains(m, 1), m.toReadonlyArray(), expectArrayEquals([true]))), createTest("source does not contain value", pipeLazy([2, 3, 4], m.fromArray(), Container.contains(m, 1), m.toReadonlyArray(), expectArrayEquals([false]))));
 const startWithTests = (m) => createDescribe("startWith", createTest("appends the additional values to the start of the container", pipeLazy([0, 1], m.fromArray(), Container.startWith(m, 2, 3, 4), m.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1]))));
 const takeFirstTests = (m) => createDescribe("takeFirst", createTest("when taking fewer than the total number of elements in the source", pipeLazy([1, 2, 3, 4, 5], m.fromArray(), m.takeFirst({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), createTest("when taking more than all the items produced by the source", pipeLazy([1, 2], m.fromArray(), m.takeFirst({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([1, 2]))), createTest("when source is empty", pipeLazy([], m.fromArray(), m.takeFirst({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([]))), createTest("with default count", pipeLazy([1, 2, 3], m.fromArray(), m.takeFirst(), m.toReadonlyArray(), expectArrayEquals([1]))), createTest("when count is 0", pipeLazy([1, 2, 3], m.fromArray(), m.takeFirst({ count: 0 }), m.toReadonlyArray(), expectArrayEquals([]))));
@@ -112,7 +112,7 @@ const takeLastTests = (m) => createDescribe("takeLast", createTest("when count i
 const takeWhileTests = (m) => createDescribe("takeWhile", createTest("exclusive", () => {
     pipe([1, 2, 3, 4, 5], m.fromArray(), m.takeWhile(x => x < 4), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
     pipe([1, 2, 3], m.fromArray(), m.takeWhile(alwaysTrue), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
-    pipe([], m.fromArray(), m.takeWhile(alwaysTrue), m.toReadonlyArray(), expectArrayEquals(empty()));
+    pipe([], m.fromArray(), m.takeWhile(alwaysTrue), m.toReadonlyArray(), expectArrayEquals(ReadonlyArray.empty()));
 }), createTest("inclusive", pipeLazy([1, 2, 3, 4, 5, 6], m.fromArray(), m.takeWhile(x => x < 4, { inclusive: true }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), createTest("when predicate throws", () => {
     const err = new Error();
     const predicate = (_) => {

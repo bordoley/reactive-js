@@ -17,5 +17,16 @@ const shouldYield = Scheduler_shouldYield;
 const schedule = Scheduler_schedule;
 const toPausableScheduler = Scheduler_toPausableScheduler;
 const toPriorityScheduler = create;
+/** @ignore */
+const Scheduler = {
+    createHostScheduler,
+    getCurrentTime,
+    isInContinuation,
+    requestYield,
+    shouldYield,
+    schedule,
+    toPausableScheduler,
+    toPriorityScheduler,
+};
 
-export { createHostScheduler, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };
+export { createHostScheduler, Scheduler as default, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };

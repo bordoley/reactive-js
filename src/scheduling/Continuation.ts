@@ -3,3 +3,11 @@ import Continuation_yield from "../scheduling/__internal__/Continuation/Continua
 
 export const yield_ = Continuation_yield;
 export const run = Continuation_run;
+
+/** @ignore */
+const Continuation = {
+  yield: yield_,
+  run,
+};
+
+export default Continuation;

@@ -27,10 +27,7 @@ import {
   Zip,
 } from "../containers";
 import Container from "../containers/Container";
-import {
-  empty,
-  empty as emptyReadonlyArray,
-} from "../containers/ReadonlyArray";
+import ReadonlyArray from "../containers/ReadonlyArray";
 import {
   alwaysFalse,
   alwaysTrue,
@@ -401,7 +398,7 @@ export const ignoreElementsTests = <C extends ContainerLike>(
         m.fromArray(),
         Container.ignoreElements<C, number>(m),
         m.toReadonlyArray(),
-        expectArrayEquals(empty()),
+        expectArrayEquals(ReadonlyArray.empty()),
       ),
     ),
   );
@@ -742,7 +739,7 @@ export const skipFirstTests = <C extends ContainerLike>(
         m.fromArray(),
         m.skipFirst({ count: 4 }),
         m.toReadonlyArray(),
-        expectArrayEquals(emptyReadonlyArray()),
+        expectArrayEquals(ReadonlyArray.empty()),
       ),
     ),
   );
@@ -920,7 +917,7 @@ export const takeWhileTests = <C extends ContainerLike>(
         m.fromArray(),
         m.takeWhile<number>(alwaysTrue),
         m.toReadonlyArray(),
-        expectArrayEquals(emptyReadonlyArray()),
+        expectArrayEquals(ReadonlyArray.empty()),
       );
     }),
     test(

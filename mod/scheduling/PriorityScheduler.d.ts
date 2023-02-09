@@ -7,4 +7,8 @@ import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
  * @param priority The priority to schedule work at.
  */
 declare const toScheduler: (priority: number) => Function1<PrioritySchedulerLike, SchedulerLike>;
-export { toScheduler };
+/** @ignore */
+declare const PriorityScheduler: {
+    toScheduler: (priority: number) => Function1<PrioritySchedulerLike, SchedulerLike>;
+};
+export { PriorityScheduler as default, toScheduler };

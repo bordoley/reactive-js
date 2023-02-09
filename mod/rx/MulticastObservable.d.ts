@@ -5,4 +5,12 @@ declare const getObserverCount: (obs: {
 declare const getReplay: (obs: {
     [MulticastObservableLike_replay]: number;
 }) => number;
-export { getObserverCount, getReplay };
+declare const MulticastObservable: {
+    getObserverCount: (obs: {
+        [MulticastObservableLike_observerCount]: number;
+    }) => number;
+    getReplay: (obs: {
+        [MulticastObservableLike_replay]: number;
+    }) => number;
+};
+export { MulticastObservable as default, getObserverCount, getReplay };

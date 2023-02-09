@@ -1,5 +1,5 @@
 import Container from "../../containers/Container";
-import { toRunnableObservable } from "../../containers/ReadonlyArray";
+import ReadonlyArray from "../../containers/ReadonlyArray";
 import {
   arrayEquality,
   increment,
@@ -15,13 +15,13 @@ import {
 import { ObservableLike } from "../../rx";
 import Observable from "../../rx/Observable";
 import { __await, __memo } from "../../rx/Observable/effects";
-import { run } from "../../scheduling/Continuation";
-import { dispatch, dispatchTo } from "../../scheduling/Dispatcher";
-import { getCurrentTime, schedule } from "../../scheduling/Scheduler";
-import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
+import Continuation from "../../scheduling/Continuation";
+import Dispatcher from "../../scheduling/Dispatcher";
+import Scheduler from "../../scheduling/Scheduler";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
 import { FlowMode_pause, FlowMode_resume } from "../../streaming";
-import { stream } from "../../streaming/Streamable";
-import { dispose, getError, isDisposed } from "../../util/Disposable";
+import Streamable from "../../streaming/Streamable";
+import Disposable from "../../util/Disposable";
 import {
   describe,
   expectArrayEquals,
@@ -63,14 +63,14 @@ const combineLatestTests = describe(
 const onSubscribeTests = describe(
   "onSubscribe",
   test("when subscribe function returns a teardown function", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = VirtualTimeScheduler.create();
 
     const disp = mockFn();
     const f = mockFn(disp);
 
     pipe(
       [1],
-      toRunnableObservable(),
+      ReadonlyArray.toObservable(),
       Observable.onSubscribe(f),
       Observable.subscribe(scheduler),
     );
@@ -78,22 +78,22 @@ const onSubscribeTests = describe(
     pipe(disp, expectToHaveBeenCalledTimes(0));
     pipe(f, expectToHaveBeenCalledTimes(1));
 
-    run(scheduler);
+    Continuation.run(scheduler);
 
     pipe(disp, expectToHaveBeenCalledTimes(1));
     pipe(f, expectToHaveBeenCalledTimes(1));
   }),
 
   test("when callback function throws", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = VirtualTimeScheduler.create();
     const subscription = pipe(
       [1],
-      toRunnableObservable(),
+      ReadonlyArray.toObservable(),
       Observable.onSubscribe(raise),
       Observable.subscribe(scheduler),
     );
 
-    pipe(subscription, getError, expectIsSome);
+    pipe(subscription, Disposable.getError, expectIsSome);
   }),
 );
 
@@ -103,7 +103,7 @@ const retryTests = describe(
     "repeats the observable n times",
     pipeLazy(
       Observable.concat(
-        pipe([1, 2, 3], toRunnableObservable()),
+        pipe([1, 2, 3], ReadonlyArray.toObservable()),
         pipe(raise, Container.throws<ObservableLike, number>(Observable)),
       ),
       Observable.retry(),
@@ -117,10 +117,10 @@ const retryTests = describe(
 const shareTests = describe(
   "share",
   test("shared observable zipped with itself", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = VirtualTimeScheduler.create();
     const shared = pipe(
       [1, 2, 3],
-      toRunnableObservable({ delay: 1 }),
+      ReadonlyArray.toObservable({ delay: 1 }),
       Observable.share(scheduler, { replay: 1 }),
     );
 
@@ -134,7 +134,7 @@ const shareTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    run(scheduler);
+    Continuation.run(scheduler);
     pipe(result, expectArrayEquals([2, 4, 6]));
   }),
 );
@@ -145,9 +145,9 @@ const takeUntilTests = describe(
     "takes until the notifier notifies its first notification",
     pipeLazy(
       [1, 2, 3, 4, 5],
-      toRunnableObservable({ delay: 1 }),
+      ReadonlyArray.toObservable({ delay: 1 }),
       Observable.takeUntil(
-        pipe([1], toRunnableObservable({ delay: 3, delayStart: true })),
+        pipe([1], ReadonlyArray.toObservable({ delay: 3, delayStart: true })),
       ),
       Observable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3]),
@@ -162,7 +162,7 @@ const timeoutTests = describe(
     pipeLazy(
       pipeLazy(
         [1],
-        toRunnableObservable({ delay: 2, delayStart: true }),
+        ReadonlyArray.toObservable({ delay: 2, delayStart: true }),
         Observable.timeout(1),
         Observable.toReadonlyArray(),
       ),
@@ -174,7 +174,7 @@ const timeoutTests = describe(
     "when timeout is greater than observed time",
     pipeLazy(
       [1],
-      toRunnableObservable({ delay: 2, delayStart: true }),
+      ReadonlyArray.toObservable({ delay: 2, delayStart: true }),
       Observable.timeout(3),
       Observable.toReadonlyArray(),
       expectArrayEquals([1]),
@@ -245,7 +245,7 @@ const throttleTests = describe(
 const toFlowableTests = describe(
   "toFlowable",
   test("flow a generating source", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = VirtualTimeScheduler.create();
 
     const generateStream = pipe(
       Observable.generate(increment, returns(-1), {
@@ -253,47 +253,55 @@ const toFlowableTests = describe(
         delayStart: true,
       }),
       Observable.toFlowable(),
-      stream(scheduler),
+      Streamable.stream(scheduler),
     );
 
-    pipe(generateStream, dispatch(FlowMode_resume));
+    pipe(generateStream, Dispatcher.dispatch(FlowMode_resume));
 
     pipe(
       scheduler,
-      schedule(pipeLazy(FlowMode_pause, dispatchTo(generateStream)), {
-        delay: 2,
+      Scheduler.schedule(
+        pipeLazy(FlowMode_pause, Dispatcher.dispatchTo(generateStream)),
+        {
+          delay: 2,
+        },
+      ),
+    );
+
+    pipe(
+      scheduler,
+      Scheduler.schedule(
+        pipeLazy(FlowMode_resume, Dispatcher.dispatchTo(generateStream)),
+        {
+          delay: 4,
+        },
+      ),
+    );
+
+    pipe(
+      scheduler,
+      Scheduler.schedule(pipeLazy(generateStream, Disposable.dispose()), {
+        delay: 5,
       }),
-    );
-
-    pipe(
-      scheduler,
-      schedule(pipeLazy(FlowMode_resume, dispatchTo(generateStream)), {
-        delay: 4,
-      }),
-    );
-
-    pipe(
-      scheduler,
-      schedule(pipeLazy(generateStream, dispose()), { delay: 5 }),
     );
 
     const f = mockFn();
     const subscription = pipe(
       generateStream,
       Observable.forEach<number>(x => {
-        f(getCurrentTime(scheduler), x);
+        f(Scheduler.getCurrentTime(scheduler), x);
       }),
       Observable.subscribe(scheduler),
     );
 
-    run(scheduler);
+    Continuation.run(scheduler);
 
     pipe(f, expectToHaveBeenCalledTimes(3));
     pipe(f.calls[0][1], expectEquals(0));
     pipe(f.calls[1][1], expectEquals(1));
     pipe(f.calls[2][1], expectEquals(2));
 
-    pipe(subscription, isDisposed, expectTrue);
+    pipe(subscription, Disposable.isDisposed, expectTrue);
   }),
 );
 
@@ -303,9 +311,9 @@ const withLatestFromTest = describe(
     "when source and latest are interlaced",
     pipeLazy(
       [0, 1, 2, 3],
-      toRunnableObservable({ delay: 1 }),
+      ReadonlyArray.toObservable({ delay: 1 }),
       Observable.withLatestFrom(
-        pipe([0, 1, 2, 3], toRunnableObservable({ delay: 2 })),
+        pipe([0, 1, 2, 3], ReadonlyArray.toObservable({ delay: 2 })),
         (a, b) => [a, b],
       ),
       Observable.toReadonlyArray(),
@@ -324,7 +332,7 @@ const withLatestFromTest = describe(
     "when latest produces no values",
     pipeLazy(
       [0],
-      toRunnableObservable({ delay: 1 }),
+      ReadonlyArray.toObservable({ delay: 1 }),
       Observable.withLatestFrom(Observable.empty(), sum),
       Observable.toReadonlyArray(),
       expectArrayEquals([] as number[]),
@@ -336,7 +344,7 @@ const withLatestFromTest = describe(
     pipe(
       pipeLazy(
         [0],
-        toRunnableObservable({ delay: 1 }),
+        ReadonlyArray.toObservable({ delay: 1 }),
         Observable.withLatestFrom(
           Container.throws(Observable)(returns(error)),
           sum,
@@ -357,11 +365,11 @@ const zipLatestTests = describe(
       Observable.zipLatest(
         pipe(
           [1, 2, 3, 4, 5, 6, 7, 8],
-          toRunnableObservable({ delay: 1, delayStart: true }),
+          ReadonlyArray.toObservable({ delay: 1, delayStart: true }),
         ),
         pipe(
           [1, 2, 3, 4],
-          toRunnableObservable({ delay: 2, delayStart: true }),
+          ReadonlyArray.toObservable({ delay: 2, delayStart: true }),
         ),
       ),
       Observable.map<[number, number], number>(([a, b]) => a + b),
@@ -379,7 +387,7 @@ const zipWithLatestTests = describe(
       pipeLazy(
         Container.throws(Observable)(raise),
         Observable.zipWithLatestFrom(
-          pipe([1], toRunnableObservable()),
+          pipe([1], ReadonlyArray.toObservable()),
           (_, b) => b,
         ),
         Observable.toReadonlyArray(),
@@ -393,7 +401,7 @@ const zipWithLatestTests = describe(
     pipeLazy(
       pipeLazy(
         [1, 2, 3],
-        toRunnableObservable({ delay: 1 }),
+        ReadonlyArray.toObservable({ delay: 1 }),
         Observable.zipWithLatestFrom(
           Container.throws(Observable)(raise),
           (_, b) => b,
@@ -408,9 +416,9 @@ const zipWithLatestTests = describe(
     "when other completes first",
     pipeLazy(
       [1, 2, 3],
-      toRunnableObservable({ delay: 2 }),
+      ReadonlyArray.toObservable({ delay: 2 }),
       Observable.zipWithLatestFrom(
-        pipe([2, 4], toRunnableObservable({ delay: 1 })),
+        pipe([2, 4], ReadonlyArray.toObservable({ delay: 1 })),
         (a, b) => a + b,
       ),
       Observable.toReadonlyArray(),
@@ -422,9 +430,9 @@ const zipWithLatestTests = describe(
     "when this completes first",
     pipeLazy(
       [1, 2, 3],
-      toRunnableObservable({ delay: 2 }),
+      ReadonlyArray.toObservable({ delay: 2 }),
       Observable.zipWithLatestFrom(
-        pipe([2, 4, 6, 8], toRunnableObservable({ delay: 1 })),
+        pipe([2, 4, 6, 8], ReadonlyArray.toObservable({ delay: 1 })),
         (a, b) => a + b,
       ),
       Observable.toReadonlyArray(),
@@ -436,7 +444,7 @@ const zipWithLatestTests = describe(
 const asyncTests = describe(
   "async",
   test("batch mode", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = VirtualTimeScheduler.create();
 
     const fromValueWithDelay = (
       delay: number,
@@ -463,12 +471,12 @@ const asyncTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    run(scheduler);
+    Continuation.run(scheduler);
 
     pipe(result, expectEquals(22));
   }),
   test("combined-latest mode", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = VirtualTimeScheduler.create();
 
     const oneTwoThreeDelayed = pipe(
       [1, 2, 3],
@@ -495,12 +503,12 @@ const asyncTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    run(scheduler);
+    Continuation.run(scheduler);
 
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
   }),
   test("conditional hooks", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = VirtualTimeScheduler.create();
 
     const src = pipe([0, 1, 2, 3, 4, 5], Observable.fromArray({ delay: 5 }));
     const src2 = Observable.generate(increment, returns(100), {
@@ -526,7 +534,7 @@ const asyncTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    run(scheduler);
+    Continuation.run(scheduler);
 
     pipe(
       result,

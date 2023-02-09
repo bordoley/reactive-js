@@ -1,5 +1,5 @@
 import Container from "../../containers/Container";
-import { toRunnableObservable } from "../../containers/ReadonlyArray";
+import ReadonlyArray from "../../containers/ReadonlyArray";
 import {
   arrayEquality,
   identity,
@@ -20,8 +20,8 @@ import RunnableObservable, {
   toReadonlyArray,
   zip,
 } from "../../rx/RunnableObservable";
-import { createHostScheduler } from "../../scheduling/Scheduler";
-import { dispose } from "../../util/Disposable";
+import Scheduler from "../../scheduling/Scheduler";
+import Disposable from "../../util/Disposable";
 import {
   bufferTests,
   catchErrorTests,
@@ -68,11 +68,11 @@ const exhaustTests = describe(
     "when the initial observable never disposes",
     pipeLazy(
       [
-        pipe([1, 2, 3], toRunnableObservable({ delay: 3 })),
-        pipe([4, 5, 6], toRunnableObservable()),
-        pipe([7, 8, 9], toRunnableObservable({ delay: 2 })),
+        pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 3 })),
+        pipe([4, 5, 6], ReadonlyArray.toRunnableObservable()),
+        pipe([7, 8, 9], ReadonlyArray.toRunnableObservable({ delay: 2 })),
       ],
-      toRunnableObservable({ delay: 5 }),
+      ReadonlyArray.toRunnableObservable({ delay: 5 }),
       exhaust(),
       toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 7, 8, 9]),
@@ -88,9 +88,12 @@ const mergeTests = describe(
       merge(
         pipe(
           [0, 2, 3, 5, 6],
-          toRunnableObservable({ delay: 1, delayStart: true }),
+          ReadonlyArray.toRunnableObservable({ delay: 1, delayStart: true }),
         ),
-        pipe([1, 4, 7], toRunnableObservable({ delay: 2, delayStart: true })),
+        pipe(
+          [1, 4, 7],
+          ReadonlyArray.toRunnableObservable({ delay: 2, delayStart: true }),
+        ),
       ),
       toReadonlyArray(),
       expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
@@ -101,7 +104,7 @@ const mergeTests = describe(
     pipeLazy(
       pipeLazy(
         merge(
-          pipe([1, 4, 7], toRunnableObservable({ delay: 2 })),
+          pipe([1, 4, 7], ReadonlyArray.toRunnableObservable({ delay: 2 })),
           Container.throws(RunnableObservable, { delay: 5 })(raise),
         ),
         toReadonlyArray(),
@@ -139,10 +142,10 @@ const switchAllTests = describe(
     "concating arrays",
     pipeLazy(
       [1, 2, 3],
-      toRunnableObservable({ delay: 1 }),
+      ReadonlyArray.toRunnableObservable({ delay: 1 }),
       Container.concatMap<RunnableObservableLike, number, number>(
         { concatAll: switchAll, map },
-        _ => pipe([1, 2, 3], toRunnableObservable({ delay: 0 })),
+        _ => pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 0 })),
       ),
       toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
@@ -152,10 +155,10 @@ const switchAllTests = describe(
     "overlapping notification",
     pipeLazy(
       [1, 2, 3],
-      toRunnableObservable({ delay: 4 }),
+      ReadonlyArray.toRunnableObservable({ delay: 4 }),
       Container.concatMap<RunnableObservableLike, number, number>(
         { concatAll: switchAll, map },
-        _ => pipe([1, 2, 3], toRunnableObservable({ delay: 2 })),
+        _ => pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 2 })),
       ),
       toReadonlyArray(),
       expectArrayEquals([1, 2, 1, 2, 1, 2, 3]),
@@ -169,7 +172,7 @@ const toEnumerableTests = describe(
     "with an enumerable observable",
     pipeLazy(
       [1, 2, 3, 4],
-      toRunnableObservable(),
+      ReadonlyArray.toRunnableObservable(),
       toEnumerable(),
       Enumerable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 4]),
@@ -180,11 +183,11 @@ const toEnumerableTests = describe(
 const toPromiseTests = describe(
   "toPromise",
   testAsync("when observable completes without producing a value", async () => {
-    const scheduler = createHostScheduler();
+    const scheduler = Scheduler.createHostScheduler();
     try {
       await pipe(pipe(empty(), toPromise(scheduler)), expectPromiseToThrow);
     } finally {
-      pipe(scheduler, dispose());
+      pipe(scheduler, Disposable.dispose());
     }
   }),
 );
@@ -196,9 +199,9 @@ const zipTests = describe(
     "with synchronous and non-synchronous sources",
     pipeLazy(
       zip(
-        pipe([1, 2], toRunnableObservable({ delay: 1 })),
-        pipe([2, 3], toRunnableObservable()),
-        pipe([3, 4, 5], toRunnableObservable({ delay: 1 })),
+        pipe([1, 2], ReadonlyArray.toRunnableObservable({ delay: 1 })),
+        pipe([2, 3], ReadonlyArray.toRunnableObservable()),
+        pipe([3, 4, 5], ReadonlyArray.toRunnableObservable({ delay: 1 })),
       ),
       toReadonlyArray(),
       expectArrayEquals(
@@ -211,8 +214,8 @@ const zipTests = describe(
     "fast with slow",
     pipeLazy(
       zip(
-        pipe([1, 2, 3], toRunnableObservable({ delay: 1 })),
-        pipe([1, 2, 3], toRunnableObservable({ delay: 5 })),
+        pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 1 })),
+        pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 5 })),
       ),
       toReadonlyArray(),
       expectArrayEquals(
@@ -227,7 +230,7 @@ const zipTests = describe(
       pipeLazy(
         zip(
           pipe(raise, Container.throws(RunnableObservable)),
-          pipe([1, 2, 3], toRunnableObservable()),
+          pipe([1, 2, 3], ReadonlyArray.toRunnableObservable()),
         ),
         map<readonly [unknown, number], number>(([, b]) => b),
         toReadonlyArray(),

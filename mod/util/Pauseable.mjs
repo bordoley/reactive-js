@@ -5,5 +5,10 @@ import Pauseable_resume from './__internal__/Pauseable/Pauseable.resume.mjs';
 
 const pause = Pauseable_pause;
 const resume = Pauseable_resume;
+/** @ignore */
+const Pauseable = {
+    pause,
+    resume,
+};
 
-export { pause, resume };
+export { Pauseable as default, pause, resume };

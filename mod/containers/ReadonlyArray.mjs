@@ -35,5 +35,26 @@ const toReadonlyArray = () => identity;
 const toRunnable = ReadonlyArray_toRunnable;
 const toRunnableObservable = ReadonlyArray_toRunnableObservable;
 const toSequence = ReadonlyArray_toSequence;
+/** @ignore */
+const ReadonlyArray = {
+    empty,
+    every,
+    forEach,
+    fromArray,
+    fromAsyncEnumerable,
+    fromEnumerable,
+    fromEnumerableObservable,
+    fromSequence,
+    keep,
+    map,
+    some,
+    toEnumerable,
+    toEnumerableObservable,
+    toObservable,
+    toReadonlyArray,
+    toRunnable,
+    toRunnableObservable,
+    toSequence,
+};
 
-export { empty, every, forEach, fromArray, fromAsyncEnumerable, fromEnumerable, fromEnumerableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };
+export { ReadonlyArray as default, empty, every, forEach, fromArray, fromAsyncEnumerable, fromEnumerable, fromEnumerableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };

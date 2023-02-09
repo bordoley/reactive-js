@@ -2,5 +2,9 @@
 import Stream_sourceFrom from './__internal__/Stream/Stream.sourceFrom.mjs';
 
 const sourceFrom = Stream_sourceFrom;
+/** @ignore */
+const Stream = {
+    sourceFrom,
+};
 
-export { sourceFrom };
+export { Stream as default, sourceFrom };

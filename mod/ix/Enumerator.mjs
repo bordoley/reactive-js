@@ -9,5 +9,12 @@ const forEach = Enumerator_forEach;
 const getCurrent = Enumerator_getCurrent;
 const hasCurrent = Enumerator_hasCurrent;
 const move = Enumerator_move;
+/** @ignore */
+const Enumerator = {
+    forEach,
+    getCurrent,
+    hasCurrent,
+    move,
+};
 
-export { forEach, getCurrent, hasCurrent, move };
+export { Enumerator as default, forEach, getCurrent, hasCurrent, move };

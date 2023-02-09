@@ -4,3 +4,10 @@ import Flowable_toObservable from "./__internal__/Flowable/Flowable.toObservable
 
 export const toObservable: ToObservable<FlowableLike>["toObservable"] =
   Flowable_toObservable;
+
+/** @ignore */
+const Flowable = {
+  toObservable,
+};
+
+export default Flowable;

@@ -5,5 +5,9 @@ import MulticastObservable_getReplay from './__internal__/MulticastObservable/Mu
 
 const getObserverCount = MulticastObservable_getObserverCount;
 const getReplay = MulticastObservable_getReplay;
+const MulticastObservable = {
+    getObserverCount,
+    getReplay,
+};
 
-export { getObserverCount, getReplay };
+export { MulticastObservable as default, getObserverCount, getReplay };

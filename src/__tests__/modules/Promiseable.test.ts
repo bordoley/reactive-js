@@ -1,8 +1,8 @@
-import { toObservable } from "../../containers/Promiseable";
+import Promiseable from "../../containers/Promiseable";
 import { newInstance, pipe } from "../../functions";
 import Observable from "../../rx/Observable";
-import { createHostScheduler } from "../../scheduling/Scheduler";
-import { dispose } from "../../util/Disposable";
+import Scheduler from "../../scheduling/Scheduler";
+import Disposable from "../../util/Disposable";
 import {
   describe,
   expectEquals,
@@ -16,34 +16,38 @@ testModule(
   describe(
     "toObservable",
     testAsync("when the promise resolves", async () => {
-      const scheduler = createHostScheduler();
+      const scheduler = Scheduler.createHostScheduler();
 
       const promise = Promise.resolve(1);
 
       try {
         const result = await pipe(
           promise,
-          toObservable(),
+          Promiseable.toObservable(),
           Observable.toPromise(scheduler),
         );
         pipe(result, expectEquals(1));
       } finally {
-        pipe(scheduler, dispose());
+        pipe(scheduler, Disposable.dispose());
       }
     }),
     testAsync("when the promise reject", async () => {
-      const scheduler = createHostScheduler();
+      const scheduler = Scheduler.createHostScheduler();
 
       const error = newInstance(Error);
       const promise = Promise.reject(error);
 
       try {
         await pipe(
-          pipe(promise, toObservable(), Observable.toPromise(scheduler)),
+          pipe(
+            promise,
+            Promiseable.toObservable(),
+            Observable.toPromise(scheduler),
+          ),
           expectPromiseToThrow,
         );
       } finally {
-        pipe(scheduler, dispose());
+        pipe(scheduler, Disposable.dispose());
       }
     }),
   ),

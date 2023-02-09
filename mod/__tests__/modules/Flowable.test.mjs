@@ -1,17 +1,17 @@
 /// <reference types="./Flowable.test.d.ts" />
-import { toObservable } from '../../containers/ReadonlyArray.mjs';
+import ReadonlyArray from '../../containers/ReadonlyArray.mjs';
 import { pipe } from '../../functions.mjs';
 import Observable from '../../rx/Observable.mjs';
-import { run } from '../../scheduling/Continuation.mjs';
-import { create } from '../../scheduling/VirtualTimeScheduler.mjs';
-import { toObservable as toObservable$1 } from '../../streaming/Flowable.mjs';
+import Continuation from '../../scheduling/Continuation.mjs';
+import VirtualTimeScheduler from '../../scheduling/VirtualTimeScheduler.mjs';
+import Flowable from '../../streaming/Flowable.mjs';
 import { testModule, test as createTest } from '../testing.mjs';
 
 testModule("Flowable", createTest("toObservable", () => {
-    const scheduler = create();
+    const scheduler = VirtualTimeScheduler.create();
     const result = [];
-    pipe([0, 1, 2, 3, 4], toObservable({ delay: 1 }), Observable.toFlowable(), toObservable$1(), Observable.forEach(v => {
+    pipe([0, 1, 2, 3, 4], ReadonlyArray.toObservable({ delay: 1 }), Observable.toFlowable(), Flowable.toObservable(), Observable.forEach(v => {
         result.push(v);
     }), Observable.subscribe(scheduler));
-    run(scheduler);
+    Continuation.run(scheduler);
 }));

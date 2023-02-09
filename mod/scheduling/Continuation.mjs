@@ -4,5 +4,10 @@ import Continuation_yield_ from './__internal__/Continuation/Continuation.yield.
 
 const yield_ = Continuation_yield_;
 const run = Continuation_run;
+/** @ignore */
+const Continuation = {
+    yield: yield_,
+    run,
+};
 
-export { run, yield_ };
+export { Continuation as default, run, yield_ };

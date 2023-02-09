@@ -2,5 +2,9 @@
 import ReactiveContainer_sinkInto from './__internal__/ReactiveContainer/ReactiveContainer.sinkInto.mjs';
 
 const sinkInto = ReactiveContainer_sinkInto;
+/** @ignore */
+const ReactiveContainer = {
+    sinkInto,
+};
 
-export { sinkInto };
+export { ReactiveContainer as default, sinkInto };

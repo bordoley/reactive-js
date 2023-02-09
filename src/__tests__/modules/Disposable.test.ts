@@ -1,19 +1,9 @@
 import { Optional, error, none, pipe, pipeLazy, raise } from "../../functions";
 import Observable from "../../rx/Observable";
-import { run } from "../../scheduling/Continuation";
-import { getCurrentTime, schedule } from "../../scheduling/Scheduler";
-import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
-import {
-  add,
-  addIgnoringChildErrors,
-  addTo,
-  create as createDisposable,
-  dispose,
-  getError,
-  isDisposed,
-  onDisposed,
-  toObservable,
-} from "../../util/Disposable";
+import Continuation from "../../scheduling/Continuation";
+import Scheduler from "../../scheduling/Scheduler";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
+import Disposable from "../../util/Disposable";
 import {
   expectArrayEquals,
   expectEquals,
@@ -28,22 +18,30 @@ import {
 testModule(
   "Disposable",
   test("disposes child disposable when disposed", () => {
-    const child = createDisposable();
-    pipe(createDisposable(), addIgnoringChildErrors(child), dispose());
-    pipe(child, isDisposed, expectTrue);
+    const child = Disposable.create();
+    pipe(
+      Disposable.create(),
+      Disposable.addIgnoringChildErrors(child),
+      Disposable.dispose(),
+    );
+    pipe(child, Disposable.isDisposed, expectTrue);
   }),
   test("adding to disposed disposable disposes the child", () => {
-    const child = createDisposable();
-    pipe(createDisposable(), dispose(), addIgnoringChildErrors(child));
-    pipe(child, isDisposed, expectTrue);
+    const child = Disposable.create();
+    pipe(
+      Disposable.create(),
+      Disposable.dispose(),
+      Disposable.addIgnoringChildErrors(child),
+    );
+    pipe(child, Disposable.isDisposed, expectTrue);
   }),
   test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();
     pipe(
-      createDisposable(),
-      onDisposed(teardown),
-      onDisposed(teardown),
-      dispose(),
+      Disposable.create(),
+      Disposable.onDisposed(teardown),
+      Disposable.onDisposed(teardown),
+      Disposable.dispose(),
     );
     pipe(teardown, expectToHaveBeenCalledTimes(1));
   }),
@@ -51,64 +49,67 @@ testModule(
     const teardown = pipeLazy(none, raise);
 
     const disposable = pipe(
-      createDisposable(),
-      onDisposed(teardown),
-      dispose(),
+      Disposable.create(),
+      Disposable.onDisposed(teardown),
+      Disposable.dispose(),
     );
-    pipe(disposable, getError, expectIsNone);
+    pipe(disposable, Disposable.getError, expectIsNone);
   }),
   test("propogates errors when disposed with an Error", () => {
     const err: Optional<Error> = error(null);
 
     const childTeardown = mockFn();
-    const disposable = pipe(createDisposable(), onDisposed(childTeardown));
+    const disposable = pipe(
+      Disposable.create(),
+      Disposable.onDisposed(childTeardown),
+    );
 
-    pipe(disposable, dispose(err));
+    pipe(disposable, Disposable.dispose(err));
 
-    pipe(disposable, getError, expectEquals<Optional<Error>>(err));
+    pipe(disposable, Disposable.getError, expectEquals<Optional<Error>>(err));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([err]));
   }),
   test("ignores when it is added to itself", () => {
-    const disposable = createDisposable();
-    pipe(disposable, addTo(disposable), dispose());
+    const disposable = Disposable.create();
+    pipe(disposable, Disposable.addTo(disposable), Disposable.dispose());
   }),
   test("disposes parent when child is disposed with error", () => {
-    const parent = createDisposable();
-    const child = createDisposable();
+    const parent = Disposable.create();
+    const child = Disposable.create();
 
-    pipe(parent, add(child));
+    pipe(parent, Disposable.add(child));
 
     const e = new Error();
-    pipe(child, dispose(e));
+    pipe(child, Disposable.dispose(e));
 
-    pipe(parent, getError, expectEquals<Optional<Error>>(e));
+    pipe(parent, Disposable.getError, expectEquals<Optional<Error>>(e));
   }),
   test("toObservable", () => {
-    const disposable = createDisposable();
-    const scheduler = createVirtualTimeScheduler();
+    const disposable = Disposable.create();
+    const scheduler = VirtualTimeScheduler.create();
 
     let disposedTime = 0;
     pipe(
       disposable,
-      toObservable(),
+      Disposable.toObservable(),
       Observable.subscribe(scheduler),
-      onDisposed(_ => {
-        disposedTime = getCurrentTime(scheduler);
+      Disposable.onDisposed(_ => {
+        disposedTime = Scheduler.getCurrentTime(scheduler);
       }),
     );
 
     pipe(
       scheduler,
-      schedule(
+      Scheduler.schedule(
         () => {
-          pipe(disposable, dispose());
+          pipe(disposable, Disposable.dispose());
         },
         { delay: 2 },
       ),
     );
 
-    run(scheduler);
+    Continuation.run(scheduler);
     pipe(disposedTime, expectEquals(2));
   }),
 );

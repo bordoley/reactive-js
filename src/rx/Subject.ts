@@ -5,3 +5,12 @@ import Subject_publishTo from "./__internal__/Subject/Subject.publishTo";
 export const create = Subject_create;
 export const publish = Subject_publish;
 export const publishTo = Subject_publishTo;
+
+/** @ignore */
+const Subject = {
+  create,
+  publish,
+  publishTo,
+};
+
+export default Subject;
