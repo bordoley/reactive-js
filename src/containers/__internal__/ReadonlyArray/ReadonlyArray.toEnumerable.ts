@@ -56,7 +56,8 @@ const ReadonlyArray_toEnumerable: ToEnumerable<
         init(typedMutableEnumeratorMixin, instance);
 
         instance[ReadonlyArrayEnumerator_array] = array;
-        instance[ReadonlyArrayEnumerator_index] = start - 1;
+        instance[ReadonlyArrayEnumerator_index] =
+          count >= 0 ? start - 1 : start + 1;
         instance[ReadonlyArrayEnumerator_count] = count;
 
         return instance;
@@ -70,19 +71,21 @@ const ReadonlyArray_toEnumerable: ToEnumerable<
         [SourceLike_move](this: TProperties & MutableEnumeratorLike<T>) {
           const { [ReadonlyArrayEnumerator_array]: array } = this;
           if (!Disposable_isDisposed(this)) {
-            this[ReadonlyArrayEnumerator_index]++;
             const {
-              [ReadonlyArrayEnumerator_index]: index,
               [ReadonlyArrayEnumerator_count]: count,
+              [ReadonlyArrayEnumerator_index]: prevIndex,
             } = this;
 
             if (count !== 0) {
-              this[EnumeratorLike_current] = array[index];
+              this[ReadonlyArrayEnumerator_index] =
+                count > 0 ? prevIndex + 1 : prevIndex - 1;
 
               this[ReadonlyArrayEnumerator_count] =
-                count > 0
-                  ? this[ReadonlyArrayEnumerator_count] - 1
-                  : this[ReadonlyArrayEnumerator_count] + 1;
+                count > 0 ? count - 1 : count + 1;
+
+              const { [ReadonlyArrayEnumerator_index]: index } = this;
+
+              this[EnumeratorLike_current] = array[index];
             } else {
               pipe(this, Disposable_dispose());
             }

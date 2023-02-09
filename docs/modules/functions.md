@@ -43,6 +43,7 @@
 
 ### Functions
 
+- [abs](functions.md#abs)
 - [alwaysFalse](functions.md#alwaysfalse)
 - [alwaysTrue](functions.md#alwaystrue)
 - [arrayEquality](functions.md#arrayequality)
@@ -909,6 +910,22 @@ Computes a new value of type `T` from the previous value of type `T`.
 An alias for undefined.
 
 ## Functions
+
+### abs
+
+▸ **abs**(`x`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `x` | `number` |
+
+#### Returns
+
+`number`
+
+___
 
 ### alwaysFalse
 

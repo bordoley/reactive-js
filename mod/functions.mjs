@@ -164,6 +164,6 @@ const sum = (...args) => {
     return acc;
 };
 function unsafeCast(_v) { }
-const { floor, max, min } = Math;
+const { abs, floor, max, min } = Math;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, raiseError, raiseWithDebugMessage, returns, strictEquality, sum, unsafeCast };
+export { abs, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, forEach, getLength, getOrDefault, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, raiseError, raiseWithDebugMessage, returns, strictEquality, sum, unsafeCast };

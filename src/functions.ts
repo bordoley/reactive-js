@@ -760,4 +760,4 @@ export const sum = (...args: number[]) => {
 
 export function unsafeCast<T>(_v: unknown): asserts _v is T {}
 
-export const { floor, max, min } = Math;
+export const { abs, floor, max, min } = Math;

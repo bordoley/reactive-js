@@ -1,5 +1,5 @@
 import { ReadonlyArrayLike } from "../../../containers";
-import { increment, pipe, returns } from "../../../functions";
+import { abs, decrement, increment, pipe, returns } from "../../../functions";
 import { ToAsyncEnumerable } from "../../../ix";
 import AsyncEnumerable_create from "../../../ix/__internal__/AsyncEnumerable/AsyncEnumerable.create";
 import { ObservableLike } from "../../../rx";
@@ -23,13 +23,15 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
   ReadonlyArray_toContainer(
     (array: readonly T[], start: number, count: number, options) =>
       AsyncEnumerable_create(
-        Observable_scan(increment, returns(start - 1)),
+        count >= 0
+          ? Observable_scan(increment, returns(start - 1))
+          : Observable_scan(decrement, returns(start + 1)),
         Container_concatMap<ObservableLike, number, T>(
           { map: Observable_map, concatAll: Observable_concatAll },
           (i: number) =>
             pipe([array[i]], ReadonlyArray_toRunnableObservable(options)),
         ),
-        Observable_takeFirst({ count }),
+        Observable_takeFirst({ count: abs(count) }),
       ),
   ))();
 

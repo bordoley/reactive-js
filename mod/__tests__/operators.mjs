@@ -51,6 +51,19 @@ const forEachTests = (m) => createDescribe("forEach", createTest("invokes the ef
         throw err;
     }), m.toReadonlyArray()), expectToThrowError(err));
 }));
+const fromArrayTests = (m) => createDescribe("fromArray", createTest("negative count with start index", () => {
+    pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray({ count: -3, start: 4 }), m.toReadonlyArray(), expectArrayEquals([5, 4, 3]));
+}), createTest("positive count with start index", () => {
+    pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray({ count: 3, start: 4 }), m.toReadonlyArray(), expectArrayEquals([5, 6, 7]));
+}), createTest("negative count exceeding bounds with start index", () => {
+    pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray({ count: -100, start: 3 }), m.toReadonlyArray(), expectArrayEquals([4, 3, 2, 1]));
+}), createTest("positive count exceeding bounds with start index", () => {
+    pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray({ count: 100, start: 7 }), m.toReadonlyArray(), expectArrayEquals([8, 9]));
+}), createTest("negative count without start index", () => {
+    pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray({ count: -3 }), m.toReadonlyArray(), expectArrayEquals([9, 8, 7]));
+}), createTest("positive count without start index", () => {
+    pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
+}));
 const genMapTests = (m) => createDescribe("genMap", createTest("maps the incoming value with the inline generator function", pipeLazy([none, none], m.fromArray(), Container.genMap(m, function* (_) {
     yield 1;
     yield 2;
@@ -146,4 +159,4 @@ const zipWithTests = (m) => createDescribe("zipWith", createTest("when inputs ar
     [3, 3],
 ], arrayEquality()))));
 
-export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests, zipWithTests };
+export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromArrayTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests, zipWithTests };
