@@ -6,26 +6,6 @@ import {
   useState,
 } from "react";
 import {
-  unstable_IdlePriority,
-  unstable_ImmediatePriority,
-  unstable_LowPriority,
-  unstable_NormalPriority,
-  unstable_UserBlockingPriority,
-  unstable_cancelCallback,
-  unstable_now,
-  // @ts-ignore-next-line
-  unstable_requestPaint,
-  unstable_scheduleCallback,
-  unstable_shouldYield,
-} from "scheduler";
-import {
-  createInstanceFactory,
-  include,
-  init,
-  mix,
-  props,
-} from "../__internal__/mixins";
-import {
   Factory,
   Optional,
   ignore,
@@ -35,36 +15,14 @@ import {
   pipe,
   pipeLazy,
   raiseError,
-  unsafeCast,
 } from "../functions";
 import { ObservableLike, SubjectLike } from "../rx";
 import { distinctUntilChanged, forEach, subscribe } from "../rx/Observable";
 import { create as createSubject, publish } from "../rx/Subject";
-import {
-  ContinuationLike,
-  PrioritySchedulerLike,
-  SchedulerLike,
-  SchedulerLike_inContinuation,
-  SchedulerLike_now,
-  SchedulerLike_requestYield,
-  SchedulerLike_schedule,
-  SchedulerLike_shouldYield,
-} from "../scheduling";
-import { run } from "../scheduling/Continuation";
-import { toScheduler } from "../scheduling/PriorityScheduler";
-import { isInContinuation } from "../scheduling/Scheduler";
-import { getDelay } from "../scheduling/__internal__/Scheduler.options";
-import { DisposableLike } from "../util";
-import {
-  addIgnoringChildErrors,
-  addTo,
-  create as createDisposable,
-  dispose,
-  isDisposed,
-  onDisposed,
-  onError,
-} from "../util/Disposable";
-import Disposable_mixin from "../util/__internal__/Disposable/Disposable.mixin";
+import { SchedulerLike } from "../scheduling";
+import { dispose, onError } from "../util/Disposable";
+import { createSchedulerWithNormalPriority } from "./scheduler";
+
 /**
  * Returns the current value, if defined, of `observable`.
  *
@@ -84,7 +42,7 @@ export const useObservable = <T>(
 
     const scheduler = isFunction(schedulerOption)
       ? schedulerOption()
-      : schedulerOption ?? createReactNormalPriorityScheduler();
+      : schedulerOption ?? createSchedulerWithNormalPriority();
 
     const subscription = pipe(
       observable,
@@ -128,103 +86,3 @@ export const createComponent = <TProps>(
 
   return ObservableComponent;
 };
-
-const createReactPriorityScheduler = /*@__PURE__*/ (() => {
-  type TProperties = {
-    [SchedulerLike_inContinuation]: boolean;
-  };
-
-  return createInstanceFactory(
-    mix(
-      include(Disposable_mixin),
-      function ReactPriorityScheduler(
-        instance: Omit<
-          PrioritySchedulerLike,
-          typeof SchedulerLike_inContinuation | keyof DisposableLike
-        > &
-          TProperties,
-      ): PrioritySchedulerLike {
-        init(Disposable_mixin, instance);
-        return instance;
-      },
-      props<TProperties>({
-        [SchedulerLike_inContinuation]: false,
-      }),
-      {
-        get [SchedulerLike_now](): number {
-          return unstable_now();
-        },
-
-        get [SchedulerLike_shouldYield](): boolean {
-          unsafeCast<TProperties>(this);
-          return isInContinuation(this) && unstable_shouldYield();
-        },
-
-        [SchedulerLike_requestYield]() {
-          unstable_requestPaint();
-        },
-
-        [SchedulerLike_schedule](
-          this: DisposableLike & {
-            [SchedulerLike_inContinuation]: boolean;
-          },
-          continuation: ContinuationLike,
-          options: {
-            priority: number;
-            delay?: number;
-          },
-        ) {
-          const delay = getDelay(options);
-
-          const { priority } = options;
-
-          pipe(this, addIgnoringChildErrors(continuation));
-
-          if (isDisposed(continuation)) {
-            return;
-          }
-
-          const callback = () => {
-            pipe(callbackNodeDisposable, dispose());
-
-            this[SchedulerLike_inContinuation] = true;
-            run(continuation);
-            this[SchedulerLike_inContinuation] = false;
-          };
-
-          const callbackNode = unstable_scheduleCallback(
-            priority,
-            callback,
-            delay > 0 ? { delay } : none,
-          );
-
-          const callbackNodeDisposable = pipe(
-            createDisposable(),
-            onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)),
-            addTo(continuation),
-          );
-        },
-      },
-    ),
-  );
-})();
-
-const createReactSchedulerFactory =
-  (priority: number): Factory<SchedulerLike> =>
-  () =>
-    pipe(createReactPriorityScheduler(), toScheduler(priority));
-
-export const createReactIdlePriorityScheduler =
-  /*@__PURE__*/ createReactSchedulerFactory(unstable_IdlePriority);
-
-export const createReactImmediatePriorityScheduler =
-  /*@__PURE__*/ createReactSchedulerFactory(unstable_ImmediatePriority);
-
-export const createReactNormalPriorityScheduler =
-  /*@__PURE__*/ createReactSchedulerFactory(unstable_NormalPriority);
-
-export const createReactLowPriorityScheduler =
-  /*@__PURE__*/ createReactSchedulerFactory(unstable_LowPriority);
-
-export const createReactUserBlockingPriorityScheduler =
-  /*@__PURE__*/ createReactSchedulerFactory(unstable_UserBlockingPriority);

@@ -16,6 +16,7 @@ Reactive-JS
 - [functions](modules/functions.md)
 - [integrations/node](modules/integrations_node.md)
 - [integrations/react](modules/integrations_react.md)
+- [integrations/scheduler](modules/integrations_scheduler.md)
 - [integrations/web](modules/integrations_web.md)
 - [integrations/web/WindowLocationStream](modules/integrations_web_WindowLocationStream.md)
 - [ix](modules/ix.md)

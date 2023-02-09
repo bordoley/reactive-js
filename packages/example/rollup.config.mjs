@@ -28,13 +28,13 @@ export default [
       replace({
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
-      }),
+      }),/*
       terser({
         compress: {
           unsafe: true,
           unsafe_symbols: true,
         },
-      }),
+      }),*/
     ],
   },
 ];

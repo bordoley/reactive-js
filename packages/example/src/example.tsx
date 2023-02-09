@@ -16,9 +16,9 @@ import {
 } from "@reactive-js/core/streaming";
 import {
   createComponent,
-  createReactNormalPriorityScheduler,
   useObservable,
 } from "@reactive-js/core/integrations/react";
+import { createSchedulerWithNormalPriority } from "@reactive-js/core/integrations/scheduler";
 import {
   windowLocation,
   WindowLocationURI,
@@ -35,7 +35,7 @@ import { DispatcherLike } from "@reactive-js/core/scheduling";
 import * as Dispatcher from "@reactive-js/core/scheduling/Dispatcher";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 
-const normalPriorityScheduler = createReactNormalPriorityScheduler();
+const normalPriorityScheduler = createSchedulerWithNormalPriority();
 
 // History must be globally unique to an application
 const historyStream = pipe(

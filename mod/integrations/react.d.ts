@@ -15,9 +15,4 @@ declare const useObservable: <T>(observable: ObservableLike<T>, options?: {
 declare const createComponent: <TProps>(fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>, options?: {
     readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
 }) => ComponentType<TProps>;
-declare const createReactIdlePriorityScheduler: Factory<SchedulerLike>;
-declare const createReactImmediatePriorityScheduler: Factory<SchedulerLike>;
-declare const createReactNormalPriorityScheduler: Factory<SchedulerLike>;
-declare const createReactLowPriorityScheduler: Factory<SchedulerLike>;
-declare const createReactUserBlockingPriorityScheduler: Factory<SchedulerLike>;
-export { createComponent, createReactIdlePriorityScheduler, createReactImmediatePriorityScheduler, createReactLowPriorityScheduler, createReactNormalPriorityScheduler, createReactUserBlockingPriorityScheduler, useObservable };
+export { createComponent, useObservable };
