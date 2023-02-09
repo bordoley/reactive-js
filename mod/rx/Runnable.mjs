@@ -32,11 +32,11 @@ import Runnable_takeWhile from './__internal__/Runnable/Runnable.takeWhile.mjs';
 import Runnable_throwIfEmpty from './__internal__/Runnable/Runnable.throwIfEmpty.mjs';
 import Runnable_toReadonlyArray from './__internal__/Runnable/Runnable.toReadonlyArray.mjs';
 
-const create = Runnable_create;
 const buffer = Runnable_buffer;
 const catchError = Runnable_catchError;
 const concat = Runnable_concat;
 const concatAll = Runnable_concatAll;
+const create = Runnable_create;
 const decodeWithCharset = Runnable_decodeWithCharset;
 const defer = Runnable_defer;
 const distinctUntilChanged = Runnable_distinctUntilChanged;
@@ -70,6 +70,7 @@ const Runnable = {
     catchError,
     concat,
     concatAll,
+    create,
     decodeWithCharset,
     defer,
     distinctUntilChanged,
@@ -82,9 +83,12 @@ const Runnable = {
     keep,
     last,
     map,
+    never,
+    onRun,
     pairwise,
     reduce,
     repeat,
+    run,
     scan,
     skipFirst,
     someSatisfy,

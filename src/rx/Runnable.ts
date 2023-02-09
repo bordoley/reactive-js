@@ -58,8 +58,6 @@ import Runnable_takeWhile from "./__internal__/Runnable/Runnable.takeWhile";
 import Runnable_throwIfEmpty from "./__internal__/Runnable/Runnable.throwIfEmpty";
 import Runnable_toReadonlyArray from "./__internal__/Runnable/Runnable.toReadonlyArray";
 
-export const create = Runnable_create;
-
 export const buffer: Buffer<RunnableLike>["buffer"] = Runnable_buffer;
 
 export const catchError: CatchError<RunnableLike>["catchError"] =
@@ -69,6 +67,8 @@ export const concat: Concat<RunnableLike>["concat"] = Runnable_concat;
 
 export const concatAll: ConcatAll<RunnableLike>["concatAll"] =
   Runnable_concatAll;
+
+export const create = Runnable_create;
 
 export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
   Runnable_decodeWithCharset;
@@ -140,6 +140,7 @@ const Runnable = {
   catchError,
   concat,
   concatAll,
+  create,
   decodeWithCharset,
   defer,
   distinctUntilChanged,
@@ -152,9 +153,12 @@ const Runnable = {
   keep,
   last,
   map,
+  never,
+  onRun,
   pairwise,
   reduce,
   repeat,
+  run,
   scan,
   skipFirst,
   someSatisfy,

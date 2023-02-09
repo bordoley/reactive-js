@@ -1,4 +1,4 @@
-/// <reference types="./streaming.test.d.ts" />
+/// <reference types="./Streamable.test.d.ts" />
 import { pipe, returns } from '../../functions.mjs';
 import Observable from '../../rx/Observable.mjs';
 import Continuation from '../../scheduling/Continuation.mjs';

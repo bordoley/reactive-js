@@ -3,7 +3,7 @@ import ReadonlyArray from '../../containers/ReadonlyArray.mjs';
 import { pipe } from '../../functions.mjs';
 import MulticastObservable from '../../rx/MulticastObservable.mjs';
 import Observable from '../../rx/Observable.mjs';
-import Runnable, { run } from '../../rx/Runnable.mjs';
+import Runnable from '../../rx/Runnable.mjs';
 import Subject from '../../rx/Subject.mjs';
 import Continuation from '../../scheduling/Continuation.mjs';
 import VirtualTimeScheduler from '../../scheduling/VirtualTimeScheduler.mjs';
@@ -13,7 +13,7 @@ import { testModule, test as createTest, expectArrayEquals, expectEquals } from 
 testModule("Subject", createTest("with replay", () => {
     const scheduler = VirtualTimeScheduler.create();
     const subject = Subject.create({ replay: 2 });
-    pipe([1, 2, 3, 4], ReadonlyArray.toRunnable(), Runnable.forEach(Subject.publishTo(subject)), run());
+    pipe([1, 2, 3, 4], ReadonlyArray.toRunnable(), Runnable.forEach(Subject.publishTo(subject)), Runnable.run());
     pipe(subject, Disposable.dispose());
     const result = [];
     pipe(subject, Observable.forEach(x => {
