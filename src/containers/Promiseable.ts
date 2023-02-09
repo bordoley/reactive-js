@@ -8,3 +8,11 @@ export const fromObservable =
 
 export const toObservable: ToObservable<PromiseableLike>["toObservable"] =
   Promiseable_toObservable;
+
+/** @ignore */
+const Promiseable = {
+  fromObservable,
+  toObservable,
+};
+
+export default Promiseable;

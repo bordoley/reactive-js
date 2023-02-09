@@ -43,3 +43,17 @@ export const toPriorityScheduler: Function1<
   SchedulerLike,
   PrioritySchedulerLike
 > = Scheduler_toPriorityScheduler;
+
+/** @ignore */
+const Scheduler = {
+  createHostScheduler,
+  getCurrentTime,
+  isInContinuation,
+  requestYield,
+  shouldYield,
+  schedule,
+  toPausableScheduler,
+  toPriorityScheduler,
+};
+
+export default Scheduler;

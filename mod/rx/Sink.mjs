@@ -6,5 +6,11 @@ import Sink_sourceFrom from './__internal__/Sink/Sink.sourceFrom.mjs';
 const notify = Sink_notify;
 const notifySink = Sink_notifySink;
 const sourceFrom = Sink_sourceFrom;
+/** @ignore */
+const Sink = {
+    notify,
+    notifySink,
+    sourceFrom,
+};
 
-export { notify, notifySink, sourceFrom };
+export { Sink as default, notify, notifySink, sourceFrom };

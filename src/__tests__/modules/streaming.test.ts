@@ -1,10 +1,10 @@
 import { pipe, returns } from "../../functions";
 import Observable from "../../rx/Observable";
-import { run } from "../../scheduling/Continuation";
-import { dispatch } from "../../scheduling/Dispatcher";
-import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
-import { createStateStore, stream } from "../../streaming/Streamable";
-import { dispose } from "../../util/Disposable";
+import Continuation from "../../scheduling/Continuation";
+import Dispatcher from "../../scheduling/Dispatcher";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
+import Streamable from "../../streaming/Streamable";
+import Disposable from "../../util/Disposable";
 import { describe, expectArrayEquals, test, testModule } from "../testing";
 
 testModule(
@@ -12,10 +12,18 @@ testModule(
   describe(
     "stateStore",
     test("createStateStore", () => {
-      const scheduler = createVirtualTimeScheduler();
-      const stateStream = pipe(createStateStore(returns(1)), stream(scheduler));
+      const scheduler = VirtualTimeScheduler.create();
+      const stateStream = pipe(
+        Streamable.createStateStore(returns(1)),
+        Streamable.stream(scheduler),
+      );
 
-      pipe(stateStream, dispatch(returns(2)), dispatch(returns(3)), dispose());
+      pipe(
+        stateStream,
+        Dispatcher.dispatch(returns(2)),
+        Dispatcher.dispatch(returns(3)),
+        Disposable.dispose(),
+      );
 
       let result: number[] = [];
 
@@ -27,7 +35,7 @@ testModule(
         Observable.subscribe(scheduler),
       );
 
-      run(scheduler);
+      Continuation.run(scheduler);
 
       pipe(result, expectArrayEquals([1, 2, 3]));
     }),

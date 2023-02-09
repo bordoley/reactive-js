@@ -9,3 +9,10 @@ export const move: <
 >(
   source: TSource,
 ) => TSource = Source_move;
+
+/** @ignore */
+const Source = {
+  move,
+};
+
+export default Source;

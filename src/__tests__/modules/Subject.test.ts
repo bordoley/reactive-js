@@ -1,22 +1,27 @@
-import { toRunnable as arrayToRunnable } from "../../containers/ReadonlyArray";
+import ReadonlyArray from "../../containers/ReadonlyArray";
 import { pipe } from "../../functions";
-import { getObserverCount } from "../../rx/MulticastObservable";
+import MulticastObservable from "../../rx/MulticastObservable";
 import Observable from "../../rx/Observable";
-import { forEach, run } from "../../rx/Runnable";
-import { create as createSubject, publishTo } from "../../rx/Subject";
-import { run as runContinuation } from "../../scheduling/Continuation";
-import { create as createVirtualTimeScheduler } from "../../scheduling/VirtualTimeScheduler";
-import { dispose } from "../../util/Disposable";
+import Runnable, { run } from "../../rx/Runnable";
+import Subject from "../../rx/Subject";
+import Continuation from "../../scheduling/Continuation";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
+import Disposable from "../../util/Disposable";
 import { expectArrayEquals, expectEquals, test, testModule } from "../testing";
 
 testModule(
   "Subject",
   test("with replay", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = VirtualTimeScheduler.create();
 
-    const subject = createSubject<number>({ replay: 2 });
-    pipe([1, 2, 3, 4], arrayToRunnable(), forEach(publishTo(subject)), run());
-    pipe(subject, dispose());
+    const subject = Subject.create<number>({ replay: 2 });
+    pipe(
+      [1, 2, 3, 4],
+      ReadonlyArray.toRunnable(),
+      Runnable.forEach(Subject.publishTo(subject)),
+      run(),
+    );
+    pipe(subject, Disposable.dispose());
 
     const result: number[] = [];
     pipe(
@@ -26,23 +31,23 @@ testModule(
       }),
       Observable.subscribe(scheduler),
     );
-    runContinuation(scheduler);
+    Continuation.run(scheduler);
 
     pipe(result, expectArrayEquals([3, 4]));
   }),
 
   test("with multiple observers", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = VirtualTimeScheduler.create();
 
-    const subject = createSubject();
-    pipe(subject, getObserverCount, expectEquals(0));
+    const subject = Subject.create();
+    pipe(subject, MulticastObservable.getObserverCount, expectEquals(0));
     const sub1 = pipe(subject, Observable.subscribe(scheduler));
-    pipe(subject, getObserverCount, expectEquals(1));
+    pipe(subject, MulticastObservable.getObserverCount, expectEquals(1));
     const sub2 = pipe(subject, Observable.subscribe(scheduler));
-    pipe(subject, getObserverCount, expectEquals(2));
-    pipe(sub1, dispose());
-    pipe(subject, getObserverCount, expectEquals(1));
-    pipe(sub2, dispose());
-    pipe(subject, getObserverCount, expectEquals(0));
+    pipe(subject, MulticastObservable.getObserverCount, expectEquals(2));
+    pipe(sub1, Disposable.dispose());
+    pipe(subject, MulticastObservable.getObserverCount, expectEquals(1));
+    pipe(sub2, Disposable.dispose());
+    pipe(subject, MulticastObservable.getObserverCount, expectEquals(0));
   }),
 );

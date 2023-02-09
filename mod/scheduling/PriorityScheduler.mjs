@@ -8,5 +8,9 @@ import PriorityScheduler_toScheduler from './__internal__/PriorityScheduler/Prio
  * @param priority The priority to schedule work at.
  */
 const toScheduler = PriorityScheduler_toScheduler;
+/** @ignore */
+const PriorityScheduler = {
+    toScheduler,
+};
 
-export { toScheduler };
+export { PriorityScheduler as default, toScheduler };

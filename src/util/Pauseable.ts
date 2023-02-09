@@ -9,3 +9,11 @@ export const pause: <TPauseable extends { [PauseableLike_pause](): void }>(
 export const resume: <TPauseable extends { [PauseableLike_resume](): void }>(
   pausable: TPauseable,
 ) => TPauseable = Pauseable_resume;
+
+/** @ignore */
+const Pauseable = {
+  pause,
+  resume,
+};
+
+export default Pauseable;

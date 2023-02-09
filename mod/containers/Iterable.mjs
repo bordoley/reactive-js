@@ -16,5 +16,14 @@ const toIterable = () => identity;
 const toEnumerableObservable = Iterable_toEnumerableObservable;
 const toObservable = Iterable_toRunnableObservable;
 const toRunnableObservable = Iterable_toRunnableObservable;
+/** @ignore */
+const Iterable = {
+    toAsyncEnumerable,
+    toEnumerable,
+    toIterable,
+    toEnumerableObservable,
+    toObservable,
+    toRunnableObservable,
+};
 
-export { toAsyncEnumerable, toEnumerable, toEnumerableObservable, toIterable, toObservable, toRunnableObservable };
+export { Iterable as default, toAsyncEnumerable, toEnumerable, toEnumerableObservable, toIterable, toObservable, toRunnableObservable };

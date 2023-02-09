@@ -21,4 +21,27 @@ declare const schedule: (f: ContinuationLike | SideEffect, options?: {
 } | undefined) => Function1<SchedulerLike, DisposableLike>;
 declare const toPausableScheduler: Function1<SchedulerLike, PauseableSchedulerLike>;
 declare const toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
-export { createHostScheduler, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };
+/** @ignore */
+declare const Scheduler: {
+    createHostScheduler: (options?: {
+        readonly yieldInterval?: number | undefined;
+    }) => SchedulerLike;
+    getCurrentTime: (scheduler: {
+        readonly [SchedulerLike_now]: number;
+    }) => number;
+    isInContinuation: (scheduler: {
+        readonly [SchedulerLike_inContinuation]: boolean;
+    }) => boolean;
+    requestYield: (scheduler: {
+        [SchedulerLike_requestYield](): void;
+    }) => void;
+    shouldYield: (scheduler: {
+        [SchedulerLike_shouldYield]: boolean;
+    }) => boolean;
+    schedule: (f: ContinuationLike | SideEffect, options?: {
+        readonly delay?: number | undefined;
+    } | undefined) => Function1<SchedulerLike, DisposableLike>;
+    toPausableScheduler: Function1<SchedulerLike, PauseableSchedulerLike>;
+    toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
+};
+export { createHostScheduler, Scheduler as default, getCurrentTime, isInContinuation, requestYield, schedule, shouldYield, toPausableScheduler, toPriorityScheduler };

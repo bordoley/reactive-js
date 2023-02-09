@@ -4,5 +4,10 @@ import Promiseable_toObservable from './__internal__/Promiseable/Promiseable.toO
 
 const fromObservable = Observable_toPromise;
 const toObservable = Promiseable_toObservable;
+/** @ignore */
+const Promiseable = {
+    fromObservable,
+    toObservable,
+};
 
-export { fromObservable, toObservable };
+export { Promiseable as default, fromObservable, toObservable };

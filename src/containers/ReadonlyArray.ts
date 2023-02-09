@@ -118,3 +118,27 @@ export const toRunnableObservable: ToRunnableObservable<
 
 export const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
   ReadonlyArray_toSequence;
+
+/** @ignore */
+const ReadonlyArray = {
+  empty,
+  every,
+  forEach,
+  fromArray,
+  fromAsyncEnumerable,
+  fromEnumerable,
+  fromEnumerableObservable,
+  fromSequence,
+  keep,
+  map,
+  some,
+  toEnumerable,
+  toEnumerableObservable,
+  toObservable,
+  toReadonlyArray,
+  toRunnable,
+  toRunnableObservable,
+  toSequence,
+};
+
+export default ReadonlyArray;
