@@ -1,8 +1,6 @@
 import {
-  Concat,
   ConcatAll,
   DistinctUntilChanged,
-  FromArray,
   Generate,
   Keep,
   Map,
@@ -90,24 +88,7 @@ export const toRunnable: ToRunnable<SequenceLike>["toRunnable"] =
 export const zip: Zip<SequenceLike>["zip"] = Sequence_zip;
 
 /** @ignore */
-const Sequence: Concat<SequenceLike> &
-  ConcatAll<SequenceLike> &
-  DistinctUntilChanged<SequenceLike> &
-  FromArray<SequenceLike> &
-  Generate<SequenceLike> &
-  Keep<SequenceLike> &
-  Map<SequenceLike> &
-  Pairwise<SequenceLike> &
-  Repeat<SequenceLike> &
-  Scan<SequenceLike> &
-  SkipFirst<SequenceLike> &
-  TakeFirst<SequenceLike> &
-  TakeLast<SequenceLike> &
-  TakeWhile<SequenceLike> &
-  ToEnumerable<SequenceLike> &
-  ToReadonlyArray<SequenceLike> &
-  ToRunnable<SequenceLike> &
-  Zip<SequenceLike> = {
+const Sequence = {
   concat,
   concatAll,
   distinctUntilChanged,

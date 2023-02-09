@@ -206,42 +206,7 @@ export const toRunnable =
 export const zip = Observable_zip as Zip<RunnableObservableLike>["zip"];
 
 /** @ignore */
-const RunnableObservable: Buffer<RunnableObservableLike> &
-  CatchError<RunnableObservableLike> &
-  Concat<RunnableObservableLike> &
-  ConcatAll<
-    RunnableObservableLike,
-    {
-      maxBufferSize?: number;
-    }
-  > &
-  DecodeWithCharset<RunnableObservableLike> &
-  Defer<RunnableObservableLike> &
-  DistinctUntilChanged<RunnableObservableLike> &
-  Empty<RunnableObservableLike, { delay: number }> &
-  EverySatisfy<RunnableObservableLike> &
-  ForEach<RunnableObservableLike> &
-  FromArray<RunnableObservableLike> &
-  Generate<RunnableObservableLike> &
-  Keep<RunnableObservableLike> &
-  Map<RunnableObservableLike> &
-  Never<RunnableObservableLike> &
-  Pairwise<RunnableObservableLike> &
-  Reduce<RunnableObservableLike> &
-  Scan<RunnableObservableLike> &
-  ScanAsync<RunnableObservableLike, RunnableObservableLike> &
-  SkipFirst<RunnableObservableLike> &
-  SomeSatisfy<RunnableObservableLike> &
-  TakeFirst<RunnableObservableLike> &
-  TakeLast<RunnableObservableLike> &
-  TakeWhile<RunnableObservableLike> &
-  ThrowIfEmpty<RunnableObservableLike> &
-  ToEnumerable<RunnableObservableLike> &
-  ToFlowable<RunnableObservableLike> &
-  ToPromiseable<RunnableObservableLike, SchedulerLike> &
-  ToReadonlyArray<RunnableObservableLike> &
-  ToRunnable<RunnableObservableLike> &
-  Zip<RunnableObservableLike> = {
+const RunnableObservable = {
   buffer,
   catchError,
   concat,
@@ -251,11 +216,13 @@ const RunnableObservable: Buffer<RunnableObservableLike> &
   distinctUntilChanged,
   empty,
   everySatisfy,
+  exhaust,
   forEach,
   fromArray,
   generate,
   keep,
   map,
+  merge,
   never,
   pairwise,
   reduce,
@@ -263,6 +230,7 @@ const RunnableObservable: Buffer<RunnableObservableLike> &
   scanAsync,
   skipFirst,
   someSatisfy,
+  switchAll,
   takeFirst,
   takeLast,
   takeWhile,

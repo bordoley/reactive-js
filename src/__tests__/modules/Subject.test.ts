@@ -2,7 +2,7 @@ import ReadonlyArray from "../../containers/ReadonlyArray";
 import { pipe } from "../../functions";
 import MulticastObservable from "../../rx/MulticastObservable";
 import Observable from "../../rx/Observable";
-import Runnable, { run } from "../../rx/Runnable";
+import Runnable from "../../rx/Runnable";
 import Subject from "../../rx/Subject";
 import Continuation from "../../scheduling/Continuation";
 import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
@@ -19,7 +19,7 @@ testModule(
       [1, 2, 3, 4],
       ReadonlyArray.toRunnable(),
       Runnable.forEach(Subject.publishTo(subject)),
-      run(),
+      Runnable.run(),
     );
     pipe(subject, Disposable.dispose());
 

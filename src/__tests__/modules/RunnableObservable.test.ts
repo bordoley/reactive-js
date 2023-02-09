@@ -9,17 +9,7 @@ import {
 } from "../../functions";
 import Enumerable from "../../ix/Enumerable";
 import { RunnableObservableLike } from "../../rx";
-import RunnableObservable, {
-  empty,
-  exhaust,
-  map,
-  merge,
-  switchAll,
-  toEnumerable,
-  toPromise,
-  toReadonlyArray,
-  zip,
-} from "../../rx/RunnableObservable";
+import RunnableObservable from "../../rx/RunnableObservable";
 import Scheduler from "../../scheduling/Scheduler";
 import Disposable from "../../util/Disposable";
 import {
@@ -73,8 +63,8 @@ const exhaustTests = describe(
         pipe([7, 8, 9], ReadonlyArray.toRunnableObservable({ delay: 2 })),
       ],
       ReadonlyArray.toRunnableObservable({ delay: 5 }),
-      exhaust(),
-      toReadonlyArray(),
+      RunnableObservable.exhaust(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 7, 8, 9]),
     ),
   ),
@@ -85,7 +75,7 @@ const mergeTests = describe(
   test(
     "two arrays",
     pipeLazy(
-      merge(
+      RunnableObservable.merge(
         pipe(
           [0, 2, 3, 5, 6],
           ReadonlyArray.toRunnableObservable({ delay: 1, delayStart: true }),
@@ -95,7 +85,7 @@ const mergeTests = describe(
           ReadonlyArray.toRunnableObservable({ delay: 2, delayStart: true }),
         ),
       ),
-      toReadonlyArray(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
     ),
   ),
@@ -103,11 +93,11 @@ const mergeTests = describe(
     "when one source throws",
     pipeLazy(
       pipeLazy(
-        merge(
+        RunnableObservable.merge(
           pipe([1, 4, 7], ReadonlyArray.toRunnableObservable({ delay: 2 })),
           Container.throws(RunnableObservable, { delay: 5 })(raise),
         ),
-        toReadonlyArray(),
+        RunnableObservable.toReadonlyArray(),
       ),
       expectToThrow,
     ),
@@ -119,9 +109,9 @@ const switchAllTests = describe(
   test(
     "with empty source",
     pipeLazy(
-      empty({ delay: 1 }),
-      switchAll(),
-      toReadonlyArray(),
+      RunnableObservable.empty({ delay: 1 }),
+      RunnableObservable.switchAll(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([] as unknown[]),
     ),
   ),
@@ -131,8 +121,8 @@ const switchAllTests = describe(
       pipeLazy(
         raise,
         Container.throws(RunnableObservable),
-        switchAll(),
-        toReadonlyArray(),
+        RunnableObservable.switchAll(),
+        RunnableObservable.toReadonlyArray(),
       ),
       expectToThrow,
       identity,
@@ -144,10 +134,13 @@ const switchAllTests = describe(
       [1, 2, 3],
       ReadonlyArray.toRunnableObservable({ delay: 1 }),
       Container.concatMap<RunnableObservableLike, number, number>(
-        { concatAll: switchAll, map },
+        {
+          concatAll: RunnableObservable.switchAll,
+          map: RunnableObservable.map,
+        },
         _ => pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 0 })),
       ),
-      toReadonlyArray(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
     ),
   ),
@@ -157,10 +150,13 @@ const switchAllTests = describe(
       [1, 2, 3],
       ReadonlyArray.toRunnableObservable({ delay: 4 }),
       Container.concatMap<RunnableObservableLike, number, number>(
-        { concatAll: switchAll, map },
+        {
+          concatAll: RunnableObservable.switchAll,
+          map: RunnableObservable.map,
+        },
         _ => pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 2 })),
       ),
-      toReadonlyArray(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([1, 2, 1, 2, 1, 2, 3]),
     ),
   ),
@@ -173,7 +169,7 @@ const toEnumerableTests = describe(
     pipeLazy(
       [1, 2, 3, 4],
       ReadonlyArray.toRunnableObservable(),
-      toEnumerable(),
+      RunnableObservable.toEnumerable(),
       Enumerable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 4]),
     ),
@@ -185,7 +181,13 @@ const toPromiseTests = describe(
   testAsync("when observable completes without producing a value", async () => {
     const scheduler = Scheduler.createHostScheduler();
     try {
-      await pipe(pipe(empty(), toPromise(scheduler)), expectPromiseToThrow);
+      await pipe(
+        pipe(
+          RunnableObservable.empty(),
+          RunnableObservable.toPromise(scheduler),
+        ),
+        expectPromiseToThrow,
+      );
     } finally {
       pipe(scheduler, Disposable.dispose());
     }
@@ -194,16 +196,16 @@ const toPromiseTests = describe(
 
 const zipTests = describe(
   "zip",
-  zipOperatorTests(RunnableObservable),
+  zipOperatorTests<RunnableObservableLike>(RunnableObservable),
   test(
     "with synchronous and non-synchronous sources",
     pipeLazy(
-      zip(
+      RunnableObservable.zip(
         pipe([1, 2], ReadonlyArray.toRunnableObservable({ delay: 1 })),
         pipe([2, 3], ReadonlyArray.toRunnableObservable()),
         pipe([3, 4, 5], ReadonlyArray.toRunnableObservable({ delay: 1 })),
       ),
-      toReadonlyArray(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals(
         [[1, 2, 3] as readonly number[], [2, 3, 4]],
         arrayEquality(),
@@ -213,11 +215,11 @@ const zipTests = describe(
   test(
     "fast with slow",
     pipeLazy(
-      zip(
+      RunnableObservable.zip(
         pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 1 })),
         pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 5 })),
       ),
-      toReadonlyArray(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals(
         [[1, 1] as readonly number[], [2, 2], [3, 3]],
         arrayEquality(),
@@ -228,12 +230,14 @@ const zipTests = describe(
     "when source throws",
     pipeLazy(
       pipeLazy(
-        zip(
+        RunnableObservable.zip(
           pipe(raise, Container.throws(RunnableObservable)),
           pipe([1, 2, 3], ReadonlyArray.toRunnableObservable()),
         ),
-        map<readonly [unknown, number], number>(([, b]) => b),
-        toReadonlyArray(),
+        RunnableObservable.map<readonly [unknown, number], number>(
+          ([, b]) => b,
+        ),
+        RunnableObservable.toReadonlyArray(),
       ),
       expectToThrow,
     ),
@@ -244,13 +248,13 @@ testModule(
   "RunnableObservable",
   bufferTests(RunnableObservable),
   catchErrorTests(RunnableObservable),
-  concatTests(RunnableObservable),
+  concatTests<RunnableObservableLike>(RunnableObservable),
   concatAllTests<RunnableObservableLike>(RunnableObservable),
   concatMapTests(RunnableObservable),
-  concatWithTests(RunnableObservable),
+  concatWithTests<RunnableObservableLike>(RunnableObservable),
   decodeWithCharsetTests(RunnableObservable),
   distinctUntilChangedTests(RunnableObservable),
-  endWithTests(RunnableObservable),
+  endWithTests<RunnableObservableLike>(RunnableObservable),
   everySatisfyTests(RunnableObservable),
   exhaustTests,
   forEachTests(RunnableObservable),
@@ -268,13 +272,13 @@ testModule(
   ),
   skipFirstTests(RunnableObservable),
   someSatisfyTests(RunnableObservable),
-  startWithTests(RunnableObservable),
+  startWithTests<RunnableObservableLike>(RunnableObservable),
   switchAllTests,
   takeFirstTests(RunnableObservable),
   takeLastTests(RunnableObservable),
   takeWhileTests(RunnableObservable),
   throwIfEmptyTests(RunnableObservable),
-  zipWithTests(RunnableObservable),
+  zipWithTests<RunnableObservableLike>(RunnableObservable),
   toEnumerableTests,
   toPromiseTests,
   zipTests,
