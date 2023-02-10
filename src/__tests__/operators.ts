@@ -36,10 +36,11 @@ import {
   none,
   pipe,
   pipeLazy,
+  raise,
   returns,
   sum,
 } from "../functions";
-import { ObservableLike, ScanAsync } from "../rx";
+import { ObservableLike, Retry, ScanAsync } from "../rx";
 import {
   describe,
   expectArrayEquals,
@@ -639,6 +640,31 @@ export const repeatTests = <C extends ContainerLike>(
         expectToThrowError(err),
       );
     }),
+  );
+
+export const retryTests = <C extends ObservableLike>(
+  m: Concat<C> &
+    Retry<C> &
+    FromArray<C> &
+    Map<C> &
+    TakeFirst<C> &
+    ToReadonlyArray<C>,
+) =>
+  describe(
+    "retry",
+    test(
+      "retrys the container on an exception",
+      pipeLazy(
+        m.concat(
+          pipe([1, 2, 3], m.fromArray()),
+          pipe(raise, Container.throws<C, number>(m)),
+        ),
+        m.retry(),
+        m.takeFirst({ count: 6 }),
+        m.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
   );
 
 export const scanTests = <C extends ContainerLike>(

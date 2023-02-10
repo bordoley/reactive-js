@@ -22,6 +22,7 @@ import {
   mapToTests,
   pairwiseTests,
   reduceTests,
+  retryTests,
   scanAsyncTests,
   scanTests,
   skipFirstTests,
@@ -70,6 +71,7 @@ testModule(
   mapToTests(EnumerableObservable),
   pairwiseTests(EnumerableObservable),
   reduceTests(EnumerableObservable),
+  retryTests<EnumerableObservableLike>(EnumerableObservable),
   scanTests(EnumerableObservable),
   scanAsyncTests<EnumerableObservableLike, EnumerableObservableLike>(
     EnumerableObservable,

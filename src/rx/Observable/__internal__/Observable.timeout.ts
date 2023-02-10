@@ -10,7 +10,12 @@ import {
 } from "../../../__internal__/mixins";
 import Container_throws from "../../../containers/Container/__internal__/Container.throws";
 import { isNumber, none, partial, pipe, returns } from "../../../functions";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
+import {
+  ObservableLike,
+  ObserverLike,
+  SinkLike_notify,
+  Timeout,
+} from "../../../rx";
 import { DisposableLike } from "../../../util";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
@@ -30,7 +35,9 @@ import Observable_lift from "./Observable.lift";
 import Observable_map from "./Observable.map";
 import Observable_subscribe from "./Observable.subscribe";
 
-const Observable_timeout = /*@__PURE__*/ (<T>() => {
+const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
+  T,
+>() => {
   const timeoutError = Symbol("Observable.timeout.error");
 
   const typedDisposableRefMixin = DisposableRef_mixin();

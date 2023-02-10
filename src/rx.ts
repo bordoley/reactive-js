@@ -143,6 +143,24 @@ export type FromObservable<C extends ContainerLike> = Container<C> & {
   ) => Function1<ObservableLike<T>, ContainerOf<C, T>>;
 };
 
+export type Retry<C extends ObservableLike> = {
+  /**
+   * Returns an `ObservableLike` that mirrors the source, re-subscribing
+   * if the source completes with an error.
+   */
+  retry<T>(): ContainerOperator<C, T, T>;
+
+  /**
+   * Returns an `ObservableLike` that mirrors the source, resubscrbing
+   * if the source completes with an error which satisfies the predicate function.
+   *
+   * @param predicate
+   */
+  retry<T>(
+    predicate: Function2<number, unknown, boolean>,
+  ): ContainerOperator<C, T, T>;
+};
+
 export type ScanAsync<
   C extends ContainerLike,
   CInner extends ObservableLike,
@@ -151,6 +169,26 @@ export type ScanAsync<
     scanner: AsyncReducer<CInner, T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ContainerOperator<C, T, TAcc>;
+};
+
+export type TakeUntil<C extends ObservableLike> = {
+  takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
+};
+
+export type Timeout<C extends ObservableLike> = {
+  /**
+   * Returns an `ObservableLike` that completes with an error if the source
+   * does not emit a value in given time span.
+   *
+   * @param duration Time in ms within which the source must emit values.
+   */
+  timeout<T>(duration: number): ContainerOperator<C, T, T>;
+
+  /**
+   *
+   * @param duration
+   */
+  timeout<T>(duration: C): ContainerOperator<C, T, T>;
 };
 
 export type ToObservable<C extends ContainerLike, O = never> = Container<C> & {
@@ -179,4 +217,18 @@ export type ToEnumerableObservable<
 
 export type ToRunnable<C extends ContainerLike, O = never> = Container<C> & {
   toRunnable<T>(options?: O): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+};
+
+export type WithLatestFrom<C extends ObservableLike> = {
+  withLatestFrom<TA, TB, T>(
+    other: ContainerOf<C, TB>,
+    selector: Function2<TA, TB, T>,
+  ): ContainerOperator<C, TA, T>;
+};
+
+export type ZipWithLatestFrom<C extends ObservableLike> = {
+  zipWithLatestFrom<TA, TB, T>(
+    other: ContainerOf<C, TB>,
+    selector: Function2<TA, TB, T>,
+  ): ContainerOperator<C, TA, T>;
 };

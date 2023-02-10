@@ -20,6 +20,7 @@ import Observable_map from './Observable/__internal__/Observable.map.mjs';
 import Observable_merge from './Observable/__internal__/Observable.merge.mjs';
 import Observable_pairwise from './Observable/__internal__/Observable.pairwise.mjs';
 import Observable_reduce from './Observable/__internal__/Observable.reduce.mjs';
+import Observable_retry from './Observable/__internal__/Observable.retry.mjs';
 import Observable_scan from './Observable/__internal__/Observable.scan.mjs';
 import Observable_skipFirst from './Observable/__internal__/Observable.skipFirst.mjs';
 import Observable_someSatisfy from './Observable/__internal__/Observable.someSatisfy.mjs';
@@ -58,6 +59,7 @@ const merge = Observable_merge;
 const mergeAll = EnumerableObservable_mergeAll;
 const pairwise = Observable_pairwise;
 const reduce = Observable_reduce;
+const retry = Observable_retry;
 const scan = Observable_scan;
 const scanAsync = EnumerableObservable_scanAsync;
 const skipFirst = Observable_skipFirst;
@@ -93,6 +95,7 @@ const EnumerableObservable = {
     merge,
     pairwise,
     reduce,
+    retry,
     scan,
     scanAsync,
     skipFirst,
@@ -110,4 +113,4 @@ const EnumerableObservable = {
     zip,
 };
 
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };

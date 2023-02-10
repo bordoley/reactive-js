@@ -1,5 +1,5 @@
-import { Function1, pipe } from "../../../functions";
-import { ObservableLike, ObserverLike } from "../../../rx";
+import { pipe } from "../../../functions";
+import { ObservableLike, ObserverLike, TakeUntil } from "../../../rx";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
@@ -9,9 +9,9 @@ import Observable_lift from "./Observable.lift";
 import Observable_subscribe from "./Observable.subscribe";
 import Observable_takeFirst from "./Observable.takeFirst";
 
-const Observable_takeUntil = <T>(
+const Observable_takeUntil: TakeUntil<ObservableLike>["takeUntil"] = <T>(
   notifier: ObservableLike,
-): Function1<ObservableLike<T>, ObservableLike<T>> => {
+) => {
   const operator = (delegate: ObserverLike<T>) =>
     pipe(
       Observer_createWithDelegate(delegate),

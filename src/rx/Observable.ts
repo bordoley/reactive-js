@@ -263,26 +263,7 @@ interface RepeatOperator {
 }
 export const repeat: RepeatOperator = Observable_repeat;
 
-interface Retry {
-  /**
-   * Returns an `ObservableLike` that mirrors the source, re-subscribing
-   * if the source completes with an error.
-   */
-  <T>(): ContainerOperator<ObservableLike, T, T>;
-
-  /**
-   * Returns an `ObservableLike` that mirrors the source, resubscrbing
-   * if the source completes with an error which satisfies the predicate function.
-   *
-   * @param predicate
-   */
-  <T>(predicate: Function2<number, unknown, boolean>): ContainerOperator<
-    ObservableLike,
-    T,
-    T
-  >;
-}
-export const retry: Retry = Observable_retry;
+export const retry = Observable_retry;
 
 export const scan = Observable_scan;
 
@@ -363,26 +344,7 @@ export const throttle: Throttle = Observable_throttle;
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-interface Timeout {
-  /**
-   * Returns an `ObservableLike` that completes with an error if the source
-   * does not emit a value in given time span.
-   *
-   * @param duration Time in ms within which the source must emit values.
-   */
-  <T>(duration: number): ContainerOperator<ObservableLike, T, T>;
-
-  /**
-   *
-   * @param duration
-   */
-  <T>(duration: ObservableLike<unknown>): ContainerOperator<
-    ObservableLike,
-    T,
-    T
-  >;
-}
-export const timeout: Timeout = Observable_timeout;
+export const timeout = Observable_timeout;
 
 export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
   Observable_toFlowable;
@@ -392,17 +354,10 @@ export const toPromise: ToPromiseable<
   SchedulerLike
 >["toPromise"] = Observable_toPromise;
 
-export const withLatestFrom: <TA, TB, T>(
-  other: ObservableLike<TB>,
-  selector: Function2<TA, TB, T>,
-) => ContainerOperator<ObservableLike, TA, T> = Observable_withLatestFrom;
+export const withLatestFrom = Observable_withLatestFrom;
 
 export const zip: Zip<ObservableLike>["zip"] = Observable_zip;
 
-/**
- * Returns an `ObservableLike` that zips the latest values from
- * multiple sources.
- */
 export const zipLatest: Zip<ObservableLike>["zip"] = Observable_zipLatest;
 
 export const zipWithLatestFrom: <TA, TB, T>(

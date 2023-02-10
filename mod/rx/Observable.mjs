@@ -155,10 +155,6 @@ const toFlowable = Observable_toFlowable;
 const toPromise = Observable_toPromise;
 const withLatestFrom = Observable_withLatestFrom;
 const zip = Observable_zip;
-/**
- * Returns an `ObservableLike` that zips the latest values from
- * multiple sources.
- */
 const zipLatest = Observable_zipLatest;
 const zipWithLatestFrom = Observable_zipWithLatestFrom;
 /** @ignore */

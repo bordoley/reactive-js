@@ -1,5 +1,3 @@
-import { ContainerOperator } from "../../../containers.js";
-import { Function2 } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
-declare const Observable_withLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike, TA, T>;
+import { WithLatestFrom, ObservableLike } from "../../../rx.js";
+declare const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"];
 export { Observable_withLatestFrom as default };

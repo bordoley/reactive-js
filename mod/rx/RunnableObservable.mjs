@@ -15,16 +15,23 @@ import Observable_map from './Observable/__internal__/Observable.map.mjs';
 import Observable_merge from './Observable/__internal__/Observable.merge.mjs';
 import Observable_pairwise from './Observable/__internal__/Observable.pairwise.mjs';
 import Observable_reduce from './Observable/__internal__/Observable.reduce.mjs';
+import Observable_retry from './Observable/__internal__/Observable.retry.mjs';
 import Observable_scan from './Observable/__internal__/Observable.scan.mjs';
 import Observable_skipFirst from './Observable/__internal__/Observable.skipFirst.mjs';
 import Observable_someSatisfy from './Observable/__internal__/Observable.someSatisfy.mjs';
 import Observable_takeFirst from './Observable/__internal__/Observable.takeFirst.mjs';
 import Observable_takeLast from './Observable/__internal__/Observable.takeLast.mjs';
+import Observable_takeUntil from './Observable/__internal__/Observable.takeUntil.mjs';
 import Observable_takeWhile from './Observable/__internal__/Observable.takeWhile.mjs';
+import Observable_throttle from './Observable/__internal__/Observable.throttle.mjs';
 import Observable_throwIfEmpty from './Observable/__internal__/Observable.throwIfEmpty.mjs';
+import Observable_timeout from './Observable/__internal__/Observable.timeout.mjs';
 import Observable_toFlowable from './Observable/__internal__/Observable.toFlowable.mjs';
 import Observable_toPromise from './Observable/__internal__/Observable.toPromise.mjs';
+import Observable_withLatestFrom from './Observable/__internal__/Observable.withLatestFrom.mjs';
 import Observable_zip from './Observable/__internal__/Observable.zip.mjs';
+import Observable_zipLatest from './Observable/__internal__/Observable.zipLatest.mjs';
+import Observable_zipWithLatestFrom from './Observable/__internal__/Observable.zipWithLatestFrom.mjs';
 import RunnableObservable_catchError from './RunnableObservable/__internal__/RunnableObservable.catchError.mjs';
 import RunnableObservable_defer from './RunnableObservable/__internal__/RunnableObservable.defer.mjs';
 import RunnableObservable_mergeAll from './RunnableObservable/__internal__/RunnableObservable.mergeAll.mjs';
@@ -59,6 +66,7 @@ const merge = Observable_merge;
 const mergeAll = RunnableObservable_mergeAll;
 const pairwise = Observable_pairwise;
 const reduce = Observable_reduce;
+const retry = Observable_retry;
 const scan = Observable_scan;
 const scanAsync = RunnableObservable_scanAsync;
 const skipFirst = Observable_skipFirst;
@@ -66,13 +74,21 @@ const someSatisfy = Observable_someSatisfy;
 const switchAll = RunnableObservable_switchAll;
 const takeFirst = Observable_takeFirst;
 const takeLast = Observable_takeLast;
+const takeUntil = Observable_takeUntil;
 const takeWhile = Observable_takeWhile;
+// FIXME: We could support duration: Function1<T, ObservableLike> version as well,
+// but that will require additional rework.
+const throttle = Observable_throttle;
 const throwIfEmpty = Observable_throwIfEmpty;
+const timeout = Observable_timeout;
 const toFlowable = Observable_toFlowable;
 const toPromise = Observable_toPromise;
 const toReadonlyArray = RunnableObservable_toReadonlyArray;
 const toRunnable = RunnableObservable_toRunnable;
+const withLatestFrom = Observable_withLatestFrom;
 const zip = Observable_zip;
+const zipLatest = Observable_zipLatest;
+const zipWithLatestFrom = Observable_zipWithLatestFrom;
 /** @ignore */
 const RunnableObservable = {
     buffer,
@@ -94,6 +110,7 @@ const RunnableObservable = {
     merge,
     pairwise,
     reduce,
+    retry,
     scan,
     scanAsync,
     skipFirst,
@@ -101,13 +118,19 @@ const RunnableObservable = {
     switchAll,
     takeFirst,
     takeLast,
+    takeUntil,
     takeWhile,
+    throttle,
     throwIfEmpty,
+    timeout,
     toFlowable,
     toPromise,
     toReadonlyArray,
     toRunnable,
+    withLatestFrom,
     zip,
+    zipLatest,
+    zipWithLatestFrom,
 };
 
-export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

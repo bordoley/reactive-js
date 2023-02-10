@@ -5,7 +5,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { ContainerOperator } from "../../../containers";
-import { compose, getLength, none, pipe } from "../../../functions";
+import { composeUnsafe, getLength, none, pipe } from "../../../functions";
 import {
   AsyncEnumerableLike,
   AsyncEnumeratorLike,
@@ -172,7 +172,14 @@ const AsyncEnumerable_create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
   return (
     ...ops: readonly ContainerOperator<ObservableLike, unknown, unknown>[]
   ): AsyncEnumerableLike => {
-    const op = getLength(ops) > 1 ? (compose as any)(...ops) : ops[0];
+    const op =
+      getLength(ops) > 1
+        ? (composeUnsafe(...ops) as ContainerOperator<
+            ObservableLike<unknown>,
+            unknown,
+            unknown
+          >)
+        : ops[0];
     return factory(op);
   };
 })();
