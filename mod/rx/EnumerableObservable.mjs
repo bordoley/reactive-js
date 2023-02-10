@@ -1,7 +1,6 @@
 /// <reference types="./EnumerableObservable.d.ts" />
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
 import EnumerableObservable_catchError from './EnumerableObservable/__internal__/EnumerableObservable.catchError.mjs';
-import EnumerableObservable_create from './EnumerableObservable/__internal__/EnumerableObservable.create.mjs';
 import EnumerableObservable_defer from './EnumerableObservable/__internal__/EnumerableObservable.defer.mjs';
 import EnumerableObservable_mergeAll from './EnumerableObservable/__internal__/EnumerableObservable.mergeAll.mjs';
 import EnumerableObservable_never from './EnumerableObservable/__internal__/EnumerableObservable.never.mjs';
@@ -42,7 +41,6 @@ const concatAll = (options = {}) => {
     const { maxBufferSize = MAX_SAFE_INTEGER } = options;
     return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
-const create = EnumerableObservable_create;
 const decodeWithCharset = Observable_decodeWithCharset;
 const defer = EnumerableObservable_defer;
 const distinctUntilChanged = Observable_distinctUntilChanged;
@@ -114,4 +112,4 @@ const EnumerableObservable = {
     zip,
 };
 
-export { buffer, catchError, concat, concatAll, create, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };

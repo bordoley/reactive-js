@@ -27,7 +27,6 @@ import Observable_toFlowable from './Observable/__internal__/Observable.toFlowab
 import Observable_toPromise from './Observable/__internal__/Observable.toPromise.mjs';
 import Observable_zip from './Observable/__internal__/Observable.zip.mjs';
 import RunnableObservable_catchError from './RunnableObservable/__internal__/RunnableObservable.catchError.mjs';
-import RunnableObservable_create from './RunnableObservable/__internal__/RunnableObservable.create.mjs';
 import RunnableObservable_defer from './RunnableObservable/__internal__/RunnableObservable.defer.mjs';
 import RunnableObservable_mergeAll from './RunnableObservable/__internal__/RunnableObservable.mergeAll.mjs';
 import RunnableObservable_scanAsync from './RunnableObservable/__internal__/RunnableObservable.scanAsync.mjs';
@@ -43,7 +42,6 @@ const concatAll = (options = {}) => {
     const { maxBufferSize = MAX_SAFE_INTEGER } = options;
     return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
-const create = RunnableObservable_create;
 const decodeWithCharset = Observable_decodeWithCharset;
 const defer = RunnableObservable_defer;
 const distinctUntilChanged = Observable_distinctUntilChanged;
@@ -115,4 +113,4 @@ const RunnableObservable = {
     zip,
 };
 
-export { buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };

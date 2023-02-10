@@ -1,7 +1,7 @@
 import { ToFlowable, FlowableLike } from "../streaming.js";
+import { RunnableObservableLike, ScanAsync, RunnableLike, AsyncReducer } from "../rx.js";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling.js";
-import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer } from "../functions.js";
-import { RunnableObservableLike, ObserverLike, ScanAsync, RunnableLike, AsyncReducer } from "../rx.js";
+import { Equality, Predicate, SideEffect1, Function1, Updater, Factory, Reducer } from "../functions.js";
 import { ContainerOperator, CatchError, Zip, ConcatAll, Defer, ToPromiseable, ReadonlyArrayLike, PromiseableLike } from "../containers.js";
 declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number | undefined;
@@ -12,7 +12,6 @@ declare const concat: <T>(fst: RunnableObservableLike<T>, snd: RunnableObservabl
 declare const concatAll: ConcatAll<RunnableObservableLike, {
     maxBufferSize?: number;
 }>["concatAll"];
-declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => RunnableObservableLike<T>;
 declare const decodeWithCharset: (charset?: string | undefined) => ContainerOperator<RunnableObservableLike<unknown>, ArrayBuffer, string>;
 declare const defer: Defer<RunnableObservableLike>["defer"];
 declare const distinctUntilChanged: <T>(options?: {
@@ -320,4 +319,4 @@ declare const RunnableObservable: {
         ]>;
     };
 };
-export { buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
