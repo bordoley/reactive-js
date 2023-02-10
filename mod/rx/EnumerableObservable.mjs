@@ -3,7 +3,6 @@ import { MAX_SAFE_INTEGER } from '../constants.mjs';
 import EnumerableObservable_catchError from './EnumerableObservable/__internal__/EnumerableObservable.catchError.mjs';
 import EnumerableObservable_defer from './EnumerableObservable/__internal__/EnumerableObservable.defer.mjs';
 import EnumerableObservable_mergeAll from './EnumerableObservable/__internal__/EnumerableObservable.mergeAll.mjs';
-import EnumerableObservable_never from './EnumerableObservable/__internal__/EnumerableObservable.never.mjs';
 import EnumerableObservable_scanAsync from './EnumerableObservable/__internal__/EnumerableObservable.scanAsync.mjs';
 import EnumerableObservable_switchAll from './EnumerableObservable/__internal__/EnumerableObservable.switchAll.mjs';
 import EnumerableObservable_toEnumerable from './EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.mjs';
@@ -57,7 +56,6 @@ const keep = Observable_keep;
 const map = Observable_map;
 const merge = Observable_merge;
 const mergeAll = EnumerableObservable_mergeAll;
-const never = EnumerableObservable_never;
 const pairwise = Observable_pairwise;
 const reduce = Observable_reduce;
 const scan = Observable_scan;
@@ -112,4 +110,4 @@ const EnumerableObservable = {
     zip,
 };
 
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };

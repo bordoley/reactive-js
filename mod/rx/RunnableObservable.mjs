@@ -1,6 +1,5 @@
 /// <reference types="./RunnableObservable.d.ts" />
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
-import EnumerableObservable_never from './EnumerableObservable/__internal__/EnumerableObservable.never.mjs';
 import Observable_buffer from './Observable/__internal__/Observable.buffer.mjs';
 import Observable_combineLatest from './Observable/__internal__/Observable.combineLatest.mjs';
 import Observable_concat from './Observable/__internal__/Observable.concat.mjs';
@@ -58,7 +57,6 @@ const keep = Observable_keep;
 const map = Observable_map;
 const merge = Observable_merge;
 const mergeAll = RunnableObservable_mergeAll;
-const never = EnumerableObservable_never;
 const pairwise = Observable_pairwise;
 const reduce = Observable_reduce;
 const scan = Observable_scan;
@@ -94,7 +92,6 @@ const RunnableObservable = {
     keep,
     map,
     merge,
-    never,
     pairwise,
     reduce,
     scan,
@@ -113,4 +110,4 @@ const RunnableObservable = {
     zip,
 };
 
-export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, never, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };

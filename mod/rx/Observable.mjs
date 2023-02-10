@@ -2,7 +2,6 @@
 import Promiseable_toObservable from '../containers/Promiseable/__internal__/Promiseable.toObservable.mjs';
 import Flowable_toObservable from '../streaming/Flowable/__internal__/Flowable.toObservable.mjs';
 import Disposable_toObservable from '../util/Disposable/__internal__/Disposable.toObservable.mjs';
-import EnumerableObservable_never from './EnumerableObservable/__internal__/EnumerableObservable.never.mjs';
 import Observable_async from './Observable/__internal__/Observable.async.mjs';
 import Observable_buffer from './Observable/__internal__/Observable.buffer.mjs';
 import Observable_catchError from './Observable/__internal__/Observable.catchError.mjs';
@@ -29,6 +28,7 @@ import Observable_mapAsync from './Observable/__internal__/Observable.mapAsync.m
 import Observable_merge from './Observable/__internal__/Observable.merge.mjs';
 import Observable_mergeAll from './Observable/__internal__/Observable.mergeAll.mjs';
 import Observable_multicast from './Observable/__internal__/Observable.multicast.mjs';
+import Observable_never from './Observable/__internal__/Observable.never.mjs';
 import Observable_onSubscribe from './Observable/__internal__/Observable.onSubscribe.mjs';
 import Observable_pairwise from './Observable/__internal__/Observable.pairwise.mjs';
 import Observable_reduce from './Observable/__internal__/Observable.reduce.mjs';
@@ -114,7 +114,7 @@ const mergeAll = Observable_mergeAll;
  * is subscribed to.
  */
 const multicast = Observable_multicast;
-const never = EnumerableObservable_never;
+const never = Observable_never;
 const onSubscribe = Observable_onSubscribe;
 const pairwise = Observable_pairwise;
 const reduce = Observable_reduce;

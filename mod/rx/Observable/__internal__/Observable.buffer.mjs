@@ -12,12 +12,12 @@ import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from '../../../util/Disposable/__internal__/Disposable.onComplete.mjs';
 import DisposableRef_create from '../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create.mjs';
 import { MutableRefLike_current } from '../../../util/__internal__/util.internal.mjs';
-import EnumerableObservable_never from '../../EnumerableObservable/__internal__/EnumerableObservable.never.mjs';
 import Observer_getScheduler from '../../Observer/__internal__/Observer.getScheduler.mjs';
 import Observer_mixin from '../../Observer/__internal__/Observer.mixin.mjs';
 import ReactiveContainer_sinkInto from '../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.mjs';
 import Observable_forEach from './Observable.forEach.mjs';
 import Observable_lift from './Observable.lift.mjs';
+import Observable_never from './Observable.never.mjs';
 import Observable_subscribe from './Observable.subscribe.mjs';
 
 const Observable_buffer = /*@__PURE__*/ (() => {
@@ -75,7 +75,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         var _a, _b;
         const durationOption = (_a = options.duration) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER;
         const durationFunction = durationOption === MAX_SAFE_INTEGER
-            ? EnumerableObservable_never
+            ? Observable_never
             : isNumber(durationOption)
                 ? (_) => pipe([none], ReadonlyArray_toRunnableObservable())
                 : durationOption;

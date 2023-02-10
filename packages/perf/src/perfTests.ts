@@ -18,12 +18,11 @@ import {
 } from "@reactive-js/core/containers";
 
 import * as Enumerable from "@reactive-js/core/ix/Enumerable";
-import * as Observable from "@reactive-js/core/rx/Observable";
+import * as RunnableObservable from "@reactive-js/core/rx/RunnableObservable";
 import * as ReadonlyArray from "@reactive-js/core/containers/ReadonlyArray";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import * as Sequence from "@reactive-js/core/containers/Sequence";
 import { ToRunnable } from "@reactive-js/core/rx";
-import { __memo, __observe, async } from "@reactive-js/core/effects";
 
 export const passthrough = <T>(_: T, x: T) => x;
 export const createArray = (n: number): ReadonlyArray<number> => {
@@ -49,27 +48,10 @@ export const map = (n: number) =>
   benchmarkGroup(
     `map ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createMapPerfTest("enumerable", Enumerable),
-    createMapPerfTest("observable", Observable),
-    createMapPerfTest("runnable", Runnable),
-    createMapPerfTest("sequence", Sequence),
-    benchmarkTest(
-      "observable__observe",
-      async src => {
-        const arrObs = Observable.fromArray<number>()(src);
-        return pipeLazy(
-          async(
-            () => {
-              const v = __observe(arrObs) ?? 0;
-              return increment(v);
-            },
-            { mode: "combine-latest" },
-          ),
-          Observable.toReadonlyArray(),
-        );
-      },
-      callWith(),
-    ),
+    createMapPerfTest("Enumerable", Enumerable),
+    createMapPerfTest("Observable", RunnableObservable),
+    createMapPerfTest("Runnable", Runnable),
+    createMapPerfTest("Sequence", Sequence),
     createMapPerfTest("readonlyArray", ReadonlyArray),
     benchmarkTest(
       "array methods",
@@ -106,10 +88,10 @@ export const filterMapFusion = (n: number) =>
   benchmarkGroup(
     `filter -> map -> fusion with ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createFilterMapFusionPerfTest("enumerable", Enumerable),
-    createFilterMapFusionPerfTest("observable", Observable),
-    createFilterMapFusionPerfTest("runnable", Runnable),
-    createFilterMapFusionPerfTest("sequence", Sequence),
+    createFilterMapFusionPerfTest("Enumerable", Enumerable),
+    createFilterMapFusionPerfTest("Observable", RunnableObservable),
+    createFilterMapFusionPerfTest("Runnable", Runnable),
+    createFilterMapFusionPerfTest("Sequence", Sequence),
     benchmarkTest(
       "array methods",
       async src => {
@@ -149,10 +131,10 @@ export const filterMapReduce = (n: number) =>
   benchmarkGroup(
     `filter -> map -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createFilterMapReducePerfTest("enumerable", Enumerable),
-    createFilterMapReducePerfTest("observable", Observable),
-    createFilterMapReducePerfTest("runnable", Runnable),
-    createFilterMapReducePerfTest("sequence", Sequence),
+    createFilterMapReducePerfTest("Enumerable", Enumerable),
+    createFilterMapReducePerfTest("Observable", RunnableObservable),
+    createFilterMapReducePerfTest("Runnable", Runnable),
+    createFilterMapReducePerfTest("Sequence", Sequence),
     benchmarkTest(
       "array methods",
       async src => {
@@ -200,39 +182,10 @@ export const scanReduce = (n: number) =>
   benchmarkGroup(
     `scan -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createScanReducePerfTest("enumerable", Enumerable),
-    createScanReducePerfTest("observable", Observable),
-    createScanReducePerfTest("runnable", Runnable),
-    createScanReducePerfTest("sequence", Sequence),
-    benchmarkTest(
-      "observable__observe",
-      async src => {
-        const arrObs = Observable.fromArray<number>()(src);
-        const createRef = (current: number) => ({ current });
-
-        return pipeLazy(
-          async(
-            () => {
-              const ref = __memo(createRef, 0);
-              const v = __observe(arrObs) ?? 0;
-              const result = sum(ref.current, v);
-
-              // mutating variables in effects like this isn't really safe
-              // it only works because the mode is combine latest, running with a
-              // hot source that never yields to the scheduler, and the scheduler
-              // never requests the source to yield.
-              ref.current = result;
-              return result;
-            },
-            { mode: "combine-latest" },
-          ),
-          Observable.toRunnable(),
-          Runnable.reduce<number, number>(passthrough, returns(0)),
-          Runnable.first(),
-        );
-      },
-      callWith(),
-    ),
+    createScanReducePerfTest("Enumerable", Enumerable),
+    createScanReducePerfTest("Observable", RunnableObservable),
+    createScanReducePerfTest("Runnable", Runnable),
+    createScanReducePerfTest("Sequence", Sequence),
     benchmarkTest(
       "most",
       async src => {
@@ -252,7 +205,7 @@ export const every = (n: number) =>
     `every ${n} integers`,
     () => createArray(n),
     benchmarkTest(
-      "runnable",
+      "Runnable",
       async src =>
         pipeLazy(
           src,

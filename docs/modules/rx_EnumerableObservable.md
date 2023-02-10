@@ -23,7 +23,6 @@
 - [map](rx_EnumerableObservable.md#map)
 - [merge](rx_EnumerableObservable.md#merge)
 - [mergeAll](rx_EnumerableObservable.md#mergeall)
-- [never](rx_EnumerableObservable.md#never)
 - [pairwise](rx_EnumerableObservable.md#pairwise)
 - [reduce](rx_EnumerableObservable.md#reduce)
 - [scan](rx_EnumerableObservable.md#scan)
@@ -424,22 +423,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
-
-___
-
-### never
-
-▸ **never**<`T`\>(): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 ___
 

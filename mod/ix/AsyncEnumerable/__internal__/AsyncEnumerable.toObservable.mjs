@@ -9,7 +9,9 @@ import Dispatcher_dispatch from '../../../scheduling/Dispatcher/__internal__/Dis
 import Streamable_stream from '../../../streaming/Streamable/__internal__/Streamable.stream.mjs';
 import Disposable_addTo from '../../../util/Disposable/__internal__/Disposable.addTo.mjs';
 
-const AsyncEnumerable_toObservable = () => enumerable => RunnableObservable_create(observer => {
+const AsyncEnumerable_toObservable = () => enumerable => 
+// FIXME: Fairly sketchy. Need a way to prove any async enumerable is actually pure.
+RunnableObservable_create(observer => {
     const enumerator = pipe(enumerable, Streamable_stream(Observer_getScheduler(observer)), Disposable_addTo(observer));
     pipe(enumerator, Observable_forEach(_ => {
         pipe(enumerator, Dispatcher_dispatch(none));

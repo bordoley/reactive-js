@@ -24,7 +24,6 @@
 - [map](rx_RunnableObservable.md#map)
 - [merge](rx_RunnableObservable.md#merge)
 - [mergeAll](rx_RunnableObservable.md#mergeall)
-- [never](rx_RunnableObservable.md#never)
 - [pairwise](rx_RunnableObservable.md#pairwise)
 - [reduce](rx_RunnableObservable.md#reduce)
 - [scan](rx_RunnableObservable.md#scan)
@@ -648,22 +647,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, `T`\>
-
-___
-
-### never
-
-▸ **never**<`T`\>(): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 ___
 

@@ -14,7 +14,6 @@ import {
   Generate,
   Keep,
   Map,
-  Never,
   Pairwise,
   Reduce,
   Scan,
@@ -30,7 +29,6 @@ import {
 import { RunnableObservableLike, ScanAsync } from "../rx";
 import { SchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
-import EnumerableObservable_never from "./EnumerableObservable/__internal__/EnumerableObservable.never";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest";
 import Observable_concat from "./Observable/__internal__/Observable.concat";
@@ -142,9 +140,6 @@ export const mergeAll: ConcatAll<
   }
 >["concatAll"] = RunnableObservable_mergeAll;
 
-export const never =
-  EnumerableObservable_never as Never<RunnableObservableLike>["never"];
-
 export const pairwise =
   Observable_pairwise as Pairwise<RunnableObservableLike>["pairwise"];
 
@@ -212,7 +207,6 @@ const RunnableObservable = {
   keep,
   map,
   merge,
-  never,
   pairwise,
   reduce,
   scan,

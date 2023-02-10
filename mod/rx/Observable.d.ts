@@ -1,4 +1,4 @@
-import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, EverySatisfy, ForkZip, ForkConcat, FromPromise, Keep, Map, Never, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromiseable, PromiseableLike } from "../containers.js";
+import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, EverySatisfy, ForkZip, ForkConcat, FromPromise, Keep, Map, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromiseable, PromiseableLike } from "../containers.js";
 import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, AsyncReducer } from "../rx.js";
 import { FlowableLike, ToFlowable } from "../streaming.js";
 import { Factory, Function1, SideEffect1, Equality, Reducer, Function2, Predicate, Updater } from "../functions.js";
@@ -91,7 +91,7 @@ declare const mergeAll: ConcatAll<ObservableLike, {
 declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
-declare const never: Never<EnumerableObservableLike>["never"];
+declare const never: <T>() => ObservableLike<T>;
 declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<ObservableLike, T, T>;
 declare const pairwise: Pairwise<ObservableLike>["pairwise"];
 declare const reduce: Reduce<ObservableLike>["reduce"];
@@ -305,7 +305,7 @@ declare const Observable: {
     isRunnable: (obs: ObservableLike<unknown>) => obs is RunnableObservableLike<unknown>;
     keep: <T_12>(predicate: Predicate<T_12>) => ContainerOperator<ObservableLike<unknown>, T_12, T_12>;
     map: <TA_8, TB_8>(mapper: Function1<TA_8, TB_8>) => ContainerOperator<ObservableLike<unknown>, TA_8, TB_8>;
-    never: <T_13>() => EnumerableObservableLike<T_13>;
+    never: <T_13>() => ObservableLike<T_13>;
     onSubscribe: <T_14>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<ObservableLike<unknown>, T_14, T_14>;
     pairwise: <T_15>() => ContainerOperator<ObservableLike<unknown>, T_15, readonly [
         T_15,
