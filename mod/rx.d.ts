@@ -1,4 +1,4 @@
-import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator } from "./containers.js";
+import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator, Zip } from "./containers.js";
 import { Function2, Factory, Function1 } from "./functions.js";
 import { DispatcherLike, SchedulerLike, VirtualTimeSchedulerLike } from "./scheduling.js";
 import { DisposableLike } from "./util.js";
@@ -129,7 +129,10 @@ type ToRunnable<C extends ContainerLike, O = never> = Container<C> & {
 type WithLatestFrom<C extends ObservableLike> = {
     withLatestFrom<TA, TB, T>(other: ContainerOf<C, TB>, selector: Function2<TA, TB, T>): ContainerOperator<C, TA, T>;
 };
+type ZipLatest<C extends ObservableLike> = {
+    zipLatest: Zip<C>["zip"];
+};
 type ZipWithLatestFrom<C extends ObservableLike> = {
     zipWithLatestFrom<TA, TB, T>(other: ContainerOf<C, TB>, selector: Function2<TA, TB, T>): ContainerOperator<C, TA, T>;
 };
-export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, Retry, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, TakeUntil, Timeout, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, WithLatestFrom, ZipWithLatestFrom };
+export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, Retry, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, TakeUntil, Timeout, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, WithLatestFrom, ZipLatest, ZipWithLatestFrom };

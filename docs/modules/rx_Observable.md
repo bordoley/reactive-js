@@ -2073,201 +2073,201 @@ ___
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA_1`, `TB_1`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
+| `TA_1` |
+| `TB_1` |
 | `TC` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_1`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_1`\> |
 | `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA_2`, `TB_2`, `TC_1`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
+| `TA_2` |
+| `TB_2` |
+| `TC_1` |
 | `TD` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_2`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_2`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_1`\> |
 | `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
+| `TA_3` |
+| `TB_3` |
+| `TC_2` |
+| `TD_1` |
 | `TE` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_3`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_3`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_2`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_1`\> |
 | `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
+| `TA_4` |
+| `TB_4` |
+| `TC_3` |
+| `TD_2` |
+| `TE_1` |
 | `TF` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_4`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_4`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_3`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_2`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE_1`\> |
 | `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
+| `TA_5` |
+| `TB_5` |
+| `TC_4` |
+| `TD_3` |
+| `TE_2` |
+| `TF_1` |
 | `TG` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_5`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_5`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_4`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_3`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE_2`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF_1`\> |
 | `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
+| `TA_6` |
+| `TB_6` |
+| `TC_5` |
+| `TD_4` |
+| `TE_3` |
+| `TF_2` |
+| `TG_1` |
 | `TH` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_6`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_6`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_5`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_4`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE_3`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF_2`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG_1`\> |
 | `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
-| `TH` |
+| `TA_7` |
+| `TB_7` |
+| `TC_6` |
+| `TD_5` |
+| `TE_4` |
+| `TF_3` |
+| `TG_2` |
+| `TH_1` |
 | `TI` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_7`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_7`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_6`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_5`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE_4`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF_3`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG_2`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH_1`\> |
 | `i` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TI`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>
 
 ___
 
@@ -2293,201 +2293,201 @@ ___
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zipLatest**<`TA_1`, `TB_1`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
+| `TA_1` |
+| `TB_1` |
 | `TC` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_1`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_1`\> |
 | `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipLatest**<`TA_2`, `TB_2`, `TC_1`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
+| `TA_2` |
+| `TB_2` |
+| `TC_1` |
 | `TD` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_2`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_2`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_1`\> |
 | `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipLatest**<`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
+| `TA_3` |
+| `TB_3` |
+| `TC_2` |
+| `TD_1` |
 | `TE` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_3`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_3`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_2`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_1`\> |
 | `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipLatest**<`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
+| `TA_4` |
+| `TB_4` |
+| `TC_3` |
+| `TD_2` |
+| `TE_1` |
 | `TF` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_4`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_4`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_3`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_2`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE_1`\> |
 | `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipLatest**<`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
+| `TA_5` |
+| `TB_5` |
+| `TC_4` |
+| `TD_3` |
+| `TE_2` |
+| `TF_1` |
 | `TG` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_5`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_5`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_4`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_3`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE_2`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF_1`\> |
 | `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipLatest**<`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
+| `TA_6` |
+| `TB_6` |
+| `TC_5` |
+| `TD_4` |
+| `TE_3` |
+| `TF_2` |
+| `TG_1` |
 | `TH` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_6`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_6`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_5`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_4`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE_3`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF_2`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG_1`\> |
 | `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipLatest**<`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
-| `TH` |
+| `TA_7` |
+| `TB_7` |
+| `TC_6` |
+| `TD_5` |
+| `TE_4` |
+| `TF_3` |
+| `TG_2` |
+| `TH_1` |
 | `TI` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA_7`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB_7`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC_6`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD_5`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE_4`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF_3`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG_2`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH_1`\> |
 | `i` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TI`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>
 
 ___
 

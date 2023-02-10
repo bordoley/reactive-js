@@ -34,6 +34,7 @@ import {
   TakeUntil,
   Timeout,
   WithLatestFrom,
+  ZipLatest,
   ZipWithLatestFrom,
 } from "../rx";
 import { SchedulerLike } from "../scheduling";
@@ -224,7 +225,7 @@ export const withLatestFrom =
 export const zip = Observable_zip as Zip<RunnableObservableLike>["zip"];
 
 export const zipLatest =
-  Observable_zipLatest as Zip<RunnableObservableLike>["zip"];
+  Observable_zipLatest as ZipLatest<RunnableObservableLike>["zipLatest"];
 
 export const zipWithLatestFrom =
   Observable_zipWithLatestFrom as ZipWithLatestFrom<RunnableObservableLike>["zipWithLatestFrom"];

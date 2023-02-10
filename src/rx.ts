@@ -7,6 +7,7 @@ import {
   ContainerOperator,
   StatefulContainerLike,
   StatefulContainerLike_state,
+  Zip,
 } from "./containers";
 import { Factory, Function1, Function2 } from "./functions";
 import {
@@ -224,6 +225,10 @@ export type WithLatestFrom<C extends ObservableLike> = {
     other: ContainerOf<C, TB>,
     selector: Function2<TA, TB, T>,
   ): ContainerOperator<C, TA, T>;
+};
+
+export type ZipLatest<C extends ObservableLike> = {
+  zipLatest: Zip<C>["zip"];
 };
 
 export type ZipWithLatestFrom<C extends ObservableLike> = {
