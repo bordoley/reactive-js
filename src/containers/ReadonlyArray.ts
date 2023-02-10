@@ -11,8 +11,8 @@ import {
 } from "../containers";
 import { identity } from "../functions";
 import { FromAsyncEnumerable, FromEnumerable, ToEnumerable } from "../ix";
-import AsyncEnumerable_toReadonlyArray from "../ix/__internal__/AsyncEnumerable/AsyncEnumerable.toReadonlyArray";
-import Enumerable_toReadonlyArray from "../ix/__internal__/Enumerable/Enumerable.toReadonlyArray";
+import AsyncEnumerable_toReadonlyArray from "../ix/AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray";
+import Enumerable_toReadonlyArray from "../ix/Enumerable/__internal__/Enumerable.toReadonlyArray";
 import {
   FromEnumerableObservable,
   ToEnumerableObservable,
@@ -20,18 +20,18 @@ import {
   ToRunnable,
   ToRunnableObservable,
 } from "../rx";
-import RunnableObservable_toReadonlyArray from "../rx/__internal__/RunnableObservable/RunnableObservable.toReadonlyArray";
-import ReadonlyArray_empty from "./__internal__/ReadonlyArray/ReadonlyArray.empty";
-import ReadonlyArray_every from "./__internal__/ReadonlyArray/ReadonlyArray.every";
-import ReadonlyArray_forEach from "./__internal__/ReadonlyArray/ReadonlyArray.forEach";
-import ReadonlyArray_keep from "./__internal__/ReadonlyArray/ReadonlyArray.keep";
-import ReadonlyArray_map from "./__internal__/ReadonlyArray/ReadonlyArray.map";
-import ReadonlyArray_some from "./__internal__/ReadonlyArray/ReadonlyArray.some";
-import ReadonlyArray_toEnumerable from "./__internal__/ReadonlyArray/ReadonlyArray.toEnumerable";
-import ReadonlyArray_toRunnable from "./__internal__/ReadonlyArray/ReadonlyArray.toRunnable";
-import ReadonlyArray_toRunnableObservable from "./__internal__/ReadonlyArray/ReadonlyArray.toRunnableObservable";
-import ReadonlyArray_toSequence from "./__internal__/ReadonlyArray/ReadonlyArray.toSequence";
-import Sequence_toReadonlyArray from "./__internal__/Sequence/Sequence.toReadonlyArray";
+import RunnableObservable_toReadonlyArray from "../rx/RunnableObservable/__internal__/RunnableObservable.toReadonlyArray";
+import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty";
+import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every";
+import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach";
+import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep";
+import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map";
+import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some";
+import ReadonlyArray_toEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toEnumerable";
+import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable";
+import ReadonlyArray_toRunnableObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
+import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence";
+import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray";
 
 export const empty: Empty<ReadonlyArrayLike>["empty"] = ReadonlyArray_empty;
 

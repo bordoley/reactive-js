@@ -1,6 +1,6 @@
-import Subject_create from "./__internal__/Subject/Subject.create";
-import Subject_publish from "./__internal__/Subject/Subject.publish";
-import Subject_publishTo from "./__internal__/Subject/Subject.publishTo";
+import Subject_create from "./Subject/__internal__/Subject.create";
+import Subject_publish from "./Subject/__internal__/Subject.publish";
+import Subject_publishTo from "./Subject/__internal__/Subject.publishTo";
 
 export const create = Subject_create;
 export const publish = Subject_publish;

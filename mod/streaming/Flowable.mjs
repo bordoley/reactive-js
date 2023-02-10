@@ -1,5 +1,5 @@
 /// <reference types="./Flowable.d.ts" />
-import Flowable_toObservable from './__internal__/Flowable/Flowable.toObservable.mjs';
+import Flowable_toObservable from './Flowable/__internal__/Flowable.toObservable.mjs';
 
 const toObservable = Flowable_toObservable;
 /** @ignore */

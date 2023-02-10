@@ -6,10 +6,10 @@ import {
   SourceLike_move,
 } from "../ix";
 
-import Enumerator_forEach from "./__internal__/Enumerator/Enumerator.forEach";
-import Enumerator_getCurrent from "./__internal__/Enumerator/Enumerator.getCurrent";
-import Enumerator_hasCurrent from "./__internal__/Enumerator/Enumerator.hasCurrent";
-import Enumerator_move from "./__internal__/Enumerator/Enumerator.move";
+import Enumerator_forEach from "./Enumerator/__internal__/Enumerator.forEach";
+import Enumerator_getCurrent from "./Enumerator/__internal__/Enumerator.getCurrent";
+import Enumerator_hasCurrent from "./Enumerator/__internal__/Enumerator.hasCurrent";
+import Enumerator_move from "./Enumerator/__internal__/Enumerator.move";
 
 export const forEach: <
   T,

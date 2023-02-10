@@ -1,4 +1,4 @@
-import ReactiveContainer_sinkInto from "./__internal__/ReactiveContainer/ReactiveContainer.sinkInto";
+import ReactiveContainer_sinkInto from "./ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
 
 export const sinkInto = ReactiveContainer_sinkInto;
 

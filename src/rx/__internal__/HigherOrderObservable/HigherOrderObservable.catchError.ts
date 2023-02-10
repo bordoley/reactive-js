@@ -7,9 +7,9 @@ import {
 import { CatchError, ContainerOperator } from "../../../containers";
 import { Function1, partial, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
-import Observer_getScheduler from "../Observer/Observer.getScheduler";
-import Observer_mixin from "../Observer/Observer.mixin";
-import Sink_catchErrorMixin from "../Sink/Sink.catchErrorMixin";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
+import Sink_catchErrorMixin from "../../Sink/__internal__/Sink.catchErrorMixin";
 
 const HigherOrderObservable_catchError = <C extends ObservableLike>(
   lift: <T>(

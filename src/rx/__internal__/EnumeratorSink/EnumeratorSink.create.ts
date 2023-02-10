@@ -15,9 +15,9 @@ import {
 } from "../../../ix";
 import { SinkLike, SinkLike_notify } from "../../../rx";
 import { DisposableLike } from "../../../util";
-import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable_onDisposed from "../../../util/__internal__/Disposable/Disposable.onDisposed";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed";
 import { EnumeratorSinkLike } from "../rx.internal";
 
 const EnumeratorSink_buffer = Symbol("EnumeratorSink_buffer");

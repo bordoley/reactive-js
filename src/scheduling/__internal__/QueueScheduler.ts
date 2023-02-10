@@ -23,10 +23,10 @@ import {
   EnumeratorLike_current,
   SourceLike_move,
 } from "../../ix";
-import Enumerator_getCurrent from "../../ix/__internal__/Enumerator/Enumerator.getCurrent";
-import Enumerator_hasCurrent from "../../ix/__internal__/Enumerator/Enumerator.hasCurrent";
+import Enumerator_getCurrent from "../../ix/Enumerator/__internal__/Enumerator.getCurrent";
+import Enumerator_hasCurrent from "../../ix/Enumerator/__internal__/Enumerator.hasCurrent";
+import Source_move from "../../ix/Source/__internal__/Source.move";
 import MutableEnumerator_mixin from "../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
-import Source_move from "../../ix/__internal__/Source/Source.move";
 import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal";
 import {
   ContinuationLike,
@@ -43,11 +43,11 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../../util";
-import Disposable_addIgnoringChildErrors from "../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors";
-import Disposable_disposed from "../../util/__internal__/Disposable/Disposable.disposed";
-import Disposable_isDisposed from "../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable_mixin from "../../util/__internal__/Disposable/Disposable.mixin";
-import DisposableRef_mixin from "../../util/__internal__/DisposableRef/DisposableRef.mixin";
+import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors";
+import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed";
+import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed";
+import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin";
+import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin";
 import Queue_create from "../../util/__internal__/Queue/Queue.create";
 import Queue_peek from "../../util/__internal__/Queue/Queue.peek";
 import Queue_pop from "../../util/__internal__/Queue/Queue.pop";
@@ -57,13 +57,13 @@ import {
   MutableRefLike_current,
   QueueLike,
 } from "../../util/__internal__/util.internal";
-import Continuation_run from "./Continuation/Continuation.run";
-import yield_ from "./Continuation/Continuation.yield";
+import Continuation_run from "../Continuation/__internal__/Continuation.run";
+import yield_ from "../Continuation/__internal__/Continuation.yield";
+import getCurrentTime from "../Scheduler/__internal__/Scheduler.getCurrentTime";
+import isInContinuation from "../Scheduler/__internal__/Scheduler.isInContinuation";
+import schedule from "../Scheduler/__internal__/Scheduler.schedule";
+import shouldYield from "../Scheduler/__internal__/Scheduler.shouldYield";
 import { getDelay } from "./Scheduler.options";
-import getCurrentTime from "./Scheduler/Scheduler.getCurrentTime";
-import isInContinuation from "./Scheduler/Scheduler.isInContinuation";
-import schedule from "./Scheduler/Scheduler.schedule";
-import shouldYield from "./Scheduler/Scheduler.shouldYield";
 
 export type QueueSchedulerOptions = {
   readonly priority?: number;

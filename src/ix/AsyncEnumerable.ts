@@ -7,18 +7,18 @@ import {
   TakeWhile,
   ToReadonlyArray,
 } from "../containers";
-import ReadonlyArray_toAsyncEnumerable from "../containers/__internal__/ReadonlyArray/ReadonlyArray.toAsyncEnumerable";
+import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable";
 import { AsyncEnumerableLike, EnumerableLike, ToAsyncEnumerable } from "../ix";
 import { ObservableLike, ScanAsync, ToObservable } from "../rx";
-import AsyncEnumerable_generate from "./__internal__/AsyncEnumerable/AsyncEnumerable.generate";
-import AsyncEnumerable_keep from "./__internal__/AsyncEnumerable/AsyncEnumerable.keep";
-import AsyncEnumerable_map from "./__internal__/AsyncEnumerable/AsyncEnumerable.map";
-import AsyncEnumerable_scan from "./__internal__/AsyncEnumerable/AsyncEnumerable.scan";
-import AsyncEnumerable_scanAsync from "./__internal__/AsyncEnumerable/AsyncEnumerable.scanAsync";
-import AsyncEnumerable_takeWhile from "./__internal__/AsyncEnumerable/AsyncEnumerable.takeWhile";
-import AsyncEnumerable_toObservable from "./__internal__/AsyncEnumerable/AsyncEnumerable.toObservable";
-import AsyncEnumerable_toReadonlyArray from "./__internal__/AsyncEnumerable/AsyncEnumerable.toReadonlyArray";
-import Enumerable_toAsyncEnumerable from "./__internal__/Enumerable/Enumerable.toAsyncEnumerable";
+import AsyncEnumerable_generate from "./AsyncEnumerable/__internal__/AsyncEnumerable.generate";
+import AsyncEnumerable_keep from "./AsyncEnumerable/__internal__/AsyncEnumerable.keep";
+import AsyncEnumerable_map from "./AsyncEnumerable/__internal__/AsyncEnumerable.map";
+import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable.scan";
+import AsyncEnumerable_scanAsync from "./AsyncEnumerable/__internal__/AsyncEnumerable.scanAsync";
+import AsyncEnumerable_takeWhile from "./AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile";
+import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toObservable";
+import AsyncEnumerable_toReadonlyArray from "./AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray";
+import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable";
 
 export const fromArray: FromArray<AsyncEnumerableLike>["fromArray"] =
   ReadonlyArray_toAsyncEnumerable;

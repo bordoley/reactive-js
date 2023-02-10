@@ -1,8 +1,8 @@
 /// <reference types="./Streamable.d.ts" />
-import Streamable_createActionReducer from './__internal__/Streamable/Streamable.createActionReducer.mjs';
-import Streamable_createStateStore from './__internal__/Streamable/Streamable.createStateStore.mjs';
-import Streamable_sinkInto from './__internal__/Streamable/Streamable.sinkInto.mjs';
-import Streamable_stream from './__internal__/Streamable/Streamable.stream.mjs';
+import Streamable_createActionReducer from './Streamable/__internal__/Streamable.createActionReducer.mjs';
+import Streamable_createStateStore from './Streamable/__internal__/Streamable.createStateStore.mjs';
+import Streamable_sinkInto from './Streamable/__internal__/Streamable.sinkInto.mjs';
+import Streamable_stream from './Streamable/__internal__/Streamable.stream.mjs';
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function

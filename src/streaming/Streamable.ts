@@ -2,10 +2,10 @@ import { Equality, Factory, Function1, Reducer, Updater } from "../functions";
 import { SchedulerLike } from "../scheduling";
 import { StreamLike, StreamableLike } from "../streaming";
 
-import Streamable_createActionReducer from "./__internal__/Streamable/Streamable.createActionReducer";
-import Streamable_createStateStore from "./__internal__/Streamable/Streamable.createStateStore";
-import Streamable_sinkInto from "./__internal__/Streamable/Streamable.sinkInto";
-import Streamable_stream from "./__internal__/Streamable/Streamable.stream";
+import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer";
+import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore";
+import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto";
+import Streamable_stream from "./Streamable/__internal__/Streamable.stream";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function

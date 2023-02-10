@@ -1,9 +1,9 @@
 /// <reference types="./HigherOrderObservable.catchError.d.ts" />
 import { createInstanceFactory, mix, include, init } from '../../../__internal__/mixins.mjs';
 import { pipe, partial } from '../../../functions.mjs';
-import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
-import Observer_mixin from '../Observer/Observer.mixin.mjs';
-import Sink_catchErrorMixin from '../Sink/Sink.catchErrorMixin.mjs';
+import Observer_getScheduler from '../../Observer/__internal__/Observer.getScheduler.mjs';
+import Observer_mixin from '../../Observer/__internal__/Observer.mixin.mjs';
+import Sink_catchErrorMixin from '../../Sink/__internal__/Sink.catchErrorMixin.mjs';
 
 const HigherOrderObservable_catchError = (lift) => {
     const createCatchErrorObserver = (() => {

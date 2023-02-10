@@ -18,8 +18,8 @@ import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
 } from "../../../scheduling";
-import Dispatcher_dispatch from "../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch";
-import Dispatcher_getScheduler from "../../../scheduling/__internal__/Dispatcher/Dispatcher.getScheduler";
+import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch";
+import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler";
 import { StreamLike } from "../../../streaming";
 
 const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<

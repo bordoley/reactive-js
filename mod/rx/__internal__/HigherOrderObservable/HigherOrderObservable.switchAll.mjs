@@ -2,19 +2,19 @@
 import { DelegatingLike_delegate, createInstanceFactory, mix, include, delegatingMixin, init, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import Disposable_disposed from '../../../util/__internal__/Disposable/Disposable.disposed.mjs';
-import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
-import DisposableRef_create from '../../../util/__internal__/DisposableRef/DisposableRef.create.mjs';
+import Disposable_addTo from '../../../util/Disposable/__internal__/Disposable.addTo.mjs';
+import Disposable_dispose from '../../../util/Disposable/__internal__/Disposable.dispose.mjs';
+import Disposable_disposed from '../../../util/Disposable/__internal__/Disposable.disposed.mjs';
+import Disposable_isDisposed from '../../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.mixin.mjs';
+import Disposable_onComplete from '../../../util/Disposable/__internal__/Disposable.onComplete.mjs';
+import DisposableRef_create from '../../../util/DisposableRef/__internal__/DisposableRef.create.mjs';
 import { MutableRefLike_current } from '../../../util/__internal__/util.internal.mjs';
-import Observable_forEach from '../Observable/Observable.forEach.mjs';
-import Observable_subscribe from '../Observable/Observable.subscribe.mjs';
-import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
-import Observer_mixin from '../Observer/Observer.mixin.mjs';
-import Sink_notifySink from '../Sink/Sink.notifySink.mjs';
+import Observable_forEach from '../../Observable/__internal__/Observable.forEach.mjs';
+import Observable_subscribe from '../../Observable/__internal__/Observable.subscribe.mjs';
+import Observer_getScheduler from '../../Observer/__internal__/Observer.getScheduler.mjs';
+import Observer_mixin from '../../Observer/__internal__/Observer.mixin.mjs';
+import Sink_notifySink from '../../Sink/__internal__/Sink.notifySink.mjs';
 
 const HigherOrderObservable_currentRef = Symbol("HigherOrderObservable_currentRef");
 const HigherOrderObservable_switchAll = (lift) => {

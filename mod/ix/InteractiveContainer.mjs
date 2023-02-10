@@ -1,5 +1,5 @@
 /// <reference types="./InteractiveContainer.d.ts" />
-import InteractiveContainer_interact from './__internal__/InteractiveContainer/InteractiveContainer.interact.mjs';
+import InteractiveContainer_interact from './InteractiveContainer/__internal__/InteractiveContainer.interact.mjs';
 
 const interact = InteractiveContainer_interact;
 /** @ignore */

@@ -1,15 +1,15 @@
 /// <reference types="./HigherOrderObservable.scanAsync.d.ts" />
 import { pipe } from '../../../functions.mjs';
-import Disposable_addTo from '../../../util/__internal__/Disposable/Disposable.addTo.mjs';
-import Observable_forEach from '../Observable/Observable.forEach.mjs';
-import Observable_onSubscribe from '../Observable/Observable.onSubscribe.mjs';
-import Observable_switchAll from '../Observable/Observable.switchAll.mjs';
-import Observable_takeFirst from '../Observable/Observable.takeFirst.mjs';
-import Observable_zipWithLatestFrom from '../Observable/Observable.zipWithLatestFrom.mjs';
-import ReactiveContainer_sinkInto from '../ReactiveContainer/ReactiveContainer.sinkInto.mjs';
-import Subject_create from '../Subject/Subject.create.mjs';
-import Subject_publish from '../Subject/Subject.publish.mjs';
-import Subject_publishTo from '../Subject/Subject.publishTo.mjs';
+import Disposable_addTo from '../../../util/Disposable/__internal__/Disposable.addTo.mjs';
+import Observable_forEach from '../../Observable/__internal__/Observable.forEach.mjs';
+import Observable_onSubscribe from '../../Observable/__internal__/Observable.onSubscribe.mjs';
+import Observable_switchAll from '../../Observable/__internal__/Observable.switchAll.mjs';
+import Observable_takeFirst from '../../Observable/__internal__/Observable.takeFirst.mjs';
+import Observable_zipWithLatestFrom from '../../Observable/__internal__/Observable.zipWithLatestFrom.mjs';
+import ReactiveContainer_sinkInto from '../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.mjs';
+import Subject_create from '../../Subject/__internal__/Subject.create.mjs';
+import Subject_publish from '../../Subject/__internal__/Subject.publish.mjs';
+import Subject_publishTo from '../../Subject/__internal__/Subject.publishTo.mjs';
 
 const HigherOrderObservable_scanAsync = (createObservable) => {
     return (scanner, initialValue) => observable => {

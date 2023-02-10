@@ -62,9 +62,9 @@ import {
   StreamableLike_stream,
 } from "../streaming";
 import { createActionReducer, stream } from "../streaming/Streamable";
-import Streamable_create from "../streaming/__internal__/Streamable/Streamable.create";
+import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create";
 import { addTo, dispose, onDisposed, toAbortSignal } from "../util/Disposable";
-import Disposable_delegatingMixin from "../util/__internal__/Disposable/Disposable.delegatingMixin";
+import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin";
 
 export type WindowLocationURI = {
   title: string;

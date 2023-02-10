@@ -1,4 +1,4 @@
-import { ZipWith } from "./__internal__/Container/Container.zipWith.js";
+import { ZipWith } from "./Container/__internal__/Container.zipWith.js";
 import { Function1, Factory, Equality, Optional, TypePredicate, Predicate } from "../functions.js";
 import { ContainerLike, Container as Container$1, ContainerOperator, ContainerOf, Map, ConcatAll, Concat, SomeSatisfy, FromArray, FromIterable, Keep, EverySatisfy } from "../containers.js";
 declare const compute: <C extends ContainerLike, T, O extends {

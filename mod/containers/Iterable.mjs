@@ -1,9 +1,9 @@
 /// <reference types="./Iterable.d.ts" />
 import { identity } from '../functions.mjs';
-import Iterable_toAsyncEnumerable from './__internal__/Iterable/Iterable.toAsyncEnumerable.mjs';
-import Iterable_toEnumerable from './__internal__/Iterable/Iterable.toEnumerable.mjs';
-import Iterable_toEnumerableObservable from './__internal__/Iterable/Iterable.toEnumerableObservable.mjs';
-import Iterable_toRunnableObservable from './__internal__/Iterable/Iterable.toRunnableObservable.mjs';
+import Iterable_toAsyncEnumerable from './Iterable/__internal__/Iterable.toAsyncEnumerable.mjs';
+import Iterable_toEnumerable from './Iterable/__internal__/Iterable.toEnumerable.mjs';
+import Iterable_toEnumerableObservable from './Iterable/__internal__/Iterable.toEnumerableObservable.mjs';
+import Iterable_toRunnableObservable from './Iterable/__internal__/Iterable.toRunnableObservable.mjs';
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.

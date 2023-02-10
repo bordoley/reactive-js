@@ -1,6 +1,6 @@
-import Sink_notify from "./__internal__/Sink/Sink.notify";
-import Sink_notifySink from "./__internal__/Sink/Sink.notifySink";
-import Sink_sourceFrom from "./__internal__/Sink/Sink.sourceFrom";
+import Sink_notify from "./Sink/__internal__/Sink.notify";
+import Sink_notifySink from "./Sink/__internal__/Sink.notifySink";
+import Sink_sourceFrom from "./Sink/__internal__/Sink.sourceFrom";
 
 export const notify = Sink_notify;
 export const notifySink = Sink_notifySink;

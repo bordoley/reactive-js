@@ -8,14 +8,14 @@ import {
   SchedulerLike_shouldYield,
 } from "../scheduling";
 
+import Scheduler_createHostScheduler from "./Scheduler/__internal__/Scheduler.createHostScheduler";
+import Scheduler_getCurrentTime from "./Scheduler/__internal__/Scheduler.getCurrentTime";
+import Scheduler_isInContinuation from "./Scheduler/__internal__/Scheduler.isInContinuation";
+import Scheduler_requestYield from "./Scheduler/__internal__/Scheduler.requestYield";
+import Scheduler_schedule from "./Scheduler/__internal__/Scheduler.schedule";
+import Scheduler_shouldYield from "./Scheduler/__internal__/Scheduler.shouldYield";
+import Scheduler_toPausableScheduler from "./Scheduler/__internal__/Scheduler.toPausableScheduler";
 import { create as Scheduler_toPriorityScheduler } from "./__internal__/QueueScheduler";
-import Scheduler_createHostScheduler from "./__internal__/Scheduler/Scheduler.createHostScheduler";
-import Scheduler_getCurrentTime from "./__internal__/Scheduler/Scheduler.getCurrentTime";
-import Scheduler_isInContinuation from "./__internal__/Scheduler/Scheduler.isInContinuation";
-import Scheduler_requestYield from "./__internal__/Scheduler/Scheduler.requestYield";
-import Scheduler_schedule from "./__internal__/Scheduler/Scheduler.schedule";
-import Scheduler_shouldYield from "./__internal__/Scheduler/Scheduler.shouldYield";
-import Scheduler_toPausableScheduler from "./__internal__/Scheduler/Scheduler.toPausableScheduler";
 
 export const createHostScheduler = Scheduler_createHostScheduler;
 

@@ -1,7 +1,7 @@
 import { Function1 } from "../functions";
 import { StreamLike, StreamableLike } from "../streaming";
 
-import Stream_sourceFrom from "./__internal__/Stream/Stream.sourceFrom";
+import Stream_sourceFrom from "./Stream/__internal__/Stream.sourceFrom";
 
 export const sourceFrom: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(
   streamable: StreamableLike<TReq, T>,

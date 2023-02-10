@@ -42,7 +42,7 @@ import {
   isDisposed,
   onDisposed,
 } from "../util/Disposable";
-import Disposable_mixin from "../util/__internal__/Disposable/Disposable.mixin";
+import Disposable_mixin from "../util/Disposable/__internal__/Disposable.mixin";
 
 const createPriorityScheduler = /*@__PURE__*/ (() => {
   type TProperties = {

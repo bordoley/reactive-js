@@ -3,29 +3,29 @@ import { createInstanceFactory, mix, include, init, props } from '../../__intern
 import { MAX_SAFE_INTEGER } from '../../constants.mjs';
 import { isNone, none, isSome, max, pipe, unsafeCast } from '../../functions.mjs';
 import { EnumeratorLike_current, SourceLike_move } from '../../ix.mjs';
-import Enumerator_getCurrent from '../../ix/__internal__/Enumerator/Enumerator.getCurrent.mjs';
-import Enumerator_hasCurrent from '../../ix/__internal__/Enumerator/Enumerator.hasCurrent.mjs';
+import Enumerator_getCurrent from '../../ix/Enumerator/__internal__/Enumerator.getCurrent.mjs';
+import Enumerator_hasCurrent from '../../ix/Enumerator/__internal__/Enumerator.hasCurrent.mjs';
+import Source_move from '../../ix/Source/__internal__/Source.move.mjs';
 import MutableEnumerator_mixin from '../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
-import Source_move from '../../ix/__internal__/Source/Source.move.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../scheduling.mjs';
 import { PauseableLike_pause, PauseableLike_resume } from '../../util.mjs';
-import Disposable_addIgnoringChildErrors from '../../util/__internal__/Disposable/Disposable.addIgnoringChildErrors.mjs';
-import Disposable_disposed from '../../util/__internal__/Disposable/Disposable.disposed.mjs';
-import Disposable_isDisposed from '../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable_mixin from '../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import DisposableRef_mixin from '../../util/__internal__/DisposableRef/DisposableRef.mixin.mjs';
+import Disposable_addIgnoringChildErrors from '../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.mjs';
+import Disposable_disposed from '../../util/Disposable/__internal__/Disposable.disposed.mjs';
+import Disposable_isDisposed from '../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../util/Disposable/__internal__/Disposable.mixin.mjs';
+import DisposableRef_mixin from '../../util/DisposableRef/__internal__/DisposableRef.mixin.mjs';
 import Queue_create from '../../util/__internal__/Queue/Queue.create.mjs';
 import Queue_peek from '../../util/__internal__/Queue/Queue.peek.mjs';
 import Queue_pop from '../../util/__internal__/Queue/Queue.pop.mjs';
 import Queue_push from '../../util/__internal__/Queue/Queue.push.mjs';
 import { MutableRefLike_current } from '../../util/__internal__/util.internal.mjs';
-import Continuation_run from './Continuation/Continuation.run.mjs';
-import Continuation_yield_ from './Continuation/Continuation.yield.mjs';
+import Continuation_run from '../Continuation/__internal__/Continuation.run.mjs';
+import Continuation_yield_ from '../Continuation/__internal__/Continuation.yield.mjs';
+import Scheduler_getCurrentTime from '../Scheduler/__internal__/Scheduler.getCurrentTime.mjs';
+import Scheduler_isInContinuation from '../Scheduler/__internal__/Scheduler.isInContinuation.mjs';
+import Scheduler_schedule from '../Scheduler/__internal__/Scheduler.schedule.mjs';
+import Scheduler_shouldYield from '../Scheduler/__internal__/Scheduler.shouldYield.mjs';
 import { getDelay } from './Scheduler.options.mjs';
-import Scheduler_getCurrentTime from './Scheduler/Scheduler.getCurrentTime.mjs';
-import Scheduler_isInContinuation from './Scheduler/Scheduler.isInContinuation.mjs';
-import Scheduler_schedule from './Scheduler/Scheduler.schedule.mjs';
-import Scheduler_shouldYield from './Scheduler/Scheduler.shouldYield.mjs';
 
 const create = 
 /*@__PURE__*/ (() => {

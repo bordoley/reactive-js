@@ -13,8 +13,8 @@ import {
   SourceLike_move,
 } from "../../../ix";
 import { DisposableLike } from "../../../util";
-import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import { MutableEnumeratorLike } from "../ix.internal";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
+import { MutableEnumeratorLike } from "../../__internal__/ix.internal";
 
 type TEnumeratorMixinReturn<T> = Omit<
   MutableEnumeratorLike<T>,

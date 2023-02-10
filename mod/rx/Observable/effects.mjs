@@ -1,14 +1,14 @@
 /// <reference types="./effects.d.ts" />
 import { pipe, none, isSome } from '../../functions.mjs';
-import Streamable_createStateStore from '../../streaming/__internal__/Streamable/Streamable.createStateStore.mjs';
-import Streamable_stream from '../../streaming/__internal__/Streamable/Streamable.stream.mjs';
-import Disposable_dispose from '../../util/__internal__/Disposable/Disposable.dispose.mjs';
-import { assertCurrentContext, AsyncContext_memoOrUse, AsyncContext_awaitOrObserve, AsyncContext_observer } from '../__internal__/Observable/Observable.async.mjs';
-import Observable_create from '../__internal__/Observable/Observable.create.mjs';
-import Observable_subscribe from '../__internal__/Observable/Observable.subscribe.mjs';
-import Observer_getScheduler from '../__internal__/Observer/Observer.getScheduler.mjs';
-import Observer_schedule from '../__internal__/Observer/Observer.schedule.mjs';
-import Sink_notify from '../__internal__/Sink/Sink.notify.mjs';
+import Streamable_createStateStore from '../../streaming/Streamable/__internal__/Streamable.createStateStore.mjs';
+import Streamable_stream from '../../streaming/Streamable/__internal__/Streamable.stream.mjs';
+import Disposable_dispose from '../../util/Disposable/__internal__/Disposable.dispose.mjs';
+import { assertCurrentContext, AsyncContext_memoOrUse, AsyncContext_awaitOrObserve, AsyncContext_observer } from './__internal__/Observable.async.mjs';
+import Observable_create from './__internal__/Observable.create.mjs';
+import Observable_subscribe from './__internal__/Observable.subscribe.mjs';
+import Observer_getScheduler from '../Observer/__internal__/Observer.getScheduler.mjs';
+import Observer_schedule from '../Observer/__internal__/Observer.schedule.mjs';
+import Sink_notify from '../Sink/__internal__/Sink.notify.mjs';
 
 const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
