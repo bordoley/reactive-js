@@ -12,6 +12,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 
 const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
   () => enumerable =>
+    // FIXME: Fairly sketchy. Need a way to prove any async enumerable is actually pure.
     RunnableObservable_create(observer => {
       const enumerator = pipe(
         enumerable,

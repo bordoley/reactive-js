@@ -35,7 +35,6 @@ import { ToFlowable } from "../streaming";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError";
 import EnumerableObservable_defer from "./EnumerableObservable/__internal__/EnumerableObservable.defer";
 import EnumerableObservable_mergeAll from "./EnumerableObservable/__internal__/EnumerableObservable.mergeAll";
-import EnumerableObservable_never from "./EnumerableObservable/__internal__/EnumerableObservable.never";
 import EnumerableObservable_scanAsync from "./EnumerableObservable/__internal__/EnumerableObservable.scanAsync";
 import EnumerableObservable_switchAll from "./EnumerableObservable/__internal__/EnumerableObservable.switchAll";
 import EnumerableObservable_toEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toEnumerable";
@@ -133,8 +132,6 @@ export const mergeAll: ConcatAll<
     readonly maxConcurrency?: number;
   }
 >["concatAll"] = EnumerableObservable_mergeAll;
-
-export const never = EnumerableObservable_never;
 
 export const pairwise =
   Observable_pairwise as Pairwise<EnumerableObservableLike>["pairwise"];

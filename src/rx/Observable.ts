@@ -11,7 +11,6 @@ import {
   FromPromise,
   Keep,
   Map,
-  Never,
   Pairwise,
   Reduce,
   SkipFirst,
@@ -44,7 +43,6 @@ import { FromFlowable, ToFlowable } from "../streaming";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable";
 import { DisposableLike, DisposableOrTeardown } from "../util";
 import Disposable_toObservable from "../util/Disposable/__internal__/Disposable.toObservable";
-import EnumerableObservable_never from "./EnumerableObservable/__internal__/EnumerableObservable.never";
 import Observable_async from "./Observable/__internal__/Observable.async";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError";
@@ -71,6 +69,7 @@ import Observable_mapAsync from "./Observable/__internal__/Observable.mapAsync";
 import Observable_merge from "./Observable/__internal__/Observable.merge";
 import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll";
 import Observable_multicast from "./Observable/__internal__/Observable.multicast";
+import Observable_never from "./Observable/__internal__/Observable.never";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce";
@@ -231,8 +230,7 @@ export const mergeAll: ConcatAll<
  */
 export const multicast = Observable_multicast;
 
-export const never: Never<EnumerableObservableLike>["never"] =
-  EnumerableObservable_never;
+export const never = Observable_never;
 
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,

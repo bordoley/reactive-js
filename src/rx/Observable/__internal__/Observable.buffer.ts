@@ -33,12 +33,12 @@ import {
   DisposableRefLike,
   MutableRefLike_current,
 } from "../../../util/__internal__/util.internal";
-import EnumerableObservable_never from "../../EnumerableObservable/__internal__/EnumerableObservable.never";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
 import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
 import Observable_forEach from "./Observable.forEach";
 import Observable_lift from "./Observable.lift";
+import EnumerableObservable_never from "./Observable.never";
 import Observable_subscribe from "./Observable.subscribe";
 
 const Observable_buffer: <T>(options?: {
