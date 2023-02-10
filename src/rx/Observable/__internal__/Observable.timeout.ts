@@ -15,8 +15,8 @@ import { DisposableLike } from "../../../util";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed";
-import DisposableRef_mixin from "../../../util/DisposableRef/__internal__/DisposableRef.mixin";
-import MutableRef_get from "../../../util/MutableRef/__internal__/MutableRef.get";
+import DisposableRef_mixin from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin";
+import MutableRef_get from "../../../util/__internal__/MutableRef/__internal__/MutableRef.get";
 import {
   MutableRefLike,
   MutableRefLike_current,

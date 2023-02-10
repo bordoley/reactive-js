@@ -16,8 +16,21 @@ import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal_
 import ReadonlyArray_keep from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keep";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some";
-import { compose, isSome, isTrue, none, pipe } from "../../../functions";
-import { EnumerableLike, EnumeratorLike } from "../../../ix";
+import {
+  compose,
+  getLength,
+  isSome,
+  isTrue,
+  none,
+  pipe,
+} from "../../../functions";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  SourceLike_move,
+} from "../../../ix";
 import Enumerable_enumerate from "../../../ix/Enumerable/__internal__/Enumerable.enumerate";
 import Enumerable_toRunnableObservable from "../../../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
 import Enumerable_zip from "../../../ix/Enumerable/__internal__/Enumerable.zip";
@@ -30,22 +43,85 @@ import {
   SinkLike,
   SinkLike_notify,
 } from "../../../rx";
-import { DisposableLike_isDisposed } from "../../../util";
+import { DisposableLike, DisposableLike_isDisposed } from "../../../util";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed";
 import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__internal__/EnumerableObservable.toEnumerable";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
 import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create";
 import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
-import EnumeratorSink_create from "../../__internal__/EnumeratorSink/EnumeratorSink.create";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
 import Observable_allAreRunnable from "./Observable.allAreRunnable";
 import Observable_create from "./Observable.create";
 import Observable_isEnumerable from "./Observable.isEnumerable";
+
+export interface EnumeratorSinkLike<T> extends EnumeratorLike<T>, SinkLike<T> {}
+
+const EnumeratorSink_buffer = Symbol("EnumeratorSink_buffer");
+
+const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
+  type TProperties = {
+    [EnumeratorLike_current]: T;
+    [EnumeratorLike_hasCurrent]: boolean;
+    readonly [EnumeratorSink_buffer]: T[];
+  };
+
+  return createInstanceFactory(
+    mix(
+      include(Disposable_mixin),
+      function EnumeratorSink(
+        instance: Pick<
+          SinkLike<T> & EnumeratorLike<T>,
+          typeof SinkLike_notify | typeof SourceLike_move
+        > &
+          Mutable<TProperties>,
+      ): EnumeratorLike<T> & SinkLike<T> {
+        init(Disposable_mixin, instance);
+
+        instance[EnumeratorSink_buffer] = [];
+
+        pipe(
+          instance,
+          Disposable_onDisposed(() => {
+            instance[EnumeratorSink_buffer].length = 0;
+            instance[EnumeratorLike_hasCurrent] = false;
+          }),
+        );
+
+        return instance;
+      },
+      props<TProperties>({
+        [EnumeratorSink_buffer]: none,
+        [EnumeratorLike_current]: none,
+        [EnumeratorLike_hasCurrent]: false,
+      }),
+      {
+        [SinkLike_notify](this: DisposableLike & TProperties, next: T) {
+          if (Disposable_isDisposed(this)) {
+            return;
+          }
+          this[EnumeratorSink_buffer].push(next);
+        },
+        [SourceLike_move](this: DisposableLike & TProperties) {
+          const { [EnumeratorSink_buffer]: buffer } = this;
+
+          if (!Disposable_isDisposed(this) && getLength(buffer) > 0) {
+            const next = buffer.shift() as T;
+            this[EnumeratorLike_current] = next;
+            this[EnumeratorLike_hasCurrent] = true;
+          } else {
+            this[EnumeratorLike_hasCurrent] = false;
+          }
+        },
+      },
+    ),
+  );
+})();
 
 const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   const typedObserverMixin = Observer_mixin();

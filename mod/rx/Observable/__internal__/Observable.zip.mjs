@@ -1,12 +1,13 @@
 /// <reference types="./Observable.zip.d.ts" />
-import { createInstanceFactory, mix, include, delegatingMixin, init, props, DelegatingLike_delegate } from '../../../__internal__/mixins.mjs';
+import { createInstanceFactory, mix, include, init, props, delegatingMixin, DelegatingLike_delegate } from '../../../__internal__/mixins.mjs';
 import Container_keepType from '../../../containers/Container/__internal__/Container.keepType.mjs';
 import ReadonlyArray_every from '../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.mjs';
 import ReadonlyArray_forEach from '../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.mjs';
 import ReadonlyArray_keep from '../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keep.mjs';
 import ReadonlyArray_map from '../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.mjs';
 import ReadonlyArray_some from '../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.mjs';
-import { compose, isTrue, pipe, none, isSome } from '../../../functions.mjs';
+import { pipe, none, getLength, compose, isTrue, isSome } from '../../../functions.mjs';
+import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SourceLike_move } from '../../../ix.mjs';
 import Enumerable_enumerate from '../../../ix/Enumerable/__internal__/Enumerable.enumerate.mjs';
 import Enumerable_toRunnableObservable from '../../../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.mjs';
 import Enumerable_zip from '../../../ix/Enumerable/__internal__/Enumerable.zip.mjs';
@@ -20,17 +21,51 @@ import Disposable_dispose from '../../../util/Disposable/__internal__/Disposable
 import Disposable_isDisposed from '../../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
 import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.mixin.mjs';
 import Disposable_onComplete from '../../../util/Disposable/__internal__/Disposable.onComplete.mjs';
+import Disposable_onDisposed from '../../../util/Disposable/__internal__/Disposable.onDisposed.mjs';
 import EnumerableObservable_toEnumerable from '../../EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.mjs';
 import Observer_getScheduler from '../../Observer/__internal__/Observer.getScheduler.mjs';
 import Observer_mixin from '../../Observer/__internal__/Observer.mixin.mjs';
 import RunnableObservable_create from '../../RunnableObservable/__internal__/RunnableObservable.create.mjs';
 import Sink_sourceFrom from '../../Sink/__internal__/Sink.sourceFrom.mjs';
-import EnumeratorSink_create from '../../__internal__/EnumeratorSink/EnumeratorSink.create.mjs';
 import Observable_allAreEnumerable from './Observable.allAreEnumerable.mjs';
 import Observable_allAreRunnable from './Observable.allAreRunnable.mjs';
 import Observable_create from './Observable.create.mjs';
 import Observable_isEnumerable from './Observable.isEnumerable.mjs';
 
+const EnumeratorSink_buffer = Symbol("EnumeratorSink_buffer");
+const EnumeratorSink_create = (() => {
+    return createInstanceFactory(mix(include(Disposable_mixin), function EnumeratorSink(instance) {
+        init(Disposable_mixin, instance);
+        instance[EnumeratorSink_buffer] = [];
+        pipe(instance, Disposable_onDisposed(() => {
+            instance[EnumeratorSink_buffer].length = 0;
+            instance[EnumeratorLike_hasCurrent] = false;
+        }));
+        return instance;
+    }, props({
+        [EnumeratorSink_buffer]: none,
+        [EnumeratorLike_current]: none,
+        [EnumeratorLike_hasCurrent]: false,
+    }), {
+        [SinkLike_notify](next) {
+            if (Disposable_isDisposed(this)) {
+                return;
+            }
+            this[EnumeratorSink_buffer].push(next);
+        },
+        [SourceLike_move]() {
+            const { [EnumeratorSink_buffer]: buffer } = this;
+            if (!Disposable_isDisposed(this) && getLength(buffer) > 0) {
+                const next = buffer.shift();
+                this[EnumeratorLike_current] = next;
+                this[EnumeratorLike_hasCurrent] = true;
+            }
+            else {
+                this[EnumeratorLike_hasCurrent] = false;
+            }
+        },
+    }));
+})();
 const Observable_zip = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
     const shouldEmit = compose(ReadonlyArray_map((x) => Enumerator_hasCurrent(x) || Enumerator_move(x)), ReadonlyArray_every(isTrue));

@@ -9,8 +9,8 @@ import Disposable_disposed from '../../../util/Disposable/__internal__/Disposabl
 import Disposable_isDisposed from '../../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
 import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.mixin.mjs';
 import Disposable_onComplete from '../../../util/Disposable/__internal__/Disposable.onComplete.mjs';
-import DisposableRef_create from '../../../util/DisposableRef/__internal__/DisposableRef.create.mjs';
-import MutableRef_set from '../../../util/MutableRef/__internal__/MutableRef.set.mjs';
+import DisposableRef_create from '../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create.mjs';
+import MutableRef_set from '../../../util/__internal__/MutableRef/__internal__/MutableRef.set.mjs';
 import { MutableRefLike_current } from '../../../util/__internal__/util.internal.mjs';
 import Observer_getScheduler from '../../Observer/__internal__/Observer.getScheduler.mjs';
 import Observer_mixin from '../../Observer/__internal__/Observer.mixin.mjs';

@@ -7,9 +7,9 @@ import Disposable_dispose from '../../../util/Disposable/__internal__/Disposable
 import Disposable_disposed from '../../../util/Disposable/__internal__/Disposable.disposed.mjs';
 import Disposable_isDisposed from '../../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
 import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.mixin.mjs';
-import DisposableRef_mixin from '../../../util/DisposableRef/__internal__/DisposableRef.mixin.mjs';
-import MutableRef_get from '../../../util/MutableRef/__internal__/MutableRef.get.mjs';
-import MutableRef_set from '../../../util/MutableRef/__internal__/MutableRef.set.mjs';
+import DisposableRef_mixin from '../../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin.mjs';
+import MutableRef_get from '../../../util/__internal__/MutableRef/__internal__/MutableRef.get.mjs';
+import MutableRef_set from '../../../util/__internal__/MutableRef/__internal__/MutableRef.set.mjs';
 import Enumerator_getCurrent from '../../Enumerator/__internal__/Enumerator.getCurrent.mjs';
 import Enumerator_move from '../../Enumerator/__internal__/Enumerator.move.mjs';
 import MutableEnumerator_mixin from '../../__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
