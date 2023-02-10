@@ -21,7 +21,7 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import Iterable_toEnumerable from "../containers/__internal__/Iterable/Iterable.toEnumerable";
+import Iterable_toEnumerable from "../containers/Iterable/__internal__/Iterable.toEnumerable";
 import { identity } from "../functions";
 import { EnumerableLike, ToEnumerable } from "../ix";
 import {
@@ -30,31 +30,31 @@ import {
   ToRunnable,
   ToRunnableObservable,
 } from "../rx";
-import Enumerable_buffer from "./__internal__/Enumerable/Enumerable.buffer";
-import Enumerable_concat from "./__internal__/Enumerable/Enumerable.concat";
-import Enumerable_concatAll from "./__internal__/Enumerable/Enumerable.concatAll";
-import Enumerable_distinctUntilChanged from "./__internal__/Enumerable/Enumerable.distinctUntilChanged";
-import Enumerable_empty from "./__internal__/Enumerable/Enumerable.empty";
-import Enumerable_enumerate from "./__internal__/Enumerable/Enumerable.enumerate";
-import Enumerable_forEach from "./__internal__/Enumerable/Enumerable.forEach";
-import Enumerable_fromArray from "./__internal__/Enumerable/Enumerable.fromArray";
-import Enumerable_generate from "./__internal__/Enumerable/Enumerable.generate";
-import Enumerable_keep from "./__internal__/Enumerable/Enumerable.keep";
-import Enumerable_map from "./__internal__/Enumerable/Enumerable.map";
-import Enumerable_pairwise from "./__internal__/Enumerable/Enumerable.pairwise";
-import Enumerable_repeat from "./__internal__/Enumerable/Enumerable.repeat";
-import Enumerable_scan from "./__internal__/Enumerable/Enumerable.scan";
-import Enumerable_skipFirst from "./__internal__/Enumerable/Enumerable.skipFirst";
-import Enumerable_takeFirst from "./__internal__/Enumerable/Enumerable.takeFirst";
-import Enumerable_takeLast from "./__internal__/Enumerable/Enumerable.takeLast";
-import Enumerable_takeWhile from "./__internal__/Enumerable/Enumerable.takeWhile";
-import Enumerable_throwIfEmpty from "./__internal__/Enumerable/Enumerable.throwIfEmpty";
-import Enumerable_toEnumerableObservable from "./__internal__/Enumerable/Enumerable.toEnumerableObservable";
-import Enumerable_toIterable from "./__internal__/Enumerable/Enumerable.toIterable";
-import Enumerable_toReadonlyArray from "./__internal__/Enumerable/Enumerable.toReadonlyArray";
-import Enumerable_toRunnable from "./__internal__/Enumerable/Enumerable.toRunnable";
-import Enumerable_toRunnableObservable from "./__internal__/Enumerable/Enumerable.toRunnableObservable";
-import Enumerable_zip from "./__internal__/Enumerable/Enumerable.zip";
+import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer";
+import Enumerable_concat from "./Enumerable/__internal__/Enumerable.concat";
+import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll";
+import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerable.distinctUntilChanged";
+import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty";
+import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate";
+import Enumerable_forEach from "./Enumerable/__internal__/Enumerable.forEach";
+import Enumerable_fromArray from "./Enumerable/__internal__/Enumerable.fromArray";
+import Enumerable_generate from "./Enumerable/__internal__/Enumerable.generate";
+import Enumerable_keep from "./Enumerable/__internal__/Enumerable.keep";
+import Enumerable_map from "./Enumerable/__internal__/Enumerable.map";
+import Enumerable_pairwise from "./Enumerable/__internal__/Enumerable.pairwise";
+import Enumerable_repeat from "./Enumerable/__internal__/Enumerable.repeat";
+import Enumerable_scan from "./Enumerable/__internal__/Enumerable.scan";
+import Enumerable_skipFirst from "./Enumerable/__internal__/Enumerable.skipFirst";
+import Enumerable_takeFirst from "./Enumerable/__internal__/Enumerable.takeFirst";
+import Enumerable_takeLast from "./Enumerable/__internal__/Enumerable.takeLast";
+import Enumerable_takeWhile from "./Enumerable/__internal__/Enumerable.takeWhile";
+import Enumerable_throwIfEmpty from "./Enumerable/__internal__/Enumerable.throwIfEmpty";
+import Enumerable_toEnumerableObservable from "./Enumerable/__internal__/Enumerable.toEnumerableObservable";
+import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable";
+import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray";
+import Enumerable_toRunnable from "./Enumerable/__internal__/Enumerable.toRunnable";
+import Enumerable_toRunnableObservable from "./Enumerable/__internal__/Enumerable.toRunnableObservable";
+import Enumerable_zip from "./Enumerable/__internal__/Enumerable.zip";
 
 export const enumerate = Enumerable_enumerate;
 

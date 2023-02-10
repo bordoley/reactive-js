@@ -1,14 +1,14 @@
 /// <reference types="./AsyncEnumerable.d.ts" />
-import ReadonlyArray_toAsyncEnumerable from '../containers/__internal__/ReadonlyArray/ReadonlyArray.toAsyncEnumerable.mjs';
-import AsyncEnumerable_generate from './__internal__/AsyncEnumerable/AsyncEnumerable.generate.mjs';
-import AsyncEnumerable_keep from './__internal__/AsyncEnumerable/AsyncEnumerable.keep.mjs';
-import AsyncEnumerable_map from './__internal__/AsyncEnumerable/AsyncEnumerable.map.mjs';
-import AsyncEnumerable_scan from './__internal__/AsyncEnumerable/AsyncEnumerable.scan.mjs';
-import AsyncEnumerable_scanAsync from './__internal__/AsyncEnumerable/AsyncEnumerable.scanAsync.mjs';
-import AsyncEnumerable_takeWhile from './__internal__/AsyncEnumerable/AsyncEnumerable.takeWhile.mjs';
-import AsyncEnumerable_toObservable from './__internal__/AsyncEnumerable/AsyncEnumerable.toObservable.mjs';
-import AsyncEnumerable_toReadonlyArray from './__internal__/AsyncEnumerable/AsyncEnumerable.toReadonlyArray.mjs';
-import Enumerable_toAsyncEnumerable from './__internal__/Enumerable/Enumerable.toAsyncEnumerable.mjs';
+import ReadonlyArray_toAsyncEnumerable from '../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.mjs';
+import AsyncEnumerable_generate from './AsyncEnumerable/__internal__/AsyncEnumerable.generate.mjs';
+import AsyncEnumerable_keep from './AsyncEnumerable/__internal__/AsyncEnumerable.keep.mjs';
+import AsyncEnumerable_map from './AsyncEnumerable/__internal__/AsyncEnumerable.map.mjs';
+import AsyncEnumerable_scan from './AsyncEnumerable/__internal__/AsyncEnumerable.scan.mjs';
+import AsyncEnumerable_scanAsync from './AsyncEnumerable/__internal__/AsyncEnumerable.scanAsync.mjs';
+import AsyncEnumerable_takeWhile from './AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile.mjs';
+import AsyncEnumerable_toObservable from './AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.mjs';
+import AsyncEnumerable_toReadonlyArray from './AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray.mjs';
+import Enumerable_toAsyncEnumerable from './Enumerable/__internal__/Enumerable.toAsyncEnumerable.mjs';
 
 const fromArray = ReadonlyArray_toAsyncEnumerable;
 /**

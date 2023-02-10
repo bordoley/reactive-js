@@ -1,7 +1,7 @@
 /// <reference types="./Sink.d.ts" />
-import Sink_notify from './__internal__/Sink/Sink.notify.mjs';
-import Sink_notifySink from './__internal__/Sink/Sink.notifySink.mjs';
-import Sink_sourceFrom from './__internal__/Sink/Sink.sourceFrom.mjs';
+import Sink_notify from './Sink/__internal__/Sink.notify.mjs';
+import Sink_notifySink from './Sink/__internal__/Sink.notifySink.mjs';
+import Sink_sourceFrom from './Sink/__internal__/Sink.sourceFrom.mjs';
 
 const notify = Sink_notify;
 const notifySink = Sink_notifySink;

@@ -1,6 +1,6 @@
 import { PauseableLike_pause, PauseableLike_resume } from "../util";
-import Pauseable_pause from "./__internal__/Pauseable/Pauseable.pause";
-import Pauseable_resume from "./__internal__/Pauseable/Pauseable.resume";
+import Pauseable_pause from "./Pauseable/__internal__/Pauseable.pause";
+import Pauseable_resume from "./Pauseable/__internal__/Pauseable.resume";
 
 export const pause: <TPauseable extends { [PauseableLike_pause](): void }>(
   pausable: TPauseable,

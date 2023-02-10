@@ -1,7 +1,7 @@
 /// <reference types="./Pauseable.d.ts" />
 import '../util.mjs';
-import Pauseable_pause from './__internal__/Pauseable/Pauseable.pause.mjs';
-import Pauseable_resume from './__internal__/Pauseable/Pauseable.resume.mjs';
+import Pauseable_pause from './Pauseable/__internal__/Pauseable.pause.mjs';
+import Pauseable_resume from './Pauseable/__internal__/Pauseable.resume.mjs';
 
 const pause = Pauseable_pause;
 const resume = Pauseable_resume;

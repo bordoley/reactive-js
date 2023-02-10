@@ -21,16 +21,16 @@ import {
   pipe,
 } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
-import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
-import Observable_forEach from "../Observable/Observable.forEach";
-import Observable_subscribe from "../Observable/Observable.subscribe";
-import Observer_getScheduler from "../Observer/Observer.getScheduler";
-import Observer_mixin from "../Observer/Observer.mixin";
-import Sink_notifySink from "../Sink/Sink.notifySink";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
+import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
+import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
+import Sink_notifySink from "../../Sink/__internal__/Sink.notifySink";
 
 const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
   lift: <T>(

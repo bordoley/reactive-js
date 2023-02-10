@@ -4,8 +4,8 @@ import { pipe, none, unsafeCast, returns } from '../../../functions.mjs';
 import { SourceLike_move } from '../../../ix.mjs';
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable } from '../../../rx.mjs';
 import { DispatcherLike_dispatch, DispatcherLike_scheduler } from '../../../scheduling.mjs';
-import Dispatcher_dispatch from '../../../scheduling/__internal__/Dispatcher/Dispatcher.dispatch.mjs';
-import Dispatcher_getScheduler from '../../../scheduling/__internal__/Dispatcher/Dispatcher.getScheduler.mjs';
+import Dispatcher_dispatch from '../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.mjs';
+import Dispatcher_getScheduler from '../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.mjs';
 
 const DelegatingAsyncEnumerator_mixin = /*@__PURE__*/ (() => {
     return pipe(mix(include(delegatingMixin()), function DelegatingAsyncEnumeratorMixin(instance, delegate) {

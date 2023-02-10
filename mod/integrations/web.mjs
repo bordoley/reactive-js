@@ -13,9 +13,9 @@ import { DispatcherLike_scheduler, DispatcherLike_dispatch } from '../scheduling
 import { dispatch, getScheduler, dispatchTo } from '../scheduling/Dispatcher.mjs';
 import '../streaming.mjs';
 import { createActionReducer, stream } from '../streaming/Streamable.mjs';
-import Streamable_create from '../streaming/__internal__/Streamable/Streamable.create.mjs';
+import Streamable_create from '../streaming/Streamable/__internal__/Streamable.create.mjs';
 import { onDisposed, toAbortSignal, dispose, addTo } from '../util/Disposable.mjs';
-import Disposable_delegatingMixin from '../util/__internal__/Disposable/Disposable.delegatingMixin.mjs';
+import Disposable_delegatingMixin from '../util/Disposable/__internal__/Disposable.delegatingMixin.mjs';
 
 /** @ignore */
 const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");

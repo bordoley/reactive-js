@@ -1,7 +1,7 @@
 import { InteractiveContainerLike } from "../ix";
 import { DisposableLike } from "../util";
 
-import InteractiveContainer_interact from "./__internal__/InteractiveContainer/InteractiveContainer.interact";
+import InteractiveContainer_interact from "./InteractiveContainer/__internal__/InteractiveContainer.interact";
 
 export const interact: <
   C extends InteractiveContainerLike<TSource, TCtx>,

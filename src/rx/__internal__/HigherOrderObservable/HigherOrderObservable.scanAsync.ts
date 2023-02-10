@@ -6,16 +6,16 @@ import {
   ObserverLike,
   ScanAsync,
 } from "../../../rx";
-import Disposable_addTo from "../../../util/__internal__/Disposable/Disposable.addTo";
-import Observable_forEach from "../Observable/Observable.forEach";
-import Observable_onSubscribe from "../Observable/Observable.onSubscribe";
-import Observable_switchAll from "../Observable/Observable.switchAll";
-import Observable_takeFirst from "../Observable/Observable.takeFirst";
-import Observable_zipWithLatestFrom from "../Observable/Observable.zipWithLatestFrom";
-import ReactiveContainer_sinkInto from "../ReactiveContainer/ReactiveContainer.sinkInto";
-import Subject_create from "../Subject/Subject.create";
-import Subject_publish from "../Subject/Subject.publish";
-import Subject_publishTo from "../Subject/Subject.publishTo";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
+import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
+import Observable_onSubscribe from "../../Observable/__internal__/Observable.onSubscribe";
+import Observable_switchAll from "../../Observable/__internal__/Observable.switchAll";
+import Observable_takeFirst from "../../Observable/__internal__/Observable.takeFirst";
+import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom";
+import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
+import Subject_create from "../../Subject/__internal__/Subject.create";
+import Subject_publish from "../../Subject/__internal__/Subject.publish";
+import Subject_publishTo from "../../Subject/__internal__/Subject.publishTo";
 
 const HigherOrderObservable_scanAsync = <
   C extends ObservableLike,

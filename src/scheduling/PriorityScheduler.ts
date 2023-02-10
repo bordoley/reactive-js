@@ -1,4 +1,4 @@
-import PriorityScheduler_toScheduler from "./__internal__/PriorityScheduler/PriorityScheduler.toScheduler";
+import PriorityScheduler_toScheduler from "./PriorityScheduler/__internal__/PriorityScheduler.toScheduler";
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.

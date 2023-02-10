@@ -8,7 +8,7 @@ import { toScheduler } from '../scheduling/PriorityScheduler.mjs';
 import { isInContinuation } from '../scheduling/Scheduler.mjs';
 import { getDelay } from '../scheduling/__internal__/Scheduler.options.mjs';
 import { addIgnoringChildErrors, isDisposed, dispose, create, onDisposed, addTo } from '../util/Disposable.mjs';
-import Disposable_mixin from '../util/__internal__/Disposable/Disposable.mixin.mjs';
+import Disposable_mixin from '../util/Disposable/__internal__/Disposable.mixin.mjs';
 
 const createPriorityScheduler = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_mixin), function ReactPriorityScheduler(instance) {

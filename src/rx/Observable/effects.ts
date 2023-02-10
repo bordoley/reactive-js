@@ -23,21 +23,21 @@ import {
 import { ObservableLike } from "../../rx";
 import { SchedulerLike } from "../../scheduling";
 import { StreamLike, StreamableLike } from "../../streaming";
-import Streamable_createStateStore from "../../streaming/__internal__/Streamable/Streamable.createStateStore";
-import Streamable_stream from "../../streaming/__internal__/Streamable/Streamable.stream";
+import Streamable_createStateStore from "../../streaming/Streamable/__internal__/Streamable.createStateStore";
+import Streamable_stream from "../../streaming/Streamable/__internal__/Streamable.stream";
 import { DisposableLike } from "../../util";
-import Disposable_dispose from "../../util/__internal__/Disposable/Disposable.dispose";
+import Disposable_dispose from "../../util/Disposable/__internal__/Disposable.dispose";
 import {
   AsyncContext_awaitOrObserve,
   AsyncContext_memoOrUse,
   AsyncContext_observer,
   assertCurrentContext,
-} from "../__internal__/Observable/Observable.async";
-import Observable_create from "../__internal__/Observable/Observable.create";
-import Observable_subscribe from "../__internal__/Observable/Observable.subscribe";
-import Observer_getScheduler from "../__internal__/Observer/Observer.getScheduler";
-import Observer_schedule from "../__internal__/Observer/Observer.schedule";
-import Sink_notify from "../__internal__/Sink/Sink.notify";
+} from "../Observable/__internal__/Observable.async";
+import Observable_create from "../Observable/__internal__/Observable.create";
+import Observable_subscribe from "../Observable/__internal__/Observable.subscribe";
+import Observer_getScheduler from "../Observer/__internal__/Observer.getScheduler";
+import Observer_schedule from "../Observer/__internal__/Observer.schedule";
+import Sink_notify from "../Sink/__internal__/Sink.notify";
 
 interface __Memo {
   <T>(fn: Factory<T>): T;

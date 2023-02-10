@@ -8,10 +8,10 @@ import { getScheduler, getDispatcher } from '../rx/Observer.mjs';
 import { sinkInto } from '../rx/ReactiveContainer.mjs';
 import { dispatch, dispatchTo, getScheduler as getScheduler$1 } from '../scheduling/Dispatcher.mjs';
 import { FlowMode_resume, FlowMode_pause } from '../streaming.mjs';
+import Flowable_createLifted from '../streaming/Flowable/__internal__/Flowable.createLifted.mjs';
 import { sourceFrom } from '../streaming/Stream.mjs';
 import { stream } from '../streaming/Streamable.mjs';
-import Flowable_createLifted from '../streaming/__internal__/Flowable/Flowable.createLifted.mjs';
-import Streamable_createLifted from '../streaming/__internal__/Streamable/Streamable.createLifted.mjs';
+import Streamable_createLifted from '../streaming/Streamable/__internal__/Streamable.createLifted.mjs';
 import { dispose, toErrorHandler, onError, onDisposed, onComplete } from '../util/Disposable.mjs';
 
 const bindNodeCallback = (callback) => function (...args) {

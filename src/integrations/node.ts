@@ -50,10 +50,10 @@ import {
   FlowableLike,
   StreamableLike,
 } from "../streaming";
+import Flowable_createLifted from "../streaming/Flowable/__internal__/Flowable.createLifted";
 import { sourceFrom } from "../streaming/Stream";
 import { stream } from "../streaming/Streamable";
-import Flowable_createLifted from "../streaming/__internal__/Flowable/Flowable.createLifted";
-import Streamable_createLifted from "../streaming/__internal__/Streamable/Streamable.createLifted";
+import Streamable_createLifted from "../streaming/Streamable/__internal__/Streamable.createLifted";
 import { DisposableLike } from "../util";
 import {
   dispose,

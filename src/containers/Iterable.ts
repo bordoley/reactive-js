@@ -7,10 +7,10 @@ import {
   ToRunnableObservable,
 } from "../rx";
 
-import Iterable_toAsyncEnumerable from "./__internal__/Iterable/Iterable.toAsyncEnumerable";
-import Iterable_toEnumerable from "./__internal__/Iterable/Iterable.toEnumerable";
-import Iterable_toEnumerableObservable from "./__internal__/Iterable/Iterable.toEnumerableObservable";
-import Iterable_toRunnableObservable from "./__internal__/Iterable/Iterable.toRunnableObservable";
+import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsyncEnumerable";
+import Iterable_toEnumerable from "./Iterable/__internal__/Iterable.toEnumerable";
+import Iterable_toEnumerableObservable from "./Iterable/__internal__/Iterable.toEnumerableObservable";
+import Iterable_toRunnableObservable from "./Iterable/__internal__/Iterable.toRunnableObservable";
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *

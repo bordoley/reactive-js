@@ -2,7 +2,7 @@
 import { mix, props } from '../../../__internal__/mixins.mjs';
 import { pipe, none, unsafeCast, raiseWithDebugMessage, returns } from '../../../functions.mjs';
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent } from '../../../ix.mjs';
-import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
+import Disposable_isDisposed from '../../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
 
 const MutableEnumerator_mixin = 
 /*@__PURE__*/ (() => {

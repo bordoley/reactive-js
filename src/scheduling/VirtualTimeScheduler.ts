@@ -1,4 +1,4 @@
-import VirtualTimeScheduler_create from "./__internal__/VirtualTimeScheduler/VirtualTimeScheduler.create";
+import VirtualTimeScheduler_create from "./VirtualTimeScheduler/__internal__/VirtualTimeScheduler.create";
 
 export const create = VirtualTimeScheduler_create;
 

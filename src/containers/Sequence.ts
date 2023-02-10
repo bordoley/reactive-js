@@ -17,25 +17,25 @@ import {
 } from "../containers";
 import { ToEnumerable } from "../ix";
 import { ToRunnable } from "../rx";
-import Sequence_concat from "./__internal__/Sequence/Sequence.concat";
-import Sequence_concatAll from "./__internal__/Sequence/Sequence.concatAll";
-import Sequence_distinctUntilChanged from "./__internal__/Sequence/Sequence.distinctUntilChanged";
-import Sequence_fromArray from "./__internal__/Sequence/Sequence.fromArray";
-import Sequence_generate from "./__internal__/Sequence/Sequence.generate";
-import Sequence_keep from "./__internal__/Sequence/Sequence.keep";
-import Sequence_map from "./__internal__/Sequence/Sequence.map";
-import Sequence_pairwise from "./__internal__/Sequence/Sequence.pairwise";
-import Sequence_repeat from "./__internal__/Sequence/Sequence.repeat";
-import Sequence_scan from "./__internal__/Sequence/Sequence.scan";
-import Sequence_seek from "./__internal__/Sequence/Sequence.seek";
-import Sequence_skipFirst from "./__internal__/Sequence/Sequence.skipFirst";
-import Sequence_takeFirst from "./__internal__/Sequence/Sequence.takeFirst";
-import Sequence_takeLast from "./__internal__/Sequence/Sequence.takeLast";
-import Sequence_takeWhile from "./__internal__/Sequence/Sequence.takeWhile";
-import Sequence_toEnumerable from "./__internal__/Sequence/Sequence.toEnumerable";
-import Sequence_toReadonlyArray from "./__internal__/Sequence/Sequence.toReadonlyArray";
-import Sequence_toRunnable from "./__internal__/Sequence/Sequence.toRunnable";
-import Sequence_zip from "./__internal__/Sequence/Sequence.zip";
+import Sequence_concat from "./Sequence/__internal__/Sequence.concat";
+import Sequence_concatAll from "./Sequence/__internal__/Sequence.concatAll";
+import Sequence_distinctUntilChanged from "./Sequence/__internal__/Sequence.distinctUntilChanged";
+import Sequence_fromArray from "./Sequence/__internal__/Sequence.fromArray";
+import Sequence_generate from "./Sequence/__internal__/Sequence.generate";
+import Sequence_keep from "./Sequence/__internal__/Sequence.keep";
+import Sequence_map from "./Sequence/__internal__/Sequence.map";
+import Sequence_pairwise from "./Sequence/__internal__/Sequence.pairwise";
+import Sequence_repeat from "./Sequence/__internal__/Sequence.repeat";
+import Sequence_scan from "./Sequence/__internal__/Sequence.scan";
+import Sequence_seek from "./Sequence/__internal__/Sequence.seek";
+import Sequence_skipFirst from "./Sequence/__internal__/Sequence.skipFirst";
+import Sequence_takeFirst from "./Sequence/__internal__/Sequence.takeFirst";
+import Sequence_takeLast from "./Sequence/__internal__/Sequence.takeLast";
+import Sequence_takeWhile from "./Sequence/__internal__/Sequence.takeWhile";
+import Sequence_toEnumerable from "./Sequence/__internal__/Sequence.toEnumerable";
+import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray";
+import Sequence_toRunnable from "./Sequence/__internal__/Sequence.toRunnable";
+import Sequence_zip from "./Sequence/__internal__/Sequence.zip";
 
 export const concat: <T>(
   fst: SequenceLike<T>,

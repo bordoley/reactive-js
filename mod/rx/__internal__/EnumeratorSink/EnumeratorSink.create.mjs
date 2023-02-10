@@ -3,9 +3,9 @@ import { createInstanceFactory, mix, include, init, props } from '../../../__int
 import { pipe, none, getLength } from '../../../functions.mjs';
 import { EnumeratorLike_hasCurrent, EnumeratorLike_current, SourceLike_move } from '../../../ix.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
-import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
-import Disposable_onDisposed from '../../../util/__internal__/Disposable/Disposable.onDisposed.mjs';
+import Disposable_isDisposed from '../../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
+import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.mixin.mjs';
+import Disposable_onDisposed from '../../../util/Disposable/__internal__/Disposable.onDisposed.mjs';
 
 const EnumeratorSink_buffer = Symbol("EnumeratorSink_buffer");
 const EnumeratorSink_create = (() => {
