@@ -16,7 +16,8 @@ import Observable_isRunnable from './Observable.isRunnable.mjs';
 import Observable_lift from './Observable.lift.mjs';
 import Observable_subscribe from './Observable.subscribe.mjs';
 
-const Observable_zipWithLatestFrom = /*@__PURE__*/ (() => {
+const Observable_zipWithLatestFrom = 
+/*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
         const typedObserverMixin = Observer_mixin();
         const ZipWithLatestFromObserver_hasLatest = Symbol("ZipWithLatestFromObserver_hasLatest");

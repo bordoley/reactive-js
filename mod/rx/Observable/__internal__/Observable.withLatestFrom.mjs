@@ -15,7 +15,8 @@ import Observable_isRunnable from './Observable.isRunnable.mjs';
 import Observable_lift from './Observable.lift.mjs';
 import Observable_subscribe from './Observable.subscribe.mjs';
 
-const Observable_withLatestFrom = /*@__PURE__*/ (() => {
+const Observable_withLatestFrom = 
+/*@__PURE__*/ (() => {
     const createWithLatestObserver = (() => {
         const typedObserverMixin = Observer_mixin();
         const WithLatestFromObserver_hasLatest = Symbol("WithLatestFromObserver_hasLatest");

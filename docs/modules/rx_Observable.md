@@ -1547,9 +1547,6 @@ ___
 
 ▸ **retry**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
-Returns an `ObservableLike` that mirrors the source, re-subscribing
-if the source completes with an error.
-
 #### Type parameters
 
 | Name |
@@ -1560,16 +1557,13 @@ if the source completes with an error.
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **retry**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-Returns an `ObservableLike` that mirrors the source, resubscrbing
-if the source completes with an error which satisfies the predicate function.
+▸ **retry**<`T_1`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T_1`, `T_1`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `T` |
+| `T_1` |
 
 #### Parameters
 
@@ -1579,7 +1573,7 @@ if the source completes with an error which satisfies the predicate function.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T_1`, `T_1`\>
 
 ___
 
@@ -1833,7 +1827,7 @@ ___
 
 ### takeUntil
 
-▸ **takeUntil**<`T`\>(`notifier`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **takeUntil**<`T`\>(`notifier`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1849,7 +1843,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -1952,27 +1946,6 @@ ___
 
 ▸ **timeout**<`T`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
-Returns an `ObservableLike` that completes with an error if the source
-does not emit a value in given time span.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `duration` | `number` | Time in ms within which the source must emit values. |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-▸ **timeout**<`T`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
 #### Type parameters
 
 | Name |
@@ -1983,11 +1956,29 @@ does not emit a value in given time span.
 
 | Name | Type |
 | :------ | :------ |
-| `duration` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\> |
+| `duration` | `number` |
 
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **timeout**<`T_1`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T_1`, `T_1`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `duration` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T_1`, `T_1`\>
 
 ___
 
@@ -2284,9 +2275,6 @@ ___
 
 ▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
-Returns an `ObservableLike` that zips the latest values from
-multiple sources.
-
 #### Type parameters
 
 | Name |
@@ -2306,9 +2294,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
 ▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
-
-Returns an `ObservableLike` that zips the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -2331,9 +2316,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 ▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
-
-Returns an `ObservableLike` that zips the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -2358,9 +2340,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 ▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
-
-Returns an `ObservableLike` that zips the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -2387,9 +2366,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 ▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
-
-Returns an `ObservableLike` that zips the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -2418,9 +2394,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 ▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
-
-Returns an `ObservableLike` that zips the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -2451,9 +2424,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 ▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
-
-Returns an `ObservableLike` that zips the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -2486,9 +2456,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 ▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
-
-Returns an `ObservableLike` that zips the latest values from
-multiple sources.
 
 #### Type parameters
 

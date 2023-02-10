@@ -21,11 +21,16 @@
 - [AsyncReducer](rx.md#asyncreducer)
 - [FromEnumerableObservable](rx.md#fromenumerableobservable)
 - [FromObservable](rx.md#fromobservable)
+- [Retry](rx.md#retry)
 - [ScanAsync](rx.md#scanasync)
+- [TakeUntil](rx.md#takeuntil)
+- [Timeout](rx.md#timeout)
 - [ToEnumerableObservable](rx.md#toenumerableobservable)
 - [ToObservable](rx.md#toobservable)
 - [ToRunnable](rx.md#torunnable)
 - [ToRunnableObservable](rx.md#torunnableobservable)
+- [WithLatestFrom](rx.md#withlatestfrom)
+- [ZipWithLatestFrom](rx.md#zipwithlatestfrom)
 
 ## Type Aliases
 
@@ -67,6 +72,24 @@ ___
 
 ___
 
+### Retry
+
+Ƭ **Retry**<`C`\>: `Object`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `retry` | <T\>() => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`predicate`: [`Function2`](functions.md#function2)<`number`, `unknown`, `boolean`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\> |
+
+___
+
 ### ScanAsync
 
 Ƭ **ScanAsync**<`C`, `CInner`\>: [`Container`](containers.md#container)<`C`\> & { `scanAsync`: <T, TAcc\>(`scanner`: [`AsyncReducer`](rx.md#asyncreducer)<`CInner`, `T`, `TAcc`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TAcc`\>  }
@@ -77,6 +100,42 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `CInner` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
+
+___
+
+### TakeUntil
+
+Ƭ **TakeUntil**<`C`\>: `Object`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `takeUntil` | <T\>(`notifier`: `C`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\> |
+
+___
+
+### Timeout
+
+Ƭ **Timeout**<`C`\>: `Object`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `timeout` | <T\>(`duration`: `number`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`duration`: `C`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\> |
 
 ___
 
@@ -129,3 +188,39 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `O` | `never` |
+
+___
+
+### WithLatestFrom
+
+Ƭ **WithLatestFrom**<`C`\>: `Object`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `withLatestFrom` | <TA, TB, T\>(`other`: [`ContainerOf`](containers.md#containerof)<`C`, `TB`\>, `selector`: [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `T`\> |
+
+___
+
+### ZipWithLatestFrom
+
+Ƭ **ZipWithLatestFrom**<`C`\>: `Object`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `zipWithLatestFrom` | <TA, TB, T\>(`other`: [`ContainerOf`](containers.md#containerof)<`C`, `TB`\>, `selector`: [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `T`\> |

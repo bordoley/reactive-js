@@ -80,8 +80,39 @@ type FromEnumerableObservable<C extends ContainerLike> = Container<C> & {
 type FromObservable<C extends ContainerLike> = Container<C> & {
     fromObservable: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, ContainerOf<C, T>>;
 };
+type Retry<C extends ObservableLike> = {
+    /**
+     * Returns an `ObservableLike` that mirrors the source, re-subscribing
+     * if the source completes with an error.
+     */
+    retry<T>(): ContainerOperator<C, T, T>;
+    /**
+     * Returns an `ObservableLike` that mirrors the source, resubscrbing
+     * if the source completes with an error which satisfies the predicate function.
+     *
+     * @param predicate
+     */
+    retry<T>(predicate: Function2<number, unknown, boolean>): ContainerOperator<C, T, T>;
+};
 type ScanAsync<C extends ContainerLike, CInner extends ObservableLike> = Container<C> & {
     scanAsync: <T, TAcc>(scanner: AsyncReducer<CInner, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
+};
+type TakeUntil<C extends ObservableLike> = {
+    takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
+};
+type Timeout<C extends ObservableLike> = {
+    /**
+     * Returns an `ObservableLike` that completes with an error if the source
+     * does not emit a value in given time span.
+     *
+     * @param duration Time in ms within which the source must emit values.
+     */
+    timeout<T>(duration: number): ContainerOperator<C, T, T>;
+    /**
+     *
+     * @param duration
+     */
+    timeout<T>(duration: C): ContainerOperator<C, T, T>;
 };
 type ToObservable<C extends ContainerLike, O = never> = Container<C> & {
     toObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
@@ -95,4 +126,10 @@ type ToEnumerableObservable<C extends ContainerLike, O = never> = Container<C> &
 type ToRunnable<C extends ContainerLike, O = never> = Container<C> & {
     toRunnable<T>(options?: O): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 };
-export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable };
+type WithLatestFrom<C extends ObservableLike> = {
+    withLatestFrom<TA, TB, T>(other: ContainerOf<C, TB>, selector: Function2<TA, TB, T>): ContainerOperator<C, TA, T>;
+};
+type ZipWithLatestFrom<C extends ObservableLike> = {
+    zipWithLatestFrom<TA, TB, T>(other: ContainerOf<C, TB>, selector: Function2<TA, TB, T>): ContainerOperator<C, TA, T>;
+};
+export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, Retry, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, TakeUntil, Timeout, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, WithLatestFrom, ZipWithLatestFrom };

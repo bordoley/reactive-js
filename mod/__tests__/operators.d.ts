@@ -1,4 +1,4 @@
-import { ObservableLike, AsyncReducer } from "../rx.js";
+import { ObservableLike, Retry, AsyncReducer } from "../rx.js";
 import { Describe } from "./testing.js";
 import { Function1, Factory, Equality, Predicate, SideEffect1, Reducer } from "../functions.js";
 import { ContainerLike, Container, ContainerOperator, ContainerOf, ReadonlyArrayLike, FromArray } from "../containers.js";
@@ -224,6 +224,22 @@ declare const repeatTests: <C extends ContainerLike>(m: Container<C> & {
     } | undefined): ContainerOperator<C, T_4, T_4>;
 } & {
     toReadonlyArray<T_5>(options?: undefined): Function1<ContainerOf<C, T_5>, ReadonlyArrayLike<T_5>>;
+}) => Describe;
+declare const retryTests: <C extends ObservableLike<unknown>>(m: Container<C> & {
+    concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
+} & Retry<C> & {
+    fromArray<T_1>(options?: {
+        readonly start?: number | undefined;
+        readonly count?: number | undefined;
+    } | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+} & {
+    map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
+} & {
+    takeFirst<T_2>(options?: {
+        readonly count?: number | undefined;
+    } | undefined): ContainerOperator<C, T_2, T_2>;
+} & {
+    toReadonlyArray<T_3>(options?: undefined): Function1<ContainerOf<C, T_3>, ReadonlyArrayLike<T_3>>;
 }) => Describe;
 declare const scanTests: <C extends ContainerLike>(m: Container<C> & {
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<C, T, TAcc>;
@@ -466,4 +482,4 @@ declare const zipWithTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
-export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromArrayTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests, zipWithTests };
+export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromArrayTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, retryTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests, zipWithTests };

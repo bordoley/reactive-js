@@ -1,6 +1,6 @@
 /// <reference types="./AsyncEnumerable.create.d.ts" />
 import { createInstanceFactory, mix, props } from '../../../__internal__/mixins.mjs';
-import { none, pipe, getLength, compose } from '../../../functions.mjs';
+import { none, pipe, getLength, composeUnsafe } from '../../../functions.mjs';
 import { InteractiveContainerLike_interact } from '../../../ix.mjs';
 import { StreamableLike_stream } from '../../../streaming.mjs';
 import Streamable_stream from '../../../streaming/Streamable/__internal__/Streamable.stream.mjs';
@@ -22,7 +22,9 @@ const AsyncEnumerable_create = /*@__PURE__*/ (() => {
         },
     }));
     return (...ops) => {
-        const op = getLength(ops) > 1 ? compose(...ops) : ops[0];
+        const op = getLength(ops) > 1
+            ? composeUnsafe(...ops)
+            : ops[0];
         return factory(op);
     };
 })();

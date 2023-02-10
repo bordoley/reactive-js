@@ -25,6 +25,7 @@
 - [mergeAll](rx_EnumerableObservable.md#mergeall)
 - [pairwise](rx_EnumerableObservable.md#pairwise)
 - [reduce](rx_EnumerableObservable.md#reduce)
+- [retry](rx_EnumerableObservable.md#retry)
 - [scan](rx_EnumerableObservable.md#scan)
 - [scanAsync](rx_EnumerableObservable.md#scanasync)
 - [skipFirst](rx_EnumerableObservable.md#skipfirst)
@@ -463,6 +464,46 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns an `ObservableLike` that mirrors the source, re-subscribing
+if the source completes with an error.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **retry**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns an `ObservableLike` that mirrors the source, resubscrbing
+if the source completes with an error which satisfies the predicate function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](functions.md#function2)<`number`, `unknown`, `boolean`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

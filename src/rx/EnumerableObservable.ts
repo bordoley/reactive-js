@@ -29,7 +29,7 @@ import {
 } from "../containers";
 import { Factory } from "../functions";
 import { ToEnumerable } from "../ix";
-import { EnumerableObservableLike, ScanAsync, ToRunnable } from "../rx";
+import { EnumerableObservableLike, Retry, ScanAsync, ToRunnable } from "../rx";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError";
@@ -52,6 +52,7 @@ import Observable_map from "./Observable/__internal__/Observable.map";
 import Observable_merge from "./Observable/__internal__/Observable.merge";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce";
+import Observable_retry from "./Observable/__internal__/Observable.retry";
 import Observable_scan from "./Observable/__internal__/Observable.scan";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy";
@@ -139,6 +140,9 @@ export const pairwise =
 export const reduce =
   Observable_reduce as Reduce<EnumerableObservableLike>["reduce"];
 
+export const retry: Retry<EnumerableObservableLike>["retry"] =
+  Observable_retry as Retry<EnumerableObservableLike>["retry"];
+
 export const scan = Observable_scan as Scan<EnumerableObservableLike>["scan"];
 
 export const scanAsync: ScanAsync<
@@ -211,6 +215,7 @@ const EnumerableObservable = {
   merge,
   pairwise,
   reduce,
+  retry,
   scan,
   scanAsync,
   skipFirst,

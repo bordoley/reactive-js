@@ -1,7 +1,7 @@
 /// <reference types="./operators.d.ts" />
 import Container from '../containers/Container.mjs';
 import ReadonlyArray from '../containers/ReadonlyArray.mjs';
-import { pipeLazy, arrayEquality, pipe, alwaysFalse, alwaysTrue, none, increment, returns, sum } from '../functions.mjs';
+import { pipeLazy, arrayEquality, pipe, alwaysFalse, alwaysTrue, none, increment, returns, raise, sum } from '../functions.mjs';
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from './testing.mjs';
 
 const bufferTests = (m) => createDescribe("buffer", createTest("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray(), m.buffer({ maxBufferSize: 3 }), m.toReadonlyArray(), expectArrayEquals([
@@ -103,6 +103,7 @@ const repeatTests = (m) => createDescribe("repeat", createTest("when always repe
         throw err;
     }), m.toReadonlyArray()), expectToThrowError(err));
 }));
+const retryTests = (m) => createDescribe("retry", createTest("retrys the container on an exception", pipeLazy(m.concat(pipe([1, 2, 3], m.fromArray()), pipe(raise, Container.throws(m))), m.retry(), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
 const scanTests = (m) => createDescribe("scan", createTest("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromArray(), m.scan(sum, returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), createTest("throws when the scan function throws", () => {
     const err = new Error();
     const scanner = (_acc, _next) => {
@@ -159,4 +160,4 @@ const zipWithTests = (m) => createDescribe("zipWith", createTest("when inputs ar
     [3, 3],
 ], arrayEquality()))));
 
-export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromArrayTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests, zipWithTests };
+export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromArrayTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, retryTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests, zipWithTests };

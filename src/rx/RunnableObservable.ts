@@ -4,6 +4,7 @@ import {
   CatchError,
   Concat,
   ConcatAll,
+  ContainerOperator,
   DecodeWithCharset,
   Defer,
   DistinctUntilChanged,
@@ -26,7 +27,15 @@ import {
   ToPromiseable,
   Zip,
 } from "../containers";
-import { RunnableObservableLike, ScanAsync } from "../rx";
+import {
+  Retry,
+  RunnableObservableLike,
+  ScanAsync,
+  TakeUntil,
+  Timeout,
+  WithLatestFrom,
+  ZipWithLatestFrom,
+} from "../rx";
 import { SchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer";
@@ -44,16 +53,23 @@ import Observable_map from "./Observable/__internal__/Observable.map";
 import Observable_merge from "./Observable/__internal__/Observable.merge";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce";
+import Observable_retry from "./Observable/__internal__/Observable.retry";
 import Observable_scan from "./Observable/__internal__/Observable.scan";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast";
+import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile";
+import Observable_throttle from "./Observable/__internal__/Observable.throttle";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty";
+import Observable_timeout from "./Observable/__internal__/Observable.timeout";
 import Observable_toFlowable from "./Observable/__internal__/Observable.toFlowable";
 import Observable_toPromise from "./Observable/__internal__/Observable.toPromise";
+import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom";
 import Observable_zip from "./Observable/__internal__/Observable.zip";
+import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest";
+import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom";
 import RunnableObservable_catchError from "./RunnableObservable/__internal__/RunnableObservable.catchError";
 import RunnableObservable_defer from "./RunnableObservable/__internal__/RunnableObservable.defer";
 import RunnableObservable_mergeAll from "./RunnableObservable/__internal__/RunnableObservable.mergeAll";
@@ -146,6 +162,9 @@ export const pairwise =
 export const reduce =
   Observable_reduce as Reduce<RunnableObservableLike>["reduce"];
 
+export const retry: Retry<RunnableObservableLike>["retry"] =
+  Observable_retry as Retry<RunnableObservableLike>["retry"];
+
 export const scan = Observable_scan as Scan<RunnableObservableLike>["scan"];
 
 export const scanAsync: ScanAsync<
@@ -168,11 +187,24 @@ export const takeFirst =
 export const takeLast =
   Observable_takeLast as TakeLast<RunnableObservableLike>["takeLast"];
 
+export const takeUntil =
+  Observable_takeUntil as TakeUntil<RunnableObservableLike>["takeUntil"];
+
 export const takeWhile =
   Observable_takeWhile as TakeWhile<RunnableObservableLike>["takeWhile"];
 
+// FIXME: We could support duration: Function1<T, ObservableLike> version as well,
+// but that will require additional rework.
+export const throttle = Observable_throttle as <T>(
+  duration: number,
+  options?: { readonly mode?: "first" | "last" | "interval" },
+) => ContainerOperator<RunnableObservableLike, T, T>;
+
 export const throwIfEmpty =
   Observable_throwIfEmpty as ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"];
+
+export const timeout =
+  Observable_timeout as Timeout<RunnableObservableLike>["timeout"];
 
 export const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
   Observable_toFlowable;
@@ -186,7 +218,16 @@ export const toReadonlyArray = RunnableObservable_toReadonlyArray;
 
 export const toRunnable = RunnableObservable_toRunnable;
 
+export const withLatestFrom =
+  Observable_withLatestFrom as WithLatestFrom<RunnableObservableLike>["withLatestFrom"];
+
 export const zip = Observable_zip as Zip<RunnableObservableLike>["zip"];
+
+export const zipLatest =
+  Observable_zipLatest as Zip<RunnableObservableLike>["zip"];
+
+export const zipWithLatestFrom =
+  Observable_zipWithLatestFrom as ZipWithLatestFrom<RunnableObservableLike>["zipWithLatestFrom"];
 
 /** @ignore */
 const RunnableObservable = {
@@ -209,6 +250,7 @@ const RunnableObservable = {
   merge,
   pairwise,
   reduce,
+  retry,
   scan,
   scanAsync,
   skipFirst,
@@ -216,13 +258,19 @@ const RunnableObservable = {
   switchAll,
   takeFirst,
   takeLast,
+  takeUntil,
   takeWhile,
+  throttle,
   throwIfEmpty,
+  timeout,
   toFlowable,
   toPromise,
   toReadonlyArray,
   toRunnable,
+  withLatestFrom,
   zip,
+  zipLatest,
+  zipWithLatestFrom,
 };
 
 export default RunnableObservable;

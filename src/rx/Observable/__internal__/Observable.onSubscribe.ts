@@ -6,8 +6,7 @@ import ReactiveContainer_onSink from "../../ReactiveContainer/__internal__/React
 
 const Observable_onSubscribe =
   <T>(f: Factory<DisposableOrTeardown | void>) =>
-  (obs: ObservableLike<T>): ObservableLike<T> => {
-    return ReactiveContainer_onSink(Observable_create, obs, f);
-  };
+  (obs: ObservableLike<T>): ObservableLike<T> =>
+    ReactiveContainer_onSink(Observable_create, obs, f);
 
 export default Observable_onSubscribe;
