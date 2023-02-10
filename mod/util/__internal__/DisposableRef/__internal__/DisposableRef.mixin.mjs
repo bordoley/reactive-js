@@ -1,9 +1,9 @@
 /// <reference types="./DisposableRef.mixin.d.ts" />
-import { mix, props } from '../../../__internal__/mixins.mjs';
-import { pipe, unsafeCast, none, returns } from '../../../functions.mjs';
-import Disposable_add from '../../Disposable/__internal__/Disposable.add.mjs';
-import Disposable_dispose from '../../Disposable/__internal__/Disposable.dispose.mjs';
-import { MutableRefLike_current } from '../../__internal__/util.internal.mjs';
+import { mix, props } from '../../../../__internal__/mixins.mjs';
+import { pipe, unsafeCast, none, returns } from '../../../../functions.mjs';
+import Disposable_add from '../../../Disposable/__internal__/Disposable.add.mjs';
+import Disposable_dispose from '../../../Disposable/__internal__/Disposable.dispose.mjs';
+import { MutableRefLike_current } from '../../util.internal.mjs';
 
 const DisposableRef_mixin = /*@__PURE__*/ (() => {
     const DisposableRefMixin_current = Symbol("DisposableRefMixin_current");

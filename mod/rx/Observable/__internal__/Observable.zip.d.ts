@@ -1,4 +1,7 @@
 import { Zip } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
+import { EnumeratorLike } from "../../../ix.js";
+import { SinkLike, ObservableLike } from "../../../rx.js";
+interface EnumeratorSinkLike<T> extends EnumeratorLike<T>, SinkLike<T> {
+}
 declare const Observable_zip: Zip<ObservableLike>["zip"];
-export { Observable_zip as default };
+export { EnumeratorSinkLike, Observable_zip as default };

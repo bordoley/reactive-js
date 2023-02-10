@@ -1,5 +1,5 @@
 /// <reference types="./MutableRef.set.d.ts" />
-import { MutableRefLike_current } from '../../__internal__/util.internal.mjs';
+import { MutableRefLike_current } from '../../util.internal.mjs';
 
 const MutableRef_set = (v) => (ref) => {
     ref[MutableRefLike_current] = v;

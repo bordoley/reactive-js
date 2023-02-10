@@ -13,7 +13,7 @@ import Disposable_addIgnoringChildErrors from '../../util/Disposable/__internal_
 import Disposable_disposed from '../../util/Disposable/__internal__/Disposable.disposed.mjs';
 import Disposable_isDisposed from '../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
 import Disposable_mixin from '../../util/Disposable/__internal__/Disposable.mixin.mjs';
-import DisposableRef_mixin from '../../util/DisposableRef/__internal__/DisposableRef.mixin.mjs';
+import DisposableRef_mixin from '../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin.mjs';
 import Queue_create from '../../util/__internal__/Queue/Queue.create.mjs';
 import Queue_peek from '../../util/__internal__/Queue/Queue.peek.mjs';
 import Queue_pop from '../../util/__internal__/Queue/Queue.pop.mjs';

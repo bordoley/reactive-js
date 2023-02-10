@@ -21,9 +21,9 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import DisposableRef_mixin from "../../../util/DisposableRef/__internal__/DisposableRef.mixin";
-import MutableRef_get from "../../../util/MutableRef/__internal__/MutableRef.get";
-import MutableRef_set from "../../../util/MutableRef/__internal__/MutableRef.set";
+import DisposableRef_mixin from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin";
+import MutableRef_get from "../../../util/__internal__/MutableRef/__internal__/MutableRef.get";
+import MutableRef_set from "../../../util/__internal__/MutableRef/__internal__/MutableRef.set";
 import { MutableRefLike } from "../../../util/__internal__/util.internal";
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent";
 import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move";

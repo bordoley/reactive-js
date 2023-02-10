@@ -3,10 +3,10 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { DisposableLike } from "../../../util";
-import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin";
-import { DisposableRefLike } from "../../__internal__/util.internal";
+} from "../../../../__internal__/mixins";
+import { DisposableLike } from "../../../../util";
+import Disposable_mixin from "../../../Disposable/__internal__/Disposable.mixin";
+import { DisposableRefLike } from "../../../__internal__/util.internal";
 import DisposableRef_mixin from "./DisposableRef.mixin";
 
 const DisposableRef_create: <TDisposable extends DisposableLike>(

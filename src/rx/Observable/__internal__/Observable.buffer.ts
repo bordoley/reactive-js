@@ -28,7 +28,7 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create";
+import DisposableRef_create from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create";
 import {
   DisposableRefLike,
   MutableRefLike_current,
