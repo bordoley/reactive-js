@@ -26,7 +26,6 @@ import Promiseable_toObservable from "../containers/Promiseable/__internal__/Pro
 import {
   Factory,
   Function1,
-  Function2,
   Predicate,
   SideEffect1,
   Updater,
@@ -355,15 +354,9 @@ export const toPromise: ToPromiseable<
 >["toPromise"] = Observable_toPromise;
 
 export const withLatestFrom = Observable_withLatestFrom;
-
-export const zip: Zip<ObservableLike>["zip"] = Observable_zip;
-
-export const zipLatest: Zip<ObservableLike>["zip"] = Observable_zipLatest;
-
-export const zipWithLatestFrom: <TA, TB, T>(
-  other: ObservableLike<TB>,
-  selector: Function2<TA, TB, T>,
-) => ContainerOperator<ObservableLike, TA, T> = Observable_zipWithLatestFrom;
+export const zip = Observable_zip;
+export const zipLatest = Observable_zipLatest;
+export const zipWithLatestFrom = Observable_zipWithLatestFrom;
 
 /** @ignore */
 const Observable = {

@@ -30,6 +30,7 @@
 - [ToRunnable](rx.md#torunnable)
 - [ToRunnableObservable](rx.md#torunnableobservable)
 - [WithLatestFrom](rx.md#withlatestfrom)
+- [ZipLatest](rx.md#ziplatest)
 - [ZipWithLatestFrom](rx.md#zipwithlatestfrom)
 
 ## Type Aliases
@@ -206,6 +207,24 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `withLatestFrom` | <TA, TB, T\>(`other`: [`ContainerOf`](containers.md#containerof)<`C`, `TB`\>, `selector`: [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `T`\> |
+
+___
+
+### ZipLatest
+
+Ƭ **ZipLatest**<`C`\>: `Object`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `zipLatest` | [`Zip`](containers.md#zip)<`C`\>[``"zip"``] |
 
 ___
 
