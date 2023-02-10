@@ -25,16 +25,14 @@ import {
   TakeWhile,
   ThrowIfEmpty,
   ToPromiseable,
-  ToReadonlyArray,
   Zip,
 } from "../containers";
-import { Factory } from "../functions";
-import { ToEnumerable } from "../ix";
-import { RunnableObservableLike, ScanAsync, ToRunnable } from "../rx";
-import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling";
+import { RunnableObservableLike, ScanAsync } from "../rx";
+import { SchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import EnumerableObservable_never from "./__internal__/EnumerableObservable/EnumerableObservable.never";
 import Observable_buffer from "./__internal__/Observable/Observable.buffer";
+import Observable_combineLatest from "./__internal__/Observable/Observable.combineLatest";
 import Observable_concat from "./__internal__/Observable/Observable.concat";
 import Observable_decodeWithCharset from "./__internal__/Observable/Observable.decodeWithCharset";
 import Observable_distinctUntilChanged from "./__internal__/Observable/Observable.distinctUntilChanged";
@@ -55,11 +53,8 @@ import Observable_takeFirst from "./__internal__/Observable/Observable.takeFirst
 import Observable_takeLast from "./__internal__/Observable/Observable.takeLast";
 import Observable_takeWhile from "./__internal__/Observable/Observable.takeWhile";
 import Observable_throwIfEmpty from "./__internal__/Observable/Observable.throwIfEmpty";
-import Observable_toEnumerable from "./__internal__/Observable/Observable.toEnumerable";
 import Observable_toFlowable from "./__internal__/Observable/Observable.toFlowable";
 import Observable_toPromise from "./__internal__/Observable/Observable.toPromise";
-import Observable_toReadonlyArray from "./__internal__/Observable/Observable.toReadonlyArray";
-import Observable_toRunnable from "./__internal__/Observable/Observable.toRunnable";
 import Observable_zip from "./__internal__/Observable/Observable.zip";
 import RunnableObservable_catchError from "./__internal__/RunnableObservable/RunnableObservable.catchError";
 import RunnableObservable_create from "./__internal__/RunnableObservable/RunnableObservable.create";
@@ -67,12 +62,17 @@ import RunnableObservable_defer from "./__internal__/RunnableObservable/Runnable
 import RunnableObservable_mergeAll from "./__internal__/RunnableObservable/RunnableObservable.mergeAll";
 import RunnableObservable_scanAsync from "./__internal__/RunnableObservable/RunnableObservable.scanAsync";
 import RunnableObservable_switchAll from "./__internal__/RunnableObservable/RunnableObservable.switchAll";
+import RunnableObservable_toReadonlyArray from "./__internal__/RunnableObservable/RunnableObservable.toReadonlyArray";
+import RunnableObservable_toRunnable from "./__internal__/RunnableObservable/RunnableObservable.toRunnable";
 
 export const buffer =
   Observable_buffer as Buffer<RunnableObservableLike>["buffer"];
 
 export const catchError: CatchError<RunnableObservableLike>["catchError"] =
   RunnableObservable_catchError;
+
+export const combineLatest: Zip<RunnableObservableLike>["zip"] =
+  Observable_combineLatest as Zip<RunnableObservableLike>["zip"];
 
 export const concat =
   Observable_concat as Concat<RunnableObservableLike>["concat"];
@@ -127,7 +127,7 @@ export const fromArray = Observable_fromArray as FromArray<
 
 export const generate = Observable_generate as Generate<
   RunnableObservableLike,
-  { readonly delay: number; readonly delayStart: boolean }
+  { readonly delay?: number; readonly delayStart?: boolean }
 >["generate"];
 
 export const keep = Observable_keep as Keep<RunnableObservableLike>["keep"];
@@ -182,9 +182,6 @@ export const takeWhile =
 export const throwIfEmpty =
   Observable_throwIfEmpty as ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"];
 
-export const toEnumerable: ToEnumerable<RunnableObservableLike>["toEnumerable"] =
-  Observable_toEnumerable;
-
 export const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
   Observable_toFlowable;
 
@@ -193,15 +190,9 @@ export const toPromise: ToPromiseable<
   SchedulerLike
 >["toPromise"] = Observable_toPromise;
 
-export const toReadonlyArray = Observable_toReadonlyArray as ToReadonlyArray<
-  RunnableObservableLike,
-  {
-    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-  }
->["toReadonlyArray"];
+export const toReadonlyArray = RunnableObservable_toReadonlyArray;
 
-export const toRunnable =
-  Observable_toRunnable as ToRunnable<RunnableObservableLike>["toRunnable"];
+export const toRunnable = RunnableObservable_toRunnable;
 
 export const zip = Observable_zip as Zip<RunnableObservableLike>["zip"];
 
@@ -209,6 +200,7 @@ export const zip = Observable_zip as Zip<RunnableObservableLike>["zip"];
 const RunnableObservable = {
   buffer,
   catchError,
+  combineLatest,
   concat,
   concatAll,
   decodeWithCharset,
@@ -235,7 +227,6 @@ const RunnableObservable = {
   takeLast,
   takeWhile,
   throwIfEmpty,
-  toEnumerable,
   toFlowable,
   toPromise,
   toReadonlyArray,

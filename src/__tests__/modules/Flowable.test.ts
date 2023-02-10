@@ -1,6 +1,7 @@
 import ReadonlyArray from "../../containers/ReadonlyArray";
 import { pipe } from "../../functions";
 import Observable from "../../rx/Observable";
+import RunnnableObservable from "../../rx/RunnableObservable";
 import Continuation from "../../scheduling/Continuation";
 import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
 import Flowable from "../../streaming/Flowable";
@@ -15,8 +16,8 @@ testModule(
 
     pipe(
       [0, 1, 2, 3, 4],
-      ReadonlyArray.toObservable({ delay: 1 }),
-      Observable.toFlowable(),
+      ReadonlyArray.toRunnableObservable({ delay: 1 }),
+      RunnnableObservable.toFlowable(),
       Flowable.toObservable<number>(),
       Observable.forEach<number>(v => {
         result.push(v);

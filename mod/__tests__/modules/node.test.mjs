@@ -5,6 +5,7 @@ import ReadonlyArray from '../../containers/ReadonlyArray.mjs';
 import { newInstance, pipe, returns } from '../../functions.mjs';
 import { createWritableSink, createReadableSource, gzip, gunzip } from '../../integrations/node.mjs';
 import Observable from '../../rx/Observable.mjs';
+import RunnableObservable from '../../rx/RunnableObservable.mjs';
 import Scheduler from '../../scheduling/Scheduler.mjs';
 import { FlowMode_pause } from '../../streaming.mjs';
 import Flowable from '../../streaming/Flowable.mjs';
@@ -26,9 +27,9 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
                 callback();
             },
         });
-        const src = pipe([encoder.encode("abc"), encoder.encode("defg")], ReadonlyArray.toObservable(), Observable.toFlowable());
+        const src = pipe([encoder.encode("abc"), encoder.encode("defg")], ReadonlyArray.toRunnableObservable(), RunnableObservable.toFlowable());
         const dest = pipe(createWritableSink(returns(writable)), Streamable.stream(scheduler), Stream.sourceFrom(src));
-        await pipe(dest, Container.endWith(Observable, FlowMode_pause), Observable.toPromise(scheduler));
+        await pipe(dest, Container.endWith(RunnableObservable, FlowMode_pause), Observable.toPromise(scheduler));
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
     }
@@ -47,7 +48,7 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
                 callback(err);
             },
         });
-        const src = pipe([encoder.encode("abc"), encoder.encode("defg")], ReadonlyArray.toObservable(), Observable.toFlowable());
+        const src = pipe([encoder.encode("abc"), encoder.encode("defg")], ReadonlyArray.toRunnableObservable(), RunnableObservable.toFlowable());
         const dest = pipe(createWritableSink(returns(writable)), Streamable.stream(scheduler), Stream.sourceFrom(src));
         const promise = pipe(dest, Container.ignoreElements(Observable), Container.endWith(Observable, 0), Observable.toPromise(scheduler));
         await expectPromiseToThrow(promise);
@@ -89,7 +90,7 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
     try {
         const encoder = newInstance(TextEncoder);
         const textDecoder = newInstance(TextDecoder);
-        const acc = await pipe([encoder.encode("abc"), encoder.encode("defg")], ReadonlyArray.toObservable(), Observable.toFlowable(), gzip(), gunzip(), Flowable.toObservable(), Observable.reduce((acc, next) => acc + textDecoder.decode(next), returns("")), Observable.takeFirst({ count: 1 }), Observable.toPromise(scheduler));
+        const acc = await pipe([encoder.encode("abc"), encoder.encode("defg")], ReadonlyArray.toRunnableObservable(), RunnableObservable.toFlowable(), gzip(), gunzip(), Flowable.toObservable(), Observable.reduce((acc, next) => acc + textDecoder.decode(next), returns("")), Observable.takeFirst({ count: 1 }), Observable.toPromise(scheduler));
         pipe(acc, expectEquals("abcdefg"));
     }
     finally {

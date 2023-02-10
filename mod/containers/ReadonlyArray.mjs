@@ -2,7 +2,7 @@
 import { identity } from '../functions.mjs';
 import AsyncEnumerable_toReadonlyArray from '../ix/__internal__/AsyncEnumerable/AsyncEnumerable.toReadonlyArray.mjs';
 import Enumerable_toReadonlyArray from '../ix/__internal__/Enumerable/Enumerable.toReadonlyArray.mjs';
-import Observable_toReadonlyArray from '../rx/__internal__/Observable/Observable.toReadonlyArray.mjs';
+import RunnableObservable_toReadonlyArray from '../rx/__internal__/RunnableObservable/RunnableObservable.toReadonlyArray.mjs';
 import ReadonlyArray_empty from './__internal__/ReadonlyArray/ReadonlyArray.empty.mjs';
 import ReadonlyArray_every from './__internal__/ReadonlyArray/ReadonlyArray.every.mjs';
 import ReadonlyArray_forEach from './__internal__/ReadonlyArray/ReadonlyArray.forEach.mjs';
@@ -23,7 +23,7 @@ const fromArray =
 _options => identity;
 const fromAsyncEnumerable = AsyncEnumerable_toReadonlyArray;
 const fromEnumerable = Enumerable_toReadonlyArray;
-const fromEnumerableObservable = Observable_toReadonlyArray;
+const fromEnumerableObservable = RunnableObservable_toReadonlyArray;
 const fromSequence = Sequence_toReadonlyArray;
 const keep = ReadonlyArray_keep;
 const map = ReadonlyArray_map;

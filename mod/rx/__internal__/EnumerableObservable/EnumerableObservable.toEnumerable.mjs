@@ -1,9 +1,8 @@
-/// <reference types="./Observable.toEnumerable.d.ts" />
+/// <reference types="./EnumerableObservable.toEnumerable.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, unsafeCast, isSome, pipe } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import Enumerable_create from '../../../ix/__internal__/Enumerable/Enumerable.create.mjs';
-import Enumerable_empty from '../../../ix/__internal__/Enumerable/Enumerable.empty.mjs';
 import MutableEnumerator_mixin from '../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../../scheduling.mjs';
@@ -16,9 +15,8 @@ import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposa
 import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
 import Observer_mixin from '../Observer/Observer.mixin.mjs';
 import Sink_sourceFrom from '../Sink/Sink.sourceFrom.mjs';
-import Observable_isEnumerable from './Observable.isEnumerable.mjs';
 
-const Observable_toEnumerable = 
+const EnumerableObservable_toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const typedObserverMixin = Observer_mixin();
@@ -73,13 +71,11 @@ const Observable_toEnumerable =
             this.enumerator[EnumeratorLike_current] = next;
         },
     }));
-    return () => (obs) => Observable_isEnumerable(obs)
-        ? Enumerable_create(() => {
-            const scheduler = createEnumeratorScheduler();
-            pipe(createEnumeratorObserver(scheduler), Disposable_addTo(scheduler), Sink_sourceFrom(obs));
-            return scheduler;
-        })
-        : Enumerable_empty();
+    return () => (obs) => Enumerable_create(() => {
+        const scheduler = createEnumeratorScheduler();
+        pipe(createEnumeratorObserver(scheduler), Disposable_addTo(scheduler), Sink_sourceFrom(obs));
+        return scheduler;
+    });
 })();
 
-export { Observable_toEnumerable as default };
+export { EnumerableObservable_toEnumerable as default };

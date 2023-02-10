@@ -1,9 +1,8 @@
-import { ToEnumerable, EnumerableLike } from "../ix.js";
-import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, EverySatisfy, ForkZip, ForkConcat, FromPromise, Keep, Map, Never, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromiseable, ToReadonlyArray, PromiseableLike, ReadonlyArrayLike } from "../containers.js";
-import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling.js";
-import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, RunnableLike, AsyncReducer } from "../rx.js";
+import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, EverySatisfy, ForkZip, ForkConcat, FromPromise, Keep, Map, Never, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromiseable, PromiseableLike } from "../containers.js";
+import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, AsyncReducer } from "../rx.js";
 import { FlowableLike, ToFlowable } from "../streaming.js";
 import { Factory, Function1, SideEffect1, Equality, Reducer, Function2, Predicate, Updater } from "../functions.js";
+import { SchedulerLike } from "../scheduling.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
 declare const async: <T>(computation: Factory<T>, { mode }?: {
     mode?: "batched" | "combine-latest" | undefined;
@@ -72,8 +71,8 @@ interface GenerateObservable {
     }): RunnableObservableLike<T>;
 }
 declare const generate: GenerateObservable;
-declare const isEnumerable: (obs: ObservableLike) => obs is EnumerableObservableLike;
-declare const isRunnable: (obs: ObservableLike) => obs is RunnableObservableLike;
+declare const isEnumerable: (obs: ObservableLike<unknown>) => obs is EnumerableObservableLike<unknown>;
+declare const isRunnable: (obs: ObservableLike<unknown>) => obs is RunnableObservableLike<unknown>;
 declare const keep: Keep<ObservableLike>["keep"];
 declare const map: Map<ObservableLike>["map"];
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
@@ -199,13 +198,8 @@ interface Timeout {
     <T>(duration: ObservableLike<unknown>): ContainerOperator<ObservableLike, T, T>;
 }
 declare const timeout: Timeout;
-declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
 declare const toFlowable: ToFlowable<ObservableLike>["toFlowable"];
 declare const toPromise: ToPromiseable<ObservableLike, SchedulerLike>["toPromise"];
-declare const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"];
-declare const toRunnable: <T>(options?: {
-    readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike> | undefined;
-} | undefined) => Function1<ObservableLike<T>, RunnableLike<T>>;
 declare const withLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike, TA, T>;
 declare const zip: Zip<ObservableLike>["zip"];
 /**
@@ -307,6 +301,8 @@ declare const Observable: {
     fromFlowable: <T_10>(options?: undefined) => Function1<FlowableLike<T_10>, ObservableLike<T_10>>;
     fromPromise: <T_11>(options?: undefined) => Function1<PromiseableLike<T_11>, ObservableLike<T_11>>;
     generate: GenerateObservable;
+    isEnumerable: (obs: ObservableLike<unknown>) => obs is EnumerableObservableLike<unknown>;
+    isRunnable: (obs: ObservableLike<unknown>) => obs is RunnableObservableLike<unknown>;
     keep: <T_12>(predicate: Predicate<T_12>) => ContainerOperator<ObservableLike<unknown>, T_12, T_12>;
     map: <TA_8, TB_8>(mapper: Function1<TA_8, TB_8>) => ContainerOperator<ObservableLike<unknown>, TA_8, TB_8>;
     never: <T_13>() => EnumerableObservableLike<T_13>;
@@ -341,14 +337,9 @@ declare const Observable: {
     throttle: Throttle;
     throwIfEmpty: <T_27>(factory: Factory<unknown>) => ContainerOperator<ObservableLike<unknown>, T_27, T_27>;
     timeout: Timeout;
-    toEnumerable: <T_28>(options?: undefined) => Function1<ObservableLike<T_28>, EnumerableLike<T_28>>;
-    toFlowable: <T_29>(options?: undefined) => Function1<ObservableLike<T_29>, FlowableLike<T_29>>;
-    toPromise: <T_30>(ctx: SchedulerLike) => Function1<ObservableLike<T_30>, PromiseableLike<T_30>>;
-    toReadonlyArray: <T_31>(options?: undefined) => Function1<ObservableLike<T_31>, ReadonlyArrayLike<T_31>>;
-    toRunnable: <T_32>(options?: {
-        readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike> | undefined;
-    } | undefined) => Function1<ObservableLike<T_32>, RunnableLike<T_32>>;
-    withLatestFrom: <TA_9, TB_9, T_33>(other: ObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_33>) => ContainerOperator<ObservableLike<unknown>, TA_9, T_33>;
+    toFlowable: <T_28>(options?: undefined) => Function1<ObservableLike<T_28>, FlowableLike<T_28>>;
+    toPromise: <T_29>(ctx: SchedulerLike) => Function1<ObservableLike<T_29>, PromiseableLike<T_29>>;
+    withLatestFrom: <TA_9, TB_9, T_30>(other: ObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_30>) => ContainerOperator<ObservableLike<unknown>, TA_9, T_30>;
     zip: {
         <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<readonly [
             TA,
@@ -473,6 +464,6 @@ declare const Observable: {
             TI
         ]>;
     };
-    zipWithLatestFrom: <TA_10, TB_10, T_34>(other: ObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_34>) => ContainerOperator<ObservableLike<unknown>, TA_10, T_34>;
+    zipWithLatestFrom: <TA_10, TB_10, T_31>(other: ObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_31>) => ContainerOperator<ObservableLike<unknown>, TA_10, T_31>;
 };
-export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

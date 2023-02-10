@@ -20,7 +20,7 @@ import {
   ToRunnable,
   ToRunnableObservable,
 } from "../rx";
-import Observable_toReadonlyArray from "../rx/__internal__/Observable/Observable.toReadonlyArray";
+import RunnableObservable_toReadonlyArray from "../rx/__internal__/RunnableObservable/RunnableObservable.toReadonlyArray";
 import ReadonlyArray_empty from "./__internal__/ReadonlyArray/ReadonlyArray.empty";
 import ReadonlyArray_every from "./__internal__/ReadonlyArray/ReadonlyArray.every";
 import ReadonlyArray_forEach from "./__internal__/ReadonlyArray/ReadonlyArray.forEach";
@@ -51,7 +51,7 @@ export const fromEnumerable: FromEnumerable<ReadonlyArrayLike>["fromEnumerable"]
   Enumerable_toReadonlyArray;
 
 export const fromEnumerableObservable =
-  Observable_toReadonlyArray as FromEnumerableObservable<ReadonlyArrayLike>["fromEnumerableObservable"];
+  RunnableObservable_toReadonlyArray as FromEnumerableObservable<ReadonlyArrayLike>["fromEnumerableObservable"];
 
 export const fromSequence: FromSequence<ReadonlyArrayLike>["fromSequence"] =
   Sequence_toReadonlyArray;

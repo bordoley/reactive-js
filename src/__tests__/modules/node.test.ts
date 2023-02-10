@@ -10,6 +10,7 @@ import {
 } from "../../integrations/node";
 import { ObservableLike } from "../../rx";
 import Observable from "../../rx/Observable";
+import RunnableObservable from "../../rx/RunnableObservable";
 import Scheduler from "../../scheduling/Scheduler";
 import { FlowMode, FlowMode_pause } from "../../streaming";
 import Flowable from "../../streaming/Flowable";
@@ -46,8 +47,8 @@ testModule(
 
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
-          ReadonlyArray.toObservable(),
-          Observable.toFlowable(),
+          ReadonlyArray.toRunnableObservable(),
+          RunnableObservable.toFlowable(),
         );
 
         const dest = pipe(
@@ -59,7 +60,7 @@ testModule(
         await pipe(
           dest,
           Container.endWith<ObservableLike, FlowMode>(
-            Observable,
+            RunnableObservable,
             FlowMode_pause,
           ),
           Observable.toPromise(scheduler),
@@ -90,8 +91,8 @@ testModule(
 
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
-          ReadonlyArray.toObservable(),
-          Observable.toFlowable(),
+          ReadonlyArray.toRunnableObservable(),
+          RunnableObservable.toFlowable(),
         );
 
         const dest = pipe(
@@ -179,8 +180,8 @@ testModule(
 
       const acc = await pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
-        ReadonlyArray.toObservable(),
-        Observable.toFlowable(),
+        ReadonlyArray.toRunnableObservable(),
+        RunnableObservable.toFlowable(),
         gzip(),
         gunzip(),
         Flowable.toObservable(),

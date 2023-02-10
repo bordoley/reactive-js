@@ -49,11 +49,8 @@ import Observable_takeWhile from './__internal__/Observable/Observable.takeWhile
 import Observable_throttle from './__internal__/Observable/Observable.throttle.mjs';
 import Observable_throwIfEmpty from './__internal__/Observable/Observable.throwIfEmpty.mjs';
 import Observable_timeout from './__internal__/Observable/Observable.timeout.mjs';
-import Observable_toEnumerable from './__internal__/Observable/Observable.toEnumerable.mjs';
 import Observable_toFlowable from './__internal__/Observable/Observable.toFlowable.mjs';
 import Observable_toPromise from './__internal__/Observable/Observable.toPromise.mjs';
-import Observable_toReadonlyArray from './__internal__/Observable/Observable.toReadonlyArray.mjs';
-import Observable_toRunnable from './__internal__/Observable/Observable.toRunnable.mjs';
 import Observable_withLatestFrom from './__internal__/Observable/Observable.withLatestFrom.mjs';
 import Observable_zip from './__internal__/Observable/Observable.zip.mjs';
 import Observable_zipLatest from './__internal__/Observable/Observable.zipLatest.mjs';
@@ -154,11 +151,8 @@ const takeWhile = Observable_takeWhile;
 const throttle = Observable_throttle;
 const throwIfEmpty = Observable_throwIfEmpty;
 const timeout = Observable_timeout;
-const toEnumerable = Observable_toEnumerable;
 const toFlowable = Observable_toFlowable;
 const toPromise = Observable_toPromise;
-const toReadonlyArray = Observable_toReadonlyArray;
-const toRunnable = Observable_toRunnable;
 const withLatestFrom = Observable_withLatestFrom;
 const zip = Observable_zip;
 /**
@@ -185,6 +179,8 @@ const Observable = {
     fromFlowable,
     fromPromise,
     generate,
+    isEnumerable,
+    isRunnable,
     keep,
     map,
     never,
@@ -206,15 +202,12 @@ const Observable = {
     throttle,
     throwIfEmpty,
     timeout,
-    toEnumerable,
     toFlowable,
     toPromise,
-    toReadonlyArray,
-    toRunnable,
     withLatestFrom,
     zip,
     zipLatest,
     zipWithLatestFrom,
 };
 
-export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

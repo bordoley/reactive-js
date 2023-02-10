@@ -15,10 +15,13 @@ import {
   ToEnumerable,
 } from "../../../ix";
 import Enumerable_create from "../../../ix/__internal__/Enumerable/Enumerable.create";
-import Enumerable_empty from "../../../ix/__internal__/Enumerable/Enumerable.empty";
 import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
 import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
+import {
+  EnumerableObservableLike,
+  ObserverLike,
+  SinkLike_notify,
+} from "../../../rx";
 import {
   ContinuationLike,
   SchedulerLike,
@@ -38,9 +41,8 @@ import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposa
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Observer_mixin from "../Observer/Observer.mixin";
 import Sink_sourceFrom from "../Sink/Sink.sourceFrom";
-import Observable_isEnumerable from "./Observable.isEnumerable";
 
-const Observable_toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
+const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
     const typedObserverMixin = Observer_mixin<T>();
@@ -152,20 +154,18 @@ const Observable_toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
     );
 
     return () =>
-      (obs: ObservableLike<T>): EnumerableLike<T> =>
-        Observable_isEnumerable(obs)
-          ? Enumerable_create(() => {
-              const scheduler = createEnumeratorScheduler();
+      (obs: EnumerableObservableLike<T>): EnumerableLike<T> =>
+        Enumerable_create(() => {
+          const scheduler = createEnumeratorScheduler();
 
-              pipe(
-                createEnumeratorObserver(scheduler),
-                Disposable_addTo(scheduler),
-                Sink_sourceFrom(obs),
-              );
+          pipe(
+            createEnumeratorObserver(scheduler),
+            Disposable_addTo(scheduler),
+            Sink_sourceFrom(obs),
+          );
 
-              return scheduler;
-            })
-          : Enumerable_empty();
+          return scheduler;
+        });
   })();
 
-export default Observable_toEnumerable;
+export default EnumerableObservable_toEnumerable;

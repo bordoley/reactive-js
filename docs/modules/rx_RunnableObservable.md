@@ -8,6 +8,7 @@
 
 - [buffer](rx_RunnableObservable.md#buffer)
 - [catchError](rx_RunnableObservable.md#catcherror)
+- [combineLatest](rx_RunnableObservable.md#combinelatest)
 - [concat](rx_RunnableObservable.md#concat)
 - [concatAll](rx_RunnableObservable.md#concatall)
 - [create](rx_RunnableObservable.md#create)
@@ -36,7 +37,6 @@
 - [takeLast](rx_RunnableObservable.md#takelast)
 - [takeWhile](rx_RunnableObservable.md#takewhile)
 - [throwIfEmpty](rx_RunnableObservable.md#throwifempty)
-- [toEnumerable](rx_RunnableObservable.md#toenumerable)
 - [toFlowable](rx_RunnableObservable.md#toflowable)
 - [toPromise](rx_RunnableObservable.md#topromise)
 - [toReadonlyArray](rx_RunnableObservable.md#toreadonlyarray)
@@ -87,6 +87,226 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### combineLatest
+
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TE`\> |
+| `f` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TE`\> |
+| `f` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TF`\> |
+| `g` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TE`\> |
+| `f` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TF`\> |
+| `g` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TG`\> |
+| `h` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TA`\> |
+| `b` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\> |
+| `c` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TC`\> |
+| `d` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TD`\> |
+| `e` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TE`\> |
+| `f` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TF`\> |
+| `g` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TG`\> |
+| `h` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TH`\> |
+| `i` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
@@ -352,8 +572,8 @@ ___
 | `generator` | [`Updater`](functions.md#updater)<`T`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
 | `options?` | `Object` |
-| `options.delay` | `number` |
-| `options.delayStart` | `boolean` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 
@@ -717,28 +937,6 @@ ___
 
 ___
 
-### toEnumerable
-
-▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
-
-___
-
 ### toFlowable
 
 ▸ **toFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
@@ -797,8 +995,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.schedulerFactory` | [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\> |
+| `options?` | `undefined` |
 
 #### Returns
 
@@ -820,7 +1017,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `undefined` |
+| `options?` | `Object` |
+| `options.schedulerFactory?` | [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\> |
 
 #### Returns
 
