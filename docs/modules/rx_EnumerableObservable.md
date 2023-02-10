@@ -10,7 +10,6 @@
 - [catchError](rx_EnumerableObservable.md#catcherror)
 - [concat](rx_EnumerableObservable.md#concat)
 - [concatAll](rx_EnumerableObservable.md#concatall)
-- [create](rx_EnumerableObservable.md#create)
 - [decodeWithCharset](rx_EnumerableObservable.md#decodewithcharset)
 - [defer](rx_EnumerableObservable.md#defer)
 - [distinctUntilChanged](rx_EnumerableObservable.md#distinctuntilchanged)
@@ -134,28 +133,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
-
-___
-
-### create
-
-▸ **create**<`T`\>(`f`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\>\> |
-
-#### Returns
-
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
 
 ___
 

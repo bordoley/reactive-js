@@ -11,7 +11,6 @@
 - [combineLatest](rx_RunnableObservable.md#combinelatest)
 - [concat](rx_RunnableObservable.md#concat)
 - [concatAll](rx_RunnableObservable.md#concatall)
-- [create](rx_RunnableObservable.md#create)
 - [decodeWithCharset](rx_RunnableObservable.md#decodewithcharset)
 - [defer](rx_RunnableObservable.md#defer)
 - [distinctUntilChanged](rx_RunnableObservable.md#distinctuntilchanged)
@@ -354,28 +353,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, `T`\>
-
-___
-
-### create
-
-▸ **create**<`T`\>(`f`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\>\> |
-
-#### Returns
-
-[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
 
 ___
 

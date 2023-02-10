@@ -57,7 +57,6 @@ import Observable_toFlowable from "./Observable/__internal__/Observable.toFlowab
 import Observable_toPromise from "./Observable/__internal__/Observable.toPromise";
 import Observable_zip from "./Observable/__internal__/Observable.zip";
 import RunnableObservable_catchError from "./RunnableObservable/__internal__/RunnableObservable.catchError";
-import RunnableObservable_create from "./RunnableObservable/__internal__/RunnableObservable.create";
 import RunnableObservable_defer from "./RunnableObservable/__internal__/RunnableObservable.defer";
 import RunnableObservable_mergeAll from "./RunnableObservable/__internal__/RunnableObservable.mergeAll";
 import RunnableObservable_scanAsync from "./RunnableObservable/__internal__/RunnableObservable.scanAsync";
@@ -86,8 +85,6 @@ export const concatAll: ConcatAll<
   const { maxBufferSize = MAX_SAFE_INTEGER } = options;
   return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
-
-export const create = RunnableObservable_create;
 
 export const decodeWithCharset =
   Observable_decodeWithCharset as DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"];

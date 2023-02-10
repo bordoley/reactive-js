@@ -33,7 +33,6 @@ import { EnumerableObservableLike, ScanAsync, ToRunnable } from "../rx";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError";
-import EnumerableObservable_create from "./EnumerableObservable/__internal__/EnumerableObservable.create";
 import EnumerableObservable_defer from "./EnumerableObservable/__internal__/EnumerableObservable.defer";
 import EnumerableObservable_mergeAll from "./EnumerableObservable/__internal__/EnumerableObservable.mergeAll";
 import EnumerableObservable_never from "./EnumerableObservable/__internal__/EnumerableObservable.never";
@@ -85,8 +84,6 @@ export const concatAll: ConcatAll<
   const { maxBufferSize = MAX_SAFE_INTEGER } = options;
   return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
-
-export const create = EnumerableObservable_create;
 
 export const decodeWithCharset =
   Observable_decodeWithCharset as DecodeWithCharset<EnumerableObservableLike>["decodeWithCharset"];
