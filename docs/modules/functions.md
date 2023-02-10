@@ -54,9 +54,7 @@
 - [decrementBy](functions.md#decrementby)
 - [error](functions.md#error)
 - [floor](functions.md#floor)
-- [forEach](functions.md#foreach)
 - [getLength](functions.md#getlength)
-- [getOrDefault](functions.md#getordefault)
 - [getOrRaise](functions.md#getorraise)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
@@ -1568,28 +1566,6 @@ ___
 
 ___
 
-### forEach
-
-▸ **forEach**<`T`\>(`f`): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-___
-
 ### getLength
 
 ▸ **getLength**(`arr`): `number`
@@ -1603,40 +1579,6 @@ ___
 #### Returns
 
 `number`
-
-___
-
-### getOrDefault
-
-▸ **getOrDefault**<`T`\>(`defaultValue`): (`v`: [`Optional`](functions.md#optional)<`T`\>) => `T`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `defaultValue` | `T` |
-
-#### Returns
-
-`fn`
-
-▸ (`v`): `T`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | [`Optional`](functions.md#optional)<`T`\> |
-
-##### Returns
-
-`T`
 
 ___
 

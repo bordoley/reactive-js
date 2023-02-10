@@ -300,20 +300,8 @@ export const decrementBy =
   (x: number) =>
     x - decr;
 
-export const forEach =
-  <T>(f: SideEffect1<T>): Function1<readonly T[], readonly T[]> =>
-  arr => {
-    arr.forEach(f);
-    return arr;
-  };
-
 export const getLength = (arr: readonly unknown[] | string): number =>
   arr.length;
-
-export const getOrDefault =
-  <T>(defaultValue: T) =>
-  (v: Optional<T>): T =>
-    isSome(v) ? v : defaultValue;
 
 export const getOrRaise =
   <T>() =>
@@ -330,9 +318,7 @@ export const identity = <T>(v: T): T => v;
 /**
  * A function that always returns `undefined`.
  */
-export const ignore = (..._args: unknown[]): void => {
-  return undefined;
-};
+export const ignore = (..._args: unknown[]): void => {};
 
 /**
  * An updater function that returns the result of incrementing `x`.
