@@ -3,11 +3,12 @@ import ReadonlyArray from "../../containers/ReadonlyArray";
 import {
   arrayEquality,
   identity,
+  incrementBy,
   pipe,
   pipeLazy,
   raise,
+  returns,
 } from "../../functions";
-import Enumerable from "../../ix/Enumerable";
 import { RunnableObservableLike } from "../../rx";
 import RunnableObservable from "../../rx/RunnableObservable";
 import Scheduler from "../../scheduling/Scheduler";
@@ -52,6 +53,30 @@ import {
   testAsync,
   testModule,
 } from "../testing";
+
+const combineLatestTests = describe(
+  "combineLatest",
+  test(
+    "combineLatest",
+    pipeLazy(
+      RunnableObservable.combineLatest(
+        pipe(
+          RunnableObservable.generate(incrementBy(2), returns(1), { delay: 2 }),
+          RunnableObservable.takeFirst({ count: 3 }),
+        ),
+        pipe(
+          RunnableObservable.generate(incrementBy(2), returns(0), { delay: 3 }),
+          RunnableObservable.takeFirst({ count: 2 }),
+        ),
+      ),
+      RunnableObservable.toReadonlyArray(),
+      expectArrayEquals(
+        [[3, 2] as readonly [number, number], [5, 2], [5, 4], [7, 4]],
+        arrayEquality(),
+      ),
+    ),
+  ),
+);
 
 const exhaustTests = describe(
   "exhaust",
@@ -163,20 +188,6 @@ const switchAllTests = describe(
   ),
 );
 
-const toEnumerableTests = describe(
-  "toEnumerable",
-  test(
-    "with an enumerable observable",
-    pipeLazy(
-      [1, 2, 3, 4],
-      ReadonlyArray.toRunnableObservable(),
-      RunnableObservable.toEnumerable(),
-      Enumerable.toReadonlyArray(),
-      expectArrayEquals([1, 2, 3, 4]),
-    ),
-  ),
-);
-
 const toPromiseTests = describe(
   "toPromise",
   testAsync("when observable completes without producing a value", async () => {
@@ -249,6 +260,7 @@ testModule(
   "RunnableObservable",
   bufferTests(RunnableObservable),
   catchErrorTests(RunnableObservable),
+  combineLatestTests,
   concatTests<RunnableObservableLike>(RunnableObservable),
   concatAllTests<RunnableObservableLike>(RunnableObservable),
   concatMapTests(RunnableObservable),
@@ -281,7 +293,6 @@ testModule(
   takeWhileTests(RunnableObservable),
   throwIfEmptyTests(RunnableObservable),
   zipWithTests<RunnableObservableLike>(RunnableObservable),
-  toEnumerableTests,
   toPromiseTests,
   zipTests,
 );

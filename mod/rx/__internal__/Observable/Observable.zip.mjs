@@ -6,7 +6,7 @@ import ReadonlyArray_forEach from '../../../containers/__internal__/ReadonlyArra
 import ReadonlyArray_keep from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.keep.mjs';
 import ReadonlyArray_map from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map.mjs';
 import ReadonlyArray_some from '../../../containers/__internal__/ReadonlyArray/ReadonlyArray.some.mjs';
-import { compose, isTrue, pipe, none, getOrRaise, isSome } from '../../../functions.mjs';
+import { compose, isTrue, pipe, none, isSome } from '../../../functions.mjs';
 import Enumerable_enumerate from '../../../ix/__internal__/Enumerable/Enumerable.enumerate.mjs';
 import Enumerable_toRunnableObservable from '../../../ix/__internal__/Enumerable/Enumerable.toRunnableObservable.mjs';
 import Enumerable_zip from '../../../ix/__internal__/Enumerable/Enumerable.zip.mjs';
@@ -20,6 +20,7 @@ import Disposable_dispose from '../../../util/__internal__/Disposable/Disposable
 import Disposable_isDisposed from '../../../util/__internal__/Disposable/Disposable.isDisposed.mjs';
 import Disposable_mixin from '../../../util/__internal__/Disposable/Disposable.mixin.mjs';
 import Disposable_onComplete from '../../../util/__internal__/Disposable/Disposable.onComplete.mjs';
+import EnumerableObservable_toEnumerable from '../EnumerableObservable/EnumerableObservable.toEnumerable.mjs';
 import EnumeratorSink_create from '../EnumeratorSink/EnumeratorSink.create.mjs';
 import Observer_getScheduler from '../Observer/Observer.getScheduler.mjs';
 import Observer_mixin from '../Observer/Observer.mixin.mjs';
@@ -29,7 +30,6 @@ import Observable_allAreEnumerable from './Observable.allAreEnumerable.mjs';
 import Observable_allAreRunnable from './Observable.allAreRunnable.mjs';
 import Observable_create from './Observable.create.mjs';
 import Observable_isEnumerable from './Observable.isEnumerable.mjs';
-import Observable_toEnumerable from './Observable.toEnumerable.mjs';
 
 const Observable_zip = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
@@ -75,7 +75,7 @@ const Observable_zip = /*@__PURE__*/ (() => {
         const enumerators = [];
         for (const next of observables) {
             if (Observable_isEnumerable(next)) {
-                const enumerator = pipe(next, Observable_toEnumerable(), getOrRaise(), Enumerable_enumerate(), Disposable_addTo(observer));
+                const enumerator = pipe(next, EnumerableObservable_toEnumerable(), Enumerable_enumerate(), Disposable_addTo(observer));
                 Enumerator_move(enumerator);
                 enumerators.push(enumerator);
             }
@@ -90,7 +90,7 @@ const Observable_zip = /*@__PURE__*/ (() => {
         const isEnumerable = Observable_allAreEnumerable(observables);
         const isRunnable = Observable_allAreRunnable(observables);
         return isEnumerable
-            ? pipe(observables, ReadonlyArray_map(Observable_toEnumerable()), Container_keepType({ keep: ReadonlyArray_keep }, isSome), enumerables => Enumerable_zip(...enumerables), Enumerable_toRunnableObservable())
+            ? pipe(observables, ReadonlyArray_map(EnumerableObservable_toEnumerable()), Container_keepType({ keep: ReadonlyArray_keep }, isSome), enumerables => Enumerable_zip(...enumerables), Enumerable_toRunnableObservable())
             : isRunnable
                 ? RunnableObservable_create(onSink(observables))
                 : Observable_create(onSink(observables));

@@ -1,6 +1,6 @@
 import Iterable from "../../containers/Iterable";
 import { pipeLazy } from "../../functions";
-import Observable from "../../rx/Observable";
+import RunnableObservable from "../../rx/RunnableObservable";
 import { describe, expectArrayEquals, test, testModule } from "../testing";
 
 testModule(
@@ -11,8 +11,8 @@ testModule(
       "without delay",
       pipeLazy(
         [1, 2, 3, 4, 5],
-        Iterable.toObservable(),
-        Observable.toReadonlyArray(),
+        Iterable.toRunnableObservable(),
+        RunnableObservable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5]),
       ),
     ),
@@ -20,8 +20,8 @@ testModule(
       "with delay",
       pipeLazy(
         [1, 2, 3, 4, 5],
-        Iterable.toObservable({ delay: 1 }),
-        Observable.toReadonlyArray(),
+        Iterable.toRunnableObservable({ delay: 1 }),
+        RunnableObservable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5]),
       ),
     ),

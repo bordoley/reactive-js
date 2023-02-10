@@ -3,7 +3,6 @@ import ReadonlyArray from "../../containers/ReadonlyArray";
 import {
   arrayEquality,
   increment,
-  incrementBy,
   isSome,
   newInstance,
   pipe,
@@ -12,9 +11,10 @@ import {
   returns,
   sum,
 } from "../../functions";
-import { ObservableLike } from "../../rx";
+import { ObservableLike, RunnableObservableLike } from "../../rx";
 import Observable from "../../rx/Observable";
 import { __await, __memo } from "../../rx/Observable/effects";
+import RunnableObservable from "../../rx/RunnableObservable";
 import Continuation from "../../scheduling/Continuation";
 import Dispatcher from "../../scheduling/Dispatcher";
 import Scheduler from "../../scheduling/Scheduler";
@@ -35,30 +35,6 @@ import {
   test,
   testModule,
 } from "../testing";
-
-const combineLatestTests = describe(
-  "combineLatest",
-  test(
-    "combineLatest",
-    pipeLazy(
-      Observable.combineLatest(
-        pipe(
-          Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
-          Observable.takeFirst({ count: 3 }),
-        ),
-        pipe(
-          Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
-          Observable.takeFirst({ count: 2 }),
-        ),
-      ),
-      Observable.toReadonlyArray(),
-      expectArrayEquals(
-        [[3, 2] as readonly [number, number], [5, 2], [5, 4], [7, 4]],
-        arrayEquality(),
-      ),
-    ),
-  ),
-);
 
 const onSubscribeTests = describe(
   "onSubscribe",
@@ -108,7 +84,9 @@ const retryTests = describe(
       ),
       Observable.retry(),
       Observable.takeFirst({ count: 6 }),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 1, 2, 3]),
     ),
   ),
@@ -149,7 +127,9 @@ const takeUntilTests = describe(
       Observable.takeUntil(
         pipe([1], ReadonlyArray.toObservable({ delay: 3, delayStart: true })),
       ),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3]),
     ),
   ),
@@ -164,7 +144,9 @@ const timeoutTests = describe(
         [1],
         ReadonlyArray.toObservable({ delay: 2, delayStart: true }),
         Observable.timeout(1),
-        Observable.toReadonlyArray(),
+        (x): RunnableObservableLike<number> =>
+          Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+        RunnableObservable.toReadonlyArray(),
       ),
       expectToThrow,
     ),
@@ -176,7 +158,9 @@ const timeoutTests = describe(
       [1],
       ReadonlyArray.toObservable({ delay: 2, delayStart: true }),
       Observable.timeout(3),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([1]),
     ),
   ),
@@ -193,7 +177,9 @@ const throttleTests = describe(
       }),
       Observable.takeFirst({ count: 100 }),
       Observable.throttle(50, { mode: "first" }),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([0, 49, 99]),
     ),
   ),
@@ -207,7 +193,9 @@ const throttleTests = describe(
       }),
       Observable.takeFirst({ count: 200 }),
       Observable.throttle(50, { mode: "last" }),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([49, 99, 149, 199]),
     ),
   ),
@@ -221,7 +209,9 @@ const throttleTests = describe(
       }),
       Observable.takeFirst({ count: 200 }),
       Observable.throttle(75, { mode: "interval" }),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([0, 74, 149, 199]),
     ),
   ),
@@ -316,7 +306,9 @@ const withLatestFromTest = describe(
         pipe([0, 1, 2, 3], ReadonlyArray.toObservable({ delay: 2 })),
         (a, b) => [a, b],
       ),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<[number, number]> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals(
         [
           [0, 0],
@@ -334,7 +326,9 @@ const withLatestFromTest = describe(
       [0],
       ReadonlyArray.toObservable({ delay: 1 }),
       Observable.withLatestFrom(Observable.empty(), sum),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([] as number[]),
     ),
   ),
@@ -349,7 +343,9 @@ const withLatestFromTest = describe(
           Container.throws(Observable)(returns(error)),
           sum,
         ),
-        Observable.toReadonlyArray(),
+        (x): RunnableObservableLike<number> =>
+          Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+        RunnableObservable.toReadonlyArray(),
         expectArrayEquals([] as number[]),
       ),
       expectToThrowError(error),
@@ -373,7 +369,9 @@ const zipLatestTests = describe(
         ),
       ),
       Observable.map<[number, number], number>(([a, b]) => a + b),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([2, 5, 8, 11]),
     ),
   ),
@@ -390,7 +388,9 @@ const zipWithLatestTests = describe(
           pipe([1], ReadonlyArray.toObservable()),
           (_, b) => b,
         ),
-        Observable.toReadonlyArray(),
+        (x): RunnableObservableLike<number> =>
+          Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+        RunnableObservable.toReadonlyArray(),
       ),
       expectToThrow,
     ),
@@ -406,7 +406,9 @@ const zipWithLatestTests = describe(
           Container.throws(Observable)(raise),
           (_, b) => b,
         ),
-        Observable.toReadonlyArray(),
+        (x): RunnableObservableLike<number> =>
+          Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+        RunnableObservable.toReadonlyArray(),
       ),
       expectToThrow,
     ),
@@ -421,7 +423,9 @@ const zipWithLatestTests = describe(
         pipe([2, 4], ReadonlyArray.toObservable({ delay: 1 })),
         (a, b) => a + b,
       ),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([3, 6]),
     ),
   ),
@@ -435,7 +439,9 @@ const zipWithLatestTests = describe(
         pipe([2, 4, 6, 8], ReadonlyArray.toObservable({ delay: 1 })),
         (a, b) => a + b,
       ),
-      Observable.toReadonlyArray(),
+      (x): RunnableObservableLike<number> =>
+        Observable.isRunnable(x) ? x : RunnableObservable.empty(),
+      RunnableObservable.toReadonlyArray(),
       expectArrayEquals([3, 6, 11]),
     ),
   ),
@@ -546,7 +552,6 @@ const asyncTests = describe(
 testModule(
   "Observable",
   asyncTests,
-  combineLatestTests,
   onSubscribeTests,
   retryTests,
   shareTests,

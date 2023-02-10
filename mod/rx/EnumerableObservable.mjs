@@ -7,6 +7,7 @@ import EnumerableObservable_mergeAll from './__internal__/EnumerableObservable/E
 import EnumerableObservable_never from './__internal__/EnumerableObservable/EnumerableObservable.never.mjs';
 import EnumerableObservable_scanAsync from './__internal__/EnumerableObservable/EnumerableObservable.scanAsync.mjs';
 import EnumerableObservable_switchAll from './__internal__/EnumerableObservable/EnumerableObservable.switchAll.mjs';
+import EnumerableObservable_toEnumerable from './__internal__/EnumerableObservable/EnumerableObservable.toEnumerable.mjs';
 import Observable_buffer from './__internal__/Observable/Observable.buffer.mjs';
 import Observable_concat from './__internal__/Observable/Observable.concat.mjs';
 import Observable_decodeWithCharset from './__internal__/Observable/Observable.decodeWithCharset.mjs';
@@ -28,12 +29,11 @@ import Observable_takeFirst from './__internal__/Observable/Observable.takeFirst
 import Observable_takeLast from './__internal__/Observable/Observable.takeLast.mjs';
 import Observable_takeWhile from './__internal__/Observable/Observable.takeWhile.mjs';
 import Observable_throwIfEmpty from './__internal__/Observable/Observable.throwIfEmpty.mjs';
-import Observable_toEnumerable from './__internal__/Observable/Observable.toEnumerable.mjs';
 import Observable_toFlowable from './__internal__/Observable/Observable.toFlowable.mjs';
 import Observable_toPromise from './__internal__/Observable/Observable.toPromise.mjs';
-import Observable_toReadonlyArray from './__internal__/Observable/Observable.toReadonlyArray.mjs';
-import Observable_toRunnable from './__internal__/Observable/Observable.toRunnable.mjs';
 import Observable_zip from './__internal__/Observable/Observable.zip.mjs';
+import RunnableObservable_toReadonlyArray from './__internal__/RunnableObservable/RunnableObservable.toReadonlyArray.mjs';
+import RunnableObservable_toRunnable from './__internal__/RunnableObservable/RunnableObservable.toRunnable.mjs';
 
 const buffer = Observable_buffer;
 const catchError = EnumerableObservable_catchError;
@@ -71,11 +71,11 @@ const takeFirst = Observable_takeFirst;
 const takeLast = Observable_takeLast;
 const takeWhile = Observable_takeWhile;
 const throwIfEmpty = Observable_throwIfEmpty;
-const toEnumerable = Observable_toEnumerable;
+const toEnumerable = EnumerableObservable_toEnumerable;
 const toFlowable = Observable_toFlowable;
 const toPromise = Observable_toPromise;
-const toReadonlyArray = Observable_toReadonlyArray;
-const toRunnable = Observable_toRunnable;
+const toReadonlyArray = RunnableObservable_toReadonlyArray;
+const toRunnable = RunnableObservable_toRunnable;
 const zip = Observable_zip;
 /** @ignore */
 const EnumerableObservable = {

@@ -21,7 +21,6 @@ import {
   TakeWhile,
   ThrowIfEmpty,
   ToPromiseable,
-  ToReadonlyArray,
   Zip,
 } from "../containers";
 import Promiseable_toObservable from "../containers/__internal__/Promiseable/Promiseable.toObservable";
@@ -33,7 +32,6 @@ import {
   SideEffect1,
   Updater,
 } from "../functions";
-import { ToEnumerable } from "../ix";
 import {
   EnumerableObservableLike,
   ObservableLike,
@@ -93,11 +91,8 @@ import Observable_takeWhile from "./__internal__/Observable/Observable.takeWhile
 import Observable_throttle from "./__internal__/Observable/Observable.throttle";
 import Observable_throwIfEmpty from "./__internal__/Observable/Observable.throwIfEmpty";
 import Observable_timeout from "./__internal__/Observable/Observable.timeout";
-import Observable_toEnumerable from "./__internal__/Observable/Observable.toEnumerable";
 import Observable_toFlowable from "./__internal__/Observable/Observable.toFlowable";
 import Observable_toPromise from "./__internal__/Observable/Observable.toPromise";
-import Observable_toReadonlyArray from "./__internal__/Observable/Observable.toReadonlyArray";
-import Observable_toRunnable from "./__internal__/Observable/Observable.toRunnable";
 import Observable_withLatestFrom from "./__internal__/Observable/Observable.withLatestFrom";
 import Observable_zip from "./__internal__/Observable/Observable.zip";
 import Observable_zipLatest from "./__internal__/Observable/Observable.zipLatest";
@@ -207,13 +202,9 @@ interface GenerateObservable {
 export const generate: GenerateObservable =
   Observable_generate as GenerateObservable;
 
-export const isEnumerable: (
-  obs: ObservableLike,
-) => obs is EnumerableObservableLike = Observable_isEnumerable;
+export const isEnumerable = Observable_isEnumerable;
 
-export const isRunnable: (
-  obs: ObservableLike,
-) => obs is RunnableObservableLike = Observable_isRunnable;
+export const isRunnable = Observable_isRunnable;
 
 export const keep: Keep<ObservableLike>["keep"] = Observable_keep;
 
@@ -395,9 +386,6 @@ interface Timeout {
 }
 export const timeout: Timeout = Observable_timeout;
 
-export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
-  Observable_toEnumerable;
-
 export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
   Observable_toFlowable;
 
@@ -405,11 +393,6 @@ export const toPromise: ToPromiseable<
   ObservableLike,
   SchedulerLike
 >["toPromise"] = Observable_toPromise;
-
-export const toReadonlyArray: ToReadonlyArray<ObservableLike>["toReadonlyArray"] =
-  Observable_toReadonlyArray;
-
-export const toRunnable = Observable_toRunnable;
 
 export const withLatestFrom: <TA, TB, T>(
   other: ObservableLike<TB>,
@@ -447,6 +430,8 @@ const Observable = {
   fromFlowable,
   fromPromise,
   generate,
+  isEnumerable,
+  isRunnable,
   keep,
   map,
   never,
@@ -468,11 +453,8 @@ const Observable = {
   throttle,
   throwIfEmpty,
   timeout,
-  toEnumerable,
   toFlowable,
   toPromise,
-  toReadonlyArray,
-  toRunnable,
   withLatestFrom,
   zip,
   zipLatest,

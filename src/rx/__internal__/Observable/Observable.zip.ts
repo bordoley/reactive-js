@@ -16,14 +16,7 @@ import ReadonlyArray_forEach from "../../../containers/__internal__/ReadonlyArra
 import ReadonlyArray_keep from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.keep";
 import ReadonlyArray_map from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.map";
 import ReadonlyArray_some from "../../../containers/__internal__/ReadonlyArray/ReadonlyArray.some";
-import {
-  compose,
-  getOrRaise,
-  isSome,
-  isTrue,
-  none,
-  pipe,
-} from "../../../functions";
+import { compose, isSome, isTrue, none, pipe } from "../../../functions";
 import { EnumerableLike, EnumeratorLike } from "../../../ix";
 import Enumerable_enumerate from "../../../ix/__internal__/Enumerable/Enumerable.enumerate";
 import Enumerable_toRunnableObservable from "../../../ix/__internal__/Enumerable/Enumerable.toRunnableObservable";
@@ -43,6 +36,7 @@ import Disposable_dispose from "../../../util/__internal__/Disposable/Disposable
 import Disposable_isDisposed from "../../../util/__internal__/Disposable/Disposable.isDisposed";
 import Disposable_mixin from "../../../util/__internal__/Disposable/Disposable.mixin";
 import Disposable_onComplete from "../../../util/__internal__/Disposable/Disposable.onComplete";
+import EnumerableObservable_toEnumerable from "../EnumerableObservable/EnumerableObservable.toEnumerable";
 import EnumeratorSink_create from "../EnumeratorSink/EnumeratorSink.create";
 import Observer_getScheduler from "../Observer/Observer.getScheduler";
 import Observer_mixin from "../Observer/Observer.mixin";
@@ -52,7 +46,6 @@ import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
 import Observable_allAreRunnable from "./Observable.allAreRunnable";
 import Observable_create from "./Observable.create";
 import Observable_isEnumerable from "./Observable.isEnumerable";
-import Observable_toEnumerable from "./Observable.toEnumerable";
 
 const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
   const typedObserverMixin = Observer_mixin();
@@ -157,8 +150,7 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
         if (Observable_isEnumerable(next)) {
           const enumerator = pipe(
             next,
-            Observable_toEnumerable(),
-            getOrRaise(),
+            EnumerableObservable_toEnumerable(),
             Enumerable_enumerate(),
             Disposable_addTo(observer),
           );
@@ -190,7 +182,7 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
     return isEnumerable
       ? pipe(
           observables,
-          ReadonlyArray_map(Observable_toEnumerable()),
+          ReadonlyArray_map(EnumerableObservable_toEnumerable()),
           Container_keepType({ keep: ReadonlyArray_keep }, isSome),
           enumerables =>
             (
