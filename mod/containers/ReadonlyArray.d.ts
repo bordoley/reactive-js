@@ -46,7 +46,7 @@ declare const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"];
 declare const ReadonlyArray: {
     empty: <T>(options?: undefined) => ReadonlyArrayLike<T>;
     every: <T_1>(predicate: Predicate<T_1>) => Function1<readonly T_1[], boolean>;
-    forEach: <T_2>(effect: SideEffect1<T_2>) => ContainerOperator<ReadonlyArrayLike<unknown>, T_2, T_2>;
+    forEach: <T_2>(effect: SideEffect1<T_2>, options?: undefined) => ContainerOperator<ReadonlyArrayLike<unknown>, T_2, T_2>;
     fromArray: <T_3>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
@@ -57,8 +57,8 @@ declare const ReadonlyArray: {
         readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
     } | undefined) => Function1<EnumerableObservableLike<T_6>, ReadonlyArrayLike<T_6>>;
     fromSequence: <T_7>(options?: undefined) => Function1<SequenceLike<T_7>, ReadonlyArrayLike<T_7>>;
-    keep: <T_8>(predicate: Predicate<T_8>) => ContainerOperator<ReadonlyArrayLike<unknown>, T_8, T_8>;
-    map: <TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<ReadonlyArrayLike<unknown>, TA, TB>;
+    keep: <T_8>(predicate: Predicate<T_8>, options?: undefined) => ContainerOperator<ReadonlyArrayLike<unknown>, T_8, T_8>;
+    map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<ReadonlyArrayLike<unknown>, TA, TB>;
     some: <T_9>(predicate: Predicate<T_9>) => Function1<ReadonlyArrayLike<T_9>, boolean>;
     toEnumerable: <T_10>(options?: {
         readonly start: number;

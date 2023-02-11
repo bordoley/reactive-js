@@ -75,7 +75,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         var _a, _b;
         const durationOption = (_a = options.duration) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER;
         const durationFunction = durationOption === MAX_SAFE_INTEGER
-            ? Observable_never
+            ? (_) => Observable_never()
             : isNumber(durationOption)
                 ? (_) => pipe([none], ReadonlyArray_toRunnableObservable())
                 : durationOption;

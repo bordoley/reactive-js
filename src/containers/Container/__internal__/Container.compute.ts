@@ -4,23 +4,28 @@ import {
   FromArray,
   Map,
 } from "../../../containers";
-import { Factory, Function1, callWith, compose } from "../../../functions";
+import { Factory, callWith, pipe } from "../../../functions";
 
-const Container_compute = <
-  C extends ContainerLike,
-  T,
-  O extends {
-    readonly start?: number;
-    readonly count?: number;
-  } = {
-    readonly start?: number;
-    readonly count?: number;
-  },
->(
+const Container_compute = <C extends ContainerLike, T, O = unknown>(
   m: Map<C> & FromArray<C, O>,
-  // FIXME: How do we omit the start/count options sanely
+  factory: Factory<T>,
   options?: O,
-): Function1<Factory<T>, ContainerOf<C, T>> =>
-  compose(x => [x], m.fromArray<Factory<T>>(options), m.map(callWith()));
+): ContainerOf<C, T> => {
+  const { start, count, ...tail } = (options ?? {}) as O & {
+    readonly start?: number;
+    readonly count?: number;
+  };
+
+  return pipe(
+    [factory],
+    m.fromArray(
+      tail as O & {
+        readonly start?: number;
+        readonly count?: number;
+      },
+    ),
+    m.map(callWith()),
+  );
+};
 
 export default Container_compute;

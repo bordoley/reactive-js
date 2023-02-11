@@ -8,7 +8,7 @@ import {
 import Container_concatWith from "./Container.concatWith";
 
 const Container_endWith: <C extends ContainerLike, T>(
-  m: Concat<C> & FromArray<C, never>,
+  m: Concat<C> & FromArray<C>,
   value: T,
   ...values: readonly T[]
 ) => ContainerOperator<C, T, T> = <C extends ContainerLike, T>(

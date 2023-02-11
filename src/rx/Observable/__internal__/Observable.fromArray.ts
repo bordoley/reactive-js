@@ -7,8 +7,6 @@ const Observable_fromArray: FromArray<
   {
     readonly delay?: number;
     readonly delayStart?: boolean;
-    readonly start?: number;
-    readonly count?: number;
   }
 >["fromArray"] = ReadonlyArray_toRunnableObservable;
 export default Observable_fromArray;

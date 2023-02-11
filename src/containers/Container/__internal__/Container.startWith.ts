@@ -9,7 +9,7 @@ import { pipe } from "../../../functions";
 import Container_concatWith from "./Container.concatWith";
 
 const Container_startWith: <C extends ContainerLike, T>(
-  m: Concat<C> & FromArray<C, never>,
+  m: Concat<C> & FromArray<C>,
   value: T,
   ...values: readonly T[]
 ) => ContainerOperator<C, T, T> =

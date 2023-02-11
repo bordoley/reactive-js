@@ -36,7 +36,6 @@ import {
   none,
   pipe,
   pipeLazy,
-  raise,
   returns,
   sum,
 } from "../functions";
@@ -99,8 +98,7 @@ export const catchErrorTests = <C extends ContainerLike>(
     test("when source throws", () => {
       const e = {};
       pipe(
-        () => e,
-        Container.throws<C, number>(m),
+        Container.throws<C, number>(m, { raise: returns(e) }),
         m.catchError(_ => pipe([1, 2, 3], m.fromArray())),
         m.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
@@ -655,10 +653,7 @@ export const retryTests = <C extends ObservableLike>(
     test(
       "retrys the container on an exception",
       pipeLazy(
-        m.concat(
-          pipe([1, 2, 3], m.fromArray()),
-          pipe(raise, Container.throws<C, number>(m)),
-        ),
+        m.concat(pipe([1, 2, 3], m.fromArray()), Container.throws(m)),
         m.retry(),
         m.takeFirst({ count: 6 }),
         m.toReadonlyArray(),

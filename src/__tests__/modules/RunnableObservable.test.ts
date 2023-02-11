@@ -8,7 +8,6 @@ import {
   newInstance,
   pipe,
   pipeLazy,
-  raise,
   returns,
   sum,
 } from "../../functions";
@@ -126,7 +125,7 @@ const mergeTests = describe(
       pipeLazy(
         RunnableObservable.merge(
           pipe([1, 4, 7], ReadonlyArray.toRunnableObservable({ delay: 2 })),
-          Container.throws(RunnableObservable, { delay: 5 })(raise),
+          Container.throws(RunnableObservable, { delay: 5 }),
         ),
         RunnableObservable.toReadonlyArray(),
       ),
@@ -150,7 +149,6 @@ const switchAllTests = describe(
     "when source throw",
     pipeLazy(
       pipeLazy(
-        raise,
         Container.throws(RunnableObservable),
         RunnableObservable.switchAll(),
         RunnableObservable.toReadonlyArray(),
@@ -358,7 +356,7 @@ const withLatestFromTest = describe(
         [0],
         ReadonlyArray.toRunnableObservable({ delay: 1 }),
         RunnableObservable.withLatestFrom(
-          Container.throws(RunnableObservable)(returns(error)),
+          Container.throws(RunnableObservable, { raise: returns(error) }),
           sum,
         ),
         RunnableObservable.toReadonlyArray(),
@@ -406,7 +404,7 @@ const zipTests = describe(
     pipeLazy(
       pipeLazy(
         RunnableObservable.zip(
-          pipe(raise, Container.throws(RunnableObservable)),
+          Container.throws(RunnableObservable),
           pipe([1, 2, 3], ReadonlyArray.toRunnableObservable()),
         ),
         RunnableObservable.map<readonly [unknown, number], number>(
@@ -447,7 +445,7 @@ const zipWithLatestTests = describe(
     "when source throws",
     pipeLazy(
       pipeLazy(
-        Container.throws(RunnableObservable)(raise),
+        Container.throws(RunnableObservable),
         RunnableObservable.zipWithLatestFrom(
           pipe([1], ReadonlyArray.toRunnableObservable()),
           (_, b) => b,
@@ -465,7 +463,7 @@ const zipWithLatestTests = describe(
         [1, 2, 3],
         ReadonlyArray.toRunnableObservable({ delay: 1 }),
         RunnableObservable.zipWithLatestFrom(
-          Container.throws(RunnableObservable)(raise),
+          Container.throws(RunnableObservable),
           (_, b) => b,
         ),
         RunnableObservable.toReadonlyArray(),

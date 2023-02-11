@@ -101,7 +101,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
     ),
   );
 
-  const returnTimeoutError = returns(timeoutError);
+  const raise = returns(timeoutError);
 
   return (duration: number | ObservableLike<unknown>) => {
     const durationObs = isNumber(duration)
@@ -110,14 +110,17 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
             fromArray: Observable_fromArray,
             map: Observable_map,
           },
-          { delay: duration, delayStart: true },
-        )(returnTimeoutError)
+          { delay: duration, delayStart: true, raise },
+        )
       : Observable_concat(
           duration,
-          Container_throws({
-            fromArray: Observable_fromArray,
-            map: Observable_map,
-          })(returnTimeoutError),
+          Container_throws(
+            {
+              fromArray: Observable_fromArray,
+              map: Observable_map,
+            },
+            { raise },
+          ),
         );
 
     return pipe(

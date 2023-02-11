@@ -99,15 +99,18 @@ export type Container<C extends ContainerLike> = {
   readonly ContainerLike_type?: C;
 };
 
-export type Buffer<C extends ContainerLike> = Container<C> & {
-  buffer: <T>(options?: {
-    readonly maxBufferSize?: number;
-  }) => ContainerOperator<C, T, readonly T[]>;
+export type Buffer<C extends ContainerLike, O = unknown> = Container<C> & {
+  buffer: <T>(
+    options?: O & {
+      readonly maxBufferSize?: number;
+    },
+  ) => ContainerOperator<C, T, readonly T[]>;
 };
 
-export type CatchError<C extends ContainerLike> = Container<C> & {
+export type CatchError<C extends ContainerLike, O = never> = Container<C> & {
   catchError<T>(
     onError: Function1<unknown, ContainerOf<C, T> | void>,
+    options?: O,
   ): ContainerOperator<C, T, T>;
 };
 
@@ -123,32 +126,45 @@ export type ConcatAll<C extends ContainerLike, O = never> = Container<C> & {
   concatAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
 };
 
-export type DecodeWithCharset<C extends ContainerLike> = Container<C> & {
+export type DecodeWithCharset<
+  C extends ContainerLike,
+  O = unknown,
+> = Container<C> & {
   decodeWithCharset(
-    charset?: string,
+    options?: O & {
+      charset?: string;
+    },
   ): ContainerOperator<C, ArrayBuffer, string>;
 };
 
-export type Defer<C extends ContainerLike> = Container<C> & {
-  defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
+export type Defer<C extends ContainerLike, O = never> = Container<C> & {
+  defer<T>(factory: Factory<ContainerOf<C, T>>, options?: O): ContainerOf<C, T>;
 };
 
-export type DistinctUntilChanged<C extends ContainerLike> = Container<C> & {
-  distinctUntilChanged<T>(options?: {
-    readonly equality?: Equality<T>;
-  }): ContainerOperator<C, T, T>;
+export type DistinctUntilChanged<
+  C extends ContainerLike,
+  O = unknown,
+> = Container<C> & {
+  distinctUntilChanged<T>(
+    options?: O & {
+      readonly equality?: Equality<T>;
+    },
+  ): ContainerOperator<C, T, T>;
 };
 
-export type EverySatisfy<C extends ContainerLike> = Container<C> & {
-  everySatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
+export type EverySatisfy<C extends ContainerLike, O = never> = Container<C> & {
+  everySatisfy<T>(
+    predicate: Predicate<T>,
+    options?: O,
+  ): ContainerOperator<C, T, boolean>;
 };
 
 export type Empty<C extends ContainerLike, O = never> = Container<C> & {
   empty<T>(options?: O): ContainerOf<C, T>;
 };
 
-export type ForEach<C extends ContainerLike> = Container<C> & {
-  forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
+export type ForEach<C extends ContainerLike, O = never> = Container<C> & {
+  forEach<T>(effect: SideEffect1<T>, options?: O): ContainerOperator<C, T, T>;
 };
 
 export type ForkConcat<C extends ContainerLike> = Container<C> & {
@@ -222,17 +238,13 @@ export type ForkZip<C extends ContainerLike> = Container<C> & {
   ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 };
 
-export type FromArray<
-  C extends ContainerLike,
-  O extends {
-    readonly start?: number;
-    readonly count?: number;
-  } = {
-    readonly start?: number;
-    readonly count?: number;
-  },
-> = Container<C> & {
-  fromArray<T>(options?: O): Function1<readonly T[], ContainerOf<C, T>>;
+export type FromArray<C extends ContainerLike, O = unknown> = Container<C> & {
+  fromArray<T>(
+    options?: O & {
+      readonly start?: number;
+      readonly count?: number;
+    },
+  ): Function1<readonly T[], ContainerOf<C, T>>;
 };
 
 export type FromAsyncIterable<
@@ -268,73 +280,93 @@ export type Generate<C extends ContainerLike, O = never> = Container<C> & {
   ): ContainerOf<C, T>;
 };
 
-export type Keep<C extends ContainerLike> = Container<C> & {
-  keep<T>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
+export type Keep<C extends ContainerLike, O = never> = Container<C> & {
+  keep<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, T>;
 };
 
-export type Map<C extends ContainerLike> = Container<C> & {
-  map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
+export type Map<C extends ContainerLike, O = never> = Container<C> & {
+  map<TA, TB>(
+    mapper: Function1<TA, TB>,
+    options?: O,
+  ): ContainerOperator<C, TA, TB>;
 };
 
-export type Never<C extends StatefulContainerLike> = Container<C> & {
-  never<T>(): ContainerOf<C, T>;
+export type Never<C extends StatefulContainerLike, O = never> = Container<C> & {
+  never<T>(options?: O): ContainerOf<C, T>;
 };
 
-export type Pairwise<C extends ContainerLike> = Container<C> & {
-  pairwise<T>(): ContainerOperator<C, T, readonly [T, T]>;
+export type Pairwise<C extends ContainerLike, O = never> = Container<C> & {
+  pairwise<T>(options?: O): ContainerOperator<C, T, readonly [T, T]>;
 };
 
-export type Reduce<C extends ContainerLike> = Container<C> & {
+export type Reduce<C extends ContainerLike, O = never> = Container<C> & {
   reduce<T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
+    options?: O,
   ): ContainerOperator<C, T, TAcc>;
 };
 
-export type Repeat<C extends ContainerLike> = Container<C> & {
-  repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
-  repeat<T>(count: number): ContainerOperator<C, T, T>;
-  repeat<T>(): ContainerOperator<C, T, T>;
+export type Repeat<C extends ContainerLike, O = never> = Container<C> & {
+  repeat<T>(
+    predicate: Predicate<number>,
+    options?: O,
+  ): ContainerOperator<C, T, T>;
+  repeat<T>(count: number, options?: O): ContainerOperator<C, T, T>;
+  repeat<T>(options?: O): ContainerOperator<C, T, T>;
 };
 
-export type Scan<C extends ContainerLike> = Container<C> & {
+export type Scan<C extends ContainerLike, O = never> = Container<C> & {
   scan<T, TAcc>(
     scanner: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
+    options?: O,
   ): ContainerOperator<C, T, TAcc>;
 };
 
-export type SkipFirst<C extends ContainerLike> = Container<C> & {
-  skipFirst<T>(options?: {
-    readonly count?: number;
-  }): ContainerOperator<C, T, T>;
-};
-
-export type SomeSatisfy<C extends ContainerLike> = Container<C> & {
-  someSatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
-};
-
-export type TakeFirst<C extends ContainerLike> = Container<C> & {
-  takeFirst<T>(options?: {
-    readonly count?: number;
-  }): ContainerOperator<C, T, T>;
-};
-
-export type TakeLast<C extends ContainerLike> = Container<C> & {
-  takeLast<T>(options?: {
-    readonly count?: number;
-  }): ContainerOperator<C, T, T>;
-};
-
-export type TakeWhile<C extends ContainerLike> = Container<C> & {
-  takeWhile<T>(
-    predicate: Predicate<T>,
-    options?: { readonly inclusive?: boolean },
+export type SkipFirst<C extends ContainerLike, O = unknown> = Container<C> & {
+  skipFirst<T>(
+    options?: O & {
+      readonly count?: number;
+    },
   ): ContainerOperator<C, T, T>;
 };
 
-export type ThrowIfEmpty<C extends ContainerLike> = Container<C> & {
-  throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
+export type SomeSatisfy<C extends ContainerLike, O = never> = Container<C> & {
+  someSatisfy<T>(
+    predicate: Predicate<T>,
+    options?: O,
+  ): ContainerOperator<C, T, boolean>;
+};
+
+export type TakeFirst<C extends ContainerLike, O = unknown> = Container<C> & {
+  takeFirst<T>(
+    options?: O & {
+      readonly count?: number;
+    },
+  ): ContainerOperator<C, T, T>;
+};
+
+export type TakeLast<C extends ContainerLike, O = unknown> = Container<C> & {
+  takeLast<T>(
+    options?: O & {
+      readonly count?: number;
+    },
+  ): ContainerOperator<C, T, T>;
+};
+
+export type TakeWhile<C extends ContainerLike, O = unknown> = Container<C> & {
+  takeWhile<T>(
+    predicate: Predicate<T>,
+    options?: O & { readonly inclusive?: boolean },
+  ): ContainerOperator<C, T, T>;
+};
+
+export type ThrowIfEmpty<C extends ContainerLike, O = never> = Container<C> & {
+  throwIfEmpty<T>(
+    factory: Factory<unknown>,
+    options?: O,
+  ): ContainerOperator<C, T, T>;
 };
 
 export type ToAsyncIterable<
@@ -350,6 +382,7 @@ export type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
   toIterable<T>(options?: O): Function1<ContainerOf<C, T>, IterableLike<T>>;
 };
 
+// FIXME: Propbably should remove this
 export type ToPromiseable<
   C extends ContainerLike,
   Ctx = void,

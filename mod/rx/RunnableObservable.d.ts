@@ -12,7 +12,9 @@ declare const concat: <T>(fst: RunnableObservableLike<T>, snd: RunnableObservabl
 declare const concatAll: ConcatAll<RunnableObservableLike, {
     maxBufferSize?: number;
 }>["concatAll"];
-declare const decodeWithCharset: (charset?: string | undefined) => ContainerOperator<RunnableObservableLike<unknown>, ArrayBuffer, string>;
+declare const decodeWithCharset: (options?: {
+    charset?: string | undefined;
+} | undefined) => ContainerOperator<RunnableObservableLike<unknown>, ArrayBuffer, string>;
 declare const defer: Defer<RunnableObservableLike>["defer"];
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
@@ -20,38 +22,39 @@ declare const distinctUntilChanged: <T>(options?: {
 declare const empty: <T>(options?: {
     delay: number;
 } | undefined) => RunnableObservableLike<T>;
-declare const everySatisfy: <T>(predicate: Predicate<T>) => ContainerOperator<RunnableObservableLike<unknown>, T, boolean>;
+declare const everySatisfy: <T>(predicate: Predicate<T>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, boolean>;
 declare const exhaust: ConcatAll<RunnableObservableLike>["concatAll"];
-declare const forEach: <T>(effect: SideEffect1<T>) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-declare const fromArray: <T>(options?: {
+declare const forEach: <T>(effect: SideEffect1<T>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
+declare const fromArray: <T>(options?: ({
     readonly delay?: number | undefined;
     readonly delayStart?: boolean | undefined;
+} & {
     readonly start?: number | undefined;
     readonly count?: number | undefined;
-} | undefined) => Function1<readonly T[], RunnableObservableLike<T>>;
+}) | undefined) => Function1<readonly T[], RunnableObservableLike<T>>;
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
     readonly delay?: number | undefined;
     readonly delayStart?: boolean | undefined;
 } | undefined) => RunnableObservableLike<T>;
-declare const keep: <T>(predicate: Predicate<T>) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<RunnableObservableLike<unknown>, TA, TB>;
+declare const keep: <T>(predicate: Predicate<T>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
+declare const map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, TA, TB>;
 declare const merge: <T>(fst: RunnableObservableLike<T>, snd: RunnableObservableLike<T>, ...tail: readonly RunnableObservableLike<T>[]) => RunnableObservableLike<T>;
 declare const mergeAll: ConcatAll<RunnableObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
 }>["concatAll"];
-declare const pairwise: <T>() => ContainerOperator<RunnableObservableLike<unknown>, T, readonly [
+declare const pairwise: <T>(options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, readonly [
     T,
     T
 ]>;
-declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<RunnableObservableLike<unknown>, T, TAcc>;
+declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, TAcc>;
 declare const retry: Retry<RunnableObservableLike>["retry"];
-declare const scan: <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<RunnableObservableLike<unknown>, T, TAcc>;
+declare const scan: <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, TAcc>;
 declare const scanAsync: ScanAsync<RunnableObservableLike, RunnableObservableLike>["scanAsync"];
 declare const skipFirst: <T>(options?: {
     readonly count?: number | undefined;
 } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-declare const someSatisfy: <T>(predicate: Predicate<T>) => ContainerOperator<RunnableObservableLike<unknown>, T, boolean>;
+declare const someSatisfy: <T>(predicate: Predicate<T>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, boolean>;
 declare const switchAll: ConcatAll<RunnableObservableLike>["concatAll"];
 declare const takeFirst: <T>(options?: {
     readonly count?: number | undefined;
@@ -66,7 +69,7 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const throttle: <T>(duration: number, options?: {
     readonly mode?: "first" | "last" | "interval";
 }) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
+declare const throwIfEmpty: <T>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
 declare const timeout: {
     <T>(duration: number): ContainerOperator<RunnableObservableLike<unknown>, T, T>;
     <T_1>(duration: RunnableObservableLike<unknown>): ContainerOperator<RunnableObservableLike<unknown>, T_1, T_1>;
@@ -208,7 +211,7 @@ declare const RunnableObservable: {
     buffer: <T>(options?: {
         readonly maxBufferSize?: number | undefined;
     } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, readonly T[]>;
-    catchError: <T_1>(onError: Function1<unknown, void | RunnableObservableLike<T_1>>) => ContainerOperator<RunnableObservableLike<unknown>, T_1, T_1>;
+    catchError: <T_1>(onError: Function1<unknown, void | RunnableObservableLike<T_1>>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_1, T_1>;
     combineLatest: {
         <TA, TB>(a: RunnableObservableLike<TA>, b: RunnableObservableLike<TB>): RunnableObservableLike<readonly [
             TA,
@@ -275,45 +278,48 @@ declare const RunnableObservable: {
     concatAll: <T_3>(options?: {
         maxBufferSize?: number | undefined;
     } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, RunnableObservableLike<T_3>, T_3>;
-    decodeWithCharset: (charset?: string | undefined) => ContainerOperator<RunnableObservableLike<unknown>, ArrayBuffer, string>;
-    defer: <T_4>(factory: Factory<RunnableObservableLike<T_4>>) => RunnableObservableLike<T_4>;
+    decodeWithCharset: (options?: {
+        charset?: string | undefined;
+    } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, ArrayBuffer, string>;
+    defer: <T_4>(factory: Factory<RunnableObservableLike<T_4>>, options?: undefined) => RunnableObservableLike<T_4>;
     distinctUntilChanged: <T_5>(options?: {
         readonly equality?: Equality<T_5> | undefined;
     } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_5, T_5>;
     empty: <T_6>(options?: {
         delay: number;
     } | undefined) => RunnableObservableLike<T_6>;
-    everySatisfy: <T_7>(predicate: Predicate<T_7>) => ContainerOperator<RunnableObservableLike<unknown>, T_7, boolean>;
+    everySatisfy: <T_7>(predicate: Predicate<T_7>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_7, boolean>;
     exhaust: <T_8>(options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, RunnableObservableLike<T_8>, T_8>;
-    forEach: <T_9>(effect: SideEffect1<T_9>) => ContainerOperator<RunnableObservableLike<unknown>, T_9, T_9>;
-    fromArray: <T_10>(options?: {
+    forEach: <T_9>(effect: SideEffect1<T_9>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_9, T_9>;
+    fromArray: <T_10>(options?: ({
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
+    } & {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
-    } | undefined) => Function1<readonly T_10[], RunnableObservableLike<T_10>>;
+    }) | undefined) => Function1<readonly T_10[], RunnableObservableLike<T_10>>;
     generate: <T_11>(generator: Updater<T_11>, initialValue: Factory<T_11>, options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
     } | undefined) => RunnableObservableLike<T_11>;
-    keep: <T_12>(predicate: Predicate<T_12>) => ContainerOperator<RunnableObservableLike<unknown>, T_12, T_12>;
-    map: <TA_8, TB_8>(mapper: Function1<TA_8, TB_8>) => ContainerOperator<RunnableObservableLike<unknown>, TA_8, TB_8>;
+    keep: <T_12>(predicate: Predicate<T_12>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_12, T_12>;
+    map: <TA_8, TB_8>(mapper: Function1<TA_8, TB_8>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, TA_8, TB_8>;
     merge: <T_2>(fst: RunnableObservableLike<T_2>, snd: RunnableObservableLike<T_2>, ...tail: readonly RunnableObservableLike<T_2>[]) => RunnableObservableLike<T_2>;
-    pairwise: <T_13>() => ContainerOperator<RunnableObservableLike<unknown>, T_13, readonly [
+    pairwise: <T_13>(options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_13, readonly [
         T_13,
         T_13
     ]>;
-    reduce: <T_14, TAcc>(reducer: Reducer<T_14, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<RunnableObservableLike<unknown>, T_14, TAcc>;
+    reduce: <T_14, TAcc>(reducer: Reducer<T_14, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_14, TAcc>;
     retry: {
         <T_15>(): ContainerOperator<RunnableObservableLike<unknown>, T_15, T_15>;
         <T_16>(predicate: Function2<number, unknown, boolean>): ContainerOperator<RunnableObservableLike<unknown>, T_16, T_16>;
     };
-    scan: <T_17, TAcc_1>(scanner: Reducer<T_17, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<RunnableObservableLike<unknown>, T_17, TAcc_1>;
+    scan: <T_17, TAcc_1>(scanner: Reducer<T_17, TAcc_1>, initialValue: Factory<TAcc_1>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_17, TAcc_1>;
     scanAsync: <T_18, TAcc_2>(scanner: AsyncReducer<RunnableObservableLike<unknown>, T_18, TAcc_2>, initialValue: Factory<TAcc_2>) => ContainerOperator<RunnableObservableLike<unknown>, T_18, TAcc_2>;
     skipFirst: <T_19>(options?: {
         readonly count?: number | undefined;
     } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_19, T_19>;
-    someSatisfy: <T_20>(predicate: Predicate<T_20>) => ContainerOperator<RunnableObservableLike<unknown>, T_20, boolean>;
+    someSatisfy: <T_20>(predicate: Predicate<T_20>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_20, boolean>;
     switchAll: <T_8>(options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, RunnableObservableLike<T_8>, T_8>;
     takeFirst: <T_21>(options?: {
         readonly count?: number | undefined;
@@ -328,7 +334,7 @@ declare const RunnableObservable: {
     throttle: <T_25>(duration: number, options?: {
         readonly mode?: "first" | "last" | "interval";
     }) => ContainerOperator<RunnableObservableLike<unknown>, T_25, T_25>;
-    throwIfEmpty: <T_26>(factory: Factory<unknown>) => ContainerOperator<RunnableObservableLike<unknown>, T_26, T_26>;
+    throwIfEmpty: <T_26>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_26, T_26>;
     timeout: {
         <T_27>(duration: number): ContainerOperator<RunnableObservableLike<unknown>, T_27, T_27>;
         <T_28>(duration: RunnableObservableLike<unknown>): ContainerOperator<RunnableObservableLike<unknown>, T_28, T_28>;

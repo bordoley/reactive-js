@@ -7,15 +7,10 @@ import {
 } from "../../../containers";
 import { Function1, compose, pipe } from "../../../functions";
 
-const Container_genMap = <
-  C extends ContainerLike,
-  TA,
-  TB,
-  OFromIterable = never,
->(
-  m: ConcatAll<C, never> & Map<C> & FromIterable<C, OFromIterable>,
+const Container_genMap = <C extends ContainerLike, TA, TB, O = never>(
+  m: ConcatAll<C, never> & Map<C> & FromIterable<C, O>,
   mapper: Function1<TA, Generator<TB, any, any>>,
-  options?: OFromIterable,
+  options?: O,
 ): ContainerOperator<C, TA, TB> =>
   compose(
     m.map(x => pipe(x, mapper, m.fromIterable<TB>(options))),

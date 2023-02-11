@@ -72,8 +72,8 @@ interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;
 }
 type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
-type FromEnumerableObservable<C extends ContainerLike> = Container<C> & {
-    fromEnumerableObservable: <T>(options?: {
+type FromEnumerableObservable<C extends ContainerLike, O = unknown> = Container<C> & {
+    fromEnumerableObservable: <T>(options?: O & {
         readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
     }) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
 };

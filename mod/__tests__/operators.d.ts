@@ -15,9 +15,9 @@ declare const bufferTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const catchErrorTests: <C extends ContainerLike>(m: Container<C> & {
-    catchError<T>(onError: Function1<unknown, void | ContainerOf<C, T>>): ContainerOperator<C, T, T>;
+    catchError<T>(onError: Function1<unknown, void | ContainerOf<C, T>>, options?: undefined): ContainerOperator<C, T, T>;
 } & {
-    map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
+    map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
 } & {
     fromArray<T_1>(options?: {
         readonly start?: number | undefined;
@@ -54,7 +54,7 @@ declare const concatMapTests: <C extends ContainerLike>(m: Container<C> & {
         readonly count?: number | undefined;
     } | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 } & {
-    map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
+    map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
 } & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
@@ -69,16 +69,18 @@ declare const concatWithTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const decodeWithCharsetTests: <C extends ContainerLike>(m: Container<C> & {
-    decodeWithCharset(charset?: string | undefined): ContainerOperator<C, ArrayBuffer, string>;
+    decodeWithCharset(options?: {
+        charset?: string | undefined;
+    } | undefined): ContainerOperator<C, ArrayBuffer, string>;
 } & {
-    defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
+    defer<T>(factory: Factory<ContainerOf<C, T>>, options?: undefined): ContainerOf<C, T>;
 } & {
     fromArray<T_1>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     } | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 } & {
-    map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
+    map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
 } & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
@@ -105,7 +107,7 @@ declare const endWithTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const everySatisfyTests: <C extends ContainerLike>(m: Container<C> & {
-    everySatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
+    everySatisfy<T>(predicate: Predicate<T>, options?: undefined): ContainerOperator<C, T, boolean>;
 } & {
     fromArray<T_1>(options?: {
         readonly start?: number | undefined;
@@ -115,7 +117,7 @@ declare const everySatisfyTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const forEachTests: <C extends ContainerLike>(m: Container<C> & {
-    forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
+    forEach<T>(effect: SideEffect1<T>, options?: undefined): ContainerOperator<C, T, T>;
 } & {
     fromArray<T_1>(options?: {
         readonly start?: number | undefined;
@@ -142,12 +144,12 @@ declare const genMapTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     fromIterable<T_2>(options?: undefined): Function1<Iterable<T_2>, ContainerOf<C, T_2>>;
 } & {
-    map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
+    map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
 } & {
     toReadonlyArray<T_3>(options?: undefined): Function1<ContainerOf<C, T_3>, ReadonlyArrayLike<T_3>>;
 }) => Describe;
 declare const ignoreElementsTests: <C extends ContainerLike>(m: Container<C> & {
-    keep<T>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
+    keep<T>(predicate: Predicate<T>, options?: undefined): ContainerOperator<C, T, T>;
 } & {
     fromArray<T_1>(options?: {
         readonly start?: number | undefined;
@@ -157,7 +159,7 @@ declare const ignoreElementsTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const keepTests: <C extends ContainerLike>(m: Container<C> & {
-    keep<T>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
+    keep<T>(predicate: Predicate<T>, options?: undefined): ContainerOperator<C, T, T>;
 } & {
     fromArray<T_1>(options?: {
         readonly start?: number | undefined;
@@ -167,7 +169,7 @@ declare const keepTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const mapTests: <C extends ContainerLike>(m: Container<C> & {
-    map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
+    map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
 } & {
     fromArray<T>(options?: {
         readonly start?: number | undefined;
@@ -177,7 +179,7 @@ declare const mapTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
 declare const mapToTests: <C extends ContainerLike>(m: Container<C> & {
-    map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
+    map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
 } & {
     fromArray<T>(options?: {
         readonly start?: number | undefined;
@@ -187,7 +189,7 @@ declare const mapToTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
 declare const pairwiseTests: <C extends ContainerLike>(m: Container<C> & {
-    pairwise<T>(): ContainerOperator<C, T, readonly [
+    pairwise<T>(options?: undefined): ContainerOperator<C, T, readonly [
         T,
         T
     ]>;
@@ -200,7 +202,7 @@ declare const pairwiseTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const reduceTests: <C extends ContainerLike>(m: Container<C> & {
-    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<C, T, TAcc>;
+    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: undefined): ContainerOperator<C, T, TAcc>;
 } & {
     fromArray<T_1>(options?: {
         readonly start?: number | undefined;
@@ -210,9 +212,9 @@ declare const reduceTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const repeatTests: <C extends ContainerLike>(m: Container<C> & {
-    repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
-    repeat<T_1>(count: number): ContainerOperator<C, T_1, T_1>;
-    repeat<T_2>(): ContainerOperator<C, T_2, T_2>;
+    repeat<T>(predicate: Predicate<number>, options?: undefined): ContainerOperator<C, T, T>;
+    repeat<T_1>(count: number, options?: undefined): ContainerOperator<C, T_1, T_1>;
+    repeat<T_2>(options?: undefined): ContainerOperator<C, T_2, T_2>;
 } & {
     fromArray<T_3>(options?: {
         readonly start?: number | undefined;
@@ -233,7 +235,7 @@ declare const retryTests: <C extends ObservableLike<unknown>>(m: Container<C> & 
         readonly count?: number | undefined;
     } | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 } & {
-    map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
+    map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
 } & {
     takeFirst<T_2>(options?: {
         readonly count?: number | undefined;
@@ -242,7 +244,7 @@ declare const retryTests: <C extends ObservableLike<unknown>>(m: Container<C> & 
     toReadonlyArray<T_3>(options?: undefined): Function1<ContainerOf<C, T_3>, ReadonlyArrayLike<T_3>>;
 }) => Describe;
 declare const scanTests: <C extends ContainerLike>(m: Container<C> & {
-    scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<C, T, TAcc>;
+    scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: undefined): ContainerOperator<C, T, TAcc>;
 } & {
     fromArray<T_1>(options?: {
         readonly start?: number | undefined;
@@ -254,11 +256,14 @@ declare const scanTests: <C extends ContainerLike>(m: Container<C> & {
 declare const scanAsyncTests: <C extends ContainerLike, CInner extends ObservableLike<unknown>>(m: Container<C> & {
     scanAsync: <T, TAcc>(scanner: AsyncReducer<CInner, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
 } & {
-    fromArray<T_1>(options?: {
+    fromArray<T_1>(options?: ({
         readonly start?: number | undefined;
         readonly count?: number | undefined;
         delay?: number | undefined;
-    } | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
+    } & {
+        readonly start?: number | undefined;
+        readonly count?: number | undefined;
+    }) | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
 } & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }, mInner: FromArray<CInner, {
@@ -279,7 +284,7 @@ declare const skipFirstTests: <C extends ContainerLike>(m: Container<C> & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
 declare const someSatisfyTests: <C extends ContainerLike>(m: Container<C> & {
-    someSatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
+    someSatisfy<T>(predicate: Predicate<T>, options?: undefined): ContainerOperator<C, T, boolean>;
 } & {
     fromArray<T_1>(options?: {
         readonly start?: number | undefined;
@@ -340,7 +345,7 @@ declare const throwIfEmptyTests: <C extends ContainerLike>(m: Container<C> & {
         readonly count?: number | undefined;
     } | undefined): Function1<readonly T[], ContainerOf<C, T>>;
 } & {
-    throwIfEmpty<T_1>(factory: Factory<unknown>): ContainerOperator<C, T_1, T_1>;
+    throwIfEmpty<T_1>(factory: Factory<unknown>, options?: undefined): ContainerOperator<C, T_1, T_1>;
 } & {
     toReadonlyArray<T_2>(options?: undefined): Function1<ContainerOf<C, T_2>, ReadonlyArrayLike<T_2>>;
 }) => Describe;
