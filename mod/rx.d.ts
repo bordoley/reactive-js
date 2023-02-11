@@ -77,9 +77,6 @@ type FromEnumerableObservable<C extends ContainerLike, O = unknown> = Container<
         readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
     }) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
 };
-type FromObservable<C extends ContainerLike> = Container<C> & {
-    fromObservable: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, ContainerOf<C, T>>;
-};
 type Retry<C extends ObservableLike> = {
     /**
      * Returns an `ObservableLike` that mirrors the source, re-subscribing
@@ -135,4 +132,4 @@ type ZipLatest<C extends ObservableLike> = {
 type ZipWithLatestFrom<C extends ObservableLike> = {
     zipWithLatestFrom<TA, TB, T>(other: ContainerOf<C, TB>, selector: Function2<TA, TB, T>): ContainerOperator<C, TA, T>;
 };
-export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, Retry, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, TakeUntil, Timeout, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, WithLatestFrom, ZipLatest, ZipWithLatestFrom };
+export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, Retry, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, TakeUntil, Timeout, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, WithLatestFrom, ZipLatest, ZipWithLatestFrom };

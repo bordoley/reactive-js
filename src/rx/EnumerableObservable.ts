@@ -23,14 +23,13 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
-  ToPromiseable,
   ToReadonlyArray,
   Zip,
 } from "../containers";
 import { Factory } from "../functions";
 import { ToEnumerable } from "../ix";
 import { EnumerableObservableLike, Retry, ScanAsync, ToRunnable } from "../rx";
-import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling";
+import { VirtualTimeSchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError";
 import EnumerableObservable_defer from "./EnumerableObservable/__internal__/EnumerableObservable.defer";
@@ -61,7 +60,6 @@ import Observable_takeLast from "./Observable/__internal__/Observable.takeLast";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty";
 import Observable_toFlowable from "./Observable/__internal__/Observable.toFlowable";
-import Observable_toPromise from "./Observable/__internal__/Observable.toPromise";
 import Observable_zip from "./Observable/__internal__/Observable.zip";
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray";
 import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable";
@@ -177,11 +175,6 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
 export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
   Observable_toFlowable;
 
-export const toPromise: ToPromiseable<
-  EnumerableObservableLike,
-  SchedulerLike
->["toPromise"] = Observable_toPromise;
-
 export const toReadonlyArray =
   RunnableObservable_toReadonlyArray as ToReadonlyArray<
     EnumerableObservableLike,
@@ -227,7 +220,6 @@ const EnumerableObservable = {
   throwIfEmpty,
   toEnumerable,
   toFlowable,
-  toPromise,
   toReadonlyArray,
   toRunnable,
   zip,

@@ -20,7 +20,6 @@
 
 - [AsyncReducer](rx.md#asyncreducer)
 - [FromEnumerableObservable](rx.md#fromenumerableobservable)
-- [FromObservable](rx.md#fromobservable)
 - [Retry](rx.md#retry)
 - [ScanAsync](rx.md#scanasync)
 - [TakeUntil](rx.md#takeuntil)
@@ -59,18 +58,6 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `O` | `unknown` |
-
-___
-
-### FromObservable
-
-Ƭ **FromObservable**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `fromObservable`: <T\>(`scheduler`: [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)) => [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 
 ___
 

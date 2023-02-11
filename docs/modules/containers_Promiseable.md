@@ -13,7 +13,7 @@
 
 ### fromObservable
 
-▸ **fromObservable**<`T`\>(`scheduler`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
+▸ **fromObservable**<`T`\>(`scheduler`): (`observable`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => `PromiseLike`<`T`\>
 
 #### Type parameters
 
@@ -29,7 +29,19 @@
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
+`fn`
+
+▸ (`observable`): `PromiseLike`<`T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+
+##### Returns
+
+`PromiseLike`<`T`\>
 
 ___
 

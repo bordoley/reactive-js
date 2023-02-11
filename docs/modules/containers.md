@@ -54,7 +54,6 @@
 - [ThrowIfEmpty](containers.md#throwifempty)
 - [ToAsyncIterable](containers.md#toasynciterable)
 - [ToIterable](containers.md#toiterable)
-- [ToPromiseable](containers.md#topromiseable)
 - [ToReadonlyArray](containers.md#toreadonlyarray)
 - [ToReadonlySet](containers.md#toreadonlyset)
 - [ToSequence](containers.md#tosequence)
@@ -543,19 +542,6 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `O` | `never` |
-
-___
-
-### ToPromiseable
-
-Ƭ **ToPromiseable**<`C`, `Ctx`\>: [`Container`](containers.md#container)<`C`\> & { `toPromise`: <T\>(`ctx`: `Ctx`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `Ctx` | `void` |
 
 ___
 

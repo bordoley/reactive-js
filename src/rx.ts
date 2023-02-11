@@ -143,13 +143,6 @@ export type FromEnumerableObservable<
   ) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
 };
 
-// FIXME: probably should remove this
-export type FromObservable<C extends ContainerLike> = Container<C> & {
-  fromObservable: <T>(
-    scheduler: SchedulerLike,
-  ) => Function1<ObservableLike<T>, ContainerOf<C, T>>;
-};
-
 export type Retry<C extends ObservableLike> = {
   /**
    * Returns an `ObservableLike` that mirrors the source, re-subscribing

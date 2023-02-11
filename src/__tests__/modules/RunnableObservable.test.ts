@@ -13,8 +13,6 @@ import {
 } from "../../functions";
 import { RunnableObservableLike } from "../../rx";
 import RunnableObservable from "../../rx/RunnableObservable";
-import Scheduler from "../../scheduling/Scheduler";
-import Disposable from "../../util/Disposable";
 import {
   bufferTests,
   catchErrorTests,
@@ -50,11 +48,9 @@ import {
 import {
   describe,
   expectArrayEquals,
-  expectPromiseToThrow,
   expectToThrow,
   expectToThrowError,
   test,
-  testAsync,
   testModule,
 } from "../testing";
 
@@ -297,24 +293,6 @@ const timeoutTests = describe(
   ),
 );
 
-const toPromiseTests = describe(
-  "toPromise",
-  testAsync("when observable completes without producing a value", async () => {
-    const scheduler = Scheduler.createHostScheduler();
-    try {
-      await pipe(
-        pipe(
-          RunnableObservable.empty(),
-          RunnableObservable.toPromise(scheduler),
-        ),
-        expectPromiseToThrow,
-      );
-    } finally {
-      pipe(scheduler, Disposable.dispose());
-    }
-  }),
-);
-
 const withLatestFromTest = describe(
   "withLatestFrom",
   test(
@@ -543,7 +521,6 @@ testModule(
   timeoutTests,
   withLatestFromTest,
   zipWithTests<RunnableObservableLike>(RunnableObservable),
-  toPromiseTests,
   zipTests,
   zipLatestTests,
   zipWithLatestTests,

@@ -1,7 +1,7 @@
 import { ToFlowable, FlowableLike } from "../streaming.js";
 import { RunnableObservableLike, Retry, ScanAsync, RunnableLike, AsyncReducer } from "../rx.js";
-import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling.js";
-import { ContainerOperator, CatchError, Zip, ConcatAll, Defer, ToPromiseable, ReadonlyArrayLike, PromiseableLike } from "../containers.js";
+import { VirtualTimeSchedulerLike } from "../scheduling.js";
+import { ContainerOperator, CatchError, Zip, ConcatAll, Defer, ReadonlyArrayLike } from "../containers.js";
 import { Equality, Predicate, SideEffect1, Function1, Updater, Factory, Reducer, Function2 } from "../functions.js";
 declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number | undefined;
@@ -75,7 +75,6 @@ declare const timeout: {
     <T_1>(duration: RunnableObservableLike<unknown>): ContainerOperator<RunnableObservableLike<unknown>, T_1, T_1>;
 };
 declare const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"];
-declare const toPromise: ToPromiseable<RunnableObservableLike, SchedulerLike>["toPromise"];
 declare const toReadonlyArray: <T>(options?: undefined) => Function1<RunnableObservableLike<T>, ReadonlyArrayLike<T>>;
 declare const toRunnable: <T>(options?: {
     readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike> | undefined;
@@ -340,12 +339,11 @@ declare const RunnableObservable: {
         <T_28>(duration: RunnableObservableLike<unknown>): ContainerOperator<RunnableObservableLike<unknown>, T_28, T_28>;
     };
     toFlowable: <T_29>(options?: undefined) => Function1<RunnableObservableLike<T_29>, FlowableLike<T_29>>;
-    toPromise: <T_30>(ctx: SchedulerLike) => Function1<RunnableObservableLike<T_30>, PromiseableLike<T_30>>;
-    toReadonlyArray: <T_31>(options?: undefined) => Function1<RunnableObservableLike<T_31>, ReadonlyArrayLike<T_31>>;
-    toRunnable: <T_32>(options?: {
+    toReadonlyArray: <T_30>(options?: undefined) => Function1<RunnableObservableLike<T_30>, ReadonlyArrayLike<T_30>>;
+    toRunnable: <T_31>(options?: {
         readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike> | undefined;
-    } | undefined) => Function1<RunnableObservableLike<T_32>, RunnableLike<T_32>>;
-    withLatestFrom: <TA_9, TB_9, T_33>(other: RunnableObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_33>) => ContainerOperator<RunnableObservableLike<unknown>, TA_9, T_33>;
+    } | undefined) => Function1<RunnableObservableLike<T_31>, RunnableLike<T_31>>;
+    withLatestFrom: <TA_9, TB_9, T_32>(other: RunnableObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_32>) => ContainerOperator<RunnableObservableLike<unknown>, TA_9, T_32>;
     zip: {
         <TA, TB>(a: RunnableObservableLike<TA>, b: RunnableObservableLike<TB>): RunnableObservableLike<readonly [
             TA,
@@ -470,6 +468,6 @@ declare const RunnableObservable: {
             TI
         ]>;
     };
-    zipWithLatestFrom: <TA_10, TB_10, T_34>(other: RunnableObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_34>) => ContainerOperator<RunnableObservableLike<unknown>, TA_10, T_34>;
+    zipWithLatestFrom: <TA_10, TB_10, T_33>(other: RunnableObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_33>) => ContainerOperator<RunnableObservableLike<unknown>, TA_10, T_33>;
 };
-export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

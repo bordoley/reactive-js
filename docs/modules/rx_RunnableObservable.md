@@ -40,7 +40,6 @@
 - [throwIfEmpty](rx_RunnableObservable.md#throwifempty)
 - [timeout](rx_RunnableObservable.md#timeout)
 - [toFlowable](rx_RunnableObservable.md#toflowable)
-- [toPromise](rx_RunnableObservable.md#topromise)
 - [toReadonlyArray](rx_RunnableObservable.md#toreadonlyarray)
 - [toRunnable](rx_RunnableObservable.md#torunnable)
 - [withLatestFrom](rx_RunnableObservable.md#withlatestfrom)
@@ -1062,28 +1061,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-___
-
-### toPromise
-
-▸ **toPromise**<`T`\>(`ctx`): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `ctx` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
 
 ___
 

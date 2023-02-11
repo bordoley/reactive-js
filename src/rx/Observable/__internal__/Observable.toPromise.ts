@@ -1,4 +1,3 @@
-import { ToPromiseable } from "../../../containers";
 import {
   Optional,
   error,
@@ -13,10 +12,7 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import Observable_forEach from "./Observable.forEach";
 import Observable_subscribe from "./Observable.subscribe";
 
-const Observable_toPromise: ToPromiseable<
-  ObservableLike,
-  SchedulerLike
->["toPromise"] =
+const Observable_toPromise =
   <T>(scheduler: SchedulerLike) =>
   (observable: ObservableLike<T>): PromiseLike<T> =>
     newInstance<
