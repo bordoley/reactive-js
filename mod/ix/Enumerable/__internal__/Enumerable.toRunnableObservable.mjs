@@ -5,14 +5,14 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import EnumerableObservable_create from '../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.mjs';
 import Observer_schedule from '../../../rx/Observer/__internal__/Observer.schedule.mjs';
 import RunnableObservable_create from '../../../rx/RunnableObservable/__internal__/RunnableObservable.create.mjs';
-import Continuation_yield_ from '../../../scheduling/Continuation/__internal__/Continuation.yield.mjs';
+import { __yield } from '../../../scheduling/Continuation/effects.mjs';
 import { hasDelay } from '../../../scheduling/__internal__/Scheduler.options.mjs';
 import { DisposableLike_isDisposed } from '../../../util.mjs';
 import Disposable_bindTo from '../../../util/Disposable/__internal__/Disposable.bindTo.mjs';
 import Enumerable_enumerate from './Enumerable.enumerate.mjs';
 
 const Enumerable_toRunnableObservable = (options) => enumerable => {
-    const { delayStart = false } = options !== null && options !== void 0 ? options : {};
+    const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
         const enumerator = pipe(enumerable, Enumerable_enumerate(), Disposable_bindTo(observer));
         pipe(observer, Observer_schedule(() => {
@@ -20,7 +20,7 @@ const Enumerable_toRunnableObservable = (options) => enumerable => {
                 (enumerator[SourceLike_move](),
                     enumerator[EnumeratorLike_hasCurrent])) {
                 observer[SinkLike_notify](enumerator[EnumeratorLike_current]);
-                Continuation_yield_(options);
+                __yield(delay);
             }
         }, delayStart ? options : none));
     };

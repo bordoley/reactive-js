@@ -20,7 +20,7 @@ import Queue_pop from '../../util/__internal__/Queue/Queue.pop.mjs';
 import Queue_push from '../../util/__internal__/Queue/Queue.push.mjs';
 import { MutableRefLike_current } from '../../util/__internal__/util.internal.mjs';
 import Continuation_run from '../Continuation/__internal__/Continuation.run.mjs';
-import Continuation_yield_ from '../Continuation/__internal__/Continuation.yield.mjs';
+import { __yield } from '../Continuation/effects.mjs';
 import Scheduler_getCurrentTime from '../Scheduler/__internal__/Scheduler.getCurrentTime.mjs';
 import Scheduler_isInContinuation from '../Scheduler/__internal__/Scheduler.isInContinuation.mjs';
 import Scheduler_schedule from '../Scheduler/__internal__/Scheduler.schedule.mjs';
@@ -110,7 +110,7 @@ const create =
                     instance[QueueScheduler_dueTime] =
                         Scheduler_getCurrentTime(instance[QueueScheduler_host]) + delay;
                 }
-                Continuation_yield_({ delay });
+                __yield(delay);
             }
         });
         instance[QueueScheduler_hostContinuation] = continuation;
