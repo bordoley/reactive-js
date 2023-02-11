@@ -23,10 +23,12 @@ import {
   expectArrayEquals,
   expectEquals,
   expectIsSome,
+  expectPromiseToThrow,
   expectToHaveBeenCalledTimes,
   expectTrue,
   mockFn,
   test,
+  testAsync,
   testModule,
 } from "../testing";
 
@@ -155,6 +157,21 @@ const toFlowableTests = describe(
   }),
 );
 
+const toPromiseTests = describe(
+  "toPromise",
+  testAsync("when observable completes without producing a value", async () => {
+    const scheduler = Scheduler.createHostScheduler();
+    try {
+      await pipe(
+        pipe(Observable.empty(), Observable.toPromise(scheduler)),
+        expectPromiseToThrow,
+      );
+    } finally {
+      pipe(scheduler, Disposable.dispose());
+    }
+  }),
+);
+
 const asyncTests = describe(
   "async",
   test("batch mode", () => {
@@ -263,4 +280,5 @@ testModule(
   onSubscribeTests,
   shareTests,
   toFlowableTests,
+  toPromiseTests,
 );

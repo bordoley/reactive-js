@@ -19,7 +19,6 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
-  ToPromiseable,
   Zip,
 } from "../containers";
 import Promiseable_toObservable from "../containers/Promiseable/__internal__/Promiseable.toObservable";
@@ -348,10 +347,7 @@ export const timeout = Observable_timeout;
 export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
   Observable_toFlowable;
 
-export const toPromise: ToPromiseable<
-  ObservableLike,
-  SchedulerLike
->["toPromise"] = Observable_toPromise;
+export const toPromise = Observable_toPromise;
 
 export const withLatestFrom = Observable_withLatestFrom;
 export const zip = Observable_zip;

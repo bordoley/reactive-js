@@ -2,8 +2,8 @@ import { ToFlowable, FlowableLike } from "../streaming.js";
 import { ToEnumerable, EnumerableLike } from "../ix.js";
 import { EnumerableObservableLike, Retry, ScanAsync, RunnableLike, AsyncReducer } from "../rx.js";
 import { Equality, Predicate, SideEffect1, Function1, Updater, Factory, Reducer, Function2 } from "../functions.js";
-import { ContainerOperator, CatchError, ConcatAll, Defer, ToPromiseable, ReadonlyArrayLike, PromiseableLike } from "../containers.js";
-import { SchedulerLike, VirtualTimeSchedulerLike } from "../scheduling.js";
+import { ContainerOperator, CatchError, ConcatAll, Defer, ReadonlyArrayLike } from "../containers.js";
+import { VirtualTimeSchedulerLike } from "../scheduling.js";
 declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number | undefined;
 } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, readonly T[]>;
@@ -62,7 +62,6 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const throwIfEmpty: <T>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
 declare const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"];
 declare const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"];
-declare const toPromise: ToPromiseable<EnumerableObservableLike, SchedulerLike>["toPromise"];
 declare const toReadonlyArray: <T>(options?: {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 } | undefined) => Function1<EnumerableObservableLike<T>, ReadonlyArrayLike<T>>;
@@ -188,11 +187,10 @@ declare const EnumerableObservable: {
     throwIfEmpty: <T_24>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_24, T_24>;
     toEnumerable: <T_25>(options?: undefined) => Function1<EnumerableObservableLike<T_25>, EnumerableLike<T_25>>;
     toFlowable: <T_26>(options?: undefined) => Function1<EnumerableObservableLike<T_26>, FlowableLike<T_26>>;
-    toPromise: <T_27>(ctx: SchedulerLike) => Function1<EnumerableObservableLike<T_27>, PromiseableLike<T_27>>;
-    toReadonlyArray: <T_28>(options?: {
+    toReadonlyArray: <T_27>(options?: {
         readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-    } | undefined) => Function1<EnumerableObservableLike<T_28>, ReadonlyArrayLike<T_28>>;
-    toRunnable: <T_29>(options?: undefined) => Function1<EnumerableObservableLike<T_29>, RunnableLike<T_29>>;
+    } | undefined) => Function1<EnumerableObservableLike<T_27>, ReadonlyArrayLike<T_27>>;
+    toRunnable: <T_28>(options?: undefined) => Function1<EnumerableObservableLike<T_28>, RunnableLike<T_28>>;
     zip: {
         <TA_1, TB_1>(a: EnumerableObservableLike<TA_1>, b: EnumerableObservableLike<TB_1>): EnumerableObservableLike<readonly [
             TA_1,
@@ -256,4 +254,4 @@ declare const EnumerableObservable: {
         ]>;
     };
 };
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toPromise, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, zip };

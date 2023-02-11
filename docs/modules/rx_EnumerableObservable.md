@@ -37,7 +37,6 @@
 - [throwIfEmpty](rx_EnumerableObservable.md#throwifempty)
 - [toEnumerable](rx_EnumerableObservable.md#toenumerable)
 - [toFlowable](rx_EnumerableObservable.md#toflowable)
-- [toPromise](rx_EnumerableObservable.md#topromise)
 - [toReadonlyArray](rx_EnumerableObservable.md#toreadonlyarray)
 - [toRunnable](rx_EnumerableObservable.md#torunnable)
 - [zip](rx_EnumerableObservable.md#zip)
@@ -772,28 +771,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-___
-
-### toPromise
-
-▸ **toPromise**<`T`\>(`ctx`): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `ctx` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>\>
 
 ___
 

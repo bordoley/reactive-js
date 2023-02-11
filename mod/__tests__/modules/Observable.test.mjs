@@ -11,7 +11,7 @@ import VirtualTimeScheduler from '../../scheduling/VirtualTimeScheduler.mjs';
 import { FlowMode_resume, FlowMode_pause } from '../../streaming.mjs';
 import Streamable from '../../streaming/Streamable.mjs';
 import Disposable from '../../util/Disposable.mjs';
-import { describe as createDescribe, test as createTest, mockFn, expectToHaveBeenCalledTimes, expectIsSome, expectArrayEquals, expectEquals, expectTrue, testModule } from '../testing.mjs';
+import { describe as createDescribe, test as createTest, mockFn, expectToHaveBeenCalledTimes, expectIsSome, expectArrayEquals, expectEquals, expectTrue, testAsync, expectPromiseToThrow, testModule } from '../testing.mjs';
 
 const onSubscribeTests = createDescribe("onSubscribe", createTest("when subscribe function returns a teardown function", () => {
     const scheduler = VirtualTimeScheduler.create();
@@ -65,6 +65,15 @@ const toFlowableTests = createDescribe("toFlowable", createTest("flow a generati
     pipe(f.calls[2][1], expectEquals(2));
     pipe(subscription, Disposable.isDisposed, expectTrue);
 }));
+const toPromiseTests = createDescribe("toPromise", testAsync("when observable completes without producing a value", async () => {
+    const scheduler = Scheduler.createHostScheduler();
+    try {
+        await pipe(pipe(Observable.empty(), Observable.toPromise(scheduler)), expectPromiseToThrow);
+    }
+    finally {
+        pipe(scheduler, Disposable.dispose());
+    }
+}));
 const asyncTests = createDescribe("async", createTest("batch mode", () => {
     const scheduler = VirtualTimeScheduler.create();
     const fromValueWithDelay = (delay, value) => pipe([value], Observable.fromArray({ delay }));
@@ -117,4 +126,4 @@ const asyncTests = createDescribe("async", createTest("batch mode", () => {
     Continuation.run(scheduler);
     pipe(result, expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]));
 }));
-testModule("Observable", asyncTests, onSubscribeTests, shareTests, toFlowableTests);
+testModule("Observable", asyncTests, onSubscribeTests, shareTests, toFlowableTests, toPromiseTests);

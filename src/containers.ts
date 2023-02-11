@@ -382,14 +382,6 @@ export type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
   toIterable<T>(options?: O): Function1<ContainerOf<C, T>, IterableLike<T>>;
 };
 
-// FIXME: Propbably should remove this
-export type ToPromiseable<
-  C extends ContainerLike,
-  Ctx = void,
-> = Container<C> & {
-  toPromise<T>(ctx: Ctx): Function1<ContainerOf<C, T>, PromiseableLike<T>>;
-};
-
 export type ToReadonlyArray<
   C extends ContainerLike,
   O = never,

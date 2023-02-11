@@ -24,7 +24,6 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
-  ToPromiseable,
   Zip,
 } from "../containers";
 import {
@@ -37,7 +36,6 @@ import {
   ZipLatest,
   ZipWithLatestFrom,
 } from "../rx";
-import { SchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest";
@@ -66,7 +64,6 @@ import Observable_throttle from "./Observable/__internal__/Observable.throttle";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout";
 import Observable_toFlowable from "./Observable/__internal__/Observable.toFlowable";
-import Observable_toPromise from "./Observable/__internal__/Observable.toPromise";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom";
 import Observable_zip from "./Observable/__internal__/Observable.zip";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest";
@@ -208,11 +205,6 @@ export const timeout =
 export const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
   Observable_toFlowable;
 
-export const toPromise: ToPromiseable<
-  RunnableObservableLike,
-  SchedulerLike
->["toPromise"] = Observable_toPromise;
-
 export const toReadonlyArray = RunnableObservable_toReadonlyArray;
 
 export const toRunnable = RunnableObservable_toRunnable;
@@ -263,7 +255,6 @@ const RunnableObservable = {
   throwIfEmpty,
   timeout,
   toFlowable,
-  toPromise,
   toReadonlyArray,
   toRunnable,
   withLatestFrom,

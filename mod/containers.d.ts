@@ -234,9 +234,6 @@ type ToAsyncIterable<C extends ContainerLike, O = never> = Container<C> & {
 type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
     toIterable<T>(options?: O): Function1<ContainerOf<C, T>, IterableLike<T>>;
 };
-type ToPromiseable<C extends ContainerLike, Ctx = void> = Container<C> & {
-    toPromise<T>(ctx: Ctx): Function1<ContainerOf<C, T>, PromiseableLike<T>>;
-};
 type ToReadonlyArray<C extends ContainerLike, O = never> = Container<C> & {
     toReadonlyArray<T>(options?: O): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
 };
@@ -308,4 +305,4 @@ type Zip<C extends ContainerLike> = Container<C> & {
         TI
     ]>;
 };
-export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromAsyncIterable, FromIterable, FromPromise, FromSequence, FromSet, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, ReadonlySetLike, Reduce, Repeat, Scan, SequenceLike, SequenceLike_data, SequenceLike_next, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToAsyncIterable, ToIterable, ToPromiseable, ToReadonlyArray, ToReadonlySet, ToSequence, Zip };
+export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromAsyncIterable, FromIterable, FromPromise, FromSequence, FromSet, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, ReadonlySetLike, Reduce, Repeat, Scan, SequenceLike, SequenceLike_data, SequenceLike_next, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToAsyncIterable, ToIterable, ToReadonlyArray, ToReadonlySet, ToSequence, Zip };

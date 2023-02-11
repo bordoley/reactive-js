@@ -27,7 +27,6 @@ import Observable_throttle from './Observable/__internal__/Observable.throttle.m
 import Observable_throwIfEmpty from './Observable/__internal__/Observable.throwIfEmpty.mjs';
 import Observable_timeout from './Observable/__internal__/Observable.timeout.mjs';
 import Observable_toFlowable from './Observable/__internal__/Observable.toFlowable.mjs';
-import Observable_toPromise from './Observable/__internal__/Observable.toPromise.mjs';
 import Observable_withLatestFrom from './Observable/__internal__/Observable.withLatestFrom.mjs';
 import Observable_zip from './Observable/__internal__/Observable.zip.mjs';
 import Observable_zipLatest from './Observable/__internal__/Observable.zipLatest.mjs';
@@ -82,7 +81,6 @@ const throttle = Observable_throttle;
 const throwIfEmpty = Observable_throwIfEmpty;
 const timeout = Observable_timeout;
 const toFlowable = Observable_toFlowable;
-const toPromise = Observable_toPromise;
 const toReadonlyArray = RunnableObservable_toReadonlyArray;
 const toRunnable = RunnableObservable_toRunnable;
 const withLatestFrom = Observable_withLatestFrom;
@@ -124,7 +122,6 @@ const RunnableObservable = {
     throwIfEmpty,
     timeout,
     toFlowable,
-    toPromise,
     toReadonlyArray,
     toRunnable,
     withLatestFrom,
@@ -133,4 +130,4 @@ const RunnableObservable = {
     zipWithLatestFrom,
 };
 
-export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

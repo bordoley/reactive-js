@@ -1,4 +1,4 @@
-import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, EverySatisfy, ForkZip, ForkConcat, FromPromise, Keep, Map, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToPromiseable, PromiseableLike } from "../containers.js";
+import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, EverySatisfy, ForkZip, ForkConcat, FromPromise, Keep, Map, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, PromiseableLike } from "../containers.js";
 import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, AsyncReducer } from "../rx.js";
 import { FlowableLike, ToFlowable } from "../streaming.js";
 import { Factory, Function1, SideEffect1, Equality, Function2, Reducer, Predicate, Updater } from "../functions.js";
@@ -178,7 +178,7 @@ declare const timeout: {
     <T_1>(duration: ObservableLike<unknown>): ContainerOperator<ObservableLike<unknown>, T_1, T_1>;
 };
 declare const toFlowable: ToFlowable<ObservableLike>["toFlowable"];
-declare const toPromise: ToPromiseable<ObservableLike, SchedulerLike>["toPromise"];
+declare const toPromise: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<T>;
 declare const withLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike<unknown>, TA, T>;
 declare const zip: {
     <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<readonly [
@@ -444,7 +444,7 @@ declare const Observable: {
         <T_31>(duration: ObservableLike<unknown>): ContainerOperator<ObservableLike<unknown>, T_31, T_31>;
     };
     toFlowable: <T_32>(options?: undefined) => Function1<ObservableLike<T_32>, FlowableLike<T_32>>;
-    toPromise: <T_33>(ctx: SchedulerLike) => Function1<ObservableLike<T_33>, PromiseableLike<T_33>>;
+    toPromise: <T_33>(scheduler: SchedulerLike) => (observable: ObservableLike<T_33>) => PromiseLike<T_33>;
     withLatestFrom: <TA_9, TB_9, T_34>(other: ObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_34>) => ContainerOperator<ObservableLike<unknown>, TA_9, T_34>;
     zip: {
         <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<readonly [
