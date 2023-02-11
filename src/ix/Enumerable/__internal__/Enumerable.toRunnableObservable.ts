@@ -14,7 +14,7 @@ import {
 import EnumerableObservable_create from "../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule";
 import RunnableObservable_create from "../../../rx/RunnableObservable/__internal__/RunnableObservable.create";
-import Continuation_yield_ from "../../../scheduling/Continuation/__internal__/Continuation.yield";
+import { __yield } from "../../../scheduling/Continuation/effects";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
 import { DisposableLike_isDisposed } from "../../../util";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo";
@@ -32,7 +32,7 @@ const Enumerable_toRunnableObservable: ToRunnableObservable<
     delayStart?: boolean;
   }): Function1<EnumerableLike<T>, RunnableObservableLike<T>> =>
   enumerable => {
-    const { delayStart = false } = options ?? {};
+    const { delay = 0, delayStart = false } = options ?? {};
 
     const onSink = (observer: ObserverLike<T>) => {
       const enumerator = pipe(
@@ -51,7 +51,7 @@ const Enumerable_toRunnableObservable: ToRunnableObservable<
               enumerator[EnumeratorLike_hasCurrent])
             ) {
               observer[SinkLike_notify](enumerator[EnumeratorLike_current]);
-              Continuation_yield_(options);
+              __yield(delay);
             }
           },
           delayStart ? options : none,

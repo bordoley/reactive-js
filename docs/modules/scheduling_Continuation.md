@@ -7,7 +7,6 @@
 ### Functions
 
 - [run](scheduling_Continuation.md#run)
-- [yield\_](scheduling_Continuation.md#yield_)
 
 ## Functions
 
@@ -24,20 +23,3 @@
 #### Returns
 
 [`ContinuationLike`](../interfaces/scheduling.ContinuationLike.md)
-
-___
-
-### yield\_
-
-▸ **yield_**(`options?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-`void`

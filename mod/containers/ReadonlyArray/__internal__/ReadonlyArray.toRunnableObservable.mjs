@@ -4,14 +4,14 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import EnumerableObservable_create from '../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.mjs';
 import Observer_schedule from '../../../rx/Observer/__internal__/Observer.schedule.mjs';
 import RunnableObservable_create from '../../../rx/RunnableObservable/__internal__/RunnableObservable.create.mjs';
-import Continuation_yield_ from '../../../scheduling/Continuation/__internal__/Continuation.yield.mjs';
+import { __yield } from '../../../scheduling/Continuation/effects.mjs';
 import { hasDelay } from '../../../scheduling/__internal__/Scheduler.options.mjs';
 import { DisposableLike_isDisposed } from '../../../util.mjs';
 import Disposable_dispose from '../../../util/Disposable/__internal__/Disposable.dispose.mjs';
 import ReadonlyArray_toContainer from './ReadonlyArray.toContainer.mjs';
 
 const ReadonlyArray_toRunnableObservable = /*@__PURE__*/ (() => ReadonlyArray_toContainer((values, startIndex, count, options) => {
-    const { delayStart = false } = options !== null && options !== void 0 ? options : {};
+    const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
         let index = startIndex, cnt = count;
         const continuation = () => {
@@ -27,7 +27,7 @@ const ReadonlyArray_toRunnableObservable = /*@__PURE__*/ (() => ReadonlyArray_to
                 }
                 observer[SinkLike_notify](value);
                 if (cnt !== 0) {
-                    Continuation_yield_(options);
+                    __yield(delay);
                 }
             }
             pipe(observer, Disposable_dispose());
