@@ -21,7 +21,9 @@ const StatefulContainer_decodeWithCharset =
       StatefulContainerOperatorOut<C, ArrayBuffer, string, TVar>
     >,
   ): DecodeWithCharset<C>["decodeWithCharset"] =>
-  (charset = "utf-8") =>
-    pipe(operator, partial(charset), StatefulContainer_lift(m));
+  options => {
+    const charset = options?.charset ?? "utf-8";
+    return pipe(operator, partial(charset), StatefulContainer_lift(m));
+  };
 
 export default StatefulContainer_decodeWithCharset;

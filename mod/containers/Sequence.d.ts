@@ -30,18 +30,18 @@ declare const Sequence: {
     } | undefined) => ContainerOperator<SequenceLike<unknown>, T_2, T_2>;
     fromArray: <T_3>(options?: undefined) => Function1<ReadonlyArrayLike<T_3>, SequenceLike<T_3>>;
     generate: <T_4>(generator: Updater<T_4>, initialValue: Factory<T_4>, options?: undefined) => SequenceLike<T_4>;
-    keep: <T_5>(predicate: Predicate<T_5>) => ContainerOperator<SequenceLike<unknown>, T_5, T_5>;
-    map: <TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<SequenceLike<unknown>, TA, TB>;
-    pairwise: <T_6>() => ContainerOperator<SequenceLike<unknown>, T_6, readonly [
+    keep: <T_5>(predicate: Predicate<T_5>, options?: undefined) => ContainerOperator<SequenceLike<unknown>, T_5, T_5>;
+    map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<SequenceLike<unknown>, TA, TB>;
+    pairwise: <T_6>(options?: undefined) => ContainerOperator<SequenceLike<unknown>, T_6, readonly [
         T_6,
         T_6
     ]>;
     repeat: {
-        <T_7>(predicate: Predicate<number>): ContainerOperator<SequenceLike<unknown>, T_7, T_7>;
-        <T_8>(count: number): ContainerOperator<SequenceLike<unknown>, T_8, T_8>;
-        <T_9>(): ContainerOperator<SequenceLike<unknown>, T_9, T_9>;
+        <T_7>(predicate: Predicate<number>, options?: undefined): ContainerOperator<SequenceLike<unknown>, T_7, T_7>;
+        <T_8>(count: number, options?: undefined): ContainerOperator<SequenceLike<unknown>, T_8, T_8>;
+        <T_9>(options?: undefined): ContainerOperator<SequenceLike<unknown>, T_9, T_9>;
     };
-    scan: <T_10, TAcc>(scanner: Reducer<T_10, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<SequenceLike<unknown>, T_10, TAcc>;
+    scan: <T_10, TAcc>(scanner: Reducer<T_10, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<SequenceLike<unknown>, T_10, TAcc>;
     skipFirst: <T_11>(options?: {
         readonly count?: number | undefined;
     } | undefined) => ContainerOperator<SequenceLike<unknown>, T_11, T_11>;

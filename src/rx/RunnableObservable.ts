@@ -132,8 +132,6 @@ export const fromArray = Observable_fromArray as FromArray<
   {
     readonly delay?: number;
     readonly delayStart?: boolean;
-    readonly start?: number;
-    readonly count?: number;
   }
 >["fromArray"];
 

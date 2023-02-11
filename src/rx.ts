@@ -132,12 +132,18 @@ export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
   ContainerOf<C, TAcc>
 >;
 
-export type FromEnumerableObservable<C extends ContainerLike> = Container<C> & {
-  fromEnumerableObservable: <T>(options?: {
-    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-  }) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
+export type FromEnumerableObservable<
+  C extends ContainerLike,
+  O = unknown,
+> = Container<C> & {
+  fromEnumerableObservable: <T>(
+    options?: O & {
+      readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
+    },
+  ) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
 };
 
+// FIXME: probably should remove this
 export type FromObservable<C extends ContainerLike> = Container<C> & {
   fromObservable: <T>(
     scheduler: SchedulerLike,

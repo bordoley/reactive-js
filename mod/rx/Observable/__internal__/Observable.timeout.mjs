@@ -41,17 +41,17 @@ const Observable_timeout = /*@__PURE__*/ (() => {
             this[DelegatingLike_delegate][SinkLike_notify](next);
         },
     }));
-    const returnTimeoutError = returns(timeoutError);
+    const raise = returns(timeoutError);
     return (duration) => {
         const durationObs = isNumber(duration)
             ? Container_throws({
                 fromArray: Observable_fromArray,
                 map: Observable_map,
-            }, { delay: duration, delayStart: true })(returnTimeoutError)
+            }, { delay: duration, delayStart: true, raise })
             : Observable_concat(duration, Container_throws({
                 fromArray: Observable_fromArray,
                 map: Observable_map,
-            })(returnTimeoutError));
+            }, { raise }));
         return pipe(createTimeoutObserver, partial(durationObs), Observable_lift(false, isNumber(duration) || Observable_isRunnable(duration)));
     };
 })();

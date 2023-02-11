@@ -51,13 +51,14 @@ ___
 
 ### FromEnumerableObservable
 
-Ƭ **FromEnumerableObservable**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `fromEnumerableObservable`: <T\>(`options?`: { `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }) => [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromEnumerableObservable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromEnumerableObservable`: <T\>(`options?`: `O` & { `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }) => [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `unknown` |
 
 ___
 

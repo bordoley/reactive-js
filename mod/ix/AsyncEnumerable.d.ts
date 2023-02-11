@@ -35,9 +35,9 @@ declare const AsyncEnumerable: {
     generate: <T_1>(generator: Updater<T_1>, initialValue: Factory<T_1>, options?: {
         delay: number;
     } | undefined) => AsyncEnumerableLike<T_1>;
-    keep: <T_2>(predicate: Predicate<T_2>) => ContainerOperator<AsyncEnumerableLike<unknown>, T_2, T_2>;
-    map: <TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<AsyncEnumerableLike<unknown>, TA, TB>;
-    scan: <T_3, TAcc>(scanner: Reducer<T_3, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<AsyncEnumerableLike<unknown>, T_3, TAcc>;
+    keep: <T_2>(predicate: Predicate<T_2>, options?: undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_2, T_2>;
+    map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, TA, TB>;
+    scan: <T_3, TAcc>(scanner: Reducer<T_3, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_3, TAcc>;
     scanAsync: <T_4, TAcc_1>(scanner: AsyncReducer<ObservableLike<unknown>, T_4, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<AsyncEnumerableLike<unknown>, T_4, TAcc_1>;
     takeWhile: <T_5>(predicate: Predicate<T_5>, options?: {
         readonly inclusive?: boolean | undefined;

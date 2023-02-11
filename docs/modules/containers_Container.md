@@ -26,7 +26,7 @@
 
 ### compute
 
-▸ **compute**<`C`, `T`, `O`\>(`m`, `options?`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+▸ **compute**<`C`, `T`, `O`\>(`m`, `factory`, `options?`): [`ContainerOf`](containers.md#containerof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -34,18 +34,19 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `O` | extends `Object` = { `count?`: `number` ; `start?`: `number`  } |
+| `O` | `unknown` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromArray`: <T_1\>(`options?`: `O`) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>, `options?`: `undefined`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromArray`: <T_1\>(`options?`: `O` & { `count?`: `number` ; `start?`: `number`  }) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
+| `factory` | [`Factory`](functions.md#factory)<`T`\> |
 | `options?` | `O` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+[`ContainerOf`](containers.md#containerof)<`C`, `T`\>
 
 ___
 
@@ -65,7 +66,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `concatAll`: <T\>(`options?`: `undefined`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  } |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>, `options?`: `undefined`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `concatAll`: <T\>(`options?`: `undefined`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  } |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ContainerOf`](containers.md#containerof)<`C`, `TB`\>\> |
 
 #### Returns
@@ -114,7 +115,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | [`SomeSatisfy`](containers.md#somesatisfy)<`C`\> |
+| `«destructured»` | [`SomeSatisfy`](containers.md#somesatisfy)<`C`, `never`\> |
 | `value` | `T` |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
@@ -139,7 +140,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `defer`: <T\>(`factory`: [`Factory`](functions.md#factory)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  } & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `defer`: <T\>(`factory`: [`Factory`](functions.md#factory)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>, `options?`: `undefined`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  } & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>, `options?`: `undefined`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } |
 
 #### Returns
 
@@ -162,7 +163,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `concat`: <T_1\>(`fst`: [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>, `snd`: [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>, ...`tail`: readonly [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>[]) => [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>  } & { `fromArray`: <T_2\>(`options?`: `undefined`) => [`Function1`](functions.md#function1)<readonly `T_2`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_2`\>\>  } |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `concat`: <T_1\>(`fst`: [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>, `snd`: [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>, ...`tail`: readonly [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>[]) => [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>  } & { `fromArray`: <T_2\>(`options?`: { `count?`: `number` ; `start?`: `number`  }) => [`Function1`](functions.md#function1)<readonly `T_2`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_2`\>\>  } |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
 
@@ -182,7 +183,7 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `O` | extends `Object` = { `count?`: `number` ; `start?`: `number`  } |
+| `O` | extends `Object` = { `count?`: `undefined` ; `start?`: `undefined`  } |
 
 #### Parameters
 
@@ -214,7 +215,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `concatAll`: <T\>(`options?`: `undefined`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  } & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromIterable`: <T\>(`options?`: `OFromIterable`) => [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  } |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `concatAll`: <T\>(`options?`: `undefined`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>, `T`\>  } & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>, `options?`: `undefined`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromIterable`: <T\>(`options?`: `OFromIterable`) => [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  } |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `any`, `any`\>\> |
 | `options?` | `OFromIterable` |
 
@@ -239,7 +240,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | [`Keep`](containers.md#keep)<`C`\> |
+| `«destructured»` | [`Keep`](containers.md#keep)<`C`, `never`\> |
 
 #### Returns
 
@@ -263,7 +264,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | [`Keep`](containers.md#keep)<`C`\> |
+| `«destructured»` | [`Keep`](containers.md#keep)<`C`, `never`\> |
 | `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
 
 #### Returns
@@ -288,7 +289,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | [`Map`](containers.md#map)<`C`\> |
+| `«destructured»` | [`Map`](containers.md#map)<`C`, `never`\> |
 | `value` | `TB` |
 
 #### Returns
@@ -312,7 +313,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | [`EverySatisfy`](containers.md#everysatisfy)<`C`\> |
+| `«destructured»` | [`EverySatisfy`](containers.md#everysatisfy)<`C`, `never`\> |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 
 #### Returns
@@ -336,7 +337,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `concat`: <T_1\>(`fst`: [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>, `snd`: [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>, ...`tail`: readonly [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>[]) => [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>  } & { `fromArray`: <T_2\>(`options?`: `undefined`) => [`Function1`](functions.md#function1)<readonly `T_2`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_2`\>\>  } |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `concat`: <T_1\>(`fst`: [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>, `snd`: [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>, ...`tail`: readonly [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>[]) => [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>  } & { `fromArray`: <T_2\>(`options?`: { `count?`: `number` ; `start?`: `number`  }) => [`Function1`](functions.md#function1)<readonly `T_2`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_2`\>\>  } |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
 
@@ -348,7 +349,7 @@ ___
 
 ### throws
 
-▸ **throws**<`C`, `T`, `O`\>(`m`, `options?`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`unknown`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+▸ **throws**<`C`, `T`, `O`\>(`m`, `options?`): [`ContainerOf`](containers.md#containerof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -356,18 +357,18 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `T` | `T` |
-| `O` | extends `Object` = { `count?`: `number` ; `start?`: `number`  } |
+| `O` | `unknown` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromArray`: <T_1\>(`options?`: `O`) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
-| `options?` | `Omit`<`O`, ``"start"`` \| ``"count"``\> |
+| `m` | [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>, `options?`: `undefined`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  } & { `fromArray`: <T_1\>(`options?`: `O` & { `count?`: `number` ; `start?`: `number`  }) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](containers.md#containerof)<`C`, `T_1`\>\>  } |
+| `options?` | `O` & { `raise?`: [`Factory`](functions.md#factory)<`unknown`\>  } |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`unknown`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>
+[`ContainerOf`](containers.md#containerof)<`C`, `T`\>
 
 ___
 

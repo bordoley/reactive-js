@@ -1,8 +1,9 @@
 /// <reference types="./Container.compute.d.ts" />
-import { compose, callWith } from '../../../functions.mjs';
+import { pipe, callWith } from '../../../functions.mjs';
 
-const Container_compute = (m, 
-// FIXME: How do we omit the start/count options sanely
-options) => compose(x => [x], m.fromArray(options), m.map(callWith()));
+const Container_compute = (m, factory, options) => {
+    const { start, count, ...tail } = (options !== null && options !== void 0 ? options : {});
+    return pipe([factory], m.fromArray(tail), m.map(callWith()));
+};
 
 export { Container_compute as default };

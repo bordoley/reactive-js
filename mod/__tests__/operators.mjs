@@ -1,7 +1,7 @@
 /// <reference types="./operators.d.ts" />
 import Container from '../containers/Container.mjs';
 import ReadonlyArray from '../containers/ReadonlyArray.mjs';
-import { pipeLazy, arrayEquality, pipe, alwaysFalse, alwaysTrue, none, increment, returns, raise, sum } from '../functions.mjs';
+import { pipeLazy, arrayEquality, pipe, returns, alwaysFalse, alwaysTrue, none, increment, sum } from '../functions.mjs';
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from './testing.mjs';
 
 const bufferTests = (m) => createDescribe("buffer", createTest("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromArray(), m.buffer({ maxBufferSize: 3 }), m.toReadonlyArray(), expectArrayEquals([
@@ -15,7 +15,7 @@ const bufferTests = (m) => createDescribe("buffer", createTest("with multiple su
 ], arrayEquality()))));
 const catchErrorTests = (m) => createDescribe("catchError", createTest("when source throws", () => {
     const e = {};
-    pipe(() => e, Container.throws(m), m.catchError(_ => pipe([1, 2, 3], m.fromArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
+    pipe(Container.throws(m, { raise: returns(e) }), m.catchError(_ => pipe([1, 2, 3], m.fromArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
 }), createTest("when source does not throw", pipeLazy([4, 5, 6], m.fromArray(), m.catchError(_ => pipe([1, 2, 3], m.fromArray())), m.toReadonlyArray(), expectArrayEquals([4, 5, 6]))));
 const concatTests = (m) => createDescribe("concat", createTest("concats the input containers in order", pipeLazy(m.concat(pipe([1, 2, 3], m.fromArray()), pipe([4, 5, 6], m.fromArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))));
 const concatAllTests = (m) => createDescribe("concatAll", createTest("concats the input containers in order", pipeLazy([pipe([1, 2, 3], m.fromArray()), pipe([4, 5, 6], m.fromArray())], m.fromArray(), m.concatAll(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), createTest("when an inner enumerator throw", () => {
@@ -103,7 +103,7 @@ const repeatTests = (m) => createDescribe("repeat", createTest("when always repe
         throw err;
     }), m.toReadonlyArray()), expectToThrowError(err));
 }));
-const retryTests = (m) => createDescribe("retry", createTest("retrys the container on an exception", pipeLazy(m.concat(pipe([1, 2, 3], m.fromArray()), pipe(raise, Container.throws(m))), m.retry(), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
+const retryTests = (m) => createDescribe("retry", createTest("retrys the container on an exception", pipeLazy(m.concat(pipe([1, 2, 3], m.fromArray()), Container.throws(m)), m.retry(), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
 const scanTests = (m) => createDescribe("scan", createTest("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromArray(), m.scan(sum, returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), createTest("throws when the scan function throws", () => {
     const err = new Error();
     const scanner = (_acc, _next) => {

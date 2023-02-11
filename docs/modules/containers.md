@@ -64,25 +64,27 @@
 
 ### Buffer
 
-Ƭ **Buffer**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `buffer`: <T\>(`options?`: { `maxBufferSize?`: `number`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>  }
+Ƭ **Buffer**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `buffer`: <T\>(`options?`: `O` & { `maxBufferSize?`: `number`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `unknown` |
 
 ___
 
 ### CatchError
 
-Ƭ **CatchError**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `catchError`: <T\>(`onError`: [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **CatchError**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `catchError`: <T\>(`onError`: [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
@@ -158,37 +160,40 @@ ___
 
 ### DecodeWithCharset
 
-Ƭ **DecodeWithCharset**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `decodeWithCharset`: (`charset?`: `string`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `ArrayBuffer`, `string`\>  }
+Ƭ **DecodeWithCharset**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `decodeWithCharset`: (`options?`: `O` & { `charset?`: `string`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `ArrayBuffer`, `string`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `unknown` |
 
 ___
 
 ### Defer
 
-Ƭ **Defer**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `defer`: <T\>(`factory`: [`Factory`](functions.md#factory)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+Ƭ **Defer**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `defer`: <T\>(`factory`: [`Factory`](functions.md#factory)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>, `options?`: `O`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### DistinctUntilChanged
 
-Ƭ **DistinctUntilChanged**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `distinctUntilChanged`: <T\>(`options?`: { `equality?`: [`Equality`](functions.md#equality)<`T`\>  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **DistinctUntilChanged**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `distinctUntilChanged`: <T\>(`options?`: `O` & { `equality?`: [`Equality`](functions.md#equality)<`T`\>  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `unknown` |
 
 ___
 
@@ -207,25 +212,27 @@ ___
 
 ### EverySatisfy
 
-Ƭ **EverySatisfy**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `everySatisfy`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `boolean`\>  }
+Ƭ **EverySatisfy**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `everySatisfy`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `boolean`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### ForEach
 
-Ƭ **ForEach**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `forEach`: <T\>(`effect`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **ForEach**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `forEach`: <T\>(`effect`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
@@ -255,14 +262,14 @@ ___
 
 ### FromArray
 
-Ƭ **FromArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromArray`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromArray`: <T\>(`options?`: `O` & { `count?`: `number` ; `start?`: `number`  }) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | extends `Object` = { `count?`: `number` ; `start?`: `number`  } |
+| `O` | `unknown` |
 
 ___
 
@@ -346,157 +353,170 @@ ___
 
 ### Keep
 
-Ƭ **Keep**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `keep`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **Keep**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `keep`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### Map
 
-Ƭ **Map**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  }
+Ƭ **Map**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `map`: <TA, TB\>(`mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `TB`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### Never
 
-Ƭ **Never**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `never`: <T\>() => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
+Ƭ **Never**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `never`: <T\>(`options?`: `O`) => [`ContainerOf`](containers.md#containerof)<`C`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### Pairwise
 
-Ƭ **Pairwise**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `pairwise`: <T\>() => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`T`, `T`]\>  }
+Ƭ **Pairwise**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `pairwise`: <T\>(`options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, readonly [`T`, `T`]\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### Reduce
 
-Ƭ **Reduce**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `reduce`: <T, TAcc\>(`reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TAcc`\>  }
+Ƭ **Reduce**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `reduce`: <T, TAcc\>(`reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc`\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TAcc`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### Repeat
 
-Ƭ **Repeat**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `repeat`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`number`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`count`: `number`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>() => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **Repeat**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `repeat`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`number`\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`count`: `number`, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### Scan
 
-Ƭ **Scan**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `scan`: <T, TAcc\>(`scanner`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TAcc`\>  }
+Ƭ **Scan**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `scan`: <T, TAcc\>(`scanner`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc`\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `TAcc`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### SkipFirst
 
-Ƭ **SkipFirst**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `skipFirst`: <T\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **SkipFirst**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `skipFirst`: <T\>(`options?`: `O` & { `count?`: `number`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `unknown` |
 
 ___
 
 ### SomeSatisfy
 
-Ƭ **SomeSatisfy**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `someSatisfy`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `boolean`\>  }
+Ƭ **SomeSatisfy**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `someSatisfy`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `boolean`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 
 ### TakeFirst
 
-Ƭ **TakeFirst**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `takeFirst`: <T\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **TakeFirst**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `takeFirst`: <T\>(`options?`: `O` & { `count?`: `number`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `unknown` |
 
 ___
 
 ### TakeLast
 
-Ƭ **TakeLast**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `takeLast`: <T\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **TakeLast**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `takeLast`: <T\>(`options?`: `O` & { `count?`: `number`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `unknown` |
 
 ___
 
 ### TakeWhile
 
-Ƭ **TakeWhile**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `takeWhile`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `options?`: { `inclusive?`: `boolean`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **TakeWhile**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `takeWhile`: <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `options?`: `O` & { `inclusive?`: `boolean`  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `unknown` |
 
 ___
 
 ### ThrowIfEmpty
 
-Ƭ **ThrowIfEmpty**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `throwIfEmpty`: <T\>(`factory`: [`Factory`](functions.md#factory)<`unknown`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **ThrowIfEmpty**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `throwIfEmpty`: <T\>(`factory`: [`Factory`](functions.md#factory)<`unknown`\>, `options?`: `O`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 

@@ -50,25 +50,25 @@ declare const Enumerable: {
         readonly equality?: Equality<T_3> | undefined;
     } | undefined) => ContainerOperator<EnumerableLike<unknown>, T_3, T_3>;
     empty: <T_4>(options?: undefined) => EnumerableLike<T_4>;
-    forEach: <T_5>(effect: SideEffect1<T_5>) => ContainerOperator<EnumerableLike<unknown>, T_5, T_5>;
+    forEach: <T_5>(effect: SideEffect1<T_5>, options?: undefined) => ContainerOperator<EnumerableLike<unknown>, T_5, T_5>;
     fromArray: <T_6>(options?: {
         readonly start: number;
         readonly count: number;
     } | undefined) => Function1<ReadonlyArrayLike<T_6>, EnumerableLike<T_6>>;
     fromIterable: <T_7>(options?: undefined) => Function1<Iterable<T_7>, EnumerableLike<T_7>>;
     generate: <T_8>(generator: Updater<T_8>, initialValue: Factory<T_8>, options?: undefined) => EnumerableLike<T_8>;
-    keep: <T_9>(predicate: Predicate<T_9>) => ContainerOperator<EnumerableLike<unknown>, T_9, T_9>;
-    map: <TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<EnumerableLike<unknown>, TA, TB>;
-    pairwise: <T_10>() => ContainerOperator<EnumerableLike<unknown>, T_10, readonly [
+    keep: <T_9>(predicate: Predicate<T_9>, options?: undefined) => ContainerOperator<EnumerableLike<unknown>, T_9, T_9>;
+    map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<EnumerableLike<unknown>, TA, TB>;
+    pairwise: <T_10>(options?: undefined) => ContainerOperator<EnumerableLike<unknown>, T_10, readonly [
         T_10,
         T_10
     ]>;
     repeat: {
-        <T_11>(predicate: Predicate<number>): ContainerOperator<EnumerableLike<unknown>, T_11, T_11>;
-        <T_12>(count: number): ContainerOperator<EnumerableLike<unknown>, T_12, T_12>;
-        <T_13>(): ContainerOperator<EnumerableLike<unknown>, T_13, T_13>;
+        <T_11>(predicate: Predicate<number>, options?: undefined): ContainerOperator<EnumerableLike<unknown>, T_11, T_11>;
+        <T_12>(count: number, options?: undefined): ContainerOperator<EnumerableLike<unknown>, T_12, T_12>;
+        <T_13>(options?: undefined): ContainerOperator<EnumerableLike<unknown>, T_13, T_13>;
     };
-    scan: <T_14, TAcc>(scanner: Reducer<T_14, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<EnumerableLike<unknown>, T_14, TAcc>;
+    scan: <T_14, TAcc>(scanner: Reducer<T_14, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<EnumerableLike<unknown>, T_14, TAcc>;
     skipFirst: <T_15>(options?: {
         readonly count?: number | undefined;
     } | undefined) => ContainerOperator<EnumerableLike<unknown>, T_15, T_15>;
@@ -81,7 +81,7 @@ declare const Enumerable: {
     takeWhile: <T_18>(predicate: Predicate<T_18>, options?: {
         readonly inclusive?: boolean | undefined;
     } | undefined) => ContainerOperator<EnumerableLike<unknown>, T_18, T_18>;
-    throwIfEmpty: <T_19>(factory: Factory<unknown>) => ContainerOperator<EnumerableLike<unknown>, T_19, T_19>;
+    throwIfEmpty: <T_19>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<EnumerableLike<unknown>, T_19, T_19>;
     toEnumerable: <T_20>(options?: undefined) => Function1<EnumerableLike<T_20>, EnumerableLike<T_20>>;
     toReadonlyArray: <T_21>(options?: undefined) => Function1<EnumerableLike<T_21>, ReadonlyArrayLike<T_21>>;
     toRunnable: <T_22>(options?: undefined) => Function1<EnumerableLike<T_22>, RunnableLike<T_22>>;
