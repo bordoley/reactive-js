@@ -7,7 +7,7 @@ import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from '../../../util/Disposable/__internal__/Disposable.onComplete.mjs';
 import ReactiveContainer_sinkInto from '../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.mjs';
 
-const Sink_takeLastMixin = (fromArray) => {
+const Sink_takeLastMixin = (fromReadonlyArray) => {
     const TakeLastSinkMixin_last = Symbol("TakeLastSinkMixin_last");
     const TakeLastSinkMixin_takeLastCount = Symbol("TakeLastSinkMixin_takeLastCount");
     return mix(include(Disposable_mixin), function TakeLastSinkMixin(instance, delegate, takeLastCount) {
@@ -15,7 +15,7 @@ const Sink_takeLastMixin = (fromArray) => {
         instance[TakeLastSinkMixin_takeLastCount] = takeLastCount;
         instance[TakeLastSinkMixin_last] = [];
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            pipe(instance[TakeLastSinkMixin_last], fromArray, ReactiveContainer_sinkInto(delegate));
+            pipe(instance[TakeLastSinkMixin_last], fromReadonlyArray, ReactiveContainer_sinkInto(delegate));
         }));
         return instance;
     }, props({

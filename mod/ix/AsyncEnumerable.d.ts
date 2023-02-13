@@ -1,21 +1,9 @@
 import { ScanAsync, ObservableLike, ToObservable, AsyncReducer } from "../rx.js";
-import { FromArray, Generate, Keep, Map, Scan, TakeWhile, ToReadonlyArray, ContainerOperator, ReadonlyArrayLike } from "../containers.js";
+import { FromReadonlyArray, Generate, Keep, Map, Scan, TakeWhile, ToReadonlyArray, ContainerOperator, ReadonlyArrayLike } from "../containers.js";
 import { Function1, Updater, Factory, Predicate, Reducer } from "../functions.js";
-import { AsyncEnumerableLike, ToAsyncEnumerable, EnumerableLike } from "../ix.js";
-declare const fromArray: FromArray<AsyncEnumerableLike>["fromArray"];
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
+import { ToAsyncEnumerable, EnumerableLike, AsyncEnumerableLike } from "../ix.js";
 declare const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"];
-/**
- * Generates an `AsyncEnumerableLike` sequence from a generator function
- * that is applied to an accumulator value.
- *
- * @param generator The generator function.
- * @param initialValue Factory function to generate the initial accumulator.
- */
+declare const fromReadonlyArray: FromReadonlyArray<AsyncEnumerableLike>["fromReadonlyArray"];
 declare const generate: Generate<AsyncEnumerableLike, {
     delay: number;
 }>["generate"];
@@ -28,7 +16,7 @@ declare const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"];
 declare const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"];
 /** @ignore */
 declare const AsyncEnumerable: {
-    fromArray: <T>(options?: {
+    fromReadonlyArray: <T>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     } | undefined) => Function1<readonly T[], AsyncEnumerableLike<T>>;
@@ -44,4 +32,4 @@ declare const AsyncEnumerable: {
     } | undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_5, T_5>;
     toReadonlyArray: <T_6>(options?: undefined) => Function1<AsyncEnumerableLike<T_6>, ReadonlyArrayLike<T_6>>;
 };
-export { AsyncEnumerable as default, fromArray, fromEnumerable, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };
+export { AsyncEnumerable as default, fromEnumerable, fromReadonlyArray, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };

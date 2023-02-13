@@ -20,14 +20,14 @@ const Sink_reduceMixin: <
   T,
   TAcc,
 >(
-  fromArray: (v: readonly TAcc[]) => C,
+  fromReadonlyArray: (v: readonly TAcc[]) => C,
 ) => Mixin3<SinkLike<T>, TSink, Reducer<T, TAcc>, Factory<TAcc>> = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<TAcc>,
   T,
   TAcc,
 >(
-  fromArray: (v: readonly TAcc[]) => C,
+  fromReadonlyArray: (v: readonly TAcc[]) => C,
 ) => {
   const ReduceSinkMixin_reducer = Symbol("ReduceSinkMixin_reducer");
   const ReduceSinkMixin_acc = Symbol("ReduceSinkMixin_acc");
@@ -63,7 +63,7 @@ const Sink_reduceMixin: <
         Disposable_onComplete(() => {
           pipe(
             [instance[ReduceSinkMixin_acc]],
-            fromArray,
+            fromReadonlyArray,
             ReactiveContainer_sinkInto<C, TSink, TAcc>(delegate),
           );
         }),

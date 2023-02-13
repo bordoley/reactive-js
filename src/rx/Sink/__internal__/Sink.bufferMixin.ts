@@ -22,13 +22,13 @@ const Sink_bufferMixin: <
   TSink extends SinkLike<readonly T[]>,
   T,
 >(
-  fromArray: (v: readonly T[][]) => C,
+  fromReadonlyArray: (v: readonly T[][]) => C,
 ) => Mixin2<SinkLike<T>, TSink, number> = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<readonly T[]>,
   T,
 >(
-  fromArray: (v: readonly T[][]) => C,
+  fromReadonlyArray: (v: readonly T[][]) => C,
 ) => {
   const BufferSinkMixin_maxBufferSize = Symbol("BufferSinkMixin_maxBufferSize");
   const BufferSinkMixin_buffer = Symbol("BufferSinkMixin_buffer");
@@ -64,7 +64,7 @@ const Sink_bufferMixin: <
           } else {
             pipe(
               [buffer],
-              fromArray,
+              fromReadonlyArray,
               ReactiveContainer_sinkInto<C, TSink, readonly T[]>(
                 instance[DelegatingLike_delegate],
               ),

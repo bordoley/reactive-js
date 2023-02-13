@@ -1,10 +1,10 @@
 import { ZipWith } from "./Container/__internal__/Container.zipWith.js";
 import { Function1, Factory, Equality, Optional, TypePredicate, Predicate } from "../functions.js";
-import { ContainerLike, Container as Container$1, ContainerOperator, ContainerOf, Map, ConcatAll, Concat, SomeSatisfy, FromArray, FromIterable, Keep, EverySatisfy } from "../containers.js";
+import { ContainerLike, Container as Container$1, ContainerOperator, ContainerOf, Map, ConcatAll, Concat, SomeSatisfy, FromReadonlyArray, FromIterable, Keep, EverySatisfy } from "../containers.js";
 declare const compute: <C extends ContainerLike, T, O = unknown>(m: Container$1<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
 } & {
-    fromArray<T_1>(options?: (O & {
+    fromReadonlyArray<T_1>(options?: (O & {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     }) | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
@@ -22,7 +22,7 @@ declare const encodeUtf8: <C extends ContainerLike>(m: Container$1<C> & {
 declare const endWith: <C extends ContainerLike, T>(m: Container$1<C> & {
     concat<T_1>(fst: ContainerOf<C, T_1>, snd: ContainerOf<C, T_1>, ...tail: readonly ContainerOf<C, T_1>[]): ContainerOf<C, T_1>;
 } & {
-    fromArray<T_2>(options?: {
+    fromReadonlyArray<T_2>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     } | undefined): Function1<readonly T_2[], ContainerOf<C, T_2>>;
@@ -33,7 +33,7 @@ declare const fromOption: <C extends ContainerLike, T, O extends {
 } = {
     start?: undefined;
     count?: undefined;
-}>({ fromArray }: FromArray<C, O>, options?: O | undefined) => Function1<Optional<T>, ContainerOf<C, T>>;
+}>({ fromReadonlyArray }: FromReadonlyArray<C, O>, options?: O | undefined) => Function1<Optional<T>, ContainerOf<C, T>>;
 declare const genMap: <C extends ContainerLike, TA, TB, OFromIterable = never>(m: ConcatAll<C, never> & Map<C> & FromIterable<C, OFromIterable>, mapper: Function1<TA, Generator<TB, any, any>>, options?: OFromIterable) => ContainerOperator<C, TA, TB>;
 declare const ignoreElements: <C extends ContainerLike, T>({ keep, }: Keep<C, never>) => ContainerOperator<C, unknown, T>;
 declare const keepType: <C extends ContainerLike, TA, TB extends TA>({ keep }: Keep<C, never>, predicate: TypePredicate<TA, TB>) => ContainerOperator<C, TA, TB>;
@@ -42,7 +42,7 @@ declare const noneSatisfy: <C extends ContainerLike, T>({ everySatisfy }: EveryS
 declare const startWith: <C extends ContainerLike, T>(m: Container$1<C> & {
     concat<T_1>(fst: ContainerOf<C, T_1>, snd: ContainerOf<C, T_1>, ...tail: readonly ContainerOf<C, T_1>[]): ContainerOf<C, T_1>;
 } & {
-    fromArray<T_2>(options?: {
+    fromReadonlyArray<T_2>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     } | undefined): Function1<readonly T_2[], ContainerOf<C, T_2>>;
@@ -50,7 +50,7 @@ declare const startWith: <C extends ContainerLike, T>(m: Container$1<C> & {
 declare const throws: <C extends ContainerLike, T, O = unknown>(m: Container$1<C> & {
     map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
 } & {
-    fromArray<T_1>(options?: (O & {
+    fromReadonlyArray<T_1>(options?: (O & {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     }) | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
@@ -63,7 +63,7 @@ declare const Container: {
     compute: <C extends ContainerLike, T, O = unknown>(m: Container$1<C> & {
         map<TA, TB>(mapper: Function1<TA, TB>, options?: undefined): ContainerOperator<C, TA, TB>;
     } & {
-        fromArray<T_1>(options?: (O & {
+        fromReadonlyArray<T_1>(options?: (O & {
             readonly start?: number | undefined;
             readonly count?: number | undefined;
         }) | undefined): Function1<readonly T_1[], ContainerOf<C, T_1>>;
@@ -85,7 +85,7 @@ declare const Container: {
     endWith: <C_5 extends ContainerLike, T_6>(m: Container$1<C_5> & {
         concat<T_7>(fst: ContainerOf<C_5, T_7>, snd: ContainerOf<C_5, T_7>, ...tail: readonly ContainerOf<C_5, T_7>[]): ContainerOf<C_5, T_7>;
     } & {
-        fromArray<T_8>(options?: {
+        fromReadonlyArray<T_8>(options?: {
             readonly start?: number | undefined;
             readonly count?: number | undefined;
         } | undefined): Function1<readonly T_8[], ContainerOf<C_5, T_8>>;
@@ -96,7 +96,7 @@ declare const Container: {
     } = {
         start?: undefined;
         count?: undefined;
-    }>({ fromArray }: FromArray<C_6, O_1>, options?: O_1 | undefined) => Function1<Optional<T_9>, ContainerOf<C_6, T_9>>;
+    }>({ fromReadonlyArray }: FromReadonlyArray<C_6, O_1>, options?: O_1 | undefined) => Function1<Optional<T_9>, ContainerOf<C_6, T_9>>;
     genMap: <C_7 extends ContainerLike, TA_4, TB_4, OFromIterable = never>(m: Container$1<C_7> & {
         concatAll: <T_10>(options?: undefined) => ContainerOperator<C_7, ContainerOf<C_7, T_10>, T_10>;
     } & {
@@ -111,7 +111,7 @@ declare const Container: {
     startWith: <C_12 extends ContainerLike, T_14>(m: Container$1<C_12> & {
         concat<T_15>(fst: ContainerOf<C_12, T_15>, snd: ContainerOf<C_12, T_15>, ...tail: readonly ContainerOf<C_12, T_15>[]): ContainerOf<C_12, T_15>;
     } & {
-        fromArray<T_16>(options?: {
+        fromReadonlyArray<T_16>(options?: {
             readonly start?: number | undefined;
             readonly count?: number | undefined;
         } | undefined): Function1<readonly T_16[], ContainerOf<C_12, T_16>>;
@@ -119,7 +119,7 @@ declare const Container: {
     throws: <C_13 extends ContainerLike, T_17, O_2 = unknown>(m: Container$1<C_13> & {
         map<TA_8, TB_8>(mapper: Function1<TA_8, TB_8>, options?: undefined): ContainerOperator<C_13, TA_8, TB_8>;
     } & {
-        fromArray<T_18>(options?: (O_2 & {
+        fromReadonlyArray<T_18>(options?: (O_2 & {
             readonly start?: number | undefined;
             readonly count?: number | undefined;
         }) | undefined): Function1<readonly T_18[], ContainerOf<C_13, T_18>>;

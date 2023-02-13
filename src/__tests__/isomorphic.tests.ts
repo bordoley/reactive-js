@@ -10,6 +10,7 @@ import "./modules/Flowable.test";
 import "./modules/Iterable.test";
 import "./modules/Observable.test";
 import "./modules/Promiseable.test";
+import "./modules/ReadonlyArray.test";
 import "./modules/Runnable.test";
 import "./modules/RunnableObservable.test";
 import "./modules/Sequence.test";

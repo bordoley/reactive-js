@@ -32,12 +32,12 @@
 - [ForEach](containers.md#foreach)
 - [ForkConcat](containers.md#forkconcat)
 - [ForkZip](containers.md#forkzip)
-- [FromArray](containers.md#fromarray)
 - [FromAsyncIterable](containers.md#fromasynciterable)
 - [FromIterable](containers.md#fromiterable)
 - [FromPromise](containers.md#frompromise)
+- [FromReadonlyArray](containers.md#fromreadonlyarray)
+- [FromReadonlySet](containers.md#fromreadonlyset)
 - [FromSequence](containers.md#fromsequence)
-- [FromSet](containers.md#fromset)
 - [Generate](containers.md#generate)
 - [Keep](containers.md#keep)
 - [Map](containers.md#map)
@@ -259,19 +259,6 @@ ___
 
 ___
 
-### FromArray
-
-Ƭ **FromArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromArray`: <T\>(`options?`: `O` & { `count?`: `number` ; `start?`: `number`  }) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | `unknown` |
-
-___
-
 ### FromAsyncIterable
 
 Ƭ **FromAsyncIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromAsyncIterable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
@@ -311,9 +298,22 @@ ___
 
 ___
 
-### FromSequence
+### FromReadonlyArray
 
-Ƭ **FromSequence**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromSequence`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromReadonlyArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromReadonlyArray`: <T\>(`options?`: `O` & { `count?`: `number` ; `start?`: `number`  }) => [`Function1`](functions.md#function1)<readonly `T`[], [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `unknown` |
+
+___
+
+### FromReadonlySet
+
+Ƭ **FromReadonlySet**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromReadonlySet`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<`ReadonlySet`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
@@ -324,9 +324,9 @@ ___
 
 ___
 
-### FromSet
+### FromSequence
 
-Ƭ **FromSet**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromSet`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<`ReadonlySet`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromSequence**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromSequence`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 

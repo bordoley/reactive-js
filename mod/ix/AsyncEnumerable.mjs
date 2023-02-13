@@ -10,20 +10,8 @@ import AsyncEnumerable_toObservable from './AsyncEnumerable/__internal__/AsyncEn
 import AsyncEnumerable_toReadonlyArray from './AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray.mjs';
 import Enumerable_toAsyncEnumerable from './Enumerable/__internal__/Enumerable.toAsyncEnumerable.mjs';
 
-const fromArray = ReadonlyArray_toAsyncEnumerable;
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
 const fromEnumerable = Enumerable_toAsyncEnumerable;
-/**
- * Generates an `AsyncEnumerableLike` sequence from a generator function
- * that is applied to an accumulator value.
- *
- * @param generator The generator function.
- * @param initialValue Factory function to generate the initial accumulator.
- */
+const fromReadonlyArray = ReadonlyArray_toAsyncEnumerable;
 const generate = AsyncEnumerable_generate;
 const keep = AsyncEnumerable_keep;
 const map = AsyncEnumerable_map;
@@ -34,7 +22,7 @@ const toObservable = AsyncEnumerable_toObservable;
 const toReadonlyArray = AsyncEnumerable_toReadonlyArray;
 /** @ignore */
 const AsyncEnumerable = {
-    fromArray,
+    fromReadonlyArray,
     generate,
     keep,
     map,
@@ -44,4 +32,4 @@ const AsyncEnumerable = {
     toReadonlyArray,
 };
 
-export { AsyncEnumerable as default, fromArray, fromEnumerable, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };
+export { AsyncEnumerable as default, fromEnumerable, fromReadonlyArray, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };

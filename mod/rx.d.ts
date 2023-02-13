@@ -1,6 +1,6 @@
 import { StatefulContainerLike, ContainerLike_type, ContainerLike_T, StatefulContainerLike_state, ContainerOf, ContainerLike, Container, ContainerOperator, Zip } from "./containers.js";
-import { Function2, Factory, Function1 } from "./functions.js";
-import { DispatcherLike, SchedulerLike, VirtualTimeSchedulerLike } from "./scheduling.js";
+import { Function2, Function1, Factory } from "./functions.js";
+import { DispatcherLike, SchedulerLike } from "./scheduling.js";
 import { DisposableLike } from "./util.js";
 /** @ignore */
 declare const SinkLike_notify: unique symbol;
@@ -72,10 +72,11 @@ interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;
 }
 type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
-type FromEnumerableObservable<C extends ContainerLike, O = unknown> = Container<C> & {
-    fromEnumerableObservable: <T>(options?: O & {
-        readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-    }) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
+type FromEnumerableObservable<C extends ContainerLike, O = never> = Container<C> & {
+    fromEnumerableObservable: <T>(options?: O) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
+};
+type FromRunnableObservable<C extends ContainerLike, O = never> = Container<C> & {
+    fromRunnableObservable: <T>(options?: O) => Function1<RunnableObservableLike<T>, ContainerOf<C, T>>;
 };
 type Retry<C extends ObservableLike> = {
     /**
@@ -132,4 +133,4 @@ type ZipLatest<C extends ObservableLike> = {
 type ZipWithLatestFrom<C extends ObservableLike> = {
     zipWithLatestFrom<TA, TB, T>(other: ContainerOf<C, TB>, selector: Function2<TA, TB, T>): ContainerOperator<C, TA, T>;
 };
-export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, Retry, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, TakeUntil, Timeout, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, WithLatestFrom, ZipLatest, ZipWithLatestFrom };
+export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromRunnableObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, Retry, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, TakeUntil, Timeout, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, WithLatestFrom, ZipLatest, ZipWithLatestFrom };

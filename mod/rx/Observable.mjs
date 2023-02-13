@@ -18,7 +18,7 @@ import Observable_forEach from './Observable/__internal__/Observable.forEach.mjs
 import Observable_forkCombineLatest from './Observable/__internal__/Observable.forkCombineLatest.mjs';
 import Observable_forkMerge from './Observable/__internal__/Observable.forkMerge.mjs';
 import Observable_forkZipLatest from './Observable/__internal__/Observable.forkZipLatest.mjs';
-import Observable_fromArray from './Observable/__internal__/Observable.fromArray.mjs';
+import Observable_fromReadonlyArray from './Observable/__internal__/Observable.fromReadonlyArray.mjs';
 import Observable_generate from './Observable/__internal__/Observable.generate.mjs';
 import Observable_isEnumerable from './Observable/__internal__/Observable.isEnumerable.mjs';
 import Observable_isRunnable from './Observable/__internal__/Observable.isRunnable.mjs';
@@ -59,21 +59,8 @@ import Observable_zipWithLatestFrom from './Observable/__internal__/Observable.z
 const async = Observable_async;
 const buffer = Observable_buffer;
 const catchError = Observable_catchError;
-/**
- * Returns an `ObservableLike` that combines the latest values from
- * multiple sources.
- */
 const combineLatest = Observable_combineLatest;
-/**
- * Creates an `ObservableLike` which emits all values from each source sequentially.
- */
 const concat = Observable_concat;
-/**
- * Converts a higher-order `ObservableLike` into a first-order
- * `ObservableLike` by concatenating the inner sources in order.
- *
- * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
- */
 const concatAll = Observable_concatAll;
 const create = Observable_create;
 const decodeWithCharset = Observable_decodeWithCharset;
@@ -81,11 +68,6 @@ const defer = Observable_defer;
 const distinctUntilChanged = Observable_distinctUntilChanged;
 const empty = Observable_empty;
 const everySatisfy = Observable_everySatisfy;
-/**
- * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
- * by dropping inner sources while the previous inner source
- * has not yet been disposed.
- */
 const exhaust = () => mergeAll({
     maxBufferSize: 1,
     maxConcurrency: 1,
@@ -94,10 +76,10 @@ const forEach = Observable_forEach;
 const forkCombineLatest = Observable_forkCombineLatest;
 const forkMerge = Observable_forkMerge;
 const forkZipLatest = Observable_forkZipLatest;
-const fromArray = Observable_fromArray;
 const fromDisposable = Disposable_toObservable;
 const fromFlowable = Flowable_toObservable;
 const fromPromise = Promiseable_toObservable;
+const fromReadonlyArray = Observable_fromReadonlyArray;
 const generate = Observable_generate;
 const isEnumerable = Observable_isEnumerable;
 const isRunnable = Observable_isRunnable;
@@ -121,13 +103,6 @@ const reduce = Observable_reduce;
 const repeat = Observable_repeat;
 const retry = Observable_retry;
 const scan = Observable_scan;
-/**
- * Returns the `ObservableLike` that applies an asynchronous accumulator function
- * over the source, and emits each intermediate result.
- *
- * @param scanner The accumulator function called on each source value.
- * @param initialValue The initial accumulation value.
- */
 const scanAsync = Observable_scanAsync;
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
@@ -171,9 +146,9 @@ const Observable = {
     empty,
     everySatisfy,
     forEach,
-    fromArray,
     fromFlowable,
     fromPromise,
+    fromReadonlyArray,
     generate,
     isEnumerable,
     isRunnable,
@@ -206,4 +181,4 @@ const Observable = {
     zipWithLatestFrom,
 };
 
-export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromFlowable, fromPromise, fromReadonlyArray, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

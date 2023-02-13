@@ -1,5 +1,5 @@
 import {
-  FromArray,
+  FromReadonlyArray,
   Generate,
   Keep,
   Map,
@@ -20,24 +20,12 @@ import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEn
 import AsyncEnumerable_toReadonlyArray from "./AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable";
 
-export const fromArray: FromArray<AsyncEnumerableLike>["fromArray"] =
-  ReadonlyArray_toAsyncEnumerable;
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
 export const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"] =
   Enumerable_toAsyncEnumerable;
 
-/**
- * Generates an `AsyncEnumerableLike` sequence from a generator function
- * that is applied to an accumulator value.
- *
- * @param generator The generator function.
- * @param initialValue Factory function to generate the initial accumulator.
- */
+export const fromReadonlyArray: FromReadonlyArray<AsyncEnumerableLike>["fromReadonlyArray"] =
+  ReadonlyArray_toAsyncEnumerable;
+
 export const generate: Generate<
   AsyncEnumerableLike,
   { delay: number }
@@ -65,7 +53,7 @@ export const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyAr
 
 /** @ignore */
 const AsyncEnumerable = {
-  fromArray,
+  fromReadonlyArray,
   generate,
   keep,
   map,

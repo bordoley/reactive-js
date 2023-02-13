@@ -35,7 +35,6 @@ const decrement = (x) => x - 1;
  */
 const decrementBy = (decr) => (x) => x - decr;
 const getLength = (arr) => arr.length;
-const getOrRaise = () => (v) => isSome(v) ? v : raiseWithDebugMessage("value is none");
 /**
  * The identity function.
  *
@@ -159,4 +158,4 @@ const sum = (...args) => {
 function unsafeCast(_v) { }
 const { abs, floor, max, min } = Math;
 
-export { abs, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, getLength, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, raiseError, raiseWithDebugMessage, returns, strictEquality, sum, unsafeCast };
+export { abs, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, raiseError, raiseWithDebugMessage, returns, strictEquality, sum, unsafeCast };

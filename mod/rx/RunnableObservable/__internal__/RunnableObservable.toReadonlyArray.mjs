@@ -6,9 +6,8 @@ import Disposable_getError from '../../../util/Disposable/__internal__/Disposabl
 import Observable_forEach from '../../Observable/__internal__/Observable.forEach.mjs';
 import Observable_subscribe from '../../Observable/__internal__/Observable.subscribe.mjs';
 
-const RunnableObservable_toReadonlyArray = (options = {}) => observable => {
-    const { schedulerFactory = VirtualTimeScheduler_create } = options;
-    const scheduler = schedulerFactory();
+const RunnableObservable_toReadonlyArray = () => observable => {
+    const scheduler = VirtualTimeScheduler_create();
     const result = [];
     const subscription = pipe(observable, Observable_forEach(next => {
         result.push(next);

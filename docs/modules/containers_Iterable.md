@@ -6,6 +6,7 @@
 
 ### Functions
 
+- [fromEnumerable](containers_Iterable.md#fromenumerable)
 - [toAsyncEnumerable](containers_Iterable.md#toasyncenumerable)
 - [toEnumerable](containers_Iterable.md#toenumerable)
 - [toEnumerableObservable](containers_Iterable.md#toenumerableobservable)
@@ -15,11 +16,31 @@
 
 ## Functions
 
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+
+___
+
 ### toAsyncEnumerable
 
 ▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
-
-Returns an `AsyncEnumerableLike` from the provided iterable.
 
 #### Type parameters
 

@@ -23,10 +23,10 @@
 - [forkCombineLatest](rx_Observable.md#forkcombinelatest)
 - [forkMerge](rx_Observable.md#forkmerge)
 - [forkZipLatest](rx_Observable.md#forkziplatest)
-- [fromArray](rx_Observable.md#fromarray)
 - [fromDisposable](rx_Observable.md#fromdisposable)
 - [fromFlowable](rx_Observable.md#fromflowable)
 - [fromPromise](rx_Observable.md#frompromise)
+- [fromReadonlyArray](rx_Observable.md#fromreadonlyarray)
 - [generate](rx_Observable.md#generate)
 - [isEnumerable](rx_Observable.md#isenumerable)
 - [isRunnable](rx_Observable.md#isrunnable)
@@ -141,9 +141,6 @@ ___
 
 ▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
-Returns an `ObservableLike` that combines the latest values from
-multiple sources.
-
 #### Type parameters
 
 | Name |
@@ -163,9 +160,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
 ▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
-
-Returns an `ObservableLike` that combines the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -188,9 +182,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 ▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
-
-Returns an `ObservableLike` that combines the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -215,9 +206,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 ▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
-
-Returns an `ObservableLike` that combines the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -244,9 +232,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 ▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
-
-Returns an `ObservableLike` that combines the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -275,9 +260,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 ▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
-
-Returns an `ObservableLike` that combines the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -308,9 +290,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 ▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
-
-Returns an `ObservableLike` that combines the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -343,9 +322,6 @@ multiple sources.
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 ▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
-
-Returns an `ObservableLike` that combines the latest values from
-multiple sources.
 
 #### Type parameters
 
@@ -385,8 +361,6 @@ ___
 
 ▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-Creates an `ObservableLike` which emits all values from each source sequentially.
-
 #### Type parameters
 
 | Name |
@@ -410,9 +384,6 @@ ___
 ### concatAll
 
 ▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
-
-Converts a higher-order `ObservableLike` into a first-order
-`ObservableLike` by concatenating the inner sources in order.
 
 #### Type parameters
 
@@ -579,10 +550,6 @@ ___
 ### exhaust
 
 ▸ **exhaust**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
-
-Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
-by dropping inner sources while the previous inner source
-has not yet been disposed.
 
 #### Type parameters
 
@@ -1106,28 +1073,6 @@ ___
 
 ___
 
-### fromArray
-
-▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | { `delay?`: `number` ; `delayStart?`: `boolean`  } & { `count?`: `number` ; `start?`: `number`  } |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-___
-
 ### fromDisposable
 
 ▸ **fromDisposable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/util.DisposableLike.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
@@ -1185,6 +1130,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | { `delay?`: `number` ; `delayStart?`: `boolean`  } & { `count?`: `number` ; `start?`: `number`  } |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -1502,30 +1469,7 @@ ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-Returns an `ObservableLike` that applies the predicate function each time the source
-completes to determine if the subscription should be renewed.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> | The predicate function to apply. |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-Returns an `ObservableLike` that repeats the source count times.
+▸ **repeat**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1537,25 +1481,49 @@ Returns an `ObservableLike` that repeats the source count times.
 
 | Name | Type |
 | :------ | :------ |
-| `count` | `number` |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
+| `options?` | `undefined` |
 
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-Returns an `ObservableLike` that continually repeats the source.
+▸ **repeat**<`T_1`\>(`count`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T_1`, `T_1`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `T` |
+| `T_1` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+| `options?` | `undefined` |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T_1`, `T_1`\>
+
+▸ **repeat**<`T_2`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T_2`, `T_2`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T_2` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T_2`, `T_2`\>
 
 ___
 
@@ -1622,9 +1590,6 @@ ___
 
 ▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
-Returns the `ObservableLike` that applies an asynchronous accumulator function
-over the source, and emits each intermediate result.
-
 #### Type parameters
 
 | Name |
@@ -1634,10 +1599,10 @@ over the source, and emits each intermediate result.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\> | The accumulator function called on each source value. |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
 

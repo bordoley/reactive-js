@@ -114,7 +114,6 @@ declare const decrement: (x: number) => number;
  */
 declare const decrementBy: (decr: number) => Updater<number>;
 declare const getLength: (arr: readonly unknown[] | string) => number;
-declare const getOrRaise: <T>() => (v: Optional<T>) => T;
 /**
  * The identity function.
  *
@@ -250,4 +249,4 @@ declare const abs: (x: number) => number;
 declare const floor: (x: number) => number;
 declare const max: (...values: number[]) => number;
 declare const min: (...values: number[]) => number;
-export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Optional, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, abs, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, getLength, getOrRaise, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, raiseError, raiseWithDebugMessage, returns, strictEquality, sum, unsafeCast };
+export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Optional, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, abs, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeUnsafe, decrement, decrementBy, error, floor, getLength, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isFalse, isFunction, isNone, isNumber, isObject, isOdd, isSome, isString, isTrue, max, min, negate, newInstance, none, partial, pipe, pipeLazy, pipeUnsafe, raise, raiseError, raiseWithDebugMessage, returns, strictEquality, sum, unsafeCast };

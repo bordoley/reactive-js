@@ -1,4 +1,8 @@
-import { ContainerLike, ContainerOf, FromArray } from "../../../containers";
+import {
+  ContainerLike,
+  ContainerOf,
+  FromReadonlyArray,
+} from "../../../containers";
 import { Function1, Optional, isSome, pipe } from "../../../functions";
 
 const Container_fromOption = <
@@ -9,7 +13,7 @@ const Container_fromOption = <
     count?: never;
   },
 >(
-  { fromArray }: FromArray<C, O>,
+  { fromReadonlyArray }: FromReadonlyArray<C, O>,
   options?: O,
 ): Function1<Optional<T>, ContainerOf<C, T>> => {
   const { start, count, ...tail } = (options ?? {}) as O & {
@@ -17,7 +21,8 @@ const Container_fromOption = <
     readonly count?: number;
   };
 
-  return option => pipe(isSome(option) ? [option] : [], fromArray(tail as O));
+  return option =>
+    pipe(isSome(option) ? [option] : [], fromReadonlyArray(tail as O));
 };
 
 export default Container_fromOption;

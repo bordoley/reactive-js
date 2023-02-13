@@ -1,7 +1,7 @@
 import {
   ContainerLike,
   ContainerOf,
-  FromArray,
+  FromReadonlyArray,
   Map,
 } from "../../../containers";
 import { Factory, error, raise } from "../../../functions";
@@ -9,7 +9,7 @@ import { Factory, error, raise } from "../../../functions";
 import Container_compute from "./Container.compute";
 
 const Container_throws = <C extends ContainerLike, T, O = unknown>(
-  m: Map<C> & FromArray<C, O>,
+  m: Map<C> & FromReadonlyArray<C, O>,
   options?: O & {
     raise?: Factory<unknown>;
   },

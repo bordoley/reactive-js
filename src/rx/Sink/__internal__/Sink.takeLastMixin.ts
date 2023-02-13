@@ -19,13 +19,13 @@ const Sink_takeLastMixin: <
   TSink extends SinkLike<T>,
   T,
 >(
-  fromArray: (v: readonly T[]) => C,
+  fromReadonlyArray: (v: readonly T[]) => C,
 ) => Mixin2<SinkLike<T>, TSink, number> = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
   T,
 >(
-  fromArray: (v: readonly T[]) => C,
+  fromReadonlyArray: (v: readonly T[]) => C,
 ) => {
   const TakeLastSinkMixin_last = Symbol("TakeLastSinkMixin_last");
   const TakeLastSinkMixin_takeLastCount = Symbol(
@@ -56,7 +56,7 @@ const Sink_takeLastMixin: <
         Disposable_onComplete(() => {
           pipe(
             instance[TakeLastSinkMixin_last],
-            fromArray,
+            fromReadonlyArray,
             ReactiveContainer_sinkInto(delegate),
           );
         }),

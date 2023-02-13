@@ -21,12 +21,12 @@ const Sink_decodeWithCharsetMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<string>,
 >(
-  fromArray: (v: readonly string[]) => C,
+  fromReadonlyArray: (v: readonly string[]) => C,
 ) => Mixin2<SinkLike<ArrayBuffer>, SinkLike<string>, string> = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<string>,
 >(
-  fromArray: (v: readonly string[]) => C,
+  fromReadonlyArray: (v: readonly string[]) => C,
 ) => {
   const DecodeWithCharsetSinkMixin_textDecoder = Symbol(
     "DecodeWithCharsetSinkMixin_textDecoder",
@@ -57,7 +57,11 @@ const Sink_decodeWithCharsetMixin: <
           const data = textDecoder.decode();
 
           if (!isEmpty(data)) {
-            pipe([data], fromArray, ReactiveContainer_sinkInto(delegate));
+            pipe(
+              [data],
+              fromReadonlyArray,
+              ReactiveContainer_sinkInto(delegate),
+            );
           } else {
             pipe(delegate, Disposable_dispose());
           }

@@ -25,7 +25,7 @@ declare const empty: <T>(options?: {
 declare const everySatisfy: <T>(predicate: Predicate<T>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, boolean>;
 declare const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"];
 declare const forEach: <T>(effect: SideEffect1<T>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
-declare const fromArray: <T>(options?: {
+declare const fromReadonlyArray: <T>(options?: {
     readonly start?: number | undefined;
     readonly count?: number | undefined;
 } | undefined) => Function1<readonly T[], EnumerableObservableLike<T>>;
@@ -151,7 +151,7 @@ declare const EnumerableObservable: {
     everySatisfy: <T_7>(predicate: Predicate<T_7>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_7, boolean>;
     exhaust: <T_8>(options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, EnumerableObservableLike<T_8>, T_8>;
     forEach: <T_9>(effect: SideEffect1<T_9>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_9, T_9>;
-    fromArray: <T_10>(options?: {
+    fromReadonlyArray: <T_10>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     } | undefined) => Function1<readonly T_10[], EnumerableObservableLike<T_10>>;
@@ -254,4 +254,4 @@ declare const EnumerableObservable: {
         ]>;
     };
 };
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, zip };

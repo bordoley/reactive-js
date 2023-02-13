@@ -17,7 +17,7 @@
 - [everySatisfy](rx_EnumerableObservable.md#everysatisfy)
 - [exhaust](rx_EnumerableObservable.md#exhaust)
 - [forEach](rx_EnumerableObservable.md#foreach)
-- [fromArray](rx_EnumerableObservable.md#fromarray)
+- [fromReadonlyArray](rx_EnumerableObservable.md#fromreadonlyarray)
 - [generate](rx_EnumerableObservable.md#generate)
 - [keep](rx_EnumerableObservable.md#keep)
 - [map](rx_EnumerableObservable.md#map)
@@ -290,9 +290,9 @@ ___
 
 ___
 
-### fromArray
+### fromReadonlyArray
 
-▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
 
 #### Type parameters
 

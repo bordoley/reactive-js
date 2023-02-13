@@ -22,13 +22,7 @@ import {
   Zip,
 } from "../containers";
 import Promiseable_toObservable from "../containers/Promiseable/__internal__/Promiseable.toObservable";
-import {
-  Factory,
-  Function1,
-  Predicate,
-  SideEffect1,
-  Updater,
-} from "../functions";
+import { Factory, Function1, SideEffect1, Updater } from "../functions";
 import {
   EnumerableObservableLike,
   ObservableLike,
@@ -57,7 +51,7 @@ import Observable_forEach from "./Observable/__internal__/Observable.forEach";
 import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest";
-import Observable_fromArray from "./Observable/__internal__/Observable.fromArray";
+import Observable_fromReadonlyArray from "./Observable/__internal__/Observable.fromReadonlyArray";
 import Observable_generate from "./Observable/__internal__/Observable.generate";
 import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable";
@@ -105,24 +99,11 @@ export const buffer: <T>(options?: {
 export const catchError: CatchError<ObservableLike>["catchError"] =
   Observable_catchError;
 
-/**
- * Returns an `ObservableLike` that combines the latest values from
- * multiple sources.
- */
 export const combineLatest: Zip<ObservableLike>["zip"] =
   Observable_combineLatest;
 
-/**
- * Creates an `ObservableLike` which emits all values from each source sequentially.
- */
 export const concat: Concat<ObservableLike>["concat"] = Observable_concat;
 
-/**
- * Converts a higher-order `ObservableLike` into a first-order
- * `ObservableLike` by concatenating the inner sources in order.
- *
- * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
- */
 export const concatAll: ConcatAll<
   ObservableLike,
   {
@@ -149,11 +130,6 @@ export const empty: EmptyObservable = Observable_empty as EmptyObservable;
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   Observable_everySatisfy;
 
-/**
- * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
- * by dropping inner sources while the previous inner source
- * has not yet been disposed.
- */
 export const exhaust: ConcatAll<ObservableLike>["concatAll"] = <T>() =>
   mergeAll<T>({
     maxBufferSize: 1,
@@ -171,8 +147,6 @@ export const forkMerge: ForkConcat<ObservableLike>["forkConcat"] =
 export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] =
   Observable_forkZipLatest;
 
-export const fromArray = Observable_fromArray;
-
 export const fromDisposable = Disposable_toObservable;
 
 export const fromFlowable =
@@ -180,6 +154,8 @@ export const fromFlowable =
 
 export const fromPromise: FromPromise<ObservableLike>["fromPromise"] =
   Promiseable_toObservable;
+
+export const fromReadonlyArray = Observable_fromReadonlyArray;
 
 interface GenerateObservable {
   <T>(
@@ -239,39 +215,12 @@ export const pairwise: Pairwise<ObservableLike>["pairwise"] =
 
 export const reduce: Reduce<ObservableLike>["reduce"] = Observable_reduce;
 
-interface RepeatOperator {
-  /**
-   * Returns an `ObservableLike` that applies the predicate function each time the source
-   * completes to determine if the subscription should be renewed.
-   *
-   * @param predicate The predicate function to apply.
-   */
-  <T>(predicate: Predicate<number>): ContainerOperator<ObservableLike, T, T>;
-
-  /**
-   * Returns an `ObservableLike` that repeats the source count times.
-   * @param count
-   */
-  <T>(count: number): ContainerOperator<ObservableLike, T, T>;
-
-  /**
-   * Returns an `ObservableLike` that continually repeats the source.
-   */
-  <T>(): ContainerOperator<ObservableLike, T, T>;
-}
-export const repeat: RepeatOperator = Observable_repeat;
+export const repeat = Observable_repeat;
 
 export const retry = Observable_retry;
 
 export const scan = Observable_scan;
 
-/**
- * Returns the `ObservableLike` that applies an asynchronous accumulator function
- * over the source, and emits each intermediate result.
- *
- * @param scanner The accumulator function called on each source value.
- * @param initialValue The initial accumulation value.
- */
 export const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"] =
   Observable_scanAsync;
 
@@ -368,9 +317,9 @@ const Observable = {
   empty,
   everySatisfy,
   forEach,
-  fromArray,
   fromFlowable,
   fromPromise,
+  fromReadonlyArray,
   generate,
   isEnumerable,
   isRunnable,

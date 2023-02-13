@@ -14,7 +14,7 @@ declare const empty: Empty<RunnableLike>["empty"];
 declare const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"];
 declare const first: <T>() => Function1<RunnableLike<T>, Optional<T>>;
 declare const forEach: ForEach<RunnableLike>["forEach"];
-declare const fromArray: <T>(options?: undefined) => Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
+declare const fromReadonlyArray: <T>(options?: undefined) => Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
 declare const generate: Generate<RunnableLike>["generate"];
 declare const keep: Keep<RunnableLike>["keep"];
 declare const last: <T>() => Function1<RunnableLike<T>, Optional<T>>;
@@ -54,7 +54,7 @@ declare const Runnable: {
     everySatisfy: <T_8>(predicate: Predicate<T_8>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_8, boolean>;
     first: <T_9>() => Function1<RunnableLike<T_9>, Optional<T_9>>;
     forEach: <T_10>(effect: SideEffect1<T_10>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_10, T_10>;
-    fromArray: <T_11>(options?: undefined) => Function1<ReadonlyArrayLike<T_11>, RunnableLike<T_11>>;
+    fromReadonlyArray: <T_11>(options?: undefined) => Function1<ReadonlyArrayLike<T_11>, RunnableLike<T_11>>;
     generate: <T_12>(generator: Updater<T_12>, initialValue: Factory<T_12>, options?: undefined) => RunnableLike<T_12>;
     keep: <T_13>(predicate: Predicate<T_13>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_13, T_13>;
     last: <T_14>() => Function1<RunnableLike<T_14>, Optional<T_14>>;
@@ -86,4 +86,4 @@ declare const Runnable: {
     toReadonlyArray: <T_27>(options?: undefined) => Function1<RunnableLike<T_27>, ReadonlyArrayLike<T_27>>;
     toRunnable: <T_28>(options?: undefined) => Function1<RunnableLike<T_28>, RunnableLike<T_28>>;
 };
-export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromArray, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };
+export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromReadonlyArray, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };

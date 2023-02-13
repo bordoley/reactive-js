@@ -152,8 +152,8 @@ type ForkZip<C extends ContainerLike> = Container<C> & {
         TI
     ]>;
 };
-type FromArray<C extends ContainerLike, O = unknown> = Container<C> & {
-    fromArray<T>(options?: O & {
+type FromReadonlyArray<C extends ContainerLike, O = unknown> = Container<C> & {
+    fromReadonlyArray<T>(options?: O & {
         readonly start?: number;
         readonly count?: number;
     }): Function1<readonly T[], ContainerOf<C, T>>;
@@ -170,8 +170,8 @@ type FromPromise<C extends ContainerLike, O = never> = Container<C> & {
 type FromSequence<C extends ContainerLike, O = never> = Container<C> & {
     fromSequence<T>(options?: O): Function1<SequenceLike<T>, ContainerOf<C, T>>;
 };
-type FromSet<C extends ContainerLike, O = never> = Container<C> & {
-    fromSet<T>(options?: O): Function1<ReadonlySet<T>, ContainerOf<C, T>>;
+type FromReadonlySet<C extends ContainerLike, O = never> = Container<C> & {
+    fromReadonlySet<T>(options?: O): Function1<ReadonlySet<T>, ContainerOf<C, T>>;
 };
 type Generate<C extends ContainerLike, O = never> = Container<C> & {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: O): ContainerOf<C, T>;
@@ -305,4 +305,4 @@ type Zip<C extends ContainerLike> = Container<C> & {
         TI
     ]>;
 };
-export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromArray, FromAsyncIterable, FromIterable, FromPromise, FromSequence, FromSet, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, ReadonlySetLike, Reduce, Repeat, Scan, SequenceLike, SequenceLike_data, SequenceLike_next, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToAsyncIterable, ToIterable, ToReadonlyArray, ToReadonlySet, ToSequence, Zip };
+export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromIterable, FromPromise, FromReadonlyArray, FromReadonlySet, FromSequence, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, ReadonlySetLike, Reduce, Repeat, Scan, SequenceLike, SequenceLike_data, SequenceLike_next, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToAsyncIterable, ToIterable, ToReadonlyArray, ToReadonlySet, ToSequence, Zip };

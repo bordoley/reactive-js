@@ -7,6 +7,7 @@ import './modules/Flowable.test.mjs';
 import './modules/Iterable.test.mjs';
 import './modules/Observable.test.mjs';
 import './modules/Promiseable.test.mjs';
+import './modules/ReadonlyArray.test.mjs';
 import './modules/Runnable.test.mjs';
 import './modules/RunnableObservable.test.mjs';
 import './modules/Sequence.test.mjs';

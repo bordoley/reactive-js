@@ -9,16 +9,16 @@ const Sink_someSatisfyMixin: <
   TSink extends SinkLike<boolean>,
   T,
 >(
-  fromArray: (v: readonly boolean[]) => C,
+  fromReadonlyArray: (v: readonly boolean[]) => C,
 ) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<boolean>,
   T,
 >(
-  fromArray: (v: readonly boolean[]) => C,
+  fromReadonlyArray: (v: readonly boolean[]) => C,
 ) => {
   const typedSatisfySinkMixin = Sink_satisfyMixin<C, TSink, T>(
-    fromArray,
+    fromReadonlyArray,
     false,
   );
 

@@ -1,7 +1,7 @@
 import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, EverySatisfy, ForkZip, ForkConcat, FromPromise, Keep, Map, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, PromiseableLike } from "../containers.js";
 import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, AsyncReducer } from "../rx.js";
 import { FlowableLike, ToFlowable } from "../streaming.js";
-import { Factory, Function1, SideEffect1, Equality, Function2, Reducer, Predicate, Updater } from "../functions.js";
+import { Factory, Function1, SideEffect1, Equality, Predicate, Function2, Reducer, Updater } from "../functions.js";
 import { SchedulerLike } from "../scheduling.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
 declare const async: <T>(computation: Factory<T>, { mode }?: {
@@ -12,21 +12,8 @@ declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number;
 }) => ContainerOperator<ObservableLike, T, readonly T[]>;
 declare const catchError: CatchError<ObservableLike>["catchError"];
-/**
- * Returns an `ObservableLike` that combines the latest values from
- * multiple sources.
- */
 declare const combineLatest: Zip<ObservableLike>["zip"];
-/**
- * Creates an `ObservableLike` which emits all values from each source sequentially.
- */
 declare const concat: Concat<ObservableLike>["concat"];
-/**
- * Converts a higher-order `ObservableLike` into a first-order
- * `ObservableLike` by concatenating the inner sources in order.
- *
- * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
- */
 declare const concatAll: ConcatAll<ObservableLike, {
     maxBufferSize?: number;
 }>["concatAll"];
@@ -44,26 +31,21 @@ interface EmptyObservable {
 }
 declare const empty: EmptyObservable;
 declare const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"];
-/**
- * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
- * by dropping inner sources while the previous inner source
- * has not yet been disposed.
- */
 declare const exhaust: ConcatAll<ObservableLike>["concatAll"];
 declare const forEach: <T>(effect: SideEffect1<T>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T, T>;
 declare const forkCombineLatest: ForkZip<ObservableLike>["forkZip"];
 declare const forkMerge: ForkConcat<ObservableLike>["forkConcat"];
 declare const forkZipLatest: ForkZip<ObservableLike>["forkZip"];
-declare const fromArray: <T>(options?: ({
+declare const fromDisposable: <T>() => Function1<DisposableLike, ObservableLike<T>>;
+declare const fromFlowable: <T>(options?: undefined) => Function1<FlowableLike<T>, ObservableLike<T>>;
+declare const fromPromise: FromPromise<ObservableLike>["fromPromise"];
+declare const fromReadonlyArray: <T>(options?: ({
     readonly delay?: number | undefined;
     readonly delayStart?: boolean | undefined;
 } & {
     readonly start?: number | undefined;
     readonly count?: number | undefined;
 }) | undefined) => Function1<readonly T[], ObservableLike<T>>;
-declare const fromDisposable: <T>() => Function1<DisposableLike, ObservableLike<T>>;
-declare const fromFlowable: <T>(options?: undefined) => Function1<FlowableLike<T>, ObservableLike<T>>;
-declare const fromPromise: FromPromise<ObservableLike>["fromPromise"];
 interface GenerateObservable {
     <T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableObservableLike<T>;
     <T>(generator: Updater<T>, initialValue: Factory<T>, options: {
@@ -96,37 +78,16 @@ declare const never: <T>(options?: undefined) => ObservableLike<T>;
 declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<ObservableLike, T, T>;
 declare const pairwise: Pairwise<ObservableLike>["pairwise"];
 declare const reduce: Reduce<ObservableLike>["reduce"];
-interface RepeatOperator {
-    /**
-     * Returns an `ObservableLike` that applies the predicate function each time the source
-     * completes to determine if the subscription should be renewed.
-     *
-     * @param predicate The predicate function to apply.
-     */
-    <T>(predicate: Predicate<number>): ContainerOperator<ObservableLike, T, T>;
-    /**
-     * Returns an `ObservableLike` that repeats the source count times.
-     * @param count
-     */
-    <T>(count: number): ContainerOperator<ObservableLike, T, T>;
-    /**
-     * Returns an `ObservableLike` that continually repeats the source.
-     */
-    <T>(): ContainerOperator<ObservableLike, T, T>;
-}
-declare const repeat: RepeatOperator;
+declare const repeat: {
+    <T>(predicate: Predicate<number>, options?: undefined): ContainerOperator<ObservableLike<unknown>, T, T>;
+    <T_1>(count: number, options?: undefined): ContainerOperator<ObservableLike<unknown>, T_1, T_1>;
+    <T_2>(options?: undefined): ContainerOperator<ObservableLike<unknown>, T_2, T_2>;
+};
 declare const retry: {
     <T>(): ContainerOperator<ObservableLike<unknown>, T, T>;
     <T_1>(predicate: Function2<number, unknown, boolean>): ContainerOperator<ObservableLike<unknown>, T_1, T_1>;
 };
 declare const scan: <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T, TAcc>;
-/**
- * Returns the `ObservableLike` that applies an asynchronous accumulator function
- * over the source, and emits each intermediate result.
- *
- * @param scanner The accumulator function called on each source value.
- * @param initialValue The initial accumulation value.
- */
 declare const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"];
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
@@ -391,15 +352,15 @@ declare const Observable: {
     empty: EmptyObservable;
     everySatisfy: <T_7>(predicate: Predicate<T_7>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_7, boolean>;
     forEach: <T_8>(effect: SideEffect1<T_8>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_8, T_8>;
-    fromArray: <T_9>(options?: ({
+    fromFlowable: <T_9>(options?: undefined) => Function1<FlowableLike<T_9>, ObservableLike<T_9>>;
+    fromPromise: <T_10>(options?: undefined) => Function1<PromiseableLike<T_10>, ObservableLike<T_10>>;
+    fromReadonlyArray: <T_11>(options?: ({
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
     } & {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
-    }) | undefined) => Function1<readonly T_9[], ObservableLike<T_9>>;
-    fromFlowable: <T_10>(options?: undefined) => Function1<FlowableLike<T_10>, ObservableLike<T_10>>;
-    fromPromise: <T_11>(options?: undefined) => Function1<PromiseableLike<T_11>, ObservableLike<T_11>>;
+    }) | undefined) => Function1<readonly T_11[], ObservableLike<T_11>>;
     generate: GenerateObservable;
     isEnumerable: (obs: ObservableLike<unknown>) => obs is EnumerableObservableLike<unknown>;
     isRunnable: (obs: ObservableLike<unknown>) => obs is RunnableObservableLike<unknown>;
@@ -412,40 +373,44 @@ declare const Observable: {
         T_15
     ]>;
     reduce: <T_16, TAcc>(reducer: Reducer<T_16, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_16, TAcc>;
-    repeat: RepeatOperator;
-    retry: {
-        <T_17>(): ContainerOperator<ObservableLike<unknown>, T_17, T_17>;
-        <T_18>(predicate: Function2<number, unknown, boolean>): ContainerOperator<ObservableLike<unknown>, T_18, T_18>;
+    repeat: {
+        <T_17>(predicate: Predicate<number>, options?: undefined): ContainerOperator<ObservableLike<unknown>, T_17, T_17>;
+        <T_18>(count: number, options?: undefined): ContainerOperator<ObservableLike<unknown>, T_18, T_18>;
+        <T_19>(options?: undefined): ContainerOperator<ObservableLike<unknown>, T_19, T_19>;
     };
-    scan: <T_19, TAcc_1>(scanner: Reducer<T_19, TAcc_1>, initialValue: Factory<TAcc_1>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_19, TAcc_1>;
-    scanAsync: <T_20, TAcc_2>(scanner: AsyncReducer<ObservableLike<unknown>, T_20, TAcc_2>, initialValue: Factory<TAcc_2>) => ContainerOperator<ObservableLike<unknown>, T_20, TAcc_2>;
-    share: <T_21>(scheduler: SchedulerLike, options?: {
+    retry: {
+        <T_20>(): ContainerOperator<ObservableLike<unknown>, T_20, T_20>;
+        <T_21>(predicate: Function2<number, unknown, boolean>): ContainerOperator<ObservableLike<unknown>, T_21, T_21>;
+    };
+    scan: <T_22, TAcc_1>(scanner: Reducer<T_22, TAcc_1>, initialValue: Factory<TAcc_1>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_22, TAcc_1>;
+    scanAsync: <T_23, TAcc_2>(scanner: AsyncReducer<ObservableLike<unknown>, T_23, TAcc_2>, initialValue: Factory<TAcc_2>) => ContainerOperator<ObservableLike<unknown>, T_23, TAcc_2>;
+    share: <T_24>(scheduler: SchedulerLike, options?: {
         readonly replay?: number | undefined;
-    } | undefined) => Function1<ObservableLike<T_21>, ObservableLike<T_21>>;
-    skipFirst: <T_22>(options?: {
-        readonly count?: number | undefined;
-    } | undefined) => ContainerOperator<ObservableLike<unknown>, T_22, T_22>;
-    someSatisfy: <T_23>(predicate: Predicate<T_23>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_23, boolean>;
-    subscribe: <T_24>(scheduler: SchedulerLike) => Function1<ObservableLike<T_24>, DisposableLike>;
-    takeFirst: <T_25>(options?: {
+    } | undefined) => Function1<ObservableLike<T_24>, ObservableLike<T_24>>;
+    skipFirst: <T_25>(options?: {
         readonly count?: number | undefined;
     } | undefined) => ContainerOperator<ObservableLike<unknown>, T_25, T_25>;
-    takeLast: <T_26>(options?: {
+    someSatisfy: <T_26>(predicate: Predicate<T_26>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_26, boolean>;
+    subscribe: <T_27>(scheduler: SchedulerLike) => Function1<ObservableLike<T_27>, DisposableLike>;
+    takeFirst: <T_28>(options?: {
         readonly count?: number | undefined;
-    } | undefined) => ContainerOperator<ObservableLike<unknown>, T_26, T_26>;
-    takeUntil: <T_27>(notifier: ObservableLike<unknown>) => ContainerOperator<ObservableLike<unknown>, T_27, T_27>;
-    takeWhile: <T_28>(predicate: Predicate<T_28>, options?: {
-        readonly inclusive?: boolean | undefined;
     } | undefined) => ContainerOperator<ObservableLike<unknown>, T_28, T_28>;
+    takeLast: <T_29>(options?: {
+        readonly count?: number | undefined;
+    } | undefined) => ContainerOperator<ObservableLike<unknown>, T_29, T_29>;
+    takeUntil: <T_30>(notifier: ObservableLike<unknown>) => ContainerOperator<ObservableLike<unknown>, T_30, T_30>;
+    takeWhile: <T_31>(predicate: Predicate<T_31>, options?: {
+        readonly inclusive?: boolean | undefined;
+    } | undefined) => ContainerOperator<ObservableLike<unknown>, T_31, T_31>;
     throttle: Throttle;
-    throwIfEmpty: <T_29>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_29, T_29>;
+    throwIfEmpty: <T_32>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_32, T_32>;
     timeout: {
-        <T_30>(duration: number): ContainerOperator<ObservableLike<unknown>, T_30, T_30>;
-        <T_31>(duration: ObservableLike<unknown>): ContainerOperator<ObservableLike<unknown>, T_31, T_31>;
+        <T_33>(duration: number): ContainerOperator<ObservableLike<unknown>, T_33, T_33>;
+        <T_34>(duration: ObservableLike<unknown>): ContainerOperator<ObservableLike<unknown>, T_34, T_34>;
     };
-    toFlowable: <T_32>(options?: undefined) => Function1<ObservableLike<T_32>, FlowableLike<T_32>>;
-    toPromise: <T_33>(scheduler: SchedulerLike) => (observable: ObservableLike<T_33>) => PromiseLike<T_33>;
-    withLatestFrom: <TA_9, TB_9, T_34>(other: ObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_34>) => ContainerOperator<ObservableLike<unknown>, TA_9, T_34>;
+    toFlowable: <T_35>(options?: undefined) => Function1<ObservableLike<T_35>, FlowableLike<T_35>>;
+    toPromise: <T_36>(scheduler: SchedulerLike) => (observable: ObservableLike<T_36>) => PromiseLike<T_36>;
+    withLatestFrom: <TA_9, TB_9, T_37>(other: ObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_37>) => ContainerOperator<ObservableLike<unknown>, TA_9, T_37>;
     zip: {
         <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<readonly [
             TA,
@@ -570,6 +535,6 @@ declare const Observable: {
             TI
         ]>;
     };
-    zipWithLatestFrom: <TA_10, TB_10, T_35>(other: ObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_35>) => ContainerOperator<ObservableLike<unknown>, TA_10, T_35>;
+    zipWithLatestFrom: <TA_10, TB_10, T_38>(other: ObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_38>) => ContainerOperator<ObservableLike<unknown>, TA_10, T_38>;
 };
-export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromDisposable, fromFlowable, fromPromise, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromFlowable, fromPromise, fromReadonlyArray, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

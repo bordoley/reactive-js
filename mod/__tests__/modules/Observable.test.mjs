@@ -76,7 +76,7 @@ const toPromiseTests = createDescribe("toPromise", testAsync("when observable co
 }));
 const asyncTests = createDescribe("async", createTest("batch mode", () => {
     const scheduler = VirtualTimeScheduler.create();
-    const fromValueWithDelay = (delay, value) => pipe([value], Observable.fromArray({ delay }));
+    const fromValueWithDelay = (delay, value) => pipe([value], Observable.fromReadonlyArray({ delay }));
     let result = -1;
     pipe(Observable.async(() => {
         const obs1 = __memo(fromValueWithDelay, 10, 5);
@@ -93,8 +93,8 @@ const asyncTests = createDescribe("async", createTest("batch mode", () => {
     pipe(result, expectEquals(22));
 }), createTest("combined-latest mode", () => {
     const scheduler = VirtualTimeScheduler.create();
-    const oneTwoThreeDelayed = pipe([1, 2, 3], Observable.fromArray({ delay: 1 }));
-    const createOneTwoThree = (_) => pipe([1, 2, 3], Observable.fromArray());
+    const oneTwoThreeDelayed = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }));
+    const createOneTwoThree = (_) => pipe([1, 2, 3], Observable.fromReadonlyArray());
     const result = [];
     pipe(Observable.async(() => {
         const v = __await(oneTwoThreeDelayed);
@@ -107,7 +107,7 @@ const asyncTests = createDescribe("async", createTest("batch mode", () => {
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), createTest("conditional hooks", () => {
     const scheduler = VirtualTimeScheduler.create();
-    const src = pipe([0, 1, 2, 3, 4, 5], Observable.fromArray({ delay: 5 }));
+    const src = pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 }));
     const src2 = Observable.generate(increment, returns(100), {
         delay: 2,
         delayStart: false,

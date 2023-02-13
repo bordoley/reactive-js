@@ -180,7 +180,8 @@ const asyncTests = describe(
     const fromValueWithDelay = (
       delay: number,
       value: number,
-    ): ObservableLike<number> => pipe([value], Observable.fromArray({ delay }));
+    ): ObservableLike<number> =>
+      pipe([value], Observable.fromReadonlyArray({ delay }));
 
     let result = -1;
 
@@ -211,10 +212,10 @@ const asyncTests = describe(
 
     const oneTwoThreeDelayed = pipe(
       [1, 2, 3],
-      Observable.fromArray({ delay: 1 }),
+      Observable.fromReadonlyArray({ delay: 1 }),
     );
     const createOneTwoThree = (_: unknown) =>
-      pipe([1, 2, 3], Observable.fromArray());
+      pipe([1, 2, 3], Observable.fromReadonlyArray());
 
     const result: number[] = [];
 
@@ -241,7 +242,10 @@ const asyncTests = describe(
   test("conditional hooks", () => {
     const scheduler = VirtualTimeScheduler.create();
 
-    const src = pipe([0, 1, 2, 3, 4, 5], Observable.fromArray({ delay: 5 }));
+    const src = pipe(
+      [0, 1, 2, 3, 4, 5],
+      Observable.fromReadonlyArray({ delay: 5 }),
+    );
     const src2 = Observable.generate(increment, returns(100), {
       delay: 2,
       delayStart: false,

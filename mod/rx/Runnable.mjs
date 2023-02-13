@@ -12,7 +12,7 @@ import Runnable_empty from './Runnable/__internal__/Runnable.empty.mjs';
 import Runnable_everySatisfy from './Runnable/__internal__/Runnable.everySatisfy.mjs';
 import Runnable_first from './Runnable/__internal__/Runnable.first.mjs';
 import Runnable_forEach from './Runnable/__internal__/Runnable.forEach.mjs';
-import Runnable_fromArray from './Runnable/__internal__/Runnable.fromArray.mjs';
+import Runnable_fromReadonlyArray from './Runnable/__internal__/Runnable.fromReadonlyArray.mjs';
 import Runnable_generate from './Runnable/__internal__/Runnable.generate.mjs';
 import Runnable_keep from './Runnable/__internal__/Runnable.keep.mjs';
 import Runnable_last from './Runnable/__internal__/Runnable.last.mjs';
@@ -44,7 +44,7 @@ const empty = Runnable_empty;
 const everySatisfy = Runnable_everySatisfy;
 const first = Runnable_first;
 const forEach = Runnable_forEach;
-const fromArray = Runnable_fromArray;
+const fromReadonlyArray = Runnable_fromReadonlyArray;
 const generate = Runnable_generate;
 const keep = Runnable_keep;
 const last = Runnable_last;
@@ -78,7 +78,7 @@ const Runnable = {
     everySatisfy,
     first,
     forEach,
-    fromArray,
+    fromReadonlyArray,
     generate,
     keep,
     last,
@@ -100,4 +100,4 @@ const Runnable = {
     toRunnable,
 };
 
-export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromArray, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };
+export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromReadonlyArray, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };

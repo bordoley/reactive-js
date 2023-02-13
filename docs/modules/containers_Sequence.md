@@ -9,7 +9,7 @@
 - [concat](containers_Sequence.md#concat)
 - [concatAll](containers_Sequence.md#concatall)
 - [distinctUntilChanged](containers_Sequence.md#distinctuntilchanged)
-- [fromArray](containers_Sequence.md#fromarray)
+- [fromReadonlyArray](containers_Sequence.md#fromreadonlyarray)
 - [generate](containers_Sequence.md#generate)
 - [keep](containers_Sequence.md#keep)
 - [map](containers_Sequence.md#map)
@@ -97,9 +97,9 @@ ___
 
 ___
 
-### fromArray
+### fromReadonlyArray
 
-▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>
 
 #### Type parameters
 

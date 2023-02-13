@@ -1,6 +1,7 @@
 import { IterableLike, ToIterable } from "../containers";
 import { identity } from "../functions";
-import { ToAsyncEnumerable, ToEnumerable } from "../ix";
+import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix";
+import Enumerable_toIterable from "../ix/Enumerable/__internal__/Enumerable.toIterable";
 import {
   ToEnumerableObservable,
   ToObservable,
@@ -11,11 +12,10 @@ import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsync
 import Iterable_toEnumerable from "./Iterable/__internal__/Iterable.toEnumerable";
 import Iterable_toEnumerableObservable from "./Iterable/__internal__/Iterable.toEnumerableObservable";
 import Iterable_toRunnableObservable from "./Iterable/__internal__/Iterable.toRunnableObservable";
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
+
+export const fromEnumerable: FromEnumerable<IterableLike>["fromEnumerable"] =
+  Enumerable_toIterable;
+
 export const toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"] =
   Iterable_toAsyncEnumerable;
 
@@ -46,6 +46,7 @@ export const toRunnableObservable: ToRunnableObservable<
 
 /** @ignore */
 const Iterable = {
+  fromEnumerable,
   toAsyncEnumerable,
   toEnumerable,
   toIterable,

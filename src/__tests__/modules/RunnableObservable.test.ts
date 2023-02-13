@@ -25,7 +25,7 @@ import {
   endWithTests,
   everySatisfyTests,
   forEachTests,
-  fromArrayTests,
+  fromReadonlyArrayTests,
   ignoreElementsTests,
   keepTests,
   mapTests,
@@ -256,8 +256,8 @@ const throttleTests = describe(
     pipeLazy(
       pipeLazy(
         [1, 2, 3, 4, 5],
-        fromArray({ delay: 1 }),
-        throttle(_ => throws({ fromArray, mapT })(raise)),
+        fromReadonlyArray({ delay: 1 }),
+        throttle(_ => throws({ fromReadonlyArray, mapT })(raise)),
         toRunnable(),
         last(),
       ),
@@ -494,7 +494,7 @@ testModule(
   everySatisfyTests(RunnableObservable),
   exhaustTests,
   forEachTests(RunnableObservable),
-  fromArrayTests<RunnableObservableLike>(RunnableObservable),
+  fromReadonlyArrayTests<RunnableObservableLike>(RunnableObservable),
   ignoreElementsTests(RunnableObservable),
   keepTests(RunnableObservable),
   mapTests(RunnableObservable),

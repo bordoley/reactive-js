@@ -55,7 +55,6 @@
 - [error](functions.md#error)
 - [floor](functions.md#floor)
 - [getLength](functions.md#getlength)
-- [getOrRaise](functions.md#getorraise)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
@@ -1579,34 +1578,6 @@ ___
 #### Returns
 
 `number`
-
-___
-
-### getOrRaise
-
-▸ **getOrRaise**<`T`\>(): (`v`: [`Optional`](functions.md#optional)<`T`\>) => `T`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-`fn`
-
-▸ (`v`): `T`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | [`Optional`](functions.md#optional)<`T`\> |
-
-##### Returns
-
-`T`
 
 ___
 
