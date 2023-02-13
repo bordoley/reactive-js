@@ -29,7 +29,7 @@ import {
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
 import Observable_concat from "./Observable.concat";
-import Observable_fromArray from "./Observable.fromArray";
+import Observable_fromReadonlyArray from "./Observable.fromReadonlyArray";
 import Observable_isRunnable from "./Observable.isRunnable";
 import Observable_lift from "./Observable.lift";
 import Observable_map from "./Observable.map";
@@ -107,7 +107,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
     const durationObs = isNumber(duration)
       ? Container_throws(
           {
-            fromArray: Observable_fromArray,
+            fromReadonlyArray: Observable_fromReadonlyArray,
             map: Observable_map,
           },
           { delay: duration, delayStart: true, raise },
@@ -116,7 +116,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
           duration,
           Container_throws(
             {
-              fromArray: Observable_fromArray,
+              fromReadonlyArray: Observable_fromReadonlyArray,
               map: Observable_map,
             },
             { raise },

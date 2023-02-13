@@ -10,11 +10,7 @@ import {
   Zip,
 } from "./containers";
 import { Factory, Function1, Function2 } from "./functions";
-import {
-  DispatcherLike,
-  SchedulerLike,
-  VirtualTimeSchedulerLike,
-} from "./scheduling";
+import { DispatcherLike, SchedulerLike } from "./scheduling";
 import { DisposableLike } from "./util";
 
 /** @ignore */
@@ -134,13 +130,20 @@ export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
 
 export type FromEnumerableObservable<
   C extends ContainerLike,
-  O = unknown,
+  O = never,
 > = Container<C> & {
   fromEnumerableObservable: <T>(
-    options?: O & {
-      readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-    },
+    options?: O,
   ) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
+};
+
+export type FromRunnableObservable<
+  C extends ContainerLike,
+  O = never,
+> = Container<C> & {
+  fromRunnableObservable: <T>(
+    options?: O,
+  ) => Function1<RunnableObservableLike<T>, ContainerOf<C, T>>;
 };
 
 export type Retry<C extends ObservableLike> = {

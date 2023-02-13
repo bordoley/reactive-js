@@ -37,7 +37,7 @@ import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerabl
 import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate";
 import Enumerable_forEach from "./Enumerable/__internal__/Enumerable.forEach";
-import Enumerable_fromArray from "./Enumerable/__internal__/Enumerable.fromArray";
+import Enumerable_fromReadonlyArray from "./Enumerable/__internal__/Enumerable.fromReadonlyArray";
 import Enumerable_generate from "./Enumerable/__internal__/Enumerable.generate";
 import Enumerable_keep from "./Enumerable/__internal__/Enumerable.keep";
 import Enumerable_map from "./Enumerable/__internal__/Enumerable.map";
@@ -72,7 +72,7 @@ export const empty: Empty<EnumerableLike>["empty"] = Enumerable_empty;
 
 export const forEach: ForEach<EnumerableLike>["forEach"] = Enumerable_forEach;
 
-export const fromArray = Enumerable_fromArray;
+export const fromReadonlyArray = Enumerable_fromReadonlyArray;
 
 export const fromIterable: FromIterable<EnumerableLike>["fromIterable"] =
   Iterable_toEnumerable;
@@ -147,7 +147,7 @@ const Enumerable = {
   distinctUntilChanged,
   empty,
   forEach,
-  fromArray,
+  fromReadonlyArray,
   fromIterable,
   generate,
   keep,

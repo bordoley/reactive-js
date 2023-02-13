@@ -10,7 +10,7 @@ import {
   distinctUntilChangedTests,
   everySatisfyTests,
   forEachTests,
-  fromArrayTests,
+  fromReadonlyArrayTests,
   keepTests,
   mapTests,
   pairwiseTests,
@@ -36,7 +36,7 @@ testModule(
   distinctUntilChangedTests(Runnable),
   everySatisfyTests(Runnable),
   forEachTests(Runnable),
-  fromArrayTests<RunnableLike>(Runnable),
+  fromReadonlyArrayTests<RunnableLike>(Runnable),
   keepTests(Runnable),
   mapTests(Runnable),
   pairwiseTests(Runnable),
@@ -55,7 +55,7 @@ testModule(
       "when the source has values",
       pipeLazy(
         [0, 1, 2],
-        Runnable.fromArray(),
+        Runnable.fromReadonlyArray(),
         Runnable.first(),
         expectEquals<Optional<number>>(0),
       ),
@@ -64,7 +64,7 @@ testModule(
       "when the source is empty",
       pipeLazy(
         [],
-        Runnable.fromArray(),
+        Runnable.fromReadonlyArray(),
         Runnable.first(),
         expectEquals<Optional<number>>(none),
       ),
@@ -76,7 +76,7 @@ testModule(
       "when the source has values",
       pipeLazy(
         [0, 1, 2],
-        Runnable.fromArray(),
+        Runnable.fromReadonlyArray(),
         Runnable.last(),
         expectEquals<Optional<number>>(2),
       ),
@@ -85,7 +85,7 @@ testModule(
       "when the source is empty",
       pipeLazy(
         [],
-        Runnable.fromArray(),
+        Runnable.fromReadonlyArray(),
         Runnable.last(),
         expectEquals<Optional<number>>(none),
       ),

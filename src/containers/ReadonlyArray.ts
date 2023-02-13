@@ -1,7 +1,7 @@
 import {
   Empty,
   ForEach,
-  FromArray,
+  FromReadonlyArray,
   FromSequence,
   Keep,
   Map,
@@ -9,12 +9,12 @@ import {
   ToReadonlyArray,
   ToSequence,
 } from "../containers";
-import { identity } from "../functions";
 import { FromAsyncEnumerable, FromEnumerable, ToEnumerable } from "../ix";
 import AsyncEnumerable_toReadonlyArray from "../ix/AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray";
 import Enumerable_toReadonlyArray from "../ix/Enumerable/__internal__/Enumerable.toReadonlyArray";
 import {
   FromEnumerableObservable,
+  FromRunnableObservable,
   ToEnumerableObservable,
   ToObservable,
   ToRunnable,
@@ -28,6 +28,7 @@ import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep"
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map";
 import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some";
 import ReadonlyArray_toEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toEnumerable";
+import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray";
 import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable";
 import ReadonlyArray_toRunnableObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence";
@@ -40,10 +41,6 @@ export const every = ReadonlyArray_every;
 export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
   ReadonlyArray_forEach;
 
-export const fromArray: FromArray<ReadonlyArrayLike>["fromArray"] =
-  // FIXME: Handle options
-  _options => identity;
-
 export const fromAsyncEnumerable: FromAsyncEnumerable<ReadonlyArrayLike>["fromAsyncEnumerable"] =
   AsyncEnumerable_toReadonlyArray;
 
@@ -52,6 +49,12 @@ export const fromEnumerable: FromEnumerable<ReadonlyArrayLike>["fromEnumerable"]
 
 export const fromEnumerableObservable =
   RunnableObservable_toReadonlyArray as FromEnumerableObservable<ReadonlyArrayLike>["fromEnumerableObservable"];
+
+export const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fromReadonlyArray"] =
+  ReadonlyArray_toReadonlyArray;
+
+export const fromRunnableObservable =
+  RunnableObservable_toReadonlyArray as FromRunnableObservable<ReadonlyArrayLike>["fromRunnableObservable"];
 
 export const fromSequence: FromSequence<ReadonlyArrayLike>["fromSequence"] =
   Sequence_toReadonlyArray;
@@ -98,10 +101,10 @@ export const toObservable: ToObservable<
 export const toReadonlyArray: ToReadonlyArray<
   ReadonlyArrayLike,
   {
-    readonly start: number;
-    readonly count: number;
+    readonly start?: number;
+    readonly count?: number;
   }
->["toReadonlyArray"] = () => identity;
+>["toReadonlyArray"] = ReadonlyArray_toReadonlyArray;
 
 export const toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
   ReadonlyArray_toRunnable;
@@ -124,10 +127,10 @@ const ReadonlyArray = {
   empty,
   every,
   forEach,
-  fromArray,
   fromAsyncEnumerable,
   fromEnumerable,
   fromEnumerableObservable,
+  fromReadonlyArray,
   fromSequence,
   keep,
   map,

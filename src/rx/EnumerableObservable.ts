@@ -10,7 +10,7 @@ import {
   Empty,
   EverySatisfy,
   ForEach,
-  FromArray,
+  FromReadonlyArray,
   Generate,
   Keep,
   Map,
@@ -44,7 +44,7 @@ import Observable_distinctUntilChanged from "./Observable/__internal__/Observabl
 import Observable_empty from "./Observable/__internal__/Observable.empty";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach";
-import Observable_fromArray from "./Observable/__internal__/Observable.fromArray";
+import Observable_fromReadonlyArray from "./Observable/__internal__/Observable.fromReadonlyArray";
 import Observable_generate from "./Observable/__internal__/Observable.generate";
 import Observable_keep from "./Observable/__internal__/Observable.keep";
 import Observable_map from "./Observable/__internal__/Observable.map";
@@ -111,8 +111,8 @@ export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] = <
 export const forEach =
   Observable_forEach as ForEach<EnumerableObservableLike>["forEach"];
 
-export const fromArray =
-  Observable_fromArray as FromArray<EnumerableObservableLike>["fromArray"];
+export const fromReadonlyArray =
+  Observable_fromReadonlyArray as FromReadonlyArray<EnumerableObservableLike>["fromReadonlyArray"];
 
 export const generate =
   Observable_generate as Generate<EnumerableObservableLike>["generate"];
@@ -201,7 +201,7 @@ const EnumerableObservable = {
   everySatisfy,
   exhaust,
   forEach,
-  fromArray,
+  fromReadonlyArray,
   generate,
   keep,
   map,

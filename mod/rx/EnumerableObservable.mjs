@@ -13,7 +13,7 @@ import Observable_distinctUntilChanged from './Observable/__internal__/Observabl
 import Observable_empty from './Observable/__internal__/Observable.empty.mjs';
 import Observable_everySatisfy from './Observable/__internal__/Observable.everySatisfy.mjs';
 import Observable_forEach from './Observable/__internal__/Observable.forEach.mjs';
-import Observable_fromArray from './Observable/__internal__/Observable.fromArray.mjs';
+import Observable_fromReadonlyArray from './Observable/__internal__/Observable.fromReadonlyArray.mjs';
 import Observable_generate from './Observable/__internal__/Observable.generate.mjs';
 import Observable_keep from './Observable/__internal__/Observable.keep.mjs';
 import Observable_map from './Observable/__internal__/Observable.map.mjs';
@@ -50,7 +50,7 @@ const exhaust = () => mergeAll({
     maxConcurrency: 1,
 });
 const forEach = Observable_forEach;
-const fromArray = Observable_fromArray;
+const fromReadonlyArray = Observable_fromReadonlyArray;
 const generate = Observable_generate;
 const keep = Observable_keep;
 const map = Observable_map;
@@ -86,7 +86,7 @@ const EnumerableObservable = {
     everySatisfy,
     exhaust,
     forEach,
-    fromArray,
+    fromReadonlyArray,
     generate,
     keep,
     map,
@@ -110,4 +110,4 @@ const EnumerableObservable = {
     zip,
 };
 
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, zip };

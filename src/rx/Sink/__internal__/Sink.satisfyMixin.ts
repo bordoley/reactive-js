@@ -24,14 +24,14 @@ const Sink_satisfyMixin: <
   TSink extends SinkLike<boolean>,
   T,
 >(
-  fromArray: (v: readonly boolean[]) => C,
+  fromReadonlyArray: (v: readonly boolean[]) => C,
   defaultResult: boolean,
 ) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<boolean>,
   T,
 >(
-  fromArray: (v: readonly boolean[]) => C,
+  fromReadonlyArray: (v: readonly boolean[]) => C,
   defaultResult: boolean,
 ) => {
   const SatisfySinkMixin_predicate = Symbol("SatisfySinkMixin_predicate");
@@ -60,7 +60,7 @@ const Sink_satisfyMixin: <
           if (!Disposable_isDisposed(delegate)) {
             pipe(
               [defaultResult],
-              fromArray,
+              fromReadonlyArray,
               ReactiveContainer_sinkInto(delegate),
             );
           }

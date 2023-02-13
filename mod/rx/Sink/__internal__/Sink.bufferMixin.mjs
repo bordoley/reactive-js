@@ -8,7 +8,7 @@ import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from '../../../util/Disposable/__internal__/Disposable.onComplete.mjs';
 import ReactiveContainer_sinkInto from '../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.mjs';
 
-const Sink_bufferMixin = (fromArray) => {
+const Sink_bufferMixin = (fromReadonlyArray) => {
     const BufferSinkMixin_maxBufferSize = Symbol("BufferSinkMixin_maxBufferSize");
     const BufferSinkMixin_buffer = Symbol("BufferSinkMixin_buffer");
     return mix(include(Disposable_mixin, delegatingMixin()), function BufferSinkMixin(instance, delegate, maxBufferSize) {
@@ -23,7 +23,7 @@ const Sink_bufferMixin = (fromArray) => {
                 pipe(instance[DelegatingLike_delegate], Disposable_dispose());
             }
             else {
-                pipe([buffer], fromArray, ReactiveContainer_sinkInto(instance[DelegatingLike_delegate]));
+                pipe([buffer], fromReadonlyArray, ReactiveContainer_sinkInto(instance[DelegatingLike_delegate]));
             }
         }));
         return instance;

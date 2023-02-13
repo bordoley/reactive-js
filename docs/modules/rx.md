@@ -20,6 +20,7 @@
 
 - [AsyncReducer](rx.md#asyncreducer)
 - [FromEnumerableObservable](rx.md#fromenumerableobservable)
+- [FromRunnableObservable](rx.md#fromrunnableobservable)
 - [Retry](rx.md#retry)
 - [ScanAsync](rx.md#scanasync)
 - [TakeUntil](rx.md#takeuntil)
@@ -50,14 +51,27 @@ ___
 
 ### FromEnumerableObservable
 
-Ƭ **FromEnumerableObservable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromEnumerableObservable`: <T\>(`options?`: `O` & { `schedulerFactory`: [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\>  }) => [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+Ƭ **FromEnumerableObservable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromEnumerableObservable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | `unknown` |
+| `O` | `never` |
+
+___
+
+### FromRunnableObservable
+
+Ƭ **FromRunnableObservable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromRunnableObservable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `O` | `never` |
 
 ___
 

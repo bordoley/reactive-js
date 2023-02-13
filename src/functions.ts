@@ -303,11 +303,6 @@ export const decrementBy =
 export const getLength = (arr: readonly unknown[] | string): number =>
   arr.length;
 
-export const getOrRaise =
-  <T>() =>
-  (v: Optional<T>): T =>
-    isSome(v) ? v : raiseWithDebugMessage("value is none");
-
 /**
  * The identity function.
  *

@@ -18,7 +18,7 @@
 - [everySatisfy](rx_Runnable.md#everysatisfy)
 - [first](rx_Runnable.md#first)
 - [forEach](rx_Runnable.md#foreach)
-- [fromArray](rx_Runnable.md#fromarray)
+- [fromReadonlyArray](rx_Runnable.md#fromreadonlyarray)
 - [generate](rx_Runnable.md#generate)
 - [keep](rx_Runnable.md#keep)
 - [last](rx_Runnable.md#last)
@@ -302,9 +302,9 @@ ___
 
 ___
 
-### fromArray
+### fromReadonlyArray
 
-▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 

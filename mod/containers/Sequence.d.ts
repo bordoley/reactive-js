@@ -5,7 +5,7 @@ import { SequenceLike, ConcatAll, DistinctUntilChanged, ReadonlyArrayLike, Gener
 declare const concat: <T>(fst: SequenceLike<T>, snd: SequenceLike<T>, ...tail: readonly SequenceLike<T>[]) => SequenceLike<T>;
 declare const concatAll: ConcatAll<SequenceLike>["concatAll"];
 declare const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"];
-declare const fromArray: <T>(options?: undefined) => Function1<ReadonlyArrayLike<T>, SequenceLike<T>>;
+declare const fromReadonlyArray: <T>(options?: undefined) => Function1<ReadonlyArrayLike<T>, SequenceLike<T>>;
 declare const generate: Generate<SequenceLike>["generate"];
 declare const keep: Keep<SequenceLike>["keep"];
 declare const map: Map<SequenceLike>["map"];
@@ -28,7 +28,7 @@ declare const Sequence: {
     distinctUntilChanged: <T_2>(options?: {
         readonly equality?: Equality<T_2> | undefined;
     } | undefined) => ContainerOperator<SequenceLike<unknown>, T_2, T_2>;
-    fromArray: <T_3>(options?: undefined) => Function1<ReadonlyArrayLike<T_3>, SequenceLike<T_3>>;
+    fromReadonlyArray: <T_3>(options?: undefined) => Function1<ReadonlyArrayLike<T_3>, SequenceLike<T_3>>;
     generate: <T_4>(generator: Updater<T_4>, initialValue: Factory<T_4>, options?: undefined) => SequenceLike<T_4>;
     keep: <T_5>(predicate: Predicate<T_5>, options?: undefined) => ContainerOperator<SequenceLike<unknown>, T_5, T_5>;
     map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<SequenceLike<unknown>, TA, TB>;
@@ -120,4 +120,4 @@ declare const Sequence: {
         ]>;
     };
 };
-export { concat, concatAll, Sequence as default, distinctUntilChanged, fromArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };
+export { concat, concatAll, Sequence as default, distinctUntilChanged, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };

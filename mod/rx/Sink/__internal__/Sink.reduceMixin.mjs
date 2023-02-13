@@ -8,7 +8,7 @@ import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from '../../../util/Disposable/__internal__/Disposable.onComplete.mjs';
 import ReactiveContainer_sinkInto from '../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.mjs';
 
-const Sink_reduceMixin = (fromArray) => {
+const Sink_reduceMixin = (fromReadonlyArray) => {
     const ReduceSinkMixin_reducer = Symbol("ReduceSinkMixin_reducer");
     const ReduceSinkMixin_acc = Symbol("ReduceSinkMixin_acc");
     return mix(include(Disposable_mixin), function ReduceSinkMixin(instance, delegate, reducer, initialValue) {
@@ -22,7 +22,7 @@ const Sink_reduceMixin = (fromArray) => {
             pipe(instance, Disposable_dispose(error(e)));
         }
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            pipe([instance[ReduceSinkMixin_acc]], fromArray, ReactiveContainer_sinkInto(delegate));
+            pipe([instance[ReduceSinkMixin_acc]], fromReadonlyArray, ReactiveContainer_sinkInto(delegate));
         }));
         return instance;
     }, props({

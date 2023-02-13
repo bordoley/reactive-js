@@ -25,7 +25,7 @@ declare const empty: <T>(options?: {
 declare const everySatisfy: <T>(predicate: Predicate<T>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, boolean>;
 declare const exhaust: ConcatAll<RunnableObservableLike>["concatAll"];
 declare const forEach: <T>(effect: SideEffect1<T>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-declare const fromArray: <T>(options?: ({
+declare const fromReadonlyArray: <T>(options?: ({
     readonly delay?: number | undefined;
     readonly delayStart?: boolean | undefined;
 } & {
@@ -290,7 +290,7 @@ declare const RunnableObservable: {
     everySatisfy: <T_7>(predicate: Predicate<T_7>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_7, boolean>;
     exhaust: <T_8>(options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, RunnableObservableLike<T_8>, T_8>;
     forEach: <T_9>(effect: SideEffect1<T_9>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_9, T_9>;
-    fromArray: <T_10>(options?: ({
+    fromReadonlyArray: <T_10>(options?: ({
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
     } & {
@@ -470,4 +470,4 @@ declare const RunnableObservable: {
     };
     zipWithLatestFrom: <TA_10, TB_10, T_33>(other: RunnableObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_33>) => ContainerOperator<RunnableObservableLike<unknown>, TA_10, T_33>;
 };
-export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

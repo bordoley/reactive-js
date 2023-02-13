@@ -2,7 +2,7 @@
 import Sequence_concat from './Sequence/__internal__/Sequence.concat.mjs';
 import Sequence_concatAll from './Sequence/__internal__/Sequence.concatAll.mjs';
 import Sequence_distinctUntilChanged from './Sequence/__internal__/Sequence.distinctUntilChanged.mjs';
-import Sequence_fromArray from './Sequence/__internal__/Sequence.fromArray.mjs';
+import Sequence_fromReadonlyArray from './Sequence/__internal__/Sequence.fromReadonlyArray.mjs';
 import Sequence_generate from './Sequence/__internal__/Sequence.generate.mjs';
 import Sequence_keep from './Sequence/__internal__/Sequence.keep.mjs';
 import Sequence_map from './Sequence/__internal__/Sequence.map.mjs';
@@ -22,7 +22,7 @@ import Sequence_zip from './Sequence/__internal__/Sequence.zip.mjs';
 const concat = Sequence_concat;
 const concatAll = Sequence_concatAll;
 const distinctUntilChanged = Sequence_distinctUntilChanged;
-const fromArray = Sequence_fromArray;
+const fromReadonlyArray = Sequence_fromReadonlyArray;
 const generate = Sequence_generate;
 const keep = Sequence_keep;
 const map = Sequence_map;
@@ -43,7 +43,7 @@ const Sequence = {
     concat,
     concatAll,
     distinctUntilChanged,
-    fromArray,
+    fromReadonlyArray,
     generate,
     keep,
     map,
@@ -60,4 +60,4 @@ const Sequence = {
     zip,
 };
 
-export { concat, concatAll, Sequence as default, distinctUntilChanged, fromArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };
+export { concat, concatAll, Sequence as default, distinctUntilChanged, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };

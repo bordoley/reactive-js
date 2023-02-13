@@ -9,7 +9,7 @@ declare const concatAll: ConcatAll<EnumerableLike>["concatAll"];
 declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"];
 declare const empty: Empty<EnumerableLike>["empty"];
 declare const forEach: ForEach<EnumerableLike>["forEach"];
-declare const fromArray: <T>(options?: {
+declare const fromReadonlyArray: <T>(options?: {
     readonly start: number;
     readonly count: number;
 } | undefined) => Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
@@ -51,7 +51,7 @@ declare const Enumerable: {
     } | undefined) => ContainerOperator<EnumerableLike<unknown>, T_3, T_3>;
     empty: <T_4>(options?: undefined) => EnumerableLike<T_4>;
     forEach: <T_5>(effect: SideEffect1<T_5>, options?: undefined) => ContainerOperator<EnumerableLike<unknown>, T_5, T_5>;
-    fromArray: <T_6>(options?: {
+    fromReadonlyArray: <T_6>(options?: {
         readonly start: number;
         readonly count: number;
     } | undefined) => Function1<ReadonlyArrayLike<T_6>, EnumerableLike<T_6>>;
@@ -148,4 +148,4 @@ declare const Enumerable: {
         ]>;
     };
 };
-export { buffer, concat, concatAll, Enumerable as default, distinctUntilChanged, empty, enumerate, forEach, fromArray, fromIterable, generate, keep, map, pairwise, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };
+export { buffer, concat, concatAll, Enumerable as default, distinctUntilChanged, empty, enumerate, forEach, fromIterable, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

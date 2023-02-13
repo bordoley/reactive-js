@@ -8,7 +8,7 @@ import Enumerable_distinctUntilChanged from './Enumerable/__internal__/Enumerabl
 import Enumerable_empty from './Enumerable/__internal__/Enumerable.empty.mjs';
 import Enumerable_enumerate from './Enumerable/__internal__/Enumerable.enumerate.mjs';
 import Enumerable_forEach from './Enumerable/__internal__/Enumerable.forEach.mjs';
-import Enumerable_fromArray from './Enumerable/__internal__/Enumerable.fromArray.mjs';
+import Enumerable_fromReadonlyArray from './Enumerable/__internal__/Enumerable.fromReadonlyArray.mjs';
 import Enumerable_generate from './Enumerable/__internal__/Enumerable.generate.mjs';
 import Enumerable_keep from './Enumerable/__internal__/Enumerable.keep.mjs';
 import Enumerable_map from './Enumerable/__internal__/Enumerable.map.mjs';
@@ -34,7 +34,7 @@ const concatAll = Enumerable_concatAll;
 const distinctUntilChanged = Enumerable_distinctUntilChanged;
 const empty = Enumerable_empty;
 const forEach = Enumerable_forEach;
-const fromArray = Enumerable_fromArray;
+const fromReadonlyArray = Enumerable_fromReadonlyArray;
 const fromIterable = Iterable_toEnumerable;
 const generate = Enumerable_generate;
 const keep = Enumerable_keep;
@@ -63,7 +63,7 @@ const Enumerable = {
     distinctUntilChanged,
     empty,
     forEach,
-    fromArray,
+    fromReadonlyArray,
     fromIterable,
     generate,
     keep,
@@ -82,4 +82,4 @@ const Enumerable = {
     zip,
 };
 
-export { buffer, concat, concatAll, Enumerable as default, distinctUntilChanged, empty, enumerate, forEach, fromArray, fromIterable, generate, keep, map, pairwise, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };
+export { buffer, concat, concatAll, Enumerable as default, distinctUntilChanged, empty, enumerate, forEach, fromIterable, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

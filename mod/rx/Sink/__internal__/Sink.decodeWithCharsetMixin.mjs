@@ -8,7 +8,7 @@ import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from '../../../util/Disposable/__internal__/Disposable.onComplete.mjs';
 import ReactiveContainer_sinkInto from '../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.mjs';
 
-const Sink_decodeWithCharsetMixin = (fromArray) => {
+const Sink_decodeWithCharsetMixin = (fromReadonlyArray) => {
     const DecodeWithCharsetSinkMixin_textDecoder = Symbol("DecodeWithCharsetSinkMixin_textDecoder");
     return mix(include(Disposable_mixin, delegatingMixin()), function DecodeWithCharsetSinkMixin(instance, delegate, charset) {
         init(Disposable_mixin, instance);
@@ -18,7 +18,7 @@ const Sink_decodeWithCharsetMixin = (fromArray) => {
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             const data = textDecoder.decode();
             if (!isEmpty(data)) {
-                pipe([data], fromArray, ReactiveContainer_sinkInto(delegate));
+                pipe([data], fromReadonlyArray, ReactiveContainer_sinkInto(delegate));
             }
             else {
                 pipe(delegate, Disposable_dispose());

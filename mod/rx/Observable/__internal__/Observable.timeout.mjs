@@ -12,7 +12,7 @@ import { MutableRefLike_current } from '../../../util/__internal__/util.internal
 import Observer_getScheduler from '../../Observer/__internal__/Observer.getScheduler.mjs';
 import Observer_mixin from '../../Observer/__internal__/Observer.mixin.mjs';
 import Observable_concat from './Observable.concat.mjs';
-import Observable_fromArray from './Observable.fromArray.mjs';
+import Observable_fromReadonlyArray from './Observable.fromReadonlyArray.mjs';
 import Observable_isRunnable from './Observable.isRunnable.mjs';
 import Observable_lift from './Observable.lift.mjs';
 import Observable_map from './Observable.map.mjs';
@@ -45,11 +45,11 @@ const Observable_timeout = /*@__PURE__*/ (() => {
     return (duration) => {
         const durationObs = isNumber(duration)
             ? Container_throws({
-                fromArray: Observable_fromArray,
+                fromReadonlyArray: Observable_fromReadonlyArray,
                 map: Observable_map,
             }, { delay: duration, delayStart: true, raise })
             : Observable_concat(duration, Container_throws({
-                fromArray: Observable_fromArray,
+                fromReadonlyArray: Observable_fromReadonlyArray,
                 map: Observable_map,
             }, { raise }));
         return pipe(createTimeoutObserver, partial(durationObs), Observable_lift(false, isNumber(duration) || Observable_isRunnable(duration)));

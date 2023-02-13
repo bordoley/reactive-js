@@ -10,7 +10,7 @@ import Disposable_onComplete from '../../../util/Disposable/__internal__/Disposa
 import ReactiveContainer_sinkInto from '../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.mjs';
 import Sink_notify from './Sink.notify.mjs';
 
-const Sink_satisfyMixin = (fromArray, defaultResult) => {
+const Sink_satisfyMixin = (fromReadonlyArray, defaultResult) => {
     const SatisfySinkMixin_predicate = Symbol("SatisfySinkMixin_predicate");
     return mix(include(Disposable_mixin, delegatingMixin()), function SatisfySinkMixin(instance, delegate, predicate) {
         init(Disposable_mixin, instance);
@@ -18,7 +18,7 @@ const Sink_satisfyMixin = (fromArray, defaultResult) => {
         instance[SatisfySinkMixin_predicate] = predicate;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             if (!Disposable_isDisposed(delegate)) {
-                pipe([defaultResult], fromArray, ReactiveContainer_sinkInto(delegate));
+                pipe([defaultResult], fromReadonlyArray, ReactiveContainer_sinkInto(delegate));
             }
         }));
         return instance;

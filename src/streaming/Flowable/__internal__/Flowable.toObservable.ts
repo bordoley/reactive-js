@@ -10,7 +10,7 @@ import {
 import Observable_concat from "../../../rx/Observable/__internal__/Observable.concat";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach";
-import Observable_fromArray from "../../../rx/Observable/__internal__/Observable.fromArray";
+import Observable_fromReadonlyArray from "../../../rx/Observable/__internal__/Observable.fromReadonlyArray";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe";
 import Dispatcher_dispatchTo from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatchTo";
@@ -37,7 +37,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
         Container_ignoreElements({ keep: Observable_keep }),
         Container_startWith<ObservableLike, FlowMode>(
           {
-            fromArray: Observable_fromArray,
+            fromReadonlyArray: Observable_fromReadonlyArray,
             concat: Observable_concat,
           },
           FlowMode_pause,

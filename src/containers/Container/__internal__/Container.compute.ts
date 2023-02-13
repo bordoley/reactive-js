@@ -1,13 +1,13 @@
 import {
   ContainerLike,
   ContainerOf,
-  FromArray,
+  FromReadonlyArray,
   Map,
 } from "../../../containers";
 import { Factory, callWith, pipe } from "../../../functions";
 
 const Container_compute = <C extends ContainerLike, T, O = unknown>(
-  m: Map<C> & FromArray<C, O>,
+  m: Map<C> & FromReadonlyArray<C, O>,
   factory: Factory<T>,
   options?: O,
 ): ContainerOf<C, T> => {
@@ -18,7 +18,7 @@ const Container_compute = <C extends ContainerLike, T, O = unknown>(
 
   return pipe(
     [factory],
-    m.fromArray(
+    m.fromReadonlyArray(
       tail as O & {
         readonly start?: number;
         readonly count?: number;
