@@ -113,7 +113,7 @@ const makeInput = modules => ({
     .map(file => file.replace("./src", "./build-types") + ".d.ts")
     .map(m => path.resolve(m))
     .reduce((acc, next) => {
-      acc[next]= next;
+      acc[next] = next;
       return acc;
     }, {}),
 });
