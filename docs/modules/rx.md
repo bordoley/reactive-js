@@ -24,6 +24,7 @@
 - [Retry](rx.md#retry)
 - [ScanAsync](rx.md#scanasync)
 - [TakeUntil](rx.md#takeuntil)
+- [Throttle](rx.md#throttle)
 - [Timeout](rx.md#timeout)
 - [ToEnumerableObservable](rx.md#toenumerableobservable)
 - [ToObservable](rx.md#toobservable)
@@ -124,9 +125,9 @@ ___
 
 ___
 
-### Timeout
+### Throttle
 
-Ƭ **Timeout**<`C`\>: `Object`
+Ƭ **Throttle**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `throttle`: <T\>(`duration`: [`Function1`](functions.md#function1)<`T`, `C`\>, `options?`: { `mode?`: ``"first"`` \| ``"last"`` \| ``"interval"``  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`duration`: `number`, `options?`: { `mode?`: ``"first"`` \| ``"last"`` \| ``"interval"``  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
@@ -134,11 +135,17 @@ ___
 | :------ | :------ |
 | `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
 
-#### Type declaration
+___
+
+### Timeout
+
+Ƭ **Timeout**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `timeout`: <T\>(`duration`: `number`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`duration`: `C`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+
+#### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `timeout` | <T\>(`duration`: `number`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`duration`: `C`) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\> |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
 
 ___
 

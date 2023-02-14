@@ -98,7 +98,29 @@ type ScanAsync<C extends ContainerLike, CInner extends ObservableLike> = Contain
 type TakeUntil<C extends ObservableLike> = {
     takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
 };
-type Timeout<C extends ObservableLike> = {
+type Throttle<C extends ObservableLike> = Container<C> & {
+    /**
+     * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
+     *
+     * @param duration Function function that is used to determine the silence duration in between emitted values.
+     * @param mode The throttle mode.
+     */
+    throttle<T>(duration: Function1<T, C>, options?: {
+        readonly mode?: "first" | "last" | "interval";
+    }): ContainerOperator<C, T, T>;
+    /**
+     * Returns an `ObservableLike` which emits a value from the source,
+     * then ignores subsequent source values for `duration` milliseconds.
+     *
+     * @param duration Time to wait before emitting another value after
+     * emitting the last value, measured in milliseconds.
+     * @param mode The throttle mode.
+     */
+    throttle<T>(duration: number, options?: {
+        readonly mode?: "first" | "last" | "interval";
+    }): ContainerOperator<C, T, T>;
+};
+type Timeout<C extends ObservableLike> = Container<C> & {
     /**
      * Returns an `ObservableLike` that completes with an error if the source
      * does not emit a value in given time span.
@@ -133,4 +155,4 @@ type ZipLatest<C extends ObservableLike> = {
 type ZipWithLatestFrom<C extends ObservableLike> = {
     zipWithLatestFrom<TA, TB, T>(other: ContainerOf<C, TB>, selector: Function2<TA, TB, T>): ContainerOperator<C, TA, T>;
 };
-export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromRunnableObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, Retry, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, TakeUntil, Timeout, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, WithLatestFrom, ZipLatest, ZipWithLatestFrom };
+export { AsyncReducer, EnumerableObservableLike, FromEnumerableObservable, FromRunnableObservable, MulticastObservableLike, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike, ReactiveContainerLike_sinkInto, Retry, RunnableLike, RunnableObservableLike, ScanAsync, SinkLike, SinkLike_notify, SubjectLike, SubjectLike_publish, TakeUntil, Throttle, Timeout, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, WithLatestFrom, ZipLatest, ZipWithLatestFrom };

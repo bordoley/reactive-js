@@ -263,10 +263,6 @@ export type FromIterable<C extends ContainerLike, O = never> = Container<C> & {
   fromIterable<T>(options?: O): Function1<Iterable<T>, ContainerOf<C, T>>;
 };
 
-export type FromPromise<C extends ContainerLike, O = never> = Container<C> & {
-  fromPromise<T>(options?: O): Function1<PromiseableLike<T>, ContainerOf<C, T>>;
-};
-
 export type FromSequence<C extends ContainerLike, O = never> = Container<C> & {
   fromSequence<T>(options?: O): Function1<SequenceLike<T>, ContainerOf<C, T>>;
 };

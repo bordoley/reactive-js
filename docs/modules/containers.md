@@ -34,7 +34,6 @@
 - [ForkZip](containers.md#forkzip)
 - [FromAsyncIterable](containers.md#fromasynciterable)
 - [FromIterable](containers.md#fromiterable)
-- [FromPromise](containers.md#frompromise)
 - [FromReadonlyArray](containers.md#fromreadonlyarray)
 - [FromReadonlySet](containers.md#fromreadonlyset)
 - [FromSequence](containers.md#fromsequence)
@@ -275,19 +274,6 @@ ___
 ### FromIterable
 
 Ƭ **FromIterable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromIterable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | `never` |
-
-___
-
-### FromPromise
-
-Ƭ **FromPromise**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `fromPromise`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<`T`\>, [`ContainerOf`](containers.md#containerof)<`C`, `T`\>\>  }
 
 #### Type parameters
 

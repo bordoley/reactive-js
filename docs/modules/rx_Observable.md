@@ -1157,7 +1157,7 @@ ___
 
 ### generate
 
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -1171,32 +1171,13 @@ ___
 | :------ | :------ |
 | `generator` | [`Updater`](functions.md#updater)<`T`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-
-#### Returns
-
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-▸ **generate**<`T`\>(`generator`, `initialValue`, `options`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-| `options` | `Object` |
-| `options.delay` | `number` |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
 | `options.delayStart?` | `boolean` |
 
 #### Returns
 
-[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 

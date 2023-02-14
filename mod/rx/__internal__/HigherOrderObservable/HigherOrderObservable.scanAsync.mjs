@@ -11,14 +11,12 @@ import Subject_create from '../../Subject/__internal__/Subject.create.mjs';
 import Subject_publish from '../../Subject/__internal__/Subject.publish.mjs';
 import Subject_publishTo from '../../Subject/__internal__/Subject.publishTo.mjs';
 
-const HigherOrderObservable_scanAsync = (createObservable) => {
-    return (scanner, initialValue) => observable => {
-        const onSink = (observer) => {
-            const accFeedbackStream = pipe(Subject_create(), Disposable_addTo(observer));
-            pipe(observable, Observable_zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), Observable_takeFirst())), Observable_switchAll(), Observable_forEach(Subject_publishTo(accFeedbackStream)), Observable_onSubscribe(() => pipe(accFeedbackStream, Subject_publish(initialValue()))), ReactiveContainer_sinkInto(observer));
-        };
-        return createObservable(onSink);
+const HigherOrderObservable_scanAsync = (createObservable) => (scanner, initialValue) => observable => {
+    const onSink = (observer) => {
+        const accFeedbackStream = pipe(Subject_create(), Disposable_addTo(observer));
+        pipe(observable, Observable_zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), Observable_takeFirst())), Observable_switchAll(), Observable_forEach(Subject_publishTo(accFeedbackStream)), Observable_onSubscribe(() => pipe(accFeedbackStream, Subject_publish(initialValue()))), ReactiveContainer_sinkInto(observer));
     };
+    return createObservable(onSink);
 };
 
 export { HigherOrderObservable_scanAsync as default };

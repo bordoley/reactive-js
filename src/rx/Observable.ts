@@ -8,7 +8,7 @@ import {
   EverySatisfy,
   ForkConcat,
   ForkZip,
-  FromPromise,
+  Generate,
   Keep,
   Map,
   Pairwise,
@@ -22,7 +22,7 @@ import {
   Zip,
 } from "../containers";
 import Promiseable_toObservable from "../containers/Promiseable/__internal__/Promiseable.toObservable";
-import { Factory, Function1, SideEffect1, Updater } from "../functions";
+import { Factory, Function1, SideEffect1 } from "../functions";
 import {
   EnumerableObservableLike,
   ObservableLike,
@@ -152,28 +152,14 @@ export const fromDisposable = Disposable_toObservable;
 export const fromFlowable =
   Flowable_toObservable as FromFlowable<ObservableLike>["fromFlowable"];
 
-export const fromPromise: FromPromise<ObservableLike>["fromPromise"] =
-  Promiseable_toObservable;
+export const fromPromise = Promiseable_toObservable;
 
 export const fromReadonlyArray = Observable_fromReadonlyArray;
 
-interface GenerateObservable {
-  <T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-  ): EnumerableObservableLike<T>;
-
-  <T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options: {
-      readonly delay: number;
-      readonly delayStart?: boolean;
-    },
-  ): RunnableObservableLike<T>;
-}
-export const generate: GenerateObservable =
-  Observable_generate as GenerateObservable;
+export const generate: Generate<
+  ObservableLike,
+  { readonly delay?: number; readonly delayStart?: boolean }
+>["generate"] = Observable_generate;
 
 export const isEnumerable = Observable_isEnumerable;
 
