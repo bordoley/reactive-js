@@ -178,7 +178,33 @@ export type TakeUntil<C extends ObservableLike> = {
   takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
 };
 
-export type Timeout<C extends ObservableLike> = {
+export type Throttle<C extends ObservableLike> = Container<C> & {
+  /**
+   * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
+   *
+   * @param duration Function function that is used to determine the silence duration in between emitted values.
+   * @param mode The throttle mode.
+   */
+  throttle<T>(
+    duration: Function1<T, C>,
+    options?: { readonly mode?: "first" | "last" | "interval" },
+  ): ContainerOperator<C, T, T>;
+
+  /**
+   * Returns an `ObservableLike` which emits a value from the source,
+   * then ignores subsequent source values for `duration` milliseconds.
+   *
+   * @param duration Time to wait before emitting another value after
+   * emitting the last value, measured in milliseconds.
+   * @param mode The throttle mode.
+   */
+  throttle<T>(
+    duration: number,
+    options?: { readonly mode?: "first" | "last" | "interval" },
+  ): ContainerOperator<C, T, T>;
+};
+
+export type Timeout<C extends ObservableLike> = Container<C> & {
   /**
    * Returns an `ObservableLike` that completes with an error if the source
    * does not emit a value in given time span.

@@ -17,39 +17,36 @@ import Subject_create from "../../Subject/__internal__/Subject.create";
 import Subject_publish from "../../Subject/__internal__/Subject.publish";
 import Subject_publishTo from "../../Subject/__internal__/Subject.publishTo";
 
-const HigherOrderObservable_scanAsync = <
-  C extends ObservableLike,
-  CInner extends ObservableLike,
->(
-  createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
-): ScanAsync<C, CInner>["scanAsync"] => {
-  return <T, TAcc>(
-      scanner: AsyncReducer<CInner, T, TAcc>,
-      initialValue: Factory<TAcc>,
-    ): ContainerOperator<C, T, TAcc> =>
-    observable => {
-      const onSink = (observer: ObserverLike<TAcc>) => {
-        const accFeedbackStream = pipe(
-          Subject_create(),
-          Disposable_addTo(observer),
-        );
+const HigherOrderObservable_scanAsync =
+  <C extends ObservableLike, CInner extends ObservableLike>(
+    createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
+  ): ScanAsync<C, CInner>["scanAsync"] =>
+  <T, TAcc>(
+    scanner: AsyncReducer<CInner, T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<C, T, TAcc> =>
+  observable => {
+    const onSink = (observer: ObserverLike<TAcc>) => {
+      const accFeedbackStream = pipe(
+        Subject_create(),
+        Disposable_addTo(observer),
+      );
 
-        pipe(
-          observable,
-          Observable_zipWithLatestFrom(accFeedbackStream, (next, acc: TAcc) =>
-            pipe(scanner(acc, next), Observable_takeFirst()),
-          ),
-          Observable_switchAll(),
-          Observable_forEach(Subject_publishTo(accFeedbackStream)),
-          Observable_onSubscribe(() =>
-            pipe(accFeedbackStream, Subject_publish(initialValue())),
-          ),
-          ReactiveContainer_sinkInto(observer),
-        );
-      };
-
-      return createObservable(onSink);
+      pipe(
+        observable,
+        Observable_zipWithLatestFrom(accFeedbackStream, (next, acc: TAcc) =>
+          pipe(scanner(acc, next), Observable_takeFirst()),
+        ),
+        Observable_switchAll(),
+        Observable_forEach(Subject_publishTo(accFeedbackStream)),
+        Observable_onSubscribe(() =>
+          pipe(accFeedbackStream, Subject_publish(initialValue())),
+        ),
+        ReactiveContainer_sinkInto(observer),
+      );
     };
-};
+
+    return createObservable(onSink);
+  };
 
 export default HigherOrderObservable_scanAsync;
