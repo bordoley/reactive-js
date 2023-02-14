@@ -4,7 +4,6 @@ import {
   CatchError,
   Concat,
   ConcatAll,
-  ContainerOperator,
   DecodeWithCharset,
   Defer,
   DistinctUntilChanged,
@@ -60,7 +59,6 @@ import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast";
 import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile";
-import Observable_throttle from "./Observable/__internal__/Observable.throttle";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout";
 import Observable_toFlowable from "./Observable/__internal__/Observable.toFlowable";
@@ -75,6 +73,7 @@ import RunnableObservable_scanAsync from "./RunnableObservable/__internal__/Runn
 import RunnableObservable_switchAll from "./RunnableObservable/__internal__/RunnableObservable.switchAll";
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray";
 import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable";
+import RunnableObservable_throttle from "./RunnableObservable/__internal__/RunnableObservableLike.throttle";
 
 export const buffer =
   Observable_buffer as Buffer<RunnableObservableLike>["buffer"];
@@ -190,12 +189,7 @@ export const takeUntil =
 export const takeWhile =
   Observable_takeWhile as TakeWhile<RunnableObservableLike>["takeWhile"];
 
-// FIXME: We could support duration: Function1<T, ObservableLike> version as well,
-// but that will require additional rework.
-export const throttle = Observable_throttle as <T>(
-  duration: number,
-  options?: { readonly mode?: "first" | "last" | "interval" },
-) => ContainerOperator<RunnableObservableLike, T, T>;
+export const throttle = RunnableObservable_throttle;
 
 export const throwIfEmpty =
   Observable_throwIfEmpty as ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"];

@@ -1,8 +1,8 @@
 import { ToFlowable, FlowableLike } from "../streaming.js";
-import { RunnableObservableLike, Retry, ScanAsync, RunnableLike, AsyncReducer } from "../rx.js";
 import { VirtualTimeSchedulerLike } from "../scheduling.js";
-import { ContainerOperator, CatchError, Zip, ConcatAll, Defer, ReadonlyArrayLike } from "../containers.js";
+import { RunnableObservableLike, Retry, ScanAsync, ThrottleMode, RunnableLike, AsyncReducer } from "../rx.js";
 import { Equality, Predicate, SideEffect1, Function1, Updater, Factory, Reducer, Function2 } from "../functions.js";
+import { ContainerOperator, CatchError, Zip, ConcatAll, Defer, ReadonlyArrayLike } from "../containers.js";
 declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number | undefined;
 } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, readonly T[]>;
@@ -66,9 +66,14 @@ declare const takeUntil: <T>(notifier: RunnableObservableLike<unknown>) => Conta
 declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean | undefined;
 } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-declare const throttle: <T>(duration: number, options?: {
-    readonly mode?: "first" | "last" | "interval";
-}) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
+declare const throttle: {
+    <T>(duration: Function1<T, RunnableObservableLike<unknown>>, options?: {
+        readonly mode?: ThrottleMode | undefined;
+    } | undefined): ContainerOperator<RunnableObservableLike<unknown>, T, T>;
+    <T_1>(duration: number, options?: {
+        readonly mode?: ThrottleMode | undefined;
+    } | undefined): ContainerOperator<RunnableObservableLike<unknown>, T_1, T_1>;
+};
 declare const throwIfEmpty: <T>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
 declare const timeout: {
     <T>(duration: number): ContainerOperator<RunnableObservableLike<unknown>, T, T>;
@@ -330,20 +335,25 @@ declare const RunnableObservable: {
     takeWhile: <T_24>(predicate: Predicate<T_24>, options?: {
         readonly inclusive?: boolean | undefined;
     } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_24, T_24>;
-    throttle: <T_25>(duration: number, options?: {
-        readonly mode?: "first" | "last" | "interval";
-    }) => ContainerOperator<RunnableObservableLike<unknown>, T_25, T_25>;
-    throwIfEmpty: <T_26>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_26, T_26>;
-    timeout: {
-        <T_27>(duration: number): ContainerOperator<RunnableObservableLike<unknown>, T_27, T_27>;
-        <T_28>(duration: RunnableObservableLike<unknown>): ContainerOperator<RunnableObservableLike<unknown>, T_28, T_28>;
+    throttle: {
+        <T_25>(duration: Function1<T_25, RunnableObservableLike<unknown>>, options?: {
+            readonly mode?: ThrottleMode | undefined;
+        } | undefined): ContainerOperator<RunnableObservableLike<unknown>, T_25, T_25>;
+        <T_26>(duration: number, options?: {
+            readonly mode?: ThrottleMode | undefined;
+        } | undefined): ContainerOperator<RunnableObservableLike<unknown>, T_26, T_26>;
     };
-    toFlowable: <T_29>(options?: undefined) => Function1<RunnableObservableLike<T_29>, FlowableLike<T_29>>;
-    toReadonlyArray: <T_30>(options?: undefined) => Function1<RunnableObservableLike<T_30>, ReadonlyArrayLike<T_30>>;
-    toRunnable: <T_31>(options?: {
+    throwIfEmpty: <T_27>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T_27, T_27>;
+    timeout: {
+        <T_28>(duration: number): ContainerOperator<RunnableObservableLike<unknown>, T_28, T_28>;
+        <T_29>(duration: RunnableObservableLike<unknown>): ContainerOperator<RunnableObservableLike<unknown>, T_29, T_29>;
+    };
+    toFlowable: <T_30>(options?: undefined) => Function1<RunnableObservableLike<T_30>, FlowableLike<T_30>>;
+    toReadonlyArray: <T_31>(options?: undefined) => Function1<RunnableObservableLike<T_31>, ReadonlyArrayLike<T_31>>;
+    toRunnable: <T_32>(options?: {
         readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike> | undefined;
-    } | undefined) => Function1<RunnableObservableLike<T_31>, RunnableLike<T_31>>;
-    withLatestFrom: <TA_9, TB_9, T_32>(other: RunnableObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_32>) => ContainerOperator<RunnableObservableLike<unknown>, TA_9, T_32>;
+    } | undefined) => Function1<RunnableObservableLike<T_32>, RunnableLike<T_32>>;
+    withLatestFrom: <TA_9, TB_9, T_33>(other: RunnableObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_33>) => ContainerOperator<RunnableObservableLike<unknown>, TA_9, T_33>;
     zip: {
         <TA, TB>(a: RunnableObservableLike<TA>, b: RunnableObservableLike<TB>): RunnableObservableLike<readonly [
             TA,
@@ -468,6 +478,6 @@ declare const RunnableObservable: {
             TI
         ]>;
     };
-    zipWithLatestFrom: <TA_10, TB_10, T_33>(other: RunnableObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_33>) => ContainerOperator<RunnableObservableLike<unknown>, TA_10, T_33>;
+    zipWithLatestFrom: <TA_10, TB_10, T_34>(other: RunnableObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_34>) => ContainerOperator<RunnableObservableLike<unknown>, TA_10, T_34>;
 };
 export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

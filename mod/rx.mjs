@@ -19,5 +19,8 @@ const MulticastObservableLike_observerCount = Symbol("MulticastObservableLike_ob
 const MulticastObservableLike_replay = Symbol("MulticastObservableLike_replay");
 /** @ignore */
 const SubjectLike_publish = Symbol("SubjectLike_publish");
+const ThrottleMode_first = Symbol("ThrottleMode_first");
+const ThrottleMode_last = Symbol("ThrottleMode_last");
+const ThrottleMode_interval = Symbol("ThrottleMode_interval");
 
-export { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike_sinkInto, SinkLike_notify, SubjectLike_publish };
+export { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike_sinkInto, SinkLike_notify, SubjectLike_publish, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last };

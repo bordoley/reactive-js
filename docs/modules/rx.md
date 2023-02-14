@@ -25,6 +25,7 @@
 - [ScanAsync](rx.md#scanasync)
 - [TakeUntil](rx.md#takeuntil)
 - [Throttle](rx.md#throttle)
+- [ThrottleMode](rx.md#throttlemode)
 - [Timeout](rx.md#timeout)
 - [ToEnumerableObservable](rx.md#toenumerableobservable)
 - [ToObservable](rx.md#toobservable)
@@ -33,6 +34,12 @@
 - [WithLatestFrom](rx.md#withlatestfrom)
 - [ZipLatest](rx.md#ziplatest)
 - [ZipWithLatestFrom](rx.md#zipwithlatestfrom)
+
+### Variables
+
+- [ThrottleMode\_first](rx.md#throttlemode_first)
+- [ThrottleMode\_interval](rx.md#throttlemode_interval)
+- [ThrottleMode\_last](rx.md#throttlemode_last)
 
 ## Type Aliases
 
@@ -127,13 +134,19 @@ ___
 
 ### Throttle
 
-Ƭ **Throttle**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `throttle`: <T\>(`duration`: [`Function1`](functions.md#function1)<`T`, `C`\>, `options?`: { `mode?`: ``"first"`` \| ``"last"`` \| ``"interval"``  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`duration`: `number`, `options?`: { `mode?`: ``"first"`` \| ``"last"`` \| ``"interval"``  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
+Ƭ **Throttle**<`C`\>: [`Container`](containers.md#container)<`C`\> & { `throttle`: <T\>(`duration`: [`Function1`](functions.md#function1)<`T`, `C`\>, `options?`: { `mode?`: [`ThrottleMode`](rx.md#throttlemode)  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\><T\>(`duration`: `number`, `options?`: { `mode?`: [`ThrottleMode`](rx.md#throttlemode)  }) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `T`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
+
+___
+
+### ThrottleMode
+
+Ƭ **ThrottleMode**: typeof [`ThrottleMode_first`](rx.md#throttlemode_first) \| typeof [`ThrottleMode_last`](rx.md#throttlemode_last) \| typeof [`ThrottleMode_interval`](rx.md#throttlemode_interval)
 
 ___
 
@@ -252,3 +265,21 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `zipWithLatestFrom` | <TA, TB, T\>(`other`: [`ContainerOf`](containers.md#containerof)<`C`, `TB`\>, `selector`: [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\>) => [`ContainerOperator`](containers.md#containeroperator)<`C`, `TA`, `T`\> |
+
+## Variables
+
+### ThrottleMode\_first
+
+• `Const` **ThrottleMode\_first**: unique `symbol`
+
+___
+
+### ThrottleMode\_interval
+
+• `Const` **ThrottleMode\_interval**: unique `symbol`
+
+___
+
+### ThrottleMode\_last
+
+• `Const` **ThrottleMode\_last**: unique `symbol`

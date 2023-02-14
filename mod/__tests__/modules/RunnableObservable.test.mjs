@@ -2,6 +2,7 @@
 import Container from '../../containers/Container.mjs';
 import ReadonlyArray from '../../containers/ReadonlyArray.mjs';
 import { pipeLazy, pipe, incrementBy, returns, arrayEquality, identity, increment, sum, newInstance } from '../../functions.mjs';
+import { ThrottleMode_first, ThrottleMode_last, ThrottleMode_interval } from '../../rx.mjs';
 import RunnableObservable from '../../rx/RunnableObservable.mjs';
 import { zipTests as zipTests$1, bufferTests, catchErrorTests, concatTests, concatAllTests, concatMapTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, retryTests, scanTests, scanAsyncTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipWithTests } from '../operators.mjs';
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectToThrow, expectToThrowError, testModule } from '../testing.mjs';
@@ -24,13 +25,13 @@ const takeUntilTests = createDescribe("takeUntil", createTest("takes until the n
 const throttleTests = createDescribe("throttle", createTest("first", pipeLazy(RunnableObservable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
-}), RunnableObservable.takeFirst({ count: 100 }), RunnableObservable.throttle(50, { mode: "first" }), RunnableObservable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), createTest("last", pipeLazy(RunnableObservable.generate(increment, returns(-1), {
+}), RunnableObservable.takeFirst({ count: 100 }), RunnableObservable.throttle(50, { mode: ThrottleMode_first }), RunnableObservable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), createTest("last", pipeLazy(RunnableObservable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
-}), RunnableObservable.takeFirst({ count: 200 }), RunnableObservable.throttle(50, { mode: "last" }), RunnableObservable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), createTest("interval", pipeLazy(RunnableObservable.generate(increment, returns(-1), {
+}), RunnableObservable.takeFirst({ count: 200 }), RunnableObservable.throttle(50, { mode: ThrottleMode_last }), RunnableObservable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), createTest("interval", pipeLazy(RunnableObservable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
-}), RunnableObservable.takeFirst({ count: 200 }), RunnableObservable.throttle(75, { mode: "interval" }), RunnableObservable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))));
+}), RunnableObservable.takeFirst({ count: 200 }), RunnableObservable.throttle(75, { mode: ThrottleMode_interval }), RunnableObservable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))));
 const timeoutTests = createDescribe("timeout", createTest("throws when a timeout occurs", pipeLazy(pipeLazy([1], ReadonlyArray.toRunnableObservable({ delay: 2, delayStart: true }), RunnableObservable.timeout(1), RunnableObservable.toReadonlyArray()), expectToThrow)), createTest("when timeout is greater than observed time", pipeLazy([1], ReadonlyArray.toRunnableObservable({ delay: 2, delayStart: true }), RunnableObservable.timeout(3), RunnableObservable.toReadonlyArray(), expectArrayEquals([1]))));
 const withLatestFromTest = createDescribe("withLatestFrom", createTest("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 1 }), RunnableObservable.withLatestFrom(pipe([0, 1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 2 })), (a, b) => [a, b]), RunnableObservable.toReadonlyArray(), expectArrayEquals([
     [0, 0],

@@ -11,7 +11,12 @@ import {
   returns,
   sum,
 } from "../../functions";
-import { RunnableObservableLike } from "../../rx";
+import {
+  RunnableObservableLike,
+  ThrottleMode_first,
+  ThrottleMode_interval,
+  ThrottleMode_last,
+} from "../../rx";
 import RunnableObservable from "../../rx/RunnableObservable";
 import {
   bufferTests,
@@ -216,7 +221,7 @@ const throttleTests = describe(
         delayStart: true,
       }),
       RunnableObservable.takeFirst({ count: 100 }),
-      RunnableObservable.throttle(50, { mode: "first" }),
+      RunnableObservable.throttle(50, { mode: ThrottleMode_first }),
       RunnableObservable.toReadonlyArray(),
       expectArrayEquals([0, 49, 99]),
     ),
@@ -230,7 +235,7 @@ const throttleTests = describe(
         delayStart: true,
       }),
       RunnableObservable.takeFirst({ count: 200 }),
-      RunnableObservable.throttle(50, { mode: "last" }),
+      RunnableObservable.throttle(50, { mode: ThrottleMode_last }),
       RunnableObservable.toReadonlyArray(),
       expectArrayEquals([49, 99, 149, 199]),
     ),
@@ -244,7 +249,7 @@ const throttleTests = describe(
         delayStart: true,
       }),
       RunnableObservable.takeFirst({ count: 200 }),
-      RunnableObservable.throttle(75, { mode: "interval" }),
+      RunnableObservable.throttle(75, { mode: ThrottleMode_interval }),
       RunnableObservable.toReadonlyArray(),
       expectArrayEquals([0, 74, 149, 199]),
     ),
