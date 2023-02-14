@@ -178,6 +178,14 @@ export type TakeUntil<C extends ObservableLike> = {
   takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
 };
 
+export const ThrottleMode_first = Symbol("ThrottleMode_first");
+export const ThrottleMode_last = Symbol("ThrottleMode_last");
+export const ThrottleMode_interval = Symbol("ThrottleMode_interval");
+export type ThrottleMode =
+  | typeof ThrottleMode_first
+  | typeof ThrottleMode_last
+  | typeof ThrottleMode_interval;
+
 export type Throttle<C extends ObservableLike> = Container<C> & {
   /**
    * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
@@ -187,7 +195,7 @@ export type Throttle<C extends ObservableLike> = Container<C> & {
    */
   throttle<T>(
     duration: Function1<T, C>,
-    options?: { readonly mode?: "first" | "last" | "interval" },
+    options?: { readonly mode?: ThrottleMode },
   ): ContainerOperator<C, T, T>;
 
   /**
@@ -200,7 +208,7 @@ export type Throttle<C extends ObservableLike> = Container<C> & {
    */
   throttle<T>(
     duration: number,
-    options?: { readonly mode?: "first" | "last" | "interval" },
+    options?: { readonly mode?: ThrottleMode },
   ): ContainerOperator<C, T, T>;
 };
 

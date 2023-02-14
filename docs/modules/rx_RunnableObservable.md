@@ -969,13 +969,33 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `duration` | `number` |
+| `duration` | [`Function1`](functions.md#function1)<`T`, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>\> |
 | `options?` | `Object` |
-| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
+| `options.mode?` | [`ThrottleMode`](rx.md#throttlemode) |
 
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+▸ **throttle**<`T_1`\>(`duration`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T_1`, `T_1`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `duration` | `number` |
+| `options?` | `Object` |
+| `options.mode?` | [`ThrottleMode`](rx.md#throttlemode) |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T_1`, `T_1`\>
 
 ___
 

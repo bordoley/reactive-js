@@ -29,6 +29,7 @@ import {
   ObserverLike,
   RunnableObservableLike,
   ScanAsync,
+  Throttle,
 } from "../rx";
 import { SchedulerLike } from "../scheduling";
 import { FromFlowable, ToFlowable } from "../streaming";
@@ -247,32 +248,8 @@ export const takeUntil = Observable_takeUntil;
 export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
   Observable_takeWhile;
 
-interface Throttle {
-  /**
-   * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
-   *
-   * @param duration Function function that is used to determine the silence duration in between emitted values.
-   * @param mode The throttle mode.
-   */
-  <T>(
-    duration: Function1<T, ObservableLike>,
-    options?: { readonly mode?: "first" | "last" | "interval" },
-  ): ContainerOperator<ObservableLike, T, T>;
-
-  /**
-   * Returns an `ObservableLike` which emits a value from the source,
-   * then ignores subsequent source values for `duration` milliseconds.
-   *
-   * @param duration Time to wait before emitting another value after
-   * emitting the last value, measured in milliseconds.
-   * @param mode The throttle mode.
-   */
-  <T>(
-    duration: number,
-    options?: { readonly mode?: "first" | "last" | "interval" },
-  ): ContainerOperator<ObservableLike, T, T>;
-}
-export const throttle: Throttle = Observable_throttle;
+export const throttle: Throttle<ObservableLike>["throttle"] =
+  Observable_throttle;
 
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty;

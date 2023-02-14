@@ -23,7 +23,6 @@ import Observable_takeFirst from './Observable/__internal__/Observable.takeFirst
 import Observable_takeLast from './Observable/__internal__/Observable.takeLast.mjs';
 import Observable_takeUntil from './Observable/__internal__/Observable.takeUntil.mjs';
 import Observable_takeWhile from './Observable/__internal__/Observable.takeWhile.mjs';
-import Observable_throttle from './Observable/__internal__/Observable.throttle.mjs';
 import Observable_throwIfEmpty from './Observable/__internal__/Observable.throwIfEmpty.mjs';
 import Observable_timeout from './Observable/__internal__/Observable.timeout.mjs';
 import Observable_toFlowable from './Observable/__internal__/Observable.toFlowable.mjs';
@@ -38,6 +37,7 @@ import RunnableObservable_scanAsync from './RunnableObservable/__internal__/Runn
 import RunnableObservable_switchAll from './RunnableObservable/__internal__/RunnableObservable.switchAll.mjs';
 import RunnableObservable_toReadonlyArray from './RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.mjs';
 import RunnableObservable_toRunnable from './RunnableObservable/__internal__/RunnableObservable.toRunnable.mjs';
+import RunnableObservable_throttle from './RunnableObservable/__internal__/RunnableObservableLike.throttle.mjs';
 
 const buffer = Observable_buffer;
 const catchError = RunnableObservable_catchError;
@@ -75,9 +75,7 @@ const takeFirst = Observable_takeFirst;
 const takeLast = Observable_takeLast;
 const takeUntil = Observable_takeUntil;
 const takeWhile = Observable_takeWhile;
-// FIXME: We could support duration: Function1<T, ObservableLike> version as well,
-// but that will require additional rework.
-const throttle = Observable_throttle;
+const throttle = RunnableObservable_throttle;
 const throwIfEmpty = Observable_throwIfEmpty;
 const timeout = Observable_timeout;
 const toFlowable = Observable_toFlowable;
