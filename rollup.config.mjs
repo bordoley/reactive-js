@@ -101,7 +101,6 @@ const getFileList = dirName => {
 
 const allModules = getFileList("./src")
   .filter(file => file.endsWith(".ts"))
-  .filter(file => !file.includes("__private__"))
   .map(file => file.replace(".ts", ""));
 
 const external = ["stream", "react", "scheduler", "fs", "zlib"];
@@ -112,7 +111,11 @@ const makeInput = modules => ({
   // https://github.com/Swatinem/rollup-plugin-dts/blob/ced8c9d5aef7a5f65f9decfc7cc1d2ef46226bc8/src/index.ts#L66
   "build-types": modules
     .map(file => file.replace("./src", "./build-types") + ".d.ts")
-    .map(m => path.resolve(m)),
+    .map(m => path.resolve(m))
+    .reduce((acc, next) => {
+      acc[next]= next;
+      return acc;
+    }, {}),
 });
 
 const makeCoreNPMPackage = () => {
