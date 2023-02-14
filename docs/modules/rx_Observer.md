@@ -64,7 +64,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`ContinuationLike`](../interfaces/scheduling.ContinuationLike.md) \| [`SideEffect`](functions.md#sideeffect) |
+| `f` | [`SideEffect`](functions.md#sideeffect) |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 
