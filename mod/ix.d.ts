@@ -30,9 +30,23 @@ interface EnumerableLike<T = unknown> extends InteractiveContainerLike<Enumerato
 }
 interface AsyncEnumeratorLike<T = unknown> extends SourceLike, StreamLike<void, T> {
 }
+/**  @ignore */
+declare const AsyncEnumerableLike_isEnumerable: unique symbol;
+/**  @ignore */
+declare const AsyncEnumerableLike_isRunnable: unique symbol;
 interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T, AsyncEnumeratorLike<T>>, InteractiveContainerLike<AsyncEnumeratorLike<T>, SchedulerLike> {
     readonly [ContainerLike_type]?: AsyncEnumerableLike<this[typeof ContainerLike_T]>;
     readonly [StatefulContainerLike_state]?: AsyncEnumeratorLike<this[typeof ContainerLike_T]>;
+    readonly [AsyncEnumerableLike_isEnumerable]: boolean;
+    readonly [AsyncEnumerableLike_isRunnable]: boolean;
+}
+interface RunnableAsyncEnumerableLike<T = unknown> extends AsyncEnumerableLike<T> {
+    readonly [ContainerLike_type]?: RunnableAsyncEnumerableLike<this[typeof ContainerLike_T]>;
+    readonly [AsyncEnumerableLike_isRunnable]: true;
+}
+interface EnumerableAsyncEnumerableLike<T = unknown> extends RunnableAsyncEnumerableLike<T> {
+    readonly [ContainerLike_type]?: EnumerableAsyncEnumerableLike<this[typeof ContainerLike_T]>;
+    readonly [AsyncEnumerableLike_isEnumerable]: true;
 }
 type FromAsyncEnumerable<C extends ContainerLike, O = never> = Container<C> & {
     fromAsyncEnumerable<T>(options?: O): Function1<AsyncEnumerableLike<T>, ContainerOf<C, T>>;
@@ -46,4 +60,4 @@ type ToAsyncEnumerable<C extends ContainerLike, O = never> = Container<C> & {
 type ToEnumerable<C extends ContainerLike, O = never> = Container<C> & {
     toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 };
-export { AsyncEnumerableLike, AsyncEnumeratorLike, EnumerableLike, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, FromAsyncEnumerable, FromEnumerable, InteractiveContainerLike, InteractiveContainerLike_interact, SourceLike, SourceLike_move, ToAsyncEnumerable, ToEnumerable };
+export { AsyncEnumerableLike, AsyncEnumerableLike_isEnumerable, AsyncEnumerableLike_isRunnable, AsyncEnumeratorLike, EnumerableAsyncEnumerableLike, EnumerableLike, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, FromAsyncEnumerable, FromEnumerable, InteractiveContainerLike, InteractiveContainerLike_interact, RunnableAsyncEnumerableLike, SourceLike, SourceLike_move, ToAsyncEnumerable, ToEnumerable };

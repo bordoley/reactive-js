@@ -8,6 +8,8 @@ import { ContainerOperator } from "../../../containers";
 import { composeUnsafe, getLength, none, pipe } from "../../../functions";
 import {
   AsyncEnumerableLike,
+  AsyncEnumerableLike_isEnumerable,
+  AsyncEnumerableLike_isRunnable,
   AsyncEnumeratorLike,
   InteractiveContainerLike_interact,
 } from "../../../ix";
@@ -128,6 +130,8 @@ const AsyncEnumerable_create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
       unknown,
       unknown
     >;
+    readonly [AsyncEnumerableLike_isEnumerable]: boolean;
+    readonly [AsyncEnumerableLike_isRunnable]: boolean;
   };
 
   const factory = createInstanceFactory(
@@ -147,6 +151,8 @@ const AsyncEnumerable_create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
       },
       props<TProperties>({
         [AsyncEnumerable_op]: none,
+        [AsyncEnumerableLike_isEnumerable]: false,
+        [AsyncEnumerableLike_isRunnable]: false,
       }),
       {
         [StreamableLike_stream](

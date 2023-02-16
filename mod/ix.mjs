@@ -9,5 +9,9 @@ const EnumeratorLike_current = Symbol("EnumeratorLike_current");
 const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
 /** @ignore */
 const InteractiveContainerLike_interact = Symbol("InteractiveContainerLike_interact");
+/**  @ignore */
+const AsyncEnumerableLike_isEnumerable = Symbol("AsyncEnumerableLike_isEnumerable");
+/**  @ignore */
+const AsyncEnumerableLike_isRunnable = Symbol("AsyncEnumerableLike_isRunnable");
 
-export { EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerLike_interact, SourceLike_move };
+export { AsyncEnumerableLike_isEnumerable, AsyncEnumerableLike_isRunnable, EnumeratorLike_current, EnumeratorLike_hasCurrent, InteractiveContainerLike_interact, SourceLike_move };

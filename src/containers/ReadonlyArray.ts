@@ -9,8 +9,7 @@ import {
   ToReadonlyArray,
   ToSequence,
 } from "../containers";
-import { FromAsyncEnumerable, FromEnumerable, ToEnumerable } from "../ix";
-import AsyncEnumerable_toReadonlyArray from "../ix/AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray";
+import { FromEnumerable, ToEnumerable } from "../ix";
 import Enumerable_toReadonlyArray from "../ix/Enumerable/__internal__/Enumerable.toReadonlyArray";
 import {
   FromEnumerableObservable,
@@ -40,9 +39,6 @@ export const every = ReadonlyArray_every;
 
 export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
   ReadonlyArray_forEach;
-
-export const fromAsyncEnumerable: FromAsyncEnumerable<ReadonlyArrayLike>["fromAsyncEnumerable"] =
-  AsyncEnumerable_toReadonlyArray;
 
 export const fromEnumerable: FromEnumerable<ReadonlyArrayLike>["fromEnumerable"] =
   Enumerable_toReadonlyArray;
@@ -127,7 +123,6 @@ const ReadonlyArray = {
   empty,
   every,
   forEach,
-  fromAsyncEnumerable,
   fromEnumerable,
   fromEnumerableObservable,
   fromReadonlyArray,

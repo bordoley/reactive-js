@@ -5,7 +5,6 @@ import {
   Map,
   Scan,
   TakeWhile,
-  ToReadonlyArray,
 } from "../containers";
 import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable";
 import { AsyncEnumerableLike, EnumerableLike, ToAsyncEnumerable } from "../ix";
@@ -17,7 +16,6 @@ import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable
 import AsyncEnumerable_scanAsync from "./AsyncEnumerable/__internal__/AsyncEnumerable.scanAsync";
 import AsyncEnumerable_takeWhile from "./AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile";
 import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toObservable";
-import AsyncEnumerable_toReadonlyArray from "./AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable";
 
 export const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"] =
@@ -48,9 +46,6 @@ export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
   AsyncEnumerable_toObservable;
 
-export const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"] =
-  AsyncEnumerable_toReadonlyArray;
-
 /** @ignore */
 const AsyncEnumerable = {
   fromReadonlyArray,
@@ -60,7 +55,6 @@ const AsyncEnumerable = {
   scan,
   scanAsync,
   takeWhile,
-  toReadonlyArray,
 };
 
 export default AsyncEnumerable;

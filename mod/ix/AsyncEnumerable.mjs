@@ -7,7 +7,6 @@ import AsyncEnumerable_scan from './AsyncEnumerable/__internal__/AsyncEnumerable
 import AsyncEnumerable_scanAsync from './AsyncEnumerable/__internal__/AsyncEnumerable.scanAsync.mjs';
 import AsyncEnumerable_takeWhile from './AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile.mjs';
 import AsyncEnumerable_toObservable from './AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.mjs';
-import AsyncEnumerable_toReadonlyArray from './AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray.mjs';
 import Enumerable_toAsyncEnumerable from './Enumerable/__internal__/Enumerable.toAsyncEnumerable.mjs';
 
 const fromEnumerable = Enumerable_toAsyncEnumerable;
@@ -19,7 +18,6 @@ const scan = AsyncEnumerable_scan;
 const scanAsync = AsyncEnumerable_scanAsync;
 const takeWhile = AsyncEnumerable_takeWhile;
 const toObservable = AsyncEnumerable_toObservable;
-const toReadonlyArray = AsyncEnumerable_toReadonlyArray;
 /** @ignore */
 const AsyncEnumerable = {
     fromReadonlyArray,
@@ -29,7 +27,6 @@ const AsyncEnumerable = {
     scan,
     scanAsync,
     takeWhile,
-    toReadonlyArray,
 };
 
-export { AsyncEnumerable as default, fromEnumerable, fromReadonlyArray, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };
+export { AsyncEnumerable as default, fromEnumerable, fromReadonlyArray, generate, keep, map, scan, scanAsync, takeWhile, toObservable };

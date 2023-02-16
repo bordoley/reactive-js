@@ -9,7 +9,6 @@
 - [empty](containers_ReadonlyArray.md#empty)
 - [every](containers_ReadonlyArray.md#every)
 - [forEach](containers_ReadonlyArray.md#foreach)
-- [fromAsyncEnumerable](containers_ReadonlyArray.md#fromasyncenumerable)
 - [fromEnumerable](containers_ReadonlyArray.md#fromenumerable)
 - [fromEnumerableObservable](containers_ReadonlyArray.md#fromenumerableobservable)
 - [fromReadonlyArray](containers_ReadonlyArray.md#fromreadonlyarray)
@@ -92,28 +91,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### fromAsyncEnumerable
-
-▸ **fromAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
 
 ___
 

@@ -1,5 +1,5 @@
 import { ScanAsync, ObservableLike, ToObservable, AsyncReducer } from "../rx.js";
-import { FromReadonlyArray, Generate, Keep, Map, Scan, TakeWhile, ToReadonlyArray, ContainerOperator, ReadonlyArrayLike } from "../containers.js";
+import { FromReadonlyArray, Generate, Keep, Map, Scan, TakeWhile, ContainerOperator } from "../containers.js";
 import { Function1, Updater, Factory, Predicate, Reducer } from "../functions.js";
 import { ToAsyncEnumerable, EnumerableLike, AsyncEnumerableLike } from "../ix.js";
 declare const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"];
@@ -13,7 +13,6 @@ declare const scan: Scan<AsyncEnumerableLike>["scan"];
 declare const scanAsync: ScanAsync<AsyncEnumerableLike, ObservableLike>["scanAsync"];
 declare const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"];
 declare const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"];
-declare const toReadonlyArray: ToReadonlyArray<AsyncEnumerableLike>["toReadonlyArray"];
 /** @ignore */
 declare const AsyncEnumerable: {
     fromReadonlyArray: <T>(options?: {
@@ -30,6 +29,5 @@ declare const AsyncEnumerable: {
     takeWhile: <T_5>(predicate: Predicate<T_5>, options?: {
         readonly inclusive?: boolean | undefined;
     } | undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_5, T_5>;
-    toReadonlyArray: <T_6>(options?: undefined) => Function1<AsyncEnumerableLike<T_6>, ReadonlyArrayLike<T_6>>;
 };
-export { AsyncEnumerable as default, fromEnumerable, fromReadonlyArray, generate, keep, map, scan, scanAsync, takeWhile, toObservable, toReadonlyArray };
+export { AsyncEnumerable as default, fromEnumerable, fromReadonlyArray, generate, keep, map, scan, scanAsync, takeWhile, toObservable };

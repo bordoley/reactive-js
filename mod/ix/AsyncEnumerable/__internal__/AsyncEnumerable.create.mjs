@@ -1,7 +1,7 @@
 /// <reference types="./AsyncEnumerable.create.d.ts" />
 import { createInstanceFactory, mix, props } from '../../../__internal__/mixins.mjs';
 import { none, pipe, getLength, composeUnsafe } from '../../../functions.mjs';
-import { InteractiveContainerLike_interact } from '../../../ix.mjs';
+import { AsyncEnumerableLike_isEnumerable, AsyncEnumerableLike_isRunnable, InteractiveContainerLike_interact } from '../../../ix.mjs';
 import { StreamableLike_stream } from '../../../streaming.mjs';
 import Streamable_stream from '../../../streaming/Streamable/__internal__/Streamable.stream.mjs';
 import AsyncEnumerator_create from '../../AsyncEnumerator/__internal__/AsyncEnumerator.create.mjs';
@@ -13,6 +13,8 @@ const AsyncEnumerable_create = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [AsyncEnumerable_op]: none,
+        [AsyncEnumerableLike_isEnumerable]: false,
+        [AsyncEnumerableLike_isRunnable]: false,
     }), {
         [StreamableLike_stream](scheduler, options) {
             return AsyncEnumerator_create(this[AsyncEnumerable_op], scheduler, options);
