@@ -7,6 +7,7 @@
 ### Functions
 
 - [fromEnumerable](containers_Iterable.md#fromenumerable)
+- [fromReadonlyArray](containers_Iterable.md#fromreadonlyarray)
 - [toAsyncEnumerable](containers_Iterable.md#toasyncenumerable)
 - [toEnumerable](containers_Iterable.md#toenumerable)
 - [toEnumerableObservable](containers_Iterable.md#toenumerableobservable)
@@ -35,6 +36,30 @@
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
 
 ___
 
@@ -140,9 +165,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.delay` | `number` |
-| `options.delayStart?` | `boolean` |
+| `options?` | { `delay`: `number` ; `delayStart?`: `boolean`  } & { `delay?`: `number` ; `delayStart?`: `boolean`  } |
 
 #### Returns
 
@@ -165,7 +188,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.delay` | `number` |
+| `options.delay?` | `number` |
 | `options.delayStart?` | `boolean` |
 
 #### Returns

@@ -1,6 +1,3 @@
-import ReadonlyArray from "../../containers/ReadonlyArray";
-import { pipeLazy } from "../../functions";
-import Enumerable from "../../ix/Enumerable";
 import { EnumerableObservableLike } from "../../rx";
 import EnumerableObservable from "../../rx/EnumerableObservable";
 import {
@@ -32,24 +29,12 @@ import {
   takeLastTests,
   takeWhileTests,
   throwIfEmptyTests,
+  toEnumerableTests,
+  toRunnableObservableTests,
   zipTests,
   zipWithTests,
 } from "../operators";
-import { describe, expectArrayEquals, test, testModule } from "../testing";
-
-const toEnumerableTests = describe(
-  "toEnumerable",
-  test(
-    "with an enumerable observable",
-    pipeLazy(
-      [1, 2, 3, 4],
-      ReadonlyArray.toEnumerableObservable(),
-      EnumerableObservable.toEnumerable(),
-      Enumerable.toReadonlyArray(),
-      expectArrayEquals([1, 2, 3, 4]),
-    ),
-  ),
-);
+import { testModule } from "../testing";
 
 testModule(
   "EnumerableObservable",
@@ -84,7 +69,8 @@ testModule(
   takeLastTests(EnumerableObservable),
   takeWhileTests(EnumerableObservable),
   throwIfEmptyTests(EnumerableObservable),
-  toEnumerableTests,
+  toEnumerableTests<EnumerableObservableLike>(EnumerableObservable),
+  toRunnableObservableTests<EnumerableObservableLike>(EnumerableObservable),
   zipTests<EnumerableObservableLike>(EnumerableObservable),
   zipWithTests<EnumerableObservableLike>(EnumerableObservable),
 );

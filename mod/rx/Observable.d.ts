@@ -38,7 +38,10 @@ declare const forkMerge: ForkConcat<ObservableLike>["forkConcat"];
 declare const forkZipLatest: ForkZip<ObservableLike>["forkZip"];
 declare const fromDisposable: <T>() => Function1<DisposableLike, ObservableLike<T>>;
 declare const fromFlowable: <T>(options?: undefined) => Function1<FlowableLike<T>, ObservableLike<T>>;
-declare const fromPromise: <T>(options?: undefined) => Function1<PromiseableLike<T>, ObservableLike<T>>;
+declare const fromPromise: <T>(options?: {
+    readonly delay?: number | undefined;
+    readonly delayStart?: boolean | undefined;
+} | undefined) => Function1<PromiseableLike<T>, ObservableLike<T>>;
 declare const fromReadonlyArray: <T>(options?: ({
     readonly delay?: number | undefined;
     readonly delayStart?: boolean | undefined;
@@ -327,7 +330,10 @@ declare const Observable: {
     everySatisfy: <T_7>(predicate: Predicate<T_7>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_7, boolean>;
     forEach: <T_8>(effect: SideEffect1<T_8>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T_8, T_8>;
     fromFlowable: <T_9>(options?: undefined) => Function1<FlowableLike<T_9>, ObservableLike<T_9>>;
-    fromPromise: <T_10>(options?: undefined) => Function1<PromiseableLike<T_10>, ObservableLike<T_10>>;
+    fromPromise: <T_10>(options?: {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    } | undefined) => Function1<PromiseableLike<T_10>, ObservableLike<T_10>>;
     fromReadonlyArray: <T_11>(options?: ({
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;

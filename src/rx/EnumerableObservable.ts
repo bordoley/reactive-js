@@ -26,9 +26,15 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { Factory } from "../functions";
+import { Factory, identity } from "../functions";
 import { ToEnumerable } from "../ix";
-import { EnumerableObservableLike, Retry, ScanAsync, ToRunnable } from "../rx";
+import {
+  EnumerableObservableLike,
+  Retry,
+  ScanAsync,
+  ToRunnable,
+  ToRunnableObservable,
+} from "../rx";
 import { VirtualTimeSchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError";
@@ -186,6 +192,9 @@ export const toReadonlyArray =
 export const toRunnable =
   RunnableObservable_toRunnable as ToRunnable<EnumerableObservableLike>["toRunnable"];
 
+export const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike>["toRunnableObservable"] =
+  () => identity;
+
 export const zip = Observable_zip as Zip<EnumerableObservableLike>["zip"];
 
 /** @ignore */
@@ -222,6 +231,7 @@ const EnumerableObservable = {
   toFlowable,
   toReadonlyArray,
   toRunnable,
+  toRunnableObservable,
   zip,
 };
 

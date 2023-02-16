@@ -4,6 +4,9 @@ import { FlowableLike } from "../streaming.js";
 declare const toObservable: ToObservable<FlowableLike>["toObservable"];
 /** @ignore */
 declare const Flowable: {
-    toObservable: <T>(options?: undefined) => Function1<FlowableLike<T>, ObservableLike<T>>;
+    toObservable: <T>(options?: {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    } | undefined) => Function1<FlowableLike<T>, ObservableLike<T>>;
 };
 export { Flowable as default, toObservable };

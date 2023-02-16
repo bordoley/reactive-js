@@ -138,11 +138,17 @@ type Timeout<C extends ObservableLike> = Container<C> & {
      */
     timeout<T>(duration: C): ContainerOperator<C, T, T>;
 };
-type ToObservable<C extends ContainerLike, O = never> = Container<C> & {
-    toObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
+type ToObservable<C extends ContainerLike, O = unknown> = Container<C> & {
+    toObservable: <T>(options?: O & {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+    }) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 };
-type ToRunnableObservable<C extends ContainerLike, O = never> = Container<C> & {
-    toRunnableObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
+type ToRunnableObservable<C extends ContainerLike, O = unknown> = Container<C> & {
+    toRunnableObservable: <T>(options?: O & {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+    }) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
 };
 type ToEnumerableObservable<C extends ContainerLike, O = never> = Container<C> & {
     toEnumerableObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;

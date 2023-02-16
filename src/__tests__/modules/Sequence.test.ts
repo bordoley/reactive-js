@@ -20,6 +20,8 @@ import {
   takeFirstTests,
   takeLastTests,
   takeWhileTests,
+  toEnumerableTests,
+  //toRunnableObservableTests,
   zipTests,
   zipWithTests,
 } from "../operators";
@@ -45,6 +47,9 @@ testModule(
   startWithTests<SequenceLike>(Sequence),
   takeFirstTests(Sequence),
   takeLastTests(Sequence),
+  toEnumerableTests<SequenceLike>(Sequence),
+  // FIXME
+  // toRunnableObservableTests<SequenceLike>(Sequence),
   takeWhileTests(Sequence),
   zipTests<SequenceLike>(Sequence),
   zipWithTests<SequenceLike>(Sequence),

@@ -1,4 +1,4 @@
-import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, RunnableLike } from "../rx.js";
+import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, RunnableLike, RunnableObservableLike } from "../rx.js";
 import { Function1, Equality, SideEffect1, Updater, Factory, Predicate, Reducer } from "../functions.js";
 import { Buffer, Concat, ConcatAll, DistinctUntilChanged, Empty, ForEach, ReadonlyArrayLike, FromIterable, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip, ContainerOperator } from "../containers.js";
 import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix.js";
@@ -34,10 +34,7 @@ declare const toObservable: ToObservable<EnumerableLike, {
 }>["toObservable"];
 declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
 declare const toRunnable: ToRunnable<EnumerableLike>["toRunnable"];
-declare const toRunnableObservable: ToRunnableObservable<EnumerableLike, {
-    delay?: number;
-    delayStart?: boolean;
-}>["toRunnableObservable"];
+declare const toRunnableObservable: ToRunnableObservable<EnumerableLike>["toRunnableObservable"];
 declare const zip: Zip<EnumerableLike>["zip"];
 /** @ignore */
 declare const Enumerable: {
@@ -85,6 +82,10 @@ declare const Enumerable: {
     toEnumerable: <T_20>(options?: undefined) => Function1<EnumerableLike<T_20>, EnumerableLike<T_20>>;
     toReadonlyArray: <T_21>(options?: undefined) => Function1<EnumerableLike<T_21>, ReadonlyArrayLike<T_21>>;
     toRunnable: <T_22>(options?: undefined) => Function1<EnumerableLike<T_22>, RunnableLike<T_22>>;
+    toRunnableObservable: <T_23>(options?: {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    } | undefined) => Function1<EnumerableLike<T_23>, RunnableObservableLike<T_23>>;
     zip: {
         <TA_1, TB_1>(a: EnumerableLike<TA_1>, b: EnumerableLike<TB_1>): EnumerableLike<readonly [
             TA_1,
