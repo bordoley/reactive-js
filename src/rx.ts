@@ -228,18 +228,27 @@ export type Timeout<C extends ObservableLike> = Container<C> & {
   timeout<T>(duration: C): ContainerOperator<C, T, T>;
 };
 
-export type ToObservable<C extends ContainerLike, O = never> = Container<C> & {
+export type ToObservable<
+  C extends ContainerLike,
+  O = unknown,
+> = Container<C> & {
   toObservable: <T>(
-    options?: O,
+    options?: O & {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    },
   ) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 };
 
 export type ToRunnableObservable<
   C extends ContainerLike,
-  O = never,
+  O = unknown,
 > = Container<C> & {
   toRunnableObservable: <T>(
-    options?: O,
+    options?: O & {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    },
   ) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
 };
 

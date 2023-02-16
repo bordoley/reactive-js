@@ -62,23 +62,29 @@ declare const ReadonlyArray: {
         readonly count?: number | undefined;
         readonly start?: number | undefined;
     } | undefined) => Function1<ReadonlyArrayLike<T_10>, EnumerableObservableLike<T_10>>;
-    toObservable: <T_11>(options?: {
+    toObservable: <T_11>(options?: ({
         readonly count?: number | undefined;
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
         readonly start?: number | undefined;
-    } | undefined) => Function1<ReadonlyArrayLike<T_11>, ObservableLike<T_11>>;
+    } & {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    }) | undefined) => Function1<ReadonlyArrayLike<T_11>, ObservableLike<T_11>>;
     toReadonlyArray: <T_12>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     } | undefined) => Function1<ReadonlyArrayLike<T_12>, ReadonlyArrayLike<T_12>>;
     toRunnable: <T_13>(options?: undefined) => Function1<ReadonlyArrayLike<T_13>, RunnableLike<T_13>>;
-    toRunnableObservable: <T_14>(options?: {
+    toRunnableObservable: <T_14>(options?: ({
         readonly count?: number | undefined;
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
         readonly start?: number | undefined;
-    } | undefined) => Function1<ReadonlyArrayLike<T_14>, RunnableObservableLike<T_14>>;
+    } & {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    }) | undefined) => Function1<ReadonlyArrayLike<T_14>, RunnableObservableLike<T_14>>;
     toSequence: <T_15>(options?: undefined) => Function1<ReadonlyArrayLike<T_15>, SequenceLike<T_15>>;
 };
 export { ReadonlyArray as default, empty, every, forEach, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };

@@ -1,5 +1,6 @@
 /// <reference types="./EnumerableObservable.d.ts" />
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
+import { identity } from '../functions.mjs';
 import EnumerableObservable_catchError from './EnumerableObservable/__internal__/EnumerableObservable.catchError.mjs';
 import EnumerableObservable_defer from './EnumerableObservable/__internal__/EnumerableObservable.defer.mjs';
 import EnumerableObservable_mergeAll from './EnumerableObservable/__internal__/EnumerableObservable.mergeAll.mjs';
@@ -72,6 +73,7 @@ const toEnumerable = EnumerableObservable_toEnumerable;
 const toFlowable = Observable_toFlowable;
 const toReadonlyArray = RunnableObservable_toReadonlyArray;
 const toRunnable = RunnableObservable_toRunnable;
+const toRunnableObservable = () => identity;
 const zip = Observable_zip;
 /** @ignore */
 const EnumerableObservable = {
@@ -107,7 +109,8 @@ const EnumerableObservable = {
     toFlowable,
     toReadonlyArray,
     toRunnable,
+    toRunnableObservable,
     zip,
 };
 
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

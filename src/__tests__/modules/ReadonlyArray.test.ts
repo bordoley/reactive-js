@@ -5,6 +5,8 @@ import {
   fromReadonlyArrayTests,
   keepTests,
   mapTests,
+  toEnumerableTests,
+  toRunnableObservableTests,
 } from "../operators";
 import { testModule } from "../testing";
 
@@ -14,4 +16,6 @@ testModule(
   fromReadonlyArrayTests<ReadonlyArrayLike>(ReadonlyArray),
   keepTests(ReadonlyArray),
   mapTests(ReadonlyArray),
+  toEnumerableTests<ReadonlyArrayLike>(ReadonlyArray),
+  toRunnableObservableTests<ReadonlyArrayLike>(ReadonlyArray),
 );

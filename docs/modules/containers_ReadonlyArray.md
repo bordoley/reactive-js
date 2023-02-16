@@ -337,11 +337,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
-| `options.start?` | `number` |
+| `options?` | { `count?`: `number` ; `delay?`: `number` ; `delayStart?`: `boolean` ; `start?`: `number`  } & { `delay?`: `number` ; `delayStart?`: `boolean`  } |
 
 #### Returns
 
@@ -409,11 +405,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
-| `options.start?` | `number` |
+| `options?` | { `count?`: `number` ; `delay?`: `number` ; `delayStart?`: `boolean` ; `start?`: `number`  } & { `delay?`: `number` ; `delayStart?`: `boolean`  } |
 
 #### Returns
 

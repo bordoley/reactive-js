@@ -79,6 +79,7 @@ const Enumerable = {
     toEnumerable,
     toReadonlyArray,
     toRunnable,
+    toRunnableObservable,
     zip,
 };
 

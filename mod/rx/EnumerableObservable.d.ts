@@ -1,6 +1,6 @@
 import { ToFlowable, FlowableLike } from "../streaming.js";
 import { ToEnumerable, EnumerableLike } from "../ix.js";
-import { EnumerableObservableLike, Retry, ScanAsync, RunnableLike, AsyncReducer } from "../rx.js";
+import { EnumerableObservableLike, Retry, ScanAsync, RunnableLike, ToRunnableObservable, AsyncReducer, RunnableObservableLike } from "../rx.js";
 import { Equality, Predicate, SideEffect1, Function1, Updater, Factory, Reducer, Function2 } from "../functions.js";
 import { ContainerOperator, CatchError, ConcatAll, Defer, ReadonlyArrayLike } from "../containers.js";
 import { VirtualTimeSchedulerLike } from "../scheduling.js";
@@ -66,6 +66,7 @@ declare const toReadonlyArray: <T>(options?: {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 } | undefined) => Function1<EnumerableObservableLike<T>, ReadonlyArrayLike<T>>;
 declare const toRunnable: <T>(options?: undefined) => Function1<EnumerableObservableLike<T>, RunnableLike<T>>;
+declare const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike>["toRunnableObservable"];
 declare const zip: {
     <TA, TB>(a: EnumerableObservableLike<TA>, b: EnumerableObservableLike<TB>): EnumerableObservableLike<readonly [
         TA,
@@ -191,6 +192,10 @@ declare const EnumerableObservable: {
         readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
     } | undefined) => Function1<EnumerableObservableLike<T_27>, ReadonlyArrayLike<T_27>>;
     toRunnable: <T_28>(options?: undefined) => Function1<EnumerableObservableLike<T_28>, RunnableLike<T_28>>;
+    toRunnableObservable: <T_29>(options?: {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    } | undefined) => Function1<EnumerableObservableLike<T_29>, RunnableObservableLike<T_29>>;
     zip: {
         <TA_1, TB_1>(a: EnumerableObservableLike<TA_1>, b: EnumerableObservableLike<TB_1>): EnumerableObservableLike<readonly [
             TA_1,
@@ -254,4 +259,4 @@ declare const EnumerableObservable: {
         ]>;
     };
 };
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

@@ -39,7 +39,10 @@ import {
   returns,
   sum,
 } from "../functions";
-import { ObservableLike, Retry, ScanAsync } from "../rx";
+import { ToEnumerable } from "../ix";
+import Enumerable from "../ix/Enumerable";
+import { ObservableLike, Retry, ScanAsync, ToRunnableObservable } from "../rx";
+import RunnableObservable from "../rx/RunnableObservable";
 import {
   describe,
   expectArrayEquals,
@@ -1081,6 +1084,51 @@ export const throwIfEmptyTests = <C extends ContainerLike>(
         m.throwIfEmpty(() => undefined),
         m.toReadonlyArray(),
         expectArrayEquals([1]),
+      ),
+    ),
+  );
+
+export const toEnumerableTests = <C extends ContainerLike>(
+  m: FromReadonlyArray<C> & ToEnumerable<C>,
+) =>
+  describe(
+    "toEnumerable",
+    test(
+      "with an enumerable observable",
+      pipeLazy(
+        [1, 2, 3, 4],
+        m.fromReadonlyArray(),
+        m.toEnumerable(),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4]),
+      ),
+    ),
+  );
+
+export const toRunnableObservableTests = <C extends ContainerLike>(
+  m: FromReadonlyArray<C> & ToRunnableObservable<C>,
+) =>
+  describe(
+    "toRunnableObservable",
+    test(
+      "without delay",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        m.fromReadonlyArray(),
+        m.toRunnableObservable(),
+        RunnableObservable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5]),
+      ),
+    ),
+    test(
+      "with delay",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        m.fromReadonlyArray(),
+        m.toRunnableObservable({ delay: 1 }),
+        // FIXME: Ideally this test would validate the current time in the test
+        RunnableObservable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5]),
       ),
     ),
   );

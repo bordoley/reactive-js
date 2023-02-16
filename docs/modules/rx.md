@@ -177,14 +177,14 @@ ___
 
 ### ToObservable
 
-Ƭ **ToObservable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toObservable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>  }
+Ƭ **ToObservable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toObservable`: <T\>(`options?`: `O` & { `delay?`: `number` ; `delayStart?`: `boolean`  }) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | `never` |
+| `O` | `unknown` |
 
 ___
 
@@ -203,14 +203,14 @@ ___
 
 ### ToRunnableObservable
 
-Ƭ **ToRunnableObservable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toRunnableObservable`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\>  }
+Ƭ **ToRunnableObservable**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toRunnableObservable`: <T\>(`options?`: `O` & { `delay?`: `number` ; `delayStart?`: `boolean`  }) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | `never` |
+| `O` | `unknown` |
 
 ___
 

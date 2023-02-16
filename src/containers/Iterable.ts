@@ -1,4 +1,4 @@
-import { IterableLike, ToIterable } from "../containers";
+import { FromReadonlyArray, IterableLike, ToIterable } from "../containers";
 import { identity } from "../functions";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix";
 import Enumerable_toIterable from "../ix/Enumerable/__internal__/Enumerable.toIterable";
@@ -12,6 +12,10 @@ import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsync
 import Iterable_toEnumerable from "./Iterable/__internal__/Iterable.toEnumerable";
 import Iterable_toEnumerableObservable from "./Iterable/__internal__/Iterable.toEnumerableObservable";
 import Iterable_toRunnableObservable from "./Iterable/__internal__/Iterable.toRunnableObservable";
+import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray";
+
+export const fromReadonlyArray: FromReadonlyArray<IterableLike>["fromReadonlyArray"] =
+  ReadonlyArray_toReadonlyArray;
 
 export const fromEnumerable: FromEnumerable<IterableLike>["fromEnumerable"] =
   Enumerable_toIterable;
@@ -36,17 +40,13 @@ export const toObservable: ToObservable<
   }
 >["toObservable"] = Iterable_toRunnableObservable;
 
-export const toRunnableObservable: ToRunnableObservable<
-  IterableLike,
-  {
-    delay: number;
-    delayStart?: boolean;
-  }
->["toRunnableObservable"] = Iterable_toRunnableObservable;
+export const toRunnableObservable: ToRunnableObservable<IterableLike>["toRunnableObservable"] =
+  Iterable_toRunnableObservable;
 
 /** @ignore */
 const Iterable = {
   fromEnumerable,
+  fromReadonlyArray,
   toAsyncEnumerable,
   toEnumerable,
   toIterable,
