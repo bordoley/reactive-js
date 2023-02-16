@@ -37,6 +37,7 @@
 - [throwIfEmpty](rx_EnumerableObservable.md#throwifempty)
 - [toEnumerable](rx_EnumerableObservable.md#toenumerable)
 - [toFlowable](rx_EnumerableObservable.md#toflowable)
+- [toObservable](rx_EnumerableObservable.md#toobservable)
 - [toReadonlyArray](rx_EnumerableObservable.md#toreadonlyarray)
 - [toRunnable](rx_EnumerableObservable.md#torunnable)
 - [toRunnableObservable](rx_EnumerableObservable.md#torunnableobservable)
@@ -772,6 +773,30 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 

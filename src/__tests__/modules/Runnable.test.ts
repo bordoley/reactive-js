@@ -94,4 +94,5 @@ testModule(
   ),
   // FIXME
   //toRunnableObservableTests<RunnableLike>(Runnable),
+  //toObservableTests<RunnableLike>(Runnable),
 );

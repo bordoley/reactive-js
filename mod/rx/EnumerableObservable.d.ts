@@ -1,6 +1,6 @@
 import { ToFlowable, FlowableLike } from "../streaming.js";
 import { ToEnumerable, EnumerableLike } from "../ix.js";
-import { EnumerableObservableLike, Retry, ScanAsync, RunnableLike, ToRunnableObservable, AsyncReducer, RunnableObservableLike } from "../rx.js";
+import { EnumerableObservableLike, Retry, ScanAsync, RunnableLike, ToRunnableObservable, ToObservable, AsyncReducer, ObservableLike, RunnableObservableLike } from "../rx.js";
 import { Equality, Predicate, SideEffect1, Function1, Updater, Factory, Reducer, Function2 } from "../functions.js";
 import { ContainerOperator, CatchError, ConcatAll, Defer, ReadonlyArrayLike } from "../containers.js";
 import { VirtualTimeSchedulerLike } from "../scheduling.js";
@@ -67,6 +67,7 @@ declare const toReadonlyArray: <T>(options?: {
 } | undefined) => Function1<EnumerableObservableLike<T>, ReadonlyArrayLike<T>>;
 declare const toRunnable: <T>(options?: undefined) => Function1<EnumerableObservableLike<T>, RunnableLike<T>>;
 declare const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike>["toRunnableObservable"];
+declare const toObservable: ToObservable<EnumerableObservableLike>["toObservable"];
 declare const zip: {
     <TA, TB>(a: EnumerableObservableLike<TA>, b: EnumerableObservableLike<TB>): EnumerableObservableLike<readonly [
         TA,
@@ -188,14 +189,18 @@ declare const EnumerableObservable: {
     throwIfEmpty: <T_24>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_24, T_24>;
     toEnumerable: <T_25>(options?: undefined) => Function1<EnumerableObservableLike<T_25>, EnumerableLike<T_25>>;
     toFlowable: <T_26>(options?: undefined) => Function1<EnumerableObservableLike<T_26>, FlowableLike<T_26>>;
-    toReadonlyArray: <T_27>(options?: {
-        readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-    } | undefined) => Function1<EnumerableObservableLike<T_27>, ReadonlyArrayLike<T_27>>;
-    toRunnable: <T_28>(options?: undefined) => Function1<EnumerableObservableLike<T_28>, RunnableLike<T_28>>;
-    toRunnableObservable: <T_29>(options?: {
+    toObservable: <T_27>(options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<EnumerableObservableLike<T_29>, RunnableObservableLike<T_29>>;
+    } | undefined) => Function1<EnumerableObservableLike<T_27>, ObservableLike<T_27>>;
+    toReadonlyArray: <T_28>(options?: {
+        readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
+    } | undefined) => Function1<EnumerableObservableLike<T_28>, ReadonlyArrayLike<T_28>>;
+    toRunnable: <T_29>(options?: undefined) => Function1<EnumerableObservableLike<T_29>, RunnableLike<T_29>>;
+    toRunnableObservable: <T_30>(options?: {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    } | undefined) => Function1<EnumerableObservableLike<T_30>, RunnableObservableLike<T_30>>;
     zip: {
         <TA_1, TB_1>(a: EnumerableObservableLike<TA_1>, b: EnumerableObservableLike<TB_1>): EnumerableObservableLike<readonly [
             TA_1,
@@ -259,4 +264,4 @@ declare const EnumerableObservable: {
         ]>;
     };
 };
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, toRunnableObservable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

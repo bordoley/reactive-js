@@ -1,7 +1,9 @@
 /// <reference types="./AsyncEnumerable.test.d.ts" />
+import AsyncEnumerable from '../../ix/AsyncEnumerable.mjs';
+import { toObservableTests } from '../operators.mjs';
+import { testModule } from '../testing.mjs';
+
 /*
-import { AsyncEnumerableLike } from "../../ix";
-import AsyncEnumerable from "../../ix/AsyncEnumerable";
 import { RunnableObservableLike } from "../../rx";
 import RunnableObservable from "../../rx/RunnableObservable";
 import {
@@ -12,5 +14,6 @@ import {
   scanTests,
   takeWhileTests,
 } from "../operators";
-import { testModule } from "../testing";
+
 */
+testModule("AsyncEnumerable", toObservableTests(AsyncEnumerable));

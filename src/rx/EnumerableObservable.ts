@@ -33,6 +33,7 @@ import {
   EnumerableObservableLike,
   Retry,
   ScanAsync,
+  ToObservable,
   ToRunnable,
   ToRunnableObservable,
 } from "../rx";
@@ -196,6 +197,9 @@ export const toRunnable =
 export const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike>["toRunnableObservable"] =
   o => compose(toEnumerable(), Enumerable_toRunnableObservable(o));
 
+export const toObservable: ToObservable<EnumerableObservableLike>["toObservable"] =
+  toRunnableObservable;
+
 export const zip = Observable_zip as Zip<EnumerableObservableLike>["zip"];
 
 /** @ignore */
@@ -230,6 +234,7 @@ const EnumerableObservable = {
   throwIfEmpty,
   toEnumerable,
   toFlowable,
+  toObservable,
   toReadonlyArray,
   toRunnable,
   toRunnableObservable,

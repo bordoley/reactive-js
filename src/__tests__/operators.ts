@@ -41,15 +41,25 @@ import {
 } from "../functions";
 import { ToEnumerable } from "../ix";
 import Enumerable from "../ix/Enumerable";
-import { ObservableLike, Retry, ScanAsync, ToRunnableObservable } from "../rx";
+import {
+  ObservableLike,
+  Retry,
+  ScanAsync,
+  ToObservable,
+  ToRunnableObservable,
+} from "../rx";
+import Observable from "../rx/Observable";
 import RunnableObservable from "../rx/RunnableObservable";
 import { __now } from "../scheduling/Continuation/effects";
+import Scheduler from "../scheduling/Scheduler";
+import Disposable from "../util/Disposable";
 import {
   describe,
   expectArrayEquals,
   expectEquals,
   expectToThrowError,
   test,
+  testAsync,
 } from "./testing";
 
 export const bufferTests = <C extends ContainerLike>(
@@ -1105,6 +1115,28 @@ export const toEnumerableTests = <C extends ContainerLike>(
       ),
     ),
   );
+
+export const toObservableTests = <C extends ContainerLike>(
+  m: FromReadonlyArray<C> & ToObservable<C>,
+) =>
+  testAsync("toObservable", async () => {
+    const scheduler = Scheduler.createHostScheduler();
+
+    // FIXME: This should be a generic test
+    try {
+      const result = await pipe(
+        [0, 1, 2, 3, 4],
+        m.fromReadonlyArray(),
+        m.toObservable<number>(),
+        Observable.buffer(),
+        Observable.toPromise(scheduler),
+      );
+
+      pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
+    } finally {
+      pipe(scheduler, Disposable.dispose());
+    }
+  });
 
 export const toRunnableObservableTests = <C extends ContainerLike>(
   m: FromReadonlyArray<C> & ToRunnableObservable<C>,
