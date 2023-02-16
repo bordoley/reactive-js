@@ -25,6 +25,7 @@ import {
   takeWhileTests,
   throwIfEmptyTests,
   toEnumerableTests,
+  toObservableTests,
   toRunnableObservableTests,
   zipTests,
   zipWithTests,
@@ -58,6 +59,7 @@ testModule(
   throwIfEmptyTests(Enumerable),
   toEnumerableTests<EnumerableLike>(Enumerable),
   toRunnableObservableTests<EnumerableLike>(Enumerable),
+  toObservableTests<EnumerableLike>(Enumerable),
   zipTests<EnumerableLike>(Enumerable),
   zipWithTests<EnumerableLike>(Enumerable),
 );

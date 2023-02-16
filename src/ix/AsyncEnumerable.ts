@@ -55,6 +55,7 @@ const AsyncEnumerable = {
   scan,
   scanAsync,
   takeWhile,
+  toObservable,
 };
 
 export default AsyncEnumerable;

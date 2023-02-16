@@ -27,6 +27,7 @@ const AsyncEnumerable = {
     scan,
     scanAsync,
     takeWhile,
+    toObservable,
 };
 
 export { AsyncEnumerable as default, fromEnumerable, fromReadonlyArray, generate, keep, map, scan, scanAsync, takeWhile, toObservable };

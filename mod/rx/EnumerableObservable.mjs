@@ -75,6 +75,7 @@ const toFlowable = Observable_toFlowable;
 const toReadonlyArray = RunnableObservable_toReadonlyArray;
 const toRunnable = RunnableObservable_toRunnable;
 const toRunnableObservable = o => compose(toEnumerable(), Enumerable_toRunnableObservable(o));
+const toObservable = toRunnableObservable;
 const zip = Observable_zip;
 /** @ignore */
 const EnumerableObservable = {
@@ -108,10 +109,11 @@ const EnumerableObservable = {
     throwIfEmpty,
     toEnumerable,
     toFlowable,
+    toObservable,
     toReadonlyArray,
     toRunnable,
     toRunnableObservable,
     zip,
 };
 
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toReadonlyArray, toRunnable, toRunnableObservable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

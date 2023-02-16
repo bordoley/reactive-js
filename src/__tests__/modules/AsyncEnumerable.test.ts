@@ -1,6 +1,8 @@
-/*
 import { AsyncEnumerableLike } from "../../ix";
 import AsyncEnumerable from "../../ix/AsyncEnumerable";
+import { toObservableTests } from "../operators";
+import { testModule } from "../testing";
+/*
 import { RunnableObservableLike } from "../../rx";
 import RunnableObservable from "../../rx/RunnableObservable";
 import {
@@ -11,11 +13,13 @@ import {
   scanTests,
   takeWhileTests,
 } from "../operators";
-import { testModule } from "../testing";
+
 */
-/*
+
 testModule(
   "AsyncEnumerable",
+  toObservableTests<AsyncEnumerableLike>(AsyncEnumerable),
+  /*
   fromReadonlyArrayTests<AsyncEnumerableLike>(AsyncEnumerable),
   keepTests(AsyncEnumerable),
   mapTests(AsyncEnumerable),
@@ -24,7 +28,5 @@ testModule(
     AsyncEnumerable,
     RunnableObservable,
   ),
-  takeWhileTests(AsyncEnumerable),
-);*/
-
-export {};
+  takeWhileTests(AsyncEnumerable),*/
+);

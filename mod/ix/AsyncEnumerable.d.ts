@@ -29,5 +29,9 @@ declare const AsyncEnumerable: {
     takeWhile: <T_5>(predicate: Predicate<T_5>, options?: {
         readonly inclusive?: boolean | undefined;
     } | undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_5, T_5>;
+    toObservable: <T_6>(options?: {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    } | undefined) => Function1<AsyncEnumerableLike<T_6>, ObservableLike<T_6>>;
 };
 export { AsyncEnumerable as default, fromEnumerable, fromReadonlyArray, generate, keep, map, scan, scanAsync, takeWhile, toObservable };
