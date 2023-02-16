@@ -1,22 +1,12 @@
 import Container from "../../containers/Container";
 import ReadonlyArray from "../../containers/ReadonlyArray";
-import {
-  increment,
-  isSome,
-  pipe,
-  pipeLazy,
-  raise,
-  returns,
-} from "../../functions";
+import { increment, isSome, pipe, raise, returns } from "../../functions";
 import { ObservableLike } from "../../rx";
 import Observable from "../../rx/Observable";
 import { __await, __memo } from "../../rx/Observable/effects";
 import Continuation from "../../scheduling/Continuation";
-import Dispatcher from "../../scheduling/Dispatcher";
 import Scheduler from "../../scheduling/Scheduler";
 import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
-import { FlowMode_pause, FlowMode_resume } from "../../streaming";
-import Streamable from "../../streaming/Streamable";
 import Disposable from "../../util/Disposable";
 import {
   describe,
@@ -25,7 +15,6 @@ import {
   expectIsSome,
   expectPromiseToThrow,
   expectToHaveBeenCalledTimes,
-  expectTrue,
   mockFn,
   test,
   testAsync,
@@ -91,69 +80,6 @@ const shareTests = describe(
 
     Continuation.run(scheduler);
     pipe(result, expectArrayEquals([2, 4, 6]));
-  }),
-);
-
-const toFlowableTests = describe(
-  "toFlowable",
-  test("flow a generating source", () => {
-    const scheduler = VirtualTimeScheduler.create();
-
-    const generateStream = pipe(
-      Observable.generate(increment, returns(-1), {
-        delay: 1,
-        delayStart: true,
-      }),
-      Observable.toFlowable(),
-      Streamable.stream(scheduler),
-    );
-
-    pipe(generateStream, Dispatcher.dispatch(FlowMode_resume));
-
-    pipe(
-      scheduler,
-      Scheduler.schedule(
-        pipeLazy(FlowMode_pause, Dispatcher.dispatchTo(generateStream)),
-        {
-          delay: 2,
-        },
-      ),
-    );
-
-    pipe(
-      scheduler,
-      Scheduler.schedule(
-        pipeLazy(FlowMode_resume, Dispatcher.dispatchTo(generateStream)),
-        {
-          delay: 4,
-        },
-      ),
-    );
-
-    pipe(
-      scheduler,
-      Scheduler.schedule(pipeLazy(generateStream, Disposable.dispose()), {
-        delay: 5,
-      }),
-    );
-
-    const f = mockFn();
-    const subscription = pipe(
-      generateStream,
-      Observable.forEach<number>(x => {
-        f(Scheduler.getCurrentTime(scheduler), x);
-      }),
-      Observable.subscribe(scheduler),
-    );
-
-    Continuation.run(scheduler);
-
-    pipe(f, expectToHaveBeenCalledTimes(3));
-    pipe(f.calls[0][1], expectEquals(0));
-    pipe(f.calls[1][1], expectEquals(1));
-    pipe(f.calls[2][1], expectEquals(2));
-
-    pipe(subscription, Disposable.isDisposed, expectTrue);
   }),
 );
 
@@ -283,6 +209,5 @@ testModule(
   asyncTests,
   onSubscribeTests,
   shareTests,
-  toFlowableTests,
   toPromiseTests,
 );

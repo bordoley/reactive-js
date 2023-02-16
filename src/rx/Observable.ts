@@ -32,7 +32,7 @@ import {
   Throttle,
 } from "../rx";
 import { SchedulerLike } from "../scheduling";
-import { FromFlowable, ToFlowable } from "../streaming";
+import { FromFlowable } from "../streaming";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable";
 import { DisposableLike, DisposableOrTeardown } from "../util";
 import Disposable_toObservable from "../util/Disposable/__internal__/Disposable.toObservable";
@@ -83,7 +83,6 @@ import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile
 import Observable_throttle from "./Observable/__internal__/Observable.throttle";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout";
-import Observable_toFlowable from "./Observable/__internal__/Observable.toFlowable";
 import Observable_toPromise from "./Observable/__internal__/Observable.toPromise";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom";
 import Observable_zip from "./Observable/__internal__/Observable.zip";
@@ -256,9 +255,6 @@ export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
 
 export const timeout = Observable_timeout;
 
-export const toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
-  Observable_toFlowable;
-
 export const toPromise = Observable_toPromise;
 
 export const withLatestFrom = Observable_withLatestFrom;
@@ -307,7 +303,6 @@ const Observable = {
   throttle,
   throwIfEmpty,
   timeout,
-  toFlowable,
   toPromise,
   withLatestFrom,
   zip,

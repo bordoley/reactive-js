@@ -67,8 +67,8 @@ import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty";
-import Observable_toFlowable from "./Observable/__internal__/Observable.toFlowable";
 import Observable_zip from "./Observable/__internal__/Observable.zip";
+import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable";
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray";
 import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable";
 
@@ -181,7 +181,7 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
   EnumerableObservable_toEnumerable;
 
 export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
-  Observable_toFlowable;
+  RunnableObservable_toFlowable;
 
 export const toReadonlyArray =
   RunnableObservable_toReadonlyArray as ToReadonlyArray<

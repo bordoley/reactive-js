@@ -61,7 +61,6 @@ import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout";
-import Observable_toFlowable from "./Observable/__internal__/Observable.toFlowable";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom";
 import Observable_zip from "./Observable/__internal__/Observable.zip";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest";
@@ -71,6 +70,7 @@ import RunnableObservable_defer from "./RunnableObservable/__internal__/Runnable
 import RunnableObservable_mergeAll from "./RunnableObservable/__internal__/RunnableObservable.mergeAll";
 import RunnableObservable_scanAsync from "./RunnableObservable/__internal__/RunnableObservable.scanAsync";
 import RunnableObservable_switchAll from "./RunnableObservable/__internal__/RunnableObservable.switchAll";
+import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable";
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray";
 import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable";
 import RunnableObservable_throttle from "./RunnableObservable/__internal__/RunnableObservableLike.throttle";
@@ -198,7 +198,7 @@ export const timeout =
   Observable_timeout as Timeout<RunnableObservableLike>["timeout"];
 
 export const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
-  Observable_toFlowable;
+  RunnableObservable_toFlowable;
 
 export const toReadonlyArray = RunnableObservable_toReadonlyArray;
 

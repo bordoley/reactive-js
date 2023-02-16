@@ -57,7 +57,6 @@
 - [throttle](rx_Observable.md#throttle)
 - [throwIfEmpty](rx_Observable.md#throwifempty)
 - [timeout](rx_Observable.md#timeout)
-- [toFlowable](rx_Observable.md#toflowable)
 - [toPromise](rx_Observable.md#topromise)
 - [withLatestFrom](rx_Observable.md#withlatestfrom)
 - [zip](rx_Observable.md#zip)
@@ -1946,28 +1945,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T_1`, `T_1`\>
-
-___
-
-### toFlowable
-
-▸ **toFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 

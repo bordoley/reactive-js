@@ -1,17 +1,14 @@
 /// <reference types="./Observable.test.d.ts" />
 import Container from '../../containers/Container.mjs';
 import ReadonlyArray from '../../containers/ReadonlyArray.mjs';
-import { pipe, raise, increment, returns, pipeLazy, isSome } from '../../functions.mjs';
+import { pipe, raise, isSome, increment, returns } from '../../functions.mjs';
 import Observable from '../../rx/Observable.mjs';
 import { __memo, __await } from '../../rx/Observable/effects.mjs';
 import Continuation from '../../scheduling/Continuation.mjs';
-import Dispatcher from '../../scheduling/Dispatcher.mjs';
 import Scheduler from '../../scheduling/Scheduler.mjs';
 import VirtualTimeScheduler from '../../scheduling/VirtualTimeScheduler.mjs';
-import { FlowMode_resume, FlowMode_pause } from '../../streaming.mjs';
-import Streamable from '../../streaming/Streamable.mjs';
 import Disposable from '../../util/Disposable.mjs';
-import { describe as createDescribe, test as createTest, mockFn, expectToHaveBeenCalledTimes, expectIsSome, expectArrayEquals, expectEquals, expectTrue, testAsync, expectPromiseToThrow, testModule } from '../testing.mjs';
+import { describe as createDescribe, test as createTest, mockFn, expectToHaveBeenCalledTimes, expectIsSome, expectArrayEquals, testAsync, expectPromiseToThrow, expectEquals, testModule } from '../testing.mjs';
 
 const onSubscribeTests = createDescribe("onSubscribe", createTest("when subscribe function returns a teardown function", () => {
     const scheduler = VirtualTimeScheduler.create();
@@ -37,33 +34,6 @@ const shareTests = createDescribe("share", createTest("shared observable zipped 
     }), Observable.subscribe(scheduler));
     Continuation.run(scheduler);
     pipe(result, expectArrayEquals([2, 4, 6]));
-}));
-const toFlowableTests = createDescribe("toFlowable", createTest("flow a generating source", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const generateStream = pipe(Observable.generate(increment, returns(-1), {
-        delay: 1,
-        delayStart: true,
-    }), Observable.toFlowable(), Streamable.stream(scheduler));
-    pipe(generateStream, Dispatcher.dispatch(FlowMode_resume));
-    pipe(scheduler, Scheduler.schedule(pipeLazy(FlowMode_pause, Dispatcher.dispatchTo(generateStream)), {
-        delay: 2,
-    }));
-    pipe(scheduler, Scheduler.schedule(pipeLazy(FlowMode_resume, Dispatcher.dispatchTo(generateStream)), {
-        delay: 4,
-    }));
-    pipe(scheduler, Scheduler.schedule(pipeLazy(generateStream, Disposable.dispose()), {
-        delay: 5,
-    }));
-    const f = mockFn();
-    const subscription = pipe(generateStream, Observable.forEach(x => {
-        f(Scheduler.getCurrentTime(scheduler), x);
-    }), Observable.subscribe(scheduler));
-    Continuation.run(scheduler);
-    pipe(f, expectToHaveBeenCalledTimes(3));
-    pipe(f.calls[0][1], expectEquals(0));
-    pipe(f.calls[1][1], expectEquals(1));
-    pipe(f.calls[2][1], expectEquals(2));
-    pipe(subscription, Disposable.isDisposed, expectTrue);
 }));
 const toPromiseTests = createDescribe("toPromise", testAsync("when observable completes without producing a value", async () => {
     const scheduler = Scheduler.createHostScheduler();
@@ -126,4 +96,4 @@ const asyncTests = createDescribe("async", createTest("batch mode", () => {
     Continuation.run(scheduler);
     pipe(result, expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]));
 }));
-testModule("Observable", asyncTests, onSubscribeTests, shareTests, toFlowableTests, toPromiseTests);
+testModule("Observable", asyncTests, onSubscribeTests, shareTests, toPromiseTests);
