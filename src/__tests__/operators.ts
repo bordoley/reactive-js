@@ -43,6 +43,7 @@ import { ToEnumerable } from "../ix";
 import Enumerable from "../ix/Enumerable";
 import { ObservableLike, Retry, ScanAsync, ToRunnableObservable } from "../rx";
 import RunnableObservable from "../rx/RunnableObservable";
+import { __now } from "../scheduling/Continuation/effects";
 import {
   describe,
   expectArrayEquals,
@@ -1123,12 +1124,12 @@ export const toRunnableObservableTests = <C extends ContainerLike>(
     test(
       "with delay",
       pipeLazy(
-        [1, 2, 3, 4, 5],
+        [9, 9, 9, 9],
         m.fromReadonlyArray(),
         m.toRunnableObservable({ delay: 1 }),
-        // FIXME: Ideally this test would validate the current time in the test
+        RunnableObservable.map(_ => __now()),
         RunnableObservable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3, 4, 5]),
+        expectArrayEquals([0, 1, 2, 3]),
       ),
     ),
   );

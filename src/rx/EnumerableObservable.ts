@@ -26,8 +26,9 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { Factory, identity } from "../functions";
+import { Factory, compose } from "../functions";
 import { ToEnumerable } from "../ix";
+import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
 import {
   EnumerableObservableLike,
   Retry,
@@ -193,7 +194,7 @@ export const toRunnable =
   RunnableObservable_toRunnable as ToRunnable<EnumerableObservableLike>["toRunnable"];
 
 export const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike>["toRunnableObservable"] =
-  () => identity;
+  o => compose(toEnumerable(), Enumerable_toRunnableObservable(o));
 
 export const zip = Observable_zip as Zip<EnumerableObservableLike>["zip"];
 

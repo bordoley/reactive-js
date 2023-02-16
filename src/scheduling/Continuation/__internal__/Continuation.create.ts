@@ -22,6 +22,7 @@ import {
   ContinuationLike,
   ContinuationLike_run,
   SchedulerLike,
+  SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling";
@@ -56,6 +57,15 @@ export const Continuation__yield = (delay = 0) => {
   ) {
     throw newInstance(YieldError, delay);
   }
+};
+
+export const Continuation__now = () => {
+  const continuation = isNone(currentContinuation)
+    ? raiseWithDebugMessage<ContinuationLike & TProperties>(
+        "not in continuation",
+      )
+    : currentContinuation;
+  return continuation[Continuation_scheduler][SchedulerLike_now];
 };
 
 const Continuation_create: Function2<

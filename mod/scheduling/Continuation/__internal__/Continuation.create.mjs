@@ -1,7 +1,7 @@
 /// <reference types="./Continuation.create.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import { none, isNone, raiseWithDebugMessage, newInstance, error, isSome, pipe } from '../../../functions.mjs';
-import { SchedulerLike_shouldYield, ContinuationLike_run, SchedulerLike_schedule } from '../../../scheduling.mjs';
+import { SchedulerLike_shouldYield, SchedulerLike_now, ContinuationLike_run, SchedulerLike_schedule } from '../../../scheduling.mjs';
 import Disposable_dispose from '../../../util/Disposable/__internal__/Disposable.dispose.mjs';
 import Disposable_isDisposed from '../../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
 import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.mixin.mjs';
@@ -22,6 +22,12 @@ const Continuation__yield = (delay = 0) => {
         continuation[Continuation_scheduler][SchedulerLike_shouldYield]) {
         throw newInstance(YieldError, delay);
     }
+};
+const Continuation__now = () => {
+    const continuation = isNone(currentContinuation)
+        ? raiseWithDebugMessage("not in continuation")
+        : currentContinuation;
+    return continuation[Continuation_scheduler][SchedulerLike_now];
 };
 const Continuation_create = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_mixin), function Continuation(instance, scheduler, effect) {
     init(Disposable_mixin, instance);
@@ -61,4 +67,4 @@ const Continuation_create = /*@__PURE__*/ (() => createInstanceFactory(mix(inclu
     },
 })))();
 
-export { Continuation__yield, Continuation_create as default };
+export { Continuation__now, Continuation__yield, Continuation_create as default };
