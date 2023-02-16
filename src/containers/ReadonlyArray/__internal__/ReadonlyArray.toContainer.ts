@@ -1,29 +1,28 @@
-import { ReadonlyArrayLike } from "../../../containers";
+import {
+  ContainerLike,
+  ContainerOf,
+  ReadonlyArrayLike,
+} from "../../../containers";
 import { Function1, getLength, isSome, max, min } from "../../../functions";
 
 const ReadonlyArray_toContainer =
-  <
-    C,
-    T,
-    O extends {
-      readonly start?: number;
-      readonly count?: number;
-    } = {
-      readonly start?: number;
-      readonly count?: number;
-    },
-  >(
-    factory: (
+  <C extends ContainerLike, O extends unknown = unknown>(
+    factory: <T>(
       values: readonly T[],
       start: number,
       count: number,
       options?: O,
-    ) => C,
+    ) => ContainerOf<C, T>,
   ) =>
-  (options?: O): Function1<ReadonlyArrayLike<T>, C> =>
+  <T>(
+    options?: O & {
+      readonly start?: number;
+      readonly count?: number;
+    },
+  ): Function1<ReadonlyArrayLike<T>, ContainerOf<C, T>> =>
   values => {
     const valuesLength = getLength(values);
-    const { start: startOption, count: countOption } = options ?? {};
+    const { start: startOption, count: countOption, ...tail } = options ?? {};
 
     const { start, count } = (() => {
       if (isSome(countOption) && countOption >= 0) {
@@ -55,7 +54,7 @@ const ReadonlyArray_toContainer =
       }
     })();
 
-    return factory(values, start, count, options);
+    return factory(values, start, count, tail as O);
   };
 
 export default ReadonlyArray_toContainer;

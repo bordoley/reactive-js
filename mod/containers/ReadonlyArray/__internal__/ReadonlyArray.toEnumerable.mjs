@@ -9,12 +9,12 @@ import Disposable_isDisposed from '../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from '../../../util/Disposable/__internal__/Disposable.mixin.mjs';
 import ReadonlyArray_toContainer from './ReadonlyArray.toContainer.mjs';
 
-const ReadonlyArray_toEnumerable = /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+const createReadonlyArrayEnumerator = /*@__PURE__*/ (() => {
     const ReadonlyArrayEnumerator_array = Symbol("ReadonlyArrayEnumerator_array");
     const ReadonlyArrayEnumerator_count = Symbol("ReadonlyArrayEnumerator_count");
     const ReadonlyArrayEnumerator_index = Symbol("ReadonlyArrayEnumerator_index");
-    const createReadonlyArrayEnumerator = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function ReadonlyArrayEnumerator(instance, array, start, count) {
+    const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
+    return createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function ReadonlyArrayEnumerator(instance, array, start, count) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         instance[ReadonlyArrayEnumerator_array] = array;
@@ -45,7 +45,7 @@ const ReadonlyArray_toEnumerable = /*@__PURE__*/ (() => {
             }
         },
     }));
-    return ReadonlyArray_toContainer((array, start, count) => Enumerable_create(() => createReadonlyArrayEnumerator(array, start, count)));
 })();
+const ReadonlyArray_toEnumerable = /*@__PURE__*/ ReadonlyArray_toContainer((array, start, count) => Enumerable_create(() => createReadonlyArrayEnumerator(array, start, count)));
 
 export { ReadonlyArray_toEnumerable as default };

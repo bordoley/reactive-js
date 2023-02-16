@@ -10,7 +10,9 @@ import { DisposableLike_isDisposed } from '../../../util.mjs';
 import Disposable_dispose from '../../../util/Disposable/__internal__/Disposable.dispose.mjs';
 import ReadonlyArray_toContainer from './ReadonlyArray.toContainer.mjs';
 
-const ReadonlyArray_toRunnableObservable = /*@__PURE__*/ (() => ReadonlyArray_toContainer((values, startIndex, count, options) => {
+const ReadonlyArray_toRunnableObservable = 
+/*@__PURE__*/
+ReadonlyArray_toContainer((values, startIndex, count, options) => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
         let index = startIndex, cnt = count;
@@ -37,6 +39,6 @@ const ReadonlyArray_toRunnableObservable = /*@__PURE__*/ (() => ReadonlyArray_to
     return hasDelay(options)
         ? RunnableObservable_create(onSink)
         : EnumerableObservable_create(onSink);
-}))();
+});
 
 export { ReadonlyArray_toRunnableObservable as default };

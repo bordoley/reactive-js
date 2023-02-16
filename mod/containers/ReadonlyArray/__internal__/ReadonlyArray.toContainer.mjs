@@ -3,7 +3,7 @@ import { getLength, isSome, max, min } from '../../../functions.mjs';
 
 const ReadonlyArray_toContainer = (factory) => (options) => values => {
     const valuesLength = getLength(values);
-    const { start: startOption, count: countOption } = options !== null && options !== void 0 ? options : {};
+    const { start: startOption, count: countOption, ...tail } = options !== null && options !== void 0 ? options : {};
     const { start, count } = (() => {
         if (isSome(countOption) && countOption >= 0) {
             const startOrDefault = startOption !== null && startOption !== void 0 ? startOption : 0;
@@ -30,7 +30,7 @@ const ReadonlyArray_toContainer = (factory) => (options) => values => {
             return { start, count };
         }
     })();
-    return factory(values, start, count, options);
+    return factory(values, start, count, tail);
 };
 
 export { ReadonlyArray_toContainer as default };

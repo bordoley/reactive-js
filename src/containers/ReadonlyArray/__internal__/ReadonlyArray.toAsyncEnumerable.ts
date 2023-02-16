@@ -1,6 +1,6 @@
 import { ReadonlyArrayLike } from "../../../containers";
 import { abs, decrement, increment, pipe, returns } from "../../../functions";
-import { ToAsyncEnumerable } from "../../../ix";
+import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../ix";
 import AsyncEnumerable_create from "../../../ix/AsyncEnumerable/__internal__/AsyncEnumerable.create";
 import { ObservableLike } from "../../../rx";
 import Observable_concatAll from "../../../rx/Observable/__internal__/Observable.concatAll";
@@ -19,9 +19,24 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
     readonly start?: number;
     readonly count?: number;
   }
->["toAsyncEnumerable"] = /*@__PURE__*/ (<T>() =>
-  ReadonlyArray_toContainer(
-    (array: readonly T[], start: number, count: number, options) =>
+>["toAsyncEnumerable"] =
+  /*@__PURE__*/
+  ReadonlyArray_toContainer<
+    AsyncEnumerableLike,
+    {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    }
+  >(
+    <T>(
+      array: readonly T[],
+      start: number,
+      count: number,
+      options?: {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+      },
+    ) =>
       AsyncEnumerable_create(
         count >= 0
           ? Observable_scan(increment, returns(start - 1))
@@ -33,6 +48,6 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
         ),
         Observable_takeFirst({ count: abs(count) }),
       ),
-  ))();
+  );
 
 export default ReadonlyArray_toAsyncEnumerable;
