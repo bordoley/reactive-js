@@ -1,4 +1,4 @@
-/// <reference types="./Observable.toFlowable.d.ts" />
+/// <reference types="./RunnableObservable.toFlowable.d.ts" />
 import { pipe } from '../../../functions.mjs';
 import Scheduler_toPausableScheduler from '../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.mjs';
 import { FlowMode_resume, FlowMode_pause } from '../../../streaming.mjs';
@@ -8,17 +8,17 @@ import Disposable_bindTo from '../../../util/Disposable/__internal__/Disposable.
 import Disposable_toObservable from '../../../util/Disposable/__internal__/Disposable.toObservable.mjs';
 import Pauseable_pause from '../../../util/Pauseable/__internal__/Pauseable.pause.mjs';
 import Pauseable_resume from '../../../util/Pauseable/__internal__/Pauseable.resume.mjs';
+import Observable_create from '../../Observable/__internal__/Observable.create.mjs';
+import Observable_empty from '../../Observable/__internal__/Observable.empty.mjs';
+import Observable_forEach from '../../Observable/__internal__/Observable.forEach.mjs';
+import Observable_isRunnable from '../../Observable/__internal__/Observable.isRunnable.mjs';
+import Observable_subscribe from '../../Observable/__internal__/Observable.subscribe.mjs';
+import Observable_subscribeOn from '../../Observable/__internal__/Observable.subscribeOn.mjs';
+import Observable_takeUntil from '../../Observable/__internal__/Observable.takeUntil.mjs';
 import Observer_getScheduler from '../../Observer/__internal__/Observer.getScheduler.mjs';
 import Sink_sourceFrom from '../../Sink/__internal__/Sink.sourceFrom.mjs';
-import Observable_create from './Observable.create.mjs';
-import Observable_empty from './Observable.empty.mjs';
-import Observable_forEach from './Observable.forEach.mjs';
-import Observable_isRunnable from './Observable.isRunnable.mjs';
-import Observable_subscribe from './Observable.subscribe.mjs';
-import Observable_subscribeOn from './Observable.subscribeOn.mjs';
-import Observable_takeUntil from './Observable.takeUntil.mjs';
 
-const Observable_toFlowable = () => observable => Observable_isRunnable(observable)
+const RunnableObservable_toFlowable = () => observable => Observable_isRunnable(observable)
     ? Flowable_createLifted((modeObs) => Observable_create(observer => {
         const pausableScheduler = pipe(observer, Observer_getScheduler, Scheduler_toPausableScheduler);
         pipe(observer, Sink_sourceFrom(pipe(observable, Observable_subscribeOn(pausableScheduler), Observable_takeUntil(pipe(pausableScheduler, Disposable_toObservable())))), Disposable_add(pipe(modeObs, Observable_forEach(mode => {
@@ -34,4 +34,4 @@ const Observable_toFlowable = () => observable => Observable_isRunnable(observab
     }))
     : Flowable_createLifted(_ => Observable_empty());
 
-export { Observable_toFlowable as default };
+export { RunnableObservable_toFlowable as default };

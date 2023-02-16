@@ -1,6 +1,6 @@
 import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, Throttle, AsyncReducer, ThrottleMode } from "../rx.js";
 import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, EverySatisfy, ForkZip, ForkConcat, PromiseableLike, Generate, Keep, Map, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty } from "../containers.js";
-import { FlowableLike, ToFlowable } from "../streaming.js";
+import { FlowableLike } from "../streaming.js";
 import { Factory, Function1, SideEffect1, Equality, Predicate, Function2, Reducer, Updater } from "../functions.js";
 import { SchedulerLike } from "../scheduling.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
@@ -115,7 +115,6 @@ declare const timeout: {
     <T>(duration: number): ContainerOperator<ObservableLike<unknown>, T, T>;
     <T_1>(duration: ObservableLike<unknown>): ContainerOperator<ObservableLike<unknown>, T_1, T_1>;
 };
-declare const toFlowable: ToFlowable<ObservableLike>["toFlowable"];
 declare const toPromise: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<T>;
 declare const withLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike<unknown>, TA, T>;
 declare const zip: {
@@ -398,9 +397,8 @@ declare const Observable: {
         <T_36>(duration: number): ContainerOperator<ObservableLike<unknown>, T_36, T_36>;
         <T_37>(duration: ObservableLike<unknown>): ContainerOperator<ObservableLike<unknown>, T_37, T_37>;
     };
-    toFlowable: <T_38>(options?: undefined) => Function1<ObservableLike<T_38>, FlowableLike<T_38>>;
-    toPromise: <T_39>(scheduler: SchedulerLike) => (observable: ObservableLike<T_39>) => PromiseLike<T_39>;
-    withLatestFrom: <TA_9, TB_9, T_40>(other: ObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_40>) => ContainerOperator<ObservableLike<unknown>, TA_9, T_40>;
+    toPromise: <T_38>(scheduler: SchedulerLike) => (observable: ObservableLike<T_38>) => PromiseLike<T_38>;
+    withLatestFrom: <TA_9, TB_9, T_39>(other: ObservableLike<TB_9>, selector: Function2<TA_9, TB_9, T_39>) => ContainerOperator<ObservableLike<unknown>, TA_9, T_39>;
     zip: {
         <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<readonly [
             TA,
@@ -525,6 +523,6 @@ declare const Observable: {
             TI
         ]>;
     };
-    zipWithLatestFrom: <TA_10, TB_10, T_41>(other: ObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_41>) => ContainerOperator<ObservableLike<unknown>, TA_10, T_41>;
+    zipWithLatestFrom: <TA_10, TB_10, T_40>(other: ObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_40>) => ContainerOperator<ObservableLike<unknown>, TA_10, T_40>;
 };
-export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromFlowable, fromPromise, fromReadonlyArray, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromFlowable, fromPromise, fromReadonlyArray, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

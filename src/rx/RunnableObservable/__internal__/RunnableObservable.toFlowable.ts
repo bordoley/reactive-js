@@ -1,5 +1,5 @@
 import { pipe } from "../../../functions";
-import { ObservableLike } from "../../../rx";
+import { ObservableLike, RunnableObservableLike } from "../../../rx";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler";
 import {
   FlowMode,
@@ -13,17 +13,17 @@ import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.
 import Disposable_toObservable from "../../../util/Disposable/__internal__/Disposable.toObservable";
 import Pauseable_pause from "../../../util/Pauseable/__internal__/Pauseable.pause";
 import Pauseable_resume from "../../../util/Pauseable/__internal__/Pauseable.resume";
+import Observable_create from "../../Observable/__internal__/Observable.create";
+import Observable_empty from "../../Observable/__internal__/Observable.empty";
+import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
+import Observable_isRunnable from "../../Observable/__internal__/Observable.isRunnable";
+import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe";
+import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn";
+import Observable_takeUntil from "../../Observable/__internal__/Observable.takeUntil";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
 import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
-import Observable_create from "./Observable.create";
-import Observable_empty from "./Observable.empty";
-import Observable_forEach from "./Observable.forEach";
-import Observable_isRunnable from "./Observable.isRunnable";
-import Observable_subscribe from "./Observable.subscribe";
-import Observable_subscribeOn from "./Observable.subscribeOn";
-import Observable_takeUntil from "./Observable.takeUntil";
 
-const Observable_toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
+const RunnableObservable_toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
   () => observable =>
     Observable_isRunnable(observable)
       ? Flowable_createLifted((modeObs: ObservableLike<FlowMode>) =>
@@ -68,4 +68,4 @@ const Observable_toFlowable: ToFlowable<ObservableLike>["toFlowable"] =
         )
       : Flowable_createLifted(_ => Observable_empty());
 
-export default Observable_toFlowable;
+export default RunnableObservable_toFlowable;

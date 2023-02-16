@@ -30,8 +30,8 @@ import Observable_takeFirst from './Observable/__internal__/Observable.takeFirst
 import Observable_takeLast from './Observable/__internal__/Observable.takeLast.mjs';
 import Observable_takeWhile from './Observable/__internal__/Observable.takeWhile.mjs';
 import Observable_throwIfEmpty from './Observable/__internal__/Observable.throwIfEmpty.mjs';
-import Observable_toFlowable from './Observable/__internal__/Observable.toFlowable.mjs';
 import Observable_zip from './Observable/__internal__/Observable.zip.mjs';
+import RunnableObservable_toFlowable from './RunnableObservable/__internal__/RunnableObservable.toFlowable.mjs';
 import RunnableObservable_toReadonlyArray from './RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.mjs';
 import RunnableObservable_toRunnable from './RunnableObservable/__internal__/RunnableObservable.toRunnable.mjs';
 
@@ -71,7 +71,7 @@ const takeLast = Observable_takeLast;
 const takeWhile = Observable_takeWhile;
 const throwIfEmpty = Observable_throwIfEmpty;
 const toEnumerable = EnumerableObservable_toEnumerable;
-const toFlowable = Observable_toFlowable;
+const toFlowable = RunnableObservable_toFlowable;
 const toReadonlyArray = RunnableObservable_toReadonlyArray;
 const toRunnable = RunnableObservable_toRunnable;
 const toRunnableObservable = o => compose(toEnumerable(), Enumerable_toRunnableObservable(o));

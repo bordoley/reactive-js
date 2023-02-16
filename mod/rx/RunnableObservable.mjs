@@ -25,7 +25,6 @@ import Observable_takeUntil from './Observable/__internal__/Observable.takeUntil
 import Observable_takeWhile from './Observable/__internal__/Observable.takeWhile.mjs';
 import Observable_throwIfEmpty from './Observable/__internal__/Observable.throwIfEmpty.mjs';
 import Observable_timeout from './Observable/__internal__/Observable.timeout.mjs';
-import Observable_toFlowable from './Observable/__internal__/Observable.toFlowable.mjs';
 import Observable_withLatestFrom from './Observable/__internal__/Observable.withLatestFrom.mjs';
 import Observable_zip from './Observable/__internal__/Observable.zip.mjs';
 import Observable_zipLatest from './Observable/__internal__/Observable.zipLatest.mjs';
@@ -35,6 +34,7 @@ import RunnableObservable_defer from './RunnableObservable/__internal__/Runnable
 import RunnableObservable_mergeAll from './RunnableObservable/__internal__/RunnableObservable.mergeAll.mjs';
 import RunnableObservable_scanAsync from './RunnableObservable/__internal__/RunnableObservable.scanAsync.mjs';
 import RunnableObservable_switchAll from './RunnableObservable/__internal__/RunnableObservable.switchAll.mjs';
+import RunnableObservable_toFlowable from './RunnableObservable/__internal__/RunnableObservable.toFlowable.mjs';
 import RunnableObservable_toReadonlyArray from './RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.mjs';
 import RunnableObservable_toRunnable from './RunnableObservable/__internal__/RunnableObservable.toRunnable.mjs';
 import RunnableObservable_throttle from './RunnableObservable/__internal__/RunnableObservableLike.throttle.mjs';
@@ -78,7 +78,7 @@ const takeWhile = Observable_takeWhile;
 const throttle = RunnableObservable_throttle;
 const throwIfEmpty = Observable_throwIfEmpty;
 const timeout = Observable_timeout;
-const toFlowable = Observable_toFlowable;
+const toFlowable = RunnableObservable_toFlowable;
 const toReadonlyArray = RunnableObservable_toReadonlyArray;
 const toRunnable = RunnableObservable_toRunnable;
 const withLatestFrom = Observable_withLatestFrom;

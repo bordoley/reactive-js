@@ -17,7 +17,15 @@ import {
   ThrottleMode_interval,
   ThrottleMode_last,
 } from "../../rx";
+import Observable from "../../rx/Observable";
 import RunnableObservable from "../../rx/RunnableObservable";
+import Continuation from "../../scheduling/Continuation";
+import Dispatcher from "../../scheduling/Dispatcher";
+import Scheduler from "../../scheduling/Scheduler";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
+import { FlowMode_pause, FlowMode_resume } from "../../streaming";
+import Streamable from "../../streaming/Streamable";
+import Disposable from "../../util/Disposable";
 import {
   bufferTests,
   catchErrorTests,
@@ -53,8 +61,12 @@ import {
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
+  expectToHaveBeenCalledTimes,
   expectToThrow,
   expectToThrowError,
+  expectTrue,
+  mockFn,
   test,
   testModule,
 } from "../testing";
@@ -298,6 +310,70 @@ const timeoutTests = describe(
   ),
 );
 
+// FIXME Move these tests into container?
+const toFlowableTests = describe(
+  "toFlowable",
+  test("flow a generating source", () => {
+    const scheduler = VirtualTimeScheduler.create();
+
+    const generateStream = pipe(
+      RunnableObservable.generate(increment, returns(-1), {
+        delay: 1,
+        delayStart: true,
+      }),
+      RunnableObservable.toFlowable(),
+      Streamable.stream(scheduler),
+    );
+
+    pipe(generateStream, Dispatcher.dispatch(FlowMode_resume));
+
+    pipe(
+      scheduler,
+      Scheduler.schedule(
+        pipeLazy(FlowMode_pause, Dispatcher.dispatchTo(generateStream)),
+        {
+          delay: 2,
+        },
+      ),
+    );
+
+    pipe(
+      scheduler,
+      Scheduler.schedule(
+        pipeLazy(FlowMode_resume, Dispatcher.dispatchTo(generateStream)),
+        {
+          delay: 4,
+        },
+      ),
+    );
+
+    pipe(
+      scheduler,
+      Scheduler.schedule(pipeLazy(generateStream, Disposable.dispose()), {
+        delay: 5,
+      }),
+    );
+
+    const f = mockFn();
+    const subscription = pipe(
+      generateStream,
+      Observable.forEach<number>(x => {
+        f(Scheduler.getCurrentTime(scheduler), x);
+      }),
+      Observable.subscribe(scheduler),
+    );
+
+    Continuation.run(scheduler);
+
+    pipe(f, expectToHaveBeenCalledTimes(3));
+    pipe(f.calls[0][1], expectEquals(0));
+    pipe(f.calls[1][1], expectEquals(1));
+    pipe(f.calls[2][1], expectEquals(2));
+
+    pipe(subscription, Disposable.isDisposed, expectTrue);
+  }),
+);
+
 const withLatestFromTest = describe(
   "withLatestFrom",
   test(
@@ -524,6 +600,7 @@ testModule(
   throttleTests,
   throwIfEmptyTests(RunnableObservable),
   timeoutTests,
+  toFlowableTests,
   withLatestFromTest,
   zipWithTests<RunnableObservableLike>(RunnableObservable),
   zipTests,

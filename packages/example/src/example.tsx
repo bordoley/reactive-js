@@ -9,6 +9,7 @@ import {
   __stream,
 } from "@reactive-js/core/rx/Observable/effects";
 import * as Observable from "@reactive-js/core/rx/Observable";
+import * as RunnableObservable from "@reactive-js/core/rx/RunnableObservable";
 import {
   FlowMode,
   FlowMode_pause,
@@ -46,8 +47,8 @@ const historyStream = pipe(
 );
 
 const counterFlowable = pipe(
-  Observable.generate(increment, returns(0), { delay: 100 }),
-  Observable.toFlowable(),
+  RunnableObservable.generate(increment, returns(0), { delay: 100 }),
+  RunnableObservable.toFlowable(),
 );
 
 const createActions = (
