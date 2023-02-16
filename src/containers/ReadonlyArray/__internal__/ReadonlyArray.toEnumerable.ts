@@ -23,15 +23,11 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
 
-const ReadonlyArray_toEnumerable: ToEnumerable<
-  ReadonlyArrayLike,
-  {
-    readonly start: number;
-    readonly count: number;
-  }
->["toEnumerable"] = /*@__PURE__*/ (<T>() => {
-  const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
-
+const createReadonlyArrayEnumerator: <T>(
+  array: readonly T[],
+  start: number,
+  count: number,
+) => EnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
   const ReadonlyArrayEnumerator_array = Symbol("ReadonlyArrayEnumerator_array");
   const ReadonlyArrayEnumerator_count = Symbol("ReadonlyArrayEnumerator_count");
   const ReadonlyArrayEnumerator_index = Symbol("ReadonlyArrayEnumerator_index");
@@ -42,7 +38,9 @@ const ReadonlyArray_toEnumerable: ToEnumerable<
     [ReadonlyArrayEnumerator_index]: number;
   };
 
-  const createReadonlyArrayEnumerator = createInstanceFactory(
+  const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
+
+  return createInstanceFactory(
     mix(
       include(Disposable_mixin, typedMutableEnumeratorMixin),
       function ReadonlyArrayEnumerator(
@@ -94,13 +92,17 @@ const ReadonlyArray_toEnumerable: ToEnumerable<
       },
     ),
   );
-
-  return ReadonlyArray_toContainer<EnumerableLike<T>, T>(
-    (array: readonly T[], start: number, count: number) =>
-      Enumerable_create(() =>
-        createReadonlyArrayEnumerator(array, start, count),
-      ),
-  );
 })();
+
+const ReadonlyArray_toEnumerable: ToEnumerable<
+  ReadonlyArrayLike,
+  {
+    readonly start: number;
+    readonly count: number;
+  }
+>["toEnumerable"] = /*@__PURE__*/ ReadonlyArray_toContainer<EnumerableLike>(
+  <T>(array: readonly T[], start: number, count: number) =>
+    Enumerable_create(() => createReadonlyArrayEnumerator(array, start, count)),
+);
 
 export default ReadonlyArray_toEnumerable;

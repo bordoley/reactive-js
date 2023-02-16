@@ -1,10 +1,7 @@
-import { ReadonlyArrayLike } from "../../../containers.js";
+import { ContainerLike, ContainerOf, ReadonlyArrayLike } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
-declare const ReadonlyArray_toContainer: <C, T, O extends {
+declare const ReadonlyArray_toContainer: <C extends ContainerLike, O extends unknown = unknown>(factory: <T>(values: readonly T[], start: number, count: number, options?: O | undefined) => ContainerOf<C, T>) => <T_1>(options?: (O & {
     readonly start?: number | undefined;
     readonly count?: number | undefined;
-} = {
-    readonly start?: number | undefined;
-    readonly count?: number | undefined;
-}>(factory: (values: readonly T[], start: number, count: number, options?: O | undefined) => C) => (options?: O | undefined) => Function1<ReadonlyArrayLike<T>, C>;
+}) | undefined) => Function1<ReadonlyArrayLike<T_1>, ContainerOf<C, T_1>>;
 export { ReadonlyArray_toContainer as default };
