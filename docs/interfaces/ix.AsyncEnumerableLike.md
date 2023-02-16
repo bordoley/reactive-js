@@ -18,10 +18,14 @@
 
   ↳ **`AsyncEnumerableLike`**
 
+  ↳↳ [`RunnableAsyncEnumerableLike`](ix.RunnableAsyncEnumerableLike.md)
+
 ## Table of contents
 
 ### Properties
 
+- [[AsyncEnumerableLike\_isEnumerable]](ix.AsyncEnumerableLike.md#[asyncenumerablelike_isenumerable])
+- [[AsyncEnumerableLike\_isRunnable]](ix.AsyncEnumerableLike.md#[asyncenumerablelike_isrunnable])
 - [[ContainerLike\_T]](ix.AsyncEnumerableLike.md#[containerlike_t])
 - [[ContainerLike\_type]](ix.AsyncEnumerableLike.md#[containerlike_type])
 - [[StatefulContainerLike\_state]](ix.AsyncEnumerableLike.md#[statefulcontainerlike_state])
@@ -32,6 +36,18 @@
 - [[StreamableLike\_stream]](ix.AsyncEnumerableLike.md#[streamablelike_stream])
 
 ## Properties
+
+### [AsyncEnumerableLike\_isEnumerable]
+
+• `Readonly` **[AsyncEnumerableLike\_isEnumerable]**: `boolean`
+
+___
+
+### [AsyncEnumerableLike\_isRunnable]
+
+• `Readonly` **[AsyncEnumerableLike\_isRunnable]**: `boolean`
+
+___
 
 ### [ContainerLike\_T]
 

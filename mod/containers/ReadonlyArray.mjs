@@ -1,5 +1,4 @@
 /// <reference types="./ReadonlyArray.d.ts" />
-import AsyncEnumerable_toReadonlyArray from '../ix/AsyncEnumerable/__internal__/AsyncEnumerable.toReadonlyArray.mjs';
 import Enumerable_toReadonlyArray from '../ix/Enumerable/__internal__/Enumerable.toReadonlyArray.mjs';
 import RunnableObservable_toReadonlyArray from '../rx/RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.mjs';
 import ReadonlyArray_empty from './ReadonlyArray/__internal__/ReadonlyArray.empty.mjs';
@@ -18,7 +17,6 @@ import Sequence_toReadonlyArray from './Sequence/__internal__/Sequence.toReadonl
 const empty = ReadonlyArray_empty;
 const every = ReadonlyArray_every;
 const forEach = ReadonlyArray_forEach;
-const fromAsyncEnumerable = AsyncEnumerable_toReadonlyArray;
 const fromEnumerable = Enumerable_toReadonlyArray;
 const fromEnumerableObservable = RunnableObservable_toReadonlyArray;
 const fromReadonlyArray = ReadonlyArray_toReadonlyArray;
@@ -39,7 +37,6 @@ const ReadonlyArray = {
     empty,
     every,
     forEach,
-    fromAsyncEnumerable,
     fromEnumerable,
     fromEnumerableObservable,
     fromReadonlyArray,
@@ -56,4 +53,4 @@ const ReadonlyArray = {
     toSequence,
 };
 
-export { ReadonlyArray as default, empty, every, forEach, fromAsyncEnumerable, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };
+export { ReadonlyArray as default, empty, every, forEach, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };

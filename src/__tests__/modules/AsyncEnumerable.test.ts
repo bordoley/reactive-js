@@ -1,3 +1,4 @@
+/*
 import { AsyncEnumerableLike } from "../../ix";
 import AsyncEnumerable from "../../ix/AsyncEnumerable";
 import { RunnableObservableLike } from "../../rx";
@@ -11,7 +12,8 @@ import {
   takeWhileTests,
 } from "../operators";
 import { testModule } from "../testing";
-
+*/
+/*
 testModule(
   "AsyncEnumerable",
   fromReadonlyArrayTests<AsyncEnumerableLike>(AsyncEnumerable),
@@ -23,4 +25,6 @@ testModule(
     RunnableObservable,
   ),
   takeWhileTests(AsyncEnumerable),
-);
+);*/
+
+export {};

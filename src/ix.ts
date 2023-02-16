@@ -56,6 +56,16 @@ export interface AsyncEnumeratorLike<T = unknown>
   extends SourceLike,
     StreamLike<void, T> {}
 
+/**  @ignore */
+export const AsyncEnumerableLike_isEnumerable = Symbol(
+  "AsyncEnumerableLike_isEnumerable",
+);
+
+/**  @ignore */
+export const AsyncEnumerableLike_isRunnable = Symbol(
+  "AsyncEnumerableLike_isRunnable",
+);
+
 export interface AsyncEnumerableLike<T = unknown>
   extends StreamableLike<void, T, AsyncEnumeratorLike<T>>,
     InteractiveContainerLike<AsyncEnumeratorLike<T>, SchedulerLike> {
@@ -65,6 +75,26 @@ export interface AsyncEnumerableLike<T = unknown>
   readonly [StatefulContainerLike_state]?: AsyncEnumeratorLike<
     this[typeof ContainerLike_T]
   >;
+  readonly [AsyncEnumerableLike_isEnumerable]: boolean;
+  readonly [AsyncEnumerableLike_isRunnable]: boolean;
+}
+
+export interface RunnableAsyncEnumerableLike<T = unknown>
+  extends AsyncEnumerableLike<T> {
+  readonly [ContainerLike_type]?: RunnableAsyncEnumerableLike<
+    this[typeof ContainerLike_T]
+  >;
+
+  readonly [AsyncEnumerableLike_isRunnable]: true;
+}
+
+export interface EnumerableAsyncEnumerableLike<T = unknown>
+  extends RunnableAsyncEnumerableLike<T> {
+  readonly [ContainerLike_type]?: EnumerableAsyncEnumerableLike<
+    this[typeof ContainerLike_T]
+  >;
+
+  readonly [AsyncEnumerableLike_isEnumerable]: true;
 }
 
 export type FromAsyncEnumerable<

@@ -8,9 +8,11 @@
 
 - [AsyncEnumerableLike](../interfaces/ix.AsyncEnumerableLike.md)
 - [AsyncEnumeratorLike](../interfaces/ix.AsyncEnumeratorLike.md)
+- [EnumerableAsyncEnumerableLike](../interfaces/ix.EnumerableAsyncEnumerableLike.md)
 - [EnumerableLike](../interfaces/ix.EnumerableLike.md)
 - [EnumeratorLike](../interfaces/ix.EnumeratorLike.md)
 - [InteractiveContainerLike](../interfaces/ix.InteractiveContainerLike.md)
+- [RunnableAsyncEnumerableLike](../interfaces/ix.RunnableAsyncEnumerableLike.md)
 - [SourceLike](../interfaces/ix.SourceLike.md)
 
 ### Type Aliases

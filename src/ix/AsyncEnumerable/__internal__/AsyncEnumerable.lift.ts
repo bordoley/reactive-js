@@ -2,6 +2,8 @@ import { ContainerOperator } from "../../../containers";
 import { Function1, newInstance, pipe, pipeUnsafe } from "../../../functions";
 import {
   AsyncEnumerableLike,
+  AsyncEnumerableLike_isEnumerable,
+  AsyncEnumerableLike_isRunnable,
   AsyncEnumeratorLike,
   InteractiveContainerLike_interact,
 } from "../../../ix";
@@ -20,6 +22,9 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
     AsyncEnumeratorLike<any>,
     AsyncEnumeratorLike<any>
   >[];
+
+  readonly [AsyncEnumerableLike_isEnumerable] = false;
+  readonly [AsyncEnumerableLike_isRunnable] = false;
 
   constructor(
     src: AsyncEnumerableLike<any>,
