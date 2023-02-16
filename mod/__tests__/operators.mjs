@@ -4,6 +4,7 @@ import ReadonlyArray from '../containers/ReadonlyArray.mjs';
 import { pipeLazy, arrayEquality, pipe, returns, alwaysFalse, alwaysTrue, none, increment, sum } from '../functions.mjs';
 import Enumerable from '../ix/Enumerable.mjs';
 import RunnableObservable from '../rx/RunnableObservable.mjs';
+import { __now } from '../scheduling/Continuation/effects.mjs';
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError } from './testing.mjs';
 
 const bufferTests = (m) => createDescribe("buffer", createTest("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ maxBufferSize: 3 }), m.toReadonlyArray(), expectArrayEquals([
@@ -149,9 +150,7 @@ const throwIfEmptyTests = (m) => createDescribe("throwIfEmpty", createTest("when
     }), m.toReadonlyArray()), expectToThrowError(error));
 }), createTest("when source is not empty", pipeLazy([1], m.fromReadonlyArray(), m.throwIfEmpty(() => undefined), m.toReadonlyArray(), expectArrayEquals([1]))));
 const toEnumerableTests = (m) => createDescribe("toEnumerable", createTest("with an enumerable observable", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray(), m.toEnumerable(), Enumerable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))));
-const toRunnableObservableTests = (m) => createDescribe("toRunnableObservable", createTest("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnableObservable(), RunnableObservable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), createTest("with delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnableObservable({ delay: 1 }), 
-// FIXME: Ideally this test would validate the current time in the test
-RunnableObservable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))));
+const toRunnableObservableTests = (m) => createDescribe("toRunnableObservable", createTest("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnableObservable(), RunnableObservable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), createTest("with delay", pipeLazy([9, 9, 9, 9], m.fromReadonlyArray(), m.toRunnableObservable({ delay: 1 }), RunnableObservable.map(_ => __now()), RunnableObservable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3]))));
 const zipTests = (m) => createDescribe("zip", createTest("when all inputs are the same length", pipeLazy(m.zip(pipe([1, 2, 3, 4, 5], m.fromReadonlyArray()), pipe([5, 4, 3, 2, 1], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([
     [1, 5],
     [2, 4],

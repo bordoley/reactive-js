@@ -1,6 +1,7 @@
 /// <reference types="./EnumerableObservable.d.ts" />
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
-import { identity } from '../functions.mjs';
+import { compose } from '../functions.mjs';
+import Enumerable_toRunnableObservable from '../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.mjs';
 import EnumerableObservable_catchError from './EnumerableObservable/__internal__/EnumerableObservable.catchError.mjs';
 import EnumerableObservable_defer from './EnumerableObservable/__internal__/EnumerableObservable.defer.mjs';
 import EnumerableObservable_mergeAll from './EnumerableObservable/__internal__/EnumerableObservable.mergeAll.mjs';
@@ -73,7 +74,7 @@ const toEnumerable = EnumerableObservable_toEnumerable;
 const toFlowable = Observable_toFlowable;
 const toReadonlyArray = RunnableObservable_toReadonlyArray;
 const toRunnable = RunnableObservable_toRunnable;
-const toRunnableObservable = () => identity;
+const toRunnableObservable = o => compose(toEnumerable(), Enumerable_toRunnableObservable(o));
 const zip = Observable_zip;
 /** @ignore */
 const EnumerableObservable = {

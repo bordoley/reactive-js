@@ -6,9 +6,20 @@
 
 ### Functions
 
+- [\_\_now](scheduling_Continuation_effects.md#__now)
 - [\_\_yield](scheduling_Continuation_effects.md#__yield)
 
 ## Functions
+
+### \_\_now
+
+▸ **__now**(): `number`
+
+#### Returns
+
+`number`
+
+___
 
 ### \_\_yield
 
