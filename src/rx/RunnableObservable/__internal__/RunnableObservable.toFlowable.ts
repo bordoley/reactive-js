@@ -1,5 +1,7 @@
 import { pipe } from "../../../functions";
 import { ObservableLike, RunnableObservableLike } from "../../../rx";
+import Pauseable_pause from "../../../scheduling/Pauseable/__internal__/Pauseable.pause";
+import Pauseable_resume from "../../../scheduling/Pauseable/__internal__/Pauseable.resume";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler";
 import {
   FlowMode,
@@ -11,8 +13,6 @@ import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flow
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo";
 import Disposable_toObservable from "../../../util/Disposable/__internal__/Disposable.toObservable";
-import Pauseable_pause from "../../../util/Pauseable/__internal__/Pauseable.pause";
-import Pauseable_resume from "../../../util/Pauseable/__internal__/Pauseable.resume";
 import Observable_create from "../../Observable/__internal__/Observable.create";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe";

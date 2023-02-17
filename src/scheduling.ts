@@ -1,4 +1,15 @@
-import { DisposableLike, PauseableLike } from "./util";
+import { DisposableLike } from "./util";
+
+/** @ignore */
+export const PauseableLike_pause = Symbol("PausableLike_pause");
+
+/** @ignore */
+export const PauseableLike_resume = Symbol("PausableLike_resume");
+
+export interface PauseableLike {
+  [PauseableLike_pause](): void;
+  [PauseableLike_resume](): void;
+}
 
 /** @ignore */
 export const ContinuationLike_run = Symbol("ContinuationLike_run");

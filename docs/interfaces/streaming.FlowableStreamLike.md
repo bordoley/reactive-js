@@ -16,7 +16,7 @@ Represents a duplex stream
 
 - [`StreamLike`](streaming.StreamLike.md)<[`FlowMode`](../modules/streaming.md#flowmode), `T`\>
 
-- [`PauseableLike`](util.PauseableLike.md)
+- [`PauseableLike`](scheduling.PauseableLike.md)
 
   ↳ **`FlowableStreamLike`**
 
@@ -39,7 +39,7 @@ Represents a duplex stream
 
 #### Inherited from
 
-[PauseableLike](util.PauseableLike.md).[[PauseableLike_pause]](util.PauseableLike.md#[pauseablelike_pause])
+[PauseableLike](scheduling.PauseableLike.md).[[PauseableLike_pause]](scheduling.PauseableLike.md#[pauseablelike_pause])
 
 ___
 
@@ -53,4 +53,4 @@ ___
 
 #### Inherited from
 
-[PauseableLike](util.PauseableLike.md).[[PauseableLike_resume]](util.PauseableLike.md#[pauseablelike_resume])
+[PauseableLike](scheduling.PauseableLike.md).[[PauseableLike_resume]](scheduling.PauseableLike.md#[pauseablelike_resume])

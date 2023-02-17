@@ -34,12 +34,4 @@ interface DisposableLike {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
-/** @ignore */
-declare const PauseableLike_pause: unique symbol;
-/** @ignore */
-declare const PauseableLike_resume: unique symbol;
-interface PauseableLike {
-    [PauseableLike_pause](): void;
-    [PauseableLike_resume](): void;
-}
-export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown, PauseableLike, PauseableLike_pause, PauseableLike_resume };
+export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown };

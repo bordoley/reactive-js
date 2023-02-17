@@ -1,5 +1,5 @@
 /// <reference types="./Pauseable.d.ts" />
-import '../util.mjs';
+import '../scheduling.mjs';
 import Pauseable_pause from './Pauseable/__internal__/Pauseable.pause.mjs';
 import Pauseable_resume from './Pauseable/__internal__/Pauseable.resume.mjs';
 

@@ -1,6 +1,6 @@
 import { Function1, compose } from "../../../functions";
 import { PauseableSchedulerLike, SchedulerLike } from "../../../scheduling";
-import Pauseable_pause from "../../../util/Pauseable/__internal__/Pauseable.pause";
+import Pauseable_pause from "../../Pauseable/__internal__/Pauseable.pause";
 import { create as createQueueScheduler } from "../../__internal__/QueueScheduler";
 
 const Scheduler_toPausableScheduler: Function1<

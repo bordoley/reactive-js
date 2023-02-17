@@ -7,9 +7,5 @@ const DisposableLike_dispose = Symbol("DisposableLike_dispose");
 const DisposableLike_error = Symbol("DisposableLike_error");
 /** @ignore */
 const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
-/** @ignore */
-const PauseableLike_pause = Symbol("PausableLike_pause");
-/** @ignore */
-const PauseableLike_resume = Symbol("PausableLike_resume");
 
-export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume };
+export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed };

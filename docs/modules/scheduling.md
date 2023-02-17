@@ -8,6 +8,7 @@
 
 - [ContinuationLike](../interfaces/scheduling.ContinuationLike.md)
 - [DispatcherLike](../interfaces/scheduling.DispatcherLike.md)
+- [PauseableLike](../interfaces/scheduling.PauseableLike.md)
 - [PauseableSchedulerLike](../interfaces/scheduling.PauseableSchedulerLike.md)
 - [PrioritySchedulerLike](../interfaces/scheduling.PrioritySchedulerLike.md)
 - [SchedulerLike](../interfaces/scheduling.SchedulerLike.md)

@@ -7,8 +7,7 @@ import Enumerator_getCurrent from '../../ix/Enumerator/__internal__/Enumerator.g
 import Enumerator_hasCurrent from '../../ix/Enumerator/__internal__/Enumerator.hasCurrent.mjs';
 import Source_move from '../../ix/Source/__internal__/Source.move.mjs';
 import MutableEnumerator_mixin from '../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../scheduling.mjs';
-import { PauseableLike_pause, PauseableLike_resume } from '../../util.mjs';
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule } from '../../scheduling.mjs';
 import Disposable_addIgnoringChildErrors from '../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.mjs';
 import Disposable_disposed from '../../util/Disposable/__internal__/Disposable.disposed.mjs';
 import Disposable_isDisposed from '../../util/Disposable/__internal__/Disposable.isDisposed.mjs';

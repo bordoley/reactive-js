@@ -1,4 +1,4 @@
-import { PauseableLike_pause, PauseableLike_resume } from "../util";
+import { PauseableLike_pause, PauseableLike_resume } from "../scheduling";
 import Pauseable_pause from "./Pauseable/__internal__/Pauseable.pause";
 import Pauseable_resume from "./Pauseable/__internal__/Pauseable.resume";
 

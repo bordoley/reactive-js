@@ -1,4 +1,12 @@
-import { DisposableLike, PauseableLike } from "./util.js";
+import { DisposableLike } from "./util.js";
+/** @ignore */
+declare const PauseableLike_pause: unique symbol;
+/** @ignore */
+declare const PauseableLike_resume: unique symbol;
+interface PauseableLike {
+    [PauseableLike_pause](): void;
+    [PauseableLike_resume](): void;
+}
 /** @ignore */
 declare const ContinuationLike_run: unique symbol;
 /**
@@ -67,4 +75,4 @@ interface PrioritySchedulerLike extends DisposableLike {
 }
 interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
 }
-export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };
+export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableLike, PauseableLike_pause, PauseableLike_resume, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };

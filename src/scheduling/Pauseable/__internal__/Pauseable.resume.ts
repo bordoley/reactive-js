@@ -1,4 +1,4 @@
-import { PauseableLike_resume } from "../../../util";
+import { PauseableLike_resume } from "../../../scheduling";
 
 const Pauseable_resume = <
   TPauseable extends { [PauseableLike_resume](): void },
