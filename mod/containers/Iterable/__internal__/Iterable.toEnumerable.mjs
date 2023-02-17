@@ -1,6 +1,6 @@
 /// <reference types="./Iterable.toEnumerable.d.ts" />
 import { createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
-import { none, pipe } from '../../../functions.mjs';
+import { none, pipe, returns } from '../../../functions.mjs';
 import { SourceLike_move, EnumeratorLike_current } from '../../../ix.mjs';
 import Enumerable_create from '../../../ix/Enumerable/__internal__/Enumerable.create.mjs';
 import MutableEnumerator_mixin from '../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
@@ -30,7 +30,7 @@ const Iterable_toEnumerable =
             }
         },
     }));
-    return () => (iterable) => Enumerable_create(() => createIterableEnumerator(iterable[Symbol.iterator]()));
+    return returns((iterable) => Enumerable_create(() => createIterableEnumerator(iterable[Symbol.iterator]())));
 })();
 
 export { Iterable_toEnumerable as default };

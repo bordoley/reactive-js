@@ -1,5 +1,5 @@
 import { FromReadonlyArray, IterableLike, ToIterable } from "../containers";
-import { identity } from "../functions";
+import { identity, returns } from "../functions";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix";
 import Enumerable_toIterable from "../ix/Enumerable/__internal__/Enumerable.toIterable";
 import {
@@ -26,8 +26,8 @@ export const toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerab
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   Iterable_toEnumerable;
 
-export const toIterable: ToIterable<IterableLike>["toIterable"] = () =>
-  identity;
+export const toIterable: ToIterable<IterableLike>["toIterable"] =
+  /*@__PURE__*/ returns(identity) as ToIterable<IterableLike>["toIterable"];
 
 export const toEnumerableObservable: ToEnumerableObservable<IterableLike>["toEnumerableObservable"] =
   Iterable_toEnumerableObservable;

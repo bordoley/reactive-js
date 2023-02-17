@@ -1,11 +1,11 @@
 import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, EnumerableObservableLike, ObservableLike, RunnableLike, RunnableObservableLike } from "../rx.js";
 import { ToEnumerable, EnumerableLike } from "../ix.js";
-import { Function1, Equality, Updater, Factory, Predicate, Reducer } from "../functions.js";
-import { SequenceLike, ConcatAll, DistinctUntilChanged, ReadonlyArrayLike, Generate, Keep, Map, Pairwise, Repeat, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip } from "../containers.js";
-declare const concat: <T>(fst: SequenceLike<T>, snd: SequenceLike<T>, ...tail: readonly SequenceLike<T>[]) => SequenceLike<T>;
+import { Equality, Function1, Updater, Factory, Predicate, Reducer } from "../functions.js";
+import { Concat, SequenceLike, ConcatAll, DistinctUntilChanged, FromReadonlyArray, Generate, Keep, Map, Pairwise, Repeat, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip, ReadonlyArrayLike } from "../containers.js";
+declare const concat: Concat<SequenceLike>["concat"];
 declare const concatAll: ConcatAll<SequenceLike>["concatAll"];
 declare const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"];
-declare const fromReadonlyArray: <T>(options?: undefined) => Function1<ReadonlyArrayLike<T>, SequenceLike<T>>;
+declare const fromReadonlyArray: FromReadonlyArray<SequenceLike>["fromReadonlyArray"];
 declare const generate: Generate<SequenceLike>["generate"];
 declare const keep: Keep<SequenceLike>["keep"];
 declare const map: Map<SequenceLike>["map"];
@@ -31,7 +31,10 @@ declare const Sequence: {
     distinctUntilChanged: <T_2>(options?: {
         readonly equality?: Equality<T_2> | undefined;
     } | undefined) => ContainerOperator<SequenceLike<unknown>, T_2, T_2>;
-    fromReadonlyArray: <T_3>(options?: undefined) => Function1<ReadonlyArrayLike<T_3>, SequenceLike<T_3>>;
+    fromReadonlyArray: <T_3>(options?: {
+        readonly start?: number | undefined;
+        readonly count?: number | undefined;
+    } | undefined) => Function1<readonly T_3[], SequenceLike<T_3>>;
     generate: <T_4>(generator: Updater<T_4>, initialValue: Factory<T_4>, options?: undefined) => SequenceLike<T_4>;
     keep: <T_5>(predicate: Predicate<T_5>, options?: undefined) => ContainerOperator<SequenceLike<unknown>, T_5, T_5>;
     map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<SequenceLike<unknown>, TA, TB>;

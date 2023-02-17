@@ -111,8 +111,13 @@ export const toReadonlyArray: ToReadonlyArray<
   }
 >["toReadonlyArray"] = ReadonlyArray_toReadonlyArray;
 
-export const toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
-  ReadonlyArray_toRunnable;
+export const toRunnable: ToRunnable<
+  ReadonlyArrayLike,
+  {
+    readonly count?: number;
+    readonly start?: number;
+  }
+>["toRunnable"] = ReadonlyArray_toRunnable;
 
 export const toRunnableObservable: ToRunnableObservable<
   ReadonlyArrayLike,
@@ -124,8 +129,13 @@ export const toRunnableObservable: ToRunnableObservable<
   }
 >["toRunnableObservable"] = ReadonlyArray_toRunnableObservable;
 
-export const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
-  ReadonlyArray_toSequence;
+export const toSequence: ToSequence<
+  ReadonlyArrayLike,
+  {
+    readonly count?: number;
+    readonly start?: number;
+  }
+>["toSequence"] = ReadonlyArray_toSequence;
 
 /** @ignore */
 const ReadonlyArray = {

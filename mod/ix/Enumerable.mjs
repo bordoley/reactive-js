@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.d.ts" />
 import Iterable_toEnumerable from '../containers/Iterable/__internal__/Iterable.toEnumerable.mjs';
-import { identity } from '../functions.mjs';
+import { returns, identity } from '../functions.mjs';
 import Enumerable_buffer from './Enumerable/__internal__/Enumerable.buffer.mjs';
 import Enumerable_concat from './Enumerable/__internal__/Enumerable.concat.mjs';
 import Enumerable_concatAll from './Enumerable/__internal__/Enumerable.concatAll.mjs';
@@ -47,7 +47,8 @@ const takeFirst = Enumerable_takeFirst;
 const takeLast = Enumerable_takeLast;
 const takeWhile = Enumerable_takeWhile;
 const throwIfEmpty = Enumerable_throwIfEmpty;
-const toEnumerable = () => identity;
+const toEnumerable = 
+/*@__PURE__*/ returns(identity);
 const toEnumerableObservable = Enumerable_toEnumerableObservable;
 const toIterable = Enumerable_toIterable;
 const toObservable = Enumerable_toRunnableObservable;

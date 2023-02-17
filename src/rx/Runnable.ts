@@ -25,7 +25,14 @@ import {
   ToReadonlyArray,
 } from "../containers";
 import { identity, returns } from "../functions";
-import { RunnableLike, ToRunnable } from "../rx";
+import { FromEnumerable } from "../ix";
+import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable";
+import {
+  FromEnumerableObservable,
+  FromRunnableObservable,
+  RunnableLike,
+  ToRunnable,
+} from "../rx";
 import Runnable_buffer from "./Runnable/__internal__/Runnable.buffer";
 import Runnable_catchError from "./Runnable/__internal__/Runnable.catchError";
 import Runnable_concat from "./Runnable/__internal__/Runnable.concat";
@@ -57,6 +64,7 @@ import Runnable_takeLast from "./Runnable/__internal__/Runnable.takeLast";
 import Runnable_takeWhile from "./Runnable/__internal__/Runnable.takeWhile";
 import Runnable_throwIfEmpty from "./Runnable/__internal__/Runnable.throwIfEmpty";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray";
+import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable";
 
 export const buffer: Buffer<RunnableLike>["buffer"] = Runnable_buffer;
 
@@ -87,7 +95,16 @@ export const first = Runnable_first;
 
 export const forEach: ForEach<RunnableLike>["forEach"] = Runnable_forEach;
 
+export const fromEnumerable: FromEnumerable<RunnableLike>["fromEnumerable"] =
+  Enumerable_toRunnable;
+
+export const fromEnumerableObservable: FromEnumerableObservable<RunnableLike>["fromEnumerableObservable"] =
+  RunnableObservable_toRunnable;
+
 export const fromReadonlyArray = Runnable_fromReadonlyArray;
+
+export const fromRunnableObservable: FromRunnableObservable<RunnableLike>["fromRunnableObservable"] =
+  RunnableObservable_toRunnable;
 
 export const generate: Generate<RunnableLike>["generate"] = Runnable_generate;
 
@@ -132,7 +149,7 @@ export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
   Runnable_toReadonlyArray;
 
 export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
-  returns(identity);
+  /*@__PURE__*/ returns(identity);
 
 /** @ignore */
 const Runnable = {
@@ -148,7 +165,10 @@ const Runnable = {
   everySatisfy,
   first,
   forEach,
+  fromEnumerable,
+  fromEnumerableObservable,
   fromReadonlyArray,
+  fromRunnableObservable,
   generate,
   keep,
   last,
