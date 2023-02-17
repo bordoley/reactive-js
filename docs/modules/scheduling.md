@@ -17,8 +17,6 @@
 ### Type Aliases
 
 - [PauseableState](scheduling.md#pauseablestate)
-- [PrioritySchedulerOptions](scheduling.md#priorityscheduleroptions)
-- [SchedulerOptions](scheduling.md#scheduleroptions)
 
 ### Variables
 
@@ -30,31 +28,6 @@
 ### PauseableState
 
 Ƭ **PauseableState**: typeof [`PauseableState_running`](scheduling.md#pauseablestate_running) \| typeof [`PauseableState_paused`](scheduling.md#pauseablestate_paused)
-
-___
-
-### PrioritySchedulerOptions
-
-Ƭ **PrioritySchedulerOptions**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `delay?` | `number` |
-| `priority` | `number` |
-
-___
-
-### SchedulerOptions
-
-Ƭ **SchedulerOptions**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `delay?` | `number` |
 
 ## Variables
 

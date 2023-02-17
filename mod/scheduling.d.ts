@@ -20,9 +20,6 @@ declare const SchedulerLike_requestYield: unique symbol;
 declare const SchedulerLike_shouldYield: unique symbol;
 /** @ignore */
 declare const SchedulerLike_schedule: unique symbol;
-type SchedulerOptions = {
-    readonly delay?: number;
-};
 interface SchedulerLike extends DisposableLike {
     readonly [SchedulerLike_inContinuation]: boolean;
     readonly [SchedulerLike_now]: number;
@@ -31,7 +28,9 @@ interface SchedulerLike extends DisposableLike {
      * Request the scheduler to yield.
      */
     [SchedulerLike_requestYield](): void;
-    [SchedulerLike_schedule](continuation: ContinuationLike, options?: SchedulerOptions): void;
+    [SchedulerLike_schedule](continuation: ContinuationLike, options?: {
+        readonly delay?: number;
+    }): void;
 }
 /** @ignore */
 declare const DispatcherLike_dispatch: unique symbol;
@@ -52,10 +51,6 @@ interface PauseableLike extends DispatcherLike<Updater<PauseableState>> {
 }
 interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
 }
-type PrioritySchedulerOptions = {
-    readonly priority: number;
-    readonly delay?: number;
-};
 /**
  * A scheduler which schedules work according to it's priority.
  *
@@ -69,8 +64,11 @@ interface PrioritySchedulerLike extends DisposableLike {
      * Request the scheduler to yield.
      */
     [SchedulerLike_requestYield](): void;
-    [SchedulerLike_schedule](continuation: ContinuationLike, options: PrioritySchedulerOptions): void;
+    [SchedulerLike_schedule](continuation: ContinuationLike, options: {
+        readonly priority: number;
+        readonly delay?: number;
+    }): void;
 }
 interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
 }
-export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableLike, PauseableSchedulerLike, PauseableState, PauseableState_paused, PauseableState_running, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };
+export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableLike, PauseableSchedulerLike, PauseableState, PauseableState_paused, PauseableState_running, PrioritySchedulerLike, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike };
