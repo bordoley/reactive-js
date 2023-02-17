@@ -1,13 +1,13 @@
 /// <reference types="./node.d.ts" />
 import fs from 'fs';
 import { createBrotliDecompress, createGunzip, createInflate, createBrotliCompress, createGzip, createDeflate } from 'zlib';
-import { pipe, error, ignore, pipeLazy, isFunction } from '../functions.mjs';
+import { pipe, error, ignore, pipeLazy, isFunction, returns } from '../functions.mjs';
 import { ObserverLike_dispatcher } from '../rx.mjs';
-import { create, forEach, subscribe } from '../rx/Observable.mjs';
+import { create, forEach, subscribe, map } from '../rx/Observable.mjs';
 import { getScheduler, getDispatcher } from '../rx/Observer.mjs';
 import { sinkInto } from '../rx/ReactiveContainer.mjs';
+import { PauseableState_running, PauseableState_paused } from '../scheduling.mjs';
 import { dispatch, dispatchTo, getScheduler as getScheduler$1 } from '../scheduling/Dispatcher.mjs';
-import { FlowMode_resume, FlowMode_pause } from '../streaming.mjs';
 import Flowable_createLifted from '../streaming/Flowable/__internal__/Flowable.createLifted.mjs';
 import { sourceFrom } from '../streaming/Stream.mjs';
 import { stream } from '../streaming/Streamable.mjs';
@@ -61,10 +61,10 @@ const createReadableSource = (factory) => Flowable_createLifted(mode => create(o
     readable.pause();
     pipe(mode, forEach(ev => {
         switch (ev) {
-            case FlowMode_pause:
+            case PauseableState_paused:
                 readable.pause();
                 break;
-            case FlowMode_resume:
+            case PauseableState_running:
                 readable.resume();
                 break;
         }
@@ -95,20 +95,20 @@ const createWritableSink = /*@__PURE__*/ (() => {
         }), subscribe(getScheduler$1(dispatcher)), addToNodeStream(writable), onComplete(() => {
             writable.end();
         }));
-        const onDrain = pipeLazy(dispatcher, dispatch(FlowMode_resume));
+        const onDrain = pipeLazy(dispatcher, dispatch(returns(PauseableState_running)));
         const onFinish = pipeLazy(dispatcher, dispose());
-        const onPause = pipeLazy(dispatcher, dispatch(FlowMode_pause));
+        const onPause = pipeLazy(dispatcher, dispatch(returns(PauseableState_paused)));
         writable.on("drain", onDrain);
         writable.on("finish", onFinish);
         writable.on(NODE_JS_PAUSE_EVENT, onPause);
-        pipe(dispatcher, dispatch(FlowMode_resume));
+        pipe(dispatcher, dispatch(returns(PauseableState_running)));
     }));
 })();
 const transform = (factory) => src => Flowable_createLifted(modeObs => create(observer => {
     const transform = pipe(factory(), addToDisposable(observer), addDisposable(getDispatcher(observer)));
     pipe(createWritableSink(transform), stream(getScheduler(observer)), sourceFrom(src), addToNodeStream(transform));
     const transformReadableStream = pipe(createReadableSource(transform), stream(getScheduler(observer)), addToNodeStream(transform), sinkInto(observer));
-    pipe(modeObs, forEach(dispatchTo(transformReadableStream)), subscribe(getScheduler(observer)), addToNodeStream(transform));
+    pipe(modeObs, map(returns), forEach(dispatchTo(transformReadableStream)), subscribe(getScheduler(observer)), addToNodeStream(transform));
 }));
 const brotliDecompress = (options = {}) => transform(pipeLazy(options, createBrotliDecompress));
 const gunzip = (options = {}) => transform(pipeLazy(options, createGunzip));

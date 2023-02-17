@@ -18,6 +18,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ **`DispatcherLike`**
 
+  ↳↳ [`PauseableLike`](scheduling.PauseableLike.md)
+
   ↳↳ [`StreamLike`](streaming.StreamLike.md)
 
 ## Table of contents

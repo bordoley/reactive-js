@@ -20,10 +20,9 @@ import {
 import Observable from "../../rx/Observable";
 import RunnableObservable from "../../rx/RunnableObservable";
 import Continuation from "../../scheduling/Continuation";
-import Dispatcher from "../../scheduling/Dispatcher";
+import Pauseable from "../../scheduling/Pauseable";
 import Scheduler from "../../scheduling/Scheduler";
 import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
-import { FlowMode_pause, FlowMode_resume } from "../../streaming";
 import Streamable from "../../streaming/Streamable";
 import Disposable from "../../util/Disposable";
 import {
@@ -325,26 +324,20 @@ const toFlowableTests = describe(
       Streamable.stream(scheduler),
     );
 
-    pipe(generateStream, Dispatcher.dispatch(FlowMode_resume));
+    Pauseable.resume(generateStream);
 
     pipe(
       scheduler,
-      Scheduler.schedule(
-        pipeLazy(FlowMode_pause, Dispatcher.dispatchTo(generateStream)),
-        {
-          delay: 2,
-        },
-      ),
+      Scheduler.schedule(pipeLazy(generateStream, Pauseable.pause), {
+        delay: 2,
+      }),
     );
 
     pipe(
       scheduler,
-      Scheduler.schedule(
-        pipeLazy(FlowMode_resume, Dispatcher.dispatchTo(generateStream)),
-        {
-          delay: 4,
-        },
-      ),
+      Scheduler.schedule(pipeLazy(generateStream, Pauseable.resume), {
+        delay: 4,
+      }),
     );
 
     pipe(

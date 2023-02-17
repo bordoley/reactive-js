@@ -1,13 +1,13 @@
-import { PauseableLike_pause, PauseableLike_resume } from "../scheduling";
+import { PauseableLike } from "../scheduling";
 import Pauseable_pause from "./Pauseable/__internal__/Pauseable.pause";
 import Pauseable_resume from "./Pauseable/__internal__/Pauseable.resume";
 
-export const pause: <TPauseable extends { [PauseableLike_pause](): void }>(
-  pausable: TPauseable,
+export const pause: <TPauseable extends PauseableLike>(
+  pauseable: TPauseable,
 ) => TPauseable = Pauseable_pause;
 
-export const resume: <TPauseable extends { [PauseableLike_resume](): void }>(
-  pausable: TPauseable,
+export const resume: <TPauseable extends PauseableLike>(
+  pauseable: TPauseable,
 ) => TPauseable = Pauseable_resume;
 
 /** @ignore */

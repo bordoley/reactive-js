@@ -13,22 +13,10 @@
 
 ### Type Aliases
 
-- [FlowMode](streaming.md#flowmode)
 - [FromFlowable](streaming.md#fromflowable)
 - [ToFlowable](streaming.md#toflowable)
 
-### Variables
-
-- [FlowMode\_pause](streaming.md#flowmode_pause)
-- [FlowMode\_resume](streaming.md#flowmode_resume)
-
 ## Type Aliases
-
-### FlowMode
-
-Ƭ **FlowMode**: typeof [`FlowMode_resume`](streaming.md#flowmode_resume) \| typeof [`FlowMode_pause`](streaming.md#flowmode_pause)
-
-___
 
 ### FromFlowable
 
@@ -53,15 +41,3 @@ ___
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `O` | `never` |
-
-## Variables
-
-### FlowMode\_pause
-
-• `Const` **FlowMode\_pause**: unique `symbol`
-
-___
-
-### FlowMode\_resume
-
-• `Const` **FlowMode\_resume**: unique `symbol`

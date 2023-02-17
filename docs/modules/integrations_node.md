@@ -309,7 +309,7 @@ ___
 
 ### createWritableSink
 
-▸ **createWritableSink**(`factory`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`Uint8Array`, [`FlowMode`](streaming.md#flowmode), [`StreamLike`](../interfaces/streaming.StreamLike.md)<`Uint8Array`, [`FlowMode`](streaming.md#flowmode)\>\>
+▸ **createWritableSink**(`factory`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`Uint8Array`, [`Updater`](functions.md#updater)<[`PauseableState`](scheduling.md#pauseablestate)\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`Uint8Array`, [`Updater`](functions.md#updater)<[`PauseableState`](scheduling.md#pauseablestate)\>\>\>
 
 #### Parameters
 
@@ -319,7 +319,7 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`Uint8Array`, [`FlowMode`](streaming.md#flowmode), [`StreamLike`](../interfaces/streaming.StreamLike.md)<`Uint8Array`, [`FlowMode`](streaming.md#flowmode)\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`Uint8Array`, [`Updater`](functions.md#updater)<[`PauseableState`](scheduling.md#pauseablestate)\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`Uint8Array`, [`Updater`](functions.md#updater)<[`PauseableState`](scheduling.md#pauseablestate)\>\>\>
 
 ___
 

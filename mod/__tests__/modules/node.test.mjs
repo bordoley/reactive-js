@@ -6,8 +6,8 @@ import { newInstance, pipe, returns } from '../../functions.mjs';
 import { createWritableSink, createReadableSource, gzip, gunzip } from '../../integrations/node.mjs';
 import Observable from '../../rx/Observable.mjs';
 import RunnableObservable from '../../rx/RunnableObservable.mjs';
+import { PauseableState_paused } from '../../scheduling.mjs';
 import Scheduler from '../../scheduling/Scheduler.mjs';
-import { FlowMode_pause } from '../../streaming.mjs';
 import Flowable from '../../streaming/Flowable.mjs';
 import Stream from '../../streaming/Stream.mjs';
 import Streamable from '../../streaming/Streamable.mjs';
@@ -29,7 +29,7 @@ testModule("node", createDescribe("createWritableIOSink", testAsync("sinking to 
         });
         const src = pipe([encoder.encode("abc"), encoder.encode("defg")], ReadonlyArray.toRunnableObservable(), RunnableObservable.toFlowable());
         const dest = pipe(createWritableSink(returns(writable)), Streamable.stream(scheduler), Stream.sourceFrom(src));
-        await pipe(dest, Container.endWith(RunnableObservable, FlowMode_pause), Observable.toPromise(scheduler));
+        await pipe(dest, Container.endWith(RunnableObservable, returns(PauseableState_paused)), Observable.toPromise(scheduler));
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
     }

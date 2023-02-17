@@ -2,9 +2,10 @@ import fs from 'fs';
 import { Readable, Writable, Transform } from 'stream';
 import { BrotliOptions, ZlibOptions } from 'zlib';
 import { ContainerOperator } from "../containers.js";
-import { Factory, SideEffect1, SideEffect2, Function1, SideEffect3, Function2, SideEffect4, Function3, SideEffect5, Function4, SideEffect6, Function5 } from "../functions.js";
+import { Factory, Updater, SideEffect1, SideEffect2, Function1, SideEffect3, Function2, SideEffect4, Function3, SideEffect5, Function4, SideEffect6, Function5 } from "../functions.js";
 import { ObservableLike } from "../rx.js";
-import { FlowableLike, StreamableLike, FlowMode } from "../streaming.js";
+import { PauseableState } from "../scheduling.js";
+import { FlowableLike, StreamableLike } from "../streaming.js";
 interface BindNodeCallback {
     <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<ObservableLike<T>>;
     (callbackFunc: SideEffect1<SideEffect1<unknown>>): Factory<ObservableLike<void>>;
@@ -28,7 +29,7 @@ declare const readFile: (path: fs.PathLike, options?: {
     readonly end?: number;
     readonly highWaterMark?: number;
 }) => FlowableLike<Uint8Array>;
-declare const createWritableSink: (factory: Factory<Writable> | Writable) => StreamableLike<Uint8Array, FlowMode>;
+declare const createWritableSink: (factory: Factory<Writable> | Writable) => StreamableLike<Uint8Array, Updater<PauseableState>>;
 declare const transform: (factory: Factory<Transform>) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
 declare const brotliDecompress: (options?: BrotliOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
 declare const gunzip: (options?: ZlibOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;

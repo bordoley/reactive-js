@@ -13,19 +13,19 @@
 
 ### pause
 
-▸ **pause**<`TPauseable`\>(`pausable`): `TPauseable`
+▸ **pause**<`TPauseable`\>(`pauseable`): `TPauseable`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TPauseable` | extends `Object` |
+| `TPauseable` | extends [`PauseableLike`](../interfaces/scheduling.PauseableLike.md)<`TPauseable`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `pausable` | `TPauseable` |
+| `pauseable` | `TPauseable` |
 
 #### Returns
 
@@ -35,19 +35,19 @@ ___
 
 ### resume
 
-▸ **resume**<`TPauseable`\>(`pausable`): `TPauseable`
+▸ **resume**<`TPauseable`\>(`pauseable`): `TPauseable`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TPauseable` | extends `Object` |
+| `TPauseable` | extends [`PauseableLike`](../interfaces/scheduling.PauseableLike.md)<`TPauseable`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `pausable` | `TPauseable` |
+| `pauseable` | `TPauseable` |
 
 #### Returns
 

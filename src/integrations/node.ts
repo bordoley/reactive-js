@@ -24,32 +24,34 @@ import {
   SideEffect4,
   SideEffect5,
   SideEffect6,
+  Updater,
   error,
   ignore,
   isFunction,
   pipe,
   pipeLazy,
+  returns,
 } from "../functions";
 import { ObservableLike, ObserverLike_dispatcher } from "../rx";
 import {
   create as createObservable,
   forEach,
+  map,
   subscribe,
 } from "../rx/Observable";
 import { getDispatcher, getScheduler } from "../rx/Observer";
 import { sinkInto } from "../rx/ReactiveContainer";
 import {
+  PauseableState,
+  PauseableState_paused,
+  PauseableState_running,
+} from "../scheduling";
+import {
   dispatch,
   dispatchTo,
   getScheduler as dispatcherGetScheduler,
 } from "../scheduling/Dispatcher";
-import {
-  FlowMode,
-  FlowMode_pause,
-  FlowMode_resume,
-  FlowableLike,
-  StreamableLike,
-} from "../streaming";
+import { FlowableLike, StreamableLike } from "../streaming";
 import Flowable_createLifted from "../streaming/Flowable/__internal__/Flowable.createLifted";
 import { sourceFrom } from "../streaming/Stream";
 import { stream } from "../streaming/Streamable";
@@ -188,10 +190,10 @@ export const createReadableSource = (
         mode,
         forEach(ev => {
           switch (ev) {
-            case FlowMode_pause:
+            case PauseableState_paused:
               readable.pause();
               break;
-            case FlowMode_resume:
+            case PauseableState_running:
               readable.resume();
               break;
           }
@@ -225,7 +227,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
   const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
   return (
     factory: Factory<Writable> | Writable,
-  ): StreamableLike<Uint8Array, FlowMode> =>
+  ): StreamableLike<Uint8Array, Updater<PauseableState>> =>
     Streamable_createLifted(events =>
       createObservable(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
@@ -256,15 +258,21 @@ export const createWritableSink = /*@__PURE__*/ (() => {
           }),
         );
 
-        const onDrain = pipeLazy(dispatcher, dispatch(FlowMode_resume));
+        const onDrain = pipeLazy(
+          dispatcher,
+          dispatch(returns(PauseableState_running)),
+        );
         const onFinish = pipeLazy(dispatcher, dispose());
-        const onPause = pipeLazy(dispatcher, dispatch(FlowMode_pause));
+        const onPause = pipeLazy(
+          dispatcher,
+          dispatch(returns(PauseableState_paused)),
+        );
 
         writable.on("drain", onDrain);
         writable.on("finish", onFinish);
         writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-        pipe(dispatcher, dispatch(FlowMode_resume));
+        pipe(dispatcher, dispatch(returns(PauseableState_running)));
       }),
     );
 })();
@@ -298,6 +306,7 @@ export const transform =
 
         pipe(
           modeObs,
+          map(returns),
           forEach(dispatchTo(transformReadableStream)),
           subscribe(getScheduler(observer)),
           addToNodeStream(transform),

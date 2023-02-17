@@ -7,7 +7,7 @@ import Enumerator_getCurrent from '../../ix/Enumerator/__internal__/Enumerator.g
 import Enumerator_hasCurrent from '../../ix/Enumerator/__internal__/Enumerator.hasCurrent.mjs';
 import Source_move from '../../ix/Source/__internal__/Source.move.mjs';
 import MutableEnumerator_mixin from '../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.mjs';
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule } from '../../scheduling.mjs';
+import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, DispatcherLike_scheduler, DispatcherLike_dispatch, PauseableState_paused, PauseableState_running, SchedulerLike_requestYield, SchedulerLike_schedule } from '../../scheduling.mjs';
 import Disposable_addIgnoringChildErrors from '../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.mjs';
 import Disposable_disposed from '../../util/Disposable/__internal__/Disposable.disposed.mjs';
 import Disposable_isDisposed from '../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
@@ -163,6 +163,23 @@ const create =
                     (isSome(next) ? priorityShouldYield(this, next) : false) ||
                     Scheduler_shouldYield(this[QueueScheduler_host])));
         },
+        get [DispatcherLike_scheduler]() {
+            unsafeCast(this);
+            return this[QueueScheduler_host];
+        },
+        [DispatcherLike_dispatch](req) {
+            const nextState = req(this[QueueScheduler_isPaused]
+                ? PauseableState_paused
+                : PauseableState_running);
+            if (nextState === PauseableState_paused) {
+                this[QueueScheduler_isPaused] = true;
+                this[MutableRefLike_current] = Disposable_disposed;
+            }
+            else {
+                this[QueueScheduler_isPaused] = false;
+                scheduleOnHost(this);
+            }
+        },
         [SourceLike_move]() {
             // First fast forward through disposed tasks.
             peek(this);
@@ -173,14 +190,6 @@ const create =
         },
         [SchedulerLike_requestYield]() {
             this[QueueScheduler_yieldRequested] = true;
-        },
-        [PauseableLike_pause]() {
-            this[QueueScheduler_isPaused] = true;
-            this[MutableRefLike_current] = Disposable_disposed;
-        },
-        [PauseableLike_resume]() {
-            this[QueueScheduler_isPaused] = false;
-            scheduleOnHost(this);
         },
         [SchedulerLike_schedule](continuation, options) {
             const delay = getDelay(options);
