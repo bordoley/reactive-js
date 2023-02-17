@@ -87,8 +87,13 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
 export const toEnumerableObservable: ToEnumerableObservable<SequenceLike>["toEnumerableObservable"] =
   Sequence_toRunnableObservable as ToEnumerableObservable<SequenceLike>["toEnumerableObservable"];
 
-export const toObservable: ToObservable<SequenceLike>["toObservable"] =
-  Sequence_toRunnableObservable;
+export const toObservable: ToObservable<
+  SequenceLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toObservable"] = Sequence_toRunnableObservable;
 
 export const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
   Sequence_toReadonlyArray;
@@ -96,8 +101,13 @@ export const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
 export const toRunnable: ToRunnable<SequenceLike>["toRunnable"] =
   Sequence_toRunnable;
 
-export const toRunnableObservable: ToRunnableObservable<SequenceLike>["toRunnableObservable"] =
-  Sequence_toRunnableObservable;
+export const toRunnableObservable: ToRunnableObservable<
+  SequenceLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toRunnableObservable"] = Sequence_toRunnableObservable;
 
 export const zip: Zip<SequenceLike>["zip"] = Sequence_zip;
 

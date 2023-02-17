@@ -372,10 +372,7 @@ declare const toObservableTests: <C extends ContainerLike>(m: Container<C> & {
         readonly count?: number | undefined;
     } | undefined): Function1<readonly T[], ContainerOf<C, T>>;
 } & {
-    toObservable: <T_1>(options?: {
-        readonly delay?: number | undefined;
-        readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<ContainerOf<C, T_1>, ObservableLike<T_1>>;
+    toObservable: <T_1>(options?: undefined) => Function1<ContainerOf<C, T_1>, ObservableLike<T_1>>;
 }) => TestAsync;
 declare const toRunnableObservableTests: <C extends ContainerLike>(m: Container<C> & {
     fromReadonlyArray<T>(options?: {

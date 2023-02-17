@@ -19,10 +19,16 @@ declare const takeLast: TakeLast<SequenceLike>["takeLast"];
 declare const takeWhile: TakeWhile<SequenceLike>["takeWhile"];
 declare const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"];
 declare const toEnumerableObservable: ToEnumerableObservable<SequenceLike>["toEnumerableObservable"];
-declare const toObservable: ToObservable<SequenceLike>["toObservable"];
+declare const toObservable: ToObservable<SequenceLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+}>["toObservable"];
 declare const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"];
 declare const toRunnable: ToRunnable<SequenceLike>["toRunnable"];
-declare const toRunnableObservable: ToRunnableObservable<SequenceLike>["toRunnableObservable"];
+declare const toRunnableObservable: ToRunnableObservable<SequenceLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+}>["toRunnableObservable"];
 declare const zip: Zip<SequenceLike>["zip"];
 /** @ignore */
 declare const Sequence: {

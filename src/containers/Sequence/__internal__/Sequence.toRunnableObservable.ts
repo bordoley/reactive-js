@@ -17,37 +17,42 @@ import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
 import { DisposableLike_isDisposed } from "../../../util";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
 
-const Sequence_toRunnableObservable: ToRunnableObservable<SequenceLike>["toRunnableObservable"] =
+const Sequence_toRunnableObservable: ToRunnableObservable<
+  SequenceLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toRunnableObservable"] =
+  options =>
+  <T>(seq: SequenceLike<T>) => {
+    const { delay = 0, delayStart = false } = options ?? {};
 
-    options =>
-    <T>(seq: SequenceLike<T>) => {
-      const { delay = 0, delayStart = false } = options ?? {};
+    const onSink = (observer: ObserverLike<T>) => {
+      let next = seq();
 
-      const onSink = (observer: ObserverLike<T>) => {
-        let next = seq();
+      const continuation = () => {
+        while (!observer[DisposableLike_isDisposed] && isSome(next)) {
+          observer[SinkLike_notify](next[SequenceLike_data]);
+          next = next[SequenceLike_next]();
 
-        const continuation = () => {
-          while (!observer[DisposableLike_isDisposed] && isSome(next)) {
-            observer[SinkLike_notify](next[SequenceLike_data]);
-            next = next[SequenceLike_next]();
-
-            if (isSome(next)) {
-              __yield(delay);
-            }
+          if (isSome(next)) {
+            __yield(delay);
           }
+        }
 
-          pipe(observer, Disposable_dispose());
-        };
-
-        pipe(
-          observer,
-          Observer_schedule(continuation, delayStart ? options : none),
-        );
+        pipe(observer, Disposable_dispose());
       };
 
-      return hasDelay(options)
-        ? RunnableObservable_create(onSink)
-        : EnumerableObservable_create(onSink);
+      pipe(
+        observer,
+        Observer_schedule(continuation, delayStart ? options : none),
+      );
     };
+
+    return hasDelay(options)
+      ? RunnableObservable_create(onSink)
+      : EnumerableObservable_create(onSink);
+  };
 
 export default Sequence_toRunnableObservable;

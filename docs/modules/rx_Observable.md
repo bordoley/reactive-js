@@ -1124,9 +1124,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
+| `options?` | `undefined` |
 
 #### Returns
 

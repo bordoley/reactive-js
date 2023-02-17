@@ -362,7 +362,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | { `count?`: `number` ; `delay?`: `number` ; `delayStart?`: `boolean` ; `start?`: `number`  } & { `delay?`: `number` ; `delayStart?`: `boolean`  } |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
 
 #### Returns
 
@@ -432,7 +436,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | { `count?`: `number` ; `delay?`: `number` ; `delayStart?`: `boolean` ; `start?`: `number`  } & { `delay?`: `number` ; `delayStart?`: `boolean`  } |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
 
 #### Returns
 

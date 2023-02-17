@@ -1158,7 +1158,14 @@ export const toObservableTests = <C extends ContainerLike>(
   });
 
 export const toRunnableObservableTests = <C extends ContainerLike>(
-  m: FromReadonlyArray<C> & ToRunnableObservable<C>,
+  m: FromReadonlyArray<C> &
+    ToRunnableObservable<
+      C,
+      {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+      }
+    >,
 ) =>
   describe(
     "toRunnableObservable",

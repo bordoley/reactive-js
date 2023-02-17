@@ -16,9 +16,6 @@ declare const Flowable: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     }) | undefined) => Function1<readonly T[], FlowableLike<T>>;
-    toObservable: <T_1>(options?: {
-        readonly delay?: number | undefined;
-        readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<FlowableLike<T_1>, ObservableLike<T_1>>;
+    toObservable: <T_1>(options?: undefined) => Function1<FlowableLike<T_1>, ObservableLike<T_1>>;
 };
 export { Flowable as default, fromReadonlyArray, toObservable };

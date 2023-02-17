@@ -34,7 +34,10 @@ declare const toObservable: ToObservable<EnumerableLike, {
 }>["toObservable"];
 declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
 declare const toRunnable: ToRunnable<EnumerableLike>["toRunnable"];
-declare const toRunnableObservable: ToRunnableObservable<EnumerableLike>["toRunnableObservable"];
+declare const toRunnableObservable: ToRunnableObservable<EnumerableLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+}>["toRunnableObservable"];
 declare const zip: Zip<EnumerableLike>["zip"];
 /** @ignore */
 declare const Enumerable: {
@@ -81,13 +84,10 @@ declare const Enumerable: {
     throwIfEmpty: <T_19>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<EnumerableLike<unknown>, T_19, T_19>;
     toEnumerable: <T_20>(options?: undefined) => Function1<EnumerableLike<T_20>, EnumerableLike<T_20>>;
     toEnumerableObservable: <T_21>(options?: undefined) => Function1<EnumerableLike<T_21>, EnumerableObservableLike<T_21>>;
-    toObservable: <T_22>(options?: ({
+    toObservable: <T_22>(options?: {
         delay?: number | undefined;
         delayStart?: boolean | undefined;
-    } & {
-        readonly delay?: number | undefined;
-        readonly delayStart?: boolean | undefined;
-    }) | undefined) => Function1<EnumerableLike<T_22>, ObservableLike<T_22>>;
+    } | undefined) => Function1<EnumerableLike<T_22>, ObservableLike<T_22>>;
     toReadonlyArray: <T_23>(options?: undefined) => Function1<EnumerableLike<T_23>, ReadonlyArrayLike<T_23>>;
     toRunnable: <T_24>(options?: undefined) => Function1<EnumerableLike<T_24>, RunnableLike<T_24>>;
     toRunnableObservable: <T_25>(options?: {

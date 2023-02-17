@@ -7,9 +7,6 @@ declare const toObservable: ToObservable<PromiseableLike>["toObservable"];
 /** @ignore */
 declare const Promiseable: {
     fromObservable: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<T>;
-    toObservable: <T_1>(options?: {
-        readonly delay?: number | undefined;
-        readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<PromiseableLike<T_1>, ObservableLike<T_1>>;
+    toObservable: <T_1>(options?: undefined) => Function1<PromiseableLike<T_1>, ObservableLike<T_1>>;
 };
 export { Promiseable as default, fromObservable, toObservable };
