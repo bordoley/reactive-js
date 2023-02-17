@@ -32,13 +32,8 @@ export const toIterable: ToIterable<IterableLike>["toIterable"] =
 export const toEnumerableObservable: ToEnumerableObservable<IterableLike>["toEnumerableObservable"] =
   Iterable_toEnumerableObservable;
 
-export const toObservable: ToObservable<
-  IterableLike,
-  {
-    delay: number;
-    delayStart?: boolean;
-  }
->["toObservable"] = Iterable_toRunnableObservable;
+export const toObservable: ToObservable<IterableLike>["toObservable"] =
+  Iterable_toRunnableObservable;
 
 export const toRunnableObservable: ToRunnableObservable<IterableLike>["toRunnableObservable"] =
   Iterable_toRunnableObservable;

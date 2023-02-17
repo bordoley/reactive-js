@@ -8,10 +8,7 @@ declare const toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumera
 declare const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"];
 declare const toIterable: ToIterable<IterableLike>["toIterable"];
 declare const toEnumerableObservable: ToEnumerableObservable<IterableLike>["toEnumerableObservable"];
-declare const toObservable: ToObservable<IterableLike, {
-    delay: number;
-    delayStart?: boolean;
-}>["toObservable"];
+declare const toObservable: ToObservable<IterableLike>["toObservable"];
 declare const toRunnableObservable: ToRunnableObservable<IterableLike>["toRunnableObservable"];
 /** @ignore */
 declare const Iterable: {
@@ -24,13 +21,10 @@ declare const Iterable: {
     toEnumerable: <T_3>(options?: undefined) => Function1<IterableLike<T_3>, EnumerableLike<T_3>>;
     toIterable: <T_4>(options?: undefined) => Function1<IterableLike<T_4>, IterableLike<T_4>>;
     toEnumerableObservable: <T_5>(options?: undefined) => Function1<IterableLike<T_5>, EnumerableObservableLike<T_5>>;
-    toObservable: <T_6>(options?: ({
-        delay: number;
-        delayStart?: boolean | undefined;
-    } & {
+    toObservable: <T_6>(options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    }) | undefined) => Function1<IterableLike<T_6>, ObservableLike<T_6>>;
+    } | undefined) => Function1<IterableLike<T_6>, ObservableLike<T_6>>;
     toRunnableObservable: <T_7>(options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
