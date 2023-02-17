@@ -1,5 +1,5 @@
 import { FromEnumerable, ToEnumerable, EnumerableLike } from "../ix.js";
-import { Empty, ReadonlyArrayLike, ForEach, FromReadonlyArray, FromSequence, Keep, Map, ToReadonlyArray, ToSequence, ContainerOperator, SequenceLike } from "../containers.js";
+import { Empty, ReadonlyArrayLike, ForEach, FromReadonlyArray, FromSequence, Keep, Map, ToIterable, ToReadonlyArray, ToSequence, ContainerOperator, SequenceLike, IterableLike } from "../containers.js";
 import { EnumerableObservableLike, RunnableObservableLike, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, ObservableLike, RunnableLike } from "../rx.js";
 import { Predicate, Function1, SideEffect1 } from "../functions.js";
 declare const empty: Empty<ReadonlyArrayLike>["empty"];
@@ -21,6 +21,10 @@ declare const toEnumerableObservable: ToEnumerableObservable<ReadonlyArrayLike, 
     readonly count?: number;
     readonly start?: number;
 }>["toEnumerableObservable"];
+declare const toIterable: ToIterable<ReadonlyArrayLike, {
+    readonly count?: number;
+    readonly start?: number;
+}>["toIterable"];
 declare const toObservable: ToObservable<ReadonlyArrayLike, {
     readonly count?: number;
     readonly delay?: number;
@@ -62,7 +66,11 @@ declare const ReadonlyArray: {
         readonly count?: number | undefined;
         readonly start?: number | undefined;
     } | undefined) => Function1<ReadonlyArrayLike<T_10>, EnumerableObservableLike<T_10>>;
-    toObservable: <T_11>(options?: ({
+    toIterable: <T_11>(options?: {
+        readonly count?: number | undefined;
+        readonly start?: number | undefined;
+    } | undefined) => Function1<ReadonlyArrayLike<T_11>, IterableLike<T_11>>;
+    toObservable: <T_12>(options?: ({
         readonly count?: number | undefined;
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
@@ -70,13 +78,13 @@ declare const ReadonlyArray: {
     } & {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    }) | undefined) => Function1<ReadonlyArrayLike<T_11>, ObservableLike<T_11>>;
-    toReadonlyArray: <T_12>(options?: {
+    }) | undefined) => Function1<ReadonlyArrayLike<T_12>, ObservableLike<T_12>>;
+    toReadonlyArray: <T_13>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
-    } | undefined) => Function1<ReadonlyArrayLike<T_12>, ReadonlyArrayLike<T_12>>;
-    toRunnable: <T_13>(options?: undefined) => Function1<ReadonlyArrayLike<T_13>, RunnableLike<T_13>>;
-    toRunnableObservable: <T_14>(options?: ({
+    } | undefined) => Function1<ReadonlyArrayLike<T_13>, ReadonlyArrayLike<T_13>>;
+    toRunnable: <T_14>(options?: undefined) => Function1<ReadonlyArrayLike<T_14>, RunnableLike<T_14>>;
+    toRunnableObservable: <T_15>(options?: ({
         readonly count?: number | undefined;
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
@@ -84,7 +92,7 @@ declare const ReadonlyArray: {
     } & {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    }) | undefined) => Function1<ReadonlyArrayLike<T_14>, RunnableObservableLike<T_14>>;
-    toSequence: <T_15>(options?: undefined) => Function1<ReadonlyArrayLike<T_15>, SequenceLike<T_15>>;
+    }) | undefined) => Function1<ReadonlyArrayLike<T_15>, RunnableObservableLike<T_15>>;
+    toSequence: <T_16>(options?: undefined) => Function1<ReadonlyArrayLike<T_16>, SequenceLike<T_16>>;
 };
-export { ReadonlyArray as default, empty, every, forEach, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };
+export { ReadonlyArray as default, empty, every, forEach, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };

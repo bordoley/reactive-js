@@ -1,5 +1,5 @@
 import { EnumerableLike } from "../ix.js";
-import { ObservableLike, Retry, AsyncReducer, RunnableObservableLike } from "../rx.js";
+import { ObservableLike, Retry, AsyncReducer, EnumerableObservableLike, RunnableObservableLike } from "../rx.js";
 import { Describe, TestAsync } from "./testing.js";
 import { Function1, Factory, Equality, Predicate, SideEffect1, Reducer } from "../functions.js";
 import { ContainerLike, Container, ContainerOperator, ContainerOf, ReadonlyArrayLike, FromReadonlyArray } from "../containers.js";
@@ -358,6 +358,14 @@ declare const toEnumerableTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toEnumerable<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, EnumerableLike<T_1>>;
 }) => Describe;
+declare const toEnumerableObservableTests: <C extends ContainerLike>(m: Container<C> & {
+    fromReadonlyArray<T>(options?: {
+        readonly start?: number | undefined;
+        readonly count?: number | undefined;
+    } | undefined): Function1<readonly T[], ContainerOf<C, T>>;
+} & {
+    toEnumerableObservable: <T_1>(options?: undefined) => Function1<ContainerOf<C, T_1>, EnumerableObservableLike<T_1>>;
+}) => Describe;
 declare const toObservableTests: <C extends ContainerLike>(m: Container<C> & {
     fromReadonlyArray<T>(options?: {
         readonly start?: number | undefined;
@@ -518,4 +526,4 @@ declare const zipWithTests: <C extends ContainerLike>(m: Container<C> & {
 } & {
     toReadonlyArray<T_1>(options?: undefined): Function1<ContainerOf<C, T_1>, ReadonlyArrayLike<T_1>>;
 }) => Describe;
-export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, retryTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, toEnumerableTests, toObservableTests, toRunnableObservableTests, zipTests, zipWithTests };
+export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, retryTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, toEnumerableObservableTests, toEnumerableTests, toObservableTests, toRunnableObservableTests, zipTests, zipWithTests };

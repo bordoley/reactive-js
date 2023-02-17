@@ -77,6 +77,7 @@ const Enumerable = {
     takeWhile,
     throwIfEmpty,
     toEnumerable,
+    toEnumerableObservable,
     toObservable,
     toReadonlyArray,
     toRunnable,

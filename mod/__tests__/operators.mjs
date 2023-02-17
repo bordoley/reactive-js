@@ -3,6 +3,7 @@ import Container from '../containers/Container.mjs';
 import ReadonlyArray from '../containers/ReadonlyArray.mjs';
 import { pipeLazy, arrayEquality, pipe, returns, alwaysFalse, alwaysTrue, none, increment, sum } from '../functions.mjs';
 import Enumerable from '../ix/Enumerable.mjs';
+import EnumerableObservable from '../rx/EnumerableObservable.mjs';
 import Observable from '../rx/Observable.mjs';
 import RunnableObservable from '../rx/RunnableObservable.mjs';
 import { __now } from '../scheduling/Continuation/effects.mjs';
@@ -153,6 +154,7 @@ const throwIfEmptyTests = (m) => createDescribe("throwIfEmpty", createTest("when
     }), m.toReadonlyArray()), expectToThrowError(error));
 }), createTest("when source is not empty", pipeLazy([1], m.fromReadonlyArray(), m.throwIfEmpty(() => undefined), m.toReadonlyArray(), expectArrayEquals([1]))));
 const toEnumerableTests = (m) => createDescribe("toEnumerable", createTest("with an enumerable observable", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray(), m.toEnumerable(), Enumerable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))));
+const toEnumerableObservableTests = (m) => createDescribe("toEnumerableObservable", createTest("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toEnumerableObservable(), EnumerableObservable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))));
 const toObservableTests = (m) => testAsync("toObservable", async () => {
     const scheduler = Scheduler.createHostScheduler();
     // FIXME: This should be a generic test
@@ -182,4 +184,4 @@ const zipWithTests = (m) => createDescribe("zipWith", createTest("when inputs ar
     [3, 3],
 ], arrayEquality()))));
 
-export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, retryTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, toEnumerableTests, toObservableTests, toRunnableObservableTests, zipTests, zipWithTests };
+export { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, genMapTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, repeatTests, retryTests, scanAsyncTests, scanTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, toEnumerableObservableTests, toEnumerableTests, toObservableTests, toRunnableObservableTests, zipTests, zipWithTests };

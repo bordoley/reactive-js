@@ -1,4 +1,4 @@
-import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, ObservableLike, RunnableLike, RunnableObservableLike } from "../rx.js";
+import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, EnumerableObservableLike, ObservableLike, RunnableLike, RunnableObservableLike } from "../rx.js";
 import { Function1, Equality, SideEffect1, Updater, Factory, Predicate, Reducer } from "../functions.js";
 import { Buffer, Concat, ConcatAll, DistinctUntilChanged, Empty, ForEach, ReadonlyArrayLike, FromIterable, Generate, Keep, Map, Pairwise, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip, ContainerOperator } from "../containers.js";
 import { EnumerableLike, EnumeratorLike, ToEnumerable } from "../ix.js";
@@ -80,19 +80,20 @@ declare const Enumerable: {
     } | undefined) => ContainerOperator<EnumerableLike<unknown>, T_18, T_18>;
     throwIfEmpty: <T_19>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<EnumerableLike<unknown>, T_19, T_19>;
     toEnumerable: <T_20>(options?: undefined) => Function1<EnumerableLike<T_20>, EnumerableLike<T_20>>;
-    toObservable: <T_21>(options?: ({
+    toEnumerableObservable: <T_21>(options?: undefined) => Function1<EnumerableLike<T_21>, EnumerableObservableLike<T_21>>;
+    toObservable: <T_22>(options?: ({
         delay?: number | undefined;
         delayStart?: boolean | undefined;
     } & {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    }) | undefined) => Function1<EnumerableLike<T_21>, ObservableLike<T_21>>;
-    toReadonlyArray: <T_22>(options?: undefined) => Function1<EnumerableLike<T_22>, ReadonlyArrayLike<T_22>>;
-    toRunnable: <T_23>(options?: undefined) => Function1<EnumerableLike<T_23>, RunnableLike<T_23>>;
-    toRunnableObservable: <T_24>(options?: {
+    }) | undefined) => Function1<EnumerableLike<T_22>, ObservableLike<T_22>>;
+    toReadonlyArray: <T_23>(options?: undefined) => Function1<EnumerableLike<T_23>, ReadonlyArrayLike<T_23>>;
+    toRunnable: <T_24>(options?: undefined) => Function1<EnumerableLike<T_24>, RunnableLike<T_24>>;
+    toRunnableObservable: <T_25>(options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<EnumerableLike<T_24>, RunnableObservableLike<T_24>>;
+    } | undefined) => Function1<EnumerableLike<T_25>, RunnableObservableLike<T_25>>;
     zip: {
         <TA_1, TB_1>(a: EnumerableLike<TA_1>, b: EnumerableLike<TB_1>): EnumerableLike<readonly [
             TA_1,
