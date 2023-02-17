@@ -1,5 +1,6 @@
 /// <reference types="./RunnableObservable.d.ts" />
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
+import { returns } from '../functions.mjs';
 import Observable_buffer from './Observable/__internal__/Observable.buffer.mjs';
 import Observable_combineLatest from './Observable/__internal__/Observable.combineLatest.mjs';
 import Observable_concat from './Observable/__internal__/Observable.concat.mjs';
@@ -52,10 +53,11 @@ const defer = RunnableObservable_defer;
 const distinctUntilChanged = Observable_distinctUntilChanged;
 const empty = Observable_empty;
 const everySatisfy = Observable_everySatisfy;
-const exhaust = () => mergeAll({
+const exhaust = 
+/*@__PURE__*/ returns(RunnableObservable_mergeAll({
     maxBufferSize: 1,
     maxConcurrency: 1,
-});
+}));
 const forEach = Observable_forEach;
 const fromReadonlyArray = Observable_fromReadonlyArray;
 const generate = Observable_generate;

@@ -26,7 +26,7 @@ import {
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { Factory, compose } from "../functions";
+import { Factory, compose, returns } from "../functions";
 import { ToEnumerable } from "../ix";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
 import {
@@ -108,13 +108,13 @@ export const empty = Observable_empty as Empty<
 export const everySatisfy =
   Observable_everySatisfy as EverySatisfy<EnumerableObservableLike>["everySatisfy"];
 
-export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] = <
-  T,
->() =>
-  mergeAll<T>({
-    maxBufferSize: 1,
-    maxConcurrency: 1,
-  });
+export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] =
+  /*@__PURE__*/ returns(
+    EnumerableObservable_mergeAll({
+      maxBufferSize: 1,
+      maxConcurrency: 1,
+    }),
+  );
 
 export const forEach =
   Observable_forEach as ForEach<EnumerableObservableLike>["forEach"];
