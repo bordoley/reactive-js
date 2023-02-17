@@ -193,7 +193,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `continuation` | [`ContinuationLike`](scheduling.ContinuationLike.md) |
-| `options?` | [`SchedulerOptions`](../modules/scheduling.md#scheduleroptions) |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
 
 #### Returns
 

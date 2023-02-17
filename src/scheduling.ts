@@ -30,8 +30,6 @@ export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
 /** @ignore */
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 
-export type SchedulerOptions = { readonly delay?: number };
-
 export interface SchedulerLike extends DisposableLike {
   readonly [SchedulerLike_inContinuation]: boolean;
   readonly [SchedulerLike_now]: number;
@@ -44,7 +42,7 @@ export interface SchedulerLike extends DisposableLike {
 
   [SchedulerLike_schedule](
     continuation: ContinuationLike,
-    options?: SchedulerOptions,
+    options?: { readonly delay?: number },
   ): void;
 }
 
@@ -76,11 +74,6 @@ export interface PauseableLike
 
 export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {}
 
-export type PrioritySchedulerOptions = {
-  readonly priority: number;
-  readonly delay?: number;
-};
-
 /**
  * A scheduler which schedules work according to it's priority.
  *
@@ -98,7 +91,10 @@ export interface PrioritySchedulerLike extends DisposableLike {
 
   [SchedulerLike_schedule](
     continuation: ContinuationLike,
-    options: PrioritySchedulerOptions,
+    options: {
+      readonly priority: number;
+      readonly delay?: number;
+    },
   ): void;
 }
 

@@ -66,7 +66,9 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `continuation` | [`ContinuationLike`](scheduling.ContinuationLike.md) |
-| `options` | [`PrioritySchedulerOptions`](../modules/scheduling.md#priorityscheduleroptions) |
+| `options` | `Object` |
+| `options.delay?` | `number` |
+| `options.priority` | `number` |
 
 #### Returns
 
