@@ -1,7 +1,7 @@
 import { Readable, Writable } from "stream";
 import Container from "../../containers/Container";
 import ReadonlyArray from "../../containers/ReadonlyArray";
-import { newInstance, pipe, returns } from "../../functions";
+import { Updater, newInstance, pipe, returns } from "../../functions";
 import {
   createReadableSource,
   createWritableSink,
@@ -11,8 +11,8 @@ import {
 import { ObservableLike } from "../../rx";
 import Observable from "../../rx/Observable";
 import RunnableObservable from "../../rx/RunnableObservable";
+import { PauseableState, PauseableState_paused } from "../../scheduling";
 import Scheduler from "../../scheduling/Scheduler";
-import { FlowMode, FlowMode_pause } from "../../streaming";
 import Flowable from "../../streaming/Flowable";
 import Stream from "../../streaming/Stream";
 import Streamable from "../../streaming/Streamable";
@@ -59,9 +59,9 @@ testModule(
 
         await pipe(
           dest,
-          Container.endWith<ObservableLike, FlowMode>(
+          Container.endWith<ObservableLike, Updater<PauseableState>>(
             RunnableObservable,
-            FlowMode_pause,
+            returns(PauseableState_paused),
           ),
           Observable.toPromise(scheduler),
         );

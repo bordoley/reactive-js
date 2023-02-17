@@ -1,15 +1,5 @@
+import { Updater } from "./functions";
 import { DisposableLike } from "./util";
-
-/** @ignore */
-export const PauseableLike_pause = Symbol("PausableLike_pause");
-
-/** @ignore */
-export const PauseableLike_resume = Symbol("PausableLike_resume");
-
-export interface PauseableLike {
-  [PauseableLike_pause](): void;
-  [PauseableLike_resume](): void;
-}
 
 /** @ignore */
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
@@ -73,6 +63,16 @@ export interface DispatcherLike<T = unknown> extends DisposableLike {
 
   readonly [DispatcherLike_scheduler]: SchedulerLike;
 }
+
+export const PauseableState_running = Symbol("PauseableState_running");
+export const PauseableState_paused = Symbol("PauseableState_paused");
+
+export type PauseableState =
+  | typeof PauseableState_running
+  | typeof PauseableState_paused;
+
+export interface PauseableLike
+  extends DispatcherLike<Updater<PauseableState>> {}
 
 export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {}
 

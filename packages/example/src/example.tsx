@@ -11,11 +11,6 @@ import {
 import * as Observable from "@reactive-js/core/rx/Observable";
 import * as RunnableObservable from "@reactive-js/core/rx/RunnableObservable";
 import {
-  FlowMode,
-  FlowMode_pause,
-  FlowMode_resume,
-} from "@reactive-js/core/streaming";
-import {
   createComponent,
   useObservable,
 } from "@reactive-js/core/integrations/react";
@@ -32,7 +27,13 @@ import {
   returns,
   Updater,
 } from "@reactive-js/core/functions";
-import { DispatcherLike } from "@reactive-js/core/scheduling";
+import {
+  DispatcherLike,
+  PauseableState,
+  PauseableState_paused,
+  PauseableState_running,
+  PauseableLike,
+} from "@reactive-js/core/scheduling";
 import * as Dispatcher from "@reactive-js/core/scheduling/Dispatcher";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 
@@ -52,8 +53,8 @@ const counterFlowable = pipe(
 );
 
 const createActions = (
-  stateDispatcher: DispatcherLike<Updater<FlowMode>>,
-  counterDispatcher: DispatcherLike<FlowMode>,
+  stateDispatcher: DispatcherLike<Updater<PauseableState>>,
+  counterDispatcher: PauseableLike,
 ) => ({
   onValueChanged: (value: number) =>
     pipe(
@@ -65,15 +66,17 @@ const createActions = (
     ),
   toggleStateMode: () =>
     pipe(
-      (mode: FlowMode) =>
-        mode === FlowMode_pause ? FlowMode_resume : FlowMode_pause,
+      (mode: PauseableState) =>
+        mode === PauseableState_paused
+          ? PauseableState_running
+          : PauseableState_paused,
       Dispatcher.dispatchTo(stateDispatcher),
     ),
-  setCounterMode: (mode: FlowMode) =>
-    pipe(counterDispatcher, Dispatcher.dispatch(mode)),
+  setCounterMode: (mode: PauseableState) =>
+    pipe(counterDispatcher, Dispatcher.dispatch(returns(mode))),
 });
 
-const initialFlowModeState = (): FlowMode => FlowMode_pause;
+const initialFlowModeState = (): PauseableState => PauseableState_paused;
 
 const StreamPauseResume = createComponent(() =>
   Observable.async(() => {
@@ -92,7 +95,7 @@ const StreamPauseResume = createComponent(() =>
     const value = __observe(counter) ?? 0;
     __do(onValueChanged, value);
 
-    const label = mode === FlowMode_resume ? "PAUSE" : "RESUME";
+    const label = mode === PauseableState_running ? "PAUSE" : "RESUME";
 
     return (
       <>

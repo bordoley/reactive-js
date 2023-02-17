@@ -6,10 +6,9 @@ import { ThrottleMode_first, ThrottleMode_last, ThrottleMode_interval } from '..
 import Observable from '../../rx/Observable.mjs';
 import RunnableObservable from '../../rx/RunnableObservable.mjs';
 import Continuation from '../../scheduling/Continuation.mjs';
-import Dispatcher from '../../scheduling/Dispatcher.mjs';
+import Pauseable from '../../scheduling/Pauseable.mjs';
 import Scheduler from '../../scheduling/Scheduler.mjs';
 import VirtualTimeScheduler from '../../scheduling/VirtualTimeScheduler.mjs';
-import { FlowMode_resume, FlowMode_pause } from '../../streaming.mjs';
 import Streamable from '../../streaming/Streamable.mjs';
 import Disposable from '../../util/Disposable.mjs';
 import { zipTests as zipTests$1, bufferTests, catchErrorTests, concatTests, concatAllTests, concatMapTests, concatWithTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, retryTests, scanTests, scanAsyncTests, skipFirstTests, someSatisfyTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipWithTests } from '../operators.mjs';
@@ -48,11 +47,11 @@ const toFlowableTests = createDescribe("toFlowable", createTest("flow a generati
         delay: 1,
         delayStart: true,
     }), RunnableObservable.toFlowable(), Streamable.stream(scheduler));
-    pipe(generateStream, Dispatcher.dispatch(FlowMode_resume));
-    pipe(scheduler, Scheduler.schedule(pipeLazy(FlowMode_pause, Dispatcher.dispatchTo(generateStream)), {
+    Pauseable.resume(generateStream);
+    pipe(scheduler, Scheduler.schedule(pipeLazy(generateStream, Pauseable.pause), {
         delay: 2,
     }));
-    pipe(scheduler, Scheduler.schedule(pipeLazy(FlowMode_resume, Dispatcher.dispatchTo(generateStream)), {
+    pipe(scheduler, Scheduler.schedule(pipeLazy(generateStream, Pauseable.resume), {
         delay: 4,
     }));
     pipe(scheduler, Scheduler.schedule(pipeLazy(generateStream, Disposable.dispose()), {

@@ -1,17 +1,9 @@
-import { PauseableLike_pause, PauseableLike_resume } from "../scheduling.js";
-declare const pause: <TPauseable extends {
-    [PauseableLike_pause](): void;
-}>(pausable: TPauseable) => TPauseable;
-declare const resume: <TPauseable extends {
-    [PauseableLike_resume](): void;
-}>(pausable: TPauseable) => TPauseable;
+import { PauseableLike } from "../scheduling.js";
+declare const pause: <TPauseable extends PauseableLike>(pauseable: TPauseable) => TPauseable;
+declare const resume: <TPauseable extends PauseableLike>(pauseable: TPauseable) => TPauseable;
 /** @ignore */
 declare const Pauseable: {
-    pause: <TPauseable extends {
-        [PauseableLike_pause](): void;
-    }>(pausable: TPauseable) => TPauseable;
-    resume: <TPauseable_1 extends {
-        [PauseableLike_resume](): void;
-    }>(pausable: TPauseable_1) => TPauseable_1;
+    pause: <TPauseable extends PauseableLike>(pauseable: TPauseable) => TPauseable;
+    resume: <TPauseable_1 extends PauseableLike>(pauseable: TPauseable_1) => TPauseable_1;
 };
 export { Pauseable as default, pause, resume };

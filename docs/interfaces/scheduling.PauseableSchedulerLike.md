@@ -18,6 +18,7 @@ Represents an unmanaged resource that can be disposed.
 
 ### Properties
 
+- [[DispatcherLike\_scheduler]](scheduling.PauseableSchedulerLike.md#[dispatcherlike_scheduler])
 - [[DisposableLike\_error]](scheduling.PauseableSchedulerLike.md#[disposablelike_error])
 - [[DisposableLike\_isDisposed]](scheduling.PauseableSchedulerLike.md#[disposablelike_isdisposed])
 - [[SchedulerLike\_inContinuation]](scheduling.PauseableSchedulerLike.md#[schedulerlike_incontinuation])
@@ -26,14 +27,23 @@ Represents an unmanaged resource that can be disposed.
 
 ### Methods
 
+- [[DispatcherLike\_dispatch]](scheduling.PauseableSchedulerLike.md#[dispatcherlike_dispatch])
 - [[DisposableLike\_add]](scheduling.PauseableSchedulerLike.md#[disposablelike_add])
 - [[DisposableLike\_dispose]](scheduling.PauseableSchedulerLike.md#[disposablelike_dispose])
-- [[PauseableLike\_pause]](scheduling.PauseableSchedulerLike.md#[pauseablelike_pause])
-- [[PauseableLike\_resume]](scheduling.PauseableSchedulerLike.md#[pauseablelike_resume])
 - [[SchedulerLike\_requestYield]](scheduling.PauseableSchedulerLike.md#[schedulerlike_requestyield])
 - [[SchedulerLike\_schedule]](scheduling.PauseableSchedulerLike.md#[schedulerlike_schedule])
 
 ## Properties
+
+### [DispatcherLike\_scheduler]
+
+• `Readonly` **[DispatcherLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)
+
+#### Inherited from
+
+[PauseableLike](scheduling.PauseableLike.md).[[DispatcherLike_scheduler]](scheduling.PauseableLike.md#[dispatcherlike_scheduler])
+
+___
 
 ### [DisposableLike\_error]
 
@@ -89,6 +99,28 @@ ___
 
 ## Methods
 
+### [DispatcherLike\_dispatch]
+
+▸ **[DispatcherLike_dispatch]**(`req`): `void`
+
+Dispatches the next request
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `req` | [`Updater`](../modules/functions.md#updater)<[`PauseableState`](../modules/scheduling.md#pauseablestate)\> |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[PauseableLike](scheduling.PauseableLike.md).[[DispatcherLike_dispatch]](scheduling.PauseableLike.md#[dispatcherlike_dispatch])
+
+___
+
 ### [DisposableLike\_add]
 
 ▸ **[DisposableLike_add]**(`disposable`, `ignoreChildErrors`): `void`
@@ -133,34 +165,6 @@ Dispose the resource.
 #### Inherited from
 
 [SchedulerLike](scheduling.SchedulerLike.md).[[DisposableLike_dispose]](scheduling.SchedulerLike.md#[disposablelike_dispose])
-
-___
-
-### [PauseableLike\_pause]
-
-▸ **[PauseableLike_pause]**(): `void`
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[PauseableLike](scheduling.PauseableLike.md).[[PauseableLike_pause]](scheduling.PauseableLike.md#[pauseablelike_pause])
-
-___
-
-### [PauseableLike\_resume]
-
-▸ **[PauseableLike_resume]**(): `void`
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[PauseableLike](scheduling.PauseableLike.md).[[PauseableLike_resume]](scheduling.PauseableLike.md#[pauseablelike_resume])
 
 ___
 

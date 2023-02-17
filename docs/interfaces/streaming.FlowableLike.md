@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streaming.StreamableLike.md)<[`FlowMode`](../modules/streaming.md#flowmode), `T`, [`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`T`\>\>
+- [`StreamableLike`](streaming.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<[`PauseableState`](../modules/scheduling.md#pauseablestate)\>, `T`, [`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`T`\>\>
 
 - [`ContainerLike`](containers.ContainerLike.md)
 

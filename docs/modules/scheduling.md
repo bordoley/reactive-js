@@ -16,10 +16,22 @@
 
 ### Type Aliases
 
+- [PauseableState](scheduling.md#pauseablestate)
 - [PrioritySchedulerOptions](scheduling.md#priorityscheduleroptions)
 - [SchedulerOptions](scheduling.md#scheduleroptions)
 
+### Variables
+
+- [PauseableState\_paused](scheduling.md#pauseablestate_paused)
+- [PauseableState\_running](scheduling.md#pauseablestate_running)
+
 ## Type Aliases
+
+### PauseableState
+
+Ƭ **PauseableState**: typeof [`PauseableState_running`](scheduling.md#pauseablestate_running) \| typeof [`PauseableState_paused`](scheduling.md#pauseablestate_paused)
+
+___
 
 ### PrioritySchedulerOptions
 
@@ -43,3 +55,15 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `delay?` | `number` |
+
+## Variables
+
+### PauseableState\_paused
+
+• `Const` **PauseableState\_paused**: unique `symbol`
+
+___
+
+### PauseableState\_running
+
+• `Const` **PauseableState\_running**: unique `symbol`

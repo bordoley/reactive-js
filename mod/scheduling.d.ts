@@ -1,12 +1,5 @@
+import { Updater } from "./functions.js";
 import { DisposableLike } from "./util.js";
-/** @ignore */
-declare const PauseableLike_pause: unique symbol;
-/** @ignore */
-declare const PauseableLike_resume: unique symbol;
-interface PauseableLike {
-    [PauseableLike_pause](): void;
-    [PauseableLike_resume](): void;
-}
 /** @ignore */
 declare const ContinuationLike_run: unique symbol;
 /**
@@ -52,6 +45,11 @@ interface DispatcherLike<T = unknown> extends DisposableLike {
     [DispatcherLike_dispatch](req: T): void;
     readonly [DispatcherLike_scheduler]: SchedulerLike;
 }
+declare const PauseableState_running: unique symbol;
+declare const PauseableState_paused: unique symbol;
+type PauseableState = typeof PauseableState_running | typeof PauseableState_paused;
+interface PauseableLike extends DispatcherLike<Updater<PauseableState>> {
+}
 interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
 }
 type PrioritySchedulerOptions = {
@@ -75,4 +73,4 @@ interface PrioritySchedulerLike extends DisposableLike {
 }
 interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
 }
-export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableLike, PauseableLike_pause, PauseableLike_resume, PauseableSchedulerLike, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };
+export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableLike, PauseableSchedulerLike, PauseableState, PauseableState_paused, PauseableState_running, PrioritySchedulerLike, PrioritySchedulerOptions, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerOptions, VirtualTimeSchedulerLike };

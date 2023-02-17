@@ -1,5 +1,3 @@
-import { PauseableLike_pause } from "../../../scheduling.js";
-declare const Pauseable_pause: <TPauseable extends {
-    [PauseableLike_pause](): void;
-}>(pausable: TPauseable) => TPauseable;
+import { PauseableLike } from "../../../scheduling.js";
+declare const Pauseable_pause: <TPauseable extends PauseableLike>(pauseable: TPauseable) => TPauseable;
 export { Pauseable_pause as default };

@@ -5,9 +5,14 @@ import {
   ContainerLike_type,
   ContainerOf,
 } from "./containers";
-import { Function1 } from "./functions";
+import { Function1, Updater } from "./functions";
 import { MulticastObservableLike } from "./rx";
-import { DispatcherLike, PauseableLike, SchedulerLike } from "./scheduling";
+import {
+  DispatcherLike,
+  PauseableLike,
+  PauseableState,
+  SchedulerLike,
+} from "./scheduling";
 
 /**
  * Represents a duplex stream
@@ -32,17 +37,12 @@ export interface StreamableLike<
   ): TStream;
 }
 
-export const FlowMode_resume = Symbol("FlowMode_resume");
-export const FlowMode_pause = Symbol("FlowMode_pause");
-
-export type FlowMode = typeof FlowMode_resume | typeof FlowMode_pause;
-
 export interface FlowableStreamLike<T = unknown>
-  extends StreamLike<FlowMode, T>,
+  extends StreamLike<Updater<PauseableState>, T>,
     PauseableLike {}
 
 export interface FlowableLike<T = unknown>
-  extends StreamableLike<FlowMode, T, FlowableStreamLike<T>>,
+  extends StreamableLike<Updater<PauseableState>, T, FlowableStreamLike<T>>,
     ContainerLike {
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }

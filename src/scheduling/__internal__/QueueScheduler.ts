@@ -11,6 +11,7 @@ import {
   Function1,
   Optional,
   SideEffect,
+  Updater,
   isNone,
   isSome,
   max,
@@ -30,9 +31,12 @@ import MutableEnumerator_mixin from "../../ix/__internal__/MutableEnumerator/Mut
 import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal";
 import {
   ContinuationLike,
+  DispatcherLike_dispatch,
+  DispatcherLike_scheduler,
   PauseableLike,
-  PauseableLike_pause,
-  PauseableLike_resume,
+  PauseableState,
+  PauseableState_paused,
+  PauseableState_running,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -272,9 +276,9 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             | typeof SchedulerLike_now
             | typeof SchedulerLike_shouldYield
             | typeof SchedulerLike_requestYield
-            | typeof PauseableLike_pause
-            | typeof PauseableLike_resume
             | typeof SchedulerLike_schedule
+            | typeof DispatcherLike_dispatch
+            | typeof DispatcherLike_scheduler
           > &
             Mutable<TProperties>,
           host: SchedulerLike,
@@ -329,6 +333,27 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
                 shouldYield(this[QueueScheduler_host]))
             );
           },
+          get [DispatcherLike_scheduler](): SchedulerLike {
+            unsafeCast<TProperties & EnumeratorLike<QueueTask>>(this);
+            return this[QueueScheduler_host];
+          },
+          [DispatcherLike_dispatch](
+            this: TProperties & DisposableRefLike & EnumeratorLike,
+            req: Updater<PauseableState>,
+          ): void {
+            const nextState = req(
+              this[QueueScheduler_isPaused]
+                ? PauseableState_paused
+                : PauseableState_running,
+            );
+            if (nextState === PauseableState_paused) {
+              this[QueueScheduler_isPaused] = true;
+              this[MutableRefLike_current] = Disposable_disposed;
+            } else {
+              this[QueueScheduler_isPaused] = false;
+              scheduleOnHost(this);
+            }
+          },
           [SourceLike_move](
             this: TProperties & MutableEnumeratorLike<QueueTask>,
           ): void {
@@ -342,16 +367,6 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           },
           [SchedulerLike_requestYield](this: TProperties): void {
             this[QueueScheduler_yieldRequested] = true;
-          },
-          [PauseableLike_pause](this: TProperties & DisposableRefLike) {
-            this[QueueScheduler_isPaused] = true;
-            this[MutableRefLike_current] = Disposable_disposed;
-          },
-          [PauseableLike_resume](
-            this: TProperties & DisposableRefLike & EnumeratorLike,
-          ) {
-            this[QueueScheduler_isPaused] = false;
-            scheduleOnHost(this);
           },
           [SchedulerLike_schedule](
             this: TProperties & DisposableRefLike & EnumeratorLike<QueueTask>,

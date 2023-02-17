@@ -1,7 +1,7 @@
 import { ContainerLike, ContainerLike_type, ContainerLike_T, Container, ContainerOf } from "./containers.js";
-import { Function1 } from "./functions.js";
+import { Updater, Function1 } from "./functions.js";
 import { MulticastObservableLike } from "./rx.js";
-import { DispatcherLike, SchedulerLike, PauseableLike } from "./scheduling.js";
+import { DispatcherLike, SchedulerLike, PauseableState, PauseableLike } from "./scheduling.js";
 /**
  * Represents a duplex stream
  *
@@ -16,12 +16,9 @@ interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLi
         readonly replay?: number;
     }): TStream;
 }
-declare const FlowMode_resume: unique symbol;
-declare const FlowMode_pause: unique symbol;
-type FlowMode = typeof FlowMode_resume | typeof FlowMode_pause;
-interface FlowableStreamLike<T = unknown> extends StreamLike<FlowMode, T>, PauseableLike {
+interface FlowableStreamLike<T = unknown> extends StreamLike<Updater<PauseableState>, T>, PauseableLike {
 }
-interface FlowableLike<T = unknown> extends StreamableLike<FlowMode, T, FlowableStreamLike<T>>, ContainerLike {
+interface FlowableLike<T = unknown> extends StreamableLike<Updater<PauseableState>, T, FlowableStreamLike<T>>, ContainerLike {
     readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 type FromFlowable<C extends ContainerLike, O = never> = Container<C> & {
@@ -30,4 +27,4 @@ type FromFlowable<C extends ContainerLike, O = never> = Container<C> & {
 type ToFlowable<C extends ContainerLike, O = never> = Container<C> & {
     toFlowable<T>(options?: O): Function1<ContainerOf<C, T>, FlowableLike<T>>;
 };
-export { FlowMode, FlowMode_pause, FlowMode_resume, FlowableLike, FlowableStreamLike, FromFlowable, StreamLike, StreamableLike, StreamableLike_stream, ToFlowable };
+export { FlowableLike, FlowableStreamLike, FromFlowable, StreamLike, StreamableLike, StreamableLike_stream, ToFlowable };

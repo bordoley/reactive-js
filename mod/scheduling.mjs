@@ -1,9 +1,5 @@
 /// <reference types="./scheduling.d.ts" />
 /** @ignore */
-const PauseableLike_pause = Symbol("PausableLike_pause");
-/** @ignore */
-const PauseableLike_resume = Symbol("PausableLike_resume");
-/** @ignore */
 const ContinuationLike_run = Symbol("ContinuationLike_run");
 /** @ignore */
 const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
@@ -19,5 +15,7 @@ const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 const DispatcherLike_dispatch = Symbol("DispatcherLike_dispatch");
 /** @ignore */
 const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
+const PauseableState_running = Symbol("PauseableState_running");
+const PauseableState_paused = Symbol("PauseableState_paused");
 
-export { ContinuationLike_run, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableLike_pause, PauseableLike_resume, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield };
+export { ContinuationLike_run, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield };
