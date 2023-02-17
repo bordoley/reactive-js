@@ -17,6 +17,7 @@ import Sequence_takeWhile from './Sequence/__internal__/Sequence.takeWhile.mjs';
 import Sequence_toEnumerable from './Sequence/__internal__/Sequence.toEnumerable.mjs';
 import Sequence_toReadonlyArray from './Sequence/__internal__/Sequence.toReadonlyArray.mjs';
 import Sequence_toRunnable from './Sequence/__internal__/Sequence.toRunnable.mjs';
+import Sequence_toRunnableObservable from './Sequence/__internal__/Sequence.toRunnableObservable.mjs';
 import Sequence_zip from './Sequence/__internal__/Sequence.zip.mjs';
 
 const concat = Sequence_concat;
@@ -35,8 +36,11 @@ const takeFirst = Sequence_takeFirst;
 const takeLast = Sequence_takeLast;
 const takeWhile = Sequence_takeWhile;
 const toEnumerable = Sequence_toEnumerable;
+const toEnumerableObservable = Sequence_toRunnableObservable;
+const toObservable = Sequence_toRunnableObservable;
 const toReadonlyArray = Sequence_toReadonlyArray;
 const toRunnable = Sequence_toRunnable;
+const toRunnableObservable = Sequence_toRunnableObservable;
 const zip = Sequence_zip;
 /** @ignore */
 const Sequence = {
@@ -55,9 +59,12 @@ const Sequence = {
     takeLast,
     takeWhile,
     toEnumerable,
+    toEnumerableObservable,
+    toObservable,
     toReadonlyArray,
     toRunnable,
+    toRunnableObservable,
     zip,
 };
 
-export { concat, concatAll, Sequence as default, distinctUntilChanged, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };
+export { concat, concatAll, Sequence as default, distinctUntilChanged, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

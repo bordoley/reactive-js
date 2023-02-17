@@ -16,7 +16,12 @@ import {
   Zip,
 } from "../containers";
 import { ToEnumerable } from "../ix";
-import { ToRunnable } from "../rx";
+import {
+  ToEnumerableObservable,
+  ToObservable,
+  ToRunnable,
+  ToRunnableObservable,
+} from "../rx";
 import Sequence_concat from "./Sequence/__internal__/Sequence.concat";
 import Sequence_concatAll from "./Sequence/__internal__/Sequence.concatAll";
 import Sequence_distinctUntilChanged from "./Sequence/__internal__/Sequence.distinctUntilChanged";
@@ -35,6 +40,7 @@ import Sequence_takeWhile from "./Sequence/__internal__/Sequence.takeWhile";
 import Sequence_toEnumerable from "./Sequence/__internal__/Sequence.toEnumerable";
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray";
 import Sequence_toRunnable from "./Sequence/__internal__/Sequence.toRunnable";
+import Sequence_toRunnableObservable from "./Sequence/__internal__/Sequence.toRunnableObservable";
 import Sequence_zip from "./Sequence/__internal__/Sequence.zip";
 
 export const concat: <T>(
@@ -79,11 +85,20 @@ export const takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   Sequence_toEnumerable;
 
+export const toEnumerableObservable: ToEnumerableObservable<SequenceLike>["toEnumerableObservable"] =
+  Sequence_toRunnableObservable as ToEnumerableObservable<SequenceLike>["toEnumerableObservable"];
+
+export const toObservable: ToObservable<SequenceLike>["toObservable"] =
+  Sequence_toRunnableObservable;
+
 export const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
   Sequence_toReadonlyArray;
 
 export const toRunnable: ToRunnable<SequenceLike>["toRunnable"] =
   Sequence_toRunnable;
+
+export const toRunnableObservable: ToRunnableObservable<SequenceLike>["toRunnableObservable"] =
+  Sequence_toRunnableObservable;
 
 export const zip: Zip<SequenceLike>["zip"] = Sequence_zip;
 
@@ -104,8 +119,11 @@ const Sequence = {
   takeLast,
   takeWhile,
   toEnumerable,
+  toEnumerableObservable,
+  toObservable,
   toReadonlyArray,
   toRunnable,
+  toRunnableObservable,
   zip,
 };
 

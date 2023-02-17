@@ -27,6 +27,7 @@ const map = ReadonlyArray_map;
 const some = ReadonlyArray_some;
 const toEnumerable = ReadonlyArray_toEnumerable;
 const toEnumerableObservable = ReadonlyArray_toRunnableObservable;
+const toIterable = ReadonlyArray_toReadonlyArray;
 const toObservable = ReadonlyArray_toRunnableObservable;
 const toReadonlyArray = ReadonlyArray_toReadonlyArray;
 const toRunnable = ReadonlyArray_toRunnable;
@@ -46,6 +47,7 @@ const ReadonlyArray = {
     some,
     toEnumerable,
     toEnumerableObservable,
+    toIterable,
     toObservable,
     toReadonlyArray,
     toRunnable,
@@ -53,4 +55,4 @@ const ReadonlyArray = {
     toSequence,
 };
 
-export { ReadonlyArray as default, empty, every, forEach, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };
+export { ReadonlyArray as default, empty, every, forEach, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };

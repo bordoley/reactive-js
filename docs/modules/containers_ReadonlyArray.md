@@ -19,6 +19,7 @@
 - [some](containers_ReadonlyArray.md#some)
 - [toEnumerable](containers_ReadonlyArray.md#toenumerable)
 - [toEnumerableObservable](containers_ReadonlyArray.md#toenumerableobservable)
+- [toIterable](containers_ReadonlyArray.md#toiterable)
 - [toObservable](containers_ReadonlyArray.md#toobservable)
 - [toReadonlyArray](containers_ReadonlyArray.md#toreadonlyarray)
 - [toRunnable](containers_ReadonlyArray.md#torunnable)
@@ -320,6 +321,30 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
+
+___
+
+### toIterable
+
+▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
 
 ___
 

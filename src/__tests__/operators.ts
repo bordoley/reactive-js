@@ -45,9 +45,11 @@ import {
   ObservableLike,
   Retry,
   ScanAsync,
+  ToEnumerableObservable,
   ToObservable,
   ToRunnableObservable,
 } from "../rx";
+import EnumerableObservable from "../rx/EnumerableObservable";
 import Observable from "../rx/Observable";
 import RunnableObservable from "../rx/RunnableObservable";
 import { __now } from "../scheduling/Continuation/effects";
@@ -1112,6 +1114,23 @@ export const toEnumerableTests = <C extends ContainerLike>(
         m.toEnumerable(),
         Enumerable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4]),
+      ),
+    ),
+  );
+
+export const toEnumerableObservableTests = <C extends ContainerLike>(
+  m: FromReadonlyArray<C> & ToEnumerableObservable<C>,
+) =>
+  describe(
+    "toEnumerableObservable",
+    test(
+      "without delay",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        m.fromReadonlyArray(),
+        m.toEnumerableObservable(),
+        EnumerableObservable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5]),
       ),
     ),
   );

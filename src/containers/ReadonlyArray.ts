@@ -6,6 +6,7 @@ import {
   Keep,
   Map,
   ReadonlyArrayLike,
+  ToIterable,
   ToReadonlyArray,
   ToSequence,
 } from "../containers";
@@ -84,6 +85,14 @@ export const toEnumerableObservable: ToEnumerableObservable<
     }
   >["toEnumerableObservable"];
 
+export const toIterable: ToIterable<
+  ReadonlyArrayLike,
+  {
+    readonly count?: number;
+    readonly start?: number;
+  }
+>["toIterable"] = ReadonlyArray_toReadonlyArray;
+
 export const toObservable: ToObservable<
   ReadonlyArrayLike,
   {
@@ -132,6 +141,7 @@ const ReadonlyArray = {
   some,
   toEnumerable,
   toEnumerableObservable,
+  toIterable,
   toObservable,
   toReadonlyArray,
   toRunnable,

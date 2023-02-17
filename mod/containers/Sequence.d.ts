@@ -1,4 +1,4 @@
-import { ToRunnable, RunnableLike } from "../rx.js";
+import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable, EnumerableObservableLike, ObservableLike, RunnableLike, RunnableObservableLike } from "../rx.js";
 import { ToEnumerable, EnumerableLike } from "../ix.js";
 import { Function1, Equality, Updater, Factory, Predicate, Reducer } from "../functions.js";
 import { SequenceLike, ConcatAll, DistinctUntilChanged, ReadonlyArrayLike, Generate, Keep, Map, Pairwise, Repeat, Scan, ContainerOperator, SkipFirst, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip } from "../containers.js";
@@ -18,8 +18,11 @@ declare const takeFirst: TakeFirst<SequenceLike>["takeFirst"];
 declare const takeLast: TakeLast<SequenceLike>["takeLast"];
 declare const takeWhile: TakeWhile<SequenceLike>["takeWhile"];
 declare const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"];
+declare const toEnumerableObservable: ToEnumerableObservable<SequenceLike>["toEnumerableObservable"];
+declare const toObservable: ToObservable<SequenceLike>["toObservable"];
 declare const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"];
 declare const toRunnable: ToRunnable<SequenceLike>["toRunnable"];
+declare const toRunnableObservable: ToRunnableObservable<SequenceLike>["toRunnableObservable"];
 declare const zip: Zip<SequenceLike>["zip"];
 /** @ignore */
 declare const Sequence: {
@@ -55,8 +58,17 @@ declare const Sequence: {
         readonly inclusive?: boolean | undefined;
     } | undefined) => ContainerOperator<SequenceLike<unknown>, T_14, T_14>;
     toEnumerable: <T_15>(options?: undefined) => Function1<SequenceLike<T_15>, EnumerableLike<T_15>>;
-    toReadonlyArray: <T_16>(options?: undefined) => Function1<SequenceLike<T_16>, ReadonlyArrayLike<T_16>>;
-    toRunnable: <T_17>(options?: undefined) => Function1<SequenceLike<T_17>, RunnableLike<T_17>>;
+    toEnumerableObservable: <T_16>(options?: undefined) => Function1<SequenceLike<T_16>, EnumerableObservableLike<T_16>>;
+    toObservable: <T_17>(options?: {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    } | undefined) => Function1<SequenceLike<T_17>, ObservableLike<T_17>>;
+    toReadonlyArray: <T_18>(options?: undefined) => Function1<SequenceLike<T_18>, ReadonlyArrayLike<T_18>>;
+    toRunnable: <T_19>(options?: undefined) => Function1<SequenceLike<T_19>, RunnableLike<T_19>>;
+    toRunnableObservable: <T_20>(options?: {
+        readonly delay?: number | undefined;
+        readonly delayStart?: boolean | undefined;
+    } | undefined) => Function1<SequenceLike<T_20>, RunnableObservableLike<T_20>>;
     zip: {
         <TA_1, TB_1>(a: SequenceLike<TA_1>, b: SequenceLike<TB_1>): SequenceLike<readonly [
             TA_1,
@@ -120,4 +132,4 @@ declare const Sequence: {
         ]>;
     };
 };
-export { concat, concatAll, Sequence as default, distinctUntilChanged, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toReadonlyArray, toRunnable, zip };
+export { concat, concatAll, Sequence as default, distinctUntilChanged, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };
