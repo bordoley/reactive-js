@@ -194,11 +194,22 @@ export const toReadonlyArray =
 export const toRunnable =
   RunnableObservable_toRunnable as ToRunnable<EnumerableObservableLike>["toRunnable"];
 
-export const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike>["toRunnableObservable"] =
-  o => compose(toEnumerable(), Enumerable_toRunnableObservable(o));
+export const toRunnableObservable: ToRunnableObservable<
+  EnumerableObservableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toRunnableObservable"] = o =>
+  compose(toEnumerable(), Enumerable_toRunnableObservable(o));
 
-export const toObservable: ToObservable<EnumerableObservableLike>["toObservable"] =
-  toRunnableObservable;
+export const toObservable: ToObservable<
+  EnumerableObservableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toObservable"] = toRunnableObservable;
 
 export const zip = Observable_zip as Zip<EnumerableObservableLike>["zip"];
 

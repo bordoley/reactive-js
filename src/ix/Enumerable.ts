@@ -131,8 +131,13 @@ export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"]
 export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
   Enumerable_toRunnable;
 
-export const toRunnableObservable: ToRunnableObservable<EnumerableLike>["toRunnableObservable"] =
-  Enumerable_toRunnableObservable;
+export const toRunnableObservable: ToRunnableObservable<
+  EnumerableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toRunnableObservable"] = Enumerable_toRunnableObservable;
 
 export const zip: Zip<EnumerableLike>["zip"] = Enumerable_zip;
 

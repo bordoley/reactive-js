@@ -66,8 +66,14 @@ declare const toReadonlyArray: <T>(options?: {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 } | undefined) => Function1<EnumerableObservableLike<T>, ReadonlyArrayLike<T>>;
 declare const toRunnable: <T>(options?: undefined) => Function1<EnumerableObservableLike<T>, RunnableLike<T>>;
-declare const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike>["toRunnableObservable"];
-declare const toObservable: ToObservable<EnumerableObservableLike>["toObservable"];
+declare const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+}>["toRunnableObservable"];
+declare const toObservable: ToObservable<EnumerableObservableLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+}>["toObservable"];
 declare const zip: {
     <TA, TB>(a: EnumerableObservableLike<TA>, b: EnumerableObservableLike<TB>): EnumerableObservableLike<readonly [
         TA,

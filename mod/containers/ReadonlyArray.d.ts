@@ -76,15 +76,12 @@ declare const ReadonlyArray: {
         readonly count?: number | undefined;
         readonly start?: number | undefined;
     } | undefined) => Function1<ReadonlyArrayLike<T_11>, IterableLike<T_11>>;
-    toObservable: <T_12>(options?: ({
+    toObservable: <T_12>(options?: {
         readonly count?: number | undefined;
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
         readonly start?: number | undefined;
-    } & {
-        readonly delay?: number | undefined;
-        readonly delayStart?: boolean | undefined;
-    }) | undefined) => Function1<ReadonlyArrayLike<T_12>, ObservableLike<T_12>>;
+    } | undefined) => Function1<ReadonlyArrayLike<T_12>, ObservableLike<T_12>>;
     toReadonlyArray: <T_13>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
@@ -93,15 +90,12 @@ declare const ReadonlyArray: {
         readonly count?: number | undefined;
         readonly start?: number | undefined;
     } | undefined) => Function1<ReadonlyArrayLike<T_14>, RunnableLike<T_14>>;
-    toRunnableObservable: <T_15>(options?: ({
+    toRunnableObservable: <T_15>(options?: {
         readonly count?: number | undefined;
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
         readonly start?: number | undefined;
-    } & {
-        readonly delay?: number | undefined;
-        readonly delayStart?: boolean | undefined;
-    }) | undefined) => Function1<ReadonlyArrayLike<T_15>, RunnableObservableLike<T_15>>;
+    } | undefined) => Function1<ReadonlyArrayLike<T_15>, RunnableObservableLike<T_15>>;
     toSequence: <T_16>(options?: {
         readonly count?: number | undefined;
         readonly start?: number | undefined;
