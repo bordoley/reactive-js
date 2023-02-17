@@ -1,13 +1,13 @@
-[Reactive-JS](../README.md) / util/Pauseable
+[Reactive-JS](../README.md) / scheduling/Pauseable
 
-# Module: util/Pauseable
+# Module: scheduling/Pauseable
 
 ## Table of contents
 
 ### Functions
 
-- [pause](util_Pauseable.md#pause)
-- [resume](util_Pauseable.md#resume)
+- [pause](scheduling_Pauseable.md#pause)
+- [resume](scheduling_Pauseable.md#resume)
 
 ## Functions
 

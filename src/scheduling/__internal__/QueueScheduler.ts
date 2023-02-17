@@ -30,6 +30,9 @@ import MutableEnumerator_mixin from "../../ix/__internal__/MutableEnumerator/Mut
 import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal";
 import {
   ContinuationLike,
+  PauseableLike,
+  PauseableLike_pause,
+  PauseableLike_resume,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -37,12 +40,7 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../scheduling";
-import {
-  DisposableLike,
-  PauseableLike,
-  PauseableLike_pause,
-  PauseableLike_resume,
-} from "../../util";
+import { DisposableLike } from "../../util";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed";
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed";

@@ -1,8 +1,7 @@
 import { ContainerLike, ContainerLike_type, ContainerLike_T, Container, ContainerOf } from "./containers.js";
 import { Function1 } from "./functions.js";
 import { MulticastObservableLike } from "./rx.js";
-import { DispatcherLike, SchedulerLike } from "./scheduling.js";
-import { PauseableLike } from "./util.js";
+import { DispatcherLike, SchedulerLike, PauseableLike } from "./scheduling.js";
 /**
  * Represents a duplex stream
  *

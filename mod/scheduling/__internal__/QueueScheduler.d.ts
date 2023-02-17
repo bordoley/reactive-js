@@ -1,6 +1,6 @@
 import { Function1 } from "../../functions.js";
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, ContinuationLike, SchedulerLike } from "../../scheduling.js";
-import { DisposableLike, PauseableLike } from "../../util.js";
+import { PauseableLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_shouldYield, SchedulerLike_requestYield, SchedulerLike_schedule, ContinuationLike, SchedulerLike } from "../../scheduling.js";
+import { DisposableLike } from "../../util.js";
 type QueueSchedulerOptions = {
     readonly priority?: number;
     readonly delay?: number;

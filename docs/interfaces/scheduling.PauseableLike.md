@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [util](../modules/util.md) / PauseableLike
+[Reactive-JS](../README.md) / [scheduling](../modules/scheduling.md) / PauseableLike
 
 # Interface: PauseableLike
 
-[util](../modules/util.md).PauseableLike
+[scheduling](../modules/scheduling.md).PauseableLike
 
 ## Hierarchy
 
@@ -16,8 +16,8 @@
 
 ### Methods
 
-- [[PauseableLike\_pause]](util.PauseableLike.md#[pauseablelike_pause])
-- [[PauseableLike\_resume]](util.PauseableLike.md#[pauseablelike_resume])
+- [[PauseableLike\_pause]](scheduling.PauseableLike.md#[pauseablelike_pause])
+- [[PauseableLike\_resume]](scheduling.PauseableLike.md#[pauseablelike_resume])
 
 ## Methods
 

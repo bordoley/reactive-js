@@ -47,14 +47,3 @@ export interface DisposableLike {
    */
   [DisposableLike_dispose](error?: Error): void;
 }
-
-/** @ignore */
-export const PauseableLike_pause = Symbol("PausableLike_pause");
-
-/** @ignore */
-export const PauseableLike_resume = Symbol("PausableLike_resume");
-
-export interface PauseableLike {
-  [PauseableLike_pause](): void;
-  [PauseableLike_resume](): void;
-}

@@ -1,4 +1,4 @@
-import { PauseableLike_pause, PauseableLike_resume } from "../util.js";
+import { PauseableLike_pause, PauseableLike_resume } from "../scheduling.js";
 declare const pause: <TPauseable extends {
     [PauseableLike_pause](): void;
 }>(pausable: TPauseable) => TPauseable;

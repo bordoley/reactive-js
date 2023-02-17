@@ -1,13 +1,13 @@
 /// <reference types="./RunnableObservable.toFlowable.d.ts" />
 import { pipe } from '../../../functions.mjs';
+import Pauseable_pause from '../../../scheduling/Pauseable/__internal__/Pauseable.pause.mjs';
+import Pauseable_resume from '../../../scheduling/Pauseable/__internal__/Pauseable.resume.mjs';
 import Scheduler_toPausableScheduler from '../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.mjs';
 import { FlowMode_resume, FlowMode_pause } from '../../../streaming.mjs';
 import Flowable_createLifted from '../../../streaming/Flowable/__internal__/Flowable.createLifted.mjs';
 import Disposable_add from '../../../util/Disposable/__internal__/Disposable.add.mjs';
 import Disposable_bindTo from '../../../util/Disposable/__internal__/Disposable.bindTo.mjs';
 import Disposable_toObservable from '../../../util/Disposable/__internal__/Disposable.toObservable.mjs';
-import Pauseable_pause from '../../../util/Pauseable/__internal__/Pauseable.pause.mjs';
-import Pauseable_resume from '../../../util/Pauseable/__internal__/Pauseable.resume.mjs';
 import Observable_create from '../../Observable/__internal__/Observable.create.mjs';
 import Observable_forEach from '../../Observable/__internal__/Observable.forEach.mjs';
 import Observable_subscribe from '../../Observable/__internal__/Observable.subscribe.mjs';

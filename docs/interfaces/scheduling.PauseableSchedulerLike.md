@@ -8,7 +8,7 @@ Represents an unmanaged resource that can be disposed.
 
 ## Hierarchy
 
-- [`PauseableLike`](util.PauseableLike.md)
+- [`PauseableLike`](scheduling.PauseableLike.md)
 
 - [`SchedulerLike`](scheduling.SchedulerLike.md)
 
@@ -146,7 +146,7 @@ ___
 
 #### Inherited from
 
-[PauseableLike](util.PauseableLike.md).[[PauseableLike_pause]](util.PauseableLike.md#[pauseablelike_pause])
+[PauseableLike](scheduling.PauseableLike.md).[[PauseableLike_pause]](scheduling.PauseableLike.md#[pauseablelike_pause])
 
 ___
 
@@ -160,7 +160,7 @@ ___
 
 #### Inherited from
 
-[PauseableLike](util.PauseableLike.md).[[PauseableLike_resume]](util.PauseableLike.md#[pauseablelike_resume])
+[PauseableLike](scheduling.PauseableLike.md).[[PauseableLike_resume]](scheduling.PauseableLike.md#[pauseablelike_resume])
 
 ___
 

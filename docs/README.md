@@ -40,6 +40,7 @@ Reactive-JS
 - [scheduling/Continuation](modules/scheduling_Continuation.md)
 - [scheduling/Continuation/effects](modules/scheduling_Continuation_effects.md)
 - [scheduling/Dispatcher](modules/scheduling_Dispatcher.md)
+- [scheduling/Pauseable](modules/scheduling_Pauseable.md)
 - [scheduling/PriorityScheduler](modules/scheduling_PriorityScheduler.md)
 - [scheduling/Scheduler](modules/scheduling_Scheduler.md)
 - [scheduling/VirtualTimeScheduler](modules/scheduling_VirtualTimeScheduler.md)
@@ -49,4 +50,3 @@ Reactive-JS
 - [streaming/Streamable](modules/streaming_Streamable.md)
 - [util](modules/util.md)
 - [util/Disposable](modules/util_Disposable.md)
-- [util/Pauseable](modules/util_Pauseable.md)

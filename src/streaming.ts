@@ -7,8 +7,7 @@ import {
 } from "./containers";
 import { Function1 } from "./functions";
 import { MulticastObservableLike } from "./rx";
-import { DispatcherLike, SchedulerLike } from "./scheduling";
-import { PauseableLike } from "./util";
+import { DispatcherLike, PauseableLike, SchedulerLike } from "./scheduling";
 
 /**
  * Represents a duplex stream
