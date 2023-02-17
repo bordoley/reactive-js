@@ -408,7 +408,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `undefined` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 
@@ -452,7 +454,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `undefined` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 

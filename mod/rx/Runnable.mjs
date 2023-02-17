@@ -1,5 +1,6 @@
 /// <reference types="./Runnable.d.ts" />
 import { returns, identity } from '../functions.mjs';
+import Enumerable_toRunnable from '../ix/Enumerable/__internal__/Enumerable.toRunnable.mjs';
 import Runnable_buffer from './Runnable/__internal__/Runnable.buffer.mjs';
 import Runnable_catchError from './Runnable/__internal__/Runnable.catchError.mjs';
 import Runnable_concat from './Runnable/__internal__/Runnable.concat.mjs';
@@ -31,6 +32,7 @@ import Runnable_takeLast from './Runnable/__internal__/Runnable.takeLast.mjs';
 import Runnable_takeWhile from './Runnable/__internal__/Runnable.takeWhile.mjs';
 import Runnable_throwIfEmpty from './Runnable/__internal__/Runnable.throwIfEmpty.mjs';
 import Runnable_toReadonlyArray from './Runnable/__internal__/Runnable.toReadonlyArray.mjs';
+import RunnableObservable_toRunnable from './RunnableObservable/__internal__/RunnableObservable.toRunnable.mjs';
 
 const buffer = Runnable_buffer;
 const catchError = Runnable_catchError;
@@ -44,7 +46,10 @@ const empty = Runnable_empty;
 const everySatisfy = Runnable_everySatisfy;
 const first = Runnable_first;
 const forEach = Runnable_forEach;
+const fromEnumerable = Enumerable_toRunnable;
+const fromEnumerableObservable = RunnableObservable_toRunnable;
 const fromReadonlyArray = Runnable_fromReadonlyArray;
+const fromRunnableObservable = RunnableObservable_toRunnable;
 const generate = Runnable_generate;
 const keep = Runnable_keep;
 const last = Runnable_last;
@@ -63,7 +68,8 @@ const takeLast = Runnable_takeLast;
 const takeWhile = Runnable_takeWhile;
 const throwIfEmpty = Runnable_throwIfEmpty;
 const toReadonlyArray = Runnable_toReadonlyArray;
-const toRunnable = returns(identity);
+const toRunnable = 
+/*@__PURE__*/ returns(identity);
 /** @ignore */
 const Runnable = {
     buffer,
@@ -78,7 +84,10 @@ const Runnable = {
     everySatisfy,
     first,
     forEach,
+    fromEnumerable,
+    fromEnumerableObservable,
     fromReadonlyArray,
+    fromRunnableObservable,
     generate,
     keep,
     last,
@@ -100,4 +109,4 @@ const Runnable = {
     toRunnable,
 };
 
-export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromReadonlyArray, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };
+export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };

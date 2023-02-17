@@ -1,9 +1,7 @@
 import {
-  ReadonlyArrayLike,
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-  ToSequence,
 } from "../../../containers";
 import { Optional, none } from "../../../functions";
 
@@ -29,7 +27,7 @@ const _arraySequence = <T>(
       }
     : none;
 
-const ReadonlyArray_toSequence: ToSequence<ReadonlyArrayLike>["toSequence"] =
+const ReadonlyArray_toSequence =
   /*@__PURE__*/ ReadonlyArray_toContainer<SequenceLike>(
     <T>(values: readonly T[], startIndex: number, count: number) =>
       () =>

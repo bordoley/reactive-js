@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import { IterableLike } from "../../../containers";
-import { none, pipe } from "../../../functions";
+import { none, pipe, returns } from "../../../functions";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -63,10 +63,11 @@ const Iterable_toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
       ),
     );
 
-    return () => (iterable: Iterable<T>) =>
+    return returns((iterable: Iterable<T>) =>
       Enumerable_create(() =>
         createIterableEnumerator(iterable[Symbol.iterator]()),
-      );
+      ),
+    );
   })();
 
 export default Iterable_toEnumerable;

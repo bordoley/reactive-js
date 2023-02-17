@@ -1,6 +1,8 @@
 import {
+  Concat,
   ConcatAll,
   DistinctUntilChanged,
+  FromReadonlyArray,
   Generate,
   Keep,
   Map,
@@ -22,10 +24,10 @@ import {
   ToRunnable,
   ToRunnableObservable,
 } from "../rx";
+import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence";
 import Sequence_concat from "./Sequence/__internal__/Sequence.concat";
 import Sequence_concatAll from "./Sequence/__internal__/Sequence.concatAll";
 import Sequence_distinctUntilChanged from "./Sequence/__internal__/Sequence.distinctUntilChanged";
-import Sequence_fromReadonlyArray from "./Sequence/__internal__/Sequence.fromReadonlyArray";
 import Sequence_generate from "./Sequence/__internal__/Sequence.generate";
 import Sequence_keep from "./Sequence/__internal__/Sequence.keep";
 import Sequence_map from "./Sequence/__internal__/Sequence.map";
@@ -43,11 +45,7 @@ import Sequence_toRunnable from "./Sequence/__internal__/Sequence.toRunnable";
 import Sequence_toRunnableObservable from "./Sequence/__internal__/Sequence.toRunnableObservable";
 import Sequence_zip from "./Sequence/__internal__/Sequence.zip";
 
-export const concat: <T>(
-  fst: SequenceLike<T>,
-  snd: SequenceLike<T>,
-  ...tail: readonly SequenceLike<T>[]
-) => SequenceLike<T> = Sequence_concat;
+export const concat: Concat<SequenceLike>["concat"] = Sequence_concat;
 
 export const concatAll: ConcatAll<SequenceLike>["concatAll"] =
   Sequence_concatAll;
@@ -55,7 +53,8 @@ export const concatAll: ConcatAll<SequenceLike>["concatAll"] =
 export const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"] =
   Sequence_distinctUntilChanged;
 
-export const fromReadonlyArray = Sequence_fromReadonlyArray;
+export const fromReadonlyArray: FromReadonlyArray<SequenceLike>["fromReadonlyArray"] =
+  ReadonlyArray_toSequence;
 
 export const generate: Generate<SequenceLike>["generate"] = Sequence_generate;
 

@@ -23,7 +23,6 @@ import {
   takeLastTests,
   takeWhileTests,
   throwIfEmptyTests,
-  //toRunnableObservableTests,
 } from "../operators";
 import { describe, expectEquals, test, testModule } from "../testing";
 
@@ -92,8 +91,4 @@ testModule(
       ),
     ),
   ),
-  // FIXME
-  //  toEnumerableObservableTests<RunnableLike>(Runnable),
-  //toRunnableObservableTests<RunnableLike>(Runnable),
-  //toObservableTests<RunnableLike>(Runnable),
 );

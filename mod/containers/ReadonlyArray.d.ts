@@ -35,14 +35,20 @@ declare const toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike, {
     readonly start?: number;
     readonly count?: number;
 }>["toReadonlyArray"];
-declare const toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"];
+declare const toRunnable: ToRunnable<ReadonlyArrayLike, {
+    readonly count?: number;
+    readonly start?: number;
+}>["toRunnable"];
 declare const toRunnableObservable: ToRunnableObservable<ReadonlyArrayLike, {
     readonly count?: number;
     readonly delay?: number;
     readonly delayStart?: boolean;
     readonly start?: number;
 }>["toRunnableObservable"];
-declare const toSequence: ToSequence<ReadonlyArrayLike>["toSequence"];
+declare const toSequence: ToSequence<ReadonlyArrayLike, {
+    readonly count?: number;
+    readonly start?: number;
+}>["toSequence"];
 /** @ignore */
 declare const ReadonlyArray: {
     empty: <T>(options?: undefined) => ReadonlyArrayLike<T>;
@@ -83,7 +89,10 @@ declare const ReadonlyArray: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
     } | undefined) => Function1<ReadonlyArrayLike<T_13>, ReadonlyArrayLike<T_13>>;
-    toRunnable: <T_14>(options?: undefined) => Function1<ReadonlyArrayLike<T_14>, RunnableLike<T_14>>;
+    toRunnable: <T_14>(options?: {
+        readonly count?: number | undefined;
+        readonly start?: number | undefined;
+    } | undefined) => Function1<ReadonlyArrayLike<T_14>, RunnableLike<T_14>>;
     toRunnableObservable: <T_15>(options?: ({
         readonly count?: number | undefined;
         readonly delay?: number | undefined;
@@ -93,6 +102,9 @@ declare const ReadonlyArray: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
     }) | undefined) => Function1<ReadonlyArrayLike<T_15>, RunnableObservableLike<T_15>>;
-    toSequence: <T_16>(options?: undefined) => Function1<ReadonlyArrayLike<T_16>, SequenceLike<T_16>>;
+    toSequence: <T_16>(options?: {
+        readonly count?: number | undefined;
+        readonly start?: number | undefined;
+    } | undefined) => Function1<ReadonlyArrayLike<T_16>, SequenceLike<T_16>>;
 };
 export { ReadonlyArray as default, empty, every, forEach, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, fromSequence, keep, map, some, toEnumerable, toEnumerableObservable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, toSequence };

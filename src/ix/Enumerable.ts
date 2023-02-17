@@ -22,7 +22,7 @@ import {
   Zip,
 } from "../containers";
 import Iterable_toEnumerable from "../containers/Iterable/__internal__/Iterable.toEnumerable";
-import { identity } from "../functions";
+import { identity, returns } from "../functions";
 import { EnumerableLike, ToEnumerable } from "../ix";
 import {
   ToEnumerableObservable,
@@ -106,8 +106,10 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   Enumerable_throwIfEmpty;
 
-export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] = () =>
-  identity;
+export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
+  /*@__PURE__*/ returns(
+    identity,
+  ) as ToEnumerable<EnumerableLike>["toEnumerable"];
 
 export const toEnumerableObservable: ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"] =
   Enumerable_toEnumerableObservable;
