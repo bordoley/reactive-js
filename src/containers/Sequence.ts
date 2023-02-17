@@ -14,16 +14,18 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
+  ToIterable,
   ToReadonlyArray,
   Zip,
 } from "../containers";
-import { ToEnumerable } from "../ix";
+import { ToAsyncEnumerable, ToEnumerable } from "../ix";
 import {
   ToEnumerableObservable,
   ToObservable,
   ToRunnable,
   ToRunnableObservable,
 } from "../rx";
+import { ToFlowable } from "../streaming";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence";
 import Sequence_concat from "./Sequence/__internal__/Sequence.concat";
 import Sequence_concatAll from "./Sequence/__internal__/Sequence.concatAll";
@@ -39,7 +41,10 @@ import Sequence_skipFirst from "./Sequence/__internal__/Sequence.skipFirst";
 import Sequence_takeFirst from "./Sequence/__internal__/Sequence.takeFirst";
 import Sequence_takeLast from "./Sequence/__internal__/Sequence.takeLast";
 import Sequence_takeWhile from "./Sequence/__internal__/Sequence.takeWhile";
+import Sequence_toAsyncEnumerable from "./Sequence/__internal__/Sequence.toAsyncEnumerable";
 import Sequence_toEnumerable from "./Sequence/__internal__/Sequence.toEnumerable";
+import Sequence_toFlowable from "./Sequence/__internal__/Sequence.toFlowable";
+import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable";
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray";
 import Sequence_toRunnable from "./Sequence/__internal__/Sequence.toRunnable";
 import Sequence_toRunnableObservable from "./Sequence/__internal__/Sequence.toRunnableObservable";
@@ -81,11 +86,25 @@ export const takeLast: TakeLast<SequenceLike>["takeLast"] = Sequence_takeLast;
 export const takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
   Sequence_takeWhile;
 
+export const toAsyncEnumerable: ToAsyncEnumerable<SequenceLike>["toAsyncEnumerable"] =
+  Sequence_toAsyncEnumerable;
+
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   Sequence_toEnumerable;
 
 export const toEnumerableObservable: ToEnumerableObservable<SequenceLike>["toEnumerableObservable"] =
   Sequence_toRunnableObservable as ToEnumerableObservable<SequenceLike>["toEnumerableObservable"];
+
+export const toFlowable: ToFlowable<
+  SequenceLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toFlowable"] = Sequence_toFlowable;
+
+export const toIterable: ToIterable<SequenceLike>["toIterable"] =
+  Sequence_toIterable;
 
 export const toObservable: ToObservable<
   SequenceLike,
@@ -127,8 +146,11 @@ const Sequence = {
   takeFirst,
   takeLast,
   takeWhile,
+  toAsyncEnumerable,
   toEnumerable,
   toEnumerableObservable,
+  toFlowable,
+  toIterable,
   toObservable,
   toReadonlyArray,
   toRunnable,

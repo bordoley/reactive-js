@@ -9,6 +9,8 @@ import {
   Empty,
   EverySatisfy,
   ForEach,
+  FromIterable,
+  FromReadonlyArray,
   Generate,
   Keep,
   Map,
@@ -24,6 +26,8 @@ import {
   ThrowIfEmpty,
   ToReadonlyArray,
 } from "../containers";
+import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable";
+import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable";
 import { identity, returns } from "../functions";
 import { FromEnumerable } from "../ix";
 import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable";
@@ -45,7 +49,6 @@ import Runnable_empty from "./Runnable/__internal__/Runnable.empty";
 import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy";
 import Runnable_first from "./Runnable/__internal__/Runnable.first";
 import Runnable_forEach from "./Runnable/__internal__/Runnable.forEach";
-import Runnable_fromReadonlyArray from "./Runnable/__internal__/Runnable.fromReadonlyArray";
 import Runnable_generate from "./Runnable/__internal__/Runnable.generate";
 import Runnable_keep from "./Runnable/__internal__/Runnable.keep";
 import Runnable_last from "./Runnable/__internal__/Runnable.last";
@@ -101,7 +104,11 @@ export const fromEnumerable: FromEnumerable<RunnableLike>["fromEnumerable"] =
 export const fromEnumerableObservable: FromEnumerableObservable<RunnableLike>["fromEnumerableObservable"] =
   RunnableObservable_toRunnable;
 
-export const fromReadonlyArray = Runnable_fromReadonlyArray;
+export const fromIterable: FromIterable<RunnableLike>["fromIterable"] =
+  Iterable_toRunnable;
+
+export const fromReadonlyArray: FromReadonlyArray<RunnableLike>["fromReadonlyArray"] =
+  ReadonlyArray_toRunnable;
 
 export const fromRunnableObservable: FromRunnableObservable<RunnableLike>["fromRunnableObservable"] =
   RunnableObservable_toRunnable;
@@ -167,6 +174,7 @@ const Runnable = {
   forEach,
   fromEnumerable,
   fromEnumerableObservable,
+  fromIterable,
   fromReadonlyArray,
   fromRunnableObservable,
   generate,

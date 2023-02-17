@@ -1,6 +1,7 @@
 /// <reference types="./Observable.timeout.d.ts" />
 import { DelegatingLike_delegate, createInstanceFactory, mix, include, init, props } from '../../../__internal__/mixins.mjs';
 import Container_throws from '../../../containers/Container/__internal__/Container.throws.mjs';
+import ReadonlyArray_toRunnableObservable from '../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.mjs';
 import { pipe, none, returns, isNumber, partial } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
 import Disposable_delegatingMixin from '../../../util/Disposable/__internal__/Disposable.delegatingMixin.mjs';
@@ -12,7 +13,6 @@ import { MutableRefLike_current } from '../../../util/__internal__/util.internal
 import Observer_getScheduler from '../../Observer/__internal__/Observer.getScheduler.mjs';
 import Observer_mixin from '../../Observer/__internal__/Observer.mixin.mjs';
 import Observable_concat from './Observable.concat.mjs';
-import Observable_fromReadonlyArray from './Observable.fromReadonlyArray.mjs';
 import Observable_isRunnable from './Observable.isRunnable.mjs';
 import Observable_lift from './Observable.lift.mjs';
 import Observable_map from './Observable.map.mjs';
@@ -45,11 +45,11 @@ const Observable_timeout = /*@__PURE__*/ (() => {
     return (duration) => {
         const durationObs = isNumber(duration)
             ? Container_throws({
-                fromReadonlyArray: Observable_fromReadonlyArray,
+                fromReadonlyArray: ReadonlyArray_toRunnableObservable,
                 map: Observable_map,
             }, { delay: duration, delayStart: true, raise })
             : Observable_concat(duration, Container_throws({
-                fromReadonlyArray: Observable_fromReadonlyArray,
+                fromReadonlyArray: ReadonlyArray_toRunnableObservable,
                 map: Observable_map,
             }, { raise }));
         return pipe(createTimeoutObserver, partial(durationObs), Observable_lift(false, isNumber(duration) || Observable_isRunnable(duration)));

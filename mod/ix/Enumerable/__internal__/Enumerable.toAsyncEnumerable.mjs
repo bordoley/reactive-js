@@ -12,9 +12,9 @@ import Source_move from '../../Source/__internal__/Source.move.mjs';
 import Enumerable_enumerate from './Enumerable.enumerate.mjs';
 
 const Enumerable_toAsyncEnumerable = 
-/*@__PURE__*/ (() => returns((enumerable) => AsyncEnumerable_create(observable => Observable_create(observer => {
+/*@__PURE__*/ returns((enumerable) => AsyncEnumerable_create(observable => Observable_create(observer => {
     const enumerator = pipe(enumerable, Enumerable_enumerate(), Disposable_addTo(observer));
     pipe(observable, Observable_map(_ => Source_move(enumerator)), Observable_takeWhile(Enumerator_hasCurrent), Observable_map(Enumerator_getCurrent), ReactiveContainer_sinkInto(observer));
-}))))();
+})));
 
 export { Enumerable_toAsyncEnumerable as default };

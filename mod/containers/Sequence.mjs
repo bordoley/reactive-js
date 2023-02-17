@@ -14,7 +14,10 @@ import Sequence_skipFirst from './Sequence/__internal__/Sequence.skipFirst.mjs';
 import Sequence_takeFirst from './Sequence/__internal__/Sequence.takeFirst.mjs';
 import Sequence_takeLast from './Sequence/__internal__/Sequence.takeLast.mjs';
 import Sequence_takeWhile from './Sequence/__internal__/Sequence.takeWhile.mjs';
+import Sequence_toAsyncEnumerable from './Sequence/__internal__/Sequence.toAsyncEnumerable.mjs';
 import Sequence_toEnumerable from './Sequence/__internal__/Sequence.toEnumerable.mjs';
+import Sequence_toFlowable from './Sequence/__internal__/Sequence.toFlowable.mjs';
+import Sequence_toIterable from './Sequence/__internal__/Sequence.toIterable.mjs';
 import Sequence_toReadonlyArray from './Sequence/__internal__/Sequence.toReadonlyArray.mjs';
 import Sequence_toRunnable from './Sequence/__internal__/Sequence.toRunnable.mjs';
 import Sequence_toRunnableObservable from './Sequence/__internal__/Sequence.toRunnableObservable.mjs';
@@ -35,8 +38,11 @@ const skipFirst = Sequence_skipFirst;
 const takeFirst = Sequence_takeFirst;
 const takeLast = Sequence_takeLast;
 const takeWhile = Sequence_takeWhile;
+const toAsyncEnumerable = Sequence_toAsyncEnumerable;
 const toEnumerable = Sequence_toEnumerable;
 const toEnumerableObservable = Sequence_toRunnableObservable;
+const toFlowable = Sequence_toFlowable;
+const toIterable = Sequence_toIterable;
 const toObservable = Sequence_toRunnableObservable;
 const toReadonlyArray = Sequence_toReadonlyArray;
 const toRunnable = Sequence_toRunnable;
@@ -58,8 +64,11 @@ const Sequence = {
     takeFirst,
     takeLast,
     takeWhile,
+    toAsyncEnumerable,
     toEnumerable,
     toEnumerableObservable,
+    toFlowable,
+    toIterable,
     toObservable,
     toReadonlyArray,
     toRunnable,
@@ -67,4 +76,4 @@ const Sequence = {
     zip,
 };
 
-export { concat, concatAll, Sequence as default, distinctUntilChanged, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toEnumerableObservable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };
+export { concat, concatAll, Sequence as default, distinctUntilChanged, fromReadonlyArray, generate, keep, map, pairwise, repeat, scan, seek, skipFirst, takeFirst, takeLast, takeWhile, toAsyncEnumerable, toEnumerable, toEnumerableObservable, toFlowable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

@@ -10,7 +10,9 @@ import {
   Empty,
   EverySatisfy,
   ForEach,
+  FromIterable,
   FromReadonlyArray,
+  FromSequence,
   Generate,
   Keep,
   Map,
@@ -23,11 +25,16 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
+  ToIterable,
   ToReadonlyArray,
   Zip,
 } from "../containers";
+import Iterable_toEnumerableObservable from "../containers/Iterable/__internal__/Iterable.toEnumerableObservable";
+import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
+import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable";
 import { Factory, compose, returns } from "../functions";
-import { ToEnumerable } from "../ix";
+import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix";
+import Enumerable_toEnumerableObservable from "../ix/Enumerable/__internal__/Enumerable.toEnumerableObservable";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
 import {
   EnumerableObservableLike,
@@ -44,7 +51,9 @@ import EnumerableObservable_defer from "./EnumerableObservable/__internal__/Enum
 import EnumerableObservable_mergeAll from "./EnumerableObservable/__internal__/EnumerableObservable.mergeAll";
 import EnumerableObservable_scanAsync from "./EnumerableObservable/__internal__/EnumerableObservable.scanAsync";
 import EnumerableObservable_switchAll from "./EnumerableObservable/__internal__/EnumerableObservable.switchAll";
+import EnumerableObservable_toAsyncEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable";
 import EnumerableObservable_toEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toEnumerable";
+import EnumerableObservable_toIterable from "./EnumerableObservable/__internal__/EnumerableObservable.toIterable";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer";
 import Observable_concat from "./Observable/__internal__/Observable.concat";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset";
@@ -52,7 +61,6 @@ import Observable_distinctUntilChanged from "./Observable/__internal__/Observabl
 import Observable_empty from "./Observable/__internal__/Observable.empty";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach";
-import Observable_fromReadonlyArray from "./Observable/__internal__/Observable.fromReadonlyArray";
 import Observable_generate from "./Observable/__internal__/Observable.generate";
 import Observable_keep from "./Observable/__internal__/Observable.keep";
 import Observable_map from "./Observable/__internal__/Observable.map";
@@ -119,8 +127,17 @@ export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] =
 export const forEach =
   Observable_forEach as ForEach<EnumerableObservableLike>["forEach"];
 
-export const fromReadonlyArray =
-  Observable_fromReadonlyArray as FromReadonlyArray<EnumerableObservableLike>["fromReadonlyArray"];
+export const fromEnumerable: FromEnumerable<EnumerableObservableLike>["fromEnumerable"] =
+  Enumerable_toEnumerableObservable;
+
+export const fromIterable: FromIterable<EnumerableObservableLike>["fromIterable"] =
+  Iterable_toEnumerableObservable;
+
+export const fromReadonlyArray: FromReadonlyArray<EnumerableObservableLike>["fromReadonlyArray"] =
+  ReadonlyArray_toRunnableObservable as FromReadonlyArray<EnumerableObservableLike>["fromReadonlyArray"];
+
+export const fromSequence: FromSequence<EnumerableObservableLike>["fromSequence"] =
+  Sequence_toRunnableObservable as FromSequence<EnumerableObservableLike>["fromSequence"];
 
 export const generate =
   Observable_generate as Generate<EnumerableObservableLike>["generate"];
@@ -177,11 +194,17 @@ export const takeWhile =
 export const throwIfEmpty =
   Observable_throwIfEmpty as ThrowIfEmpty<EnumerableObservableLike>["throwIfEmpty"];
 
+export const toAsyncEnumerable: ToAsyncEnumerable<EnumerableObservableLike>["toAsyncEnumerable"] =
+  EnumerableObservable_toAsyncEnumerable;
+
 export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"] =
   EnumerableObservable_toEnumerable;
 
 export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
   RunnableObservable_toFlowable;
+
+export const toIterable: ToIterable<EnumerableObservableLike>["toIterable"] =
+  EnumerableObservable_toIterable;
 
 export const toReadonlyArray =
   RunnableObservable_toReadonlyArray as ToReadonlyArray<
@@ -226,7 +249,10 @@ const EnumerableObservable = {
   everySatisfy,
   exhaust,
   forEach,
+  fromEnumerable,
+  fromIterable,
   fromReadonlyArray,
+  fromSequence,
   generate,
   keep,
   map,
@@ -243,8 +269,10 @@ const EnumerableObservable = {
   takeLast,
   takeWhile,
   throwIfEmpty,
+  toAsyncEnumerable,
   toEnumerable,
   toFlowable,
+  toIterable,
   toObservable,
   toReadonlyArray,
   toRunnable,

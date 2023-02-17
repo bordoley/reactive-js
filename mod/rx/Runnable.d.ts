@@ -1,6 +1,6 @@
 import { FromEnumerable, EnumerableLike } from "../ix.js";
+import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromIterable, FromReadonlyArray, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ContainerOperator, ReadonlyArrayLike } from "../containers.js";
 import { DisposableOrTeardown } from "../util.js";
-import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ReadonlyArrayLike, Generate, Keep, Map, Never, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToReadonlyArray, ContainerOperator } from "../containers.js";
 import { SideEffect1, Function1, Optional, Factory, Predicate, Equality, Updater, Reducer } from "../functions.js";
 import { RunnableLike, SinkLike, FromEnumerableObservable, FromRunnableObservable, ToRunnable, EnumerableObservableLike, RunnableObservableLike } from "../rx.js";
 declare const buffer: Buffer<RunnableLike>["buffer"];
@@ -17,7 +17,8 @@ declare const first: <T>() => Function1<RunnableLike<T>, Optional<T>>;
 declare const forEach: ForEach<RunnableLike>["forEach"];
 declare const fromEnumerable: FromEnumerable<RunnableLike>["fromEnumerable"];
 declare const fromEnumerableObservable: FromEnumerableObservable<RunnableLike>["fromEnumerableObservable"];
-declare const fromReadonlyArray: <T>(options?: undefined) => Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
+declare const fromIterable: FromIterable<RunnableLike>["fromIterable"];
+declare const fromReadonlyArray: FromReadonlyArray<RunnableLike>["fromReadonlyArray"];
 declare const fromRunnableObservable: FromRunnableObservable<RunnableLike>["fromRunnableObservable"];
 declare const generate: Generate<RunnableLike>["generate"];
 declare const keep: Keep<RunnableLike>["keep"];
@@ -60,37 +61,41 @@ declare const Runnable: {
     forEach: <T_10>(effect: SideEffect1<T_10>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_10, T_10>;
     fromEnumerable: <T_11>(options?: undefined) => Function1<EnumerableLike<T_11>, RunnableLike<T_11>>;
     fromEnumerableObservable: <T_12>(options?: undefined) => Function1<EnumerableObservableLike<T_12>, RunnableLike<T_12>>;
-    fromReadonlyArray: <T_13>(options?: undefined) => Function1<ReadonlyArrayLike<T_13>, RunnableLike<T_13>>;
-    fromRunnableObservable: <T_14>(options?: undefined) => Function1<RunnableObservableLike<T_14>, RunnableLike<T_14>>;
-    generate: <T_15>(generator: Updater<T_15>, initialValue: Factory<T_15>, options?: undefined) => RunnableLike<T_15>;
-    keep: <T_16>(predicate: Predicate<T_16>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_16, T_16>;
-    last: <T_17>() => Function1<RunnableLike<T_17>, Optional<T_17>>;
+    fromIterable: <T_13>(options?: undefined) => Function1<Iterable<T_13>, RunnableLike<T_13>>;
+    fromReadonlyArray: <T_14>(options?: {
+        readonly start?: number | undefined;
+        readonly count?: number | undefined;
+    } | undefined) => Function1<readonly T_14[], RunnableLike<T_14>>;
+    fromRunnableObservable: <T_15>(options?: undefined) => Function1<RunnableObservableLike<T_15>, RunnableLike<T_15>>;
+    generate: <T_16>(generator: Updater<T_16>, initialValue: Factory<T_16>, options?: undefined) => RunnableLike<T_16>;
+    keep: <T_17>(predicate: Predicate<T_17>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_17, T_17>;
+    last: <T_18>() => Function1<RunnableLike<T_18>, Optional<T_18>>;
     map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, TA, TB>;
-    never: <T_18>(options?: undefined) => RunnableLike<T_18>;
-    onRun: <T_19>(f: Factory<void | DisposableOrTeardown>) => (runnable: RunnableLike<T_19>) => RunnableLike<T_19>;
-    pairwise: <T_20>(options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_20, readonly [
-        T_20,
-        T_20
+    never: <T_19>(options?: undefined) => RunnableLike<T_19>;
+    onRun: <T_20>(f: Factory<void | DisposableOrTeardown>) => (runnable: RunnableLike<T_20>) => RunnableLike<T_20>;
+    pairwise: <T_21>(options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_21, readonly [
+        T_21,
+        T_21
     ]>;
-    reduce: <T_21, TAcc>(reducer: Reducer<T_21, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_21, TAcc>;
+    reduce: <T_22, TAcc>(reducer: Reducer<T_22, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_22, TAcc>;
     repeat: (predicate?: number | Predicate<number> | undefined) => (c: RunnableLike<unknown>) => RunnableLike<unknown>;
-    run: <T_22>() => (runnable: RunnableLike<T_22>) => void;
-    scan: <T_23, TAcc_1>(scanner: Reducer<T_23, TAcc_1>, initialValue: Factory<TAcc_1>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_23, TAcc_1>;
-    skipFirst: <T_24>(options?: {
+    run: <T_23>() => (runnable: RunnableLike<T_23>) => void;
+    scan: <T_24, TAcc_1>(scanner: Reducer<T_24, TAcc_1>, initialValue: Factory<TAcc_1>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_24, TAcc_1>;
+    skipFirst: <T_25>(options?: {
         readonly count?: number | undefined;
-    } | undefined) => ContainerOperator<RunnableLike<unknown>, T_24, T_24>;
-    someSatisfy: <T_25>(predicate: Predicate<T_25>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_25, boolean>;
-    takeFirst: <T_26>(options?: {
-        readonly count?: number | undefined;
-    } | undefined) => ContainerOperator<RunnableLike<unknown>, T_26, T_26>;
-    takeLast: <T_27>(options?: {
+    } | undefined) => ContainerOperator<RunnableLike<unknown>, T_25, T_25>;
+    someSatisfy: <T_26>(predicate: Predicate<T_26>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_26, boolean>;
+    takeFirst: <T_27>(options?: {
         readonly count?: number | undefined;
     } | undefined) => ContainerOperator<RunnableLike<unknown>, T_27, T_27>;
-    takeWhile: <T_28>(predicate: Predicate<T_28>, options?: {
-        readonly inclusive?: boolean | undefined;
+    takeLast: <T_28>(options?: {
+        readonly count?: number | undefined;
     } | undefined) => ContainerOperator<RunnableLike<unknown>, T_28, T_28>;
-    throwIfEmpty: <T_29>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_29, T_29>;
-    toReadonlyArray: <T_30>(options?: undefined) => Function1<RunnableLike<T_30>, ReadonlyArrayLike<T_30>>;
-    toRunnable: <T_31>(options?: undefined) => Function1<RunnableLike<T_31>, RunnableLike<T_31>>;
+    takeWhile: <T_29>(predicate: Predicate<T_29>, options?: {
+        readonly inclusive?: boolean | undefined;
+    } | undefined) => ContainerOperator<RunnableLike<unknown>, T_29, T_29>;
+    throwIfEmpty: <T_30>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<RunnableLike<unknown>, T_30, T_30>;
+    toReadonlyArray: <T_31>(options?: undefined) => Function1<RunnableLike<T_31>, ReadonlyArrayLike<T_31>>;
+    toRunnable: <T_32>(options?: undefined) => Function1<RunnableLike<T_32>, RunnableLike<T_32>>;
 };
-export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromEnumerable, fromEnumerableObservable, fromReadonlyArray, fromRunnableObservable, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };
+export { buffer, catchError, concat, concatAll, create, decodeWithCharset, Runnable as default, defer, distinctUntilChanged, empty, everySatisfy, first, forEach, fromEnumerable, fromEnumerableObservable, fromIterable, fromReadonlyArray, fromRunnableObservable, generate, keep, last, map, never, onRun, pairwise, reduce, repeat, run, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, throwIfEmpty, toReadonlyArray, toRunnable };

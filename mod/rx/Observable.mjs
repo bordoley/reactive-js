@@ -1,5 +1,9 @@
 /// <reference types="./Observable.d.ts" />
+import Iterable_toRunnableObservable from '../containers/Iterable/__internal__/Iterable.toRunnableObservable.mjs';
 import Promiseable_toObservable from '../containers/Promiseable/__internal__/Promiseable.toObservable.mjs';
+import ReadonlyArray_toRunnableObservable from '../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.mjs';
+import Sequence_toRunnableObservable from '../containers/Sequence/__internal__/Sequence.toRunnableObservable.mjs';
+import Enumerable_toRunnableObservable from '../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.mjs';
 import Flowable_toObservable from '../streaming/Flowable/__internal__/Flowable.toObservable.mjs';
 import Disposable_toObservable from '../util/Disposable/__internal__/Disposable.toObservable.mjs';
 import Observable_async from './Observable/__internal__/Observable.async.mjs';
@@ -18,7 +22,6 @@ import Observable_forEach from './Observable/__internal__/Observable.forEach.mjs
 import Observable_forkCombineLatest from './Observable/__internal__/Observable.forkCombineLatest.mjs';
 import Observable_forkMerge from './Observable/__internal__/Observable.forkMerge.mjs';
 import Observable_forkZipLatest from './Observable/__internal__/Observable.forkZipLatest.mjs';
-import Observable_fromReadonlyArray from './Observable/__internal__/Observable.fromReadonlyArray.mjs';
 import Observable_generate from './Observable/__internal__/Observable.generate.mjs';
 import Observable_isEnumerable from './Observable/__internal__/Observable.isEnumerable.mjs';
 import Observable_isRunnable from './Observable/__internal__/Observable.isRunnable.mjs';
@@ -76,9 +79,12 @@ const forkCombineLatest = Observable_forkCombineLatest;
 const forkMerge = Observable_forkMerge;
 const forkZipLatest = Observable_forkZipLatest;
 const fromDisposable = Disposable_toObservable;
+const fromEnumerable = Enumerable_toRunnableObservable;
+const fromIterable = Iterable_toRunnableObservable;
 const fromFlowable = Flowable_toObservable;
 const fromPromise = Promiseable_toObservable;
-const fromReadonlyArray = Observable_fromReadonlyArray;
+const fromReadonlyArray = ReadonlyArray_toRunnableObservable;
+const fromSequence = Sequence_toRunnableObservable;
 const generate = Observable_generate;
 const isEnumerable = Observable_isEnumerable;
 const isRunnable = Observable_isRunnable;
@@ -144,9 +150,12 @@ const Observable = {
     empty,
     everySatisfy,
     forEach,
+    fromEnumerable,
     fromFlowable,
+    fromIterable,
     fromPromise,
     fromReadonlyArray,
+    fromSequence,
     generate,
     isEnumerable,
     isRunnable,
@@ -178,4 +187,4 @@ const Observable = {
     zipWithLatestFrom,
 };
 
-export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromFlowable, fromPromise, fromReadonlyArray, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromEnumerable, fromFlowable, fromIterable, fromPromise, fromReadonlyArray, fromSequence, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

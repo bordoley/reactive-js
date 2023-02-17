@@ -1,9 +1,12 @@
-import { ScanAsync, ObservableLike, ToObservable, AsyncReducer } from "../rx.js";
-import { FromReadonlyArray, Generate, Keep, Map, Scan, TakeWhile, ContainerOperator } from "../containers.js";
+import { FromIterable, FromReadonlyArray, FromSequence, Generate, Keep, Map, Scan, TakeWhile, SequenceLike, ContainerOperator } from "../containers.js";
+import { FromEnumerableObservable, ScanAsync, ObservableLike, ToObservable, EnumerableObservableLike, AsyncReducer } from "../rx.js";
 import { Function1, Updater, Factory, Predicate, Reducer } from "../functions.js";
-import { ToAsyncEnumerable, EnumerableLike, AsyncEnumerableLike } from "../ix.js";
-declare const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"];
+import { FromEnumerable, AsyncEnumerableLike, EnumerableLike } from "../ix.js";
+declare const fromEnumerable: FromEnumerable<AsyncEnumerableLike>["fromEnumerable"];
+declare const fromEnumerableObservable: FromEnumerableObservable<AsyncEnumerableLike>["fromEnumerableObservable"];
+declare const fromIterable: FromIterable<AsyncEnumerableLike>["fromIterable"];
 declare const fromReadonlyArray: FromReadonlyArray<AsyncEnumerableLike>["fromReadonlyArray"];
+declare const fromSequence: FromSequence<AsyncEnumerableLike>["fromSequence"];
 declare const generate: Generate<AsyncEnumerableLike, {
     delay: number;
 }>["generate"];
@@ -15,20 +18,24 @@ declare const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"];
 declare const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"];
 /** @ignore */
 declare const AsyncEnumerable: {
-    fromReadonlyArray: <T>(options?: {
+    fromEnumerable: <T>(options?: undefined) => Function1<EnumerableLike<T>, AsyncEnumerableLike<T>>;
+    fromEnumerableObservable: <T_1>(options?: undefined) => Function1<EnumerableObservableLike<T_1>, AsyncEnumerableLike<T_1>>;
+    fromIterable: <T_2>(options?: undefined) => Function1<Iterable<T_2>, AsyncEnumerableLike<T_2>>;
+    fromReadonlyArray: <T_3>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
-    } | undefined) => Function1<readonly T[], AsyncEnumerableLike<T>>;
-    generate: <T_1>(generator: Updater<T_1>, initialValue: Factory<T_1>, options?: {
+    } | undefined) => Function1<readonly T_3[], AsyncEnumerableLike<T_3>>;
+    fromSequence: <T_4>(options?: undefined) => Function1<SequenceLike<T_4>, AsyncEnumerableLike<T_4>>;
+    generate: <T_5>(generator: Updater<T_5>, initialValue: Factory<T_5>, options?: {
         delay: number;
-    } | undefined) => AsyncEnumerableLike<T_1>;
-    keep: <T_2>(predicate: Predicate<T_2>, options?: undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_2, T_2>;
+    } | undefined) => AsyncEnumerableLike<T_5>;
+    keep: <T_6>(predicate: Predicate<T_6>, options?: undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_6, T_6>;
     map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, TA, TB>;
-    scan: <T_3, TAcc>(scanner: Reducer<T_3, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_3, TAcc>;
-    scanAsync: <T_4, TAcc_1>(scanner: AsyncReducer<ObservableLike<unknown>, T_4, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<AsyncEnumerableLike<unknown>, T_4, TAcc_1>;
-    takeWhile: <T_5>(predicate: Predicate<T_5>, options?: {
+    scan: <T_7, TAcc>(scanner: Reducer<T_7, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_7, TAcc>;
+    scanAsync: <T_8, TAcc_1>(scanner: AsyncReducer<ObservableLike<unknown>, T_8, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<AsyncEnumerableLike<unknown>, T_8, TAcc_1>;
+    takeWhile: <T_9>(predicate: Predicate<T_9>, options?: {
         readonly inclusive?: boolean | undefined;
-    } | undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_5, T_5>;
-    toObservable: <T_6>(options?: undefined) => Function1<AsyncEnumerableLike<T_6>, ObservableLike<T_6>>;
+    } | undefined) => ContainerOperator<AsyncEnumerableLike<unknown>, T_9, T_9>;
+    toObservable: <T_10>(options?: undefined) => Function1<AsyncEnumerableLike<T_10>, ObservableLike<T_10>>;
 };
-export { AsyncEnumerable as default, fromEnumerable, fromReadonlyArray, generate, keep, map, scan, scanAsync, takeWhile, toObservable };
+export { AsyncEnumerable as default, fromEnumerable, fromEnumerableObservable, fromIterable, fromReadonlyArray, fromSequence, generate, keep, map, scan, scanAsync, takeWhile, toObservable };

@@ -11,14 +11,17 @@
 - [forEach](containers_ReadonlyArray.md#foreach)
 - [fromEnumerable](containers_ReadonlyArray.md#fromenumerable)
 - [fromEnumerableObservable](containers_ReadonlyArray.md#fromenumerableobservable)
+- [fromIterable](containers_ReadonlyArray.md#fromiterable)
 - [fromReadonlyArray](containers_ReadonlyArray.md#fromreadonlyarray)
 - [fromRunnableObservable](containers_ReadonlyArray.md#fromrunnableobservable)
 - [fromSequence](containers_ReadonlyArray.md#fromsequence)
 - [keep](containers_ReadonlyArray.md#keep)
 - [map](containers_ReadonlyArray.md#map)
 - [some](containers_ReadonlyArray.md#some)
+- [toAsyncEnumerable](containers_ReadonlyArray.md#toasyncenumerable)
 - [toEnumerable](containers_ReadonlyArray.md#toenumerable)
 - [toEnumerableObservable](containers_ReadonlyArray.md#toenumerableobservable)
+- [toFlowable](containers_ReadonlyArray.md#toflowable)
 - [toIterable](containers_ReadonlyArray.md#toiterable)
 - [toObservable](containers_ReadonlyArray.md#toobservable)
 - [toReadonlyArray](containers_ReadonlyArray.md#toreadonlyarray)
@@ -136,6 +139,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
 
 ___
 
@@ -276,6 +301,32 @@ ___
 
 ___
 
+### toAsyncEnumerable
+
+▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+
+___
+
 ### toEnumerable
 
 ▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
@@ -321,6 +372,30 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
+
+___
+
+### toFlowable
+
+▸ **toFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 
