@@ -1,6 +1,6 @@
 /// <reference types="./EnumerableObservable.d.ts" />
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
-import { compose } from '../functions.mjs';
+import { returns, compose } from '../functions.mjs';
 import Enumerable_toRunnableObservable from '../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.mjs';
 import EnumerableObservable_catchError from './EnumerableObservable/__internal__/EnumerableObservable.catchError.mjs';
 import EnumerableObservable_defer from './EnumerableObservable/__internal__/EnumerableObservable.defer.mjs';
@@ -47,10 +47,11 @@ const defer = EnumerableObservable_defer;
 const distinctUntilChanged = Observable_distinctUntilChanged;
 const empty = Observable_empty;
 const everySatisfy = Observable_everySatisfy;
-const exhaust = () => mergeAll({
+const exhaust = 
+/*@__PURE__*/ returns(EnumerableObservable_mergeAll({
     maxBufferSize: 1,
     maxConcurrency: 1,
-});
+}));
 const forEach = Observable_forEach;
 const fromReadonlyArray = Observable_fromReadonlyArray;
 const generate = Observable_generate;

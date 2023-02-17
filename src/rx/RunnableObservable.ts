@@ -25,6 +25,7 @@ import {
   ThrowIfEmpty,
   Zip,
 } from "../containers";
+import { returns } from "../functions";
 import {
   Retry,
   RunnableObservableLike,
@@ -114,11 +115,13 @@ export const empty = Observable_empty as Empty<
 export const everySatisfy =
   Observable_everySatisfy as EverySatisfy<RunnableObservableLike>["everySatisfy"];
 
-export const exhaust: ConcatAll<RunnableObservableLike>["concatAll"] = <T>() =>
-  mergeAll<T>({
-    maxBufferSize: 1,
-    maxConcurrency: 1,
-  });
+export const exhaust: ConcatAll<RunnableObservableLike>["concatAll"] =
+  /*@__PURE__*/ returns(
+    RunnableObservable_mergeAll({
+      maxBufferSize: 1,
+      maxConcurrency: 1,
+    }),
+  );
 
 export const forEach =
   Observable_forEach as ForEach<RunnableObservableLike>["forEach"];
