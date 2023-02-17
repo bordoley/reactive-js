@@ -10,7 +10,9 @@ import {
   Empty,
   EverySatisfy,
   ForEach,
+  FromIterable,
   FromReadonlyArray,
+  FromSequence,
   Generate,
   Keep,
   Map,
@@ -25,13 +27,19 @@ import {
   ThrowIfEmpty,
   Zip,
 } from "../containers";
-import { returns } from "../functions";
+import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable";
+import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
+import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable";
+import { identity, returns } from "../functions";
+import { FromEnumerable } from "../ix";
+import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
 import {
   Retry,
   RunnableObservableLike,
   ScanAsync,
   TakeUntil,
   Timeout,
+  ToObservable,
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
@@ -45,7 +53,6 @@ import Observable_distinctUntilChanged from "./Observable/__internal__/Observabl
 import Observable_empty from "./Observable/__internal__/Observable.empty";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach";
-import Observable_fromReadonlyArray from "./Observable/__internal__/Observable.fromReadonlyArray";
 import Observable_generate from "./Observable/__internal__/Observable.generate";
 import Observable_keep from "./Observable/__internal__/Observable.keep";
 import Observable_map from "./Observable/__internal__/Observable.map";
@@ -126,14 +133,32 @@ export const exhaust: ConcatAll<RunnableObservableLike>["concatAll"] =
 export const forEach =
   Observable_forEach as ForEach<RunnableObservableLike>["forEach"];
 
-export const fromReadonlyArray =
-  Observable_fromReadonlyArray as FromReadonlyArray<
-    RunnableObservableLike,
-    {
-      readonly delay?: number;
-      readonly delayStart?: boolean;
-    }
-  >["fromReadonlyArray"];
+export const fromEnumerable: FromEnumerable<
+  RunnableObservableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["fromEnumerable"] = Enumerable_toRunnableObservable;
+
+export const fromIterable: FromIterable<
+  RunnableObservableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["fromIterable"] = Iterable_toRunnableObservable;
+
+export const fromReadonlyArray: FromReadonlyArray<
+  RunnableObservableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["fromReadonlyArray"] = ReadonlyArray_toRunnableObservable;
+
+export const fromSequence: FromSequence<RunnableObservableLike>["fromSequence"] =
+  Sequence_toRunnableObservable;
 
 export const generate = Observable_generate as Generate<
   RunnableObservableLike,
@@ -203,6 +228,9 @@ export const timeout =
 export const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
   RunnableObservable_toFlowable;
 
+export const toObservable: ToObservable<RunnableObservableLike>["toObservable"] =
+  /*@__PURE__*/ returns(identity);
+
 export const toReadonlyArray = RunnableObservable_toReadonlyArray;
 
 export const toRunnable = RunnableObservable_toRunnable;
@@ -232,7 +260,10 @@ const RunnableObservable = {
   everySatisfy,
   exhaust,
   forEach,
+  fromEnumerable,
+  fromIterable,
   fromReadonlyArray,
+  fromSequence,
   generate,
   keep,
   map,
@@ -253,6 +284,7 @@ const RunnableObservable = {
   throwIfEmpty,
   timeout,
   toFlowable,
+  toObservable,
   toReadonlyArray,
   toRunnable,
   withLatestFrom,

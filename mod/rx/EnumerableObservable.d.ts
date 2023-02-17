@@ -1,8 +1,8 @@
 import { ToFlowable, FlowableLike } from "../streaming.js";
-import { ToEnumerable, EnumerableLike } from "../ix.js";
+import { FromEnumerable, ToAsyncEnumerable, ToEnumerable, EnumerableLike, AsyncEnumerableLike } from "../ix.js";
 import { EnumerableObservableLike, Retry, ScanAsync, RunnableLike, ToRunnableObservable, ToObservable, AsyncReducer, ObservableLike, RunnableObservableLike } from "../rx.js";
-import { Equality, Predicate, SideEffect1, Function1, Updater, Factory, Reducer, Function2 } from "../functions.js";
-import { ContainerOperator, CatchError, ConcatAll, Defer, ReadonlyArrayLike } from "../containers.js";
+import { Equality, Predicate, SideEffect1, Updater, Factory, Function1, Reducer, Function2 } from "../functions.js";
+import { ContainerOperator, CatchError, ConcatAll, Defer, FromIterable, FromReadonlyArray, FromSequence, ToIterable, ReadonlyArrayLike, SequenceLike, IterableLike } from "../containers.js";
 import { VirtualTimeSchedulerLike } from "../scheduling.js";
 declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number | undefined;
@@ -25,10 +25,10 @@ declare const empty: <T>(options?: {
 declare const everySatisfy: <T>(predicate: Predicate<T>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, boolean>;
 declare const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"];
 declare const forEach: <T>(effect: SideEffect1<T>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
-declare const fromReadonlyArray: <T>(options?: {
-    readonly start?: number | undefined;
-    readonly count?: number | undefined;
-} | undefined) => Function1<readonly T[], EnumerableObservableLike<T>>;
+declare const fromEnumerable: FromEnumerable<EnumerableObservableLike>["fromEnumerable"];
+declare const fromIterable: FromIterable<EnumerableObservableLike>["fromIterable"];
+declare const fromReadonlyArray: FromReadonlyArray<EnumerableObservableLike>["fromReadonlyArray"];
+declare const fromSequence: FromSequence<EnumerableObservableLike>["fromSequence"];
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: undefined) => EnumerableObservableLike<T>;
 declare const keep: <T>(predicate: Predicate<T>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, TA, TB>;
@@ -60,8 +60,10 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean | undefined;
 } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
 declare const throwIfEmpty: <T>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T, T>;
+declare const toAsyncEnumerable: ToAsyncEnumerable<EnumerableObservableLike>["toAsyncEnumerable"];
 declare const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"];
 declare const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"];
+declare const toIterable: ToIterable<EnumerableObservableLike>["toIterable"];
 declare const toReadonlyArray: <T>(options?: {
     readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
 } | undefined) => Function1<EnumerableObservableLike<T>, ReadonlyArrayLike<T>>;
@@ -159,54 +161,59 @@ declare const EnumerableObservable: {
     everySatisfy: <T_7>(predicate: Predicate<T_7>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_7, boolean>;
     exhaust: <T_8>(options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, EnumerableObservableLike<T_8>, T_8>;
     forEach: <T_9>(effect: SideEffect1<T_9>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_9, T_9>;
-    fromReadonlyArray: <T_10>(options?: {
+    fromEnumerable: <T_10>(options?: undefined) => Function1<EnumerableLike<T_10>, EnumerableObservableLike<T_10>>;
+    fromIterable: <T_11>(options?: undefined) => Function1<Iterable<T_11>, EnumerableObservableLike<T_11>>;
+    fromReadonlyArray: <T_12>(options?: {
         readonly start?: number | undefined;
         readonly count?: number | undefined;
-    } | undefined) => Function1<readonly T_10[], EnumerableObservableLike<T_10>>;
-    generate: <T_11>(generator: Updater<T_11>, initialValue: Factory<T_11>, options?: undefined) => EnumerableObservableLike<T_11>;
-    keep: <T_12>(predicate: Predicate<T_12>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_12, T_12>;
+    } | undefined) => Function1<readonly T_12[], EnumerableObservableLike<T_12>>;
+    fromSequence: <T_13>(options?: undefined) => Function1<SequenceLike<T_13>, EnumerableObservableLike<T_13>>;
+    generate: <T_14>(generator: Updater<T_14>, initialValue: Factory<T_14>, options?: undefined) => EnumerableObservableLike<T_14>;
+    keep: <T_15>(predicate: Predicate<T_15>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_15, T_15>;
     map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, TA, TB>;
     merge: <T_2>(fst: EnumerableObservableLike<T_2>, snd: EnumerableObservableLike<T_2>, ...tail: readonly EnumerableObservableLike<T_2>[]) => EnumerableObservableLike<T_2>;
-    pairwise: <T_13>(options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_13, readonly [
-        T_13,
-        T_13
+    pairwise: <T_16>(options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_16, readonly [
+        T_16,
+        T_16
     ]>;
-    reduce: <T_14, TAcc>(reducer: Reducer<T_14, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_14, TAcc>;
+    reduce: <T_17, TAcc>(reducer: Reducer<T_17, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_17, TAcc>;
     retry: {
-        <T_15>(): ContainerOperator<EnumerableObservableLike<unknown>, T_15, T_15>;
-        <T_16>(predicate: Function2<number, unknown, boolean>): ContainerOperator<EnumerableObservableLike<unknown>, T_16, T_16>;
+        <T_18>(): ContainerOperator<EnumerableObservableLike<unknown>, T_18, T_18>;
+        <T_19>(predicate: Function2<number, unknown, boolean>): ContainerOperator<EnumerableObservableLike<unknown>, T_19, T_19>;
     };
-    scan: <T_17, TAcc_1>(scanner: Reducer<T_17, TAcc_1>, initialValue: Factory<TAcc_1>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_17, TAcc_1>;
-    scanAsync: <T_18, TAcc_2>(scanner: AsyncReducer<EnumerableObservableLike<unknown>, T_18, TAcc_2>, initialValue: Factory<TAcc_2>) => ContainerOperator<EnumerableObservableLike<unknown>, T_18, TAcc_2>;
-    skipFirst: <T_19>(options?: {
-        readonly count?: number | undefined;
-    } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_19, T_19>;
-    someSatisfy: <T_20>(predicate: Predicate<T_20>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_20, boolean>;
-    switchAll: <T_8>(options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, EnumerableObservableLike<T_8>, T_8>;
-    takeFirst: <T_21>(options?: {
-        readonly count?: number | undefined;
-    } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_21, T_21>;
-    takeLast: <T_22>(options?: {
+    scan: <T_20, TAcc_1>(scanner: Reducer<T_20, TAcc_1>, initialValue: Factory<TAcc_1>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_20, TAcc_1>;
+    scanAsync: <T_21, TAcc_2>(scanner: AsyncReducer<EnumerableObservableLike<unknown>, T_21, TAcc_2>, initialValue: Factory<TAcc_2>) => ContainerOperator<EnumerableObservableLike<unknown>, T_21, TAcc_2>;
+    skipFirst: <T_22>(options?: {
         readonly count?: number | undefined;
     } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_22, T_22>;
-    takeWhile: <T_23>(predicate: Predicate<T_23>, options?: {
+    someSatisfy: <T_23>(predicate: Predicate<T_23>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_23, boolean>;
+    switchAll: <T_8>(options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, EnumerableObservableLike<T_8>, T_8>;
+    takeFirst: <T_24>(options?: {
+        readonly count?: number | undefined;
+    } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_24, T_24>;
+    takeLast: <T_25>(options?: {
+        readonly count?: number | undefined;
+    } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_25, T_25>;
+    takeWhile: <T_26>(predicate: Predicate<T_26>, options?: {
         readonly inclusive?: boolean | undefined;
-    } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_23, T_23>;
-    throwIfEmpty: <T_24>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_24, T_24>;
-    toEnumerable: <T_25>(options?: undefined) => Function1<EnumerableObservableLike<T_25>, EnumerableLike<T_25>>;
-    toFlowable: <T_26>(options?: undefined) => Function1<EnumerableObservableLike<T_26>, FlowableLike<T_26>>;
-    toObservable: <T_27>(options?: {
+    } | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_26, T_26>;
+    throwIfEmpty: <T_27>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, T_27, T_27>;
+    toAsyncEnumerable: <T_28>(options?: undefined) => Function1<EnumerableObservableLike<T_28>, AsyncEnumerableLike<T_28>>;
+    toEnumerable: <T_29>(options?: undefined) => Function1<EnumerableObservableLike<T_29>, EnumerableLike<T_29>>;
+    toFlowable: <T_30>(options?: undefined) => Function1<EnumerableObservableLike<T_30>, FlowableLike<T_30>>;
+    toIterable: <T_31>(options?: undefined) => Function1<EnumerableObservableLike<T_31>, IterableLike<T_31>>;
+    toObservable: <T_32>(options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<EnumerableObservableLike<T_27>, ObservableLike<T_27>>;
-    toReadonlyArray: <T_28>(options?: {
+    } | undefined) => Function1<EnumerableObservableLike<T_32>, ObservableLike<T_32>>;
+    toReadonlyArray: <T_33>(options?: {
         readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-    } | undefined) => Function1<EnumerableObservableLike<T_28>, ReadonlyArrayLike<T_28>>;
-    toRunnable: <T_29>(options?: undefined) => Function1<EnumerableObservableLike<T_29>, RunnableLike<T_29>>;
-    toRunnableObservable: <T_30>(options?: {
+    } | undefined) => Function1<EnumerableObservableLike<T_33>, ReadonlyArrayLike<T_33>>;
+    toRunnable: <T_34>(options?: undefined) => Function1<EnumerableObservableLike<T_34>, RunnableLike<T_34>>;
+    toRunnableObservable: <T_35>(options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<EnumerableObservableLike<T_30>, RunnableObservableLike<T_30>>;
+    } | undefined) => Function1<EnumerableObservableLike<T_35>, RunnableObservableLike<T_35>>;
     zip: {
         <TA_1, TB_1>(a: EnumerableObservableLike<TA_1>, b: EnumerableObservableLike<TB_1>): EnumerableObservableLike<readonly [
             TA_1,
@@ -270,4 +277,4 @@ declare const EnumerableObservable: {
         ]>;
     };
 };
-export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toEnumerable, toFlowable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };
+export { buffer, catchError, concat, concatAll, decodeWithCharset, EnumerableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromEnumerable, fromIterable, fromReadonlyArray, fromSequence, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeWhile, throwIfEmpty, toAsyncEnumerable, toEnumerable, toFlowable, toIterable, toObservable, toReadonlyArray, toRunnable, toRunnableObservable, zip };

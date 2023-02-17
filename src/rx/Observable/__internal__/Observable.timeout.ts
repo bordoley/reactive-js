@@ -9,6 +9,7 @@ import {
   props,
 } from "../../../__internal__/mixins";
 import Container_throws from "../../../containers/Container/__internal__/Container.throws";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
 import { isNumber, none, partial, pipe, returns } from "../../../functions";
 import {
   ObservableLike,
@@ -29,7 +30,6 @@ import {
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
 import Observable_concat from "./Observable.concat";
-import Observable_fromReadonlyArray from "./Observable.fromReadonlyArray";
 import Observable_isRunnable from "./Observable.isRunnable";
 import Observable_lift from "./Observable.lift";
 import Observable_map from "./Observable.map";
@@ -107,7 +107,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
     const durationObs = isNumber(duration)
       ? Container_throws(
           {
-            fromReadonlyArray: Observable_fromReadonlyArray,
+            fromReadonlyArray: ReadonlyArray_toRunnableObservable,
             map: Observable_map,
           },
           { delay: duration, delayStart: true, raise },
@@ -116,7 +116,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
           duration,
           Container_throws(
             {
-              fromReadonlyArray: Observable_fromReadonlyArray,
+              fromReadonlyArray: ReadonlyArray_toRunnableObservable,
               map: Observable_map,
             },
             { raise },

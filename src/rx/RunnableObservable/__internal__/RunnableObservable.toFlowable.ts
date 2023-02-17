@@ -14,9 +14,7 @@ import Disposable_toObservable from "../../../util/Disposable/__internal__/Dispo
 import Pauseable_pause from "../../../util/Pauseable/__internal__/Pauseable.pause";
 import Pauseable_resume from "../../../util/Pauseable/__internal__/Pauseable.resume";
 import Observable_create from "../../Observable/__internal__/Observable.create";
-import Observable_empty from "../../Observable/__internal__/Observable.empty";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
-import Observable_isRunnable from "../../Observable/__internal__/Observable.isRunnable";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn";
 import Observable_takeUntil from "../../Observable/__internal__/Observable.takeUntil";
@@ -25,47 +23,45 @@ import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
 
 const RunnableObservable_toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
   () => observable =>
-    Observable_isRunnable(observable)
-      ? Flowable_createLifted((modeObs: ObservableLike<FlowMode>) =>
-          Observable_create(observer => {
-            const pausableScheduler = pipe(
-              observer,
-              Observer_getScheduler,
-              Scheduler_toPausableScheduler,
-            );
+    Flowable_createLifted((modeObs: ObservableLike<FlowMode>) =>
+      Observable_create(observer => {
+        const pausableScheduler = pipe(
+          observer,
+          Observer_getScheduler,
+          Scheduler_toPausableScheduler,
+        );
 
+        pipe(
+          observer,
+          Sink_sourceFrom(
             pipe(
-              observer,
-              Sink_sourceFrom(
-                pipe(
-                  observable,
-                  Observable_subscribeOn(pausableScheduler),
-                  Observable_takeUntil(
-                    pipe(pausableScheduler, Disposable_toObservable()),
-                  ),
-                ),
+              observable,
+              Observable_subscribeOn(pausableScheduler),
+              Observable_takeUntil(
+                pipe(pausableScheduler, Disposable_toObservable()),
               ),
-              Disposable_add(
-                pipe(
-                  modeObs,
-                  Observable_forEach(mode => {
-                    switch (mode) {
-                      case FlowMode_pause:
-                        Pauseable_pause(pausableScheduler);
-                        break;
-                      case FlowMode_resume:
-                        Pauseable_resume(pausableScheduler);
-                        break;
-                    }
-                  }),
-                  Observable_subscribe(Observer_getScheduler(observer)),
-                  Disposable_bindTo(pausableScheduler),
-                ),
-              ),
-              Disposable_add(pausableScheduler),
-            );
-          }),
-        )
-      : Flowable_createLifted(_ => Observable_empty());
+            ),
+          ),
+          Disposable_add(
+            pipe(
+              modeObs,
+              Observable_forEach(mode => {
+                switch (mode) {
+                  case FlowMode_pause:
+                    Pauseable_pause(pausableScheduler);
+                    break;
+                  case FlowMode_resume:
+                    Pauseable_resume(pausableScheduler);
+                    break;
+                }
+              }),
+              Observable_subscribe(Observer_getScheduler(observer)),
+              Disposable_bindTo(pausableScheduler),
+            ),
+          ),
+          Disposable_add(pausableScheduler),
+        );
+      }),
+    );
 
 export default RunnableObservable_toFlowable;

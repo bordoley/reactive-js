@@ -8,6 +8,9 @@ import {
   EverySatisfy,
   ForkConcat,
   ForkZip,
+  FromIterable,
+  FromReadonlyArray,
+  FromSequence,
   Generate,
   Keep,
   Map,
@@ -21,8 +24,13 @@ import {
   ThrowIfEmpty,
   Zip,
 } from "../containers";
+import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable";
 import Promiseable_toObservable from "../containers/Promiseable/__internal__/Promiseable.toObservable";
+import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
+import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable";
 import { Factory, Function1, SideEffect1 } from "../functions";
+import { FromEnumerable } from "../ix";
+import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
 import {
   EnumerableObservableLike,
   ObservableLike,
@@ -52,7 +60,6 @@ import Observable_forEach from "./Observable/__internal__/Observable.forEach";
 import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest";
-import Observable_fromReadonlyArray from "./Observable/__internal__/Observable.fromReadonlyArray";
 import Observable_generate from "./Observable/__internal__/Observable.generate";
 import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable";
@@ -149,12 +156,42 @@ export const forkZipLatest: ForkZip<ObservableLike>["forkZip"] =
 
 export const fromDisposable = Disposable_toObservable;
 
+export const fromEnumerable: FromEnumerable<
+  ObservableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["fromEnumerable"] = Enumerable_toRunnableObservable;
+
+export const fromIterable: FromIterable<
+  ObservableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["fromIterable"] = Iterable_toRunnableObservable;
+
 export const fromFlowable =
   Flowable_toObservable as FromFlowable<ObservableLike>["fromFlowable"];
 
 export const fromPromise = Promiseable_toObservable;
 
-export const fromReadonlyArray = Observable_fromReadonlyArray;
+export const fromReadonlyArray: FromReadonlyArray<
+  ObservableLike,
+  {
+    delay?: number;
+    delayStart?: boolean;
+  }
+>["fromReadonlyArray"] = ReadonlyArray_toRunnableObservable;
+
+export const fromSequence: FromSequence<
+  ObservableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["fromSequence"] = Sequence_toRunnableObservable;
 
 export const generate: Generate<
   ObservableLike,
@@ -276,9 +313,12 @@ const Observable = {
   empty,
   everySatisfy,
   forEach,
+  fromEnumerable,
   fromFlowable,
+  fromIterable,
   fromPromise,
   fromReadonlyArray,
+  fromSequence,
   generate,
   isEnumerable,
   isRunnable,

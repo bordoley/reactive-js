@@ -17,26 +17,25 @@ import Source_move from "../../Source/__internal__/Source.move";
 import Enumerable_enumerate from "./Enumerable.enumerate";
 
 const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"] =
-  /*@__PURE__*/ (<T>() =>
-    returns(
-      (enumerable: EnumerableLike<T>): AsyncEnumerableLike<T> =>
-        AsyncEnumerable_create(observable =>
-          Observable_create(observer => {
-            const enumerator = pipe(
-              enumerable,
-              Enumerable_enumerate(),
-              Disposable_addTo(observer),
-            );
+  /*@__PURE__*/ returns(
+    (enumerable: EnumerableLike): AsyncEnumerableLike =>
+      AsyncEnumerable_create(observable =>
+        Observable_create(observer => {
+          const enumerator = pipe(
+            enumerable,
+            Enumerable_enumerate(),
+            Disposable_addTo(observer),
+          );
 
-            pipe(
-              observable,
-              Observable_map(_ => Source_move(enumerator)),
-              Observable_takeWhile<EnumeratorLike<T>>(Enumerator_hasCurrent),
-              Observable_map(Enumerator_getCurrent),
-              ReactiveContainer_sinkInto(observer),
-            );
-          }),
-        ),
-    ))();
+          pipe(
+            observable,
+            Observable_map(_ => Source_move(enumerator)),
+            Observable_takeWhile<EnumeratorLike>(Enumerator_hasCurrent),
+            Observable_map(Enumerator_getCurrent),
+            ReactiveContainer_sinkInto(observer),
+          );
+        }),
+      ),
+  );
 
 export default Enumerable_toAsyncEnumerable;

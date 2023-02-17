@@ -1,6 +1,10 @@
 /// <reference types="./RunnableObservable.d.ts" />
 import { MAX_SAFE_INTEGER } from '../constants.mjs';
-import { returns } from '../functions.mjs';
+import Iterable_toRunnableObservable from '../containers/Iterable/__internal__/Iterable.toRunnableObservable.mjs';
+import ReadonlyArray_toRunnableObservable from '../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.mjs';
+import Sequence_toRunnableObservable from '../containers/Sequence/__internal__/Sequence.toRunnableObservable.mjs';
+import { returns, identity } from '../functions.mjs';
+import Enumerable_toRunnableObservable from '../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.mjs';
 import Observable_buffer from './Observable/__internal__/Observable.buffer.mjs';
 import Observable_combineLatest from './Observable/__internal__/Observable.combineLatest.mjs';
 import Observable_concat from './Observable/__internal__/Observable.concat.mjs';
@@ -9,7 +13,6 @@ import Observable_distinctUntilChanged from './Observable/__internal__/Observabl
 import Observable_empty from './Observable/__internal__/Observable.empty.mjs';
 import Observable_everySatisfy from './Observable/__internal__/Observable.everySatisfy.mjs';
 import Observable_forEach from './Observable/__internal__/Observable.forEach.mjs';
-import Observable_fromReadonlyArray from './Observable/__internal__/Observable.fromReadonlyArray.mjs';
 import Observable_generate from './Observable/__internal__/Observable.generate.mjs';
 import Observable_keep from './Observable/__internal__/Observable.keep.mjs';
 import Observable_map from './Observable/__internal__/Observable.map.mjs';
@@ -59,7 +62,10 @@ const exhaust =
     maxConcurrency: 1,
 }));
 const forEach = Observable_forEach;
-const fromReadonlyArray = Observable_fromReadonlyArray;
+const fromEnumerable = Enumerable_toRunnableObservable;
+const fromIterable = Iterable_toRunnableObservable;
+const fromReadonlyArray = ReadonlyArray_toRunnableObservable;
+const fromSequence = Sequence_toRunnableObservable;
 const generate = Observable_generate;
 const keep = Observable_keep;
 const map = Observable_map;
@@ -81,6 +87,8 @@ const throttle = RunnableObservable_throttle;
 const throwIfEmpty = Observable_throwIfEmpty;
 const timeout = Observable_timeout;
 const toFlowable = RunnableObservable_toFlowable;
+const toObservable = 
+/*@__PURE__*/ returns(identity);
 const toReadonlyArray = RunnableObservable_toReadonlyArray;
 const toRunnable = RunnableObservable_toRunnable;
 const withLatestFrom = Observable_withLatestFrom;
@@ -101,7 +109,10 @@ const RunnableObservable = {
     everySatisfy,
     exhaust,
     forEach,
+    fromEnumerable,
+    fromIterable,
     fromReadonlyArray,
+    fromSequence,
     generate,
     keep,
     map,
@@ -122,6 +133,7 @@ const RunnableObservable = {
     throwIfEmpty,
     timeout,
     toFlowable,
+    toObservable,
     toReadonlyArray,
     toRunnable,
     withLatestFrom,
@@ -130,4 +142,4 @@ const RunnableObservable = {
     zipWithLatestFrom,
 };
 
-export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromReadonlyArray, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromEnumerable, fromIterable, fromReadonlyArray, fromSequence, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toObservable, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

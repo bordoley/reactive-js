@@ -1,6 +1,7 @@
 import {
   Empty,
   ForEach,
+  FromIterable,
   FromReadonlyArray,
   FromSequence,
   Keep,
@@ -10,7 +11,7 @@ import {
   ToReadonlyArray,
   ToSequence,
 } from "../containers";
-import { FromEnumerable, ToEnumerable } from "../ix";
+import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix";
 import Enumerable_toReadonlyArray from "../ix/Enumerable/__internal__/Enumerable.toReadonlyArray";
 import {
   FromEnumerableObservable,
@@ -21,13 +22,17 @@ import {
   ToRunnableObservable,
 } from "../rx";
 import RunnableObservable_toReadonlyArray from "../rx/RunnableObservable/__internal__/RunnableObservable.toReadonlyArray";
+import { ToFlowable } from "../streaming";
+import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty";
 import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach";
 import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map";
 import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some";
+import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable";
 import ReadonlyArray_toEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toEnumerable";
+import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray";
 import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable";
 import ReadonlyArray_toRunnableObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
@@ -47,6 +52,9 @@ export const fromEnumerable: FromEnumerable<ReadonlyArrayLike>["fromEnumerable"]
 export const fromEnumerableObservable =
   RunnableObservable_toReadonlyArray as FromEnumerableObservable<ReadonlyArrayLike>["fromEnumerableObservable"];
 
+export const fromIterable: FromIterable<ReadonlyArrayLike>["fromIterable"] =
+  Iterable_toReadonlyArray;
+
 export const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
@@ -61,6 +69,16 @@ export const keep: Keep<ReadonlyArrayLike>["keep"] = ReadonlyArray_keep;
 export const map: Map<ReadonlyArrayLike>["map"] = ReadonlyArray_map;
 
 export const some = ReadonlyArray_some;
+
+export const toAsyncEnumerable: ToAsyncEnumerable<
+  ReadonlyArrayLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+    readonly count?: number;
+  }
+>["toAsyncEnumerable"] = ReadonlyArray_toAsyncEnumerable;
 
 export const toEnumerable: ToEnumerable<
   ReadonlyArrayLike,
@@ -84,6 +102,14 @@ export const toEnumerableObservable: ToEnumerableObservable<
       readonly start?: number;
     }
   >["toEnumerableObservable"];
+
+export const toFlowable: ToFlowable<
+  ReadonlyArrayLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toFlowable"] = ReadonlyArray_toFlowable;
 
 export const toIterable: ToIterable<
   ReadonlyArrayLike,
@@ -144,13 +170,16 @@ const ReadonlyArray = {
   forEach,
   fromEnumerable,
   fromEnumerableObservable,
+  fromIterable,
   fromReadonlyArray,
   fromSequence,
   keep,
   map,
   some,
+  toAsyncEnumerable,
   toEnumerable,
   toEnumerableObservable,
+  toFlowable,
   toIterable,
   toObservable,
   toReadonlyArray,

@@ -1,14 +1,24 @@
 import {
+  FromIterable,
   FromReadonlyArray,
+  FromSequence,
   Generate,
   Keep,
   Map,
   Scan,
   TakeWhile,
 } from "../containers";
+import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable";
 import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable";
-import { AsyncEnumerableLike, EnumerableLike, ToAsyncEnumerable } from "../ix";
-import { ObservableLike, ScanAsync, ToObservable } from "../rx";
+import Sequence_toAsyncEnumerable from "../containers/Sequence/__internal__/Sequence.toAsyncEnumerable";
+import { AsyncEnumerableLike, FromEnumerable } from "../ix";
+import {
+  FromEnumerableObservable,
+  ObservableLike,
+  ScanAsync,
+  ToObservable,
+} from "../rx";
+import EnumerableObservable_toAsyncEnumerable from "../rx/EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable";
 import AsyncEnumerable_generate from "./AsyncEnumerable/__internal__/AsyncEnumerable.generate";
 import AsyncEnumerable_keep from "./AsyncEnumerable/__internal__/AsyncEnumerable.keep";
 import AsyncEnumerable_map from "./AsyncEnumerable/__internal__/AsyncEnumerable.map";
@@ -18,11 +28,20 @@ import AsyncEnumerable_takeWhile from "./AsyncEnumerable/__internal__/AsyncEnume
 import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toObservable";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable";
 
-export const fromEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"] =
+export const fromEnumerable: FromEnumerable<AsyncEnumerableLike>["fromEnumerable"] =
   Enumerable_toAsyncEnumerable;
+
+export const fromEnumerableObservable: FromEnumerableObservable<AsyncEnumerableLike>["fromEnumerableObservable"] =
+  EnumerableObservable_toAsyncEnumerable;
+
+export const fromIterable: FromIterable<AsyncEnumerableLike>["fromIterable"] =
+  Iterable_toAsyncEnumerable;
 
 export const fromReadonlyArray: FromReadonlyArray<AsyncEnumerableLike>["fromReadonlyArray"] =
   ReadonlyArray_toAsyncEnumerable;
+
+export const fromSequence: FromSequence<AsyncEnumerableLike>["fromSequence"] =
+  Sequence_toAsyncEnumerable;
 
 export const generate: Generate<
   AsyncEnumerableLike,
@@ -48,7 +67,11 @@ export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
 
 /** @ignore */
 const AsyncEnumerable = {
+  fromEnumerable,
+  fromEnumerableObservable,
+  fromIterable,
   fromReadonlyArray,
+  fromSequence,
   generate,
   keep,
   map,

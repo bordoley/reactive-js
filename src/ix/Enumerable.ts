@@ -6,6 +6,7 @@ import {
   Empty,
   ForEach,
   FromIterable,
+  FromReadonlyArray,
   Generate,
   Keep,
   Map,
@@ -22,14 +23,16 @@ import {
   Zip,
 } from "../containers";
 import Iterable_toEnumerable from "../containers/Iterable/__internal__/Iterable.toEnumerable";
+import ReadonlyArray_toEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toEnumerable";
 import { identity, returns } from "../functions";
-import { EnumerableLike, ToEnumerable } from "../ix";
+import { EnumerableLike, ToAsyncEnumerable, ToEnumerable } from "../ix";
 import {
   ToEnumerableObservable,
   ToObservable,
   ToRunnable,
   ToRunnableObservable,
 } from "../rx";
+import { ToFlowable } from "../streaming";
 import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer";
 import Enumerable_concat from "./Enumerable/__internal__/Enumerable.concat";
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll";
@@ -37,7 +40,6 @@ import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerabl
 import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate";
 import Enumerable_forEach from "./Enumerable/__internal__/Enumerable.forEach";
-import Enumerable_fromReadonlyArray from "./Enumerable/__internal__/Enumerable.fromReadonlyArray";
 import Enumerable_generate from "./Enumerable/__internal__/Enumerable.generate";
 import Enumerable_keep from "./Enumerable/__internal__/Enumerable.keep";
 import Enumerable_map from "./Enumerable/__internal__/Enumerable.map";
@@ -49,7 +51,9 @@ import Enumerable_takeFirst from "./Enumerable/__internal__/Enumerable.takeFirst
 import Enumerable_takeLast from "./Enumerable/__internal__/Enumerable.takeLast";
 import Enumerable_takeWhile from "./Enumerable/__internal__/Enumerable.takeWhile";
 import Enumerable_throwIfEmpty from "./Enumerable/__internal__/Enumerable.throwIfEmpty";
+import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable";
 import Enumerable_toEnumerableObservable from "./Enumerable/__internal__/Enumerable.toEnumerableObservable";
+import Enumerable_toFlowable from "./Enumerable/__internal__/Enumerable.toFlowable";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray";
 import Enumerable_toRunnable from "./Enumerable/__internal__/Enumerable.toRunnable";
@@ -72,7 +76,8 @@ export const empty: Empty<EnumerableLike>["empty"] = Enumerable_empty;
 
 export const forEach: ForEach<EnumerableLike>["forEach"] = Enumerable_forEach;
 
-export const fromReadonlyArray = Enumerable_fromReadonlyArray;
+export const fromReadonlyArray: FromReadonlyArray<EnumerableLike>["fromReadonlyArray"] =
+  ReadonlyArray_toEnumerable;
 
 export const fromIterable: FromIterable<EnumerableLike>["fromIterable"] =
   Iterable_toEnumerable;
@@ -106,6 +111,9 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   Enumerable_throwIfEmpty;
 
+export const toAsyncEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"] =
+  Enumerable_toAsyncEnumerable;
+
 export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
   /*@__PURE__*/ returns(
     identity,
@@ -113,6 +121,14 @@ export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
 
 export const toEnumerableObservable: ToEnumerableObservable<EnumerableLike>["toEnumerableObservable"] =
   Enumerable_toEnumerableObservable;
+
+export const toFlowable: ToFlowable<
+  EnumerableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["toFlowable"] = Enumerable_toFlowable;
 
 export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
   Enumerable_toIterable;
@@ -162,8 +178,11 @@ const Enumerable = {
   takeLast,
   takeWhile,
   throwIfEmpty,
+  toAsyncEnumerable,
   toEnumerable,
   toEnumerableObservable,
+  toFlowable,
+  toIterable,
   toObservable,
   toReadonlyArray,
   toRunnable,
