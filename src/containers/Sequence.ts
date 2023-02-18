@@ -142,6 +142,7 @@ const Sequence = {
   pairwise,
   repeat,
   scan,
+  seek,
   skipFirst,
   takeFirst,
   takeLast,

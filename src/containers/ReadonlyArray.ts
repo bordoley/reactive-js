@@ -49,8 +49,8 @@ export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
 export const fromEnumerable: FromEnumerable<ReadonlyArrayLike>["fromEnumerable"] =
   Enumerable_toReadonlyArray;
 
-export const fromEnumerableObservable =
-  RunnableObservable_toReadonlyArray as FromEnumerableObservable<ReadonlyArrayLike>["fromEnumerableObservable"];
+export const fromEnumerableObservable: FromEnumerableObservable<ReadonlyArrayLike>["fromEnumerableObservable"] =
+  RunnableObservable_toReadonlyArray;
 
 export const fromIterable: FromIterable<ReadonlyArrayLike>["fromIterable"] =
   Iterable_toReadonlyArray;
@@ -58,8 +58,8 @@ export const fromIterable: FromIterable<ReadonlyArrayLike>["fromIterable"] =
 export const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
-export const fromRunnableObservable =
-  RunnableObservable_toReadonlyArray as FromRunnableObservable<ReadonlyArrayLike>["fromRunnableObservable"];
+export const fromRunnableObservable: FromRunnableObservable<ReadonlyArrayLike>["fromRunnableObservable"] =
+  RunnableObservable_toReadonlyArray;
 
 export const fromSequence: FromSequence<ReadonlyArrayLike>["fromSequence"] =
   Sequence_toReadonlyArray;
