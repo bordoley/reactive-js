@@ -47,12 +47,6 @@ export interface ReadonlyArrayLike<T = unknown>
   >;
 }
 
-export interface ReadonlySetLike<T = unknown>
-  extends ContainerLike,
-    ReadonlySet<T> {
-  readonly [ContainerLike_type]?: ReadonlySetLike<this[typeof ContainerLike_T]>;
-}
-
 /**  @ignore */
 export const SequenceLike_data = Symbol("SequenceLike_data");
 
@@ -395,12 +389,6 @@ export type ToReadonlyArray<
 
 export type ToSequence<C extends ContainerLike, O = never> = Container<C> & {
   toSequence<T>(options?: O): Function1<ContainerOf<C, T>, SequenceLike<T>>;
-};
-
-export type ToReadonlySet<C extends ContainerLike, O = never> = Container<C> & {
-  toReadonlySet<T>(
-    options?: O,
-  ): Function1<ContainerOf<C, T>, ReadonlySetLike<T>>;
 };
 
 export type Zip<C extends ContainerLike> = Container<C> & {
