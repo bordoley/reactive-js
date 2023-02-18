@@ -16,8 +16,6 @@
 
   ↳ [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)
 
-  ↳ [`ReadonlySetLike`](containers.ReadonlySetLike.md)
-
   ↳ [`SequenceLike`](containers.SequenceLike.md)
 
   ↳ [`StatefulContainerLike`](containers.StatefulContainerLike.md)

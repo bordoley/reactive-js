@@ -11,7 +11,6 @@
 - [IterableLike](../interfaces/containers.IterableLike.md)
 - [PromiseableLike](../interfaces/containers.PromiseableLike.md)
 - [ReadonlyArrayLike](../interfaces/containers.ReadonlyArrayLike.md)
-- [ReadonlySetLike](../interfaces/containers.ReadonlySetLike.md)
 - [SequenceLike](../interfaces/containers.SequenceLike.md)
 - [StatefulContainerLike](../interfaces/containers.StatefulContainerLike.md)
 
@@ -54,7 +53,6 @@
 - [ToAsyncIterable](containers.md#toasynciterable)
 - [ToIterable](containers.md#toiterable)
 - [ToReadonlyArray](containers.md#toreadonlyarray)
-- [ToReadonlySet](containers.md#toreadonlyset)
 - [ToSequence](containers.md#tosequence)
 - [Zip](containers.md#zip)
 
@@ -534,19 +532,6 @@ ___
 ### ToReadonlyArray
 
 Ƭ **ToReadonlyArray**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlyArray`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
-| `O` | `never` |
-
-___
-
-### ToReadonlySet
-
-Ƭ **ToReadonlySet**<`C`, `O`\>: [`Container`](containers.md#container)<`C`\> & { `toReadonlySet`: <T\>(`options?`: `O`) => [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `T`\>, [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`T`\>\>  }
 
 #### Type parameters
 

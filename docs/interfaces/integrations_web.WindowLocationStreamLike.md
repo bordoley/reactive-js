@@ -49,7 +49,7 @@ Represents a duplex stream
 
 #### Overrides
 
-StreamLike.\_\_@DispatcherLike\_dispatch@23772
+StreamLike.\_\_@DispatcherLike\_dispatch@23761
 
 ___
 
