@@ -220,8 +220,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.delay` | `number` |
+| `options?` | `undefined` |
 
 #### Returns
 
@@ -1006,198 +1005,198 @@ ___
 
 [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zip**<`TA_1`, `TB_1`, `TC`\>(`a`, `b`, `c`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA_1` |
-| `TB_1` |
+| `TA` |
+| `TB` |
 | `TC` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_1`\> |
-| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_1`\> |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB`\> |
 | `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC`\> |
 
 #### Returns
 
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zip**<`TA_2`, `TB_2`, `TC_1`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA_2` |
-| `TB_2` |
-| `TC_1` |
+| `TA` |
+| `TB` |
+| `TC` |
 | `TD` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_2`\> |
-| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_2`\> |
-| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_1`\> |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC`\> |
 | `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD`\> |
 
 #### Returns
 
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zip**<`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA_3` |
-| `TB_3` |
-| `TC_2` |
-| `TD_1` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
 | `TE` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_3`\> |
-| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_3`\> |
-| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_2`\> |
-| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_1`\> |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD`\> |
 | `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE`\> |
 
 #### Returns
 
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zip**<`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA_4` |
-| `TB_4` |
-| `TC_3` |
-| `TD_2` |
-| `TE_1` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
 | `TF` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_4`\> |
-| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_4`\> |
-| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_3`\> |
-| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_2`\> |
-| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE_1`\> |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD`\> |
+| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE`\> |
 | `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF`\> |
 
 #### Returns
 
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zip**<`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA_5` |
-| `TB_5` |
-| `TC_4` |
-| `TD_3` |
-| `TE_2` |
-| `TF_1` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
 | `TG` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_5`\> |
-| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_5`\> |
-| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_4`\> |
-| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_3`\> |
-| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE_2`\> |
-| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF_1`\> |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD`\> |
+| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE`\> |
+| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF`\> |
 | `g` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TG`\> |
 
 #### Returns
 
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zip**<`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA_6` |
-| `TB_6` |
-| `TC_5` |
-| `TD_4` |
-| `TE_3` |
-| `TF_2` |
-| `TG_1` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
 | `TH` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_6`\> |
-| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_6`\> |
-| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_5`\> |
-| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_4`\> |
-| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE_3`\> |
-| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF_2`\> |
-| `g` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TG_1`\> |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD`\> |
+| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE`\> |
+| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF`\> |
+| `g` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TG`\> |
 | `h` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TH`\> |
 
 #### Returns
 
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zip**<`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA_7` |
-| `TB_7` |
-| `TC_6` |
-| `TD_5` |
-| `TE_4` |
-| `TF_3` |
-| `TG_2` |
-| `TH_1` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
 | `TI` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA_7`\> |
-| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB_7`\> |
-| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC_6`\> |
-| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD_5`\> |
-| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE_4`\> |
-| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF_3`\> |
-| `g` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TG_2`\> |
-| `h` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TH_1`\> |
+| `a` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TA`\> |
+| `b` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TB`\> |
+| `c` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TC`\> |
+| `d` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TD`\> |
+| `e` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TE`\> |
+| `f` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TF`\> |
+| `g` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TG`\> |
+| `h` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TH`\> |
 | `i` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`TI`\> |
 
 #### Returns
 
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>

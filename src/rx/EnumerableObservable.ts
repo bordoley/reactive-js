@@ -80,13 +80,13 @@ import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/Run
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray";
 import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable";
 
-export const buffer =
+export const buffer: Buffer<EnumerableObservableLike>["buffer"] =
   Observable_buffer as Buffer<EnumerableObservableLike>["buffer"];
 
 export const catchError: CatchError<EnumerableObservableLike>["catchError"] =
   EnumerableObservable_catchError;
 
-export const concat =
+export const concat: Concat<EnumerableObservableLike>["concat"] =
   Observable_concat as Concat<EnumerableObservableLike>["concat"];
 
 export const concatAll: ConcatAll<
@@ -99,21 +99,19 @@ export const concatAll: ConcatAll<
   return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
 
-export const decodeWithCharset =
+export const decodeWithCharset: DecodeWithCharset<EnumerableObservableLike>["decodeWithCharset"] =
   Observable_decodeWithCharset as DecodeWithCharset<EnumerableObservableLike>["decodeWithCharset"];
 
 export const defer: Defer<EnumerableObservableLike>["defer"] =
   EnumerableObservable_defer;
 
-export const distinctUntilChanged =
+export const distinctUntilChanged: DistinctUntilChanged<EnumerableObservableLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged as DistinctUntilChanged<EnumerableObservableLike>["distinctUntilChanged"];
 
-export const empty = Observable_empty as Empty<
-  EnumerableObservableLike,
-  { delay: number }
->["empty"];
+export const empty: Empty<EnumerableObservableLike>["empty"] =
+  Observable_empty as Empty<EnumerableObservableLike>["empty"];
 
-export const everySatisfy =
+export const everySatisfy: EverySatisfy<EnumerableObservableLike>["everySatisfy"] =
   Observable_everySatisfy as EverySatisfy<EnumerableObservableLike>["everySatisfy"];
 
 export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] =
@@ -124,7 +122,7 @@ export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] =
     }),
   );
 
-export const forEach =
+export const forEach: ForEach<EnumerableObservableLike>["forEach"] =
   Observable_forEach as ForEach<EnumerableObservableLike>["forEach"];
 
 export const fromEnumerable: FromEnumerable<EnumerableObservableLike>["fromEnumerable"] =
@@ -139,14 +137,16 @@ export const fromReadonlyArray: FromReadonlyArray<EnumerableObservableLike>["fro
 export const fromSequence: FromSequence<EnumerableObservableLike>["fromSequence"] =
   Sequence_toRunnableObservable as FromSequence<EnumerableObservableLike>["fromSequence"];
 
-export const generate =
+export const generate: Generate<EnumerableObservableLike>["generate"] =
   Observable_generate as Generate<EnumerableObservableLike>["generate"];
 
-export const keep = Observable_keep as Keep<EnumerableObservableLike>["keep"];
+export const keep: Keep<EnumerableObservableLike>["keep"] =
+  Observable_keep as Keep<EnumerableObservableLike>["keep"];
 
-export const map = Observable_map as Map<EnumerableObservableLike>["map"];
+export const map: Map<EnumerableObservableLike>["map"] =
+  Observable_map as Map<EnumerableObservableLike>["map"];
 
-export const merge =
+export const merge: Concat<EnumerableObservableLike>["concat"] =
   Observable_merge as Concat<EnumerableObservableLike>["concat"];
 
 export const mergeAll: ConcatAll<
@@ -157,41 +157,42 @@ export const mergeAll: ConcatAll<
   }
 >["concatAll"] = EnumerableObservable_mergeAll;
 
-export const pairwise =
+export const pairwise: Pairwise<EnumerableObservableLike>["pairwise"] =
   Observable_pairwise as Pairwise<EnumerableObservableLike>["pairwise"];
 
-export const reduce =
+export const reduce: Reduce<EnumerableObservableLike>["reduce"] =
   Observable_reduce as Reduce<EnumerableObservableLike>["reduce"];
 
 export const retry: Retry<EnumerableObservableLike>["retry"] =
   Observable_retry as Retry<EnumerableObservableLike>["retry"];
 
-export const scan = Observable_scan as Scan<EnumerableObservableLike>["scan"];
+export const scan: Scan<EnumerableObservableLike>["scan"] =
+  Observable_scan as Scan<EnumerableObservableLike>["scan"];
 
 export const scanAsync: ScanAsync<
   EnumerableObservableLike,
   EnumerableObservableLike
 >["scanAsync"] = EnumerableObservable_scanAsync;
 
-export const skipFirst =
+export const skipFirst: SkipFirst<EnumerableObservableLike>["skipFirst"] =
   Observable_skipFirst as SkipFirst<EnumerableObservableLike>["skipFirst"];
 
-export const someSatisfy =
+export const someSatisfy: SomeSatisfy<EnumerableObservableLike>["someSatisfy"] =
   Observable_someSatisfy as SomeSatisfy<EnumerableObservableLike>["someSatisfy"];
 
 export const switchAll: ConcatAll<EnumerableObservableLike>["concatAll"] =
   EnumerableObservable_switchAll;
 
-export const takeFirst =
+export const takeFirst: TakeFirst<EnumerableObservableLike>["takeFirst"] =
   Observable_takeFirst as TakeFirst<EnumerableObservableLike>["takeFirst"];
 
-export const takeLast =
+export const takeLast: TakeLast<EnumerableObservableLike>["takeLast"] =
   Observable_takeLast as TakeLast<EnumerableObservableLike>["takeLast"];
 
-export const takeWhile =
+export const takeWhile: TakeWhile<EnumerableObservableLike>["takeWhile"] =
   Observable_takeWhile as TakeWhile<EnumerableObservableLike>["takeWhile"];
 
-export const throwIfEmpty =
+export const throwIfEmpty: ThrowIfEmpty<EnumerableObservableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty as ThrowIfEmpty<EnumerableObservableLike>["throwIfEmpty"];
 
 export const toAsyncEnumerable: ToAsyncEnumerable<EnumerableObservableLike>["toAsyncEnumerable"] =
@@ -206,15 +207,19 @@ export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
 export const toIterable: ToIterable<EnumerableObservableLike>["toIterable"] =
   EnumerableObservable_toIterable;
 
-export const toReadonlyArray =
-  RunnableObservable_toReadonlyArray as ToReadonlyArray<
-    EnumerableObservableLike,
-    {
-      readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-    }
-  >["toReadonlyArray"];
+export const toReadonlyArray: ToReadonlyArray<
+  EnumerableObservableLike,
+  {
+    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
+  }
+>["toReadonlyArray"] = RunnableObservable_toReadonlyArray as ToReadonlyArray<
+  EnumerableObservableLike,
+  {
+    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
+  }
+>["toReadonlyArray"];
 
-export const toRunnable =
+export const toRunnable: ToRunnable<EnumerableObservableLike>["toRunnable"] =
   RunnableObservable_toRunnable as ToRunnable<EnumerableObservableLike>["toRunnable"];
 
 export const toRunnableObservable: ToRunnableObservable<
@@ -234,7 +239,8 @@ export const toObservable: ToObservable<
   }
 >["toObservable"] = toRunnableObservable;
 
-export const zip = Observable_zip as Zip<EnumerableObservableLike>["zip"];
+export const zip: Zip<EnumerableObservableLike>["zip"] =
+  Observable_zip as Zip<EnumerableObservableLike>["zip"];
 
 /** @ignore */
 const EnumerableObservable = {

@@ -61,36 +61,37 @@ declare const Sequence: {
         <T_9>(options?: undefined): ContainerOperator<SequenceLike<unknown>, T_9, T_9>;
     };
     scan: <T_10, TAcc>(scanner: Reducer<T_10, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<SequenceLike<unknown>, T_10, TAcc>;
-    skipFirst: <T_11>(options?: {
-        readonly count?: number | undefined;
-    } | undefined) => ContainerOperator<SequenceLike<unknown>, T_11, T_11>;
-    takeFirst: <T_12>(options?: {
+    seek: <T_11>(count: number) => ContainerOperator<SequenceLike<unknown>, T_11, T_11>;
+    skipFirst: <T_12>(options?: {
         readonly count?: number | undefined;
     } | undefined) => ContainerOperator<SequenceLike<unknown>, T_12, T_12>;
-    takeLast: <T_13>(options?: {
+    takeFirst: <T_13>(options?: {
         readonly count?: number | undefined;
     } | undefined) => ContainerOperator<SequenceLike<unknown>, T_13, T_13>;
-    takeWhile: <T_14>(predicate: Predicate<T_14>, options?: {
-        readonly inclusive?: boolean | undefined;
+    takeLast: <T_14>(options?: {
+        readonly count?: number | undefined;
     } | undefined) => ContainerOperator<SequenceLike<unknown>, T_14, T_14>;
-    toAsyncEnumerable: <T_15>(options?: undefined) => Function1<SequenceLike<T_15>, AsyncEnumerableLike<T_15>>;
-    toEnumerable: <T_16>(options?: undefined) => Function1<SequenceLike<T_16>, EnumerableLike<T_16>>;
-    toEnumerableObservable: <T_17>(options?: undefined) => Function1<SequenceLike<T_17>, EnumerableObservableLike<T_17>>;
-    toFlowable: <T_18>(options?: {
+    takeWhile: <T_15>(predicate: Predicate<T_15>, options?: {
+        readonly inclusive?: boolean | undefined;
+    } | undefined) => ContainerOperator<SequenceLike<unknown>, T_15, T_15>;
+    toAsyncEnumerable: <T_16>(options?: undefined) => Function1<SequenceLike<T_16>, AsyncEnumerableLike<T_16>>;
+    toEnumerable: <T_17>(options?: undefined) => Function1<SequenceLike<T_17>, EnumerableLike<T_17>>;
+    toEnumerableObservable: <T_18>(options?: undefined) => Function1<SequenceLike<T_18>, EnumerableObservableLike<T_18>>;
+    toFlowable: <T_19>(options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<SequenceLike<T_18>, FlowableLike<T_18>>;
-    toIterable: <T_19>(options?: undefined) => Function1<SequenceLike<T_19>, IterableLike<T_19>>;
-    toObservable: <T_20>(options?: {
+    } | undefined) => Function1<SequenceLike<T_19>, FlowableLike<T_19>>;
+    toIterable: <T_20>(options?: undefined) => Function1<SequenceLike<T_20>, IterableLike<T_20>>;
+    toObservable: <T_21>(options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<SequenceLike<T_20>, ObservableLike<T_20>>;
-    toReadonlyArray: <T_21>(options?: undefined) => Function1<SequenceLike<T_21>, ReadonlyArrayLike<T_21>>;
-    toRunnable: <T_22>(options?: undefined) => Function1<SequenceLike<T_22>, RunnableLike<T_22>>;
-    toRunnableObservable: <T_23>(options?: {
+    } | undefined) => Function1<SequenceLike<T_21>, ObservableLike<T_21>>;
+    toReadonlyArray: <T_22>(options?: undefined) => Function1<SequenceLike<T_22>, ReadonlyArrayLike<T_22>>;
+    toRunnable: <T_23>(options?: undefined) => Function1<SequenceLike<T_23>, RunnableLike<T_23>>;
+    toRunnableObservable: <T_24>(options?: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
-    } | undefined) => Function1<SequenceLike<T_23>, RunnableObservableLike<T_23>>;
+    } | undefined) => Function1<SequenceLike<T_24>, RunnableObservableLike<T_24>>;
     zip: {
         <TA_1, TB_1>(a: SequenceLike<TA_1>, b: SequenceLike<TB_1>): SequenceLike<readonly [
             TA_1,

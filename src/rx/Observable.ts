@@ -5,7 +5,9 @@ import {
   ContainerOperator,
   DecodeWithCharset,
   Defer,
+  Empty,
   EverySatisfy,
+  ForEach,
   ForkConcat,
   ForkZip,
   FromIterable,
@@ -31,14 +33,7 @@ import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/S
 import { Factory, Function1, SideEffect1 } from "../functions";
 import { FromEnumerable } from "../ix";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
-import {
-  EnumerableObservableLike,
-  ObservableLike,
-  ObserverLike,
-  RunnableObservableLike,
-  ScanAsync,
-  Throttle,
-} from "../rx";
+import { ObservableLike, ObserverLike, ScanAsync, Throttle } from "../rx";
 import { SchedulerLike } from "../scheduling";
 import { FromFlowable } from "../streaming";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable";
@@ -128,11 +123,8 @@ export const defer: Defer<ObservableLike>["defer"] = Observable_defer;
 
 export const distinctUntilChanged = Observable_distinctUntilChanged;
 
-interface EmptyObservable {
-  <T>(): EnumerableObservableLike<T>;
-  <T>(options: { delay: number }): RunnableObservableLike<T>;
-}
-export const empty: EmptyObservable = Observable_empty as EmptyObservable;
+export const empty: Empty<ObservableLike, { delay?: number }>["empty"] =
+  Observable_empty;
 
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   Observable_everySatisfy;
@@ -143,7 +135,7 @@ export const exhaust: ConcatAll<ObservableLike>["concatAll"] = <T>() =>
     maxConcurrency: 1,
   });
 
-export const forEach = Observable_forEach;
+export const forEach: ForEach<ObservableLike>["forEach"] = Observable_forEach;
 
 export const forkCombineLatest: ForkZip<ObservableLike>["forkZip"] =
   Observable_forkCombineLatest;
@@ -172,8 +164,8 @@ export const fromIterable: FromIterable<
   }
 >["fromIterable"] = Iterable_toRunnableObservable;
 
-export const fromFlowable =
-  Flowable_toObservable as FromFlowable<ObservableLike>["fromFlowable"];
+export const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"] =
+  Flowable_toObservable;
 
 export const fromPromise = Promiseable_toObservable;
 
