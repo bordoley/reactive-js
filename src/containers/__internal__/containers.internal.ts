@@ -25,9 +25,7 @@ export type StatefulContainerStateOf<
     };
 
 export type TInteractive = 0;
-export const interactive: TInteractive = 0;
 export type TReactive = 1;
-export const reactive: TReactive = 1;
 
 export type StatefulContainerOperatorIn<
   C extends StatefulContainerLike,
@@ -57,6 +55,4 @@ export type Lift<
       StatefulContainerOperatorOut<C, TA, TB, TVar>
     >,
   ): ContainerOperator<C, TA, TB>;
-
-  readonly variance: TVar;
 };
