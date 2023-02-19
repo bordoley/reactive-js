@@ -1,6 +1,8 @@
 import {
+  Equality,
   Factory,
   Optional,
+  Updater,
   arrayEquality,
   error,
   getLength,
@@ -14,6 +16,10 @@ import {
   raiseWithDebugMessage,
 } from "../../../functions";
 import { ObservableLike, ObserverLike } from "../../../rx";
+import { SchedulerLike } from "../../../scheduling";
+import { StreamLike, StreamableLike } from "../../../streaming";
+import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore";
+import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream";
 import { DisposableLike } from "../../../util";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
@@ -314,7 +320,7 @@ export const assertCurrentContext = (): AsyncContext =>
       )
     : currentCtx;
 
-const Observable_async = <T>(
+export const Observable_async = <T>(
   computation: Factory<T>,
   { mode = "batched" }: { mode?: "batched" | "combine-latest" } = {},
 ): ObservableLike<T> =>
@@ -415,4 +421,116 @@ const Observable_async = <T>(
     pipe(observer, Observer_schedule(runComputation));
   });
 
-export default Observable_async;
+export const Observable_async__memo = <T>(
+  f: (...args: any[]) => T,
+  ...args: unknown[]
+): T => {
+  const ctx = assertCurrentContext();
+  return ctx[AsyncContext_memoOrUse](false, f, ...args);
+};
+
+export const Observable_async__await = <T>(
+  observable: ObservableLike<T>,
+): T => {
+  const ctx = assertCurrentContext();
+  return ctx[AsyncContext_awaitOrObserve](observable, true) as T;
+};
+
+export const Observable_async__observe = <T>(
+  observable: ObservableLike<T>,
+): Optional<T> => {
+  const ctx = assertCurrentContext();
+  return ctx[AsyncContext_awaitOrObserve](observable, false);
+};
+
+export const Observable_async__do = /*@__PURE__*/ (() => {
+  const deferSideEffect = (f: (...args: any[]) => void, ...args: unknown[]) =>
+    Observable_create(observer => {
+      const callback = () => {
+        f(...args);
+        pipe(observer, Sink_notify(none), Disposable_dispose());
+      };
+
+      pipe(observer, Observer_schedule(callback));
+    });
+
+  return (f: (...args: any[]) => void, ...args: unknown[]): void => {
+    const ctx = assertCurrentContext();
+
+    const scheduler = Observer_getScheduler(ctx[AsyncContext_observer]);
+    const observable = ctx[AsyncContext_memoOrUse](
+      false,
+      deferSideEffect,
+      f,
+      ...args,
+    );
+    const subscribeOnScheduler = ctx[AsyncContext_memoOrUse](
+      false,
+      Observable_subscribe,
+      scheduler,
+    );
+    ctx[AsyncContext_memoOrUse](true, subscribeOnScheduler, observable);
+  };
+})();
+
+export const Observable_async__using = <T extends DisposableLike>(
+  f: (...args: any[]) => T,
+  ...args: unknown[]
+): T => {
+  const ctx = assertCurrentContext();
+  return ctx[AsyncContext_memoOrUse](true, f, ...args);
+};
+
+export function Observable_async__currentScheduler(): SchedulerLike {
+  const ctx = assertCurrentContext();
+  return Observer_getScheduler(ctx[AsyncContext_observer]);
+}
+
+export const Observable_async__stream = /*@__PURE__*/ (() => {
+  const streamOnSchedulerFactory = <
+    TReq,
+    T,
+    TStream extends StreamLike<TReq, T>,
+  >(
+    streamable: StreamableLike<TReq, T, TStream>,
+    scheduler: SchedulerLike,
+    replay: number,
+  ) => pipe(streamable, Streamable_stream(scheduler, { replay }));
+
+  return <TReq, T, TStream extends StreamLike<TReq, T>>(
+    streamable: StreamableLike<TReq, T, TStream>,
+    {
+      replay = 0,
+      scheduler,
+    }: { readonly replay?: number; readonly scheduler?: SchedulerLike } = {},
+  ): TStream => {
+    const currentScheduler = Observable_async__currentScheduler();
+    return Observable_async__using(
+      streamOnSchedulerFactory,
+      streamable,
+      scheduler ?? currentScheduler,
+      replay,
+    ) as TStream;
+  };
+})();
+
+export const Observable_async__state = /*@__PURE__*/ (() => {
+  const createStateOptions = <T>(equality: Optional<Equality<T>>) =>
+    isSome(equality) ? { equality } : none;
+
+  return <T>(
+    initialState: () => T,
+    options: {
+      readonly equality?: Optional<Equality<T>>;
+    } = {},
+  ): StreamLike<Updater<T>, T> => {
+    const { equality } = options;
+    const optionsMemo = Observable_async__memo(createStateOptions, equality);
+    const streamable = Observable_async__memo(
+      Streamable_createStateStore,
+      initialState,
+      optionsMemo,
+    );
+    return Observable_async__stream(streamable) as StreamLike<Updater<T>, T>;
+  };
+})();

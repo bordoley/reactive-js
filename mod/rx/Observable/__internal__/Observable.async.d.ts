@@ -1,5 +1,7 @@
-import { Factory, Optional } from "../../../functions.js";
+import { Factory, Optional, Equality, Updater } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import { StreamLike, StreamableLike } from "../../../streaming.js";
 import { DisposableLike } from "../../../util.js";
 type EffectsMode = "batched" | "combine-latest";
 declare const Memo = 1;
@@ -66,4 +68,17 @@ declare const assertCurrentContext: () => AsyncContext;
 declare const Observable_async: <T>(computation: Factory<T>, { mode }?: {
     mode?: "batched" | "combine-latest" | undefined;
 }) => ObservableLike<T>;
-export { AsyncContext_awaitOrObserve, AsyncContext_memoOrUse, AsyncContext_observer, assertCurrentContext, Observable_async as default };
+declare const Observable_async__memo: <T>(f: (...args: any[]) => T, ...args: unknown[]) => T;
+declare const Observable_async__await: <T>(observable: ObservableLike<T>) => T;
+declare const Observable_async__observe: <T>(observable: ObservableLike<T>) => Optional<T>;
+declare const Observable_async__do: (f: (...args: any[]) => void, ...args: unknown[]) => void;
+declare const Observable_async__using: <T extends DisposableLike>(f: (...args: any[]) => T, ...args: unknown[]) => T;
+declare function Observable_async__currentScheduler(): SchedulerLike;
+declare const Observable_async__stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
+    readonly replay?: number | undefined;
+    readonly scheduler?: SchedulerLike | undefined;
+}) => TStream;
+declare const Observable_async__state: <T>(initialState: () => T, options?: {
+    readonly equality?: Optional<Equality<T>>;
+}) => StreamLike<Updater<T>, T>;
+export { AsyncContext_awaitOrObserve, AsyncContext_memoOrUse, AsyncContext_observer, Observable_async, Observable_async__await, Observable_async__currentScheduler, Observable_async__do, Observable_async__memo, Observable_async__observe, Observable_async__state, Observable_async__stream, Observable_async__using, assertCurrentContext };

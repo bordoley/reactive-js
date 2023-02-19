@@ -7,7 +7,7 @@ import {
   __observe,
   __state,
   __stream,
-} from "@reactive-js/core/rx/Observable/effects";
+} from "@reactive-js/core/rx/Observable";
 import * as Observable from "@reactive-js/core/rx/Observable";
 import * as RunnableObservable from "@reactive-js/core/rx/RunnableObservable";
 import {

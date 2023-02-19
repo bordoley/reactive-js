@@ -30,7 +30,22 @@ import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/I
 import Promiseable_toObservable from "../containers/Promiseable/__internal__/Promiseable.toObservable";
 import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
 import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable";
-import { Factory, Function1, SideEffect1 } from "../functions";
+import {
+  Factory,
+  Function1,
+  Function2,
+  Function3,
+  Function4,
+  Function5,
+  Function6,
+  SideEffect,
+  SideEffect1,
+  SideEffect2,
+  SideEffect3,
+  SideEffect4,
+  SideEffect5,
+  SideEffect6,
+} from "../functions";
 import { FromEnumerable } from "../ix";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
 import { ObservableLike, ObserverLike, ScanAsync, Throttle } from "../rx";
@@ -39,7 +54,17 @@ import { FromFlowable } from "../streaming";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable";
 import { DisposableLike, DisposableOrTeardown } from "../util";
 import Disposable_toObservable from "../util/Disposable/__internal__/Disposable.toObservable";
-import Observable_async from "./Observable/__internal__/Observable.async";
+import {
+  Observable_async,
+  Observable_async__await,
+  Observable_async__currentScheduler,
+  Observable_async__do,
+  Observable_async__memo,
+  Observable_async__observe,
+  Observable_async__state,
+  Observable_async__stream,
+  Observable_async__using,
+} from "./Observable/__internal__/Observable.async";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest";
@@ -90,6 +115,143 @@ import Observable_withLatestFrom from "./Observable/__internal__/Observable.with
 import Observable_zip from "./Observable/__internal__/Observable.zip";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom";
+
+interface __Memo {
+  <T>(fn: Factory<T>): T;
+  <TA, T>(fn: Function1<TA, T>, a: TA): T;
+  <TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+  <TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+  <TA, TB, TC, TD, T>(
+    fn: Function4<TA, TB, TC, TD, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): T;
+  <TA, TB, TC, TD, TE, T>(
+    fn: Function5<TA, TB, TC, TD, TE, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): T;
+  <TA, TB, TC, TD, TE, TF, T>(
+    fn: Function6<TA, TB, TC, TD, TE, TF, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): T;
+}
+
+/**
+ * @category AsyncEffect
+ */
+export const __memo: __Memo = Observable_async__memo;
+
+/**
+ * @category AsyncEffect
+ */
+export const __await = Observable_async__await;
+
+/**
+ * @category AsyncEffect
+ */
+export const __currentScheduler = Observable_async__currentScheduler;
+
+interface __Do {
+  (fn: SideEffect): void;
+  <TA>(fn: SideEffect1<TA>, a: TA): void;
+  <TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
+  <TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: TC): void;
+  <TA, TB, TC, TD>(
+    fn: SideEffect4<TA, TB, TC, TD>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): void;
+  <TA, TB, TC, TD, TE>(
+    fn: SideEffect5<TA, TB, TC, TD, TE>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): void;
+  <TA, TB, TC, TD, TE, TF>(
+    fn: SideEffect6<TA, TB, TC, TD, TE, TF>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): void;
+}
+
+/**
+ * @category AsyncEffect
+ */
+export const __do: __Do = Observable_async__do;
+
+/**
+ * @category AsyncEffect
+ */
+export const __observe = Observable_async__observe;
+
+/**
+ * @category AsyncEffect
+ */
+export const __state = Observable_async__state;
+
+/**
+ * @category AsyncEffect
+ */
+export const __stream = Observable_async__stream;
+
+interface __Using {
+  <T extends DisposableLike>(fn: Factory<T>): T;
+  <TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
+  <TA, TB, T extends DisposableLike>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+  <TA, TB, TC, T extends DisposableLike>(
+    fn: Function3<TA, TB, TC, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+  ): T;
+  <TA, TB, TC, TD, T extends DisposableLike>(
+    fn: Function4<TA, TB, TC, TD, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): T;
+  <TA, TB, TC, TD, TE, T extends DisposableLike>(
+    fn: Function5<TA, TB, TC, TD, TE, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): T;
+  <TA, TB, TC, TD, TE, TF, T extends DisposableLike>(
+    fn: Function6<TA, TB, TC, TD, TE, TF, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): T;
+}
+/**
+ * @category AsyncEffect
+ */
+export const __using: __Using = Observable_async__using;
 
 export const async = Observable_async;
 

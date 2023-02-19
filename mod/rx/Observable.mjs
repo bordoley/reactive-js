@@ -6,7 +6,7 @@ import Sequence_toRunnableObservable from '../containers/Sequence/__internal__/S
 import Enumerable_toRunnableObservable from '../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.mjs';
 import Flowable_toObservable from '../streaming/Flowable/__internal__/Flowable.toObservable.mjs';
 import Disposable_toObservable from '../util/Disposable/__internal__/Disposable.toObservable.mjs';
-import Observable_async from './Observable/__internal__/Observable.async.mjs';
+import { Observable_async__memo, Observable_async__await, Observable_async__currentScheduler, Observable_async__do, Observable_async__observe, Observable_async__state, Observable_async__stream, Observable_async__using, Observable_async } from './Observable/__internal__/Observable.async.mjs';
 import Observable_buffer from './Observable/__internal__/Observable.buffer.mjs';
 import Observable_catchError from './Observable/__internal__/Observable.catchError.mjs';
 import Observable_combineLatest from './Observable/__internal__/Observable.combineLatest.mjs';
@@ -58,6 +58,38 @@ import Observable_zip from './Observable/__internal__/Observable.zip.mjs';
 import Observable_zipLatest from './Observable/__internal__/Observable.zipLatest.mjs';
 import Observable_zipWithLatestFrom from './Observable/__internal__/Observable.zipWithLatestFrom.mjs';
 
+/**
+ * @category AsyncEffect
+ */
+const __memo = Observable_async__memo;
+/**
+ * @category AsyncEffect
+ */
+const __await = Observable_async__await;
+/**
+ * @category AsyncEffect
+ */
+const __currentScheduler = Observable_async__currentScheduler;
+/**
+ * @category AsyncEffect
+ */
+const __do = Observable_async__do;
+/**
+ * @category AsyncEffect
+ */
+const __observe = Observable_async__observe;
+/**
+ * @category AsyncEffect
+ */
+const __state = Observable_async__state;
+/**
+ * @category AsyncEffect
+ */
+const __stream = Observable_async__stream;
+/**
+ * @category AsyncEffect
+ */
+const __using = Observable_async__using;
 const async = Observable_async;
 const buffer = Observable_buffer;
 const catchError = Observable_catchError;
@@ -187,4 +219,4 @@ const Observable = {
     zipWithLatestFrom,
 };
 
-export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromEnumerable, fromFlowable, fromIterable, fromPromise, fromReadonlyArray, fromSequence, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { __await, __currentScheduler, __do, __memo, __observe, __state, __stream, __using, async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromEnumerable, fromFlowable, fromIterable, fromPromise, fromReadonlyArray, fromSequence, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

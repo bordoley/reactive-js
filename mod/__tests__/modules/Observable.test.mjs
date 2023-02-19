@@ -2,8 +2,7 @@
 import Container from '../../containers/Container.mjs';
 import ReadonlyArray from '../../containers/ReadonlyArray.mjs';
 import { pipe, raise, isSome, increment, returns } from '../../functions.mjs';
-import Observable from '../../rx/Observable.mjs';
-import { __memo, __await } from '../../rx/Observable/effects.mjs';
+import Observable, { __memo, __await } from '../../rx/Observable.mjs';
 import Continuation from '../../scheduling/Continuation.mjs';
 import Scheduler from '../../scheduling/Scheduler.mjs';
 import VirtualTimeScheduler from '../../scheduling/VirtualTimeScheduler.mjs';
