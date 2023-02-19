@@ -59,8 +59,8 @@ import {
   MutableRefLike_current,
   QueueLike,
 } from "../../util/__internal__/util.internal";
+import { Continuation__yield } from "../Continuation/__internal__/Continuation.create";
 import Continuation_run from "../Continuation/__internal__/Continuation.run";
-import { __yield } from "../Continuation/effects";
 import getCurrentTime from "../Scheduler/__internal__/Scheduler.getCurrentTime";
 import isInContinuation from "../Scheduler/__internal__/Scheduler.isInContinuation";
 import schedule from "../Scheduler/__internal__/Scheduler.schedule";
@@ -224,7 +224,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               instance[QueueScheduler_dueTime] =
                 getCurrentTime(instance[QueueScheduler_host]) + delay;
             }
-            __yield(delay);
+            Continuation__yield(delay);
           }
         });
       instance[QueueScheduler_hostContinuation] = continuation;

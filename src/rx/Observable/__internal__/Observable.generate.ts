@@ -1,6 +1,6 @@
 import { Factory, Updater, none, pipe } from "../../../functions";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import { __yield } from "../../../scheduling/Continuation/effects";
+import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
 import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create";
@@ -21,7 +21,7 @@ const Observable_generate = <T>(
       while (!Disposable_isDisposed(observer)) {
         acc = generator(acc);
         observer[SinkLike_notify](acc);
-        __yield(delay);
+        Continuation__yield(delay);
       }
     };
 

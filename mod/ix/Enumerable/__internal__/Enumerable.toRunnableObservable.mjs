@@ -5,7 +5,7 @@ import { SinkLike_notify } from '../../../rx.mjs';
 import EnumerableObservable_create from '../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.mjs';
 import Observer_schedule from '../../../rx/Observer/__internal__/Observer.schedule.mjs';
 import RunnableObservable_create from '../../../rx/RunnableObservable/__internal__/RunnableObservable.create.mjs';
-import { __yield } from '../../../scheduling/Continuation/effects.mjs';
+import { Continuation__yield } from '../../../scheduling/Continuation/__internal__/Continuation.create.mjs';
 import { hasDelay } from '../../../scheduling/__internal__/Scheduler.options.mjs';
 import { DisposableLike_isDisposed } from '../../../util.mjs';
 import Disposable_bindTo from '../../../util/Disposable/__internal__/Disposable.bindTo.mjs';
@@ -20,7 +20,7 @@ const Enumerable_toRunnableObservable = (options) => enumerable => {
                 (enumerator[SourceLike_move](),
                     enumerator[EnumeratorLike_hasCurrent])) {
                 observer[SinkLike_notify](enumerator[EnumeratorLike_current]);
-                __yield(delay);
+                Continuation__yield(delay);
             }
         }, delayStart ? options : none));
     };

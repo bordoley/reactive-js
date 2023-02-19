@@ -1,7 +1,7 @@
 /// <reference types="./Observable.generate.d.ts" />
 import { pipe, none } from '../../../functions.mjs';
 import { SinkLike_notify } from '../../../rx.mjs';
-import { __yield } from '../../../scheduling/Continuation/effects.mjs';
+import { Continuation__yield } from '../../../scheduling/Continuation/__internal__/Continuation.create.mjs';
 import { hasDelay } from '../../../scheduling/__internal__/Scheduler.options.mjs';
 import Disposable_isDisposed from '../../../util/Disposable/__internal__/Disposable.isDisposed.mjs';
 import EnumerableObservable_create from '../../EnumerableObservable/__internal__/EnumerableObservable.create.mjs';
@@ -16,7 +16,7 @@ const Observable_generate = (generator, initialValue, options) => {
             while (!Disposable_isDisposed(observer)) {
                 acc = generator(acc);
                 observer[SinkLike_notify](acc);
-                __yield(delay);
+                Continuation__yield(delay);
             }
         };
         pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
