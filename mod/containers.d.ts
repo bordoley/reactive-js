@@ -258,6 +258,14 @@ interface Keep<C extends ContainerLike, O = never> extends Container<C> {
  * @category TypeClass
  */
 interface Map<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * Returns a ContainerOperator that applies the `mapper` function to each
+     * value produced by the source.
+     *
+     * @param mapper - A pure map function that is applied each value produced by the source
+     * @typeparam TA - The inner type of the source container
+     * @typeparam TB - The inner type of the mapped container
+     */
     map<TA, TB>(mapper: Function1<TA, TB>, options?: O): ContainerOperator<C, TA, TB>;
 }
 /**

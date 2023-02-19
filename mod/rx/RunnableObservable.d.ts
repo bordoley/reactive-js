@@ -2,8 +2,8 @@ import { ToFlowable, FlowableLike } from "../streaming.js";
 import { FromEnumerable, EnumerableLike } from "../ix.js";
 import { VirtualTimeSchedulerLike } from "../scheduling.js";
 import { RunnableObservableLike, Retry, ScanAsync, ThrottleMode, ToObservable, RunnableLike, AsyncReducer, ObservableLike } from "../rx.js";
-import { Equality, Predicate, SideEffect1, Updater, Factory, Function1, Reducer, Function2 } from "../functions.js";
-import { ContainerOperator, CatchError, Zip, ConcatAll, Defer, FromIterable, FromReadonlyArray, FromSequence, ReadonlyArrayLike, SequenceLike } from "../containers.js";
+import { Equality, Predicate, SideEffect1, Updater, Factory, Reducer, Function1, Function2 } from "../functions.js";
+import { ContainerOperator, CatchError, Zip, ConcatAll, Defer, FromIterable, FromReadonlyArray, FromSequence, Map, ReadonlyArrayLike, SequenceLike } from "../containers.js";
 declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number | undefined;
 } | undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, readonly T[]>;
@@ -44,7 +44,7 @@ declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, opt
     readonly delayStart?: boolean | undefined;
 } | undefined) => RunnableObservableLike<T>;
 declare const keep: <T>(predicate: Predicate<T>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, T, T>;
-declare const map: <TA, TB>(mapper: Function1<TA, TB>, options?: undefined) => ContainerOperator<RunnableObservableLike<unknown>, TA, TB>;
+declare const map: Map<RunnableObservableLike>["map"];
 declare const merge: <T>(fst: RunnableObservableLike<T>, snd: RunnableObservableLike<T>, ...tail: readonly RunnableObservableLike<T>[]) => RunnableObservableLike<T>;
 declare const mergeAll: ConcatAll<RunnableObservableLike, {
     readonly maxBufferSize?: number;
