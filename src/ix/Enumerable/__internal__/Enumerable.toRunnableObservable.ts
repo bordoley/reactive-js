@@ -14,7 +14,7 @@ import {
 import EnumerableObservable_create from "../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule";
 import RunnableObservable_create from "../../../rx/RunnableObservable/__internal__/RunnableObservable.create";
-import { __yield } from "../../../scheduling/Continuation/effects";
+import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
 import { DisposableLike_isDisposed } from "../../../util";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo";
@@ -51,7 +51,7 @@ const Enumerable_toRunnableObservable: ToRunnableObservable<
               enumerator[EnumeratorLike_hasCurrent])
             ) {
               observer[SinkLike_notify](enumerator[EnumeratorLike_current]);
-              __yield(delay);
+              Continuation__yield(delay);
             }
           },
           delayStart ? options : none,

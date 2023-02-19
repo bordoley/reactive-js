@@ -52,7 +52,7 @@ import {
 import EnumerableObservable from "../rx/EnumerableObservable";
 import Observable from "../rx/Observable";
 import RunnableObservable from "../rx/RunnableObservable";
-import { __now } from "../scheduling/Continuation/effects";
+import { __now } from "../scheduling/Continuation";
 import Scheduler from "../scheduling/Scheduler";
 import Disposable from "../util/Disposable";
 import {

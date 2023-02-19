@@ -6,7 +6,7 @@ import Enumerable from '../ix/Enumerable.mjs';
 import EnumerableObservable from '../rx/EnumerableObservable.mjs';
 import Observable from '../rx/Observable.mjs';
 import RunnableObservable from '../rx/RunnableObservable.mjs';
-import { __now } from '../scheduling/Continuation/effects.mjs';
+import { __now } from '../scheduling/Continuation.mjs';
 import Scheduler from '../scheduling/Scheduler.mjs';
 import Disposable from '../util/Disposable.mjs';
 import { describe as createDescribe, test as createTest, expectArrayEquals, expectEquals, expectToThrowError, testAsync } from './testing.mjs';
