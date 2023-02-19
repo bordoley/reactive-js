@@ -4,8 +4,6 @@
 
 [rx](../modules/rx.md).EnumerableObservableLike
 
-The source of notifications which notifies a `ObserverLike` instance.
-
 ## Type parameters
 
 | Name | Type |

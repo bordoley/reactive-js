@@ -4,11 +4,9 @@
 
 [integrations/web](../modules/integrations_web.md).WindowLocationStreamLike
 
-Represents a duplex stream
-
 ## Hierarchy
 
-- [`StreamLike`](streaming.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri)\> \| [`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri), [`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri)\>
+- [`StreamLike`](streaming.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\> \| [`WindowLocationURI`](integrations_web.WindowLocationURI.md), [`WindowLocationURI`](integrations_web.WindowLocationURI.md)\>
 
   ↳ **`WindowLocationStreamLike`**
 
@@ -39,7 +37,7 @@ Represents a duplex stream
 
 | Name | Type |
 | :------ | :------ |
-| `stateOrUpdater` | [`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri) \| [`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri)\> |
+| `stateOrUpdater` | [`WindowLocationURI`](integrations_web.WindowLocationURI.md) \| [`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\> |
 | `options?` | `Object` |
 | `options.replace?` | `boolean` |
 
@@ -49,7 +47,7 @@ Represents a duplex stream
 
 #### Overrides
 
-StreamLike.\_\_@DispatcherLike\_dispatch@23761
+StreamLike.\_\_@DispatcherLike\_dispatch@23758
 
 ___
 

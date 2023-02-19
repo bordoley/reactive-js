@@ -26,6 +26,9 @@ export interface StreamLike<TReq, T>
 /** @ignore */
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
+/**
+ * @category Container
+ */
 export interface StreamableLike<
   TReq,
   T,
@@ -41,16 +44,27 @@ export interface FlowableStreamLike<T = unknown>
   extends StreamLike<Updater<PauseableState>, T>,
     PauseableLike {}
 
+/**
+ * @category Container
+ */
 export interface FlowableLike<T = unknown>
   extends StreamableLike<Updater<PauseableState>, T, FlowableStreamLike<T>>,
     ContainerLike {
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 
-export type FromFlowable<C extends ContainerLike, O = never> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface FromFlowable<C extends ContainerLike, O = never>
+  extends Container<C> {
   fromFlowable<T>(options?: O): Function1<FlowableLike<T>, ContainerOf<C, T>>;
-};
+}
 
-export type ToFlowable<C extends ContainerLike, O = never> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface ToFlowable<C extends ContainerLike, O = never>
+  extends Container<C> {
   toFlowable<T>(options?: O): Function1<ContainerOf<C, T>, FlowableLike<T>>;
-};
+}

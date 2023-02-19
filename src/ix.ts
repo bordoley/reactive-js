@@ -14,6 +14,7 @@ import { DisposableLike } from "./util";
 
 /** @ignore */
 export const SourceLike_move = Symbol("SourceLike_move");
+
 export interface SourceLike extends DisposableLike {
   [SourceLike_move](): void;
 }
@@ -34,6 +35,9 @@ export const InteractiveContainerLike_interact = Symbol(
   "InteractiveContainerLike_interact",
 );
 
+/**
+ * @category Container
+ */
 export interface InteractiveContainerLike<
   TSource extends DisposableLike,
   TCtx = void,
@@ -43,6 +47,7 @@ export interface InteractiveContainerLike<
 
 /**
  * Interface for iterating a Container of items.
+ *  @category Container
  */
 export interface EnumerableLike<T = unknown>
   extends InteractiveContainerLike<EnumeratorLike<T>> {
@@ -66,6 +71,9 @@ export const AsyncEnumerableLike_isRunnable = Symbol(
   "AsyncEnumerableLike_isRunnable",
 );
 
+/**
+ * @category Container
+ */
 export interface AsyncEnumerableLike<T = unknown>
   extends StreamableLike<void, T, AsyncEnumeratorLike<T>>,
     InteractiveContainerLike<AsyncEnumeratorLike<T>, SchedulerLike> {
@@ -79,6 +87,9 @@ export interface AsyncEnumerableLike<T = unknown>
   readonly [AsyncEnumerableLike_isRunnable]: boolean;
 }
 
+/**
+ * @category Container
+ */
 export interface RunnableAsyncEnumerableLike<T = unknown>
   extends AsyncEnumerableLike<T> {
   readonly [ContainerLike_type]?: RunnableAsyncEnumerableLike<
@@ -88,6 +99,9 @@ export interface RunnableAsyncEnumerableLike<T = unknown>
   readonly [AsyncEnumerableLike_isRunnable]: true;
 }
 
+/**
+ * @category Container
+ */
 export interface EnumerableAsyncEnumerableLike<T = unknown>
   extends RunnableAsyncEnumerableLike<T> {
   readonly [ContainerLike_type]?: EnumerableAsyncEnumerableLike<
@@ -97,33 +111,40 @@ export interface EnumerableAsyncEnumerableLike<T = unknown>
   readonly [AsyncEnumerableLike_isEnumerable]: true;
 }
 
-export type FromAsyncEnumerable<
-  C extends ContainerLike,
-  O = never,
-> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface FromAsyncEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
   fromAsyncEnumerable<T>(
     options?: O,
   ): Function1<AsyncEnumerableLike<T>, ContainerOf<C, T>>;
-};
+}
 
-export type FromEnumerable<
-  C extends ContainerLike,
-  O = never,
-> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface FromEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
   fromEnumerable<T>(
     options?: O,
   ): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
-};
+}
 
-export type ToAsyncEnumerable<
-  C extends ContainerLike,
-  O = never,
-> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface ToAsyncEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
   toAsyncEnumerable<T>(
     options?: O,
   ): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
-};
+}
 
-export type ToEnumerable<C extends ContainerLike, O = never> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface ToEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
   toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
-};
+}

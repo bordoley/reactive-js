@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streaming.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri)\> \| [`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri), [`WindowLocationURI`](../modules/integrations_web.md#windowlocationuri), [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)\>
+- [`StreamableLike`](streaming.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\> \| [`WindowLocationURI`](integrations_web.WindowLocationURI.md), [`WindowLocationURI`](integrations_web.WindowLocationURI.md), [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)\>
 
   ↳ **`WindowLocationStreamableLike`**
 

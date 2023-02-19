@@ -4,15 +4,15 @@
 
 ## Table of contents
 
-### Interfaces
+### Container Interfaces
 
 - [WindowLocationStreamLike](../interfaces/integrations_web.WindowLocationStreamLike.md)
+
+### Other Interfaces
+
+- [FetchRequest](../interfaces/integrations_web.FetchRequest.md)
 - [WindowLocationStreamableLike](../interfaces/integrations_web.WindowLocationStreamableLike.md)
-
-### Type Aliases
-
-- [FetchRequest](integrations_web.md#fetchrequest)
-- [WindowLocationURI](integrations_web.md#windowlocationuri)
+- [WindowLocationURI](../interfaces/integrations_web.WindowLocationURI.md)
 
 ### Variables
 
@@ -23,27 +23,6 @@
 - [addEventListener](integrations_web.md#addeventlistener)
 - [createEventSource](integrations_web.md#createeventsource)
 - [fetch](integrations_web.md#fetch)
-
-## Type Aliases
-
-### FetchRequest
-
-Ƭ **FetchRequest**: `RequestInit` & { `uri`: `string`  }
-
-___
-
-### WindowLocationURI
-
-Ƭ **WindowLocationURI**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `fragment` | `string` |
-| `path` | `string` |
-| `query` | `string` |
-| `title` | `string` |
 
 ## Variables
 
@@ -95,7 +74,7 @@ ___
 
 ### fetch
 
-▸ **fetch**<`T`\>(`onResponse`): [`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](integrations_web.md#fetchrequest), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **fetch**<`T`\>(`onResponse`): [`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](../interfaces/integrations_web.FetchRequest.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -111,4 +90,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](integrations_web.md#fetchrequest), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](../interfaces/integrations_web.FetchRequest.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>

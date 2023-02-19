@@ -1,0 +1,61 @@
+[Reactive-JS](../README.md) / [containers](../modules/containers.md) / Buffer
+
+# Interface: Buffer<C, O\>
+
+[containers](../modules/containers.md).Buffer
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `O` | `unknown` |
+
+## Hierarchy
+
+- [`Container`](containers.Container.md)<`C`\>
+
+  ↳ **`Buffer`**
+
+## Table of contents
+
+### Properties
+
+- [ContainerLike\_type](containers.Buffer.md#containerlike_type)
+- [buffer](containers.Buffer.md#buffer)
+
+## Properties
+
+### ContainerLike\_type
+
+• `Optional` `Readonly` **ContainerLike\_type**: `C`
+
+#### Inherited from
+
+[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
+
+___
+
+### buffer
+
+• **buffer**: <T\>(`options?`: `O` & { `maxBufferSize?`: `number`  }) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+#### Type declaration
+
+▸ <`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `O` & { `maxBufferSize?`: `number`  } |
+
+##### Returns
+
+[`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>

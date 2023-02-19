@@ -66,15 +66,15 @@ import Streamable_create from "../streaming/Streamable/__internal__/Streamable.c
 import { addTo, dispose, onDisposed, toAbortSignal } from "../util/Disposable";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin";
 
-export type WindowLocationURI = {
-  title: string;
+export interface WindowLocationURI {
+  readonly title: string;
   // FIXME: Can we enforce non-empty string in the type system
   // should we enforce valid typing to make sure the various strings are
   // rfc compliant?
-  path: string;
-  query: string;
-  fragment: string;
-};
+  readonly path: string;
+  readonly query: string;
+  readonly fragment: string;
+}
 
 /** @ignore */
 export const WindowLocationStreamLike_goBack = Symbol(
@@ -86,6 +86,9 @@ export const WindowLocationStreamLike_canGoBack = Symbol(
   "WindowLocationStreamLike_canGoBack",
 );
 
+/**
+ * @category Container
+ */
 export interface WindowLocationStreamLike
   extends StreamLike<
     Updater<WindowLocationURI> | WindowLocationURI,
@@ -113,9 +116,9 @@ export interface WindowLocationStreamableLike
   ): WindowLocationStreamLike;
 }
 
-export type FetchRequest = RequestInit & {
-  uri: string;
-};
+export interface FetchRequest extends RequestInit {
+  readonly uri: string;
+}
 
 const reservedEvents = ["error", "open"];
 
