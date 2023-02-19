@@ -52,7 +52,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `uri` | [`WindowLocationURI`](integrations_web.md#windowlocationuri) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](integrations_web.md#windowlocationuri)\> |
+| `uri` | [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\> |
 
 #### Returns
 

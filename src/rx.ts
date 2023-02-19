@@ -15,6 +15,10 @@ import { DisposableLike } from "./util";
 
 /** @ignore */
 export const SinkLike_notify = Symbol("SinkLike_notify");
+
+/**
+ * @category Container
+ */
 export interface SinkLike<T = unknown> extends DisposableLike {
   /**
    * Notifies the the sink of the next notification produced by the observable source.
@@ -42,11 +46,18 @@ export interface ObserverLike<T = unknown> extends SinkLike<T> {
 export const ReactiveContainerLike_sinkInto = Symbol(
   "ReactiveContainerLike_sinkInto",
 );
+
+/**
+ * @category Container
+ */
 export interface ReactiveContainerLike<TSink extends DisposableLike>
   extends StatefulContainerLike {
   [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
 
+/**
+ * @category Container
+ */
 export interface RunnableLike<T = unknown>
   extends ReactiveContainerLike<SinkLike<T>> {
   readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
@@ -67,6 +78,7 @@ export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
  * The source of notifications which notifies a `ObserverLike` instance.
  *
  * @noInheritDoc
+ * @category Container
  */
 export interface ObservableLike<T = unknown>
   extends ReactiveContainerLike<ObserverLike<T>> {
@@ -79,6 +91,9 @@ export interface ObservableLike<T = unknown>
   readonly [ObservableLike_isRunnable]: boolean;
 }
 
+/**
+ * @category Container
+ */
 export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ContainerLike_type]?: RunnableObservableLike<
     this[typeof ContainerLike_T]
@@ -87,6 +102,9 @@ export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
 }
 
+/**
+ * @category Container
+ */
 export interface EnumerableObservableLike<T = unknown>
   extends RunnableObservableLike<T> {
   readonly [ContainerLike_type]?: EnumerableObservableLike<
@@ -106,6 +124,9 @@ export const MulticastObservableLike_replay = Symbol(
   "MulticastObservableLike_replay",
 );
 
+/**
+ * @category Container
+ */
 export interface MulticastObservableLike<T = unknown>
   extends ObservableLike<T>,
     DisposableLike {
@@ -118,6 +139,10 @@ export interface MulticastObservableLike<T = unknown>
 
 /** @ignore */
 export const SubjectLike_publish = Symbol("SubjectLike_publish");
+
+/**
+ * @category Container
+ */
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
   [SubjectLike_publish](next: T): void;
 }
@@ -128,25 +153,30 @@ export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
   ContainerOf<C, TAcc>
 >;
 
-export type FromEnumerableObservable<
-  C extends ContainerLike,
-  O = never,
-> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface FromEnumerableObservable<C extends ContainerLike, O = never>
+  extends Container<C> {
   fromEnumerableObservable: <T>(
     options?: O,
   ) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
-};
+}
 
-export type FromRunnableObservable<
-  C extends ContainerLike,
-  O = never,
-> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface FromRunnableObservable<C extends ContainerLike, O = never>
+  extends Container<C> {
   fromRunnableObservable: <T>(
     options?: O,
   ) => Function1<RunnableObservableLike<T>, ContainerOf<C, T>>;
-};
+}
 
-export type Retry<C extends ObservableLike> = {
+/**
+ * @category TypeClass
+ */
+export interface Retry<C extends ObservableLike> extends Container<C> {
   /**
    * Returns an `ObservableLike` that mirrors the source, re-subscribing
    * if the source completes with an error.
@@ -162,21 +192,27 @@ export type Retry<C extends ObservableLike> = {
   retry<T>(
     predicate: Function2<number, unknown, boolean>,
   ): ContainerOperator<C, T, T>;
-};
+}
 
-export type ScanAsync<
+/**
+ * @category TypeClass
+ */
+export interface ScanAsync<
   C extends ContainerLike,
   CInner extends ObservableLike,
-> = Container<C> & {
+> extends Container<C> {
   scanAsync: <T, TAcc>(
     scanner: AsyncReducer<CInner, T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ContainerOperator<C, T, TAcc>;
-};
+}
 
-export type TakeUntil<C extends ObservableLike> = {
+/**
+ * @category TypeClass
+ */
+export interface TakeUntil<C extends ObservableLike> extends Container<C> {
   takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
-};
+}
 
 export const ThrottleMode_first = Symbol("ThrottleMode_first");
 export const ThrottleMode_last = Symbol("ThrottleMode_last");
@@ -186,7 +222,10 @@ export type ThrottleMode =
   | typeof ThrottleMode_last
   | typeof ThrottleMode_interval;
 
-export type Throttle<C extends ObservableLike> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface Throttle<C extends ObservableLike> extends Container<C> {
   /**
    * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
    *
@@ -210,9 +249,12 @@ export type Throttle<C extends ObservableLike> = Container<C> & {
     duration: number,
     options?: { readonly mode?: ThrottleMode },
   ): ContainerOperator<C, T, T>;
-};
+}
 
-export type Timeout<C extends ObservableLike> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface Timeout<C extends ObservableLike> extends Container<C> {
   /**
    * Returns an `ObservableLike` that completes with an error if the source
    * does not emit a value in given time span.
@@ -226,50 +268,70 @@ export type Timeout<C extends ObservableLike> = Container<C> & {
    * @param duration
    */
   timeout<T>(duration: C): ContainerOperator<C, T, T>;
-};
+}
 
-export type ToObservable<C extends ContainerLike, O = never> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface ToObservable<C extends ContainerLike, O = never>
+  extends Container<C> {
   toObservable: <T>(
     options?: O,
   ) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
-};
+}
 
-export type ToRunnableObservable<
-  C extends ContainerLike,
-  O = never,
-> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface ToRunnableObservable<C extends ContainerLike, O = never>
+  extends Container<C> {
   toRunnableObservable: <T>(
     options?: O,
   ) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
-};
+}
 
-export type ToEnumerableObservable<
-  C extends ContainerLike,
-  O = never,
-> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface ToEnumerableObservable<C extends ContainerLike, O = never>
+  extends Container<C> {
   toEnumerableObservable: <T>(
     options?: O,
   ) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
-};
+}
 
-export type ToRunnable<C extends ContainerLike, O = never> = Container<C> & {
+/**
+ * @category TypeClass
+ */
+export interface ToRunnable<C extends ContainerLike, O = never>
+  extends Container<C> {
   toRunnable<T>(options?: O): Function1<ContainerOf<C, T>, RunnableLike<T>>;
-};
+}
 
-export type WithLatestFrom<C extends ObservableLike> = {
+/**
+ * @category TypeClass
+ */
+export interface WithLatestFrom<C extends ObservableLike> extends Container<C> {
   withLatestFrom<TA, TB, T>(
     other: ContainerOf<C, TB>,
     selector: Function2<TA, TB, T>,
   ): ContainerOperator<C, TA, T>;
-};
+}
 
-export type ZipLatest<C extends ObservableLike> = {
+/**
+ * @category TypeClass
+ */
+export interface ZipLatest<C extends ObservableLike> extends Container<C> {
   zipLatest: Zip<C>["zip"];
-};
+}
 
-export type ZipWithLatestFrom<C extends ObservableLike> = {
+/**
+ * @category TypeClass
+ */
+export interface ZipWithLatestFrom<C extends ObservableLike>
+  extends Container<C> {
   zipWithLatestFrom<TA, TB, T>(
     other: ContainerOf<C, TB>,
     selector: Function2<TA, TB, T>,
   ): ContainerOperator<C, TA, T>;
-};
+}

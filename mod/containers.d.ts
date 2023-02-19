@@ -4,19 +4,34 @@ import { DisposableLike } from "./util.js";
 declare const ContainerLike_T: unique symbol;
 /**  @ignore */
 declare const ContainerLike_type: unique symbol;
+/**
+ * @category Container
+ */
 interface ContainerLike {
     readonly [ContainerLike_T]?: unknown;
     readonly [ContainerLike_type]?: unknown;
 }
+/**
+ * @category Container
+ */
 interface AsyncIterableLike<T = unknown> extends ContainerLike, AsyncIterable<T> {
     readonly [ContainerLike_type]?: AsyncIterableLike<this[typeof ContainerLike_T]>;
 }
+/**
+ * @category Container
+ */
 interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
     readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
 }
+/**
+ * @category Container
+ */
 interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike<T> {
     readonly [ContainerLike_type]?: PromiseableLike<this[typeof ContainerLike_T]>;
 }
+/**
+ * @category Container
+ */
 interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
     readonly [ContainerLike_type]?: ReadonlyArrayLike<this[typeof ContainerLike_T]>;
 }
@@ -24,6 +39,9 @@ interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T>
 declare const SequenceLike_data: unique symbol;
 /**  @ignore */
 declare const SequenceLike_next: unique symbol;
+/**
+ * @category Container
+ */
 interface SequenceLike<T = unknown> extends ContainerLike {
     readonly [ContainerLike_type]?: SequenceLike<this[typeof ContainerLike_T]>;
     (): Optional<{
@@ -33,6 +51,9 @@ interface SequenceLike<T = unknown> extends ContainerLike {
 }
 /**  @ignore */
 declare const StatefulContainerLike_state: unique symbol;
+/**
+ * @category Container
+ */
 interface StatefulContainerLike extends ContainerLike {
     readonly [StatefulContainerLike_state]?: DisposableLike;
 }
@@ -45,49 +66,88 @@ type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly _T: () => T;
 };
 type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
-type Container<C extends ContainerLike> = {
+/**
+ * @category TypeClass
+ */
+interface Container<C extends ContainerLike> {
     readonly ContainerLike_type?: C;
-};
-type Buffer<C extends ContainerLike, O = unknown> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Buffer<C extends ContainerLike, O = unknown> extends Container<C> {
     buffer: <T>(options?: O & {
         readonly maxBufferSize?: number;
     }) => ContainerOperator<C, T, readonly T[]>;
-};
-type CatchError<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface CatchError<C extends ContainerLike, O = never> extends Container<C> {
     catchError<T>(onError: Function1<unknown, ContainerOf<C, T> | void>, options?: O): ContainerOperator<C, T, T>;
-};
-type Concat<C extends ContainerLike> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Concat<C extends ContainerLike> extends Container<C> {
     concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
-};
-type ConcatAll<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface ConcatAll<C extends ContainerLike, O = never> extends Container<C> {
     concatAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
-};
-type DecodeWithCharset<C extends ContainerLike, O = unknown> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface DecodeWithCharset<C extends ContainerLike, O = unknown> extends Container<C> {
     decodeWithCharset(options?: O & {
         charset?: string;
     }): ContainerOperator<C, ArrayBuffer, string>;
-};
-type Defer<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Defer<C extends ContainerLike, O = never> extends Container<C> {
     defer<T>(factory: Factory<ContainerOf<C, T>>, options?: O): ContainerOf<C, T>;
-};
-type DistinctUntilChanged<C extends ContainerLike, O = unknown> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface DistinctUntilChanged<C extends ContainerLike, O = unknown> extends Container<C> {
     distinctUntilChanged<T>(options?: O & {
         readonly equality?: Equality<T>;
     }): ContainerOperator<C, T, T>;
-};
-type EverySatisfy<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface EverySatisfy<C extends ContainerLike, O = never> extends Container<C> {
     everySatisfy<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, boolean>;
-};
-type Empty<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Empty<C extends ContainerLike, O = never> extends Container<C> {
     empty<T>(options?: O): ContainerOf<C, T>;
-};
-type ForEach<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface ForEach<C extends ContainerLike, O = never> extends Container<C> {
     forEach<T>(effect: SideEffect1<T>, options?: O): ContainerOperator<C, T, T>;
-};
-type ForkConcat<C extends ContainerLike> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface ForkConcat<C extends ContainerLike> extends Container<C> {
     forkConcat<TIn, TOut>(fst: ContainerOperator<C, TIn, TOut>, snd: ContainerOperator<C, TIn, TOut>, ...tail: readonly ContainerOperator<C, TIn, TOut>[]): ContainerOperator<C, TIn, TOut>;
-};
-type ForkZip<C extends ContainerLike> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface ForkZip<C extends ContainerLike> extends Container<C> {
     forkZip<T, TA, TB>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>): ContainerOperator<C, T, readonly [
         TA,
         TB
@@ -148,93 +208,165 @@ type ForkZip<C extends ContainerLike> = Container<C> & {
         TH,
         TI
     ]>;
-};
-type FromReadonlyArray<C extends ContainerLike, O = unknown> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface FromReadonlyArray<C extends ContainerLike, O = unknown> extends Container<C> {
     fromReadonlyArray<T>(options?: O & {
         readonly start?: number;
         readonly count?: number;
     }): Function1<readonly T[], ContainerOf<C, T>>;
-};
-type FromAsyncIterable<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface FromAsyncIterable<C extends ContainerLike, O = never> extends Container<C> {
     fromAsyncIterable<T>(options?: O): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
-};
-type FromIterable<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface FromIterable<C extends ContainerLike, O = never> extends Container<C> {
     fromIterable<T>(options?: O): Function1<Iterable<T>, ContainerOf<C, T>>;
-};
-type FromSequence<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface FromSequence<C extends ContainerLike, O = never> extends Container<C> {
     fromSequence<T>(options?: O): Function1<SequenceLike<T>, ContainerOf<C, T>>;
-};
-type FromReadonlySet<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface FromReadonlySet<C extends ContainerLike, O = never> extends Container<C> {
     fromReadonlySet<T>(options?: O): Function1<ReadonlySet<T>, ContainerOf<C, T>>;
-};
-type Generate<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Generate<C extends ContainerLike, O = never> extends Container<C> {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: O): ContainerOf<C, T>;
-};
-type Keep<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Keep<C extends ContainerLike, O = never> extends Container<C> {
     keep<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, T>;
-};
-type Map<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Map<C extends ContainerLike, O = never> extends Container<C> {
     map<TA, TB>(mapper: Function1<TA, TB>, options?: O): ContainerOperator<C, TA, TB>;
-};
-type Never<C extends StatefulContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Never<C extends StatefulContainerLike, O = never> extends Container<C> {
     never<T>(options?: O): ContainerOf<C, T>;
-};
-type Pairwise<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Pairwise<C extends ContainerLike, O = never> extends Container<C> {
     pairwise<T>(options?: O): ContainerOperator<C, T, readonly [
         T,
         T
     ]>;
-};
-type Reduce<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Reduce<C extends ContainerLike, O = never> extends Container<C> {
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: O): ContainerOperator<C, T, TAcc>;
-};
-type Repeat<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Repeat<C extends ContainerLike, O = never> extends Container<C> {
     repeat<T>(predicate: Predicate<number>, options?: O): ContainerOperator<C, T, T>;
     repeat<T>(count: number, options?: O): ContainerOperator<C, T, T>;
     repeat<T>(options?: O): ContainerOperator<C, T, T>;
-};
-type Scan<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Scan<C extends ContainerLike, O = never> extends Container<C> {
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: O): ContainerOperator<C, T, TAcc>;
-};
-type SkipFirst<C extends ContainerLike, O = unknown> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface SkipFirst<C extends ContainerLike, O = unknown> extends Container<C> {
     skipFirst<T>(options?: O & {
         readonly count?: number;
     }): ContainerOperator<C, T, T>;
-};
-type SomeSatisfy<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface SomeSatisfy<C extends ContainerLike, O = never> extends Container<C> {
     someSatisfy<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, boolean>;
-};
-type TakeFirst<C extends ContainerLike, O = unknown> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface TakeFirst<C extends ContainerLike, O = unknown> extends Container<C> {
     takeFirst<T>(options?: O & {
         readonly count?: number;
     }): ContainerOperator<C, T, T>;
-};
-type TakeLast<C extends ContainerLike, O = unknown> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface TakeLast<C extends ContainerLike, O = unknown> extends Container<C> {
     takeLast<T>(options?: O & {
         readonly count?: number;
     }): ContainerOperator<C, T, T>;
-};
-type TakeWhile<C extends ContainerLike, O = unknown> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface TakeWhile<C extends ContainerLike, O = unknown> extends Container<C> {
     takeWhile<T>(predicate: Predicate<T>, options?: O & {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
-};
-type ThrowIfEmpty<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface ThrowIfEmpty<C extends ContainerLike, O = never> extends Container<C> {
     throwIfEmpty<T>(factory: Factory<unknown>, options?: O): ContainerOperator<C, T, T>;
-};
-type ToAsyncIterable<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface ToAsyncIterable<C extends ContainerLike, O = never> extends Container<C> {
     toAsyncIterable<T>(options?: O): Function1<ContainerOf<C, T>, AsyncIterableLike<T>>;
-};
-type ToIterable<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface ToIterable<C extends ContainerLike, O = never> extends Container<C> {
     toIterable<T>(options?: O): Function1<ContainerOf<C, T>, IterableLike<T>>;
-};
-type ToReadonlyArray<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface ToReadonlyArray<C extends ContainerLike, O = never> extends Container<C> {
     toReadonlyArray<T>(options?: O): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
-};
-type ToSequence<C extends ContainerLike, O = never> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface ToSequence<C extends ContainerLike, O = never> extends Container<C> {
     toSequence<T>(options?: O): Function1<ContainerOf<C, T>, SequenceLike<T>>;
-};
-type Zip<C extends ContainerLike> = Container<C> & {
+}
+/**
+ * @category TypeClass
+ */
+interface Zip<C extends ContainerLike> extends Container<C> {
     zip<TA, TB>(a: ContainerOf<C, TA>, b: ContainerOf<C, TB>): ContainerOf<C, readonly [
         TA,
         TB
@@ -295,5 +427,5 @@ type Zip<C extends ContainerLike> = Container<C> & {
         TH,
         TI
     ]>;
-};
+}
 export { AsyncIterableLike, Buffer, CatchError, Concat, ConcatAll, Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromIterable, FromReadonlyArray, FromReadonlySet, FromSequence, Generate, IterableLike, Keep, Map, Never, Pairwise, PromiseableLike, ReadonlyArrayLike, Reduce, Repeat, Scan, SequenceLike, SequenceLike_data, SequenceLike_next, SkipFirst, SomeSatisfy, StatefulContainerLike, StatefulContainerLike_state, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToAsyncIterable, ToIterable, ToReadonlyArray, ToSequence, Zip };
