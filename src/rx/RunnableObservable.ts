@@ -167,7 +167,8 @@ export const generate = Observable_generate as Generate<
 
 export const keep = Observable_keep as Keep<RunnableObservableLike>["keep"];
 
-export const map = Observable_map as Map<RunnableObservableLike>["map"];
+export const map: Map<RunnableObservableLike>["map"] =
+  Observable_map as Map<RunnableObservableLike>["map"];
 
 export const merge =
   Observable_merge as Concat<RunnableObservableLike>["concat"];
