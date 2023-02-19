@@ -29,7 +29,6 @@ Reactive-JS
 - [rx/EnumerableObservable](modules/rx_EnumerableObservable.md)
 - [rx/MulticastObservable](modules/rx_MulticastObservable.md)
 - [rx/Observable](modules/rx_Observable.md)
-- [rx/Observable/effects](modules/rx_Observable_effects.md)
 - [rx/Observer](modules/rx_Observer.md)
 - [rx/ReactiveContainer](modules/rx_ReactiveContainer.md)
 - [rx/Runnable](modules/rx_Runnable.md)

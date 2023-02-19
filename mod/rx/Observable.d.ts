@@ -1,10 +1,75 @@
-import { FromFlowable, FlowableLike } from "../streaming.js";
 import { FromEnumerable, EnumerableLike } from "../ix.js";
 import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, Throttle, AsyncReducer, ThrottleMode } from "../rx.js";
 import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, FromIterable, PromiseableLike, FromReadonlyArray, FromSequence, Generate, Keep, Map, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, SequenceLike } from "../containers.js";
-import { Factory, Function1, SideEffect1, Equality, Predicate, Function2, Reducer, Updater } from "../functions.js";
+import { StreamLike, StreamableLike, FromFlowable, FlowableLike } from "../streaming.js";
+import { Optional, Equality, Updater, Factory, Function1, SideEffect1, Predicate, Function2, Reducer, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
 import { SchedulerLike } from "../scheduling.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
+import { Observable_async__currentScheduler } from "./Observable/__internal__/Observable.async.js";
+interface __Memo {
+    <T>(fn: Factory<T>): T;
+    <TA, T>(fn: Function1<TA, T>, a: TA): T;
+    <TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+    <TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+    <TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
+    <TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
+    <TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
+}
+/**
+ * @category AsyncEffect
+ */
+declare const __memo: __Memo;
+/**
+ * @category AsyncEffect
+ */
+declare const __await: <T>(observable: ObservableLike<T>) => T;
+/**
+ * @category AsyncEffect
+ */
+declare const __currentScheduler: typeof Observable_async__currentScheduler;
+interface __Do {
+    (fn: SideEffect): void;
+    <TA>(fn: SideEffect1<TA>, a: TA): void;
+    <TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
+    <TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: TC): void;
+    <TA, TB, TC, TD>(fn: SideEffect4<TA, TB, TC, TD>, a: TA, b: TB, c: TC, d: TD): void;
+    <TA, TB, TC, TD, TE>(fn: SideEffect5<TA, TB, TC, TD, TE>, a: TA, b: TB, c: TC, d: TD, e: TE): void;
+    <TA, TB, TC, TD, TE, TF>(fn: SideEffect6<TA, TB, TC, TD, TE, TF>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): void;
+}
+/**
+ * @category AsyncEffect
+ */
+declare const __do: __Do;
+/**
+ * @category AsyncEffect
+ */
+declare const __observe: <T>(observable: ObservableLike<T>) => Optional<T>;
+/**
+ * @category AsyncEffect
+ */
+declare const __state: <T>(initialState: () => T, options?: {
+    readonly equality?: Optional<Equality<T>>;
+}) => StreamLike<Updater<T>, T>;
+/**
+ * @category AsyncEffect
+ */
+declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
+    readonly replay?: number | undefined;
+    readonly scheduler?: SchedulerLike | undefined;
+}) => TStream;
+interface __Using {
+    <T extends DisposableLike>(fn: Factory<T>): T;
+    <TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
+    <TA, TB, T extends DisposableLike>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+    <TA, TB, TC, T extends DisposableLike>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+    <TA, TB, TC, TD, T extends DisposableLike>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
+    <TA, TB, TC, TD, TE, T extends DisposableLike>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
+    <TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
+}
+/**
+ * @category AsyncEffect
+ */
+declare const __using: __Using;
 declare const async: <T>(computation: Factory<T>, { mode }?: {
     mode?: "batched" | "combine-latest" | undefined;
 }) => ObservableLike<T>;
@@ -539,4 +604,4 @@ declare const Observable: {
     };
     zipWithLatestFrom: <TA_10, TB_10, T_44>(other: ObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_44>) => ContainerOperator<ObservableLike<unknown>, TA_10, T_44>;
 };
-export { async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromEnumerable, fromFlowable, fromIterable, fromPromise, fromReadonlyArray, fromSequence, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };
+export { __await, __currentScheduler, __do, __memo, __observe, __state, __stream, __using, async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromEnumerable, fromFlowable, fromIterable, fromPromise, fromReadonlyArray, fromSequence, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

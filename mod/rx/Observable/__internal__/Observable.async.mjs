@@ -1,5 +1,7 @@
 /// <reference types="./Observable.async.d.ts" />
 import { isSome, pipe, ignore, none, raiseWithDebugMessage, arrayEquality, error, raiseError, isNone, getLength, newInstance } from '../../../functions.mjs';
+import Streamable_createStateStore from '../../../streaming/Streamable/__internal__/Streamable.createStateStore.mjs';
+import Streamable_stream from '../../../streaming/Streamable/__internal__/Streamable.stream.mjs';
 import Disposable_addTo from '../../../util/Disposable/__internal__/Disposable.addTo.mjs';
 import Disposable_dispose from '../../../util/Disposable/__internal__/Disposable.dispose.mjs';
 import Disposable_disposed from '../../../util/Disposable/__internal__/Disposable.disposed.mjs';
@@ -226,5 +228,57 @@ const Observable_async = (computation, { mode = "batched" } = {}) => Observable_
     const ctx = newInstance(AsyncContext, observer, runComputation, mode);
     pipe(observer, Observer_schedule(runComputation));
 });
+const Observable_async__memo = (f, ...args) => {
+    const ctx = assertCurrentContext();
+    return ctx[AsyncContext_memoOrUse](false, f, ...args);
+};
+const Observable_async__await = (observable) => {
+    const ctx = assertCurrentContext();
+    return ctx[AsyncContext_awaitOrObserve](observable, true);
+};
+const Observable_async__observe = (observable) => {
+    const ctx = assertCurrentContext();
+    return ctx[AsyncContext_awaitOrObserve](observable, false);
+};
+const Observable_async__do = /*@__PURE__*/ (() => {
+    const deferSideEffect = (f, ...args) => Observable_create(observer => {
+        const callback = () => {
+            f(...args);
+            pipe(observer, Sink_notify(none), Disposable_dispose());
+        };
+        pipe(observer, Observer_schedule(callback));
+    });
+    return (f, ...args) => {
+        const ctx = assertCurrentContext();
+        const scheduler = Observer_getScheduler(ctx[AsyncContext_observer]);
+        const observable = ctx[AsyncContext_memoOrUse](false, deferSideEffect, f, ...args);
+        const subscribeOnScheduler = ctx[AsyncContext_memoOrUse](false, Observable_subscribe, scheduler);
+        ctx[AsyncContext_memoOrUse](true, subscribeOnScheduler, observable);
+    };
+})();
+const Observable_async__using = (f, ...args) => {
+    const ctx = assertCurrentContext();
+    return ctx[AsyncContext_memoOrUse](true, f, ...args);
+};
+function Observable_async__currentScheduler() {
+    const ctx = assertCurrentContext();
+    return Observer_getScheduler(ctx[AsyncContext_observer]);
+}
+const Observable_async__stream = /*@__PURE__*/ (() => {
+    const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, Streamable_stream(scheduler, { replay }));
+    return (streamable, { replay = 0, scheduler, } = {}) => {
+        const currentScheduler = Observable_async__currentScheduler();
+        return Observable_async__using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay);
+    };
+})();
+const Observable_async__state = /*@__PURE__*/ (() => {
+    const createStateOptions = (equality) => isSome(equality) ? { equality } : none;
+    return (initialState, options = {}) => {
+        const { equality } = options;
+        const optionsMemo = Observable_async__memo(createStateOptions, equality);
+        const streamable = Observable_async__memo(Streamable_createStateStore, initialState, optionsMemo);
+        return Observable_async__stream(streamable);
+    };
+})();
 
-export { AsyncContext_awaitOrObserve, AsyncContext_memoOrUse, AsyncContext_observer, assertCurrentContext, Observable_async as default };
+export { AsyncContext_awaitOrObserve, AsyncContext_memoOrUse, AsyncContext_observer, Observable_async, Observable_async__await, Observable_async__currentScheduler, Observable_async__do, Observable_async__memo, Observable_async__observe, Observable_async__state, Observable_async__stream, Observable_async__using, assertCurrentContext };
