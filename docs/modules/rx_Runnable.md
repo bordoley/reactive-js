@@ -15,6 +15,7 @@
 - [fromReadonlyArray](rx_Runnable.md#fromreadonlyarray)
 - [fromRunnableObservable](rx_Runnable.md#fromrunnableobservable)
 - [generate](rx_Runnable.md#generate)
+- [never](rx_Runnable.md#never)
 
 ### Converter Functions
 
@@ -47,7 +48,6 @@
 - [create](rx_Runnable.md#create)
 - [first](rx_Runnable.md#first)
 - [last](rx_Runnable.md#last)
-- [never](rx_Runnable.md#never)
 - [onRun](rx_Runnable.md#onrun)
 - [repeat](rx_Runnable.md#repeat)
 - [run](rx_Runnable.md#run)
@@ -57,6 +57,8 @@
 ### concat
 
 ▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+Returns a ContainerLike which emits all values from each source sequentially.
 
 #### Type parameters
 
@@ -104,6 +106,8 @@ ___
 ### empty
 
 ▸ **empty**<`T`\>(`options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+Return an ContainerLike that emits no items.
 
 #### Type parameters
 
@@ -239,6 +243,35 @@ ___
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
+Generates a ContainerLike from a generator function
+that is applied to an accumulator value between emitted items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+| `options?` | `undefined` | - |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
+### never
+
+▸ **never**<`T`\>(`options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+Returns a StatefulContainerLike instance that emits no items and never disposes its state.
+
 #### Type parameters
 
 | Name |
@@ -249,8 +282,6 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
 | `options?` | `undefined` |
 
 #### Returns
@@ -264,6 +295,8 @@ ___
 ### toReadonlyArray
 
 ▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+Converts the ContainerLike to a `ReadonlyArrayLike`.
 
 #### Type parameters
 
@@ -311,6 +344,9 @@ ___
 
 ▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
 
+Returns a ContainerLike which buffers items produced by the source until either the
+number of items reaches the specified maximum buffer size.
+
 #### Type parameters
 
 | Name |
@@ -334,6 +370,10 @@ ___
 
 ▸ **catchError**<`T`\>(`onError`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a StatefulContainerLike which catches errors produced by the source and either continues with
+the StatefulContainerLike returned from the `onError` callback or swallows the error if
+void is returned.
+
 #### Type parameters
 
 | Name |
@@ -342,10 +382,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
-| `options?` | `undefined` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> | a function that takes source error and either returns a StatefulContainerLike to continue with or void if the error should be propagated. |
+| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -356,6 +396,9 @@ ___
 ### concatAll
 
 ▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+
+Converts a higher-order ContainerLike into a first-order
+ContainerLike by concatenating the inner sources in order.
 
 #### Type parameters
 
@@ -395,6 +438,9 @@ ___
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerOperator that emits all items emitted by the source that
+are distinct by comparison from the previous item.
 
 #### Type parameters
 
@@ -442,6 +488,9 @@ ___
 
 ▸ **forEach**<`T`\>(`effect`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a ContainerOperator that applies the side effect function to each
+value emitted by the source.
+
 #### Type parameters
 
 | Name |
@@ -464,6 +513,9 @@ ___
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerOperator that only emits items produced by the
+source that satisfy the specified predicate.
 
 #### Type parameters
 
@@ -489,7 +541,7 @@ ___
 ▸ **map**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `mapper` function to each
-value produced by the source.
+value emitted by the source.
 
 **`Typeparam`**
 
@@ -510,7 +562,7 @@ TB - The inner type of the mapped container
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value produced by the source |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
 | `options?` | `undefined` | - |
 
 #### Returns
@@ -570,6 +622,9 @@ ___
 
 ▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
+Returns a ContainerLike that applies an accumulator function over the source,
+and emits each intermediate result.
+
 #### Type parameters
 
 | Name |
@@ -579,11 +634,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
-| `options?` | `undefined` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -594,6 +649,8 @@ ___
 ### skipFirst
 
 ▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerLike that skips the first count items emitted by the source.
 
 #### Type parameters
 
@@ -641,6 +698,8 @@ ___
 
 ▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a ContainerLike that only emits the first `count` values emitted by the source.
+
 #### Type parameters
 
 | Name |
@@ -663,6 +722,8 @@ ___
 ### takeLast
 
 ▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerLike that only emits the last `count` items emitted by the source.
 
 #### Type parameters
 
@@ -687,6 +748,10 @@ ___
 
 ▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a ContainerLike which emits values emitted by the source as long
+as each value satisfies the given predicate, and then completes as soon as
+this predicate is not satisfied.
+
 #### Type parameters
 
 | Name |
@@ -695,11 +760,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `Object` |
-| `options.inclusive?` | `boolean` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> | The predicate function. |
+| `options?` | `Object` | - |
+| `options.inclusive?` | `boolean` | - |
 
 #### Returns
 
@@ -711,6 +776,8 @@ ___
 
 ▸ **throwIfEmpty**<`T`\>(`factory`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a StatefulContainerLike that emits an error if the source completes without emitting a value.
+
 #### Type parameters
 
 | Name |
@@ -719,10 +786,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`unknown`\> |
-| `options?` | `undefined` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`unknown`\> | A factory function invoked to produce the error to be thrown. |
+| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -783,28 +850,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
-
-___
-
-### never
-
-▸ **never**<`T`\>(`options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 ___
 

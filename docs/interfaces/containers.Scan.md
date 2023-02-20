@@ -43,6 +43,9 @@
 
 ▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `TAcc`\>
 
+Returns a ContainerLike that applies an accumulator function over the source,
+and emits each intermediate result.
+
 #### Type parameters
 
 | Name |
@@ -52,11 +55,11 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `scanner` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
-| `options?` | `O` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scanner` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+| `options?` | `O` | - |
 
 #### Returns
 

@@ -43,6 +43,8 @@
 
 ▸ **toIterable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`IterableLike`](containers.IterableLike.md)<`T`\>\>
 
+Converts the ContainerLike to a `IterableLike`.
+
 #### Type parameters
 
 | Name |

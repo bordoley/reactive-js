@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Never.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [never](containers.Never.md#never)
 
@@ -37,11 +37,13 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### never
 
 ▸ **never**<`T`\>(`options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
+
+Returns a StatefulContainerLike instance that emits no items and never disposes its state.
 
 #### Type parameters
 

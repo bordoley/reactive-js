@@ -43,6 +43,8 @@
 
 ▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
+Returns a ContainerLike that skips the first count items emitted by the source.
+
 #### Type parameters
 
 | Name |

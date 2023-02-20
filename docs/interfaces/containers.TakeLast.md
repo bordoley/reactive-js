@@ -43,6 +43,8 @@
 
 ▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
+Returns a ContainerLike that only emits the last `count` items emitted by the source.
+
 #### Type parameters
 
 | Name |

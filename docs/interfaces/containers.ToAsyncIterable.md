@@ -43,6 +43,8 @@
 
 ▸ **toAsyncIterable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`AsyncIterableLike`](containers.AsyncIterableLike.md)<`T`\>\>
 
+Converts the ContainerLike to a `AsyncIterableLike`.
+
 #### Type parameters
 
 | Name |

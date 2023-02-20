@@ -1,8 +1,8 @@
 import { FromEnumerable, EnumerableLike } from "../ix.js";
-import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, Throttle, AsyncReducer, ThrottleMode } from "../rx.js";
-import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, FromIterable, PromiseableLike, FromReadonlyArray, FromSequence, Generate, Keep, Map, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, SequenceLike } from "../containers.js";
+import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, Retry, ScanAsync, TakeUntil, Throttle, Timeout, WithLatestFrom, ZipLatest, AsyncReducer, ThrottleMode } from "../rx.js";
+import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, FromIterable, PromiseableLike, FromReadonlyArray, FromSequence, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, SequenceLike } from "../containers.js";
 import { StreamLike, StreamableLike, FromFlowable, FlowableLike } from "../streaming.js";
-import { Optional, Equality, Updater, Factory, Function1, SideEffect1, Predicate, Function2, Reducer, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
+import { Optional, Equality, Updater, Factory, Function1, SideEffect1, Function2, Predicate, Reducer, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
 import { SchedulerLike } from "../scheduling.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
 import { Observable_async__currentScheduler } from "./Observable/__internal__/Observable.async.js";
@@ -143,16 +143,9 @@ declare const never: <T>(options?: undefined) => ObservableLike<T>;
 declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<ObservableLike, T, T>;
 declare const pairwise: Pairwise<ObservableLike>["pairwise"];
 declare const reduce: Reduce<ObservableLike>["reduce"];
-declare const repeat: {
-    <T>(predicate: Predicate<number>, options?: undefined): ContainerOperator<ObservableLike<unknown>, T, T>;
-    <T_1>(count: number, options?: undefined): ContainerOperator<ObservableLike<unknown>, T_1, T_1>;
-    <T_2>(options?: undefined): ContainerOperator<ObservableLike<unknown>, T_2, T_2>;
-};
-declare const retry: {
-    <T>(): ContainerOperator<ObservableLike<unknown>, T, T>;
-    <T_1>(predicate: Function2<number, unknown, boolean>): ContainerOperator<ObservableLike<unknown>, T_1, T_1>;
-};
-declare const scan: <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, T, TAcc>;
+declare const repeat: Repeat<ObservableLike>["repeat"];
+declare const retry: Retry<ObservableLike>["retry"];
+declare const scan: Scan<ObservableLike>["scan"];
 declare const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"];
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
@@ -173,140 +166,15 @@ declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
 declare const subscribeOn: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => ObservableLike<T>;
 declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];
 declare const takeLast: TakeLast<ObservableLike>["takeLast"];
-declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => ContainerOperator<ObservableLike<unknown>, T, T>;
+declare const takeUntil: TakeUntil<ObservableLike>["takeUntil"];
 declare const takeWhile: TakeWhile<ObservableLike>["takeWhile"];
 declare const throttle: Throttle<ObservableLike>["throttle"];
 declare const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"];
-declare const timeout: {
-    <T>(duration: number): ContainerOperator<ObservableLike<unknown>, T, T>;
-    <T_1>(duration: ObservableLike<unknown>): ContainerOperator<ObservableLike<unknown>, T_1, T_1>;
-};
+declare const timeout: Timeout<ObservableLike>["timeout"];
 declare const toPromise: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<T>;
-declare const withLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike<unknown>, TA, T>;
-declare const zip: {
-    <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<readonly [
-        TA,
-        TB
-    ]>;
-    <TA_1, TB_1, TC>(a: ObservableLike<TA_1>, b: ObservableLike<TB_1>, c: ObservableLike<TC>): ObservableLike<readonly [
-        TA_1,
-        TB_1,
-        TC
-    ]>;
-    <TA_2, TB_2, TC_1, TD>(a: ObservableLike<TA_2>, b: ObservableLike<TB_2>, c: ObservableLike<TC_1>, d: ObservableLike<TD>): ObservableLike<readonly [
-        TA_2,
-        TB_2,
-        TC_1,
-        TD
-    ]>;
-    <TA_3, TB_3, TC_2, TD_1, TE>(a: ObservableLike<TA_3>, b: ObservableLike<TB_3>, c: ObservableLike<TC_2>, d: ObservableLike<TD_1>, e: ObservableLike<TE>): ObservableLike<readonly [
-        TA_3,
-        TB_3,
-        TC_2,
-        TD_1,
-        TE
-    ]>;
-    <TA_4, TB_4, TC_3, TD_2, TE_1, TF>(a: ObservableLike<TA_4>, b: ObservableLike<TB_4>, c: ObservableLike<TC_3>, d: ObservableLike<TD_2>, e: ObservableLike<TE_1>, f: ObservableLike<TF>): ObservableLike<readonly [
-        TA_4,
-        TB_4,
-        TC_3,
-        TD_2,
-        TE_1,
-        TF
-    ]>;
-    <TA_5, TB_5, TC_4, TD_3, TE_2, TF_1, TG>(a: ObservableLike<TA_5>, b: ObservableLike<TB_5>, c: ObservableLike<TC_4>, d: ObservableLike<TD_3>, e: ObservableLike<TE_2>, f: ObservableLike<TF_1>, g: ObservableLike<TG>): ObservableLike<readonly [
-        TA_5,
-        TB_5,
-        TC_4,
-        TD_3,
-        TE_2,
-        TF_1,
-        TG
-    ]>;
-    <TA_6, TB_6, TC_5, TD_4, TE_3, TF_2, TG_1, TH>(a: ObservableLike<TA_6>, b: ObservableLike<TB_6>, c: ObservableLike<TC_5>, d: ObservableLike<TD_4>, e: ObservableLike<TE_3>, f: ObservableLike<TF_2>, g: ObservableLike<TG_1>, h: ObservableLike<TH>): ObservableLike<readonly [
-        TA_6,
-        TB_6,
-        TC_5,
-        TD_4,
-        TE_3,
-        TF_2,
-        TG_1,
-        TH
-    ]>;
-    <TA_7, TB_7, TC_6, TD_5, TE_4, TF_3, TG_2, TH_1, TI>(a: ObservableLike<TA_7>, b: ObservableLike<TB_7>, c: ObservableLike<TC_6>, d: ObservableLike<TD_5>, e: ObservableLike<TE_4>, f: ObservableLike<TF_3>, g: ObservableLike<TG_2>, h: ObservableLike<TH_1>, i: ObservableLike<TI>): ObservableLike<readonly [
-        TA_7,
-        TB_7,
-        TC_6,
-        TD_5,
-        TE_4,
-        TF_3,
-        TG_2,
-        TH_1,
-        TI
-    ]>;
-};
-declare const zipLatest: {
-    <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<readonly [
-        TA,
-        TB
-    ]>;
-    <TA_1, TB_1, TC>(a: ObservableLike<TA_1>, b: ObservableLike<TB_1>, c: ObservableLike<TC>): ObservableLike<readonly [
-        TA_1,
-        TB_1,
-        TC
-    ]>;
-    <TA_2, TB_2, TC_1, TD>(a: ObservableLike<TA_2>, b: ObservableLike<TB_2>, c: ObservableLike<TC_1>, d: ObservableLike<TD>): ObservableLike<readonly [
-        TA_2,
-        TB_2,
-        TC_1,
-        TD
-    ]>;
-    <TA_3, TB_3, TC_2, TD_1, TE>(a: ObservableLike<TA_3>, b: ObservableLike<TB_3>, c: ObservableLike<TC_2>, d: ObservableLike<TD_1>, e: ObservableLike<TE>): ObservableLike<readonly [
-        TA_3,
-        TB_3,
-        TC_2,
-        TD_1,
-        TE
-    ]>;
-    <TA_4, TB_4, TC_3, TD_2, TE_1, TF>(a: ObservableLike<TA_4>, b: ObservableLike<TB_4>, c: ObservableLike<TC_3>, d: ObservableLike<TD_2>, e: ObservableLike<TE_1>, f: ObservableLike<TF>): ObservableLike<readonly [
-        TA_4,
-        TB_4,
-        TC_3,
-        TD_2,
-        TE_1,
-        TF
-    ]>;
-    <TA_5, TB_5, TC_4, TD_3, TE_2, TF_1, TG>(a: ObservableLike<TA_5>, b: ObservableLike<TB_5>, c: ObservableLike<TC_4>, d: ObservableLike<TD_3>, e: ObservableLike<TE_2>, f: ObservableLike<TF_1>, g: ObservableLike<TG>): ObservableLike<readonly [
-        TA_5,
-        TB_5,
-        TC_4,
-        TD_3,
-        TE_2,
-        TF_1,
-        TG
-    ]>;
-    <TA_6, TB_6, TC_5, TD_4, TE_3, TF_2, TG_1, TH>(a: ObservableLike<TA_6>, b: ObservableLike<TB_6>, c: ObservableLike<TC_5>, d: ObservableLike<TD_4>, e: ObservableLike<TE_3>, f: ObservableLike<TF_2>, g: ObservableLike<TG_1>, h: ObservableLike<TH>): ObservableLike<readonly [
-        TA_6,
-        TB_6,
-        TC_5,
-        TD_4,
-        TE_3,
-        TF_2,
-        TG_1,
-        TH
-    ]>;
-    <TA_7, TB_7, TC_6, TD_5, TE_4, TF_3, TG_2, TH_1, TI>(a: ObservableLike<TA_7>, b: ObservableLike<TB_7>, c: ObservableLike<TC_6>, d: ObservableLike<TD_5>, e: ObservableLike<TE_4>, f: ObservableLike<TF_3>, g: ObservableLike<TG_2>, h: ObservableLike<TH_1>, i: ObservableLike<TI>): ObservableLike<readonly [
-        TA_7,
-        TB_7,
-        TC_6,
-        TD_5,
-        TE_4,
-        TF_3,
-        TG_2,
-        TH_1,
-        TI
-    ]>;
-};
+declare const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"];
+declare const zip: Zip<ObservableLike>["zip"];
+declare const zipLatest: ZipLatest<ObservableLike>["zipLatest"];
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike<unknown>, TA, T>;
 /** @ignore */
 declare const Observable: {
@@ -539,67 +407,67 @@ declare const Observable: {
         ]>;
     };
     zipLatest: {
-        <TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<readonly [
-            TA,
-            TB
+        <TA_10, TB_10>(a: ObservableLike<TA_10>, b: ObservableLike<TB_10>): ObservableLike<readonly [
+            TA_10,
+            TB_10
         ]>;
-        <TA_1, TB_1, TC>(a: ObservableLike<TA_1>, b: ObservableLike<TB_1>, c: ObservableLike<TC>): ObservableLike<readonly [
-            TA_1,
-            TB_1,
-            TC
+        <TA_11, TB_11, TC_7>(a: ObservableLike<TA_11>, b: ObservableLike<TB_11>, c: ObservableLike<TC_7>): ObservableLike<readonly [
+            TA_11,
+            TB_11,
+            TC_7
         ]>;
-        <TA_2, TB_2, TC_1, TD>(a: ObservableLike<TA_2>, b: ObservableLike<TB_2>, c: ObservableLike<TC_1>, d: ObservableLike<TD>): ObservableLike<readonly [
-            TA_2,
-            TB_2,
-            TC_1,
-            TD
+        <TA_12, TB_12, TC_8, TD_6>(a: ObservableLike<TA_12>, b: ObservableLike<TB_12>, c: ObservableLike<TC_8>, d: ObservableLike<TD_6>): ObservableLike<readonly [
+            TA_12,
+            TB_12,
+            TC_8,
+            TD_6
         ]>;
-        <TA_3, TB_3, TC_2, TD_1, TE>(a: ObservableLike<TA_3>, b: ObservableLike<TB_3>, c: ObservableLike<TC_2>, d: ObservableLike<TD_1>, e: ObservableLike<TE>): ObservableLike<readonly [
-            TA_3,
-            TB_3,
-            TC_2,
-            TD_1,
-            TE
+        <TA_13, TB_13, TC_9, TD_7, TE_5>(a: ObservableLike<TA_13>, b: ObservableLike<TB_13>, c: ObservableLike<TC_9>, d: ObservableLike<TD_7>, e: ObservableLike<TE_5>): ObservableLike<readonly [
+            TA_13,
+            TB_13,
+            TC_9,
+            TD_7,
+            TE_5
         ]>;
-        <TA_4, TB_4, TC_3, TD_2, TE_1, TF>(a: ObservableLike<TA_4>, b: ObservableLike<TB_4>, c: ObservableLike<TC_3>, d: ObservableLike<TD_2>, e: ObservableLike<TE_1>, f: ObservableLike<TF>): ObservableLike<readonly [
-            TA_4,
-            TB_4,
-            TC_3,
-            TD_2,
-            TE_1,
-            TF
+        <TA_14, TB_14, TC_10, TD_8, TE_6, TF_4>(a: ObservableLike<TA_14>, b: ObservableLike<TB_14>, c: ObservableLike<TC_10>, d: ObservableLike<TD_8>, e: ObservableLike<TE_6>, f: ObservableLike<TF_4>): ObservableLike<readonly [
+            TA_14,
+            TB_14,
+            TC_10,
+            TD_8,
+            TE_6,
+            TF_4
         ]>;
-        <TA_5, TB_5, TC_4, TD_3, TE_2, TF_1, TG>(a: ObservableLike<TA_5>, b: ObservableLike<TB_5>, c: ObservableLike<TC_4>, d: ObservableLike<TD_3>, e: ObservableLike<TE_2>, f: ObservableLike<TF_1>, g: ObservableLike<TG>): ObservableLike<readonly [
-            TA_5,
-            TB_5,
-            TC_4,
-            TD_3,
-            TE_2,
-            TF_1,
-            TG
+        <TA_15, TB_15, TC_11, TD_9, TE_7, TF_5, TG_3>(a: ObservableLike<TA_15>, b: ObservableLike<TB_15>, c: ObservableLike<TC_11>, d: ObservableLike<TD_9>, e: ObservableLike<TE_7>, f: ObservableLike<TF_5>, g: ObservableLike<TG_3>): ObservableLike<readonly [
+            TA_15,
+            TB_15,
+            TC_11,
+            TD_9,
+            TE_7,
+            TF_5,
+            TG_3
         ]>;
-        <TA_6, TB_6, TC_5, TD_4, TE_3, TF_2, TG_1, TH>(a: ObservableLike<TA_6>, b: ObservableLike<TB_6>, c: ObservableLike<TC_5>, d: ObservableLike<TD_4>, e: ObservableLike<TE_3>, f: ObservableLike<TF_2>, g: ObservableLike<TG_1>, h: ObservableLike<TH>): ObservableLike<readonly [
-            TA_6,
-            TB_6,
-            TC_5,
-            TD_4,
-            TE_3,
-            TF_2,
-            TG_1,
-            TH
+        <TA_16, TB_16, TC_12, TD_10, TE_8, TF_6, TG_4, TH_2>(a: ObservableLike<TA_16>, b: ObservableLike<TB_16>, c: ObservableLike<TC_12>, d: ObservableLike<TD_10>, e: ObservableLike<TE_8>, f: ObservableLike<TF_6>, g: ObservableLike<TG_4>, h: ObservableLike<TH_2>): ObservableLike<readonly [
+            TA_16,
+            TB_16,
+            TC_12,
+            TD_10,
+            TE_8,
+            TF_6,
+            TG_4,
+            TH_2
         ]>;
-        <TA_7, TB_7, TC_6, TD_5, TE_4, TF_3, TG_2, TH_1, TI>(a: ObservableLike<TA_7>, b: ObservableLike<TB_7>, c: ObservableLike<TC_6>, d: ObservableLike<TD_5>, e: ObservableLike<TE_4>, f: ObservableLike<TF_3>, g: ObservableLike<TG_2>, h: ObservableLike<TH_1>, i: ObservableLike<TI>): ObservableLike<readonly [
-            TA_7,
-            TB_7,
-            TC_6,
-            TD_5,
-            TE_4,
-            TF_3,
-            TG_2,
-            TH_1,
-            TI
+        <TA_17, TB_17, TC_13, TD_11, TE_9, TF_7, TG_5, TH_3, TI_1>(a: ObservableLike<TA_17>, b: ObservableLike<TB_17>, c: ObservableLike<TC_13>, d: ObservableLike<TD_11>, e: ObservableLike<TE_9>, f: ObservableLike<TF_7>, g: ObservableLike<TG_5>, h: ObservableLike<TH_3>, i: ObservableLike<TI_1>): ObservableLike<readonly [
+            TA_17,
+            TB_17,
+            TC_13,
+            TD_11,
+            TE_9,
+            TF_7,
+            TG_5,
+            TH_3,
+            TI_1
         ]>;
     };
-    zipWithLatestFrom: <TA_10, TB_10, T_44>(other: ObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_44>) => ContainerOperator<ObservableLike<unknown>, TA_10, T_44>;
+    zipWithLatestFrom: <TA_18, TB_18, T_44>(other: ObservableLike<TB_18>, selector: Function2<TA_18, TB_18, T_44>) => ContainerOperator<ObservableLike<unknown>, TA_18, T_44>;
 };
 export { __await, __currentScheduler, __do, __memo, __observe, __state, __stream, __using, async, buffer, catchError, combineLatest, concat, concatAll, create, decodeWithCharset, Observable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, forkCombineLatest, forkMerge, forkZipLatest, fromDisposable, fromEnumerable, fromFlowable, fromIterable, fromPromise, fromReadonlyArray, fromSequence, generate, isEnumerable, isRunnable, keep, map, mapAsync, merge, mergeAll, multicast, never, onSubscribe, pairwise, reduce, repeat, retry, scan, scanAsync, share, skipFirst, someSatisfy, subscribe, subscribeOn, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toPromise, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

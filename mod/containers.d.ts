@@ -72,11 +72,14 @@ type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<ContainerOf<
 interface Container<C extends ContainerLike> {
     readonly ContainerLike_type?: C;
 }
-/**
+/** *
  * @category TypeClass
  */
 interface Buffer<C extends ContainerLike, O = unknown> extends Container<C> {
     /**
+     * Returns a ContainerLike which buffers items produced by the source until either the
+     * number of items reaches the specified maximum buffer size.
+     *
      * @category Operator
      */
     buffer: <T>(options?: O & {
@@ -86,8 +89,15 @@ interface Buffer<C extends ContainerLike, O = unknown> extends Container<C> {
 /**
  * @category TypeClass
  */
-interface CatchError<C extends ContainerLike, O = never> extends Container<C> {
+interface CatchError<C extends StatefulContainerLike, O = never> extends Container<C> {
     /**
+     * Returns a StatefulContainerLike which catches errors produced by the source and either continues with
+     * the StatefulContainerLike returned from the `onError` callback or swallows the error if
+     * void is returned.
+     *
+     * @param onError a function that takes source error and either returns a StatefulContainerLike
+     * to continue with or void if the error should be propagated.
+     *
      * @category Operator
      */
     catchError<T>(onError: Function1<unknown, ContainerOf<C, T> | void>, options?: O): ContainerOperator<C, T, T>;
@@ -97,6 +107,8 @@ interface CatchError<C extends ContainerLike, O = never> extends Container<C> {
  */
 interface Concat<C extends ContainerLike> extends Container<C> {
     /**
+     * Returns a ContainerLike which emits all values from each source sequentially.
+     *
      * @category Constructor
      */
     concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
@@ -106,6 +118,9 @@ interface Concat<C extends ContainerLike> extends Container<C> {
  */
 interface ConcatAll<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Converts a higher-order ContainerLike into a first-order
+     * ContainerLike by concatenating the inner sources in order.
+     *
      * @category Operator
      */
     concatAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
@@ -135,6 +150,9 @@ interface Defer<C extends ContainerLike, O = never> extends Container<C> {
  */
 interface DistinctUntilChanged<C extends ContainerLike, O = unknown> extends Container<C> {
     /**
+     *  Returns a ContainerOperator that emits all items emitted by the source that
+     * are distinct by comparison from the previous item.
+     *
      * @category Operator
      */
     distinctUntilChanged<T>(options?: O & {
@@ -155,6 +173,8 @@ interface EverySatisfy<C extends ContainerLike, O = never> extends Container<C> 
  */
 interface Empty<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Return an ContainerLike that emits no items.
+     *
      * @category Constructor
      */
     empty<T>(options?: O): ContainerOf<C, T>;
@@ -162,8 +182,11 @@ interface Empty<C extends ContainerLike, O = never> extends Container<C> {
 /**
  * @category TypeClass
  */
-interface ForEach<C extends ContainerLike, O = never> extends Container<C> {
+interface ForEach<C extends StatefulContainerLike, O = never> extends Container<C> {
     /**
+     * Returns a ContainerOperator that applies the side effect function to each
+     * value emitted by the source.
+     *
      * @category Operator
      */
     forEach<T>(effect: SideEffect1<T>, options?: O): ContainerOperator<C, T, T>;
@@ -289,6 +312,12 @@ interface FromSequence<C extends ContainerLike, O = never> extends Container<C> 
  */
 interface Generate<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Generates a ContainerLike from a generator function
+     * that is applied to an accumulator value between emitted items.
+     *
+     * @param generator the generator function.
+     * @param initialValue Factory function used to generate the initial accumulator.
+     *
      * @category Constructor
      */
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: O): ContainerOf<C, T>;
@@ -298,6 +327,9 @@ interface Generate<C extends ContainerLike, O = never> extends Container<C> {
  */
 interface Keep<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Returns a ContainerOperator that only emits items produced by the
+     * source that satisfy the specified predicate.
+     *
      * @category Operator
      */
     keep<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, T>;
@@ -308,9 +340,9 @@ interface Keep<C extends ContainerLike, O = never> extends Container<C> {
 interface Map<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * Returns a ContainerOperator that applies the `mapper` function to each
-     * value produced by the source.
+     * value emitted by the source.
      *
-     * @param mapper - A pure map function that is applied each value produced by the source
+     * @param mapper - A pure map function that is applied each value emitted by the source
      * @typeparam TA - The inner type of the source container
      * @typeparam TB - The inner type of the mapped container
      *
@@ -319,9 +351,15 @@ interface Map<C extends ContainerLike, O = never> extends Container<C> {
     map<TA, TB>(mapper: Function1<TA, TB>, options?: O): ContainerOperator<C, TA, TB>;
 }
 /**
+ *
  * @category TypeClass
  */
 interface Never<C extends StatefulContainerLike, O = never> extends Container<C> {
+    /**
+     * Returns a StatefulContainerLike instance that emits no items and never disposes its state.
+     *
+     * @category Constructor
+     */
     never<T>(options?: O): ContainerOf<C, T>;
 }
 /**
@@ -350,10 +388,26 @@ interface Reduce<C extends ContainerLike, O = never> extends Container<C> {
  */
 interface Repeat<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Returns a ContainerLike that mirrors the source, repeating it whenever the predicate returns true.
+     *
+     * @param predicate
+     *
      * @category Operator
      */
     repeat<T>(predicate: Predicate<number>, options?: O): ContainerOperator<C, T, T>;
+    /**
+     * Returns a ContainerLike that mirrors the source, repeating it `count` times.
+     *
+     * @param count
+     *
+     * @category Operator
+     */
     repeat<T>(count: number, options?: O): ContainerOperator<C, T, T>;
+    /**
+     * Returns a ContainerLike that mirrors the source, continually repeating it.
+     *
+     * @category Operator
+     */
     repeat<T>(options?: O): ContainerOperator<C, T, T>;
 }
 /**
@@ -361,6 +415,12 @@ interface Repeat<C extends ContainerLike, O = never> extends Container<C> {
  */
 interface Scan<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Returns a ContainerLike that applies an accumulator function over the source,
+     * and emits each intermediate result.
+     *
+     * @param scanner The accumulator function called on each source value.
+     * @param initialValue The initial accumulation value.
+     *
      * @category Operator
      */
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: O): ContainerOperator<C, T, TAcc>;
@@ -370,6 +430,8 @@ interface Scan<C extends ContainerLike, O = never> extends Container<C> {
  */
 interface SkipFirst<C extends ContainerLike, O = unknown> extends Container<C> {
     /**
+     * Returns a ContainerLike that skips the first count items emitted by the source.
+     *
      * @category Operator
      */
     skipFirst<T>(options?: O & {
@@ -390,6 +452,8 @@ interface SomeSatisfy<C extends ContainerLike, O = never> extends Container<C> {
  */
 interface TakeFirst<C extends ContainerLike, O = unknown> extends Container<C> {
     /**
+     * Returns a ContainerLike that only emits the first `count` values emitted by the source.
+     *
      * @category Operator
      */
     takeFirst<T>(options?: O & {
@@ -401,6 +465,8 @@ interface TakeFirst<C extends ContainerLike, O = unknown> extends Container<C> {
  */
 interface TakeLast<C extends ContainerLike, O = unknown> extends Container<C> {
     /**
+     *  Returns a ContainerLike that only emits the last `count` items emitted by the source.
+     *
      * @category Operator
      */
     takeLast<T>(options?: O & {
@@ -412,6 +478,12 @@ interface TakeLast<C extends ContainerLike, O = unknown> extends Container<C> {
  */
 interface TakeWhile<C extends ContainerLike, O = unknown> extends Container<C> {
     /**
+     * Returns a ContainerLike which emits values emitted by the source as long
+     * as each value satisfies the given predicate, and then completes as soon as
+     * this predicate is not satisfied.
+     *
+     * @param predicate The predicate function.
+     *
      * @category Operator
      */
     takeWhile<T>(predicate: Predicate<T>, options?: O & {
@@ -421,8 +493,12 @@ interface TakeWhile<C extends ContainerLike, O = unknown> extends Container<C> {
 /**
  * @category TypeClass
  */
-interface ThrowIfEmpty<C extends ContainerLike, O = never> extends Container<C> {
+interface ThrowIfEmpty<C extends StatefulContainerLike, O = never> extends Container<C> {
     /**
+     * Returns a StatefulContainerLike that emits an error if the source completes without emitting a value.
+     *
+     * @param factory A factory function invoked to produce the error to be thrown.
+     *
      * @category Operator
      */
     throwIfEmpty<T>(factory: Factory<unknown>, options?: O): ContainerOperator<C, T, T>;
@@ -432,6 +508,8 @@ interface ThrowIfEmpty<C extends ContainerLike, O = never> extends Container<C> 
  */
 interface ToAsyncIterable<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Converts the ContainerLike to a `AsyncIterableLike`.
+     *
      * @category Converter
      */
     toAsyncIterable<T>(options?: O): Function1<ContainerOf<C, T>, AsyncIterableLike<T>>;
@@ -441,6 +519,8 @@ interface ToAsyncIterable<C extends ContainerLike, O = never> extends Container<
  */
 interface ToIterable<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Converts the ContainerLike to a `IterableLike`.
+     *
      * @category Converter
      */
     toIterable<T>(options?: O): Function1<ContainerOf<C, T>, IterableLike<T>>;
@@ -450,6 +530,8 @@ interface ToIterable<C extends ContainerLike, O = never> extends Container<C> {
  */
 interface ToReadonlyArray<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Converts the ContainerLike to a `ReadonlyArrayLike`.
+     *
      * @category Converter
      */
     toReadonlyArray<T>(options?: O): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
@@ -459,6 +541,8 @@ interface ToReadonlyArray<C extends ContainerLike, O = never> extends Container<
  */
 interface ToSequence<C extends ContainerLike, O = never> extends Container<C> {
     /**
+     * Converts the ContainerLike to a `SequenceLike`.
+     *
      * @category Converter
      */
     toSequence<T>(options?: O): Function1<ContainerOf<C, T>, SequenceLike<T>>;
@@ -468,6 +552,9 @@ interface ToSequence<C extends ContainerLike, O = never> extends Container<C> {
  */
 interface Zip<C extends ContainerLike> extends Container<C> {
     /**
+     * Combines multiple sources to create a ContainerLike whose values are calculated from the values,
+     * in order, of each of its input sources.
+     *
      * @category Constructor
      */
     zip<TA, TB>(a: ContainerOf<C, TA>, b: ContainerOf<C, TB>): ContainerOf<C, readonly [

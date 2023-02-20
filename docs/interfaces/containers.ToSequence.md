@@ -43,6 +43,8 @@
 
 ▸ **toSequence**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`SequenceLike`](containers.SequenceLike.md)<`T`\>\>
 
+Converts the ContainerLike to a `SequenceLike`.
+
 #### Type parameters
 
 | Name |
