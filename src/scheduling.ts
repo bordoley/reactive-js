@@ -30,6 +30,9 @@ export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
 /** @ignore */
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 
+/**
+ * @noInheritDoc
+ */
 export interface SchedulerLike extends DisposableLike {
   readonly [SchedulerLike_inContinuation]: boolean;
   readonly [SchedulerLike_now]: number;
@@ -52,6 +55,9 @@ export const DispatcherLike_dispatch = Symbol("DispatcherLike_dispatch");
 /** @ignore */
 export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
 
+/**
+ * @noInheritDoc
+ */
 export interface DispatcherLike<T = unknown> extends DisposableLike {
   /**
    * Dispatches the next request
@@ -69,9 +75,15 @@ export type PauseableState =
   | typeof PauseableState_running
   | typeof PauseableState_paused;
 
+/**
+ * @noInheritDoc
+ */
 export interface PauseableLike
   extends DispatcherLike<Updater<PauseableState>> {}
 
+/**
+ * @noInheritDoc
+ */
 export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {}
 
 /**
@@ -98,6 +110,9 @@ export interface PrioritySchedulerLike extends DisposableLike {
   ): void;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface VirtualTimeSchedulerLike
   extends SchedulerLike,
     ContinuationLike {}

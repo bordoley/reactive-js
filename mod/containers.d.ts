@@ -5,6 +5,7 @@ declare const ContainerLike_T: unique symbol;
 /**  @ignore */
 declare const ContainerLike_type: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface ContainerLike {
@@ -12,24 +13,28 @@ interface ContainerLike {
     readonly [ContainerLike_type]?: unknown;
 }
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface AsyncIterableLike<T = unknown> extends ContainerLike, AsyncIterable<T> {
     readonly [ContainerLike_type]?: AsyncIterableLike<this[typeof ContainerLike_T]>;
 }
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
     readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
 }
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike<T> {
     readonly [ContainerLike_type]?: PromiseableLike<this[typeof ContainerLike_T]>;
 }
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
@@ -40,6 +45,7 @@ declare const SequenceLike_data: unique symbol;
 /**  @ignore */
 declare const SequenceLike_next: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface SequenceLike<T = unknown> extends ContainerLike {
@@ -52,6 +58,7 @@ interface SequenceLike<T = unknown> extends ContainerLike {
 /**  @ignore */
 declare const StatefulContainerLike_state: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface StatefulContainerLike extends ContainerLike {
@@ -67,12 +74,14 @@ type ContainerOf<C extends ContainerLike, T> = C extends {
 };
 type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Container<C extends ContainerLike> {
     readonly ContainerLike_type?: C;
 }
-/** *
+/**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Buffer<C extends ContainerLike, O = unknown> extends Container<C> {
@@ -87,6 +96,7 @@ interface Buffer<C extends ContainerLike, O = unknown> extends Container<C> {
     }) => ContainerOperator<C, T, readonly T[]>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface CatchError<C extends StatefulContainerLike, O = never> extends Container<C> {
@@ -103,6 +113,7 @@ interface CatchError<C extends StatefulContainerLike, O = never> extends Contain
     catchError<T>(onError: Function1<unknown, ContainerOf<C, T> | void>, options?: O): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Concat<C extends ContainerLike> extends Container<C> {
@@ -114,6 +125,7 @@ interface Concat<C extends ContainerLike> extends Container<C> {
     concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ConcatAll<C extends ContainerLike, O = never> extends Container<C> {
@@ -126,6 +138,7 @@ interface ConcatAll<C extends ContainerLike, O = never> extends Container<C> {
     concatAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface DecodeWithCharset<C extends ContainerLike, O = unknown> extends Container<C> {
@@ -137,6 +150,7 @@ interface DecodeWithCharset<C extends ContainerLike, O = unknown> extends Contai
     }): ContainerOperator<C, ArrayBuffer, string>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Defer<C extends ContainerLike, O = never> extends Container<C> {
@@ -146,6 +160,7 @@ interface Defer<C extends ContainerLike, O = never> extends Container<C> {
     defer<T>(factory: Factory<ContainerOf<C, T>>, options?: O): ContainerOf<C, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface DistinctUntilChanged<C extends ContainerLike, O = unknown> extends Container<C> {
@@ -160,6 +175,7 @@ interface DistinctUntilChanged<C extends ContainerLike, O = unknown> extends Con
     }): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface EverySatisfy<C extends ContainerLike, O = never> extends Container<C> {
@@ -169,6 +185,7 @@ interface EverySatisfy<C extends ContainerLike, O = never> extends Container<C> 
     everySatisfy<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, boolean>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Empty<C extends ContainerLike, O = never> extends Container<C> {
@@ -180,6 +197,7 @@ interface Empty<C extends ContainerLike, O = never> extends Container<C> {
     empty<T>(options?: O): ContainerOf<C, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ForEach<C extends StatefulContainerLike, O = never> extends Container<C> {
@@ -192,6 +210,7 @@ interface ForEach<C extends StatefulContainerLike, O = never> extends Container<
     forEach<T>(effect: SideEffect1<T>, options?: O): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ForkConcat<C extends ContainerLike> extends Container<C> {
@@ -201,6 +220,7 @@ interface ForkConcat<C extends ContainerLike> extends Container<C> {
     forkConcat<TIn, TOut>(fst: ContainerOperator<C, TIn, TOut>, snd: ContainerOperator<C, TIn, TOut>, ...tail: readonly ContainerOperator<C, TIn, TOut>[]): ContainerOperator<C, TIn, TOut>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ForkZip<C extends ContainerLike> extends Container<C> {
@@ -269,6 +289,7 @@ interface ForkZip<C extends ContainerLike> extends Container<C> {
     ]>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface FromReadonlyArray<C extends ContainerLike, O = unknown> extends Container<C> {
@@ -281,6 +302,7 @@ interface FromReadonlyArray<C extends ContainerLike, O = unknown> extends Contai
     }): Function1<readonly T[], ContainerOf<C, T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface FromAsyncIterable<C extends ContainerLike, O = never> extends Container<C> {
@@ -290,6 +312,7 @@ interface FromAsyncIterable<C extends ContainerLike, O = never> extends Containe
     fromAsyncIterable<T>(options?: O): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface FromIterable<C extends ContainerLike, O = never> extends Container<C> {
@@ -299,6 +322,7 @@ interface FromIterable<C extends ContainerLike, O = never> extends Container<C> 
     fromIterable<T>(options?: O): Function1<Iterable<T>, ContainerOf<C, T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface FromSequence<C extends ContainerLike, O = never> extends Container<C> {
@@ -308,6 +332,7 @@ interface FromSequence<C extends ContainerLike, O = never> extends Container<C> 
     fromSequence<T>(options?: O): Function1<SequenceLike<T>, ContainerOf<C, T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Generate<C extends ContainerLike, O = never> extends Container<C> {
@@ -323,6 +348,7 @@ interface Generate<C extends ContainerLike, O = never> extends Container<C> {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: O): ContainerOf<C, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Keep<C extends ContainerLike, O = never> extends Container<C> {
@@ -335,6 +361,7 @@ interface Keep<C extends ContainerLike, O = never> extends Container<C> {
     keep<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Map<C extends ContainerLike, O = never> extends Container<C> {
@@ -351,7 +378,7 @@ interface Map<C extends ContainerLike, O = never> extends Container<C> {
     map<TA, TB>(mapper: Function1<TA, TB>, options?: O): ContainerOperator<C, TA, TB>;
 }
 /**
- *
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Never<C extends StatefulContainerLike, O = never> extends Container<C> {
@@ -363,6 +390,7 @@ interface Never<C extends StatefulContainerLike, O = never> extends Container<C>
     never<T>(options?: O): ContainerOf<C, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Pairwise<C extends ContainerLike, O = never> extends Container<C> {
@@ -375,6 +403,7 @@ interface Pairwise<C extends ContainerLike, O = never> extends Container<C> {
     ]>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Reduce<C extends ContainerLike, O = never> extends Container<C> {
@@ -384,6 +413,7 @@ interface Reduce<C extends ContainerLike, O = never> extends Container<C> {
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: O): ContainerOperator<C, T, TAcc>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Repeat<C extends ContainerLike, O = never> extends Container<C> {
@@ -411,6 +441,7 @@ interface Repeat<C extends ContainerLike, O = never> extends Container<C> {
     repeat<T>(options?: O): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Scan<C extends ContainerLike, O = never> extends Container<C> {
@@ -426,6 +457,7 @@ interface Scan<C extends ContainerLike, O = never> extends Container<C> {
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: O): ContainerOperator<C, T, TAcc>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface SkipFirst<C extends ContainerLike, O = unknown> extends Container<C> {
@@ -439,6 +471,7 @@ interface SkipFirst<C extends ContainerLike, O = unknown> extends Container<C> {
     }): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface SomeSatisfy<C extends ContainerLike, O = never> extends Container<C> {
@@ -448,6 +481,7 @@ interface SomeSatisfy<C extends ContainerLike, O = never> extends Container<C> {
     someSatisfy<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, boolean>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface TakeFirst<C extends ContainerLike, O = unknown> extends Container<C> {
@@ -461,6 +495,7 @@ interface TakeFirst<C extends ContainerLike, O = unknown> extends Container<C> {
     }): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface TakeLast<C extends ContainerLike, O = unknown> extends Container<C> {
@@ -474,6 +509,7 @@ interface TakeLast<C extends ContainerLike, O = unknown> extends Container<C> {
     }): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface TakeWhile<C extends ContainerLike, O = unknown> extends Container<C> {
@@ -491,6 +527,7 @@ interface TakeWhile<C extends ContainerLike, O = unknown> extends Container<C> {
     }): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ThrowIfEmpty<C extends StatefulContainerLike, O = never> extends Container<C> {
@@ -504,6 +541,7 @@ interface ThrowIfEmpty<C extends StatefulContainerLike, O = never> extends Conta
     throwIfEmpty<T>(factory: Factory<unknown>, options?: O): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToAsyncIterable<C extends ContainerLike, O = never> extends Container<C> {
@@ -515,6 +553,7 @@ interface ToAsyncIterable<C extends ContainerLike, O = never> extends Container<
     toAsyncIterable<T>(options?: O): Function1<ContainerOf<C, T>, AsyncIterableLike<T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToIterable<C extends ContainerLike, O = never> extends Container<C> {
@@ -526,6 +565,7 @@ interface ToIterable<C extends ContainerLike, O = never> extends Container<C> {
     toIterable<T>(options?: O): Function1<ContainerOf<C, T>, IterableLike<T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToReadonlyArray<C extends ContainerLike, O = never> extends Container<C> {
@@ -537,6 +577,7 @@ interface ToReadonlyArray<C extends ContainerLike, O = never> extends Container<
     toReadonlyArray<T>(options?: O): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToSequence<C extends ContainerLike, O = never> extends Container<C> {
@@ -548,6 +589,7 @@ interface ToSequence<C extends ContainerLike, O = never> extends Container<C> {
     toSequence<T>(options?: O): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Zip<C extends ContainerLike> extends Container<C> {

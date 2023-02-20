@@ -23,10 +23,6 @@
 
 - [buffer](containers.Buffer.md#buffer)
 
-### Other Properties
-
-- [ContainerLike\_type](containers.Buffer.md#containerlike_type)
-
 ## Operator Properties
 
 ### buffer
@@ -55,15 +51,3 @@ number of items reaches the specified maximum buffer size.
 ##### Returns
 
 [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
-
-___
-
-## Other Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)

@@ -19,23 +19,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [ContainerLike\_type](containers.TakeLast.md#containerlike_type)
-
 ### Operator Methods
 
 - [takeLast](containers.TakeLast.md#takelast)
-
-## Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
 ## Operator Methods
 

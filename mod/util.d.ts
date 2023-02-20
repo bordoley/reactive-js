@@ -10,6 +10,8 @@ declare const DisposableLike_isDisposed: unique symbol;
 type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
+ *
+ * @noInheritDoc
  */
 interface DisposableLike {
     /**

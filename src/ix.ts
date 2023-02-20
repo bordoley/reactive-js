@@ -15,6 +15,9 @@ import { DisposableLike } from "./util";
 /** @ignore */
 export const SourceLike_move = Symbol("SourceLike_move");
 
+/**
+ * @noInheritDoc
+ */
 export interface SourceLike extends DisposableLike {
   [SourceLike_move](): void;
 }
@@ -25,6 +28,9 @@ export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
 /** @ignore */
 export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
 
+/**
+ * @noInheritDoc
+ */
 export interface EnumeratorLike<T = unknown> extends SourceLike {
   readonly [EnumeratorLike_current]: T;
   readonly [EnumeratorLike_hasCurrent]: boolean;
@@ -36,6 +42,7 @@ export const InteractiveContainerLike_interact = Symbol(
 );
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface InteractiveContainerLike<
@@ -47,7 +54,9 @@ export interface InteractiveContainerLike<
 
 /**
  * Interface for iterating a Container of items.
- *  @category Container
+ *
+ * @noInheritDoc
+ * @category Container
  */
 export interface EnumerableLike<T = unknown>
   extends InteractiveContainerLike<EnumeratorLike<T>> {
@@ -57,6 +66,9 @@ export interface EnumerableLike<T = unknown>
   >;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface AsyncEnumeratorLike<T = unknown>
   extends SourceLike,
     StreamLike<void, T> {}
@@ -72,6 +84,7 @@ export const AsyncEnumerableLike_isRunnable = Symbol(
 );
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface AsyncEnumerableLike<T = unknown>
@@ -88,6 +101,7 @@ export interface AsyncEnumerableLike<T = unknown>
 }
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface RunnableAsyncEnumerableLike<T = unknown>
@@ -100,6 +114,7 @@ export interface RunnableAsyncEnumerableLike<T = unknown>
 }
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface EnumerableAsyncEnumerableLike<T = unknown>
@@ -112,6 +127,7 @@ export interface EnumerableAsyncEnumerableLike<T = unknown>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface FromAsyncEnumerable<C extends ContainerLike, O = never>
@@ -125,6 +141,7 @@ export interface FromAsyncEnumerable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface FromEnumerable<C extends ContainerLike, O = never>
@@ -138,6 +155,7 @@ export interface FromEnumerable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ToAsyncEnumerable<C extends ContainerLike, O = never>
@@ -151,6 +169,7 @@ export interface ToAsyncEnumerable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ToEnumerable<C extends ContainerLike, O = never>

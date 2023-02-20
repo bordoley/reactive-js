@@ -39,7 +39,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 #### Overrides
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[ContainerLike_type]](rx.ReactiveContainerLike.md#[containerlike_type])
+ReactiveContainerLike.\_\_@ContainerLike\_type@23198
 
 ___
 
@@ -61,4 +61,4 @@ ___
 
 #### Overrides
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[StatefulContainerLike_state]](rx.ReactiveContainerLike.md#[statefulcontainerlike_state])
+ReactiveContainerLike.\_\_@StatefulContainerLike\_state@23222

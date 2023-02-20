@@ -19,23 +19,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [ContainerLike\_type](containers.FromIterable.md#containerlike_type)
-
 ### Constructor Methods
 
 - [fromIterable](containers.FromIterable.md#fromiterable)
-
-## Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
 ## Constructor Methods
 

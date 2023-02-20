@@ -23,10 +23,6 @@
 
 - [toObservable](rx.ToObservable.md#toobservable)
 
-### Other Properties
-
-- [ContainerLike\_type](rx.ToObservable.md#containerlike_type)
-
 ## Converter Properties
 
 ### toObservable
@@ -52,15 +48,3 @@
 ##### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`ObservableLike`](rx.ObservableLike.md)<`T`\>\>
-
-___
-
-## Other Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)

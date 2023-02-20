@@ -19,23 +19,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [ContainerLike\_type](containers.DistinctUntilChanged.md#containerlike_type)
-
 ### Operator Methods
 
 - [distinctUntilChanged](containers.DistinctUntilChanged.md#distinctuntilchanged)
-
-## Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
 ## Operator Methods
 

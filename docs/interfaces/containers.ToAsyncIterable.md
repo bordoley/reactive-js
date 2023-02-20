@@ -19,23 +19,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [ContainerLike\_type](containers.ToAsyncIterable.md#containerlike_type)
-
 ### Converter Methods
 
 - [toAsyncIterable](containers.ToAsyncIterable.md#toasynciterable)
-
-## Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
 ## Converter Methods
 

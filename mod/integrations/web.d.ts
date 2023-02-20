@@ -2,6 +2,9 @@ import { Updater, Function1 } from "../functions.js";
 import { ObservableLike } from "../rx.js";
 import { DispatcherLike_dispatch, SchedulerLike } from "../scheduling.js";
 import { StreamLike, StreamableLike, StreamableLike_stream } from "../streaming.js";
+/**
+ * @noInheritDoc
+ */
 interface WindowLocationURI {
     readonly title: string;
     readonly path: string;
@@ -13,6 +16,7 @@ declare const WindowLocationStreamLike_goBack: unique symbol;
 /** @ignore */
 declare const WindowLocationStreamLike_canGoBack: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
@@ -22,11 +26,17 @@ interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI>
     readonly [WindowLocationStreamLike_canGoBack]: boolean;
     [WindowLocationStreamLike_goBack](): boolean;
 }
+/**
+ * @noInheritDoc
+ */
 interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike> {
     [StreamableLike_stream](scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): WindowLocationStreamLike;
 }
+/**
+ * @noInheritDoc
+ */
 interface FetchRequest extends RequestInit {
     readonly uri: string;
 }

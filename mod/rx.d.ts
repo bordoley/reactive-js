@@ -5,6 +5,7 @@ import { DisposableLike } from "./util.js";
 /** @ignore */
 declare const SinkLike_notify: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface SinkLike<T = unknown> extends DisposableLike {
@@ -22,6 +23,9 @@ interface SinkLike<T = unknown> extends DisposableLike {
 declare const ObserverLike_dispatcher: unique symbol;
 /** @ignore */
 declare const ObserverLike_scheduler: unique symbol;
+/**
+ * @noInheritDoc
+ */
 interface ObserverLike<T = unknown> extends SinkLike<T> {
     readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
     readonly [ObserverLike_scheduler]: SchedulerLike;
@@ -29,12 +33,14 @@ interface ObserverLike<T = unknown> extends SinkLike<T> {
 /** @ignore */
 declare const ReactiveContainerLike_sinkInto: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface ReactiveContainerLike<TSink extends DisposableLike> extends StatefulContainerLike {
     [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface RunnableLike<T = unknown> extends ReactiveContainerLike<SinkLike<T>> {
@@ -58,6 +64,7 @@ interface ObservableLike<T = unknown> extends ReactiveContainerLike<ObserverLike
     readonly [ObservableLike_isRunnable]: boolean;
 }
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
@@ -65,6 +72,7 @@ interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isRunnable]: true;
 }
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface EnumerableObservableLike<T = unknown> extends RunnableObservableLike<T> {
@@ -76,6 +84,7 @@ declare const MulticastObservableLike_observerCount: unique symbol;
 /** @ignore */
 declare const MulticastObservableLike_replay: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface MulticastObservableLike<T = unknown> extends ObservableLike<T>, DisposableLike {
@@ -88,6 +97,7 @@ interface MulticastObservableLike<T = unknown> extends ObservableLike<T>, Dispos
 /** @ignore */
 declare const SubjectLike_publish: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
@@ -95,6 +105,7 @@ interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
 }
 type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface FromEnumerableObservable<C extends ContainerLike, O = never> extends Container<C> {
@@ -104,6 +115,7 @@ interface FromEnumerableObservable<C extends ContainerLike, O = never> extends C
     fromEnumerableObservable: <T>(options?: O) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface FromRunnableObservable<C extends ContainerLike, O = never> extends Container<C> {
@@ -113,6 +125,7 @@ interface FromRunnableObservable<C extends ContainerLike, O = never> extends Con
     fromRunnableObservable: <T>(options?: O) => Function1<RunnableObservableLike<T>, ContainerOf<C, T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Retry<C extends ObservableLike> extends Container<C> {
@@ -134,6 +147,7 @@ interface Retry<C extends ObservableLike> extends Container<C> {
     retry<T>(predicate: Function2<number, unknown, boolean>): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ScanAsync<C extends ContainerLike, CInner extends ObservableLike> extends Container<C> {
@@ -143,6 +157,7 @@ interface ScanAsync<C extends ContainerLike, CInner extends ObservableLike> exte
     scanAsync: <T, TAcc>(scanner: AsyncReducer<CInner, T, TAcc>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface TakeUntil<C extends ObservableLike> extends Container<C> {
@@ -156,6 +171,7 @@ declare const ThrottleMode_last: unique symbol;
 declare const ThrottleMode_interval: unique symbol;
 type ThrottleMode = typeof ThrottleMode_first | typeof ThrottleMode_last | typeof ThrottleMode_interval;
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Throttle<C extends ObservableLike> extends Container<C> {
@@ -185,6 +201,7 @@ interface Throttle<C extends ObservableLike> extends Container<C> {
     }): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface Timeout<C extends ObservableLike> extends Container<C> {
@@ -206,6 +223,7 @@ interface Timeout<C extends ObservableLike> extends Container<C> {
     timeout<T>(duration: C): ContainerOperator<C, T, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToObservable<C extends ContainerLike, O = never> extends Container<C> {
@@ -215,6 +233,7 @@ interface ToObservable<C extends ContainerLike, O = never> extends Container<C> 
     toObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToRunnableObservable<C extends ContainerLike, O = never> extends Container<C> {
@@ -224,6 +243,7 @@ interface ToRunnableObservable<C extends ContainerLike, O = never> extends Conta
     toRunnableObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToEnumerableObservable<C extends ContainerLike, O = never> extends Container<C> {
@@ -233,6 +253,7 @@ interface ToEnumerableObservable<C extends ContainerLike, O = never> extends Con
     toEnumerableObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToRunnable<C extends ContainerLike, O = never> extends Container<C> {
@@ -242,6 +263,7 @@ interface ToRunnable<C extends ContainerLike, O = never> extends Container<C> {
     toRunnable<T>(options?: O): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface WithLatestFrom<C extends ObservableLike> extends Container<C> {
@@ -251,6 +273,7 @@ interface WithLatestFrom<C extends ObservableLike> extends Container<C> {
     withLatestFrom<TA, TB, T>(other: ContainerOf<C, TB>, selector: Function2<TA, TB, T>): ContainerOperator<C, TA, T>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ZipLatest<C extends ObservableLike> extends Container<C> {
@@ -322,6 +345,7 @@ interface ZipLatest<C extends ObservableLike> extends Container<C> {
     ]>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ZipWithLatestFrom<C extends ObservableLike> extends Container<C> {

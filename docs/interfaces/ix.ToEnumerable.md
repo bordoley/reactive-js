@@ -19,23 +19,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [ContainerLike\_type](ix.ToEnumerable.md#containerlike_type)
-
 ### Converter Methods
 
 - [toEnumerable](ix.ToEnumerable.md#toenumerable)
-
-## Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
 ## Converter Methods
 
