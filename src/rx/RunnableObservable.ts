@@ -25,6 +25,7 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
+  ToReadonlyArray,
   Zip,
 } from "../containers";
 import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable";
@@ -38,8 +39,10 @@ import {
   RunnableObservableLike,
   ScanAsync,
   TakeUntil,
+  Throttle,
   Timeout,
   ToObservable,
+  ToRunnable,
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
@@ -83,16 +86,16 @@ import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal_
 import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable";
 import RunnableObservable_throttle from "./RunnableObservable/__internal__/RunnableObservableLike.throttle";
 
-export const buffer =
+export const buffer: Buffer<RunnableObservableLike>["buffer"] =
   Observable_buffer as Buffer<RunnableObservableLike>["buffer"];
 
 export const catchError: CatchError<RunnableObservableLike>["catchError"] =
   RunnableObservable_catchError;
 
-export const combineLatest: Zip<RunnableObservableLike>["zip"] =
+export const combineLatest =
   Observable_combineLatest as Zip<RunnableObservableLike>["zip"];
 
-export const concat =
+export const concat: Concat<RunnableObservableLike>["concat"] =
   Observable_concat as Concat<RunnableObservableLike>["concat"];
 
 export const concatAll: ConcatAll<
@@ -105,32 +108,29 @@ export const concatAll: ConcatAll<
   return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
 
-export const decodeWithCharset =
+export const decodeWithCharset: DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"] =
   Observable_decodeWithCharset as DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"];
 
 export const defer: Defer<RunnableObservableLike>["defer"] =
   RunnableObservable_defer;
 
-export const distinctUntilChanged =
+export const distinctUntilChanged: DistinctUntilChanged<RunnableObservableLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged as DistinctUntilChanged<RunnableObservableLike>["distinctUntilChanged"];
 
-export const empty = Observable_empty as Empty<
-  RunnableObservableLike,
-  { delay: number }
->["empty"];
+export const empty: Empty<RunnableObservableLike, { delay: number }>["empty"] =
+  Observable_empty as Empty<RunnableObservableLike, { delay: number }>["empty"];
 
-export const everySatisfy =
+export const everySatisfy: EverySatisfy<RunnableObservableLike>["everySatisfy"] =
   Observable_everySatisfy as EverySatisfy<RunnableObservableLike>["everySatisfy"];
 
-export const exhaust: ConcatAll<RunnableObservableLike>["concatAll"] =
-  /*@__PURE__*/ returns(
-    RunnableObservable_mergeAll({
-      maxBufferSize: 1,
-      maxConcurrency: 1,
-    }),
-  );
+export const exhaust = /*@__PURE__*/ returns(
+  RunnableObservable_mergeAll({
+    maxBufferSize: 1,
+    maxConcurrency: 1,
+  }),
+) as ConcatAll<RunnableObservableLike>["concatAll"];
 
-export const forEach =
+export const forEach: ForEach<RunnableObservableLike>["forEach"] =
   Observable_forEach as ForEach<RunnableObservableLike>["forEach"];
 
 export const fromEnumerable: FromEnumerable<
@@ -160,12 +160,16 @@ export const fromReadonlyArray: FromReadonlyArray<
 export const fromSequence: FromSequence<RunnableObservableLike>["fromSequence"] =
   Sequence_toRunnableObservable;
 
-export const generate = Observable_generate as Generate<
+export const generate: Generate<
+  RunnableObservableLike,
+  { readonly delay?: number; readonly delayStart?: boolean }
+>["generate"] = Observable_generate as Generate<
   RunnableObservableLike,
   { readonly delay?: number; readonly delayStart?: boolean }
 >["generate"];
 
-export const keep = Observable_keep as Keep<RunnableObservableLike>["keep"];
+export const keep: Keep<RunnableObservableLike>["keep"] =
+  Observable_keep as Keep<RunnableObservableLike>["keep"];
 
 export const map: Map<RunnableObservableLike>["map"] =
   Observable_map as Map<RunnableObservableLike>["map"];
@@ -173,57 +177,59 @@ export const map: Map<RunnableObservableLike>["map"] =
 export const merge =
   Observable_merge as Concat<RunnableObservableLike>["concat"];
 
-export const mergeAll: ConcatAll<
+export const mergeAll = RunnableObservable_mergeAll as ConcatAll<
   RunnableObservableLike,
   {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = RunnableObservable_mergeAll;
+>["concatAll"];
 
-export const pairwise =
+export const pairwise: Pairwise<RunnableObservableLike>["pairwise"] =
   Observable_pairwise as Pairwise<RunnableObservableLike>["pairwise"];
 
-export const reduce =
+export const reduce: Reduce<RunnableObservableLike>["reduce"] =
   Observable_reduce as Reduce<RunnableObservableLike>["reduce"];
 
 export const retry: Retry<RunnableObservableLike>["retry"] =
   Observable_retry as Retry<RunnableObservableLike>["retry"];
 
-export const scan = Observable_scan as Scan<RunnableObservableLike>["scan"];
+export const scan: Scan<RunnableObservableLike>["scan"] =
+  Observable_scan as Scan<RunnableObservableLike>["scan"];
 
 export const scanAsync: ScanAsync<
   RunnableObservableLike,
   RunnableObservableLike
 >["scanAsync"] = RunnableObservable_scanAsync;
 
-export const skipFirst =
+export const skipFirst: SkipFirst<RunnableObservableLike>["skipFirst"] =
   Observable_skipFirst as SkipFirst<RunnableObservableLike>["skipFirst"];
 
-export const someSatisfy =
+export const someSatisfy: SomeSatisfy<RunnableObservableLike>["someSatisfy"] =
   Observable_someSatisfy as SomeSatisfy<RunnableObservableLike>["someSatisfy"];
 
 export const switchAll: ConcatAll<RunnableObservableLike>["concatAll"] =
   RunnableObservable_switchAll;
 
-export const takeFirst =
+export const takeFirst: TakeFirst<RunnableObservableLike>["takeFirst"] =
   Observable_takeFirst as TakeFirst<RunnableObservableLike>["takeFirst"];
 
-export const takeLast =
+export const takeLast: TakeLast<RunnableObservableLike>["takeLast"] =
   Observable_takeLast as TakeLast<RunnableObservableLike>["takeLast"];
 
-export const takeUntil =
+export const takeUntil: TakeUntil<RunnableObservableLike>["takeUntil"] =
   Observable_takeUntil as TakeUntil<RunnableObservableLike>["takeUntil"];
 
-export const takeWhile =
+export const takeWhile: TakeWhile<RunnableObservableLike>["takeWhile"] =
   Observable_takeWhile as TakeWhile<RunnableObservableLike>["takeWhile"];
 
-export const throttle = RunnableObservable_throttle;
+export const throttle: Throttle<RunnableObservableLike>["throttle"] =
+  RunnableObservable_throttle;
 
-export const throwIfEmpty =
+export const throwIfEmpty: ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty as ThrowIfEmpty<RunnableObservableLike>["throwIfEmpty"];
 
-export const timeout =
+export const timeout: Timeout<RunnableObservableLike>["timeout"] =
   Observable_timeout as Timeout<RunnableObservableLike>["timeout"];
 
 export const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
@@ -232,19 +238,22 @@ export const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
 export const toObservable: ToObservable<RunnableObservableLike>["toObservable"] =
   /*@__PURE__*/ returns(identity);
 
-export const toReadonlyArray = RunnableObservable_toReadonlyArray;
+export const toReadonlyArray: ToReadonlyArray<RunnableObservableLike>["toReadonlyArray"] =
+  RunnableObservable_toReadonlyArray;
 
-export const toRunnable = RunnableObservable_toRunnable;
+export const toRunnable: ToRunnable<RunnableObservableLike>["toRunnable"] =
+  RunnableObservable_toRunnable;
 
-export const withLatestFrom =
+export const withLatestFrom: WithLatestFrom<RunnableObservableLike>["withLatestFrom"] =
   Observable_withLatestFrom as WithLatestFrom<RunnableObservableLike>["withLatestFrom"];
 
-export const zip = Observable_zip as Zip<RunnableObservableLike>["zip"];
+export const zip: Zip<RunnableObservableLike>["zip"] =
+  Observable_zip as Zip<RunnableObservableLike>["zip"];
 
-export const zipLatest =
+export const zipLatest: ZipLatest<RunnableObservableLike>["zipLatest"] =
   Observable_zipLatest as ZipLatest<RunnableObservableLike>["zipLatest"];
 
-export const zipWithLatestFrom =
+export const zipWithLatestFrom: ZipWithLatestFrom<RunnableObservableLike>["zipWithLatestFrom"] =
   Observable_zipWithLatestFrom as ZipWithLatestFrom<RunnableObservableLike>["zipWithLatestFrom"];
 
 /** @ignore */

@@ -1,9 +1,8 @@
 import { ToFlowable, FlowableLike } from "../streaming.js";
 import { EnumerableObservableLike, Retry, ScanAsync, ToRunnable, ToRunnableObservable, ToObservable, AsyncReducer, ObservableLike, RunnableLike, RunnableObservableLike } from "../rx.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable, EnumerableLike, AsyncEnumerableLike } from "../ix.js";
-import { Factory, Function1, Equality, Predicate, SideEffect1, Updater, Reducer, Function2 } from "../functions.js";
-import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, FromIterable, FromReadonlyArray, FromSequence, Generate, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip, ContainerOperator, SequenceLike, IterableLike, ReadonlyArrayLike } from "../containers.js";
-import { VirtualTimeSchedulerLike } from "../scheduling.js";
+import { Function1, Factory, Equality, Predicate, SideEffect1, Updater, Reducer, Function2 } from "../functions.js";
+import { Buffer, CatchError, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ContainerOperator, ForEach, FromIterable, FromReadonlyArray, FromSequence, Generate, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, ToReadonlyArray, Zip, SequenceLike, IterableLike, ReadonlyArrayLike } from "../containers.js";
 declare const buffer: Buffer<EnumerableObservableLike>["buffer"];
 declare const catchError: CatchError<EnumerableObservableLike>["catchError"];
 declare const concat: Concat<EnumerableObservableLike>["concat"];
@@ -15,7 +14,7 @@ declare const defer: Defer<EnumerableObservableLike>["defer"];
 declare const distinctUntilChanged: DistinctUntilChanged<EnumerableObservableLike>["distinctUntilChanged"];
 declare const empty: Empty<EnumerableObservableLike>["empty"];
 declare const everySatisfy: EverySatisfy<EnumerableObservableLike>["everySatisfy"];
-declare const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"];
+declare const exhaust: <T>(options?: undefined) => ContainerOperator<EnumerableObservableLike<unknown>, EnumerableObservableLike<T>, T>;
 declare const forEach: ForEach<EnumerableObservableLike>["forEach"];
 declare const fromEnumerable: FromEnumerable<EnumerableObservableLike>["fromEnumerable"];
 declare const fromIterable: FromIterable<EnumerableObservableLike>["fromIterable"];
@@ -24,11 +23,11 @@ declare const fromSequence: FromSequence<EnumerableObservableLike>["fromSequence
 declare const generate: Generate<EnumerableObservableLike>["generate"];
 declare const keep: Keep<EnumerableObservableLike>["keep"];
 declare const map: Map<EnumerableObservableLike>["map"];
-declare const merge: Concat<EnumerableObservableLike>["concat"];
-declare const mergeAll: ConcatAll<EnumerableObservableLike, {
-    readonly maxBufferSize?: number;
-    readonly maxConcurrency?: number;
-}>["concatAll"];
+declare const merge: <T>(fst: EnumerableObservableLike<T>, snd: EnumerableObservableLike<T>, ...tail: readonly EnumerableObservableLike<T>[]) => EnumerableObservableLike<T>;
+declare const mergeAll: <T>(options?: {
+    readonly maxBufferSize?: number | undefined;
+    readonly maxConcurrency?: number | undefined;
+} | undefined) => ContainerOperator<EnumerableObservableLike<unknown>, EnumerableObservableLike<T>, T>;
 declare const pairwise: Pairwise<EnumerableObservableLike>["pairwise"];
 declare const reduce: Reduce<EnumerableObservableLike>["reduce"];
 declare const retry: Retry<EnumerableObservableLike>["retry"];
@@ -45,9 +44,7 @@ declare const toAsyncEnumerable: ToAsyncEnumerable<EnumerableObservableLike>["to
 declare const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"];
 declare const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"];
 declare const toIterable: ToIterable<EnumerableObservableLike>["toIterable"];
-declare const toReadonlyArray: ToReadonlyArray<EnumerableObservableLike, {
-    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-}>["toReadonlyArray"];
+declare const toReadonlyArray: ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"];
 declare const toRunnable: ToRunnable<EnumerableObservableLike>["toRunnable"];
 declare const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike, {
     readonly delay?: number;
@@ -124,9 +121,7 @@ declare const EnumerableObservable: {
         readonly delay?: number | undefined;
         readonly delayStart?: boolean | undefined;
     } | undefined) => Function1<EnumerableObservableLike<T_32>, ObservableLike<T_32>>;
-    toReadonlyArray: <T_33>(options?: {
-        readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-    } | undefined) => Function1<EnumerableObservableLike<T_33>, ReadonlyArrayLike<T_33>>;
+    toReadonlyArray: <T_33>(options?: undefined) => Function1<EnumerableObservableLike<T_33>, ReadonlyArrayLike<T_33>>;
     toRunnable: <T_34>(options?: undefined) => Function1<EnumerableObservableLike<T_34>, RunnableLike<T_34>>;
     toRunnableObservable: <T_35>(options?: {
         readonly delay?: number | undefined;

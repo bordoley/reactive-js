@@ -52,8 +52,7 @@ const defer = EnumerableObservable_defer;
 const distinctUntilChanged = Observable_distinctUntilChanged;
 const empty = Observable_empty;
 const everySatisfy = Observable_everySatisfy;
-const exhaust = 
-/*@__PURE__*/ returns(EnumerableObservable_mergeAll({
+const exhaust = /*@__PURE__*/ returns(EnumerableObservable_mergeAll({
     maxBufferSize: 1,
     maxConcurrency: 1,
 }));

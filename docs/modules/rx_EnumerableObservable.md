@@ -14,7 +14,6 @@
 - [fromReadonlyArray](rx_EnumerableObservable.md#fromreadonlyarray)
 - [fromSequence](rx_EnumerableObservable.md#fromsequence)
 - [generate](rx_EnumerableObservable.md#generate)
-- [merge](rx_EnumerableObservable.md#merge)
 - [zip](rx_EnumerableObservable.md#zip)
 
 ### Converter Functions
@@ -36,11 +35,9 @@
 - [decodeWithCharset](rx_EnumerableObservable.md#decodewithcharset)
 - [distinctUntilChanged](rx_EnumerableObservable.md#distinctuntilchanged)
 - [everySatisfy](rx_EnumerableObservable.md#everysatisfy)
-- [exhaust](rx_EnumerableObservable.md#exhaust)
 - [forEach](rx_EnumerableObservable.md#foreach)
 - [keep](rx_EnumerableObservable.md#keep)
 - [map](rx_EnumerableObservable.md#map)
-- [mergeAll](rx_EnumerableObservable.md#mergeall)
 - [pairwise](rx_EnumerableObservable.md#pairwise)
 - [reduce](rx_EnumerableObservable.md#reduce)
 - [retry](rx_EnumerableObservable.md#retry)
@@ -53,6 +50,12 @@
 - [takeLast](rx_EnumerableObservable.md#takelast)
 - [takeWhile](rx_EnumerableObservable.md#takewhile)
 - [throwIfEmpty](rx_EnumerableObservable.md#throwifempty)
+
+### Other Functions
+
+- [exhaust](rx_EnumerableObservable.md#exhaust)
+- [merge](rx_EnumerableObservable.md#merge)
+- [mergeAll](rx_EnumerableObservable.md#mergeall)
 
 ## Constructor Functions
 
@@ -239,32 +242,6 @@ that is applied to an accumulator value between emitted items.
 | `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
 | `options?` | `undefined` | - |
-
-#### Returns
-
-[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-___
-
-### merge
-
-▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
-
-Returns a ContainerLike which emits all values from each source sequentially.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
-| `snd` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
-| `...tail` | readonly [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>[] |
 
 #### Returns
 
@@ -627,8 +604,7 @@ Converts the ContainerLike to a `ReadonlyArrayLike`.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.schedulerFactory` | [`Factory`](functions.md#factory)<[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)\> |
+| `options?` | `undefined` |
 
 #### Returns
 
@@ -829,31 +805,6 @@ ___
 
 ___
 
-### exhaust
-
-▸ **exhaust**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
-
-Converts a higher-order ContainerLike into a first-order
-ContainerLike by concatenating the inner sources in order.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
-
-___
-
 ### forEach
 
 ▸ **forEach**<`T`\>(`effect`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
@@ -938,33 +889,6 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-___
-
-### mergeAll
-
-▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
-
-Converts a higher-order ContainerLike into a first-order
-ContainerLike by concatenating the inner sources in order.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
-| `options.maxConcurrency?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -1280,3 +1204,75 @@ Returns a StatefulContainerLike that emits an error if the source completes with
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+## Other Functions
+
+### exhaust
+
+▸ **exhaust**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
+| `snd` | [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>
+
+___
+
+### mergeAll
+
+▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+| `options.maxConcurrency?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, `T`\>

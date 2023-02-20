@@ -1,8 +1,8 @@
 import { FromEnumerable, EnumerableLike } from "../ix.js";
-import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, Retry, ScanAsync, TakeUntil, Throttle, Timeout, WithLatestFrom, ZipLatest, AsyncReducer, ThrottleMode } from "../rx.js";
-import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, FromIterable, PromiseableLike, FromReadonlyArray, FromSequence, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, SequenceLike } from "../containers.js";
+import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, Retry, ScanAsync, TakeUntil, Throttle, Timeout, WithLatestFrom, ZipLatest, ZipWithLatestFrom, AsyncReducer, ThrottleMode } from "../rx.js";
+import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, FromIterable, PromiseableLike, FromReadonlyArray, FromSequence, Generate, Keep, Map, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, SequenceLike } from "../containers.js";
 import { StreamLike, StreamableLike, FromFlowable, FlowableLike } from "../streaming.js";
-import { Optional, Equality, Updater, Factory, Function1, SideEffect1, Function2, Predicate, Reducer, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
+import { Optional, Equality, Updater, Factory, Function1, SideEffect1, Predicate, Reducer, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
 import { SchedulerLike } from "../scheduling.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
 import { Observable_async__currentScheduler } from "./Observable/__internal__/Observable.async.js";
@@ -91,7 +91,7 @@ declare const empty: Empty<ObservableLike, {
     delay?: number;
 }>["empty"];
 declare const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"];
-declare const exhaust: ConcatAll<ObservableLike>["concatAll"];
+declare const exhaust: <T>(options?: undefined) => ContainerOperator<ObservableLike<unknown>, ObservableLike<T>, T>;
 declare const forEach: ForEach<ObservableLike>["forEach"];
 declare const forkCombineLatest: ForkZip<ObservableLike>["forkZip"];
 declare const forkMerge: ForkConcat<ObservableLike>["forkConcat"];
@@ -125,10 +125,10 @@ declare const keep: Keep<ObservableLike>["keep"];
 declare const map: Map<ObservableLike>["map"];
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
 declare const merge: Concat<ObservableLike>["concat"];
-declare const mergeAll: ConcatAll<ObservableLike, {
-    readonly maxBufferSize?: number;
-    readonly maxConcurrency?: number;
-}>["concatAll"];
+declare const mergeAll: <T>(options?: {
+    readonly maxBufferSize?: number | undefined;
+    readonly maxConcurrency?: number | undefined;
+} | undefined) => ContainerOperator<ObservableLike<unknown>, ObservableLike<T>, T>;
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
@@ -139,7 +139,7 @@ declare const mergeAll: ConcatAll<ObservableLike, {
 declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
-declare const never: <T>(options?: undefined) => ObservableLike<T>;
+declare const never: Never<ObservableLike>["never"];
 declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<ObservableLike, T, T>;
 declare const pairwise: Pairwise<ObservableLike>["pairwise"];
 declare const reduce: Reduce<ObservableLike>["reduce"];
@@ -175,7 +175,7 @@ declare const toPromise: <T>(scheduler: SchedulerLike) => (observable: Observabl
 declare const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"];
 declare const zip: Zip<ObservableLike>["zip"];
 declare const zipLatest: ZipLatest<ObservableLike>["zipLatest"];
-declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ContainerOperator<ObservableLike<unknown>, TA, T>;
+declare const zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"];
 /** @ignore */
 declare const Observable: {
     async: <T>(computation: Factory<T>, { mode }?: {

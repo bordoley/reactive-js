@@ -9,9 +9,8 @@ import Observable_subscribe from '../../Observable/__internal__/Observable.subsc
 import Runnable_create from '../../Runnable/__internal__/Runnable.create.mjs';
 import Sink_notifySink from '../../Sink/__internal__/Sink.notifySink.mjs';
 
-const RunnableObservable_toRunnable = (options) => observable => Runnable_create(sink => {
-    const { schedulerFactory = VirtualTimeScheduler_create } = options !== null && options !== void 0 ? options : {};
-    const scheduler = schedulerFactory();
+const RunnableObservable_toRunnable = () => observable => Runnable_create(sink => {
+    const scheduler = VirtualTimeScheduler_create();
     pipe(observable, Observable_forEach(Sink_notifySink(sink)), Observable_subscribe(scheduler), Disposable_addTo(sink));
     pipe(scheduler, Disposable_addTo(sink), Continuation_run, Disposable_dispose());
 });

@@ -32,7 +32,7 @@ import {
 import Iterable_toEnumerableObservable from "../containers/Iterable/__internal__/Iterable.toEnumerableObservable";
 import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
 import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable";
-import { Factory, compose, returns } from "../functions";
+import { compose, returns } from "../functions";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix";
 import Enumerable_toEnumerableObservable from "../ix/Enumerable/__internal__/Enumerable.toEnumerableObservable";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
@@ -44,7 +44,6 @@ import {
   ToRunnable,
   ToRunnableObservable,
 } from "../rx";
-import { VirtualTimeSchedulerLike } from "../scheduling";
 import { ToFlowable } from "../streaming";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError";
 import EnumerableObservable_defer from "./EnumerableObservable/__internal__/EnumerableObservable.defer";
@@ -114,13 +113,12 @@ export const empty: Empty<EnumerableObservableLike>["empty"] =
 export const everySatisfy: EverySatisfy<EnumerableObservableLike>["everySatisfy"] =
   Observable_everySatisfy as EverySatisfy<EnumerableObservableLike>["everySatisfy"];
 
-export const exhaust: ConcatAll<EnumerableObservableLike>["concatAll"] =
-  /*@__PURE__*/ returns(
-    EnumerableObservable_mergeAll({
-      maxBufferSize: 1,
-      maxConcurrency: 1,
-    }),
-  );
+export const exhaust = /*@__PURE__*/ returns(
+  EnumerableObservable_mergeAll({
+    maxBufferSize: 1,
+    maxConcurrency: 1,
+  }),
+) as ConcatAll<EnumerableObservableLike>["concatAll"];
 
 export const forEach: ForEach<EnumerableObservableLike>["forEach"] =
   Observable_forEach as ForEach<EnumerableObservableLike>["forEach"];
@@ -146,16 +144,16 @@ export const keep: Keep<EnumerableObservableLike>["keep"] =
 export const map: Map<EnumerableObservableLike>["map"] =
   Observable_map as Map<EnumerableObservableLike>["map"];
 
-export const merge: Concat<EnumerableObservableLike>["concat"] =
+export const merge =
   Observable_merge as Concat<EnumerableObservableLike>["concat"];
 
-export const mergeAll: ConcatAll<
+export const mergeAll = EnumerableObservable_mergeAll as ConcatAll<
   EnumerableObservableLike,
   {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = EnumerableObservable_mergeAll;
+>["concatAll"];
 
 export const pairwise: Pairwise<EnumerableObservableLike>["pairwise"] =
   Observable_pairwise as Pairwise<EnumerableObservableLike>["pairwise"];
@@ -207,17 +205,8 @@ export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
 export const toIterable: ToIterable<EnumerableObservableLike>["toIterable"] =
   EnumerableObservable_toIterable;
 
-export const toReadonlyArray: ToReadonlyArray<
-  EnumerableObservableLike,
-  {
-    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-  }
->["toReadonlyArray"] = RunnableObservable_toReadonlyArray as ToReadonlyArray<
-  EnumerableObservableLike,
-  {
-    readonly schedulerFactory: Factory<VirtualTimeSchedulerLike>;
-  }
->["toReadonlyArray"];
+export const toReadonlyArray: ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"] =
+  RunnableObservable_toReadonlyArray as ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"];
 
 export const toRunnable: ToRunnable<EnumerableObservableLike>["toRunnable"] =
   RunnableObservable_toRunnable as ToRunnable<EnumerableObservableLike>["toRunnable"];

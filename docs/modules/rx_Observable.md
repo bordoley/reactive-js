@@ -28,6 +28,7 @@
 - [fromSequence](rx_Observable.md#fromsequence)
 - [generate](rx_Observable.md#generate)
 - [merge](rx_Observable.md#merge)
+- [never](rx_Observable.md#never)
 - [zip](rx_Observable.md#zip)
 - [zipLatest](rx_Observable.md#ziplatest)
 
@@ -38,14 +39,12 @@
 - [decodeWithCharset](rx_Observable.md#decodewithcharset)
 - [distinctUntilChanged](rx_Observable.md#distinctuntilchanged)
 - [everySatisfy](rx_Observable.md#everysatisfy)
-- [exhaust](rx_Observable.md#exhaust)
 - [forEach](rx_Observable.md#foreach)
 - [forkCombineLatest](rx_Observable.md#forkcombinelatest)
 - [forkMerge](rx_Observable.md#forkmerge)
 - [forkZipLatest](rx_Observable.md#forkziplatest)
 - [keep](rx_Observable.md#keep)
 - [map](rx_Observable.md#map)
-- [mergeAll](rx_Observable.md#mergeall)
 - [pairwise](rx_Observable.md#pairwise)
 - [reduce](rx_Observable.md#reduce)
 - [repeat](rx_Observable.md#repeat)
@@ -63,25 +62,26 @@
 - [throwIfEmpty](rx_Observable.md#throwifempty)
 - [timeout](rx_Observable.md#timeout)
 - [withLatestFrom](rx_Observable.md#withlatestfrom)
+- [zipWithLatestFrom](rx_Observable.md#zipwithlatestfrom)
 
 ### Other Functions
 
 - [async](rx_Observable.md#async)
 - [buffer](rx_Observable.md#buffer)
 - [create](rx_Observable.md#create)
+- [exhaust](rx_Observable.md#exhaust)
 - [fromDisposable](rx_Observable.md#fromdisposable)
 - [fromPromise](rx_Observable.md#frompromise)
 - [isEnumerable](rx_Observable.md#isenumerable)
 - [isRunnable](rx_Observable.md#isrunnable)
 - [mapAsync](rx_Observable.md#mapasync)
+- [mergeAll](rx_Observable.md#mergeall)
 - [multicast](rx_Observable.md#multicast)
-- [never](rx_Observable.md#never)
 - [onSubscribe](rx_Observable.md#onsubscribe)
 - [share](rx_Observable.md#share)
 - [subscribe](rx_Observable.md#subscribe)
 - [subscribeOn](rx_Observable.md#subscribeon)
 - [toPromise](rx_Observable.md#topromise)
-- [zipWithLatestFrom](rx_Observable.md#zipwithlatestfrom)
 
 ## AsyncEffect Functions
 
@@ -1164,6 +1164,30 @@ Returns a ContainerLike which emits all values from each source sequentially.
 
 ___
 
+### never
+
+▸ **never**<`T`\>(`options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+Returns a StatefulContainerLike instance that emits no items and never disposes its state.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
 ### zip
 
 ▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
@@ -1728,31 +1752,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
-
-___
-
-### exhaust
-
-▸ **exhaust**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
-
-Converts a higher-order ContainerLike into a first-order
-ContainerLike by concatenating the inner sources in order.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -2324,33 +2323,6 @@ TB - The inner type of the mapped container
 
 ___
 
-### mergeAll
-
-▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
-
-Converts a higher-order ContainerLike into a first-order
-ContainerLike by concatenating the inner sources in order.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
-| `options.maxConcurrency?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
-
-___
-
 ### pairwise
 
 ▸ **pairwise**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
@@ -2871,6 +2843,31 @@ ___
 
 ___
 
+### zipWithLatestFrom
+
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `other` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `T`\>
+
+___
+
 ## Other Functions
 
 ### async
@@ -2940,6 +2937,28 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
+### exhaust
+
+▸ **exhaust**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -3036,6 +3055,30 @@ ___
 
 ___
 
+### mergeAll
+
+▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+| `options.maxConcurrency?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
+
+___
+
 ### multicast
 
 ▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
@@ -3059,28 +3102,6 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
-
-___
-
-### never
-
-▸ **never**<`T`\>(`options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -3221,28 +3242,3 @@ ___
 ##### Returns
 
 `PromiseLike`<`T`\>
-
-___
-
-### zipWithLatestFrom
-
-▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `other` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
-| `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `T`\>
