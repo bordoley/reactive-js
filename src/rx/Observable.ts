@@ -17,6 +17,7 @@ import {
   Generate,
   Keep,
   Map,
+  Never,
   Pairwise,
   Reduce,
   Repeat,
@@ -48,6 +49,7 @@ import {
   SideEffect4,
   SideEffect5,
   SideEffect6,
+  returns,
 } from "../functions";
 import { FromEnumerable } from "../ix";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
@@ -61,6 +63,7 @@ import {
   Timeout,
   WithLatestFrom,
   ZipLatest,
+  ZipWithLatestFrom,
 } from "../rx";
 import { SchedulerLike } from "../scheduling";
 import { FromFlowable } from "../streaming";
@@ -305,11 +308,12 @@ export const empty: Empty<ObservableLike, { delay?: number }>["empty"] =
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   Observable_everySatisfy;
 
-export const exhaust: ConcatAll<ObservableLike>["concatAll"] = <T>() =>
-  mergeAll<T>({
+export const exhaust = /*@__PURE__*/ returns(
+  Observable_mergeAll({
     maxBufferSize: 1,
     maxConcurrency: 1,
-  });
+  }),
+) as ConcatAll<ObservableLike>["concatAll"];
 
 export const forEach: ForEach<ObservableLike>["forEach"] = Observable_forEach;
 
@@ -378,13 +382,13 @@ export const mapAsync = Observable_mapAsync;
 
 export const merge: Concat<ObservableLike>["concat"] = Observable_merge;
 
-export const mergeAll: ConcatAll<
+export const mergeAll = Observable_mergeAll as ConcatAll<
   ObservableLike,
   {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = Observable_mergeAll;
+>["concatAll"];
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -395,7 +399,7 @@ export const mergeAll: ConcatAll<
  */
 export const multicast = Observable_multicast;
 
-export const never = Observable_never;
+export const never: Never<ObservableLike>["never"] = Observable_never;
 
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
@@ -471,7 +475,8 @@ export const zip: Zip<ObservableLike>["zip"] = Observable_zip;
 export const zipLatest: ZipLatest<ObservableLike>["zipLatest"] =
   Observable_zipLatest;
 
-export const zipWithLatestFrom = Observable_zipWithLatestFrom;
+export const zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"] =
+  Observable_zipWithLatestFrom;
 
 /** @ignore */
 const Observable = {

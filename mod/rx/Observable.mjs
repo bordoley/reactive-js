@@ -3,6 +3,7 @@ import Iterable_toRunnableObservable from '../containers/Iterable/__internal__/I
 import Promiseable_toObservable from '../containers/Promiseable/__internal__/Promiseable.toObservable.mjs';
 import ReadonlyArray_toRunnableObservable from '../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.mjs';
 import Sequence_toRunnableObservable from '../containers/Sequence/__internal__/Sequence.toRunnableObservable.mjs';
+import { returns } from '../functions.mjs';
 import Enumerable_toRunnableObservable from '../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.mjs';
 import Flowable_toObservable from '../streaming/Flowable/__internal__/Flowable.toObservable.mjs';
 import Disposable_toObservable from '../util/Disposable/__internal__/Disposable.toObservable.mjs';
@@ -102,10 +103,10 @@ const defer = Observable_defer;
 const distinctUntilChanged = Observable_distinctUntilChanged;
 const empty = Observable_empty;
 const everySatisfy = Observable_everySatisfy;
-const exhaust = () => mergeAll({
+const exhaust = /*@__PURE__*/ returns(Observable_mergeAll({
     maxBufferSize: 1,
     maxConcurrency: 1,
-});
+}));
 const forEach = Observable_forEach;
 const forkCombineLatest = Observable_forkCombineLatest;
 const forkMerge = Observable_forkMerge;

@@ -1,6 +1,5 @@
-import { Factory, pipe } from "../../../functions";
+import { pipe } from "../../../functions";
 import { RunnableObservableLike, ToRunnable } from "../../../rx";
-import { VirtualTimeSchedulerLike } from "../../../scheduling";
 import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run";
 import VirtualTimeScheduler_create from "../../../scheduling/VirtualTimeScheduler/__internal__/VirtualTimeScheduler.create";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
@@ -10,19 +9,11 @@ import Observable_subscribe from "../../Observable/__internal__/Observable.subsc
 import Runnable_create from "../../Runnable/__internal__/Runnable.create";
 import Sink_notifySink from "../../Sink/__internal__/Sink.notifySink";
 
-const RunnableObservable_toRunnable: ToRunnable<
-  RunnableObservableLike,
-  {
-    readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
-  }
->["toRunnable"] =
-  (options?: {
-    readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
-  }) =>
-  observable =>
+const RunnableObservable_toRunnable: ToRunnable<RunnableObservableLike>["toRunnable"] =
+  () => observable =>
     Runnable_create(sink => {
-      const { schedulerFactory = VirtualTimeScheduler_create } = options ?? {};
-      const scheduler = schedulerFactory();
+      const scheduler = VirtualTimeScheduler_create();
+
       pipe(
         observable,
         Observable_forEach(Sink_notifySink(sink)),
