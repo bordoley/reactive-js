@@ -18,23 +18,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [ContainerLike\_type](rx.ZipWithLatestFrom.md#containerlike_type)
-
 ### Operator Methods
 
 - [zipWithLatestFrom](rx.ZipWithLatestFrom.md#zipwithlatestfrom)
-
-## Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
 ## Operator Methods
 

@@ -18,23 +18,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [ContainerLike\_type](containers.Zip.md#containerlike_type)
-
 ### Constructor Methods
 
 - [zip](containers.Zip.md#zip)
-
-## Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
 ## Constructor Methods
 

@@ -27,6 +27,7 @@ export interface StreamLike<TReq, T>
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface StreamableLike<
@@ -39,12 +40,15 @@ export interface StreamableLike<
     options?: { readonly replay?: number },
   ): TStream;
 }
-
+/**
+ * @noInheritDoc
+ */
 export interface FlowableStreamLike<T = unknown>
   extends StreamLike<Updater<PauseableState>, T>,
     PauseableLike {}
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface FlowableLike<T = unknown>
@@ -54,6 +58,7 @@ export interface FlowableLike<T = unknown>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface FromFlowable<C extends ContainerLike, O = never>
@@ -65,6 +70,7 @@ export interface FromFlowable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ToFlowable<C extends ContainerLike, O = never>

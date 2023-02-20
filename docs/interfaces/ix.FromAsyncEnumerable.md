@@ -19,23 +19,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [ContainerLike\_type](ix.FromAsyncEnumerable.md#containerlike_type)
-
 ### Constructor Methods
 
 - [fromAsyncEnumerable](ix.FromAsyncEnumerable.md#fromasyncenumerable)
-
-## Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
 ## Constructor Methods
 

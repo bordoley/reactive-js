@@ -20,25 +20,10 @@
 
 ### Properties
 
-- [[ContainerLike\_T]](rx.RunnableLike.md#[containerlike_t])
 - [[ContainerLike\_type]](rx.RunnableLike.md#[containerlike_type])
 - [[StatefulContainerLike\_state]](rx.RunnableLike.md#[statefulcontainerlike_state])
 
-### Methods
-
-- [[ReactiveContainerLike\_sinkInto]](rx.RunnableLike.md#[reactivecontainerlike_sinkinto])
-
 ## Properties
-
-### [ContainerLike\_T]
-
-• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
-
-#### Inherited from
-
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[ContainerLike_T]](rx.ReactiveContainerLike.md#[containerlike_t])
-
-___
 
 ### [ContainerLike\_type]
 
@@ -46,7 +31,7 @@ ___
 
 #### Overrides
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[ContainerLike_type]](rx.ReactiveContainerLike.md#[containerlike_type])
+ReactiveContainerLike.\_\_@ContainerLike\_type@23198
 
 ___
 
@@ -56,24 +41,4 @@ ___
 
 #### Overrides
 
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[StatefulContainerLike_state]](rx.ReactiveContainerLike.md#[statefulcontainerlike_state])
-
-## Methods
-
-### [ReactiveContainerLike\_sinkInto]
-
-▸ **[ReactiveContainerLike_sinkInto]**(`sink`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `sink` | [`SinkLike`](rx.SinkLike.md)<`T`\> |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[ReactiveContainerLike](rx.ReactiveContainerLike.md).[[ReactiveContainerLike_sinkInto]](rx.ReactiveContainerLike.md#[reactivecontainerlike_sinkinto])
+ReactiveContainerLike.\_\_@StatefulContainerLike\_state@23222

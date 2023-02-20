@@ -30,20 +30,9 @@
 
 ### Properties
 
-- [[ContainerLike\_T]](containers.SequenceLike.md#[containerlike_t])
 - [[ContainerLike\_type]](containers.SequenceLike.md#[containerlike_type])
 
 ## Properties
-
-### [ContainerLike\_T]
-
-• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
-
-#### Inherited from
-
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_T]](containers.ContainerLike.md#[containerlike_t])
-
-___
 
 ### [ContainerLike\_type]
 

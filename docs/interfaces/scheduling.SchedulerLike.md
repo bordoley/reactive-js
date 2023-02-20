@@ -4,8 +4,6 @@
 
 [scheduling](../modules/scheduling.md).SchedulerLike
 
-Represents an unmanaged resource that can be disposed.
-
 ## Hierarchy
 
 - [`DisposableLike`](util.DisposableLike.md)
@@ -20,44 +18,16 @@ Represents an unmanaged resource that can be disposed.
 
 ### Properties
 
-- [[DisposableLike\_error]](scheduling.SchedulerLike.md#[disposablelike_error])
-- [[DisposableLike\_isDisposed]](scheduling.SchedulerLike.md#[disposablelike_isdisposed])
 - [[SchedulerLike\_inContinuation]](scheduling.SchedulerLike.md#[schedulerlike_incontinuation])
 - [[SchedulerLike\_now]](scheduling.SchedulerLike.md#[schedulerlike_now])
 - [[SchedulerLike\_shouldYield]](scheduling.SchedulerLike.md#[schedulerlike_shouldyield])
 
 ### Methods
 
-- [[DisposableLike\_add]](scheduling.SchedulerLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](scheduling.SchedulerLike.md#[disposablelike_dispose])
 - [[SchedulerLike\_requestYield]](scheduling.SchedulerLike.md#[schedulerlike_requestyield])
 - [[SchedulerLike\_schedule]](scheduling.SchedulerLike.md#[schedulerlike_schedule])
 
 ## Properties
-
-### [DisposableLike\_error]
-
-• `Readonly` **[DisposableLike\_error]**: [`Optional`](../modules/functions.md#optional)<`Error`\>
-
-The error the `Disposable` was disposed with if disposed.
-
-#### Inherited from
-
-[DisposableLike](util.DisposableLike.md).[[DisposableLike_error]](util.DisposableLike.md#[disposablelike_error])
-
-___
-
-### [DisposableLike\_isDisposed]
-
-• `Readonly` **[DisposableLike\_isDisposed]**: `boolean`
-
-`true` if this resource has been disposed, otherwise false
-
-#### Inherited from
-
-[DisposableLike](util.DisposableLike.md).[[DisposableLike_isDisposed]](util.DisposableLike.md#[disposablelike_isdisposed])
-
-___
 
 ### [SchedulerLike\_inContinuation]
 
@@ -76,53 +46,6 @@ ___
 • `Readonly` **[SchedulerLike\_shouldYield]**: `boolean`
 
 ## Methods
-
-### [DisposableLike\_add]
-
-▸ **[DisposableLike_add]**(`disposable`, `ignoreChildErrors`): `void`
-
-Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `disposable` | [`DisposableOrTeardown`](../modules/util.md#disposableorteardown) |
-| `ignoreChildErrors` | `boolean` |
-
-#### Returns
-
-`void`
-
-`this`
-
-#### Inherited from
-
-[DisposableLike](util.DisposableLike.md).[[DisposableLike_add]](util.DisposableLike.md#[disposablelike_add])
-
-___
-
-### [DisposableLike\_dispose]
-
-▸ **[DisposableLike_dispose]**(`error?`): `void`
-
-Dispose the resource.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `error?` | `Error` | An optional error that signals the resource is being disposed due to an error. |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[DisposableLike](util.DisposableLike.md).[[DisposableLike_dispose]](util.DisposableLike.md#[disposablelike_dispose])
-
-___
 
 ### [SchedulerLike\_requestYield]
 

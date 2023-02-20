@@ -23,10 +23,6 @@
 
 - [fromRunnableObservable](rx.FromRunnableObservable.md#fromrunnableobservable)
 
-### Other Properties
-
-- [ContainerLike\_type](rx.FromRunnableObservable.md#containerlike_type)
-
 ## Constructor Properties
 
 ### fromRunnableObservable
@@ -52,15 +48,3 @@
 ##### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`RunnableObservableLike`](rx.RunnableObservableLike.md)<`T`\>, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\>
-
-___
-
-## Other Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)

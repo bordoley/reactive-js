@@ -5,6 +5,9 @@ import { StreamLike, StreamableLike } from "./streaming.js";
 import { DisposableLike } from "./util.js";
 /** @ignore */
 declare const SourceLike_move: unique symbol;
+/**
+ * @noInheritDoc
+ */
 interface SourceLike extends DisposableLike {
     [SourceLike_move](): void;
 }
@@ -12,6 +15,9 @@ interface SourceLike extends DisposableLike {
 declare const EnumeratorLike_current: unique symbol;
 /** @ignore */
 declare const EnumeratorLike_hasCurrent: unique symbol;
+/**
+ * @noInheritDoc
+ */
 interface EnumeratorLike<T = unknown> extends SourceLike {
     readonly [EnumeratorLike_current]: T;
     readonly [EnumeratorLike_hasCurrent]: boolean;
@@ -19,6 +25,7 @@ interface EnumeratorLike<T = unknown> extends SourceLike {
 /** @ignore */
 declare const InteractiveContainerLike_interact: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface InteractiveContainerLike<TSource extends DisposableLike, TCtx = void> extends StatefulContainerLike {
@@ -26,12 +33,17 @@ interface InteractiveContainerLike<TSource extends DisposableLike, TCtx = void> 
 }
 /**
  * Interface for iterating a Container of items.
- *  @category Container
+ *
+ * @noInheritDoc
+ * @category Container
  */
 interface EnumerableLike<T = unknown> extends InteractiveContainerLike<EnumeratorLike<T>> {
     readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
     readonly [StatefulContainerLike_state]?: EnumeratorLike<this[typeof ContainerLike_T]>;
 }
+/**
+ * @noInheritDoc
+ */
 interface AsyncEnumeratorLike<T = unknown> extends SourceLike, StreamLike<void, T> {
 }
 /**  @ignore */
@@ -39,6 +51,7 @@ declare const AsyncEnumerableLike_isEnumerable: unique symbol;
 /**  @ignore */
 declare const AsyncEnumerableLike_isRunnable: unique symbol;
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T, AsyncEnumeratorLike<T>>, InteractiveContainerLike<AsyncEnumeratorLike<T>, SchedulerLike> {
@@ -48,6 +61,7 @@ interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T, Async
     readonly [AsyncEnumerableLike_isRunnable]: boolean;
 }
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface RunnableAsyncEnumerableLike<T = unknown> extends AsyncEnumerableLike<T> {
@@ -55,6 +69,7 @@ interface RunnableAsyncEnumerableLike<T = unknown> extends AsyncEnumerableLike<T
     readonly [AsyncEnumerableLike_isRunnable]: true;
 }
 /**
+ * @noInheritDoc
  * @category Container
  */
 interface EnumerableAsyncEnumerableLike<T = unknown> extends RunnableAsyncEnumerableLike<T> {
@@ -62,6 +77,7 @@ interface EnumerableAsyncEnumerableLike<T = unknown> extends RunnableAsyncEnumer
     readonly [AsyncEnumerableLike_isEnumerable]: true;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface FromAsyncEnumerable<C extends ContainerLike, O = never> extends Container<C> {
@@ -71,6 +87,7 @@ interface FromAsyncEnumerable<C extends ContainerLike, O = never> extends Contai
     fromAsyncEnumerable<T>(options?: O): Function1<AsyncEnumerableLike<T>, ContainerOf<C, T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface FromEnumerable<C extends ContainerLike, O = never> extends Container<C> {
@@ -80,6 +97,7 @@ interface FromEnumerable<C extends ContainerLike, O = never> extends Container<C
     fromEnumerable<T>(options?: O): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToAsyncEnumerable<C extends ContainerLike, O = never> extends Container<C> {
@@ -89,6 +107,7 @@ interface ToAsyncEnumerable<C extends ContainerLike, O = never> extends Containe
     toAsyncEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
 }
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 interface ToEnumerable<C extends ContainerLike, O = never> extends Container<C> {

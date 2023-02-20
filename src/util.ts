@@ -17,6 +17,8 @@ export type DisposableOrTeardown =
 
 /**
  * Represents an unmanaged resource that can be disposed.
+ *
+ * @noInheritDoc
  */
 export interface DisposableLike {
   /**

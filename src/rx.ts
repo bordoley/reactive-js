@@ -16,6 +16,7 @@ import { DisposableLike } from "./util";
 export const SinkLike_notify = Symbol("SinkLike_notify");
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface SinkLike<T = unknown> extends DisposableLike {
@@ -36,6 +37,9 @@ export const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
 /** @ignore */
 export const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
 
+/**
+ * @noInheritDoc
+ */
 export interface ObserverLike<T = unknown> extends SinkLike<T> {
   readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
   readonly [ObserverLike_scheduler]: SchedulerLike;
@@ -47,6 +51,7 @@ export const ReactiveContainerLike_sinkInto = Symbol(
 );
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface ReactiveContainerLike<TSink extends DisposableLike>
@@ -55,6 +60,7 @@ export interface ReactiveContainerLike<TSink extends DisposableLike>
 }
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface RunnableLike<T = unknown>
@@ -91,6 +97,7 @@ export interface ObservableLike<T = unknown>
 }
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
@@ -102,6 +109,7 @@ export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
 }
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface EnumerableObservableLike<T = unknown>
@@ -124,6 +132,7 @@ export const MulticastObservableLike_replay = Symbol(
 );
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface MulticastObservableLike<T = unknown>
@@ -140,6 +149,7 @@ export interface MulticastObservableLike<T = unknown>
 export const SubjectLike_publish = Symbol("SubjectLike_publish");
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
@@ -153,6 +163,7 @@ export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
 >;
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface FromEnumerableObservable<C extends ContainerLike, O = never>
@@ -166,6 +177,7 @@ export interface FromEnumerableObservable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface FromRunnableObservable<C extends ContainerLike, O = never>
@@ -179,6 +191,7 @@ export interface FromRunnableObservable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface Retry<C extends ObservableLike> extends Container<C> {
@@ -204,6 +217,7 @@ export interface Retry<C extends ObservableLike> extends Container<C> {
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ScanAsync<
@@ -220,6 +234,7 @@ export interface ScanAsync<
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface TakeUntil<C extends ObservableLike> extends Container<C> {
@@ -238,6 +253,7 @@ export type ThrottleMode =
   | typeof ThrottleMode_interval;
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface Throttle<C extends ObservableLike> extends Container<C> {
@@ -271,6 +287,7 @@ export interface Throttle<C extends ObservableLike> extends Container<C> {
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface Timeout<C extends ObservableLike> extends Container<C> {
@@ -294,6 +311,7 @@ export interface Timeout<C extends ObservableLike> extends Container<C> {
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ToObservable<C extends ContainerLike, O = never>
@@ -307,6 +325,7 @@ export interface ToObservable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ToRunnableObservable<C extends ContainerLike, O = never>
@@ -320,6 +339,7 @@ export interface ToRunnableObservable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ToEnumerableObservable<C extends ContainerLike, O = never>
@@ -333,6 +353,7 @@ export interface ToEnumerableObservable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ToRunnable<C extends ContainerLike, O = never>
@@ -344,6 +365,7 @@ export interface ToRunnable<C extends ContainerLike, O = never>
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface WithLatestFrom<C extends ObservableLike> extends Container<C> {
@@ -357,6 +379,7 @@ export interface WithLatestFrom<C extends ObservableLike> extends Container<C> {
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ZipLatest<C extends ObservableLike> extends Container<C> {
@@ -429,6 +452,7 @@ export interface ZipLatest<C extends ObservableLike> extends Container<C> {
 }
 
 /**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface ZipWithLatestFrom<C extends ObservableLike>

@@ -20,6 +20,9 @@ declare const SchedulerLike_requestYield: unique symbol;
 declare const SchedulerLike_shouldYield: unique symbol;
 /** @ignore */
 declare const SchedulerLike_schedule: unique symbol;
+/**
+ * @noInheritDoc
+ */
 interface SchedulerLike extends DisposableLike {
     readonly [SchedulerLike_inContinuation]: boolean;
     readonly [SchedulerLike_now]: number;
@@ -36,6 +39,9 @@ interface SchedulerLike extends DisposableLike {
 declare const DispatcherLike_dispatch: unique symbol;
 /** @ignore */
 declare const DispatcherLike_scheduler: unique symbol;
+/**
+ * @noInheritDoc
+ */
 interface DispatcherLike<T = unknown> extends DisposableLike {
     /**
      * Dispatches the next request
@@ -47,8 +53,14 @@ interface DispatcherLike<T = unknown> extends DisposableLike {
 declare const PauseableState_running: unique symbol;
 declare const PauseableState_paused: unique symbol;
 type PauseableState = typeof PauseableState_running | typeof PauseableState_paused;
+/**
+ * @noInheritDoc
+ */
 interface PauseableLike extends DispatcherLike<Updater<PauseableState>> {
 }
+/**
+ * @noInheritDoc
+ */
 interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
 }
 /**
@@ -69,6 +81,9 @@ interface PrioritySchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): void;
 }
+/**
+ * @noInheritDoc
+ */
 interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
 }
 export { ContinuationLike, ContinuationLike_run, DispatcherLike, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableLike, PauseableSchedulerLike, PauseableState, PauseableState_paused, PauseableState_running, PrioritySchedulerLike, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike };

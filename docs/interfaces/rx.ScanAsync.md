@@ -23,10 +23,6 @@
 
 - [scanAsync](rx.ScanAsync.md#scanasync)
 
-### Other Properties
-
-- [ContainerLike\_type](rx.ScanAsync.md#containerlike_type)
-
 ## Operator Properties
 
 ### scanAsync
@@ -54,15 +50,3 @@
 ##### Returns
 
 [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `TAcc`\>
-
-___
-
-## Other Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)

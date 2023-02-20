@@ -66,6 +66,9 @@ import Streamable_create from "../streaming/Streamable/__internal__/Streamable.c
 import { addTo, dispose, onDisposed, toAbortSignal } from "../util/Disposable";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin";
 
+/**
+ * @noInheritDoc
+ */
 export interface WindowLocationURI {
   readonly title: string;
   // FIXME: Can we enforce non-empty string in the type system
@@ -87,6 +90,7 @@ export const WindowLocationStreamLike_canGoBack = Symbol(
 );
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface WindowLocationStreamLike
@@ -104,6 +108,9 @@ export interface WindowLocationStreamLike
   [WindowLocationStreamLike_goBack](): boolean;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface WindowLocationStreamableLike
   extends StreamableLike<
     Updater<WindowLocationURI> | WindowLocationURI,
@@ -116,6 +123,9 @@ export interface WindowLocationStreamableLike
   ): WindowLocationStreamLike;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface FetchRequest extends RequestInit {
   readonly uri: string;
 }
